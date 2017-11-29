@@ -45,6 +45,30 @@
       "revId": "60826ad34835322d881262d1f8c084a42a1be9a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b94f2da8_969aa2bb",
+        "filename": "content/browser/child_process_security_policy_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1157,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-29T21:55:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5833f527_bea3ea54",
+      "range": {
+        "startLine": 1157,
+        "startChar": 27,
+        "endLine": 1157,
+        "endChar": 34
+      },
+      "revId": "60826ad34835322d881262d1f8c084a42a1be9a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
