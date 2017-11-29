@@ -51,6 +51,24 @@
       "revId": "e225d4d44b82f7c9c429e360cd774e52eb9728e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a31b04f_7729637a",
+        "filename": "ui/accessibility/platform/ax_platform_node_auralinux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1250986
+      },
+      "writtenOn": "2017-11-29T16:35:30Z",
+      "side": 1,
+      "message": "Yes, but unfortunately, while Chromium still support Ubuntu 14.04 Trusty, we cannot add function calls for ATK 2.12+. I hit the problem on the original implementation, as it would be built with a newer ATK, but the binary checks done for checking if the resulting binary would be runnable in Trusty fail.\n\nIt is a pity, as I\u0027d prefer to add support for both the new and the old API (or even only the new one).",
+      "parentUuid": "f1d8bbb3_86bdc7cd",
+      "revId": "e225d4d44b82f7c9c429e360cd774e52eb9728e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
