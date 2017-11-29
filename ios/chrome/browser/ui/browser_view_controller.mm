@@ -73,7 +73,9 @@
 #import "ios/chrome/browser/find_in_page/find_tab_helper.h"
 #include "ios/chrome/browser/first_run/first_run.h"
 #import "ios/chrome/browser/geolocation/omnibox_geolocation_controller.h"
+#include "ios/chrome/browser/infobars/infobar_container_delegate_ios.h"
 #include "ios/chrome/browser/infobars/infobar_container_ios.h"
+#import "ios/chrome/browser/infobars/infobar_container_state_delegate.h"
 #include "ios/chrome/browser/infobars/infobar_container_view.h"
 #include "ios/chrome/browser/infobars/infobar_manager_impl.h"
 #import "ios/chrome/browser/language/url_language_histogram_factory.h"
@@ -389,6 +391,7 @@ NSString* const kBrowserViewControllerSnackbarCategory =
                                     CRWWebStateDelegate,
                                     DialogPresenterDelegate,
                                     LegacyFullscreenControllerDelegate,
+                                    InfobarContainerStateDelegate,
                                     KeyCommandsPlumbing,
                                     NetExportTabHelperDelegate,
                                     ManageAccountsDelegate,
@@ -794,8 +797,6 @@ bubblePresenterForFeature:(const base::Feature&)feature
                       selectText:(BOOL)selectText
                      shouldFocus:(BOOL)shouldFocus;
 
-// The infobar state (typically height) has changed.
-- (void)infoBarContainerStateChanged:(bool)is_animating;
 // Adds a CardView on top of the contentArea either taking the size of the full
 // screen or just the size of the space under the header.
 // Returns the CardView that was added.
@@ -900,46 +901,63 @@ bubblePresenterForFeature:(const base::Feature&)feature
 - (void)addToReadingListURL:(const GURL&)URL title:(NSString*)title;
 @end
 
-class InfoBarContainerDelegateIOS
-    : public infobars::InfoBarContainer::Delegate {
- public:
-  explicit InfoBarContainerDelegateIOS(BrowserViewController* controller)
-      : controller_(controller) {}
+// Called from the BrowserBookmarkModelBridge from C++ -> ObjC.
+@interface BrowserViewController (BookmarkBridgeMethods)
+// If a bookmark matching the currentTab url is added or moved, update the
+// toolbar state so the star highlight is in sync.
+- (void)bookmarkNodeModified:(const BookmarkNode*)node;
+- (void)allBookmarksRemoved;
+@end
 
-  ~InfoBarContainerDelegateIOS() override {}
+// Handle notification that bookmarks has been removed changed so we can update
+// the bookmarked star icon.
+class BrowserBookmarkModelBridge : public bookmarks::BookmarkModelObserver {
+ public:
+  explicit BrowserBookmarkModelBridge(BrowserViewController* owner)
+      : owner_(owner) {}
+
+  ~BrowserBookmarkModelBridge() override {}
+
+  void BookmarkNodeRemoved(bookmarks::BookmarkModel* model,
+                           const BookmarkNode* parent,
+                           int old_index,
+                           const BookmarkNode* node,
+                           const std::set<GURL>& removed_urls) override {
+    [owner_ bookmarkNodeModified:node];
+  }
+
+  void BookmarkModelLoaded(bookmarks::BookmarkModel* model,
+                           bool ids_reassigned) override {}
+
+  void BookmarkNodeMoved(bookmarks::BookmarkModel* model,
+                         const BookmarkNode* old_parent,
+                         int old_index,
+                         const BookmarkNode* new_parent,
+                         int new_index) override {}
+
+  void BookmarkNodeAdded(bookmarks::BookmarkModel* model,
+                         const BookmarkNode* parent,
+                         int index) override {
+    [owner_ bookmarkNodeModified:parent->GetChild(index)];
+  }
+
+  void BookmarkNodeChanged(bookmarks::BookmarkModel* model,
+                           const BookmarkNode* node) override {}
+
+  void BookmarkNodeFaviconChanged(bookmarks::BookmarkModel* model,
+                                  const BookmarkNode* node) override {}
+
+  void BookmarkNodeChildrenReordered(bookmarks::BookmarkModel* model,
+                                     const BookmarkNode* node) override {}
+
+  void BookmarkAllUserNodesRemoved(
+      bookmarks::BookmarkModel* model,
+      const std::set<GURL>& removed_urls) override {
+    [owner_ allBookmarksRemoved];
+  }
 
  private:
-  SkColor GetInfoBarSeparatorColor() const override {
-    NOTIMPLEMENTED();
-    return SK_ColorBLACK;
-  }
-
-  int ArrowTargetHeightForInfoBar(
-      size_t index,
-      const gfx::SlideAnimation& animation) const override {
-    return 0;
-  }
-
-  void ComputeInfoBarElementSizes(const gfx::SlideAnimation& animation,
-                                  int arrow_target_height,
-                                  int bar_target_height,
-                                  int* arrow_height,
-                                  int* arrow_half_width,
-                                  int* bar_height) const override {
-    DCHECK_NE(-1, bar_target_height)
-        << "Infobars don't have a default height on iOS";
-    *arrow_height = 0;
-    *arrow_half_width = 0;
-    *bar_height = animation.CurrentValueBetween(0, bar_target_height);
-  }
-
-  void InfoBarContainerStateChanged(bool is_animating) override {
-    [controller_ infoBarContainerStateChanged:is_animating];
-  }
-
-  bool DrawInfoBarArrows(int* x) const override { return false; }
-
-  __weak BrowserViewController* controller_;
+  __weak BrowserViewController* owner_;
 };
 
 @implementation BrowserViewController
@@ -1368,7 +1386,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   // This reinitializes the toolbar, including updating the Overlay View,
   // if there is one.
   [self updateToolbar];
-  [self infoBarContainerStateChanged:false];
+  [self infoBarContainerStateDidChangeAnimated:NO];
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -3337,11 +3355,16 @@ bubblePresenterForFeature:(const base::Feature&)feature
       [self.dispatcher closeCurrentTab];
       break;
     case OverscrollAction::REFRESH:
-      [self reload];
-      break;
-    case OverscrollAction::NONE:
-      NOTREACHED();
-      break;
+      web::WebState* webState = [_model currentTab].webState;
+      if (webState) {
+        if (webState->IsLoading()) {
+          webState->Stop();
+        }
+        [self reload];
+        break;
+        case OverscrollAction::NONE:
+          NOTREACHED();
+          break;
   }
 }
 
@@ -4949,10 +4972,9 @@ bubblePresenterForFeature:(const base::Feature&)feature
   }
 }
 
+#pragma mark - InfobarContainerStateDelegate
 
-#pragma mark - InfoBarControllerDelegate
-
-- (void)infoBarContainerStateChanged:(bool)isAnimating {
+-(void)infoBarContainerStateDidChangeAnimated : (BOOL)animated {
   InfoBarContainerView* infoBarContainerView = _infoBarContainer->view();
   DCHECK(infoBarContainerView);
   CGRect containerFrame = infoBarContainerView.frame;
@@ -4971,6 +4993,8 @@ bubblePresenterForFeature:(const base::Feature&)feature
             UIAccessibilityLayoutChangedNotification, infoBarContainerView);
       }];
 }
+
+#pragma mark - InfoBarControllerDelegate
 
 - (BOOL)shouldAutorotate {
   if (_voiceSearchController && _voiceSearchController->IsVisible()) {
