@@ -49,17 +49,15 @@ TestingPlatformSupportWithMockScheduler::
               nullptr,
               mock_task_runner_,
               clock_.get()))),
-      thread_(scheduler_->CreateMainThread()) {
+      thread_(scheduler_->CreateMainThread()),
+      time_functions_override_(WTF::Bind(&GetTestTime)) {
   DCHECK(IsMainThread());
   // Set the work batch size to one so RunPendingTasks behaves as expected.
   scheduler_->GetSchedulerHelperForTesting()->SetWorkBatchSizeForTesting(1);
-
-  WTF::SetTimeFunctionsForTesting(GetTestTime);
 }
 
 TestingPlatformSupportWithMockScheduler::
     ~TestingPlatformSupportWithMockScheduler() {
-  WTF::SetTimeFunctionsForTesting(nullptr);
   scheduler_->Shutdown();
 }
 

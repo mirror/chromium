@@ -5240,19 +5240,17 @@ TEST_P(ParameterizedWebFrameTest, FindInPageJavaScriptUpdatesDOM) {
 }
 
 struct FakeTimerSetter {
-  FakeTimerSetter() {
+  FakeTimerSetter() : time_functions_override_(WTF::Bind(&ReturnMockTime)) {
     time_elapsed_ = 0.0;
-    original_time_function_ = SetTimeFunctionsForTesting(ReturnMockTime);
   }
 
-  ~FakeTimerSetter() { SetTimeFunctionsForTesting(original_time_function_); }
   static double ReturnMockTime() {
     time_elapsed_ += 1.0;
     return time_elapsed_;
   }
 
  private:
-  TimeFunction original_time_function_;
+  ScopedTimeFunctionsOverrideForTesting time_functions_override_;
   static double time_elapsed_;
 };
 double FakeTimerSetter::time_elapsed_ = 0.;

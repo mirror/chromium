@@ -3759,7 +3759,12 @@ TEST_F(RendererSchedulerImplTest, UnthrottledTaskRunner) {
 }
 
 TEST_F(RendererSchedulerImplTest, EnableVirtualTime) {
-  scheduler_->EnableVirtualTime();
+  base::TimeTicks virtual_time_base = scheduler_->EnableVirtualTime();
+
+  EXPECT_NE(nullptr, WTF::GetMonotonicallyIncreasingTimeCallbackForTesting());
+  EXPECT_EQ(virtual_time_base.ToInternalValue() /
+                static_cast<double>(base::Time::kMicrosecondsPerSecond),
+            MonotonicallyIncreasingTime());
 
   scoped_refptr<MainThreadTaskQueue> loading_tq =
       scheduler_->NewLoadingTaskQueue(
@@ -3850,6 +3855,7 @@ TEST_F(RendererSchedulerImplTest, DisableVirtualTimeForTesting) {
           MainThreadTaskQueue::QueueType::kUnthrottled));
 
   scheduler_->DisableVirtualTimeForTesting();
+  EXPECT_EQ(nullptr, WTF::GetMonotonicallyIncreasingTimeCallbackForTesting());
   EXPECT_EQ(scheduler_->DefaultTaskQueue()->GetTimeDomain(),
             scheduler_->real_time_domain());
   EXPECT_EQ(scheduler_->CompositorTaskQueue()->GetTimeDomain(),

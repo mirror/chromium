@@ -26,20 +26,17 @@ const char kEndMarkForMeasureHistogram[] =
 
 class FakeTimer {
  public:
-  FakeTimer(double init_time) {
+  FakeTimer(double init_time)
+      : time_functions_override_(WTF::Bind(&GetMockTimeInSeconds)) {
     g_mock_time = init_time;
-    original_time_function_ =
-        WTF::SetTimeFunctionsForTesting(GetMockTimeInSeconds);
   }
-
-  ~FakeTimer() { WTF::SetTimeFunctionsForTesting(original_time_function_); }
 
   static double GetMockTimeInSeconds() { return g_mock_time; }
 
   void AdvanceTimer(double duration) { g_mock_time += duration; }
 
  private:
-  TimeFunction original_time_function_;
+  ScopedTimeFunctionsOverrideForTesting time_functions_override_;
   static double g_mock_time;
 };
 

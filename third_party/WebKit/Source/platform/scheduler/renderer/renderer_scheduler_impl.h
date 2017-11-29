@@ -565,6 +565,10 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   // TaskQueueThrottler.
   void VirtualTimeResumed();
 
+  // Returns the current virtual time offset in seconds. Used to override
+  // WTF::MonotonicallyIncreasingTime().
+  double GetCurrentVirtualTimeSeconds();
+
   MainThreadSchedulerHelper helper_;
   IdleHelper idle_helper_;
   IdleCanceledDelayedTaskSweeper idle_canceled_delayed_task_sweeper_;
@@ -665,6 +669,10 @@ class PLATFORM_EXPORT RendererSchedulerImpl
 
     base::ObserverList<VirtualTimeObserver> virtual_time_observers;
     base::TimeTicks initial_virtual_time;
+    // It is not usually allowed to override WTF time functions outside of
+    // testing. Virtual time is an exception for which this is necessary.
+    std::unique_ptr<ScopedTimeFunctionsOverrideForTesting>
+        time_functions_override;
     VirtualTimePolicy virtual_time_policy;
 
     // In VirtualTimePolicy::kDeterministicLoading virtual time is only allowed

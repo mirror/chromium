@@ -74,15 +74,16 @@ class MockIdleDeadlinePlatform : public TestingPlatformSupport {
 class IdleDeadlineTest : public ::testing::Test {
  public:
   void SetUp() override {
-    original_time_function_ = SetTimeFunctionsForTesting([] { return 1.0; });
+    time_functions_override_ =
+        std::make_unique<ScopedTimeFunctionsOverrideForTesting>(
+            WTF::Bind([] { return 1.0; }));
   }
 
-  void TearDown() override {
-    SetTimeFunctionsForTesting(original_time_function_);
-  }
+  void TearDown() override { time_functions_override_.reset(); }
 
  private:
-  TimeFunction original_time_function_;
+  std::unique_ptr<ScopedTimeFunctionsOverrideForTesting>
+      time_functions_override_;
 };
 
 TEST_F(IdleDeadlineTest, deadlineInFuture) {

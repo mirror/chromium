@@ -1505,6 +1505,14 @@ base::TimeTicks RendererSchedulerImpl::EnableVirtualTime() {
   RegisterTimeDomain(virtual_time_domain_.get());
   virtual_time_domain_->SetObserver(this);
 
+  // Override WTF::MonotonicallyIncreasingTime() to return the current virtual
+  // time. This allows e.g. aligning image animations with virtual time.
+  main_thread_only().time_functions_override =
+      std::make_unique<ScopedTimeFunctionsOverrideForTesting>(
+          TimeCallback(),
+          WTF::Bind(&RendererSchedulerImpl::GetCurrentVirtualTimeSeconds,
+                    base::Unretained(this)));
+
   DCHECK(!virtual_time_control_task_queue_);
   virtual_time_control_task_queue_ =
       helper_.NewTaskQueue(MainThreadTaskQueue::QueueCreationParams(
@@ -1529,6 +1537,7 @@ void RendererSchedulerImpl::DisableVirtualTimeForTesting() {
     return;
   // Reset virtual time and all tasks queues back to their initial state.
   main_thread_only().use_virtual_time = false;
+  main_thread_only().time_functions_override.reset();
 
   if (main_thread_only().virtual_time_stopped) {
     main_thread_only().virtual_time_stopped = false;
@@ -2313,6 +2322,13 @@ void RendererSchedulerImpl::OnTraceLogEnabled() {
 }
 
 void RendererSchedulerImpl::OnTraceLogDisabled() {}
+
+double RendererSchedulerImpl::GetCurrentVirtualTimeSeconds() {
+  base::TimeTicks now = virtual_time_domain_ ? virtual_time_domain_->Now()
+                                             : base::TimeTicks::Now();
+  return now.ToInternalValue() /
+         static_cast<double>(base::Time::kMicrosecondsPerSecond);
+}
 
 // static
 const char* RendererSchedulerImpl::UseCaseToString(UseCase use_case) {

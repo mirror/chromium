@@ -352,7 +352,9 @@ class BitmapImageTestWithMockDecoder : public BitmapImageTest,
                                        public MockImageDecoderClient {
  public:
   void SetUp() override {
-    original_time_function_ = SetTimeFunctionsForTesting([] { return now_; });
+    time_functions_override_ =
+        std::make_unique<ScopedTimeFunctionsOverrideForTesting>(
+            WTF::Bind([] { return now_; }));
 
     BitmapImageTest::SetUp();
     auto decoder = MockImageDecoder::Create(this);
@@ -361,9 +363,7 @@ class BitmapImageTestWithMockDecoder : public BitmapImageTest,
         DeferredImageDecoder::CreateForTesting(std::move(decoder)));
   }
 
-  void TearDown() override {
-    SetTimeFunctionsForTesting(original_time_function_);
-  }
+  void TearDown() override { time_functions_override_.reset(); }
 
   void DecoderBeingDestroyed() override {}
   void DecodeRequested() override {}
@@ -383,7 +383,8 @@ class BitmapImageTestWithMockDecoder : public BitmapImageTest,
   bool last_frame_complete_;
 
   static double now_;
-  TimeFunction original_time_function_;
+  std::unique_ptr<ScopedTimeFunctionsOverrideForTesting>
+      time_functions_override_;
 };
 
 double BitmapImageTestWithMockDecoder::now_ = 0;
