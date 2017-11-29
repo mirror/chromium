@@ -27,7 +27,7 @@ struct Capabilities {
         watchable(watchable),
         multiple_mounts(multiple_mounts),
         source(source) {}
-  Capabilities() {}
+
   bool configurable;
   bool watchable;
   bool multiple_mounts;
@@ -44,9 +44,8 @@ class ProviderInterface {
       const ProvidedFileSystemInfo& file_system_info) = 0;
 
   // Returns the capabilites of file system with |provider_id|.
-  virtual bool GetCapabilities(Profile* profile,
-                               const ProviderId& provider_id,
-                               Capabilities& result) = 0;
+  virtual Capabilities GetCapabilities(Profile* profile,
+                                       const ProviderId& provider_id) = 0;
 };
 
 }  // namespace file_system_provider

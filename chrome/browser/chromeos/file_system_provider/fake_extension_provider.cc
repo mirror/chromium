@@ -26,7 +26,7 @@ FakeExtensionProvider::CreateProvidedFileSystem(
     Profile* profile,
     const ProvidedFileSystemInfo& file_system_info) {
   DCHECK(profile);
-  return std::make_unique<FakeProvidedFileSystem>(file_system_info);
+  return base::MakeUnique<FakeProvidedFileSystem>(file_system_info);
 }
 
 FakeExtensionProvider::FakeExtensionProvider() {}

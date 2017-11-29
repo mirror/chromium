@@ -17,7 +17,7 @@ file_system_provider::ProviderId kSmbProviderId =
 
 SmbService::SmbService(Profile* profile) : profile_(profile) {
   GetProviderService()->RegisterNativeProvider(
-      kSmbProviderId, std::make_unique<SmbService>(profile));
+      kSmbProviderId, base::MakeUnique<SmbService>(profile));
 }
 
 SmbService::~SmbService() {}
@@ -36,14 +36,12 @@ SmbService::CreateProvidedFileSystem(
     Profile* profile,
     const ProvidedFileSystemInfo& file_system_info) {
   DCHECK(profile);
-  return std::make_unique<SmbFileSystem>(file_system_info);
+  return base::MakeUnique<SmbFileSystem>(file_system_info);
 }
 
-bool SmbService::GetCapabilities(Profile* profile,
-                                 const ProviderId& provider_id,
-                                 Capabilities& result) {
-  result = Capabilities(false, false, false, extensions::SOURCE_NETWORK);
-  return true;
+Capabilities SmbService::GetCapabilities(Profile* profile,
+                                         const ProviderId& provider_id) {
+  return Capabilities(false, false, false, extensions::SOURCE_NETWORK);
 }
 
 }  // namespace smb_client

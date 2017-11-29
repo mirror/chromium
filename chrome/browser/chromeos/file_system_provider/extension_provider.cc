@@ -59,21 +59,19 @@ ExtensionProvider::CreateProvidedFileSystem(
       std::make_unique<ProvidedFileSystem>(profile, file_system_info));
 }
 
-bool ExtensionProvider::GetCapabilities(Profile* profile,
-                                        const ProviderId& provider_id,
-                                        Capabilities& result) {
+Capabilities ExtensionProvider::GetCapabilities(Profile* profile,
+                                                const ProviderId& provider_id) {
   ProvidingExtensionInfo providing_extension_info;
 
   // TODO(baileyberro): Change this so error is not swallowed once
   // bug is resolved (crrev.com/c/767629).
-  bool success = GetProvidingExtensionInfo(provider_id.GetExtensionId(),
-                                           &providing_extension_info, profile);
+  GetProvidingExtensionInfo(provider_id.GetExtensionId(),
+                            &providing_extension_info, profile);
 
-  result = Capabilities(providing_extension_info.capabilities.configurable(),
-                        providing_extension_info.capabilities.watchable(),
-                        providing_extension_info.capabilities.multiple_mounts(),
-                        providing_extension_info.capabilities.source());
-  return success;
+  return Capabilities(providing_extension_info.capabilities.configurable(),
+                      providing_extension_info.capabilities.watchable(),
+                      providing_extension_info.capabilities.multiple_mounts(),
+                      providing_extension_info.capabilities.source());
 }
 
 ExtensionProvider::ExtensionProvider() {}

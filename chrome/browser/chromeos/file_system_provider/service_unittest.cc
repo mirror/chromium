@@ -35,8 +35,11 @@
 #include "extensions/browser/extension_registry.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/manifest_constants.h"
+#include "extensions/common/permissions/api_permission.h"
 #include "storage/browser/fileapi/external_mount_points.h"
 #include "testing/gtest/include/gtest/gtest.h"
+
+#include "extensions/common/permissions/permissions_data.h"
 
 namespace chromeos {
 namespace file_system_provider {
@@ -54,18 +57,47 @@ const ProviderId kCustomProviderId =
 const char kFileSystemId[] = "camera/pictures/id .!@#$%^&*()_+";
 
 // Creates a fake extension with the specified |extension_id|.
+// scoped_refptr<extensions::Extension> CreateFakeExtension(
+//     const std::string& extension_id) {
+//   base::DictionaryValue manifest;
+//   std::string error;
+//   manifest.SetKey(extensions::manifest_keys::kVersion,
+//   base::Value("1.0.0.0")); manifest.SetKey(extensions::manifest_keys::kName,
+//   base::Value("unused")); return
+//   extensions::Extension::Create(base::FilePath(),
+//                                        extensions::Manifest::UNPACKED,
+//                                        manifest,
+//                                        extensions::Extension::NO_FLAGS,
+//                                        extension_id,
+//                                        &error);
+// }
+
 scoped_refptr<extensions::Extension> CreateFakeExtension(
-    const std::string& extension_id) {
+    const std::string& extension_id,
+    bool should_have_api_permission) {
   base::DictionaryValue manifest;
   std::string error;
   manifest.SetKey(extensions::manifest_keys::kVersion, base::Value("1.0.0.0"));
   manifest.SetKey(extensions::manifest_keys::kName, base::Value("unused"));
-  return extensions::Extension::Create(base::FilePath(),
-                                       extensions::Manifest::UNPACKED,
-                                       manifest,
-                                       extensions::Extension::NO_FLAGS,
-                                       extension_id,
-                                       &error);
+
+  if (should_have_api_permission) {
+    auto permissions = base::MakeUnique<base::ListValue>();
+    permissions->AppendString("fileSystemProvider");
+    manifest.Set(extensions::manifest_keys::kPermissions,
+                 std::move(permissions));
+
+    auto capabilities = base::MakeUnique<base::DictionaryValue>();
+    capabilities->SetString("source", "network");
+    manifest.Set(extensions::manifest_keys::kFileSystemProviderCapabilities,
+                 std::move(capabilities));
+  }
+
+  auto ext = extensions::Extension::Create(
+      base::FilePath(), extensions::Manifest::UNPACKED, manifest,
+      extensions::Extension::NO_FLAGS, extension_id, &error);
+
+  LOG(ERROR) << error;
+  return ext;
 }
 
 }  // namespace
@@ -76,7 +108,7 @@ class FakeDefaultExtensionProvider : public FakeExtensionProvider {
       Profile* profile,
       const ProvidedFileSystemInfo& file_system_info) override {
     called_default_factory = true;
-    return std::make_unique<FakeProvidedFileSystem>(file_system_info);
+    return base::MakeUnique<FakeProvidedFileSystem>(file_system_info);
   }
 
   static bool called_default_factory;
@@ -90,13 +122,11 @@ class FakeNativeProvider : public ProviderInterface {
       Profile* profile,
       const ProvidedFileSystemInfo& file_system_info) override {
     called_custom_factory = true;
-    return std::make_unique<FakeProvidedFileSystem>(file_system_info);
+    return base::MakeUnique<FakeProvidedFileSystem>(file_system_info);
   }
-  bool GetCapabilities(Profile* profile,
-                       const ProviderId& provider_id,
-                       Capabilities& result) override {
-    result = Capabilities(false, false, false, extensions::SOURCE_NETWORK);
-    return true;
+  Capabilities GetCapabilities(Profile* profile,
+                               const ProviderId& provider_id) override {
+    return Capabilities(false, false, false, extensions::SOURCE_NETWORK);
   }
   static bool called_custom_factory;
 };
@@ -118,14 +148,22 @@ class FileSystemProviderServiceTest : public testing::Test {
         AccountId::FromUserEmail(profile_->GetProfileUserName()));
     user_manager_enabler_ = std::make_unique<user_manager::ScopedUserManager>(
         base::WrapUnique(user_manager_));
-    extension_registry_.reset(new extensions::ExtensionRegistry(profile_));
 
-    service_.reset(new Service(profile_, extension_registry_.get()));
+    extensions::ExtensionRegistry* extension_registry =
+        extensions::ExtensionRegistry::Get(profile_);
 
+    extension_ = CreateFakeExtension(kProviderId.GetExtensionId(), true);
+
+    // Checks that the extension was created and has the correct api Permission
+    ASSERT_TRUE(extension_);
+    ASSERT_TRUE(extension_->permissions_data()->HasAPIPermission(
+        extensions::APIPermission::kFileSystemProvider));
+
+    extension_registry->AddEnabled(extension_);
+
+    service_.reset(new Service(profile_, extension_registry));
     service_->SetExtensionProviderForTesting(
-        std::make_unique<FakeExtensionProvider>());
-
-    extension_ = CreateFakeExtension(kProviderId.GetExtensionId());
+        base::MakeUnique<FakeExtensionProvider>());
 
     registry_ = new FakeRegistry;
     // Passes ownership to the service instance.
@@ -145,7 +183,6 @@ class FileSystemProviderServiceTest : public testing::Test {
   TestingProfile* profile_;
   FakeChromeUserManager* user_manager_;
   std::unique_ptr<user_manager::ScopedUserManager> user_manager_enabler_;
-  std::unique_ptr<extensions::ExtensionRegistry> extension_registry_;
   std::unique_ptr<Service> service_;
   scoped_refptr<extensions::Extension> extension_;
   FakeRegistry* registry_;  // Owned by Service.
@@ -156,9 +193,9 @@ class FileSystemProviderServiceTest : public testing::Test {
 
 TEST_F(FileSystemProviderServiceTest, RegisterFileSystemProvider) {
   service_->RegisterNativeProvider(kCustomProviderId,
-                                   std::make_unique<FakeNativeProvider>());
+                                   base::MakeUnique<FakeNativeProvider>());
   service_->SetExtensionProviderForTesting(
-      std::make_unique<FakeDefaultExtensionProvider>());
+      base::MakeUnique<FakeDefaultExtensionProvider>());
 
   FakeNativeProvider::called_custom_factory = false;
   FakeDefaultExtensionProvider::called_default_factory = false;

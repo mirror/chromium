@@ -48,7 +48,7 @@ class SmbServiceTest : public testing::Test {
     fsp_service_ = std::make_unique<file_system_provider::Service>(
         profile_, extension_registry_.get());
     fsp_service_->SetExtensionProviderForTesting(
-        std::make_unique<file_system_provider::FakeExtensionProvider>());
+        base::MakeUnique<file_system_provider::FakeExtensionProvider>());
 
     fsp_service_->SetRegistryForTesting(
         std::make_unique<file_system_provider::FakeRegistry>());

@@ -126,8 +126,14 @@ base::File::Error Service::MountFileSystemInternal(
   ProvidingExtensionInfo provider_info;
   // TODO(mtomasz): Set up a testing extension in unit tests.
   ProviderInterface* provider = GetProvider(provider_id);
-  Capabilities capabilities;
-  provider->GetCapabilities(profile_, provider_id, capabilities);
+  Capabilities capabilities = provider->GetCapabilities(profile_, provider_id);
+
+  //   // TODO(baileyberro): Change to Providers with GetCapabilites &
+  //   // CreateFileSystem;
+  //   if (!GetProvidingExtensionInfo(provider_id.GetIdUnsafe(),
+  //   &provider_info))
+  //     return base::File::FILE_ERROR_FAILED;
+
   // Store the file system descriptor. Use the mount point name as the file
   // system provider file system id.
   // Examples:
@@ -342,12 +348,16 @@ bool Service::GetProvidingExtensionInfo(const std::string& extension_id,
     return false;
   }
 
+  // Before, these lines were not touched by any tests:
+
   result->extension_id = extension->id();
   result->name = extension->name();
   const extensions::FileSystemProviderCapabilities* const capabilities =
       extensions::FileSystemProviderCapabilities::Get(extension);
   DCHECK(capabilities);
   result->capabilities = *capabilities;
+
+  LOG(ERROR) << "This code is hit now";
 
   return true;
 }
@@ -409,6 +419,14 @@ ProvidedFileSystemInterface* Service::GetProvidedFileSystem(
     const std::string& mount_point_name) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
+  //
+  LOG(ERROR) << "Printing out the map";
+  for (auto it = mount_point_name_to_key_map_.begin();
+       it != mount_point_name_to_key_map_.end(); it++) {
+    LOG(ERROR) << it->first;
+  }
+  LOG(ERROR) << "Done printing out the map";
+  //
   const auto mapping_it = mount_point_name_to_key_map_.find(mount_point_name);
   if (mapping_it == mount_point_name_to_key_map_.end())
     return NULL;

@@ -27,9 +27,8 @@ class ExtensionProvider : public ProviderInterface {
   std::unique_ptr<ProvidedFileSystemInterface> CreateProvidedFileSystem(
       Profile* profile,
       const ProvidedFileSystemInfo& file_system_info) override;
-  bool GetCapabilities(Profile* profile,
-                       const ProviderId& provider_id,
-                       Capabilities& result) override;
+  Capabilities GetCapabilities(Profile* profile,
+                               const ProviderId& provider_id) override;
 };
 
 }  // namespace file_system_provider
