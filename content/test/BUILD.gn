@@ -429,6 +429,8 @@ static_library("test_support") {
     sources += [
       "../browser/compositor/test/no_transport_image_transport_factory.cc",
       "../browser/compositor/test/no_transport_image_transport_factory.h",
+      "../browser/renderer_host/mock_render_widget_host_delegate.cc",
+      "../browser/renderer_host/mock_render_widget_host_delegate.h",
     ]
   }
 
