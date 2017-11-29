@@ -118,6 +118,30 @@
       "revId": "a5fa3ee8b4421717d29694e3dd77cdd7ea8c5200",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e3b02bf_4c9ebe2c",
+        "filename": "content/common/media/media_devices.typemap",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-11-29T13:28:33Z",
+      "side": 0,
+      "message": "I think it\u0027s possible.\n//third_party/WebKit/public/platform/modules/permissions/permission.mojom seems to be a good example in this regard where the service(PermissionService) is getting accessed from both //content/renderer/media and //third_party/WebKit/Source/modules.",
+      "parentUuid": "253c2631_8d98a23e",
+      "range": {
+        "startLine": 10,
+        "startChar": 1,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "a5fa3ee8b4421717d29694e3dd77cdd7ea8c5200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
