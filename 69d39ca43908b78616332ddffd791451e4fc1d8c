@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "46299e3b_e0841807",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-11-29T17:39:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c13f1345_f721eda3",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 7
+      },
+      "revId": "69d39ca43908b78616332ddffd791451e4fc1d8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29c9dd45_1e09d510",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "69d39ca43908b78616332ddffd791451e4fc1d8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6266da4_1e31333b",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-11-29T17:39:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29c9dd45_1e09d510",
+      "range": {
+        "startLine": 851,
+        "startChar": 25,
+        "endLine": 851,
+        "endChar": 26
+      },
+      "revId": "69d39ca43908b78616332ddffd791451e4fc1d8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
