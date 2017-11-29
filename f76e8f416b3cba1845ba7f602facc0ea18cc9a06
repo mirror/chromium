@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "60e0a16a_91ce317d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-11-29T19:45:41Z",
+      "side": 1,
+      "message": "This sounds reasonable to me, thanks, updated!",
+      "parentUuid": "1c79dabe_73f2dc2f",
+      "range": {
+        "startLine": 586,
+        "startChar": 0,
+        "endLine": 586,
+        "endChar": 49
+      },
+      "revId": "f76e8f416b3cba1845ba7f602facc0ea18cc9a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e07acbda_6ddf1998",
         "filename": "chrome/android/java/strings/android_chrome_strings.grd",
         "patchSetId": 12
