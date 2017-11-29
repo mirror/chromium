@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "47ba50b3_10a0f7b2",
+        "filename": "net/http/http_cache_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3484,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-11-29T21:30:20Z",
+      "side": 1,
+      "message": "Rather so that it can\u0027t share reading with transaction 2. Should I just say that, or can that not happen? This may comment be in part due to me misunderstanding problems with a much earlier version of the test.",
+      "parentUuid": "a1c7bade_fb8c36bd",
+      "revId": "565e15708b51e379dffc3778b5905fe765d7d705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "627c527b_8d1eddac",
         "filename": "net/http/http_cache_unittest.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-29T21:13:46Z",
       "side": 1,
       "message": "Why does this read from a doomed entry?",
+      "revId": "565e15708b51e379dffc3778b5905fe765d7d705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b08550a3_4fcd798d",
+        "filename": "net/http/http_cache_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3494,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-11-29T21:30:20Z",
+      "side": 1,
+      "message": "I don\u0027t understand the question.\n\nBefore this change it would read the memory index hints set by the doomed transaction, since the hints are set as backend methods, not entry methods, so the numbers below would be  3/0/3 instead of 2/1/2.",
+      "parentUuid": "627c527b_8d1eddac",
       "revId": "565e15708b51e379dffc3778b5905fe765d7d705",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
