@@ -40,6 +40,7 @@ namespace history {
 class HistoryService;
 }
 
+class AppEngagementRecorder;
 class GURL;
 class HostContentSettingsMap;
 class Profile;
@@ -257,9 +258,10 @@ class SiteEngagementService : public KeyedService,
   // Called when the engagement for |url| loaded in |web_contents| increases.
   // Calls OnEngagementIncreased in all observers. |web_contents| may be null if
   // the engagement has increased when |url| is not in a tab, e.g. from a
-  // notification interaction.
+  // notification interaction. Also records engagement-type metrics.
   void OnEngagementIncreased(content::WebContents* web_contents,
-                             const GURL& url);
+                             const GURL& url,
+                             SiteEngagementMetrics::EngagementType type);
 
   // Called if |url| changes to |level| engagement, and informs every Helper of
   // the change.
@@ -319,6 +321,9 @@ class SiteEngagementService : public KeyedService,
   // A list of observers. When any origin registers an engagement-increasing
   // event, each observer's OnEngagementIncreased method will be called.
   base::ObserverList<SiteEngagementObserver> observer_list_;
+
+  // TODO(mgiuca): Register & scope this someplace else. DO NOT SUBMIT.
+  std::unique_ptr<AppEngagementRecorder> app_engagement_recorder_;
 
   base::WeakPtrFactory<SiteEngagementService> weak_factory_;
 

@@ -50,9 +50,11 @@ class AppBannerManagerDesktop
                      const GURL& validated_url) override;
 
   // SiteEngagementObserver override.
-  void OnEngagementIncreased(content::WebContents* web_contents,
-                             const GURL& url,
-                             double score) override;
+  void OnEngagementIncreased(
+      content::WebContents* web_contents,
+      const GURL& url,
+      double score,
+      SiteEngagementMetrics::EngagementType type) override;
 
   std::unique_ptr<extensions::BookmarkAppHelper> bookmark_app_helper_;
 

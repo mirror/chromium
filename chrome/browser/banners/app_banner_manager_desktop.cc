@@ -109,11 +109,12 @@ void AppBannerManagerDesktop::DidFinishLoad(
 void AppBannerManagerDesktop::OnEngagementIncreased(
     content::WebContents* web_contents,
     const GURL& url,
-    double score) {
+    double score,
+    SiteEngagementMetrics::EngagementType type) {
   if (gDisableTriggeringForTesting)
     return;
 
-  AppBannerManager::OnEngagementIncreased(web_contents, url, score);
+  AppBannerManager::OnEngagementIncreased(web_contents, url, score, type);
 }
 
 }  // namespace banners

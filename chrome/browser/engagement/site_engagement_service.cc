@@ -19,6 +19,7 @@
 #include "base/values.h"
 #include "chrome/browser/banners/app_banner_settings_helper.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
+#include "chrome/browser/engagement/app_engagement_recorder.h"
 #include "chrome/browser/engagement/site_engagement_helper.h"
 #include "chrome/browser/engagement/site_engagement_metrics.h"
 #include "chrome/browser/engagement/site_engagement_score.h"
@@ -180,12 +181,12 @@ void SiteEngagementService::HandleNotificationInteraction(const GURL& url) {
   if (!ShouldRecordEngagement(url))
     return;
 
-  SiteEngagementMetrics::RecordEngagement(
-      SiteEngagementMetrics::ENGAGEMENT_NOTIFICATION_INTERACTION);
   AddPoints(url, SiteEngagementScore::GetNotificationInteractionPoints());
 
   RecordMetrics();
-  OnEngagementIncreased(nullptr /* web_contents */, url);
+  OnEngagementIncreased(
+      nullptr /* web_contents */, url,
+      SiteEngagementMetrics::ENGAGEMENT_NOTIFICATION_INTERACTION);
 }
 
 bool SiteEngagementService::IsBootstrapped() const {
@@ -243,6 +244,8 @@ void SiteEngagementService::SetLastShortcutLaunchTime(const GURL& url) {
     SiteEngagementMetrics::RecordDaysSinceLastShortcutLaunch(
         std::max(0, (now - last_launch).InDays()));
   }
+  // TODO(mgiuca): Shouldn't this call OnEngagementIncreased? Or is it not
+  // always increasing in this case?
   SiteEngagementMetrics::RecordEngagement(
       SiteEngagementMetrics::ENGAGEMENT_WEBAPP_SHORTCUT_LAUNCH);
 
@@ -329,6 +332,7 @@ void SiteEngagementService::AddPoints(const GURL& url, double points) {
 }
 
 void SiteEngagementService::AfterStartupTask() {
+  app_engagement_recorder_.reset(new AppEngagementRecorder(this));
   // Check if we need to reset last engagement times on startup - we want to
   // avoid doing this in AddPoints() if possible. It is still necessary to check
   // in AddPoints for people who never restart Chrome, but leave it open and
@@ -506,14 +510,14 @@ void SiteEngagementService::HandleMediaPlaying(
   if (!ShouldRecordEngagement(url))
     return;
 
-  SiteEngagementMetrics::RecordEngagement(
-      is_hidden ? SiteEngagementMetrics::ENGAGEMENT_MEDIA_HIDDEN
-                : SiteEngagementMetrics::ENGAGEMENT_MEDIA_VISIBLE);
   AddPoints(url, is_hidden ? SiteEngagementScore::GetHiddenMediaPoints()
                            : SiteEngagementScore::GetVisibleMediaPoints());
 
   RecordMetrics();
-  OnEngagementIncreased(web_contents, url);
+  OnEngagementIncreased(web_contents, url,
+                        is_hidden
+                            ? SiteEngagementMetrics::ENGAGEMENT_MEDIA_HIDDEN
+                            : SiteEngagementMetrics::ENGAGEMENT_MEDIA_VISIBLE);
 }
 
 void SiteEngagementService::HandleNavigation(content::WebContents* web_contents,
@@ -522,12 +526,11 @@ void SiteEngagementService::HandleNavigation(content::WebContents* web_contents,
   if (!IsEngagementNavigation(transition) || !ShouldRecordEngagement(url))
     return;
 
-  SiteEngagementMetrics::RecordEngagement(
-      SiteEngagementMetrics::ENGAGEMENT_NAVIGATION);
   AddPoints(url, SiteEngagementScore::GetNavigationPoints());
 
   RecordMetrics();
-  OnEngagementIncreased(web_contents, url);
+  OnEngagementIncreased(web_contents, url,
+                        SiteEngagementMetrics::ENGAGEMENT_NAVIGATION);
 }
 
 void SiteEngagementService::HandleUserInput(
@@ -537,19 +540,21 @@ void SiteEngagementService::HandleUserInput(
   if (!ShouldRecordEngagement(url))
     return;
 
-  SiteEngagementMetrics::RecordEngagement(type);
   AddPoints(url, SiteEngagementScore::GetUserInputPoints());
 
   RecordMetrics();
-  OnEngagementIncreased(web_contents, url);
+  OnEngagementIncreased(web_contents, url, type);
 }
 
 void SiteEngagementService::OnEngagementIncreased(
     content::WebContents* web_contents,
-    const GURL& url) {
+    const GURL& url,
+    SiteEngagementMetrics::EngagementType type) {
+  SiteEngagementMetrics::RecordEngagement(type);
+
   double score = GetScore(url);
   for (SiteEngagementObserver& observer : observer_list_)
-    observer.OnEngagementIncreased(web_contents, url, score);
+    observer.OnEngagementIncreased(web_contents, url, score, type);
 }
 
 void SiteEngagementService::SendLevelChangeToHelpers(

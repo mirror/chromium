@@ -460,9 +460,11 @@ void AppBannerManager::WebContentsDestroyed() {
   Terminate();
 }
 
-void AppBannerManager::OnEngagementIncreased(content::WebContents* contents,
-                                             const GURL& url,
-                                             double score) {
+void AppBannerManager::OnEngagementIncreased(
+    content::WebContents* contents,
+    const GURL& url,
+    double score,
+    SiteEngagementMetrics::EngagementType /*unused*/) {
   // Only trigger a banner using site engagement if:
   //  1. engagement increased for the web contents which we are attached to; and
   //  2. there are no currently active media players; and
