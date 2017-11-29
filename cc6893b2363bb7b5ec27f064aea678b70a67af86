@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "19e6c4ff_4e570f9b",
+        "filename": "components/arc/PRESUBMIT.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-29T03:33:24Z",
+      "side": 1,
+      "message": "One more note/Just clarification.\nThis presubmit is also applied to c/b/c/arc, too.\nSo, in later change, lint warns base::Bind( etc. in new code in c/b/c/arc, too.\nI think it is ok, but I also thought it\u0027s nice to double check with you. Maybe mentioning in commit message is nice to have?",
+      "revId": "cc6893b2363bb7b5ec27f064aea678b70a67af86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9119739d_137e71d9",
         "filename": "components/arc/PRESUBMIT.py",
         "patchSetId": 3
