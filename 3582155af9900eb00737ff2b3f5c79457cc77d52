@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8015a197_bd8fe064",
+        "filename": "chrome/browser/page_load_metrics/observers/ukm_page_load_metrics_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-11-29T01:15:09Z",
+      "side": 1,
+      "message": "Making a helper SGTM.",
+      "parentUuid": "8c200d4d_bdf460a5",
+      "revId": "3582155af9900eb00737ff2b3f5c79457cc77d52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0841dbea_434614ba",
         "filename": "chrome/browser/page_load_metrics/observers/ukm_page_load_metrics_observer.cc",
         "patchSetId": 3
@@ -81,6 +99,30 @@
       "revId": "3582155af9900eb00737ff2b3f5c79457cc77d52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d4aaba9_8e371ac3",
+        "filename": "chrome/browser/page_load_metrics/observers/ukm_page_load_metrics_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-11-29T01:15:09Z",
+      "side": 1,
+      "message": "Ah, yes, I guess std::log isn\u0027t constexpr.",
+      "parentUuid": "15479b76_56eefa45",
+      "range": {
+        "startLine": 204,
+        "startChar": 6,
+        "endLine": 207,
+        "endChar": 14
+      },
+      "revId": "3582155af9900eb00737ff2b3f5c79457cc77d52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
