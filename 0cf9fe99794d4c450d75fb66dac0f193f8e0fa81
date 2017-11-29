@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5de1a88_f55be80e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-29T20:56:35Z",
+      "side": 1,
+      "message": "Please set a crbug number.",
+      "revId": "0cf9fe99794d4c450d75fb66dac0f193f8e0fa81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a50e993_b7e066a2",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceClient.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-29T20:56:35Z",
+      "side": 1,
+      "message": "I prefer \"(successful) revalidation responses\" over \"304 responses\", because 304 response is not necessarily a response to revalidation.\n\nAlso, I\u0027d like to add more contexts, e.g.\nDo not rely on DataReceived() for correctness, except for RawResource, because it is not called on successful revalidation.\nFor RawResource, DataReceived is always called for each data chunk (because RawResource is never revalidated).",
+      "revId": "0cf9fe99794d4c450d75fb66dac0f193f8e0fa81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
