@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "859a6944_27a71f26",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-11-29T23:11:49Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be here, good thing we have tests for this.",
+      "range": {
+        "startLine": 67,
+        "startChar": 44,
+        "endLine": 67,
+        "endChar": 56
+      },
+      "revId": "cfc62b12d7a046ed071a502faccfc6ab01957ba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
