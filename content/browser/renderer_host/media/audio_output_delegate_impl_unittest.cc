@@ -120,7 +120,10 @@ class AudioOutputDelegateTest : public testing::Test {
 
     audio_manager_.reset(new media::FakeAudioManager(
         std::make_unique<media::AudioThreadImpl>(), &log_factory_));
+    audio_log_ = log_factory_.CreateAudioLog(
+        media::AudioLogFactory::AUDIO_OUTPUT_CONTROLLER);
   }
+
   ~AudioOutputDelegateTest() { audio_manager_->Shutdown(); }
 
   // Test bodies are here, so that we can run them on the IO thread.
@@ -136,9 +139,8 @@ class AudioOutputDelegateTest : public testing::Test {
       auto reader = AudioSyncReader::Create(Params(), socket.get());
       AudioOutputDelegateImpl delegate(
           std::move(reader), std::move(socket), &event_handler_,
-          audio_manager_.get(),
-          log_factory_.CreateAudioLog(
-              media::AudioLogFactory::AUDIO_OUTPUT_CONTROLLER),
+          audio_manager_.get(), audio_log_.get(),
+
           &mirroring_manager_, &media_observer_, kStreamId, kRenderFrameId,
           kRenderProcessId, Params(), kDefaultDeviceId);
 
@@ -162,9 +164,8 @@ class AudioOutputDelegateTest : public testing::Test {
       auto reader = AudioSyncReader::Create(Params(), socket.get());
       AudioOutputDelegateImpl delegate(
           std::move(reader), std::move(socket), &event_handler_,
-          audio_manager_.get(),
-          log_factory_.CreateAudioLog(
-              media::AudioLogFactory::AUDIO_OUTPUT_CONTROLLER),
+          audio_manager_.get(), audio_log_.get(),
+
           &mirroring_manager_, &media_observer_, kStreamId, kRenderFrameId,
           kRenderProcessId, Params(), kDefaultDeviceId);
 
@@ -190,9 +191,8 @@ class AudioOutputDelegateTest : public testing::Test {
       auto reader = AudioSyncReader::Create(Params(), socket.get());
       AudioOutputDelegateImpl delegate(
           std::move(reader), std::move(socket), &event_handler_,
-          audio_manager_.get(),
-          log_factory_.CreateAudioLog(
-              media::AudioLogFactory::AUDIO_OUTPUT_CONTROLLER),
+          audio_manager_.get(), audio_log_.get(),
+
           &mirroring_manager_, &media_observer_, kStreamId, kRenderFrameId,
           kRenderProcessId, Params(), kDefaultDeviceId);
 
@@ -218,9 +218,8 @@ class AudioOutputDelegateTest : public testing::Test {
       auto reader = AudioSyncReader::Create(Params(), socket.get());
       AudioOutputDelegateImpl delegate(
           std::move(reader), std::move(socket), &event_handler_,
-          audio_manager_.get(),
-          log_factory_.CreateAudioLog(
-              media::AudioLogFactory::AUDIO_OUTPUT_CONTROLLER),
+          audio_manager_.get(), audio_log_.get(),
+
           &mirroring_manager_, &media_observer_, kStreamId, kRenderFrameId,
           kRenderProcessId, Params(), kDefaultDeviceId);
 
@@ -248,9 +247,8 @@ class AudioOutputDelegateTest : public testing::Test {
       auto reader = AudioSyncReader::Create(Params(), socket.get());
       AudioOutputDelegateImpl delegate(
           std::move(reader), std::move(socket), &event_handler_,
-          audio_manager_.get(),
-          log_factory_.CreateAudioLog(
-              media::AudioLogFactory::AUDIO_OUTPUT_CONTROLLER),
+          audio_manager_.get(), audio_log_.get(),
+
           &mirroring_manager_, &media_observer_, kStreamId, kRenderFrameId,
           kRenderProcessId, Params(), kDefaultDeviceId);
 
@@ -278,9 +276,8 @@ class AudioOutputDelegateTest : public testing::Test {
       auto reader = AudioSyncReader::Create(Params(), socket.get());
       AudioOutputDelegateImpl delegate(
           std::move(reader), std::move(socket), &event_handler_,
-          audio_manager_.get(),
-          log_factory_.CreateAudioLog(
-              media::AudioLogFactory::AUDIO_OUTPUT_CONTROLLER),
+          audio_manager_.get(), audio_log_.get(),
+
           &mirroring_manager_, &media_observer_, kStreamId, kRenderFrameId,
           kRenderProcessId, Params(), kDefaultDeviceId);
 
@@ -307,9 +304,8 @@ class AudioOutputDelegateTest : public testing::Test {
       auto reader = AudioSyncReader::Create(Params(), socket.get());
       AudioOutputDelegateImpl delegate(
           std::move(reader), std::move(socket), &event_handler_,
-          audio_manager_.get(),
-          log_factory_.CreateAudioLog(
-              media::AudioLogFactory::AUDIO_OUTPUT_CONTROLLER),
+          audio_manager_.get(), audio_log_.get(),
+
           &mirroring_manager_, &media_observer_, kStreamId, kRenderFrameId,
           kRenderProcessId, Params(), kDefaultDeviceId);
 
@@ -339,9 +335,8 @@ class AudioOutputDelegateTest : public testing::Test {
       auto reader = AudioSyncReader::Create(Params(), socket.get());
       AudioOutputDelegateImpl delegate(
           std::move(reader), std::move(socket), &event_handler_,
-          audio_manager_.get(),
-          log_factory_.CreateAudioLog(
-              media::AudioLogFactory::AUDIO_OUTPUT_CONTROLLER),
+          audio_manager_.get(), audio_log_.get(),
+
           &mirroring_manager_, &media_observer_, kStreamId, kRenderFrameId,
           kRenderProcessId, Params(), kDefaultDeviceId);
 
@@ -376,11 +371,9 @@ class AudioOutputDelegateTest : public testing::Test {
     auto reader = AudioSyncReader::Create(Params(), socket.get());
     auto delegate = std::make_unique<AudioOutputDelegateImpl>(
         std::move(reader), std::move(socket), &event_handler_,
-        audio_manager_.get(),
-        log_factory_.CreateAudioLog(
-            media::AudioLogFactory::AUDIO_OUTPUT_CONTROLLER),
-        &mirroring_manager_, &media_observer_, kStreamId, kRenderFrameId,
-        kRenderProcessId, Params(), kDefaultDeviceId);
+        audio_manager_.get(), audio_log_.get(), &mirroring_manager_,
+        &media_observer_, kStreamId, kRenderFrameId, kRenderProcessId, Params(),
+        kDefaultDeviceId);
 
     delegate->OnPlayStream();
     delegate->GetControllerForTesting()->OnError();
@@ -406,9 +399,8 @@ class AudioOutputDelegateTest : public testing::Test {
       auto reader = AudioSyncReader::Create(Params(), socket.get());
       AudioOutputDelegateImpl delegate(
           std::move(reader), std::move(socket), &event_handler_,
-          audio_manager_.get(),
-          log_factory_.CreateAudioLog(
-              media::AudioLogFactory::AUDIO_OUTPUT_CONTROLLER),
+          audio_manager_.get(), audio_log_.get(),
+
           &mirroring_manager_, &media_observer_, kStreamId, kRenderFrameId,
           kRenderProcessId, Params(), kDefaultDeviceId);
     }
@@ -429,9 +421,8 @@ class AudioOutputDelegateTest : public testing::Test {
       auto reader = AudioSyncReader::Create(Params(), socket.get());
       AudioOutputDelegateImpl delegate(
           std::move(reader), std::move(socket), &event_handler_,
-          audio_manager_.get(),
-          log_factory_.CreateAudioLog(
-              media::AudioLogFactory::AUDIO_OUTPUT_CONTROLLER),
+          audio_manager_.get(), audio_log_.get(),
+
           &mirroring_manager_, &media_observer_, kStreamId, kRenderFrameId,
           kRenderProcessId, Params(), kDefaultDeviceId);
 
@@ -456,9 +447,8 @@ class AudioOutputDelegateTest : public testing::Test {
       auto reader = AudioSyncReader::Create(Params(), socket.get());
       AudioOutputDelegateImpl delegate(
           std::move(reader), std::move(socket), &event_handler_,
-          audio_manager_.get(),
-          log_factory_.CreateAudioLog(
-              media::AudioLogFactory::AUDIO_OUTPUT_CONTROLLER),
+          audio_manager_.get(), audio_log_.get(),
+
           &mirroring_manager_, &media_observer_, kStreamId, kRenderFrameId,
           kRenderProcessId, Params(), kDefaultDeviceId);
       SyncWithAllThreads();
@@ -476,6 +466,7 @@ class AudioOutputDelegateTest : public testing::Test {
   StrictMock<MockEventHandler> event_handler_;
   StrictMock<MockObserver> media_observer_;
   media::FakeAudioLogFactory log_factory_;
+  std::unique_ptr<media::AudioLog> audio_log_;
 
  private:
   void SyncWithAllThreads() {

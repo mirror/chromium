@@ -20,7 +20,6 @@
 #include "base/sync_socket.h"
 #include "build/build_config.h"
 #include "content/browser/media/capture/audio_mirroring_manager.h"
-#include "content/browser/media/media_internals.h"
 #include "content/browser/renderer_host/media/audio_sync_reader.h"
 #include "content/browser/renderer_host/media/media_stream_manager.h"
 #include "content/public/browser/browser_thread.h"
@@ -29,6 +28,7 @@
 #include "media/audio/audio_output_controller.h"
 #include "media/audio/audio_system_impl.h"
 #include "media/audio/fake_audio_input_stream.h"
+#include "media/audio/fake_audio_log_factory.h"
 #include "media/audio/mock_audio_manager.h"
 #include "media/audio/test_audio_thread.h"
 #include "media/base/bind_to_current_loop.h"
@@ -147,7 +147,9 @@ class AudioInputDelegateTest : public testing::Test {
       : thread_bundle_(base::in_place),
         audio_manager_(std::make_unique<media::TestAudioThread>()),
         audio_system_(&audio_manager_),
-        media_stream_manager_(&audio_system_, audio_manager_.GetTaskRunner()) {
+        media_stream_manager_(&audio_system_, audio_manager_.GetTaskRunner()),
+        audio_log_(media::FakeAudioLogFactory().CreateAudioLog(
+            media::AudioLogFactory::AUDIO_INPUT_CONTROLLER)) {
     audio_manager_.SetMakeInputStreamCB(
         base::BindRepeating(&ExpectNoInputStreamCreation));
     audio_manager_.SetMakeOutputStreamCB(
@@ -177,14 +179,12 @@ class AudioInputDelegateTest : public testing::Test {
       int session_id,
       bool enable_agc) {
     return AudioInputDelegateImpl::Create(
-        &event_handler_, &audio_manager_, AudioMirroringManager::GetInstance(),
+        &audio_manager_, AudioMirroringManager::GetInstance(),
         &user_input_monitor_,
-        media_stream_manager_.audio_input_device_manager(),
-        MediaInternals::GetInstance()->CreateAudioLog(
-            media::AudioLogFactory::AudioComponent::AUDIO_INPUT_CONTROLLER),
-        AudioInputDeviceManager::KeyboardMicRegistration(),
-        shared_memory_count, kStreamId, session_id, kRenderProcessId,
-        kRenderFrameId, enable_agc, ValidAudioParameters());
+        media_stream_manager_.audio_input_device_manager(), audio_log_.get(),
+        AudioInputDeviceManager::KeyboardMicRegistration(), shared_memory_count,
+        kStreamId, session_id, kRenderProcessId, kRenderFrameId, enable_agc,
+        ValidAudioParameters(), &event_handler_);
   }
 
   base::Optional<TestBrowserThreadBundle> thread_bundle_;
@@ -193,6 +193,7 @@ class AudioInputDelegateTest : public testing::Test {
   MediaStreamManager media_stream_manager_;
   NiceMock<MockUserInputMonitor> user_input_monitor_;
   StrictMock<MockEventHandler> event_handler_;
+  std::unique_ptr<media::AudioLog> audio_log_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(AudioInputDelegateTest);
