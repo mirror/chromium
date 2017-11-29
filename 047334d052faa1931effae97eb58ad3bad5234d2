@@ -699,6 +699,30 @@
     },
     {
       "key": {
+        "uuid": "bb12a803_b0de5d7d",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-29T04:16:14Z",
+      "side": 1,
+      "message": "We fully support Drive in offline mode, and Drive is mounted in offline on purpose. If CI worked in offline, we should not regress it, unless we have a clear approval from UX to restrict CI to online only.\n\nSo please confirm that nothing regresses in offline with this CL.",
+      "parentUuid": "a4f24707_7cac206c",
+      "range": {
+        "startLine": 389,
+        "startChar": 14,
+        "endLine": 389,
+        "endChar": 69
+      },
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59b50ba7_f2f00b7c",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
         "patchSetId": 5
