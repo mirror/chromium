@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a34d76b9_97c9f794",
+        "filename": "ash/system/bluetooth/tray_bluetooth_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-29T22:42:32Z",
+      "side": 1,
+      "message": "nit: I think this could still be a range-based \"for (Foo* device : devices) ...\"",
+      "revId": "2bfe721200ee4e540a6139165deb2e96997170ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c23881ef_33651850",
+        "filename": "ash/system/bluetooth/tray_bluetooth_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-29T22:42:32Z",
+      "side": 1,
+      "message": "nit: {} not needed",
+      "revId": "2bfe721200ee4e540a6139165deb2e96997170ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df53274c_8c8450be",
+        "filename": "ash/system/bluetooth/tray_bluetooth_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-29T22:42:32Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "2bfe721200ee4e540a6139165deb2e96997170ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5ba39cb_98ac4ca3",
+        "filename": "ash/system/bluetooth/tray_bluetooth_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-29T22:42:32Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "2bfe721200ee4e540a6139165deb2e96997170ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
