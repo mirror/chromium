@@ -920,7 +920,8 @@ public class VrShellDelegate
             if (DEBUG_LOGS) Log.i(TAG, "onNewIntentWithNative: autopresent");
             assert activitySupportsAutopresentation(activity);
             instance.mAutopresentWebVr = true;
-            if (!ChromeFeatureList.isEnabled(ChromeFeatureList.WEBVR_AUTOPRESENT_FROM_INTENT)) {
+            if (!ChromeFeatureList.isEnabled(ChromeFeatureList.WEBVR_AUTOPRESENT_FROM_INTENT)
+                    || instance.getVrSupportLevel() != VR_DAYDREAM) {
                 instance.onEnterVrUnsupported();
                 return;
             }
