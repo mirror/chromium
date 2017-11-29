@@ -16,13 +16,33 @@ class WebContents;
 // Must be used on the UI thread.
 class TabMetricsLogger {
  public:
+  // The state of the page loaded in a tab's main frame, starting since the last
+  // navigation.
+  struct PageMetrics {
+    // Number of key events.
+    int key_event_count = 0;
+    // Number of mouse events.
+    int mouse_event_count = 0;
+    // Number of touch events.
+    int touch_event_count = 0;
+  };
+
+  // The state of a tab.
+  struct TabMetrics {
+    content::WebContents* web_contents = nullptr;
+
+    // Per-page metrics of the state of the WebContents. Tracked since the
+    // tab's last top-level navigation.
+    PageMetrics page_metrics = {};
+  };
+
   TabMetricsLogger() = default;
   virtual ~TabMetricsLogger() = default;
 
   // Logs metrics for the tab with the given main frame WebContents. Does
   // nothing if |ukm_source_id| is zero.
   virtual void LogBackgroundTab(ukm::SourceId ukm_source_id,
-                                content::WebContents* web_contents) = 0;
+                                const TabMetrics& tab_metrics) = 0;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TabMetricsLogger);
