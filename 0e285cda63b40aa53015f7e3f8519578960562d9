@@ -88,6 +88,52 @@
       "revId": "0e285cda63b40aa53015f7e3f8519578960562d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c4286f1_c7c7d9cf",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/main_thread_task_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-11-29T12:30:41Z",
+      "side": 1,
+      "message": "What\u0027s throttling got to do with it?",
+      "range": {
+        "startLine": 131,
+        "startChar": 50,
+        "endLine": 131,
+        "endChar": 58
+      },
+      "revId": "0e285cda63b40aa53015f7e3f8519578960562d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd95d285_651b568f",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/task_queue_throttler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-11-29T12:30:41Z",
+      "side": 1,
+      "message": "Wait what\u0027s an active time domain? That\u0027s a misleading method since there can be real and virtual times domains at the same time.",
+      "range": {
+        "startLine": 90,
+        "startChar": 53,
+        "endLine": 90,
+        "endChar": 72
+      },
+      "revId": "0e285cda63b40aa53015f7e3f8519578960562d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
