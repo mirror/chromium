@@ -1,0 +1,293 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91b08aff_74b73bd6",
+        "filename": "cc/output/overlay_candidate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T19:25:59Z",
+      "side": 1,
+      "message": "nit: maybe this is just me but usually arguments that change more from call to call come later in the parameter list? ie put this after |resource_provider|?",
+      "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83cbd709_7450fd3d",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T19:25:59Z",
+      "side": 1,
+      "message": "When is output_surface_ null? What happens when the context is lost and a new output surface is set? Can we add tests for these cases?",
+      "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3637942_dbacdef8",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T19:25:59Z",
+      "side": 1,
+      "message": "When is this null?",
+      "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64c42ee9_d19911b0",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T19:25:59Z",
+      "side": 1,
+      "message": "What happens when the current_surface_id_ changes? Can we add a test for this case?",
+      "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8c6e783_1f351a3f",
+        "filename": "components/viz/service/display/display.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T19:25:59Z",
+      "side": 1,
+      "message": "Can you document on as many places as possible that this is only supported for Gpu compositing?",
+      "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f09220ba_c3f0d36a",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2998,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T19:25:59Z",
+      "side": 1,
+      "message": "When is current_frame null?",
+      "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c85db24a_fb939753",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3044,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T19:25:59Z",
+      "side": 1,
+      "message": "DCHECK?",
+      "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85e7d342_36e93070",
+        "filename": "components/viz/service/display/gl_renderer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2271,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T19:25:59Z",
+      "side": 1,
+      "message": "Can you leave comments through this test explaining what it is testing and why, for future readers? Tests are very dense",
+      "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dc682a7_34fb75e3",
+        "filename": "components/viz/service/display/gl_renderer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2281,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T19:25:59Z",
+      "side": 1,
+      "message": "Can we verify we don\u0027t set the matrix on non-root renderpass?",
+      "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b80d4f50_a1d22afb",
+        "filename": "components/viz/service/display/gl_renderer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2287,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T19:25:59Z",
+      "side": 1,
+      "message": "Can you verify the right values were given for the matrix?",
+      "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8699f0ca_304b3106",
+        "filename": "components/viz/service/display/gl_renderer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2292,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T19:25:59Z",
+      "side": 1,
+      "message": "nit: This happens automatically when teh mock is destroyed",
+      "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab7239b9_d95cba2a",
+        "filename": "components/viz/service/display/overlay_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T19:25:59Z",
+      "side": 1,
+      "message": "\"since\" color matrices?",
+      "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "076dc59b_1dc3ef13",
+        "filename": "components/viz/service/display/renderer_pixeltest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 936,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T19:25:59Z",
+      "side": 1,
+      "message": "Can you add comments thru the test explaining what it is doing and why?",
+      "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04b1b28b_b3fa5aa8",
+        "filename": "components/viz/service/display/renderer_pixeltest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 943,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T19:25:59Z",
+      "side": 1,
+      "message": "I couldn\u0027t actually see a difference in the 2 png files, but if this is green, and the above one is yellow, I\u0027d expect a different output, is this green quad showing up as expected? I don\u0027t see a RenderPassDrawQuad in the root to actually show the child pass anywhere?\n\nCould we swap the colors so the child has yellow then it can share png still with the other test, cuz the output should be yellow+matrix?",
+      "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be5d5254_97a5cdb3",
+        "filename": "components/viz/service/display/renderer_pixeltest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T19:25:59Z",
+      "side": 1,
+      "message": "Is the output of this test any different from the above? Should it share the same file?",
+      "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3c512ad_eb76e1ac",
+        "filename": "components/viz/service/display/shader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T19:25:59Z",
+      "side": 1,
+      "message": "If we\u0027re changing the shaders, should there be some change in the GLRendererShaderPixelTest?",
+      "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c2162c6_1bf2d041",
+        "filename": "services/viz/privileged/interfaces/compositing/display_private.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-29T19:25:59Z",
+      "side": 1,
+      "message": "Please document this only works in gpu compositing.",
+      "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
