@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "ea484054_28fceed4",
+        "filename": "extensions/common/extension_messages.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-11-29T07:25:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "359eaa7d_244a1e35",
+      "revId": "76c5733e80ae49cc570b0fc6a03fba6bca3213b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92737edb_decf8c7f",
         "filename": "extensions/renderer/programmatic_script_injector.h",
         "patchSetId": 5
@@ -50,6 +68,24 @@
       "revId": "76c5733e80ae49cc570b0fc6a03fba6bca3213b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7a8fccd_f3c12036",
+        "filename": "extensions/renderer/programmatic_script_injector.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-11-29T07:25:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92737edb_decf8c7f",
+      "revId": "76c5733e80ae49cc570b0fc6a03fba6bca3213b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "1bf43cb0_9613f2bc",
+        "filename": "extensions/renderer/script_injection.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-11-29T07:25:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "234c5f3d_7142e3b3",
+      "revId": "76c5733e80ae49cc570b0fc6a03fba6bca3213b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b8b0293_604dd567",
         "filename": "extensions/renderer/script_injector.h",
         "patchSetId": 5
@@ -84,6 +138,24 @@
       "revId": "76c5733e80ae49cc570b0fc6a03fba6bca3213b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "431b1bfe_f3e0f023",
+        "filename": "extensions/renderer/script_injector.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-11-29T07:25:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b8b0293_604dd567",
+      "revId": "76c5733e80ae49cc570b0fc6a03fba6bca3213b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
