@@ -94,6 +94,30 @@
       "revId": "3dfb740966faad52f173d752f5e7e423cbe77da7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7dafa00_253d4cb8",
+        "filename": "extensions/common/api/networking_private.idl",
+        "patchSetId": 26
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-29T00:08:23Z",
+      "side": 1,
+      "message": "Yeah, apologies, I missed that these were provider properties and not network properties. It looks like the only Arc specific Shill property is kTunnelChrome. If we need that in the UI at some point we\u0027ll need to add ArcVPNProperties here, but the provider properties should just be in the browser proxy as suggested.",
+      "parentUuid": "b740a8f2_72f59273",
+      "range": {
+        "startLine": 503,
+        "startChar": 13,
+        "endLine": 503,
+        "endChar": 29
+      },
+      "revId": "3dfb740966faad52f173d752f5e7e423cbe77da7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
