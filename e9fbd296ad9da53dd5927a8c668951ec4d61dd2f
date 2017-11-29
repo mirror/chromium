@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a5339d58_c8876d54",
+        "filename": "components/viz/service/display/output_surface_client.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-29T20:51:42Z",
+      "side": 1,
+      "message": "I renamed this method to DidReceivePresentationFeedback(), because this method could be called before the buffer is presented on screen for some GLSurface implementation. PresentationFeedback::flags \u0026 kHWCompletion \u003d\u003d true indicates the frame has been presented on screen. Otherwise, the timestamp could be an estimated value in future.\n\nI updated the comment for this method as well.",
+      "parentUuid": "76be5596_77e3bb98",
+      "revId": "e9fbd296ad9da53dd5927a8c668951ec4d61dd2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5eb3d72_fdeed459",
         "filename": "ui/gfx/presentation_feedback.h",
         "patchSetId": 38
@@ -33,6 +51,24 @@
       "revId": "e9fbd296ad9da53dd5927a8c668951ec4d61dd2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "878478b7_e6b210e8",
+        "filename": "ui/gfx/presentation_feedback.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-29T20:51:42Z",
+      "side": 1,
+      "message": "I added struct comment to clarify  this struct is for gl::GLSurface methods SwapBuffers, etc. And comment for PresentationCallback in GLSusrface describes it clearly.\n\nAnd I feel a general name timestamp is little bit better, because the timestamp will be different meaning for different GLSurface implementations.\nit could be really scan out time, or an estimated presentation time in future. so we have the flags variable to indicates the kind of the timestamp.",
+      "parentUuid": "e5eb3d72_fdeed459",
+      "revId": "e9fbd296ad9da53dd5927a8c668951ec4d61dd2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "18b29c2c_5db5c8a4",
+        "filename": "ui/gfx/presentation_feedback.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-29T20:51:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c05983b_8ac83137",
+      "revId": "e9fbd296ad9da53dd5927a8c668951ec4d61dd2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b21ed11_cdd3c846",
         "filename": "ui/gfx/presentation_feedback.h",
         "patchSetId": 38
@@ -67,6 +121,24 @@
       "revId": "e9fbd296ad9da53dd5927a8c668951ec4d61dd2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea45533d_71e46a17",
+        "filename": "ui/gfx/presentation_feedback.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-29T20:51:42Z",
+      "side": 1,
+      "message": "It is an estimated time between two refreshes. I renamed it to interval.",
+      "parentUuid": "7b21ed11_cdd3c846",
+      "revId": "e9fbd296ad9da53dd5927a8c668951ec4d61dd2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "d9cf11b9_20b8deea",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_surface.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-29T20:51:42Z",
+      "side": 1,
+      "message": "I thought it is better to keep using the same style for SwapCompletionCallback and PresentationCallback. And maybe change them together in one CL.",
+      "parentUuid": "8255defc_4a45d191",
+      "revId": "e9fbd296ad9da53dd5927a8c668951ec4d61dd2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "550f5e8c_ca194e5b",
         "filename": "ui/ozone/platform/drm/gpu/gbm_surfaceless.h",
         "patchSetId": 38
@@ -101,6 +191,24 @@
       "revId": "e9fbd296ad9da53dd5927a8c668951ec4d61dd2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "238d145b_86a0b2a6",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_surfaceless.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-29T20:51:42Z",
+      "side": 1,
+      "message": "I am not sure right now. Looks like ScheduleOverlayPlane() doesn\u0027t present anything on screen. The scheduled overlay planes will be presented on screen when the SwapBuffers() or CommitOverlayPlanes() are called later.\n\nI will do more research to figure out if we want to get the presentation\nfeedback for this method or just use the feedback from SwapBuffers() or\nCommitOverlayPlanes().",
+      "parentUuid": "550f5e8c_ca194e5b",
+      "revId": "e9fbd296ad9da53dd5927a8c668951ec4d61dd2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

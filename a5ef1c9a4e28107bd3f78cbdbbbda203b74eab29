@@ -124,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "91e19761_be4e2679",
+        "filename": "ui/gfx/presentation_feedback.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-29T20:51:42Z",
+      "side": 1,
+      "message": "Those flags are copied from wayland protocol. I am not sure if it implies kVSync. I guess maybe some kinds of HWs don\u0027t use VSync.",
+      "parentUuid": "983515e0_467f80a0",
+      "revId": "a5ef1c9a4e28107bd3f78cbdbbbda203b74eab29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81fd2b4a_dacd705d",
         "filename": "ui/gfx/presentation_feedback.h",
         "patchSetId": 36
@@ -212,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "cc1327ee_4ea8e0aa",
+        "filename": "ui/gfx/presentation_feedback.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-29T20:51:42Z",
+      "side": 1,
+      "message": "It is difficult to write chrome ipc struct trail for a class, and this struct is only for carrying data, so I choose struct instead of class.\n\nMaybe we I will add methods here in follow-up CLs. I will consider to use class.",
+      "parentUuid": "0e686845_99cdf321",
+      "revId": "a5ef1c9a4e28107bd3f78cbdbbbda203b74eab29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52367762_df759b6f",
         "filename": "ui/gl/gl_surface.h",
         "patchSetId": 36
@@ -296,6 +332,24 @@
       "revId": "a5ef1c9a4e28107bd3f78cbdbbbda203b74eab29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "149bae6e_e043129f",
+        "filename": "ui/ozone/demo/gl_renderer.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-29T20:51:42Z",
+      "side": 1,
+      "message": "Sure I will update it with ozone implementation.",
+      "parentUuid": "626adb8d_4bc9502e",
+      "revId": "a5ef1c9a4e28107bd3f78cbdbbbda203b74eab29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
