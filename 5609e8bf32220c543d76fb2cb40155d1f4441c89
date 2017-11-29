@@ -16,6 +16,24 @@
       "revId": "5609e8bf32220c543d76fb2cb40155d1f4441c89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "046e79ac_37beb570",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewContentsClientAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-11-29T21:39:26Z",
+      "side": 1,
+      "message": "You\u0027re correct. Both points are fixed in next patchset.",
+      "parentUuid": "9422b130_f291548a",
+      "revId": "5609e8bf32220c543d76fb2cb40155d1f4441c89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
