@@ -46,6 +46,30 @@
       "revId": "824b1471f7676cc1a6a85120ac5c2a6c4441498b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e8fcdd4_d4a2140d",
+        "filename": "components/cronet/native/generated/cronet.idl_c.h",
+        "patchSetId": 43
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-29T18:42:24Z",
+      "side": 1,
+      "message": "Why are these part of the public API?  Seems like they should be hidden/private, like the definition of Cronet_UrlRequestCallback.",
+      "parentUuid": "c8a8cddf_30a4a1ef",
+      "range": {
+        "startLine": 224,
+        "startChar": 0,
+        "endLine": 249,
+        "endChar": 74
+      },
+      "revId": "824b1471f7676cc1a6a85120ac5c2a6c4441498b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
