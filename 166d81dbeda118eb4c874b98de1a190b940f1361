@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "677597d0_5c24b330",
+        "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-11-29T01:19:31Z",
+      "side": 1,
+      "message": "There was a comment about paying a penalty for unaligned access. From an algorithm-level, these should support unaligned access.\n\nI\u0027m not sure if the current platforms have a terrible unaligned access penalty. We might have moved into the realm of memory-speed-bound where a small penalty won\u0027t make a difference. I don\u0027t think any of them would fault.\n\nIf we want to align things (better safe than sorry), we could easily do:\nloads -- 1-byte loads in a loop (since the loads happen less. I think this is what Mike suggested)\nstores -- something like loop unrolling setup: a switch over the offset to fill the non-aligned values and then phase shift so instead of filling \"abababab\" it could fill unaligned \"a\" and continue filling \"babababa\" (overfilling an extra \"a\" at the end).",
+      "range": {
+        "startLine": 61,
+        "startChar": 39,
+        "endLine": 61,
+        "endChar": 54
+      },
+      "revId": "166d81dbeda118eb4c874b98de1a190b940f1361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
