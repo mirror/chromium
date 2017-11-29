@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f75fb4c6_0ff02b7f",
+        "filename": "third_party/WebKit/Source/modules/fetch/DataConsumerHandleTestUtil.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-11-29T22:44:26Z",
+      "side": 1,
+      "message": "I see from the compile failure that std::make_unique template specializations are losing so much context they don\u0027t know they should be allowed to access private constructors. You\u0027ll have to make the constructor public.",
+      "range": {
+        "startLine": 215,
+        "startChar": 20,
+        "endLine": 215,
+        "endChar": 31
+      },
+      "revId": "972203110756dc72dfcada0c9d86beeea46819e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
