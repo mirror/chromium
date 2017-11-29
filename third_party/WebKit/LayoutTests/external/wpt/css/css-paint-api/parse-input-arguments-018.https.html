@@ -15,10 +15,6 @@
 <script src="/common/reftest-wait.js"></script>
 <script src="/common/css-paint-tests.js"></script>
 <body>
-<p>The test result should show only one black rect border. It should not paint
-any content in the rect because registerPaint will be called twice and the
-inputArguments will return two different strings, that will throw an exception
-and paint won't be executed.</p>
 <div id="canvas-geometry" class="container"></div>
 
 <script id="code" type="text/worklet">
@@ -30,8 +26,9 @@ function generateRandString(length) {
     return text;
 }
 
+var testPassed = false;
 try {
-    registerPaint('geometry', class {
+    registerPaint('foo', class {
         static get inputArguments() {
             // This test is testing the case where an exception should be thrown
             // when two paint definitions with different properties are registered
@@ -42,14 +39,27 @@ try {
             var current_str = generateRandString(100);
             return [current_str];
         }
-        paint(ctx, geom) {
-            ctx.strokeStyle = 'red';
-            ctx.lineWidth = 4;
-            ctx.strokeRect(0, 0, geom.width, geom.height);
-        }
+        // The paint function here should never be called because the inputArguments
+        // will generate two different properties, and that should throw an
+        // exception.
+        paint() { }
     });
 } catch(ex) {
+    if (ex.name == 'NotSupportedError') {
+        testPassed = true;
+    }
 }
+
+registerPaint('geometry', class {
+    paint(ctx, geom) {
+        if (testPassed)
+            ctx.fillStyle = 'green';
+        else
+            ctx.fillStyle = 'red';
+        ctx.fillRect(0, 0, geom.width, geom.height);
+    }
+});
+
 </script>
 
 <script>

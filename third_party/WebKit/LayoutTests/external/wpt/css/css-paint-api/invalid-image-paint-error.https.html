@@ -5,8 +5,7 @@
     #output {
         width: 100px;
         height: 100px;
-        background-image: paint(error);
-        background-color: green;
+        background-image: paint(error), paint(geometry);
     }
 </style>
 <script src="/common/reftest-wait.js"></script>
@@ -20,6 +19,12 @@ registerPaint('error', class {
         ctx.fillStyle = 'red';
         ctx.fillRect(0, 0, geom.width, geom.height);
         throw Error('failed!');
+    }
+});
+registerPaint('geometry', class {
+    paint(ctx, geom) {
+        ctx.fillStyle = 'green';
+        ctx.fillRect(0, 0, geom.width, geom.height);
     }
 });
 </script>
