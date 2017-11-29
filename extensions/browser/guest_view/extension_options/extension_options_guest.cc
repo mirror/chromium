@@ -62,6 +62,7 @@ GuestViewBase* ExtensionOptionsGuest::Create(WebContents* owner_web_contents) {
 void ExtensionOptionsGuest::CreateWebContents(
     const base::DictionaryValue& create_params,
     const WebContentsCreatedCallback& callback) {
+  LOG(ERROR) << "------ExtensionOptionsGuest::CreateWebContents 0";
   // Get the extension's base URL.
   std::string extension_id;
   create_params.GetString(extensionoptions::kExtensionId, &extension_id);
@@ -70,6 +71,7 @@ void ExtensionOptionsGuest::CreateWebContents(
     callback.Run(nullptr);
     return;
   }
+  LOG(ERROR) << "------ExtensionOptionsGuest::CreateWebContents 1";
 
   std::string embedder_extension_id = GetOwnerSiteURL().host();
   if (crx_file::id_util::IdIsValid(embedder_extension_id) &&
@@ -78,6 +80,7 @@ void ExtensionOptionsGuest::CreateWebContents(
     callback.Run(nullptr);
     return;
   }
+  LOG(ERROR) << "------ExtensionOptionsGuest::CreateWebContents 2";
 
   GURL extension_url =
       extensions::Extension::GetBaseURLFromExtensionId(extension_id);
@@ -85,24 +88,30 @@ void ExtensionOptionsGuest::CreateWebContents(
     callback.Run(nullptr);
     return;
   }
+  LOG(ERROR) << "------ExtensionOptionsGuest::CreateWebContents 3";
 
   // Get the options page URL for later use.
   extensions::ExtensionRegistry* registry =
       extensions::ExtensionRegistry::Get(browser_context());
   const extensions::Extension* extension =
       registry->enabled_extensions().GetByID(extension_id);
+
+  LOG(ERROR) << "------id: " << extension_id;
+
   if (!extension) {
     // The ID was valid but the extension didn't exist. Typically this will
     // happen when an extension is disabled.
     callback.Run(nullptr);
     return;
   }
+  LOG(ERROR) << "------ExtensionOptionsGuest::CreateWebContents 4";
 
   options_page_ = extensions::OptionsPageInfo::GetOptionsPage(extension);
   if (!options_page_.is_valid()) {
     callback.Run(nullptr);
     return;
   }
+  LOG(ERROR) << "------ExtensionOptionsGuest::CreateWebContents 5";
 
   // Create a WebContents using the extension URL. The options page's
   // WebContents should live in the same process as its parent extension's
@@ -114,6 +123,7 @@ void ExtensionOptionsGuest::CreateWebContents(
   WebContents* wc = WebContents::Create(params);
   SetViewType(wc, VIEW_TYPE_EXTENSION_GUEST);
   callback.Run(wc);
+  LOG(ERROR) << "------ExtensionOptionsGuest::CreateWebContents 6";
 }
 
 void ExtensionOptionsGuest::DidInitialize(
@@ -144,6 +154,7 @@ bool ExtensionOptionsGuest::IsPreferredSizeModeEnabled() const {
 }
 
 void ExtensionOptionsGuest::OnPreferredSizeChanged(const gfx::Size& pref_size) {
+  LOG(ERROR) << "------ExtensionOptionsGuest::OnPreferredSizeChanged";
   extension_options_internal::PreferredSizeChangedOptions options;
   // Convert the size from physical pixels to logical pixels.
   options.width = PhysicalPixelsToLogicalPixels(pref_size.width());
