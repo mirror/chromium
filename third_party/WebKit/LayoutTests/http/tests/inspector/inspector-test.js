@@ -219,7 +219,8 @@ function closeFrontend(callback)
 function openFrontendAndIncrement()
 {
     frontendReopeningCount++;
-    testRunner.showWebInspector(JSON.stringify({testPath: '"' + location.href + '"'}).replace(/\"/g,"%22"));
+    // Do not clear storage when re-opening devtools for the second time
+    testRunner.showWebInspector(JSON.stringify({testPath: '"' + location.href.replace(/\"/g,"%22") + '"', retainStorage: true}));
     setTimeout(runTest, 1);
 }
 

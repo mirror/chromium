@@ -41,6 +41,7 @@ class LayoutTestDevToolsBindings : public ShellDevToolsBindings {
   void RenderFrameCreated(RenderFrameHost* render_frame_host) override;
 
   void NavigateDevToolsFrontend();
+  void Init(bool new_harness);
 
   bool ready_for_test_ = false;
   GURL frontend_url_;
