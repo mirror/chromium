@@ -25,7 +25,9 @@ class VIZ_SERVICE_EXPORT OutputSurfaceClient {
   // For surfaceless/ozone implementations to create damage for the next frame.
   virtual void SetNeedsRedrawRect(const gfx::Rect& damage_rect) = 0;
 
-  // For overlays.
+  // Used to synchronize overlay use with the macOS WindowServer.
+  // TODO(ccameron): This can be removed when we access the CALayer tree
+  // directly instead of through the command buffer.
   virtual void DidReceiveTextureInUseResponses(
       const gpu::TextureInUseResponses& responses) = 0;
 

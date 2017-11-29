@@ -52,6 +52,11 @@ class DisplayOutputSurface : public OutputSurface,
  protected:
   OutputSurfaceClient* client() const { return client_; }
 
+  // Called on macOS with parameters required for a swapped frame to be
+  // displayed in a CALayer.
+  virtual void DidReceiveCALayerParams(
+      const gpu::GpuProcessHostedCALayerTreeParamsMac* params_mac);
+
   // Called when a swap completion is signaled from ImageTransportSurface.
   virtual void DidReceiveSwapBuffersAck(gfx::SwapResult result);
 
