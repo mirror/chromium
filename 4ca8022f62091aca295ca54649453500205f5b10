@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30847a09_fd70ca41",
+        "filename": "content/shell/browser/layout_test/layout_test_devtools_bindings.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-29T23:34:55Z",
+      "side": 1,
+      "message": "What do we use storage for? If that\u0027s LocalStorage for settings, we should pass a different storage backend to settings while under test (we actually support that).\n\nFor everything else, should we just do an explicit clear in tests which require it, like indexeddb?",
+      "revId": "4ca8022f62091aca295ca54649453500205f5b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
