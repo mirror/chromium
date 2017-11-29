@@ -19,7 +19,6 @@
 #include "chrome/services/util_win/public/interfaces/shell_util_win.mojom.h"
 #include "content/public/common/service_manager_connection.h"
 #include "services/service_manager/public/cpp/connector.h"
-#include "ui/base/l10n/l10n_util.h"
 #include "ui/base/win/open_file_name_win.h"
 #include "ui/shell_dialogs/select_file_dialog_win.h"
 #include "ui/shell_dialogs/select_file_policy.h"

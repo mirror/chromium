@@ -42,7 +42,6 @@
 #include "extensions/browser/extension_system.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/geometry/test/rect_test_util.h"
 
 using ::gfx::test::RectContains;

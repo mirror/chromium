@@ -39,7 +39,6 @@
 #include "content/public/common/origin_util.h"
 #include "extensions/common/constants.h"
 #include "third_party/WebKit/common/feature_policy/feature_policy_feature.h"
-#include "ui/base/l10n/l10n_util.h"
 
 #if defined(OS_ANDROID)
 #include <vector>

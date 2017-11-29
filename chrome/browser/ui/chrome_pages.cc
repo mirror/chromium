@@ -51,7 +51,6 @@
 #include "chrome/browser/ui/settings_window_manager_chromeos.h"
 #include "chrome/grit/generated_resources.h"
 #include "extensions/browser/extension_registry.h"
-#include "ui/base/l10n/l10n_util.h"
 #endif
 
 #if !defined(OS_ANDROID)

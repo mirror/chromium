@@ -34,7 +34,6 @@
 #include "printing/pwg_raster_settings.h"
 #include "printing/units.h"
 #include "services/service_manager/public/cpp/connector.h"
-#include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/size.h"
 
