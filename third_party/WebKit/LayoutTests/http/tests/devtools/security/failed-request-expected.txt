@@ -1,12 +1,53 @@
 Tests that origins with failed requests are shown correctly in the security panel origins list.
 
 Group: Main origin
+<SPAN class=tree-element-title >
+Reload to view details
+</SPAN>
 Group: Secure origins
-<SPAN class=title >
-https://foo.test
+<SPAN class=tree-element-title >
+</SPAN>
+<SPAN is=url-text >
+    <SPAN class=url-scheme-secure >
+https
+    </SPAN>
+    <SPAN class=url-scheme-separator >
+://
+    </SPAN>
+    <SPAN >
+foo.test
+    </SPAN>
+</SPAN>
+<SPAN class=url-scheme-secure >
+https
+</SPAN>
+<SPAN class=url-scheme-separator >
+://
+</SPAN>
+<SPAN >
+foo.test
 </SPAN>
 Group: Unknown / canceled
-<SPAN class=title >
-https://does-not-resolve.test
+<SPAN class=tree-element-title >
+</SPAN>
+<SPAN is=url-text >
+    <SPAN class=url-scheme-unknown >
+https
+    </SPAN>
+    <SPAN class=url-scheme-separator >
+://
+    </SPAN>
+    <SPAN >
+does-not-resolve.test
+    </SPAN>
+</SPAN>
+<SPAN class=url-scheme-unknown >
+https
+</SPAN>
+<SPAN class=url-scheme-separator >
+://
+</SPAN>
+<SPAN >
+does-not-resolve.test
 </SPAN>
 

@@ -1,8 +1,30 @@
 Tests that blank origins aren't shown in the security panel origins list.
 
 Group: Main origin
+<SPAN class=tree-element-title >
+Reload to view details
+</SPAN>
 Group: Unknown / canceled
-<SPAN class=title >
-https://foo.test
+<SPAN class=tree-element-title >
+</SPAN>
+<SPAN is=url-text >
+    <SPAN class=url-scheme-unknown >
+https
+    </SPAN>
+    <SPAN class=url-scheme-separator >
+://
+    </SPAN>
+    <SPAN >
+foo.test
+    </SPAN>
+</SPAN>
+<SPAN class=url-scheme-unknown >
+https
+</SPAN>
+<SPAN class=url-scheme-separator >
+://
+</SPAN>
+<SPAN >
+foo.test
 </SPAN>
 
