@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e3da62a3_cd6a78ff",
+        "filename": "third_party/WebKit/Source/core/layout/svg/LayoutSVGResourceClipper.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-11-29T23:50:45Z",
+      "side": 0,
+      "message": "Done.\n\nI prefer against micro-optimization like this, especially this really belongs to SkOpBuilder::resolve(). But I agree with you that SkOpBuilder::resolve() is doing too much non-trivial work. (And restoring it fixed most rounding difference in tests. *shrug*)",
+      "parentUuid": "c5c4c52c_cd024826",
+      "revId": "8d71ca83bd7d6e377d06e0b13db6521faff8313d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3e99a24_55ab24d0",
         "filename": "third_party/WebKit/Source/core/style/ClipPathOperation.h",
         "patchSetId": 13

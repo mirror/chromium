@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "e90621ed_badb7bde",
+        "filename": "third_party/WebKit/Source/core/layout/svg/LayoutSVGResourceClipper.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-11-29T23:50:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed68ca02_2e103333",
+      "revId": "46a413c4064fed443ecb7e1f40fd51a4c8162ac0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4aeaa3c7_07a46c8b",
         "filename": "third_party/WebKit/Source/core/layout/svg/LayoutSVGResourceClipper.cpp",
         "patchSetId": 13
