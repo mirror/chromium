@@ -27,8 +27,8 @@
 
 #include "core/dom/Text.h"
 #include "core/editing/EditingUtilities.h"
-#include "core/html/HTMLContentElement.h"
 #include "core/html/HTMLDivElement.h"
+#include "core/html/HTMLSlotElement.h"
 #include "core/html/forms/HTMLSelectElement.h"
 #include "core/html/shadow/ShadowElementNames.h"
 #include "core/html_names.h"
@@ -51,7 +51,7 @@ HTMLOptGroupElement::~HTMLOptGroupElement() {}
 
 HTMLOptGroupElement* HTMLOptGroupElement::Create(Document& document) {
   HTMLOptGroupElement* opt_group_element = new HTMLOptGroupElement(document);
-  opt_group_element->EnsureUserAgentShadowRoot();
+  opt_group_element->EnsureUserAgentShadowRootV1();
   return opt_group_element;
 }
 
@@ -141,9 +141,10 @@ void HTMLOptGroupElement::DidAddUserAgentShadowRoot(ShadowRoot& root) {
   label->SetIdAttribute(ShadowElementNames::OptGroupLabel());
   root.AppendChild(label);
 
-  HTMLContentElement* content = HTMLContentElement::Create(GetDocument());
-  content->setAttribute(selectAttr, "option,hr");
-  root.AppendChild(content);
+  HTMLSlotElement* slot = HTMLSlotElement::Create(GetDocument());
+  // TODO: fix this.
+  slot->setAttribute(selectAttr, "option,hr");
+  root.AppendChild(slot);
 }
 
 void HTMLOptGroupElement::UpdateGroupLabel() {

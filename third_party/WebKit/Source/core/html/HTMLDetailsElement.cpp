@@ -28,8 +28,9 @@
 #include "core/dom/Text.h"
 #include "core/dom/events/Event.h"
 #include "core/frame/UseCounter.h"
-#include "core/html/HTMLContentElement.h"
+#include "core/html/HTMLContentElement.h"  // TODO: remove this
 #include "core/html/HTMLDivElement.h"
+#include "core/html/HTMLSlotElement.h"
 #include "core/html/HTMLSummaryElement.h"
 #include "core/html/shadow/DetailsMarkerControl.h"
 #include "core/html/shadow/ShadowElementNames.h"
@@ -71,7 +72,7 @@ class FirstSummarySelectFilter final : public HTMLContentSelectFilter {
 
 HTMLDetailsElement* HTMLDetailsElement::Create(Document& document) {
   HTMLDetailsElement* details = new HTMLDetailsElement(document);
-  details->EnsureUserAgentShadowRoot();
+  details->EnsureUserAgentShadowRootV1();
   return details;
 }
 
@@ -97,15 +98,15 @@ void HTMLDetailsElement::DidAddUserAgentShadowRoot(ShadowRoot& root) {
       Text::Create(GetDocument(),
                    GetLocale().QueryString(WebLocalizedString::kDetailsLabel)));
 
-  HTMLContentElement* summary = HTMLContentElement::Create(
-      GetDocument(), FirstSummarySelectFilter::Create());
+  // TODO: pass |FirstSummarySelectorFilter::Create()|
+  HTMLSlotElement* summary = HTMLSlotElement::Create(GetDocument());
   summary->SetIdAttribute(ShadowElementNames::DetailsSummary());
   summary->AppendChild(default_summary);
   root.AppendChild(summary);
 
   HTMLDivElement* content = HTMLDivElement::Create(GetDocument());
   content->SetIdAttribute(ShadowElementNames::DetailsContent());
-  content->AppendChild(HTMLContentElement::Create(GetDocument()));
+  content->AppendChild(HTMLSlotElement::Create(GetDocument()));
   content->SetInlineStyleProperty(CSSPropertyDisplay, CSSValueNone);
   root.AppendChild(content);
 }
@@ -115,11 +116,11 @@ Element* HTMLDetailsElement::FindMainSummary() const {
           Traversal<HTMLSummaryElement>::FirstChild(*this))
     return summary;
 
-  HTMLContentElement* content =
-      ToHTMLContentElementOrDie(UserAgentShadowRoot()->firstChild());
-  DCHECK(content->firstChild());
-  CHECK(IsHTMLSummaryElement(*content->firstChild()));
-  return ToElement(content->firstChild());
+  HTMLSlotElement* slot =
+      ToHTMLSlotElementOrDie(UserAgentShadowRoot()->firstChild());
+  DCHECK(slot->firstChild());
+  CHECK(IsHTMLSummaryElement(*slot->firstChild()));
+  return ToElement(slot->firstChild());
 }
 
 void HTMLDetailsElement::ParseAttribute(
@@ -139,7 +140,7 @@ void HTMLDetailsElement::ParseAttribute(
                 WTF::Bind(&HTMLDetailsElement::DispatchPendingEvent,
                           WrapPersistent(this)));
 
-    Element* content = EnsureUserAgentShadowRoot().getElementById(
+    Element* content = EnsureUserAgentShadowRootV1().getElementById(
         ShadowElementNames::DetailsContent());
     DCHECK(content);
     if (is_open_)

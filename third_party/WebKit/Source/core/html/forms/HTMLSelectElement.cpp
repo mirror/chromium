@@ -50,6 +50,7 @@
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/html/HTMLHRElement.h"
+#include "core/html/HTMLSlotElement.h"
 #include "core/html/forms/FormController.h"
 #include "core/html/forms/FormData.h"
 #include "core/html/forms/HTMLFormElement.h"
@@ -99,7 +100,7 @@ HTMLSelectElement::HTMLSelectElement(Document& document)
 
 HTMLSelectElement* HTMLSelectElement::Create(Document& document) {
   HTMLSelectElement* select = new HTMLSelectElement(document);
-  select->EnsureUserAgentShadowRoot();
+  select->EnsureUserAgentShadowRootV1();
   return select;
 }
 
@@ -1821,9 +1822,10 @@ void HTMLSelectElement::Trace(blink::Visitor* visitor) {
 }
 
 void HTMLSelectElement::DidAddUserAgentShadowRoot(ShadowRoot& root) {
-  HTMLContentElement* content = HTMLContentElement::Create(GetDocument());
-  content->setAttribute(selectAttr, "option,optgroup,hr");
-  root.AppendChild(content);
+  HTMLSlotElement* slot = HTMLSlotElement::Create(GetDocument());
+  // TODO: fix this.
+  slot->setAttribute(selectAttr, "option,optgroup,hr");
+  root.AppendChild(slot);
 }
 
 HTMLOptionElement* HTMLSelectElement::SpatialNavigationFocusedOption() {
