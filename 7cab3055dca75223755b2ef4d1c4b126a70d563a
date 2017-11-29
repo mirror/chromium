@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "aca00315_c0ff0a88",
+        "filename": "third_party/WebKit/Source/core/layout/svg/LayoutSVGShape.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-29T17:37:41Z",
+      "side": 1,
+      "message": "Thanks, done.",
+      "parentUuid": "e364c073_21869769",
+      "range": {
+        "startLine": 61,
+        "startChar": 17,
+        "endLine": 61,
+        "endChar": 34
+      },
+      "revId": "7cab3055dca75223755b2ef4d1c4b126a70d563a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b81f4c98_c9e84b5b",
         "filename": "third_party/WebKit/Source/core/layout/svg/LayoutSVGShape.cpp",
         "patchSetId": 2
