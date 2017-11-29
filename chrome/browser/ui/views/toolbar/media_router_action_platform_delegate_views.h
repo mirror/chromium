@@ -19,7 +19,7 @@ class MediaRouterActionPlatformDelegateViews :
   bool CloseOverflowMenuIfOpen() override;
 
  private:
-  // The corresponding browser.
+  // The corresponding browser. Never nullptr.
   Browser* const browser_;
 
   DISALLOW_COPY_AND_ASSIGN(MediaRouterActionPlatformDelegateViews);

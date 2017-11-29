@@ -69,12 +69,10 @@ class FirstRunBubble : public views::BubbleDialogDelegateView,
   // views::LinkListener overrides:
   void LinkClicked(views::Link* source, int event_flags) override;
 
-  Browser* const browser_;
+  Browser* const browser_;  // Can be nullptr in tests.
   FirstRunBubbleCloser bubble_closer_;
 
   DISALLOW_COPY_AND_ASSIGN(FirstRunBubble);
 };
-
-namespace first_run {}  // namespace first_run
 
 #endif  // CHROME_BROWSER_UI_VIEWS_FIRST_RUN_BUBBLE_H_

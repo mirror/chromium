@@ -43,7 +43,8 @@ class ChooserBubbleUi : public BubbleUi, public views::WidgetObserver {
   // allow this bubble to be used in either.
   void CreateAndShow(views::BubbleDialogDelegateView* delegate);
 
-  Browser* const browser_;  // Weak.
+  Browser* const browser_;  // Weak. Never nullptr.
+
   // Weak. Owned by its parent view.
   ChooserBubbleUiViewDelegate* chooser_bubble_ui_view_delegate_;
 

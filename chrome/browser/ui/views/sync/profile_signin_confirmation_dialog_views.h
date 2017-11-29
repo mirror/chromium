@@ -65,11 +65,11 @@ class ProfileSigninConfirmationDialogViews : public views::DialogDelegateView,
   // is true, the dialog will offer to create a new profile before signin.
   void Show(bool prompt_for_new_profile);
 
-  // Weak ptr to parent view.
+  // Weak ptr to parent view. Never nullptr.
   Browser* const browser_;
 
   // The GAIA username being signed in.
-  std::string username_;
+  const std::string username_;
 
   // Dialog button handler.
   std::unique_ptr<ui::ProfileSigninConfirmationDelegate> delegate_;

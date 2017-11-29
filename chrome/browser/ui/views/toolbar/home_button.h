@@ -26,7 +26,7 @@ class HomeButton : public ToolbarButton {
   int OnDragUpdated(const ui::DropTargetEvent& event) override;
   int OnPerformDrop(const ui::DropTargetEvent& event) override;
 
-  Browser* const browser_;
+  Browser* const browser_;  // Never nullptr.
 
   DISALLOW_COPY_AND_ASSIGN(HomeButton);
 };

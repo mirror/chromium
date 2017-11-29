@@ -182,8 +182,8 @@ class BookmarkMenuDelegate : public bookmarks::BaseBookmarkModelObserver,
   void AddMenuToMaps(views::MenuItemView* menu,
                      const bookmarks::BookmarkNode* node);
 
-  Browser* const browser_;
-  Profile* profile_;
+  Browser* const browser_;  // Never nullptr.
+  Profile* const profile_;  // Never nullptr.
 
   content::PageNavigator* page_navigator_;
 

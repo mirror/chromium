@@ -52,7 +52,7 @@ class HomePageUndoBubble : public views::BubbleDialogDelegateView,
 
   static HomePageUndoBubble* home_page_undo_bubble_;
 
-  Browser* browser_;
+  Browser* const browser_;  // Never nullptr.
   bool undo_value_is_ntp_;
   GURL undo_url_;
 

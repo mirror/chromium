@@ -414,6 +414,8 @@ class BookmarkBarView : public views::AccessiblePaneView,
   std::unique_ptr<BookmarkContextMenu> context_menu_;
 
   // Shows the "Other Bookmarks" folder button.
+  // Never nullptr after Init() has been called. Same for the other view objects
+  // below.
   views::MenuButton* other_bookmarks_button_;
 
   // Shows the managed bookmarks entries.
@@ -434,8 +436,10 @@ class BookmarkBarView : public views::AccessiblePaneView,
 
   ButtonSeparatorView* bookmarks_separator_view_;
 
-  Browser* const browser_;
-  BrowserView* browser_view_;
+  Browser* const browser_;  // Never nullptr.
+
+  // Can be null during tests.
+  BrowserView* const browser_view_;
 
   // True if the owning browser is showing an infobar.
   bool infobar_visible_;

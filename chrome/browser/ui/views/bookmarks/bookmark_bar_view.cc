@@ -1226,13 +1226,11 @@ void BookmarkBarView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
 }
 
 void BookmarkBarView::AnimationProgressed(const gfx::Animation* animation) {
-  // |browser_view_| can be null during tests.
   if (browser_view_)
     browser_view_->ToolbarSizeChanged(true);
 }
 
 void BookmarkBarView::AnimationEnded(const gfx::Animation* animation) {
-  // |browser_view_| can be null during tests.
   if (browser_view_) {
     browser_view_->ToolbarSizeChanged(false);
     SchedulePaint();

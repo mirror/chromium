@@ -77,13 +77,14 @@ class SessionCrashedBubbleView : public SessionCrashedBubble,
   void CloseBubble();
 
   // Used for opening the question mark link as well as access the tab strip.
+  // Never nullptr.
   Browser* const browser_;
 
   // Checkbox for the user to opt-in to UMA reporting.
   views::Checkbox* uma_option_;
 
   // Whether or not the UMA opt-in option should be shown.
-  bool offer_uma_optin_;
+  const bool offer_uma_optin_;
 
   // Whether or not the user ignored the bubble. It is used to collect bubble
   // usage stats.

@@ -42,13 +42,13 @@ class ConflictingModuleView : public views::BubbleDialogDelegateView,
   // EnumerateModulesModel::Observer:
   void OnConflictsAcknowledged() override;
 
-  Browser* const browser_;
+  Browser* const browser_;  // Never nullptr.
 
   ScopedObserver<EnumerateModulesModel,
                  EnumerateModulesModel::Observer> observer_;
 
   // The link to the help center for this conflict.
-  GURL help_center_url_;
+  const GURL help_center_url_;
 
   DISALLOW_COPY_AND_ASSIGN(ConflictingModuleView);
 };

@@ -68,10 +68,10 @@ class ExtensionViewViews : public views::WebView,
   void PreferredSizeChanged() override;
   void OnWebContentsAttached() override;
 
-  // Note that host_ owns view
+  // Note that |host_| owns the view. Never nullptr.
   extensions::ExtensionHost* host_;
 
-  // The browser window that this view is in.
+  // The browser window that this view is in. Nullptr for dialogs.
   Browser* const browser_;
 
   // What we should set the preferred width to once the ExtensionViewViews has

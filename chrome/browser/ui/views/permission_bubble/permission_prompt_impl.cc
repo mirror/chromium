@@ -272,9 +272,6 @@ bool PermissionPromptImpl::CanAcceptRequestUpdate() {
 }
 
 void PermissionPromptImpl::UpdateAnchorPosition() {
-  DCHECK(browser_);
-  DCHECK(browser_->window());
-
   if (bubble_delegate_) {
     bubble_delegate_->set_parent_window(
         platform_util::GetViewForWindow(browser_->window()->GetNativeWindow()));
@@ -289,26 +286,19 @@ gfx::NativeWindow PermissionPromptImpl::GetNativeWindow() {
 }
 
 void PermissionPromptImpl::Closing() {
-  if (bubble_delegate_)
-    bubble_delegate_ = nullptr;
-  if (delegate_)
-    delegate_->Closing();
+  bubble_delegate_ = nullptr;
+  delegate_->Closing();
 }
 
 void PermissionPromptImpl::Accept() {
-  if (delegate_)
-    delegate_->Accept();
+  delegate_->Accept();
 }
 
 void PermissionPromptImpl::Deny() {
-  if (delegate_)
-    delegate_->Deny();
+  delegate_->Deny();
 }
 
 void PermissionPromptImpl::Show() {
-  DCHECK(browser_);
-  DCHECK(browser_->window());
-
   bubble_delegate_ = new PermissionsBubbleDialogDelegateView(
       this, delegate_->Requests(), delegate_->GetDisplayOrigin());
 
@@ -331,6 +321,5 @@ void PermissionPromptImpl::Show() {
     widget->ShowInactive();
 
   bubble_delegate_->SizeToContents();
-
   bubble_delegate_->UpdateAnchor();
 }

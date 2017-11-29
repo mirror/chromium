@@ -203,7 +203,7 @@ class ToolbarView : public views::AccessiblePaneView,
   BrowserActionsContainer* browser_actions_;
   AppMenuButton* app_menu_button_;
 
-  Browser* const browser_;
+  Browser* const browser_;  // Never nullptr.
 
   AppMenuIconController app_menu_icon_controller_;
 

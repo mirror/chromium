@@ -158,10 +158,10 @@ class GlobalMenuBarX11 : public AvatarMenuObserver,
   CHROMEG_CALLBACK_1(GlobalMenuBarX11, void, OnCreateProfileItemActivated,
                      DbusmenuMenuitem*, unsigned int);
 
-  Browser* const browser_;
-  Profile* profile_;
-  BrowserView* browser_view_;
-  BrowserDesktopWindowTreeHostX11* host_;
+  Browser* const browser_;                 // Never nullptr.
+  Profile* const profile_;                 // Never nullptr.
+  BrowserView* browser_view_;              // Never nullptr.
+  BrowserDesktopWindowTreeHostX11* host_;  // Never nullptr.
 
   // Maps command ids to DbusmenuMenuitems so we can modify their
   // enabled/checked state in response to state change notifications.

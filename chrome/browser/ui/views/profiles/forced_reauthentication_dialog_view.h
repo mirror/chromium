@@ -63,8 +63,8 @@ class ForcedReauthenticationDialogView : public views::DialogDelegateView {
   void OnCountDown();
   base::TimeDelta GetTimeRemaining() const;
 
-  Browser* const browser_;
-  SigninManager* signin_manager_;
+  Browser* const browser_;               // Never nullptr.
+  SigninManager* const signin_manager_;  // Never nullptr.
 
   const base::TimeTicks desired_close_time_;
 

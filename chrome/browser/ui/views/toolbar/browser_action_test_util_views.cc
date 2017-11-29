@@ -42,7 +42,7 @@ class ContainerParent : public views::View {
   }
 
  private:
-  BrowserActionsContainer* container_;
+  BrowserActionsContainer* const container_;
 
   DISALLOW_COPY_AND_ASSIGN(ContainerParent);
 };
@@ -61,7 +61,7 @@ class TestToolbarActionsBarHelperViews : public TestToolbarActionsBarHelper {
 
  private:
   // The created BrowserActionsContainer. Owned by |container_parent_|.
-  BrowserActionsContainer* browser_actions_container_;
+  BrowserActionsContainer* const browser_actions_container_;
 
   // The parent of the BrowserActionsContainer, which directly owns the
   // container as part of the views hierarchy.
@@ -103,6 +103,7 @@ BrowserActionTestUtil::BrowserActionTestUtil(Browser* browser)
 BrowserActionTestUtil::BrowserActionTestUtil(Browser* browser,
                                              bool is_real_window)
     : browser_(browser) {
+  DCHECK(browser_);
   if (!is_real_window)
     test_helper_.reset(new TestToolbarActionsBarHelperViews(browser, nullptr));
 }
@@ -227,4 +228,5 @@ BrowserActionTestUtil::BrowserActionTestUtil(Browser* browser,
       test_helper_(new TestToolbarActionsBarHelperViews(
           browser_,
           GetContainer(browser_, main_bar->test_helper_.get()))) {
+  DCHECK(browser_);
 }
