@@ -62,7 +62,7 @@ class PLATFORM_EXPORT ResourceLoadScheduler final
     return new ResourceLoadScheduler(context ? context
                                              : &FetchContext::NullInstance());
   }
-  ~ResourceLoadScheduler() {}
+  ~ResourceLoadScheduler();
   void Trace(blink::Visitor*);
 
   // Stops all operations including observing throttling signals.
@@ -90,6 +90,8 @@ class PLATFORM_EXPORT ResourceLoadScheduler final
   void OnThrottlingStateChanged(WebFrameScheduler::ThrottlingState) override;
 
  private:
+  class TrafficMonitor;
+
   class ClientIdWithPriority {
    public:
     ClientIdWithPriority(ClientId client_id,
@@ -168,6 +170,9 @@ class PLATFORM_EXPORT ResourceLoadScheduler final
       pending_request_map_;
   // We use std::set here because WTF doesn't have its counterpart.
   std::set<ClientIdWithPriority> pending_requests_;
+
+  // Holds an internal class instance to monitor and report traffic.
+  std::unique_ptr<TrafficMonitor> traffic_monitor_;
 
   // Holds FetchContext reference to contact WebFrameScheduler.
   Member<FetchContext> context_;
