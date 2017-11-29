@@ -4,10 +4,20 @@
 
 package org.chromium.content_public.browser;
 
+import android.graphics.Rect;
+
 /**
-  * An interface that allows the embedder to be notified when the results of
-  * extractSmartClipData are available.
-  */
+ * An interface that allows the embedder to be notified when the results of
+ * extractSmartClipData are available.
+ */
 public interface SmartClipCallback {
-    void onSmartClipDataExtracted(String text, String html);
+    /**
+     * API that notifies the results of extractSmartClipData.
+     *
+     * @param text The text data that is extracted for requested smart clip.
+     * @param html The html data that is extracted for requested smart clip.
+     * @param clipRect The smartclip coordinates in DIP scale which correspond to the
+     *                 extracted data.
+     */
+    void onSmartClipDataExtracted(String text, String html, Rect clipRect);
 }
