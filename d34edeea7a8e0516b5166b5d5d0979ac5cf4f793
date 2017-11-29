@@ -453,6 +453,24 @@
     },
     {
       "key": {
+        "uuid": "8928bef9_a953b0b0",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-29T01:17:12Z",
+      "side": 1,
+      "message": "Ping",
+      "parentUuid": "12e7ac0c_d494a669",
+      "revId": "d34edeea7a8e0516b5166b5d5d0979ac5cf4f793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd15fe03_762f5514",
         "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.cc",
         "patchSetId": 9

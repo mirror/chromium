@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "59c624e8_a5820351",
+        "filename": "chrome/browser/media/router/discovery/dial/device_description_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-29T01:17:12Z",
+      "side": 1,
+      "message": "DeviceDescriptionFetcher is owned by this-\u003edevice_description_fetcher_map_, and the callback won\u0027t be called after its destruction, which is why I think it\u0027s safe to use base::Unretained(this) there.",
+      "parentUuid": "952dc712_805e8b5d",
+      "range": {
+        "startLine": 212,
+        "startChar": 27,
+        "endLine": 212,
+        "endChar": 37
+      },
+      "revId": "a069e013f78dd69aeb6b71af0e45f12319a96a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b96ce8b_da0e0761",
         "filename": "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.cc",
         "patchSetId": 11
