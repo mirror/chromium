@@ -44,6 +44,8 @@ const char CBORReader::kMapKeyOutOfOrder[] =
     "order.";
 const char CBORReader::kNonMinimalEncoding[] =
     "Unsigned integers must be encoded with minimum number of bytes.";
+const char CBORReader::kOutOfRangeIntegerValue[] =
+    "Absolute value for integers must be between 0 and UINT64_MAX.";
 
 CBORReader::CBORReader(std::vector<uint8_t>::const_iterator it,
                        std::vector<uint8_t>::const_iterator end)
@@ -82,12 +84,14 @@ base::Optional<CBORValue> CBORReader::DecodeCBOR(int max_nesting_level) {
   const uint8_t additional_info = GetAdditionalInfo(initial_byte);
 
   uint64_t length;
-  if (!ReadUnsignedInt(additional_info, &length))
+  if (!ReadUnsignedInt(major_type, additional_info, &length))
     return base::nullopt;
 
   switch (major_type) {
     case CBORValue::Type::UNSIGNED:
       return CBORValue(length);
+    case CBORValue::Type::NEGATIVE:
+      return CBORValue(length + 1, CBORValue::IntegerType::NEGATIVE);
     case CBORValue::Type::BYTE_STRING:
       return ReadBytes(length);
     case CBORValue::Type::STRING:
@@ -104,7 +108,9 @@ base::Optional<CBORValue> CBORReader::DecodeCBOR(int max_nesting_level) {
   return base::nullopt;
 }
 
-bool CBORReader::ReadUnsignedInt(int additional_info, uint64_t* length) {
+bool CBORReader::ReadUnsignedInt(CBORValue::Type major_type,
+                                 uint8_t additional_info,
+                                 uint64_t* length) {
   uint8_t additional_bytes = 0;
   if (additional_info < 24) {
     *length = additional_info;
@@ -130,7 +136,7 @@ bool CBORReader::ReadUnsignedInt(int additional_info, uint64_t* length) {
     int_data |= *it_++;
   }
   *length = int_data;
-  return CheckUintEncodedByteLength(additional_bytes, int_data);
+  return CheckIntegerValueError(major_type, additional_bytes, int_data);
 }
 
 base::Optional<CBORValue> CBORReader::ReadString(uint64_t num_bytes) {
@@ -196,13 +202,20 @@ bool CBORReader::CanConsume(uint64_t bytes) {
   return false;
 }
 
-bool CBORReader::CheckUintEncodedByteLength(uint8_t additional_bytes,
-                                            uint64_t uint_data) {
+bool CBORReader::CheckIntegerValueError(CBORValue::Type major_type,
+                                        uint8_t additional_bytes,
+                                        uint64_t uint_data) {
   if ((additional_bytes == 1 && uint_data < 24) ||
       uint_data <= (1ULL << 8 * (additional_bytes >> 1)) - 1) {
     error_code_ = NON_MINIMAL_ENCODING_ERROR;
     return false;
   }
+
+  if (major_type == CBORValue::Type::NEGATIVE && uint_data == UINT64_MAX) {
+    error_code_ = OUT_OF_RANGE_INTEGER_VALUE_ERROR;
+    return false;
+  }
+
   return true;
 }
 
@@ -261,6 +274,8 @@ std::string CBORReader::ErrorCodeToString(CBORDecoderError error) {
       return kMapKeyOutOfOrder;
     case NON_MINIMAL_ENCODING_ERROR:
       return kNonMinimalEncoding;
+    case OUT_OF_RANGE_INTEGER_VALUE_ERROR:
+      return kOutOfRangeIntegerValue;
     default:
       NOTREACHED();
       return std::string();
