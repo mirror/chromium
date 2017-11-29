@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d2fcf8c_7c4004e1",
+        "filename": "chrome/common/secure_origin_whitelist.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-29T10:51:34Z",
+      "side": 1,
+      "message": "let\u0027s skip ones resulted in being unique (.unique() returning true)",
+      "revId": "b1877bafe1ec17044d315c0cdc85aa36238958ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
