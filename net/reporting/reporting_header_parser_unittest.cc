@@ -104,5 +104,26 @@ TEST_F(ReportingHeaderParserTest, ZeroMaxAge) {
   EXPECT_EQ(nullptr, FindClientInCache(cache(), kOrigin_, kEndpoint_));
 }
 
+TEST_F(ReportingHeaderParserTest, RemoveOld) {
+  static const GURL kDifferentEndpoint_ = GURL("https://endpoint2/");
+
+  ReportingHeaderParser::ParseHeader(
+      context(), kUrl_,
+      "{\"url\":\"" + kEndpoint_.spec() + "\",\"max-age\":86400}");
+
+  const ReportingClient* client =
+      FindClientInCache(cache(), kOrigin_, kEndpoint_);
+  EXPECT_TRUE(client);
+
+  ReportingHeaderParser::ParseHeader(
+      context(), kUrl_,
+      "{\"url\":\"" + kDifferentEndpoint_.spec() + "\",\"max-age\":86400}");
+
+  client = FindClientInCache(cache(), kOrigin_, kEndpoint_);
+  EXPECT_FALSE(client);
+  client = FindClientInCache(cache(), kOrigin_, kDifferentEndpoint_);
+  EXPECT_TRUE(client);
+}
+
 }  // namespace
 }  // namespace net

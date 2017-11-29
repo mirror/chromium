@@ -167,38 +167,6 @@ class ReportingCacheImpl : public ReportingCache {
     context_->NotifyCacheUpdated();
   }
 
-  void GetClients(
-      std::vector<const ReportingClient*>* clients_out) const override {
-    clients_out->clear();
-    for (const auto& it : clients_)
-      for (const auto& endpoint_and_client : it.second)
-        clients_out->push_back(endpoint_and_client.second.get());
-  }
-
-  void GetClientsForOriginAndGroup(
-      const url::Origin& origin,
-      const std::string& group,
-      std::vector<const ReportingClient*>* clients_out) const override {
-    clients_out->clear();
-
-    const auto it = clients_.find(origin);
-    if (it != clients_.end()) {
-      for (const auto& endpoint_and_client : it->second) {
-        if (endpoint_and_client.second->group == group)
-          clients_out->push_back(endpoint_and_client.second.get());
-      }
-    }
-
-    // If no clients were found, try successive superdomain suffixes until a
-    // client with includeSubdomains is found or there are no more domain
-    // components left.
-    std::string domain = origin.host();
-    while (clients_out->empty() && !domain.empty()) {
-      GetWildcardClientsForDomainAndGroup(domain, group, clients_out);
-      domain = GetSuperdomain(domain);
-    }
-  }
-
   void SetClient(const url::Origin& origin,
                  const GURL& endpoint,
                  ReportingClient::Subdomains subdomains,
@@ -240,6 +208,51 @@ class ReportingCacheImpl : public ReportingCache {
         GetClientByOriginAndEndpoint(origin, endpoint);
     DCHECK(client);
     client_last_used_[client] = tick_clock()->NowTicks();
+  }
+
+  void GetClients(
+      std::vector<const ReportingClient*>* clients_out) const override {
+    clients_out->clear();
+    for (const auto& it : clients_)
+      for (const auto& endpoint_and_client : it.second)
+        clients_out->push_back(endpoint_and_client.second.get());
+  }
+
+  void GetClientsForOriginAndGroup(
+      const url::Origin& origin,
+      const std::string& group,
+      std::vector<const ReportingClient*>* clients_out) const override {
+    clients_out->clear();
+
+    const auto it = clients_.find(origin);
+    if (it != clients_.end()) {
+      for (const auto& endpoint_and_client : it->second) {
+        if (endpoint_and_client.second->group == group)
+          clients_out->push_back(endpoint_and_client.second.get());
+      }
+    }
+
+    // If no clients were found, try successive superdomain suffixes until a
+    // client with includeSubdomains is found or there are no more domain
+    // components left.
+    std::string domain = origin.host();
+    while (clients_out->empty() && !domain.empty()) {
+      GetWildcardClientsForDomainAndGroup(domain, group, clients_out);
+      domain = GetSuperdomain(domain);
+    }
+  }
+
+  // TODO(juliatuttle): Unittests.
+  void GetEndpointsForOrigin(const url::Origin& origin,
+                             std::vector<GURL>* endpoints_out) const override {
+    endpoints_out->clear();
+
+    const auto it = clients_.find(origin);
+    if (it == clients_.end())
+      return;
+
+    for (const auto& endpoint_and_client : it->second)
+      endpoints_out->push_back(endpoint_and_client.first);
   }
 
   void RemoveClients(
