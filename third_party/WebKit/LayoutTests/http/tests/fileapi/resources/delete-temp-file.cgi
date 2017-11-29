@@ -34,7 +34,7 @@ use warnings FATAL => 'all';
 use CGI qw(-oldstyle_urls);
 use Encode qw(encode decode);
 use File::Basename qw(basename dirname);
-use File::Spec::Functions qw(tmpdir);
+use File::Spec::Functions qw(rel2abs tmpdir);
 use utf8;
 
 my $win32 = eval 'use Win32; 1' ? 1 : 0;
@@ -66,7 +66,7 @@ my $system_tmpdir =
   $ENV{TMPDIR} || $ENV{TEMP} || $ENV{TMP} || $local_appdata_temp;
 $system_tmpdir =~ /\A([^\0- ]*)\z/s
   or die "untaint failed: $!";
-$system_tmpdir = $1;
+$system_tmpdir = rel2abs($1);
 if ($win32) {
   $system_tmpdir = Win32::GetANSIPathName($system_tmpdir);
   # Drive+directory path equality checks are performed in the 8.3
