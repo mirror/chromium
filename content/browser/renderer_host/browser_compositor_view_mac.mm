@@ -11,6 +11,7 @@
 #include "base/containers/circular_deque.h"
 #include "base/lazy_instance.h"
 #include "base/trace_event/trace_event.h"
+#include "components/viz/common/features.h"
 #include "content/browser/compositor/image_transport_factory.h"
 #include "content/browser/renderer_host/compositor_resize_lock.h"
 #include "content/public/browser/browser_thread.h"
@@ -107,7 +108,7 @@ RecyclableCompositorMac::RecyclableCompositorMac()
                   content::GetContextFactory(),
                   content::GetContextFactoryPrivate(),
                   ui::WindowResizeHelperMac::Get()->task_runner(),
-                  false /* enable_surface_synchronization */,
+                  features::IsSurfaceSynchronizationEnabled(),
                   false /* enable_pixel_canvas */) {
   compositor_.SetAcceleratedWidget(
       accelerated_widget_mac_->accelerated_widget());
@@ -184,9 +185,8 @@ BrowserCompositorMac::BrowserCompositorMac(
   g_browser_compositor_count += 1;
 
   root_layer_.reset(new ui::Layer(ui::LAYER_SOLID_COLOR));
-  // TODO(fsamuel): Plumb surface synchronization settings.
   delegated_frame_host_.reset(new DelegatedFrameHost(
-      frame_sink_id, this, false /* enable_surface_synchronization */,
+      frame_sink_id, this, features::IsSurfaceSynchronizationEnabled(),
       false /* enable_viz */));
 
   SetRenderWidgetHostIsHidden(render_widget_host_is_hidden);
