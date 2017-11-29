@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e68e0e24_a9736479",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-29T13:32:13Z",
+      "side": 1,
+      "message": "FWIW, we will want to have a UKM around this but it should probably be done in a follow-up. We could record the event and add the local score with it and/or visits/playbacks.",
+      "revId": "5199e680991272584f52b4315ebd170e0571143f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

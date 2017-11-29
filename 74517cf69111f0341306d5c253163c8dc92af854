@@ -34,6 +34,24 @@
       "revId": "74517cf69111f0341306d5c253163c8dc92af854",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e234166_8af5d055",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 3078,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-29T13:32:13Z",
+      "side": 0,
+      "message": "What mechanism is used instead? Do we rely on ::ReadyToCommitNavigation() only instead?",
+      "parentUuid": "4b780b84_4068ca11",
+      "revId": "74517cf69111f0341306d5c253163c8dc92af854",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
