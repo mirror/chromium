@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "6b3dd689_95aab44b",
+        "filename": "chrome/browser/browsing_data/sync_aware_counter_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-29T16:07:32Z",
+      "side": 1,
+      "message": "That\u0027s true. What I meant is that people who search for \"Callback\" who *want* to get \"base::Callback\". So to rephrase - this should have been named more semantically.",
+      "parentUuid": "d9ffa7c8_04c88aa0",
+      "range": {
+        "startLine": 74,
+        "startChar": 7,
+        "endLine": 74,
+        "endChar": 15
+      },
+      "revId": "e51b20b002bb5538fbd5f3212192450c6bed0b3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16da4fad_524daed5",
         "filename": "chrome/browser/browsing_data/sync_aware_counter_browsertest.cc",
         "patchSetId": 1
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "This call should still check whether counting finished since the last call to WaitForCounting()? The behavior should be exactly the same as before",
       "parentUuid": "4600b520_f9eb7573",
+      "range": {
+        "startLine": 142,
+        "startChar": 2,
+        "endLine": 142,
+        "endChar": 49
+      },
+      "revId": "e51b20b002bb5538fbd5f3212192450c6bed0b3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b803e0a8_827e9422",
+        "filename": "chrome/browser/browsing_data/sync_aware_counter_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-29T16:07:32Z",
+      "side": 1,
+      "message": "But |finished_| is always false in between counting, and only true while handling Callback().\n\nSo what this line tests is - are we currently handling callback? Well, no, we\u0027re executing code in a different Task.\n\nAs the name of the function suggests, it should return true if counting finished since last asked. But instead, the method always returns \"false\" because of line 63.\n\nIf you put EXPECT_TRUE(CountingFinishedSinceLastAsked()) on line 150, that is a valid expectation, but it will fail.",
+      "parentUuid": "4b65cdf7_394cdd1e",
       "range": {
         "startLine": 142,
         "startChar": 2,
