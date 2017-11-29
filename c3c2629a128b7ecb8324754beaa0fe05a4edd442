@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "277f3a8a_4d8471bd",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-29T21:55:20Z",
+      "side": 1,
+      "message": "focus_manager.js seems can be used for this. Have you considered that?\n\nOne similar use case is in chrome://extensions page:\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/extensions/extension_focus_manager.js",
+      "revId": "c3c2629a128b7ecb8324754beaa0fe05a4edd442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
