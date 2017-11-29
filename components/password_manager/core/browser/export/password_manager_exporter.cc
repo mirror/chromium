@@ -32,8 +32,10 @@ namespace password_manager {
 
 PasswordManagerExporter::PasswordManagerExporter(
     password_manager::CredentialProviderInterface*
-        credential_provider_interface)
+        credential_provider_interface,
+    base::RepeatingCallback<void(const std::string&)> on_writing_completed)
     : credential_provider_interface_(credential_provider_interface),
+      on_writing_completed_(std::move(on_writing_completed)),
       task_runner_(base::CreateSequencedTaskRunnerWithTraits(
           {base::TaskPriority::USER_VISIBLE, base::MayBlock()})),
       weak_factory_(this) {}
@@ -86,7 +88,9 @@ void PasswordManagerExporter::Export() {
 void PasswordManagerExporter::OnPasswordsSerialised(
     std::unique_ptr<Destination> destination,
     const std::string& serialised) {
-  destination->Write(serialised);
+  bool success = destination->Write(serialised);
+  on_writing_completed_.Run(
+      success ? std::string() : std::string("Writing to destination failed."));
 }
 
 }  // namespace password_manager
