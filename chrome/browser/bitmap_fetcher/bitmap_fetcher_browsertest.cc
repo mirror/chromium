@@ -10,6 +10,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/test/base/in_process_browser_test.h"
+#include "content/public/browser/storage_partition.h"
 #include "content/public/test/test_utils.h"
 #include "net/base/load_flags.h"
 #include "net/http/http_status_code.h"
@@ -120,9 +121,10 @@ IN_PROC_BROWSER_TEST_F(BitmapFetcherBrowserTest, StartTest) {
   // We expect that the image decoder will get called and return
   // an image in a callback to OnImageDecoded().
   fetcher.Init(
-      browser()->profile()->GetRequestContext(),
+      content::BrowserContext::GetDefaultStoragePartition(browser()->profile())
+          ->GetURLLoaderFactoryForBrowserProcess(),
       std::string(),
-      net::URLRequest::CLEAR_REFERRER_ON_TRANSITION_FROM_SECURE_TO_INSECURE,
+      blink::kWebReferrerPolicyNoReferrerWhenDowngradeOriginWhenCrossOrigin,
       net::LOAD_NORMAL);
   fetcher.Start();
 
@@ -173,9 +175,10 @@ IN_PROC_BROWSER_TEST_F(BitmapFetcherBrowserTest, OnURLFetchFailureTest) {
                                         net::URLRequestStatus::FAILED);
 
   fetcher.Init(
-      browser()->profile()->GetRequestContext(),
+      content::BrowserContext::GetDefaultStoragePartition(browser()->profile())
+          ->GetURLLoaderFactoryForBrowserProcess(),
       std::string(),
-      net::URLRequest::CLEAR_REFERRER_ON_TRANSITION_FROM_SECURE_TO_INSECURE,
+      blink::kWebReferrerPolicyNoReferrerWhenDowngradeOriginWhenCrossOrigin,
       net::LOAD_NORMAL);
   fetcher.Start();
 
@@ -195,9 +198,10 @@ IN_PROC_BROWSER_TEST_F(BitmapFetcherBrowserTest, HandleImageFailedTest) {
                                         net::URLRequestStatus::SUCCESS);
 
   fetcher.Init(
-      browser()->profile()->GetRequestContext(),
+      content::BrowserContext::GetDefaultStoragePartition(browser()->profile())
+          ->GetURLLoaderFactoryForBrowserProcess(),
       std::string(),
-      net::URLRequest::CLEAR_REFERRER_ON_TRANSITION_FROM_SECURE_TO_INSECURE,
+      blink::kWebReferrerPolicyNoReferrerWhenDowngradeOriginWhenCrossOrigin,
       net::LOAD_NORMAL);
   fetcher.Start();
 
