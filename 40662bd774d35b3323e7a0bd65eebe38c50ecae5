@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a59f62d_1b4e2c36",
+        "filename": "content/browser/notifications/blink_notification_service_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-29T14:47:53Z",
+      "side": 1,
+      "message": "nit: already included in the header",
+      "revId": "40662bd774d35b3323e7a0bd65eebe38c50ecae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dc8cc37_80e5552e",
+        "filename": "content/browser/notifications/blink_notification_service_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-29T14:47:53Z",
+      "side": 1,
+      "message": "It\u0027d be worth documenting why using base::Unretained() here is safe.",
+      "revId": "40662bd774d35b3323e7a0bd65eebe38c50ecae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b9d7e53_b4d7271c",
+        "filename": "third_party/WebKit/Source/modules/notifications/Notification.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-29T14:47:53Z",
+      "side": 1,
+      "message": "This won\u0027t compile.... also please add a test.",
+      "revId": "40662bd774d35b3323e7a0bd65eebe38c50ecae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d382e93_7f832858",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-29T14:47:53Z",
+      "side": 1,
+      "message": "Please use GetNotificationService()...",
+      "revId": "40662bd774d35b3323e7a0bd65eebe38c50ecae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c626dd78_4d963b8a",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-29T14:47:53Z",
+      "side": 1,
+      "message": "We now have NotificationManager::DisplayNonPersistentNotification and NotificationService::DisplayNonPersistent. Align?",
+      "revId": "40662bd774d35b3323e7a0bd65eebe38c50ecae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fffcee1_b343508a",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-29T14:47:53Z",
+      "side": 1,
+      "message": "nit: delete this comment since they won\u0027t be yet?",
+      "revId": "40662bd774d35b3323e7a0bd65eebe38c50ecae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d152fbf9_fb6fbaf2",
+        "filename": "third_party/WebKit/public/platform/modules/notifications/notification_service.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-29T14:47:53Z",
+      "side": 1,
+      "message": "Drop the origin.",
+      "revId": "40662bd774d35b3323e7a0bd65eebe38c50ecae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
