@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38d8ca81_a2abf960",
+        "filename": "chrome/browser/media/media_engagement_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-29T16:49:27Z",
+      "side": 1,
+      "message": "Note: some tests are passing because of these and some are failing :shrug",
+      "revId": "0191015495405a657ce4878b17917a5a2804b3e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35e89b2b_aa633ab0",
+        "filename": "chrome/browser/media/media_engagement_session_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-29T16:49:27Z",
+      "side": 1,
+      "message": "FWIW, I will make `session` a member variable of the test class to simplify a bit these methods (ie. they wouldn\u0027t need the `session`).",
+      "revId": "0191015495405a657ce4878b17917a5a2804b3e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
