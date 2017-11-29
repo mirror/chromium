@@ -667,6 +667,7 @@ mojom("mojo_bindings") {
     "chrome_render_frame.mojom",
     "constants.mojom",
     "insecure_content_renderer.mojom",
+    "interstitial_page.mojom",
     "navigation_corrector.mojom",
     "net_benchmarking.mojom",
     "network_diagnostics.mojom",
