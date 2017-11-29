@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c49f4c4e_40842dfb",
+        "filename": "content/renderer/loader/web_url_request_util.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-29T02:28:46Z",
+      "side": 1,
+      "message": "Hmm, OK. That\u0027s a little confusing I think, but not much to do about it here.\n\nDo you mind DCHECK()\u0027ing that the callback is not null when constructed? That might help hint to readers that we expected one or both of these to be called, hence the null checks.",
+      "parentUuid": "db145913_41062e0a",
+      "revId": "6580c928240ee83c7b8d21440617bead7104fe92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0919a44_4927ecaf",
         "filename": "content/renderer/loader/web_url_request_util.cc",
         "patchSetId": 11
@@ -48,6 +66,24 @@
       "writtenOn": "2017-11-29T01:04:36Z",
       "side": 1,
       "message": "This is potentially null if OnCalculatedSize() was called successfully, but an error later occurred and OnComplete() was called with error.",
+      "revId": "6580c928240ee83c7b8d21440617bead7104fe92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fab3919a_95cc6a37",
+        "filename": "content/renderer/loader/web_url_request_util.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-29T02:28:46Z",
+      "side": 1,
+      "message": "And perhaps adding a brief comment here wouldn\u0027t hurt either: on error, signal failure immediately here; otherwise, on success, OnCalculatedSize() is guaranteed to be called, and the result will be signaled from there.",
+      "parentUuid": "f0919a44_4927ecaf",
       "revId": "6580c928240ee83c7b8d21440617bead7104fe92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
