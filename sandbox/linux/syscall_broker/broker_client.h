@@ -65,9 +65,6 @@ class BrokerClient {
   // This is async signal safe.
   int Rename(const char* oldpath, const char* newpath);
 
-  // Can be used in place of Readlink().
-  int Readlink(const char* path, char* buf, size_t bufsiz);
-
   // Get the file descriptor used for IPC. This is used for tests.
   int GetIPCDescriptor() const { return ipc_channel_.get(); }
 

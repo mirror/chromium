@@ -33,7 +33,6 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace sandbox {
-
 namespace syscall_broker {
 
 class BrokerProcessTestHelper {
@@ -47,6 +46,8 @@ class BrokerProcessTestHelper {
 };
 
 namespace {
+
+const int kFakeErrnoSentinel = 99999;
 
 bool NoOpCallback() {
   return true;
@@ -753,9 +754,11 @@ TEST(BrokerProcess, RenameFile) {
     permissions.push_back(BrokerFilePermission::ReadWrite(oldpath));
 
     bool fast_check_in_client = false;
-    BrokerProcess open_broker(EPERM, permissions, fast_check_in_client);
+    BrokerProcess open_broker(kFakeErrnoSentinel, permissions,
+                              fast_check_in_client);
     ASSERT_TRUE(open_broker.Init(base::Bind(&NoOpCallback)));
-    EXPECT_EQ(-EPERM, open_broker.Rename(oldpath.c_str(), newpath.c_str()));
+    EXPECT_EQ(-kFakeErrnoSentinel,
+              open_broker.Rename(oldpath.c_str(), newpath.c_str()));
 
     // ... and no files moved around.
     EXPECT_TRUE(access(oldpath.c_str(), F_OK) == 0);
@@ -767,9 +770,11 @@ TEST(BrokerProcess, RenameFile) {
     permissions.push_back(BrokerFilePermission::ReadWrite(newpath));
 
     bool fast_check_in_client = false;
-    BrokerProcess open_broker(EPERM, permissions, fast_check_in_client);
+    BrokerProcess open_broker(kFakeErrnoSentinel, permissions,
+                              fast_check_in_client);
     ASSERT_TRUE(open_broker.Init(base::Bind(&NoOpCallback)));
-    EXPECT_EQ(-EPERM, open_broker.Rename(oldpath.c_str(), newpath.c_str()));
+    EXPECT_EQ(-kFakeErrnoSentinel,
+              open_broker.Rename(oldpath.c_str(), newpath.c_str()));
 
     // ... and no files moved around.
     EXPECT_TRUE(access(oldpath.c_str(), F_OK) == 0);
@@ -782,9 +787,11 @@ TEST(BrokerProcess, RenameFile) {
     permissions.push_back(BrokerFilePermission::ReadWrite(newpath));
 
     bool fast_check_in_client = false;
-    BrokerProcess open_broker(EPERM, permissions, fast_check_in_client);
+    BrokerProcess open_broker(kFakeErrnoSentinel, permissions,
+                              fast_check_in_client);
     ASSERT_TRUE(open_broker.Init(base::Bind(&NoOpCallback)));
-    EXPECT_EQ(-EPERM, open_broker.Rename(oldpath.c_str(), newpath.c_str()));
+    EXPECT_EQ(-kFakeErrnoSentinel,
+              open_broker.Rename(oldpath.c_str(), newpath.c_str()));
 
     // ... and no files moved around.
     EXPECT_TRUE(access(oldpath.c_str(), F_OK) == 0);
@@ -797,9 +804,11 @@ TEST(BrokerProcess, RenameFile) {
     permissions.push_back(BrokerFilePermission::ReadOnly(newpath));
 
     bool fast_check_in_client = false;
-    BrokerProcess open_broker(EPERM, permissions, fast_check_in_client);
+    BrokerProcess open_broker(kFakeErrnoSentinel, permissions,
+                              fast_check_in_client);
     ASSERT_TRUE(open_broker.Init(base::Bind(&NoOpCallback)));
-    EXPECT_EQ(-EPERM, open_broker.Rename(oldpath.c_str(), newpath.c_str()));
+    EXPECT_EQ(-kFakeErrnoSentinel,
+              open_broker.Rename(oldpath.c_str(), newpath.c_str()));
 
     // ... and no files moved around.
     EXPECT_TRUE(access(oldpath.c_str(), F_OK) == 0);
@@ -812,7 +821,8 @@ TEST(BrokerProcess, RenameFile) {
     permissions.push_back(BrokerFilePermission::ReadWrite(newpath));
 
     bool fast_check_in_client = false;
-    BrokerProcess open_broker(EPERM, permissions, fast_check_in_client);
+    BrokerProcess open_broker(kFakeErrnoSentinel, permissions,
+                              fast_check_in_client);
     ASSERT_TRUE(open_broker.Init(base::Bind(&NoOpCallback)));
     EXPECT_EQ(0, open_broker.Rename(oldpath.c_str(), newpath.c_str()));
 
@@ -822,62 +832,6 @@ TEST(BrokerProcess, RenameFile) {
   }
 
   // Cleanup using new path name.
-  unlink(newpath.c_str());
-}
-
-TEST(BrokerProcess, ReadlinkFileOk) {
-  std::string oldpath;
-  std::string newpath;
-  {
-    // Just to generate names and ensure they do not exist upon scope exit.
-    ScopedTemporaryFile oldfile;
-    ScopedTemporaryFile newfile;
-    oldpath = oldfile.full_file_name();
-    newpath = newfile.full_file_name();
-  }
-
-  // Now make a link from old to new path name.
-  EXPECT_TRUE(symlink(oldpath.c_str(), newpath.c_str()) == 0);
-
-  const char* nonesuch_name = "/mbogo/nonesuch";
-  const char* oldpath_name = oldpath.c_str();
-  const char* newpath_name = newpath.c_str();
-  const bool fast_check_in_client = false;
-  char buf[1024];
-  {
-    // Nonexistent file with no permissions to see file.
-    std::vector<BrokerFilePermission> permissions;
-    BrokerProcess open_broker(EPERM, permissions, fast_check_in_client);
-    ASSERT_TRUE(open_broker.Init(base::Bind(&NoOpCallback)));
-    EXPECT_EQ(-EPERM, open_broker.Readlink(nonesuch_name, buf, sizeof(buf)));
-  }
-  {
-    // Actual file with no permissions to see file.
-    std::vector<BrokerFilePermission> permissions;
-    BrokerProcess open_broker(EPERM, permissions, fast_check_in_client);
-    ASSERT_TRUE(open_broker.Init(base::Bind(&NoOpCallback)));
-    EXPECT_EQ(-EPERM, open_broker.Readlink(newpath_name, buf, sizeof(buf)));
-  }
-  {
-    // Nonexistent file with permissions to see file.
-    std::vector<BrokerFilePermission> permissions;
-    permissions.push_back(BrokerFilePermission::ReadOnly(nonesuch_name));
-    BrokerProcess open_broker(EPERM, permissions, fast_check_in_client);
-    ASSERT_TRUE(open_broker.Init(base::Bind(&NoOpCallback)));
-    EXPECT_EQ(-ENOENT, open_broker.Readlink(nonesuch_name, buf, sizeof(buf)));
-  }
-  {
-    // Actual file with permissions to see file.
-    std::vector<BrokerFilePermission> permissions;
-    permissions.push_back(BrokerFilePermission::ReadOnly(newpath_name));
-    BrokerProcess open_broker(EPERM, permissions, fast_check_in_client);
-    ASSERT_TRUE(open_broker.Init(base::Bind(&NoOpCallback)));
-    EXPECT_TRUE(open_broker.Readlink(newpath_name, buf, sizeof(buf)) > 0);
-    EXPECT_EQ(0, strcmp(oldpath_name, buf));
-  }
-
-  // Cleanup both paths.
-  unlink(oldpath.c_str());
   unlink(newpath.c_str());
 }
 

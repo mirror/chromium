@@ -9,6 +9,7 @@
 #include <stddef.h>
 
 namespace sandbox {
+
 namespace syscall_broker {
 
 const size_t kMaxMessageLength = 4096;
@@ -34,10 +35,10 @@ enum IPCCommand {
   COMMAND_STAT,
   COMMAND_STAT64,
   COMMAND_RENAME,
-  COMMAND_READLINK,
 };
 
 }  // namespace syscall_broker
+
 }  // namespace sandbox
 
 #endif  // SANDBOX_LINUX_SYSCALL_BROKER_BROKER_COMMON_H_

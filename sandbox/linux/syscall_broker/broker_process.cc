@@ -129,11 +129,6 @@ int BrokerProcess::Rename(const char* oldpath, const char* newpath) const {
   return broker_client_->Rename(oldpath, newpath);
 }
 
-int BrokerProcess::Readlink(const char* path, char* buf, size_t bufsiz) const {
-  RAW_CHECK(initialized_);
-  return broker_client_->Readlink(path, buf, bufsiz);
-}
-
 #if defined(MEMORY_SANITIZER)
 #define BROKER_UNPOISON_STRING(x) __msan_unpoison_string(x)
 #else
