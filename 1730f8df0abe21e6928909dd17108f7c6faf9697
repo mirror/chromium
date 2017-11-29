@@ -46,6 +46,29 @@
       "revId": "1730f8df0abe21e6928909dd17108f7c6faf9697",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7947171_a38fb719",
+        "filename": "chrome/browser/resources/md_extensions/toolbar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-11-29T19:36:54Z",
+      "side": 1,
+      "message": "can\u0027t everywhere that does set/getAttribute(\u0027hidden\u0027) just use .hidden?\n\nthis.$.devDrawer.hidden \u003d !this.inDevMode;",
+      "range": {
+        "startLine": 84,
+        "startChar": 7,
+        "endLine": 84,
+        "endChar": 0
+      },
+      "revId": "1730f8df0abe21e6928909dd17108f7c6faf9697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
