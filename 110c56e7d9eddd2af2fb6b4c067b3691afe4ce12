@@ -70,6 +70,24 @@
       "revId": "110c56e7d9eddd2af2fb6b4c067b3691afe4ce12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d950191_8ae99b17",
+        "filename": "chrome/browser/banners/app_banner_manager_desktop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-29T06:01:43Z",
+      "side": 1,
+      "message": "That being said, it should be possible to still record an ignore if the bookmark app bubble is destroyed without being interacted with (a la what AppBannerInfoBarDelegateDesktop does). I\u0027m not too concerned with this situation though since it seems like it would be rare.",
+      "parentUuid": "205f1af6_d4a87a7a",
+      "revId": "110c56e7d9eddd2af2fb6b4c067b3691afe4ce12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
