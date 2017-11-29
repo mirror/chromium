@@ -62,6 +62,9 @@ class ShellDevToolsBindings : public WebContentsObserver,
                                const std::string& message) override;
 
   void SetPreferences(const std::string& json);
+  base::Value* GetPreference(const std::string& key) {
+    return preferences_.FindKey(key);
+  }
   virtual void HandleMessageFromDevToolsFrontend(const std::string& message);
 
  private:
