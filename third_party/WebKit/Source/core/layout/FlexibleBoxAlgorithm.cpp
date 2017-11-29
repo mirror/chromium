@@ -351,7 +351,7 @@ void FlexLine::ComputeLineItemsPosition(LayoutUnit main_axis_offset,
 
   main_axis_extent = main_axis_offset;
 
-  this->cross_axis_offset = cross_axis_offset;
+  cross_axis_offset = cross_axis_offset;
   cross_axis_extent = max_child_cross_axis_extent;
 
   cross_axis_offset += max_child_cross_axis_extent;
