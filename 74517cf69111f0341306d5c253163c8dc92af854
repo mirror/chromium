@@ -52,6 +52,24 @@
       "revId": "74517cf69111f0341306d5c253163c8dc92af854",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c32faf48_3f3d2289",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 3078,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-29T14:25:10Z",
+      "side": 0,
+      "message": "Yes ReadyToCommitNavigation will set the bit on the frame.",
+      "parentUuid": "0e234166_8af5d055",
+      "revId": "74517cf69111f0341306d5c253163c8dc92af854",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
