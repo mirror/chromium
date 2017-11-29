@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1e392195_606412b0",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logging_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-29T06:43:41Z",
+      "side": 1,
+      "message": "IdleEventNotifier and UserActivityLogger require complex initialization and have to be initialized in the ctor body. They also don\u0027t have default ctor. So the only alternative would be a raw ptr. I would prefer unique_ptr. :)",
+      "parentUuid": "b56bb936_9bc5e0c1",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 60
+      },
+      "revId": "2aefac325328f03f0d7f94204ca841bcfa76ae80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6240529_6ed35f6f",
         "filename": "chrome/common/chrome_features.h",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-29T01:43:55Z",
       "side": 1,
       "message": "The top and bottom of this file say this should be in alphabetical order. These last few features aren\u0027t but if you ignore them you can insert kUser* around line 279.",
+      "range": {
+        "startLine": 310,
+        "startChar": 27,
+        "endLine": 310,
+        "endChar": 52
+      },
+      "revId": "2aefac325328f03f0d7f94204ca841bcfa76ae80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1891f0a8_2d2cb1f0",
+        "filename": "chrome/common/chrome_features.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-29T06:43:41Z",
+      "side": 1,
+      "message": "I put this feature under defined(OS_CHROMEOS), so I could either leave it here, or, place it just below \"extern const base::Feature kQuickUnlockFingerprint\" (line 292). What do you think?",
+      "parentUuid": "c6240529_6ed35f6f",
       "range": {
         "startLine": 310,
         "startChar": 27,
