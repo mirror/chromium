@@ -22,6 +22,30 @@
       "revId": "166d81dbeda118eb4c874b98de1a190b940f1361",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3d91f6f_4c4dd2c4",
+        "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-11-29T09:16:08Z",
+      "side": 1,
+      "message": "I should give an example of what I mean to be more clear. :) Something like:\n\nconstexpr size_t alignment \u003d 4;\n\n// Fill the beginning unaligned bytes\nswitch (pointer % alignment) {\n  case 3:\n    load_and_store_one_byte();\n    // fall through\n  case 2:\n    load_and_store_one_byte();\n    // fall through\n  case 1:\n    load_and_store_one_byte();\n}\n\n// Loop over aligned remainder\nwhile (more_to_do) {\n  load_and_store_four_bytes();\n}",
+      "parentUuid": "677597d0_5c24b330",
+      "range": {
+        "startLine": 61,
+        "startChar": 39,
+        "endLine": 61,
+        "endChar": 54
+      },
+      "revId": "166d81dbeda118eb4c874b98de1a190b940f1361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
