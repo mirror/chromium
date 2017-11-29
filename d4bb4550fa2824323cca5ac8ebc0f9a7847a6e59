@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4eb05d6_1c7e5f83",
+        "filename": "build/android/pylib/local/device/local_device_gtest_run.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-29T20:16:21Z",
+      "side": 1,
+      "message": "Can you add a TODO to pull this once we\u0027ve diagnosed and fixed crbug.com/726880?",
+      "revId": "d4bb4550fa2824323cca5ac8ebc0f9a7847a6e59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33a5f2da_2401880d",
+        "filename": "build/android/pylib/local/device/local_device_gtest_run.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-29T20:16:21Z",
+      "side": 1,
+      "message": "dev.adb.Logcat(dump\u003dTrue)\ndev.adb.Logcat(clear\u003dTrue)",
+      "revId": "d4bb4550fa2824323cca5ac8ebc0f9a7847a6e59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
