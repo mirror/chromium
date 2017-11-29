@@ -42,6 +42,29 @@
     },
     {
       "key": {
+        "uuid": "72569d55_24de594f",
+        "filename": "components/exo/data_source.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-29T14:06:24Z",
+      "side": 1,
+      "message": "nit: s/OK/safe/",
+      "range": {
+        "startLine": 122,
+        "startChar": 19,
+        "endLine": 122,
+        "endChar": 21
+      },
+      "revId": "049ea585d774a3a8f35b97e1d3dc97b5172b2296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7e1cac8_f6329995",
         "filename": "components/exo/data_source.h",
         "patchSetId": 6
@@ -58,6 +81,29 @@
         "startChar": 31,
         "endLine": 56,
         "endChar": 39
+      },
+      "revId": "049ea585d774a3a8f35b97e1d3dc97b5172b2296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "628a2536_5f3e6898",
+        "filename": "components/exo/seat.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-29T14:06:24Z",
+      "side": 1,
+      "message": "nit: I prefer to have this included in the other CL as it\u0027s not clear how the old callback is invalidated otherwise",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 3
       },
       "revId": "049ea585d774a3a8f35b97e1d3dc97b5172b2296",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
