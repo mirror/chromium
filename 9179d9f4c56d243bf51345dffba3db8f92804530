@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "e74fe08b_259b1c87",
+        "filename": "ui/base/cocoa/bubble_closer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-29T21:48:26Z",
+      "side": 1,
+      "message": "aside: I thought it might be nice if there were a cross-platform solution that would also close for clicks outside Win/Linux/CrOS bubbles that don\u0027t activate (that has come up a few times lately). I\u0027d suggest PointerWatcher, but that\u0027s aura-specific and only works on the basis of mus WindowTreeClients... haha I\u0027ve been in mus+ash land too long. I guess we need this class!",
+      "revId": "9179d9f4c56d243bf51345dffba3db8f92804530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41a704cd_259af66a",
         "filename": "ui/base/cocoa/bubble_closer.mm",
         "patchSetId": 3
@@ -30,6 +47,40 @@
       "writtenOn": "2017-11-29T19:50:56Z",
       "side": 1,
       "message": "Maybe just write this as a lambda?",
+      "revId": "9179d9f4c56d243bf51345dffba3db8f92804530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfb6aa19_feee0d91",
+        "filename": "ui/views/bubble/bubble_dialog_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-29T21:48:26Z",
+      "side": 1,
+      "message": "Should this only happen if close_on_deactivate() is true?",
+      "revId": "9179d9f4c56d243bf51345dffba3db8f92804530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9be6a49e_705f5b16",
+        "filename": "ui/views/bubble/bubble_dialog_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-29T21:48:26Z",
+      "side": 1,
+      "message": "It\u0027s so weird that the Mac window server has that behavior, but I guess I believe it.",
       "revId": "9179d9f4c56d243bf51345dffba3db8f92804530",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
