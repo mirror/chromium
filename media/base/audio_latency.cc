@@ -128,27 +128,20 @@ int AudioLatency::GetRtcBufferSize(int sample_rate, int hardware_buffer_size) {
   return frames_per_buffer;
 }
 
+//
+#if 0
+static bool IsPowerOfTwo(int x) {
+  // From Hacker's Delight.  x & (x - 1) turns off (zeroes) the
+  // rightmost 1-bit in the word x.  If x is a power of two, then the
+  // result is, of course, 0.
+  return x > 0 && ((x & (x - 1)) == 0);
+}
+#endif
+
 // static
 int AudioLatency::GetInteractiveBufferSize(int hardware_buffer_size) {
 #if defined(OS_ANDROID)
-  // The optimum low-latency hardware buffer size is usually too small on
-  // Android for WebAudio to render without glitching. So, if it is small, use
-  // a larger size.
-  //
-  // Since WebAudio renders in 128-frame blocks, the small buffer sizes (144 for
-  // a Galaxy Nexus), cause significant processing jitter. Sometimes multiple
-  // blocks will processed, but other times will not be since the WebAudio can't
-  // satisfy the request. By using a larger render buffer size, we smooth out
-  // the jitter.
-  const int kSmallBufferSize = 1024;
-  const int kDefaultCallbackBufferSize = 2048;
-
   LOG(INFO) << "audioHardwareBufferSize = " << hardware_buffer_size;
-
-  if (hardware_buffer_size <= kSmallBufferSize)
-    hardware_buffer_size = kDefaultCallbackBufferSize;
-
-  LOG(INFO) << "callbackBufferSize      = " << hardware_buffer_size;
 #endif
 
   return hardware_buffer_size;
@@ -160,7 +153,7 @@ int AudioLatency::GetExactBufferSize(base::TimeDelta duration,
   DCHECK_NE(0, hardware_buffer_size);
 
 // Other platforms do not currently support custom buffer sizes.
-#if !defined(OS_MACOSX) && !defined(USE_CRAS)
+#if !defined(OS_MACOSX) && !defined(USE_CRAS) && !defined(OS_ANDROID)
   return hardware_buffer_size;
 #else
   const double requested_buffer_size = duration.InSecondsF() * sample_rate;
@@ -171,7 +164,7 @@ int AudioLatency::GetExactBufferSize(base::TimeDelta duration,
 #if defined(OS_MACOSX)
   minimum_buffer_size =
       GetMinAudioBufferSizeMacOS(limits::kMinAudioBufferSize, sample_rate);
-#elif defined(USE_CRAS)
+#elif defined(USE_CRAS) || defined(OS_ANDROID)
   minimum_buffer_size = limits::kMinAudioBufferSize;
 #endif
 
