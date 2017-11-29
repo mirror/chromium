@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "24f810ab_e6584cd5",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-29T19:49:29Z",
+      "side": 1,
+      "message": "Ack. Let\u0027s go with this for now and see how interesting these values will be.",
+      "parentUuid": "31257c08_3eaf5aac",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 40
+      },
+      "revId": "f1dddfced5f0d9b7b37b8c4e7f33bd6f495c924f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57c2a0c6_9b75b296",
         "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
         "patchSetId": 2
@@ -135,6 +159,29 @@
         "startChar": 18,
         "endLine": 59,
         "endChar": 23
+      },
+      "revId": "f1dddfced5f0d9b7b37b8c4e7f33bd6f495c924f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9828f0f1_8ed03966",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 92587,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-29T19:49:29Z",
+      "side": 1,
+      "message": "As discussed offline, something like VRSessionDLA would be better.",
+      "range": {
+        "startLine": 92587,
+        "startChar": 17,
+        "endLine": 92587,
+        "endChar": 52
       },
       "revId": "f1dddfced5f0d9b7b37b8c4e7f33bd6f495c924f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
