@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ccddfe5_60bae319",
+        "filename": "chrome/browser/vr/elements/text.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-29T15:13:30Z",
+      "side": 1,
+      "message": "nit: initialize it with a default value given that it is not in ctor now?",
+      "revId": "0ab2457f9d4b1378eef9ae4cfaea1a7f8b02bf7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faf5b510_612517ae",
+        "filename": "chrome/browser/vr/elements/textured_element.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-29T15:13:30Z",
+      "side": 1,
+      "message": "while you are on it, can we add DCHECK here to make sure that stale_size().width \u003e 0 for this case and stale_size().height \u003e 0 for the else case? This could prevent regression.",
+      "revId": "0ab2457f9d4b1378eef9ae4cfaea1a7f8b02bf7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
