@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<body>
+  <script src=/resources/testharness.js></script>
+  <script src=/resources/testharnessreport.js></script>
+  <script src=/feature-policy/resources/featurepolicy.js></script>
+  <script>
+  'use strict';
+  var local_origin = 'https://web-platform.test:8444';
+  var same_origin_src = '/feature-policy/resources/feature-policy-subframe-policy.html';
+  var cross_origin_src = 'https://{{domains[www]}}:{{ports[https][0]}}' + same_origin_src;
+  var allowlists = [
+    {feature: 'fullscreen', whitelist: ['*']},
+    {feature: 'payment', whitelist: [local_origin]},
+    {feature: 'midi', whitelist: []},
+    {feature: 'camera', whitelist: [local_origin, 'https://www.example.com']}];
+
+  test_allowlists(
+      allowlists,
+      document.policy,
+      'Test allowed features in document.policy');
+
+  // sub frames should inherit the same policy from the main document.
+  async_test(t => {
+    test_allowed_features_for_subframe(
+        t,
+        ['fullscreen', 'payment', 'camera'],
+        ['midi'],
+        same_origin_src)
+  }, 'Test allowed features in a same-origin iframe');
+  async_test(t => {
+    test_allowed_features_for_subframe(
+        t,
+        // TODO(loonybear): once support cross origin definition, enable 'camera'
+        // in cross origin.
+        ['fullscreen'],
+        ['midi', 'payment', 'camera'], // payment and camera are allowed only for self origin.
+        cross_origin_src)
+  }, 'Test allowed features in a cross-origin iframe');
+  </script>
+</body>

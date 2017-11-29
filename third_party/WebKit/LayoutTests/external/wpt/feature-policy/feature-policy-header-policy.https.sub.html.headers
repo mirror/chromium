@@ -1,0 +1,1 @@
+Feature-Policy: fullscreen *; payment 'self'; midi 'none'; camera 'self' https://www.example.com
