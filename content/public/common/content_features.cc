@@ -317,7 +317,7 @@ const base::Feature kTimerThrottlingForHiddenFrames{
 // tracked through a frame-based state instead of the gesture tokens we use
 // today.
 const base::Feature kUserActivationV2{"UserActivationV2",
-                                      base::FEATURE_DISABLED_BY_DEFAULT};
+                                      base::FEATURE_ENABLED_BY_DEFAULT};
 
 // Groups all out-of-process iframes to a different process from the process of
 // the top document. This is a performance isolation mode.  Launch bug:
