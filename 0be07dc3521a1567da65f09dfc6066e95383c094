@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5cbb7e9e_9dfe2349",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-11-29T14:48:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf194c55_846f020a",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 32
+      },
+      "revId": "0be07dc3521a1567da65f09dfc6066e95383c094",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3b5c79e_3633ef29",
         "filename": "third_party/WebKit/LayoutTests/media/track/captions-webvtt/header-regions.vtt",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "0be07dc3521a1567da65f09dfc6066e95383c094",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a08d831_fda9af81",
+        "filename": "third_party/WebKit/LayoutTests/media/track/captions-webvtt/header-regions.vtt",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-11-29T14:48:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3b5c79e_3633ef29",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 9
+      },
+      "revId": "0be07dc3521a1567da65f09dfc6066e95383c094",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "98d8c716_5b6bbe56",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-11-29T14:48:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bdd0cef_9fa03191",
+      "range": {
+        "startLine": 225,
+        "startChar": 5,
+        "endLine": 226,
+        "endChar": 53
+      },
+      "revId": "0be07dc3521a1567da65f09dfc6066e95383c094",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "991c51c6_ccd92b2d",
         "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
         "patchSetId": 7
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "bc216728_4d1f69fd",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-11-29T14:48:49Z",
+      "side": 1,
+      "message": "It should be buffer not current_content_.\nmodified the logic to check remaining character.",
+      "parentUuid": "991c51c6_ccd92b2d",
+      "range": {
+        "startLine": 260,
+        "startChar": 12,
+        "endLine": 262,
+        "endChar": 65
+      },
+      "revId": "0be07dc3521a1567da65f09dfc6066e95383c094",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6fc0b4b9_0a27d4d3",
         "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
         "patchSetId": 7
@@ -105,6 +201,30 @@
       "writtenOn": "2017-11-28T16:44:39Z",
       "side": 1,
       "message": "Let the only call this be in the main \"driver\" (VTTParser::Parse), and then rather add additional/modify states as needed. Calling this nested makes buffer boundaries difficult to handle correctly.\n\nI would suggest that you decompose the algorithm so that you can process it per-line instead.",
+      "range": {
+        "startLine": 278,
+        "startChar": 11,
+        "endLine": 278,
+        "endChar": 37
+      },
+      "revId": "0be07dc3521a1567da65f09dfc6066e95383c094",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7413fe2b_603756f1",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-11-29T14:48:49Z",
+      "side": 1,
+      "message": "removed GetLine from here. handled line by line.",
+      "parentUuid": "6fc0b4b9_0a27d4d3",
       "range": {
         "startLine": 278,
         "startChar": 11,
