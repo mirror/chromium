@@ -9,7 +9,6 @@
 #include "media/base/media_switches.h"
 
 namespace content {
-
 namespace {
 
 bool IsMediaSessionEnabled() {
@@ -24,12 +23,11 @@ bool IsMediaSessionEnabled() {
 #endif
 }
 
-}  // anonymous namespace
+}  // namespace
 
 MediaSessionControllersManager::MediaSessionControllersManager(
     MediaWebContentsObserver* media_web_contents_observer)
-    : media_web_contents_observer_(media_web_contents_observer) {
-}
+    : media_web_contents_observer_(media_web_contents_observer) {}
 
 MediaSessionControllersManager::~MediaSessionControllersManager() = default;
 
