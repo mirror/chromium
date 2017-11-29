@@ -89,6 +89,8 @@ class VrGLThread : public base::android::JavaHandlerThread,
   void SetOmniboxSuggestions(
       std::unique_ptr<vr::OmniboxSuggestions> result) override;
 
+  void ShowKeyboard(bool show) override;
+
  protected:
   void Init() override;
   void CleanUp() override;

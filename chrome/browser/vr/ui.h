@@ -106,6 +106,8 @@ class Ui : public BrowserUiInterface {
 
   void Dump();
 
+  void OnKeyboardTextChanged(const base::string16& string, int position);
+
  private:
   void InitializeModel(const UiInitialState& ui_initial_state);
   UiBrowserInterface* browser_;

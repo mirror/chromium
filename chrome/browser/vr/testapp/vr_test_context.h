@@ -37,6 +37,7 @@ class VrTestContext : public vr::UiBrowserInterface {
   // vr::UiBrowserInterface implementation (UI calling to VrShell).
   void ExitPresent() override;
   void ExitFullscreen() override;
+  void Navigate(GURL gurl) override;
   void NavigateBack() override;
   void ExitCct() override;
   void OnUnsupportedMode(vr::UiUnsupportedMode mode) override;
@@ -46,12 +47,14 @@ class VrTestContext : public vr::UiBrowserInterface {
   void SetVoiceSearchActive(bool active) override;
   void StartAutocomplete(const base::string16& string) override;
   void StopAutocomplete() override;
-  void Navigate(GURL gurl) override;
+
+  void ShowKeyboard(bool show) override;
 
   void set_window_size(const gfx::Size& size) { window_size_ = size; }
 
  private:
   unsigned int CreateFakeContentTexture();
+  void CreateFakeTextInput();
   void CreateFakeOmniboxSuggestions();
   void CycleWebVrModes();
   void ToggleSplashScreen();

@@ -48,6 +48,8 @@
 #include "ui/gl/gl_surface.h"
 #include "ui/gl/init/gl_factory.h"
 
+#include "base/strings/utf_string_conversions.h"
+
 namespace vr_shell {
 
 namespace {
@@ -103,43 +105,11 @@ static constexpr int kNumSamplesPerPixelWebVr = 1;
 static constexpr float kRedrawSceneAngleDeltaDegrees = 1.0;
 
 static gvr_keyboard_context* keyboard_context;
+static base::Callback<void(void*, int32_t)> keyboard_context_callback;
 
-// TODO(ymalik,crbug.com/780318): This callback is temporary until we have an
-// editable input field.
-void OnKeyboardEvent(void*, int32_t event) {
-  switch (event) {
-    case GVR_KEYBOARD_ERROR_UNKNOWN:
-      LOG(ERROR) << "Unknown GVR keyboard error.";
-      break;
-    case GVR_KEYBOARD_ERROR_SERVICE_NOT_CONNECTED:
-      LOG(ERROR) << "GVR keyboard service not connected.";
-      break;
-    case GVR_KEYBOARD_ERROR_NO_LOCALES_FOUND:
-      LOG(ERROR) << "No GVR keyboard locales found.";
-      break;
-    case GVR_KEYBOARD_ERROR_SDK_LOAD_FAILED:
-      LOG(ERROR) << "GVR keyboard sdk load failed.";
-      break;
-    case GVR_KEYBOARD_SHOWN:
-      DVLOG(1) << "GVR keyboard shown.";
-      break;
-    case GVR_KEYBOARD_HIDDEN:
-      DVLOG(1) << "GVR keyboard hidden.";
-      break;
-    case GVR_KEYBOARD_TEXT_UPDATED: {
-      char* text = gvr_keyboard_get_text(keyboard_context);
-      DVLOG(1) << "GVR keyboard text updated: " << text;
-      free(reinterpret_cast<void*>(text));
-    } break;
-    case GVR_KEYBOARD_TEXT_COMMITTED: {
-      char* text = gvr_keyboard_get_text(keyboard_context);
-      DVLOG(1) << "GVR keyboard text updated: " << text;
-      free(reinterpret_cast<void*>(text));
-      gvr_keyboard_set_text(keyboard_context, "");
-    } break;
-    default:
-      NOTREACHED();
-  }
+void OnKeyboardEventWrapper(void* p, int32_t event) {
+  if (keyboard_context_callback)
+    keyboard_context_callback.Run(p, event);
 }
 
 gfx::Transform PerspectiveMatrixFromView(const gvr::Rectf& fov,
@@ -231,12 +201,44 @@ VrShellGl::VrShellGl(GlBrowserInterface* browser_interface,
       webvr_render_time_(new vr::SlidingAverage(kWebVRSlidingAverageSize)),
       weak_ptr_factory_(this) {
   GvrInit(gvr_api);
+  keyboard_context_callback =
+      base::Bind(&VrShellGl::OnKeyboardEvent, base::Unretained(this));
 }
 
 VrShellGl::~VrShellGl() {
   ClosePresentationBindings();
   if (keyboard_enabled_) {
     gvr_keyboard_destroy(&gvr_keyboard_);
+  }
+}
+
+void VrShellGl::OnKeyboardEvent(void*, int32_t event) {
+  switch (event) {
+    case GVR_KEYBOARD_ERROR_UNKNOWN:
+      LOG(ERROR) << "Unknown GVR keyboard error.";
+      break;
+    case GVR_KEYBOARD_ERROR_SERVICE_NOT_CONNECTED:
+      LOG(ERROR) << "GVR keyboard service not connected.";
+      break;
+    case GVR_KEYBOARD_ERROR_NO_LOCALES_FOUND:
+      LOG(ERROR) << "No GVR keyboard locales found.";
+      break;
+    case GVR_KEYBOARD_ERROR_SDK_LOAD_FAILED:
+      LOG(ERROR) << "GVR keyboard sdk load failed.";
+      break;
+    case GVR_KEYBOARD_SHOWN:
+      DVLOG(1) << "GVR keyboard shown.";
+      break;
+    case GVR_KEYBOARD_HIDDEN:
+      DVLOG(1) << "GVR keyboard hidden.";
+      break;
+    case GVR_KEYBOARD_TEXT_UPDATED:
+    case GVR_KEYBOARD_TEXT_COMMITTED: {
+      std::unique_ptr<char> text(gvr_keyboard_get_text(keyboard_context));
+      base::string16 string(base::UTF8ToUTF16(text.get()));
+      ui_->OnKeyboardTextChanged(string, string.size());
+      break;
+    }
   }
 }
 
@@ -662,9 +664,30 @@ void VrShellGl::HandleControllerInput(const gfx::Point3F& laser_origin,
   controller_model.laser_origin = laser_origin;
   controller_model_ = controller_model;
 
+  // ************************************
+  // Keyboard hack
+  if (keyboard_enabled_) {
+    gvr_vec3f reticle_point_1;
+    gvr_vec3f reticle_point_2;
+    reticle_point_1.x = controller_model.laser_origin.x();
+    reticle_point_1.y = controller_model.laser_origin.y();
+    reticle_point_1.z = controller_model.laser_origin.z();
+    reticle_point_2.x =
+        reticle_point_1.x + controller_model.laser_direction.x();
+    reticle_point_2.y =
+        reticle_point_1.y + controller_model.laser_direction.y();
+    reticle_point_2.z =
+        reticle_point_1.z + controller_model.laser_direction.z();
+    gvr_vec3f hit_point;
+    gvr_keyboard_update_controller_ray(gvr_keyboard_, &reticle_point_1,
+                                       &reticle_point_2, &hit_point);
+  }
+  // ************************************
+
   vr::ReticleModel reticle_model;
   ui_->input_manager()->HandleInput(current_time, controller_model,
                                     &reticle_model, &gesture_list);
+
   ui_->OnControllerUpdated(controller_model, reticle_model);
 }
 
@@ -678,6 +701,25 @@ void VrShellGl::SendImmediateExitRequestIfNecessary() {
         controller_->ButtonDownHappened(buttons[i])) {
       browser_->ForceExitVr();
     }
+  }
+}
+
+void VrShellGl::ShowKeyboard(bool show) {
+  // TODO(ymalik,crbug.com/780318): We temporarily show and hide the keyboard
+  // when the app button is pressed. This behavior is behind a runtime enabled
+  // feature and should go away as soon as we have editable input fields.
+  LOG(INFO) << "Show keyboard in gl: " << show;
+  show_keyboard_ = keyboard_enabled_ && show;
+  if (keyboard_enabled_) {
+    if (show_keyboard_) {
+      gvr_keyboard_set_text(gvr_keyboard_, "");
+      gvr_keyboard_show(gvr_keyboard_);
+      gvr_keyboard_set_selection_indices(gvr_keyboard_, 0, 0);
+      gvr_keyboard_set_composing_indices(gvr_keyboard_, 0, 0);
+    } else {
+      gvr_keyboard_hide(gvr_keyboard_);
+    }
+    ui_->OnKeyboardTextChanged(base::string16(), 0);
   }
 }
 
@@ -1042,7 +1084,7 @@ void VrShellGl::CreateKeyboard() {
   if (!keyboard_enabled_)
     return;
 
-  gvr_keyboard_ = gvr_keyboard_create(nullptr, OnKeyboardEvent);
+  gvr_keyboard_ = gvr_keyboard_create(nullptr, OnKeyboardEventWrapper);
   if (!gvr_keyboard_) {
     keyboard_enabled_ = false;
     return;
