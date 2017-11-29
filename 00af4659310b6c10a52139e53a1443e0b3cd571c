@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15f7cf66_f7ed419e",
+        "filename": "chromeos/audio/cras_audio_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-29T00:31:49Z",
+      "side": 1,
+      "message": "nit: pre-decrement, i.e. --init_volume_count_",
+      "revId": "00af4659310b6c10a52139e53a1443e0b3cd571c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "712ce07d_44cbc70d",
+        "filename": "chromeos/audio/cras_audio_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-29T00:31:49Z",
+      "side": 1,
+      "message": "Ah, I know the reason now : /\n\nIt is raised from code review that no-else-after-return, which changed the code-context...",
+      "revId": "00af4659310b6c10a52139e53a1443e0b3cd571c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "817d5f4d_4e0ccc34",
+        "filename": "chromeos/audio/cras_audio_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-29T00:31:49Z",
+      "side": 1,
+      "message": "nit: pre-increment, i.e. ++init_volume_count_",
+      "revId": "00af4659310b6c10a52139e53a1443e0b3cd571c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
