@@ -30,7 +30,7 @@
 #include "core/CoreExport.h"
 #include "core/loader/FrameLoaderTypes.h"
 #include "platform/heap/Handle.h"
-#include "platform/loader/fetch/ResourceLoadPriority.h"
+#include "platform/loader/fetch/ResourcePriority.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/HashMap.h"

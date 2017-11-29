@@ -6,7 +6,7 @@
 
 #include "base/trace_event/trace_event.h"
 #include "platform/instrumentation/tracing/TracedValue.h"
-#include "platform/loader/fetch/ResourceLoadPriority.h"
+#include "platform/loader/fetch/ResourcePriority.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 
 namespace blink {
@@ -49,7 +49,7 @@ std::unique_ptr<TracedValue> ScopedResourceTrackerBeginData(
 std::unique_ptr<TracedValue> ResourcePrioritySetData(
     blink::ResourceLoadPriority priority) {
   std::unique_ptr<TracedValue> data = TracedValue::Create();
-  data->SetInteger("priority", priority);
+  data->SetInteger("priority", static_cast<int>(priority));
   return data;
 }
 

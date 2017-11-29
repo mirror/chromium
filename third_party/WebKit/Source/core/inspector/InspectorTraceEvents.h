@@ -14,7 +14,7 @@
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/instrumentation/tracing/TracedValue.h"
 #include "platform/loader/fetch/Resource.h"
-#include "platform/loader/fetch/ResourceLoadPriority.h"
+#include "platform/loader/fetch/ResourcePriority.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/Functional.h"
 #include "platform/wtf/Optional.h"

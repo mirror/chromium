@@ -150,7 +150,7 @@
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/loader/fetch/MemoryCache.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
-#include "platform/loader/fetch/ResourceLoadPriority.h"
+#include "platform/loader/fetch/ResourcePriority.h"
 #include "platform/network/NetworkStateNotifier.h"
 #include "platform/runtime_enabled_features.h"
 #include "platform/scroll/ProgrammaticScrollAnimator.h"
@@ -457,15 +457,15 @@ bool Internals::isLoadingFromMemoryCache(const String& url) {
 
 int Internals::getResourcePriority(const String& url, Document* document) {
   if (!document)
-    return ResourceLoadPriority::kResourceLoadPriorityUnresolved;
+    return static_cast<int>(ResourceLoadPriority::kUnresolved);
 
   Resource* resource = document->Fetcher()->AllResources().at(
       URLTestHelpers::ToKURL(url.Utf8().data()));
 
   if (!resource)
-    return ResourceLoadPriority::kResourceLoadPriorityUnresolved;
+    return static_cast<int>(ResourceLoadPriority::kUnresolved);
 
-  return resource->GetResourceRequest().Priority();
+  return static_cast<int>(resource->GetResourceRequest().Priority());
 }
 
 String Internals::getResourceHeader(const String& url,

@@ -17,7 +17,7 @@
 #include "platform/fonts/FontSelector.h"
 #include "platform/fonts/SimpleFontData.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
-#include "platform/loader/fetch/ResourceLoadPriority.h"
+#include "platform/loader/fetch/ResourcePriority.h"
 #include "platform/network/NetworkStateNotifier.h"
 #include "platform/wtf/Time.h"
 #include "public/platform/TaskType.h"
@@ -220,7 +220,7 @@ void RemoteFontFaceSource::BeginLoadIfNeeded() {
         font_->IsLowPriorityLoadingAllowedForRemoteFont()) {
       // Set the loading priority to VeryLow since this font is not required
       // for painting the text.
-      font_->DidChangePriority(kResourceLoadPriorityVeryLow, 0);
+      font_->DidChangePriority(ResourceLoadPriority::kVeryLow, 0);
     }
     if (font_selector_->GetExecutionContext()->Fetcher()->StartLoad(font_)) {
       // Start timers only when load is actually started asynchronously.

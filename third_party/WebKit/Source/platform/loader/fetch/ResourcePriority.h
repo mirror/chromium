@@ -23,25 +23,15 @@
  * THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef ResourceLoadPriority_h
-#define ResourceLoadPriority_h
+#ifndef ResourcePriority_h
+#define ResourcePriority_h
 
 #include "platform/wtf/Allocator.h"
+#include "public/platform/WebURLRequest.h"
 
 namespace blink {
 
-enum ResourceLoadPriority : int8_t {
-  // The unresolved priority is here for the convenience of the clients. It
-  // should not be passed to the ResourceLoadScheduler.
-  kResourceLoadPriorityUnresolved = -1,
-  kResourceLoadPriorityVeryLow = 0,
-  kResourceLoadPriorityLow,
-  kResourceLoadPriorityMedium,
-  kResourceLoadPriorityHigh,
-  kResourceLoadPriorityVeryHigh,
-  kResourceLoadPriorityLowest = kResourceLoadPriorityVeryLow,
-  kResourceLoadPriorityHighest = kResourceLoadPriorityVeryHigh,
-};
+using ResourceLoadPriority = WebURLRequest::Priority;
 
 struct ResourcePriority final {
   STACK_ALLOCATED();
