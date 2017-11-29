@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4eab10e_43a03658",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-29T23:13:38Z",
+      "side": 1,
+      "message": "Random drive-by observation: CreateRootCompositorFrameSink sure has a lot of parameters now lol. force_software_compositing can\u0027t be part of renderer_settings?",
+      "revId": "d07083f4975a82d067252a8bcf7778b745a4ad74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
