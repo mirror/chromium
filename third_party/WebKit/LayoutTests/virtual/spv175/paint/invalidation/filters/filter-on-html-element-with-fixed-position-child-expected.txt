@@ -53,10 +53,6 @@
   ],
   "objectPaintInvalidations": [
     {
-      "object": "LayoutView #document",
-      "reason": "invalidate paint rectangle"
-    },
-    {
       "object": "LayoutBlockFlow (positioned) DIV",
       "reason": "subtree"
     },

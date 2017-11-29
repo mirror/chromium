@@ -12,11 +12,6 @@
           "reason": "full"
         },
         {
-          "object": "LayoutView #document",
-          "rect": [0, 10, 785, 600],
-          "reason": "invalidate paint rectangle"
-        },
-        {
           "object": "LayoutBlockFlow (positioned) DIV",
           "rect": [100, 110, 100, 100],
           "reason": "subtree"
@@ -52,10 +47,6 @@
     }
   ],
   "objectPaintInvalidations": [
-    {
-      "object": "LayoutView #document",
-      "reason": "invalidate paint rectangle"
-    },
     {
       "object": "LayoutBlockFlow (positioned) DIV",
       "reason": "subtree"
