@@ -50,6 +50,24 @@
       "revId": "8aa719565098fbc91ea5396a539df5c1f950262b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41f6db31_af10333b",
+        "filename": "ui/views/view_constants_aura.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-11-29T23:07:18Z",
+      "side": 1,
+      "message": "The macro defines a template specialization. If the compiler sees someone use the template without having seen the specialization, it generate a default body. This will either be inlined or become a weak symbol in the object file.\n\nThen another cc file uses the template and has seen the specialization (the macro in this case) and uses that, either inline of as a weak symbol in the object file.\n\nFinally the linker comes along, choose one implementation (unless they were all inlined) and something happens. Hopefully it will not choose the wrong implementation.\n\nSo this is all without jumbo. With jumbo several cc files are in the same translation unit and the compiler will first see someone use the template and bind it to the default implementation. Then the macro comes along and define a specialization. This is explicitly not allowed in C++. You cannot define a specialization after the default instantiation has already been activated.\n\nBut whether this is the optimal fix I don\u0027t know. There is something bad since the code will have two conflicting implementations and this was detected in jumbo builds but not triggered by the jumbo builds. The exact error, in case that helps to see if this is the right fix is below:\n\n./../../ui/views/view_properties.cc:14:1: error: explicit specialization of \u0027GetProperty\u003cgfx::Insets *\u003e\u0027 after instantiation\nDECLARE_EXPORTED_UI_CLASS_PROPERTY_TYPE(VIEWS_EXPORT, gfx::Insets*);\n^\n../../ui/base/class_property.h:203:29: note: expanded from macro \u0027DECLARE_EXPORTED_UI_CLASS_PROPERTY_TYPE\u0027\n  EXPORT T PropertyHandler::GetProperty(                                     \\\n                            ^\n./../../ui/views/layout/box_layout.cc:41:41: note: implicit instantiation first required here\n  gfx::Insets* margins \u003d view_ ? view_-\u003eGetProperty(kMarginsKey) : nullptr;\n                                        ^\nIn file included from gen/ui/views/views_jumbo_2.cc:74:\n./../../ui/views/view_constants_aura.cc:10:1: error: explicit specialization of \u0027SetProperty\u003cviews::View *\u003e\u0027 after instantiation\nDECLARE_EXPORTED_UI_CLASS_PROPERTY_TYPE(VIEWS_EXPORT, views::View*);\n^\n../../ui/base/class_property.h:198:32: note: expanded from macro \u0027DECLARE_EXPORTED_UI_CLASS_PROPERTY_TYPE\u0027\n  EXPORT void PropertyHandler::SetProperty(                                  \\\n                               ^\n./../../ui/views/controls/native/native_view_host_aura.cc:80:20: note: implicit instantiation first required here\n  clipping_window_.SetProperty(views::kHostViewKey, static_cast\u003cView*\u003e(host_));\n                   ^\nIn file included from gen/ui/views/views_jumbo_2.cc:74:\n./../../ui/views/view_constants_aura.cc:10:1: error: explicit specialization of \u0027ClearProperty\u003cviews::View *\u003e\u0027 after instantiation\nDECLARE_EXPORTED_UI_CLASS_PROPERTY_TYPE(VIEWS_EXPORT, views::View*);\n^\n../../ui/base/class_property.h:208:32: note: expanded from macro \u0027DECLARE_EXPORTED_UI_CLASS_PROPERTY_TYPE\u0027\n  EXPORT void PropertyHandler::ClearProperty(                                \\\n                               ^\n./../../ui/views/controls/native/native_view_host_aura.cc:86:27: note: implicit instantiation first required here\n    host_-\u003enative_view()-\u003eClearProperty(views::kHostViewKey);",
+      "parentUuid": "abdf9136_6086d764",
+      "revId": "8aa719565098fbc91ea5396a539df5c1f950262b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
