@@ -10,6 +10,7 @@
 #include "ash/ash_export.h"
 #include "ash/public/interfaces/window_style.mojom.h"
 #include "ash/shell_observer.h"
+#include "ash/wm/splitview/split_view_controller.h"
 #include "base/macros.h"
 #include "base/optional.h"
 #include "third_party/skia/include/core/SkColor.h"
@@ -34,14 +35,24 @@ enum class FrameBackButtonState {
 
 // A base class for v2 and ARC apps to hide header in overview mode.
 class ASH_EXPORT CustomFrameViewAshBase : public views::NonClientFrameView,
-                                          public ash::ShellObserver {
+                                          public ShellObserver,
+                                          public SplitViewController::Observer {
  public:
   CustomFrameViewAshBase();
   ~CustomFrameViewAshBase() override;
 
-  // ash::ShellObserver:
+  // ShellObserver:
   void OnOverviewModeStarting() override;
   void OnOverviewModeEnded() override;
+
+  // SplitViewController::Observer:
+  void OnSplitViewStateChanged(SplitViewController::State previous_state,
+                               SplitViewController::State state) override;
+
+  // Paint the header when the splitview state changes and one window is snapped
+  // (overview is still active with one snapped window), if the snapped window
+  // matches the frame's associated window.
+  virtual void MaybePaintHeaderForSplitview(SplitViewController::State state) {}
 
   // If |paint| is false, we should not paint the header. Used for overview mode
   // with OnOverviewModeStarting() and OnOverviewModeEnded() to hide/show the
@@ -117,6 +128,7 @@ class ASH_EXPORT CustomFrameViewAsh : public CustomFrameViewAshBase {
   void SetVisible(bool visible) override;
 
   // ash::CustomFrameViewAshBase:
+  void MaybePaintHeaderForSplitview(SplitViewController::State state) override;
   void SetShouldPaintHeader(bool paint) override;
 
   const views::View* GetAvatarIconViewForTest() const;

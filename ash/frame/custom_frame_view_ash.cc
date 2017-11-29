@@ -34,6 +34,8 @@
 #include "ui/views/widget/widget.h"
 #include "ui/views/widget/widget_delegate.h"
 
+#include "ash/wm/splitview/split_view_controller.h"
+
 namespace ash {
 
 namespace {
@@ -167,9 +169,12 @@ class CustomFrameViewAshWindowStateDelegate : public wm::WindowStateDelegate,
 
 CustomFrameViewAshBase::CustomFrameViewAshBase() {
   Shell::Get()->AddShellObserver(this);
+  Shell::Get()->split_view_controller()->AddObserver(this);
 }
 
 CustomFrameViewAshBase::~CustomFrameViewAshBase() {
+  if (Shell::Get()->split_view_controller())
+    Shell::Get()->split_view_controller()->RemoveObserver(this);
   Shell::Get()->RemoveShellObserver(this);
 }
 
@@ -179,6 +184,12 @@ void CustomFrameViewAshBase::OnOverviewModeStarting() {
 
 void CustomFrameViewAshBase::OnOverviewModeEnded() {
   SetShouldPaintHeader(true);
+}
+
+void CustomFrameViewAshBase::OnSplitViewStateChanged(
+    SplitViewController::State previous_state,
+    SplitViewController::State state) {
+  MaybePaintHeaderForSplitview(state);
 }
 
 // static
@@ -489,6 +500,19 @@ void CustomFrameViewAsh::SetVisible(bool visible) {
 
 const views::View* CustomFrameViewAsh::GetAvatarIconViewForTest() const {
   return header_view_->avatar_icon();
+}
+
+void CustomFrameViewAsh::MaybePaintHeaderForSplitview(
+    SplitViewController::State state) {
+  SplitViewController* controller = Shell::Get()->split_view_controller();
+  aura::Window* window = nullptr;
+  if (state == SplitViewController::LEFT_SNAPPED)
+    window = controller->left_window();
+  else if (state == SplitViewController::RIGHT_SNAPPED)
+    window = controller->right_window();
+
+  if (window && window == frame_->GetNativeWindow())
+    header_view_->SetShouldPaintHeader(true /* paint */);
 }
 
 void CustomFrameViewAsh::SetShouldPaintHeader(bool paint) {
