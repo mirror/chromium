@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "616559de_e91b2ce6",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/wasm_streaming/wasm_streaming_xss.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1125279
+      },
+      "writtenOn": "2017-11-29T10:04:07Z",
+      "side": 1,
+      "message": "done - made the test .https, and then using the \u0027unauthenticated\u0027 host for the other origin.",
+      "parentUuid": "caeadfd5_b2a42a97",
+      "range": {
+        "startLine": 9,
+        "startChar": 19,
+        "endLine": 9,
+        "endChar": 30
+      },
+      "revId": "99ebea4f6f2ff36b3e3c61eab20d7436f4281f2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21d79f5a_4e5409e6",
         "filename": "third_party/WebKit/LayoutTests/http/tests/wasm_streaming/wasm_streaming_xss.html",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "99ebea4f6f2ff36b3e3c61eab20d7436f4281f2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48479eb4_702f442f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/wasm_streaming/wasm_streaming_xss.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1125279
+      },
+      "writtenOn": "2017-11-29T10:04:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "21d79f5a_4e5409e6",
+      "range": {
+        "startLine": 26,
+        "startChar": 19,
+        "endLine": 26,
+        "endChar": 30
+      },
+      "revId": "99ebea4f6f2ff36b3e3c61eab20d7436f4281f2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
