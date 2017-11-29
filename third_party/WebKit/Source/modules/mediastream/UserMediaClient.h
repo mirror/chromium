@@ -36,7 +36,6 @@
 #include "base/memory/scoped_refptr.h"
 #include "modules/ModulesExport.h"
 #include "modules/mediastream/UserMediaClient.h"
-#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
@@ -51,7 +50,7 @@ class WebUserMediaClient;
 class MODULES_EXPORT UserMediaClient {
  public:
   static std::unique_ptr<UserMediaClient> Create(WebUserMediaClient* client) {
-    return WTF::WrapUnique(new UserMediaClient(client));
+    return std::unique_ptr<UserMediaClient>(new UserMediaClient(client));
   }
 
   void RequestUserMedia(UserMediaRequest*);

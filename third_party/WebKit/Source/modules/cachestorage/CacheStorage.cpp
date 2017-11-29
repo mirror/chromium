@@ -16,7 +16,6 @@
 #include "modules/fetch/Response.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/network/http_names.h"
-#include "platform/wtf/PtrUtil.h"
 #include "public/platform/modules/cache_storage/cache_storage.mojom-blink.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerCacheStorage.h"
 
@@ -95,8 +94,9 @@ class CacheStorage::WithCacheCallbacks final
     if (!resolver_->GetExecutionContext() ||
         resolver_->GetExecutionContext()->IsContextDestroyed())
       return;
-    Cache* cache = Cache::Create(cache_storage_->scoped_fetcher_,
-                                 WTF::WrapUnique(web_cache.release()));
+    Cache* cache = Cache::Create(
+        cache_storage_->scoped_fetcher_,
+        std::unique_ptr<WebServiceWorkerCache>(web_cache.release()));
     resolver_->Resolve(cache);
     resolver_.Clear();
   }
