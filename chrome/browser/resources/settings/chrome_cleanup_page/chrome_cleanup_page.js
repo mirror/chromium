@@ -35,10 +35,13 @@ settings.ChromeCleanupDismissSource = {
  * @enum {string}
  */
 settings.ChromeCleanerCardState = {
-  HIDDEN_CARD: 'hidden_card',
+  SCANNING_OFFERED: 'scanning_offered',
+  SCANNING: 'scanning',
   CLEANUP_OFFERED: 'cleanup_offered',
   CLEANING: 'cleaning',
   REBOOT_REQUIRED: 'reboot_required',
+  SCANNING_FOUND_NOTHING: 'scanning_found_nothing',
+  SCANNING_FAILED: 'scanning_failed',
   CLEANUP_SUCCEEDED: 'cleanup_succeeded',
   CLEANING_FAILED: 'cleanup_failed',
 };
@@ -52,7 +55,8 @@ settings.ChromeCleanupCardFlags = {
   SHOW_DETAILS: 1 << 0,
   SHOW_LOGS_PERMISSIONS: 1 << 1,
   SHOW_LEARN_MORE: 1 << 2,
-  IS_REMOVING: 1 << 3,
+  WAITING_FOR_RESULT: 1 << 3,
+  SHOW_ITEMS_TO_REMOVE: 1 << 4,
 };
 
 /**
@@ -74,6 +78,7 @@ settings.ChromeCleanupCardActionButton;
 /**
  * @typedef {{
  *   title: ?string,
+ *   explanation: ?string,
  *   icon: ?settings.ChromeCleanupCardIcon,
  *   actionButton: ?settings.ChromeCleanupCardActionButton,
  *   flags: number,
@@ -100,7 +105,21 @@ Polymer({
 
   properties: {
     /** @private */
+    userInitiatedCleanupsEnabled_: {
+      type: Boolean,
+      value: function() {
+        return loadTimeData.getBoolean('userInitiatedCleanupsEnabled');
+      },
+    },
+
+    /** @private */
     title_: {
+      type: String,
+      value: '',
+    },
+
+    /** @private */
+    explanation_: {
       type: String,
       value: '',
     },
@@ -141,6 +160,12 @@ Polymer({
 
     /** @private */
     showLogsPermission_: {
+      type: Boolean,
+      value: false,
+    },
+
+    /** @private */
+    showItemsToRemove_: {
       type: Boolean,
       value: false,
     },
@@ -200,6 +225,8 @@ Polymer({
 
   /** @override */
   attached: function() {
+    console.log('attached');
+
     this.browserProxy_ = settings.ChromeCleanupProxyImpl.getInstance();
     this.cardStateToComponentsMap_ = this.buildCardStateToComponentsMap_();
 
@@ -218,6 +245,8 @@ Polymer({
         'chrome-cleanup-upload-permission-change',
         this.onUploadPermissionChange_.bind(this));
     this.browserProxy_.registerChromeCleanerObserver();
+
+    console.log('attached done');
   },
 
   /**
@@ -281,16 +310,48 @@ Polymer({
    * @private
    */
   onIdle_: function(idleReason) {
-    if (idleReason == settings.ChromeCleanupIdleReason.CLEANING_SUCCEEDED) {
-      this.renderCleanupCard_(
-          settings.ChromeCleanerCardState.CLEANUP_SUCCEEDED, []);
-    } else if (idleReason == settings.ChromeCleanupIdleReason.INITIAL) {
-      this.dismiss_(settings.ChromeCleanupDismissSource.OTHER);
-    } else {
-      // Scanning-related idle reasons are unexpected. Show an error message for
-      // all reasons other than |CLEANING_SUCCEEDED| and |INITIAL|.
-      this.renderCleanupCard_(
-          settings.ChromeCleanerCardState.CLEANING_FAILED, []);
+    switch (idleReason) {
+      case settings.ChromeCleanupIdleReason.INITIAL:
+      // Fallthrough.
+      case settings.ChromeCleanupIdleReason.USER_DECLINED_CLEANUP:
+        this.renderCleanupCard_(
+            settings.ChromeCleanerCardState.SCANNING_OFFERED, []);
+        break;
+
+      case settings.ChromeCleanupIdleReason.SCANNING_FOUND_NOTHING:
+        this.renderCleanupCard_(
+            settings.ChromeCleanerCardState.SCANNING_FOUND_NOTHING, []);
+        break;
+
+      case settings.ChromeCleanupIdleReason.SCANNING_FAILED:
+        this.renderCleanupCard_(
+            settings.ChromeCleanerCardState.SCANNING_FAILED, []);
+        break;
+
+      case settings.ChromeCleanupIdleReason.CONNECTION_LOST:
+        if (this.scanning_) {
+          this.renderCleanupCard_(
+              settings.ChromeCleanerCardState.SCANNING_FAILED, []);
+        } else {
+          assert(this.cleaning_);
+          this.renderCleanupCard_(
+              settings.ChromeCleanerCardState.CLEANING_FAILED, []);
+        }
+        break;
+
+      case settings.ChromeCleanupIdleReason.CLEANING_FAILED:
+        this.renderCleanupCard_(
+            settings.ChromeCleanerCardState.CLEANING_FAILED, []);
+        break;
+
+      case settings.ChromeCleanupIdleReason.CLEANING_SUCCEEDED:
+        this.renderCleanupCard_(
+            settings.ChromeCleanerCardState.CLEANUP_SUCCEEDED, []);
+        break;
+
+      default:
+        // Scanning-related idle reasons are unexpected. Show an error message
+        // for all reasons other than |CLEANING_SUCCEEDED| and |INITIAL|.
     }
   },
 
@@ -301,7 +362,7 @@ Polymer({
    * @private
    */
   onScanning_: function() {
-    this.renderCleanupCard_(settings.ChromeCleanerCardState.HIDDEN_CARD, []);
+    this.renderCleanupCard_(settings.ChromeCleanerCardState.SCANNING, []);
   },
 
   /**
@@ -350,6 +411,7 @@ Polymer({
 
     this.filesToRemove_ = files;
     this.title_ = components.title || '';
+    this.explanation_ = components.explanation || '';
     this.updateIcon_(components.icon);
     this.updateActionButton_(components.actionButton);
     this.updateCardFlags_(components.flags);
@@ -404,7 +466,9 @@ Polymer({
     this.showLearnMore_ =
         (flags & settings.ChromeCleanupCardFlags.SHOW_LEARN_MORE) != 0;
     this.isRemoving_ =
-        (flags & settings.ChromeCleanupCardFlags.IS_REMOVING) != 0;
+        (flags & settings.ChromeCleanupCardFlags.WAITING_FOR_RESULT) != 0;
+    this.showItemsToRemove_ =
+        (flags & settings.ChromeCleanupCardFlags.SHOW_ITEMS_TO_REMOVE) != 0;
 
     // Files to remove list should only be expandable if details are being
     // shown, otherwise it will add extra padding at the bottom of the card.
@@ -448,8 +512,21 @@ Polymer({
    * @private
    */
   dismiss_: function(source) {
+    // If user initiated cleanups are enabled, the card won't be shown at the
+    // top of the settings page and the dismiss button should never be rendered.
+    assert(!this.userInitiatedCleanupsEnabled_);
+
     this.renderCleanupCard_(settings.ChromeCleanerCardState.HIDDEN_CARD, []);
     this.browserProxy_.dismissCleanupPage(source);
+  },
+
+  /**
+   * Sends an action to the browser proxy to start scanning.
+   * @private
+   */
+  startScanning_: function() {
+    this.browserProxy_.startScanning(
+        this.$.chromeCleanupLogsUploadControl.checked);
   },
 
   /**
@@ -505,6 +582,11 @@ Polymer({
      * @enum {settings.ChromeCleanupCardActionButton}
      */
     var actionButtons = {
+      SCAN: {
+        label: 'Scan',
+        doAction: this.startScanning_.bind(this),
+      },
+
       REMOVE: {
         label: this.i18n('chromeCleanupRemoveButtonLabel'),
         doAction: this.startCleanup_.bind(this),
@@ -528,6 +610,11 @@ Polymer({
             this,
             settings.ChromeCleanupDismissSource.CLEANUP_FAILURE_DONE_BUTTON),
       },
+
+      RETRY: {
+        label: 'Retry',
+        doAction: this.startScanning_.bind(this),
+      }
     };
 
     return new Map([
@@ -542,26 +629,31 @@ Polymer({
       [
         settings.ChromeCleanerCardState.CLEANUP_OFFERED, {
           title: this.i18n('chromeCleanupTitleRemove'),
+          explanation: this.i18n('chromeCleanupExplanation'),
           icon: icons.REMOVE,
           actionButton: actionButtons.REMOVE,
           flags: settings.ChromeCleanupCardFlags.SHOW_DETAILS |
               settings.ChromeCleanupCardFlags.SHOW_LOGS_PERMISSIONS |
-              settings.ChromeCleanupCardFlags.SHOW_LEARN_MORE,
+              settings.ChromeCleanupCardFlags.SHOW_LEARN_MORE |
+              settings.ChromeCleanupCardFlags.SHOW_ITEMS_TO_REMOVE,
         }
       ],
       [
         settings.ChromeCleanerCardState.CLEANING, {
           title: this.i18n('chromeCleanupTitleRemoving'),
+          explanation: this.i18n('chromeCleanupExplanation'),
           icon: null,
           actionButton: null,
           flags: settings.ChromeCleanupCardFlags.SHOW_DETAILS |
-              settings.ChromeCleanupCardFlags.IS_REMOVING |
-              settings.ChromeCleanupCardFlags.SHOW_LEARN_MORE,
+              settings.ChromeCleanupCardFlags.WAITING_FOR_RESULT |
+              settings.ChromeCleanupCardFlags.SHOW_LEARN_MORE |
+              settings.ChromeCleanupCardFlags.SHOW_ITEMS_TO_REMOVE,
         }
       ],
       [
         settings.ChromeCleanerCardState.REBOOT_REQUIRED, {
           title: this.i18n('chromeCleanupTitleRestart'),
+          explanation: null,
           icon: icons.DONE,
           actionButton: actionButtons.RESTART_COMPUTER,
           flags: settings.ChromeCleanupCardFlags.NONE,
@@ -570,18 +662,65 @@ Polymer({
       [
         settings.ChromeCleanerCardState.CLEANUP_SUCCEEDED, {
           title: this.i18n('chromeCleanupTitleRemoved'),
+          explanation: null,
           icon: icons.DONE,
-          actionButton: actionButtons.DISMISS_CLEANUP_SUCCESS,
+          actionButton: this.userInitiatedCleanupsEnabled_ ?
+              null :
+              actionButtons.DISMISS_CLEANUP_SUCCESS,
           flags: settings.ChromeCleanupCardFlags.NONE,
         }
       ],
       [
         settings.ChromeCleanerCardState.CLEANING_FAILED, {
           title: this.i18n('chromeCleanupTitleErrorCantRemove'),
+          explanation: this.i18n('chromeCleanupExplanationCleanupError'),
           icon: icons.WARNING,
-          actionButton: actionButtons.DISMISS_CLEANUP_FAILURE,
-          flags: settings.ChromeCleanupCardFlags.SHOW_LEARN_MORE |
-              settings.ChromeCleanupCardFlags.NONE,
+          actionButton: actionButtons.RETRY,
+          flags: settings.ChromeCleanupCardFlags.SHOW_DETAILS |
+              settings.ChromeCleanupCardFlags.SHOW_LOGS_PERMISSIONS |
+              settings.ChromeCleanupCardFlags.SHOW_LEARN_MORE,
+        }
+      ],
+      [
+        settings.ChromeCleanerCardState.SCANNING_OFFERED, {
+          title: this.i18n('chromeCleanupTitleFindAndRemove'),
+          explanation: this.i18n('chromeCleanupExplanationFindAndRemove'),
+          icon: icons.REMOVE,
+          actionButton: actionButtons.SCAN,
+          flags: settings.ChromeCleanupCardFlags.SHOW_DETAILS |
+              settings.ChromeCleanupCardFlags.SHOW_LOGS_PERMISSIONS |
+              settings.ChromeCleanupCardFlags.SHOW_LEARN_MORE,
+        }
+      ],
+      [
+        settings.ChromeCleanerCardState.SCANNING, {
+          title: this.i18n('chromeCleanupTitleScanning'),
+          explanation: null,
+          icon: null,
+          actionButton: null,
+          flags: settings.ChromeCleanupCardFlags.SHOW_DETAILS |
+              settings.ChromeCleanupCardFlags.SHOW_LEARN_MORE |
+              settings.ChromeCleanupCardFlags.WAITING_FOR_RESULT,
+        }
+      ],
+      [
+        settings.ChromeCleanerCardState.SCANNING_FOUND_NOTHING, {
+          title: this.i18n('chromeCleanupTitleNothingFound'),
+          explanation: null,
+          icon: icons.DONE,
+          actionButton: null,
+          flags: settings.ChromeCleanupCardFlags.NONE,
+        }
+      ],
+      [
+        settings.ChromeCleanerCardState.SCANNING_FAILED, {
+          title: this.i18n('chromeCleanupTitleScanningFailed'),
+          explanation: this.i18n('chromeCleanupExplanationScanError'),
+          icon: icons.WARNING,
+          actionButton: actionButtons.RETRY,
+          flags: settings.ChromeCleanupCardFlags.SHOW_DETAILS |
+              settings.ChromeCleanupCardFlags.SHOW_LOGS_PERMISSIONS |
+              settings.ChromeCleanupCardFlags.SHOW_LEARN_MORE,
         }
       ],
     ]);
