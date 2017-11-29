@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc3cb027_e29f49e6",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-29T20:45:38Z",
+      "side": 0,
+      "message": "The GetUserPrefValue check is needed because the default value is changed.\n\nCan you confirm with muyuanli that this can be safely removed now?",
+      "revId": "53331c8cf67a3d87f5f8d68c3c4e7f89c56065b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
