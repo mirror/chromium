@@ -93,6 +93,7 @@ public class FeedbackCollector implements Runnable {
         // entries here.
         sources.add(new ConnectivityFeedbackSource(profile));
         sources.add(new SystemInfoFeedbackSource());
+        sources.add(new DeviceCertifiedFeedbackSource());
 
         return sources;
     }

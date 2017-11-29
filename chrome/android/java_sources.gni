@@ -412,6 +412,7 @@ chrome_java_sources = [
   "java/src/org/chromium/chrome/browser/feedback/ConnectivityFeedbackSource.java",
   "java/src/org/chromium/chrome/browser/feedback/ConnectivityTask.java",
   "java/src/org/chromium/chrome/browser/feedback/DataReductionProxyFeedbackSource.java",
+  "java/src/org/chromium/chrome/browser/feedback/DeviceCertifiedFeedbackSource.java",
   "java/src/org/chromium/chrome/browser/feedback/FeedbackCollector.java",
   "java/src/org/chromium/chrome/browser/feedback/FeedbackReporter.java",
   "java/src/org/chromium/chrome/browser/feedback/FeedbackSource.java",

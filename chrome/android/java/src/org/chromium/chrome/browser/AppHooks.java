@@ -331,4 +331,13 @@ public abstract class AppHooks {
     public PartnerBrowserCustomizations.Provider getCustomizationProvider() {
         return new PartnerBrowserCustomizations.ProviderPackage();
     }
+
+    /**
+     * @param callback A callback that will be notified about whether or not this device is
+     * considered certified or not.  By default this is {@code null} which means unable to be
+     * determined.
+     */
+    public void checkIfDeviceIsCertified(final Callback<Boolean> callback) {
+        new Handler().post(() -> callback.onResult(null));
+    }
 }
