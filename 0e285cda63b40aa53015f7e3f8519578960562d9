@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "f684e340_d034f5c7",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-11-29T12:48:32Z",
+      "side": 1,
+      "message": "Ah, this means that \u0027this\u0027 TaskQueueImpl must live until UnregisterTaskQueue is finished? Thank you for explanation. Agreed that we need comments above std::move usages.",
+      "parentUuid": "075b3f4d_beec4ac3",
+      "revId": "0e285cda63b40aa53015f7e3f8519578960562d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c4286f1_c7c7d9cf",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/main_thread_task_queue.cc",
         "patchSetId": 1
