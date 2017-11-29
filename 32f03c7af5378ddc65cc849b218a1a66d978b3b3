@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fe156c32_ce8f5d65",
+        "filename": "chrome/test/data/extensions/api_test/webrequest/test_types.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-29T23:46:45Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "ee8a9c7c_4b13cc53",
+      "range": {
+        "startLine": 600,
+        "startChar": 18,
+        "endLine": 600,
+        "endChar": 23
+      },
+      "revId": "32f03c7af5378ddc65cc849b218a1a66d978b3b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25732559_33e8c7d0",
         "filename": "chrome/test/data/extensions/api_test/webrequest/test_types.js",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-29T23:22:31Z",
       "side": 0,
       "message": "Since this fixes crbug.com/522129, can you also follow up on other TODO\u0027s of this bug - https://cs.chromium.org/search/?q\u003dcrbug.com/522129\u0026sq\u003dpackage:chromium\u0026type\u003dcs (in framework.js)",
+      "range": {
+        "startLine": 602,
+        "startChar": 36,
+        "endLine": 602,
+        "endChar": 60
+      },
+      "revId": "32f03c7af5378ddc65cc849b218a1a66d978b3b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a38b2d61_3c97f04c",
+        "filename": "chrome/test/data/extensions/api_test/webrequest/test_types.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-29T23:46:45Z",
+      "side": 0,
+      "message": "Would rather follow up in another CL. This one is already big enough, and the other tests with TODOs are still passing.",
+      "parentUuid": "25732559_33e8c7d0",
       "range": {
         "startLine": 602,
         "startChar": 36,
@@ -118,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "c20944a1_c8e6b3a7",
+        "filename": "extensions/browser/api/web_request/web_request_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1517,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-29T23:46:45Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "345269ab_049303af",
+      "range": {
+        "startLine": 1517,
+        "startChar": 38,
+        "endLine": 1517,
+        "endChar": 63
+      },
+      "revId": "32f03c7af5378ddc65cc849b218a1a66d978b3b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "926ec8c0_5e9c3600",
         "filename": "extensions/browser/api/web_request/web_request_permissions.cc",
         "patchSetId": 8
@@ -138,6 +210,30 @@
       "revId": "32f03c7af5378ddc65cc849b218a1a66d978b3b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d5f1fd7_74dbbda0",
+        "filename": "extensions/browser/api/web_request/web_request_permissions.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-29T23:46:45Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "926ec8c0_5e9c3600",
+      "range": {
+        "startLine": 108,
+        "startChar": 27,
+        "endLine": 108,
+        "endChar": 47
+      },
+      "revId": "32f03c7af5378ddc65cc849b218a1a66d978b3b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

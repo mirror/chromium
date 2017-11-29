@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "870d2716_cdd7c7e9",
+        "filename": "extensions/browser/api/web_request/web_request_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-29T23:46:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d416a608_cad995ff",
+      "range": {
+        "startLine": 182,
+        "startChar": 18,
+        "endLine": 182,
+        "endChar": 35
+      },
+      "revId": "57305d0b5a8c927cc7afa677a2953ffbf52e02bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2430d1d6_01a6c470",
         "filename": "extensions/browser/api/web_request/web_request_event_details.cc",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "57305d0b5a8c927cc7afa677a2953ffbf52e02bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d4acb62_d1f5081b",
+        "filename": "extensions/browser/api/web_request/web_request_event_details.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-29T23:46:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2430d1d6_01a6c470",
+      "range": {
+        "startLine": 49,
+        "startChar": 6,
+        "endLine": 49,
+        "endChar": 13
+      },
+      "revId": "57305d0b5a8c927cc7afa677a2953ffbf52e02bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a3013372_9eb32a70",
+        "filename": "extensions/browser/api/web_request/web_request_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-29T23:46:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80c6a9b0_530ebc9c",
+      "range": {
+        "startLine": 123,
+        "startChar": 4,
+        "endLine": 123,
+        "endChar": 10
+      },
+      "revId": "57305d0b5a8c927cc7afa677a2953ffbf52e02bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a127a72d_2452c49b",
         "filename": "extensions/browser/api/web_request/web_request_info.cc",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "57305d0b5a8c927cc7afa677a2953ffbf52e02bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09524114_45192e3c",
+        "filename": "extensions/browser/api/web_request/web_request_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-29T23:46:45Z",
+      "side": 1,
+      "message": "Noted and fixed, but the proposed alternative is wrong: info may be null if it\u0027s a websocket request. I\u0027ve simply removed the if condition.",
+      "parentUuid": "a127a72d_2452c49b",
+      "range": {
+        "startLine": 128,
+        "startChar": 8,
+        "endLine": 128,
+        "endChar": 24
+      },
+      "revId": "57305d0b5a8c927cc7afa677a2953ffbf52e02bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "29ee50af_8eeded23",
+        "filename": "extensions/browser/api/web_request/web_request_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-29T23:46:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd0302b1_ed175c64",
+      "range": {
+        "startLine": 151,
+        "startChar": 29,
+        "endLine": 151,
+        "endChar": 47
+      },
+      "revId": "57305d0b5a8c927cc7afa677a2953ffbf52e02bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e28c76a9_84d748e1",
         "filename": "extensions/browser/api/web_request/web_request_info.cc",
         "patchSetId": 8
@@ -137,6 +257,30 @@
       "revId": "57305d0b5a8c927cc7afa677a2953ffbf52e02bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54805e9c_5622aa9d",
+        "filename": "extensions/browser/api/web_request/web_request_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-29T23:46:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e28c76a9_84d748e1",
+      "range": {
+        "startLine": 165,
+        "startChar": 36,
+        "endLine": 165,
+        "endChar": 52
+      },
+      "revId": "57305d0b5a8c927cc7afa677a2953ffbf52e02bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "b279ffd2_d74bf62c",
+        "filename": "extensions/browser/api/web_request/web_request_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-29T23:46:45Z",
+      "side": 1,
+      "message": "This call definitely always returns false when frame_id \u003c 0, so it\u0027d be pointless to move it out of this block.",
+      "parentUuid": "20c37b49_68fdf4e3",
+      "range": {
+        "startLine": 170,
+        "startChar": 8,
+        "endLine": 170,
+        "endChar": 28
+      },
+      "revId": "57305d0b5a8c927cc7afa677a2953ffbf52e02bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4052b440_ab6875a9",
         "filename": "extensions/browser/api/web_request/web_request_info.cc",
         "patchSetId": 8
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "316aea92_d5a938ec",
+        "filename": "extensions/browser/api/web_request/web_request_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-29T23:46:45Z",
+      "side": 1,
+      "message": "Yes, true. Note that there aren\u0027t actually any non-browser-side navigations now, but since the code path still exists and the other comments refer to browser-side navigation, I\u0027ve updated the comment accordingly.",
+      "parentUuid": "4052b440_ab6875a9",
+      "range": {
+        "startLine": 178,
+        "startChar": 7,
+        "endLine": 178,
+        "endChar": 29
+      },
+      "revId": "57305d0b5a8c927cc7afa677a2953ffbf52e02bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3987935_9f5b5a67",
         "filename": "extensions/browser/api/web_request/web_request_permissions.cc",
         "patchSetId": 8
@@ -206,6 +398,30 @@
       "revId": "57305d0b5a8c927cc7afa677a2953ffbf52e02bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d17ea4d_82ce24dc",
+        "filename": "extensions/browser/api/web_request/web_request_permissions.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-29T23:46:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3987935_9f5b5a67",
+      "range": {
+        "startLine": 116,
+        "startChar": 16,
+        "endLine": 116,
+        "endChar": 27
+      },
+      "revId": "57305d0b5a8c927cc7afa677a2953ffbf52e02bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
