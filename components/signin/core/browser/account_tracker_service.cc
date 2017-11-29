@@ -245,7 +245,11 @@ void AccountTrackerService::SetAccountStateFromUserInfo(
 
 void AccountTrackerService::SetIsChildAccount(const std::string& account_id,
                                               const bool& is_child_account) {
-  DCHECK(base::ContainsKey(accounts_, account_id));
+  if (!base::ContainsKey(accounts_, account_id)) {
+    // Account is not being tracked yet.
+    VLOG(1) << "Trying to set untracked account as child";
+    return;
+  }
   AccountState& state = accounts_[account_id];
   if (state.info.is_child_account == is_child_account)
     return;
