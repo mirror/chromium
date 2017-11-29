@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18cf030e_2c16aea2",
+        "filename": "content/browser/gpu/gpu_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-29T14:52:11Z",
+      "side": 1,
+      "message": "You are getting a WeakPtr on the UI thread here, and posting a task on the IO thread. This would not work (WeakPtr cannot be checked/validated only on the thread it\u0027s created on).",
+      "revId": "b7ada056d91a800e98facb98d55718da83117025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
