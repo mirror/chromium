@@ -87,6 +87,14 @@
         text-decoration: none;
       }
 
+      .secondary {
+        @apply(--cr-secondary-text);
+      }
+
+      .three-line {
+        min-height: var(--cr-section-three-line-min-height);
+      }
+
       .section {
         @apply(--cr-section);
       }
@@ -322,16 +330,14 @@
         <template is="dom-if" if="[[shouldShowOptionsSection_(data.*)]]">
           <div id="options-section">
             <template is="dom-if" if="[[data.incognitoAccess.isEnabled]]">
-              <extensions-toggle-row id="allow-incognito"
+              <extensions-toggle-row id="allow-incognito" class="three-line"
                   checked="[[data.incognitoAccess.isActive]]"
                   on-change="onAllowIncognitoChange_">
                 <span>
                   $i18n{itemAllowIncognito}
-                  <cr-tooltip-icon
-                      icon-class="cr:error-outline"
-                      tooltip-text="$i18n{incognitoInfoWarning}"
-                      on-click="onIconClick_">
-                  </cr-tooltip-icon>
+                  <div class="secondary">
+                    $i18n{incognitoInfoWarning}
+                  </div>
                 </span>
               </extensions-toggle-row>
             </template>
