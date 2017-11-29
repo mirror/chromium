@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b781a326_272c18a2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-29T21:10:23Z",
+      "side": 1,
+      "message": "mVrDaydreamApi.launchVrHomescreen() works in this case?!",
+      "range": {
+        "startLine": 924,
+        "startChar": 23,
+        "endLine": 924,
+        "endChar": 66
+      },
+      "revId": "eb20901bd2170b4f70934412980fa294477f8fcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
