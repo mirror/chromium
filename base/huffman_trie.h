@@ -9,8 +9,68 @@
 #include <stdlib.h>
 
 #include "base/base_export.h"
+#include "base/callback_forward.h"
+#include "base/strings/string_piece.h"
 
 namespace base {
+
+namespace trie {
+
+class BitReader;
+
+// Config represents a precomputed trie. The trie works over an alphabet of
+// values in the range [1,126] and elements of that alphabet are Huffman
+// compressed. Thus a complete trie consists of a pointer to the trie data
+// itself, the offset (in bits) of the root of the trie, as well as a Huffman
+// table.
+//
+// See net/tools/transport_security_state_generator/README.md for code to
+// precompute suitable trie structures.
+struct Config {
+  Config();
+  ~Config();
+
+  const uint8_t* trie_data = nullptr;
+  size_t trie_bits = 0;
+  size_t root_position = 0;
+
+  const uint8_t *huffman_data = nullptr;
+  size_t huffman_size = 0;
+
+  // match_subdomains indicates whether partial matches of a given key at a
+  // DNS-label boundary should be considered to be “on path”. See the comment
+  // for |Walk|.
+  bool match_subdomains = false;
+};
+
+// Walk iterates over the trie specified by |config|, looking for |key|. It
+// returns false if the trie data is found to be invalid and true otherwise.
+//
+// Leaf nodes in the trie contain embedded metadata which needs
+// context-specific knowledge to parse. Thus a callback, |decode_metadata|,
+// must be given that is capable of walking a |BitReader| over that metadata.
+//
+// The callback is also passed |on_path|, which indicates whether the current
+// node is a partial or full match for the key, as opposed to being a node that
+// needs to be skipped over. If |on_path| is true, the callback will likely
+// want to save the parsed metadata. If |config.match_subdomains| is false,
+// then |on_path| will only be true for an exact match. Otherwise it can be set
+// if, for example, |key| is "foo.bar.com" and the metadata is for "bar.com".
+// The callback can distinguish these cases by testing |key_offset|, which is
+// one greater than the offset in |key| that is currently being matched. Thus,
+// for an exact match, this will be zero.
+//
+// Lastly, if the callback considers the node to be acceptable, it can set
+// |out_found|, which is equal to the final argument to |Walk|.
+//
+// If the callback returns false, |Walk| will abort and return false.
+BASE_EXPORT bool Walk(
+    const Config& config,
+    const std::string& key,
+    const RepeatingCallback<
+        bool(BitReader*, bool on_path, size_t key_offset, bool* out_found)>&
+        decode_metadata,
+    bool* out_found);
 
 // BitReader is a class that allows a bytestring to be read bit-by-bit.
 class BASE_EXPORT BitReader {
@@ -49,35 +109,7 @@ class BASE_EXPORT BitReader {
   unsigned num_bits_used_;
 };
 
-// HuffmanDecoder is a very simple Huffman reader. The input Huffman tree is
-// simply encoded as a series of two-byte structures. The first byte determines
-// the "0" pointer for that node and the second the "1" pointer. Each byte
-// either has the MSB set, in which case the bottom 7 bits are the value for
-// that position, or else the bottom seven bits contain the index of a node.
-//
-// The tree is decoded by walking rather than a table-driven approach.
-//
-// There is an implementation of the encoder here:
-// net/tools/transport_security_state_generator/huffman/huffman_builder.h
-//
-// Usage guidelines:
-//  - Generate the Huffman Tree using the encoder.
-//  - Pass the generated Huffman Tree and the size in bytes to the constructor.
-//  - Create a BitReader instance with your huffman compressed trie.
-//    (spec is here: net/tools/transport_security_state_generator/README.md)
-//  - Call the decode function to read the next bit and decode it.
-class BASE_EXPORT TrieHuffmanDecoder {
- public:
-  TrieHuffmanDecoder(const uint8_t* tree, size_t tree_bytes);
-
-  // Read the next bit from |reader| decode it and store the decoded char in
-  // |out|.
-  bool Decode(BitReader* reader, char* out);
-
- private:
-  const uint8_t* const tree_;
-  const size_t tree_bytes_;
-};
+}  // namespace trie
 
 }  // namespace base
 

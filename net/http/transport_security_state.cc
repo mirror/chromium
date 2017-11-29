@@ -276,6 +276,77 @@ struct PreloadResult {
   uint32_t expect_staple_report_uri_id = 0;
 };
 
+bool DecodeHSTSPreloadMetadata(PreloadResult* out,
+                               base::trie::BitReader* reader,
+                               bool on_path,
+                               size_t key_offset,
+                               bool* out_found) {
+  PreloadResult tmp;
+  bool is_simple_entry;
+  if (!reader->Next(&is_simple_entry)) {
+    return false;
+  }
+
+  // Simple entries only configure HSTS with IncludeSubdomains and use a
+  // compact serialization format where the other policy flags are
+  // omitted. The omitted flags are assumed to be 0 and the associated
+  // policies are disabled.
+  if (is_simple_entry) {
+    tmp.force_https = true;
+    tmp.sts_include_subdomains = true;
+  } else {
+    if (!reader->Next(&tmp.sts_include_subdomains) ||
+        !reader->Next(&tmp.force_https) ||
+        !reader->Next(&tmp.has_pins)) {
+      return false;
+    }
+
+    tmp.pkp_include_subdomains = tmp.sts_include_subdomains;
+
+    if (tmp.has_pins) {
+      if (!reader->Read(4, &tmp.pinset_id) ||
+          (!tmp.sts_include_subdomains &&
+           !reader->Next(&tmp.pkp_include_subdomains))) {
+        return false;
+      }
+    }
+
+    if (!reader->Next(&tmp.expect_ct))
+      return false;
+
+    if (tmp.expect_ct && !reader->Read(4, &tmp.expect_ct_report_uri_id))
+      return false;
+
+    if (!reader->Next(&tmp.expect_staple))
+      return false;
+
+    tmp.expect_staple_include_subdomains = false;
+    if (tmp.expect_staple) {
+      if (!reader->Next(&tmp.expect_staple_include_subdomains))
+        return false;
+      if (!reader->Read(4, &tmp.expect_staple_report_uri_id))
+        return false;
+    }
+  }
+
+  tmp.hostname_offset = key_offset;
+
+  if (on_path) {
+    *out_found = tmp.sts_include_subdomains ||
+                 tmp.pkp_include_subdomains ||
+                 tmp.expect_staple_include_subdomains;
+    *out = tmp;
+
+    if (key_offset > 0) {
+      out->force_https &= tmp.sts_include_subdomains;
+    } else {
+      *out_found = true;
+    }
+  }
+
+  return true;
+}
+
 // DecodeHSTSPreloadRaw resolves |hostname| in the preloaded data. It returns
 // false on internal error and true otherwise. After a successful return,
 // |*out_found| is true iff a relevant entry has been found. If so, |*out|
@@ -304,16 +375,6 @@ struct PreloadResult {
 bool DecodeHSTSPreloadRaw(const std::string& search_hostname,
                           bool* out_found,
                           PreloadResult* out) {
-  base::TrieHuffmanDecoder huffman(g_hsts_source->huffman_tree,
-                                   g_hsts_source->huffman_tree_size);
-  base::BitReader reader(g_hsts_source->preloaded_data,
-                         g_hsts_source->preloaded_bits);
-  size_t bit_offset = g_hsts_source->root_position;
-  static const char kEndOfString = 0;
-  static const char kEndOfTable = 127;
-
-  *out_found = false;
-
   // Ensure that |search_hostname| is a valid hostname before
   // processing.
   if (CanonicalizeHost(search_hostname).empty()) {
@@ -337,177 +398,17 @@ bool DecodeHSTSPreloadRaw(const std::string& search_hostname,
     return true;
   }
 
-  // hostname_offset contains one more than the index of the current character
-  // in the hostname that is being considered. It's one greater so that we can
-  // represent the position just before the beginning (with zero).
-  size_t hostname_offset = hostname.size();
+  base::trie::Config config;
+  config.trie_data = g_hsts_source->preloaded_data;
+  config.trie_bits = g_hsts_source->preloaded_bits;
+  config.root_position = g_hsts_source->root_position;
+  config.huffman_data = g_hsts_source->huffman_tree;
+  config.huffman_size = g_hsts_source->huffman_tree_size;
+  config.match_subdomains = true;
 
-  for (;;) {
-    // Seek to the desired location.
-    if (!reader.Seek(bit_offset)) {
-      return false;
-    }
-
-    // Decode the unary length of the common prefix.
-    size_t prefix_length;
-    if (!reader.Unary(&prefix_length)) {
-      return false;
-    }
-
-    // Match each character in the prefix.
-    for (size_t i = 0; i < prefix_length; ++i) {
-      if (hostname_offset == 0) {
-        // We can't match the terminator with a prefix string.
-        return true;
-      }
-
-      char c;
-      if (!huffman.Decode(&reader, &c)) {
-        return false;
-      }
-      if (hostname[hostname_offset - 1] != c) {
-        return true;
-      }
-      hostname_offset--;
-    }
-
-    bool is_first_offset = true;
-    size_t current_offset = 0;
-
-    // Next is the dispatch table.
-    for (;;) {
-      char c;
-      if (!huffman.Decode(&reader, &c)) {
-        return false;
-      }
-      if (c == kEndOfTable) {
-        // No exact match.
-        return true;
-      }
-
-      if (c == kEndOfString) {
-        PreloadResult tmp;
-        bool is_simple_entry;
-        if (!reader.Next(&is_simple_entry)) {
-          return false;
-        }
-
-        // Simple entries only configure HSTS with IncludeSubdomains and use a
-        // compact serialization format where the other policy flags are
-        // omitted. The omitted flags are assumed to be 0 and the associated
-        // policies are disabled.
-        if (is_simple_entry) {
-          tmp.force_https = true;
-          tmp.sts_include_subdomains = true;
-        } else {
-          if (!reader.Next(&tmp.sts_include_subdomains) ||
-              !reader.Next(&tmp.force_https) || !reader.Next(&tmp.has_pins)) {
-            return false;
-          }
-
-          tmp.pkp_include_subdomains = tmp.sts_include_subdomains;
-
-          if (tmp.has_pins) {
-            if (!reader.Read(4, &tmp.pinset_id) ||
-                (!tmp.sts_include_subdomains &&
-                 !reader.Next(&tmp.pkp_include_subdomains))) {
-              return false;
-            }
-          }
-
-          if (!reader.Next(&tmp.expect_ct))
-            return false;
-
-          if (tmp.expect_ct) {
-            if (!reader.Read(4, &tmp.expect_ct_report_uri_id))
-              return false;
-          }
-
-          if (!reader.Next(&tmp.expect_staple))
-            return false;
-          tmp.expect_staple_include_subdomains = false;
-          if (tmp.expect_staple) {
-            if (!reader.Next(&tmp.expect_staple_include_subdomains))
-              return false;
-            if (!reader.Read(4, &tmp.expect_staple_report_uri_id))
-              return false;
-          }
-        }
-
-        tmp.hostname_offset = hostname_offset;
-
-        if (hostname_offset == 0 || hostname[hostname_offset - 1] == '.') {
-          *out_found = tmp.sts_include_subdomains ||
-                       tmp.pkp_include_subdomains ||
-                       tmp.expect_staple_include_subdomains;
-          *out = tmp;
-
-          if (hostname_offset > 0) {
-            out->force_https &= tmp.sts_include_subdomains;
-          } else {
-            *out_found = true;
-            return true;
-          }
-        }
-
-        continue;
-      }
-
-      // The entries in a dispatch table are in order thus we can tell if there
-      // will be no match if the current character past the one that we want.
-      if (hostname_offset == 0 || hostname[hostname_offset - 1] < c) {
-        return true;
-      }
-
-      if (is_first_offset) {
-        // The first offset is backwards from the current position.
-        uint32_t jump_delta_bits;
-        uint32_t jump_delta;
-        if (!reader.Read(5, &jump_delta_bits) ||
-            !reader.Read(jump_delta_bits, &jump_delta)) {
-          return false;
-        }
-
-        if (bit_offset < jump_delta) {
-          return false;
-        }
-
-        current_offset = bit_offset - jump_delta;
-        is_first_offset = false;
-      } else {
-        // Subsequent offsets are forward from the target of the first offset.
-        uint32_t is_long_jump;
-        if (!reader.Read(1, &is_long_jump)) {
-          return false;
-        }
-
-        uint32_t jump_delta;
-        if (!is_long_jump) {
-          if (!reader.Read(7, &jump_delta)) {
-            return false;
-          }
-        } else {
-          uint32_t jump_delta_bits;
-          if (!reader.Read(4, &jump_delta_bits) ||
-              !reader.Read(jump_delta_bits + 8, &jump_delta)) {
-            return false;
-          }
-        }
-
-        current_offset += jump_delta;
-        if (current_offset >= bit_offset) {
-          return false;
-        }
-      }
-
-      DCHECK_LT(0u, hostname_offset);
-      if (hostname[hostname_offset - 1] == c) {
-        bit_offset = current_offset;
-        hostname_offset--;
-        break;
-      }
-    }
-  }
+  return base::trie::Walk(config, hostname,
+                          base::BindRepeating(DecodeHSTSPreloadMetadata, out),
+                          out_found);
 }
 
 bool DecodeHSTSPreload(const std::string& hostname, PreloadResult* out) {
