@@ -72,7 +72,7 @@ public class WebApkServiceClient {
      */
     public void notifyNotification(final String webApkPackage,
             final NotificationBuilderBase notificationBuilder, final String platformTag,
-            final int platformID) {
+            final int platformID, final String channelName) {
         final ApiUseCallback connectionCallback = new ApiUseCallback() {
             @Override
             public void useApi(IWebApkApi api) throws RemoteException {
@@ -93,7 +93,8 @@ public class WebApkServiceClient {
                 }
                 boolean notificationPermissionEnabled = api.notificationPermissionEnabled();
                 if (notificationPermissionEnabled) {
-                    api.notifyNotification(platformTag, platformID, notificationBuilder.build());
+                    api.notifyNotificationWithChannel(
+                            platformTag, platformID, notificationBuilder.build(), channelName);
                 }
                 WebApkUma.recordNotificationPermissionStatus(notificationPermissionEnabled);
             }
