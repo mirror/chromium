@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aca7a6c2_f907b5d6",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 108917,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-29T20:56:37Z",
+      "side": 1,
+      "message": "Nit: VRSessionTimeDLA",
+      "range": {
+        "startLine": 108917,
+        "startChar": 28,
+        "endLine": 108917,
+        "endChar": 40
+      },
+      "revId": "7c52cb8c48918a95271b06325b6fce49fbcc1c3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
