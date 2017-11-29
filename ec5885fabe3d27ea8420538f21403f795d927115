@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f7e4394_922a3e37",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-29T20:28:21Z",
+      "side": 1,
+      "message": "I don\u0027t understand this code. Who is adding the dialog insets that they need to be subtracted here?",
+      "range": {
+        "startLine": 333,
+        "startChar": 2,
+        "endLine": 342,
+        "endChar": 3
+      },
+      "revId": "ec5885fabe3d27ea8420538f21403f795d927115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8e4a130_ef2f93f2",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-29T20:28:21Z",
+      "side": 1,
+      "message": "This is going to effect *all* checkbox. I think you should only change the one you care about.",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 35
+      },
+      "revId": "ec5885fabe3d27ea8420538f21403f795d927115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
