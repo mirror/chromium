@@ -326,6 +326,18 @@ cr.define('print_preview_test', function() {
   }
 
   /**
+   * @param {!HTMLElement} headerFooter The header/footer settings section.
+   * @param {boolean} displayed Whether the header footer section should be
+   *     displayed when the preview is done loading.
+   */
+  function checkHeaderFooterOnLoad(headerFooter, displayed) {
+    return nativeLayer.whenCalled('getPreview').then(function() {
+      checkElementDisplayed(headerFooter, displayed);
+      return whenAnimationDone('more-settings');
+    });
+  }
+
+  /**
    * Expand the 'More Settings' div to expose all options.
    */
   function expandMoreSettings() {
@@ -913,18 +925,19 @@ cr.define('print_preview_test', function() {
     // Make sure that custom margins controls are properly set up.
     test('CustomMarginsControlsCheck', function() {
       return setupSettingsAndDestinationsWithCapabilities().then(function() {
+        nativeLayer.resetResolver('getPreview');
         printPreview.printTicketStore_.marginsType.updateValue(
             print_preview.ticket_items.MarginsTypeValue.CUSTOM);
-
-        ['left', 'top', 'right', 'bottom'].forEach(function(margin) {
-          const control =
-              $('preview-area').querySelector('.margin-control-' + margin);
-          assertNotEquals(null, control);
-          const input = control.querySelector('.margin-control-textbox');
-          assertTrue(input.hasAttribute('aria-label'));
-          assertNotEquals('undefined', input.getAttribute('aria-label'));
+        return nativeLayer.whenCalled('getPreview').then(function() {
+          ['left', 'top', 'right', 'bottom'].forEach(function(margin) {
+            const control =
+                $('preview-area').querySelector('.margin-control-' + margin);
+            assertNotEquals(null, control);
+            const input = control.querySelector('.margin-control-textbox');
+            assertTrue(input.hasAttribute('aria-label'));
+            assertNotEquals('undefined', input.getAttribute('aria-label'));
+          });
         });
-        return whenAnimationDone('more-settings');
       });
     });
 
@@ -944,14 +957,13 @@ cr.define('print_preview_test', function() {
 
         checkElementDisplayed(headerFooter, true);
 
+        nativeLayer.resetResolver('getPreview');
         printPreview.printTicketStore_.marginsType.updateValue(
             print_preview.ticket_items.MarginsTypeValue.CUSTOM);
         printPreview.printTicketStore_.customMargins.updateValue(
             new print_preview.Margins(0, 0, 0, 0));
 
-        checkElementDisplayed(headerFooter, false);
-
-        return whenAnimationDone('more-settings');
+        return checkHeaderFooterOnLoad(headerFooter, false);
       });
     });
 
@@ -971,14 +983,12 @@ cr.define('print_preview_test', function() {
 
         checkElementDisplayed(headerFooter, true);
 
+        nativeLayer.resetResolver('getPreview');
         printPreview.printTicketStore_.marginsType.updateValue(
             print_preview.ticket_items.MarginsTypeValue.CUSTOM);
         printPreview.printTicketStore_.customMargins.updateValue(
             new print_preview.Margins(36, 36, 36, 36));
-
-        checkElementDisplayed(headerFooter, true);
-
-        return whenAnimationDone('more-settings');
+        return checkHeaderFooterOnLoad(headerFooter, true);
       });
     });
 
@@ -999,14 +1009,13 @@ cr.define('print_preview_test', function() {
 
         checkElementDisplayed(headerFooter, true);
 
+        nativeLayer.resetResolver('getPreview');
         printPreview.printTicketStore_.marginsType.updateValue(
             print_preview.ticket_items.MarginsTypeValue.CUSTOM);
         printPreview.printTicketStore_.customMargins.updateValue(
             new print_preview.Margins(0, 36, 0, 36));
 
-        checkElementDisplayed(headerFooter, false);
-
-        return whenAnimationDone('more-settings');
+        return checkHeaderFooterOnLoad(headerFooter, false);
       });
     });
 
@@ -1027,14 +1036,13 @@ cr.define('print_preview_test', function() {
 
         checkElementDisplayed(headerFooter, true);
 
+        nativeLayer.resetResolver('getPreview');
         printPreview.printTicketStore_.marginsType.updateValue(
             print_preview.ticket_items.MarginsTypeValue.CUSTOM);
         printPreview.printTicketStore_.customMargins.updateValue(
             new print_preview.Margins(0, 36, 36, 36));
 
-        checkElementDisplayed(headerFooter, true);
-
-        return whenAnimationDone('more-settings');
+        return checkHeaderFooterOnLoad(headerFooter, true);
       });
     });
 
@@ -1066,16 +1074,18 @@ cr.define('print_preview_test', function() {
         checkElementDisplayed(headerFooter, true);
 
         // Small label should not
+        nativeLayer.resetResolver('getPreview');
         printPreview.printTicketStore_.mediaSize.updateValue(
             device.capabilities.printer.media_size.option[0]);
-        checkElementDisplayed(headerFooter, false);
+        return nativeLayer.whenCalled('getPreview').then(function() {
+          checkElementDisplayed(headerFooter, false);
 
-        // Oriented in landscape, there should be enough space for
-        // header/footer.
-        printPreview.printTicketStore_.landscape.updateValue(true);
-        checkElementDisplayed(headerFooter, true);
-
-        return whenAnimationDone('more-settings');
+          // Oriented in landscape, there should be enough space for
+          // header/footer.
+          nativeLayer.resetResolver('getPreview');
+          printPreview.printTicketStore_.landscape.updateValue(true);
+          return checkHeaderFooterOnLoad(headerFooter, true);
+        });
       });
     });
 
@@ -1513,7 +1523,7 @@ cr.define('print_preview_test', function() {
             expectEquals(
                 mediaDefault.height_microns,
                 printTicketStore.mediaSize.getValue().height_microns);
-            return nativeLayer.whenCalled('hidePreview');
+            return nativeLayer.whenCalled('dialogClose');
           });
     });
 
@@ -1600,7 +1610,7 @@ cr.define('print_preview_test', function() {
               const openPdfPreviewLink = $('open-pdf-in-preview-link');
               checkElementDisplayed(openPdfPreviewLink, true);
               openPdfPreviewLink.click();
-              // Should result in a print call and dialog should hide
+              // Should result in a print call and dialog should close.
               return nativeLayer.whenCalled('print');
             }).then(
                 /**
@@ -1615,7 +1625,7 @@ cr.define('print_preview_test', function() {
                  */
                 function(args) {
                   expectTrue(args.openPdfInPreview);
-                  return nativeLayer.whenCalled('hidePreview');
+                  return nativeLayer.whenCalled('dialogClose');
                 });
       });
 
@@ -1668,7 +1678,7 @@ cr.define('print_preview_test', function() {
               const systemDialogLink = $('system-dialog-link');
               checkElementDisplayed(systemDialogLink, true);
               systemDialogLink.click();
-              // Should result in a print call and dialog should hide
+              // Should result in a print call and dialog should close.
               return nativeLayer.whenCalled('print');
             }).then(
                 /**
@@ -1683,7 +1693,7 @@ cr.define('print_preview_test', function() {
                  */
                 function(args) {
                   expectTrue(args.showSystemDialog);
-                  return nativeLayer.whenCalled('hidePreview');
+                  return nativeLayer.whenCalled('dialogClose');
                 });
       });
 
