@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66810039_5258a4c3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DebuggerModel.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-29T21:53:01Z",
+      "side": 1,
+      "message": "!Promise",
+      "revId": "5a8cf50b9664475eebf8a7241cfd724120c15786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d144167_5921728a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DebuggerModel.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-29T21:53:01Z",
+      "side": 1,
+      "message": "Make it private",
+      "range": {
+        "startLine": 234,
+        "startChar": 2,
+        "endLine": 234,
+        "endChar": 18
+      },
+      "revId": "5a8cf50b9664475eebf8a7241cfd724120c15786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14743797_3c2c45a9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DebuggerModel.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-29T21:53:01Z",
+      "side": 1,
+      "message": "Make it a for-loop.",
+      "revId": "5a8cf50b9664475eebf8a7241cfd724120c15786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfe6fdbc_fc9c441d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DebuggerModel.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-29T21:53:01Z",
+      "side": 1,
+      "message": "move to line 529",
+      "revId": "5a8cf50b9664475eebf8a7241cfd724120c15786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2cebd08_08db172d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/module.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-29T21:53:01Z",
+      "side": 1,
+      "message": "omit the platform",
+      "revId": "5a8cf50b9664475eebf8a7241cfd724120c15786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
