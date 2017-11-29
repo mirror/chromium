@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c983375_40e9bf95",
+        "filename": "content/public/browser/navigation_handle.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-29T16:29:51Z",
+      "side": 1,
+      "message": "nit: remove the extra . at the end of the comment.",
+      "revId": "59d0fca8c46e0020f0624f1f0fda48bcb8b9d5f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3f6e2785_e024c4fd",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-29T16:29:51Z",
+      "side": 1,
+      "message": "Should we check that GetSSLInfo is valid here?",
+      "revId": "a41150b092561a2bc485f47a8776e035074267b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9daf431_1b7d3dd6",
         "filename": "content/browser/frame_host/navigation_handle_impl.cc",
         "patchSetId": 4
@@ -34,6 +51,24 @@
       "revId": "a41150b092561a2bc485f47a8776e035074267b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a153a600_ec8041cb",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-29T16:29:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "09695750_70822fd1",
+      "revId": "a41150b092561a2bc485f47a8776e035074267b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -72,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "ad7afc50_2ca59b66",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-29T16:29:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4c7e1e9c_faabb9b7",
+      "revId": "a41150b092561a2bc485f47a8776e035074267b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8ffd659_9fec2910",
         "filename": "content/browser/loader/navigation_url_loader_network_service.h",
         "patchSetId": 4
@@ -107,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "d1041946_829f3566",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-29T16:29:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "75aaa26a_1bc6752e",
+      "revId": "a41150b092561a2bc485f47a8776e035074267b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "002b8dd7_6e42ec1d",
         "filename": "content/public/browser/navigation_handle.h",
         "patchSetId": 4
@@ -136,6 +207,24 @@
       "side": 1,
       "message": "oops, the comment wasn\u0027t updated correctly. Fixed, thanks.\n\nRe const in public; that\u0027s just for the method itself. but we return const references often.",
       "parentUuid": "002b8dd7_6e42ec1d",
+      "revId": "a41150b092561a2bc485f47a8776e035074267b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "668ab7a9_ee3f76aa",
+        "filename": "content/public/browser/navigation_handle.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-29T16:29:51Z",
+      "side": 1,
+      "message": "Yes that\u0027s what I thought but I wanted to check :).",
+      "parentUuid": "0f40ff63_267543b1",
       "revId": "a41150b092561a2bc485f47a8776e035074267b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
