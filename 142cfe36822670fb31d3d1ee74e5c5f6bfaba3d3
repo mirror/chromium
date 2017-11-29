@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62afcaa7_f826d70f",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 3896,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-29T20:36:47Z",
+      "side": 1,
+      "message": "Copy over the comment about why we don\u0027t care about this during layout.",
+      "range": {
+        "startLine": 3896,
+        "startChar": 7,
+        "endLine": 3896,
+        "endChar": 18
+      },
+      "revId": "142cfe36822670fb31d3d1ee74e5c5f6bfaba3d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1bf8d28_c5cf8da4",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-29T20:36:47Z",
+      "side": 1,
+      "message": "Nit: Blink style doesn\u0027t have the hacker case convention for trivial methods. These should be CapitalCamelCase",
+      "range": {
+        "startLine": 927,
+        "startChar": 7,
+        "endLine": 927,
+        "endChar": 37
+      },
+      "revId": "142cfe36822670fb31d3d1ee74e5c5f6bfaba3d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed83a4a2_69f4f57e",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinator.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-29T20:36:47Z",
+      "side": 1,
+      "message": "This would be faster and I don\u0027t think you change the meaning if you just make this:\n\nif (ScrolLGestureRegionIsDirtyOnSubtree(...))\n  return true;\n\nSimilarly, you can do the same at the start of the function and not need the `dirty` variable at all.",
+      "range": {
+        "startLine": 178,
+        "startChar": 8,
+        "endLine": 178,
+        "endChar": 13
+      },
+      "revId": "142cfe36822670fb31d3d1ee74e5c5f6bfaba3d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca6cc5a5_5ce451db",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinator.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-29T20:36:47Z",
+      "side": 1,
+      "message": "I\u0027m not sure what this means, could you add a bug and clarify (there or in comment)?\n\nIs it that you clear the dirty bit on the passed in frame_view, even though it might be a child frame_view that\u0027s dirty?",
+      "range": {
+        "startLine": 203,
+        "startChar": 22,
+        "endLine": 204,
+        "endChar": 66
+      },
+      "revId": "142cfe36822670fb31d3d1ee74e5c5f6bfaba3d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91bd0b8c_868e128d",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinator.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-29T20:36:47Z",
+      "side": 1,
+      "message": "This should still be equivalent to page_, right?",
+      "range": {
+        "startLine": 257,
+        "startChar": 28,
+        "endLine": 257,
+        "endChar": 49
+      },
+      "revId": "142cfe36822670fb31d3d1ee74e5c5f6bfaba3d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
