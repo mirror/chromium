@@ -22,6 +22,30 @@
       "revId": "99626ab48e966733197411da08e3cf18f390149d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ccee6fb_5f8f243b",
+        "filename": "third_party/WebKit/common/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-11-29T12:22:35Z",
+      "side": 1,
+      "message": "They allow this in //WebKit/public though, which was my reference for this change.\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/public/BUILD.gn?l\u003d840.",
+      "parentUuid": "0de753d9_c474fb05",
+      "range": {
+        "startLine": 109,
+        "startChar": 28,
+        "endLine": 109,
+        "endChar": 42
+      },
+      "revId": "99626ab48e966733197411da08e3cf18f390149d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
