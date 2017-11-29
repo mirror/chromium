@@ -353,6 +353,30 @@
       "revId": "116bc1a501fb96bf4268cba3744f24e3d7cd6a09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "494c1f6c_a9c5face",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_view.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-29T10:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b41b4e28_f7c269bb",
+      "range": {
+        "startLine": 340,
+        "startChar": 2,
+        "endLine": 341,
+        "endChar": 54
+      },
+      "revId": "116bc1a501fb96bf4268cba3744f24e3d7cd6a09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
