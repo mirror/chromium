@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c19364d2_ca6c644b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-29T00:05:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5b714b1_18530143",
+      "revId": "e011e9f2ea6b21a74f15c4a7f54e1351802bfd38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ae0ecb1_6d48ecc7",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 4
@@ -59,6 +77,24 @@
     },
     {
       "key": {
+        "uuid": "3d5da4d6_24811ccc",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-29T00:05:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "44e46a47_309efbec",
+      "revId": "e011e9f2ea6b21a74f15c4a7f54e1351802bfd38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7b099db_342bb8a7",
         "filename": "content/browser/webauth/cbor/cbor_values.cc",
         "patchSetId": 4
@@ -73,6 +109,24 @@
       "revId": "e011e9f2ea6b21a74f15c4a7f54e1351802bfd38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02e76812_b878df29",
+        "filename": "content/browser/webauth/cbor/cbor_values.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-29T00:05:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7b099db_342bb8a7",
+      "revId": "e011e9f2ea6b21a74f15c4a7f54e1351802bfd38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +147,24 @@
     },
     {
       "key": {
+        "uuid": "adeac1f3_aac9b9fc",
+        "filename": "content/browser/webauth/cbor/cbor_values.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-29T00:05:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85044f6a_4ed42d08",
+      "revId": "e011e9f2ea6b21a74f15c4a7f54e1351802bfd38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f1b9172_bebd1c28",
         "filename": "content/browser/webauth/cbor/cbor_values.cc",
         "patchSetId": 4
@@ -104,6 +176,24 @@
       "writtenOn": "2017-11-28T17:33:49Z",
       "side": 1,
       "message": "Duplicate label.",
+      "revId": "e011e9f2ea6b21a74f15c4a7f54e1351802bfd38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e161e76_fafe1e2c",
+        "filename": "content/browser/webauth/cbor/cbor_values.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-29T00:05:31Z",
+      "side": 1,
+      "message": "Hmm perhaps \"code camouflage\" caused by line collapse? :) I think switch statement from CBORValue::InternalMoveCOnstructFrom() and CBORValue::InternalCleanup() seems to have merged with the line collapse. Please let me know if I\u0027m wrong though!",
+      "parentUuid": "8f1b9172_bebd1c28",
       "revId": "e011e9f2ea6b21a74f15c4a7f54e1351802bfd38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -124,6 +214,24 @@
       "revId": "e011e9f2ea6b21a74f15c4a7f54e1351802bfd38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ab0acae_5060626c",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-29T00:05:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67f2c68a_a3d5cda9",
+      "revId": "e011e9f2ea6b21a74f15c4a7f54e1351802bfd38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
