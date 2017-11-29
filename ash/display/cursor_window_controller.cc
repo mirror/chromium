@@ -125,8 +125,7 @@ bool CursorWindowController::ShouldEnableCursorCompositing() {
          prefs->GetBoolean(prefs::kAccessibilityHighContrastEnabled) ||
          prefs->GetBoolean(prefs::kAccessibilityScreenMagnifierEnabled) ||
          prefs->GetBoolean(prefs::kNightLightEnabled) ||
-         (display_manager->is_multi_mirroring_enabled() &&
-          display_manager->IsInSoftwareMirrorMode());
+         display_manager->IsInSoftwareMirrorMode();
 }
 
 void CursorWindowController::SetCursorCompositingEnabled(bool enabled) {
