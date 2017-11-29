@@ -2310,6 +2310,39 @@ def _CheckForRelativeIncludes(input_api, output_api):
   return results
 
 
+def _CheckForDeprecatedCallback(input_api, output_api):
+  """Discourages the use of deprecated base::{Bind,Callback,Closure}."""
+  # This contains a list of regex and a human-readable error message.
+  patterns = [
+      (r'\bbase::Bind\(',
+       'uses base::Bind. Please consider using base::Bind{Once,Repeating} '
+       'instead.'),
+      (r'\bbase::Callback<',
+       'uses base::Callback. Please consider using '
+       'base::{Once,Repeating}Callback instead'),
+      (r'\bbase::Closure\b',
+       'uses base::Closure. Please consider using '
+       'base::{Once,Repeating}Closure instead'),
+  ]
+  problems = []
+  def SourceFilter(affected_file):
+    return input_api.FilterSourceFile(affected_file, (r'.+\.(cc|h)$',),
+                                      input_api.DEFAULT_BLACK_LIST)
+  for f in input_api.AffectedSourceFiles(SourceFilter):
+    for line_number, line in f.ChangedContents():
+      for pattern in patterns:
+        if input_api.re.search(pattern[0], line):
+          problems.append(
+              '%s:%d %s' % (f.LocalPath(), line_number, pattern[1]))
+  if problems:
+    return [output_api.PresubmitPromptWarning(
+        'base::Bind, base::Closure, and base::Callback are in the process ' +
+        'of being deprecated. See crbug.com/714018 for more information ' +
+        'about the migration\n',
+        items=problems)]
+  return []
+
+
 def _CheckWatchlistDefinitionsEntrySyntax(key, value, ast):
   if not isinstance(key, ast.Str):
     return 'Key at line %d must be a string literal' % key.lineno
@@ -2496,6 +2529,7 @@ def _CommonChecks(input_api, output_api):
   results.extend(_CheckUselessForwardDeclarations(input_api, output_api))
   results.extend(_CheckForRiskyJsFeatures(input_api, output_api))
   results.extend(_CheckForRelativeIncludes(input_api, output_api))
+  results.extend(_CheckForDeprecatedCallback(input_api, output_api))
   results.extend(_CheckWATCHLISTS(input_api, output_api))
   results.extend(input_api.RunTests(
     input_api.canned_checks.CheckVPythonSpec(input_api, output_api)))
