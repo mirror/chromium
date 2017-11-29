@@ -66,7 +66,7 @@ class IdleEventNotifierTest : public testing::Test {
         scoped_context_(task_runner_.get()) {
     viz::mojom::VideoDetectorObserverPtr observer;
     idle_event_notifier_ = std::make_unique<IdleEventNotifier>(
-        &power_client_, mojo::MakeRequest(&observer));
+        &power_client_, &user_activity_detector_, mojo::MakeRequest(&observer));
     idle_event_notifier_->SetClockForTesting(task_runner_->GetMockClock());
     idle_event_notifier_->AddObserver(&test_observer_);
     ac_power_.set_external_power(

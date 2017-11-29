@@ -59,7 +59,8 @@ class UserActivityLoggerTest : public testing::Test {
     fake_power_manager_client_.Init(nullptr);
     viz::mojom::VideoDetectorObserverPtr observer;
     idle_event_notifier_ = std::make_unique<IdleEventNotifier>(
-        &fake_power_manager_client_, mojo::MakeRequest(&observer));
+        &fake_power_manager_client_, &user_activity_detector_,
+        mojo::MakeRequest(&observer));
     activity_logger_ = std::make_unique<UserActivityLogger>(
         &delegate_, idle_event_notifier_.get(), &user_activity_detector_,
         &fake_power_manager_client_, &session_manager_,
