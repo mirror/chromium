@@ -7,6 +7,7 @@
 #include "base/memory/singleton.h"
 #include "components/keyed_service/core/service_access_type.h"
 #include "components/keyed_service/ios/browser_state_dependency_manager.h"
+#include "components/signin/ios/browser/delay_callback_helper.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/content_settings/cookie_settings_factory.h"
 #include "ios/chrome/browser/content_settings/host_content_settings_map_factory.h"
@@ -42,8 +43,10 @@ std::unique_ptr<KeyedService> SigninClientFactory::BuildServiceInstanceFor(
     web::BrowserState* context) const {
   ios::ChromeBrowserState* chrome_browser_state =
       ios::ChromeBrowserState::FromBrowserState(context);
+  std::unique_ptr<DelayCallbackHelper> delay_network_helper =
+      std::make_unique<DelayCallbackHelper>();
   return std::make_unique<IOSChromeSigninClient>(
-      chrome_browser_state,
+      std::move(delay_network_helper), chrome_browser_state,
       ios::SigninErrorControllerFactory::GetForBrowserState(
           chrome_browser_state),
       ios::CookieSettingsFactory::GetForBrowserState(chrome_browser_state),

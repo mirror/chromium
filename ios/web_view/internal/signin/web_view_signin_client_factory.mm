@@ -9,6 +9,7 @@
 #include "components/keyed_service/core/service_access_type.h"
 #include "components/keyed_service/ios/browser_state_dependency_manager.h"
 #include "components/signin/core/browser/signin_client.h"
+#include "components/signin/ios/browser/delay_callback_helper.h"
 #include "ios/web_view/internal/content_settings/web_view_cookie_settings_factory.h"
 #include "ios/web_view/internal/content_settings/web_view_host_content_settings_map_factory.h"
 #include "ios/web_view/internal/signin/ios_web_view_signin_client.h"
@@ -47,8 +48,11 @@ WebViewSigninClientFactory::BuildServiceInstanceFor(
     web::BrowserState* context) const {
   WebViewBrowserState* browser_state =
       WebViewBrowserState::FromBrowserState(context);
+  std::unique_ptr<DelayCallbackHelper> delay_network_helper =
+      std::make_unique<DelayCallbackHelper>();
   return base::MakeUnique<IOSWebViewSigninClient>(
-      browser_state->GetPrefs(), browser_state->GetRequestContext(),
+      std::move(delay_network_helper), browser_state->GetPrefs(),
+      browser_state->GetRequestContext(),
       WebViewSigninErrorControllerFactory::GetForBrowserState(browser_state),
       WebViewCookieSettingsFactory::GetForBrowserState(browser_state),
       WebViewHostContentSettingsMapFactory::GetForBrowserState(browser_state),
