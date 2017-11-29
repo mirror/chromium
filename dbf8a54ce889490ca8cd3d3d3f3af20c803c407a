@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a751e36e_ce3e2ff0",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1116036
+      },
+      "writtenOn": "2017-11-29T19:17:25Z",
+      "side": 1,
+      "message": "So there\u0027s a bit of a paradigm shift to not reporting errors until the task is completed. That\u0027s fine, but does it present a \"liveness\" problem for the user, right?\n\nQ: What happens if there are many/all errors in a large set of files being imported? Won\u0027t it appear that nothing is happening for a long period of time?\n\nYou could fix this simply by treating the ERROR state as non-fatal, basically meaning the entry has been queued up for retry. You would just need to update progress center to demonstrate this this to the user.",
+      "revId": "dbf8a54ce889490ca8cd3d3d3f3af20c803c407a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27d1cd74_eb77d5ac",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
         "patchSetId": 15
@@ -30,6 +47,75 @@
       "writtenOn": "2017-11-29T04:11:00Z",
       "side": 1,
       "message": "I guess there is a reason to have these cancel logic in importOne_.\nSteve, do you know background?",
+      "revId": "dbf8a54ce889490ca8cd3d3d3f3af20c803c407a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ad37ab3_b4bd9c8b",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1116036
+      },
+      "writtenOn": "2017-11-29T19:17:25Z",
+      "side": 1,
+      "message": "Are you referring to the \"if (this.canceled_)\" check on line 435?\n\nI assume it is a guard against an async task doing more stuff after the task has been cancelled.",
+      "parentUuid": "47237251_da1cc200",
+      "revId": "dbf8a54ce889490ca8cd3d3d3f3af20c803c407a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ebe166e_250f6b0e",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1116036
+      },
+      "writtenOn": "2017-11-29T19:17:25Z",
+      "side": 1,
+      "message": "I still don\u0027t know what slice() with no args does. Is it a copy? Is there some default length?",
+      "revId": "dbf8a54ce889490ca8cd3d3d3f3af20c803c407a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fa6ad1a_6f36687e",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1116036
+      },
+      "writtenOn": "2017-11-29T19:17:25Z",
+      "side": 1,
+      "message": "Add some whitespace to your code. Empty lines between logical sections give the reader needed resting spots and useful clues.\n\nE.g. add an empty line after you setup the driveListener_. That\u0027s a discrete chunk of logic.",
+      "revId": "dbf8a54ce889490ca8cd3d3d3f3af20c803c407a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5797b0f_8d3c41a1",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1116036
+      },
+      "writtenOn": "2017-11-29T19:17:25Z",
+      "side": 1,
+      "message": "There\u0027s one thing I\u0027ve been wondering about this change. If import is failing because device is out of disk space how does this change actually free up more space? Does DriveSyncHandler.COMPLETED_EVENT mean that content has been evicted from the cache, or that it is eligible for cache eviction?\n\nEither way, it might make sense to lean back and write up some really nice code comments (like you did in your CL description) for future maintainers. Describe *why this exists at all*, and how it is intended to work. That way when Fukino-san\u0027s grandson inherits maintenance of this code he\u0027ll have help understanding what\u0027s going on. And in the short term it\u0027ll help me understand what\u0027s going on too.",
       "revId": "dbf8a54ce889490ca8cd3d3d3f3af20c803c407a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +151,24 @@
       "side": 1,
       "message": "The MediaImportHandler / ImportTask only know after all retries have happened that the process is done, they don\u0027t know about the time a try is done and waiting for the next retry to happen - there is a test case testing the behavior if there was an error during the process, but because we mock the DriveSyncHandler in that test, the signal for the new retry to start will never happen, leading to time out in the test. Introducing this makes it possible to fire the DriveSyncHandler.COMPLETED_EVENT to trigger the retry, letting the test continue on without getting stuck.",
       "parentUuid": "5968511f_9c5df2a2",
+      "revId": "dbf8a54ce889490ca8cd3d3d3f3af20c803c407a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "68bf7c8d_498d3f15",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1116036
+      },
+      "writtenOn": "2017-11-29T19:17:25Z",
+      "side": 1,
+      "message": "If you are simply trying to known when the first import pass has completed, just add an event for that and send it to the observer. The test already has an observer and can use that signal to orchestrate DriveSyncHandler events.\n\nFurthermore, existence of that event would allow the progress center to clearly indicate to the user that the media backup is going into a retrying state. That might would also help address the liveness issues I raised in an earlier comment.",
+      "parentUuid": "137f2ce0_b4a4589a",
       "revId": "dbf8a54ce889490ca8cd3d3d3f3af20c803c407a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
