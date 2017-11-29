@@ -74,6 +74,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Implementation of the ICustomTabsConnectionService interface.
@@ -199,6 +200,12 @@ public class CustomTabsConnection {
     protected final boolean mLogRequests;
     private final AtomicBoolean mWarmupHasBeenCalled = new AtomicBoolean();
     private final AtomicBoolean mWarmupHasBeenFinished = new AtomicBoolean();
+    // Initialization tasks.
+    // Transitions are:
+    // null -> ChainedTasks to start asynchronous initialization. (non UI thread)
+    // ChainedTasks -> null when tasks are cancelled or complete. (UI thread only)
+    // Hence this is non-null iff initialization tasks are in progress.
+    private final AtomicReference<ChainedTasks> mWarmupTasks = new AtomicReference<>();
     private ExternalPrerenderHandler mExternalPrerenderHandler;
     private boolean mForcePrerenderForTesting;
     private volatile Runnable mWarmupFinishedCallback;
@@ -206,8 +213,6 @@ public class CustomTabsConnection {
     // Conversion between native TimeTicks and SystemClock.uptimeMillis().
     private long mNativeTickOffsetUs;
     private boolean mNativeTickOffsetUsComputed;
-
-    private volatile ChainedTasks mWarmupTasks;
 
     /**
      * <strong>DO NOT CALL</strong>
@@ -367,13 +372,15 @@ public class CustomTabsConnection {
      * @return true for success.
      */
     private boolean warmupInternal(final boolean mayCreateSpareWebContents) {
+        if (mWarmupTasks.get() != null) return true;
+
         // Here and in mayLaunchUrl(), don't do expensive work for background applications.
         if (!isCallerForegroundOrSelf()) return false;
         mClientManager.recordUidHasCalledWarmup(Binder.getCallingUid());
         final boolean initialized = !mWarmupHasBeenCalled.compareAndSet(false, true);
 
         // The call is non-blocking and this must execute on the UI thread, post chained tasks.
-        ChainedTasks tasks = new ChainedTasks();
+        final ChainedTasks tasks = new ChainedTasks();
 
         // Ordering of actions here:
         // 1. Initializing the browser needs to be done once, and first.
@@ -385,65 +392,61 @@ public class CustomTabsConnection {
         // 5. RequestThrottler first access has to be done only once.
 
         // (1)
-        if (!initialized) {
-            tasks.add(new Runnable() {
-                @Override
-                public void run() {
-                    try (TraceEvent e =
-                                    TraceEvent.scoped("CustomTabsConnection.initializeBrowser()")) {
-                        initializeBrowser(mContext);
-                        ChromeBrowserInitializer.initNetworkChangeNotifier(mContext);
-                        mWarmupHasBeenFinished.set(true);
-                    }
+        // If a first set of tasks has been created and cancelled before native initialization is
+        // done, need to call it again. To avoid duplicating work, no need to post it if
+        // initialization is done at posting time, and no need to run it if it's done at running
+        // time.
+        if (!mWarmupHasBeenFinished.get()) {
+            tasks.add(() -> {
+                if (mWarmupHasBeenFinished.get()) return;
+                try (TraceEvent e = TraceEvent.scoped("CustomTabsConnection.initializeBrowser()")) {
+                    initializeBrowser(mContext);
+                    ChromeBrowserInitializer.initNetworkChangeNotifier(mContext);
+                    mWarmupHasBeenFinished.set(true);
                 }
             });
         }
 
         // (2)
         if (mayCreateSpareWebContents && mSpeculation == null) {
-            tasks.add(new Runnable() {
-                @Override
-                public void run() {
-                    try (TraceEvent e = TraceEvent.scoped("CreateSpareWebContents")) {
-                        WarmupManager.getInstance().createSpareWebContents();
-                    }
+            tasks.add(() -> {
+                try (TraceEvent e = TraceEvent.scoped("CreateSpareWebContents")) {
+                    WarmupManager.getInstance().createSpareWebContents();
                 }
             });
         }
 
         // (3)
-        tasks.add(new Runnable() {
-            @Override
-            public void run() {
-                try (TraceEvent e = TraceEvent.scoped("InitializeViewHierarchy")) {
-                    WarmupManager.getInstance().initializeViewHierarchy(mContext,
-                            R.layout.custom_tabs_control_container, R.layout.custom_tabs_toolbar);
-                }
+        tasks.add(() -> {
+            try (TraceEvent e = TraceEvent.scoped("InitializeViewHierarchy")) {
+                WarmupManager.getInstance().initializeViewHierarchy(mContext,
+                        R.layout.custom_tabs_control_container, R.layout.custom_tabs_toolbar);
             }
         });
 
         if (!initialized) {
-            tasks.add(new Runnable() {
-                @Override
-                public void run() {
-                    try (TraceEvent e = TraceEvent.scoped("WarmupInternalFinishInitialization")) {
-                        // (4)
-                        Profile profile = Profile.getLastUsedProfile();
-                        new LoadingPredictor(profile).startInitialization();
+            tasks.add(() -> {
+                try (TraceEvent e = TraceEvent.scoped("WarmupInternalFinishInitialization")) {
+                    // (4)
+                    Profile profile = Profile.getLastUsedProfile();
+                    new LoadingPredictor(profile).startInitialization();
 
-                        // (5)
-                        // The throttling database uses shared preferences, that can cause a
-                        // StrictMode violation on the first access. Make sure that this access is
-                        // not in mayLauchUrl.
-                        RequestThrottler.loadInBackground(mContext);
-                    }
+                    // (5)
+
+                    // The throttling database uses shared preferences, that can cause a StrictMode
+                    // violation on the first access. Make sure that this access is not in
+                    // mayLauchUrl.
+                    RequestThrottler.loadInBackground(mContext);
                 }
             });
         }
+
+        tasks.add(() -> mWarmupTasks.compareAndSet(tasks, null));
+        // The completion callback is used in tests to know when it's safe to start calling
+        // warmup() again, so should run after cleanup.
         if (mWarmupFinishedCallback != null) tasks.add(mWarmupFinishedCallback);
 
-        tasks.start(false);
-        mWarmupTasks = tasks;
+        if (mWarmupTasks.compareAndSet(null, tasks)) tasks.start(false);
         return true;
     }
 
@@ -879,7 +882,9 @@ public class CustomTabsConnection {
 
         // If we still have pending warmup tasks, don't continue as they would only delay intent
         // processing from now on.
-        if (mWarmupTasks != null) mWarmupTasks.cancel();
+        ChainedTasks tasks = mWarmupTasks.get();
+        if (tasks != null) tasks.cancel();
+        mWarmupTasks.compareAndSet(tasks, null);
 
         // For the preconnection to not be a no-op, we need more than just the native library.
         if (!ChromeBrowserInitializer.getInstance(mContext).hasNativeInitializationCompleted()) {
