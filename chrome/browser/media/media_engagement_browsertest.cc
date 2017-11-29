@@ -9,12 +9,16 @@
 #include "base/test/simple_test_clock.h"
 #include "base/test/test_mock_time_task_runner.h"
 #include "base/time/time.h"
+#include "chrome/browser/browser_process.h"
+#include "chrome/browser/component_updater/mei_preload_component_installer.h"
 #include "chrome/browser/media/media_engagement_contents_observer.h"
+#include "chrome/browser/media/media_engagement_preloaded_list.h"
 #include "chrome/browser/media/media_engagement_service.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/ui_test_utils.h"
+#include "components/component_updater/component_updater_service.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/test/browser_test_utils.h"
 #include "media/base/media_switches.h"
@@ -34,7 +38,7 @@ class WasRecentlyAudibleWatcher {
   // |web_contents| must be non-NULL and needs to stay alive for the
   // entire lifetime of |this|.
   explicit WasRecentlyAudibleWatcher(content::WebContents* web_contents)
-      : web_contents_(web_contents), timer_(new base::Timer(true, true)){};
+      : web_contents_(web_contents), timer_(new base::Timer(true, true)) {}
   ~WasRecentlyAudibleWatcher() = default;
 
   // Waits until WasRecentlyAudible is true.
@@ -47,7 +51,7 @@ class WasRecentlyAudibleWatcher {
       run_loop_.reset(new base::RunLoop());
       run_loop_->Run();
     }
-  };
+  }
 
  private:
   void TestWasRecentlyAudible() {
@@ -55,7 +59,7 @@ class WasRecentlyAudibleWatcher {
       run_loop_->Quit();
       timer_->Stop();
     }
-  };
+  }
 
   content::WebContents* web_contents_;
 
@@ -69,7 +73,7 @@ class WasRecentlyAudibleWatcher {
 
 // Class used to test the Media Engagement service.
 class MediaEngagementBrowserTest : public InProcessBrowserTest {
- public:
+ protected:
   MediaEngagementBrowserTest()
       : test_clock_(new base::SimpleTestClock()),
         task_runner_(new base::TestMockTimeTaskRunner()) {
@@ -90,7 +94,7 @@ class MediaEngagementBrowserTest : public InProcessBrowserTest {
     InProcessBrowserTest::SetUp();
 
     injected_clock_ = false;
-  };
+  }
 
   void LoadTestPage(const std::string& page) {
     // We can't do this in SetUp as the browser isn't ready yet and we
@@ -98,7 +102,7 @@ class MediaEngagementBrowserTest : public InProcessBrowserTest {
     InjectTimerTaskRunner();
 
     ui_test_utils::NavigateToURL(browser(), http_server_.GetURL("/" + page));
-  };
+  }
 
   void LoadTestPageAndWaitForPlay(const std::string& page,
                                   bool web_contents_muted) {
@@ -111,7 +115,7 @@ class MediaEngagementBrowserTest : public InProcessBrowserTest {
                                             bool web_contents_muted) {
     LoadTestPageAndWaitForPlay(page, web_contents_muted);
     WaitForWasRecentlyAudible();
-  };
+  }
 
   void Advance(base::TimeDelta time) {
     DCHECK(injected_clock_);
@@ -238,6 +242,23 @@ class MediaEngagementBrowserTest : public InProcessBrowserTest {
   const base::TimeDelta kMaxWaitingTime =
       MediaEngagementContentsObserver::kSignificantMediaPlaybackTime +
       base::TimeDelta::FromSeconds(2);
+};
+
+// Class used to test the MEI preload component.
+class MediaEngagementPreloadBrowserTest : public InProcessBrowserTest {
+ public:
+  MediaEngagementPreloadBrowserTest() = default;
+  ~MediaEngagementPreloadBrowserTest() override = default;
+
+  void SetUp() override {
+    scoped_feature_list_.InitWithFeatures({media::kPreloadMediaEngagementData},
+                                          {});
+
+    InProcessBrowserTest::SetUp();
+  }
+
+ private:
+  base::test::ScopedFeatureList scoped_feature_list_;
 };
 
 IN_PROC_BROWSER_TEST_F(MediaEngagementBrowserTest, RecordEngagement) {
@@ -455,4 +476,15 @@ IN_PROC_BROWSER_TEST_F(MediaEngagementBrowserTest,
   Advance(base::TimeDelta::FromSeconds(4));
   CloseTab();
   ExpectScores(1, 0, 1, 0);
+}
+
+IN_PROC_BROWSER_TEST_F(MediaEngagementPreloadBrowserTest,
+                       EnsureSingletonListIsLoaded) {
+  base::RunLoop run_loop;
+  component_updater::RegisterMediaEngagementPreloadComponent(
+      g_browser_process->component_updater(), run_loop.QuitClosure());
+  run_loop.Run();
+
+  // The list should be loaded now.
+  EXPECT_TRUE(MediaEngagementPreloadedList::GetInstance()->IsLoaded());
 }
