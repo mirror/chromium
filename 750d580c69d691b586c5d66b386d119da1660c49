@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "25c1c943_798b54dd",
+        "filename": "chrome/browser/chromeos/login/active_directory_login_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-29T00:27:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3498a61_87e5da78",
+      "revId": "750d580c69d691b586c5d66b386d119da1660c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74bf5011_addcf6a0",
         "filename": "chrome/browser/chromeos/login/existing_user_controller_browsertest.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "750d580c69d691b586c5d66b386d119da1660c49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e0aeb47_3213a434",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-29T00:27:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74bf5011_addcf6a0",
+      "revId": "750d580c69d691b586c5d66b386d119da1660c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ddcf3167_25201aa7",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-29T00:27:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a21d38d_9e3102c1",
+      "revId": "750d580c69d691b586c5d66b386d119da1660c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "508437ec_89b7e821",
         "filename": "chrome/browser/chromeos/policy/device_policy_cros_browser_test.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "750d580c69d691b586c5d66b386d119da1660c49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "223b4b70_be12f445",
+        "filename": "chrome/browser/chromeos/policy/device_policy_cros_browser_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-29T00:27:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "508437ec_89b7e821",
+      "revId": "750d580c69d691b586c5d66b386d119da1660c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "4e7aac80_d414a84c",
+        "filename": "chromeos/dbus/fake_auth_policy_client_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-29T00:27:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2739a5ce_dea7ab9e",
+      "revId": "750d580c69d691b586c5d66b386d119da1660c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f4f9360_1d05effa",
         "filename": "chromeos/login/auth/authpolicy_test_helper.h",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2017-11-28T18:48:57Z",
       "side": 1,
       "message": "Do we really need a separate file for this?",
+      "revId": "750d580c69d691b586c5d66b386d119da1660c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab044b2a_92544686",
+        "filename": "chromeos/login/auth/authpolicy_test_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-29T00:27:29Z",
+      "side": 1,
+      "message": "Probably not. But I\u0027m not sure where to put it. Maybe in chromeos/login/auth/authpolicy_login_helper.{h,cc}? WDYT?",
+      "parentUuid": "2f4f9360_1d05effa",
       "revId": "750d580c69d691b586c5d66b386d119da1660c49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
