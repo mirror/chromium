@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ea027b9_634956af",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-29T22:46:44Z",
+      "side": 1,
+      "message": "Doesn\u0027t feel directly related to the bug, since we spun this change into its own CL.",
+      "revId": "d5a42df6338a026ea008e14c7d33c1a880a2d6b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfe10d01_51187290",
+        "filename": "base/lazy_instance.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-29T22:46:44Z",
+      "side": 1,
+      "message": "I think it will be helpful for readers if you add: \"Unlike Get() and Pointer(), IsCreated() will not instantiate the object of Type.\"",
+      "revId": "d5a42df6338a026ea008e14c7d33c1a880a2d6b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
