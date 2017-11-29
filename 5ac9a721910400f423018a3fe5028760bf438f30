@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "34e3e5fe_43afc339",
+        "filename": "ui/file_manager/file_manager/background/js/drive_sync_handler.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-11-29T04:31:40Z",
+      "side": 1,
+      "message": "Move this check to the beginning of the function, and add default: clause to switch.\n\nif (entry.type \u003d\u003d\u003d \u0027misc\u0027) {\n  ...\n  return;\n}\n\n...\n\nswitch (entry.type) {\n  ...\n  default:\n    console.warning(\u0027Unknown error type: \u0027 + entry.type); \n}",
+      "range": {
+        "startLine": 233,
+        "startChar": 12,
+        "endLine": 233,
+        "endChar": 16
+      },
+      "revId": "5ac9a721910400f423018a3fe5028760bf438f30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "997717d1_d1987ee8",
         "filename": "ui/file_manager/file_manager/background/js/drive_sync_handler.js",
         "patchSetId": 2
