@@ -142,6 +142,14 @@ bool OverscrollController::WillHandleEvent(const blink::WebInputEvent& event) {
           event.GetType() == blink::WebInputEvent::kGestureFlingStart);
 }
 
+void OverscrollController::OnDidOverscroll(
+    const ui::DidOverscrollParams& params) {
+  overscroll_effects_disabled_ =
+      params.scroll_boundary_behavior.x !=
+      cc::ScrollBoundaryBehavior::ScrollBoundaryBehaviorType::
+          kScrollBoundaryBehaviorTypeAuto;
+}
+
 void OverscrollController::ReceivedEventACK(const blink::WebInputEvent& event,
                                             bool processed) {
   if (!ShouldProcessEvent(event))
@@ -170,12 +178,14 @@ void OverscrollController::Reset() {
   overscroll_mode_ = OVERSCROLL_NONE;
   overscroll_source_ = OverscrollSource::NONE;
   overscroll_delta_x_ = overscroll_delta_y_ = 0.f;
+  overscroll_effects_disabled_ = false;
   ResetScrollState();
 }
 
 void OverscrollController::Cancel() {
   SetOverscrollMode(OVERSCROLL_NONE, OverscrollSource::NONE);
   overscroll_delta_x_ = overscroll_delta_y_ = 0.f;
+  overscroll_effects_disabled_ = false;
   ResetScrollState();
 }
 
@@ -411,7 +421,7 @@ bool OverscrollController::ProcessOverscroll(float delta_x,
 
   // Tell the delegate about the overscroll update so that it can update
   // the display accordingly (e.g. show history preview etc.).
-  if (delegate_) {
+  if (delegate_ && !overscroll_effects_disabled_) {
     // Do not include the threshold amount when sending the deltas to the
     // delegate.
     float delegate_delta_x = overscroll_delta_x_;
@@ -458,6 +468,10 @@ void OverscrollController::SetOverscrollMode(OverscrollMode mode,
       mode != locked_mode_) {
     return;
   }
+
+  // overscroll_effects_disabled_ should prevent setting to a non-NONE mode.
+  if (mode != OVERSCROLL_NONE && overscroll_effects_disabled_)
+    return;
 
   OverscrollMode old_mode = overscroll_mode_;
   overscroll_mode_ = mode;
