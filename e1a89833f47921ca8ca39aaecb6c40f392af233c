@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1396bf0_d05526ab",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.cc",
+        "patchSetId": 59
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-29T20:52:22Z",
+      "side": 1,
+      "message": "If you keep the ShallowFlushCHROMIUM in GLES2Implementation::GetGpuFence, this can\u0027t happen any more, right? Should we simplify?",
+      "revId": "e1a89833f47921ca8ca39aaecb6c40f392af233c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

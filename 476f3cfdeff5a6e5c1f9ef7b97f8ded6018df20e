@@ -403,6 +403,24 @@
     },
     {
       "key": {
+        "uuid": "ee79c452_d1b96c51",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-29T20:52:22Z",
+      "side": 1,
+      "message": "\u003e Added a CHECK, but I\u0027m still not convinced that it\u0027s necessary. In this scenario:\n\u003e \n\u003e GLuint fence1 \u003d gl-\u003eInsertGpuFenceCHROMIUM();\n\u003e gl-\u003eDestroyGpuFenceCHROMIUM(fence1);\n\u003e // ...\n\u003e GLuint fence2 \u003d gl-\u003eInsertClientGpuFenceCHROMIUM(client_fence);\n\u003e \n\u003e the potential concern was that a SendGpuFence might arrive at the service before DestroyGpuFenceCHROMIUM is handled.\n\u003e \n\u003e However, now that it\u0027s allocating IDs sequentially, it looks as if the only way for fence1 and fence2 to be equal is if there are 2^32-1 intervening Insert/Delete calls so that fence2 ends up equal to fence1 after wraparound, but the Destroy(fence1) still hasn\u0027t been executed yet. Would the command buffer even support keeping that many commands queued and unflushed?\n\nIf you move your \"//...\" to before the DestroyGpuFenceCHROMIUM maybe it makes it clearer why this could happen after a wrap? Nothing says/guarantees fences are created\u0026destroyed in order.",
+      "parentUuid": "9f45a1e4_fda8853c",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b1e294e_b870ce42",
         "filename": "gpu/command_buffer/client/gles2_implementation.cc",
         "patchSetId": 46
