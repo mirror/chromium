@@ -2,6 +2,92 @@
   "comments": [
     {
       "key": {
+        "uuid": "aabcbdb6_f1645b6f",
+        "filename": "third_party/WebKit/Source/core/dom/Range.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-29T23:32:00Z",
+      "side": 1,
+      "message": "Range is another entry point where we can hold reference to DOM and modify it...\n\nShould we do the similar thing of keeping const_cast within |Range|?",
+      "revId": "9bebb8b5d8007d0ad9600b262721d51f62df065c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f368ccc5_ee17bd30",
+        "filename": "third_party/WebKit/Source/core/editing/DOMSelection.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-29T23:32:00Z",
+      "side": 1,
+      "message": "We should make the return type |const Node*| instead.",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 56,
+        "endChar": 12
+      },
+      "revId": "9bebb8b5d8007d0ad9600b262721d51f62df065c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e4fbbed_16e0325a",
+        "filename": "third_party/WebKit/Source/core/editing/DOMSelection.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-29T23:32:00Z",
+      "side": 1,
+      "message": "This function should take and return |const Node*|",
+      "range": {
+        "startLine": 67,
+        "startChar": 31,
+        "endLine": 67,
+        "endChar": 50
+      },
+      "revId": "9bebb8b5d8007d0ad9600b262721d51f62df065c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ad158a5_909fb8dc",
+        "filename": "third_party/WebKit/Source/core/editing/EditingStyle.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-29T23:32:00Z",
+      "side": 1,
+      "message": "Should EditingStyle take |const Node*| instead?\n\nDoes EditingStyle perform any DOM mutation?",
+      "range": {
+        "startLine": 410,
+        "startChar": 7,
+        "endLine": 410,
+        "endChar": 35
+      },
+      "revId": "9bebb8b5d8007d0ad9600b262721d51f62df065c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3ad2609_187ff0e5",
         "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
         "patchSetId": 1
@@ -13,6 +99,24 @@
       "writtenOn": "2017-11-28T20:37:14Z",
       "side": 1,
       "message": "I tagged the most ugly changes with a TODO, but it would be great if we can fix this.\nDo you have any ideas, what can we do with AncestorInThisScope?\nCan we make a copy of this function that takes and returns a |const Node*|?",
+      "revId": "9bebb8b5d8007d0ad9600b262721d51f62df065c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65f047e8_20409c18",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-29T23:32:00Z",
+      "side": 1,
+      "message": "Is there any blocker of making AncestorInThisCope take and return |const Node*|?",
+      "parentUuid": "f3ad2609_187ff0e5",
       "revId": "9bebb8b5d8007d0ad9600b262721d51f62df065c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -36,6 +140,24 @@
     },
     {
       "key": {
+        "uuid": "573a5890_90872412",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1279,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-29T23:32:00Z",
+      "side": 1,
+      "message": "In general, we would like as many functions as possible to take and return const ptrs/refs.\n\nThe blocker is that, some callers may want to pass the return value to a mutator.\n\nSolution 1: Introduce const and non-const duplicates of functions. In this way we don\u0027t have const_cast, but have duplicated code.\n\nSolution 2: Keep only const functions, and restrict the const_cast only in mutators. For example, keep const_cast only in ctors of SimpleEditCommands? In this way, everything other than SimpleEditCommand looks clean and tidy.\n\nI prefer Solution 2.",
+      "parentUuid": "1898fa37_e3acf1fd",
+      "revId": "9bebb8b5d8007d0ad9600b262721d51f62df065c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00481fb4_f204441f",
         "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
         "patchSetId": 1
@@ -47,6 +169,29 @@
       "writtenOn": "2017-11-28T20:37:14Z",
       "side": 1,
       "message": "The same question - how can we return a non-const Node for the given Position object?",
+      "revId": "9bebb8b5d8007d0ad9600b262721d51f62df065c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "346628d0_64e14df3",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-29T23:32:00Z",
+      "side": 1,
+      "message": "AX is another can of worms... Maybe we just const_cast here and assign to AX team?",
+      "range": {
+        "startLine": 789,
+        "startChar": 13,
+        "endLine": 789,
+        "endChar": 45
+      },
       "revId": "9bebb8b5d8007d0ad9600b262721d51f62df065c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +232,29 @@
     },
     {
       "key": {
+        "uuid": "5c09b78c_99f3e3cd",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyBlockElementCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-29T23:32:00Z",
+      "side": 1,
+      "message": "We can land such changes first to reduce patch size.",
+      "range": {
+        "startLine": 133,
+        "startChar": 2,
+        "endLine": 133,
+        "endChar": 8
+      },
+      "revId": "9bebb8b5d8007d0ad9600b262721d51f62df065c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b414136_75012fbf",
         "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
         "patchSetId": 1
@@ -115,6 +283,70 @@
       "writtenOn": "2017-11-28T20:37:14Z",
       "side": 1,
       "message": "I wonder if we can use |const Node| for CSSComputedStyleDeclaration and the like.",
+      "revId": "9bebb8b5d8007d0ad9600b262721d51f62df065c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8e650ee_47f222ea",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-29T23:32:00Z",
+      "side": 1,
+      "message": "The usage of a temporary CSSComputedStyleDeclaration looks really weird.\n\nI wonder if we can get rid of it.",
+      "parentUuid": "2a16bfe8_e2cb2254",
+      "revId": "9bebb8b5d8007d0ad9600b262721d51f62df065c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8fc4849_988ad946",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1985,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-29T23:32:00Z",
+      "side": 1,
+      "message": "This function should take |const Node\u0026|.",
+      "range": {
+        "startLine": 1985,
+        "startChar": 6,
+        "endLine": 1985,
+        "endChar": 37
+      },
+      "revId": "9bebb8b5d8007d0ad9600b262721d51f62df065c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eda06179_47c68f34",
+        "filename": "third_party/WebKit/Source/core/editing/commands/SplitElementCommand.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-29T23:32:00Z",
+      "side": 1,
+      "message": "This should be a mutable reference, since the command changes its parent node and siblings.",
+      "range": {
+        "startLine": 52,
+        "startChar": 9,
+        "endLine": 52,
+        "endChar": 19
+      },
       "revId": "9bebb8b5d8007d0ad9600b262721d51f62df065c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
