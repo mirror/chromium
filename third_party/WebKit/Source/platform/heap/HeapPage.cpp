@@ -166,11 +166,16 @@ BasePage* BaseArena::FindPageFromAddress(Address address) {
 }
 #endif
 
+void BaseArena::CheckIntegrity() {
+  for (BasePage* page = first_page_; page; page = page->Next())
+    page->CheckIntegrity();
+}
+
 void BaseArena::MakeConsistentForGC() {
-  ClearFreeLists();
+  //ClearFreeLists(); Move to presweep
 
   // Verification depends on the allocation point being cleared.
-  Verify();
+  //Verify();
 
 #if DCHECK_IS_ON()
   DCHECK(IsConsistentForGC());
@@ -220,6 +225,19 @@ void BaseArena::MakeConsistentForMutator() {
   Verify();
 }
 
+void BaseArena::UnmarkAll() {
+  //DCHECK(!first_page_);
+
+  // Drop marks from marked objects and rebuild free lists in preparation for
+  // resuming the executions of mutators.
+  BasePage* previous_page = nullptr;
+  for (BasePage *page = first_page_; page;
+       previous_page = page, page = page->Next()) {
+    page->UnmarkAll();
+    page->MarkAsSwept();
+  }
+}
+
 size_t BaseArena::ObjectPayloadSizeForTesting() {
 #if DCHECK_IS_ON()
   DCHECK(IsConsistentForGC());
@@ -235,6 +253,7 @@ size_t BaseArena::ObjectPayloadSizeForTesting() {
 void BaseArena::PrepareForSweep() {
   DCHECK(GetThreadState()->IsInGC());
   DCHECK(!first_unswept_page_);
+  ClearFreeLists();
 
   // Move all pages to a list of unswept pages.
   first_unswept_page_ = first_page_;
@@ -277,6 +296,7 @@ Address BaseArena::LazySweep(size_t allocation_size, size_t gc_info_index) {
 
 void BaseArena::SweepUnsweptPage() {
   BasePage* page = first_unswept_page_;
+  CHECK(page->IsValid());
   if (page->IsEmpty()) {
     page->Unlink(&first_unswept_page_);
     page->RemoveFromHeap();
@@ -390,6 +410,15 @@ bool BaseArena::WillObjectBeLazilySwept(BasePage* page,
   Address page_end = normal_page->PayloadEnd();
   for (Address header_address = normal_page->Payload();
        header_address < page_end;) {
+    if (header_address == normal_page->ArenaForNormalPage()->CurrentAllocationPoint()) {
+      LOG(ERROR) << "BaseArena::WillObjectBeLazilySwept Skipping allocation area";
+      LOG(ERROR) << "header_address " << reinterpret_cast<void*>(header_address);
+      LOG(ERROR) << "RemainingAllocationSize " << reinterpret_cast<void*>(normal_page->ArenaForNormalPage()->RemainingAllocationSize());
+      header_address = header_address + normal_page->ArenaForNormalPage()->RemainingAllocationSize();
+      if (header_address >= normal_page->PayloadEnd()) {
+        break;
+      }
+    }
     HeapObjectHeader* header =
         reinterpret_cast<HeapObjectHeader*>(header_address);
     size_t size = header->size();
@@ -675,8 +704,9 @@ void NormalPageArena::AllocatePage() {
   // to the free list.
   ASAN_UNPOISON_MEMORY_REGION(page->Payload(), page->PayloadSize());
   Address address = page->Payload();
-  for (size_t i = 0; i < page->PayloadSize(); i++)
+  for (size_t i = 0; i < page->PayloadSize(); i++) {
     address[i] = kReuseAllowedZapValue;
+  }
   ASAN_POISON_MEMORY_REGION(page->Payload(), page->PayloadSize());
 #endif
   AddToFreeList(page->Payload(), page->PayloadSize());
@@ -723,6 +753,15 @@ bool NormalPageArena::Coalesce() {
     Address start_of_gap = page->Payload();
     for (Address header_address = start_of_gap;
          header_address < page->PayloadEnd();) {
+      if (header_address == page->ArenaForNormalPage()->CurrentAllocationPoint()) {
+        LOG(ERROR) << "NormalPage::PoisonUnmarkedObjects Skipping allocation area";
+        LOG(ERROR) << "header_address " << reinterpret_cast<void*>(header_address);
+        LOG(ERROR) << "RemainingAllocationSize " << reinterpret_cast<void*>(page->ArenaForNormalPage()->RemainingAllocationSize());
+        header_address = header_address + page->ArenaForNormalPage()->RemainingAllocationSize();
+        if (header_address >= page->PayloadEnd()) {
+          break;
+        }
+      }
       HeapObjectHeader* header =
           reinterpret_cast<HeapObjectHeader*>(header_address);
       size_t size = header->size();
@@ -949,8 +988,10 @@ Address NormalPageArena::OutOfLineAllocate(size_t allocation_size,
   // 2. Try to allocate from a free list.
   UpdateRemainingAllocationSize();
   Address result = AllocateFromFreeList(allocation_size, gc_info_index);
-  if (result)
+  if (result) {
+    //LOG(ERROR) << "NormalPageArena::OutOfLineAllocate AllocateFromFreeList result " << reinterpret_cast<void*>(result) << " size " << allocation_size;
     return result;
+  }
 
   // 3. Reset the allocation point.
   SetAllocationPoint(nullptr, 0);
@@ -958,15 +999,19 @@ Address NormalPageArena::OutOfLineAllocate(size_t allocation_size,
   // 4. Lazily sweep pages of this heap until we find a freed area for
   // this allocation or we finish sweeping all pages of this heap.
   result = LazySweep(allocation_size, gc_info_index);
-  if (result)
+  if (result) {
+    //LOG(ERROR) << "NormalPageArena::OutOfLineAllocate AllocateAfterLazySweep result " << reinterpret_cast<void*>(result) << " size " << allocation_size;
     return result;
+  }
 
   // 5. Coalesce promptly freed areas and then try to allocate from a free
   // list.
   if (Coalesce()) {
     result = AllocateFromFreeList(allocation_size, gc_info_index);
-    if (result)
+    if (result) {
+      //LOG(ERROR) << "NormalPageArena::OutOfLineAllocate AllocateAfterCoalesce result " << reinterpret_cast<void*>(result) << " size " << allocation_size;
       return result;
+    }
   }
 
   // 6. Complete sweeping.
@@ -981,6 +1026,7 @@ Address NormalPageArena::OutOfLineAllocate(size_t allocation_size,
   // 9. Try to allocate from a free list. This allocation must succeed.
   result = AllocateFromFreeList(allocation_size, gc_info_index);
   CHECK(result);
+  //LOG(ERROR) << "NormalPageArena::OutOfLineAllocate AllocateAfterNewPage result " << reinterpret_cast<void*>(result) << " size " << allocation_size;
   return result;
 }
 
@@ -1229,6 +1275,9 @@ void NEVER_INLINE FreeList::ZapFreedMemory(Address address, size_t size) {
 void NEVER_INLINE FreeList::CheckFreedMemoryIsZapped(Address address,
                                                      size_t size) {
   for (size_t i = 0; i < size; i++) {
+    if (address[i] != kReuseAllowedZapValue && address[i] != kReuseForbiddenZapValue) {
+      fprintf(stderr, "%x\n", address[i]);
+    }
     DCHECK(address[i] == kReuseAllowedZapValue ||
            address[i] == kReuseForbiddenZapValue);
   }
@@ -1327,6 +1376,8 @@ NormalPage::NormalPage(PageMemory* storage, BaseArena* arena)
 NormalPage::~NormalPage() {
 #if DCHECK_IS_ON()
   DCHECK(IsPageHeaderAddress(reinterpret_cast<Address>(this)));
+// TODO(mlippautz): Go through the object bitmap and verify that there are
+// only free list object headers present.
 #endif
 }
 
@@ -1370,11 +1421,21 @@ static void DiscardPages(Address begin, Address end) {
 #endif
 
 void NormalPage::Sweep() {
+  VerifyObjectStartBitmapIsConsistentWithPayload();
   object_start_bit_map()->Clear();
   size_t marked_object_size = 0;
   Address start_of_gap = Payload();
   NormalPageArena* page_arena = ArenaForNormalPage();
   for (Address header_address = start_of_gap; header_address < PayloadEnd();) {
+    if (header_address == ArenaForNormalPage()->CurrentAllocationPoint()) {
+      LOG(ERROR) << "NormalPage::Sweep Skipping allocation area";
+      LOG(ERROR) << "header_address " << reinterpret_cast<void*>(header_address);
+      LOG(ERROR) << "RemainingAllocationSize " << reinterpret_cast<void*>(ArenaForNormalPage()->RemainingAllocationSize());
+      header_address = header_address + ArenaForNormalPage()->RemainingAllocationSize();
+      if (header_address >= PayloadEnd()) {
+        break;
+      }
+    }
     HeapObjectHeader* header =
         reinterpret_cast<HeapObjectHeader*>(header_address);
     size_t size = header->size();
@@ -1595,9 +1656,46 @@ void NormalPage::MakeConsistentForMutator() {
   VerifyObjectStartBitmapIsConsistentWithPayload();
 }
 
+void NormalPage::UnmarkAll() {
+  for (Address header_address = Payload(); header_address < PayloadEnd();) {
+    if (header_address == ArenaForNormalPage()->CurrentAllocationPoint()) {
+      LOG(ERROR) << "Skipping allocation area";
+      LOG(ERROR) << "header_address " << reinterpret_cast<void*>(header_address);
+      LOG(ERROR) << "RemainingAllocationSize " << reinterpret_cast<void*>(ArenaForNormalPage()->RemainingAllocationSize());
+      header_address = header_address + ArenaForNormalPage()->RemainingAllocationSize();
+      if (header_address >= PayloadEnd()) {
+        break;
+      }
+    }
+    HeapObjectHeader* header =
+        reinterpret_cast<HeapObjectHeader*>(header_address);
+    CHECK(header->IsValidOrZapped());
+    size_t size = header->size();
+    DCHECK_LT(size, BlinkPagePayloadSize());
+    if (header->IsPromptlyFreed() || header->IsFree()) { // MEMO: is free possible?
+      header_address += size;
+      continue;
+    }
+    CHECK(size > 0);
+    if (header->IsMarked())
+      header->Unmark();
+    header_address += size;
+    DCHECK_LE(header_address, PayloadEnd());
+  }
+}
+
 #if defined(ADDRESS_SANITIZER)
 void NormalPage::PoisonUnmarkedObjects() {
   for (Address header_address = Payload(); header_address < PayloadEnd();) {
+    if (header_address == ArenaForNormalPage()->CurrentAllocationPoint()) {
+      LOG(ERROR) << "NormalPage::PoisonUnmarkedObjects Skipping allocation area";
+      LOG(ERROR) << "header_address " << reinterpret_cast<void*>(header_address);
+      LOG(ERROR) << "RemainingAllocationSize " << reinterpret_cast<void*>(ArenaForNormalPage()->RemainingAllocationSize());
+      header_address = header_address + ArenaForNormalPage()->RemainingAllocationSize();
+      if (header_address >= PayloadEnd()) {
+        break;
+      }
+    }
     HeapObjectHeader* header =
         reinterpret_cast<HeapObjectHeader*>(header_address);
     DCHECK_LT(header->size(), BlinkPagePayloadSize());
@@ -1614,6 +1712,53 @@ void NormalPage::PoisonUnmarkedObjects() {
 }
 #endif
 
+void NormalPage::CheckIntegrity() {
+  VerifyObjectStartBitmapIsConsistentWithPayload();
+}
+
+void LargeObjectPage::CheckIntegrity() {
+}
+
+void NormalPage::VerifyObjectStartBitmapIsConsistentWithPayload() {
+#if DCHECK_IS_ON()
+  NormalPage* page = this;
+  Address p = Payload();
+  Address pe = PayloadEnd();
+  HeapObjectHeader* current_header =
+      reinterpret_cast<HeapObjectHeader*>(Payload());
+  if (reinterpret_cast<Address>(current_header) == page->ArenaForNormalPage()->CurrentAllocationPoint()) {
+    current_header = reinterpret_cast<HeapObjectHeader*>(reinterpret_cast<Address>(current_header) + page->ArenaForNormalPage()->RemainingAllocationSize());
+  }
+  ObjectStartBitmap* osm = object_start_bit_map();
+  object_start_bit_map()->Iterate([&current_header, &osm, &p, &pe, &page](Address object_address) {
+    if (reinterpret_cast<Address>(current_header) == pe) {
+      LOG(ERROR) << "current_header reached payload end";
+      return;
+    }
+    const HeapObjectHeader* object_header =
+        reinterpret_cast<HeapObjectHeader*>(object_address);
+    if (object_header != current_header) {
+      LOG(ERROR) << "MISMATCH6";
+      LOG(ERROR) << "  object_header : " << reinterpret_cast<const void*>(object_header);
+      LOG(ERROR) << "  current_header: " << reinterpret_cast<const void*>(current_header);
+      LOG(ERROR) << "  CheckBit object_header : " << osm->CheckBit(object_address);
+      LOG(ERROR) << "  CheckBit current_header: " << osm->CheckBit(reinterpret_cast<Address>(current_header));
+      LOG(ERROR) << "  payload    : " << reinterpret_cast<const void*>(p);
+      LOG(ERROR) << "  payload end: " << reinterpret_cast<const void*>(pe);
+      LOG(ERROR) << "reinterpret_cast<Address>(current_header) == pe" << (reinterpret_cast<Address>(current_header) == pe);
+    }
+    DCHECK_EQ(object_header, current_header);
+    DCHECK(object_header->IsFree() ||
+           (object_header->GcInfoIndex() != kGcInfoIndexForFreeListHeader));
+    current_header = reinterpret_cast<HeapObjectHeader*>(object_address +
+                                                         object_header->size());
+    if (reinterpret_cast<Address>(current_header) == page->ArenaForNormalPage()->CurrentAllocationPoint()) {
+      current_header = reinterpret_cast<HeapObjectHeader*>(reinterpret_cast<Address>(current_header) + page->ArenaForNormalPage()->RemainingAllocationSize());
+    }
+  });
+#endif  // DCHECK_IS_ON()
+}
+/*
 void NormalPage::VerifyObjectStartBitmapIsConsistentWithPayload() {
 #if DCHECK_IS_ON()
   Address current_allocation_point =
@@ -1633,7 +1778,7 @@ void NormalPage::VerifyObjectStartBitmapIsConsistentWithPayload() {
   });
 #endif  // DCHECK_IS_ON()
 }
-
+*/
 Address ObjectStartBitmap::FindHeader(
     Address address_maybe_pointing_to_the_middle_of_object) {
   size_t object_offset =
@@ -1815,6 +1960,12 @@ void LargeObjectPage::Sweep() {
 }
 
 void LargeObjectPage::MakeConsistentForMutator() {
+  HeapObjectHeader* header = GetHeapObjectHeader();
+  if (header->IsMarked())
+    header->Unmark();
+}
+
+void LargeObjectPage::UnmarkAll() {
   HeapObjectHeader* header = GetHeapObjectHeader();
   if (header->IsMarked())
     header->Unmark();

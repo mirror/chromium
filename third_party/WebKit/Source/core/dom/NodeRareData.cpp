@@ -48,6 +48,7 @@ static_assert(sizeof(NodeRareData) == sizeof(SameSizeAsNodeRareData),
               "NodeRareData should stay small");
 
 void NodeRareData::TraceAfterDispatch(blink::Visitor* visitor) {
+  //LOG(ERROR) << "NodeRareData::TraceAfterDispatch " << static_cast<void*>(this);
   visitor->Trace(mutation_observer_data_);
   // Do not keep empty NodeListsNodeData objects around.
   if (node_lists_ && node_lists_->IsEmpty())
@@ -57,6 +58,7 @@ void NodeRareData::TraceAfterDispatch(blink::Visitor* visitor) {
 }
 
 void NodeRareData::Trace(blink::Visitor* visitor) {
+  //LOG(ERROR) << "NodeRareData::Trace " << static_cast<void*>(this);
   if (is_element_rare_data_)
     static_cast<ElementRareData*>(this)->TraceAfterDispatch(visitor);
   else
@@ -78,6 +80,7 @@ void NodeRareData::TraceWrappersAfterDispatch(
 }
 
 void NodeRareData::FinalizeGarbageCollectedObject() {
+  //LOG(ERROR) << "NodeRareData::FinalizeGarbageCollectedObject " << static_cast<void*>(this);
   if (is_element_rare_data_)
     static_cast<ElementRareData*>(this)->~ElementRareData();
   else
