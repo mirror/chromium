@@ -21,8 +21,14 @@ namespace {
 constexpr int kHistogramBuckets = 13;
 constexpr char kAppListPlayStoreQueryStateHistogram[] =
     "Apps.AppListPlayStoreQueryState";
+// This enum matches numbering from AppListPlayStoreQueryState in enums.xml.
+// It acts as a complement to |arc::mojom::AppDiscoveryRequestState| which
+// holds state generated from Android.
+enum class AppDiscoveryRequestState {
+  CHROME_GOT_INVALID_RESULT = 17,
+};
 // TODO(crbug.com/742517): Use the mojo generated constants.
-constexpr int kAppListPlayStoreQueryStateNum = 17;
+constexpr int kAppListPlayStoreQueryStateNum = 18;
 
 // Skips Play Store apps that have equivalent extensions installed.
 // Do not skip recent instant apps since they should be treated like
@@ -45,6 +51,37 @@ bool CanSkipSearchResult(content::BrowserContext* context,
   // Don't show installed Android apps.
   const ArcAppListPrefs* arc_prefs = ArcAppListPrefs::Get(context);
   return arc_prefs && arc_prefs->GetPackage(result.package_name.value());
+}
+
+// Checks if we're receiving a result with invalid data from Android.
+// This could happen if the mojo versions of Android and Chrome mismatch.
+bool IsInvalidResult(const arc::mojom::AppDiscoveryResult& result) {
+  // The result doesn't have a valid launch intent or install intent.
+  if ((!result.launch_intent_uri || result.launch_intent_uri.value().empty()) &&
+      (!result.install_intent_uri || result.install_intent_uri.value().empty()))
+    return true;
+
+  // The result doesn't have a valid label.
+  if (!result.label || result.label.value().empty())
+    return true;
+
+  // The result doesn't have a valid formatted price.
+  if (!result.formatted_price || result.formatted_price.value().empty())
+    return true;
+
+  // The result doesn't have a valid review score.
+  if (result.review_score < 0)
+    return true;
+
+  // The result doesn't have a valid launcher icon.
+  if (result.icon_png_data.empty())
+    return true;
+
+  // The result doesn't have a valid package name.
+  if (!result.package_name || result.package_name.value().empty())
+    return true;
+
+  return false;
 }
 }  // namespace
 
@@ -88,10 +125,10 @@ void ArcPlayStoreSearchProvider::OnResults(
     base::TimeTicks query_start_time,
     arc::mojom::AppDiscoveryRequestState state,
     std::vector<arc::mojom::AppDiscoveryResultPtr> results) {
-  UMA_HISTOGRAM_ENUMERATION(kAppListPlayStoreQueryStateHistogram, state,
-                            kAppListPlayStoreQueryStateNum);
   if (state != arc::mojom::AppDiscoveryRequestState::SUCCESS) {
     DCHECK(results.empty());
+    UMA_HISTOGRAM_ENUMERATION(kAppListPlayStoreQueryStateHistogram, state,
+                              kAppListPlayStoreQueryStateNum);
     ClearResults();
     return;
   }
@@ -102,15 +139,27 @@ void ArcPlayStoreSearchProvider::OnResults(
     if (result->is_instant_app)
       ++instant_app_count;
 
-    if (CanSkipSearchResult(profile_, *result))
+    if (CanSkipSearchResult(profile_, *result) || IsInvalidResult(*result))
       continue;
 
-    new_results.emplace_back(base::MakeUnique<ArcPlayStoreSearchResult>(
+    if (IsInvalidResult(*result)) {
+      UMA_HISTOGRAM_ENUMERATION(
+          kAppListPlayStoreQueryStateHistogram,
+          AppDiscoveryRequestState::CHROME_GOT_INVALID_RESULT,
+          kAppListPlayStoreQueryStateNum);
+      ClearResults();
+      return;
+    }
+
+    new_results.emplace_back(std::make_unique<ArcPlayStoreSearchResult>(
         std::move(result), profile_, list_controller_));
   }
   SwapResults(&new_results);
 
   // Record user metrics.
+  UMA_HISTOGRAM_ENUMERATION(kAppListPlayStoreQueryStateHistogram,
+                            arc::mojom::AppDiscoveryRequestState::SUCCESS,
+                            kAppListPlayStoreQueryStateNum);
   UMA_HISTOGRAM_TIMES("Arc.PlayStoreSearch.QueryTime",
                       base::TimeTicks::Now() - query_start_time);
   UMA_HISTOGRAM_EXACT_LINEAR("Arc.PlayStoreSearch.ReturnedAppsTotal",
