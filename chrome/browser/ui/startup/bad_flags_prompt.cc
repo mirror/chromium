@@ -139,7 +139,11 @@ void ShowBadFlagsPrompt(Browser* browser) {
 
     // This flag allows sites to access protected media identifiers without
     // getting the user's permission.
-    switches::kUnsafelyAllowProtectedMediaIdentifierForDomain
+    switches::kUnsafelyAllowProtectedMediaIdentifierForDomain,
+
+    // This flag allows using http://localhost URLs in web payment APIs, such as
+    // PaymentRequest and PaymentHandler.
+    switches::kAllowWebPaymentsLocalhostUrls,
   };
 
   for (const char* flag : kBadFlags) {

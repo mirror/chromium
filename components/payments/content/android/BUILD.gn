@@ -20,6 +20,7 @@ static_library("android") {
     ":jni_headers",
     "//base",
     "//components/payments/content",
+    "//components/payments/content:origin_security_checker",
     "//components/payments/content:utils",
     "//components/payments/content/utility",
     "//components/payments/core",

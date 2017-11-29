@@ -84,6 +84,10 @@ void WebRuntimeFeatures::EnableAllowActivationDelegationAttr(bool enable) {
   RuntimeEnabledFeatures::SetAllowActivationDelegationAttrEnabled(enable);
 }
 
+void WebRuntimeFeatures::EnableAllowWebPaymentsLocalhostUrls(bool enable) {
+  RuntimeEnabledFeatures::SetAllowWebPaymentsLocalhostUrlsEnabled(enable);
+}
+
 void WebRuntimeFeatures::EnableAudioOutputDevices(bool enable) {
   RuntimeEnabledFeatures::SetAudioOutputDevicesEnabled(enable);
 }

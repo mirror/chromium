@@ -14,6 +14,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/memory/scoped_refptr.h"
 #include "base/strings/string_number_conversions.h"
+#include "components/payments/content/origin_security_checker.h"
 #include "components/payments/content/utility/fingerprint_parser.h"
 #include "content/public/common/service_manager_connection.h"
 #include "net/base/url_util.h"
@@ -26,8 +27,6 @@ namespace {
 const size_t kMaximumNumberOfItems = 100U;
 
 const char* const kDefaultApplications = "default_applications";
-const char* const kHttpPrefix = "http://";
-const char* const kHttpsPrefix = "https://";
 const char* const kSupportedOrigins = "supported_origins";
 
 // Parses the "default_applications": ["https://some/url"] from |dict| into
@@ -52,27 +51,24 @@ bool ParseDefaultApplications(base::DictionaryValue* dict,
 
   for (size_t i = 0; i < apps_number; ++i) {
     std::string item;
-    if (!list->GetString(i, &item) || item.empty() ||
-        !base::IsStringUTF8(item) ||
-        !(base::StartsWith(item, kHttpsPrefix, base::CompareCase::SENSITIVE) ||
-          base::StartsWith(item, kHttpPrefix, base::CompareCase::SENSITIVE))) {
-      LOG(ERROR) << "Each entry in \"" << kDefaultApplications
-                 << "\" must be UTF8 string that starts with \"" << kHttpsPrefix
-                 << "\" or \"" << kHttpPrefix << "\" (for localhost).";
+    if (!list->GetString(i, &item)) {
+      LOG(ERROR) << "Each item in \"" << kDefaultApplications
+                 << "\" should be a string, but the item in position " << i
+                 << " is not a string.";
       web_app_manifest_urls->clear();
       return false;
     }
 
-    GURL url(item);
-    if (!url.is_valid() || !(url.SchemeIs(url::kHttpsScheme) ||
-                             (url.SchemeIs(url::kHttpScheme) &&
-                              net::IsLocalhost(url.HostNoBracketsPiece())))) {
-      LOG(ERROR) << "\"" << item << "\" entry in \"" << kDefaultApplications
-                 << "\" is not a valid URL with HTTPS scheme and is not a "
-                    "valid localhost URL with HTTP scheme.";
+    GURL url;
+    std::string error_message_suffix;
+    if (!OriginSecurityChecker::IsValidWebPaymentsUrl(item, &url,
+                                                      &error_message_suffix)) {
+      LOG(ERROR) << "Entry \"" << item << "\" in \"" << kDefaultApplications
+                 << "\" " << error_message_suffix;
       web_app_manifest_urls->clear();
       return false;
     }
+    DCHECK(url.is_valid());
 
     web_app_manifest_urls->push_back(url);
   }
@@ -124,27 +120,28 @@ bool ParseSupportedOrigins(base::DictionaryValue* dict,
 
   for (size_t i = 0; i < supported_origins_number; ++i) {
     std::string item;
-    if (!list->GetString(i, &item) || item.empty() ||
-        !base::IsStringUTF8(item) ||
-        !(base::StartsWith(item, kHttpsPrefix, base::CompareCase::SENSITIVE) ||
-          base::StartsWith(item, kHttpPrefix, base::CompareCase::SENSITIVE))) {
-      LOG(ERROR) << "Each entry in \"" << kSupportedOrigins
-                 << "\" must be UTF8 string that starts with \"" << kHttpsPrefix
-                 << "\" or \"" << kHttpPrefix << "\" (for localhost).";
+    if (!list->GetString(i, &item)) {
+      LOG(ERROR) << "Each item in \"" << kSupportedOrigins
+                 << "\" should be a string, but the item in position " << i
+                 << " is not a string.";
       supported_origins->clear();
       return false;
     }
 
-    GURL url(item);
-    if (!url.is_valid() ||
-        !(url.SchemeIs(url::kHttpsScheme) ||
-          (url.SchemeIs(url::kHttpScheme) &&
-           net::IsLocalhost(url.HostNoBracketsPiece()))) ||
-        url.path() != "/" || url.has_query() || url.has_ref() ||
-        url.has_username() || url.has_password()) {
-      LOG(ERROR) << "\"" << item << "\" entry in \"" << kSupportedOrigins
-                 << "\" is not a valid origin with HTTPS scheme and is not a "
-                    "valid localhost origin with HTTP scheme.";
+    GURL url;
+    std::string error_message_suffix;
+    if (!OriginSecurityChecker::IsValidWebPaymentsUrl(item, &url,
+                                                      &error_message_suffix)) {
+      LOG(ERROR) << "Entry \"" << item << "\" in \"" << kSupportedOrigins
+                 << "\" " << error_message_suffix;
+      supported_origins->clear();
+      return false;
+    }
+    DCHECK(url.is_valid());
+
+    if (url.path() != "/" || url.has_query() || url.has_ref()) {
+      LOG(ERROR) << "Entry \"" << item << "\" in \"" << kSupportedOrigins
+                 << "\" is not a valid RFC6454 origin.";
       supported_origins->clear();
       return false;
     }

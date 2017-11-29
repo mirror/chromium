@@ -4,7 +4,9 @@
 
 #include "components/payments/content/utility/payment_manifest_parser.h"
 
+#include "base/command_line.h"
 #include "base/json/json_reader.h"
+#include "content/public/common/content_switches.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 #include "url/origin.h"
@@ -190,6 +192,8 @@ TEST(PaymentManifestParserTest, WellFormedPaymentMethodManifestWithApps) {
 
 TEST(PaymentManifestParserTest,
      WellFormedPaymentMethodManifestWithHttpLocalhostApps) {
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kAllowWebPaymentsLocalhostUrls);
   ExpectParsedPaymentMethodManifest(
       "{\"default_applications\": ["
       "\"http://127.0.0.1:8080/app.json\","
@@ -244,6 +248,8 @@ TEST(PaymentManifestParserTest,
 
 TEST(PaymentManifestParserTest,
      WellFormedPaymentMethodManifestWithHttpLocalhostSupportedOrigins) {
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kAllowWebPaymentsLocalhostUrls);
   ExpectParsedPaymentMethodManifest(
       "{\"supported_origins\": [\"http://localhost:8080\", "
       "\"http://127.0.0.1:8081\"]}",
