@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb88f859_2e382985",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-29T06:21:23Z",
+      "side": 1,
+      "message": "Optional: (This suggestion is for reducing the amount of code, rather than optimization which it might appear to be at first!) You could write:\n\n    if (transition_qualifier \u0026 (ui::PAGE_TRANSITION_FORWARD_BACK |\n                                ui::PAGE_TRANSITION_FROM_ADDRESS_BAR))\n\nto combine these two cases into a single if statement. It makes the logs less specific but I think that\u0027s OK.",
+      "revId": "07a1e36aba3314e1dca0b6fe28dd9e61574a8fe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "332fb6bd_5cc384a2",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-29T06:21:23Z",
+      "side": 1,
+      "message": "nit: No comma.\n\nOr re-word as two sentences: \"Paste an in-scope URL into the address and navigate to it. Expect a TRANSITION_LINK navigation with a TRANSITION_FROM_ADDRESS_BAR qualifier.\"",
+      "range": {
+        "startLine": 507,
+        "startChar": 66,
+        "endLine": 507,
+        "endChar": 67
+      },
+      "revId": "07a1e36aba3314e1dca0b6fe28dd9e61574a8fe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
