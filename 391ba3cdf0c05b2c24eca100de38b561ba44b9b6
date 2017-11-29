@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0000d0e9_4ae55125",
+        "filename": "chrome/browser/component_updater/mei_preload_component_installer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-29T08:35:17Z",
+      "side": 1,
+      "message": "can this callback be used for the \"i\u0027m done\" notification rather than introducing something new for the test? it sorta looks like one could provide a callback that posts a task on the main thread, and that task would run after ComponentReady. hmm, but that won\u0027t work since you need to wait until the background thread processes the load...",
+      "range": {
+        "startLine": 124,
+        "startChar": 27,
+        "endLine": 124,
+        "endChar": 46
+      },
+      "revId": "391ba3cdf0c05b2c24eca100de38b561ba44b9b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b394bf8a_7c56d3be",
+        "filename": "chrome/browser/media/media_engagement_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-29T08:35:17Z",
+      "side": 1,
+      "message": "do you expect to need WaitForListLoaded in other tests? if no, i think MediaEngagementPreloadBrowserTest.EnsureSingletonListIsLoaded would be easier to understand if these three lines were inlined in it. if yes, i think this should be a protected static method in the MediaEngagementPreloadBrowserTest class so that it\u0027s with the related test fixture.",
+      "revId": "391ba3cdf0c05b2c24eca100de38b561ba44b9b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "367b49cf_9fd7754c",
+        "filename": "chrome/browser/media/media_engagement_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-29T08:35:17Z",
+      "side": 1,
+      "message": "this test doesn\u0027t have any assertions or expectations. what is it testing? should it at least check that the list is loaded after the wait?",
+      "revId": "391ba3cdf0c05b2c24eca100de38b561ba44b9b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2efdb8e_c699991f",
+        "filename": "chrome/browser/media/media_engagement_preloaded_list.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-29T08:35:17Z",
+      "side": 1,
+      "message": "this happens on some background thread, which likely isn\u0027t the right thing. MediaEngagementPreloadComponentInstallerPolicy::ComponentReady does the bounce to a bg thread. maybe it needs to use PostTaskAndReply to get back to the main thread after the load.",
+      "revId": "391ba3cdf0c05b2c24eca100de38b561ba44b9b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abd1f3e7_e9c58278",
+        "filename": "chrome/browser/media/media_engagement_preloaded_list.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-29T08:35:17Z",
+      "side": 1,
+      "message": "std::move(on_load_closure_).Run();",
+      "revId": "391ba3cdf0c05b2c24eca100de38b561ba44b9b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f4ce0f1_7156c1fb",
+        "filename": "chrome/browser/media/media_engagement_preloaded_list.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-29T08:35:17Z",
+      "side": 1,
+      "message": "no need for unique_ptr here, in which case SetOnLoad... can become \"on_load_closure_ \u003d std::move(closure);\"",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 32
+      },
+      "revId": "391ba3cdf0c05b2c24eca100de38b561ba44b9b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
