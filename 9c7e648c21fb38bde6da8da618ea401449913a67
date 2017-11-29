@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6d1bbb5_d5c446ce",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-29T10:08:12Z",
+      "side": 1,
+      "message": "\u0027Must be called (at least) before the throttling state changes.\u0027",
+      "revId": "9c7e648c21fb38bde6da8da618ea401449913a67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61b54d3b_ea93b22a",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-29T10:08:12Z",
+      "side": 1,
+      "message": "Was thinking about how these histograms would be interpreted a bit more.  Would it be useful if we record these per request, and categorize it by the throttling state of the time when the request is initiated.  MainFrameThrottled, MainFrameNotThrottled, SubframeThrottled, SubframeNotThrottled can be an enum and the enumeration histogram can be incremented when every request finishes?",
+      "revId": "9c7e648c21fb38bde6da8da618ea401449913a67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89be2fd8_5678dc11",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-29T10:08:12Z",
+      "side": 1,
+      "message": "This lines are after break; ?",
+      "revId": "9c7e648c21fb38bde6da8da618ea401449913a67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc829854_dc0dc162",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-29T10:08:12Z",
+      "side": 1,
+      "message": "nit: report -\u003e reports",
+      "revId": "9c7e648c21fb38bde6da8da618ea401449913a67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ee8379d_8067df34",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-29T10:08:12Z",
+      "side": 1,
+      "message": "I wonder if this Release method should just take an additional param which indicates if the request finished with an error or not, rather than using a negative value?",
+      "revId": "9c7e648c21fb38bde6da8da618ea401449913a67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57f3f674_c2c8b4f7",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-29T10:08:12Z",
+      "side": 1,
+      "message": "Would be probably helpful to have a brief comment for this method at this point (\u0027Release\u0027 and \u0027decoded_body_length\u0027 may not give much hint what this method is about)\n\nPlease also document when a negative number (-1) is given.\n\nIt\u0027s probably also good to note that this size is not about the data that is transferred over the wire (which is encoded_body_length), but is received for this request (which includes the data retrieved from cache).  (I wonder we might want to log both, actually?)",
+      "revId": "9c7e648c21fb38bde6da8da618ea401449913a67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
