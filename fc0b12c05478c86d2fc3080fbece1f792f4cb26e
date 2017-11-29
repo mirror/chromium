@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd98a4b1_cd6b40ea",
+        "filename": "ui/file_manager/file_manager/background/js/background.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-29T04:03:10Z",
+      "side": 1,
+      "message": "Does it return file entry, directory entry or volume? The method naming and comment and \"volume\" at the end of this line seem inconsistent. Please double check.",
+      "range": {
+        "startLine": 213,
+        "startChar": 7,
+        "endLine": 213,
+        "endChar": 29
+      },
+      "revId": "fc0b12c05478c86d2fc3080fbece1f792f4cb26e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c914d056_ba590b23",
+        "filename": "ui/file_manager/file_manager/background/js/background.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-29T04:03:10Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 228,
+        "startChar": 7,
+        "endLine": 228,
+        "endChar": 63
+      },
+      "revId": "fc0b12c05478c86d2fc3080fbece1f792f4cb26e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "13025a72_8c350391",
+        "filename": "ui/file_manager/file_manager/common/js/volume_manager_common.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-29T04:03:10Z",
+      "side": 1,
+      "message": "This still looks strange. Do we use this inheritance pattern anywhere in Files app code base? Like having a constructor which uses return?\n\nIf not, then maybe we can simplify and just rename this to a regular method as described in [1]?\n\n[1] https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Creating_and_triggering_events\n\nIt would look like:\n\nVolumeManagerCommon.createArchiveOpenedEvent \u003d (...) {\n  return new CustomEvent(\n      VolumeManagerCommon.ARCHIVE_OPENED_EVENT_TYPE,\n      { detail: mountPoint });\n}\n\nWDYT?",
+      "range": {
+        "startLine": 348,
+        "startChar": 0,
+        "endLine": 349,
+        "endChar": 15
+      },
+      "revId": "fc0b12c05478c86d2fc3080fbece1f792f4cb26e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
