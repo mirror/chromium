@@ -198,6 +198,18 @@ bool CSSStyleSheetResource::CanUseSheet(MIMETypeCheck mime_type_check) const {
   if (ErrorOccurred())
     return false;
 
+  // For `file:` URLs, we may need to be a little more strict than the below.
+  // Though we'll likely change this in the future, for the moment we're going
+  // to enforce a file-extension requirement on stylesheets loaded from `file:`
+  // URLs and see how far it gets us.
+  if (RuntimeEnabledFeatures::RequireCSSExtensionForFileEnabled()) {
+    KURL sheet_url = GetResponse().Url();
+    if (sheet_url.IsLocalFile() &&
+        !sheet_url.LastPathComponent().EndsWithIgnoringCase(".css")) {
+      return false;
+    }
+  }
+
   // This check exactly matches Firefox. Note that we grab the Content-Type
   // header directly because we want to see what the value is BEFORE content
   // sniffing. Firefox does this by setting a "type hint" on the channel. This
