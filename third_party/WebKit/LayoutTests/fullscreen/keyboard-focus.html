@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<title>Elements not contained by the fullscreen element are inert</title>
+<script src="../resources/testharness.js"></script>
+<script src="../resources/testharnessreport.js"></script>
+<script src="../shadow-dom/resources/focus-utils.js"></script>
+<script src="trusted-click.js"></script>
+<div id="log"></div>
+<div class="before"><input value="before"></div>
+<div class="target"><input value="inside"></div>
+<div class="after"><input value="after"></div>
+<script>
+// The important side effect of inertness is that focus moves away from an
+// element that becomes inert, and that when in fullscreen it's not possible to
+// move focus out of the fullscreen elemeent.
+//
+// TODO(foolip): This is not yet per spec, so change the spec:
+// https://github.com/whatwg/fullscreen/issues/15
+async_test(t => {
+  const before = document.querySelector("div.before");
+  const target = document.querySelector("div.target");
+  const after = document.querySelector("div.after");
+
+  // initial focus is body, cycle to first input
+  assert_equals(document.activeElement, document.body, 'active element #1');
+  navigateFocusForward();
+  assert_equals(document.activeElement, before.firstChild, 'active element #2');
+
+  document.onfullscreenchange = t.step_func(() => {
+    // entering fullscreen moved the focus back to body
+    assert_equals(document.activeElement, document.body);
+
+    // now cycling focus should skip the inert elements
+    navigateFocusForward();
+    assert_equals(document.activeElement, target.firstChild, 'active element #3');
+    navigateFocusForward();
+    assert_equals(document.activeElement, target.firstChild, 'active element #4');
+
+    t.done();
+  });
+
+  trusted_request(t, target);
+});
+</script>
