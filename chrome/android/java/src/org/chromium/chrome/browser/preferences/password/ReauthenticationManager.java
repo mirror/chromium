@@ -7,14 +7,20 @@ package org.chromium.chrome.browser.preferences.password;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.KeyguardManager;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+
+import org.chromium.base.VisibleForTesting;
 
 /**
  * This collection of static methods provides reauthentication primitives for passwords
  * settings UI. */
 public final class ReauthenticationManager {
+    public enum ScreenLockSetUpOverride { NOT_OVERRIDDEN, SET_UP, NOT_SET_UP }
+
     // Useful for retrieving the fragment in tests.
     public static final String FRAGMENT_TAG = "reauthentication-manager-fragment";
 
@@ -25,11 +31,21 @@ public final class ReauthenticationManager {
     // means there was no successful reauthentication yet.
     private static long sLastReauthTimeMillis;
 
+    // Used in tests to override the result of check for screen lock set-up. This allows the tests
+    // to be independent of a particular device configuration.
+    private static ScreenLockSetUpOverride sScreenLockSetUpOverride =
+            ScreenLockSetUpOverride.NOT_OVERRIDDEN;
+
     /**
      * Stores the timestamp of last reauthentication of the user.
      */
     public static void setLastReauthTimeMillis(long value) {
         sLastReauthTimeMillis = value;
+    }
+
+    @VisibleForTesting
+    public static void setScreenLockSetUpOverride(ScreenLockSetUpOverride screenLockSetUpOverride) {
+        sScreenLockSetUpOverride = screenLockSetUpOverride;
     }
 
     /**
@@ -70,5 +86,25 @@ public final class ReauthenticationManager {
         return sLastReauthTimeMillis != 0
                 && System.currentTimeMillis() - sLastReauthTimeMillis
                 < VALID_REAUTHENTICATION_TIME_INTERVAL_MILLIS;
+    }
+
+    /**
+     * Checks whether the user set up screen lock so that it can be used for reauthentication. Can
+     * be overridden in tests.
+     * @param context The context to retrieve the KeyguardManager to find out.
+     */
+    public static boolean isScreenLockSetUp(Context context) {
+        switch (sScreenLockSetUpOverride) {
+            case NOT_OVERRIDDEN:
+                return ((KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE))
+                        .isKeyguardSecure();
+            case SET_UP:
+                return true;
+            case NOT_SET_UP:
+                return false;
+        }
+        // This branch is not reachable.
+        assert false;
+        return false;
     }
 }

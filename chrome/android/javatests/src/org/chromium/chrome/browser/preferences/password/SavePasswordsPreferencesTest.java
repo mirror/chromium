@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.preferences.password;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.action.ViewActions;
+import android.support.test.espresso.assertion.ViewAssertions;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.filters.SmallTest;
 
@@ -162,6 +163,10 @@ public class SavePasswordsPreferencesTest {
     @Feature({"Preferences"})
     @EnableFeatures("password-export")
     public void testExportMenuItem() throws Exception {
+        PasswordReauthenticationFragment.preventLockingForTesting();
+        ReauthenticationManager.setScreenLockSetUpOverride(
+                ReauthenticationManager.ScreenLockSetUpOverride.SET_UP);
+
         final Preferences preferences =
                 PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
                         SavePasswordsPreferences.class.getName());
@@ -171,5 +176,30 @@ public class SavePasswordsPreferencesTest {
         Espresso.onView(ViewMatchers.withText(
                                 R.string.save_password_preferences_export_action_title))
                 .perform(ViewActions.click());
+    }
+
+    /**
+     * Check whether the user is asked to set up a screen lock if attempting to export passwords.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @EnableFeatures("password-export")
+    public void testExportMenuItemNoLock() throws Exception {
+        PasswordReauthenticationFragment.preventLockingForTesting();
+        ReauthenticationManager.setScreenLockSetUpOverride(
+                ReauthenticationManager.ScreenLockSetUpOverride.NOT_SET_UP);
+
+        final Preferences preferences =
+                PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
+                        SavePasswordsPreferences.class.getName());
+
+        Espresso.openActionBarOverflowOrOptionsMenu(
+                InstrumentationRegistry.getInstrumentation().getTargetContext());
+        Espresso.onView(ViewMatchers.withText(
+                                R.string.save_password_preferences_export_action_title))
+                .perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withText(R.string.password_export_set_lock_screen))
+                .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
     }
 }
