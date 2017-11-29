@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1f40d5b1_6e9f7971",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-29T23:04:21Z",
+      "side": 1,
+      "message": "We can do that but it involves enumerating both directories, running eu-readelf on each binary in there, to collate a lookup table from Build-Ids to binary paths.\n\nTo use that during symbolization we then need to eu-readelf the stripped binaries to match the them to their unstripped counterparts, since we only get Build-Ids from crashlogger dumps - Chrome itself doesn\u0027t currently have code to grab them from the mapped DSOs.\n\nSo yeah, I\u0027ll add a TODO for us to just scan the directories to populate a Build-Id-\u003epath mapping once we have Build-Ids in stack printouts.",
+      "parentUuid": "076e4242_b0d995f0",
+      "range": {
+        "startLine": 157,
+        "startChar": 4,
+        "endLine": 157,
+        "endChar": 8
+      },
+      "revId": "9f636f16e09bd4ed1410b47fe63dd1738cc85079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "319dcf65_a07c650e",
         "filename": "build/toolchain/fuchsia/BUILD.gn",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "9f636f16e09bd4ed1410b47fe63dd1738cc85079",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7ebd37d_d30c11e0",
+        "filename": "build/toolchain/fuchsia/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-29T23:04:21Z",
+      "side": 1,
+      "message": "#iknowrite?!?",
+      "parentUuid": "319dcf65_a07c650e",
+      "revId": "9f636f16e09bd4ed1410b47fe63dd1738cc85079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
