@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fe51d3e_372aa095",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-display/display-contents-first-line-002.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-29T23:54:37Z",
+      "side": 1,
+      "message": "Is the trailing \u003c/div\u003e meant to be there?",
+      "revId": "005546322ce37088ec8a4b1ef4d9c92592ff2117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
