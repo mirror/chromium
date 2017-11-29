@@ -16,6 +16,24 @@
       "revId": "d9b5850a3cc1560f4c666573edbf923bcbd79b61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15cb0ffb_426b624e",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-11-29T19:32:01Z",
+      "side": 1,
+      "message": "good catch. removed.",
+      "parentUuid": "d705447b_607bdb4c",
+      "revId": "d9b5850a3cc1560f4c666573edbf923bcbd79b61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
