@@ -124,8 +124,7 @@ void LaunchDateAndTimeSettingsImpl() {
 #endif
 
 bool AreCommittedInterstitialsEnabled() {
-  return base::CommandLine::ForCurrentProcess()->HasSwitch(
-      switches::kCommittedInterstitials);
+  return true;
 }
 
 }  // namespace

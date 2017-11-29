@@ -30,8 +30,6 @@ const char* SSLErrorNavigationThrottle::GetNameForLogging() {
 
 content::NavigationThrottle::ThrottleCheckResult
 SSLErrorNavigationThrottle::WillFailRequest() {
-  DCHECK(base::CommandLine::ForCurrentProcess()->HasSwitch(
-      switches::kCommittedInterstitials));
   content::NavigationHandle* handle = navigation_handle();
   if (!handle->GetSSLInfo().has_value()) {
     return content::NavigationThrottle::PROCEED;

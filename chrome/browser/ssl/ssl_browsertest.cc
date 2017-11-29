@@ -189,8 +189,6 @@ enum AuthStateFlags {
 
 void Check(const NavigationEntry& entry, int expected_authentication_state) {
   if (expected_authentication_state == AuthState::SHOWING_ERROR ||
-      (base::CommandLine::ForCurrentProcess()->HasSwitch(
-           switches::kCommittedInterstitials) &&
        expected_authentication_state == AuthState::SHOWING_INTERSTITIAL)) {
     EXPECT_EQ(content::PAGE_TYPE_ERROR, entry.GetPageType());
   } else {
@@ -425,8 +423,7 @@ void SetHSTSForHostName(
 }
 
 bool AreCommittedInterstitialsEnabled() {
-  return base::CommandLine::ForCurrentProcess()->HasSwitch(
-      switches::kCommittedInterstitials);
+  return true;
 }
 
 // A getter for the tab's InterstitialPageDelegate that is agnostic about

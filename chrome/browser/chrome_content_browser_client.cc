@@ -2323,14 +2323,11 @@ void ChromeContentBrowserClient::AllowCertificateError(
     return;
   }
 
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kCommittedInterstitials)) {
-    // We deny the request here in order to trigger the committed interstitials
-    // code path (committing certificate error pages as navigations) instead of
-    // the old code path.
-    callback.Run(content::CERTIFICATE_REQUEST_RESULT_TYPE_DENY);
-    return;
-  }
+  // We deny the request here in order to trigger the committed interstitials
+  // code path (committing certificate error pages as navigations) instead of
+  // the old code path.
+  callback.Run(content::CERTIFICATE_REQUEST_RESULT_TYPE_DENY);
+  return;
 
   // Otherwise, display an SSL blocking page. The interstitial page takes
   // ownership of ssl_blocking_page. We pass a null BlockingPageReadyCallback()
@@ -3482,13 +3479,10 @@ ChromeContentBrowserClient::CreateThrottlesForNavigation(
   if (tab_under_throttle)
     throttles.push_back(std::move(tab_under_throttle));
 
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kCommittedInterstitials)) {
-    throttles.push_back(std::make_unique<SSLErrorNavigationThrottle>(
-        handle,
-        std::make_unique<CertificateReportingServiceCertReporter>(web_contents),
-        base::Bind(&SSLErrorHandler::HandleSSLError)));
-  }
+  throttles.push_back(std::make_unique<SSLErrorNavigationThrottle>(
+      handle,
+      std::make_unique<CertificateReportingServiceCertReporter>(web_contents),
+      base::Bind(&SSLErrorHandler::HandleSSLError)));
 
   return throttles;
 }
