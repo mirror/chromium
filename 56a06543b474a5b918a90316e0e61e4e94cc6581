@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1164e065_8ef954e8",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-29T22:04:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e58f6ffb_b554e2e3",
+      "range": {
+        "startLine": 85,
+        "startChar": 7,
+        "endLine": 85,
+        "endChar": 36
+      },
+      "revId": "56a06543b474a5b918a90316e0e61e4e94cc6581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "054dcdec_c32015c7",
         "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
         "patchSetId": 21
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d973eeda_f3a61120",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-29T22:04:49Z",
+      "side": 1,
+      "message": "Thanks! I haven\u0027t thought about that yet..",
+      "parentUuid": "054dcdec_c32015c7",
+      "range": {
+        "startLine": 95,
+        "startChar": 43,
+        "endLine": 95,
+        "endChar": 60
+      },
+      "revId": "56a06543b474a5b918a90316e0e61e4e94cc6581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d83cf7ad_6a75f2cf",
         "filename": "third_party/WebKit/Source/platform/scroll/ScrollSnapData.h",
         "patchSetId": 21
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-29T19:35:45Z",
       "side": 1,
       "message": "Perhaps you\u0027ve thought about this and I\u0027m missing something, but wouldn\u0027t it be more natural to just add kNone to SnapStrictness?",
+      "range": {
+        "startLine": 50,
+        "startChar": 5,
+        "endLine": 50,
+        "endChar": 58
+      },
+      "revId": "56a06543b474a5b918a90316e0e61e4e94cc6581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6634ecd9_71bce607",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollSnapData.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-11-29T22:04:49Z",
+      "side": 1,
+      "message": "Yes it would for sure.\n\nThis boolean value was added from this comment in consideration that scroll-snap-type accepts a \"none\" input, but the original code puts \"none\" with SnapAxis: https://codereview.chromium.org/2932593004/diff/180001/third_party/WebKit/Source/core/style/StyleScrollSnapData.h#newcode41\n\nAnyway, we can still put the none value in SnapStrictness. I\u0027ll have a follow-up to update some of the CSS parsing of snap points.",
+      "parentUuid": "d83cf7ad_6a75f2cf",
       "range": {
         "startLine": 50,
         "startChar": 5,
