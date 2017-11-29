@@ -93,6 +93,30 @@
       "revId": "852ef29761b24bba37b187b240a1c6a9a074841e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8375cda9_43e5ad83",
+        "filename": "third_party/WebKit/Source/core/loader/resource/CSSStyleSheetResource.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-29T21:13:41Z",
+      "side": 1,
+      "message": "After checking the hardcoded file-extension to MIME-mapping table, we fallback to asking the system, which on Windows includes consulting the registry.\n\nI\u0027m slightly concerned about the scenario whereby some \"clever\" Electron app (or whatever Chromium host) decided that they should use a custom file extension for their \"special\" CSS files; allowing the registry check would enable a workaround for them.",
+      "parentUuid": "78988ddb_19b2e09e",
+      "range": {
+        "startLine": 213,
+        "startChar": 39,
+        "endLine": 213,
+        "endChar": 66
+      },
+      "revId": "852ef29761b24bba37b187b240a1c6a9a074841e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
