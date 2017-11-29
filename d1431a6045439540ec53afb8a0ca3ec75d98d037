@@ -588,6 +588,24 @@
     },
     {
       "key": {
+        "uuid": "4c4d3e4b_a093dc0e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-29T02:55:15Z",
+      "side": 1,
+      "message": "This sort of expected ordering of calls can be a bit brittle/error-prone. Please document the expectations and add asserts to help prevent erroneous usage in the future.",
+      "parentUuid": "ab3e01ed_f888da6e",
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b1a61a2_e7518479",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
         "patchSetId": 4
@@ -717,6 +735,30 @@
     },
     {
       "key": {
+        "uuid": "cd190747_d7afec7e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-29T02:55:15Z",
+      "side": 1,
+      "message": "This may not be necessary at all if it\u0027s not possible to change the accept languages through some other means. Are there even use cases we need to cover (e.g. update on desktop updates here)?\n\nIf we do need to support this, we have mechanisms to notify observers when a preference changes (e.g. https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/history/HistoryManager.java?type\u003dcs\u0026q\u003dpref+observer+file:%5Esrc/chrome/android/java/src/org/chromium/chrome/browser/history/+package:%5Echromium$\u0026l\u003d175)\n\nYou may be able to re-use the PrefRegistrar construct. Otherwise, you likely need a custom observer/notifier implementation.",
+      "parentUuid": "4e512c64_c9f404bd",
+      "range": {
+        "startLine": 146,
+        "startChar": 7,
+        "endLine": 156,
+        "endChar": 9
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a6390617_496de52f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
         "patchSetId": 4
@@ -752,6 +794,30 @@
       "side": 1,
       "message": "languages map is read from a list returned by PrefServiceBridge.getChromeLanguageList(), and when native generates the ChromeLanguageList for Android, it will filter some languages out if these language codes are not recognized by current Android OS.\n\nBut the getUserLanguageCodes() simply returns a language code list shared by all platforms, so some language codes inside may be NOT recognized by device\u0027s Android OS, we need to check the list first.\n\nEg. suppose all languages predefined in Chrome native are [a,b,c,d,e] and \u0027d\u0027 is supported by window 10. Android 5.1 supports only [a,b,c,e], while getUserLanguageCodes could return [a,d]. but for devices with Android 5.1,  only [a] will be listed.\n\nHope the explanation is clear.",
       "parentUuid": "a6390617_496de52f",
+      "range": {
+        "startLine": 163,
+        "startChar": 12,
+        "endLine": 169,
+        "endChar": 0
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "477a817d_6ca9b26e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-29T02:55:15Z",
+      "side": 1,
+      "message": "That\u0027s clear, thanks.\n\nThis would be good to capture in a code comment so folks who aren\u0027t familiar with multi-platform language support understand what\u0027s going on. The JavaDocs for the PrefServiceBridge methods should also talk about whether the data returned is filtered by supported Android languages or not.",
+      "parentUuid": "f9e0054f_5c5a1798",
       "range": {
         "startLine": 163,
         "startChar": 12,
@@ -1198,6 +1264,24 @@
       "side": 1,
       "message": "Do we have a Util class or Interface to store all kinds of Intents definition (eg. request_codes, data_key...), which could help us avoid any conflict.\n\nI simply checked some other components, the codes they used seems random\nhttps://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkActivity.java?type\u003dcs\u0026q\u003dEDIT_BOOKMARK_REQUEST_CODE+file:%5Esrc/chrome/android/java/src/org/chromium/chrome/browser/bookmarks/+package:%5Echromium$\u0026l\u003d24\n\nSo I just made 7 for this. Glad to know the guideline for the definition if you point it out.",
       "parentUuid": "60fe9764_5d641eb2",
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5329999c_9387d8d2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguagesPreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-29T02:55:15Z",
+      "side": 1,
+      "message": "\u003e Do we have a Util class or Interface to store all kinds of Intents definition (eg. request_codes, data_key...), which could help us avoid any conflict.\n\nNot that I\u0027m aware of. The value specified here is arbitrary, you just need to make sure that it doesn\u0027t conflict with activities that you might be using with onActivityResult. I suggest using \u00271\u0027 unless it conflicts with something else in preferences. If it does, then it\u0027d be nice to create a PreferenceRequestCodes.java class that aggregates all of the request codes used with the Preferences.java activity.\n\n\u003eI simply checked some other components, the codes they used seems random.\n\nThey probably are somewhat random. Bookmarks has other request codes, so it has to distinguish between them. I suspect we used to have more request codes in bookmarks when we were trying to integrate with the Search Stars project. We ended up dropping the integration, but there are still some remnants.",
+      "parentUuid": "797c54be_63924091",
       "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
