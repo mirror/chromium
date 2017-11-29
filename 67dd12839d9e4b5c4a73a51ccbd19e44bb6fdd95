@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f2502e3_6cbb2028",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/AnnotationProcessingUtils.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-11-29T11:12:40Z",
+      "side": 1,
+      "message": "There\u0027s a bit of duplication between here and line 47. Could you add a \"getClosestAnnoation\" to the AnnotationsExtractor?",
+      "range": {
+        "startLine": 36,
+        "startChar": 50,
+        "endLine": 36,
+        "endChar": 61
+      },
+      "revId": "67dd12839d9e4b5c4a73a51ccbd19e44bb6fdd95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7202e29d_bfdcd930",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/AnnotationProcessingUtils.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-11-29T11:12:40Z",
+      "side": 1,
+      "message": "As discussed offline you seem to be using a strange combination of iterative and recursive breadth first search. Just using iterative will make things cleaner.",
+      "range": {
+        "startLine": 152,
+        "startChar": 12,
+        "endLine": 152,
+        "endChar": 28
+      },
+      "revId": "67dd12839d9e4b5c4a73a51ccbd19e44bb6fdd95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e092ebda_f16fb507",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/AnnotationProcessor.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-11-29T11:12:40Z",
+      "side": 1,
+      "message": "I\u0027m perfectly fine with this code (looking through the list backwards and returning the first item you find), though I\u0027m wondering if the following would be more readable:\n\nA ret \u003d null;\nfor (annotation: mCollectedAnnotations) { \n  if (annnotationType.isAssignableFrom(annotation.annotationType())) {\n    ret \u003d (A) annotation;\n  }\n}\n\nreturn ret;",
+      "range": {
+        "startLine": 120,
+        "startChar": 38,
+        "endLine": 120,
+        "endChar": 80
+      },
+      "revId": "67dd12839d9e4b5c4a73a51ccbd19e44bb6fdd95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38db16c4_94ea1042",
+        "filename": "base/test/android/junit/src/org/chromium/base/test/util/SkipCheckTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-11-29T11:12:40Z",
+      "side": 1,
+      "message": "Unintentional?",
+      "range": {
+        "startLine": 120,
+        "startChar": 19,
+        "endLine": 120,
+        "endChar": 26
+      },
+      "revId": "67dd12839d9e4b5c4a73a51ccbd19e44bb6fdd95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff77a4f2_06610b61",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/browser/ChromeHome.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-11-29T11:12:40Z",
+      "side": 1,
+      "message": "How does this work?\n\nAnnotationProcessor.getAnnotation(class) returns a \u003cA extends Annotation\u003e. Surely this should be a null check?",
+      "range": {
+        "startLine": 53,
+        "startChar": 30,
+        "endLine": 53,
+        "endChar": 43
+      },
+      "revId": "67dd12839d9e4b5c4a73a51ccbd19e44bb6fdd95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
