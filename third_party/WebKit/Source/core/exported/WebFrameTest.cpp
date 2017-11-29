@@ -11758,6 +11758,8 @@ class ShowVirtualKeyboardObserverWidgetClient
 
   bool DidShowVirtualKeyboard() const { return did_show_virtual_keyboard_; }
 
+  void ResetDidShowVirtualKeyboard() { did_show_virtual_keyboard_ = false; }
+
  private:
   bool did_show_virtual_keyboard_;
 };
@@ -11783,6 +11785,15 @@ TEST_P(ParameterizedWebFrameTest, ShowVirtualKeyboardOnElementFocus) {
                       "document.querySelector('input').focus();"));
 
   // Verify that the right WebWidgetClient has been notified.
+  EXPECT_TRUE(web_widget_client.DidShowVirtualKeyboard());
+
+  // Verify that a subsequent focus event on the same element (while it still
+  // has focus) leads to the OSK being shown again.
+  web_widget_client.ResetDidShowVirtualKeyboard();
+  EXPECT_FALSE(web_widget_client.DidShowVirtualKeyboard());
+  local_frame->SetHasReceivedUserGesture();
+  local_frame->ExecuteScript(
+      WebScriptSource("document.querySelector('input').focus();"));
   EXPECT_TRUE(web_widget_client.DidShowVirtualKeyboard());
 
   web_view_helper.Reset();

@@ -2871,8 +2871,13 @@ void Element::focus(const FocusParams& params) {
   if (!isConnected())
     return;
 
-  if (GetDocument().FocusedElement() == this)
+  if (GetDocument().FocusedElement() == this) {
+    // The virtual keyboard might have been dismissed, while this Element
+    // still had focus. In such cases, the keyboard should be brought up
+    // again, if a user gesture was received.
+    ShowVirtualKeyboardOnElementFocusIfNeeded();
     return;
+  }
 
   if (!GetDocument().IsActive())
     return;
@@ -2906,6 +2911,10 @@ void Element::focus(const FocusParams& params) {
           this, GetDocument().GetFrame(), params))
     return;
 
+  ShowVirtualKeyboardOnElementFocusIfNeeded();
+}
+
+void Element::ShowVirtualKeyboardOnElementFocusIfNeeded() {
   if (GetDocument().FocusedElement() == this &&
       GetDocument().GetFrame()->HasBeenActivated()) {
     // Bring up the keyboard in the context of anything triggered by a user
