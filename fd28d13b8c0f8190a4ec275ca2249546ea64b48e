@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc9f76aa_8766486d",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-29T15:06:03Z",
+      "side": 1,
+      "message": "I\u0027m slightly concerned that this appoach will lead to missing some data due to the fact that renderer process can be killed without a warning and we won\u0027t have a chance to flush the metrics. I believe that it\u0027s the procedure now for tearing down the renderer process when user closes the tab, which means that if the tab was sitting in background for a long time and user closed it, we\u0027d lose all the metrics from it.\n\nShould we record the metrics (at least TrafficBytes ones) after completing each request?",
+      "range": {
+        "startLine": 230,
+        "startChar": 2,
+        "endLine": 230,
+        "endChar": 30
+      },
+      "revId": "fd28d13b8c0f8190a4ec275ca2249546ea64b48e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2733328b_b9eeede1",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-29T15:06:03Z",
+      "side": 1,
+      "message": "If we\u0027re recording \"TotalTrafficBytes\" metric, it feels like we should use encoded_body_length (I assume that encoded_body_length is the actual number of bytes sent over network).\n\nIdeally, in the future, we\u0027d want both encoded and decoded figure.",
+      "range": {
+        "startLine": 82,
+        "startChar": 48,
+        "endLine": 82,
+        "endChar": 67
+      },
+      "revId": "fd28d13b8c0f8190a4ec275ca2249546ea64b48e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
