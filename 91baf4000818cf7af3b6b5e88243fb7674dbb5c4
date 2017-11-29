@@ -16,6 +16,24 @@
       "revId": "91baf4000818cf7af3b6b5e88243fb7674dbb5c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee7cfb5b_88c51abf",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1242,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-29T10:15:42Z",
+      "side": 1,
+      "message": "Done.\n\nI liked the idea of a CHECK that fails though as it would flush out interesting cases.",
+      "parentUuid": "2d4ac80c_b459c963",
+      "revId": "91baf4000818cf7af3b6b5e88243fb7674dbb5c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
