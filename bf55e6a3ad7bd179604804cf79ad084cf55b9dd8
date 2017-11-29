@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bd5a2b4_5b4b2e7c",
+        "filename": "ios/chrome/browser/autofill/form_structure_browsertest.mm",
+        "patchSetId": 31
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-29T17:30:55Z",
+      "side": 1,
+      "message": "There seems to be an issue here. These two forms have an action\u003d\"/search\" which is explicitly blacklisted by FormStructure::ShouldBeParsed.\nI think the iOS result is the correct one and the action is somehow lost on desktop.",
+      "range": {
+        "startLine": 87,
+        "startChar": 7,
+        "endLine": 87,
+        "endChar": 23
+      },
+      "revId": "bf55e6a3ad7bd179604804cf79ad084cf55b9dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
