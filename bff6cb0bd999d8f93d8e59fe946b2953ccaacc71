@@ -267,6 +267,30 @@
       "revId": "bff6cb0bd999d8f93d8e59fe946b2953ccaacc71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a896f47_98fb2f29",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-29T18:30:56Z",
+      "side": 1,
+      "message": "This is a placeholder to disable default implementation created by CustomFrameViewAsh. Added comment to the class.",
+      "parentUuid": "20475e3c_e737f709",
+      "range": {
+        "startLine": 207,
+        "startChar": 0,
+        "endLine": 207,
+        "endChar": 70
+      },
+      "revId": "bff6cb0bd999d8f93d8e59fe946b2953ccaacc71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
