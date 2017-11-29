@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1571532_958d6562",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1671,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-29T22:46:50Z",
+      "side": 0,
+      "message": "Update flag_descriptions.cc to remove kSyncAppListName and kSyncAppListDescription as well.",
+      "revId": "f3163e206d28bd017c1f692bcd8f58e807b74ab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

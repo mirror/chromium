@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "459b3d0e_1b9e1508",
+        "filename": "chrome/browser/ui/app_list/app_list_model_builder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-29T22:46:50Z",
+      "side": 1,
+      "message": "Why not merge this with Initialize?",
+      "revId": "53cfe98c62e2d52e2092e6779ce57821a3d2677e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d5883d7_e2e5d2f9",
+        "filename": "chrome/browser/ui/app_list/app_list_model_updater.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-29T22:46:50Z",
+      "side": 1,
+      "message": "Document.\n\n// An interface to wrap AppListModel access in browser.",
+      "revId": "53cfe98c62e2d52e2092e6779ce57821a3d2677e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba4705be_51aca6bd",
+        "filename": "chrome/browser/ui/app_list/app_list_model_updater.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-29T22:46:50Z",
+      "side": 1,
+      "message": "We should not have those because the model would live in ash and the interface impl needs to talk to it via mojo. It would be tricky to read back an AppListItem. Can you add a TODO to remove them?",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 48
+      },
+      "revId": "53cfe98c62e2d52e2092e6779ce57821a3d2677e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36e874b1_4037c962",
+        "filename": "chrome/browser/ui/app_list/app_list_syncable_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-29T22:46:50Z",
+      "side": 1,
+      "message": "No need to do in this CL. But we should consider merge ModelObserver and ModelUpdater.",
+      "revId": "53cfe98c62e2d52e2092e6779ce57821a3d2677e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "411950a6_3b57981c",
+        "filename": "chrome/browser/ui/app_list/extension_app_model_builder_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-29T22:46:50Z",
+      "side": 1,
+      "message": "nit: update the comment as well",
+      "revId": "53cfe98c62e2d52e2092e6779ce57821a3d2677e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86c4cb39_03b33d54",
+        "filename": "chrome/browser/ui/app_list/extension_app_model_builder_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-29T22:46:50Z",
+      "side": 1,
+      "message": "std:set should not be a global var. Let\u0027s move it as a member of ExtensionAppModelBuilderTest and initialized in SetUp.",
+      "revId": "53cfe98c62e2d52e2092e6779ce57821a3d2677e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3db96aa0_754c9286",
+        "filename": "chrome/browser/ui/app_list/test/fake_app_list_model_updater.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-29T22:46:50Z",
+      "side": 1,
+      "message": "nit: no \"else\" if the other branch returns",
+      "revId": "53cfe98c62e2d52e2092e6779ce57821a3d2677e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9627e6ae_a0838a8e",
+        "filename": "chrome/browser/ui/app_list/test/fake_app_list_model_updater.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-29T22:46:50Z",
+      "side": 1,
+      "message": "nit: // AppListModelUpdater:",
+      "revId": "53cfe98c62e2d52e2092e6779ce57821a3d2677e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28a60992_8e32bfae",
+        "filename": "chrome/browser/ui/app_list/test/fake_app_list_model_updater.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-29T22:46:50Z",
+      "side": 1,
+      "message": "nit: DISALLOW_COPY_AND_ASSIGN(...)",
+      "revId": "53cfe98c62e2d52e2092e6779ce57821a3d2677e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
