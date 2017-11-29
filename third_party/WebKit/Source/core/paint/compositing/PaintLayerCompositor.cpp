@@ -285,7 +285,7 @@ void PaintLayerCompositor::SetNeedsCompositingUpdate(
     CompositingUpdateType update_type) {
   DCHECK_NE(update_type, kCompositingUpdateNone);
   pending_update_type_ = std::max(pending_update_type_, update_type);
-  if (Page* page = this->GetPage())
+  if (Page* page = GetPage())
     page->Animator().ScheduleVisualUpdate(layout_view_.GetFrame());
   Lifecycle().EnsureStateAtMost(DocumentLifecycle::kLayoutClean);
 }
@@ -479,7 +479,7 @@ void PaintLayerCompositor::UpdateIfNeeded(
     if (layers_changed) {
       update_type = std::max(update_type, kCompositingUpdateRebuildTree);
       if (ScrollingCoordinator* scrolling_coordinator =
-              this->GetScrollingCoordinator())
+              GetScrollingCoordinator())
         scrolling_coordinator->NotifyGeometryChanged();
     }
   }
@@ -601,7 +601,7 @@ bool PaintLayerCompositor::AllocateOrClearCompositedLayerMapping(
       // frame.
       if (layer->IsRootLayer() && layout_view_.GetFrame()->IsLocalRoot()) {
         if (ScrollingCoordinator* scrolling_coordinator =
-                this->GetScrollingCoordinator()) {
+                GetScrollingCoordinator()) {
           scrolling_coordinator->FrameViewRootLayerDidChange(
               layout_view_.GetFrameView());
         }
@@ -638,8 +638,7 @@ bool PaintLayerCompositor::AllocateOrClearCompositedLayerMapping(
   // If a fixed position layer gained/lost a compositedLayerMapping or the
   // reason not compositing it changed, the scrolling coordinator needs to
   // recalculate whether it can do fast scrolling.
-  if (ScrollingCoordinator* scrolling_coordinator =
-          this->GetScrollingCoordinator()) {
+  if (ScrollingCoordinator* scrolling_coordinator = GetScrollingCoordinator()) {
     scrolling_coordinator->FrameViewFixedObjectsDidChange(
         layout_view_.GetFrameView());
   }
@@ -711,8 +710,7 @@ void PaintLayerCompositor::FrameViewDidScroll() {
     return;
 
   bool scrolling_coordinator_handles_offset = false;
-  if (ScrollingCoordinator* scrolling_coordinator =
-          this->GetScrollingCoordinator()) {
+  if (ScrollingCoordinator* scrolling_coordinator = GetScrollingCoordinator()) {
     scrolling_coordinator_handles_offset =
         scrolling_coordinator->ScrollableAreaScrollLayerDidChange(frame_view);
   }
@@ -1070,7 +1068,7 @@ void PaintLayerCompositor::UpdateOverflowControlsLayers() {
       controls_parent->AddChild(layer_for_horizontal_scrollbar_.get());
 
       if (ScrollingCoordinator* scrolling_coordinator =
-              this->GetScrollingCoordinator()) {
+              GetScrollingCoordinator()) {
         scrolling_coordinator->ScrollableAreaScrollbarLayerDidChange(
             layout_view_.GetFrameView(), kHorizontalScrollbar);
       }
@@ -1080,7 +1078,7 @@ void PaintLayerCompositor::UpdateOverflowControlsLayers() {
     layer_for_horizontal_scrollbar_ = nullptr;
 
     if (ScrollingCoordinator* scrolling_coordinator =
-            this->GetScrollingCoordinator()) {
+            GetScrollingCoordinator()) {
       scrolling_coordinator->ScrollableAreaScrollbarLayerDidChange(
           layout_view_.GetFrameView(), kHorizontalScrollbar);
     }
@@ -1095,7 +1093,7 @@ void PaintLayerCompositor::UpdateOverflowControlsLayers() {
       controls_parent->AddChild(layer_for_vertical_scrollbar_.get());
 
       if (ScrollingCoordinator* scrolling_coordinator =
-              this->GetScrollingCoordinator()) {
+              GetScrollingCoordinator()) {
         scrolling_coordinator->ScrollableAreaScrollbarLayerDidChange(
             layout_view_.GetFrameView(), kVerticalScrollbar);
       }
@@ -1105,7 +1103,7 @@ void PaintLayerCompositor::UpdateOverflowControlsLayers() {
     layer_for_vertical_scrollbar_ = nullptr;
 
     if (ScrollingCoordinator* scrolling_coordinator =
-            this->GetScrollingCoordinator()) {
+            GetScrollingCoordinator()) {
       scrolling_coordinator->ScrollableAreaScrollbarLayerDidChange(
           layout_view_.GetFrameView(), kVerticalScrollbar);
     }
@@ -1171,7 +1169,7 @@ void PaintLayerCompositor::EnsureRootLayer() {
     container_layer_ = GraphicsLayer::Create(this);
     scroll_layer_ = GraphicsLayer::Create(this);
     if (ScrollingCoordinator* scrolling_coordinator =
-            this->GetScrollingCoordinator()) {
+            GetScrollingCoordinator()) {
       scrolling_coordinator->SetLayerIsContainerForFixedPositionLayers(
           scroll_layer_.get(), true);
     }
@@ -1202,7 +1200,7 @@ void PaintLayerCompositor::DestroyRootLayer() {
     layer_for_horizontal_scrollbar_->RemoveFromParent();
     layer_for_horizontal_scrollbar_ = nullptr;
     if (ScrollingCoordinator* scrolling_coordinator =
-            this->GetScrollingCoordinator()) {
+            GetScrollingCoordinator()) {
       scrolling_coordinator->ScrollableAreaScrollbarLayerDidChange(
           layout_view_.GetFrameView(), kHorizontalScrollbar);
     }
@@ -1214,7 +1212,7 @@ void PaintLayerCompositor::DestroyRootLayer() {
     layer_for_vertical_scrollbar_->RemoveFromParent();
     layer_for_vertical_scrollbar_ = nullptr;
     if (ScrollingCoordinator* scrolling_coordinator =
-            this->GetScrollingCoordinator()) {
+            GetScrollingCoordinator()) {
       scrolling_coordinator->ScrollableAreaScrollbarLayerDidChange(
           layout_view_.GetFrameView(), kVerticalScrollbar);
     }
@@ -1318,7 +1316,7 @@ void PaintLayerCompositor::DetachCompositorTimeline() {
 }
 
 ScrollingCoordinator* PaintLayerCompositor::GetScrollingCoordinator() const {
-  if (Page* page = this->GetPage())
+  if (Page* page = GetPage())
     return page->GetScrollingCoordinator();
 
   return nullptr;
