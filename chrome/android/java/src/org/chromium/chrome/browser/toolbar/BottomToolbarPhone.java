@@ -324,6 +324,14 @@ public class BottomToolbarPhone extends ToolbarPhone {
     }
 
     /**
+     * Set the pull handle visibility.
+     * @param isVisible Whether the handle should be visible.
+     */
+    public void setHandleVisbility(boolean isVisible) {
+        mToolbarHandleView.setVisibility(isVisible ? View.VISIBLE : View.INVISIBLE);
+    }
+
+    /**
      * @return Whether or not the toolbar is currently using a light theme color.
      */
     public boolean isLightTheme() {
@@ -347,7 +355,8 @@ public class BottomToolbarPhone extends ToolbarPhone {
 
     /** Shows the tab switcher toolbar. */
     public void showTabSwitcherToolbar() {
-        setTabSwitcherMode(true, true, false);
+        // TODO(twellington): Add animation.
+        setTabSwitcherMode(true, true, false, false);
     }
 
     /** Shows the normal toolbar. */
