@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c86d96a_a4636b16",
+        "filename": "chrome/browser/ui/tabs/tab_network_state.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-29T21:54:06Z",
+      "side": 1,
+      "message": "Moved from browser_tab_strip_controller.cc",
+      "revId": "d901037d8495e60c5b3b9ff325e2b9a33dbc1296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fd7b411_38d598b0",
+        "filename": "ui/gfx/geometry/rect.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-29T21:54:06Z",
+      "side": 1,
+      "message": "I was confused about whether these functions moved the whole rect or just the left/top side so updated the comment.",
+      "revId": "d901037d8495e60c5b3b9ff325e2b9a33dbc1296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "496c0509_d98908a7",
+        "filename": "ui/gfx/paint_throbber.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-29T21:54:06Z",
+      "side": 1,
+      "message": "This was uninitialized before. Didn\u0027t seem to be a problem, but initializing seems like good hygiene.",
+      "revId": "d901037d8495e60c5b3b9ff325e2b9a33dbc1296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
