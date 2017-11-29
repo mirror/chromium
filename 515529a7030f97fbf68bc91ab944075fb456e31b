@@ -16,6 +16,24 @@
       "revId": "515529a7030f97fbf68bc91ab944075fb456e31b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "480c04be_76d90c0d",
+        "filename": "chromeos/network/network_configuration_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-29T19:05:56Z",
+      "side": 1,
+      "message": "Yes, this seems fine assuming everything all tests pass :)",
+      "parentUuid": "de0dfddc_32062688",
+      "revId": "515529a7030f97fbf68bc91ab944075fb456e31b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
