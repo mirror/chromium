@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b6f90de9_8ff4a849",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1247467
+      },
+      "writtenOn": "2017-11-29T23:35:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86e860f0_a1f94855",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 14
+      },
+      "revId": "ae7d8922ea03e610005c11e305514e5dfb839bed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad9a6a5b_bf97f442",
         "filename": "media/mojo/interfaces/cdm_proxy.mojom",
         "patchSetId": 15
@@ -39,6 +63,24 @@
       "revId": "ae7d8922ea03e610005c11e305514e5dfb839bed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa553592_7d91f459",
+        "filename": "media/mojo/interfaces/cdm_proxy.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1247467
+      },
+      "writtenOn": "2017-11-29T23:35:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad9a6a5b_bf97f442",
+      "revId": "ae7d8922ea03e610005c11e305514e5dfb839bed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "0daeea53_36a1d365",
+        "filename": "media/mojo/interfaces/cdm_proxy.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1247467
+      },
+      "writtenOn": "2017-11-29T23:35:29Z",
+      "side": 1,
+      "message": "I am still working on the unit tests but this is an implementation of the proxy.\nhttps://chromium-review.googlesource.com/c/chromium/src/+/792590\nThis is also WIP plumbing by xhwang:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/786444\nmedia_options.gni has \"mojo_media_host \u003d \"gpu\"\"\n\nI\u0027ve added another bug number to the BUG line. Please see the design doc in the description as well.",
+      "parentUuid": "f1b4585c_bf863e23",
+      "range": {
+        "startLine": 31,
+        "startChar": 1,
+        "endLine": 61,
+        "endChar": 47
+      },
+      "revId": "ae7d8922ea03e610005c11e305514e5dfb839bed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5f79482_de519daa",
         "filename": "media/mojo/interfaces/cdm_proxy.mojom",
         "patchSetId": 15
@@ -76,6 +142,24 @@
       "writtenOn": "2017-11-28T10:19:59Z",
       "side": 1,
       "message": "Similarly for CdmProxyClient: which process does this live in?",
+      "revId": "ae7d8922ea03e610005c11e305514e5dfb839bed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7e2ccd9_e0f1fdcc",
+        "filename": "media/mojo/interfaces/cdm_proxy.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1247467
+      },
+      "writtenOn": "2017-11-29T23:35:29Z",
+      "side": 1,
+      "message": "cdm/utility process. Added a comment.\nPlease also see the design doc in the new BUG that I added.",
+      "parentUuid": "b5f79482_de519daa",
       "revId": "ae7d8922ea03e610005c11e305514e5dfb839bed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
