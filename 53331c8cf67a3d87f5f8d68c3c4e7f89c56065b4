@@ -16,6 +16,24 @@
       "revId": "53331c8cf67a3d87f5f8d68c3c4e7f89c56065b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26debd6a_af0daacc",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-11-29T21:58:20Z",
+      "side": 0,
+      "message": "muyuanli is OOO for a while, but I can confirm it\u0027s not needed now :)",
+      "parentUuid": "fc3cb027_e29f49e6",
+      "revId": "53331c8cf67a3d87f5f8d68c3c4e7f89c56065b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
