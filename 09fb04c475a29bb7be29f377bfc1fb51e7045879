@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8f8c1ec_39b7b751",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-29T22:21:36Z",
+      "side": 1,
+      "message": "Let\u0027s try to incorporate into this one.",
+      "revId": "09fb04c475a29bb7be29f377bfc1fb51e7045879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dd5a80e_26f66261",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ExpandableText.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-29T22:21:36Z",
+      "side": 1,
+      "message": "no (c)",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "09fb04c475a29bb7be29f377bfc1fb51e7045879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48ca1c22_0d0a15c0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ExpandableText.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-29T22:21:36Z",
+      "side": 1,
+      "message": "Let\u0027s move this static method to ConsoleViewMessage.",
+      "revId": "09fb04c475a29bb7be29f377bfc1fb51e7045879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5141bf0f_d40a7210",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ExpandableText.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-29T22:21:36Z",
+      "side": 1,
+      "message": "Let\u0027s return null when it\u0027s short, and handle that in clients.",
+      "revId": "09fb04c475a29bb7be29f377bfc1fb51e7045879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
