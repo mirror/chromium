@@ -113,7 +113,6 @@ void StatFileForIPC(const BrokerPolicy& policy,
                     IPCCommand command_type,
                     const std::string& requested_filename,
                     base::Pickle* write_pickle) {
-  DCHECK(write_pickle);
   DCHECK(command_type == COMMAND_STAT || command_type == COMMAND_STAT64);
   const char* file_to_access = nullptr;
   if (!policy.GetFileNameIfAllowedToAccess(requested_filename.c_str(), F_OK,
@@ -146,7 +145,6 @@ void RenameFileForIPC(const BrokerPolicy& policy,
                       const std::string& old_filename,
                       const std::string& new_filename,
                       base::Pickle* write_pickle) {
-  DCHECK(write_pickle);
   bool ignore;
   const char* old_file_to_access = nullptr;
   const char* new_file_to_access = nullptr;
@@ -162,6 +160,25 @@ void RenameFileForIPC(const BrokerPolicy& policy,
     return;
   }
   write_pickle->WriteInt(0);
+}
+
+// Perform readlink(2) on |filename| using a buffer of |bufsiz| bytes.
+void ReadlinkFileForIPC(const BrokerPolicy& policy,
+                        const std::string& filename,
+                        uint32_t bufsiz,
+                        base::Pickle* write_pickle) {
+  bool ignore;
+  const char* file_to_access = nullptr;
+  if (!policy.GetFileNameIfAllowedToOpen(filename.c_str(), R_OK,
+                                         &file_to_access, &ignore)) {
+    write_pickle->WriteInt(-policy.denied_errno());
+    return;
+  }
+  char buf[kMaxMessageLength];
+  ssize_t result = readlink(file_to_access, buf, bufsiz);
+  write_pickle->WriteInt(result);
+  if (result >= 0)
+    write_pickle->WriteData(buf, result);
 }
 
 // Handle a |command_type| request contained in |iter| and write the reply
@@ -207,6 +224,16 @@ bool HandleRemoteCommand(const BrokerPolicy& policy,
       if (!iter.ReadString(&old_filename) || !iter.ReadString(&new_filename))
         return false;
       RenameFileForIPC(policy, old_filename, new_filename, write_pickle);
+      break;
+    }
+    case COMMAND_READLINK: {
+      std::string filename;
+      uint32_t bufsiz;
+      if (!iter.ReadString(&filename) || !iter.ReadUInt32(&bufsiz))
+        return false;
+      if (bufsiz >= kMaxMessageLength - 16)
+        return false;
+      ReadlinkFileForIPC(policy, filename, bufsiz, write_pickle);
       break;
     }
     default:
