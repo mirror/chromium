@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "83091070_14f81acf",
+        "filename": "chrome/test/data/extensions/wasm_app/background.js",
+        "patchSetId": 21
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1144619
+      },
+      "writtenOn": "2017-11-29T17:56:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "955fb984_57cced43",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "747a5e6336b4249045ab0687fdc14be85f6874f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "432f3268_6bf60614",
         "filename": "chrome/test/data/extensions/wasm_app/background.js",
         "patchSetId": 21
@@ -39,6 +63,24 @@
       "revId": "747a5e6336b4249045ab0687fdc14be85f6874f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3eafb92_8af42a35",
+        "filename": "chrome/test/data/extensions/wasm_app/background.js",
+        "patchSetId": 21
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1144619
+      },
+      "writtenOn": "2017-11-29T17:56:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "432f3268_6bf60614",
+      "revId": "747a5e6336b4249045ab0687fdc14be85f6874f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "747a5e6336b4249045ab0687fdc14be85f6874f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c51ec19_aed43af1",
+        "filename": "chrome/test/data/extensions/wasm_app/background.js",
+        "patchSetId": 21
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1144619
+      },
+      "writtenOn": "2017-11-29T17:56:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fb554d7_48eceb84",
+      "range": {
+        "startLine": 6,
+        "startChar": 3,
+        "endLine": 6,
+        "endChar": 12
+      },
+      "revId": "747a5e6336b4249045ab0687fdc14be85f6874f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
