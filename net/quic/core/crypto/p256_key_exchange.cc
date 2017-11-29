@@ -25,7 +25,7 @@ P256KeyExchange::P256KeyExchange(bssl::UniquePtr<EC_KEY> private_key,
   memcpy(public_key_, public_key, sizeof(public_key_));
 }
 
-P256KeyExchange::~P256KeyExchange() {}
+P256KeyExchange::~P256KeyExchange() = default;
 
 // static
 P256KeyExchange* P256KeyExchange::New(QuicStringPiece key) {

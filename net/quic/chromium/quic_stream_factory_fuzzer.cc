@@ -34,12 +34,12 @@ const char kCertData[] = {
 
 class MockSSLConfigService : public SSLConfigService {
  public:
-  MockSSLConfigService() {}
+  MockSSLConfigService() = default;
 
   void GetSSLConfig(SSLConfig* config) override { *config = config_; }
 
  private:
-  ~MockSSLConfigService() override {}
+  ~MockSSLConfigService() override = default;
 
   SSLConfig config_;
 };

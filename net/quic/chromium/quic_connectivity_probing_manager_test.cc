@@ -35,7 +35,7 @@ class MockQuicChromiumClientSession
  public:
   MockQuicChromiumClientSession()
       : successful_network_(NetworkChangeNotifier::kInvalidNetworkHandle) {}
-  ~MockQuicChromiumClientSession() override {}
+  ~MockQuicChromiumClientSession() override = default;
 
   // QuicChromiumPacketReader::Visitor interface.
   MOCK_METHOD2(OnReadError,

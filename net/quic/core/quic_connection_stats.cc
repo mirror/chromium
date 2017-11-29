@@ -44,7 +44,7 @@ QuicConnectionStats::QuicConnectionStats()
 QuicConnectionStats::QuicConnectionStats(const QuicConnectionStats& other) =
     default;
 
-QuicConnectionStats::~QuicConnectionStats() {}
+QuicConnectionStats::~QuicConnectionStats() = default;
 
 std::ostream& operator<<(std::ostream& os, const QuicConnectionStats& s) {
   os << "{ bytes_sent: " << s.bytes_sent;

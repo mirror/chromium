@@ -20,7 +20,7 @@ namespace test {
 namespace {
 
 class TestProofVerifyDetails : public ProofVerifyDetails {
-  ~TestProofVerifyDetails() override {}
+  ~TestProofVerifyDetails() override = default;
 
   // ProofVerifyDetails implementation
   ProofVerifyDetails* Clone() const override {

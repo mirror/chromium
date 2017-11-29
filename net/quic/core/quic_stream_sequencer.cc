@@ -34,7 +34,7 @@ QuicStreamSequencer::QuicStreamSequencer(QuicStream* quic_stream,
       clock_(clock),
       ignore_read_data_(false) {}
 
-QuicStreamSequencer::~QuicStreamSequencer() {}
+QuicStreamSequencer::~QuicStreamSequencer() = default;
 
 void QuicStreamSequencer::OnStreamFrame(const QuicStreamFrame& frame) {
   ++num_frames_received_;

@@ -31,7 +31,7 @@ QuicReceivedPacketManager::QuicReceivedPacketManager(QuicConnectionStats* stats)
       time_largest_observed_(QuicTime::Zero()),
       stats_(stats) {}
 
-QuicReceivedPacketManager::~QuicReceivedPacketManager() {}
+QuicReceivedPacketManager::~QuicReceivedPacketManager() = default;
 
 void QuicReceivedPacketManager::RecordPacketReceived(
     const QuicPacketHeader& header,

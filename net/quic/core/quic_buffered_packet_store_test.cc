@@ -33,9 +33,9 @@ typedef QuicBufferedPacketStore::BufferedPacketList BufferedPacketList;
 class QuicBufferedPacketStoreVisitor
     : public QuicBufferedPacketStore::VisitorInterface {
  public:
-  QuicBufferedPacketStoreVisitor() {}
+  QuicBufferedPacketStoreVisitor() = default;
 
-  ~QuicBufferedPacketStoreVisitor() override {}
+  ~QuicBufferedPacketStoreVisitor() override = default;
 
   void OnExpiredPackets(QuicConnectionId connection_id,
                         BufferedPacketList early_arrived_packets) override {

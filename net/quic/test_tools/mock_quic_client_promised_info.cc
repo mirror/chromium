@@ -15,7 +15,7 @@ MockQuicClientPromisedInfo::MockQuicClientPromisedInfo(
     string url)
     : QuicClientPromisedInfo(session, id, url) {}
 
-MockQuicClientPromisedInfo::~MockQuicClientPromisedInfo() {}
+MockQuicClientPromisedInfo::~MockQuicClientPromisedInfo() = default;
 
 }  // namespace test
 }  // namespace net

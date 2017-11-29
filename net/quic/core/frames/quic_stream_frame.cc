@@ -33,7 +33,7 @@ QuicStreamFrame::QuicStreamFrame(QuicStreamId stream_id,
       data_buffer(data_buffer),
       offset(offset) {}
 
-QuicStreamFrame::~QuicStreamFrame() {}
+QuicStreamFrame::~QuicStreamFrame() = default;
 
 std::ostream& operator<<(std::ostream& os,
                          const QuicStreamFrame& stream_frame) {

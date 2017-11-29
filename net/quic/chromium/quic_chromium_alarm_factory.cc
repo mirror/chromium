@@ -94,7 +94,7 @@ QuicChromiumAlarmFactory::QuicChromiumAlarmFactory(
     const QuicClock* clock)
     : task_runner_(task_runner), clock_(clock), weak_factory_(this) {}
 
-QuicChromiumAlarmFactory::~QuicChromiumAlarmFactory() {}
+QuicChromiumAlarmFactory::~QuicChromiumAlarmFactory() = default;
 
 QuicArenaScopedPtr<QuicAlarm> QuicChromiumAlarmFactory::CreateAlarm(
     QuicArenaScopedPtr<QuicAlarm::Delegate> delegate,

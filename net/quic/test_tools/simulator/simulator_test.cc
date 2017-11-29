@@ -31,7 +31,7 @@ class Counter : public Actor {
       : Actor(simulator, name), value_(-1), period_(period) {
     Schedule(clock_->Now());
   }
-  ~Counter() override {}
+  ~Counter() override = default;
 
   inline int get_value() const { return value_; }
 
@@ -69,7 +69,7 @@ TEST_F(SimulatorTest, Counters) {
 class CounterPort : public UnconstrainedPortInterface {
  public:
   CounterPort() { Reset(); }
-  ~CounterPort() override {}
+  ~CounterPort() override = default;
 
   inline QuicByteCount bytes() const { return bytes_; }
   inline QuicPacketCount packets() const { return packets_; }

@@ -15,7 +15,7 @@ namespace test {
 FakeProofSource::FakeProofSource()
     : delegate_(crypto_test_utils::ProofSourceForTesting()) {}
 
-FakeProofSource::~FakeProofSource() {}
+FakeProofSource::~FakeProofSource() = default;
 
 FakeProofSource::PendingOp::~PendingOp() = default;
 

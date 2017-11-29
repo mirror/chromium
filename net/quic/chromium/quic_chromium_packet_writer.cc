@@ -42,7 +42,7 @@ void RecordRetryCount(int count) {
 QuicChromiumPacketWriter::ReusableIOBuffer::ReusableIOBuffer(size_t capacity)
     : IOBuffer(capacity), capacity_(capacity), size_(0) {}
 
-QuicChromiumPacketWriter::ReusableIOBuffer::~ReusableIOBuffer() {}
+QuicChromiumPacketWriter::ReusableIOBuffer::~ReusableIOBuffer() = default;
 
 void QuicChromiumPacketWriter::ReusableIOBuffer::Set(const char* buffer,
                                                      size_t buf_len) {
@@ -68,7 +68,7 @@ QuicChromiumPacketWriter::QuicChromiumPacketWriter(
                                weak_factory_.GetWeakPtr());
 }
 
-QuicChromiumPacketWriter::~QuicChromiumPacketWriter() {}
+QuicChromiumPacketWriter::~QuicChromiumPacketWriter() = default;
 
 void QuicChromiumPacketWriter::SetPacket(const char* buffer, size_t buf_len) {
   if (UNLIKELY(!packet_)) {

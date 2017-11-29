@@ -39,7 +39,7 @@ TcpCubicSenderBase::TcpCubicSenderBase(const QuicClock* clock,
       slow_start_large_reduction_(false),
       no_prr_(false) {}
 
-TcpCubicSenderBase::~TcpCubicSenderBase() {}
+TcpCubicSenderBase::~TcpCubicSenderBase() = default;
 
 void TcpCubicSenderBase::SetFromConfig(const QuicConfig& config,
                                        Perspective perspective) {

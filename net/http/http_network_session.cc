@@ -137,7 +137,7 @@ HttpNetworkSession::Params::Params()
 
 HttpNetworkSession::Params::Params(const Params& other) = default;
 
-HttpNetworkSession::Params::~Params() {}
+HttpNetworkSession::Params::~Params() = default;
 
 HttpNetworkSession::Context::Context()
     : client_socket_factory(nullptr),
@@ -161,7 +161,7 @@ HttpNetworkSession::Context::Context()
 
 HttpNetworkSession::Context::Context(const Context& other) = default;
 
-HttpNetworkSession::Context::~Context() {}
+HttpNetworkSession::Context::~Context() = default;
 
 // TODO(mbelshe): Move the socket factories into HttpStreamFactory.
 HttpNetworkSession::HttpNetworkSession(const Params& params,

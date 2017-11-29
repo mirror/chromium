@@ -12,7 +12,7 @@ MockQuicSpdyClientStream::MockQuicSpdyClientStream(
     QuicSpdyClientSession* session)
     : QuicSpdyClientStream(id, session) {}
 
-MockQuicSpdyClientStream::~MockQuicSpdyClientStream() {}
+MockQuicSpdyClientStream::~MockQuicSpdyClientStream() = default;
 
 }  // namespace test
 }  // namespace net

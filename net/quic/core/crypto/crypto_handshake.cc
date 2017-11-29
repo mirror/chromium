@@ -17,11 +17,11 @@ QuicCryptoNegotiatedParameters::QuicCryptoNegotiatedParameters()
       token_binding_key_param(0),
       sct_supported_by_client(false) {}
 
-QuicCryptoNegotiatedParameters::~QuicCryptoNegotiatedParameters() {}
+QuicCryptoNegotiatedParameters::~QuicCryptoNegotiatedParameters() = default;
 
-CrypterPair::CrypterPair() {}
+CrypterPair::CrypterPair() = default;
 
-CrypterPair::~CrypterPair() {}
+CrypterPair::~CrypterPair() = default;
 
 // static
 const char QuicCryptoConfig::kInitialLabel[] = "QUIC key expansion";
@@ -36,6 +36,6 @@ const char QuicCryptoConfig::kForwardSecureLabel[] =
 QuicCryptoConfig::QuicCryptoConfig()
     : common_cert_sets(CommonCertSets::GetInstanceQUIC()) {}
 
-QuicCryptoConfig::~QuicCryptoConfig() {}
+QuicCryptoConfig::~QuicCryptoConfig() = default;
 
 }  // namespace net

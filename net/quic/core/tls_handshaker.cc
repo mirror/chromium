@@ -88,7 +88,7 @@ TlsHandshaker::TlsHandshaker(QuicCryptoStream* stream,
   SSL_set0_wbio(ssl(), bio);
 }
 
-TlsHandshaker::~TlsHandshaker() {}
+TlsHandshaker::~TlsHandshaker() = default;
 
 void TlsHandshaker::OnDataAvailableForBIO() {
   AdvanceHandshake();

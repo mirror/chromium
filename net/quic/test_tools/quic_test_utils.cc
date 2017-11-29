@@ -159,7 +159,7 @@ MockFramerVisitor::MockFramerVisitor() {
   ON_CALL(*this, OnGoAwayFrame(_)).WillByDefault(testing::Return(true));
 }
 
-MockFramerVisitor::~MockFramerVisitor() {}
+MockFramerVisitor::~MockFramerVisitor() = default;
 
 bool NoOpFramerVisitor::OnProtocolVersionMismatch(
     QuicTransportVersion version) {
@@ -222,13 +222,13 @@ bool NoOpFramerVisitor::OnBlockedFrame(const QuicBlockedFrame& frame) {
   return true;
 }
 
-MockQuicConnectionVisitor::MockQuicConnectionVisitor() {}
+MockQuicConnectionVisitor::MockQuicConnectionVisitor() = default;
 
-MockQuicConnectionVisitor::~MockQuicConnectionVisitor() {}
+MockQuicConnectionVisitor::~MockQuicConnectionVisitor() = default;
 
-MockQuicConnectionHelper::MockQuicConnectionHelper() {}
+MockQuicConnectionHelper::MockQuicConnectionHelper() = default;
 
-MockQuicConnectionHelper::~MockQuicConnectionHelper() {}
+MockQuicConnectionHelper::~MockQuicConnectionHelper() = default;
 
 const QuicClock* MockQuicConnectionHelper::GetClock() const {
   return &clock_;
@@ -325,7 +325,7 @@ MockQuicConnection::MockQuicConnection(
           Invoke(this, &PacketSavingConnection::QuicConnection_OnError));
 }
 
-MockQuicConnection::~MockQuicConnection() {}
+MockQuicConnection::~MockQuicConnection() = default;
 
 void MockQuicConnection::AdvanceTime(QuicTime::Delta delta) {
   static_cast<MockQuicConnectionHelper*>(helper())->AdvanceTime(delta);
@@ -351,7 +351,7 @@ PacketSavingConnection::PacketSavingConnection(
                          perspective,
                          supported_versions) {}
 
-PacketSavingConnection::~PacketSavingConnection() {}
+PacketSavingConnection::~PacketSavingConnection() = default;
 
 void PacketSavingConnection::SendOrQueuePacket(SerializedPacket* packet) {
   encrypted_packets_.push_back(QuicMakeUnique<QuicEncryptedPacket>(
@@ -395,7 +395,7 @@ QuicConsumedData MockQuicSession::ConsumeAllData(QuicStream* /*stream*/,
 MockQuicCryptoStream::MockQuicCryptoStream(QuicSession* session)
     : QuicCryptoStream(session), params_(new QuicCryptoNegotiatedParameters) {}
 
-MockQuicCryptoStream::~MockQuicCryptoStream() {}
+MockQuicCryptoStream::~MockQuicCryptoStream() = default;
 
 bool MockQuicCryptoStream::encryption_established() const {
   return false;
@@ -500,7 +500,7 @@ TestQuicSpdyClientSession::TestQuicSpdyClientSession(
   Initialize();
 }
 
-TestQuicSpdyClientSession::~TestQuicSpdyClientSession() {}
+TestQuicSpdyClientSession::~TestQuicSpdyClientSession() = default;
 
 bool TestQuicSpdyClientSession::IsAuthorized(const string& authority) {
   return true;
@@ -536,23 +536,23 @@ MockPacketWriter::MockPacketWriter() {
       .WillByDefault(testing::Return(kMaxPacketSize));
 }
 
-MockPacketWriter::~MockPacketWriter() {}
+MockPacketWriter::~MockPacketWriter() = default;
 
-MockSendAlgorithm::MockSendAlgorithm() {}
+MockSendAlgorithm::MockSendAlgorithm() = default;
 
-MockSendAlgorithm::~MockSendAlgorithm() {}
+MockSendAlgorithm::~MockSendAlgorithm() = default;
 
-MockLossAlgorithm::MockLossAlgorithm() {}
+MockLossAlgorithm::MockLossAlgorithm() = default;
 
-MockLossAlgorithm::~MockLossAlgorithm() {}
+MockLossAlgorithm::~MockLossAlgorithm() = default;
 
-MockAckListener::MockAckListener() {}
+MockAckListener::MockAckListener() = default;
 
-MockAckListener::~MockAckListener() {}
+MockAckListener::~MockAckListener() = default;
 
-MockNetworkChangeVisitor::MockNetworkChangeVisitor() {}
+MockNetworkChangeVisitor::MockNetworkChangeVisitor() = default;
 
-MockNetworkChangeVisitor::~MockNetworkChangeVisitor() {}
+MockNetworkChangeVisitor::~MockNetworkChangeVisitor() = default;
 
 namespace {
 
@@ -817,21 +817,21 @@ QuicTransportVersionVector SupportedTransportVersions(
   return versions;
 }
 
-MockQuicConnectionDebugVisitor::MockQuicConnectionDebugVisitor() {}
+MockQuicConnectionDebugVisitor::MockQuicConnectionDebugVisitor() = default;
 
-MockQuicConnectionDebugVisitor::~MockQuicConnectionDebugVisitor() {}
+MockQuicConnectionDebugVisitor::~MockQuicConnectionDebugVisitor() = default;
 
 MockReceivedPacketManager::MockReceivedPacketManager(QuicConnectionStats* stats)
     : QuicReceivedPacketManager(stats) {}
 
-MockReceivedPacketManager::~MockReceivedPacketManager() {}
+MockReceivedPacketManager::~MockReceivedPacketManager() = default;
 
-MockConnectionCloseDelegate::MockConnectionCloseDelegate() {}
+MockConnectionCloseDelegate::MockConnectionCloseDelegate() = default;
 
-MockConnectionCloseDelegate::~MockConnectionCloseDelegate() {}
+MockConnectionCloseDelegate::~MockConnectionCloseDelegate() = default;
 
-MockPacketCreatorDelegate::MockPacketCreatorDelegate() {}
-MockPacketCreatorDelegate::~MockPacketCreatorDelegate() {}
+MockPacketCreatorDelegate::MockPacketCreatorDelegate() = default;
+MockPacketCreatorDelegate::~MockPacketCreatorDelegate() = default;
 
 void CreateClientSessionForTest(QuicServerId server_id,
                                 bool supports_stateless_rejects,

@@ -23,7 +23,7 @@ QuicClientPromisedInfo::QuicClientPromisedInfo(
       url_(std::move(url)),
       client_request_delegate_(nullptr) {}
 
-QuicClientPromisedInfo::~QuicClientPromisedInfo() {}
+QuicClientPromisedInfo::~QuicClientPromisedInfo() = default;
 
 void QuicClientPromisedInfo::CleanupAlarm::OnAlarm() {
   QUIC_DVLOG(1) << "self GC alarm for stream " << promised_->id_;

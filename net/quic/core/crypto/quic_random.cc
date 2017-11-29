@@ -23,8 +23,8 @@ class DefaultRandom : public QuicRandom {
   void Reseed(const void* additional_entropy, size_t entropy_len) override;
 
  private:
-  DefaultRandom() {}
-  ~DefaultRandom() override {}
+  DefaultRandom() = default;
+  ~DefaultRandom() override = default;
 
   friend struct base::DefaultSingletonTraits<DefaultRandom>;
   DISALLOW_COPY_AND_ASSIGN(DefaultRandom);

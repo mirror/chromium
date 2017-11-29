@@ -23,8 +23,8 @@ const int64_t kRtt = 100;
 
 class MockFlowController : public QuicFlowControllerInterface {
  public:
-  MockFlowController() {}
-  ~MockFlowController() override {}
+  MockFlowController() = default;
+  ~MockFlowController() override = default;
 
   MOCK_METHOD1(EnsureWindowAtLeast, void(QuicByteCount));
 

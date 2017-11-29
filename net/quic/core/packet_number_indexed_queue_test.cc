@@ -17,7 +17,7 @@ namespace {
 
 class PacketNumberIndexedQueueTest : public ::testing::Test {
  public:
-  PacketNumberIndexedQueueTest() {}
+  PacketNumberIndexedQueueTest() = default;
 
  protected:
   PacketNumberIndexedQueue<string> queue_;

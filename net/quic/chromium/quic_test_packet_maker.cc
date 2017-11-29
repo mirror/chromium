@@ -37,7 +37,7 @@ QuicTestPacketMaker::QuicTestPacketMaker(QuicTransportVersion version,
       spdy_response_framer_(SpdyFramer::ENABLE_COMPRESSION),
       perspective_(perspective) {}
 
-QuicTestPacketMaker::~QuicTestPacketMaker() {}
+QuicTestPacketMaker::~QuicTestPacketMaker() = default;
 
 void QuicTestPacketMaker::set_hostname(const std::string& host) {
   host_.assign(host);

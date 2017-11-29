@@ -38,8 +38,8 @@ namespace {
 
 class MockDelegate : public QuicPacketGenerator::DelegateInterface {
  public:
-  MockDelegate() {}
-  ~MockDelegate() override {}
+  MockDelegate() = default;
+  ~MockDelegate() override = default;
 
   MOCK_METHOD2(ShouldGeneratePacket,
                bool(HasRetransmittableData retransmittable,

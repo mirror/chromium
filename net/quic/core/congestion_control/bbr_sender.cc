@@ -134,7 +134,7 @@ BbrSender::BbrSender(const RttStats* rtt_stats,
   EnterStartupMode();
 }
 
-BbrSender::~BbrSender() {}
+BbrSender::~BbrSender() = default;
 
 bool BbrSender::InSlowStart() const {
   return mode_ == STARTUP;

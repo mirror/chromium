@@ -65,12 +65,12 @@ namespace {
 
 class MockSSLConfigService : public SSLConfigService {
  public:
-  MockSSLConfigService() {}
+  MockSSLConfigService() = default;
 
   void GetSSLConfig(SSLConfig* config) override { *config = config_; }
 
  private:
-  ~MockSSLConfigService() override {}
+  ~MockSSLConfigService() override = default;
 
   SSLConfig config_;
 };
@@ -171,7 +171,7 @@ class QuicHttpStreamPeer {
 class TestConnectionMigrationSocketFactory : public MockClientSocketFactory {
  public:
   TestConnectionMigrationSocketFactory() : next_source_port_num_(1u) {}
-  ~TestConnectionMigrationSocketFactory() override {}
+  ~TestConnectionMigrationSocketFactory() override = default;
 
   std::unique_ptr<DatagramClientSocket> CreateDatagramClientSocket(
       DatagramSocket::BindType bind_type,

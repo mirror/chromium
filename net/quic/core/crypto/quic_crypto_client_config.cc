@@ -61,14 +61,14 @@ QuicCryptoClientConfig::QuicCryptoClientConfig(
   SetDefaults();
 }
 
-QuicCryptoClientConfig::~QuicCryptoClientConfig() {}
+QuicCryptoClientConfig::~QuicCryptoClientConfig() = default;
 
 QuicCryptoClientConfig::CachedState::CachedState()
     : server_config_valid_(false),
       expiration_time_(QuicWallTime::Zero()),
       generation_counter_(0) {}
 
-QuicCryptoClientConfig::CachedState::~CachedState() {}
+QuicCryptoClientConfig::CachedState::~CachedState() = default;
 
 bool QuicCryptoClientConfig::CachedState::IsComplete(QuicWallTime now) const {
   if (server_config_.empty()) {

@@ -11,7 +11,7 @@ QuicChromiumConnectionHelper::QuicChromiumConnectionHelper(
     QuicRandom* random_generator)
     : clock_(clock), random_generator_(random_generator) {}
 
-QuicChromiumConnectionHelper::~QuicChromiumConnectionHelper() {}
+QuicChromiumConnectionHelper::~QuicChromiumConnectionHelper() = default;
 
 const QuicClock* QuicChromiumConnectionHelper::GetClock() const {
   return clock_;
