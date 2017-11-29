@@ -52,6 +52,7 @@ class FakeStreamSocket : public net::StreamSocket {
   void ClearConnectionAttempts() override;
   void AddConnectionAttempts(const net::ConnectionAttempts& attempts) override;
   int64_t GetTotalReceivedBytes() const override;
+  void Tag(const net::SocketTag& tag) override;
 
  private:
   const net::IPEndPoint local_address_;

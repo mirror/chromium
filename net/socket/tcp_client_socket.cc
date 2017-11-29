@@ -344,6 +344,13 @@ int64_t TCPClientSocket::GetTotalReceivedBytes() const {
   return total_received_bytes_;
 }
 
+void TCPClientSocket::Tag(const SocketTag& tag) {
+  if (socket_->IsValid() && tag_ != tag) {
+    socket_->Tag(tag);
+  }
+  tag_ = tag;
+}
+
 void TCPClientSocket::DidCompleteConnect(int result) {
   DCHECK_EQ(next_connect_state_, CONNECT_STATE_CONNECT_COMPLETE);
   DCHECK_NE(result, ERR_IO_PENDING);
@@ -384,6 +391,9 @@ int TCPClientSocket::OpenSocket(AddressFamily family) {
     return result;
 
   socket_->SetDefaultOptionsForClient();
+  // Apply tag if a specific (non-default) tag is set.
+  if (tag_ != SocketTag())
+    socket_->Tag(tag_);
 
   return OK;
 }
