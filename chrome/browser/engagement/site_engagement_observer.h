@@ -7,6 +7,7 @@
 
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
+#include "chrome/browser/engagement/site_engagement_service.h"
 
 namespace content {
 class WebContents;
@@ -23,16 +24,17 @@ class SiteEngagementObserver {
   // so observers *must not* perform any expensive tasks here. |web_contents|
   // may be null if the engagement has increased when |url| is not in a tab,
   // e.g. from a notification interaction.
-  virtual void OnEngagementIncreased(content::WebContents* web_contents,
-                                     const GURL& url,
-                                     double score) {}
+  virtual void OnEngagementEvent(content::WebContents* web_contents,
+                                 const GURL& url,
+                                 double score,
+                                 SiteEngagementService::EngagementType type) {}
 
  protected:
   explicit SiteEngagementObserver(SiteEngagementService* service);
 
   SiteEngagementObserver();
 
-  ~SiteEngagementObserver();
+  virtual ~SiteEngagementObserver();
 
   // Returns the site engagement service which this object is observing.
   SiteEngagementService* GetSiteEngagementService() const;

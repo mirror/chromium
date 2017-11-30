@@ -17,6 +17,7 @@
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/engagement/site_engagement_helper.h"
 #include "chrome/browser/engagement/site_engagement_metrics.h"
+#include "chrome/browser/engagement/site_engagement_observer.h"
 #include "chrome/browser/engagement/site_engagement_score.h"
 #include "chrome/browser/history/history_service_factory.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
@@ -122,9 +123,11 @@ class ObserverTester : public SiteEngagementObserver {
         callback_called_(false),
         run_loop_() {}
 
-  void OnEngagementIncreased(content::WebContents* web_contents,
-                             const GURL& url,
-                             double score) override {
+  void OnEngagementEvent(content::WebContents* web_contents,
+                         const GURL& url,
+                         double score,
+                         SiteEngagementService::EngagementType type) override {
+    // TODO(mgiuca): Store and test |type|. DO NOT SUBMIT.
     EXPECT_EQ(web_contents_, web_contents);
     EXPECT_EQ(url_, url);
     EXPECT_DOUBLE_EQ(score_, score);
@@ -366,38 +369,38 @@ TEST_F(SiteEngagementServiceTest, GetTotalUserInputPoints) {
 
   NavigateAndCommit(url1);
   service->HandleUserInput(web_contents(),
-                           SiteEngagementMetrics::ENGAGEMENT_MOUSE);
+                           SiteEngagementService::ENGAGEMENT_MOUSE);
   EXPECT_DOUBLE_EQ(0.05, service->GetScore(url1));
   EXPECT_DOUBLE_EQ(0.05, service->GetTotalEngagementPoints());
 
   NavigateAndCommit(url2);
   service->HandleUserInput(web_contents(),
-                           SiteEngagementMetrics::ENGAGEMENT_MOUSE);
+                           SiteEngagementService::ENGAGEMENT_MOUSE);
   service->HandleUserInput(web_contents(),
-                           SiteEngagementMetrics::ENGAGEMENT_KEYPRESS);
+                           SiteEngagementService::ENGAGEMENT_KEYPRESS);
   EXPECT_DOUBLE_EQ(0.1, service->GetScore(url2));
   EXPECT_DOUBLE_EQ(0.15, service->GetTotalEngagementPoints());
 
   NavigateAndCommit(url3);
   service->HandleUserInput(web_contents(),
-                           SiteEngagementMetrics::ENGAGEMENT_KEYPRESS);
+                           SiteEngagementService::ENGAGEMENT_KEYPRESS);
   EXPECT_DOUBLE_EQ(0.05, service->GetScore(url3));
   EXPECT_DOUBLE_EQ(0.2, service->GetTotalEngagementPoints());
 
   NavigateAndCommit(url1);
   service->HandleUserInput(web_contents(),
-                           SiteEngagementMetrics::ENGAGEMENT_KEYPRESS);
+                           SiteEngagementService::ENGAGEMENT_KEYPRESS);
   service->HandleUserInput(web_contents(),
-                           SiteEngagementMetrics::ENGAGEMENT_MOUSE);
+                           SiteEngagementService::ENGAGEMENT_MOUSE);
   EXPECT_DOUBLE_EQ(0.15, service->GetScore(url1));
   EXPECT_DOUBLE_EQ(0.3, service->GetTotalEngagementPoints());
 
   NavigateAndCommit(url2);
   service->HandleUserInput(web_contents(),
-                           SiteEngagementMetrics::ENGAGEMENT_SCROLL);
+                           SiteEngagementService::ENGAGEMENT_SCROLL);
   NavigateAndCommit(url3);
   service->HandleUserInput(web_contents(),
-                           SiteEngagementMetrics::ENGAGEMENT_TOUCH_GESTURE);
+                           SiteEngagementService::ENGAGEMENT_TOUCH_GESTURE);
   EXPECT_DOUBLE_EQ(0.15, service->GetScore(url2));
   EXPECT_DOUBLE_EQ(0.1, service->GetScore(url3));
   EXPECT_DOUBLE_EQ(0.4, service->GetTotalEngagementPoints());
@@ -422,28 +425,28 @@ TEST_F(SiteEngagementServiceTest, GetTotalNotificationPoints) {
   EXPECT_DOUBLE_EQ(1.0, service->GetTotalEngagementPoints());
   histograms.ExpectBucketCount(
       SiteEngagementMetrics::kEngagementTypeHistogram,
-      SiteEngagementMetrics::ENGAGEMENT_NOTIFICATION_INTERACTION, 1);
+      SiteEngagementService::ENGAGEMENT_NOTIFICATION_INTERACTION, 1);
 
   service->HandleNotificationInteraction(url2);
   EXPECT_DOUBLE_EQ(1.0, service->GetScore(url2));
   EXPECT_DOUBLE_EQ(2.0, service->GetTotalEngagementPoints());
   histograms.ExpectBucketCount(
       SiteEngagementMetrics::kEngagementTypeHistogram,
-      SiteEngagementMetrics::ENGAGEMENT_NOTIFICATION_INTERACTION, 2);
+      SiteEngagementService::ENGAGEMENT_NOTIFICATION_INTERACTION, 2);
 
   service->HandleNotificationInteraction(url1);
   EXPECT_DOUBLE_EQ(2.0, service->GetScore(url1));
   EXPECT_DOUBLE_EQ(3.0, service->GetTotalEngagementPoints());
   histograms.ExpectBucketCount(
       SiteEngagementMetrics::kEngagementTypeHistogram,
-      SiteEngagementMetrics::ENGAGEMENT_NOTIFICATION_INTERACTION, 3);
+      SiteEngagementService::ENGAGEMENT_NOTIFICATION_INTERACTION, 3);
 
   service->HandleNotificationInteraction(url3);
   EXPECT_DOUBLE_EQ(1.0, service->GetScore(url3));
   EXPECT_DOUBLE_EQ(4.0, service->GetTotalEngagementPoints());
   histograms.ExpectBucketCount(
       SiteEngagementMetrics::kEngagementTypeHistogram,
-      SiteEngagementMetrics::ENGAGEMENT_NOTIFICATION_INTERACTION, 4);
+      SiteEngagementService::ENGAGEMENT_NOTIFICATION_INTERACTION, 4);
 }
 
 TEST_F(SiteEngagementServiceTest, RestrictedToHTTPAndHTTPS) {
@@ -458,7 +461,7 @@ TEST_F(SiteEngagementServiceTest, RestrictedToHTTPAndHTTPS) {
 
   NavigateAndCommit(url1);
   service->HandleUserInput(web_contents(),
-                           SiteEngagementMetrics::ENGAGEMENT_MOUSE);
+                           SiteEngagementService::ENGAGEMENT_MOUSE);
   EXPECT_EQ(0, service->GetScore(url1));
 
   NavigateAndCommit(url2);
@@ -471,7 +474,7 @@ TEST_F(SiteEngagementServiceTest, RestrictedToHTTPAndHTTPS) {
 
   NavigateAndCommit(url4);
   service->HandleUserInput(web_contents(),
-                           SiteEngagementMetrics::ENGAGEMENT_KEYPRESS);
+                           SiteEngagementService::ENGAGEMENT_KEYPRESS);
   EXPECT_EQ(0, service->GetScore(url4));
 }
 
@@ -491,17 +494,17 @@ TEST_F(SiteEngagementServiceTest, LastShortcutLaunch) {
   EXPECT_EQ(0, service_->GetScore(url2));
   EXPECT_EQ(0, service_->GetScore(url3));
 
-  service_->SetLastShortcutLaunchTime(url2);
+  service_->SetLastShortcutLaunchTime(web_contents(), url2);
   histograms.ExpectTotalCount(
       SiteEngagementMetrics::kDaysSinceLastShortcutLaunchHistogram, 0);
   histograms.ExpectUniqueSample(
       SiteEngagementMetrics::kEngagementTypeHistogram,
-      SiteEngagementMetrics::ENGAGEMENT_WEBAPP_SHORTCUT_LAUNCH, 1);
+      SiteEngagementService::ENGAGEMENT_WEBAPP_SHORTCUT_LAUNCH, 1);
 
   service_->AddPoints(url1, 2.0);
   service_->AddPoints(url2, 2.0);
   clock_->SetNow(current_day);
-  service_->SetLastShortcutLaunchTime(url2);
+  service_->SetLastShortcutLaunchTime(web_contents(), url2);
 
   histograms.ExpectTotalCount(
       SiteEngagementMetrics::kDaysSinceLastShortcutLaunchHistogram, 1);
@@ -509,10 +512,10 @@ TEST_F(SiteEngagementServiceTest, LastShortcutLaunch) {
                               4);
   histograms.ExpectBucketCount(
       SiteEngagementMetrics::kEngagementTypeHistogram,
-      SiteEngagementMetrics::ENGAGEMENT_WEBAPP_SHORTCUT_LAUNCH, 2);
+      SiteEngagementService::ENGAGEMENT_WEBAPP_SHORTCUT_LAUNCH, 2);
   histograms.ExpectBucketCount(
       SiteEngagementMetrics::kEngagementTypeHistogram,
-      SiteEngagementMetrics::ENGAGEMENT_FIRST_DAILY_ENGAGEMENT, 2);
+      SiteEngagementService::ENGAGEMENT_FIRST_DAILY_ENGAGEMENT, 2);
 
   EXPECT_DOUBLE_EQ(2.0, service_->GetScore(url1));
   EXPECT_DOUBLE_EQ(7.0, service_->GetScore(url2));
@@ -638,9 +641,9 @@ TEST_F(SiteEngagementServiceTest, CheckHistograms) {
   NavigateAndCommit(url1);
   service_->HandleNavigation(web_contents(), ui::PAGE_TRANSITION_TYPED);
   service_->HandleUserInput(web_contents(),
-                            SiteEngagementMetrics::ENGAGEMENT_KEYPRESS);
+                            SiteEngagementService::ENGAGEMENT_KEYPRESS);
   service_->HandleUserInput(web_contents(),
-                            SiteEngagementMetrics::ENGAGEMENT_MOUSE);
+                            SiteEngagementService::ENGAGEMENT_MOUSE);
   NavigateAndCommit(url2);
   service_->HandleMediaPlaying(web_contents(), true);
 
@@ -667,17 +670,17 @@ TEST_F(SiteEngagementServiceTest, CheckHistograms) {
   histograms.ExpectTotalCount(SiteEngagementMetrics::kEngagementTypeHistogram,
                               6);
   histograms.ExpectBucketCount(SiteEngagementMetrics::kEngagementTypeHistogram,
-                               SiteEngagementMetrics::ENGAGEMENT_NAVIGATION, 1);
+                               SiteEngagementService::ENGAGEMENT_NAVIGATION, 1);
   histograms.ExpectBucketCount(SiteEngagementMetrics::kEngagementTypeHistogram,
-                               SiteEngagementMetrics::ENGAGEMENT_KEYPRESS, 1);
+                               SiteEngagementService::ENGAGEMENT_KEYPRESS, 1);
   histograms.ExpectBucketCount(SiteEngagementMetrics::kEngagementTypeHistogram,
-                               SiteEngagementMetrics::ENGAGEMENT_MOUSE, 1);
+                               SiteEngagementService::ENGAGEMENT_MOUSE, 1);
   histograms.ExpectBucketCount(SiteEngagementMetrics::kEngagementTypeHistogram,
-                               SiteEngagementMetrics::ENGAGEMENT_MEDIA_HIDDEN,
+                               SiteEngagementService::ENGAGEMENT_MEDIA_HIDDEN,
                                1);
   histograms.ExpectBucketCount(
       SiteEngagementMetrics::kEngagementTypeHistogram,
-      SiteEngagementMetrics::ENGAGEMENT_FIRST_DAILY_ENGAGEMENT, 2);
+      SiteEngagementService::ENGAGEMENT_FIRST_DAILY_ENGAGEMENT, 2);
 
   // Navigations are still logged within the 1 hour refresh period
   clock_->SetNow(clock_->Now() + base::TimeDelta::FromMinutes(59));
@@ -689,17 +692,17 @@ TEST_F(SiteEngagementServiceTest, CheckHistograms) {
   histograms.ExpectTotalCount(SiteEngagementMetrics::kEngagementTypeHistogram,
                               8);
   histograms.ExpectBucketCount(SiteEngagementMetrics::kEngagementTypeHistogram,
-                               SiteEngagementMetrics::ENGAGEMENT_NAVIGATION, 3);
+                               SiteEngagementService::ENGAGEMENT_NAVIGATION, 3);
   histograms.ExpectBucketCount(SiteEngagementMetrics::kEngagementTypeHistogram,
-                               SiteEngagementMetrics::ENGAGEMENT_KEYPRESS, 1);
+                               SiteEngagementService::ENGAGEMENT_KEYPRESS, 1);
   histograms.ExpectBucketCount(SiteEngagementMetrics::kEngagementTypeHistogram,
-                               SiteEngagementMetrics::ENGAGEMENT_MOUSE, 1);
+                               SiteEngagementService::ENGAGEMENT_MOUSE, 1);
   histograms.ExpectBucketCount(SiteEngagementMetrics::kEngagementTypeHistogram,
-                               SiteEngagementMetrics::ENGAGEMENT_MEDIA_HIDDEN,
+                               SiteEngagementService::ENGAGEMENT_MEDIA_HIDDEN,
                                1);
   histograms.ExpectBucketCount(
       SiteEngagementMetrics::kEngagementTypeHistogram,
-      SiteEngagementMetrics::ENGAGEMENT_FIRST_DAILY_ENGAGEMENT, 2);
+      SiteEngagementService::ENGAGEMENT_FIRST_DAILY_ENGAGEMENT, 2);
 
   // Update the hourly histograms again.
   clock_->SetNow(clock_->Now() + base::TimeDelta::FromMinutes(1));
@@ -709,7 +712,7 @@ TEST_F(SiteEngagementServiceTest, CheckHistograms) {
   service_->HandleMediaPlaying(web_contents(), false);
   NavigateAndCommit(url2);
   service_->HandleUserInput(web_contents(),
-                            SiteEngagementMetrics::ENGAGEMENT_TOUCH_GESTURE);
+                            SiteEngagementService::ENGAGEMENT_TOUCH_GESTURE);
 
   histograms.ExpectTotalCount(SiteEngagementMetrics::kTotalEngagementHistogram,
                               3);
@@ -735,53 +738,53 @@ TEST_F(SiteEngagementServiceTest, CheckHistograms) {
   histograms.ExpectTotalCount(SiteEngagementMetrics::kEngagementTypeHistogram,
                               12);
   histograms.ExpectBucketCount(SiteEngagementMetrics::kEngagementTypeHistogram,
-                               SiteEngagementMetrics::ENGAGEMENT_NAVIGATION, 4);
+                               SiteEngagementService::ENGAGEMENT_NAVIGATION, 4);
   histograms.ExpectBucketCount(SiteEngagementMetrics::kEngagementTypeHistogram,
-                               SiteEngagementMetrics::ENGAGEMENT_KEYPRESS, 1);
+                               SiteEngagementService::ENGAGEMENT_KEYPRESS, 1);
   histograms.ExpectBucketCount(SiteEngagementMetrics::kEngagementTypeHistogram,
-                               SiteEngagementMetrics::ENGAGEMENT_MOUSE, 1);
+                               SiteEngagementService::ENGAGEMENT_MOUSE, 1);
   histograms.ExpectBucketCount(SiteEngagementMetrics::kEngagementTypeHistogram,
-                               SiteEngagementMetrics::ENGAGEMENT_TOUCH_GESTURE,
+                               SiteEngagementService::ENGAGEMENT_TOUCH_GESTURE,
                                1);
   histograms.ExpectBucketCount(SiteEngagementMetrics::kEngagementTypeHistogram,
-                               SiteEngagementMetrics::ENGAGEMENT_MEDIA_VISIBLE,
+                               SiteEngagementService::ENGAGEMENT_MEDIA_VISIBLE,
                                1);
   histograms.ExpectBucketCount(SiteEngagementMetrics::kEngagementTypeHistogram,
-                               SiteEngagementMetrics::ENGAGEMENT_MEDIA_HIDDEN,
+                               SiteEngagementService::ENGAGEMENT_MEDIA_HIDDEN,
                                1);
   histograms.ExpectBucketCount(
       SiteEngagementMetrics::kEngagementTypeHistogram,
-      SiteEngagementMetrics::ENGAGEMENT_FIRST_DAILY_ENGAGEMENT, 3);
+      SiteEngagementService::ENGAGEMENT_FIRST_DAILY_ENGAGEMENT, 3);
 
   NavigateAndCommit(url1);
   service_->HandleNavigation(web_contents(), ui::PAGE_TRANSITION_GENERATED);
   service_->HandleNavigation(web_contents(), ui::PAGE_TRANSITION_TYPED);
   NavigateAndCommit(url2);
   service_->HandleUserInput(web_contents(),
-                            SiteEngagementMetrics::ENGAGEMENT_SCROLL);
+                            SiteEngagementService::ENGAGEMENT_SCROLL);
   NavigateAndCommit(url1);
   service_->HandleUserInput(web_contents(),
-                            SiteEngagementMetrics::ENGAGEMENT_KEYPRESS);
+                            SiteEngagementService::ENGAGEMENT_KEYPRESS);
   NavigateAndCommit(url3);
   service_->HandleUserInput(web_contents(),
-                            SiteEngagementMetrics::ENGAGEMENT_MOUSE);
+                            SiteEngagementService::ENGAGEMENT_MOUSE);
 
   histograms.ExpectTotalCount(SiteEngagementMetrics::kEngagementTypeHistogram,
                               17);
   histograms.ExpectBucketCount(SiteEngagementMetrics::kEngagementTypeHistogram,
-                               SiteEngagementMetrics::ENGAGEMENT_NAVIGATION, 6);
+                               SiteEngagementService::ENGAGEMENT_NAVIGATION, 6);
   histograms.ExpectBucketCount(SiteEngagementMetrics::kEngagementTypeHistogram,
-                               SiteEngagementMetrics::ENGAGEMENT_KEYPRESS, 2);
+                               SiteEngagementService::ENGAGEMENT_KEYPRESS, 2);
   histograms.ExpectBucketCount(SiteEngagementMetrics::kEngagementTypeHistogram,
-                               SiteEngagementMetrics::ENGAGEMENT_MOUSE, 2);
+                               SiteEngagementService::ENGAGEMENT_MOUSE, 2);
   histograms.ExpectBucketCount(SiteEngagementMetrics::kEngagementTypeHistogram,
-                               SiteEngagementMetrics::ENGAGEMENT_TOUCH_GESTURE,
+                               SiteEngagementService::ENGAGEMENT_TOUCH_GESTURE,
                                1);
   histograms.ExpectBucketCount(SiteEngagementMetrics::kEngagementTypeHistogram,
-                               SiteEngagementMetrics::ENGAGEMENT_SCROLL, 1);
+                               SiteEngagementService::ENGAGEMENT_SCROLL, 1);
   histograms.ExpectBucketCount(
       SiteEngagementMetrics::kEngagementTypeHistogram,
-      SiteEngagementMetrics::ENGAGEMENT_FIRST_DAILY_ENGAGEMENT, 3);
+      SiteEngagementService::ENGAGEMENT_FIRST_DAILY_ENGAGEMENT, 3);
 
   // Advance an origin to the max for a day and advance the clock an hour before
   // the last increment before max. Expect the histogram to be updated.
@@ -817,11 +820,11 @@ TEST_F(SiteEngagementServiceTest, CheckHistograms) {
   histograms.ExpectTotalCount(SiteEngagementMetrics::kEngagementTypeHistogram,
                               24);
   histograms.ExpectBucketCount(SiteEngagementMetrics::kEngagementTypeHistogram,
-                               SiteEngagementMetrics::ENGAGEMENT_NAVIGATION,
+                               SiteEngagementService::ENGAGEMENT_NAVIGATION,
                                13);
   histograms.ExpectBucketCount(
       SiteEngagementMetrics::kEngagementTypeHistogram,
-      SiteEngagementMetrics::ENGAGEMENT_FIRST_DAILY_ENGAGEMENT, 3);
+      SiteEngagementService::ENGAGEMENT_FIRST_DAILY_ENGAGEMENT, 3);
 
   for (const std::string& histogram_name : engagement_bucket_histogram_names)
     histograms.ExpectTotalCount(histogram_name, 3);
@@ -1408,7 +1411,7 @@ TEST_F(SiteEngagementServiceTest, Observers) {
     ObserverTester tester(service, web_contents(), url_score_2, 0.55);
     NavigateAndCommit(url_score_2);
     service->HandleUserInput(web_contents(),
-                             SiteEngagementMetrics::ENGAGEMENT_MOUSE);
+                             SiteEngagementService::ENGAGEMENT_MOUSE);
     tester.Wait();
     EXPECT_TRUE(tester.callback_called());
     EXPECT_FALSE(tester_not_called.callback_called());
