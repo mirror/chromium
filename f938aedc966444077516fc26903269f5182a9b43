@@ -16,6 +16,24 @@
       "revId": "f938aedc966444077516fc26903269f5182a9b43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18b47ade_7f02c8e7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1226606
+      },
+      "writtenOn": "2017-11-30T16:11:23Z",
+      "side": 1,
+      "message": "NotificationManagerCompat has got smaller functionality than NotificationManager, we need both with our approach.",
+      "parentUuid": "f819dd9e_764c74e3",
+      "revId": "f938aedc966444077516fc26903269f5182a9b43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
