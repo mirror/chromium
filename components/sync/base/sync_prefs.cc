@@ -77,6 +77,8 @@ void SyncPrefs::RegisterProfilePrefs(
                                std::string());
   registry->RegisterStringPref(prefs::kSyncKeystoreEncryptionBootstrapToken,
                                std::string());
+  registry->RegisterBooleanPref(prefs::kSyncRequireCustomPassphrase, false);
+
 #if defined(OS_CHROMEOS)
   registry->RegisterStringPref(prefs::kSyncSpareBootstrapToken, "");
 #endif
