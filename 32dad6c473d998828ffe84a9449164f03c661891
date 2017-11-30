@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23a56001_51bf3d42",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 1336,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-30T17:57:41Z",
+      "side": 1,
+      "message": "Let\u0027s go deeper and put this in _linkifyWithCustomLinkifier (e.g. to line 1309). This way we cover more long strings.",
+      "revId": "32dad6c473d998828ffe84a9449164f03c661891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4b91c59_9745f7b2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 1353,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-30T17:57:41Z",
+      "side": 1,
+      "message": "Should we just make a button say \"XXXX more\"?",
+      "range": {
+        "startLine": 1353,
+        "startChar": 50,
+        "endLine": 1353,
+        "endChar": 58
+      },
+      "revId": "32dad6c473d998828ffe84a9449164f03c661891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f90c28e_28b60c1f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 1496,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-30T17:57:41Z",
+      "side": 1,
+      "message": "What\u0027s the point of these JSDocs? It\u0027s obvious enough.",
+      "revId": "32dad6c473d998828ffe84a9449164f03c661891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
