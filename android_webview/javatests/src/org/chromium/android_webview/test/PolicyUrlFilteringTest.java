@@ -88,6 +88,7 @@ public class PolicyUrlFilteringTest {
         setFilteringPolicy(testProvider, new String[] {"localhost"}, new String[] {});
 
         navigateAndCheckOutcome(mFooTestUrl, 0 /* error count before */, 1 /* error count after */);
+
         Assert.assertEquals(ErrorCodeConversionHelper.ERROR_CONNECT,
                 mContentsClient.getOnReceivedErrorHelper().getErrorCode());
     }

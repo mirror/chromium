@@ -80,6 +80,7 @@
 #include "chrome/browser/web_data_service_factory.h"
 #include "chrome/common/features.h"
 #include "components/feature_engagement/features.h"
+#include "components/policy/core/browser/policy_blacklist_navigation_throttle.h"
 #include "components/spellcheck/spellcheck_build_features.h"
 #include "extensions/features/features.h"
 #include "ppapi/features/features.h"
@@ -333,6 +334,7 @@ EnsureBrowserContextKeyedServiceFactoriesBuilt() {
   prerender::PrerenderMessageFilter::EnsureShutdownNotifierFactoryBuilt();
   ProfileSyncServiceFactory::GetInstance();
   ProtocolHandlerRegistryFactory::GetInstance();
+  PolicyBlacklistFactory::GetInstance();
 #if defined(OS_ANDROID)
   SearchPermissionsService::Factory::GetInstance();
 #endif

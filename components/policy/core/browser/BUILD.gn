@@ -35,6 +35,8 @@ source_set("internal") {
     "configuration_policy_handler_list.h",
     "configuration_policy_pref_store.cc",
     "configuration_policy_pref_store.h",
+    "policy_blacklist_navigation_throttle.cc",
+    "policy_blacklist_navigation_throttle.h",
     "policy_error_map.cc",
     "policy_error_map.h",
     "proxy_policy_handler.cc",

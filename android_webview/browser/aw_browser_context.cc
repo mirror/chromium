@@ -26,6 +26,7 @@
 #include "components/metrics/metrics_service.h"
 #include "components/policy/core/browser/browser_policy_connector_base.h"
 #include "components/policy/core/browser/configuration_policy_pref_store.h"
+#include "components/policy/core/browser/policy_blacklist_navigation_throttle.h"
 #include "components/policy/core/browser/url_blacklist_manager.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/in_memory_pref_store.h"
@@ -83,24 +84,6 @@ std::unique_ptr<net::ProxyConfigService> CreateProxyConfigService() {
       static_cast<net::ProxyConfigServiceAndroid*>(config_service.get());
   android_config_service->set_exclude_pac_url(true);
   return config_service;
-}
-
-bool OverrideBlacklistForURL(const GURL& url, bool* block, int* reason) {
-  // We don't have URLs that should never be blacklisted here.
-  return false;
-}
-
-policy::URLBlacklistManager* CreateURLBlackListManager(
-    PrefService* pref_service) {
-  scoped_refptr<base::SequencedTaskRunner> background_task_runner =
-      base::CreateSequencedTaskRunnerWithTraits(
-          {base::MayBlock(), base::TaskPriority::BACKGROUND});
-  scoped_refptr<base::SingleThreadTaskRunner> io_task_runner =
-      BrowserThread::GetTaskRunnerForThread(BrowserThread::IO);
-
-  return new policy::URLBlacklistManager(pref_service, background_task_runner,
-                                         io_task_runner,
-                                         base::Bind(OverrideBlacklistForURL));
 }
 
 std::unique_ptr<AwSafeBrowsingWhitelistManager>
@@ -172,8 +155,6 @@ void AwBrowserContext::PreMainMessageLoopRun() {
       new AwFormDatabaseService(context_storage_path_));
 
   EnsureResourceContextInitialized(this);
-
-  blacklist_manager_.reset(CreateURLBlackListManager(user_pref_service_.get()));
 
   AwMetricsServiceClient::GetInstance()->Initialize(
       user_pref_service_.get(),
@@ -366,13 +347,6 @@ AwBrowserContext::CreateMediaRequestContextForStoragePartition(
     bool in_memory) {
   NOTREACHED();
   return NULL;
-}
-
-policy::URLBlacklistManager* AwBrowserContext::GetURLBlacklistManager() {
-  // Should not be called until the end of PreMainMessageLoopRun, where
-  // blacklist_manager_ is initialized.
-  DCHECK(blacklist_manager_);
-  return blacklist_manager_.get();
 }
 
 web_restrictions::WebRestrictionsClient*
