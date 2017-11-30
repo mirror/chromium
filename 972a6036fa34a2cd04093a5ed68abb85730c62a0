@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7a2fe57_85ac5ec2",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 43167,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T20:51:36Z",
+      "side": 1,
+      "message": "The order of these two doesn\u0027t match the enum.",
+      "revId": "972a6036fa34a2cd04093a5ed68abb85730c62a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
