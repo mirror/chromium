@@ -17,6 +17,7 @@ import org.junit.Rule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
+import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.UrlUtils;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ShortcutHelper;
@@ -26,6 +27,8 @@ import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.net.test.EmbeddedTestServer;
 import org.chromium.net.test.EmbeddedTestServerRule;
+
+import java.util.concurrent.TimeoutException;
 
 /**
  * Custom {@link ChromeActivityTestRule} for tests using {@link WebappActivity}.
@@ -111,14 +114,35 @@ public class WebappActivityTestRule extends ChromeActivityTestRule<WebappActivit
         Statement webappTestRuleStatement = new Statement() {
             @Override
             public void evaluate() throws Throwable {
-                // Register the webapp so when the data storage is opened, the test doesn't crash.
-                WebappRegistry.refreshSharedPrefsForTesting();
-                TestFetchStorageCallback callback = new TestFetchStorageCallback();
-                WebappRegistry.getInstance().register(WEBAPP_ID, callback);
-                callback.waitForCallback(0);
-                callback.getStorage().updateFromShortcutIntent(createIntent());
+                // We run everything except base.evaluate() on the UI thread to make sure that we
+                // don't get any ConcurrentModificationExceptions from using the WebappRegistry on
+                // multiple threads.
+                ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Register the webapp so when the data storage is opened, the test doesn't
+                        // crash.
+                        WebappRegistry.refreshSharedPrefsForTesting();
+                        TestFetchStorageCallback callback = new TestFetchStorageCallback();
+                        WebappRegistry.getInstance().register(WEBAPP_ID, callback);
+                        try {
+                            callback.waitForCallback(0);
+                        } catch (InterruptedException | TimeoutException e) {
+                            e.printStackTrace();
+                            Assert.fail("Waiting for Webapp registration callback failed");
+                        }
+                        callback.getStorage().updateFromShortcutIntent(createIntent());
+                    }
+                });
+
                 base.evaluate();
-                WebappRegistry.getInstance().clearForTesting();
+
+                ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+                    @Override
+                    public void run() {
+                        WebappRegistry.getInstance().clearForTesting();
+                    }
+                });
             }
         };
 
