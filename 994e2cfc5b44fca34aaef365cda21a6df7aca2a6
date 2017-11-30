@@ -16,6 +16,24 @@
       "revId": "994e2cfc5b44fca34aaef365cda21a6df7aca2a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1649c370_e100da8c",
+        "filename": "chrome/browser/signin/dice_tab_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-30T16:03:10Z",
+      "side": 0,
+      "message": "Not worth it (I think). This is just a DCHECK. The caller also DCHECKs the url before adding the tab helper (so this is really useless).",
+      "parentUuid": "a5f13abf_ec9fc34e",
+      "revId": "994e2cfc5b44fca34aaef365cda21a6df7aca2a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
