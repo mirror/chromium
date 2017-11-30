@@ -5,7 +5,10 @@
 #import "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.h"
 
 #include "base/command_line.h"
+#include "chrome/app/chrome_command_ids.h"
+#include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/browser_command_controller.h"
 #include "chrome/browser/ui/exclusive_access/exclusive_access_manager.h"
 #include "chrome/browser/ui/exclusive_access/fullscreen_controller.h"
 #include "chrome/browser/ui/page_info/page_info_dialog.h"
@@ -27,7 +30,25 @@
 
 namespace {
 
-using PageInfoBubbleViewsMacTest = InProcessBrowserTest;
+struct GURLBubbleTypePair {
+  const char* url;
+  const PageInfoBubbleView::BubbleType bubble_type;
+};
+
+const GURLBubbleTypePair kGurlBubbleTypePairs[] = {
+    {url::kAboutBlankURL, PageInfoBubbleView::BUBBLE_PAGE_INFO},
+    {"chrome://settings", PageInfoBubbleView::BUBBLE_INTERNAL_PAGE},
+};
+
+class PageInfoBubbleViewsMacTest
+    : public InProcessBrowserTest,
+      public testing::WithParamInterface<GURLBubbleTypePair> {
+ protected:
+  PageInfoBubbleViewsMacTest() {}
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(PageInfoBubbleViewsMacTest);
+};
 
 }  // namespace
 
@@ -62,3 +83,39 @@ IN_PROC_BROWSER_TEST_F(PageInfoBubbleViewsMacTest, NoCrashOnFullScreenToggle) {
   // transitioning into full screen.
   fake_fullscreen.FinishTransition();
 }
+
+// Test |PageInfoBubbleView| or |InternalPageInfoBubbleView| is hidden on tab
+// switches via keyboard shortcuts.
+IN_PROC_BROWSER_TEST_P(PageInfoBubbleViewsMacTest,
+                       PageInfoBubbleClosesOnKeyboardTabSwitch) {
+  ui_test_utils::NavigateToURL(browser(), GURL(GetParam().url));
+  // Make a second tab and switch to the first.
+  content::WebContents* contents = content::WebContents::Create(
+      content::WebContents::CreateParams(browser()->profile()));
+  browser()->tab_strip_model()->AppendWebContents(contents, false);
+  ASSERT_EQ(0, browser()->tab_strip_model()->active_index());
+
+  // Show the (Internal) Page Info bubble and check it's visible.
+  ShowPageInfoDialog(browser()->tab_strip_model()->GetWebContentsAt(0));
+  EXPECT_EQ(GetParam().bubble_type, PageInfoBubbleView::GetShownBubbleType());
+  views::BubbleDialogDelegateView* page_info =
+      PageInfoBubbleView::GetPageInfoBubble();
+  EXPECT_TRUE(page_info);
+  EXPECT_TRUE(page_info->GetWidget()->IsVisible());
+
+  // Switch to the second tab via a keyboard shortcut.
+  CommandUpdater* updater = browser()->command_controller()->command_updater();
+  updater->ExecuteCommand(IDC_SELECT_NEXT_TAB);
+  ASSERT_EQ(1, browser()->tab_strip_model()->active_index());
+
+  page_info = PageInfoBubbleView::GetPageInfoBubble();
+  // Check the bubble is no longer visible. BubbleDialogDelegateView's Widget is
+  // destroyed when the native widget is destroyed, so it should still be alive.
+  EXPECT_TRUE(page_info);
+  EXPECT_TRUE(page_info->GetWidget());
+  EXPECT_FALSE(page_info->GetWidget()->IsVisible());
+}
+
+INSTANTIATE_TEST_CASE_P(PageInfoBubbleClosesOnKeyboardTabSwitch,
+                        PageInfoBubbleViewsMacTest,
+                        testing::ValuesIn(kGurlBubbleTypePairs));

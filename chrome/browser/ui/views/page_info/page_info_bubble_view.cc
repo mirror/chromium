@@ -283,13 +283,15 @@ class BubbleHeaderView : public views::View {
 // The regular PageInfoBubbleView is not supported for internal Chrome pages and
 // extension pages. Instead of the |PageInfoBubbleView|, the
 // |InternalPageInfoBubbleView| is displayed.
-class InternalPageInfoBubbleView : public views::BubbleDialogDelegateView {
+class InternalPageInfoBubbleView : public views::BubbleDialogDelegateView,
+                                   public content::WebContentsObserver {
  public:
   // If |anchor_view| is nullptr, or has no Widget, |parent_window| may be
   // provided to ensure this bubble is closed when the parent closes.
   InternalPageInfoBubbleView(views::View* anchor_view,
                              const gfx::Rect& anchor_rect,
                              gfx::NativeView parent_window,
+                             content::WebContents* web_contents,
                              const GURL& url);
   ~InternalPageInfoBubbleView() override;
 
@@ -300,6 +302,9 @@ class InternalPageInfoBubbleView : public views::BubbleDialogDelegateView {
   gfx::ImageSkia GetWindowIcon() override;
   bool ShouldShowWindowIcon() const override;
   void OnWidgetDestroying(views::Widget* widget) override;
+
+  // content::WebContentsObserver:
+  void WasHidden() override;
 
  private:
   base::string16 title_text_;
@@ -459,8 +464,10 @@ InternalPageInfoBubbleView::InternalPageInfoBubbleView(
     views::View* anchor_view,
     const gfx::Rect& anchor_rect,
     gfx::NativeView parent_window,
+    content::WebContents* web_contents,
     const GURL& url)
-    : BubbleDialogDelegateView(anchor_view, views::BubbleBorder::TOP_LEFT) {
+    : BubbleDialogDelegateView(anchor_view, views::BubbleBorder::TOP_LEFT),
+      content::WebContentsObserver(web_contents) {
   g_shown_bubble_type = PageInfoBubbleView::BUBBLE_INTERNAL_PAGE;
   g_page_info_bubble = this;
   set_parent_window(parent_window);
@@ -536,6 +543,10 @@ void InternalPageInfoBubbleView::OnWidgetDestroying(views::Widget* widget) {
   g_page_info_bubble = nullptr;
 }
 
+void InternalPageInfoBubbleView::WasHidden() {
+  GetWidget()->Close();
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // PageInfoBubbleView
 ////////////////////////////////////////////////////////////////////////////////
@@ -559,7 +570,7 @@ views::BubbleDialogDelegateView* PageInfoBubbleView::CreatePageInfoBubble(
       url.SchemeIs(extensions::kExtensionScheme) ||
       url.SchemeIs(content::kViewSourceScheme)) {
     return new InternalPageInfoBubbleView(anchor_view, anchor_rect,
-                                          parent_window, url);
+                                          parent_window, web_contents, url);
   }
 
   return new PageInfoBubbleView(anchor_view, anchor_rect, parent_window,
