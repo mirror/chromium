@@ -46,6 +46,92 @@
       "revId": "0007b70a53b5103d80423e3ebd56abb99b408754",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "460dad56_72c5aa01",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 20
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-30T01:13:31Z",
+      "side": 1,
+      "message": "nit: s/FrameHost/FrameHostMsg/ in all three IPCs.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 66
+      },
+      "revId": "0007b70a53b5103d80423e3ebd56abb99b408754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e36c1ed8_46076670",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-30T01:13:31Z",
+      "side": 1,
+      "message": "nit: loaded (let\u0027s fix while we\u0027re here :) )",
+      "range": {
+        "startLine": 188,
+        "startChar": 52,
+        "endLine": 188,
+        "endChar": 59
+      },
+      "revId": "0007b70a53b5103d80423e3ebd56abb99b408754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "379a93b0_2279d35b",
+        "filename": "third_party/WebKit/common/feature_policy/feature_policy.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-30T01:13:31Z",
+      "side": 1,
+      "message": "nit: some of these lines have the \";\" and others don\u0027t -- make it consistent?",
+      "range": {
+        "startLine": 15,
+        "startChar": 59,
+        "endLine": 15,
+        "endChar": 60
+      },
+      "revId": "0007b70a53b5103d80423e3ebd56abb99b408754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccad0c85_0c6bab03",
+        "filename": "third_party/WebKit/common/feature_policy/feature_policy_struct_traits.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-30T01:13:31Z",
+      "side": 1,
+      "message": "It\u0027s sad that we are adding a third enum for sandbox flags - we already have to keep SandboxFlags and WebSandboxFlags in sync.  I ran this by dcheng@, who said that typically you\u0027d just switch everybody else to the mojo type at this point, but that seems hard here, so this is probably ok to leave for followup work.",
+      "revId": "0007b70a53b5103d80423e3ebd56abb99b408754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
