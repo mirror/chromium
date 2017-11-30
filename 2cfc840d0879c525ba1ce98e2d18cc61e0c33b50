@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1953d1af_96de3435",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1241692
+      },
+      "writtenOn": "2017-11-30T19:57:42Z",
+      "side": 1,
+      "message": "Just nuking for now.",
+      "parentUuid": "89b5b447_2c36e5e7",
+      "revId": "2cfc840d0879c525ba1ce98e2d18cc61e0c33b50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3eaa9e81_5f6d5607",
         "filename": "chromeos/printing/ppd_provider.h",
         "patchSetId": 4
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "ab73805c_ec9c5b8a",
+        "filename": "chromeos/printing/ppd_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1241692
+      },
+      "writtenOn": "2017-11-30T19:57:42Z",
+      "side": 1,
+      "message": "I\u0027d rather leave it in as most of the internal implementation works with ResolvedPrinterLists and some require the restrictions, like the FilterRestrictedPpdReferences.\n\nA solution would be to decouple the internal data types with the return types, but can\u0027t tell yet if that\u0027s going to be a more in-depth problem.",
+      "parentUuid": "d19e0435_0556da6c",
+      "revId": "2cfc840d0879c525ba1ce98e2d18cc61e0c33b50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afc1a118_9da1675f",
         "filename": "chromeos/printing/ppd_provider_unittest.cc",
         "patchSetId": 4
@@ -92,6 +128,30 @@
       "revId": "2cfc840d0879c525ba1ce98e2d18cc61e0c33b50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80bf2cdf_4bf55a73",
+        "filename": "chromeos/printing/ppd_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1241692
+      },
+      "writtenOn": "2017-11-30T19:57:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afc1a118_9da1675f",
+      "range": {
+        "startLine": 84,
+        "startChar": 46,
+        "endLine": 84,
+        "endChar": 53
+      },
+      "revId": "2cfc840d0879c525ba1ce98e2d18cc61e0c33b50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
