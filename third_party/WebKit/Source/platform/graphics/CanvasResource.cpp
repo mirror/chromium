@@ -98,7 +98,7 @@ GLuint CanvasResource_Skia::TextureId() const {
 CanvasResource_GpuMemoryBuffer::CanvasResource_GpuMemoryBuffer(
     const IntSize& size,
     const CanvasColorParams& color_params,
-    WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper)
+    base::WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper)
     : CanvasResource(std::move(context_provider_wrapper)),
       color_params_(color_params) {
   if (!context_provider_wrapper_)
@@ -138,7 +138,8 @@ scoped_refptr<CanvasResource_GpuMemoryBuffer>
 CanvasResource_GpuMemoryBuffer::Create(
     const IntSize& size,
     const CanvasColorParams& color_params,
-    WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper) {
+    base::WeakPtr<WebGraphicsContext3DProviderWrapper>
+        context_provider_wrapper) {
   scoped_refptr<CanvasResource_GpuMemoryBuffer> resource =
       AdoptRef(new CanvasResource_GpuMemoryBuffer(size, color_params,
                                                   context_provider_wrapper));

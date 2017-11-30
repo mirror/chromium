@@ -35,7 +35,8 @@ class CanvasResourceProvider_Texture : public CanvasResourceProvider {
       const IntSize& size,
       unsigned msaa_sample_count,
       const CanvasColorParams color_params,
-      WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper)
+      base::WeakPtr<WebGraphicsContext3DProviderWrapper>
+          context_provider_wrapper)
       : CanvasResourceProvider(size,
                                color_params,
                                std::move(context_provider_wrapper)),
