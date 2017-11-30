@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3d219535_9a310f4c",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_event_router.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-11-30T14:53:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6ed80c2_918bc7c9",
+      "range": {
+        "startLine": 48,
+        "startChar": 69,
+        "endLine": 48,
+        "endChar": 78
+      },
+      "revId": "6415565618264d88138d7cc13cc46ea795a9eeef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "669c1f6d_5e165139",
         "filename": "components/password_manager/core/browser/export/password_manager_exporter.h",
         "patchSetId": 14
@@ -45,6 +69,30 @@
       "revId": "6415565618264d88138d7cc13cc46ea795a9eeef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad4f11ee_3577cd4d",
+        "filename": "components/password_manager/core/browser/export/password_manager_exporter.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-11-30T14:53:14Z",
+      "side": 1,
+      "message": "If the user tries to export multiple times, the request will be served by the same instance of PasswordManagerExporter and |on_writing_completed_| will be reused.",
+      "parentUuid": "669c1f6d_5e165139",
+      "range": {
+        "startLine": 63,
+        "startChar": 2,
+        "endLine": 63,
+        "endChar": 25
+      },
+      "revId": "6415565618264d88138d7cc13cc46ea795a9eeef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
