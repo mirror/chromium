@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27c46aeb_e7365e6f",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-11-30T06:36:13Z",
+      "side": 1,
+      "message": "This DCHECK might fail if !NGInlineNode::CanUseNewLayout(), no?\n\nIn general, I prefer to have code that uses the function in single patch, so that I can see how it\u0027s used, and also tests don\u0027t fail.",
+      "revId": "f820c6d272ab5d8ebe904e75654d8c66eb720bae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
