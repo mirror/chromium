@@ -12014,6 +12014,7 @@ Called by update_net_error_codes.py.-->
   <int value="400" label="UnsafelyTreatInsecureOriginAsSecure"/>
   <int value="401" label="DefaultDownloadDirectory"/>
   <int value="402" label="SecurityKeyPermitAttestation"/>
+  <int value="403" label="AbusiveExperienceEnforce"/>
 </enum>
 
 <enum name="EnterprisePolicyInvalidations">
