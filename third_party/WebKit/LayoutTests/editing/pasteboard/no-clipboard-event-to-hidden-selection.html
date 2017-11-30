@@ -1,0 +1,56 @@
+<!doctype html>
+<title>A hidden selection/cursor should not receive Clipboard-events</title>
+<link rel="help" href="https://www.w3.org/TR/clipboard-apis/#fire-a-clipboard-event">
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+
+<input type="checkbox" id="checkbox">
+<textarea>HEY</textarea>
+
+<script>
+testClipboardEvent = function(event_name) {
+  assert_exists(window, 'testRunner', 'This test requires testRunner.');
+  let textarea_hit_count = 0;
+  let document_hit_count = 0;
+  let last_target;
+  textareaLog = function(e) {
+    textarea_hit_count++;
+    last_target = e.target;
+  }
+  documentLog = function(e) {
+    document_hit_count++;
+    last_target = e.target;
+  }
+  let textarea = document.querySelector("textarea");
+  textarea.addEventListener(event_name, textareaLog);
+  document.addEventListener(event_name, documentLog);
+
+  textarea.focus();
+  testRunner.execCommand(event_name);
+  assert_equals(textarea_hit_count, 1, "The <textarea> should receive one " + event_name + "-event.")
+  assert_equals(document_hit_count, 1, "The document should receive one bubbled " + event_name + "-event.")
+  assert_equals(last_target, textarea, "The <textarea> should be the " + event_name + "-event's target.")
+
+  checkbox.focus();
+  testRunner.execCommand(event_name);
+  assert_equals(textarea_hit_count, 1, "The <textarea> is hidden so it should not receive the " + event_name + "-events.")
+  assert_equals(document_hit_count, 2, "The document should receive one " + event_name + "-event.")
+  assert_equals(last_target, document.body, "The document should be the " + event_name + "-event's target.")
+
+  checkbox.blur();
+  testRunner.execCommand(event_name);
+  assert_equals(textarea_hit_count, 1, "The <textarea> is hidden so it should not receive the " + event_name + "-events.")
+  assert_equals(document_hit_count, 3, "The document should receive one " + event_name + "-event.")
+  assert_equals(last_target, document.body, "The document should be the " + event_name + "-event's target.")
+
+  document.body.focus();
+  testRunner.execCommand(event_name);
+  assert_equals(textarea_hit_count, 1, "The <textarea> is hidden so it should not receive the " + event_name + "-events.")
+  assert_equals(document_hit_count, 4, "The document should receive another " + event_name + "-event.")
+  assert_equals(last_target, document.body, "The document should be the " + event_name + "-event's target.")
+}
+
+test(() => testClipboardEvent("paste"), "Hidden selections are not targeted by paste-events.");
+test(() => testClipboardEvent("copy"),  "Hidden selections are not targeted by copy-events.");
+test(() => testClipboardEvent("cut"),   "Hidden selections are not targeted by cut-events.");
+</script>
