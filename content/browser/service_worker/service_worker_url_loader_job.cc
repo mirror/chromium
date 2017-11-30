@@ -232,13 +232,15 @@ void ServiceWorkerURLLoaderJob::DidDispatchFetchEvent(
     return;
   }
 
-  if (fetch_result == SERVICE_WORKER_FETCH_EVENT_RESULT_FALLBACK) {
+  if (fetch_result == ServiceWorkerFetchEventResult::
+                          SERVICE_WORKER_FETCH_EVENT_RESULT_FALLBACK) {
     // TODO(kinuko): Check if this needs to fallback to the renderer.
     FallbackToNetwork();
     return;
   }
 
-  DCHECK_EQ(fetch_result, SERVICE_WORKER_FETCH_EVENT_RESULT_RESPONSE);
+  DCHECK_EQ(fetch_result, ServiceWorkerFetchEventResult::
+                              SERVICE_WORKER_FETCH_EVENT_RESULT_RESPONSE);
 
   // A response with status code 0 is Blink telling us to respond with
   // network error.

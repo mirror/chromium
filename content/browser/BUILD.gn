@@ -1484,6 +1484,7 @@ jumbo_source_set("browser") {
     "service_worker/service_worker_dispatcher_host.h",
     "service_worker/service_worker_fetch_dispatcher.cc",
     "service_worker/service_worker_fetch_dispatcher.h",
+    "service_worker/service_worker_fetch_event_result.h",
     "service_worker/service_worker_handle.cc",
     "service_worker/service_worker_handle.h",
     "service_worker/service_worker_info.cc",

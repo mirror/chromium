@@ -715,7 +715,8 @@ void ServiceWorkerURLRequestJob::DidDispatchFetchEvent(
     return;
   }
 
-  if (fetch_result == SERVICE_WORKER_FETCH_EVENT_RESULT_FALLBACK) {
+  if (fetch_result == ServiceWorkerFetchEventResult::
+                          SERVICE_WORKER_FETCH_EVENT_RESULT_FALLBACK) {
     ServiceWorkerMetrics::RecordFallbackedRequestMode(request_mode_);
     if (IsFallbackToRendererNeeded()) {
       FinalizeFallbackToRenderer();
@@ -726,7 +727,9 @@ void ServiceWorkerURLRequestJob::DidDispatchFetchEvent(
   }
 
   // We should have a response now.
-  DCHECK_EQ(SERVICE_WORKER_FETCH_EVENT_RESULT_RESPONSE, fetch_result);
+  DCHECK_EQ(
+      ServiceWorkerFetchEventResult::SERVICE_WORKER_FETCH_EVENT_RESULT_RESPONSE,
+      fetch_result);
 
   // A response with status code 0 is Blink telling us to respond with network
   // error.
