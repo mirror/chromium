@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e58a3b0d_32deff0a",
+        "filename": "chrome/browser/vr/metrics_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-30T18:55:23Z",
+      "side": 1,
+      "message": "Nit: VRComponentStatus",
+      "range": {
+        "startLine": 34,
+        "startChar": 39,
+        "endLine": 34,
+        "endChar": 54
+      },
+      "revId": "d73657d66883c1c6d8f95397624a881bec359b35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
