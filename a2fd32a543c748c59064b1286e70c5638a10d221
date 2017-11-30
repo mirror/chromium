@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "27a70eef_4d919f2f",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_dictionary.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-11-30T17:02:42Z",
+      "side": 1,
+      "message": "Yes, we would need three exclusive lists to avoid using filters: origin-trial, runtime-enabled, and \"normal\" (i.e. neither of the first two). Origin trial and runtime enabled are mutually-exclusive (there\u0027s a check in the bindings script to guarantee that). Secure context doesn\u0027t apply to dictionary members, so that simplifies things a little bit here.\n\nI agree that avoiding a filter would be preferred. Is it worth reworking this into multiple lists to do that?",
+      "parentUuid": "2842870f_1b1215b0",
+      "revId": "a2fd32a543c748c59064b1286e70c5638a10d221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be465539_7c5e6e8c",
         "filename": "third_party/WebKit/Source/bindings/scripts/v8_utilities.py",
         "patchSetId": 4
@@ -51,6 +69,24 @@
       "revId": "a2fd32a543c748c59064b1286e70c5638a10d221",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "850b8a4e_5b1fe6f5",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_utilities.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-11-30T17:02:42Z",
+      "side": 1,
+      "message": "That\u0027s true the context shouldn\u0027t be null in the usage. I based this on the existing filters for exposed and secure context in code_generator.py.\n\nRemoved the condition, and leave it any callers to ensure appropriate checks are in place.",
+      "parentUuid": "be465539_7c5e6e8c",
+      "revId": "a2fd32a543c748c59064b1286e70c5638a10d221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -86,6 +122,24 @@
       "revId": "a2fd32a543c748c59064b1286e70c5638a10d221",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdefd2a1_dd985a80",
+        "filename": "third_party/WebKit/Source/bindings/templates/dictionary_v8.cpp.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-11-30T17:02:42Z",
+      "side": 1,
+      "message": "Yes, I was going to use execution_context, but didn\u0027t want to mix styles. I figured it was best done as a separate cleanup.",
+      "parentUuid": "1b981afc_7419a9ba",
+      "revId": "a2fd32a543c748c59064b1286e70c5638a10d221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
