@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "419da203_67111b69",
+        "filename": "extensions/browser/extension_error.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-30T06:49:45Z",
+      "side": 1,
+      "message": "If this doesn\u0027t really fit on 80 chars, maybe we should just get rid of the // NL line breakers.",
+      "revId": "7d5e53fbd963e12c8dc1de03d77bbefca93b35ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
