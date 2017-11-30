@@ -43,9 +43,10 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
    * @return {?string}
    */
   static inspectedPageDomain() {
-    var maintarget = SDK.targetManager.mainTarget();
-    var inspectedURL = maintarget ? maintarget.inspectedURL() : '';
-    var parsedURL = new Common.ParsedURL(inspectedURL);
+    var mainTarget = SDK.targetManager.mainTarget();
+    if (!mainTarget)
+      return null;
+    var parsedURL = new Common.ParsedURL(mainTarget.inspectedURL());
     var scheme = parsedURL.scheme;
     if (parsedURL.isValid && (scheme === 'http' || scheme === 'https'))
       return parsedURL.domain() || null;
@@ -139,7 +140,8 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
             Workspace.Workspace.Events.ProjectRemoved,
             event => this._onProjectRemoved(/** @type {!Workspace.Project} */ (event.data))),
         SDK.targetManager.addEventListener(
-            SDK.TargetManager.Events.InspectedURLChanged, this._updateActiveProject, this),
+            SDK.TargetManager.Events.InspectedURLChanged,
+            () => this._updateActiveProject(Persistence.NetworkPersistenceManager.inspectedPageDomain()), this),
         Workspace.workspace.addEventListener(
             Workspace.Workspace.Events.UISourceCodeRenamed,
             event => {
@@ -158,20 +160,23 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
             event => this._onUISourceCodeWorkingCopyCommitted(
                 /** @type {!Workspace.UISourceCode} */ (event.data.uiSourceCode)))
       ];
-      this._updateActiveProject();
+      this._updateActiveProject(Persistence.NetworkPersistenceManager.inspectedPageDomain());
     } else {
       Common.EventTarget.removeEventListeners(this._eventDescriptors);
-      this._updateActiveProject();
+      this._updateActiveProject(Persistence.NetworkPersistenceManager.inspectedPageDomain());
     }
+    this._scheduleUpdateInterceptionPatterns();
   }
 
-  _updateActiveProject() {
-    var mainTarget = SDK.targetManager.mainTarget();
-    if (!this._enabledSetting.get() || !mainTarget) {
+  /**
+   * @param {?string} domain
+   */
+  _updateActiveProject(domain) {
+    if (!domain || !this._enabledSetting.get()) {
       this._setActiveProject(null);
       return;
     }
-    this._setActiveProject(this.projectForDomain(Persistence.NetworkPersistenceManager.inspectedPageDomain()));
+    this._setActiveProject(this.projectForDomain(domain));
   }
 
   /**
@@ -370,7 +375,7 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
     if (uiSourceCode.project() !== this._activeProject)
       return;
 
-    this._updateInterceptionPatterns();
+    this._scheduleUpdateInterceptionPatterns();
 
     var relativePath = Persistence.FileSystemWorkspaceBinding.relativePath(uiSourceCode);
     var networkUISourceCode = this._networkUISourceCodeForEncodedPath.get(relativePath.join('/'));
@@ -378,31 +383,40 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
       this._bind(networkUISourceCode, uiSourceCode);
   }
 
-  _updateInterceptionPatterns() {
-    this._updateInterceptionThrottler.schedule(innerUpdateInterceptionPatterns.bind(this));
+  _scheduleUpdateInterceptionPatterns() {
+    this._updateInterceptionThrottler.schedule(this._updateInterceptionPatterns.bind(this));
+  }
 
-    /**
-     * @this {Persistence.NetworkPersistenceManager}
-     * @return {!Promise}
-     */
-    function innerUpdateInterceptionPatterns() {
-      if (!this._activeProject)
-        return SDK.multitargetNetworkManager.setInterceptionHandlerForPatterns([], this._interceptionHandlerBound);
-      var patterns = new Set();
+  /**
+   * @return {!Promise}
+   */
+  _updateInterceptionPatterns() {
+    var patterns = /** @type {!Array<!SDK.MultitargetNetworkManager.InterceptionPattern>} */ ([]);
+    if (this._activeProject) {
       var indexFileName = 'index.html';
       for (var uiSourceCode of this._activeProject.uiSourceCodes()) {
         var pattern = this._patternForFileSystemUISourceCode(uiSourceCode);
-        patterns.add(pattern);
-        if (pattern.endsWith('/' + indexFileName))
-          patterns.add(pattern.substr(0, pattern.length - indexFileName.length));
+        patterns.push({urlPattern: pattern, interceptionStage: Protocol.Network.InterceptionStage.HeadersReceived});
+        if (pattern.endsWith('/' + indexFileName)) {
+          patterns.push({
+            urlPattern: pattern.substr(0, pattern.length - indexFileName.length),
+            interceptionStage: Protocol.Network.InterceptionStage.HeadersReceived
+          });
+        }
       }
-
-      return SDK.multitargetNetworkManager.setInterceptionHandlerForPatterns(
-          Array.from(patterns).map(
-              pattern =>
-                  ({urlPattern: pattern, interceptionStage: Protocol.Network.InterceptionStage.HeadersReceived})),
-          this._interceptionHandlerBound);
     }
+    if (this._enabled) {
+      patterns.push({
+        urlPattern: '*',
+        interceptionStage: Protocol.Network.InterceptionStage.HeadersReceived,
+        resourceType: Protocol.Page.ResourceType.Document
+      });
+    }
+    return SDK.multitargetNetworkManager.setInterceptionHandlerForPatterns(patterns, this._interceptionHandlerBound)
+        .then(this._patternsUpdatedForTest.bind(this));
+  }
+
+  _patternsUpdatedForTest() {
   }
 
   /**
@@ -426,7 +440,7 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
       this._networkUISourceCodeForEncodedPath.delete(this._encodedPathFromUrl(uiSourceCode.url()));
       return;
     }
-    this._updateInterceptionPatterns();
+    this._scheduleUpdateInterceptionPatterns();
     this._unbind(uiSourceCode);
   }
 
@@ -441,7 +455,7 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
     var domain = this._domainForFileSystemMap.get(fileSystemPath);
     if (!domain)
       return;
-    this._updateActiveProject();
+    this._updateActiveProject(Persistence.NetworkPersistenceManager.inspectedPageDomain());
   }
 
   /**
@@ -452,7 +466,7 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
       return;
     for (var uiSourceCode of project.uiSourceCodes())
       this._onUISourceCodeRemoved(uiSourceCode);
-    this._updateActiveProject();
+    this._updateActiveProject(Persistence.NetworkPersistenceManager.inspectedPageDomain());
   }
 
   /**
@@ -460,8 +474,20 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
    * @return {!Promise}
    */
   async _interceptionHandler(interceptedRequest) {
-    var method = interceptedRequest.request.method;
-    if (!this._activeProject || (method !== 'GET' && method !== 'POST'))
+    if (interceptedRequest.request.method !== 'GET' && interceptedRequest.request.method !== 'POST')
+      return;
+    var treeModel = SDK.targetManager.mainTarget() ? SDK.targetManager.mainTarget().model(SDK.ResourceTreeModel) : null;
+    if (treeModel && interceptedRequest.isNavigationRequest && interceptedRequest.frameId === treeModel.mainFrame.id) {
+      var parsedURL = new Common.ParsedURL(interceptedRequest.redirectUrl || interceptedRequest.request.url);
+      var scheme = parsedURL.scheme;
+      if (parsedURL.isValid && (scheme === 'http' || scheme === 'https')) {
+        this._updateActiveProject(parsedURL.domain());
+        await this._updateInterceptionPatterns();
+      }
+    }
+
+    var isResponseInterception = interceptedRequest.responseErrorReason || interceptedRequest.responseStatusCode;
+    if (!this._activeProject || !isResponseInterception)
       return;
     var path = this._activeProject.fileSystemPath() + '/' + this._encodedPathFromUrl(interceptedRequest.request.url);
     var fileSystemUISourceCode = this._activeProject.uiSourceCodeForURL(path);

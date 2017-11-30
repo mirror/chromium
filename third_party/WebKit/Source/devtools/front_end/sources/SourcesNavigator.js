@@ -175,6 +175,7 @@ Sources.OverridesNavigatorView = class extends Sources.NavigatorView {
   constructor() {
     super();
     this._toolbar = new UI.Toolbar('navigator-toolbar');
+    this._toolbar.makeVertical();
 
     this.contentElement.insertBefore(this._toolbar.element, this.contentElement.lastChild);
     this._domainElement = this.contentElement.insertBefore(
@@ -209,13 +210,13 @@ Sources.OverridesNavigatorView = class extends Sources.NavigatorView {
 
   _updateUI() {
     this._toolbar.removeToolbarItems();
+    var enableCheckbox =
+        new UI.ToolbarSettingCheckbox(Common.settings.moduleSetting('persistenceNetworkOverridesEnabled'));
+    this._toolbar.appendToolbarItem(enableCheckbox);
+
     var inspectedPageDomain = Persistence.NetworkPersistenceManager.inspectedPageDomain();
     var project = Persistence.networkPersistenceManager.projectForDomain(inspectedPageDomain);
     if (project) {
-      var title = Common.UIString('Enable Overrides');
-      var enableCheckbox =
-          new UI.ToolbarSettingCheckbox(Common.settings.moduleSetting('persistenceNetworkOverridesEnabled'));
-      this._toolbar.appendToolbarItem(enableCheckbox);
       this._domainElement.textContent =
           Common.UIString(Persistence.networkPersistenceManager.domainForProject(project) || '');
       this._domainElement.classList.remove('hidden');

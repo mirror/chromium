@@ -754,16 +754,23 @@ void DevToolsURLInterceptorRequestJob::OnSubRequestRedirectReceived(
     bool* defer_redirect) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(sub_request_);
-  // If we're not intercepting results then just exit.
-  if (stage_to_intercept_ == InterceptionStage::DONT_INTERCEPT) {
+
+  redirect_.reset(new net::RedirectInfo(redirectinfo));
+  sub_request_->Cancel();
+  sub_request_.reset();
+
+  // If we're not intercepting results or are a response then cancel this
+  // redirect and tell the parent request it was redirected through |redirect_|.
+  if (stage_to_intercept_ == InterceptionStage::DONT_INTERCEPT ||
+      stage_to_intercept_ == InterceptionStage::RESPONSE) {
     *defer_redirect = false;
-    return;
-  }
-  // If we're a response interception only, we will pick it up on the followup
-  // request in DevToolsURLInterceptorRequestJob::Start().
-  if (stage_to_intercept_ == InterceptionStage::RESPONSE) {
-    interceptor_->ExpectRequestAfterRedirect(this->request(), interception_id_);
-    *defer_redirect = false;
+    ProcessInterceptionRespose(
+        std::make_unique<DevToolsURLRequestInterceptor::Modifications>(
+            base::nullopt, base::nullopt, protocol::Maybe<std::string>(),
+            protocol::Maybe<std::string>(), protocol::Maybe<std::string>(),
+            protocol::Maybe<protocol::Network::Headers>(),
+            protocol::Maybe<protocol::Network::AuthChallengeResponse>(),
+            false));
     return;
   }
 
@@ -779,10 +786,6 @@ void DevToolsURLInterceptorRequestJob::OnSubRequestRedirectReceived(
                                                           &header_value)) {
     headers_dict->setString(header_name, header_value);
   }
-
-  redirect_.reset(new net::RedirectInfo(redirectinfo));
-  sub_request_->Cancel();
-  sub_request_.reset();
 
   waiting_for_user_response_ = WaitingForUserResponse::WAITING_FOR_REQUEST_ACK;
 
