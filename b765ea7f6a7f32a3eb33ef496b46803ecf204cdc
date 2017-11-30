@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4f7dad4_750ce2a8",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-30T05:59:41Z",
+      "side": 1,
+      "message": "Have you considered whether we need to use the return value of this here for some reason?",
+      "revId": "b765ea7f6a7f32a3eb33ef496b46803ecf204cdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
