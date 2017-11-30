@@ -86,7 +86,7 @@ interface FakeCentral {
   // need to call the respective connect functions to signal they intend to keep
   // the connection alive.
   SimulatePreconnectedPeripheral(string address,
-                                 string name,
+                                 string? name,
                                  array<UUID> known_service_uuids) => ();
 
   // Sets the next GATT Connection request response for peripheral with

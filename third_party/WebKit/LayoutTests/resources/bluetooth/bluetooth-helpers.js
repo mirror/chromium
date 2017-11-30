@@ -819,3 +819,19 @@ function getDiscoveredHealthThermometerDevice(
       }));
   });
 }
+
+function getNamelessHealthThermometerDevice(
+options = {filters: [{services: ['health_thermometer']}]}) {
+  return setUpPreconnectedDevice({
+    address: '09:09:09:09:09:09',
+    name: null,
+    knownServiceUUIDs: ['generic_access', 'health_thermometer'],
+  })
+  .then(fake_peripheral => {
+    return requestDeviceWithTrustedClick(options)
+      .then(device => ({
+        device: device,
+        fake_peripheral: fake_peripheral
+      }));
+  });
+}

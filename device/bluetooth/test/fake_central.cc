@@ -25,7 +25,7 @@ FakeCentral::FakeCentral(mojom::CentralState state,
 
 void FakeCentral::SimulatePreconnectedPeripheral(
     const std::string& address,
-    const std::string& name,
+    const base::Optional<std::string>& name,
     const std::vector<device::BluetoothUUID>& known_service_uuids,
     SimulatePreconnectedPeripheralCallback callback) {
   FakePeripheral* fake_peripheral = GetFakePeripheral(address);

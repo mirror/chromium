@@ -6,12 +6,11 @@
 <script src="../../../resources/bluetooth/bluetooth-helpers.js"></script>
 <script>
 'use strict';
-bluetooth_test(() => {
-  return setBluetoothFakeAdapter('NoNameDeviceAdapter')
-    .then(() => requestDeviceWithTrustedClick({acceptAllDevices: true}))
-    .then(device => {
-      assert_true(device.name === null);
-    });
-}, 'Device with no name or UUIDs nearby. Should be found if ' +
-   'acceptAllDevices is true.');
+const test_desc = 'Device with no name or UUIDs nearby. Should be found if ' +
+   'acceptAllDevices is true.';
+
+bluetooth_test(() => getNamelessHealthThermometerDevice()
+  .then(() => requestDeviceWithTrustedClick({acceptAllDevices: true}))
+  .then(device => assert_true(device.name === null)),
+  test_desc);
 </script>
