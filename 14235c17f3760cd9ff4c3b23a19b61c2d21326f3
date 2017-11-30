@@ -22,6 +22,30 @@
       "revId": "14235c17f3760cd9ff4c3b23a19b61c2d21326f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3082bb5_403cfbb5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/TabWebContentsObserver.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-11-30T12:45:44Z",
+      "side": 1,
+      "message": "Yes, we are aware of the problem of chrome being started in background and we would appreciate if you can help us with resolving this issue.\n\nPlease notice, that we reset the \"running application start\" flag in ChromeTabbedActivity.preInflationStartup only if the native library is not initialized yet. This way we don\u0027t record the histogram if the application was started as a service or a broadcast receiver or whatever that requires the native library. IIUC, the native library can be initialized only once during the lifetime of application so this check will actually work for these cases.\n\nHowever, if the application was started by a component that doesn\u0027t require the native library, we record wrong number.\n\nIs there any way to determine what caused the app to start inside of the application layer or inside of an activity? We had an idea to create a base class for all background tasks that will register itself on a startup in some global structure but that solution doesn\u0027t sound feasible.",
+      "parentUuid": "c4a0b14c_868928a4",
+      "range": {
+        "startLine": 212,
+        "startChar": 27,
+        "endLine": 212,
+        "endChar": 28
+      },
+      "revId": "14235c17f3760cd9ff4c3b23a19b61c2d21326f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
