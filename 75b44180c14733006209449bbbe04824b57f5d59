@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "649aa3af_51f0285b",
+        "filename": "components/omnibox/browser/fake_autocomplete_provider_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-11-30T17:01:17Z",
+      "side": 1,
+      "message": "What happens to the failing test if you use ScopedTaskEnvironment::RunUntilIdle() here? From the comments in the following doc, it looks like that\u0027s what we\u0027re supposed to be doing now and I wonder if it might catch the case you\u0027re running into.\n\nhttps://docs.google.com/document/d/1QabRo8c7D9LsYY3cEcaPQbOCLo8Tu-6VLykYXyl3Pkk/edit#heading\u003dh.xdvwzp23mtse",
+      "revId": "75b44180c14733006209449bbbe04824b57f5d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
