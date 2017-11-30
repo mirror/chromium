@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2a20d4c_5a4342d1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrDaydreamApiImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-30T15:40:08Z",
+      "side": 1,
+      "message": "Maybe remove these changes as they\u0027re not necessary anymore? I don\u0027t really care though, we should probably be returning a boolean here anyways.",
+      "range": {
+        "startLine": 108,
+        "startChar": 11,
+        "endLine": 108,
+        "endChar": 18
+      },
+      "revId": "05bd6aeecca455343eac3a6d70b69c9a3bfa6cc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82e30c02_4798e1af",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrIntentUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-30T15:40:08Z",
+      "side": 1,
+      "message": "You can ignore this for this CL, but we should refactor here. There\u0027s no reason for this to be an interface, it should be a class with the default implementation of these functions, and the tests can override the functions they want to reimplement.",
+      "range": {
+        "startLine": 37,
+        "startChar": 21,
+        "endLine": 37,
+        "endChar": 36
+      },
+      "revId": "05bd6aeecca455343eac3a6d70b69c9a3bfa6cc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63476ddd_4dbcb622",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrIntentUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-30T15:40:08Z",
+      "side": 1,
+      "message": "testing?",
+      "range": {
+        "startLine": 66,
+        "startChar": 21,
+        "endLine": 66,
+        "endChar": 34
+      },
+      "revId": "05bd6aeecca455343eac3a6d70b69c9a3bfa6cc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da5db5b8_486edb80",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-30T15:40:08Z",
+      "side": 1,
+      "message": "Does it work to leave the above private, but make this public or package visible and use VrSupportLevel.VR_DAYDREAM?",
+      "range": {
+        "startLine": 103,
+        "startChar": 4,
+        "endLine": 103,
+        "endChar": 11
+      },
+      "revId": "05bd6aeecca455343eac3a6d70b69c9a3bfa6cc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b7e6f21_e5b4d015",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1614,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-30T15:40:08Z",
+      "side": 1,
+      "message": "I don\u0027t think it makes sense to pass this in as an argument to whether VrCore is compatible. Why not just check sdk version at the callsites that care about it?",
+      "range": {
+        "startLine": 1614,
+        "startChar": 16,
+        "endLine": 1614,
+        "endChar": 29
+      },
+      "revId": "05bd6aeecca455343eac3a6d70b69c9a3bfa6cc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fa1d3be_c9bca243",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1616,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-30T15:40:08Z",
+      "side": 1,
+      "message": "nit: braces",
+      "range": {
+        "startLine": 1616,
+        "startChar": 50,
+        "endLine": 1616,
+        "endChar": 0
+      },
+      "revId": "05bd6aeecca455343eac3a6d70b69c9a3bfa6cc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
