@@ -16,6 +16,24 @@
       "revId": "1ffadd2886d2a9f09791fdef9f0d52ac82a60a71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "159eb6fd_9b42fcb8",
+        "filename": "skia/tools/fuzzers/BUILD.gn",
+        "patchSetId": 15
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-11-30T17:10:03Z",
+      "side": 1,
+      "message": "You\u0027re correct. I\u0027m going to build skia without SK_IGNORE_TO_STRING for now since building with it is simply a small optimization.\n\nI could add something to the \"skia\" component like this:\n\n  if (use_engine_fuzzer) {\n    defines \u003d [ \"SK_IGNORE_TO_STRING\" ]\n  }\n\nbut as I said, I think it isn\u0027t worth the effort for now.",
+      "parentUuid": "b8e4d1d2_08dc3a15",
+      "revId": "1ffadd2886d2a9f09791fdef9f0d52ac82a60a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
