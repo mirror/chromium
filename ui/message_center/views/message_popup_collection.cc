@@ -122,6 +122,11 @@ void MessagePopupCollection::ClickOnSettingsButton(
   message_center_->ClickOnSettingsButton(notification_id);
 }
 
+void MessagePopupCollection::DisableNotification(
+    const std::string& notification_id) {
+  message_center_->DisableNotification(notification_id);
+}
+
 void MessagePopupCollection::UpdateNotificationSize(
     const std::string& notification_id) {
   OnNotificationUpdated(notification_id);

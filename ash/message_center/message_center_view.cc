@@ -478,6 +478,11 @@ void MessageCenterView::ClickOnSettingsButton(
   message_center_->ClickOnSettingsButton(notification_id);
 }
 
+void MessageCenterView::DisableNotification(
+    const std::string& notification_id) {
+  message_center_->DisableNotification(notification_id);
+}
+
 void MessageCenterView::UpdateNotificationSize(
     const std::string& notification_id) {
   // TODO(edcourtney, yoshiki): We don't call OnNotificationUpdated directly

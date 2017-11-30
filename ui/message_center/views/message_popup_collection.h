@@ -67,6 +67,7 @@ class MESSAGE_CENTER_EXPORT MessagePopupCollection
                                           int button_index,
                                           const base::string16& reply) override;
   void ClickOnSettingsButton(const std::string& notification_id) override;
+  void DisableNotification(const std::string& notification_id) override;
   void UpdateNotificationSize(const std::string& notification_id) override;
 
   void MarkAllPopupsShown();
