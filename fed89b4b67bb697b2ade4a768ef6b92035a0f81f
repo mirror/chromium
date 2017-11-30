@@ -50,6 +50,23 @@
       "revId": "fed89b4b67bb697b2ade4a768ef6b92035a0f81f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74c2421e_157a623e",
+        "filename": "third_party/android_platform/development/scripts/stack_core.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-11-30T22:33:52Z",
+      "side": 1,
+      "message": "Note that you can expect to get more than one symbol and location here if the address represents multiple stack frames, i.e. if code was inlined at the given address. It would probably be best to show all stack frames in that case.",
+      "revId": "fed89b4b67bb697b2ade4a768ef6b92035a0f81f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
