@@ -33,6 +33,24 @@
       "revId": "7d5dac182cbb6228dea6f3ec8d46adf3f5179811",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92766ffd_cae437b4",
+        "filename": "chrome/browser/resources/md_extensions/item_list.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-30T18:07:53Z",
+      "side": 1,
+      "message": "Summarizing offline discussion. My previous suggestion would not work for the case where the filter changes, but the results are the same, so ignore it.\n\nSo just to avoid recalculating the filter, lets create a computedFilter_ property that is computed based on filter_, and add the observer on that one instead.",
+      "parentUuid": "fc2b7796_ed73dc17",
+      "revId": "7d5dac182cbb6228dea6f3ec8d46adf3f5179811",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
