@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f58a43d5_624a5006",
+        "filename": "cc/output/overlay_candidate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-30T04:12:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91b08aff_74b73bd6",
+      "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83cbd709_7450fd3d",
         "filename": "components/viz/service/display/display.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-29T19:25:59Z",
       "side": 1,
       "message": "When is output_surface_ null? What happens when the context is lost and a new output surface is set? Can we add tests for these cases?",
+      "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f666b4b_b645c447",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-30T04:12:07Z",
+      "side": 1,
+      "message": "output_surface_ doesn\u0027t seem to be reset anywhere here, however I see it being checked for null in several places in this file. Not sure why.\n\nRegarding the context lost test, I think this will be part of the next CL that includes the ui::Compsitor work, which is what will listen to context lost events and re-set the color matrix on the new display.\n\nI can\u0027t test that now.",
+      "parentUuid": "83cbd709_7450fd3d",
       "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "83cb3ec3_6f60dfa6",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-30T04:12:07Z",
+      "side": 1,
+      "message": "It seems that this will be null until DirectLayerTreeFrameSink binds to its client [1] which will eventually call Display::InitializeRenderer() [2] that will construct the aggregator.\n\nI see various places in this file checking if(aggregator_).\n\n[1]: https://cs.chromium.org/chromium/src/components/viz/service/frame_sinks/direct_layer_tree_frame_sink.cc?type\u003dcs\u0026q\u003dDirectLayerTreeFrameSink::BindToClient\u0026l\u003d78\n\n[2]: https://cs.chromium.org/chromium/src/components/viz/service/display/display.cc?type\u003dcs\u0026q\u003dDisplay::InitializeRenderer\u0026l\u003d229",
+      "parentUuid": "a3637942_dbacdef8",
+      "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "64c42ee9_d19911b0",
         "filename": "components/viz/service/display/display.cc",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-29T19:25:59Z",
       "side": 1,
       "message": "What happens when the current_surface_id_ changes? Can we add a test for this case?",
+      "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47afc960_4f2eac8d",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-30T04:12:07Z",
+      "side": 1,
+      "message": "If the surface id changes, that shouldn\u0027t affect the color matrix, which remains unchanged on the output surface. This seems that will lead to damaging the surface and redrawing. But nothing seems to be relevant to the color matrix in particular.",
+      "parentUuid": "64c42ee9_d19911b0",
       "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "94fa4aa9_aa074a76",
+        "filename": "components/viz/service/display/display.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-30T04:12:07Z",
+      "side": 1,
+      "message": "Done. But what do you mean by \"many places\"? Do you mean the other functions here too like SetColorSpace()? Or other places.",
+      "parentUuid": "b8c6e783_1f351a3f",
+      "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f09220ba_c3f0d36a",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4173d404_8477de43",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2998,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-30T04:12:07Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to be needed. Done.",
+      "parentUuid": "f09220ba_c3f0d36a",
+      "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "4540335f_20d2b785",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3044,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-30T04:12:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c85db24a_fb939753",
+      "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85e7d342_36e93070",
         "filename": "components/viz/service/display/gl_renderer_unittest.cc",
         "patchSetId": 3
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "475e4b45_bb1da82c",
+        "filename": "components/viz/service/display/gl_renderer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2271,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-30T04:12:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85e7d342_36e93070",
+      "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7dc682a7_34fb75e3",
         "filename": "components/viz/service/display/gl_renderer_unittest.cc",
         "patchSetId": 3
@@ -149,6 +293,24 @@
       "writtenOn": "2017-11-29T19:25:59Z",
       "side": 1,
       "message": "Can we verify we don\u0027t set the matrix on non-root renderpass?",
+      "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e31df0e_dfdaa5ba",
+        "filename": "components/viz/service/display/gl_renderer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2281,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-30T04:12:07Z",
+      "side": 1,
+      "message": "Done.\n\nI noticed that if we add multiple Quads on the *root* pass, the matrix will be set for each Quad as well, is that expected?",
+      "parentUuid": "7dc682a7_34fb75e3",
       "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "ccbad83d_9fd5d96a",
+        "filename": "components/viz/service/display/gl_renderer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2287,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-30T04:12:07Z",
+      "side": 1,
+      "message": "It took me a while to figure out how to do this as there are various matrices being registered, and I wanted to filter out only the output_color_matrix one. Thanks for suggesting this! The test is now more robust!",
+      "parentUuid": "b80d4f50_a1d22afb",
+      "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8699f0ca_304b3106",
         "filename": "components/viz/service/display/gl_renderer_unittest.cc",
         "patchSetId": 3
@@ -186,6 +366,24 @@
       "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a18cb8b_2cd5d274",
+        "filename": "components/viz/service/display/gl_renderer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2292,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-30T04:12:07Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "8699f0ca_304b3106",
+      "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "9ad71545_901662ea",
+        "filename": "components/viz/service/display/overlay_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-30T04:12:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab7239b9_d95cba2a",
+      "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "076dc59b_1dc3ef13",
         "filename": "components/viz/service/display/renderer_pixeltest.cc",
         "patchSetId": 3
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "bae76c63_ece01c15",
+        "filename": "components/viz/service/display/renderer_pixeltest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 936,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-30T04:12:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "076dc59b_1dc3ef13",
+      "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04b1b28b_b3fa5aa8",
         "filename": "components/viz/service/display/renderer_pixeltest.cc",
         "patchSetId": 3
@@ -234,6 +468,24 @@
       "writtenOn": "2017-11-29T19:25:59Z",
       "side": 1,
       "message": "I couldn\u0027t actually see a difference in the 2 png files, but if this is green, and the above one is yellow, I\u0027d expect a different output, is this green quad showing up as expected? I don\u0027t see a RenderPassDrawQuad in the root to actually show the child pass anywhere?\n\nCould we swap the colors so the child has yellow then it can share png still with the other test, cuz the output should be yellow+matrix?",
+      "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ba81f67_be09e13f",
+        "filename": "components/viz/service/display/renderer_pixeltest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 943,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-30T04:12:07Z",
+      "side": 1,
+      "message": "Apparently I don\u0027t understand how those passes/quads interact with each other. I modified the test so that my intention is clear. I wanted something like this:\n\n  +---------------+\n  |  Root: Yellow |\n  |  +---------+  |\n  |  | Child:  |  | \n  |  | Green   |  |\n  |  |         |  |\n  |  +---------+  |\n  |               |\n  +---------------+\n\nBut I can\u0027t make that happen! :(\n\nMaybe the draw order has something to do with it. How can I make the child quad draw on top?\n\nPlease advise.",
+      "parentUuid": "04b1b28b_b3fa5aa8",
       "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "5ab03760_b9f8a59e",
+        "filename": "components/viz/service/display/renderer_pixeltest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-30T04:12:07Z",
+      "side": 1,
+      "message": "See my above comment.",
+      "parentUuid": "be5d5254_97a5cdb3",
+      "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3c512ad_eb76e1ac",
         "filename": "components/viz/service/display/shader.h",
         "patchSetId": 3
@@ -274,6 +544,24 @@
     },
     {
       "key": {
+        "uuid": "09f2f75e_4f62a792",
+        "filename": "components/viz/service/display/shader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-30T04:12:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3c512ad_eb76e1ac",
+      "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c2162c6_1bf2d041",
         "filename": "services/viz/privileged/interfaces/compositing/display_private.mojom",
         "patchSetId": 3
@@ -288,6 +576,24 @@
       "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efa27461_647edecb",
+        "filename": "services/viz/privileged/interfaces/compositing/display_private.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-30T04:12:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c2162c6_1bf2d041",
+      "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
