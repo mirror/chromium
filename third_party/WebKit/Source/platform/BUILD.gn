@@ -1475,7 +1475,6 @@ jumbo_component("platform") {
     "//gpu/command_buffer/client:gles2_c_lib",
     "//gpu/command_buffer/client:gles2_interface",
     "//gpu/command_buffer/common:common",
-    "//media",
     "//net",
     "//services/resource_coordinator/public/cpp:resource_coordinator_cpp",
     "//services/service_manager/public/interfaces:interfaces_blink",
