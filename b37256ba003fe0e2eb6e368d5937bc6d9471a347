@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5f306eed_2655dec6",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-11-30T21:37:57Z",
+      "side": 1,
+      "message": "Yes makes sense. Not using by ARC was what I worried about.",
+      "parentUuid": "0d180deb_abffb81a",
+      "revId": "b37256ba003fe0e2eb6e368d5937bc6d9471a347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6702e092_3ad5d67c",
         "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "577b5edc_0b095f7d",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-11-30T21:37:57Z",
+      "side": 1,
+      "message": "Oh thanks for this.",
+      "parentUuid": "6702e092_3ad5d67c",
+      "range": {
+        "startLine": 60,
+        "startChar": 36,
+        "endLine": 60,
+        "endChar": 76
+      },
+      "revId": "b37256ba003fe0e2eb6e368d5937bc6d9471a347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e46deebc_371aeda0",
         "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
         "patchSetId": 1
@@ -62,6 +104,30 @@
       "revId": "b37256ba003fe0e2eb6e368d5937bc6d9471a347",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a796ebc9_05291487",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-11-30T21:37:57Z",
+      "side": 1,
+      "message": "I must be dozing... I\u0027ll move this to upmost so that we can catch it early.",
+      "parentUuid": "e46deebc_371aeda0",
+      "range": {
+        "startLine": 145,
+        "startChar": 8,
+        "endLine": 145,
+        "endChar": 32
+      },
+      "revId": "b37256ba003fe0e2eb6e368d5937bc6d9471a347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
