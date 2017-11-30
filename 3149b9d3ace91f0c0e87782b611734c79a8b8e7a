@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71518365_2b43b468",
+        "filename": "chrome/browser/extensions/crx_installer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-30T02:38:10Z",
+      "side": 1,
+      "message": "If this is all copied from ExtensionService::UpdateExtension, can we refactor this to avoid a) duplicate code and b) divergence?  Let\u0027s just put a method on CrxInstaller to initialize the creation flags, that can be called from both here and ExtensionService.",
+      "revId": "3149b9d3ace91f0c0e87782b611734c79a8b8e7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35ca85f1_093fd48e",
+        "filename": "chrome/browser/extensions/crx_installer_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-30T02:38:10Z",
+      "side": 1,
+      "message": "nit: move closer to its use (i.e., around line 582 of this patch set)",
+      "revId": "3149b9d3ace91f0c0e87782b611734c79a8b8e7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa436fe3_0987e7a3",
+        "filename": "extensions/browser/updater/extension_installer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-30T02:38:10Z",
+      "side": 1,
+      "message": "I don\u0027t think this is quite specific enough.  For instance, this says that most things run on the UI thread before and after the installer runs, but Install() posts a task to the UI thread - implying it\u0027s not already on the UI thread.  I\u0027d prefer we document each method with where it should be running/called from.",
+      "revId": "3149b9d3ace91f0c0e87782b611734c79a8b8e7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f1e0f51_c6ec9d4b",
+        "filename": "extensions/browser/updater/extension_installer_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-30T02:38:10Z",
+      "side": 1,
+      "message": "This seems weird to me... I think we must have a way of comparing paths properly, otherwise many other things seem like they would fail.\n\nDoes this still fail with MakeAbsoluteFilePath()?",
+      "revId": "3149b9d3ace91f0c0e87782b611734c79a8b8e7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
