@@ -16,6 +16,24 @@
       "revId": "b765ea7f6a7f32a3eb33ef496b46803ecf204cdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7386d853_08a003e1",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-11-30T13:32:11Z",
+      "side": 1,
+      "message": "The return value is true only if there is a visible change to the permanent text. This could be true when switching tabs and could be false when focusing the address bar otherwise. I don\u0027t see any obvious way in which this information would change the workflow within \"OnFocus\". I will add a TODO just to keep a reminder for this consideration.",
+      "parentUuid": "a4f7dad4_750ce2a8",
+      "revId": "b765ea7f6a7f32a3eb33ef496b46803ecf204cdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
