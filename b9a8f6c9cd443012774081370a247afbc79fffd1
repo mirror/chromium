@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9e4748f_96d870e7",
+        "filename": "chrome/browser/apps/guest_view/web_view_interactive_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1578,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-11-30T14:41:38Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we we be sending the events to the embedder\u0027s web contents so that it routes properly? After all, doesn\u0027t TouchSelection rely on all events going through the top-level RWHVA (and doing so with UI events, and not Web events)?",
+      "range": {
+        "startLine": 1578,
+        "startChar": 32,
+        "endLine": 1578,
+        "endChar": 50
+      },
+      "revId": "b9a8f6c9cd443012774081370a247afbc79fffd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
