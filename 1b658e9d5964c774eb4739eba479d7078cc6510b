@@ -16,6 +16,24 @@
       "revId": "1b658e9d5964c774eb4739eba479d7078cc6510b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77595910_cf3ecf04",
+        "filename": "third_party/WebKit/Source/devtools/front_end/main/Main.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-30T21:52:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dec348cf_def3a3b9",
+      "revId": "1b658e9d5964c774eb4739eba479d7078cc6510b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
