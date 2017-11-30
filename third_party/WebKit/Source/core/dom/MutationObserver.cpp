@@ -357,7 +357,7 @@ void MutationObserver::DeliverMutations() {
   for (const auto& observer : observers) {
     if (observer->ShouldBeSuspended())
       SuspendedMutationObservers().insert(observer);
-    else
+    else if (observer->GetExecutionContext())
       observer->Deliver();
   }
   for (const auto& slot : slots)
