@@ -113,6 +113,29 @@
     },
     {
       "key": {
+        "uuid": "0bd1c65f_f1f5e91f",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 18
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-11-30T09:58:37Z",
+      "side": 1,
+      "message": "This line ended up forcing a revert anyway. We were getting to this line on the x64 Android builder.\nIt seems like even though the static library isn\u0027t required on x86 Android, it is being built?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 25
+      },
+      "revId": "46b0cd54825ba2a05183e9a882f67ecf60e94786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "308f5113_e2995e81",
         "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
         "patchSetId": 18
