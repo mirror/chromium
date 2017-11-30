@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fdb8284e_0f2f9506",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ChromeModalDialogManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-30T00:35:05Z",
+      "side": 1,
+      "message": "Good point. Done.",
+      "parentUuid": "f2f50581_611a7bb1",
+      "range": {
+        "startLine": 104,
+        "startChar": 16,
+        "endLine": 104,
+        "endChar": 46
+      },
+      "revId": "64db5325d650dcd83d9c9879068a47fe5eff3eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "123d3a8b_58b82517",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ChromeModalDialogManager.java",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-27T22:47:44Z",
       "side": 1,
       "message": "I don\u0027t know if you\u0027ve thought about it, but what if the container is always the top most child and instead of relying on the size of the container for the background scrim drawing, we\u0027d do it ourselves by either having a custom drawable or overwriting onDraw.\n\nMy thinking is the container could just be a FullscreenListener for ChromeFullscreenManager.  Then it would adjust it\u0027s background drawing but not worry about position in the hierarchy.\n\nThis might require tweaking the touch handling of that view as it would need to only consume events that touched the scrim region and allow the rest to bleed through.",
+      "range": {
+        "startLine": 166,
+        "startChar": 29,
+        "endLine": 166,
+        "endChar": 36
+      },
+      "revId": "64db5325d650dcd83d9c9879068a47fe5eff3eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fac94023_78d8e637",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ChromeModalDialogManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-30T00:35:05Z",
+      "side": 1,
+      "message": "I have thought about some similar approach like this, but not as detailed. I think this approach will work fine for the toolbar, but the major challenge is an opened BottomSheet in Chrome Home. The BottomSheet can occupy the whole screen and we have to change the index position to be below the toolbar and FadingBackgroundView, or otherwise we\u0027ll need to temporarily hide the container and reshow it after toolbar is defocused or BottomSheet is closed.\n\nBut if we decide to temporarily hide the container instead of putting it below, I think this approach might be an overkill since we don\u0027t need to adjust positioning anymore.",
+      "parentUuid": "123d3a8b_58b82517",
       "range": {
         "startLine": 166,
         "startChar": 29,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b97cfd88_72ed914e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ChromeModalDialogManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-30T00:35:05Z",
+      "side": 1,
+      "message": "The current spec is to disable the overflow menu (https://folio.googleplex.com/chrome-ux/mocks/418-clank-dialogs/011317_TabModalClankDialogs#%2F02_TabModalRuleSet.png%3Fz\u003dwidth)\n\nI also think having a limited set of items in overflow menu would be nice. We can sync with UX and see how this works out together.",
+      "parentUuid": "cae5bf8e_ec593892",
+      "range": {
+        "startLine": 250,
+        "startChar": 23,
+        "endLine": 250,
+        "endChar": 33
+      },
+      "revId": "64db5325d650dcd83d9c9879068a47fe5eff3eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8854821d_1f40baaa",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
         "patchSetId": 8
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-27T22:47:44Z",
       "side": 1,
       "message": "Could this be a List\u003cPair\u003cModalDialogView, Integer\u003e\u003e to remove the need for mPendingDialogTypes above?",
+      "range": {
+        "startLine": 59,
+        "startChar": 18,
+        "endLine": 59,
+        "endChar": 22
+      },
+      "revId": "64db5325d650dcd83d9c9879068a47fe5eff3eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65086d0c_0608e63b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-30T00:35:05Z",
+      "side": 1,
+      "message": "We would need to keep the ModalDialogViews in order for showing the next dialog in queue, and also the ability to remove an arbitrary ModalDialogView in the queue.\n\nIf using List\u003cPair\u003cModalDialogView, Integer\u003e\u003e, is there a better way to remove an item from the List based on the first value of the pair than manually iterate through the whole list? Or iteration is okay?",
+      "parentUuid": "8854821d_1f40baaa",
       "range": {
         "startLine": 59,
         "startChar": 18,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "860efc11_2a62f7a8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-30T00:35:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f5c8eba_82e31ad8",
+      "range": {
+        "startLine": 65,
+        "startChar": 28,
+        "endLine": 65,
+        "endChar": 46
+      },
+      "revId": "64db5325d650dcd83d9c9879068a47fe5eff3eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4b4da09_b0268a5a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
         "patchSetId": 8
@@ -131,6 +251,24 @@
       "revId": "64db5325d650dcd83d9c9879068a47fe5eff3eb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb076bc3_0f776e83",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-30T00:35:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4b4da09_b0268a5a",
+      "revId": "64db5325d650dcd83d9c9879068a47fe5eff3eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -151,6 +289,24 @@
     },
     {
       "key": {
+        "uuid": "c154eaa8_b689d0a0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-30T00:35:05Z",
+      "side": 1,
+      "message": "Reusing was just to avoid building new ones. Let\u0027s build a new dialog/container every time then.",
+      "parentUuid": "b95423f6_95232775",
+      "revId": "64db5325d650dcd83d9c9879068a47fe5eff3eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68fdae72_f11b4eb6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
         "patchSetId": 8
@@ -162,6 +318,30 @@
       "writtenOn": "2017-11-27T22:47:44Z",
       "side": 1,
       "message": "Calling handleBackPress seems a bit cyclical to me.  handleBackPresss calls dismissDialog on the Manager then that calls dismissDialog on the Presenter.  Maybe showDialog could take an OnCancel Runnable that would allow this to be a static class w/o dependencies on the Manager.",
+      "range": {
+        "startLine": 74,
+        "startChar": 63,
+        "endLine": 74,
+        "endChar": 78
+      },
+      "revId": "64db5325d650dcd83d9c9879068a47fe5eff3eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "216bd189_fd360db4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-30T00:35:05Z",
+      "side": 1,
+      "message": "Hm.. I feel like we might still need to depend on Manager in the Presenter, The presenter itself should just show/hide the views, but show/dismiss the dialog should still be handled by the manager. Also, there are different options to dismiss dialogs (dismiss or cancel single dialog, and cancel all dialogs), and these options might all be needed for a presenter, so I am not sure having just one OnCancel Runnable is sufficient.",
+      "parentUuid": "68fdae72_f11b4eb6",
       "range": {
         "startLine": 74,
         "startChar": 63,
@@ -191,6 +371,24 @@
     },
     {
       "key": {
+        "uuid": "37b28c9b_6745a479",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-30T00:35:05Z",
+      "side": 1,
+      "message": "Yes this is definitely more scalable and easier for adding new Presenters. ChromeModalDialogManager is not needed.",
+      "parentUuid": "f483868a_1974df23",
+      "revId": "64db5325d650dcd83d9c9879068a47fe5eff3eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d91d63e_5dd87d9b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
         "patchSetId": 8
@@ -211,6 +409,30 @@
       "revId": "64db5325d650dcd83d9c9879068a47fe5eff3eb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfc745d3_bf676278",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-30T00:35:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d91d63e_5dd87d9b",
+      "range": {
+        "startLine": 144,
+        "startChar": 19,
+        "endLine": 144,
+        "endChar": 20
+      },
+      "revId": "64db5325d650dcd83d9c9879068a47fe5eff3eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -237,6 +459,30 @@
     },
     {
       "key": {
+        "uuid": "ee14358a_bf8f0f4e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-30T00:35:05Z",
+      "side": 1,
+      "message": "Good point. We should not expect dismissDialog to call dismissNoAction since dismissDialog should only be directly called after user did some actions on the dialog. However I think what\u0027s missing in Manager is cancelDialog() that handles dismissal outside the dialog.\n\ncancelDialog() would call dismissDialog() and onDismissNoAction().\n\nI think the naming makes this a little confusing. \"onDissmissNoAction\" should just be \"onCancel\" so that it is the same as the terms from Android dialogs. Also \"dismissAllDialogs\" should be \"cancelAllDialogs\".",
+      "parentUuid": "776418f5_32ec3cc6",
+      "range": {
+        "startLine": 145,
+        "startChar": 32,
+        "endLine": 145,
+        "endChar": 38
+      },
+      "revId": "64db5325d650dcd83d9c9879068a47fe5eff3eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ffdcf9f_f7b5a2e6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogView.java",
         "patchSetId": 8
@@ -251,6 +497,24 @@
       "revId": "64db5325d650dcd83d9c9879068a47fe5eff3eb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b0e48ac_ff26f492",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogView.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-30T00:35:05Z",
+      "side": 1,
+      "message": "I guess for the purpose of AlertDialog, it is probably not necessary to support dynamic titles.\n\nIf message and custom view are set together, it will look strange if the message is scrollable. Added assert to check message and custom view are not both set.",
+      "parentUuid": "0ffdcf9f_f7b5a2e6",
+      "revId": "64db5325d650dcd83d9c9879068a47fe5eff3eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -291,6 +555,30 @@
       "revId": "64db5325d650dcd83d9c9879068a47fe5eff3eb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ae201ea_654312fe",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogView.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-30T00:35:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d04fa7f3_c08da55d",
+      "range": {
+        "startLine": 160,
+        "startChar": 34,
+        "endLine": 160,
+        "endChar": 37
+      },
+      "revId": "64db5325d650dcd83d9c9879068a47fe5eff3eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
