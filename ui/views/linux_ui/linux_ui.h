@@ -8,6 +8,7 @@
 #include <string>
 
 #include "base/callback.h"
+#include "base/time/time.h"
 #include "build/buildflag.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/base/ime/linux/linux_input_method_context_factory.h"
