@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "046428a0_ae53798b",
+        "filename": "components/cronet/native/cronet.idl",
+        "patchSetId": 44
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-30T19:01:28Z",
+      "side": 1,
+      "message": "I would agree, but java.nio.Buffer() defines them as \u0027int\u0027. Added comment explaining motivation.",
+      "parentUuid": "ca6f165c_ccc98276",
+      "range": {
+        "startLine": 19,
+        "startChar": 18,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "e04b96a8eade21bbfaf72b7163622edb82ba696c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6272b66c_639a7104",
         "filename": "components/cronet/native/cronet.idl",
         "patchSetId": 44
@@ -45,6 +69,30 @@
       "revId": "e04b96a8eade21bbfaf72b7163622edb82ba696c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ca07a2a_36fb11c0",
+        "filename": "components/cronet/native/cronet.idl",
+        "patchSetId": 44
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-30T19:01:28Z",
+      "side": 1,
+      "message": "Hrm, comments predate actual defaults. Removed.",
+      "parentUuid": "6272b66c_639a7104",
+      "range": {
+        "startLine": 29,
+        "startChar": 26,
+        "endLine": 29,
+        "endChar": 0
+      },
+      "revId": "e04b96a8eade21bbfaf72b7163622edb82ba696c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "43041072_c3724289",
+        "filename": "components/cronet/native/cronet.idl",
+        "patchSetId": 44
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-30T19:01:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc49c0ee_b3c04bde",
+      "range": {
+        "startLine": 40,
+        "startChar": 5,
+        "endLine": 40,
+        "endChar": 19
+      },
+      "revId": "e04b96a8eade21bbfaf72b7163622edb82ba696c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "537c5b7c_ac8e770d",
         "filename": "components/cronet/native/cronet.idl",
         "patchSetId": 44
@@ -85,6 +157,24 @@
       "revId": "e04b96a8eade21bbfaf72b7163622edb82ba696c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d181bce2_438d7db9",
+        "filename": "components/cronet/native/cronet.idl",
+        "patchSetId": 44
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-30T19:01:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "537c5b7c_ac8e770d",
+      "revId": "e04b96a8eade21bbfaf72b7163622edb82ba696c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "7f069b07_3f4a2c95",
+        "filename": "components/cronet/native/cronet.idl",
+        "patchSetId": 44
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-30T19:01:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23225b79_9419f4c3",
+      "range": {
+        "startLine": 181,
+        "startChar": 53,
+        "endLine": 181,
+        "endChar": 0
+      },
+      "revId": "e04b96a8eade21bbfaf72b7163622edb82ba696c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4025bf3d_cc689034",
         "filename": "components/cronet/native/cronet.idl",
         "patchSetId": 44
@@ -131,6 +245,30 @@
       "revId": "e04b96a8eade21bbfaf72b7163622edb82ba696c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d3c6225_3d830afe",
+        "filename": "components/cronet/native/cronet.idl",
+        "patchSetId": 44
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-30T19:01:28Z",
+      "side": 1,
+      "message": "Hrm, we don\u0027t mention it in Java API, but sgtm. Done.",
+      "parentUuid": "4025bf3d_cc689034",
+      "range": {
+        "startLine": 632,
+        "startChar": 66,
+        "endLine": 632,
+        "endChar": 0
+      },
+      "revId": "e04b96a8eade21bbfaf72b7163622edb82ba696c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "af9d971f_1240277e",
+        "filename": "components/cronet/native/cronet.idl",
+        "patchSetId": 44
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-30T19:01:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddb1b15f_0c5768fb",
+      "range": {
+        "startLine": 814,
+        "startChar": 75,
+        "endLine": 814,
+        "endChar": 0
+      },
+      "revId": "e04b96a8eade21bbfaf72b7163622edb82ba696c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aeea1f8b_03d80088",
         "filename": "components/cronet/native/generated/cronet.idl_c.h",
         "patchSetId": 44
@@ -171,6 +333,24 @@
       "revId": "e04b96a8eade21bbfaf72b7163622edb82ba696c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcd8a7a1_da0c73d3",
+        "filename": "components/cronet/native/generated/cronet.idl_c.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-30T19:01:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aeea1f8b_03d80088",
+      "revId": "e04b96a8eade21bbfaf72b7163622edb82ba696c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -197,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "d211592b_97b6bcf0",
+        "filename": "components/cronet/native/generated/cronet.idl_c.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-30T19:01:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff1ad78e_0a3460bc",
+      "range": {
+        "startLine": 120,
+        "startChar": 3,
+        "endLine": 120,
+        "endChar": 10
+      },
+      "revId": "e04b96a8eade21bbfaf72b7163622edb82ba696c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b90775d4_7a4e0540",
         "filename": "components/cronet/native/generated/cronet.idl_impl_interface.h",
         "patchSetId": 44
@@ -208,6 +412,24 @@
       "writtenOn": "2017-11-30T14:04:53Z",
       "side": 1,
       "message": "These should all be classes, not structs, I believe according to the style guide:\nhttps://google.github.io/styleguide/cppguide.html#Structs_vs._Classes",
+      "revId": "e04b96a8eade21bbfaf72b7163622edb82ba696c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3bea7f9_98a8c2e1",
+        "filename": "components/cronet/native/generated/cronet.idl_impl_interface.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-30T19:01:28Z",
+      "side": 1,
+      "message": "I agree, but I don\u0027t think you can inherit class from struct, and these structs and partially defined in C header, which doesn\u0027t have notion of classes.",
+      "parentUuid": "b90775d4_7a4e0540",
       "revId": "e04b96a8eade21bbfaf72b7163622edb82ba696c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -234,6 +456,30 @@
       "revId": "e04b96a8eade21bbfaf72b7163622edb82ba696c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62d29bd4_ebec8286",
+        "filename": "components/cronet/tools/generate_idl_bindings.py",
+        "patchSetId": 44
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-30T19:01:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5492d9e_15e9072c",
+      "range": {
+        "startLine": 30,
+        "startChar": 23,
+        "endLine": 30,
+        "endChar": 0
+      },
+      "revId": "e04b96a8eade21bbfaf72b7163622edb82ba696c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
