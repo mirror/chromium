@@ -63,12 +63,11 @@ bool GbmSurface::SupportsPostSubBuffer() {
 void GbmSurface::SwapBuffersAsync(
     const SwapCompletionCallback& completion_callback,
     const PresentationCallback& presentation_callback) {
-  // TODO(penghuang): Provide useful presentation feedback.
-  // https://crbug.com/776877
   if (!images_[current_surface_]->ScheduleOverlayPlane(
           widget(), 0, gfx::OverlayTransform::OVERLAY_TRANSFORM_NONE,
           gfx::Rect(GetSize()), gfx::RectF(1, 1))) {
     completion_callback.Run(gfx::SwapResult::SWAP_FAILED);
+    presentation_callback.Run(gfx::PresentationFeedback());
     return;
   }
   GbmSurfaceless::SwapBuffersAsync(completion_callback, presentation_callback);
