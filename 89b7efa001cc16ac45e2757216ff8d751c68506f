@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86f5567b_d920fd08",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarDataProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-30T20:24:34Z",
+      "side": 1,
+      "message": "i\u0027d say if we don\u0027t inline the resource \u003d\u003d 0 check, we should update the doc to let callers know that the resource could still be missing",
+      "revId": "89b7efa001cc16ac45e2757216ff8d751c68506f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fecf087_cb9e87e9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarModelImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-30T20:24:34Z",
+      "side": 1,
+      "message": "should this internally do the getSecurityIconResource() !\u003d 0 check?",
+      "revId": "89b7efa001cc16ac45e2757216ff8d751c68506f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
