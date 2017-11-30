@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27f4ec2b_78d16b3b",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-30T23:30:51Z",
+      "side": 1,
+      "message": "Why doesn\u0027t SetText(base:string16()) suffice?",
+      "revId": "a57369949bda0e072375a1954eee940716102984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4f11a35_b7319eb7",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-30T23:30:51Z",
+      "side": 1,
+      "message": "q: Should this be calling AppendText, or maybe AppendNumber is a misnomer and it intends to replace selected text?",
+      "range": {
+        "startLine": 486,
+        "startChar": 14,
+        "endLine": 486,
+        "endChar": 33
+      },
+      "revId": "a57369949bda0e072375a1954eee940716102984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
