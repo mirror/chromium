@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "593b74cb_e8bd0131",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-30T18:31:50Z",
+      "side": 1,
+      "message": "It\u0027s not the static_cast I am concerned about, although it would be preferable to avoid that.\n\nI\u0027m concerned whether GetWidget()-\u003eGetNativeView()-\u003eparent() is gauranteed to be non null, especially considering that this is an event handler.",
+      "parentUuid": "e8c376b7_a3f1c57a",
+      "revId": "b3c82b2bb6d24ca42efe4e286fe45886a65075de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "756e1884_a1738f31",
         "filename": "ui/views/bubble/tray_bubble_view.cc",
         "patchSetId": 4
