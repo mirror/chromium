@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "680e657a_88181688",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-30T21:35:26Z",
+      "side": 1,
+      "message": "I don\u0027t think this is necessary. iOS can\u0027t use anything under chrome/ anyway. See assertion at https://cs.chromium.org/chromium/src/chrome/app/resources/BUILD.gn?type\u003dcs\u0026sq\u003dpackage:chromium\u0026q\u003dis_ios+file:%5Esrc/chrome/app/+package:%5Echromium$\u0026l\u003d9.",
+      "range": {
+        "startLine": 333,
+        "startChar": 30,
+        "endLine": 333,
+        "endChar": 45
+      },
+      "revId": "ee6125f8cd22057a52f87cf258b6b10b47be60ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
