@@ -16,6 +16,40 @@
       "revId": "5f5fe9bac7ab04de2265d1d2e0ca62d9dd6eeab7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e0bda8d_ba7652e9",
+        "filename": "chrome/browser/ui/page_info/page_info_ui.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-30T00:20:18Z",
+      "side": 1,
+      "message": "Would it be better to keep these icons in the PermissionsUIInfo struct array rather than in a switch here? That means 1 less place to modify when adding a new setting?",
+      "revId": "5f5fe9bac7ab04de2265d1d2e0ca62d9dd6eeab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81d3558b_852bdd0a",
+        "filename": "chrome/browser/ui/page_info/page_info_ui.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-30T00:20:18Z",
+      "side": 1,
+      "message": "Same question here I guess though it\u0027s a lot less of an issue because there\u0027s only 1 thing",
+      "revId": "5f5fe9bac7ab04de2265d1d2e0ca62d9dd6eeab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
