@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1575a563_a643e253",
+        "filename": "chromeos/dbus/proto/media_perception.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1189096
+      },
+      "writtenOn": "2017-11-30T02:06:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a4ae6a5_336f3e01",
+      "revId": "4c88f96a46c949a2ff3e97980729b09fb9283421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b426ee1_b4c5070b",
         "filename": "chromeos/dbus/proto/media_perception.proto",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "4d3c1d58_4d34a3ef",
+        "filename": "chromeos/dbus/proto/media_perception.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1189096
+      },
+      "writtenOn": "2017-11-30T02:06:15Z",
+      "side": 1,
+      "message": "Our computer vision backend has a couple of pipelines to process different video streams. Each pipeline has its own set of parameters such as resolution and frame rate.",
+      "parentUuid": "3b426ee1_b4c5070b",
+      "range": {
+        "startLine": 63,
+        "startChar": 2,
+        "endLine": 64,
+        "endChar": 22
+      },
+      "revId": "4c88f96a46c949a2ff3e97980729b09fb9283421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03b7456c_34675168",
         "filename": "extensions/browser/api/media_perception_private/media_perception_private_api.cc",
         "patchSetId": 2
@@ -56,6 +98,24 @@
       "revId": "4c88f96a46c949a2ff3e97980729b09fb9283421",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "def7ad44_2945ac69",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_private_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1189096
+      },
+      "writtenOn": "2017-11-30T02:06:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03b7456c_34675168",
+      "revId": "4c88f96a46c949a2ff3e97980729b09fb9283421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "4fc22afd_2081548f",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1189096
+      },
+      "writtenOn": "2017-11-30T02:06:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce547cc6_a06c0e17",
+      "revId": "4c88f96a46c949a2ff3e97980729b09fb9283421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e80dc4db_bc0435c1",
         "filename": "extensions/common/api/media_perception_private.idl",
         "patchSetId": 2
@@ -90,6 +168,24 @@
       "revId": "4c88f96a46c949a2ff3e97980729b09fb9283421",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f594effa_62a44e98",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1189096
+      },
+      "writtenOn": "2017-11-30T02:06:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e80dc4db_bc0435c1",
+      "revId": "4c88f96a46c949a2ff3e97980729b09fb9283421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -133,6 +229,48 @@
     },
     {
       "key": {
+        "uuid": "204d8578_f13cf93d",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1189096
+      },
+      "writtenOn": "2017-11-30T02:06:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fd985e0_3266c8c3",
+      "revId": "4c88f96a46c949a2ff3e97980729b09fb9283421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "34f11d3d_d4438222",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1189096
+      },
+      "writtenOn": "2017-11-30T02:06:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2aa158b9_7d158bb4",
+      "range": {
+        "startLine": 115,
+        "startChar": 24,
+        "endLine": 115,
+        "endChar": 40
+      },
+      "revId": "4c88f96a46c949a2ff3e97980729b09fb9283421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8159cfde_e2b20043",
         "filename": "extensions/test/data/media_perception_private/state/runtest.js",
         "patchSetId": 2
@@ -153,6 +291,30 @@
       "revId": "4c88f96a46c949a2ff3e97980729b09fb9283421",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ae98bbb_9f2cc03c",
+        "filename": "extensions/test/data/media_perception_private/state/runtest.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1189096
+      },
+      "writtenOn": "2017-11-30T02:06:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8159cfde_e2b20043",
+      "range": {
+        "startLine": 46,
+        "startChar": 9,
+        "endLine": 46,
+        "endChar": 53
+      },
+      "revId": "4c88f96a46c949a2ff3e97980729b09fb9283421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
