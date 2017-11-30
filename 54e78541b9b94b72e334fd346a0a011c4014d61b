@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f70a1a08_3aec5906",
+        "filename": "content/browser/notifications/notification_id_generator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-30T11:31:47Z",
+      "side": 1,
+      "message": "This maybe could be worded a little clearer. Uniqueness *of notification ids* across different browser contexts?\n\nOut of interest, how does the PNS guarantee this? (Not that this should be included in the comment but I\u0027d like to understand it).",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 70
+      },
+      "revId": "54e78541b9b94b72e334fd346a0a011c4014d61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
