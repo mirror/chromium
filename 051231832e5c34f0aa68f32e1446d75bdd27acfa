@@ -16,6 +16,24 @@
       "revId": "051231832e5c34f0aa68f32e1446d75bdd27acfa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16a725d6_553bdef3",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasResource.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-11-30T20:25:32Z",
+      "side": 1,
+      "message": "It\u0027s because CanvasResource.cpp can\u0027t compile otherwise.  This destructor has a dependency on GpuMemoryBuffer.h due to member gpu_memory_buffer_ getting destroyed.  I was getting a compile error saying that it can\u0027t call the destructor on an incomplete type, due to the use of a forward declaration in the header file.  FWIW, calling abandon In the destructor of a leaf class is fine.  It\u0027s calling it from the base class destructor that is problematic (clang warns of undefined behavior).",
+      "parentUuid": "e87fc214_d6d266a8",
+      "revId": "051231832e5c34f0aa68f32e1446d75bdd27acfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
