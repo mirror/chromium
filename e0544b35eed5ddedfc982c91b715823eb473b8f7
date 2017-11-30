@@ -22,6 +22,30 @@
       "revId": "e0544b35eed5ddedfc982c91b715823eb473b8f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f781e52_8cff5965",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-30T21:39:32Z",
+      "side": 1,
+      "message": "Good question. The test is currently passing on Windows, and https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/dup-dup2 documents it including a similar example. There\u0027s a warning that \"Windows 8.x Store apps\" must redirect file descriptors since there\u0027s no console, but AFAIK we\u0027re not currently building for that.\n\nI\u0027ve wrapped two tests that do this in #if defined(OS_POSIX) to avoid any potential issues, and split out a platform-independent Basic test.",
+      "parentUuid": "bc9ef095_60ff75d6",
+      "range": {
+        "startLine": 208,
+        "startChar": 15,
+        "endLine": 208,
+        "endChar": 23
+      },
+      "revId": "e0544b35eed5ddedfc982c91b715823eb473b8f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
