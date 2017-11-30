@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "29da225c_7fa52781",
+        "filename": "chrome/browser/ui/page_info/page_info_ui.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-30T02:29:42Z",
+      "side": 1,
+      "message": "Done! Good point, thanks.",
+      "parentUuid": "bc78b376_7145f757",
+      "revId": "5f5fe9bac7ab04de2265d1d2e0ca62d9dd6eeab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e0bda8d_ba7652e9",
         "filename": "chrome/browser/ui/page_info/page_info_ui.cc",
         "patchSetId": 11
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "45edd44a_29341414",
+        "filename": "chrome/browser/ui/page_info/page_info_ui.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-30T02:29:42Z",
+      "side": 1,
+      "message": "Yeah, I originally thought that would be better too, but vector icons don\u0027t exist on Android, so either we could keep it in the struct array and ifdef out all the icons for Android, or have this switch here instead. WDYT?",
+      "parentUuid": "1e0bda8d_ba7652e9",
+      "revId": "5f5fe9bac7ab04de2265d1d2e0ca62d9dd6eeab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81d3558b_852bdd0a",
         "filename": "chrome/browser/ui/page_info/page_info_ui.cc",
         "patchSetId": 11
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-30T00:20:18Z",
       "side": 1,
       "message": "Same question here I guess though it\u0027s a lot less of an issue because there\u0027s only 1 thing",
+      "revId": "5f5fe9bac7ab04de2265d1d2e0ca62d9dd6eeab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfbb8b5b_60bad77d",
+        "filename": "chrome/browser/ui/page_info/page_info_ui.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-30T02:29:42Z",
+      "side": 1,
+      "message": "Ditto reply above.",
+      "parentUuid": "81d3558b_852bdd0a",
       "revId": "5f5fe9bac7ab04de2265d1d2e0ca62d9dd6eeab7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
