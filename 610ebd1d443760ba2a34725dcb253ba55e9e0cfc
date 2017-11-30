@@ -22,6 +22,23 @@
       "revId": "610ebd1d443760ba2a34725dcb253ba55e9e0cfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a0c85c9_750e6d13",
+        "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1119,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-11-30T13:35:18Z",
+      "side": 1,
+      "message": "This is a good catch. It won\u0027t solve all the problems, but it looks like a good place to initialize AccountTrackerService. \n\nPS:\nWe cannot change User type here, because it\u0027s too late.\n\nWe need to create user_manager::User with correct account type from the very beginning.\n\nUnfortunately, current implementation completely ignores UserContext::user_type_ value, and this is what I am working now.",
+      "revId": "610ebd1d443760ba2a34725dcb253ba55e9e0cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
