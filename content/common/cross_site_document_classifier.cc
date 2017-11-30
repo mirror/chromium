@@ -116,7 +116,7 @@ bool CrossSiteDocumentClassifier::IsValidCorsHeaderSet(
   // eventually be able to receive, so we won't see illegal cross-site
   // documents allowed by this. We have to find a way to see if this
   // response is from a cookie-tagged request or not in the future.
-  if (access_control_origin == "*")
+  if (access_control_origin == "*" || access_control_origin == "null")
     return true;
 
   // TODO(dsjang): The CORS spec only treats a fully specified URL, except for
