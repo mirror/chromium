@@ -49,8 +49,6 @@ TEST(ProfileManagementSwitchesTest, GetAccountConsistencyMethod) {
     bool expect_dice_migration;
     bool expect_dice_enabled_for_profile;
   } test_cases[] = {
-    {AccountConsistencyMethod::kDisabled, false, false, false, false, false,
-     false},
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
     {AccountConsistencyMethod::kDiceFixAuthErrors, false, true, false, false,
      false, false},
@@ -60,9 +58,12 @@ TEST(ProfileManagementSwitchesTest, GetAccountConsistencyMethod) {
      true, true, true, false, false},
     {AccountConsistencyMethod::kDiceMigration, false, true, true, true, true,
      false},
-    {AccountConsistencyMethod::kDice, false, true, true, true, true, true},
-#endif
+    {AccountConsistencyMethod::kDice, false, true, true, true, true, true}
+#else
+    {AccountConsistencyMethod::kDisabled, false, false, false, false, false,
+     false},
     {AccountConsistencyMethod::kMirror, true, false, false, false, false, false}
+#endif
   };
 
   for (const TestCase& test_case : test_cases) {
@@ -101,14 +102,12 @@ TEST(ProfileManagementSwitchesTest, DiceMigration) {
     AccountConsistencyMethod method;
     bool expect_dice_enabled_for_profile;
   } test_cases[] = {
-      {AccountConsistencyMethod::kDisabled, false},
       {AccountConsistencyMethod::kDiceFixAuthErrors, false},
       {AccountConsistencyMethod::kDicePrepareMigration, false},
       {AccountConsistencyMethod::kDicePrepareMigrationChromeSyncEndpoint,
        false},
       {AccountConsistencyMethod::kDiceMigration, true},
-      {AccountConsistencyMethod::kDice, true},
-      {AccountConsistencyMethod::kMirror, false}};
+      {AccountConsistencyMethod::kDice, true}};
 
   for (const TestCase& test_case : test_cases) {
     ScopedAccountConsistency scoped_method(test_case.method);

@@ -48,7 +48,6 @@ TEST(AccountConsistencyModeManagerTest, MigrateAtCreation) {
 
   {
     // Migration does not happen if Dice is not enabled.
-    signin::ScopedAccountConsistencyDiceFixAuthErrors scoped_dice_fix_errors;
     EXPECT_FALSE(signin::IsDiceEnabledForProfile(prefs));
     AccountConsistencyModeManager manager(profile.get());
     EXPECT_TRUE(manager.IsReadyForDiceMigration());

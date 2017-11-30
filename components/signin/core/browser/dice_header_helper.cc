@@ -181,14 +181,9 @@ DiceResponseParams DiceHeaderHelper::BuildDiceSignoutResponseParams(
 }
 
 bool DiceHeaderHelper::IsUrlEligibleForRequestHeader(const GURL& url) {
-  if (!IsDiceFixAuthErrorsEnabled())
-    return false;
-
   // With kDiceFixAuthError, only set the request header if the user is signed
   // in and has an authentication error.
-  if (!signed_in_with_auth_error_ &&
-      (GetAccountConsistencyMethod() ==
-       AccountConsistencyMethod::kDiceFixAuthErrors)) {
+  if (!signed_in_with_auth_error_ && !IsDicePrepareMigrationEnabled()) {
     return false;
   }
 
