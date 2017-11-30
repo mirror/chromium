@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "23cc1f1a_930e7cef",
+        "filename": "ios/chrome/browser/infobars/infobar_container_delegate_ios.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-30T10:58:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4fa3560_a8930244",
+      "revId": "5ebae6a3383341941a13c898ae79cc647fd2fd55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0854f0d_dc568f4b",
         "filename": "ios/chrome/browser/infobars/infobar_container_delegate_ios.h",
         "patchSetId": 5
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "eb764fd2_89f1f833",
+        "filename": "ios/chrome/browser/infobars/infobar_container_delegate_ios.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-30T10:58:36Z",
+      "side": 1,
+      "message": "Maybe I was getting too aspirational with that sentence. Certainly the animations *shouldn\u0027t* be driven by cross-platform code. I\u0027ve edited accordingly, thanks!",
+      "parentUuid": "a0854f0d_dc568f4b",
+      "range": {
+        "startLine": 15,
+        "startChar": 31,
+        "endLine": 16,
+        "endChar": 31
+      },
+      "revId": "5ebae6a3383341941a13c898ae79cc647fd2fd55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f405020_9b7eeae4",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 5
@@ -53,6 +95,24 @@
       "writtenOn": "2017-11-29T22:30:47Z",
       "side": 1,
       "message": "Should this be deleted?",
+      "revId": "5ebae6a3383341941a13c898ae79cc647fd2fd55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70b1f5dc_9c961a4b",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 4933,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-30T10:58:36Z",
+      "side": 1,
+      "message": "It should, yes. I had assumed that the BVC was also an InfoBarControllerDelegate, and that the methods below here were implementations of that. But there is no such protocol.\n\nI\u0027ve moved a method and added another pragma to clarify things further.",
+      "parentUuid": "4f405020_9b7eeae4",
       "revId": "5ebae6a3383341941a13c898ae79cc647fd2fd55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
