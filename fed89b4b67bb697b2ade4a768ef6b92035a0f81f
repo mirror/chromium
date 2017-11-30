@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a7e988e_4b5f46a4",
+        "filename": "build/android/llvm_symbolizer.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-30T22:16:01Z",
+      "side": 1,
+      "message": "nit: docstring",
+      "revId": "fed89b4b67bb697b2ade4a768ef6b92035a0f81f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad07a7b2_a1aa220c",
+        "filename": "build/android/llvm_symbolizer.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-30T22:16:01Z",
+      "side": 1,
+      "message": "nit: docstring",
+      "revId": "fed89b4b67bb697b2ade4a768ef6b92035a0f81f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "911f3af5_28bddb0e",
+        "filename": "build/android/llvm_symbolizer.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-30T22:16:01Z",
+      "side": 1,
+      "message": "nit: docstring",
+      "revId": "fed89b4b67bb697b2ade4a768ef6b92035a0f81f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

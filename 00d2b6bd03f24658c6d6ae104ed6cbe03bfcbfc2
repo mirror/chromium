@@ -244,6 +244,24 @@
       "revId": "00d2b6bd03f24658c6d6ae104ed6cbe03bfcbfc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6197a97a_030dd536",
+        "filename": "third_party/android_platform/development/scripts/README.chromium",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-30T22:16:01Z",
+      "side": 1,
+      "message": "This just means you should change //third_party/android_platform/README.chromium. Add a brief description of the modifications you\u0027re introducing to the Local Modifications section.",
+      "parentUuid": "377be6ac_065a3308",
+      "revId": "00d2b6bd03f24658c6d6ae104ed6cbe03bfcbfc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
