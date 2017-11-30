@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bb27d7a_96a5bb03",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-11-30T19:51:16Z",
+      "side": 1,
+      "message": "The comment above means `db_.reset()` goes here right?\n\nAlso here would be where we would store a timestamp for the \"time until reopen\" UMA.",
+      "revId": "f430f8fdec9a1931117906727fab1887613fe7b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
