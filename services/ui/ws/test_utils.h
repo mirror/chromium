@@ -820,6 +820,7 @@ class TestPlatformDisplay : public PlatformDisplay {
   void SetImeVisibility(bool visible) override;
   void UpdateViewportMetrics(const display::ViewportMetrics& metrics) override;
   const display::ViewportMetrics& GetViewportMetrics() override;
+  int64_t GetId() const override;
   gfx::AcceleratedWidget GetAcceleratedWidget() const override;
   FrameGenerator* GetFrameGenerator() override;
   EventSink* GetEventSink() override;

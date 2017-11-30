@@ -747,6 +747,9 @@ void TestPlatformDisplay::UpdateViewportMetrics(
 const display::ViewportMetrics& TestPlatformDisplay::GetViewportMetrics() {
   return metrics_;
 }
+int64_t TestPlatformDisplay::GetId() const {
+  return display::kInvalidDisplayId;
+}
 gfx::AcceleratedWidget TestPlatformDisplay::GetAcceleratedWidget() const {
   return gfx::kNullAcceleratedWidget;
 }
