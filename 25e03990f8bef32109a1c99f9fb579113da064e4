@@ -86,6 +86,75 @@
       "revId": "25e03990f8bef32109a1c99f9fb579113da064e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4be4e68_263b7de5",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-30T18:53:03Z",
+      "side": 1,
+      "message": "nit: s/10/10u/ to be consistent",
+      "range": {
+        "startLine": 31,
+        "startChar": 58,
+        "endLine": 31,
+        "endChar": 60
+      },
+      "revId": "25e03990f8bef32109a1c99f9fb579113da064e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ed78d0e_49f45d68",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-30T18:53:03Z",
+      "side": 1,
+      "message": "nit: 1u",
+      "range": {
+        "startLine": 32,
+        "startChar": 66,
+        "endLine": 32,
+        "endChar": 67
+      },
+      "revId": "25e03990f8bef32109a1c99f9fb579113da064e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88c8c347_beb55504",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-30T18:53:03Z",
+      "side": 1,
+      "message": "I feel this name is too generic. Can we have clearer name for this? Probably almost every parameters we have in this class would be a limit as we already have bg and bg sub limits.",
+      "range": {
+        "startLine": 34,
+        "startChar": 63,
+        "endLine": 34,
+        "endChar": 68
+      },
+      "revId": "25e03990f8bef32109a1c99f9fb579113da064e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
