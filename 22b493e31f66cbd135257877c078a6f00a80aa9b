@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e459df3b_3237ee55",
+        "filename": "components/crash/core/common/objc_zombie.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-11-30T16:25:33Z",
+      "side": 1,
+      "message": "The documentation suggests putting the crash key in an anonymous namespace instead of as a static variable.  Does it matter?",
+      "revId": "22b493e31f66cbd135257877c078a6f00a80aa9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
