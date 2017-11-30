@@ -915,9 +915,8 @@ public class LocationBarLayout extends FrameLayout
         if (mUrlHasFocus && isTablet) return BUTTON_TYPE_NAVIGATION_ICON;
 
         boolean isOfflinePage = mToolbarDataProvider.isOfflinePage();
-        return getSecurityIconResource(getSecurityLevel(), !isTablet, isOfflinePage) != 0
-                ? BUTTON_TYPE_SECURITY_ICON
-                : BUTTON_TYPE_NONE;
+        return mToolbarDataProvider.getSecurityIconResource() != 0 ? BUTTON_TYPE_SECURITY_ICON
+                                                                   : BUTTON_TYPE_NONE;
     }
 
     private void changeLocationBarIcon() {
@@ -1294,47 +1293,6 @@ public class LocationBarLayout extends FrameLayout
         if (type != mNavigationButtonType) setNavigationButtonType(type);
     }
 
-    private int getSecurityLevel() {
-        return getSecurityLevel(getCurrentTab(), mToolbarDataProvider.isOfflinePage());
-    }
-
-    @VisibleForTesting
-    static int getSecurityLevel(Tab tab, boolean isOfflinePage) {
-        if (tab == null || isOfflinePage) return ConnectionSecurityLevel.NONE;
-        return tab.getSecurityLevel();
-    }
-
-    /**
-     * Determines the icon that should be displayed for the current security level.
-     * @param securityLevel The security level for which the resource will be returned.
-     * @param isSmallDevice Whether the device form factor is small (like a phone) or large
-     * (like a tablet).
-     * @param isOfflinePage Whether the page for which the icon is shown is an offline page.
-     * @return The resource ID of the icon that should be displayed, 0 if no icon should show.
-     */
-    @DrawableRes
-    public static int getSecurityIconResource(
-            int securityLevel, boolean isSmallDevice, boolean isOfflinePage) {
-        if (isOfflinePage) {
-            return R.drawable.offline_pin_round;
-        }
-        switch (securityLevel) {
-            case ConnectionSecurityLevel.NONE:
-                return isSmallDevice ? 0 : R.drawable.omnibox_info;
-            case ConnectionSecurityLevel.HTTP_SHOW_WARNING:
-                return R.drawable.omnibox_info;
-            case ConnectionSecurityLevel.DANGEROUS:
-                return R.drawable.omnibox_https_invalid;
-            case ConnectionSecurityLevel.SECURE_WITH_POLICY_INSTALLED_CERT:
-            case ConnectionSecurityLevel.SECURE:
-            case ConnectionSecurityLevel.EV_SECURE:
-                return R.drawable.omnibox_https_valid;
-            default:
-                assert false;
-        }
-        return 0;
-    }
-
     /**
      * @param securityLevel The security level for which the color will be returned.
      * @param provider The {@link ToolbarDataProvider}.
@@ -1378,10 +1336,8 @@ public class LocationBarLayout extends FrameLayout
      */
     @Override
     public void updateSecurityIcon(int securityLevel) {
-        boolean isSmallDevice = !DeviceFormFactor.isTablet();
         @DrawableRes
-        int id = getSecurityIconResource(
-                securityLevel, isSmallDevice, mToolbarDataProvider.isOfflinePage());
+        int id = mToolbarDataProvider.getSecurityIconResource();
         if (id == 0) {
             mSecurityButton.setImageDrawable(null);
         } else {
@@ -1480,8 +1436,9 @@ public class LocationBarLayout extends FrameLayout
         // Because is offline page is cleared a bit slower, we also ensure that connection security
         // level is NONE or HTTP_SHOW_WARNING (http://crbug.com/671453).
         boolean verboseStatusVisible = !mUrlHasFocus && mToolbarDataProvider.isOfflinePage()
-                && (getSecurityLevel() == ConnectionSecurityLevel.NONE
-                           || getSecurityLevel() == ConnectionSecurityLevel.HTTP_SHOW_WARNING);
+                && (mToolbarDataProvider.getSecurityLevel() == ConnectionSecurityLevel.NONE
+                           || mToolbarDataProvider.getSecurityLevel()
+                                   == ConnectionSecurityLevel.HTTP_SHOW_WARNING);
 
         int verboseStatusVisibility = verboseStatusVisible ? VISIBLE : GONE;
 
@@ -2322,7 +2279,7 @@ public class LocationBarLayout extends FrameLayout
     public void updateLoadingState(boolean updateUrl) {
         if (updateUrl) setUrlToPageUrl();
         updateNavigationButton();
-        updateSecurityIcon(getSecurityLevel());
+        updateSecurityIcon(mToolbarDataProvider.getSecurityLevel());
     }
 
     @Override
@@ -2566,7 +2523,7 @@ public class LocationBarLayout extends FrameLayout
     @Override
     public void updateVisualsForState() {
         if (updateUseDarkColors() || mIsEmphasizingHttpsScheme != shouldEmphasizeHttpsScheme()) {
-            updateSecurityIcon(getSecurityLevel());
+            updateSecurityIcon(mToolbarDataProvider.getSecurityLevel());
         }
         ColorStateList colorStateList = ApiCompatibilityUtils.getColorStateList(getResources(),
                 mUseDarkColors ? R.color.dark_mode_tint : R.color.light_mode_tint);
@@ -2699,5 +2656,10 @@ public class LocationBarLayout extends FrameLayout
      */
     public void scrollUrlBarToTld() {
         mUrlBar.scrollToTLD();
+    }
+
+    @VisibleForTesting
+    String getUrlBarTextForTests() {
+        return mUrlBar.getText().toString();
     }
 }
