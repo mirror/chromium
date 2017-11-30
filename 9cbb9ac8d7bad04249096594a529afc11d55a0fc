@@ -52,6 +52,24 @@
       "revId": "9cbb9ac8d7bad04249096594a529afc11d55a0fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70c10bb7_4ffd7654",
+        "filename": "ui/views/bubble/bubble_dialog_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-30T08:06:05Z",
+      "side": 1,
+      "message": "\u003e Ah, I mistakenly thought that tab-modal dialogs were using BubbleDialogDelegate. Yeah, I\u0027m pretty sure the min size isn\u0027t used for bubbles, but checking would be nice.\n\nSo.. I found TrayBubbleView :/. It overrides Min/Max sizes.. It also overrides BubbleDialogDelegateView::CreateNonClientFrameView already, but not in way that helps. So I need to do a more thorough search and think up a good plan for moving forward.\n\n(I wonder if the CL owner can remove a reviewers\u0027 +1...)",
+      "parentUuid": "40ad9864_cf4ee253",
+      "revId": "9cbb9ac8d7bad04249096594a529afc11d55a0fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
