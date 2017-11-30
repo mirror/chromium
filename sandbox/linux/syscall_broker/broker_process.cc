@@ -31,13 +31,15 @@ namespace syscall_broker {
 
 BrokerProcess::BrokerProcess(
     int denied_errno,
+    uint32_t allowed_command_mask,
     const std::vector<syscall_broker::BrokerFilePermission>& permissions,
     bool fast_check_in_client,
     bool quiet_failures_for_tests)
     : initialized_(false),
+      broker_pid_(-1),
       fast_check_in_client_(fast_check_in_client),
       quiet_failures_for_tests_(quiet_failures_for_tests),
-      broker_pid_(-1),
+      allowed_command_mask_(allowed_command_mask),
       broker_policy_(denied_errno, permissions) {}
 
 BrokerProcess::~BrokerProcess() {
@@ -73,7 +75,8 @@ bool BrokerProcess::Init(
     ipc_reader.reset();
     broker_pid_ = child_pid;
     broker_client_ = std::make_unique<BrokerClient>(
-        broker_policy_, fast_check_in_client_, quiet_failures_for_tests_);
+        broker_policy_, allowed_command_mask_, fast_check_in_client_,
+        quiet_failures_for_tests_);
     initialized_ = true;
     return true;
   }
@@ -82,7 +85,8 @@ bool BrokerProcess::Init(
   // we get notified if the client disappears.
   ipc_writer_.reset();
   CHECK(broker_process_init_callback.Run());
-  BrokerHost broker_host(broker_policy_, std::move(ipc_reader));
+  BrokerHost broker_host(broker_policy_, allowed_command_mask_,
+                         std::move(ipc_reader));
   for (;;) {
     switch (broker_host.HandleRequest()) {
       case BrokerHost::RequestStatus::LOST_CLIENT:
