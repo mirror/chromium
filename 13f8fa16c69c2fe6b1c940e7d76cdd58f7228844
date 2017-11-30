@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8eff9dc_aa1f8cbc",
+        "filename": "chrome/browser/media/media_engagement_preloaded_list.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-30T11:58:34Z",
+      "side": 1,
+      "message": "i think this is a fine use of CR_DEFINE_STATIC_LOCAL:\n#include \"base/macros.h\"\n\n  CR_DEFINE_STATIC_LOCAL(MediaEngagementPreloadedList, instance, ());\n  return \u0026instance;\n\nunless there\u0027s a compelling reason why this object must be destroyed at shutdown.",
+      "revId": "13f8fa16c69c2fe6b1c940e7d76cdd58f7228844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bee12d52_23e4353c",
+        "filename": "chrome/browser/media/media_engagement_preloaded_list.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-30T11:58:34Z",
+      "side": 1,
+      "message": "nit: pass by constref",
+      "range": {
+        "startLine": 188,
+        "startChar": 48,
+        "endLine": 188,
+        "endChar": 62
+      },
+      "revId": "13f8fa16c69c2fe6b1c940e7d76cdd58f7228844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a415167d_f6d67687",
+        "filename": "chrome/browser/media/media_engagement_preloaded_list.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-30T11:58:34Z",
+      "side": 1,
+      "message": "nit: remove this, as ReadFileToString also does it, so this is wasted work.",
+      "revId": "13f8fa16c69c2fe6b1c940e7d76cdd58f7228844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
