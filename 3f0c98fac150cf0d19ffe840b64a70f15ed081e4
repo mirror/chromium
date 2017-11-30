@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "915bc79d_b5e82f3f",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-11-30T19:21:12Z",
+      "side": 1,
+      "message": "The acceleration hint should not be hard-coded here. Please make it an argument of ToStaticBitmapImage so that the decision about the acceleration hint can be deferred to the caller.  Otherwise people might add call to this in the future without realizing that it is sub optimal for a given use case.",
+      "range": {
+        "startLine": 732,
+        "startChar": 45,
+        "endLine": 732,
+        "endChar": 66
+      },
+      "revId": "3f0c98fac150cf0d19ffe840b64a70f15ed081e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18294015_b345e940",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-11-30T19:21:12Z",
+      "side": 1,
+      "message": "For readability and simplicity, please formulate this as:\nif (!image_bitmap)\n  image_bitmap \u003d CreateTransparentImage(size_)\nreturn image_bitmap;",
+      "range": {
+        "startLine": 744,
+        "startChar": 6,
+        "endLine": 744,
+        "endChar": 18
+      },
+      "revId": "3f0c98fac150cf0d19ffe840b64a70f15ed081e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e29162b9_938085cb",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-11-30T19:21:12Z",
+      "side": 1,
+      "message": "Add comment to explain why there are two separate paths (on/off main thread)",
+      "range": {
+        "startLine": 774,
+        "startChar": 6,
+        "endLine": 774,
+        "endChar": 18
+      },
+      "revId": "3f0c98fac150cf0d19ffe840b64a70f15ed081e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09077671_88fa1a6f",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageBuffer.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-11-30T19:21:12Z",
+      "side": 1,
+      "message": "Remove this if to make logic simpler. You just need:\nif (skia_image-\u003eisTextureBacked()){\n   ...\n} else if (skia_image-\u003eisLazyDecoded()) {\n   ...\n}",
+      "range": {
+        "startLine": 432,
+        "startChar": 7,
+        "endLine": 432,
+        "endChar": 17
+      },
+      "revId": "3f0c98fac150cf0d19ffe840b64a70f15ed081e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b7c5855_dd42861d",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageBuffer.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-11-30T19:21:12Z",
+      "side": 1,
+      "message": "I don\u0027t see why this would be any more efficient than readPixels.  You should keep the code cleaner by just calling readPixels IMHO. Only read on pixel.",
+      "range": {
+        "startLine": 447,
+        "startChar": 30,
+        "endLine": 447,
+        "endChar": 39
+      },
+      "revId": "3f0c98fac150cf0d19ffe840b64a70f15ed081e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "486fbd75_16330c9d",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageBuffer.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-11-30T19:21:12Z",
+      "side": 1,
+      "message": "When would this ever happen.  If you don\u0027t think it should ever happen, replace this with a DCHECK.",
+      "range": {
+        "startLine": 449,
+        "startChar": 10,
+        "endLine": 449,
+        "endChar": 16
+      },
+      "revId": "3f0c98fac150cf0d19ffe840b64a70f15ed081e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
