@@ -21,6 +21,14 @@ size_t GetFileCountInDirectory(const base::FilePath& directory) {
   return count;
 }
 
+void IterateDirFiles(const base::FilePath& dir) {
+  base::FileEnumerator file_enumerator(dir, false, base::FileEnumerator::FILES);
+  for (base::FilePath path = file_enumerator.Next(); !path.empty();
+       path = file_enumerator.Next()) {
+    DLOG(ERROR) << path.value();
+  }
+}
+
 }  // namespace test_util
 
 }  // namespace offline_pages
