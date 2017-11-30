@@ -58,9 +58,9 @@ namespace Discard = api::webrtc_logging_private::Discard;
 namespace SetMetaData = api::webrtc_logging_private::SetMetaData;
 namespace SetUploadOnRenderClose =
     api::webrtc_logging_private::SetUploadOnRenderClose;
-namespace Start = api::webrtc_logging_private::Start;
+namespace Start = api::webrtc_logging_private::Start;  // TODO: !!!
 namespace StartRtpDump = api::webrtc_logging_private::StartRtpDump;
-namespace Stop = api::webrtc_logging_private::Stop;
+namespace Stop = api::webrtc_logging_private::Stop;  // TODO: !!!
 namespace StopRtpDump = api::webrtc_logging_private::StopRtpDump;
 namespace Store = api::webrtc_logging_private::Store;
 namespace Upload = api::webrtc_logging_private::Upload;
@@ -69,10 +69,6 @@ namespace StartAudioDebugRecordings =
     api::webrtc_logging_private::StartAudioDebugRecordings;
 namespace StopAudioDebugRecordings =
     api::webrtc_logging_private::StopAudioDebugRecordings;
-namespace StartWebRtcEventLogging =
-    api::webrtc_logging_private::StartWebRtcEventLogging;
-namespace StopWebRtcEventLogging =
-    api::webrtc_logging_private::StopWebRtcEventLogging;
 namespace GetLogsDirectory = api::webrtc_logging_private::GetLogsDirectory;
 
 namespace {
@@ -528,6 +524,7 @@ bool WebrtcLoggingPrivateStopAudioDebugRecordingsFunction::RunAsync() {
   return true;
 }
 
+#if 0  // TODO: !!!
 bool WebrtcLoggingPrivateStartWebRtcEventLoggingFunction::RunAsync() {
   if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kEnableWebRtcEventLoggingFromExtension)) {
@@ -584,6 +581,8 @@ bool WebrtcLoggingPrivateStopWebRtcEventLoggingFunction::RunAsync() {
 
   return true;
 }
+
+#endif
 
 bool WebrtcLoggingPrivateGetLogsDirectoryFunction::RunAsync() {
 #if defined(OS_LINUX) || defined(OS_CHROMEOS)

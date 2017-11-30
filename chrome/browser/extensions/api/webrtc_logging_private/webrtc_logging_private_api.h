@@ -256,7 +256,7 @@ class WebrtcLoggingPrivateStopAudioDebugRecordingsFunction
   // ExtensionFunction overrides.
   bool RunAsync() override;
 };
-
+#if 0  // TODO: !!!
 class WebrtcLoggingPrivateStartWebRtcEventLoggingFunction
     : public WebrtcLoggingPrivateFunctionWithRecordingDoneCallback {
  public:
@@ -284,6 +284,8 @@ class WebrtcLoggingPrivateStopWebRtcEventLoggingFunction
   // ExtensionFunction overrides.
   bool RunAsync() override;
 };
+
+#endif
 
 class WebrtcLoggingPrivateGetLogsDirectoryFunction
     : public WebrtcLoggingPrivateFunction {
