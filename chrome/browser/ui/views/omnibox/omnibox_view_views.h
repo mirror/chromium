@@ -218,6 +218,8 @@ class OmniboxViewViews : public OmniboxView,
   void OnCompositingChildResizing(ui::Compositor* compositor) override;
   void OnCompositingShuttingDown(ui::Compositor* compositor) override;
 
+  void ClearAccessibilityLabel();
+
   // When true, the location bar view is read only and also is has a slightly
   // different presentation (smaller font size). This is used for popups.
   bool popup_window_mode_;
@@ -272,6 +274,16 @@ class OmniboxViewViews : public OmniboxView,
     COMPOSITING_COMMIT,   // Compositing was committed after OnPaint().
     COMPOSITING_STARTED,  // Compositing was started.
   } latency_histogram_state_;
+
+  // The currently selected match, if any, with additional labelling text
+  // such as the document title and the type of search, for example:
+  // "Google https://google.com location from bookmark", or
+  // "cats are liquid search suggestion".
+  base::string16 friendly_suggestion_text_;
+  // The number of added labelling characters before editable text begins.
+  // For example,  "Google https://google.com location from history",
+  // this is set to 7 (the length of "Google ").
+  int friendly_suggestion_text_prefix_length_;
 
   ScopedObserver<ui::Compositor, ui::CompositorObserver> scoped_observer_;
 
