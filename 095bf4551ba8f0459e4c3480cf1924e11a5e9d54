@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f30eef98_9e1a9622",
+        "filename": "ios/chrome/browser/ui/main/main_presenting_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-11-30T16:12:30Z",
+      "side": 1,
+      "message": "Is this setFrame call still necessary, if we\u0027re switching to using constraints?",
+      "revId": "095bf4551ba8f0459e4c3480cf1924e11a5e9d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
