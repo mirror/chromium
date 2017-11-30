@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a037712_f6719b0c",
+        "filename": "components/cronet/url_request_context_config_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-30T20:38:18Z",
+      "side": 1,
+      "message": "../../components/cronet/url_request_context_config_unittest.cc:171:27: error: no matching constructor for initialization of \u0027cronet::URLRequestContextConfig\u0027\n  URLRequestContextConfig config(\n                          ^\n../../components/cronet/url_request_context_config.h:82:3: note: candidate constructor not viable: requires 14 arguments, but 15 were provided\n  URLRequestContextConfig(\n  ^\n../../components/cronet/url_request_context_config.h:190:28: note: candidate constructor not viable: requires 1 argument, but 15 were provided\n  DISALLOW_COPY_AND_ASSIGN(URLRequestContextConfig);",
+      "range": {
+        "startLine": 171,
+        "startChar": 2,
+        "endLine": 171,
+        "endChar": 25
+      },
+      "revId": "c51a0d73c8d691bb7c80c23d97d30141a4fe93dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
