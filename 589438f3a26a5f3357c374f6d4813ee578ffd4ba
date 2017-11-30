@@ -16,6 +16,40 @@
       "revId": "589438f3a26a5f3357c374f6d4813ee578ffd4ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a8b7f73_43aaf070",
+        "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-30T01:44:35Z",
+      "side": 1,
+      "message": "nit: s/const InlineBox*/const InlineBox* const/\nas same as |const int offset_in_box|.",
+      "revId": "589438f3a26a5f3357c374f6d4813ee578ffd4ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2978ef6_7df1326e",
+        "filename": "third_party/WebKit/Source/core/editing/RenderedPosition.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-30T01:44:35Z",
+      "side": 1,
+      "message": "I hope following patch will change |const LayoutObject*| and\n|const InlineBox*| to const references.",
+      "revId": "589438f3a26a5f3357c374f6d4813ee578ffd4ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
