@@ -240,6 +240,30 @@
     },
     {
       "key": {
+        "uuid": "e63805cd_3f70d557",
+        "filename": "ios/chrome/browser/tabs/tab_model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-30T16:29:34Z",
+      "side": 1,
+      "message": "2 initializers is not really about \"prettiness\". It\u0027s more about testing slightly different code, comparing to a different app. But I will not push on this.",
+      "parentUuid": "5ac61d21_98c7c365",
+      "range": {
+        "startLine": 136,
+        "startChar": 22,
+        "endLine": 136,
+        "endChar": 37
+      },
+      "revId": "a3c2086fe9fb16a01745d65dfcba72506d79f95b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d11b2bbe_41f9057f",
         "filename": "ios/chrome/browser/tabs/tab_model_unittest.mm",
         "patchSetId": 3
