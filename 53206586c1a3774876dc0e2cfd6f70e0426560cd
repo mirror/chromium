@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "935758dc_9cbbd445",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-30T21:21:48Z",
+      "side": 1,
+      "message": "D\u0027oh!  Missed this one.  Updated the CL description.  I think that omitting \"stars\" is probably fine.",
+      "parentUuid": "0333004f_095ec8e1",
+      "revId": "53206586c1a3774876dc0e2cfd6f70e0426560cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a954a7de_69fc04c3",
         "filename": "chrome/app/generated_resources.grd",
         "patchSetId": 5
@@ -350,6 +368,24 @@
       "revId": "53206586c1a3774876dc0e2cfd6f70e0426560cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0057cd95_5686c5ae",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-30T21:21:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1eca00f4_99733897",
+      "revId": "53206586c1a3774876dc0e2cfd6f70e0426560cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

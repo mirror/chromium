@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9bf00a52_fdb44dc9",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 7
+      },
+      "lineNbr": 3472,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-30T21:21:48Z",
+      "side": 1,
+      "message": "Done. I got confused about which spaces were included in the string and which weren\u0027t.  For instance:\n{0, number, 0.0}\nand\n{0, number,0.0}\nare actually different :/\n\nThis seems to work, though!",
+      "parentUuid": "b90321fe_820969f8",
+      "revId": "b7d6b48af5e0d3e0146621b09ff9918307cd2e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cdff674_3c143e14",
         "filename": "chrome/app/generated_resources.grd",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "b7d6b48af5e0d3e0146621b09ff9918307cd2e9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "592c1c93_0c19034a",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 7
+      },
+      "lineNbr": 3492,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-30T21:21:48Z",
+      "side": 1,
+      "message": "I think newlines in the middle of a longer message are... confusing.  They are respected in the message itself, so it would have to be something like:\n\nRated \u003cph name\u003d\"AVERAGE_RATING\"\u003e{0, number,0.0}\u003cex\u003e3.2\u003c/ex\u003e\u003c/ph\u003e by \u003cph name\u003d\"NUMBER_OF_RATINGS\"\u003e{\n  1, plural,\n  \u003d1 {one user}\n  other {# users}}\u003cex\u003e400 users\u003c/ex\u003e\u003c/ph\u003e.\n\nwhich to me looks a bit odd.",
+      "parentUuid": "2cdff674_3c143e14",
+      "revId": "b7d6b48af5e0d3e0146621b09ff9918307cd2e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
