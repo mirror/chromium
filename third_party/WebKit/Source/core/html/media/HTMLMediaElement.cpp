@@ -1771,7 +1771,7 @@ void HTMLMediaElement::SetReadyState(ReadyState state) {
     ScheduleEvent(EventTypeNames::durationchange);
 
     if (IsHTMLVideoElement())
-      ScheduleEvent(EventTypeNames::resize);
+      SizeChanged(true);
     ScheduleEvent(EventTypeNames::loadedmetadata);
 
     bool jumped = false;
@@ -3249,15 +3249,8 @@ void HTMLMediaElement::Repaint() {
     GetLayoutObject()->SetShouldDoFullPaintInvalidation();
 }
 
-void HTMLMediaElement::SizeChanged() {
-  BLINK_MEDIA_LOG << "sizeChanged(" << (void*)this << ")";
-
-  DCHECK(HasVideo());  // "resize" makes no sense in absence of video.
-  if (ready_state_ > kHaveNothing && IsHTMLVideoElement())
-    ScheduleEvent(EventTypeNames::resize);
-
-  if (GetLayoutObject())
-    GetLayoutObject()->UpdateFromElement();
+void HTMLMediaElement::SizeChanged(bool) {
+  NOTREACHED();
 }
 
 TimeRanges* HTMLMediaElement::buffered() const {

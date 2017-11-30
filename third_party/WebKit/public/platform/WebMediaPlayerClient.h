@@ -71,7 +71,7 @@ class BLINK_PLATFORM_EXPORT WebMediaPlayerClient {
   virtual void TimeChanged() = 0;
   virtual void Repaint() = 0;
   virtual void DurationChanged() = 0;
-  virtual void SizeChanged() = 0;
+  virtual void SizeChanged(bool force_event = false) = 0;
   virtual void PlaybackStateChanged() = 0;
   virtual void SetWebLayer(WebLayer*) = 0;
   virtual WebMediaPlayer::TrackId AddAudioTrack(const WebString& id,

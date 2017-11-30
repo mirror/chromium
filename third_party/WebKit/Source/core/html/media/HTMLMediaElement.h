@@ -384,7 +384,7 @@ class CORE_EXPORT HTMLMediaElement
   void TimeChanged() final;
   void Repaint() final;
   void DurationChanged() final;
-  void SizeChanged() final;
+  void SizeChanged(bool force_event = false);
   void PlaybackStateChanged() final;
 
   void SetWebLayer(WebLayer*) final;

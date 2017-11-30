@@ -105,7 +105,7 @@ class DummyWebMediaPlayerClient : public blink::WebMediaPlayerClient {
   void TimeChanged() override {}
   void Repaint() override {}
   void DurationChanged() override {}
-  void SizeChanged() override {}
+  void SizeChanged(bool) override {}
   void PlaybackStateChanged() override {}
   void SetWebLayer(blink::WebLayer*) override {}
   blink::WebMediaPlayer::TrackId AddAudioTrack(

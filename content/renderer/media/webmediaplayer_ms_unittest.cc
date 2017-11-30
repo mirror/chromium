@@ -480,7 +480,7 @@ class WebMediaPlayerMSTest
   void TimeChanged() override {}
   void Repaint() override {}
   void DurationChanged() override {}
-  void SizeChanged() override;
+  void SizeChanged(bool) override;
   void PlaybackStateChanged() override {}
   void SetWebLayer(blink::WebLayer* layer) override;
   blink::WebMediaPlayer::TrackId AddAudioTrack(const blink::WebString& id,
@@ -669,7 +669,7 @@ void WebMediaPlayerMSTest::RenderFrame() {
       base::TimeDelta::FromSecondsD(1.0 / 60.0));
 }
 
-void WebMediaPlayerMSTest::SizeChanged() {
+void WebMediaPlayerMSTest::SizeChanged(bool) {
   gfx::Size frame_size = compositor_->GetCurrentSize();
   CheckSizeChanged(frame_size);
 }
