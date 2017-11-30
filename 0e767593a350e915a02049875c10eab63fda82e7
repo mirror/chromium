@@ -155,6 +155,30 @@
     },
     {
       "key": {
+        "uuid": "9c77bdc3_ed48e1b0",
+        "filename": "ios/chrome/browser/context_menu/context_menu_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-30T22:29:59Z",
+      "side": 1,
+      "message": "Makes sense. I\u0027ve exposed the activeviewcontroller method.",
+      "parentUuid": "3e833e6f_a854819b",
+      "range": {
+        "startLine": 212,
+        "startChar": 34,
+        "endLine": 212,
+        "endChar": 52
+      },
+      "revId": "0e767593a350e915a02049875c10eab63fda82e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "897f5004_65edbbeb",
         "filename": "ios/chrome/browser/context_menu/context_menu_egtest.mm",
         "patchSetId": 3
