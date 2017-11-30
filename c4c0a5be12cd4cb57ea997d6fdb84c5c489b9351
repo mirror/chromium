@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ef2fc545_9d62ba5c",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1574,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-30T18:18:33Z",
+      "side": 1,
+      "message": "I think that won\u0027t help in the case of an app process embedding a non-app subframe.  We can only skip the effective URL resolution for |dest_url|, but the |candidate|\u0027s process privilege level in the ProcessMap will already be PRIV_HOSTED, so there\u0027ll be a mismatch since |dest_url| doesn\u0027t correspond to an app either with or without effective URLs.",
+      "parentUuid": "15f5347a_ae7dea1b",
+      "range": {
+        "startLine": 1572,
+        "startChar": 0,
+        "endLine": 1574,
+        "endChar": 17
+      },
+      "revId": "c4c0a5be12cd4cb57ea997d6fdb84c5c489b9351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f7935ac_27ef168e",
         "filename": "content/browser/frame_host/render_frame_host_manager.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "088f0b38_2192f48d",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1588,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-30T18:18:33Z",
+      "side": 1,
+      "message": "Stashing the original URL that was used to create the site URL allowed me to remove this whole block.  Basically, a new subframe will always be left in the parent\u0027s SiteInstance, and that should have a reliable |original_url_| regardless of where it came from (openers/ancestors/etc.).",
+      "parentUuid": "6f7935ac_27ef168e",
+      "range": {
+        "startLine": 1588,
+        "startChar": 30,
+        "endLine": 1588,
+        "endChar": 38
+      },
+      "revId": "c4c0a5be12cd4cb57ea997d6fdb84c5c489b9351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2fded061_cf994a49",
         "filename": "content/browser/frame_host/render_frame_host_manager.cc",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-28T19:30:22Z",
       "side": 1,
       "message": "RenderFrameHostManager::IsCurrentlySameSite returns an answers for |**candidate**| \u003c-\u003e |dest_url| relationship.  When looking at parent\u0027s last_successful_url, aren\u0027t we answering the question for a different process (one associated with the parent, not with the |candidate|)?",
+      "range": {
+        "startLine": 1591,
+        "startChar": 32,
+        "endLine": 1591,
+        "endChar": 77
+      },
+      "revId": "c4c0a5be12cd4cb57ea997d6fdb84c5c489b9351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cfc3837_fa438a59",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1591,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-30T18:18:33Z",
+      "side": 1,
+      "message": "See above.",
+      "parentUuid": "2fded061_cf994a49",
       "range": {
         "startLine": 1591,
         "startChar": 32,
