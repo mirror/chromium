@@ -15,6 +15,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/test/simple_test_tick_clock.h"
+#include "base/threading/platform_thread.h"
 #include "chrome/browser/history/history_service_factory.h"
 #include "chrome/browser/history/history_test_utils.h"
 #include "chrome/browser/prerender/prerender_handle.h"
@@ -37,13 +38,59 @@
 #include "content/public/test/browser_test_utils.h"
 #include "net/base/escape.h"
 #include "net/base/load_flags.h"
+#include "net/cookies/cookie_store.h"
 #include "net/dns/mock_host_resolver.h"
 #include "net/test/embedded_test_server/request_handler_util.h"
+#include "net/url_request/url_request_context.h"
+#include "net/url_request/url_request_context_getter.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using prerender::test_utils::DestructionWaiter;
 using prerender::test_utils::RequestCounter;
 using prerender::test_utils::TestPrerender;
+
+namespace {
+
+// Helper method that checks for NoStatePrefetchBrowserTest.PrefetchCookies and
+// notifies the RunLoop when they're found.
+void CheckCookiesForPrefetchCookieTest(base::RunLoop* loop,
+                                       GURL url,
+                                       net::CookieStore* cookie_store,
+                                       const net::CookieList& cookies) {
+  bool found_chocolate = false;
+  bool found_oatmeal = false;
+  for (const auto& c : cookies) {
+    if (c.Name() == "chocolate-chip") {
+      EXPECT_EQ("the-best", c.Value());
+      found_chocolate = true;
+    }
+    if (c.Name() == "oatmeal") {
+      EXPECT_EQ("sublime", c.Value());
+      found_oatmeal = true;
+    }
+  }
+  if (found_oatmeal && found_chocolate) {
+    loop->Quit();
+  } else {
+    base::PlatformThread::Sleep(base::TimeDelta::FromMilliseconds(250));
+    cookie_store->GetAllCookiesForURLAsync(
+        url, base::BindOnce(CheckCookiesForPrefetchCookieTest, loop, url,
+                            cookie_store));
+  }
+}
+
+// Launches the CheckCookiesForPrefetchCookieTest from the IO thread.
+void LaunchPrefetchCookieTestFromIO(content::StoragePartition* storage,
+                                    base::RunLoop* loop,
+                                    GURL url) {
+  net::CookieStore* cookie_store =
+      storage->GetURLRequestContext()->GetURLRequestContext()->cookie_store();
+  cookie_store->GetAllCookiesForURLAsync(
+      url, base::BindOnce(CheckCookiesForPrefetchCookieTest, loop, url,
+                          cookie_store));
+}
+
+}  // namespace
 
 namespace prerender {
 
@@ -65,6 +112,7 @@ const char kPrefetchScript2[] = "/prerender/prefetch2.js";
 const char kServiceWorkerLoader[] = "/prerender/service_worker.html";
 const char kPrefetchSubresourceRedirectPage[] =
     "/prerender/prefetch_subresource_redirect.html";
+const char kPrefetchCookiePage[] = "/prerender/cookie.html";
 
 class NoStatePrefetchBrowserTest
     : public test_utils::PrerenderInProcessBrowserTest,
@@ -217,6 +265,46 @@ IN_PROC_BROWSER_TEST_P(NoStatePrefetchBrowserTest, PrefetchSimple) {
   WaitForRequestCount(src_server()->GetURL(kPrefetchPage), 1);
   WaitForRequestCount(src_server()->GetURL(kPrefetchScript), 1);
   WaitForRequestCount(src_server()->GetURL(kPrefetchScript2), 0);
+}
+
+// Check cookie loading for prefetched pages.
+IN_PROC_BROWSER_TEST_P(NoStatePrefetchBrowserTest, PrefetchCookie) {
+  GURL url = src_server()->GetURL(kPrefetchCookiePage);
+  std::unique_ptr<TestPrerender> test_prerender =
+      PrefetchFromURL(url, FINAL_STATUS_NOSTATE_PREFETCH_FINISHED);
+
+  content::StoragePartition* storage_partition =
+      content::BrowserContext::GetStoragePartitionForSite(
+          current_browser()->profile(), url, false);
+  base::RunLoop loop;
+  content::BrowserThread::PostTask(
+      content::BrowserThread::IO, FROM_HERE,
+      base::BindOnce(LaunchPrefetchCookieTestFromIO, storage_partition, &loop,
+                     url));
+  loop.Run();
+  // Will timeout if cookies aren't found.
+}
+
+// Check cookie loading for a cross-domain prefetched pages.
+IN_PROC_BROWSER_TEST_P(NoStatePrefetchBrowserTest, PrefetchCookieCrossDomain) {
+  static const std::string secondary_domain = "www.foo.com";
+  GURL cross_domain_url(base::StringPrintf(
+      "http://%s:%d%s", secondary_domain.c_str(),
+      embedded_test_server()->host_port_pair().port(), kPrefetchCookiePage));
+
+  std::unique_ptr<TestPrerender> test_prerender =
+      PrefetchFromURL(cross_domain_url, FINAL_STATUS_NOSTATE_PREFETCH_FINISHED);
+
+  content::StoragePartition* storage_partition =
+      content::BrowserContext::GetStoragePartitionForSite(
+          current_browser()->profile(), cross_domain_url, false);
+  base::RunLoop loop;
+  content::BrowserThread::PostTask(
+      content::BrowserThread::IO, FROM_HERE,
+      base::BindOnce(LaunchPrefetchCookieTestFromIO, storage_partition, &loop,
+                     cross_domain_url));
+  loop.Run();
+  // Will timeout if cookies aren't found.
 }
 
 // Check that the LOAD_PREFETCH flag is set.
