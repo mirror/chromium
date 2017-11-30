@@ -52,6 +52,24 @@
       "revId": "f938aedc966444077516fc26903269f5182a9b43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed100b28_08fdfe42",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1226606
+      },
+      "writtenOn": "2017-11-30T16:21:55Z",
+      "side": 1,
+      "message": "I wanted to use notify from NotificationManagerCompat with priority from it to avoid any possible side effects.",
+      "parentUuid": "6958153d_3d5acd6a",
+      "revId": "f938aedc966444077516fc26903269f5182a9b43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
