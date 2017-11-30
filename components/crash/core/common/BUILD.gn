@@ -13,7 +13,19 @@ group("common") {
   }
 }
 
-static_library("crash_key") {
+use_crashpad = is_mac || is_win
+use_stubs = is_fuchsia
+
+# Crashpad's annotation system can store data on a per-module basis (i.e.,
+# in different shared libraries in the component build) without issue. The
+# Breakpad implementation uses a static global variable, so there should
+# only be one, necessitating it being in its own shared library.
+if (use_crashpad || use_stubs) {
+  crash_key_target_type = "static_library"
+} else {
+  crash_key_target_type = "component"
+}
+target(crash_key_target_type, "crash_key") {
   sources = [
     "crash_key.cc",
     "crash_key.h",
@@ -21,14 +33,16 @@ static_library("crash_key") {
     "crash_key_base_support.h",
   ]
 
+  defines = [ "CRASH_CORE_COMMON_IMPLEMENTATION" ]
+
   deps = [
     "//base",
   ]
 
-  if (is_mac || is_win) {
+  if (use_crashpad) {
     sources += [ "crash_key_crashpad.cc" ]
     deps += [ "//third_party/crashpad/crashpad/client" ]
-  } else if (is_fuchsia) {
+  } else if (use_stubs) {
     sources += [ "crash_key_stubs.cc" ]
   } else {
     include_dirs = [ "//third_party/breakpad/breakpad/src/" ]
