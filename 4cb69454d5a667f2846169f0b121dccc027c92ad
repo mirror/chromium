@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "92711468_fd813463",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/FetchContext.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-30T09:00:17Z",
+      "side": 1,
+      "message": "Done in ResourceLoadScheduler.h.",
+      "parentUuid": "c177e1ec_78fc8396",
+      "revId": "4cb69454d5a667f2846169f0b121dccc027c92ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce5d5ef5_2285393f",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-30T07:35:38Z",
       "side": 1,
       "message": "I feel I might rather prefer plain, clearer mode transition, like LAYOUT_BLOCKING and NORMAL.  The term may feel a bit of layer violation but I\u0027m afraid \u0027Tighter throttling -\u003e looser throttling\u0027 doesn\u0027t explain a lot about why we\u0027re doing this.  Or if we want to make this generic enough that isn\u0027t specific to layout-blocking mode should we just promote SetOutstandingLimitForTesting available for production code?",
+      "revId": "4cb69454d5a667f2846169f0b121dccc027c92ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b1b4211_6a7d3faf",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-30T09:00:17Z",
+      "side": 1,
+      "message": "Tight \u003d\u003e loose state transition is clear to me as it\u0027s what we are doing. I introduced |kTight| and |kNormal| states, renamed some functions, and added comments. What do you think about PS6?",
+      "parentUuid": "ce5d5ef5_2285393f",
       "revId": "4cb69454d5a667f2846169f0b121dccc027c92ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
