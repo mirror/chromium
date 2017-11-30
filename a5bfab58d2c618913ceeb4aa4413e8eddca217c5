@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0b1a943d_62f3e4df",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 1245983
+      },
+      "writtenOn": "2017-11-30T04:46:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5589365b_5a0fe9e0",
+      "revId": "a5bfab58d2c618913ceeb4aa4413e8eddca217c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc798ba2_805acb2c",
         "filename": "chrome/browser/content_settings/tab_specific_content_settings.h",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c4c543f0_1e38b037",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1245983
+      },
+      "writtenOn": "2017-11-30T04:46:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc798ba2_805acb2c",
+      "revId": "a5bfab58d2c618913ceeb4aa4413e8eddca217c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0ecd374_2cdd98f8",
         "filename": "chrome/browser/ui/page_info/page_info.cc",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-29T00:53:40Z",
       "side": 1,
       "message": "Would it be simpler to just always add the permission to this map whenever it changes (regardless of what value it changes too)?",
+      "revId": "a5bfab58d2c618913ceeb4aa4413e8eddca217c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fd67ec9_2d9af7e3",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1245983
+      },
+      "writtenOn": "2017-11-30T04:46:40Z",
+      "side": 1,
+      "message": "I am a bit skeptical about this. Because we are currently showing non-default ones, I think it\u0027s better to keep only recently \"changed to default\" ones here (the minimum possible data). But if you think it\u0027s better to keep all recently changed ones, I will change it. Please let me know what you think.",
+      "parentUuid": "f0ecd374_2cdd98f8",
       "revId": "a5bfab58d2c618913ceeb4aa4413e8eddca217c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
