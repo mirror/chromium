@@ -33,12 +33,12 @@
 
 #include <memory>
 #include "base/memory/scoped_refptr.h"
+#include "base/memory/weak_ptr.h"
 #include "core/CoreExport.h"
 #include "core/dom/MessagePort.h"
 #include "core/workers/ThreadedObjectProxyBase.h"
 #include "core/workers/WorkerReportingProxy.h"
 #include "platform/heap/Handle.h"
-#include "platform/wtf/WeakPtr.h"
 
 namespace v8_inspector {
 struct V8StackTraceId;
