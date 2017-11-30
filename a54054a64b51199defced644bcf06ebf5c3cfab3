@@ -87,6 +87,24 @@
       "revId": "a54054a64b51199defced644bcf06ebf5c3cfab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63cca551_1db3b429",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-30T18:39:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc89befb_4fc1b2af",
+      "revId": "a54054a64b51199defced644bcf06ebf5c3cfab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
