@@ -24,6 +24,11 @@
       "all"
     ]
   },
+  "Mac Builder (dbg)": {
+    "additional_compile_targets": [
+      "all"
+    ]
+  },
   "Win Builder": {
     "additional_compile_targets": [
       "all"
