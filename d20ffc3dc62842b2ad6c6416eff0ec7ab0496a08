@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b3bcd8cd_3fd8850e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-11-30T00:44:29Z",
+      "side": 1,
+      "message": "ahem: \"a removing\" -\u003e \"removing\".",
+      "parentUuid": "06898469_c8649b3d",
+      "revId": "d20ffc3dc62842b2ad6c6416eff0ec7ab0496a08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6236d4ca_c1f40b6b",
         "filename": "third_party/WebKit/public/web/README.md",
         "patchSetId": 1
