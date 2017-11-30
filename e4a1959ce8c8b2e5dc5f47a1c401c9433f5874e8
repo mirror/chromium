@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f47121aa_eead4c31",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/SecondTapMlOverride.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-30T18:45:18Z",
+      "side": 1,
+      "message": "No, that\u0027s a bug.  Added a check of mIsSecondTapEnabled here.  Thanks for the catch!",
+      "parentUuid": "98785477_7b9aae03",
+      "range": {
+        "startLine": 55,
+        "startChar": 19,
+        "endLine": 55,
+        "endChar": 33
+      },
+      "revId": "e4a1959ce8c8b2e5dc5f47a1c401c9433f5874e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "842b292e_b3fefdd8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/SecondTapMlOverride.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c2f03c2b_df0f9f78",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/SecondTapMlOverride.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-30T18:45:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "842b292e_b3fefdd8",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 29
+      },
+      "revId": "e4a1959ce8c8b2e5dc5f47a1c401c9433f5874e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e2e54b8_e6b25f09",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "e4a1959ce8c8b2e5dc5f47a1c401c9433f5874e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af1f5c6c_43caec0a",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 6763,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-30T18:45:18Z",
+      "side": 1,
+      "message": "I don\u0027t think we can fix the reversed-values legacy usage of the existing ContextualSearchResultsSeen enum since it\u0027s used by lots of histograms.\n\nI\u0027ll remove this new enum to avoid confusion and just use the \"Boolean\" enum instead.  This seems like a good pattern going forward: Use recordBooleanHistogram to record and set up the histogram to use the existing \"Boolean\" enum.",
+      "parentUuid": "1e2e54b8_e6b25f09",
+      "range": {
+        "startLine": 6759,
+        "startChar": 1,
+        "endLine": 6763,
+        "endChar": 0
+      },
+      "revId": "e4a1959ce8c8b2e5dc5f47a1c401c9433f5874e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
