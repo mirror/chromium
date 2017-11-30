@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "9f3e93bb_df9b5c9c",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2202,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-30T02:26:22Z",
+      "side": 1,
+      "message": "I\u0027m not 100% sure, but it\u0027s probably best not to rely on it in any case.  I think when needed, one can specify the default value as an optional third arg to the macro.",
+      "parentUuid": "34cd99e7_c836d00c",
+      "range": {
+        "startLine": 2202,
+        "startChar": 8,
+        "endLine": 2202,
+        "endChar": 30
+      },
+      "revId": "6a71a4cfc08a41d5ae8d600eef8a6d5089b109fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfc038e9_ae5c0248",
         "filename": "content/renderer/render_widget.cc",
         "patchSetId": 3
