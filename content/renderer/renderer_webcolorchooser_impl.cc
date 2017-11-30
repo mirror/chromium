@@ -4,7 +4,8 @@
 
 #include "content/renderer/renderer_webcolorchooser_impl.h"
 
-#include "content/common/frame_messages.h"
+#include "content/public/renderer/render_frame.h"
+#include "third_party/WebKit/common/associated_interfaces/associated_interface_provider.h"
 
 namespace content {
 
@@ -18,50 +19,41 @@ RendererWebColorChooserImpl::RendererWebColorChooserImpl(
     blink::WebColorChooserClient* client)
     : RenderFrameObserver(render_frame),
       identifier_(GenerateColorChooserIdentifier()),
-      client_(client) {
+      client_(client),
+      client_binding_(this) {
+  render_frame->GetRemoteAssociatedInterfaces()->GetInterface(&color_chooser_);
 }
 
 RendererWebColorChooserImpl::~RendererWebColorChooserImpl() {
 }
 
-bool RendererWebColorChooserImpl::OnMessageReceived(
-    const IPC::Message& message) {
-  bool handled = true;
-  IPC_BEGIN_MESSAGE_MAP(RendererWebColorChooserImpl, message)
-    IPC_MESSAGE_HANDLER(FrameMsg_DidChooseColorResponse,
-                        OnDidChooseColorResponse)
-    IPC_MESSAGE_HANDLER(FrameMsg_DidEndColorChooser, OnDidEndColorChooser)
-    IPC_MESSAGE_UNHANDLED(handled = false)
-  IPC_END_MESSAGE_MAP()
-  return handled;
-}
-
 void RendererWebColorChooserImpl::SetSelectedColor(blink::WebColor color) {
-  Send(new FrameHostMsg_SetSelectedColorInColorChooser(
-      routing_id(), identifier_, static_cast<SkColor>(color)));
+  color_chooser_->SetSelectedColorInColorChooser(identifier_, color);
 }
 
 void RendererWebColorChooserImpl::EndChooser() {
-  Send(new FrameHostMsg_EndColorChooser(routing_id(), identifier_));
+  color_chooser_->EndColorChooser(identifier_);
 }
 
 void RendererWebColorChooserImpl::Open(
-      SkColor initial_color,
-      const std::vector<content::ColorSuggestion>& suggestions) {
-  Send(new FrameHostMsg_OpenColorChooser(routing_id(),
-                                         identifier_,
-                                         initial_color,
-                                         suggestions));
+    SkColor initial_color,
+    std::vector<content::mojom::ColorSuggestionPtr> suggestions) {
+  content::mojom::ColorChooserClientAssociatedPtrInfo client_ptr_info;
+  client_binding_.Bind(mojo::MakeRequest(&client_ptr_info));
+  color_chooser_->OpenColorChooser(std::move(client_ptr_info), identifier_,
+                                   initial_color, std::move(suggestions));
 }
 
-void RendererWebColorChooserImpl::OnDidChooseColorResponse(int color_chooser_id,
-                                                           SkColor color) {
+void RendererWebColorChooserImpl::DidChooseColorResponse(
+    uint32_t color_chooser_id,
+    SkColor color) {
   DCHECK(identifier_ == color_chooser_id);
 
   client_->DidChooseColor(static_cast<blink::WebColor>(color));
 }
 
-void RendererWebColorChooserImpl::OnDidEndColorChooser(int color_chooser_id) {
+void RendererWebColorChooserImpl::DidEndColorChooser(
+    uint32_t color_chooser_id) {
   if (identifier_ != color_chooser_id)
     return;
   client_->DidEndChooser();

@@ -394,25 +394,15 @@ class WebContentsImpl::DestructionObserver : public WebContentsObserver {
   DISALLOW_COPY_AND_ASSIGN(DestructionObserver);
 };
 
-WebContentsImpl::ColorChooserInfo::ColorChooserInfo(int render_process_id,
-                                                    int render_frame_id,
-                                                    ColorChooser* chooser,
-                                                    int identifier)
-    : render_process_id(render_process_id),
-      render_frame_id(render_frame_id),
-      chooser(chooser),
-      identifier(identifier) {
+WebContentsImpl::ColorChooserInfo::ColorChooserInfo(
+    content::ColorChooser* chooser,
+    content::mojom::ColorChooserClientAssociatedPtrInfo client_info,
+    uint32_t identifier)
+    : chooser(chooser), identifier(identifier) {
+  client.Bind(std::move(client_info));
 }
 
 WebContentsImpl::ColorChooserInfo::~ColorChooserInfo() {
-}
-
-bool WebContentsImpl::ColorChooserInfo::Matches(
-    RenderFrameHostImpl* render_frame_host,
-    int color_chooser_id) {
-  return this->render_process_id == render_frame_host->GetProcess()->GetID() &&
-         this->render_frame_id == render_frame_host->GetRoutingID() &&
-         this->identifier == color_chooser_id;
 }
 
 // WebContentsImpl::WebContentsTreeNode ----------------------------------------
@@ -570,6 +560,9 @@ WebContentsImpl::WebContentsImpl(BrowserContext* browser_context)
 #if !defined(OS_ANDROID)
   host_zoom_map_observer_.reset(new HostZoomMapObserver(this));
 #endif  // !defined(OS_ANDROID)
+
+  color_chooser_bindings_ = std::make_unique<
+      WebContentsFrameBindingSet<content::mojom::ColorChooser>>(this, this);
 }
 
 WebContentsImpl::~WebContentsImpl() {
@@ -838,10 +831,6 @@ bool WebContentsImpl::OnMessageReceived(RenderFrameHostImpl* render_frame_host,
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidFinishDocumentLoad,
                         OnDocumentLoadedInFrame)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidFinishLoad, OnDidFinishLoad)
-    IPC_MESSAGE_HANDLER(FrameHostMsg_OpenColorChooser, OnOpenColorChooser)
-    IPC_MESSAGE_HANDLER(FrameHostMsg_EndColorChooser, OnEndColorChooser)
-    IPC_MESSAGE_HANDLER(FrameHostMsg_SetSelectedColorInColorChooser,
-                        OnSetSelectedColorInColorChooser)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidLoadResourceFromMemoryCache,
                         OnDidLoadResourceFromMemoryCache)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidDisplayInsecureContent,
@@ -3527,27 +3516,15 @@ RenderFrameHostImpl* WebContentsImpl::GetOriginalOpener() const {
 void WebContentsImpl::DidChooseColorInColorChooser(SkColor color) {
   if (!color_chooser_info_.get())
     return;
-  RenderFrameHost* rfh = RenderFrameHost::FromID(
-      color_chooser_info_->render_process_id,
-      color_chooser_info_->render_frame_id);
-  if (!rfh)
-    return;
-
-  rfh->Send(new FrameMsg_DidChooseColorResponse(
-      rfh->GetRoutingID(), color_chooser_info_->identifier, color));
+  color_chooser_info_->client->DidChooseColorResponse(
+      color_chooser_info_->identifier, color);
 }
 
 void WebContentsImpl::DidEndColorChooser() {
   if (!color_chooser_info_.get())
     return;
-  RenderFrameHost* rfh = RenderFrameHost::FromID(
-      color_chooser_info_->render_process_id,
-      color_chooser_info_->render_frame_id);
-  if (!rfh)
-    return;
-
-  rfh->Send(new FrameMsg_DidEndColorChooser(
-      rfh->GetRoutingID(), color_chooser_info_->identifier));
+  color_chooser_info_->client->DidEndColorChooser(
+      color_chooser_info_->identifier);
   color_chooser_info_.reset();
 }
 
@@ -4200,12 +4177,12 @@ void WebContentsImpl::OnAppCacheAccessed(RenderViewHostImpl* source,
     observer.AppCacheAccessed(manifest_url, blocked_by_policy);
 }
 
-void WebContentsImpl::OnOpenColorChooser(
-    RenderFrameHostImpl* source,
-    int color_chooser_id,
+void WebContentsImpl::OpenColorChooser(
+    content::mojom::ColorChooserClientAssociatedPtrInfo client,
+    uint32_t color_chooser_id,
     SkColor color,
-    const std::vector<ColorSuggestion>& suggestions) {
-  ColorChooser* new_color_chooser =
+    std::vector<content::mojom::ColorSuggestionPtr> suggestions) {
+  content::ColorChooser* new_color_chooser =
       delegate_ ? delegate_->OpenColorChooser(this, color, suggestions)
                 : nullptr;
   if (!new_color_chooser)
@@ -4214,23 +4191,19 @@ void WebContentsImpl::OnOpenColorChooser(
     color_chooser_info_->chooser->End();
 
   color_chooser_info_.reset(new ColorChooserInfo(
-      source->GetProcess()->GetID(), source->GetRoutingID(), new_color_chooser,
-      color_chooser_id));
+      new_color_chooser, std::move(client), color_chooser_id));
 }
 
-void WebContentsImpl::OnEndColorChooser(RenderFrameHostImpl* source,
-                                        int color_chooser_id) {
+void WebContentsImpl::EndColorChooser(uint32_t color_chooser_id) {
   if (color_chooser_info_ &&
-      color_chooser_info_->Matches(source, color_chooser_id))
+      color_chooser_info_->identifier == color_chooser_id)
     color_chooser_info_->chooser->End();
 }
 
-void WebContentsImpl::OnSetSelectedColorInColorChooser(
-    RenderFrameHostImpl* source,
-    int color_chooser_id,
-    SkColor color) {
+void WebContentsImpl::SetSelectedColorInColorChooser(uint32_t color_chooser_id,
+                                                     SkColor color) {
   if (color_chooser_info_ &&
-      color_chooser_info_->Matches(source, color_chooser_id))
+      color_chooser_info_->identifier == color_chooser_id)
     color_chooser_info_->chooser->SetSelectedColor(color);
 }
 

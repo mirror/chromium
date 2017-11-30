@@ -10,6 +10,7 @@
 #include "base/logging.h"
 #include "base/memory/singleton.h"
 #include "build/build_config.h"
+#include "content/common/color_chooser.mojom.h"
 #include "content/public/browser/keyboard_event_processing_result.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/security_style_explanations.h"
@@ -157,7 +158,7 @@ blink::WebDisplayMode WebContentsDelegate::GetDisplayMode(
 content::ColorChooser* WebContentsDelegate::OpenColorChooser(
     WebContents* web_contents,
     SkColor color,
-    const std::vector<ColorSuggestion>& suggestions) {
+    const std::vector<content::mojom::ColorSuggestionPtr>& suggestions) {
   return nullptr;
 }
 

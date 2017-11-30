@@ -1,0 +1,36 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module content.mojom;
+
+// ColorChooser is the window shown for <input type="color">.
+interface ColorChooser {
+  // Asks the browser to open the color chooser.  Field color uses uint32 to
+  // map to skia SkColor ARGB value.
+  OpenColorChooser(
+      associated ColorChooserClient client,
+      uint32 id,
+      uint32 color,
+      array<ColorSuggestion> suggestions);
+
+  // Notifies browser of the selected color.
+  SetSelectedColorInColorChooser(uint32 id, uint32 color);
+
+  // Asks the browser to end the color chooser.
+  EndColorChooser(uint32 id);
+};
+
+// ColorChooserClient interface is implemented by renderer.
+interface ColorChooserClient {
+  // Notifies the renderer that the user selected a color.
+  DidChooseColorResponse(uint32 id, uint32 color);
+
+  // Notifies the renderer that the color chooser has ended.
+  DidEndColorChooser(uint32 id);
+};
+
+struct ColorSuggestion {
+  uint32 color;
+  string label;
+};

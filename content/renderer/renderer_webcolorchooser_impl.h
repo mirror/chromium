@@ -9,8 +9,9 @@
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
-#include "content/public/common/color_suggestion.h"
+#include "content/common/color_chooser.mojom.h"
 #include "content/public/renderer/render_frame_observer.h"
+#include "mojo/public/cpp/bindings/associated_binding.h"
 #include "third_party/WebKit/public/web/WebColorChooser.h"
 #include "third_party/WebKit/public/web/WebColorChooserClient.h"
 #include "third_party/skia/include/core/SkColor.h"
@@ -18,6 +19,7 @@
 namespace content {
 
 class RendererWebColorChooserImpl : public blink::WebColorChooser,
+                                    public content::mojom::ColorChooserClient,
                                     public RenderFrameObserver {
  public:
   explicit RendererWebColorChooserImpl(RenderFrame* render_frame,
@@ -29,7 +31,7 @@ class RendererWebColorChooserImpl : public blink::WebColorChooser,
   void EndChooser() override;
 
   void Open(SkColor initial_color,
-            const std::vector<content::ColorSuggestion>& suggestions);
+            std::vector<content::mojom::ColorSuggestionPtr> suggestions);
 
   blink::WebColorChooserClient* client() { return client_; }
 
@@ -39,13 +41,16 @@ class RendererWebColorChooserImpl : public blink::WebColorChooser,
   // away. RendererWebColorChooserImpl is owned by
   // blink::ColorChooserUIController.
   void OnDestruct() override {}
-  bool OnMessageReceived(const IPC::Message& message) override;
 
-  void OnDidChooseColorResponse(int color_chooser_id, SkColor color);
-  void OnDidEndColorChooser(int color_chooser_id);
+  // content::mojom::ColorChooserClient
+  void DidChooseColorResponse(uint32_t color_chooser_id,
+                              SkColor color) override;
+  void DidEndColorChooser(uint32_t color_chooser_id) override;
 
-  int identifier_;
+  uint32_t identifier_;
   blink::WebColorChooserClient* client_;
+  content::mojom::ColorChooserAssociatedPtr color_chooser_;
+  mojo::AssociatedBinding<content::mojom::ColorChooserClient> client_binding_;
 
   DISALLOW_COPY_AND_ASSIGN(RendererWebColorChooserImpl);
 };
