@@ -20,6 +20,8 @@ constexpr char kLatencyVrBrowsing[] =
     "VR.AssetsComponent.ReadyLatency.OnEnter.VRBrowsing";
 constexpr char kLatencyWebVr[] =
     "VR.AssetsComponent.ReadyLatency.OnEnter.WebVR";
+constexpr char kLatencyLaunchBrowser[] =
+    "VR.AssetsComponent.ReadyLatency.OnLaunchBrowser";
 constexpr char kDataConnectionRegisterComponent[] =
     "VR.DataConnection.OnRegisterAssetsComponent";
 constexpr char kDataConnectionVr[] = "VR.DataConnection.OnEnter.VR";
@@ -117,6 +119,15 @@ void MetricsHelper::OnComponentReady() {
   auto now = base::Time::Now();
   LogLatencyIfWaited(Mode::kVrBrowsing, now);
   LogLatencyIfWaited(Mode::kWebVr, now);
+
+  if (logged_ready_latency_on_launch_browser_) {
+    return;
+  }
+  DCHECK(launch_browser_time_);
+  auto ready_latency = now - *launch_browser_time_;
+  UMA_HISTOGRAM_CUSTOM_TIMES(kLatencyLaunchBrowser, ready_latency, kMinLatency,
+                             kMaxLatency, kLatencyBucketCount);
+  logged_ready_latency_on_launch_browser_ = true;
 }
 
 void MetricsHelper::OnEnter(Mode mode) {
@@ -141,6 +152,12 @@ void MetricsHelper::OnRegisteredComponent() {
       kDataConnectionRegisterComponent,
       net::NetworkChangeNotifier::GetConnectionType(),
       net::NetworkChangeNotifier::ConnectionType::CONNECTION_LAST + 1);
+}
+
+void MetricsHelper::OnLaunchedBrowser() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(!launch_browser_time_);
+  launch_browser_time_ = base::Time::Now();
 }
 
 base::Optional<base::Time>& MetricsHelper::GetEnterTime(Mode mode) {
