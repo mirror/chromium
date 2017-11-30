@@ -766,6 +766,21 @@ bool AXNodeObject::IsControllingVideoElement() const {
       MediaControlElementsHelper::ToParentMediaElement(node));
 }
 
+bool AXNodeObject::ComputeIsEditableRoot() const {
+  Node* node = GetNode();
+  if (!node)
+    return false;
+  if (IsNativeTextControl())
+    return true;
+  if (IsRootEditableElement(*node)) {
+    // Editable roots created by the user agent are handled by
+    // |IsNativeTextControl| above.
+    Element* element = ToElement(node);
+    return element->AuthorShadowRoot();
+  }
+  return false;
+}
+
 bool AXNodeObject::IsEmbeddedObject() const {
   return IsHTMLPlugInElement(GetNode());
 }
