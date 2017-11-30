@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e78feb04_b731012b",
+        "filename": "build/android/llvm_symbolizer.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-30T01:10:04Z",
+      "side": 1,
+      "message": "Note that this should not be in top-level //build/android.\n\nThis is the second time that the need for a non-android-specific python thing has come up in a review this week. I\u0027ll think about where this should live. (Definitely somewhere w/ pylint.)",
+      "revId": "00d2b6bd03f24658c6d6ae104ed6cbe03bfcbfc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33fc49fa_ac077a40",
+        "filename": "build/android/llvm_symbolizer.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-30T01:10:04Z",
+      "side": 1,
+      "message": "Looks like you can remove this now.",
+      "revId": "00d2b6bd03f24658c6d6ae104ed6cbe03bfcbfc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "991e63ee_26e658ce",
+        "filename": "build/android/llvm_symbolizer.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-30T01:10:04Z",
+      "side": 1,
+      "message": "nit: remove debugging statements",
+      "revId": "00d2b6bd03f24658c6d6ae104ed6cbe03bfcbfc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e107c5e7_c237ef73",
+        "filename": "build/android/llvm_symbolizer.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-30T01:10:04Z",
+      "side": 1,
+      "message": "Should we just allocate this in the constructor?",
+      "revId": "00d2b6bd03f24658c6d6ae104ed6cbe03bfcbfc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d57dd4f_472dd8f9",
+        "filename": "build/android/llvm_symbolizer.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-30T01:10:04Z",
+      "side": 1,
+      "message": "This should check that llvm_symbolizer_subprocess before accessing it is not None and then set it to None at the end.",
+      "revId": "00d2b6bd03f24658c6d6ae104ed6cbe03bfcbfc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6011984b_42da55ea",
+        "filename": "build/android/llvm_symbolizer.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-30T01:10:04Z",
+      "side": 1,
+      "message": "nit: if you just do\n \n  else:\n    return result\n\nyou can remove the line below",
+      "revId": "00d2b6bd03f24658c6d6ae104ed6cbe03bfcbfc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dee2e948_201a3795",
+        "filename": "third_party/android_platform/development/scripts/README.chromium",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-30T01:10:04Z",
+      "side": 1,
+      "message": "This is not necessary.",
+      "revId": "00d2b6bd03f24658c6d6ae104ed6cbe03bfcbfc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
