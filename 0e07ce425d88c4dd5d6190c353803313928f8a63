@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "83fe0d42_6301f7e9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-30T11:16:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7f9f679_23a7f00e",
+      "range": {
+        "startLine": 16,
+        "startChar": 16,
+        "endLine": 16,
+        "endChar": 17
+      },
+      "revId": "0e07ce425d88c4dd5d6190c353803313928f8a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69c9b0f0_256ca65a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManager.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "0e07ce425d88c4dd5d6190c353803313928f8a63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79d55294_ea2ed22f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-30T11:16:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69c9b0f0_256ca65a",
+      "range": {
+        "startLine": 19,
+        "startChar": 30,
+        "endLine": 19,
+        "endChar": 31
+      },
+      "revId": "0e07ce425d88c4dd5d6190c353803313928f8a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "17af4e70_8961d0b6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-30T11:16:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60f6d2bf_a9c828d8",
+      "range": {
+        "startLine": 60,
+        "startChar": 12,
+        "endLine": 60,
+        "endChar": 27
+      },
+      "revId": "0e07ce425d88c4dd5d6190c353803313928f8a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b987d65_8ba872d9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManager.java",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "0e07ce425d88c4dd5d6190c353803313928f8a63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b56ed19f_b2f85c66",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-30T11:16:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b987d65_8ba872d9",
+      "range": {
+        "startLine": 71,
+        "startChar": 19,
+        "endLine": 71,
+        "endChar": 25
+      },
+      "revId": "0e07ce425d88c4dd5d6190c353803313928f8a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
