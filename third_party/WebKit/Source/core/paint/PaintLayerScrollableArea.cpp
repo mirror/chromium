@@ -548,6 +548,7 @@ void PaintLayerScrollableArea::InvalidatePaintForScrollOffsetChange(
       if (!frame_view->InvalidateViewportConstrainedObjects())
         requires_paint_invalidation = true;
     }
+    InvalidatePaintForStickyDescendants();
   }
 
   if (requires_paint_invalidation)
@@ -1734,6 +1735,15 @@ void PaintLayerScrollableArea::InvalidateStickyConstraintsFor(
     if (needs_compositing_update &&
         layer->GetLayoutObject().Style()->HasStickyConstrainedPosition())
       layer->SetNeedsCompositingInputsUpdate();
+  }
+}
+
+void PaintLayerScrollableArea::InvalidatePaintForStickyDescendants() {
+  if (PaintLayerScrollableAreaRareData* d = RareData()) {
+    for (PaintLayer* sticky_layer : d->sticky_constraints_map_.Keys()) {
+      sticky_layer->GetLayoutObject()
+          .SetShouldDoFullPaintInvalidationIncludingNonCompositingDescendants();
+    }
   }
 }
 

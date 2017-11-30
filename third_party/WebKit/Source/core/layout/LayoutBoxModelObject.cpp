@@ -843,7 +843,8 @@ void LayoutBoxModelObject::UpdateStickyPositionConstraints() const {
                       .BoundingBox()
                       .Location());
   LayoutBox* scroll_ancestor =
-      Layer()->AncestorOverflowLayer()->IsRootLayer()
+      Layer()->AncestorOverflowLayer()->IsRootLayer() &&
+              !RuntimeEnabledFeatures::RootLayerScrollingEnabled()
           ? nullptr
           : &ToLayoutBox(Layer()->AncestorOverflowLayer()->GetLayoutObject());
 
@@ -1023,8 +1024,12 @@ void LayoutBoxModelObject::UpdateStickyPositionConstraints() const {
 }
 
 FloatRect LayoutBoxModelObject::ComputeStickyConstrainingRect() const {
-  if (Layer()->AncestorOverflowLayer()->IsRootLayer())
-    return View()->GetFrameView()->VisibleContentRect();
+  if (Layer()->AncestorOverflowLayer()->IsRootLayer()) {
+    return View()
+        ->GetFrameView()
+        ->LayoutViewportScrollableArea()
+        ->VisibleContentRect();
+  }
 
   LayoutBox* enclosing_clipping_box =
       Layer()->AncestorOverflowLayer()->GetLayoutBox();
