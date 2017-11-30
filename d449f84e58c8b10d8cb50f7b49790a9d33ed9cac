@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5d868ca7_e965f533",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSRotation.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1242012
+      },
+      "writtenOn": "2017-11-30T09:41:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe804610_80b38a25",
+      "revId": "d449f84e58c8b10d8cb50f7b49790a9d33ed9cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23c5bdfe_eacd630f",
         "filename": "third_party/WebKit/Source/core/css/cssom/CSSRotation.cpp",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "d449f84e58c8b10d8cb50f7b49790a9d33ed9cac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e88e8b7_d748c610",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSRotation.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1242012
+      },
+      "writtenOn": "2017-11-30T09:41:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23c5bdfe_eacd630f",
+      "revId": "d449f84e58c8b10d8cb50f7b49790a9d33ed9cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1f45e64d_d4a24b54",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSRotation.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1242012
+      },
+      "writtenOn": "2017-11-30T09:41:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fedb3c53_d9b218a3",
+      "revId": "d449f84e58c8b10d8cb50f7b49790a9d33ed9cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10e82442_f596063c",
         "filename": "third_party/WebKit/Source/core/css/cssom/CSSRotation.h",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "d449f84e58c8b10d8cb50f7b49790a9d33ed9cac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e23fe1c_b22465cd",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSRotation.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1242012
+      },
+      "writtenOn": "2017-11-30T09:41:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10e82442_f596063c",
+      "revId": "d449f84e58c8b10d8cb50f7b49790a9d33ed9cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "d9589062_fd6e03ae",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSRotation.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1242012
+      },
+      "writtenOn": "2017-11-30T09:41:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f5cb8ad_143a58b4",
+      "revId": "d449f84e58c8b10d8cb50f7b49790a9d33ed9cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff768fd3_96c8fd4f",
         "filename": "third_party/WebKit/Source/core/css/cssom/CSSRotation.h",
         "patchSetId": 6
@@ -101,6 +191,24 @@
       "revId": "d449f84e58c8b10d8cb50f7b49790a9d33ed9cac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b995bd6_def365d1",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSRotation.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1242012
+      },
+      "writtenOn": "2017-11-30T09:41:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff768fd3_96c8fd4f",
+      "revId": "d449f84e58c8b10d8cb50f7b49790a9d33ed9cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
