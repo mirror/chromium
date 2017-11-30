@@ -37,17 +37,14 @@ class ExoTestWindow {
 
   Surface* surface() { return surface_.get(); }
   ShellSurface* shell_surface() { return shell_surface_.get(); }
-  ClientControlledShellSurface* client_controlled_shell_surface() {
-    return client_controlled_shell_surface_.get();
-  }
+  ClientControlledShellSurface* client_controlled_shell_surface();
   gfx::Point origin();
 
  private:
   std::unique_ptr<Surface> surface_;
   std::unique_ptr<Buffer> buffer_;
   std::unique_ptr<ShellSurface> shell_surface_;
-  std::unique_ptr<ClientControlledShellSurface>
-      client_controlled_shell_surface_;
+  ShellSurface::BoundsMode bounds_mode_;
 };
 
 // A helper class that does common initialization required for Exosphere.

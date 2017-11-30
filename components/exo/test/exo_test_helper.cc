@@ -28,36 +28,37 @@ namespace test {
 
 ExoTestWindow::ExoTestWindow(std::unique_ptr<gfx::GpuMemoryBuffer> gpu_buffer,
                              bool is_modal,
-                             ShellSurface::BoundsMode bounds_mode) {
+                             ShellSurface::BoundsMode bounds_mode)
+    : bounds_mode_(bounds_mode) {
   surface_.reset(new Surface());
   int container = is_modal ? ash::kShellWindowId_SystemModalContainer
                            : ash::kShellWindowId_DefaultContainer;
-  if (bounds_mode == ShellSurface::BoundsMode::CLIENT) {
-    client_controlled_shell_surface_ =
-        std::make_unique<ClientControlledShellSurface>(surface_.get(), false,
-                                                       container);
-  } else {
-    shell_surface_ = std::make_unique<ShellSurface>(
-        surface_.get(), ShellSurface::BoundsMode::SHELL, gfx::Point(), true,
-        false, container);
-  }
+  shell_surface_ = bounds_mode == ShellSurface::BoundsMode::CLIENT
+                       ? std::make_unique<ClientControlledShellSurface>(
+                             surface_.get(), false, container)
+                       : std::make_unique<ShellSurface>(
+                             surface_.get(), ShellSurface::BoundsMode::SHELL,
+                             gfx::Point(), true, false, container);
 
   buffer_.reset(new Buffer(std::move(gpu_buffer)));
   surface_->Attach(buffer_.get());
   surface_->Commit();
-  ash::wm::CenterWindow(
-      shell_surface_
-          ? shell_surface_->GetWidget()->GetNativeWindow()
-          : client_controlled_shell_surface_->GetWidget()->GetNativeWindow());
+  ash::wm::CenterWindow(shell_surface_->GetWidget()->GetNativeWindow());
 }
 
 ExoTestWindow::ExoTestWindow(ExoTestWindow&& other) {
   surface_ = std::move(other.surface_);
   buffer_ = std::move(other.buffer_);
   shell_surface_ = std::move(other.shell_surface_);
+  bounds_mode_ = other.bounds_mode_;
 }
 
 ExoTestWindow::~ExoTestWindow() {}
+
+ClientControlledShellSurface* ExoTestWindow::client_controlled_shell_surface() {
+  DCHECK_EQ(bounds_mode_, ShellSurface::BoundsMode::CLIENT);
+  return static_cast<ClientControlledShellSurface*>(shell_surface());
+}
 
 gfx::Point ExoTestWindow::origin() {
   return surface_->window()->GetBoundsInScreen().origin();
