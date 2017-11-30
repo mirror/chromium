@@ -422,8 +422,8 @@ Status NotifyCommandListenersBeforeCommand(Session* session,
       }
       if (session->chrome) {
         const BrowserInfo* browser_info = session->chrome->GetBrowserInfo();
-        status.AddDetails("Session info: " + browser_info->browser_name + "=" +
-                          browser_info->browser_version);
+        status.AddDetails("WHYYY Session info: " + browser_info->browser_name +
+                          "=" + browser_info->browser_version);
       }
       return status;
     }
