@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18c46b62_2bca8317",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-30T20:31:27Z",
+      "side": 1,
+      "message": "wdyt about:\nIdentifies the video stream described by these parameters.",
+      "range": {
+        "startLine": 89,
+        "startChar": 48,
+        "endLine": 89,
+        "endChar": 53
+      },
+      "revId": "5361c2b444f5d5ef88112b619a9ec5b41c78bbeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5596b055_c1ad85a5",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-30T20:31:27Z",
+      "side": 1,
+      "message": "I think you don\u0027t need this.",
+      "range": {
+        "startLine": 90,
+        "startChar": 34,
+        "endLine": 91,
+        "endChar": 45
+      },
+      "revId": "5361c2b444f5d5ef88112b619a9ec5b41c78bbeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "401a7009_fa820b3f",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-30T20:31:27Z",
+      "side": 1,
+      "message": "can you rename this to videoStreams, or videoStreamParams?",
+      "range": {
+        "startLine": 119,
+        "startChar": 24,
+        "endLine": 119,
+        "endChar": 40
+      },
+      "revId": "5361c2b444f5d5ef88112b619a9ec5b41c78bbeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
