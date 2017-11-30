@@ -24,6 +24,7 @@ group("libgtkui") {
 
 template("libgtkui") {
   component(target_name) {
+    never_build_jumbo = true
     sources = invoker.sources + [
                 "app_indicator_icon.cc",
                 "app_indicator_icon.h",
