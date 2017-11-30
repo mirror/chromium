@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d867620d_992b87ac",
+        "filename": "chrome/browser/ui/app_list/app_list_model_builder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-11-30T18:39:56Z",
+      "side": 1,
+      "message": "Done. I was thinking that tests don\u0027t have any service to pass in.",
+      "parentUuid": "459b3d0e_1b9e1508",
+      "revId": "53cfe98c62e2d52e2092e6779ce57821a3d2677e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d5883d7_e2e5d2f9",
         "filename": "chrome/browser/ui/app_list/app_list_model_updater.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "53cfe98c62e2d52e2092e6779ce57821a3d2677e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e06b279_23977046",
+        "filename": "chrome/browser/ui/app_list/app_list_model_updater.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-11-30T18:39:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d5883d7_e2e5d2f9",
+      "revId": "53cfe98c62e2d52e2092e6779ce57821a3d2677e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "05aa1877_0b4ee7f9",
+        "filename": "chrome/browser/ui/app_list/app_list_model_updater.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-11-30T18:39:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba4705be_51aca6bd",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 48
+      },
+      "revId": "53cfe98c62e2d52e2092e6779ce57821a3d2677e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36e874b1_4037c962",
         "filename": "chrome/browser/ui/app_list/app_list_syncable_service.cc",
         "patchSetId": 3
@@ -70,6 +130,24 @@
       "writtenOn": "2017-11-29T22:46:50Z",
       "side": 1,
       "message": "No need to do in this CL. But we should consider merge ModelObserver and ModelUpdater.",
+      "revId": "53cfe98c62e2d52e2092e6779ce57821a3d2677e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "022ea737_88502ea9",
+        "filename": "chrome/browser/ui/app_list/app_list_syncable_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-11-30T18:39:56Z",
+      "side": 1,
+      "message": "The builders in this service need an updater to initialize, so I just put a simple one here.",
+      "parentUuid": "36e874b1_4037c962",
       "revId": "53cfe98c62e2d52e2092e6779ce57821a3d2677e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "7334fb57_1aad27dc",
+        "filename": "chrome/browser/ui/app_list/extension_app_model_builder_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-11-30T18:39:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "411950a6_3b57981c",
+      "revId": "53cfe98c62e2d52e2092e6779ce57821a3d2677e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86c4cb39_03b33d54",
         "filename": "chrome/browser/ui/app_list/extension_app_model_builder_unittest.cc",
         "patchSetId": 3
@@ -107,6 +203,24 @@
       "revId": "53cfe98c62e2d52e2092e6779ce57821a3d2677e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d363ba9c_dcf3899d",
+        "filename": "chrome/browser/ui/app_list/extension_app_model_builder_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-11-30T18:39:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86c4cb39_03b33d54",
+      "revId": "53cfe98c62e2d52e2092e6779ce57821a3d2677e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "d5f2339e_d517cb72",
+        "filename": "chrome/browser/ui/app_list/test/fake_app_list_model_updater.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-11-30T18:39:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3db96aa0_754c9286",
+      "revId": "53cfe98c62e2d52e2092e6779ce57821a3d2677e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9627e6ae_a0838a8e",
         "filename": "chrome/browser/ui/app_list/test/fake_app_list_model_updater.h",
         "patchSetId": 3
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "ba4f14a8_c428c067",
+        "filename": "chrome/browser/ui/app_list/test/fake_app_list_model_updater.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-11-30T18:39:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9627e6ae_a0838a8e",
+      "revId": "53cfe98c62e2d52e2092e6779ce57821a3d2677e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28a60992_8e32bfae",
         "filename": "chrome/browser/ui/app_list/test/fake_app_list_model_updater.h",
         "patchSetId": 3
@@ -158,6 +308,24 @@
       "revId": "53cfe98c62e2d52e2092e6779ce57821a3d2677e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36be489a_51fd6f6e",
+        "filename": "chrome/browser/ui/app_list/test/fake_app_list_model_updater.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-11-30T18:39:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28a60992_8e32bfae",
+      "revId": "53cfe98c62e2d52e2092e6779ce57821a3d2677e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
