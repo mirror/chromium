@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34bb3d1f_8ce8c673",
+        "filename": "chrome/browser/chromeos/file_manager/fake_disk_mount_manager.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-30T01:13:42Z",
+      "side": 1,
+      "message": "can you update this to invoke the correct observer method depending on whether the device is automountable",
+      "range": {
+        "startLine": 157,
+        "startChar": 13,
+        "endLine": 157,
+        "endChar": 37
+      },
+      "revId": "08c12f3cc5e197e20af3441854584fa8812e1620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab822626_1d118f7f",
+        "filename": "chrome/browser/chromeos/file_manager/volume_manager_unittest.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-30T01:13:42Z",
+      "side": 1,
+      "message": "can you add a test that boot devices are ignored?",
+      "range": {
+        "startLine": 259,
+        "startChar": 26,
+        "endLine": 259,
+        "endChar": 57
+      },
+      "revId": "08c12f3cc5e197e20af3441854584fa8812e1620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df736688_934c0086",
+        "filename": "chromeos/disks/disk_mount_manager.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-30T01:13:42Z",
+      "side": 1,
+      "message": "this should probably go to .cc file\nAlso, can you add a comment that generally a device must not be virtual in order to be auto mountable, but that Disk is created for non virtual devices only.",
+      "range": {
+        "startLine": 185,
+        "startChar": 43,
+        "endLine": 185,
+        "endChar": 58
+      },
+      "revId": "08c12f3cc5e197e20af3441854584fa8812e1620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1dcb04b_9b38ed7d",
+        "filename": "chromeos/disks/disk_mount_manager_unittest.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-30T01:13:42Z",
+      "side": 1,
+      "message": "can you add a separate event type for boot device disk events?\n\nAlso, there should probably be a test that verifies that boot device disks and auto-mountable disks are reported separately.\n(and that virtual devices are ignored). I\u0027m fine if you want to do this in this cl though, given that disk mounting/enumerating scenarios are not really tested at the time (so this might require some plumbing in the fake_cros_disks_client,).",
+      "range": {
+        "startLine": 341,
+        "startChar": 39,
+        "endLine": 341,
+        "endChar": 48
+      },
+      "revId": "08c12f3cc5e197e20af3441854584fa8812e1620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "989382ec_7becb8d5",
+        "filename": "chromeos/disks/mock_disk_mount_manager.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-30T01:13:42Z",
+      "side": 1,
+      "message": "can you change this to invoke correct observer (based on whether disk is automountable or not)",
+      "range": {
+        "startLine": 231,
+        "startChar": 13,
+        "endLine": 231,
+        "endChar": 34
+      },
+      "revId": "08c12f3cc5e197e20af3441854584fa8812e1620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f8bb9de_924efbc5",
+        "filename": "components/arc/volume_mounter/arc_volume_mounter_bridge.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-30T01:13:42Z",
+      "side": 1,
+      "message": "nit can you add a comment that ARC should not care about these?",
+      "revId": "08c12f3cc5e197e20af3441854584fa8812e1620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
