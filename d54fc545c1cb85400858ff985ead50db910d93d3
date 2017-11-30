@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2cc96ba_08330485",
+        "filename": "content/test/data/service_worker/cross_site_xfer.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-30T20:36:38Z",
+      "side": 1,
+      "message": "Is this comment accurate? Test just seems to navigate and wait for title",
+      "revId": "d54fc545c1cb85400858ff985ead50db910d93d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a95edfc7_b3d1a6b4",
+        "filename": "content/test/data/service_worker/cross_site_xfer.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-30T20:36:38Z",
+      "side": 1,
+      "message": "Missing the rest of the sentence",
+      "revId": "d54fc545c1cb85400858ff985ead50db910d93d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcf40831_65fb7af6",
+        "filename": "content/test/data/service_worker/cross_site_xfer.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-30T20:36:38Z",
+      "side": 1,
+      "message": "Why are we doing unregister again?",
+      "revId": "d54fc545c1cb85400858ff985ead50db910d93d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
