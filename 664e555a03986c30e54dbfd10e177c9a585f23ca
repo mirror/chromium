@@ -16,6 +16,24 @@
       "revId": "664e555a03986c30e54dbfd10e177c9a585f23ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fdf59d1_603cc563",
+        "filename": "crypto/ec_private_key.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-11-30T01:51:41Z",
+      "side": 1,
+      "message": "Yes, I believe everything you wrote is correct. Except that an \u003ddefault destructor is not identical (if written on its first declaration, in-class). A defaulted destructor can be trivial if it meets the rest of the requirements.\n\nBut for constructors and destructors in chromium code where most are out of line, \u003ddefault is only a consistency thing (and arguably a minor readability improvement depending on who you ask).",
+      "parentUuid": "88a3c108_4a519a19",
+      "revId": "664e555a03986c30e54dbfd10e177c9a585f23ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
