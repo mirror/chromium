@@ -924,7 +924,8 @@ unpacker.app = {
                             {
                               fileSystemId: fileSystemId,
                               displayName: entry.name,
-                              openedFilesLimit: 1
+                              openedFilesLimit: 1,
+                              temporary: true
                             },
                             function() {
                               if (chrome.runtime.lastError) {
