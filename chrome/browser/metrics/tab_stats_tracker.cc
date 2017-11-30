@@ -5,9 +5,12 @@
 #include "chrome/browser/metrics/tab_stats_tracker.h"
 
 #include <algorithm>
+#include <utility>
 
+#include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/power_monitor/power_monitor.h"
+#include "base/strings/stringprintf.h"
 #include "chrome/browser/background/background_mode_manager.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/ui/browser.h"
@@ -30,6 +33,12 @@ constexpr base::TimeDelta kDailyEventIntervalTimeDelta =
 // The global TabStatsTracker instance.
 TabStatsTracker* g_instance = nullptr;
 
+// The intervals at which we report the number of unused tabs.
+constexpr base::TimeDelta kTabUsageReportingIntervals[] = {
+    base::TimeDelta::FromSeconds(30), base::TimeDelta::FromMinutes(1),
+    base::TimeDelta::FromMinutes(10), base::TimeDelta::FromHours(1),
+    base::TimeDelta::FromHours(5),    base::TimeDelta::FromHours(12)};
+
 }  // namespace
 
 // static
@@ -44,6 +53,16 @@ const char TabStatsTracker::UmaStatsReportingDelegate::
     kMaxTabsPerWindowInADayHistogramName[] = "Tabs.MaxTabsPerWindowInADay";
 const char TabStatsTracker::UmaStatsReportingDelegate::
     kMaxWindowsInADayHistogramName[] = "Tabs.MaxWindowsInADay";
+const char TabStatsTracker::UmaStatsReportingDelegate::
+    kUnusedAndClosedInIntervalHistogramNameBase[] =
+        "Tabs.UnusedAndClosedInInterval.Count";
+const char TabStatsTracker::UmaStatsReportingDelegate::
+    kUnusedTabsInIntervalHistogramNameBase[] = "Tabs.UnusedInInterval.Count";
+const char TabStatsTracker::UmaStatsReportingDelegate::
+    kUsedAndClosedInIntervalHistogramNameBase[] =
+        "Tabs.UsedAndClosedInInterval.Count";
+const char TabStatsTracker::UmaStatsReportingDelegate::
+    kUsedTabsInIntervalHistogramNameBase[] = "Tabs.UsedInInterval.Count";
 
 const TabStatsDataStore::TabsStats& TabStatsTracker::tab_stats() const {
   return tab_stats_data_store_->tab_stats();
@@ -62,9 +81,13 @@ TabStatsTracker::TabStatsTracker(PrefService* pref_service)
   // if the initialization gets moved to after the creation of the first tab.
   BrowserList* browser_list = BrowserList::GetInstance();
   for (Browser* browser : *browser_list) {
-    browser->tab_strip_model()->AddObserver(this);
-    tab_stats_data_store_->OnWindowAdded();
-    tab_stats_data_store_->OnTabsAdded(browser->tab_strip_model()->count());
+    OnBrowserAdded(browser);
+    for (int i = 0; i < browser->tab_strip_model()->count(); ++i) {
+      tab_stats_data_store_->OnTabAdded(
+          browser->tab_strip_model()->GetWebContentsAt(i));
+    }
+    tab_stats_data_store_->SetTabActive(
+        browser->tab_strip_model()->GetActiveWebContents());
     tab_stats_data_store_->UpdateMaxTabsPerWindowIfNeeded(
         static_cast<size_t>(browser->tab_strip_model()->count()));
   }
@@ -81,6 +104,19 @@ TabStatsTracker::TabStatsTracker(PrefService* pref_service)
   daily_event_->CheckInterval();
   timer_.Start(FROM_HERE, kDailyEventIntervalTimeDelta, daily_event_.get(),
                &DailyEvent::CheckInterval);
+
+  // Initialize the interval maps and timers associated with them.
+  for (size_t i = 0; i < arraysize(kTabUsageReportingIntervals); ++i) {
+    tab_stats_data_store_->AddInterval(
+        kTabUsageReportingIntervals[i].InSeconds());
+    // Setup the timer associated with this interval.
+    std::unique_ptr<base::RepeatingTimer> timer =
+        base::MakeUnique<base::RepeatingTimer>();
+    timer->Start(FROM_HERE, kTabUsageReportingIntervals[i],
+                 Bind(&TabStatsTracker::OnInterval, base::Unretained(this),
+                      kTabUsageReportingIntervals[i].InSeconds()));
+    usage_interval_timers_.push_back(std::move(timer));
+  }
 }
 
 TabStatsTracker::~TabStatsTracker() {
@@ -136,7 +172,7 @@ void TabStatsTracker::TabInsertedAt(TabStripModel* model,
                                     int index,
                                     bool foreground) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  tab_stats_data_store_->OnTabsAdded(1);
+  tab_stats_data_store_->OnTabAdded(web_contents);
 
   tab_stats_data_store_->UpdateMaxTabsPerWindowIfNeeded(
       static_cast<size_t>(model->count()));
@@ -146,12 +182,35 @@ void TabStatsTracker::TabClosingAt(TabStripModel* model,
                                    content::WebContents* web_contents,
                                    int index) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  tab_stats_data_store_->OnTabsRemoved(1);
+  tab_stats_data_store_->OnTabRemoved(web_contents);
+}
+
+void TabStatsTracker::ActiveTabChanged(content::WebContents* old_contents,
+                                       content::WebContents* new_contents,
+                                       int index,
+                                       int reason) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  if (old_contents != nullptr)
+    tab_stats_data_store_->SetTabUnactive(old_contents);
+  if (new_contents != nullptr)
+    tab_stats_data_store_->SetTabActive(new_contents);
 }
 
 void TabStatsTracker::OnResume() {
   reporting_delegate_->ReportTabCountOnResume(
       tab_stats_data_store_->tab_stats().total_tab_count);
+}
+
+void TabStatsTracker::OnInterval(size_t interval_time_in_sec) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
+  TabStatsDataStore::TabsStateDuringIntervalMap* interval_map =
+      tab_stats_data_store_->GetIntervalMap(interval_time_in_sec);
+  CHECK_NE(nullptr, interval_map);
+  reporting_delegate_->ReportUsageDuringInterval(*interval_map,
+                                                 interval_time_in_sec);
+  // Reset the interval data.
+  tab_stats_data_store_->ResetIntervalData(interval_map);
 }
 
 void TabStatsTracker::UmaStatsReportingDelegate::ReportTabCountOnResume(
@@ -178,6 +237,62 @@ void TabStatsTracker::UmaStatsReportingDelegate::ReportDailyMetrics(
                              tab_stats.max_tab_per_window);
   UMA_HISTOGRAM_COUNTS_10000(kMaxWindowsInADayHistogramName,
                              tab_stats.window_count_max);
+}
+
+void TabStatsTracker::UmaStatsReportingDelegate::ReportUsageDuringInterval(
+    const TabStatsDataStore::TabsStateDuringIntervalMap& interval_map,
+    size_t interval_time_in_sec) {
+  // Counts the number of used/unused tabs during this interval, a tabs counts
+  // as unused if it hasn't been interacted with or visible during the duration
+  // of the interval.
+  size_t used_tabs = 0;
+  size_t used_and_closed_tabs = 0;
+  size_t unused_tabs = 0;
+  size_t unused_and_closed_tabs = 0;
+  for (auto iter : interval_map) {
+    // TODO(sebmarchand): Use the interval period instead of the
+    // |WasRecentlyAudible| function.
+    if (iter.second.exists_after_interval &&
+        (iter.first->WasRecentlyAudible() ||
+         iter.first->IsCurrentlyAudible())) {
+      iter.second.interacted_during_interval = true;
+    }
+    if (iter.second.interacted_during_interval ||
+        iter.second.visible_during_interval) {
+      if (iter.second.exists_after_interval)
+        ++used_tabs;
+      else
+        ++used_and_closed_tabs;
+    } else {
+      if (iter.second.exists_after_interval)
+        ++unused_tabs;
+      else
+        ++unused_and_closed_tabs;
+    }
+  }
+
+  std::string used_and_closed_histogram_name = base::StringPrintf(
+      "%s_%zu",
+      UmaStatsReportingDelegate::kUsedAndClosedInIntervalHistogramNameBase,
+      interval_time_in_sec);
+  std::string used_histogram_name = base::StringPrintf(
+      "%s_%zu", UmaStatsReportingDelegate::kUsedTabsInIntervalHistogramNameBase,
+      interval_time_in_sec);
+  std::string unused_and_closed_histogram_name = base::StringPrintf(
+      "%s_%zu",
+      UmaStatsReportingDelegate::kUnusedAndClosedInIntervalHistogramNameBase,
+      interval_time_in_sec);
+  std::string unused_histogram_name = base::StringPrintf(
+      "%s_%zu",
+      UmaStatsReportingDelegate::kUnusedTabsInIntervalHistogramNameBase,
+      interval_time_in_sec);
+
+  base::UmaHistogramCounts10000(used_and_closed_histogram_name,
+                                used_and_closed_tabs);
+  base::UmaHistogramCounts10000(used_histogram_name, used_tabs);
+  base::UmaHistogramCounts10000(unused_and_closed_histogram_name,
+                                unused_and_closed_tabs);
+  base::UmaHistogramCounts10000(unused_histogram_name, unused_tabs);
 }
 
 }  // namespace metrics
