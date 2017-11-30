@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42f49aa9_c7704575",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-11-30T00:45:00Z",
+      "side": 1,
+      "message": "I think Java enums are still disallowed. If this is true, you can use integer constants instead.",
+      "range": {
+        "startLine": 138,
+        "startChar": 4,
+        "endLine": 138,
+        "endChar": 8
+      },
+      "revId": "3210aa6bd82d00e9657a31222a1051c15ea56d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a6a9c69_baf26549",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1643,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-11-30T00:45:00Z",
+      "side": 1,
+      "message": "I think there\u0027s a penalty in code size each time we use this function (I\u0027ve been told this is true for the C++ macro). I think we\u0027ll reduce impact by adding a helper function (with only a single parameter for the enum value).",
+      "range": {
+        "startLine": 1643,
+        "startChar": 12,
+        "endLine": 1643,
+        "endChar": 94
+      },
+      "revId": "3210aa6bd82d00e9657a31222a1051c15ea56d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96fc69c9_baf6ab66",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 20830,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-11-30T00:45:00Z",
+      "side": 1,
+      "message": "You can add more descriptive labels here, like \"same as BaseUrl\".",
+      "range": {
+        "startLine": 20830,
+        "startChar": 24,
+        "endLine": 20830,
+        "endChar": 31
+      },
+      "revId": "3210aa6bd82d00e9657a31222a1051c15ea56d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
