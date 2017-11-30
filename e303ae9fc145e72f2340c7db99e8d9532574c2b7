@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "633675f5_fe3cfdf3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/LightweightFirstRunActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-30T23:53:51Z",
+      "side": 1,
+      "message": "IntentUtils#safeGetStringExtra() does not have a variation which takes a default. I can add one in a follow up CL",
+      "parentUuid": "321a11b9_9ee028ef",
+      "range": {
+        "startLine": 78,
+        "startChar": 28,
+        "endLine": 78,
+        "endChar": 46
+      },
+      "revId": "e303ae9fc145e72f2340c7db99e8d9532574c2b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9fa4d575_2d898744",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkActivity.java",
         "patchSetId": 3
@@ -59,6 +83,30 @@
       "writtenOn": "2017-11-30T21:24:49Z",
       "side": 1,
       "message": "we will eventually need something like this in a big if, else if, block inside the sequencer. Feel free to put this part in there.",
+      "range": {
+        "startLine": 47,
+        "startChar": 34,
+        "endLine": 47,
+        "endChar": 35
+      },
+      "revId": "e303ae9fc145e72f2340c7db99e8d9532574c2b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fc355a8_09ca90fd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-30T23:53:51Z",
+      "side": 1,
+      "message": "You are right. I will defer that to later to when WebAPKs are launched via LaunchIntentDispatcher",
+      "parentUuid": "9fa4d575_2d898744",
       "range": {
         "startLine": 47,
         "startChar": 34,
@@ -91,6 +139,30 @@
       "revId": "e303ae9fc145e72f2340c7db99e8d9532574c2b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "567902b5_b8a02a92",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 2207,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-30T23:53:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83f3fa55_17d008e0",
+      "range": {
+        "startLine": 2207,
+        "startChar": 36,
+        "endLine": 2207,
+        "endChar": 42
+      },
+      "revId": "e303ae9fc145e72f2340c7db99e8d9532574c2b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
