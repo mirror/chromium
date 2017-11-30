@@ -7,6 +7,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/time/time.h"
 #include "chrome/browser/android/webapk/chrome_webapk_host.h"
+#include "chrome/browser/installable/installable_metrics.h"
 
 namespace webapk {
 
@@ -28,6 +29,9 @@ void TrackInstallEvent(InstallEvent event) {
 
 void TrackInstallSource(InstallSource event) {
   UMA_HISTOGRAM_ENUMERATION(kInstallSourceHistogram, event, INSTALL_SOURCE_MAX);
+  TrackInstallSource(event == INSTALL_SOURCE_BANNER
+                         ? WebAppInstallSource::BANNER
+                         : WebAppInstallSource::MENU);
 }
 
 }  // namespace webapk

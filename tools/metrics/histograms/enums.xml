@@ -43444,6 +43444,13 @@ Called by update_traffic_annotation_histograms.py.-->
   <int value="4" label="Fullscreen"/>
 </enum>
 
+<enum name="WebAppInstallSource">
+  <int value="0" label="Install triggered via the app install banner"/>
+  <int value="1" label="Install triggered via the menu"/>
+  <int value="2"
+      label="Install triggered by calling BeforeInstallPrompt.prompt()"/>
+</enum>
+
 <enum name="WebAudioAutoplayStatus">
   <int value="0" label="The AudioContext failed to autoplay"/>
   <int value="1" label="Failed to autoplay but start() called on user gesture"/>
