@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2842870f_1b1215b0",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_dictionary.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-30T08:24:05Z",
+      "side": 1,
+      "message": "Probably the problem is that we need to handle combinations of runtime-enabled, secure context and origin-trial conditions.  All the three conditions are orthogonal rather than \"independent\", so we have to handle arbitrary combinations of them.",
+      "parentUuid": "f17f8a8f_3bc9fe65",
+      "revId": "a2fd32a543c748c59064b1286e70c5638a10d221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be465539_7c5e6e8c",
         "filename": "third_party/WebKit/Source/bindings/scripts/v8_utilities.py",
         "patchSetId": 4
