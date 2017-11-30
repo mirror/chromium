@@ -16,6 +16,24 @@
       "revId": "a51cf6c2a8bbfc16fa0ceff2ece5a602e797c28c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbdc65c8_b1ca1a45",
+        "filename": "services/ui/ws/platform_display_mirror.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-30T18:27:36Z",
+      "side": 1,
+      "message": "I attempted to replicate the ws::Display behavior of passing the AcceleratedWidget back for mus-without-viz, does that seem reasonable? Perhaps it would make more sense to avoid creating PlatformDisplayMirrors (and just use regular ws::Displays for mirrors) in that config. I\u0027d appreciate your guidance, helping me understand the implications of mus-without-viz for this work, and also explaining how to run mus-without-viz :)",
+      "parentUuid": "96170cdd_a015f8a2",
+      "revId": "a51cf6c2a8bbfc16fa0ceff2ece5a602e797c28c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
