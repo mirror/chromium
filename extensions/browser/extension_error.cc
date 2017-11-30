@@ -120,11 +120,12 @@ std::string RuntimeError::GetDebugString() const {
     // The "NL" comments are to force clang-format to choose the right layout.
     result += "\n    {";
     result +=
-        "\n      Line:     " + base::SizeTToString(iter->line_number) +    // NL
-        "\n      Column:   " + base::SizeTToString(iter->column_number) +  // NL
-        "\n      URL:      " + base::UTF16ToUTF8(iter->source) +           // NL
-        "\n      Function: " + base::UTF16ToUTF8(iter->function) +         // NL
-        "\n    }";                                                         // NL
+        "\n      Line:     " + base::NumberToString(iter->line_number) +  // NL
+        "\n      Column:   " +
+        base::NumberToString(iter->column_number) +                 // NL
+        "\n      URL:      " + base::UTF16ToUTF8(iter->source) +    // NL
+        "\n      Function: " + base::UTF16ToUTF8(iter->function) +  // NL
+        "\n    }";                                                  // NL
   }
   return result;
 }
