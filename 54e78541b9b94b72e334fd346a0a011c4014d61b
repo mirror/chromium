@@ -46,6 +46,30 @@
       "revId": "54e78541b9b94b72e334fd346a0a011c4014d61b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "054dba37_d3fb032e",
+        "filename": "content/browser/notifications/notification_id_generator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-30T15:33:20Z",
+      "side": 1,
+      "message": "I understand now, thanks!\n\nHow about \"Note that the PNS is expected to handle distinguishing identical generated ids from different browser contexts\" ?",
+      "parentUuid": "1f0a82af_cea88515",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 70
+      },
+      "revId": "54e78541b9b94b72e334fd346a0a011c4014d61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
