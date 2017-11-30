@@ -231,6 +231,10 @@ void RendererMetricsHelper::RecordTaskMetrics(MainThreadTaskQueue* queue,
   UMA_HISTOGRAM_CUSTOM_COUNTS("RendererScheduler.TaskTime2",
                               duration.InMicroseconds(), 1, 1000 * 1000, 50);
 
+  if (task.location())
+    printf("%s,%ld\n", task.location()->ToString().c_str(),
+           duration.InMicroseconds());
+
   // We want to measure thread time here, but for efficiency reasons
   // we stick with wall time.
   main_thread_load_tracker.RecordTaskTime(start_time, end_time);
