@@ -1,0 +1,360 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b0f879c_974cee11",
+        "filename": "components/cronet/ios/cronet_metrics.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-30T23:26:24Z",
+      "side": 1,
+      "message": "nit: I *think* it is preferable to avoid \u0027using\u0027 on global level.\nCan this be moved inside of CronetMetricsDelegate?",
+      "range": {
+        "startLine": 56,
+        "startChar": 6,
+        "endLine": 56,
+        "endChar": 13
+      },
+      "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6e4927c_8b63b004",
+        "filename": "components/cronet/ios/cronet_metrics.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-30T23:26:24Z",
+      "side": 1,
+      "message": "Can you add a comment about the purpose of this interface addition?\n\nnit: Maybe move it up above namespace cronet {}",
+      "range": {
+        "startLine": 81,
+        "startChar": 1,
+        "endLine": 81,
+        "endChar": 10
+      },
+      "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "facbef28_069e4804",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 25
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-30T23:26:24Z",
+      "side": 1,
+      "message": "nit: This init and one on CronetMetrics do the same thing, but are subtly different. \nCan you make them (mostly) the same?",
+      "range": {
+        "startLine": 32,
+        "startChar": 16,
+        "endLine": 32,
+        "endChar": 20
+      },
+      "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a337316f_29d001a8",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 25
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-30T23:26:24Z",
+      "side": 1,
+      "message": "nit: Remove trailing white spaces here and elsewhere. Maybe just do \u0027git cl format components/cronet\u0027.",
+      "range": {
+        "startLine": 124,
+        "startChar": 68,
+        "endLine": 124,
+        "endChar": 69
+      },
+      "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eff2e729_5227a5aa",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 25
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-30T23:26:24Z",
+      "side": 1,
+      "message": "nit: remove one empty line.",
+      "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19c7c8e0_602a638e",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 25
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-30T23:26:24Z",
+      "side": 1,
+      "message": "I think you may need to assign an object for @synchronized to work.",
+      "range": {
+        "startLine": 152,
+        "startChar": 10,
+        "endLine": 152,
+        "endChar": 29
+      },
+      "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83afc0d7_8f8a9a3a",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 25
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-30T23:26:24Z",
+      "side": 1,
+      "message": "BUG: find() also needs to be synchronized. In fact, I\u0027d put this whole logic into @synchronized section.",
+      "range": {
+        "startLine": 158,
+        "startChar": 42,
+        "endLine": 158,
+        "endChar": 46
+      },
+      "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a53a3d6b_218ed65e",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 25
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-30T23:26:24Z",
+      "side": 1,
+      "message": "nit: no need for {} around single line block if \u0027if\u0027 statement is also one line.",
+      "range": {
+        "startLine": 159,
+        "startChar": 49,
+        "endLine": 159,
+        "endChar": 50
+      },
+      "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8e73b25_55d0ffaf",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 25
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-30T23:26:24Z",
+      "side": 1,
+      "message": "Should this be id\u003cURLSessionTaskDelegate\u003e? If so, then we don\u0027t need to cast it around line 242.",
+      "range": {
+        "startLine": 199,
+        "startChar": 5,
+        "endLine": 199,
+        "endChar": 25
+      },
+      "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d091703_91187a44",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 25
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-30T23:26:24Z",
+      "side": 1,
+      "message": "I think this will spam the log.",
+      "range": {
+        "startLine": 228,
+        "startChar": 2,
+        "endLine": 228,
+        "endChar": 7
+      },
+      "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "210ce8b6_804bc9ed",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 25
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-30T23:26:24Z",
+      "side": 1,
+      "message": "Can we do this check in initWithDelegate and remember the outcome?",
+      "range": {
+        "startLine": 233,
+        "startChar": 7,
+        "endLine": 233,
+        "endChar": 16
+      },
+      "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a51549e_d4cd1708",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 25
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-30T23:26:24Z",
+      "side": 1,
+      "message": "This should be fixed now, right?",
+      "range": {
+        "startLine": 190,
+        "startChar": 46,
+        "endLine": 190,
+        "endChar": 60
+      },
+      "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d03f6a33_f8897065",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 25
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-30T23:26:24Z",
+      "side": 1,
+      "message": "nit: remove extra empty lines.",
+      "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76949872_03b21fcf",
+        "filename": "components/cronet/ios/test/cronet_test_base.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-30T23:26:24Z",
+      "side": 1,
+      "message": "nit: Could you rephrase and add period?",
+      "range": {
+        "startLine": 45,
+        "startChar": 36,
+        "endLine": 45,
+        "endChar": 37
+      },
+      "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cbab6d1_c9c5a490",
+        "filename": "ios/net/crn_http_protocol_handler.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-30T23:26:24Z",
+      "side": 1,
+      "message": "nit: spurious change?",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 2
+      },
+      "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af367e6a_7a38d0e4",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 25
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-30T23:26:24Z",
+      "side": 1,
+      "message": "base::MakeUnique\u003cnet::MetricsDelegate::Metrics\u003e();",
+      "range": {
+        "startLine": 739,
+        "startChar": 19,
+        "endLine": 740,
+        "endChar": 38
+      },
+      "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
