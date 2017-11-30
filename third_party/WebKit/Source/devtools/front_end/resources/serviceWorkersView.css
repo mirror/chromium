@@ -149,6 +149,7 @@
     height: 1px;
     width: 1px;
     margin: 0;
+    -webkit-appearance: none;
 }
 
 .service-worker-filter-label {
