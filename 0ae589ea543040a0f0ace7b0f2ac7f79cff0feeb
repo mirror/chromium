@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d2cae33_3f2683c7",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-11-30T22:53:33Z",
+      "side": 0,
+      "message": "Is the fade-in at [1] still needed? \n\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/resources/md_extensions/view_manager.js?type\u003dcs\u0026q\u003dfade-in+extension\u0026sq\u003dpackage:chromium\u0026l\u003d24",
+      "revId": "0ae589ea543040a0f0ace7b0f2ac7f79cff0feeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
