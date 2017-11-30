@@ -12,7 +12,15 @@ function getStateUninitialized() {
 function setStateRunning() {
   chrome.mediaPerceptionPrivate.setState({
     status: 'RUNNING',
-    deviceContext: 'device_context'
+    deviceContext: 'device_context',
+    videoStreamParam: [
+      {
+        id: 'FaceDetection',
+        width: 1280,
+        height: 1920,
+        frameRate: 30,
+      },
+    ],
   }, chrome.test.callbackPass(function(state) {
     chrome.test.assertEq('RUNNING', state.status);
   }));
@@ -43,6 +51,21 @@ function setStateSuspendedButWithDeviceContextFail() {
   }, chrome.test.callbackFail(error));
 }
 
+function setStateSuspendedButWithVideoStreamParamFail() {
+  const error = 'Only provide videoStreamParam with SetState RUNNING.';
+  chrome.mediaPerceptionPrivate.setState({
+    status: 'SUSPENDED',
+    videoStreamParam: [
+      {
+        id: 'FaceDetection',
+        width: 1280,
+        height: 1920,
+        frameRate: 30,
+      },
+    ],
+  }, chrome.test.callbackFail(error));
+}
+
 function setStateRestarted() {
   chrome.mediaPerceptionPrivate.setState({
     status: 'RESTARTING',
@@ -59,5 +82,6 @@ chrome.test.runTests([
     getStateRunning,
     setStateUnsettable,
     setStateSuspendedButWithDeviceContextFail,
+    setStateSuspendedButWithVideoStreamParamFail,
     setStateRestarted]);
 
