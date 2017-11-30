@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e24a495e_cbc99279",
+        "filename": "ui/message_center/views/notification_view_md_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-30T14:51:24Z",
+      "side": 1,
+      "message": "I feel like these two would be more clearly named as \"expecting_*\", since we always can but just aren\u0027t expecting it for most tests. That\u0027d also make the comments on lines 162 and 174 redundant.",
+      "revId": "4572acb1c4188e1eae72cb97213c5b2dee7a9843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84af8f59_8a2d11de",
+        "filename": "ui/message_center/views/notification_view_md_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-30T14:51:24Z",
+      "side": 1,
+      "message": "nit: s/WithReply//",
+      "revId": "4572acb1c4188e1eae72cb97213c5b2dee7a9843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc907a21_73c5bcf6",
+        "filename": "ui/message_center/views/notification_view_md_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-30T14:51:24Z",
+      "side": 1,
+      "message": "nit: you can use range-based for:\n\nfor (ui::KeyboardCode keycode : keycodes) {\n  generator.PressKey(keycode, ui::EF_NONE);\n  generator.ReleaseKey(keycode, ui::EF_NONE);\n}",
+      "revId": "4572acb1c4188e1eae72cb97213c5b2dee7a9843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
