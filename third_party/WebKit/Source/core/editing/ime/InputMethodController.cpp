@@ -572,6 +572,12 @@ bool InputMethodController::ReplaceCompositionAndMoveCaret(
 
   AddImeTextSpans(ime_text_spans, root_editable_element, text_start);
 
+  // If the IME wants to leave the selection at the end of the newly-inserted
+  // text, the selection is already in the correct place (and in fact, may have
+  // been moved by JavaScript, in which case we don't want to move it again).
+  if (relative_caret_position == 0)
+    return true;
+
   int absolute_caret_position = ComputeAbsoluteCaretPosition(
       text_start, text.length(), relative_caret_position);
   return MoveCaret(absolute_caret_position);
@@ -604,6 +610,12 @@ bool InputMethodController::InsertTextAndMoveCaret(
   if (root_editable_element) {
     AddImeTextSpans(ime_text_spans, root_editable_element, text_start);
   }
+
+  // If the IME wants to leave the selection at the end of the newly-inserted
+  // text, the selection is already in the correct place (and in fact, may have
+  // been moved by JavaScript, in which case we don't want to move it again).
+  if (relative_caret_position == 0)
+    return true;
 
   int absolute_caret_position = ComputeAbsoluteCaretPosition(
       text_start, text.length(), relative_caret_position);
@@ -759,8 +771,27 @@ void InputMethodController::SetComposition(
   // needs to be audited. see http://crbug.com/590369 for more details.
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
 
-  // We shouldn't close typing in the middle of setComposition.
-  SetEditableSelectionOffsets(selected_range, TypingContinuation::kContinue);
+  if (selection_start == static_cast<int>(text.length()) &&
+      selection_end == static_cast<int>(text.length())) {
+    // The IME requested to leave the selection at the end of the
+    // newly-inserted text. In this case, we don't want to move the selection
+    // since JavaScript may have moved it, or changed the text (which
+    // invalidates the IME selection offsets). However, we called
+    // InsertTextDuringCompositionWithEvents() with the kSelectInsertedText
+    // flag, so we still have to deselect the composition in this case.
+
+    // TODO(editing-dev): find a way to replace the composition without
+    // selecting the new text so we can handle the case where JavaScript sets a
+    // range selection.
+    const Position extent =
+        GetFrame().Selection().ComputeVisibleSelectionInDOMTree().Extent();
+    GetFrame().Selection().SetSelection(
+        SelectionInDOMTree::Builder().Collapse(extent).Build(),
+        SetSelectionOptions::Builder().SetShouldCloseTyping(false).Build());
+  } else {
+    // We shouldn't close typing in the middle of setComposition.
+    SetEditableSelectionOffsets(selected_range, TypingContinuation::kContinue);
+  }
 
   // Even though we would've returned already if SetComposition() were called
   // with an empty string, the composition range could still be empty right now

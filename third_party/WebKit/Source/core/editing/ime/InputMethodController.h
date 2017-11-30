@@ -62,6 +62,9 @@ class CORE_EXPORT InputMethodController final
 
   // international text input composition
   bool HasComposition() const;
+  // selection_start and selection_end, which control what text will be selected
+  // after SetComposition() finishes, are relative to the beginning of the
+  // newly-inserted text.
   void SetComposition(const String& text,
                       const Vector<ImeTextSpan>& ime_text_spans,
                       int selection_start,
@@ -71,8 +74,8 @@ class CORE_EXPORT InputMethodController final
                                       unsigned composition_end);
 
   // Deletes ongoing composing text if any, inserts specified text, and
-  // changes the selection according to relativeCaretPosition, which is
-  // relative to the end of the inserting text.
+  // changes the selection according to relative_caret_position, which is
+  // relative to the end of the text being inserted.
   bool CommitText(const String& text,
                   const Vector<ImeTextSpan>& ime_text_spans,
                   int relative_caret_position);
@@ -139,6 +142,7 @@ class CORE_EXPORT InputMethodController final
                        unsigned offset_in_plain_chars);
 
   bool InsertText(const String&);
+  // relative_caret_position is relative to the end of the text being inserted.
   bool InsertTextAndMoveCaret(const String&,
                               int relative_caret_position,
                               const Vector<ImeTextSpan>& ime_text_spans);
@@ -148,6 +152,7 @@ class CORE_EXPORT InputMethodController final
   bool ReplaceComposition(const String& text);
   // Inserts the given text string in the place of the existing composition
   // and moves caret. Returns true if did replace and moved caret successfully.
+  // relative_caret_position is relative to the end of the text being inserted.
   bool ReplaceCompositionAndMoveCaret(
       const String&,
       int relative_caret_position,
