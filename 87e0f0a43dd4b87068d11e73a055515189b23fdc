@@ -70,6 +70,24 @@
       "revId": "87e0f0a43dd4b87068d11e73a055515189b23fdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dd1a6a6_4272579e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/fileapi/resources/delete-temp-file.cgi",
+        "patchSetId": 27
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-30T00:49:08Z",
+      "side": 1,
+      "message": "After more research, my suggestion is:\n\n# tmpdir() does not read environment variables in taint mode.\n$system_tempdir \u003d $ENV{TMPDIR} || $ENV{TEMP} || tmpdir();\n\n1) We don\u0027t support running LayoutTests via anything other than third_party/WebKit/Tools/Scripts/{run-webkit-tests,run-blink-httpd}. Developers who use other approximations (which includes myself, at times) are responsible for sorting out env breakage.\n\n2) I think it\u0027s reasonable to assume a proper ENV on dev systems. On Linux, TMPDIR is not mandatory [1] and doesn\u0027t exist on my Google linux distribution (it does exist on my Fedora workstation, which prompted me to suggest the previous version). In this case, tmpdir() provides the correct fallback /tmp [2]. On Windows, both TEMP and TMP are de-facto standards [3], and are present by default [4], so tmpdir() should never be invoked.\n\n[1] http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap08.html\n[2] https://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard#Directory_structure\n[3] https://blogs.msdn.microsoft.com/oldnewthing/20150417-00/?p\u003d44213\n[4] https://en.wikipedia.org/wiki/Environment_variable#Default_values",
+      "parentUuid": "60b6de20_0c7bea4d",
+      "revId": "87e0f0a43dd4b87068d11e73a055515189b23fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
