@@ -209,7 +209,7 @@ class CORE_EXPORT SVGElement : public Element {
 
   virtual void Trace(blink::Visitor*);
 
-  static const AtomicString& EventParameterName();
+  static const Vector<AtomicString>& EventParameterName();
 
   bool IsPresentationAttribute(const QualifiedName&) const override;
   virtual bool IsPresentationAttributeWithSVGDOM(const QualifiedName&) const;

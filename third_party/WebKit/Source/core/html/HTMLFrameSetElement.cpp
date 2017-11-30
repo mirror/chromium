@@ -153,10 +153,13 @@ void HTMLFrameSetElement::ParseAttribute(
         CreateAttributeEventListener(GetDocument().GetFrame(), name, value,
                                      EventParameterName()));
   } else if (name == onerrorAttr) {
+    Vector<AtomicString> error_parameter_names(
+        {AtomicString("event"), AtomicString("source"), AtomicString("lineno"),
+         AtomicString("colno"), AtomicString("error")});
     GetDocument().SetWindowAttributeEventListener(
         EventTypeNames::error,
         CreateAttributeEventListener(GetDocument().GetFrame(), name, value,
-                                     EventParameterName()));
+                                     error_parameter_names));
   } else if (name == onfocusAttr) {
     GetDocument().SetWindowAttributeEventListener(
         EventTypeNames::focus,

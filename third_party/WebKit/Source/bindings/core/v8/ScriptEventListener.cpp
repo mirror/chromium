@@ -35,12 +35,14 @@
 #include "bindings/core/v8/SourceLocation.h"
 #include "bindings/core/v8/V8AbstractEventListener.h"
 #include "bindings/core/v8/V8BindingForCore.h"
+#include "bindings/core/v8/V8LazyErrorHandler.h"
 #include "bindings/core/v8/WindowProxy.h"
 #include "core/dom/Document.h"
 #include "core/dom/DocumentParser.h"
 #include "core/dom/QualifiedName.h"
 #include "core/dom/events/EventListener.h"
 #include "core/frame/LocalFrame.h"
+#include "core/html_names.h"
 #include "platform/bindings/ScriptState.h"
 #include "v8/include/v8.h"
 
@@ -50,7 +52,7 @@ V8LazyEventListener* CreateAttributeEventListener(
     Node* node,
     const QualifiedName& name,
     const AtomicString& value,
-    const AtomicString& event_parameter_name) {
+    const Vector<AtomicString>& event_parameter_names) {
   DCHECK(node);
   if (value.IsNull())
     return nullptr;
@@ -69,7 +71,7 @@ V8LazyEventListener* CreateAttributeEventListener(
     source_url = node->GetDocument().Url().GetString();
   }
 
-  return V8LazyEventListener::Create(name.LocalName(), event_parameter_name,
+  return V8LazyEventListener::Create(name.LocalName(), event_parameter_names,
                                      value, source_url, position, node,
                                      isolate);
 }
@@ -78,7 +80,7 @@ V8LazyEventListener* CreateAttributeEventListener(
     LocalFrame* frame,
     const QualifiedName& name,
     const AtomicString& value,
-    const AtomicString& event_parameter_name) {
+    const Vector<AtomicString>& event_parameter_names) {
   if (!frame)
     return nullptr;
 
@@ -91,7 +93,14 @@ V8LazyEventListener* CreateAttributeEventListener(
   TextPosition position = frame->GetScriptController().EventHandlerPosition();
   String source_url = frame->GetDocument()->Url().GetString();
 
-  return V8LazyEventListener::Create(name.LocalName(), event_parameter_name,
+  if (frame->GetDocument()->IsHTMLDocument() &&
+      name == HTMLNames::onerrorAttr) {
+    return V8LazyErrorHandler::Create(name.LocalName(), event_parameter_names,
+                                      value, source_url, position, nullptr,
+                                      ToIsolate(frame));
+  }
+
+  return V8LazyEventListener::Create(name.LocalName(), event_parameter_names,
                                      value, source_url, position, nullptr,
                                      ToIsolate(frame));
 }

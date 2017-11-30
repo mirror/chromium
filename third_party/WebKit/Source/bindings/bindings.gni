@@ -138,6 +138,8 @@ bindings_core_v8_files =
                     "core/v8/V8IteratorResultValue.h",
                     "core/v8/V8LazyEventListener.cpp",
                     "core/v8/V8LazyEventListener.h",
+                    "core/v8/V8LazyErrorHandler.cpp",
+                    "core/v8/V8LazyErrorHandler.h",
                     "core/v8/V8NodeFilterCondition.cpp",
                     "core/v8/V8NodeFilterCondition.h",
                     "core/v8/V8ObjectBuilder.cpp",

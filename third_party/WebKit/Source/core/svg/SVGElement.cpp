@@ -1357,9 +1357,9 @@ void SVGElement::Trace(blink::Visitor* visitor) {
   Element::Trace(visitor);
 }
 
-const AtomicString& SVGElement::EventParameterName() {
-  DEFINE_STATIC_LOCAL(const AtomicString, evt_string, ("evt"));
-  return evt_string;
+const Vector<AtomicString>& SVGElement::EventParameterName() {
+  DEFINE_STATIC_LOCAL(const Vector<AtomicString>, evt_vector, ({"evt"}));
+  return evt_vector;
 }
 
 }  // namespace blink
