@@ -143,6 +143,12 @@ ui::TextInputClient* RenderWidgetHostViewBase::GetTextInputClient() {
   return nullptr;
 }
 
+void RenderWidgetHostViewBase::CaptureStateChanged() {}
+
+bool RenderWidgetHostViewBase::IsShowing() {
+  return GetVisibility() != Visibility::HIDDEN;
+}
+
 void RenderWidgetHostViewBase::SetIsInVR(bool is_in_vr) {
   NOTIMPLEMENTED();
 }
