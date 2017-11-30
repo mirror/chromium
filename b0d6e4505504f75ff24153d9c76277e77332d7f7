@@ -25,6 +25,53 @@
     },
     {
       "key": {
+        "uuid": "aed8af87_9d1995a5",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 92854,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-30T16:24:02Z",
+      "side": 1,
+      "message": "I see this possibility. E.g. on browser start.",
+      "parentUuid": "347ec1ab_01702268",
+      "range": {
+        "startLine": 92854,
+        "startChar": 49,
+        "endLine": 92854,
+        "endChar": 63
+      },
+      "revId": "b0d6e4505504f75ff24153d9c76277e77332d7f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90518536_c9e76707",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 92860,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-30T16:24:02Z",
+      "side": 1,
+      "message": "I prefer duration or latency to denote a span of time. Time does sound too much like a point in time to me. Also, there will be another ready latency in a follow up CL. Thus, it should be.OnEnter.",
+      "range": {
+        "startLine": 92860,
+        "startChar": 49,
+        "endLine": 92860,
+        "endChar": 70
+      },
+      "revId": "b0d6e4505504f75ff24153d9c76277e77332d7f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "876eb5cb_3956be7e",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -36,6 +83,30 @@
       "writtenOn": "2017-11-30T02:19:07Z",
       "side": 1,
       "message": "This could be for any component. We only need to record it once, right?",
+      "range": {
+        "startLine": 92875,
+        "startChar": 45,
+        "endLine": 92875,
+        "endChar": 54
+      },
+      "revId": "b0d6e4505504f75ff24153d9c76277e77332d7f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "189dfb5a_738f924d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 92875,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-30T16:24:02Z",
+      "side": 1,
+      "message": "You mean in case we have multiple VR components in the future?",
+      "parentUuid": "876eb5cb_3956be7e",
       "range": {
         "startLine": 92875,
         "startChar": 45,
