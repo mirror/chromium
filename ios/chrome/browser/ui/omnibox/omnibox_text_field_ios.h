@@ -57,11 +57,9 @@ typedef enum {
 // the leading edge.
 - (void)fadeOutLeadingButton;
 
-- (void)addExpandOmniboxAnimations:(UIViewPropertyAnimator*)animator
-    API_AVAILABLE(ios(10.0));
+- (void)addExpandOmniboxAnimations:(UIViewPropertyAnimator*)animator;
 
-- (void)addContractOmniboxAnimations:(UIViewPropertyAnimator*)animator
-    API_AVAILABLE(ios(10.0));
+- (void)addContractOmniboxAnimations:(UIViewPropertyAnimator*)animator;
 
 @end
 
