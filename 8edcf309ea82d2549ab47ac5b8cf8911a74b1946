@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "905eab46_9f48a3f6",
+        "filename": "chrome/browser/previews/previews_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-30T18:10:14Z",
+      "side": 1,
+      "message": "May be Add crbug.com/789948.",
+      "range": {
+        "startLine": 124,
+        "startChar": 66,
+        "endLine": 124,
+        "endChar": 67
+      },
+      "revId": "8edcf309ea82d2549ab47ac5b8cf8911a74b1946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "864e8444_698b74c5",
+        "filename": "chrome/browser/previews/previews_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-30T18:10:14Z",
+      "side": 1,
+      "message": "here too.",
+      "range": {
+        "startLine": 195,
+        "startChar": 66,
+        "endLine": 195,
+        "endChar": 67
+      },
+      "revId": "8edcf309ea82d2549ab47ac5b8cf8911a74b1946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
