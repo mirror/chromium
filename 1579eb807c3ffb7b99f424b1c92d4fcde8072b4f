@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef1fcb49_a9ca3200",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1789,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-11-30T15:56:21Z",
+      "side": 1,
+      "message": "How about reject frame_hdr-\u003ebit_depth \u003e 10 somewhere?\nThen, you can write\npic_param.bit_depth \u003d frame_hdr-\u003ebit_depth;\nwithout the \"if\" because this \"if\" is unnecessary, the parser makes sure its range.\nhttps://cs.chromium.org/chromium/src/media/filters/vp9_uncompressed_header_parser.cc?sq\u003dpackage:chromium\u0026l\u003d648\n(maybe DCHECK instead if you like)",
+      "revId": "1579eb807c3ffb7b99f424b1c92d4fcde8072b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
