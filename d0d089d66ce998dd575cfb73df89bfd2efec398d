@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "e3d7219a_7263c81b",
+        "filename": "chrome/browser/android/vr_shell/vr_metrics_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-30T17:56:54Z",
+      "side": 1,
+      "message": "There have been some changes since I added that. It seems that this gets called every time the GL thread gets created. Which I think only happens when entering VR.",
+      "parentUuid": "68688fd4_13a82c72",
+      "revId": "d0d089d66ce998dd575cfb73df89bfd2efec398d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27d065d2_7dd4d524",
         "filename": "device/vr/openvr/openvr_device.cc",
         "patchSetId": 1
@@ -47,6 +65,30 @@
       "writtenOn": "2017-11-30T07:00:04Z",
       "side": 1,
       "message": "If I\u0027m right about LogVrViewerType() - see comment above - this is a much more limited case for recording \"ViewerType\".\n\nIf there\u0027s not another good location, this is probably fine for now, but we should add a TODO and crbug.",
+      "range": {
+        "startLine": 181,
+        "startChar": 19,
+        "endLine": 181,
+        "endChar": 41
+      },
+      "revId": "d0d089d66ce998dd575cfb73df89bfd2efec398d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de8093d3_56bb072a",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-30T17:56:54Z",
+      "side": 1,
+      "message": "I\u0027m not certain about how VR works on Windows at the moment. But if this is called every time we enter VR it should be similar to the GVR version. See my other comment.",
+      "parentUuid": "27d065d2_7dd4d524",
       "range": {
         "startLine": 181,
         "startChar": 19,
@@ -99,6 +141,29 @@
     },
     {
       "key": {
+        "uuid": "9428890a_db296f4e",
+        "filename": "device/vr/vr_device.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-30T17:56:54Z",
+      "side": 1,
+      "message": "Nit: VrViewerType since there is no extra vr namespace?",
+      "range": {
+        "startLine": 15,
+        "startChar": 11,
+        "endLine": 15,
+        "endChar": 21
+      },
+      "revId": "d0d089d66ce998dd575cfb73df89bfd2efec398d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee581fd7_72c0c893",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
@@ -116,6 +181,24 @@
     },
     {
       "key": {
+        "uuid": "1263c8da_da158a56",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 43163,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-30T17:56:54Z",
+      "side": 1,
+      "message": "It is also for non-presenting VR modes IIUC.",
+      "parentUuid": "ee581fd7_72c0c893",
+      "revId": "d0d089d66ce998dd575cfb73df89bfd2efec398d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1c083d7_f052705d",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
@@ -127,6 +210,24 @@
       "writtenOn": "2017-11-30T07:00:04Z",
       "side": 1,
       "message": "It\u0027s unfortunate that this is at the end of GVR but \"5\" is at the beginning of its set.\nIf \"0\" was previously only used for GVR, maybe we should rename that? It doesn\u0027t look like UNKNOWN_TYPE is possible today. Maybe reserve \"4\" for that?",
+      "revId": "d0d089d66ce998dd575cfb73df89bfd2efec398d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f650b47f_88cb8555",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 43167,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-30T17:56:54Z",
+      "side": 1,
+      "message": "It seems we never logged unknown (https://uma.googleplex.com/p/chrome/timeline_v2/?sid\u003d897357919837c6f4b8866ce4d959f72a). Should be safe to change it\u0027s meaning.",
+      "parentUuid": "a1c083d7_f052705d",
       "revId": "d0d089d66ce998dd575cfb73df89bfd2efec398d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
