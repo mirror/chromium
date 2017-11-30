@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1031d06a_bf62c40c",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadSchedulerTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-30T18:57:48Z",
+      "side": 1,
+      "message": "comment or const value for magic numbers",
+      "range": {
+        "startLine": 263,
+        "startChar": 54,
+        "endLine": 263,
+        "endChar": 56
+      },
+      "revId": "2a959d06e9c2f44dc1bcdd3c51fad2852520ea08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b108799c_9c2a7b52",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadSchedulerTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-30T18:57:48Z",
+      "side": 1,
+      "message": "is this empty line inserted intentionally?",
+      "revId": "2a959d06e9c2f44dc1bcdd3c51fad2852520ea08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
