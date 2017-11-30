@@ -82,6 +82,7 @@ class MODULES_EXPORT UserMediaRequest final
   bool Video() const;
   WebMediaConstraints AudioConstraints() const;
   WebMediaConstraints VideoConstraints() const;
+  bool ShouldDisableHardwareNoiseSuppression() const;
 
   // errorMessage is only set if requestIsPrivilegedContext() returns |false|.
   // Caller is responsible for properly setting errors and canceling request.
@@ -102,6 +103,7 @@ class MODULES_EXPORT UserMediaRequest final
 
   WebMediaConstraints audio_;
   WebMediaConstraints video_;
+  bool should_disable_hardware_noise_suppression_;
 
   Member<UserMediaController> controller_;
 
