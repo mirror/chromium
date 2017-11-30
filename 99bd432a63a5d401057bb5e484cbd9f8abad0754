@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e950ee51_d2050a03",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-11-30T02:26:59Z",
+      "side": 1,
+      "message": "FYI, this implies exactly the same READ access. If that\u0027s intended, consider adding a comment.",
+      "range": {
+        "startLine": 208,
+        "startChar": 2,
+        "endLine": 211,
+        "endChar": 3
+      },
+      "revId": "99bd432a63a5d401057bb5e484cbd9f8abad0754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bf1c156_d5e7d5a3",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 3
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-11-30T02:26:59Z",
+      "side": 1,
+      "message": "I\u0027d add this comment:\n# findit app specifies these per each build it schedules, and it might differ\n# from the ones specified below. The only reason we do so here is to pass\n# validation of buildbucket config.",
+      "revId": "99bd432a63a5d401057bb5e484cbd9f8abad0754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

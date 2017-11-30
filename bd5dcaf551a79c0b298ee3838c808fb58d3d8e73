@@ -234,6 +234,30 @@
       "revId": "bd5dcaf551a79c0b298ee3838c808fb58d3d8e73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9e0e068_11759b51",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-11-30T02:26:59Z",
+      "side": 1,
+      "message": "oh, i didn\u0027t know they are required.",
+      "parentUuid": "d47ce6f9_178913cd",
+      "range": {
+        "startLine": 236,
+        "startChar": 7,
+        "endLine": 237,
+        "endChar": 39
+      },
+      "revId": "bd5dcaf551a79c0b298ee3838c808fb58d3d8e73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
