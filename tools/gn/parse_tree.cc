@@ -9,6 +9,8 @@
 #include <string>
 #include <tuple>
 
+#include <iostream>
+
 #include "base/stl_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "tools/gn/functions.h"
@@ -554,6 +556,7 @@ Value ListNode::Execute(Scope* scope, Err* err) const {
       return Value();
     }
   }
+
   return result_value;
 }
 
