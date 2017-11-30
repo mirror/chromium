@@ -292,10 +292,6 @@ class MockImageBufferSurfaceForOverwriteTesting
                                         kInitializeImagePixels,
                                         color_params) {}
   ~MockImageBufferSurfaceForOverwriteTesting() override {}
-  bool IsRecording() const override {
-    return true;
-  }  // otherwise overwrites are not tracked
-
   MOCK_METHOD0(WillOverwriteCanvas, void());
 };
 
