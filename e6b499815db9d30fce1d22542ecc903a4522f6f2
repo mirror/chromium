@@ -22,6 +22,23 @@
       "revId": "e6b499815db9d30fce1d22542ecc903a4522f6f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7453579d_d5c4db76",
+        "filename": "jingle/notifier/communicator/login.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1252483
+      },
+      "writtenOn": "2017-11-30T07:42:33Z",
+      "side": 1,
+      "message": "Since this patch is already merged, can we create a new bug for this?\n\nOr should I push a new patch for the current bug itself?",
+      "revId": "e6b499815db9d30fce1d22542ecc903a4522f6f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
