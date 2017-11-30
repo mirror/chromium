@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "60e472c9_22c506bf",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2202,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-11-30T16:30:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9f3e93bb_df9b5c9c",
+      "range": {
+        "startLine": 2202,
+        "startChar": 8,
+        "endLine": 2202,
+        "endChar": 30
+      },
+      "revId": "6a71a4cfc08a41d5ae8d600eef8a6d5089b109fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfc038e9_ae5c0248",
         "filename": "content/renderer/render_widget.cc",
         "patchSetId": 3
@@ -273,6 +297,30 @@
       "side": 1,
       "message": "Since it\u0027s just a convenience helper function I don\u0027t see any problem with exposing this from public/ - certainly seems better than duplicating the logic.  Why is it OK to use this only in local frame cases?  Are there outstanding OOPIF issues here with editing?  If so, perhaps the comment for the public API should make it clear usage is discouraged and link to a bug tracking making editing work correctly in all OOPIF cases.",
       "parentUuid": "9e5764f7_48dbd951",
+      "range": {
+        "startLine": 2578,
+        "startChar": 0,
+        "endLine": 2581,
+        "endChar": 76
+      },
+      "revId": "6a71a4cfc08a41d5ae8d600eef8a6d5089b109fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9313d7a_78849c2f",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2581,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-11-30T16:30:23Z",
+      "side": 1,
+      "message": "\u003e Since it\u0027s just a convenience helper function I don\u0027t see any problem with exposing this from public/ - certainly seems better than duplicating the logic.\n\nThanks. In that case, I will a helper method to WebFrameWidget,\n\n\u003e Why is it OK to use this only in local frame cases?  Are there outstanding OOPIF issues here with editing?  If so, perhaps the comment for the public API should make it clear usage is discouraged and link to a bug tracking making editing work correctly in all OOPIF cases.\n\n(Assuming I understand the concern correctly:) RemoteFrames do not contain any logic for editing and IME. All the logic lives inside LocalFrame (and its related classes). For OOPIFs its not different. All such tasks are directly routed to and obtained from the OOPIF process where similarly to the main frame\u0027s case, the local frame corresponding to the OOPIF holds the state and handles the requests.\n\nThe RemoteFrame only lives as a shallow placeholder in the remote parent (or child process).\n\nThat being said, I believe for almost all the tasks handled inside a WebFrameWidget or RenderWidget we are dealing with WebLocalFrames.",
+      "parentUuid": "11c62c5d_d85698ef",
       "range": {
         "startLine": 2578,
         "startChar": 0,
