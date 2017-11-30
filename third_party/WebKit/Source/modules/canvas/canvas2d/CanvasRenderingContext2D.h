@@ -158,6 +158,9 @@ class MODULES_EXPORT CanvasRenderingContext2D final
   void ClearFilterReferences();
 
   // BaseRenderingContext2D implementation
+  RenderingContext2DType GetRenderingContext2DType() const override {
+    return Canvas2D;
+  }
   bool OriginClean() const final;
   void SetOriginTainted() final;
   bool WouldTaintOrigin(CanvasImageSource* source,
