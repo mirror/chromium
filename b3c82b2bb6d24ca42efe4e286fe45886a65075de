@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e8c376b7_a3f1c57a",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-11-30T10:55:12Z",
+      "side": 1,
+      "message": "For static_cast, it should be safe. See comment https://chromium-review.googlesource.com/c/chromium/src/+/776255/1/ui/views/bubble/tray_bubble_view.cc#171\n\nI think checking with aura::Window would be simpler as event-\u003etarget() returns aura::Window.\n\nsky@: WDYT?",
+      "parentUuid": "fc1fe310_8d82fa04",
+      "revId": "b3c82b2bb6d24ca42efe4e286fe45886a65075de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "756e1884_a1738f31",
         "filename": "ui/views/bubble/tray_bubble_view.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "b3c82b2bb6d24ca42efe4e286fe45886a65075de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95f866d0_22be2eea",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-11-30T10:55:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "756e1884_a1738f31",
+      "revId": "b3c82b2bb6d24ca42efe4e286fe45886a65075de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
