@@ -256,7 +256,7 @@ scoped_refptr<NGLayoutResult> NGBlockLayoutAlgorithm::Layout() {
   if (ConstraintSpace().IsNewFormattingContext() || BreakToken()) {
     MaybeUpdateFragmentBfcOffset(input_bfc_block_offset);
     DCHECK(input_margin_strut.IsEmpty());
-    DCHECK_EQ(container_builder_.BfcOffset().value(), NGBfcOffset());
+    DCHECK_EQ(container_builder_.BfcOffset()->block_offset, LayoutUnit());
   }
 
   input_bfc_block_offset += intrinsic_block_size_;
