@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "461f2e2b_3c41b20a",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-30T23:37:38Z",
+      "side": 1,
+      "message": "Post this instead of just calling it so the behavior is consistent IMO.",
+      "range": {
+        "startLine": 467,
+        "startChar": 4,
+        "endLine": 467,
+        "endChar": 77
+      },
+      "revId": "559a7063827d05212475b11823d39113a14cdc93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
