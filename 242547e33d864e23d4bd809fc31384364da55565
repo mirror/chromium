@@ -16,6 +16,24 @@
       "revId": "242547e33d864e23d4bd809fc31384364da55565",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "240e43bf_77682bd9",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBObjectStore.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-30T21:24:35Z",
+      "side": 1,
+      "message": "Rebased against the landed CL",
+      "parentUuid": "4e294689_68f51385",
+      "revId": "242547e33d864e23d4bd809fc31384364da55565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
