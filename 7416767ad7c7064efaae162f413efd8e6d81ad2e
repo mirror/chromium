@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "881e4759_1252f20e",
+        "filename": "ash/wm/workspace/multi_window_resize_controller_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-30T20:21:14Z",
+      "side": 1,
+      "message": "And snap proportions? Or is that coming in the other patch?",
+      "revId": "7416767ad7c7064efaae162f413efd8e6d81ad2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
