@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7262597_f3fe1215",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 3273,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-30T21:42:49Z",
+      "side": 1,
+      "message": "Your CL description mentions that you\u0027re adding a Feature, but I don\u0027t see any base::FeatureList code in the C++ file, nor do I see any enable_features listed here.  Could you please update this CL to use the Feature API – or is there an issue that came up with trying to use it?",
+      "range": {
+        "startLine": 3270,
+        "startChar": 0,
+        "endLine": 3273,
+        "endChar": 21
+      },
+      "revId": "55ef2bf2fd4a7351c9c3967aa69fb9f010a1e9f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40d90090_043d591c",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 3280,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-30T21:42:49Z",
+      "side": 1,
+      "message": "FYI, only the first listed experiment will actually be used, so it\u0027s best to make sure that\u0027s the one you want to run tests with.  (It\u0027s optional to list any additional experiments.)",
+      "range": {
+        "startLine": 3275,
+        "startChar": 16,
+        "endLine": 3280,
+        "endChar": 17
+      },
+      "revId": "55ef2bf2fd4a7351c9c3967aa69fb9f010a1e9f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
