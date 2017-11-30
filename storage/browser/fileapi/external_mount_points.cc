@@ -100,9 +100,9 @@ bool ExternalMountPoints::RegisterFileSystem(
   base::AutoLock locker(lock_);
 
   base::FilePath path = NormalizeFilePath(path_in);
-  if (!ValidateNewMountPoint(mount_name, type, path))
+  if (!ValidateNewMountPoint(mount_name, type, path)) {
     return false;
-
+  }
   instance_map_[mount_name] =
       base::MakeUnique<Instance>(type, path, mount_option);
   if (!path.empty() && IsOverlappingMountPathForbidden(type))
@@ -302,21 +302,23 @@ bool ExternalMountPoints::ValidateNewMountPoint(const std::string& mount_name,
   lock_.AssertAcquired();
 
   // Mount name must not be empty.
-  if (mount_name.empty())
+  if (mount_name.empty()) {
     return false;
-
+  }
   // Verify there is no registered mount point with the same name.
   auto found = instance_map_.find(mount_name);
-  if (found != instance_map_.end())
+  if (found != instance_map_.end()) {
     return false;
+  }
 
   // Allow empty paths.
-  if (path.empty())
+  if (path.empty()) {
     return true;
-
+  }
   // Verify path is legal.
-  if (path.ReferencesParent() || !path.IsAbsolute())
+  if (path.ReferencesParent() || !path.IsAbsolute()) {
     return false;
+  }
 
   if (IsOverlappingMountPathForbidden(type)) {
     // Check there the new path does not overlap with one of the existing ones.
@@ -338,7 +340,6 @@ bool ExternalMountPoints::ValidateNewMountPoint(const std::string& mount_name,
       }
     }
   }
-
   return true;
 }
 
