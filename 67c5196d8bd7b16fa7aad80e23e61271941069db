@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "27fb84a7_5018923c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-30T19:53:25Z",
+      "side": 1,
+      "message": "Could you set a crbug [1]?\n\n[1] Probably its good to have a crbug for merging AddClient() into Fetch() functions and merging ResourceOwner/ResourceClient (and perhaps also assigning TaskRunner to AddClient).",
+      "range": {
+        "startLine": 15,
+        "startChar": 3,
+        "endLine": 15,
+        "endChar": 4
+      },
+      "revId": "67c5196d8bd7b16fa7aad80e23e61271941069db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "530bb837_1c2da450",
+        "filename": "third_party/WebKit/Source/core/css/StyleRuleImport.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-30T19:53:25Z",
+      "side": 1,
+      "message": "drive-by: How about the following code?\nThis is not blocking this CL and to be done separately later, but might be worth considering for merging SetResource() into Fetch() by giving the |client| argument.\nThis looks like causing behavior changes when setCSSStyleSheet() is called synchronously, but anyway the existing code looks wrong in such cases, because:\n- loading_ is set to true in Line 151 after is reset to false in Line 96, and\n- parent_style_sheet_-\u003eStartLoadingDynamicSheet() is called in Line 150 after parent_style_sheet_-\u003eNotifyLoadedSheet() is called in Line 99.\n\n  loading_ \u003d true;\n  // if the import rule is issued dynamically, the sheet may be\n  // removed from the pending sheet count, so let the doc know\n  // the sheet being imported is pending.\n  if (parent_style_sheet_ \u0026\u0026 parent_style_sheet_-\u003eLoadCompleted() \u0026\u0026\n      root_sheet \u003d\u003d parent_style_sheet_)\n    parent_style_sheet_-\u003eStartLoadingDynamicSheet();\n\n  CSSStyleSheetResource* resource \u003d\n      CSSStyleSheetResource::Fetch(params, fetcher);\n  style_sheet_client_-\u003eTakeResource(resource);\n\n  if (!resource) {\n    // The last part of StyleRuleImport::SetCSSStyleSheet(), probably we can merge\n    // this block into StyleRuleImport::NotifyFinished() after we flatten the ResourceClients\n    // and make StyleRuleImport::NotifyFinished() to allow nullptr Resource, and just\n    // call NotifyFinished(nullptr) here.\n    loading_ \u003d false;\n    if (parent_style_sheet_) {\n      parent_style_sheet_-\u003eNotifyLoadedSheet(cached_style_sheet);\n      parent_style_sheet_-\u003eCheckLoaded();\n    }\n  }\n\nAs a plus, we can move the latter part of this code block to ImportedStyleSheetClient(), and removes TakeResource().",
+      "revId": "67c5196d8bd7b16fa7aad80e23e61271941069db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a46be2c9_c2418cd1",
         "filename": "third_party/WebKit/Source/core/css/StyleRuleImport.h",
         "patchSetId": 5
@@ -49,6 +89,30 @@
     },
     {
       "key": {
+        "uuid": "69cf3c33_7d834123",
+        "filename": "third_party/WebKit/Source/core/css/StyleRuleImport.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-30T19:53:25Z",
+      "side": 1,
+      "message": "I slightly prefer to keep SetResource() protected.\nAfter Nate adds ResourceClient* argument to AddClient() and calls AddClient() from RequestResource(), then ideally RequestResouce() should be the only caller to SetResource().\nActually there will be still other callers, but I feel being restrictive about calling SetResource() from another class (it is a signal that we can\u0027t merge the SetResource() call into RequestResource() trivially) aligns with the ideal-world view.\n\nBut slightly. So if this kind of redirection suffers readability, I\u0027m also OK to make SetResource() public. (I feel the current level of such redirections is acceptable though)",
+      "parentUuid": "e65fe4c7_5424592a",
+      "range": {
+        "startLine": 84,
+        "startChar": 9,
+        "endLine": 84,
+        "endChar": 21
+      },
+      "revId": "67c5196d8bd7b16fa7aad80e23e61271941069db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19d56f59_621bc745",
         "filename": "third_party/WebKit/Source/core/html/parser/CSSPreloadScanner.h",
         "patchSetId": 5
@@ -65,6 +129,97 @@
         "startChar": 7,
         "endLine": 128,
         "endChar": 20
+      },
+      "revId": "67c5196d8bd7b16fa7aad80e23e61271941069db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7332b761_528f9983",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorResourceContentLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-30T19:53:25Z",
+      "side": 1,
+      "message": "How about adding a TODO comment with crbug.com/789198, to have only single SetResource() here?",
+      "revId": "67c5196d8bd7b16fa7aad80e23e61271941069db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b3bfd34_13289734",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-30T19:53:25Z",
+      "side": 1,
+      "message": "Possible behavior change:\nAfter this CL GetResource() is not set in Line 858 (and thus remains null?).\nBefore this CL, |main_resource_| was set in Line 867 and can retain the non-null value after here.",
+      "revId": "67c5196d8bd7b16fa7aad80e23e61271941069db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "954a17ea_d8f9f314",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-30T19:53:25Z",
+      "side": 1,
+      "message": "How is this change related to ResourceOwner merging?\n\n-\u003e Oh, I understood, this is to avoid ToRawResource() here.",
+      "revId": "67c5196d8bd7b16fa7aad80e23e61271941069db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "126984ab_fcab0fce",
+        "filename": "third_party/WebKit/Source/core/svg/SVGElementProxy.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-30T19:53:25Z",
+      "side": 1,
+      "message": "This code looks good (adding a Resource link in SVGResourceClient, but is probably harmless).",
+      "revId": "67c5196d8bd7b16fa7aad80e23e61271941069db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f63d980b_133a6dc8",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceClient.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-30T19:53:25Z",
+      "side": 1,
+      "message": "Could you add a crbug link to the crbug [1]?",
+      "range": {
+        "startLine": 70,
+        "startChar": 56,
+        "endLine": 70,
+        "endChar": 57
       },
       "revId": "67c5196d8bd7b16fa7aad80e23e61271941069db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fc5d180_853b469b",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-30T19:53:25Z",
+      "side": 0,
+      "message": "Could you split the change for making DocumentThreadableLoader ResourceOwner\u003cRawResource\u003e and amend checker_ calls into a separate CL?\nIn order to isolate potential changes in assertion failure behavior to a smaller CL.",
+      "revId": "81ff5ac467fa7967cb81a9fd98dbf17804e8cb59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
