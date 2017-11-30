@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e7a7999_a07eeef6",
+        "filename": "extensions/renderer/bindings/event_emitter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-30T20:03:52Z",
+      "side": 1,
+      "message": "I assume this will become an ordinary use of MaybeLocal + ToLocal after the CL to change the sync JS running stuff, right?",
+      "revId": "c74049c83f48f97c345757c2c5a42822b2544cca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc765272_bc101cb6",
+        "filename": "extensions/renderer/bindings/event_emitter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-30T20:03:52Z",
+      "side": 1,
+      "message": "super-nit: If you also reset the TryCatch here, you can lift the v8::TryCatch outside the scope of the loop, avoiding the need to repeatedly change the isolate\u0027s handler pointer. (This is probably trivial for our uses here, but it\u0027s a thing.)",
+      "revId": "c74049c83f48f97c345757c2c5a42822b2544cca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb5046a8_a5935304",
+        "filename": "extensions/renderer/bindings/event_emitter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-30T20:03:52Z",
+      "side": 1,
+      "message": "A bunch of weird cases. e.g. if it has a prototype template, apparently its prototype gets defined via a get of the \"prototype\" property on its parent template. And if any of the properties added to the function itself fail to instantiate. I don\u0027t know that any of those apply here.",
+      "revId": "c74049c83f48f97c345757c2c5a42822b2544cca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f77afcff_6b3e0fe0",
+        "filename": "extensions/renderer/bindings/event_emitter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-30T20:03:52Z",
+      "side": 1,
+      "message": "Not sure how I feel about this. It seems like it\u0027s hacking around the fact that we don\u0027t provide an API to run C++ code when suspension ends. We\u0027re constructing JS data but not really for use by script.\n\nI wonder if what we would rather have is something like:\n\n  // WebLocalFrame\n  virtual void InvokeWhenNotPaused(base::OnceClosure closure);\n\n(where OnceClosure might be replaced by a virtual interface depending on where we are on the discussion about allowing base::Callback in the Blink public API; that\u0027s an ongoing area of development)\n\nThen you could bind the stuff you want in the usual way, rather than having to build a V8 object, stash some data in EventEmitter, etc.",
+      "revId": "c74049c83f48f97c345757c2c5a42822b2544cca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2334ca83_dfddbc99",
+        "filename": "extensions/renderer/bindings/event_emitter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-30T20:03:52Z",
+      "side": 1,
+      "message": "nit: disptach -\u003e dispatch",
+      "revId": "c74049c83f48f97c345757c2c5a42822b2544cca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
