@@ -33,6 +33,11 @@ class CHROMEOS_EXPORT ImageLoaderClient : public DBusClient {
   virtual void LoadComponent(const std::string& name,
                              DBusMethodCallback<std::string> callback) = 0;
 
+  virtual void LoadComponentAtPath(
+      const std::string& name,
+      const std::string& path,
+      DBusMethodCallback<std::string> callback) = 0;
+
   // Requests the currently registered version of the given component |name|.
   virtual void RequestComponentVersion(
       const std::string& name,
