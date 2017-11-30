@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22f3e3b0_9d01842b",
+        "filename": "components/omnibox/browser/autocomplete_match.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-11-30T18:13:14Z",
+      "side": 1,
+      "message": "I like the notion of representing any new logic in this method as opposed to at the call sites. But I don\u0027t think we want new logic. I think preserve_scheme does what we want and we just need to make preserve_scheme true in the presence of a scheme in the input.\n\nWhat has_scheme is doing here is preserving \"https://\" but not \"http://\". But the issue could exhibit with either.",
+      "revId": "50cfd189e6ee04c7e400e4abd293fe799831ea65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86bb08e5_0b0112f4",
+        "filename": "components/omnibox/browser/history_quick_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-11-30T18:13:14Z",
+      "side": 1,
+      "message": "For example, here we could have:\n\nconst bool preserve_scheme \u003d GURL(autocomplete_input_.text()).has_scheme() ||\n                             history_match.match_in_scheme;\n\nThen pass preserve_scheme as the first parameter here.\n\nSeparately, can we use autocomplet_input_.current_url() here instead of constructing a new GURL?",
+      "revId": "50cfd189e6ee04c7e400e4abd293fe799831ea65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
