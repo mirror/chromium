@@ -42,6 +42,23 @@
     },
     {
       "key": {
+        "uuid": "03b7456c_34675168",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_private_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-30T00:52:16Z",
+      "side": 1,
+      "message": "This is a little unclear, I would suggest:\nSetState: status must be RUNNING to set videoStreamParam",
+      "revId": "4c88f96a46c949a2ff3e97980729b09fb9283421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce547cc6_a06c0e17",
         "filename": "extensions/common/api/media_perception_private.idl",
         "patchSetId": 2
@@ -53,6 +70,23 @@
       "writtenOn": "2017-11-30T00:42:28Z",
       "side": 1,
       "message": "same as the proto file comment :)",
+      "revId": "4c88f96a46c949a2ff3e97980729b09fb9283421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e80dc4db_bc0435c1",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-30T00:52:16Z",
+      "side": 1,
+      "message": "This should be commented also. This is passed to setState, right? Is it a desired frame rate? Enforced?",
       "revId": "4c88f96a46c949a2ff3e97980729b09fb9283421",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +110,23 @@
         "endLine": 115,
         "endChar": 40
       },
+      "revId": "4c88f96a46c949a2ff3e97980729b09fb9283421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fd985e0_3266c8c3",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-30T00:52:16Z",
+      "side": 1,
+      "message": "This should have a comment. Include that |status| (ise $ref) must be RUNNING to set this.",
       "revId": "4c88f96a46c949a2ff3e97980729b09fb9283421",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
