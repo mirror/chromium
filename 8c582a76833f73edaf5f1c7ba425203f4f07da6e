@@ -16,6 +16,24 @@
       "revId": "8c582a76833f73edaf5f1c7ba425203f4f07da6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcddc65d_655f9d63",
+        "filename": "third_party/WebKit/LayoutTests/fast/css/css-selector-text.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-11-30T12:09:38Z",
+      "side": 1,
+      "message": "It\u0027s correct to serialize as \"\\*\". Relevant spec: https://drafts.csswg.org/cssom/#serialize-an-identifier",
+      "parentUuid": "d229f326_2228c44f",
+      "revId": "8c582a76833f73edaf5f1c7ba425203f4f07da6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

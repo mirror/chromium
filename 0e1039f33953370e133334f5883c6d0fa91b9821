@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e2625536_136c7335",
+        "filename": "third_party/WebKit/Source/core/css/CSSSelector.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-11-30T12:09:38Z",
+      "side": 1,
+      "message": "Yeah, an inline static method in CSSSelector sgtm:\n\n  static UniversalSelectorAtom() { return g_null_atom; }\n\nbut no strong opinions as long as it\u0027s clear from the code that we are comparing against the universal selector.",
+      "parentUuid": "8b923daf_e1f07cdd",
+      "revId": "0e1039f33953370e133334f5883c6d0fa91b9821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3bebe0a4_9b82111f",
         "filename": "third_party/WebKit/Source/core/css/CSSSelector.cpp",
         "patchSetId": 1
@@ -83,6 +101,24 @@
       "side": 1,
       "message": "Moved the check into a DCHECK. Nothing seems to break.",
       "parentUuid": "577ddfa7_1019812f",
+      "revId": "0e1039f33953370e133334f5883c6d0fa91b9821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4b30d777_99f14e45",
+        "filename": "third_party/WebKit/Source/core/css/PageRuleCollector.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-11-30T12:09:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fa0641d3_25291272",
       "revId": "0e1039f33953370e133334f5883c6d0fa91b9821",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -136,6 +172,24 @@
       "side": 1,
       "message": "Turns out it\u0027s hard for ConsumeName to just return a QualifiedName :( Different callers do different things to the prefix \u0026 name, but QualifiedName is immutable, so things get a bit awkward.",
       "parentUuid": "d38b82e9_6cafc737",
+      "revId": "0e1039f33953370e133334f5883c6d0fa91b9821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed9d4db1_638473e3",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSSelectorParser.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-11-30T12:09:38Z",
+      "side": 1,
+      "message": "Leaving the code as it is lgtm.",
+      "parentUuid": "9e49c4fd_9c38b9b4",
       "revId": "0e1039f33953370e133334f5883c6d0fa91b9821",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
