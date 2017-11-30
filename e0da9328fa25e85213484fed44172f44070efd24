@@ -94,6 +94,30 @@
       "revId": "e0da9328fa25e85213484fed44172f44070efd24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b2f1456_9c18847f",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-30T20:41:54Z",
+      "side": 1,
+      "message": "This moves something done in ChromeResourceDispatcherHostDelegate during mime sniffing (near commit time, when we have updated data) to being called during navigation start, before the request is even created, where we don\u0027t have that data.\n\nIf you passed in a new copy of NavigationUIData to NavigationURLLoaderNetworkService::OnStartLoadingResponseBody, it would have the correct information.  As-is, though, this code is not correct.",
+      "parentUuid": "967b90af_ec8613d0",
+      "range": {
+        "startLine": 550,
+        "startChar": 6,
+        "endLine": 550,
+        "endChar": 25
+      },
+      "revId": "e0da9328fa25e85213484fed44172f44070efd24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
