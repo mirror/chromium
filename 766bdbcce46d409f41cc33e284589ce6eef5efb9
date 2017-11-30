@@ -46,6 +46,30 @@
       "revId": "766bdbcce46d409f41cc33e284589ce6eef5efb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53d407af_0e491a2e",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-30T20:14:55Z",
+      "side": 1,
+      "message": "Ah, right, it\u0027s fine as-is then.",
+      "parentUuid": "655cc36e_017ec02a",
+      "range": {
+        "startLine": 293,
+        "startChar": 0,
+        "endLine": 293,
+        "endChar": 50
+      },
+      "revId": "766bdbcce46d409f41cc33e284589ce6eef5efb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
