@@ -259,6 +259,24 @@
     },
     {
       "key": {
+        "uuid": "db2bb7ce_8b7f88bd",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 43163,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-30T20:11:28Z",
+      "side": 1,
+      "message": "Isn\u0027t it used for VR browsing as well? I think it is logged every time we enter VR.",
+      "parentUuid": "ae2bc972_04c4d188",
+      "revId": "d0d089d66ce998dd575cfb73df89bfd2efec398d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1c083d7_f052705d",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
