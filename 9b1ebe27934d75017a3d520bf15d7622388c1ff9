@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "970c01e6_6b3c41b4",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/path/property/d-interpolation-001.svg",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-11-30T12:50:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38bdf92f_c1a3da81",
+      "range": {
+        "startLine": 5,
+        "startChar": 5,
+        "endLine": 5,
+        "endChar": 47
+      },
+      "revId": "9b1ebe27934d75017a3d520bf15d7622388c1ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "caf792f6_3ebae301",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/path/property/d-interpolation-001.svg",
         "patchSetId": 3
@@ -60,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "08854b4e_50a1929f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/path/property/d-interpolation-001.svg",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-11-30T12:50:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d779443_8fad5524",
+      "revId": "9b1ebe27934d75017a3d520bf15d7622388c1ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bca31577_7201fab0",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/path/property/d-interpolation-001.svg",
         "patchSetId": 3
@@ -71,6 +113,30 @@
       "writtenOn": "2017-11-28T11:21:11Z",
       "side": 1,
       "message": "Any particular reason not to use \u003cscript xlink:href\u003d\"...\"/\u003e? Similarly for the \u003cstyle\u003e element above. (I.e if we\u0027re bothered enough to write tests as .svg/XML then we should probably use SVG vocabulary as much as possible...)",
+      "range": {
+        "startLine": 13,
+        "startChar": 3,
+        "endLine": 13,
+        "endChar": 43
+      },
+      "revId": "9b1ebe27934d75017a3d520bf15d7622388c1ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70349430_5d21cbb7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/path/property/d-interpolation-001.svg",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-11-30T12:50:21Z",
+      "side": 1,
+      "message": "Done for style and inline script.\n\nWhen I tried making the change for script links, the tests would pass even if I added a false assert.",
+      "parentUuid": "bca31577_7201fab0",
       "range": {
         "startLine": 13,
         "startChar": 3,
@@ -106,6 +172,30 @@
     },
     {
       "key": {
+        "uuid": "4bad8941_d067755c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/path/property/getComputedStyle.svg",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-11-30T12:50:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33bc1080_f38b2239",
+      "range": {
+        "startLine": 10,
+        "startChar": 15,
+        "endLine": 10,
+        "endChar": 27
+      },
+      "revId": "9b1ebe27934d75017a3d520bf15d7622388c1ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2ebd86e_a9378716",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/path/property/resources/interpolation-testcommon.js",
         "patchSetId": 3
@@ -120,6 +210,24 @@
       "revId": "9b1ebe27934d75017a3d520bf15d7622388c1ff9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97922c2d_df2960d8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/path/property/resources/interpolation-testcommon.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-11-30T12:50:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2ebd86e_a9378716",
+      "revId": "9b1ebe27934d75017a3d520bf15d7622388c1ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -158,6 +266,24 @@
     },
     {
       "key": {
+        "uuid": "03f07e6d_409784b9",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/path/property/resources/interpolation-testcommon.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-11-30T12:50:21Z",
+      "side": 1,
+      "message": "Done, the conditionals aren\u0027t needed.",
+      "parentUuid": "dfbd5abc_bbc2f3e8",
+      "revId": "9b1ebe27934d75017a3d520bf15d7622388c1ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3641cbf8_df8777d5",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/path/property/resources/interpolation-testcommon.js",
         "patchSetId": 3
@@ -172,6 +298,24 @@
       "revId": "9b1ebe27934d75017a3d520bf15d7622388c1ff9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b7d3913_76764723",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/path/property/resources/interpolation-testcommon.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-11-30T12:50:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3641cbf8_df8777d5",
+      "revId": "9b1ebe27934d75017a3d520bf15d7622388c1ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -192,6 +336,24 @@
     },
     {
       "key": {
+        "uuid": "3ae1102d_eabf9e88",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/path/property/resources/interpolation-testcommon.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-11-30T12:50:21Z",
+      "side": 1,
+      "message": "The time remaining constant is guaranteed. We can compute style immediately before setting the stylesheet text, this will guarantee animation time 0.",
+      "parentUuid": "d2b10e1b_09aaf525",
+      "revId": "9b1ebe27934d75017a3d520bf15d7622388c1ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99abd188_9540f90c",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/path/property/resources/interpolation-testcommon.js",
         "patchSetId": 3
@@ -209,6 +371,24 @@
     },
     {
       "key": {
+        "uuid": "5b0e0235_35f059cf",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/path/property/resources/interpolation-testcommon.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-11-30T12:50:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99abd188_9540f90c",
+      "revId": "9b1ebe27934d75017a3d520bf15d7622388c1ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03e96235_b3cba19d",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/path/property/resources/interpolation-testcommon.js",
         "patchSetId": 3
@@ -223,6 +403,24 @@
       "revId": "9b1ebe27934d75017a3d520bf15d7622388c1ff9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79b84589_9e68ae05",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/path/property/resources/interpolation-testcommon.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-11-30T12:50:21Z",
+      "side": 1,
+      "message": "expectFrom, fixed.",
+      "parentUuid": "03e96235_b3cba19d",
+      "revId": "9b1ebe27934d75017a3d520bf15d7622388c1ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
