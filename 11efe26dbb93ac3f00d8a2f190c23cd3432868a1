@@ -1,0 +1,169 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9510d1f_619ad705",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.cc",
+        "patchSetId": 63
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-30T15:03:01Z",
+      "side": 1,
+      "message": "nit: do we need to validate this here? isn\u0027t it fine to just defer it until GpuFence is needed?",
+      "revId": "11efe26dbb93ac3f00d8a2f190c23cd3432868a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baac72c6_3d42ab70",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.h",
+        "patchSetId": 63
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-30T15:03:01Z",
+      "side": 1,
+      "message": "why do we need to keep a GpuFence instance around? Can\u0027t we just get it from GLFence instance when needed? please remove this if possible",
+      "revId": "11efe26dbb93ac3f00d8a2f190c23cd3432868a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a0bf5be_0527e7e5",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.h",
+        "patchSetId": 63
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-30T15:03:01Z",
+      "side": 1,
+      "message": "nit: CreateGpuFence to keep consistent extension name",
+      "revId": "11efe26dbb93ac3f00d8a2f190c23cd3432868a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b7c5a59_fbcd57e2",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.h",
+        "patchSetId": 63
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-30T15:03:01Z",
+      "side": 1,
+      "message": "nit: CreateClientGpuFence or CreateGpuFenceFromHandle",
+      "revId": "11efe26dbb93ac3f00d8a2f190c23cd3432868a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4d81de4_0ca0c1ab",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.h",
+        "patchSetId": 63
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-30T15:03:01Z",
+      "side": 1,
+      "message": "nit: \"std::unique_ptr\u003cGpuFence\u003e GetGpuFence(uint32_t client_id)\" instead and have the caller extract the handle when needed for IPC",
+      "revId": "11efe26dbb93ac3f00d8a2f190c23cd3432868a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1837a75e_1df5cd0f",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.h",
+        "patchSetId": 63
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-30T15:03:01Z",
+      "side": 1,
+      "message": "nit: add comment to make it clear that this does a server wait and not a client wait.",
+      "revId": "11efe26dbb93ac3f00d8a2f190c23cd3432868a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83897458_f937d7b0",
+        "filename": "gpu/ipc/client/command_buffer_proxy_impl.cc",
+        "patchSetId": 63
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-30T15:03:01Z",
+      "side": 1,
+      "message": "we need to still consume the handle or we leak FDs for this error case. maybe \"auto fence \u003d base::MakeUnique\u003cgfx::GpuFence\u003e(handle);\" above and then pass that to the callback below..",
+      "revId": "11efe26dbb93ac3f00d8a2f190c23cd3432868a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa8a86fe_9c0d4dde",
+        "filename": "gpu/ipc/service/gpu_command_buffer_stub.h",
+        "patchSetId": 63
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-30T15:03:01Z",
+      "side": 1,
+      "message": "nit: OnCreateClientGpuFence or OnCreateGpuFenceFromHandle",
+      "range": {
+        "startLine": 180,
+        "startChar": 7,
+        "endLine": 180,
+        "endChar": 27
+      },
+      "revId": "11efe26dbb93ac3f00d8a2f190c23cd3432868a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3faf5928_678671e5",
+        "filename": "gpu/ipc/service/gpu_command_buffer_stub.h",
+        "patchSetId": 63
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-30T15:03:01Z",
+      "side": 1,
+      "message": "nit: OnGetGpuFence to match naming elsewhere",
+      "range": {
+        "startLine": 182,
+        "startChar": 7,
+        "endLine": 182,
+        "endChar": 26
+      },
+      "revId": "11efe26dbb93ac3f00d8a2f190c23cd3432868a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
