@@ -22,6 +22,30 @@
       "revId": "4b0784d13bae8edc2474ecfaf500a9f50a2a05c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e02c2840_14ee2494",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-11-30T20:00:32Z",
+      "side": 0,
+      "message": "Yeah. The same code in two places. My previous changes centralized this code, but this copy still existed.",
+      "parentUuid": "ad753b51_7699765e",
+      "range": {
+        "startLine": 468,
+        "startChar": 4,
+        "endLine": 485,
+        "endChar": 5
+      },
+      "revId": "4b0784d13bae8edc2474ecfaf500a9f50a2a05c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

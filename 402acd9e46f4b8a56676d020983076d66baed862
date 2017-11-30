@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "379994eb_9325eff4",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-11-30T20:00:32Z",
+      "side": 1,
+      "message": ":-)",
+      "parentUuid": "0a7c714b_4c531373",
+      "range": {
+        "startLine": 335,
+        "startChar": 41,
+        "endLine": 336,
+        "endChar": 17
+      },
+      "revId": "402acd9e46f4b8a56676d020983076d66baed862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a30df349_d7132220",
         "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-30T01:16:51Z",
       "side": 1,
       "message": "What\u0027s funky about it and how does it end up not just being a mirror of the LTR version?\n\n(Will not withhold LG for that, but that does bother me as something that should work but we don\u0027t fully understand.)",
+      "range": {
+        "startLine": 341,
+        "startChar": 28,
+        "endLine": 341,
+        "endChar": 46
+      },
+      "revId": "402acd9e46f4b8a56676d020983076d66baed862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "91a29ab0_ac159303",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-11-30T20:00:32Z",
+      "side": 1,
+      "message": "When you\u0027re transitioning to pinned, in LTR the iconView moves from x\u003d15 (or thereabouts) to x\u003d21, and the tab\u0027s right side moves to the left. In RTL, the iconView moves from x\u003d138 to x\u003d21, and even though visually the tab\u0027s left edge appears to move to the right, functionally the tab\u0027s right edge is still moving left. It looks like in the RTL case the right edge outruns the iconView, which leaves the iconView hanging out in space for a moment before it completes its slide to x\u003d21.\n\nI\u0027m not sure why the right edge is able to outrun the iconView. The two animations use the exact same duration (I confirmed this). The two animations are separate, so it might be the tabView updating its subview positions, so two animations take turns adjusting the iconView\u0027s position. If this is the case I don\u0027t think there\u0027s a way to synchronize them (at least not without a lot of work) because the iconView animation gets set up before the tabView-transition-to-pinned-mode code even runs.\n\nIt seems like there should be a way to synchronize them, or there might be another cause. However it\u0027s not really worth putting more time in to figure out (very few users run in RTL mode anyway). If we don\u0027t want to live with this different behavior in RTL I can remove the animation in LTR.",
+      "parentUuid": "a30df349_d7132220",
       "range": {
         "startLine": 341,
         "startChar": 28,
