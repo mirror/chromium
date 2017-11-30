@@ -1634,8 +1634,12 @@ void LayerTreeHostImpl::DidReceiveCompositorFrameAck() {
 void LayerTreeHostImpl::DidPresentCompositorFrame(uint32_t presentation_token,
                                                   base::TimeTicks time,
                                                   base::TimeDelta refresh,
-                                                  uint32_t flags) {}
+                                                  uint32_t flags) {
+  LOG(ERROR) << "XXX DidPresentCompositorFrame toke=" << presentation_token;
+}
+
 void LayerTreeHostImpl::DidDiscardCompositorFrame(uint32_t presentation_token) {
+  LOG(ERROR) << "XXX DidDiscardCompositorFrame toke=" << presentation_token;
 }
 
 void LayerTreeHostImpl::ReclaimResources(
@@ -1719,6 +1723,11 @@ void LayerTreeHostImpl::OnCanDrawStateChangedForTree() {
 viz::CompositorFrameMetadata LayerTreeHostImpl::MakeCompositorFrameMetadata()
     const {
   viz::CompositorFrameMetadata metadata;
+
+  LOG(ERROR) << "XXX SETTING TOKEN";
+  static uint32_t token = 1;
+  metadata.presentation_token = ++token;
+
   metadata.device_scale_factor = active_tree_->painted_device_scale_factor() *
                                  active_tree_->device_scale_factor();
 
