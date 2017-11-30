@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d381f10_c6d3aefe",
+        "filename": "chrome/services/removable_storage_writer/manifest.json",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-30T22:03:22Z",
+      "side": 1,
+      "message": "nit, maybe a comment here about \n// Privileged service, do not require it from untrusted clients.",
+      "range": {
+        "startLine": 8,
+        "startChar": 2,
+        "endLine": 8,
+        "endChar": 3
+      },
+      "revId": "cb42e7d768f49caaa2c6750938afc87540286a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
