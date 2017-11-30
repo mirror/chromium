@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "23d56105_cbe1de77",
+        "filename": "chrome/browser/vr/service/vr_device_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-11-30T00:22:50Z",
+      "side": 1,
+      "message": "Right now we only want the device to be provided on android due to http://crbug.com/786252",
+      "parentUuid": "cedd7c0f_4314ada1",
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8110b658_5efbcdf2",
         "filename": "chrome/browser/vr/service/vr_device_manager.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6c16e24_e7984bc9",
+        "filename": "chrome/browser/vr/service/vr_device_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-11-30T00:22:50Z",
+      "side": 1,
+      "message": "I prefer brackets for clarity, but if the style guide says no, I\u0027ll try to remember that.",
+      "parentUuid": "8110b658_5efbcdf2",
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -83,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d0b72ead_de56f85e",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-11-30T00:22:50Z",
+      "side": 1,
+      "message": "Should that be done as part of this CL, as a pre CL, or as a followup CL?",
+      "parentUuid": "7bf29fd0_95ba073d",
+      "range": {
+        "startLine": 58,
+        "startChar": 26,
+        "endLine": 58,
+        "endChar": 46
+      },
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d5c6898_2b5fe9a1",
         "filename": "device/vr/orientation/orientation_device.cc",
         "patchSetId": 8
@@ -97,6 +157,24 @@
       "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49e8e202_3c5acf9a",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-11-30T00:22:50Z",
+      "side": 1,
+      "message": "Done, though I\u0027m not sure if I\u0027ve done it correctly.",
+      "parentUuid": "4d5c6898_2b5fe9a1",
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "2c2cff1c_2b62eb2d",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-11-30T00:22:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3a25bd6_62cd1319",
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93af31d2_8555a4fd",
         "filename": "device/vr/orientation/orientation_device.cc",
         "patchSetId": 8
@@ -131,6 +227,24 @@
       "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c7c72aa_1eeea5e8",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-11-30T00:22:50Z",
+      "side": 1,
+      "message": "I intend to write a few tests for them :)",
+      "parentUuid": "93af31d2_8555a4fd",
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -151,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "5d420ca7_6c21883b",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-11-30T00:22:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a639128d_b5c36ff5",
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eba47e9a_3b4aa1e4",
         "filename": "device/vr/orientation/orientation_device.h",
         "patchSetId": 8
@@ -162,6 +294,24 @@
       "writtenOn": "2017-11-28T14:52:51Z",
       "side": 1,
       "message": "It\u0027s nitpicky but `OrientationDevice` seems a bit too generic to be in `device` namespace. Maybe prefixed with VR?",
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "272a3f65_b3e0308a",
+        "filename": "device/vr/orientation/orientation_device.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-11-30T00:22:50Z",
+      "side": 1,
+      "message": "It\u0027s in vr/orientation, does that do that trick?",
+      "parentUuid": "eba47e9a_3b4aa1e4",
       "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -182,6 +332,24 @@
       "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33003ff1_cf0ed490",
+        "filename": "device/vr/orientation/orientation_device.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-11-30T00:22:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0443e6a0_cc60b44d",
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -208,6 +376,30 @@
     },
     {
       "key": {
+        "uuid": "3abfadaf_43276ece",
+        "filename": "device/vr/orientation/orientation_device.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-11-30T00:22:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b50826d2_9379df8d",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 0
+      },
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ed43367_dcd06b96",
         "filename": "device/vr/orientation/orientation_device.h",
         "patchSetId": 8
@@ -231,6 +423,30 @@
     },
     {
       "key": {
+        "uuid": "d82f9995_5fd813c6",
+        "filename": "device/vr/orientation/orientation_device.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-11-30T00:22:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ed43367_dcd06b96",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 32
+      },
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba7e1c22_c55102e1",
         "filename": "device/vr/orientation/orientation_device.h",
         "patchSetId": 8
@@ -245,6 +461,24 @@
       "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79191d78_b43b1577",
+        "filename": "device/vr/orientation/orientation_device.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-11-30T00:22:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba7e1c22_c55102e1",
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -271,6 +505,30 @@
     },
     {
       "key": {
+        "uuid": "196c4dff_46fa46da",
+        "filename": "device/vr/orientation/orientation_device_provider.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-11-30T00:22:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f842663d_c5aca913",
+      "range": {
+        "startLine": 25,
+        "startChar": 56,
+        "endLine": 25,
+        "endChar": 58
+      },
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52ef4f3f_3fb2c2e1",
         "filename": "device/vr/orientation/orientation_device_provider.cc",
         "patchSetId": 8
@@ -285,6 +543,24 @@
       "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d59d940d_2d7f0264",
+        "filename": "device/vr/orientation/orientation_device_provider.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-11-30T00:22:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52ef4f3f_3fb2c2e1",
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -311,6 +587,30 @@
     },
     {
       "key": {
+        "uuid": "312eb11f_a975dfe1",
+        "filename": "device/vr/orientation/orientation_device_provider.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-11-30T00:22:50Z",
+      "side": 1,
+      "message": "All this horrible code eliminated by refactor :D",
+      "parentUuid": "e22a7d30_d2b1b04e",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 14
+      },
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5e8694b_71bb4098",
         "filename": "device/vr/orientation/orientation_device_provider.cc",
         "patchSetId": 8
@@ -325,6 +625,24 @@
       "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ca806e8_de3d0647",
+        "filename": "device/vr/orientation/orientation_device_provider.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-11-30T00:22:50Z",
+      "side": 1,
+      "message": "Gone.",
+      "parentUuid": "a5e8694b_71bb4098",
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -345,6 +663,24 @@
     },
     {
       "key": {
+        "uuid": "d91bc18a_051cccf0",
+        "filename": "device/vr/orientation/orientation_device_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-11-30T00:22:50Z",
+      "side": 1,
+      "message": "Removed by refactor.",
+      "parentUuid": "342f1f6e_93a905f0",
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea14aad2_a0f7e7f9",
         "filename": "device/vr/orientation/orientation_device_provider.h",
         "patchSetId": 8
@@ -359,6 +695,24 @@
       "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ee3f587_b0dc68d6",
+        "filename": "device/vr/orientation/orientation_device_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-11-30T00:22:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea14aad2_a0f7e7f9",
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

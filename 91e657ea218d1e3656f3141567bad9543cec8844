@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58167ef6_53e21eae",
+        "filename": "device/vr/orientation/orientation_device_provider.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-11-30T00:22:50Z",
+      "side": 1,
+      "message": "This does not belong here.",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 0
+      },
+      "revId": "91e657ea218d1e3656f3141567bad9543cec8844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
