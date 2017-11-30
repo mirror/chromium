@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2302b912_dad8c553",
+        "filename": "content/public/browser/web_contents_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-11-30T12:12:43Z",
+      "side": 1,
+      "message": "it\u0027s an anti-pattern to add an API to a content delegate that is only used outside of content.\n\nI also wonder why you go down this route at all instead of using WebContents::GetOriginalOpener()?",
+      "revId": "97c386024a602189a9a8f2344c6729c35ce1fb3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
