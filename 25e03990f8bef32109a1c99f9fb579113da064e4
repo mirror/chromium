@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "b25d2bc7_0babd9b2",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-30T07:38:55Z",
+      "side": 1,
+      "message": "This should have better documentation.",
+      "revId": "25e03990f8bef32109a1c99f9fb579113da064e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d2c922b_6c97c715",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-30T07:38:55Z",
+      "side": 1,
+      "message": "ditto.  Or would it be better to add a simple getter method like set_html_body() and always check the flag there (and add a comment at has_html_body_ to note that it should not be directly updated)?",
+      "revId": "25e03990f8bef32109a1c99f9fb579113da064e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1f5920cd_42dae51d",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
         "patchSetId": 1
@@ -13,6 +47,24 @@
       "writtenOn": "2017-11-30T06:15:46Z",
       "side": 1,
       "message": "I copied the values from resource_scheduler.cc, but the meaning is a bit different because ResourceScheduler counts the running delayable requests while ResourceLoadScheduler counts all the running requests. At this point I don\u0027t change the counting way, and will see the experiment results.",
+      "revId": "25e03990f8bef32109a1c99f9fb579113da064e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfae331c_11b7b6fe",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-30T07:38:55Z",
+      "side": 1,
+      "message": "Could we document these in the code comment too?",
+      "parentUuid": "1f5920cd_42dae51d",
       "revId": "25e03990f8bef32109a1c99f9fb579113da064e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
