@@ -70,6 +70,30 @@
       "revId": "de6e84dde5c237bad77a04e6043662570a260e7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d5da9050_c200c2bd",
+        "filename": "sandbox/linux/syscall_broker/broker_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-30T23:43:16Z",
+      "side": 1,
+      "message": "Done for readlink, will fix the others in a subsequent cl I mean ...",
+      "parentUuid": "0205a2ec_812d4cf9",
+      "range": {
+        "startLine": 235,
+        "startChar": 57,
+        "endLine": 235,
+        "endChar": 67
+      },
+      "revId": "de6e84dde5c237bad77a04e6043662570a260e7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
