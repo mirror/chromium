@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1845a627_b54eeca8",
+        "filename": "components/exo/buffer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-11-30T03:34:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4013860_9fc710ef",
+      "range": {
+        "startLine": 88,
+        "startChar": 2,
+        "endLine": 89,
+        "endChar": 41
+      },
+      "revId": "a11321911fa3f367952c7679b3d2f3372904ef9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f23f4f4b_71c30908",
         "filename": "gpu/GLES2/extensions/CHROMIUM/CHROMIUM_texture_mailbox.txt",
         "patchSetId": 14
@@ -39,6 +63,24 @@
       "revId": "a11321911fa3f367952c7679b3d2f3372904ef9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c6c67d6_4fe515ca",
+        "filename": "gpu/GLES2/extensions/CHROMIUM/CHROMIUM_texture_mailbox.txt",
+        "patchSetId": 14
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-11-30T03:34:30Z",
+      "side": 1,
+      "message": "I\u0027ll leave the text as is for now, as there are no errors expected here if the texture was never bound or is incomplete.",
+      "parentUuid": "f23f4f4b_71c30908",
+      "revId": "a11321911fa3f367952c7679b3d2f3372904ef9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
