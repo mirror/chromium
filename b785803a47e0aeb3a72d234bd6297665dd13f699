@@ -16,6 +16,24 @@
       "revId": "b785803a47e0aeb3a72d234bd6297665dd13f699",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5256cfc1_2c790342",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-30T09:22:32Z",
+      "side": 1,
+      "message": "Oops, fixed.\nGood catch!",
+      "parentUuid": "61be165a_4e0630d8",
+      "revId": "b785803a47e0aeb3a72d234bd6297665dd13f699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
