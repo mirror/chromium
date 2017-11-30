@@ -137,6 +137,30 @@
       "revId": "086933d88ca9e0bcec716fba460cbe4f156c644c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6c370a1_c9f5d9d4",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-30T23:08:42Z",
+      "side": 1,
+      "message": "I didn\u0027t think the ranges are needed, either, but I wasn\u0027t sure if there was something you knew that I didn\u0027t. I like this idea.",
+      "parentUuid": "a2b7309e_958d53b0",
+      "range": {
+        "startLine": 78,
+        "startChar": 11,
+        "endLine": 79,
+        "endChar": 58
+      },
+      "revId": "086933d88ca9e0bcec716fba460cbe4f156c644c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
