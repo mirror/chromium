@@ -16,6 +16,24 @@
       "revId": "f84c0b5e0116421860d961bbf9f5e6ab86de85cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcfe742a_270f637a",
+        "filename": "chrome/browser/policy/configuration_policy_handler_list_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001296
+      },
+      "writtenOn": "2017-11-30T15:54:22Z",
+      "side": 1,
+      "message": "Done\nI switched to the direct pref mapping. The logic I\u0027m planning to implement is now:\nCustomPassphraseRequired \u003d true : user must input custom password to sync\nCustomPassphraseRequired \u003d false / not set : user can set a custom password if they want, but can also us Google credentials.",
+      "parentUuid": "6bedb011_619f17b6",
+      "revId": "f84c0b5e0116421860d961bbf9f5e6ab86de85cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
