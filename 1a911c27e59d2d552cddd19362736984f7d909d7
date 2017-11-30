@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e4c7832_b3028bcb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchBarBannerControl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-30T20:53:03Z",
+      "side": 1,
+      "message": "I think you should change the name of this to mBannarBarHeightPx and mention in the comment that it has a value of 0 when not yet measured.",
+      "range": {
+        "startLine": 61,
+        "startChar": 18,
+        "endLine": 61,
+        "endChar": 34
+      },
+      "revId": "1a911c27e59d2d552cddd19362736984f7d909d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cfe00ea_13bd5f51",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchBarBannerControl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-30T20:53:03Z",
+      "side": 1,
+      "message": "Rename this to getBannerBarHeightPx?",
+      "range": {
+        "startLine": 127,
+        "startChar": 18,
+        "endLine": 127,
+        "endChar": 36
+      },
+      "revId": "1a911c27e59d2d552cddd19362736984f7d909d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
