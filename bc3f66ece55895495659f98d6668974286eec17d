@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4a704c8e_f301ec0f",
+        "filename": "net/reporting/reporting_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-11-30T22:53:16Z",
+      "side": 1,
+      "message": "Yeah, I\u0027m trying to match the order of the header file.",
+      "parentUuid": "8444cdaf_3761de33",
+      "range": {
+        "startLine": 221,
+        "startChar": 35,
+        "endLine": 221,
+        "endChar": 0
+      },
+      "revId": "bc3f66ece55895495659f98d6668974286eec17d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66daa78b_ae670b34",
         "filename": "net/reporting/reporting_cache.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "bc3f66ece55895495659f98d6668974286eec17d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "897091c8_d98a0a38",
+        "filename": "net/reporting/reporting_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-11-30T22:53:16Z",
+      "side": 1,
+      "message": "...wow, I have no idea how that got there. Done.",
+      "parentUuid": "66daa78b_ae670b34",
+      "range": {
+        "startLine": 337,
+        "startChar": 27,
+        "endLine": 337,
+        "endChar": 42
+      },
+      "revId": "bc3f66ece55895495659f98d6668974286eec17d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b1fae63a_ff85d445",
+        "filename": "net/reporting/reporting_header_parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-11-30T22:53:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea02f064_7b2f9e08",
+      "range": {
+        "startLine": 66,
+        "startChar": 22,
+        "endLine": 66,
+        "endChar": 37
+      },
+      "revId": "bc3f66ece55895495659f98d6668974286eec17d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1107d510_1accfbb5",
         "filename": "net/reporting/reporting_header_parser.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "bc3f66ece55895495659f98d6668974286eec17d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f81df6b4_0332a576",
+        "filename": "net/reporting/reporting_header_parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-11-30T22:53:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1107d510_1accfbb5",
+      "range": {
+        "startLine": 72,
+        "startChar": 22,
+        "endLine": 72,
+        "endChar": 26
+      },
+      "revId": "bc3f66ece55895495659f98d6668974286eec17d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "0eb015d1_dd001b26",
+        "filename": "net/reporting/reporting_header_parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-11-30T22:53:16Z",
+      "side": 1,
+      "message": "I\u0027m assuming you meant \"list\", not \"GetAsList\". I\u0027ve renamed it to \"endpoint_list\".",
+      "parentUuid": "9e379a6c_3bf3d6dd",
+      "range": {
+        "startLine": 157,
+        "startChar": 24,
+        "endLine": 157,
+        "endChar": 33
+      },
+      "revId": "bc3f66ece55895495659f98d6668974286eec17d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1ef3902_59ea5711",
         "filename": "net/reporting/reporting_header_parser.cc",
         "patchSetId": 3
@@ -128,6 +248,30 @@
       "writtenOn": "2017-11-30T21:11:08Z",
       "side": 1,
       "message": "May want to make old_endpoints a set and get rid of this.  Then remove each new_endpoint from old_endpoints.\n\nIt has, on average, just as many set insertions/deletions (Well...it has fewer if we start from no data), but avoids needing the vector.",
+      "range": {
+        "startLine": 168,
+        "startChar": 31,
+        "endLine": 168,
+        "endChar": 0
+      },
+      "revId": "bc3f66ece55895495659f98d6668974286eec17d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afa0661e_1a064f93",
+        "filename": "net/reporting/reporting_header_parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-11-30T22:53:16Z",
+      "side": 1,
+      "message": "I could, but everything else in ReportingCache uses vector, so I made GetEndpointsForOrigin do the same. How strongly do you feel about this?",
+      "parentUuid": "b1ef3902_59ea5711",
       "range": {
         "startLine": 168,
         "startChar": 31,
@@ -160,6 +304,30 @@
       "revId": "bc3f66ece55895495659f98d6668974286eec17d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4c47a04_50c541d8",
+        "filename": "net/reporting/reporting_header_parser_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-11-30T22:53:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c0144a8_e40166bb",
+      "range": {
+        "startLine": 116,
+        "startChar": 14,
+        "endLine": 116,
+        "endChar": 20
+      },
+      "revId": "bc3f66ece55895495659f98d6668974286eec17d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
