@@ -56,6 +56,7 @@
 #include "services/service_manager/sandbox/win/sandbox_win.h"
 #elif defined(OS_MACOSX)
 #include "base/mac/scoped_nsautorelease_pool.h"
+#include "content/public/test/test_launcher_helper_mac.h"
 #endif
 
 namespace content {
@@ -450,6 +451,11 @@ void WrapperTestLauncherDelegate::DoRunTests(
 
   char* browser_wrapper = getenv("BROWSER_WRAPPER");
 
+#if defined(OS_MACOSX)
+  // Clear currently pressed modifier keys (if any) before the test starts.
+  ClearActiveModifiers();
+#endif
+
   auto observer = std::make_unique<ChildProcessLifetimeObserver>(
       this, test_launcher, std::move(test_names_copy), test_name, output_file,
       std::move(test_state_ptr));
@@ -500,6 +506,13 @@ void WrapperTestLauncherDelegate::GTestCallback(
     const std::string& output) {
   base::TestResult result;
   result.full_name = test_name;
+
+#if defined(OS_MACOSX)
+  // Clear currently pressed modifier keys (if any) after the test finishes.
+  // TODO(alshabalin): Should it be considered an error if the test left some
+  // modifiers in a pressed state?
+  ClearActiveModifiers();
+#endif
 
   bool crashed = false;
   std::vector<base::TestResult> parsed_results;
