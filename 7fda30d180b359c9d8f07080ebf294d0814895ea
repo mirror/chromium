@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f78fa10f_171ba6cc",
+        "filename": "base/bind.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-11-30T08:41:44Z",
+      "side": 1,
+      "message": "Return type deduction here is in C++14 Features To Be Discussed. I\u0027ll post it to cxx@chromium.org.",
+      "range": {
+        "startLine": 266,
+        "startChar": 0,
+        "endLine": 266,
+        "endChar": 4
+      },
+      "revId": "7fda30d180b359c9d8f07080ebf294d0814895ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
