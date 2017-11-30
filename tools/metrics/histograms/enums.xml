@@ -6033,6 +6033,11 @@ Called by update_net_error_codes.py.-->
   <int value="8" label="StreamingCompile">Use streamed compilation result.</int>
 </enum>
 
+<enum name="ComponentStatus">
+  <int value="0" label="Component is ready to use"/>
+  <int value="1" label="Component is not ready to use. Reason unknown."/>
+</enum>
+
 <enum name="ComponentUpdaterCalls">
   <int value="0" label="Install"/>
   <int value="1" label="Update"/>
@@ -43137,11 +43142,6 @@ Called by update_traffic_annotation_histograms.py.-->
   <int value="4" label="L2TP/IPSec None"/>
   <int value="5" label="L2TP/IPSec Certificate"/>
   <int value="6" label="L2TP/IPSec Username/Password"/>
-</enum>
-
-<enum name="VRAssetsComponentEnterStatus">
-  <int value="0" label="Component is ready to use"/>
-  <int value="1" label="Component is not ready to use. Reason not known."/>
 </enum>
 
 <enum name="VRSuppressedElement">
