@@ -16,6 +16,24 @@
       "revId": "356e14942865b57accbbdafd62f371b504d00b7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e2e66a8_268974f1",
+        "filename": "tools/gn/filesystem_utils_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-11-30T23:53:46Z",
+      "side": 1,
+      "message": "\u003e Edge case: On Windows you can\u0027t make \"C:\\foo\" relative to \"D:\\bar\". I think in this case we should return an absolute path and document this clearly in the header.\n\u003e\n\ndone.\n\n\u003e Actually we have MakeAbsolutePathRelativeIfPossible that deals with GN-style paths for a specific use-case. Unfortunately it looks like that\u0027s too specific to share code, but we should make the naming more clear.\n\u003e \n\u003e So to go with MakeAbsolutePathRelativeIfPossible, make this new one should be MakeAbsoluteFilePathRelativeIfPossible.\n\ndone.",
+      "parentUuid": "86c07506_fe3cc533",
+      "revId": "356e14942865b57accbbdafd62f371b504d00b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
