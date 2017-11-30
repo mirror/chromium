@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d229f326_2228c44f",
+        "filename": "third_party/WebKit/LayoutTests/fast/css/css-selector-text.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-30T02:51:16Z",
+      "side": 1,
+      "message": "This test fails because we are returning \u0027\\*\u0027 instead of \u0027\\2a\u0027. Do you know if we are required to return \u0027\\2a\u0027? Firefox returns \u0027\\*\u0027 as well.",
+      "revId": "8c582a76833f73edaf5f1c7ba425203f4f07da6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

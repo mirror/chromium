@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8b923daf_e1f07cdd",
+        "filename": "third_party/WebKit/Source/core/css/CSSSelector.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-30T02:51:16Z",
+      "side": 1,
+      "message": "Yes that\u0027s a good idea, although I\u0027m not sure what\u0027s the best way to alias a global constant. Something like:\n\n   CSSSelector::UniversalSelectorAtom();\n\nor like\n\n   g_selector_atom\n\nor like\n\n   g_any_name.LocalName()\n\nAny suggestions?",
+      "parentUuid": "8fe3449d_2f199ef5",
+      "revId": "0e1039f33953370e133334f5883c6d0fa91b9821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3bebe0a4_9b82111f",
         "filename": "third_party/WebKit/Source/core/css/CSSSelector.cpp",
         "patchSetId": 1
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "fa0641d3_25291272",
+        "filename": "third_party/WebKit/Source/core/css/PageRuleCollector.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-30T02:51:16Z",
+      "side": 1,
+      "message": "Moved the check into a DCHECK. Nothing seems to break.",
+      "parentUuid": "577ddfa7_1019812f",
+      "revId": "0e1039f33953370e133334f5883c6d0fa91b9821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01e2c7ed_8c866afc",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSSelectorParser.cpp",
         "patchSetId": 1
@@ -82,6 +118,24 @@
       "side": 1,
       "message": "Optional sgtm.",
       "parentUuid": "01e2c7ed_8c866afc",
+      "revId": "0e1039f33953370e133334f5883c6d0fa91b9821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e49c4fd_9c38b9b4",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSSelectorParser.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-30T02:51:16Z",
+      "side": 1,
+      "message": "Turns out it\u0027s hard for ConsumeName to just return a QualifiedName :( Different callers do different things to the prefix \u0026 name, but QualifiedName is immutable, so things get a bit awkward.",
+      "parentUuid": "d38b82e9_6cafc737",
       "revId": "0e1039f33953370e133334f5883c6d0fa91b9821",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
