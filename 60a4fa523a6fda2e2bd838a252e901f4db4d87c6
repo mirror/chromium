@@ -156,6 +156,30 @@
     },
     {
       "key": {
+        "uuid": "5e84e125_cca41f96",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-30T21:59:41Z",
+      "side": 1,
+      "message": "\u003e Why pass the actual headers downstream when blocking?\n\nIn most ways, we want the renderer to behave the same as before, but without getting any sensitive data.  See below about failing the request.\n\n\u003e  This includes the set-cookie header, for instance.\n\nCookie headers are stripped out and not delivered to the renderer, as best we could determine.  (We should verify by checking the code for that, but they seemed to be omitted in the renderer process.)\n\n\u003e  I think it\u0027s much simpler to just cancel the response, to make sure nothing gets through.\n\nThis matters for showing the right message on XHR/fetch failure, for reacting correctly on img/script/style/etc.  There\u0027s also a substantial amount of fallout in the tests (see patchsets 1-6).  I think we want to send an empty response if possible.\n\n\u003e Even creating a bogus ResourceResponse, other ResourceHandlers/ResourceThrottles may attach metadata, though we\u0027ll *probably* block it all if we avoid sending a response body.\n\nI suppose there\u0027s some risk there, but it doesn\u0027t seem too bad.",
+      "parentUuid": "298dfdd4_f5783e4b",
+      "range": {
+        "startLine": 35,
+        "startChar": 17,
+        "endLine": 35,
+        "endChar": 34
+      },
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fcffd6ae_13e2e92a",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 15
@@ -167,6 +191,30 @@
       "writtenOn": "2017-11-30T21:42:58Z",
       "side": 1,
       "message": "The mime sniffer needs a buffer of at least net::kMaxBytesToSniff * 2 (2k)...But if we are blocking the response, why not just fail the request?\n\nFailing that, there\u0027s no reason we need to return a real buffer.  We can just create a junk one and pass it on up.  We\u0027ll still need to call next_handler_-\u003eOnWillRead, but we can throw away the return value.",
+      "range": {
+        "startLine": 66,
+        "startChar": 18,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50790ee7_9414feaa",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-30T21:59:41Z",
+      "side": 1,
+      "message": "\u003e The mime sniffer needs a buffer of at least net::kMaxBytesToSniff * 2 (2k)...But if we are blocking the response, why not just fail the request?\n\nYep, this is only done once, when we know it will be blocked.  It\u0027s done so that we can send an empty response instead of failing it, which has consequences for how pages behave (see above).\n\n\u003e \n\u003e Failing that, there\u0027s no reason we need to return a real buffer.  We can just create a junk one and pass it on up.  We\u0027ll still need to call next_handler_-\u003eOnWillRead, but we can throw away the return value.\n\nYep, a separate buffer is worth doing, and something I\u0027m hoping to add to support the content sniffing. I can add the junk buffer first, whether we do the sniffing in this CL or a followup.",
+      "parentUuid": "fcffd6ae_13e2e92a",
       "range": {
         "startLine": 66,
         "startChar": 18,
@@ -202,6 +250,30 @@
     },
     {
       "key": {
+        "uuid": "f59e4d1c_3e4f182f",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-30T21:59:41Z",
+      "side": 1,
+      "message": "\u003e Why wait for the response to complete?  If we\u0027re blocking the request, and don\u0027t want to bypass all the loader logic, we can just create a constroller subclass, call OnReadCompleted(0), and when the controller is resumed, call OnResponseCompleted with another bogus controller.  When that other bogus controller is resumed, we cancel the request using the real ResourceController, telling it not telling the renderer of completion (Since we just did that).\n\nI think the cancel in OnWillRead triggers this without waiting for the response to complete.  I do have an open question about how to trigger it in the Detach() case, and I think I had issues when calling OnResponseCompleted(0) after Detach(), but maybe I can try that again.",
+      "parentUuid": "fb2e4325_03521339",
+      "range": {
+        "startLine": 69,
+        "startChar": 5,
+        "endLine": 69,
+        "endChar": 37
+      },
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c5ae93e_2c63aeb1",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 15
@@ -225,6 +297,30 @@
     },
     {
       "key": {
+        "uuid": "e59474f1_a7293598",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-30T21:59:41Z",
+      "side": 1,
+      "message": "\u003e This gets us into indeterminant state.  We\u0027re reading from the ResourceLoader 1 byte at a time (Which seems bad, as it could have perf impact), but then we\u0027re telling the sender 0 bytes were read, which indicates completion.  We do this for each read, which violates the API contract.\n\nI think this is done at most once (only when should_block_response_ is true), since we\u0027ll cancel or detach the next time we get to OnWillRead.\n\nNon-blocked responses won\u0027t ever hit this case.",
+      "parentUuid": "9c5ae93e_2c63aeb1",
+      "range": {
+        "startLine": 77,
+        "startChar": 15,
+        "endLine": 77,
+        "endChar": 17
+      },
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1815cd72_13c9cb20",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 15
@@ -236,6 +332,30 @@
       "writtenOn": "2017-11-30T21:42:58Z",
       "side": 1,
       "message": "nit: braces around multi-line conditionals to match predominant style (x3)",
+      "range": {
+        "startLine": 105,
+        "startChar": 11,
+        "endLine": 105,
+        "endChar": 16
+      },
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70cc025a_e71147d1",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-30T21:59:41Z",
+      "side": 1,
+      "message": "\u003e nit: braces around multi-line conditionals to match predominant style (x3)\n\nSure, will do in next patch.",
+      "parentUuid": "1815cd72_13c9cb20",
       "range": {
         "startLine": 105,
         "startChar": 11,
