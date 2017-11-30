@@ -87,6 +87,7 @@
 #include "chrome/browser/safe_browsing/ui_manager.h"
 #include "chrome/browser/safe_browsing/url_checker_delegate_impl.h"
 #include "chrome/browser/search/search.h"
+#include "chrome/browser/search_engines/template_url_service_factory.h"
 #include "chrome/browser/speech/chrome_speech_recognition_manager_delegate.h"
 #include "chrome/browser/speech/tts_controller.h"
 #include "chrome/browser/speech/tts_message_filter.h"
@@ -170,6 +171,8 @@
 #include "components/safe_browsing/common/safe_browsing_prefs.h"
 #include "components/safe_browsing/db/database_manager.h"
 #include "components/safe_browsing/password_protection/password_protection_navigation_throttle.h"
+#include "components/search_engines/template_url.h"
+#include "components/search_engines/template_url_service.h"
 #include "components/signin/core/browser/profile_management_switches.h"
 #include "components/spellcheck/spellcheck_build_features.h"
 #include "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.h"
@@ -2685,6 +2688,15 @@ void ChromeContentBrowserClient::OverrideWebkitPrefs(
               features::kAllowAutoplayUnmutedInWebappManifestScope)) {
         web_prefs->media_playback_gesture_whitelist_scope =
             tab_android->GetWebappManifestScope();
+      }
+
+      TemplateURLService* template_url_service =
+          TemplateURLServiceFactory::GetForProfile(profile);
+      if (template_url_service &&
+          template_url_service->IsSearchResultsPageFromDefaultSearchProvider(
+              tab_android->GetURL())) {
+        web_prefs->autoplay_policy =
+            content::AutoplayPolicy::kNoUserGestureRequired;
       }
     }
   }
