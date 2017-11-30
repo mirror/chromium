@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe7299db_571ea181",
+        "filename": "tools/perf/core/story_expectation_validator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-11-30T20:30:12Z",
+      "side": 1,
+      "message": "\"c\" and \"e\" seem like they could use better names",
+      "range": {
+        "startLine": 101,
+        "startChar": 12,
+        "endLine": 101,
+        "endChar": 13
+      },
+      "revId": "66e22479d151cb5006efb6078ba26468676f808a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
