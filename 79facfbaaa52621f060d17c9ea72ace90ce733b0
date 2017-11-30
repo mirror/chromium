@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "001f0e5c_2bfc3c7c",
+        "filename": "third_party/WebKit/LayoutTests/compositing/overflow/border-radius-on-squashed-layers.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-11-30T21:38:55Z",
+      "side": 1,
+      "message": "Will do. It didn\u0027t catch an y bugs in fixing this.",
+      "parentUuid": "2ef80753_641140c1",
+      "revId": "79facfbaaa52621f060d17c9ea72ace90ce733b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0294ff8d_331c3c25",
         "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-30T21:36:38Z",
       "side": 1,
       "message": "Can you change around the type of ancestor_to_local_offset to reduce copying data around\nbetween representations?",
+      "revId": "79facfbaaa52621f060d17c9ea72ace90ce733b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c187c247_d98ad1ee",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 3151,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-11-30T21:38:55Z",
+      "side": 1,
+      "message": "Will do.",
+      "parentUuid": "0294ff8d_331c3c25",
       "revId": "79facfbaaa52621f060d17c9ea72ace90ce733b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
