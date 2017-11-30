@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "98785477_7b9aae03",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/SecondTapMlOverride.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-30T16:53:05Z",
+      "side": 1,
+      "message": "This will only ever get called if mIsSecondTapEnabled is true, right?",
+      "range": {
+        "startLine": 55,
+        "startChar": 19,
+        "endLine": 55,
+        "endChar": 33
+      },
+      "revId": "e4a1959ce8c8b2e5dc5f47a1c401c9433f5874e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "842b292e_b3fefdd8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/SecondTapMlOverride.java",
         "patchSetId": 1
@@ -18,6 +41,29 @@
         "startChar": 0,
         "endLine": 78,
         "endChar": 29
+      },
+      "revId": "e4a1959ce8c8b2e5dc5f47a1c401c9433f5874e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e2e54b8_e6b25f09",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 6763,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-30T16:53:05Z",
+      "side": 1,
+      "message": "Is there a way to condense ContextualSearchResultsSeen and ContextualSearchResultsSeenBoolean?",
+      "range": {
+        "startLine": 6759,
+        "startChar": 1,
+        "endLine": 6763,
+        "endChar": 0
       },
       "revId": "e4a1959ce8c8b2e5dc5f47a1c401c9433f5874e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
