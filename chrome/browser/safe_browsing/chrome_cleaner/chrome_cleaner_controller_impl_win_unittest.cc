@@ -72,6 +72,7 @@ class MockChromeCleanerControllerObserver
     : public ChromeCleanerController::Observer {
  public:
   MOCK_METHOD1(OnIdle, void(ChromeCleanerController::IdleReason));
+  MOCK_METHOD0(OnReporterRunning, void());
   MOCK_METHOD0(OnScanning, void());
   MOCK_METHOD1(OnInfected, void(const ChromeCleanerScannerResults&));
   MOCK_METHOD1(OnCleaning, void(const ChromeCleanerScannerResults&));
@@ -702,6 +703,168 @@ INSTANTIATE_TEST_CASE_P(
                    UserResponse::kDenied,
                    UserResponse::kDismissed)),
     ChromeCleanerControllerTestParamsToString());
+
+using ChromeCleanerControllerReporterInteractionTestParams =
+    std::tuple<bool, ChromeCleanerController::State>;
+
+class ChromeCleanerControllerReporterInteractionTest
+    : public testing::TestWithParam<
+          ChromeCleanerControllerReporterInteractionTestParams>,
+      public ChromeCleanerControllerDelegate {
+ public:
+  void SetUp() override {
+    std::tie(user_initiated_cleanups_enabled_, initial_state_) = GetParam();
+
+    ChromeCleanerControllerImpl::ResetInstanceForTesting();
+    controller_ = ChromeCleanerControllerImpl::GetInstance();
+    ASSERT_TRUE(controller_);
+
+    controller_->SetDelegateForTesting(this);
+
+    controller_->ForceStateForTesting(initial_state_);
+    ASSERT_EQ(initial_state_, controller_->state());
+  }
+
+  void TearDown() override { controller_->SetDelegateForTesting(nullptr); }
+
+  bool UserInitiatedCleanupsEnabled() override {
+    return user_initiated_cleanups_enabled_;
+  }
+
+  void ExpectNoStateChangeOnReporterSequenceDone(
+      SwReporterInvocationResult reporter_result) {
+    controller_->OnReporterSequenceDone(reporter_result);
+    EXPECT_EQ(initial_state_, controller_->state());
+  }
+
+  void MaybeExpectStateChangeOnReporterSequenceDone(
+      SwReporterInvocationResult reporter_result,
+      ChromeCleanerController::IdleReason idle_reason) {
+    controller_->OnReporterSequenceDone(reporter_result);
+    if (user_initiated_cleanups_enabled_ &&
+        (initial_state_ == ChromeCleanerController::State::kIdle ||
+         initial_state_ == ChromeCleanerController::State::kReporterRunning)) {
+      EXPECT_EQ(ChromeCleanerController::State::kIdle, controller_->state());
+      EXPECT_EQ(idle_reason, controller_->idle_reason());
+    } else {
+      EXPECT_EQ(initial_state_, controller_->state());
+    }
+  }
+
+  bool user_initiated_cleanups_enabled_;
+  ChromeCleanerController::State initial_state_;
+
+  ChromeCleanerControllerImpl* controller_ = nullptr;
+  StrictMock<MockChromeCleanerControllerObserver> mock_observer_;
+};
+
+TEST_P(ChromeCleanerControllerReporterInteractionTest,
+       OnReporterSequenceStarted) {
+  controller_->OnReporterSequenceStarted();
+  EXPECT_EQ(user_initiated_cleanups_enabled_ &&
+                    (initial_state_ == ChromeCleanerController::State::kIdle)
+                ? ChromeCleanerController::State::kReporterRunning
+                : initial_state_,
+            controller_->state());
+}
+
+TEST_P(ChromeCleanerControllerReporterInteractionTest,
+       OnReporterSequenceDone_NotScheduled) {
+  ExpectNoStateChangeOnReporterSequenceDone(
+      SwReporterInvocationResult::kNotScheduled);
+}
+
+TEST_P(ChromeCleanerControllerReporterInteractionTest,
+       OnReporterSequenceDone_TimedOut) {
+  MaybeExpectStateChangeOnReporterSequenceDone(
+      SwReporterInvocationResult::kTimedOut,
+      ChromeCleanerController::IdleReason::kReporterFailed);
+}
+
+TEST_P(ChromeCleanerControllerReporterInteractionTest,
+       OnReporterSequenceDone_ProcessFailedToLaunch) {
+  MaybeExpectStateChangeOnReporterSequenceDone(
+      SwReporterInvocationResult::kProcessFailedToLaunch,
+      ChromeCleanerController::IdleReason::kReporterFailed);
+}
+
+TEST_P(ChromeCleanerControllerReporterInteractionTest,
+       OnReporterSequenceDone_GeneralFailure) {
+  MaybeExpectStateChangeOnReporterSequenceDone(
+      SwReporterInvocationResult::kGeneralFailure,
+      ChromeCleanerController::IdleReason::kReporterFailed);
+}
+
+TEST_P(ChromeCleanerControllerReporterInteractionTest,
+       OnReporterSequenceDone_NothingFound) {
+  MaybeExpectStateChangeOnReporterSequenceDone(
+      SwReporterInvocationResult::kNothingFound,
+      ChromeCleanerController::IdleReason::kReporterFoundNothing);
+}
+
+TEST_P(ChromeCleanerControllerReporterInteractionTest,
+       OnReporterSequenceDone_CleanupNotOffered) {
+  MaybeExpectStateChangeOnReporterSequenceDone(
+      SwReporterInvocationResult::kCleanupNotOffered,
+      ChromeCleanerController::IdleReason::kReporterFoundNothing);
+}
+
+TEST_P(ChromeCleanerControllerReporterInteractionTest,
+       OnReporterSequenceDone_CleanupToBeOffered) {
+  ExpectNoStateChangeOnReporterSequenceDone(
+      SwReporterInvocationResult::kCleanupToBeOffered);
+}
+
+std::ostream& operator<<(std::ostream& out,
+                         SwReporterInvocationResult reporter_result) {
+  switch (response) {
+    case SwReporterInvocationResult::kNotScheduled:
+      return out << "NotScheduled";
+    case SwReporterInvocationResult::kTimedOut:
+      return out << "TimedOut";
+    case SwReporterInvocationResult::kProcessFailedToLaunch:
+      return out << "ProcessFailedToLaunch";
+    case SwReporterInvocationResult::kGeneralFailure:
+      return out << "GeneralFailure";
+    case SwReporterInvocationResult::kNothingFound:
+      return out << "NothingFound";
+    case SwReporterInvocationResult::kCleanupNotOffered:
+      return out << "CleanupNotOffered";
+    case SwReporterInvocationResult::kCleanupToBeOffered:
+      return out << "CleanupToBeOffered";
+    default:
+      NOTREACHED();
+      return out << "UnknownUserResponse" << response;
+  }
+}
+
+// ::testing::PrintToStringParamName does not format tuples as a valid test
+// name, so this functor can be used to get each element in the tuple
+// explicitly and format them using the above operator<< overrides.
+struct ChromeCleanerControllerReporterInteractionTestParamsToString {
+  std::string operator()(
+      const ::testing::TestParamInfo<
+          ChromeCleanerControllerReporterInteractionTestParams>& info) const {
+    std::ostringstream param_name;
+    param_name << std::get<0>(info.param) << "_";
+    param_name << std::get<1>(info.param);
+    return param_name.str();
+  }
+};
+
+INSTANTIATE_TEST_CASE_P(
+    All,
+    ChromeCleanerControllerReporterInteractionTest,
+    Combine(Bool(),
+            Values(SwReporterInvocationResult::kUnspecified,
+                   SwReporterInvocationResult::kNotScheduled,
+                   SwReporterInvocationResult::kTimedOut,
+                   SwReporterInvocationResult::kProcessFailedToLaunch,
+                   SwReporterInvocationResult::kGeneralFailure,
+                   SwReporterInvocationResult::kNothingFound,
+                   SwReporterInvocationResult::kCleanupNotOffered,
+                   SwReporterInvocationResult::kCleanupToBeOffered)),
+    ChromeCleanerControllerReporterInteractionTestParamsToString());
 
 }  // namespace
 }  // namespace safe_browsing
