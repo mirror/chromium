@@ -1,0 +1,372 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eeb6b067_e39d266b",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-30T18:44:35Z",
+      "side": 1,
+      "message": "I\u0027m confused by these changes. I\u0027m assuming Bernhard is reviewing them.",
+      "range": {
+        "startLine": 538,
+        "startChar": 6,
+        "endLine": 541,
+        "endChar": 59
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "219e3350_513abac4",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-30T18:44:35Z",
+      "side": 1,
+      "message": "Please update header to indicate members that may now be null.\n\nAlso, as it\u0027s easy to miss adding a conditional, please add a unit test that passes in null and at least verifies GetPreferredSize() and Layout() don\u0027t crash.",
+      "range": {
+        "startLine": 240,
+        "startChar": 13,
+        "endLine": 240,
+        "endChar": 41
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dafbd563_484939a5",
+        "filename": "chrome/browser/ui/views/media_router/presentation_receiver_window_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-30T18:44:35Z",
+      "side": 1,
+      "message": "As PresentationRecieverWindowView doesn\u0027t own the controller make the destructor protected.",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 25
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e2ded0b_48eb522c",
+        "filename": "chrome/browser/ui/views/media_router/presentation_receiver_window_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-30T18:44:35Z",
+      "side": 1,
+      "message": "Chromium style guide recommends classes like this live in their own header.",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 4
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "691add45_f866e87d",
+        "filename": "chrome/browser/ui/views/media_router/presentation_receiver_window_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-30T18:44:35Z",
+      "side": 1,
+      "message": "Please, one Init() function. Also, can you get the profile from the WebContents? Profile::FromBrowserContext(web_contents-\u003eGetBrowserContext())?",
+      "range": {
+        "startLine": 39,
+        "startChar": 7,
+        "endLine": 40,
+        "endChar": 16
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95fef859_0a203d53",
+        "filename": "chrome/browser/ui/views/media_router/presentation_receiver_window_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-30T18:44:35Z",
+      "side": 1,
+      "message": "Add description.",
+      "range": {
+        "startLine": 42,
+        "startChar": 7,
+        "endLine": 42,
+        "endChar": 24
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fcd257c_238a4861",
+        "filename": "chrome/browser/ui/views/media_router/presentation_receiver_window_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-30T18:44:35Z",
+      "side": 1,
+      "message": "Are you sure you don\u0027t need to call UpdateWindowTitle?",
+      "range": {
+        "startLine": 44,
+        "startChar": 7,
+        "endLine": 44,
+        "endChar": 16
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd85b10f_545d8b80",
+        "filename": "chrome/browser/ui/views/media_router/presentation_receiver_window_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-30T18:44:35Z",
+      "side": 1,
+      "message": "Initialize to null.",
+      "range": {
+        "startLine": 69,
+        "startChar": 19,
+        "endLine": 69,
+        "endChar": 37
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40d7c443_b4cd1326",
+        "filename": "chrome/browser/ui/views/media_router/presentation_receiver_window_views.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-30T18:44:35Z",
+      "side": 1,
+      "message": "What portion of this code isn\u0027t cross platform? The controller part is defined in PresentationReceiverWindowView, but that isn\u0027t really views specific. Can this code live in c/b/ui/media_router?",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 38
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4073f2f5_e09d8271",
+        "filename": "chrome/test/media_router/presentation_receiver_window_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-30T18:44:35Z",
+      "side": 1,
+      "message": "Why this does test live in chrome/test? Generally tests live right next to the files under test. So, I would expect it to live in chrome/browser/media/router.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 60
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4125b82c_a95b76b0",
+        "filename": "chrome/test/media_router/presentation_receiver_window_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-30T18:44:35Z",
+      "side": 1,
+      "message": "Typically we use ASSERT/EXPECT in tests. How about returning an empty path if the file doesn\u0027t exist or you can\u0027t get the module and have callers ASSERT path is non-empty?",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 9
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "806c6d8c_cf6ad5fe",
+        "filename": "chrome/test/media_router/presentation_receiver_window_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-30T18:44:35Z",
+      "side": 1,
+      "message": "Add description.",
+      "range": {
+        "startLine": 60,
+        "startChar": 6,
+        "endLine": 60,
+        "endChar": 20
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fab44d6_13a89551",
+        "filename": "chrome/test/media_router/presentation_receiver_window_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-30T18:44:35Z",
+      "side": 1,
+      "message": "Comment where overrides come from. For example, // WebContentsObserver:",
+      "range": {
+        "startLine": 64,
+        "startChar": 30,
+        "endLine": 64,
+        "endChar": 39
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45c1a935_7e7930cc",
+        "filename": "chrome/test/media_router/presentation_receiver_window_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-30T18:44:35Z",
+      "side": 1,
+      "message": "DISALLOW...",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 2
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6e50b44_ea5635d5",
+        "filename": "chrome/test/media_router/presentation_receiver_window_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-30T18:44:35Z",
+      "side": 1,
+      "message": "DISALLOW...",
+      "range": {
+        "startLine": 108,
+        "startChar": 0,
+        "endLine": 108,
+        "endChar": 2
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "706cf998_9fcfa26b",
+        "filename": "chrome/test/media_router/presentation_receiver_window_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-30T18:44:35Z",
+      "side": 1,
+      "message": "A using gives the same effect:\nusing PresentationReceiverWindowBrowserTest \u003d InProcessBrowserTest;",
+      "range": {
+        "startLine": 116,
+        "startChar": 0,
+        "endLine": 116,
+        "endChar": 77
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
