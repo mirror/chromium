@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a6d59a02_86b9df8b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-30T17:29:34Z",
+      "side": 1,
+      "message": "bug number?",
+      "revId": "4fe5b4e6d825f25989f312a48a3fe9c10d546b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d79bcf91_f1d4b213",
         "filename": "ipc/ipc_listener.h",
         "patchSetId": 2
@@ -13,6 +30,52 @@
       "writtenOn": "2017-11-30T16:32:08Z",
       "side": 1,
       "message": "why not use OnBadMessageReceived in this case? i.e. this shouldn\u0027t happen normally",
+      "revId": "4fe5b4e6d825f25989f312a48a3fe9c10d546b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51c3131c_6f5338bc",
+        "filename": "ipc/ipc_listener.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-30T17:29:34Z",
+      "side": 1,
+      "message": "nit: comment describing what this does?\n\nAlso +1 to John\u0027s comment. Is it because we don\u0027t even have a Message\u0026 to pass in this particular case?",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 38
+      },
+      "revId": "4fe5b4e6d825f25989f312a48a3fe9c10d546b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec1203ef_e23690fa",
+        "filename": "ipc/ipc_message_pipe_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-30T17:29:34Z",
+      "side": 1,
+      "message": "Is there a way we can even avoid making a message if data.size() is no good, rather than using the ?-operator in the constructor?",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 97,
+        "endChar": 0
+      },
       "revId": "4fe5b4e6d825f25989f312a48a3fe9c10d546b47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
