@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57cc5f4d_f8b6f443",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-30T22:52:42Z",
+      "side": 0,
+      "message": "I don\u0027t understand why, in the old code, these are variables and not just constants. Maybe this is code that used to exist in //components and got moved back into //chrome?",
+      "revId": "bde705c598f80b494150320a3b8462a4079e8c7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

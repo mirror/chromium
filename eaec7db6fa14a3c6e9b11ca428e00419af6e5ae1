@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a43e184e_80d15274",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-30T22:52:42Z",
+      "side": 1,
+      "message": "This won\u0027t work under mash. PathService is \"layered\". When you call PathService::Get(DIR_USER_DATA) it runs code in //chrome. When ash runs in its own process, that code won\u0027t exist.\n\nInstead I think you should inject the actual paths sometime during startup. It would be nice to introduce a single mojo IPC to configure ash::Shell after the ash process starts up. Alternately, maybe SetClient() could be changed to an Initialize method that included both the client and all necessary file paths.",
+      "revId": "eaec7db6fa14a3c6e9b11ca428e00419af6e5ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeefd950_5e9930df",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-30T22:52:42Z",
+      "side": 1,
+      "message": "Can you do for (const base::FilePath\u0026 path : file_list) ?",
+      "revId": "eaec7db6fa14a3c6e9b11ca428e00419af6e5ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3809b1ed_a8804773",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-30T22:52:42Z",
+      "side": 1,
+      "message": "Prefer StringPiece or std::string for these sorts of functions.",
+      "revId": "eaec7db6fa14a3c6e9b11ca428e00419af6e5ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58db3ec0_d699f450",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-30T22:52:42Z",
+      "side": 1,
+      "message": "nit: Returns",
+      "revId": "eaec7db6fa14a3c6e9b11ca428e00419af6e5ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
