@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0e031a26_b4b4766a",
+        "filename": "content/browser/background_sync/background_sync_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-30T05:12:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "659affe5_43a6b520",
+      "revId": "7525f1f94f9985b81360a812fd0ff859f517f0bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7c46230_26dd66f3",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "7525f1f94f9985b81360a812fd0ff859f517f0bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3375d3a5_775a617c",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1218,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-30T05:12:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7c46230_26dd66f3",
+      "revId": "7525f1f94f9985b81360a812fd0ff859f517f0bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "351a3da0_d0cae40a",
+        "filename": "content/browser/service_worker/service_worker_registration_object_host.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-30T05:12:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50a19d26_943c338e",
+      "revId": "7525f1f94f9985b81360a812fd0ff859f517f0bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "265a68bf_53bdc602",
         "filename": "content/browser/service_worker/service_worker_registration_object_host.cc",
         "patchSetId": 14
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "ff4407e4_6b898878",
+        "filename": "content/browser/service_worker/service_worker_registration_object_host.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-30T05:12:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "265a68bf_53bdc602",
+      "revId": "7525f1f94f9985b81360a812fd0ff859f517f0bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a74f964_eb287ee4",
         "filename": "content/browser/service_worker/service_worker_registration_object_host.h",
         "patchSetId": 14
@@ -84,6 +156,24 @@
       "revId": "7525f1f94f9985b81360a812fd0ff859f517f0bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "946b084d_2116978b",
+        "filename": "content/browser/service_worker/service_worker_registration_object_host.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-30T05:12:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a74f964_eb287ee4",
+      "revId": "7525f1f94f9985b81360a812fd0ff859f517f0bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +212,30 @@
       "side": 1,
       "message": "I\u0027m confused why it\u0027s needed. Is this fix related to the other changes in this CL? If not, can we make it a separate patch?",
       "parentUuid": "2b9a349a_2f64614b",
+      "range": {
+        "startLine": 714,
+        "startChar": 2,
+        "endLine": 716,
+        "endChar": 48
+      },
+      "revId": "7525f1f94f9985b81360a812fd0ff859f517f0bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "078171dd_5c490914",
+        "filename": "content/browser/service_worker/service_worker_url_request_job_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-30T05:12:27Z",
+      "side": 1,
+      "message": "This change should be accompanied with this CL.\n\nBefore this commit https://chromium.googlesource.com/chromium/src/+/67025f67e9bfe35a583e843db1f447c24db5c5fe, our changes in this CL was not breaking this test:\n  The SWVersion::SetTickClockForTesting() takes a std::unique_ptr\u003cTickClock\u003e and owns it, so SWVersion can use it safely at any time.\n\nAfter that commit, SWVersion::SetTickClockForTesting() takes a raw pointer of TickClock, so we must guarantee the TickClock outlives the SWVersion, the TickClock is a member of https://cs.chromium.org/chromium/src/content/browser/service_worker/service_worker_url_request_job_unittest.cc?rcl\u003da8306aec2dd3732ad0e6976b40ca19e2e34c6123\u0026l\u003d424, before this CL such guarantee is OK, because SWRegObject-\u003eSWReg-\u003eSWVersion destructions happen before the TickClock. \n\nBut, this CL defers SWRegObject-\u003eSWReg-\u003eSWVersion destructions until the Mojo connection error comes up, which may happen inside destruction of the |thread_bundle_| at line424, at that time the TickClock has already destroyed. So we need line714-716 and line721 here.",
+      "parentUuid": "5afc5af3_19cffbb0",
       "range": {
         "startLine": 714,
         "startChar": 2,
