@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7acdf19f_90c9a162",
+        "filename": "components/exo/data_source.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-30T01:24:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce4c611b_eec578e1",
+      "revId": "196106098348fccabdbc5791d9f50f6c7dacb67b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41fb1c3a_dae5e3e1",
         "filename": "components/exo/seat.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9788cd99_ca2da620",
+        "filename": "components/exo/seat.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-30T01:24:41Z",
+      "side": 1,
+      "message": "This is used for base::UTF8ToUTF16.\nIn wayland protocol, string is passed by utf8, though Chrome clipboard using utf16 for non-ascii characters.",
+      "parentUuid": "41fb1c3a_dae5e3e1",
+      "revId": "196106098348fccabdbc5791d9f50f6c7dacb67b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "90e6802b_f7a02a1f",
         "filename": "components/exo/seat.cc",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-29T13:24:04Z",
       "side": 1,
       "message": "and this?",
+      "revId": "196106098348fccabdbc5791d9f50f6c7dacb67b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ae7ac67_4dfe262e",
+        "filename": "components/exo/seat.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-30T01:24:41Z",
+      "side": 1,
+      "message": "This was unused. Removed.",
+      "parentUuid": "90e6802b_f7a02a1f",
       "revId": "196106098348fccabdbc5791d9f50f6c7dacb67b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "7482c827_69231b95",
+        "filename": "components/exo/seat.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-30T01:24:41Z",
+      "side": 1,
+      "message": "The required change was mixed in the next CL. Moved the hunk from the next CL to here.",
+      "parentUuid": "14e91767_98042c0e",
+      "revId": "196106098348fccabdbc5791d9f50f6c7dacb67b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "480ecaec_88d23595",
         "filename": "components/exo/seat.cc",
         "patchSetId": 5
@@ -111,6 +183,30 @@
     },
     {
       "key": {
+        "uuid": "520152cb_9c44b04c",
+        "filename": "components/exo/seat.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-30T01:24:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "480ecaec_88d23595",
+      "range": {
+        "startLine": 72,
+        "startChar": 16,
+        "endLine": 72,
+        "endChar": 18
+      },
+      "revId": "196106098348fccabdbc5791d9f50f6c7dacb67b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76b3db48_827c5689",
         "filename": "components/exo/seat.cc",
         "patchSetId": 5
@@ -125,6 +221,24 @@
       "revId": "196106098348fccabdbc5791d9f50f6c7dacb67b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be240d46_361bd873",
+        "filename": "components/exo/seat.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-30T01:24:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76b3db48_827c5689",
+      "revId": "196106098348fccabdbc5791d9f50f6c7dacb67b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +271,24 @@
       "side": 1,
       "message": "Ignore this comment. It\u0027s clear that Cancelled will invalidate existing DataReads",
       "parentUuid": "1834fe06_95bf4f74",
+      "revId": "196106098348fccabdbc5791d9f50f6c7dacb67b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7b2f37c_735fa9a3",
+        "filename": "components/exo/seat.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-30T01:24:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bf823bd1_2f04228b",
       "revId": "196106098348fccabdbc5791d9f50f6c7dacb67b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -198,6 +330,24 @@
     },
     {
       "key": {
+        "uuid": "b2aae47a_3011072d",
+        "filename": "components/exo/seat.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-30T01:24:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71c7feea_6fb6de52",
+      "revId": "196106098348fccabdbc5791d9f50f6c7dacb67b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6264c139_eec20c00",
         "filename": "components/exo/seat_unittest.cc",
         "patchSetId": 5
@@ -212,6 +362,24 @@
       "revId": "196106098348fccabdbc5791d9f50f6c7dacb67b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a01a5cdb_ca0dc1ae",
+        "filename": "components/exo/seat_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-11-30T01:24:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6264c139_eec20c00",
+      "revId": "196106098348fccabdbc5791d9f50f6c7dacb67b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
