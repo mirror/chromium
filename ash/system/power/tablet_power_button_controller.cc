@@ -91,9 +91,7 @@ void TabletPowerButtonController::OnPowerButtonEvent(
       force_off_on_button_up_ = false;
     }
 
-    screen_off_when_power_button_down_ =
-        display_controller_->screen_state() !=
-        PowerButtonDisplayController::ScreenState::ON;
+    screen_off_when_power_button_down_ = !display_controller_->IsScreenOn();
     display_controller_->SetDisplayForcedOff(false);
     StartShutdownTimer();
   } else {
