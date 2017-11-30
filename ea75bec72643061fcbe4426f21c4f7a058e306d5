@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "88e8f1b8_8267fcfd",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logging_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-30T01:26:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ba72c3f_ea19b252",
+      "revId": "ea75bec72643061fcbe4426f21c4f7a058e306d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba180805_e96cce07",
         "filename": "chrome/common/chrome_features.cc",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "ea75bec72643061fcbe4426f21c4f7a058e306d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b451c49c_de07ba63",
+        "filename": "chrome/common/chrome_features.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-11-30T01:26:25Z",
+      "side": 1,
+      "message": "Done, thanks! :)",
+      "parentUuid": "ba180805_e96cce07",
+      "revId": "ea75bec72643061fcbe4426f21c4f7a058e306d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
