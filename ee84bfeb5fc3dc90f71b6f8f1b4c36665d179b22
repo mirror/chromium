@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83493fc0_ace1900f",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-30T03:55:39Z",
+      "side": 1,
+      "message": "this can be replaced by \"Identifies\"",
+      "range": {
+        "startLine": 89,
+        "startChar": 7,
+        "endLine": 89,
+        "endChar": 31
+      },
+      "revId": "ee84bfeb5fc3dc90f71b6f8f1b4c36665d179b22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "235c5d6c_04efb297",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-30T03:55:39Z",
+      "side": 1,
+      "message": "so, the documentation for this still seems little ambiguous/confusing.\nIs there a single video stream that is processed withing different contexts/pipelines?\nOr do you have multiple video streams, each associated with a single pipeline?\nI latter case, I\u0027d just not mention anything about pipelines here.\nI.e. just go with \"A list of video streams processed by the analytics process.\"",
+      "revId": "ee84bfeb5fc3dc90f71b6f8f1b4c36665d179b22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
