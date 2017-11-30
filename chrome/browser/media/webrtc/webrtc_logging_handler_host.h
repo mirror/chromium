@@ -35,6 +35,7 @@ struct WebRtcLogPaths {
 
 typedef std::map<std::string, std::string> MetaDataMap;
 
+// TODO: !!!
 // WebRtcLoggingHandlerHost handles operations regarding the WebRTC logging:
 // - Opens a shared memory buffer that the handler in the render process
 //   writes to.
