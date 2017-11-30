@@ -303,6 +303,7 @@ class DefaultProfileExtensionBrowserTest : public ExtensionBrowserTest {
 // testing for the signin profile, where we explicitly disallow all
 // extension hosts unless it's the off-the-record profile.
 IN_PROC_BROWSER_TEST_F(DefaultProfileExtensionBrowserTest, NoExtensionHosts) {
+  LOG(ERROR) << "JAMES start test";
   // Explicitly get the original and off-the-record-profiles, since on CrOS,
   // the signin profile (profile()) is the off-the-record version.
   Profile* original = profile()->GetOriginalProfile();
@@ -317,6 +318,7 @@ IN_PROC_BROWSER_TEST_F(DefaultProfileExtensionBrowserTest, NoExtensionHosts) {
 
   pm = ProcessManager::Get(otr);
   EXPECT_EQ(0u, pm->background_hosts().size());
+  LOG(ERROR) << "JAMES end test";
 }
 
 // Test that basic extension loading creates the appropriate ExtensionHosts

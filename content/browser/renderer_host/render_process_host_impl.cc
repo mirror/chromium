@@ -305,7 +305,10 @@ net::URLRequestContext* GetRequestContext(
   // specific needs for caching.
   if (resource_type == RESOURCE_TYPE_MEDIA)
     return media_request_context->GetURLRequestContext();
-  return request_context->GetURLRequestContext();
+  net::URLRequestContextGetter* getter = request_context.get();
+  // LOG(ERROR) << "JAMES request_context " << bool(getter);//just so debugger can find type
+  return getter->GetURLRequestContext();
+  // return request_context->GetURLRequestContext();
 }
 
 void GetContexts(
@@ -1692,6 +1695,7 @@ void RenderProcessHostImpl::CreateMessageFilters() {
   scoped_refptr<net::URLRequestContextGetter> media_request_context(
       GetStoragePartition()->GetMediaURLRequestContext());
 
+  LOG(ERROR) << "JAMES creating get_contexts_callback";
   ResourceMessageFilter::GetContextsCallback get_contexts_callback(base::Bind(
       &GetContexts, resource_context, request_context, media_request_context));
 

@@ -42,7 +42,10 @@ ResourceRequesterInfo::ResourceRequesterInfo(
       blob_storage_context_(blob_storage_context),
       file_system_context_(file_system_context),
       service_worker_context_(service_worker_context),
-      get_contexts_callback_(get_contexts_callback) {}
+      get_contexts_callback_(get_contexts_callback) {
+  LOG(ERROR) << "JAMES new ResourceRequesterInfo get_contexts_callback_ "
+        << bool(get_contexts_callback_);
+}
 
 ResourceRequesterInfo::~ResourceRequesterInfo() {}
 
@@ -56,6 +59,8 @@ void ResourceRequesterInfo::GetContexts(
     ResourceType resource_type,
     ResourceContext** resource_context,
     net::URLRequestContext** request_context) const {
+  LOG(ERROR) << "JAMES GetContexts get_contexts_callback_ "
+        << bool(get_contexts_callback_);
   get_contexts_callback_.Run(resource_type, resource_context, request_context);
 }
 

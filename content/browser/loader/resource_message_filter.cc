@@ -18,8 +18,8 @@
 
 namespace content {
 namespace {
-mojom::URLLoaderFactory* g_test_factory;
-ResourceMessageFilter* g_current_filter;
+mojom::URLLoaderFactory* g_test_factory = nullptr;//JAMES
+ResourceMessageFilter* g_current_filter = nullptr;//JAMES
 }  // namespace
 
 ResourceMessageFilter::ResourceMessageFilter(
@@ -41,9 +41,12 @@ ResourceMessageFilter::ResourceMessageFilter(
                                                    service_worker_context,
                                                    get_contexts_callback)),
       io_thread_task_runner_(io_thread_runner),
-      weak_ptr_factory_(this) {}
+      weak_ptr_factory_(this) {
+  LOG(ERROR) << "JAMES new ResourceMessageFilter " << this;
+      }
 
 ResourceMessageFilter::~ResourceMessageFilter() {
+  LOG(ERROR) << "JAMES del ResourceMessageFilter " << this;
   DCHECK(io_thread_task_runner_->BelongsToCurrentThread());
   DCHECK(is_channel_closed_);
   DCHECK(!weak_ptr_factory_.HasWeakPtrs());
@@ -54,7 +57,9 @@ void ResourceMessageFilter::OnFilterAdded(IPC::Channel*) {
   InitializeOnIOThread();
 }
 
+//JAMES does this need to be called earlier?
 void ResourceMessageFilter::OnChannelClosing() {
+  LOG(ERROR) << "JAMES OnChannelClosing";
   DCHECK(io_thread_task_runner_->BelongsToCurrentThread());
 
   // Close all additional Mojo connections opened to this object so that
