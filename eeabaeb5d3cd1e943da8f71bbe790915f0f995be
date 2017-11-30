@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fab5462_1d11462b",
+        "filename": "ios/chrome/browser/ui/first_run/welcome_to_chrome_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-11-30T02:01:12Z",
+      "side": 1,
+      "message": "Can we rename this part of the selector and the argument name to |syncPresenter|?  I think it would add a bit of clarity.",
+      "revId": "eeabaeb5d3cd1e943da8f71bbe790915f0f995be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
