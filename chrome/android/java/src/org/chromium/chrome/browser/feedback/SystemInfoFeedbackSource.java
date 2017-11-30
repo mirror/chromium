@@ -30,29 +30,27 @@ public class SystemInfoFeedbackSource implements AsyncFeedbackSource {
             mCallback = callback;
         }
 
-        Long getAvailableSpaceMB() {
-            if (getStatus() != Status.FINISHED) return null;
+        long getAvailableSpaceMB() {
+            if (getStatus() != Status.FINISHED) return 0;
 
             try {
                 StatFs statFs = get();
-                if (statFs == null) return null;
                 long blockSize = ApiCompatibilityUtils.getBlockSize(statFs);
                 return ApiCompatibilityUtils.getAvailableBlocks(statFs) * blockSize / 1024 / 1024;
             } catch (ExecutionException | InterruptedException e) {
-                return null;
+                return 0;
             }
         }
 
-        Long getTotalSpaceMB() {
-            if (getStatus() != Status.FINISHED) return null;
+        long getTotalSpaceMB() {
+            if (getStatus() != Status.FINISHED) return 0;
 
             try {
                 StatFs statFs = get();
-                if (statFs == null) return null;
                 long blockSize = ApiCompatibilityUtils.getBlockSize(statFs);
                 return ApiCompatibilityUtils.getBlockCount(statFs) * blockSize / 1024 / 1024;
             } catch (ExecutionException | InterruptedException e) {
-                return null;
+                return 0;
             }
         }
 
@@ -93,17 +91,15 @@ public class SystemInfoFeedbackSource implements AsyncFeedbackSource {
         Map<String, String> feedback = CollectionUtil.newHashMap(
                 Pair.create("CPU Architecture", nativeGetCpuArchitecture()),
                 Pair.create(
-                        "Available Memory (MB)", Integer.toString(nativeGetAvailableMemoryMB())),
-                Pair.create("Total Memory (MB)", Integer.toString(nativeGetTotalMemoryMB())),
+                        "Available Memory (Mb)", Integer.toString(nativeGetAvailableMemoryMB())),
+                Pair.create("Total Memory (Mb)", Integer.toString(nativeGetTotalMemoryMB())),
                 Pair.create("GPU Vendor", nativeGetGpuVendor()),
                 Pair.create("GPU Model", nativeGetGpuModel()));
 
         if (isReady()) {
-            Long availSpace = mStorageTask.getAvailableSpaceMB();
-            Long totalSpace = mStorageTask.getTotalSpaceMB();
-
-            if (availSpace != null) feedback.put("Available Storage (MB)", availSpace.toString());
-            if (totalSpace != null) feedback.put("Total Storage (MB)", totalSpace.toString());
+            feedback.put(
+                    "Available Storage (Mb)", Long.toString(mStorageTask.getAvailableSpaceMB()));
+            feedback.put("Total Storage (Mb)", Long.toString(mStorageTask.getTotalSpaceMB()));
         }
 
         return feedback;
