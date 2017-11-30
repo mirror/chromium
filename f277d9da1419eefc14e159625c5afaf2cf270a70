@@ -45,6 +45,29 @@
       "revId": "f277d9da1419eefc14e159625c5afaf2cf270a70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab5abf55_7d32a123",
+        "filename": "third_party/WebKit/Source/core/html/media/HTMLVideoElement.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-30T10:38:11Z",
+      "side": 1,
+      "message": "It\u0027s surprising that this is needed. Wherever the resize event is coming from, don\u0027t we know there what the previous size was? Or is the initial size based on metadata in the file\u0027s headers that could be wrong, and the compositor\u0027s reported size based only on the decoded size, which cannot be wrong?",
+      "range": {
+        "startLine": 191,
+        "startChar": 10,
+        "endLine": 191,
+        "endChar": 33
+      },
+      "revId": "f277d9da1419eefc14e159625c5afaf2cf270a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
