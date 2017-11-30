@@ -25,6 +25,40 @@
     },
     {
       "key": {
+        "uuid": "a4fc7970_3db9f469",
+        "filename": "third_party/WebKit/LayoutTests/fast/workers/shared-worker-dynamic-import.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-30T20:45:45Z",
+      "side": 1,
+      "message": "Worklet -\u003e Worker (same with other files)",
+      "revId": "12dd7c858527e9d6228e89b8b3b1afd54b8bee32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd5a7c05_66c7c35f",
+        "filename": "third_party/WebKit/LayoutTests/fast/workers/shared-worker-dynamic-import.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-30T20:45:45Z",
+      "side": 1,
+      "message": "Ditto (and other files)",
+      "revId": "12dd7c858527e9d6228e89b8b3b1afd54b8bee32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f26bab2_485e94f5",
         "filename": "third_party/WebKit/Source/core/dom/WorkerModulatorImpl.cpp",
         "patchSetId": 2
@@ -36,6 +70,23 @@
       "writtenOn": "2017-11-30T18:04:30Z",
       "side": 1,
       "message": "Is my understanding below correct?\n- Currently there isn\u0027t any code path that can trigger this in workers, because prepare-a-script can\u0027t be triggered in workers (so returning nullptr is OK, even though the caller of Modulator::CreateModuleScriptFetcher() assumes that non-nullptr is always returned).\n- Once dynamic import support for workers is implemented, this method can be triggered via dynamic import and thus we\u0027ll need to implement this method.",
+      "revId": "12dd7c858527e9d6228e89b8b3b1afd54b8bee32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "076114bc_72ece48f",
+        "filename": "third_party/WebKit/Source/core/dom/WorkerModulatorImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-30T20:45:45Z",
+      "side": 1,
+      "message": "\"Module scripts are\" maybe more natural",
       "revId": "12dd7c858527e9d6228e89b8b3b1afd54b8bee32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
