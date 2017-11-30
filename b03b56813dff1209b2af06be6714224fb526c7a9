@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e2ee7ab_5b8cb0f1",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-30T21:18:30Z",
+      "side": 1,
+      "message": "I don\u0027t think there is a need to abstract these two methods. There is only one use of them. Consider inlining. Good related read http://number-none.com/blow/john_carmack_on_inlined_code.html",
+      "revId": "b03b56813dff1209b2af06be6714224fb526c7a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fade1c9c_18fe4513",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 834,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-30T21:18:30Z",
+      "side": 1,
+      "message": "Let\u0027s leave these two methods for another CL and see if the abstractions work for all iframe tests.",
+      "revId": "b03b56813dff1209b2af06be6714224fb526c7a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54e3d06b_107fde54",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-30T21:18:30Z",
+      "side": 1,
+      "message": "Nit: IFrame reads better to me. (A case-sensitive code search shows no consensus but IFrame outnumbers Iframe 2:1).",
+      "revId": "b03b56813dff1209b2af06be6714224fb526c7a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
