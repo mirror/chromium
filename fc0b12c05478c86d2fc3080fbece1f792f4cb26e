@@ -164,6 +164,30 @@
       "revId": "fc0b12c05478c86d2fc3080fbece1f792f4cb26e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ec6b66d_fe4a772a",
+        "filename": "ui/file_manager/file_manager/common/js/volume_manager_common.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-11-30T09:18:03Z",
+      "side": 1,
+      "message": "Changed to use CustomEvent. Thank for the discussions.",
+      "parentUuid": "64f5f6b2_33df9610",
+      "range": {
+        "startLine": 348,
+        "startChar": 0,
+        "endLine": 349,
+        "endChar": 15
+      },
+      "revId": "fc0b12c05478c86d2fc3080fbece1f792f4cb26e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
