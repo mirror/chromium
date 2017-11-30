@@ -34,7 +34,7 @@ use warnings FATAL => 'all';
 use CGI qw(-oldstyle_urls);
 use Encode qw(encode decode);
 use File::Basename qw(basename dirname);
-use File::Spec::Functions qw(tmpdir);
+use File::Spec::Functions qw(rel2abs tmpdir);
 use utf8;
 
 my $win32 = eval 'use Win32; 1' ? 1 : 0;
@@ -45,28 +45,11 @@ autoflush STDOUT 1;
 autoflush STDERR 1;
 print "content-type: text/plain; charset=utf-8\n\n";
 
-# Finding a suitable system temporary directory should be as simple as
-# $system_tmpdir = tmpdir() but Win32 Perl CGIs got unusable
-# values. Tracked in https://crbug.com/786152
-
-# Find the logical equivalent of /tmp - however extra contortions are
-# needed on Win32 under Apache with an unpopulated environment to
-# avoid choosing the root directory of the active drive by default.
-my $local_appdata_temp = tmpdir();
-if ($win32) {
-  my $local_appdata = Win32::GetFolderPath(Win32::CSIDL_LOCAL_APPDATA());
-  if (($local_appdata ne '') && -d "$local_appdata\\Temp") {
-    $local_appdata_temp = "$local_appdata\\Temp";
-  }
-}
-
-# This fallback order works well on fairly sane "vanilla" Win32, OS X
-# and Linux Apache configurations with mod_perl.
-my $system_tmpdir =
-  $ENV{TMPDIR} || $ENV{TEMP} || $ENV{TMP} || $local_appdata_temp;
+# tmpdir() does not read environment variables in taint mode.
+my $system_tmpdir = $ENV{TMPDIR} || $ENV{TEMP} || tmpdir();
 $system_tmpdir =~ /\A([^\0- ]*)\z/s
   or die "untaint failed: $!";
-$system_tmpdir = $1;
+$system_tmpdir = rel2abs($1);
 if ($win32) {
   $system_tmpdir = Win32::GetANSIPathName($system_tmpdir);
   # Drive+directory path equality checks are performed in the 8.3
