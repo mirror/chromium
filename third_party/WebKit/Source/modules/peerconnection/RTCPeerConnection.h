@@ -39,6 +39,7 @@
 #include "modules/crypto/NormalizeAlgorithm.h"
 #include "modules/mediastream/MediaStream.h"
 #include "modules/peerconnection/RTCIceCandidate.h"
+#include "modules/peerconnection/RTCVoidRequestPromiseImpl.h"
 #include "platform/AsyncMethodRunner.h"
 #include "platform/WebFrameScheduler.h"
 #include "platform/heap/HeapAllocator.h"
@@ -73,7 +74,8 @@ class MODULES_EXPORT RTCPeerConnection final
       public WebRTCPeerConnectionHandlerClient,
       public ActiveScriptWrappable<RTCPeerConnection>,
       public PausableObject,
-      public MediaStreamObserver {
+      public MediaStreamObserver,
+      public RTCPromiseRequester {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(RTCPeerConnection);
   USING_PRE_FINALIZER(RTCPeerConnection, Dispose);
@@ -173,8 +175,13 @@ class MODULES_EXPORT RTCPeerConnection final
   void close();
 
   // We allow getStats after close, but not other calls or callbacks.
-  bool ShouldFireDefaultCallbacks() { return !closed_ && !stopped_; }
-  bool ShouldFireGetStatsCallback() { return !stopped_; }
+  bool ShouldFireDefaultCallbacks() const { return !closed_ && !stopped_; }
+  bool ShouldFireGetStatsCallback() const { return !stopped_; }
+
+  // RTCPromiseRequester
+  bool DetachOnResolveOrReject() const override {
+    return !ShouldFireDefaultCallbacks();
+  }
 
   DEFINE_ATTRIBUTE_EVENT_LISTENER(negotiationneeded);
   DEFINE_ATTRIBUTE_EVENT_LISTENER(icecandidate);

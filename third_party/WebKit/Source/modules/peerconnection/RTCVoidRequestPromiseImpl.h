@@ -11,12 +11,24 @@
 namespace blink {
 
 class ScriptPromiseResolver;
-class RTCPeerConnection;
+
+// The requester of an RTCVoidRequestPromiseImpl is referenced by the request
+// until resolved or rejected. The requester can cancel a promise that is about
+// to be resolved or rejected, detaching the promise (releasing internal
+// resources) and leaving it in a pending state.
+class RTCPromiseRequester : public GarbageCollectedMixin {
+ public:
+  virtual ~RTCPromiseRequester() {}
+
+  virtual bool DetachOnResolveOrReject() const = 0;
+
+  virtual void Trace(blink::Visitor* visitor) {}
+};
 
 class RTCVoidRequestPromiseImpl final : public RTCVoidRequest {
  public:
-  static RTCVoidRequestPromiseImpl* Create(RTCPeerConnection*,
-                                           ScriptPromiseResolver*);
+  static RTCVoidRequestPromiseImpl* Create(ScriptPromiseResolver*,
+                                           RTCPromiseRequester* = nullptr);
   ~RTCVoidRequestPromiseImpl() override;
 
   // RTCVoidRequest
@@ -26,12 +38,13 @@ class RTCVoidRequestPromiseImpl final : public RTCVoidRequest {
   virtual void Trace(blink::Visitor*);
 
  private:
-  RTCVoidRequestPromiseImpl(RTCPeerConnection*, ScriptPromiseResolver*);
+  RTCVoidRequestPromiseImpl(ScriptPromiseResolver*, RTCPromiseRequester*);
 
-  void Clear();
+  void RequestCompleted();
 
-  Member<RTCPeerConnection> requester_;
+  bool is_pending_;
   Member<ScriptPromiseResolver> resolver_;
+  Member<RTCPromiseRequester> requester_;
 };
 
 }  // namespace blink
