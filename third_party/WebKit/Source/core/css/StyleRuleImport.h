@@ -80,6 +80,10 @@ class StyleRuleImport : public StyleRuleBase {
       owner_rule_->SetCSSStyleSheet(href, base_url, referrer_policy, charset,
                                     sheet);
     }
+
+    void TakeResource(Resource* resource) { SetResource(resource); }
+    void Dispose() { ClearResource(); }
+
     String DebugName() const override { return "ImportedStyleSheetClient"; }
 
     void Trace(blink::Visitor* visitor) {
@@ -107,7 +111,6 @@ class StyleRuleImport : public StyleRuleBase {
   String str_href_;
   scoped_refptr<MediaQuerySet> media_queries_;
   Member<StyleSheetContents> style_sheet_;
-  Member<CSSStyleSheetResource> resource_;
   bool loading_;
 };
 
