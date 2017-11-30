@@ -14,6 +14,7 @@
 #include "platform/heap/HeapAllocator.h"
 #include "platform/text/TextDirection.h"
 #include "platform/text/WritingMode.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
@@ -39,6 +40,13 @@ class CSSProperty {
   // property classes yet.
   CSSPropertyID PropertyID() const { return id_; }
   bool IDEquals(CSSPropertyID id) const { return id_ == id; }
+  const char* GetPropertyName() const { return getPropertyName(id_); }
+  const WTF::AtomicString& GetPropertyNameAtomicString() const { return getPropertyNameAtomicString(id_); }
+  WTF::String GetPropertyNameString() const {
+    // We share the StringImpl with the AtomicStrings.
+    return GetPropertyNameAtomicString().GetString();
+  }
+  WTF::String GetJSPropertyName() const;
 
   virtual bool IsInterpolable() const { return false; }
   virtual bool IsInherited() const { return false; }
