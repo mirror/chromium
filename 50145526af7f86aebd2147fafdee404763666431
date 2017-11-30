@@ -22,6 +22,30 @@
       "revId": "50145526af7f86aebd2147fafdee404763666431",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d82a3ffa_b9c6999b",
+        "filename": "chrome/browser/cryptauth/chrome_cryptauth_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-11-30T01:23:46Z",
+      "side": 1,
+      "message": "Is this really a plausible edge case to consider? Basically, this would only apply to users already logged in when they get a new policy. Simply logging out and logging in would refresh this state. IMO, adding an observer adds complexity for not too much gain. Being out of sync until the user logs out isn\u0027t a big deal since it should happen so rarely.",
+      "parentUuid": "783d109a_ffbfaafa",
+      "range": {
+        "startLine": 335,
+        "startChar": 29,
+        "endLine": 335,
+        "endChar": 56
+      },
+      "revId": "50145526af7f86aebd2147fafdee404763666431",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
