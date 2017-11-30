@@ -27,6 +27,7 @@ const char kSnippetDatabaseFolder[] = "snippets";
 const char kImageDatabaseFolder[] = "images";
 
 const size_t kDatabaseWriteBufferSizeBytes = 512 << 10;
+const size_t kDatabaseWriteBufferSizeBytesForLowEndDevice = 128 << 10;
 }  // namespace
 
 namespace ntp_snippets {
@@ -58,7 +59,11 @@ RemoteSuggestionsDatabase::RemoteSuggestionsDatabase(
       weak_ptr_factory_(this) {
   base::FilePath snippet_dir = database_dir.AppendASCII(kSnippetDatabaseFolder);
   leveldb_env::Options options = leveldb_proto::CreateSimpleOptions();
-  options.write_buffer_size = kDatabaseWriteBufferSizeBytes;
+  if (base::SysInfo::IsLowEndDevice()) {
+    options.write_buffer_size = kDatabaseWriteBufferSizeBytesForLowEndDevice;
+  } else {
+    options.write_buffer_size = kDatabaseWriteBufferSizeBytes;
+  }
   database_->Init(kDatabaseUMAClientName, snippet_dir, options,
                   base::Bind(&RemoteSuggestionsDatabase::OnDatabaseInited,
                              weak_ptr_factory_.GetWeakPtr()));
@@ -343,6 +348,8 @@ void RemoteSuggestionsDatabase::DeleteUnreferencedImages(
       keys_to_remove->emplace_back(key);
     }
   }
+  if (keys_to_remove->empty())
+    return;
   DeleteImages(std::move(keys_to_remove));
 }
 
