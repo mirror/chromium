@@ -11,11 +11,13 @@
 #include "base/memory/singleton.h"
 #include "build/build_config.h"
 #include "chrome/common/chrome_features.h"
+#include "content/public/common/service_manager_connection.h"
 #include "device/vr/features/features.h"
 #include "device/vr/vr_device_provider.h"
 
 #if defined(OS_ANDROID)
 #include "device/vr/android/gvr/gvr_device_provider.h"
+#include "device/vr/orientation/orientation_device_provider.h"
 #endif
 
 #if BUILDFLAG(ENABLE_OPENVR)
@@ -26,14 +28,23 @@ namespace vr {
 
 namespace {
 VRDeviceManager* g_vr_device_manager = nullptr;
-}
+}  // namespace
 
 VRDeviceManager* VRDeviceManager::GetInstance() {
   if (!g_vr_device_manager) {
     // Register VRDeviceProviders for the current platform
     ProviderList providers;
+
 #if defined(OS_ANDROID)
     providers.emplace_back(std::make_unique<device::GvrDeviceProvider>());
+
+    content::ServiceManagerConnection* connection =
+        content::ServiceManagerConnection::GetForProcess();
+    if (connection) {
+      providers.emplace_back(
+          std::make_unique<device::OrientationDeviceProvider>(
+              connection->GetConnector()));
+    }
 #endif
 
 #if BUILDFLAG(ENABLE_OPENVR)
@@ -51,6 +62,7 @@ bool VRDeviceManager::HasInstance() {
 
 VRDeviceManager::VRDeviceManager(ProviderList providers)
     : providers_(std::move(providers)) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   CHECK(!g_vr_device_manager);
   g_vr_device_manager = this;
 }
@@ -68,8 +80,10 @@ void VRDeviceManager::AddService(VRServiceImpl* service) {
   // when they are created.
   InitializeProviders();
 
-  for (const DeviceMap::value_type& map_entry : devices_)
-    service->ConnectDevice(map_entry.second);
+  for (const DeviceMap::value_type& map_entry : devices_) {
+    if (!map_entry.second->IsFallbackDevice() || devices_.size() == 1)
+      service->ConnectDevice(map_entry.second);
+  }
 
   if (AreAllProvidersInitialized())
     service->InitializationComplete();
