@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a790a94b_d3eca31e",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 18
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-11-30T00:35:20Z",
+      "side": 1,
+      "message": "I understand we are gating Windows for now.\nThat is completely fine.\nMost of my comments here are about that and can be ignored. It is just food for thought.\n\nI believe Windows is now available on ARM. So it is possible for us to support this, presumably. But I don\u0027t think we build Chrome for Windows/ARM. So it\u0027s pretty safe to ignore for now.",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 3
+      },
+      "revId": "46b0cd54825ba2a05183e9a882f67ecf60e94786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f94803e4_d4ac8483",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 18
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-11-30T00:35:20Z",
+      "side": 1,
+      "message": "We don\u0027t add this flag if compiling with GCC?\nI seem to recall our typical builds are with Clang but the official, release builds are with GCC.\nThat might have changed since I saw that a long time ago.",
+      "range": {
+        "startLine": 127,
+        "startChar": 19,
+        "endLine": 127,
+        "endChar": 27
+      },
+      "revId": "46b0cd54825ba2a05183e9a882f67ecf60e94786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "308f5113_e2995e81",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 18
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-11-30T00:35:20Z",
+      "side": 1,
+      "message": "I think this works in GCC and Clang. But IIRC it doesn\u0027t work in VC. I am unsure about other compilers like ICC.\n\nAnyway, maybe something like:\n#if defined __clang__ || (defined __GNUC__ \u0026\u0026 __GNUC__ \u003e\u003d 4)\n#define ZLIB_INTERNAL __attribute__((visibility (\"hidden\")))\n#else\n#define ZLIB_INTERNAL\n#endif\n\nThis would be a sort of opt-in system, that way.\n(I think VC\u0027s default visibility is hidden anyway)\n\n\nActually, in retrospect, let\u0027s just worry about Windows later. I think Windows/ARM usage is low.",
+      "revId": "46b0cd54825ba2a05183e9a882f67ecf60e94786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
