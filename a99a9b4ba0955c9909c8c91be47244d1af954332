@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d69e1c4_484dbbd4",
+        "filename": "content/common/appcache_messages.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-11-30T19:19:16Z",
+      "side": 1,
+      "message": "These are mojo enums now, right? Are you sure we still need the IPC_ENUM_TRAITS_MAX_VALUE?\n\nI thought the generated mojo code would declare the IPC traits. If you just delete these lines, does it just compile?",
+      "range": {
+        "startLine": 23,
+        "startChar": 35,
+        "endLine": 23,
+        "endChar": 54
+      },
+      "revId": "a99a9b4ba0955c9909c8c91be47244d1af954332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
