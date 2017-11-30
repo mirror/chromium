@@ -47,3 +47,22 @@ source_set("x11") {
 
   public_configs = [ "//third_party/khronos:khronos_headers" ]
 }
+
+source_set("x11_ozone_unittests") {
+  testonly = true
+  sources = [
+    "x11_window_ozone_unittest.cc",
+  ]
+
+  deps = [
+    ":x11",
+    "//base/test:test_support",
+    "//testing/gmock",
+    "//testing/gtest",
+    "//ui/events:test_support",
+    "//ui/events/devices/x11:x11",
+    "//ui/events/keycodes:x11",
+    "//ui/ozone:platform",
+    "//ui/platform_window/x11:x11",
+  ]
+}
