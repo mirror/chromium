@@ -499,6 +499,15 @@ function setUpPreconnectedDevice({
     }));
 }
 
+// This sets up a FakePeripheral corresponding to the Health Thermometer device.
+function setUpHealthThermometerDevice() {
+  return setUpPreconnectedDevice({
+    address: '09:09:09:09:09:09',
+    name: 'Health Thermometer',
+    knownServiceUUIDs: ['generic_access', 'health_thermometer'],
+  });
+}
+
 // Returns an array containing two FakePeripherals corresponding
 // to the simulated devices.
 function setUpHealthThermometerAndHeartRateDevices() {
@@ -514,6 +523,16 @@ function setUpHealthThermometerAndHeartRateDevices() {
        name: 'Heart Rate',
        knownServiceUUIDs: ['generic_access', 'heart_rate'],
      })]));
+}
+
+// Prepare a health thermometer peripheral device for discovery.
+function setUpHealthThermometerDeviceForDiscovery() {
+  return setUpHealthThermometerDevice()
+    .then(fake_peripheral => {
+      fake_peripheral.setNextGATTConnectionResponse({code: HCI_SUCCESS});
+      fake_peripheral.setNextGATTDiscoveryResponse({code: HCI_SUCCESS});
+      return populateHealthThermometerFakes(fake_peripheral);
+    });
 }
 
 // Returns an object containing a BluetoothDevice discovered using |options|,
@@ -678,39 +697,32 @@ function getConnectedHealthThermometerDevice(options) {
 // connected to it and discovered its services.
 function getHealthThermometerDeviceWithServicesDiscovered(options) {
   let device, fake_peripheral, fakes;
-  return setUpPreconnectedDevice({
-    address: '09:09:09:09:09:09',
-    name: 'Health Thermometer',
-    knownServiceUUIDs: ['generic_access', 'health_thermometer'],
-  })
-    .then(_ => fake_peripheral = _)
-    .then(() => fake_peripheral.setNextGATTConnectionResponse({
-      code: HCI_SUCCESS,
+  let iframe = document.createElement('iframe');
+  return setUpHealthThermometerDeviceForDiscovery()
+    .then(() => new Promise(resolve => {
+      iframe.src = '../../../resources/bluetooth/health-thermometer-iframe.html';
+      document.body.appendChild(iframe);
+      iframe.addEventListener('load', resolve);
     }))
-    .then(() => fake_peripheral.setNextGATTDiscoveryResponse({
-      code: HCI_SUCCESS,
-    }))
-    .then(() => populateHealthThermometerFakes(fake_peripheral))
-    .then(_ => fakes = _)
     .then(() => new Promise((resolve, reject) => {
-      let iframe = document.createElement('iframe');
+      callWithTrustedClick(() => {
+        iframe.contentWindow.postMessage({
+          type: 'DiscoverServices',
+          options: options
+        }, '*');
+      });
+
       function messageHandler(messageEvent) {
-        if (messageEvent.data === 'Ready') {
-          callWithTrustedClick(() => iframe.contentWindow.postMessage({
-            type: 'DiscoverServices',
-            options: options
-          }, '*'));
-        } else if (messageEvent.data === 'DiscoveryComplete') {
-          window.removeEventListener('message', messageHandler);
-          resolve();
-        } else {
-          reject(new Error(`Unexpected message: {messageEvent.data}`));
+        switch (messageEvent.data) {
+          case 'DiscoveryComplete':
+            window.removeEventListener('message', messageHandler);
+            resolve();
+            break;
+          default:
+            reject(new Error(`Unexpected message: {messageEvent.data}`));
         }
       }
       window.addEventListener('message', messageHandler);
-      iframe.src =
-          '../../../resources/bluetooth/health-thermometer-iframe.html';
-      document.body.appendChild(iframe);
     }))
     .then(() => requestDeviceWithTrustedClick(options))
     .then(_ => device = _)
@@ -806,11 +818,7 @@ function getHIDDevice(options) {
 // discovered.
 function getDiscoveredHealthThermometerDevice(
   options = {filters: [{services: ['health_thermometer']}]}) {
-  return setUpPreconnectedDevice({
-    address: '09:09:09:09:09:09',
-    name: 'Health Thermometer',
-    knownServiceUUIDs: ['generic_access', 'health_thermometer'],
-  })
+  return setUpHealthThermometerDevice()
   .then(fake_peripheral => {
     return requestDeviceWithTrustedClick(options)
       .then(device => ({
