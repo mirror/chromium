@@ -22,6 +22,30 @@
       "revId": "6aa985259ddff2588542aad714016fe1981c9d11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32e03091_9d23719c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 8435,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-30T22:14:07Z",
+      "side": 1,
+      "message": "In my testing on captive portals, timeouts can take a full 60 seconds. (This happens on xfinitywifi network.) If we only logged on failed requests due to timeout, we would miss many users who don\u0027t sit and wait for the timeout interstitial to display, so I believe we do need to do it earlier.\n\nHowever, you did make me think of a use case where the request completes quickly, but we are not checking for the timeout error code. I will add this case to cover all potential timeout scenarios. I updated the description to account for this.",
+      "parentUuid": "15a89150_d62b1022",
+      "range": {
+        "startLine": 8435,
+        "startChar": 18,
+        "endLine": 8435,
+        "endChar": 30
+      },
+      "revId": "6aa985259ddff2588542aad714016fe1981c9d11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
