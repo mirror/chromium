@@ -3707,6 +3707,23 @@ void ChromeContentBrowserClient::
 #endif
 }
 
+bool ChromeContentBrowserClient::AllowRenderingMhtmlOverHttp(
+    content::NavigationUIData* navigation_ui_data) const {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+#if BUILDFLAG(ENABLE_OFFLINE_PAGES)
+  // It is OK to load the saved offline copy, in MHTML format.
+  ChromeNavigationUIData* chrome_navigation_ui_data =
+      static_cast<ChromeNavigationUIData*>(navigation_ui_data);
+  if (!chrome_navigation_ui_data)
+    return false;
+  offline_pages::OfflinePageNavigationUIData* offline_page_data =
+      chrome_navigation_ui_data->GetOfflinePageNavigationUIData();
+  return offline_page_data && offline_page_data->is_offline_page();
+#else
+  return false;
+#endif
+}
+
 // Static; handles rewriting Web UI URLs.
 bool ChromeContentBrowserClient::HandleWebUI(
     GURL* url,
