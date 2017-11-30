@@ -33,5 +33,26 @@ Polymer({
       type: Object,
       notify: true,
     },
+
+    /** @private {boolean} */
+    otherOptionsAvailable_: {
+      type: Boolean,
+      computed: 'computeOtherOptionsAvailable_(' +
+          'settings.duplex.available, settings.cssBackground.available, ' +
+          'settings.selectionOnly.available, ' +
+          'settings.headerFooter.available, settings.rasterize.available)',
+    },
+  },
+
+  /**
+   * @return {boolean}
+   * @private
+   */
+  computeOtherOptionsAvailable_: function() {
+    return this.settings.duplex.available ||
+        this.settings.cssBackground.available ||
+        this.settings.selectionOnly.available ||
+        this.settings.headerFooter.available ||
+        this.settings.rasterize.available;
   },
 });
