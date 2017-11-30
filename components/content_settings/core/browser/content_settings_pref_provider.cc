@@ -157,6 +157,10 @@ bool PrefProvider::SetWebsiteSetting(
   if (primary_pattern == ContentSettingsPattern::Wildcard() &&
       secondary_pattern == ContentSettingsPattern::Wildcard() &&
       resource_identifier.empty()) {
+    // Ensure |value| is deleted as this function takes ownership.
+    // TODO(crbug.com/789814): Use appropriate types so this kind of thing isn't
+    // needed.
+    std::unique_ptr<base::Value> value(in_value);
     return false;
   }
 
