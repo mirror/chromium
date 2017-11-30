@@ -210,6 +210,30 @@
       "revId": "b38020abcfa51a7c18c81e5c8d399ecf8f5cf003",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62f79d68_45dce607",
+        "filename": "ui/gl/gl_image_native_pixmap_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-30T22:00:45Z",
+      "side": 1,
+      "message": "Agree that this CL should be kept as minimal as possible. Look forward to your testing the round-trip path.",
+      "parentUuid": "9e951808_bb2b6c9a",
+      "range": {
+        "startLine": 76,
+        "startChar": 32,
+        "endLine": 76,
+        "endChar": 51
+      },
+      "revId": "b38020abcfa51a7c18c81e5c8d399ecf8f5cf003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
