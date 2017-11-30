@@ -20,7 +20,8 @@ class PLATFORM_EXPORT UnacceleratedStaticBitmapImage final
   IntSize Size() const override;
   bool IsPremultiplied() const override;
   scoped_refptr<StaticBitmapImage> MakeAccelerated(
-      WeakPtr<WebGraphicsContext3DProviderWrapper> context_wrapper) override;
+      base::WeakPtr<WebGraphicsContext3DProviderWrapper> context_wrapper)
+      override;
 
   void Draw(PaintCanvas*,
             const PaintFlags&,

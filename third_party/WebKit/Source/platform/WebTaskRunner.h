@@ -7,12 +7,12 @@
 
 #include <memory>
 #include "base/callback.h"
+#include "base/memory/weak_ptr.h"
 #include "base/single_thread_task_runner.h"
 #include "platform/wtf/Compiler.h"
 #include "platform/wtf/Functional.h"
 #include "platform/wtf/RefCounted.h"
 #include "platform/wtf/Time.h"
-#include "platform/wtf/WeakPtr.h"
 #include "public/platform/WebCommon.h"
 #include "public/platform/WebTraceLocation.h"
 
