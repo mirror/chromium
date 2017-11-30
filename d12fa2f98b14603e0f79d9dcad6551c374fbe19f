@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2bb4e2bc_66a88921",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBoxModelObject.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-30T22:57:23Z",
+      "side": 1,
+      "message": "Do you need to move the \"Populates...\" comment down?",
+      "revId": "d12fa2f98b14603e0f79d9dcad6551c374fbe19f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
