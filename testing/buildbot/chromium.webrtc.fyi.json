@@ -24,6 +24,17 @@
       "all"
     ]
   },
+  "Mac Builder (dbg)": {
+    "additional_compile_targets": [
+      "all",
+      "browser_tests",
+      "capture_unittests",
+      "content_browsertests",
+      "content_unittests",
+      "jingle_unittests",
+      "remoting_unittests"
+    ]
+  },
   "Win Builder": {
     "additional_compile_targets": [
       "all"
