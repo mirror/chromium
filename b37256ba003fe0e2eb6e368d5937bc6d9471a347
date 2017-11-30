@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d180deb_abffb81a",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-30T21:01:13Z",
+      "side": 1,
+      "message": "Should this be listed with other AppDiscoveryRequestState in mojom even though ARC side would not set it? Otherwise, it is easy to make mistakes when adding new enum in mojom file.",
+      "revId": "b37256ba003fe0e2eb6e368d5937bc6d9471a347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6702e092_3ad5d67c",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-30T21:01:13Z",
+      "side": 1,
+      "message": "Can this be\n  result.launch_intent_uri-\u003eempty() ?\n\nSame with other base::Optional\u003c\u003e::value() usage.",
+      "range": {
+        "startLine": 60,
+        "startChar": 36,
+        "endLine": 60,
+        "endChar": 76
+      },
+      "revId": "b37256ba003fe0e2eb6e368d5937bc6d9471a347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e46deebc_371aeda0",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-30T21:01:13Z",
+      "side": 1,
+      "message": "Would this ever be true since it is checked on L142 and we would \"continue\" there ?",
+      "range": {
+        "startLine": 145,
+        "startChar": 8,
+        "endLine": 145,
+        "endChar": 32
+      },
+      "revId": "b37256ba003fe0e2eb6e368d5937bc6d9471a347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
