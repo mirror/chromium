@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "71e94efa_8f5c576f",
+        "filename": "extensions/browser/updater/extension_downloader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-30T00:34:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0978ae3e_76fcde36",
+      "range": {
+        "startLine": 611,
+        "startChar": 4,
+        "endLine": 611,
+        "endChar": 39
+      },
+      "revId": "780288e861255cb994aaf106ce05efb1dfcd13ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fbbe10a_68ee2356",
         "filename": "extensions/browser/updater/safe_manifest_parser.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "780288e861255cb994aaf106ce05efb1dfcd13ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12a91c84_ebee94a9",
+        "filename": "extensions/browser/updater/safe_manifest_parser.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-30T00:34:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fbbe10a_68ee2356",
+      "range": {
+        "startLine": 51,
+        "startChar": 14,
+        "endLine": 51,
+        "endChar": 29
+      },
+      "revId": "780288e861255cb994aaf106ce05efb1dfcd13ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
