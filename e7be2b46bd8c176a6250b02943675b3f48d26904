@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9962239a_8d00f2ca",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-11-30T00:57:15Z",
+      "side": 1,
+      "message": "Not really sure if we need to take into account the \"transparent sides\" since we are not using a background image anymore (Not really sure what it mean on the original code) Did you check this?",
+      "range": {
+        "startLine": 143,
+        "startChar": 29,
+        "endLine": 143,
+        "endChar": 39
+      },
+      "revId": "e7be2b46bd8c176a6250b02943675b3f48d26904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
