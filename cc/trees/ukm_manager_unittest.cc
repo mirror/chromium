@@ -10,9 +10,11 @@
 namespace cc {
 namespace {
 const char kUserInteraction[] = "Compositor.UserInteraction";
+const char kRendering[] = "Compositor.Rendering";
 const char kCheckerboardArea[] = "CheckerboardedContentArea";
 const char kCheckerboardAreaRatio[] = "CheckerboardedContentAreaRatio";
 const char kMissingTiles[] = "NumMissingTiles";
+const char kCheckerboardedImagesCount[] = "CheckerboardedImagesCount";
 
 class UkmRecorderForTest : public ukm::TestUkmRecorder {
  public:
@@ -24,11 +26,20 @@ class UkmRecorderForTest : public ukm::TestUkmRecorder {
                   expected_final_missing_tiles_);
     ExpectMetrics(*source_, kUserInteraction, kCheckerboardAreaRatio,
                   expected_final_checkerboard_ratio_);
+    ExpectMetrics(*source_, kUserInteraction, kCheckerboardedImagesCount,
+                  expected_final_checkerboarded_images_);
+
+    ExpectMetrics(*source_, kRendering, kCheckerboardedImagesCount,
+                  expected_final_total_checkerboarded_images_);
   }
 
   std::vector<int64_t> expected_final_checkerboard_;
   std::vector<int64_t> expected_final_missing_tiles_;
   std::vector<int64_t> expected_final_checkerboard_ratio_;
+  std::vector<int64_t> expected_final_checkerboarded_images_;
+
+  std::vector<int64_t> expected_final_total_checkerboarded_images_;
+
   ukm::UkmSource* source_ = nullptr;
 };
 
@@ -58,6 +69,7 @@ TEST_F(UkmManagerTest, Basic) {
   manager_.SetUserInteractionInProgress(true);
   manager_.AddCheckerboardStatsForFrame(5, 1, 10);
   manager_.AddCheckerboardStatsForFrame(15, 3, 30);
+  manager_.AddCheckerboardedImages(6);
   manager_.SetUserInteractionInProgress(false);
 
   // We should see a single entry for the interaction above.
@@ -68,6 +80,8 @@ TEST_F(UkmManagerTest, Basic) {
   recorder()->ExpectMetric(*ukm_source_, kUserInteraction, kMissingTiles, 2);
   recorder()->ExpectMetric(*ukm_source_, kUserInteraction,
                            kCheckerboardAreaRatio, 50);
+  recorder()->ExpectMetric(*ukm_source_, kUserInteraction,
+                           kCheckerboardedImagesCount, 6);
 
   // Try pushing some stats while no user interaction is happening. No entries
   // should be pushed.
@@ -85,6 +99,8 @@ TEST_F(UkmManagerTest, Basic) {
   recorder()->expected_final_checkerboard_ = {10, 20};
   recorder()->expected_final_missing_tiles_ = {2, 3};
   recorder()->expected_final_checkerboard_ratio_ = {50, 20};
+  recorder()->expected_final_checkerboarded_images_ = {6, 0};
+  recorder()->expected_final_total_checkerboarded_images_ = {6};
   recorder()->source_ = ukm_source_;
 
   UpdateURL(GURL("chrome://test2"));
