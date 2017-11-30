@@ -34,6 +34,24 @@
       "revId": "a51cf6c2a8bbfc16fa0ceff2ece5a602e797c28c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e61f3ac_e6dba612",
+        "filename": "services/ui/ws/platform_display_mirror.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-30T19:41:13Z",
+      "side": 1,
+      "message": "Ash doesn\u0027t actually have a WindowTreeHost for the mirror destination displays; Mus creates a PlatformDisplayMirror and attempts to handle all the mirroring internally. So it\u0027s unclear what Ash would do with the AcceleratedWidget. Perhaps we should chat about this a bit more? Drop me an IM or we can VC when you have a moment, thanks!",
+      "parentUuid": "fbdc65c8_b1ca1a45",
+      "revId": "a51cf6c2a8bbfc16fa0ceff2ece5a602e797c28c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
