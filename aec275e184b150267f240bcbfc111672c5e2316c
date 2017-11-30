@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3dd5be86_692cd1f5",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadSchedulerTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-30T18:51:21Z",
+      "side": 1,
+      "message": "10 /* variable name comment */ or using const variable?\nditto on magic numbers below.",
+      "range": {
+        "startLine": 311,
+        "startChar": 54,
+        "endLine": 311,
+        "endChar": 56
+      },
+      "revId": "aec275e184b150267f240bcbfc111672c5e2316c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
