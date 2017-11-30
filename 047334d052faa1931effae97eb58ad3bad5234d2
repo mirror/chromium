@@ -556,6 +556,30 @@
     },
     {
       "key": {
+        "uuid": "22309195_7207a739",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-30T18:50:49Z",
+      "side": 1,
+      "message": "Also resolving this comment as\n\noverhead Drive + syncing \u003e\u003e overhead AsyncUtil.forEach",
+      "parentUuid": "11ce0871_b1012536",
+      "range": {
+        "startLine": 388,
+        "startChar": 10,
+        "endLine": 388,
+        "endChar": 50
+      },
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c5e3cce_609da349",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
         "patchSetId": 5
@@ -792,6 +816,30 @@
       "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e04e2e92_c3d9a053",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-30T18:50:49Z",
+      "side": 1,
+      "message": "Resolving this discussion :)",
+      "parentUuid": "534656e9_91e70222",
+      "range": {
+        "startLine": 389,
+        "startChar": 14,
+        "endLine": 389,
+        "endChar": 69
+      },
+      "revId": "047334d052faa1931effae97eb58ad3bad5234d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

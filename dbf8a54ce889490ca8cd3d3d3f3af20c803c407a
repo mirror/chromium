@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "38fad842_f96668cf",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-30T18:50:49Z",
+      "side": 1,
+      "message": "So the only error that has been witnessed up to now was due to there not being enough local space, and that error happens instantly.\nAlso, this approach doesn\u0027t treat errors as fatal - there are a couple of things to keep in mind:\n\n1) showing an error message to the user when that later gets resolved on its own can be very confusing\n2) The way the progress bar is supposed to be used is to only set it to error if it was fatal - if a subtask failed that is not fatal, it is supposed to create a new item (as I did), otherwise, all later PROGRESS/COMPLETE updates won\u0027t do anything (see https://cs.chromium.org/chromium/src/ui/file_manager/file_manager/foreground/js/progress_center_item_group.js?l\u003d246\u0026rcl\u003d03d083a82b9174dfe11ef90d000eaad2c7ccdcf6)\n3) Cloud Import usually handles a large amount of files at a time (as opposed to copying files manually). If there are no or few errors, there won\u0027t be any disadvantage to the user, if there are a lot of errors, that will spam the notification bar, thus hiding more important messages - and UX is very unhappy with that happening with Drive sync errors in the case of Cloud import because of the large amount of files and prefers to remove these errors (because sync retries later, just like import retries), but can\u0027t for the time being as there is no infrastructure yet to determine if a sync is being caused by Cloud Import or by some other means. On top of the only witnessed errors relevant to Cloud import happening instantly not causing any lag to the user.\n\nSo to summarize: we have talked this exact situation through with UX and this is the result of these discussions.",
+      "parentUuid": "a751e36e_ce3e2ff0",
+      "revId": "dbf8a54ce889490ca8cd3d3d3f3af20c803c407a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27d1cd74_eb77d5ac",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
         "patchSetId": 15
@@ -33,6 +51,24 @@
       "revId": "dbf8a54ce889490ca8cd3d3d3f3af20c803c407a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eb76b83_e721a093",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-30T18:50:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27d1cd74_eb77d5ac",
+      "revId": "dbf8a54ce889490ca8cd3d3d3f3af20c803c407a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "349804c0_3a85ce43",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-30T18:50:49Z",
+      "side": 1,
+      "message": "In that case I\u0027ll resolve this comment!",
+      "parentUuid": "6ad37ab3_b4bd9c8b",
+      "revId": "dbf8a54ce889490ca8cd3d3d3f3af20c803c407a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ebe166e_250f6b0e",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
         "patchSetId": 15
@@ -85,6 +139,24 @@
       "revId": "dbf8a54ce889490ca8cd3d3d3f3af20c803c407a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1880e1a_e2d6e32b",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-30T18:50:49Z",
+      "side": 1,
+      "message": "Sorry for the whole lot of going back and forth on this topic (because of the time constraint) - I had answered it when resolving the comment containing your first question, but I don\u0027t remember which PS it was in.\nBasically, it creates a copy - without doing that, both variables will hold a reference to the same object. So by altering one of them, the other will also be altered, creating hard-to-detect side effects.",
+      "parentUuid": "4ebe166e_250f6b0e",
+      "revId": "dbf8a54ce889490ca8cd3d3d3f3af20c803c407a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "dfe96db8_72a2c48a",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-30T18:50:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fa6ad1a_6f36687e",
+      "revId": "dbf8a54ce889490ca8cd3d3d3f3af20c803c407a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5797b0f_8d3c41a1",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
         "patchSetId": 15
@@ -119,6 +209,24 @@
       "revId": "dbf8a54ce889490ca8cd3d3d3f3af20c803c407a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e701191_ae7eeea4",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-30T18:50:49Z",
+      "side": 1,
+      "message": "DriveSyncHandler.COMPLETED_EVENT means that Drive is done syncing the current batch of changes, marking these files as eligible for cache eviction - the actually freeing up space part happens right before a snapshot is created.",
+      "parentUuid": "a5797b0f_8d3c41a1",
+      "revId": "dbf8a54ce889490ca8cd3d3d3f3af20c803c407a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
