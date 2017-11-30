@@ -16,6 +16,24 @@
       "revId": "5325a13a5e28b34b3641891f26c2d55933fd854b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe3699f3_cc8afa34",
+        "filename": "chrome/app/media_router_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1254238
+      },
+      "writtenOn": "2017-11-30T23:00:34Z",
+      "side": 1,
+      "message": "Fullscreen does force remoting unless (1) EME (2) 60fps (3) User has turned off the option using this drop-down.\n\nAdding \u0027when possible\u0027 is more accurate but makes the string too long for the dialog.\n\n+1 to removing \u0027only\u0027 in part to make the strings shorter",
+      "parentUuid": "45619f02_2d5a43f8",
+      "revId": "5325a13a5e28b34b3641891f26c2d55933fd854b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
