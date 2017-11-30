@@ -19,6 +19,7 @@
 #include "build/build_config.h"
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/browser/banners/app_banner_manager.h"
+#include "chrome/browser/banners/app_banner_manager_desktop.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/defaults.h"
 #include "chrome/browser/extensions/extension_util.h"
@@ -716,7 +717,15 @@ void AppMenuModel::Build() {
   AddItemWithStringId(IDC_FIND, IDS_FIND);
   if (extensions::util::IsNewBookmarkAppsEnabled() &&
       banners::AppBannerManager::IsExperimentalAppBannersEnabled()) {
-    AddItemWithStringId(IDC_CREATE_HOSTED_APP, IDS_ADD_TO_OS_LAUNCH_SURFACE);
+    const banners::AppBannerManager::Installable installable =
+        banners::AppBannerManager::GetInstallable(
+            browser_->tab_strip_model()->GetActiveWebContents());
+    if (installable == banners::AppBannerManager::Installable::YES) {
+      AddItemWithStringId(IDC_CREATE_HOSTED_APP,
+                          IDS_INSTALL_TO_OS_LAUNCH_SURFACE);
+    } else {
+      AddItemWithStringId(IDC_CREATE_HOSTED_APP, IDS_ADD_TO_OS_LAUNCH_SURFACE);
+    }
   }
 
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
