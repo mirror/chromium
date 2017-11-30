@@ -224,6 +224,8 @@ class Scope {
   // scopes.
   void GetCurrentScopeValues(KeyValueMap* output) const;
 
+  std::string ToString() const;
+
   // Copies this scope's values into the destination. Values from the
   // containing scope(s) (normally shadowed into the current one) will not be
   // copied, neither will the reference to the containing scope (this is why

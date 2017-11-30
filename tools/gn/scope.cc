@@ -272,6 +272,22 @@ void Scope::GetCurrentScopeValues(KeyValueMap* output) const {
     (*output)[pair.first] = pair.second.value;
 }
 
+std::string Scope::ToString() const {
+  Scope::KeyValueMap scope_values;
+  this->GetCurrentScopeValues(&scope_values);
+  if (scope_values.empty())
+    return std::string("{ }");
+
+  std::string result = "{\n";
+  for (const auto& pair : scope_values) {
+    result += "  " + pair.first.as_string() + " = " +
+              pair.second.ToString(true) + "\n";
+  }
+  result += "}";
+
+  return result;
+}
+
 bool Scope::NonRecursiveMergeTo(Scope* dest,
                                 const MergeOptions& options,
                                 const ParseNode* node_for_err,
