@@ -106,7 +106,8 @@ WebContentsViewAndroid::WebContentsViewAndroid(
       content_view_core_(NULL),
       delegate_(delegate),
       view_(this, ui::ViewAndroid::LayoutType::NORMAL),
-      synchronous_compositor_client_(nullptr) {}
+      synchronous_compositor_client_(nullptr),
+      gesture_listener_manager_(nullptr) {}
 
 WebContentsViewAndroid::~WebContentsViewAndroid() {
   if (view_.GetLayer())
@@ -501,6 +502,14 @@ int WebContentsViewAndroid::GetBottomControlsHeight() const {
 bool WebContentsViewAndroid::DoBrowserControlsShrinkBlinkSize() const {
   auto* delegate = web_contents_->GetDelegate();
   return delegate ? delegate->DoBrowserControlsShrinkBlinkSize() : false;
+}
+
+void WebContentsViewAndroid::GestureEventAck(
+    const blink::WebGestureEvent& event,
+    InputEventAckState ack_result) {
+  if (!gesture_listener_manager_)
+    return;
+  gesture_listener_manager_->GestureEventAck(event, ack_result);
 }
 
 bool WebContentsViewAndroid::OnTouchEvent(const ui::MotionEventAndroid& event) {
