@@ -26,14 +26,24 @@ const char kOutstandingLimitForBackgroundSubFrameName[] = "bg_sub_limit";
 // Field trial default parameters.
 constexpr size_t kOutstandingLimitForBackgroundFrameDefault = 16u;
 
-uint32_t GetFieldTrialUint32Param(const char* name, uint32_t default_param) {
+constexpr char kRendererSideResourceScheduler[] =
+    "RendererSideResourceScheduler";
+constexpr size_t kLimitForRendererSideResourceScheduler = 10;
+constexpr size_t kInitialLimitForRendererSideResourceScheduler = 1;
+
+constexpr char kLimitForRendererSideResourceSchedulerName[] = "limit";
+constexpr char kInitialLimitForRendererSideResourceSchedulerName[] =
+    "initial_limit";
+
+uint32_t GetFieldTrialUint32Param(const char* trial_name,
+                                  const char* parameter_name,
+                                  uint32_t default_param) {
   std::map<std::string, std::string> trial_params;
-  bool result =
-      base::GetFieldTrialParams(kResourceLoadSchedulerTrial, &trial_params);
+  bool result = base::GetFieldTrialParams(trial_name, &trial_params);
   if (!result)
     return default_param;
 
-  const auto& found = trial_params.find(name);
+  const auto& found = trial_params.find(parameter_name);
   if (found == trial_params.end())
     return default_param;
 
@@ -47,16 +57,17 @@ uint32_t GetFieldTrialUint32Param(const char* name, uint32_t default_param) {
 uint32_t GetOutstandingThrottledLimit(FetchContext* context) {
   DCHECK(context);
 
-  uint32_t main_frame_limit =
-      GetFieldTrialUint32Param(kOutstandingLimitForBackgroundMainFrameName,
-                               kOutstandingLimitForBackgroundFrameDefault);
+  uint32_t main_frame_limit = GetFieldTrialUint32Param(
+      kResourceLoadSchedulerTrial, kOutstandingLimitForBackgroundMainFrameName,
+      kOutstandingLimitForBackgroundFrameDefault);
   if (context->IsMainFrame())
     return main_frame_limit;
 
   // We do not have a fixed default limit for sub-frames, but use the limit for
   // the main frame so that it works as how previous versions that haven't
   // consider sub-frames' specific limit work.
-  return GetFieldTrialUint32Param(kOutstandingLimitForBackgroundSubFrameName,
+  return GetFieldTrialUint32Param(kResourceLoadSchedulerTrial,
+                                  kOutstandingLimitForBackgroundSubFrameName,
                                   main_frame_limit);
 }
 
@@ -68,16 +79,28 @@ constexpr ResourceLoadScheduler::ClientId
 ResourceLoadScheduler::ResourceLoadScheduler(FetchContext* context)
     : outstanding_throttled_limit_(GetOutstandingThrottledLimit(context)),
       context_(context) {
-  if (!RuntimeEnabledFeatures::ResourceLoadSchedulerEnabled())
+  if (!RuntimeEnabledFeatures::ResourceLoadSchedulerEnabled() &&
+      !Platform::Current()->IsRendererSideResourceSchedulerEnabled()) {
     return;
+  }
 
   auto* scheduler = context->GetFrameScheduler();
   if (!scheduler)
     return;
 
-  is_in_initial_mode_ =
-      Platform::Current()->IsRendererSideResourceSchedulerEnabled() &&
-      context->ShouldTightenResourceLoadThrottlingInitially();
+  if (Platform::Current()->IsRendererSideResourceSchedulerEnabled()) {
+    is_in_initial_mode_ =
+        context->ShouldTightenResourceLoadThrottlingInitially();
+    outstanding_limit_ =
+        GetFieldTrialUint32Param(kRendererSideResourceScheduler,
+                                 kLimitForRendererSideResourceSchedulerName,
+                                 kLimitForRendererSideResourceScheduler);
+    outstanding_limit_for_initial_mode_ = GetFieldTrialUint32Param(
+        kRendererSideResourceScheduler,
+        kInitialLimitForRendererSideResourceSchedulerName,
+        kInitialLimitForRendererSideResourceScheduler);
+  }
+
   is_enabled_ = true;
   scheduler->AddThrottlingObserver(WebFrameScheduler::ObserverType::kLoader,
                                    this);

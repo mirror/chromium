@@ -24,6 +24,7 @@
 #include "content/common/resource_messages.h"
 #include "content/public/browser/resource_request_info.h"
 #include "content/public/browser/resource_throttle.h"
+#include "content/public/common/content_features.h"
 #include "net/base/host_port_pair.h"
 #include "net/base/load_flags.h"
 #include "net/base/request_priority.h"
@@ -423,7 +424,10 @@ class ResourceScheduler::Client {
             resource_scheduler->throttle_delayable_.GetMaxDelayableRequests(
                 network_quality_estimator)),
         resource_scheduler_(resource_scheduler),
-        weak_ptr_factory_(this) {}
+        weak_ptr_factory_(this) {
+    if (base::FeatureList::IsEnabled(features::kRendererSideResourceScheduler))
+      has_html_body_ = true;
+  }
 
   ~Client() {}
 
@@ -488,6 +492,9 @@ class ResourceScheduler::Client {
 
   void OnNavigate() {
     has_html_body_ = false;
+    if (base::FeatureList::IsEnabled(features::kRendererSideResourceScheduler))
+      has_html_body_ = true;
+
     is_loaded_ = false;
     max_delayable_requests_ =
         resource_scheduler_->throttle_delayable_.GetMaxDelayableRequests(
