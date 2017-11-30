@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b99a66c7_c150b4ff",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1310,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-30T13:11:45Z",
+      "side": 1,
+      "message": "optional nit: I\u0027d write this as\nif (!to_delete.empty()) {\n  ...DeleteImages(..)...\n}\nThen you could also keep the previous order.",
+      "range": {
+        "startLine": 1310,
+        "startChar": 64,
+        "endLine": 1310,
+        "endChar": 0
+      },
+      "revId": "f25456fdc459d773896bc338182e6170c7ed53b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
