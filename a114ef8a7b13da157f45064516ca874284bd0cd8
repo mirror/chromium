@@ -16,6 +16,24 @@
       "revId": "a114ef8a7b13da157f45064516ca874284bd0cd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f1999ff_c22cdea5",
+        "filename": "third_party/robolectric/README.chromium",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-30T22:11:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0da4749_5d73c81f",
+      "revId": "a114ef8a7b13da157f45064516ca874284bd0cd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
