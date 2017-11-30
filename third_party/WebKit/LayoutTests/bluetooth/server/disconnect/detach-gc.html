@@ -5,31 +5,22 @@
 <script src="../../../resources/testdriver-vendor.js"></script>
 <script src="../../../resources/bluetooth/bluetooth-helpers.js"></script>
 <body>
-  <script>
-  "use strict";
-  async_test(test => {
-    window.onmessage = messageEvent => test.step(() => {
-      if (messageEvent.data === 'Ready') {
-        let iframe = document.querySelector('iframe');
-        callWithTrustedClick(() => {
-          iframe.contentWindow.postMessage('RequestAndConnect', '*');
-        });
-      } else if (messageEvent.data === 'Connected') {
-        // Detach
-        let iframe = document.querySelector('iframe');
-        iframe.remove();
-        // GC
-        runGarbageCollection().then(() => test.done());
-      } else {
-        assert_unreached('iframe sent invalid data: ' + messageEvent.data);
-      }
-    });
-    setBluetoothFakeAdapter('HeartRateAdapter')
-      .then(() => {
-        let iframe = document.createElement('iframe');
-        iframe.src = '../../../resources/bluetooth/heart-rate-iframe.html';
-        document.body.appendChild(iframe);
-      });
-  }, 'Detach frame then garbage collect. We shouldn\'t crash.');
-  </script>
+<script>
+'use strict';
+const test_desc = 'Detach frame then garbage collect. We shouldn\'t crash.';
+
+bluetooth_test(() => setUpHealthThermometerDeviceForDiscovery()
+  .then(() => createIframe())
+  // Connect device, detach the iframe, and run garbage collection.
+  .then(iframe => new Promise(resolve => {
+    let options = {filters: [{services: ['health_thermometer']}]};
+    messageIframe(iframe, 'RequestAndConnect', options);
+
+    window.onmessage = messageEvent => {
+      assert_equals(messageEvent.data, 'Connected');
+      iframe.remove();
+      runGarbageCollection().then(resolve);
+    }
+})), test_desc)
+</script>
 </body>
