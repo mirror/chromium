@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a26e353_6ae64cfc",
+        "filename": "net/cert/x509_util_nss.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-30T18:59:57Z",
+      "side": 1,
+      "message": "Can you structure the error message a bit differently to match other callsites:\n\n   CERT_NewTempCertificate failed: XXX\n\nOr alternately:\n\n   CreateCERTCertificateFromBytes failed: XXX",
+      "revId": "8da3a156049858cb21a4498ed215bdcf3d464e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a1d16f8_f7610dc2",
+        "filename": "net/cert/x509_util_nss.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-30T18:59:57Z",
+      "side": 1,
+      "message": "According to https://chromium-cpp.appspot.com/ we haven\u0027t approved use of std::to_string yet in Chrome\u0027s code (although seems to have made its way into the code base regardless...).\n\nCan you use base::NumberToString() instead?",
+      "range": {
+        "startLine": 173,
+        "startChar": 45,
+        "endLine": 173,
+        "endChar": 59
+      },
+      "revId": "8da3a156049858cb21a4498ed215bdcf3d464e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
