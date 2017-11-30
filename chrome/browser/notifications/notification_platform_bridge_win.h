@@ -13,6 +13,7 @@
 #include "base/sequenced_task_runner.h"
 #include "chrome/browser/notifications/notification_platform_bridge.h"
 
+class ActivatorRegister;
 class NotificationPlatformBridgeWinImpl;
 class NotificationTemplateBuilder;
 
@@ -22,6 +23,8 @@ class NotificationPlatformBridgeWin : public NotificationPlatformBridge {
  public:
   NotificationPlatformBridgeWin();
   ~NotificationPlatformBridgeWin() override;
+
+  static void PrepareForNativeNotification();
 
   // NotificationPlatformBridge implementation.
   void Display(NotificationCommon::Type notification_type,
@@ -71,6 +74,8 @@ class NotificationPlatformBridgeWin : public NotificationPlatformBridge {
   scoped_refptr<NotificationPlatformBridgeWinImpl> impl_;
 
   scoped_refptr<base::SequencedTaskRunner> task_runner_;
+
+  static ActivatorRegister* activator_register_;
 
   DISALLOW_COPY_AND_ASSIGN(NotificationPlatformBridgeWin);
 };
