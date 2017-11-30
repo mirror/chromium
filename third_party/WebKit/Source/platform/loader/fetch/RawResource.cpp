@@ -183,20 +183,8 @@ void RawResource::WillNotFollowRedirect() {
     c->RedirectBlocked();
 }
 
-void RawResource::ResponseReceived(
-    const ResourceResponse& response,
+void RawResource::NotifyResponseReceived(
     std::unique_ptr<WebDataConsumerHandle> handle) {
-  if (response.WasFallbackRequiredByServiceWorker()) {
-    // The ServiceWorker asked us to re-fetch the request. This resource must
-    // not be reused.
-    // Note: This logic is needed here because DocumentThreadableLoader handles
-    // CORS independently from ResourceLoader. Fix it.
-    if (IsMainThread())
-      GetMemoryCache()->Remove(this);
-  }
-
-  Resource::ResponseReceived(response, nullptr);
-
   DCHECK(!handle || !data_consumer_handle_);
   if (!handle && Clients().size() > 0)
     handle = std::move(data_consumer_handle_);

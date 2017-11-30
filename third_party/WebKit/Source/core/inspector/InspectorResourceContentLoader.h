@@ -39,10 +39,10 @@ class CORE_EXPORT InspectorResourceContentLoader final
   Resource* ResourceForURL(const KURL&);
 
  private:
-  class ResourceClient;
+  class Client;
 
   explicit InspectorResourceContentLoader(LocalFrame*);
-  void ResourceFinished(ResourceClient*);
+  void ResourceFinished(Client*);
   void CheckDone();
   void Start();
   void Stop();
@@ -53,11 +53,11 @@ class CORE_EXPORT InspectorResourceContentLoader final
   bool all_requests_started_;
   bool started_;
   Member<LocalFrame> inspected_frame_;
-  HeapHashSet<Member<ResourceClient>> pending_resource_clients_;
+  HeapHashSet<Member<Client>> pending_resource_clients_;
   HeapVector<Member<Resource>> resources_;
   int last_client_id_;
 
-  friend class ResourceClient;
+  friend class Client;
 };
 
 }  // namespace blink

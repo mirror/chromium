@@ -98,8 +98,7 @@ class PLATFORM_EXPORT RawResource final : public Resource {
     return !IsLinkPreload();
   }
   void WillNotFollowRedirect() override;
-  void ResponseReceived(const ResourceResponse&,
-                        std::unique_ptr<WebDataConsumerHandle>) override;
+  void NotifyResponseReceived(std::unique_ptr<WebDataConsumerHandle>) override;
   void SetSerializedCachedMetadata(const char*, size_t) override;
   void DidSendData(unsigned long long bytes_sent,
                    unsigned long long total_bytes_to_be_sent) override;
