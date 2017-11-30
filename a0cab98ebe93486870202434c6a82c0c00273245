@@ -16,6 +16,24 @@
       "revId": "a0cab98ebe93486870202434c6a82c0c00273245",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b152d35a_c613d5fd",
+        "filename": "components/crash/core/common/crash_key_base_support.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-30T18:17:31Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s even better.",
+      "parentUuid": "436f0cc0_a7b510bc",
+      "revId": "a0cab98ebe93486870202434c6a82c0c00273245",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
