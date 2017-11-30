@@ -15,6 +15,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/strings/string_piece.h"
 #include "base/threading/thread_checker.h"
+#include "base/time/default_tick_clock.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "net/base/net_export.h"
@@ -142,6 +143,8 @@ class NET_EXPORT HostResolverImpl
                        AddressList* addresses,
                        const NetLogWithSource& source_net_log) override;
   void SetDnsClientEnabled(bool enabled) override;
+  void SetDnsRefresherEnabled(bool enabled) override;
+
   HostCache* GetHostCache() override;
   std::unique_ptr<base::Value> GetDnsConfigAsValue() const override;
 
@@ -324,6 +327,8 @@ class NET_EXPORT HostResolverImpl
     return dispatcher_->num_running_jobs();
   }
 
+  base::TickClock* clock() { return clock_; }
+
   // Cache of host resolution results.
   std::unique_ptr<HostCache> cache_;
 
@@ -368,6 +373,9 @@ class NET_EXPORT HostResolverImpl
   // Allow fallback to ProcTask if DnsTask fails.
   bool fallback_to_proctask_;
 
+  // Enable the asynchronous DNS refresher.
+  bool async_dns_refresher_enabled_;
+
   // Task runner used for DNS lookups using the system resolver. Normally a
   // TaskScheduler task runner, but can be overridden for tests.
   scoped_refptr<base::TaskRunner> proc_task_runner_;
@@ -375,6 +383,8 @@ class NET_EXPORT HostResolverImpl
   bool persist_initialized_;
   PersistCallback persist_callback_;
   base::OneShotTimer persist_timer_;
+  base::DefaultTickClock default_tick_clock_;
+  base::TickClock* clock_;
 
   THREAD_CHECKER(thread_checker_);
 
