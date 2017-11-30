@@ -84,7 +84,10 @@ class CONTENT_EXPORT DeviceSensorEventPump
   struct SensorEntry : public device::mojom::SensorClient {
     SensorEntry(DeviceSensorEventPump* pump,
                 device::mojom::SensorType sensor_type)
-        : event_pump(pump), type(sensor_type), client_binding(this) {}
+        : event_pump(pump),
+          initializing_sensor(false),
+          type(sensor_type),
+          client_binding(this) {}
 
     ~SensorEntry() override {}
 
@@ -143,6 +146,7 @@ class CONTENT_EXPORT DeviceSensorEventPump
       sensor->AddConfiguration(
           default_config, base::Bind(&SensorEntry::OnSensorAddConfiguration,
                                      base::Unretained(this)));
+      initializing_sensor = false;
     }
 
     // Mojo callback for Sensor::AddConfiguration().
@@ -157,6 +161,7 @@ class CONTENT_EXPORT DeviceSensorEventPump
       shared_buffer_handle.reset();
       shared_buffer.reset();
       client_binding.Close();
+      initializing_sensor = false;
     }
 
     bool SensorReadingCouldBeRead() {
@@ -176,6 +181,7 @@ class CONTENT_EXPORT DeviceSensorEventPump
 
     DeviceSensorEventPump* event_pump;
     device::mojom::SensorPtr sensor;
+    bool initializing_sensor;
     device::mojom::SensorType type;
     device::mojom::ReportingMode mode;
     device::PlatformSensorConfiguration default_config;
@@ -190,9 +196,12 @@ class CONTENT_EXPORT DeviceSensorEventPump
   friend struct SensorEntry;
 
   void GetSensor(SensorEntry* sensor_entry) {
-    sensor_provider_->GetSensor(sensor_entry->type,
-                                base::Bind(&SensorEntry::OnSensorCreated,
-                                           base::Unretained(sensor_entry)));
+    if (!sensor_entry->initializing_sensor) {
+      sensor_entry->initializing_sensor = true;
+      sensor_provider_->GetSensor(sensor_entry->type,
+                                  base::Bind(&SensorEntry::OnSensorCreated,
+                                             base::Unretained(sensor_entry)));
+    }
   }
 
   virtual void DidStartIfPossible() {
