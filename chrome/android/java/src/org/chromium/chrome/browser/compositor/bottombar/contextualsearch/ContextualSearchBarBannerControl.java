@@ -58,7 +58,7 @@ public class ContextualSearchBarBannerControl extends OverlayPanelInflater {
     /**
      * The precomputed default height of the Bar Banner in pixels.
      */
-    private final float mDefaultHeightPx;
+    private float mDefaultHeightPx = 0.f;
 
     /**
      * The precomputed minimum width of the Ripple resource in pixels.
@@ -83,8 +83,6 @@ public class ContextualSearchBarBannerControl extends OverlayPanelInflater {
 
         final float dpToPx = context.getResources().getDisplayMetrics().density;
 
-        mDefaultHeightPx = context.getResources().getDimensionPixelOffset(
-                R.dimen.contextual_search_bar_banner_height);
         mPaddingPx = context.getResources().getDimensionPixelOffset(
                 R.dimen.contextual_search_bar_banner_padding);
 
@@ -100,7 +98,7 @@ public class ContextualSearchBarBannerControl extends OverlayPanelInflater {
         if (mIsVisible) return;
 
         mIsVisible = true;
-        mHeightPx = Math.round(mDefaultHeightPx);
+        mHeightPx = Math.round(getDefaultHeightPx());
 
         invalidate();
     }
@@ -120,7 +118,20 @@ public class ContextualSearchBarBannerControl extends OverlayPanelInflater {
      * @return The height of the Bar Banner when the Panel is the peeked state.
      */
     float getHeightPeekingPx() {
-        return mIsVisible ? mDefaultHeightPx : 0.f;
+        return mIsVisible ? getDefaultHeightPx() : 0.f;
+    }
+
+    /** Calculates the default height of the bar banner if it has not been calculated before.
+     * @return The default height of the Bar Banner.
+     */
+    private float getDefaultHeightPx() {
+        if (mDefaultHeightPx == 0.f) {
+            // Calculate the default height based on the measured height of the TextView.
+            inflate();
+            layout();
+            mDefaultHeightPx = getMeasuredHeight() + (2 * mPaddingPx);
+        }
+        return mDefaultHeightPx;
     }
 
     // ============================================================================================
@@ -194,7 +205,7 @@ public class ContextualSearchBarBannerControl extends OverlayPanelInflater {
     public void onUpdateFromCloseToPeek(float percentage) {
         if (!isVisible()) return;
 
-        mHeightPx = Math.round(mDefaultHeightPx);
+        mHeightPx = Math.round(getDefaultHeightPx());
     }
 
     /**
@@ -205,7 +216,7 @@ public class ContextualSearchBarBannerControl extends OverlayPanelInflater {
     public void onUpdateFromPeekToExpand(float percentage) {
         if (!isVisible()) return;
 
-        mHeightPx = Math.round(MathUtils.interpolate(mDefaultHeightPx, 0.f, percentage));
+        mHeightPx = Math.round(MathUtils.interpolate(getDefaultHeightPx(), 0.f, percentage));
         mTextOpacity = MathUtils.interpolate(1.f, 0.f, percentage);
     }
 
