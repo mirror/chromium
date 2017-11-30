@@ -102,7 +102,7 @@ namespace {
 
 const int kButtonHeight = 32;
 const int kFixedAccountRemovalViewWidth = 280;
-const int kFixedMenuWidth = 240;
+// const int kFixedMenuWidth = 288;
 
 // Spacing between the edge of the material design user menu and the
 // top/bottom or left/right of the menu items.
@@ -324,7 +324,11 @@ ProfileChooserView::ProfileChooserView(views::View* anchor_view,
       browser_(browser),
       view_mode_(view_mode),
       gaia_service_type_(service_type),
-      access_point_(access_point) {
+      access_point_(access_point),
+      kFixedMenuWidth(
+          signin::IsDiceEnabledForProfile(browser->profile()->GetPrefs())
+              ? 288
+              : 240) {
   // The sign in webview will be clipped on the bottom corners without these
   // margins, see related bug <http://crbug.com/593203>.
   set_margins(gfx::Insets(0, 0, 2, 0));
@@ -844,6 +848,10 @@ views::View* ProfileChooserView::CreateSyncErrorViewIfNeeded() {
 views::View* ProfileChooserView::CreateCurrentProfileView(
     const AvatarMenu::Item& avatar_item,
     bool is_guest) {
+  if (!avatar_item.signed_in &&
+      signin::IsDiceEnabledForProfile(browser_->profile()->GetPrefs()))
+    return CreateDiceTurnOnSyncView();
+
   ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
 
   views::View* view = new views::View();
@@ -932,6 +940,42 @@ views::View* ProfileChooserView::CreateCurrentProfileView(
   current_profile_card_->SetAccessibleName(
       l10n_util::GetStringFUTF16(
           IDS_PROFILES_EDIT_PROFILE_ACCESSIBLE_NAME, profile_name));
+  return view;
+}
+
+views::View* ProfileChooserView::CreateDiceTurnOnSyncView() {
+  // Creates a view that holds an illustration and a promo(incl. button). The
+  // illustration should slightly overlap with the promo at the bottom,
+  // therefore between_child_spacing of |view| is set to negative
+  // |kIllustrationPromoOverlap|. Note: The illustration will be changed in the
+  // future, once the final asset is ready.
+  constexpr int kIllustrationPromoOverlap = 48;
+  views::View* view = new views::View();
+  view->SetLayoutManager(new views::BoxLayout(
+      views::BoxLayout::kVertical, gfx::Insets(), -kIllustrationPromoOverlap));
+
+  ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
+  views::ImageView* illustration = new views::ImageView();
+  illustration->SetImage(
+      *rb.GetNativeImageNamed(IDR_TURN_ON_SYNC_ILLUSTRATION).ToImageSkia());
+  view->AddChildView(illustration);
+
+  views::View* promo_button_view = new views::View();
+  promo_button_view->SetLayoutManager(new views::BoxLayout(
+      views::BoxLayout::kVertical,
+      gfx::Insets(0, kMenuEdgeMargin, kMenuEdgeMargin, kMenuEdgeMargin),
+      kMenuEdgeMargin));
+  views::Label* promo = new views::Label(
+      l10n_util::GetStringUTF16(IDS_PROFILES_TURN_ON_SYNC_PROMO));
+  promo->SetMultiLine(true);
+  promo->SetHorizontalAlignment(gfx::ALIGN_LEFT);
+  promo_button_view->AddChildView(promo);
+
+  signin_current_profile_button_ =
+      views::MdTextButton::CreateSecondaryUiBlueButton(
+          this, l10n_util::GetStringUTF16(IDS_PROFILES_TURN_ON_SYNC_BUTTON));
+  promo_button_view->AddChildView(signin_current_profile_button_);
+  view->AddChildView(promo_button_view);
   return view;
 }
 
