@@ -23,7 +23,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace content {
-namespace {
+namespace shared_worker_devtools_manager_unittest {
 
 class TestDevToolsClientHost : public DevToolsAgentHostClient {
  public:
@@ -44,7 +44,6 @@ class TestDevToolsClientHost : public DevToolsAgentHostClient {
   scoped_refptr<DevToolsAgentHost> agent_host_;
   DISALLOW_COPY_AND_ASSIGN(TestDevToolsClientHost);
 };
-}  // namespace
 
 class SharedWorkerDevToolsManagerTest : public testing::Test {
  public:
@@ -346,4 +345,5 @@ TEST_F(SharedWorkerDevToolsManagerTest, PauseOnStartTest) {
   CheckWorkerCount(0);
 }
 
+}  // namespace shared_worker_devtools_manager_unittest
 }  // namespace content
