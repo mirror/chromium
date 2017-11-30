@@ -1,0 +1,237 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8d8eabe_d69f860b",
+        "filename": "media/audio/mock_audio_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-30T14:14:50Z",
+      "side": 1,
+      "message": "Unnecessary newline",
+      "revId": "b447b81df9c659f904725af6d63f512a614d85ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf508edb_298c2133",
+        "filename": "services/audio/README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-30T14:14:50Z",
+      "side": 1,
+      "message": "Say something about this being work in progress.",
+      "revId": "b447b81df9c659f904725af6d63f512a614d85ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8db7f76a_fa774d04",
+        "filename": "services/audio/audio_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-30T14:14:50Z",
+      "side": 1,
+      "message": "Remove.",
+      "revId": "b447b81df9c659f904725af6d63f512a614d85ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d47ed41_544e2f3a",
+        "filename": "services/audio/audio_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-30T14:14:50Z",
+      "side": 1,
+      "message": "Seems like naming it just \"Service\" is a bit unusual. Going through services so far:\nService: ui, viz\nServiceImpl: video_capture\nRepetitionService: data_decoder, device, file, identity, metrics, proxy_resolver, resource_coordinator, shape_detection\nPrefStoreManagerImpl: prefs\n\nI still prefer the name without repetition though :).",
+      "revId": "b447b81df9c659f904725af6d63f512a614d85ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c45c9e54_8824886f",
+        "filename": "services/audio/audio_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-30T14:14:50Z",
+      "side": 1,
+      "message": "You could declare the class as final instead of marking all the methods final.",
+      "range": {
+        "startLine": 40,
+        "startChar": 17,
+        "endLine": 40,
+        "endChar": 22
+      },
+      "revId": "b447b81df9c659f904725af6d63f512a614d85ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a33e2a0d_6542dbd9",
+        "filename": "services/audio/public/cpp/audio_device_description_struct_traits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-30T14:14:50Z",
+      "side": 1,
+      "message": "Should this be in media, since AudioDeviceDescription is in media?",
+      "revId": "b447b81df9c659f904725af6d63f512a614d85ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74a1dda2_cb85e2bb",
+        "filename": "services/audio/public/cpp/audio_system_to_mojo_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-30T14:14:50Z",
+      "side": 1,
+      "message": "Maybe use nullopt instead?",
+      "revId": "b447b81df9c659f904725af6d63f512a614d85ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba8df4ed_d2d24f22",
+        "filename": "services/audio/public/cpp/audio_system_to_mojo_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-30T14:14:50Z",
+      "side": 1,
+      "message": "I don\u0027t think this would ever fail with the production BindAudioSystemInfoCb. If there is some issue connecting the ptr, it would pretend to be connected anyways at first, and then have a connection error asynchronously. If you want some peace of mind that it won\u0027t fail with any BindAudioSystemInfoCb anyone provides, you could change the signature to BindAudioSystemInfoCb \u003d base::RepeatingCallback\u003cvoid(mojom::AudioSystemInfoRequest)\u003e (there is a *Request variant of the Connector method as well).",
+      "revId": "b447b81df9c659f904725af6d63f512a614d85ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7a6b2cc_23c1431e",
+        "filename": "services/audio/public/cpp/audio_system_to_mojo_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-30T14:14:50Z",
+      "side": 1,
+      "message": "It\u0027s automatically reset on connection error, so this connection error handler isn\u0027t needed.",
+      "revId": "b447b81df9c659f904725af6d63f512a614d85ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9918203_0f8d8cfa",
+        "filename": "services/audio/public/interfaces/audio_device_description.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-30T14:14:50Z",
+      "side": 1,
+      "message": "Move to media?",
+      "revId": "b447b81df9c659f904725af6d63f512a614d85ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b409558_1b5179dc",
+        "filename": "services/audio/public/interfaces/audio_system_info.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-30T14:14:50Z",
+      "side": 1,
+      "message": "Some comments would be nice. At least state the purpose of the interface and explain when return values may be null.",
+      "revId": "b447b81df9c659f904725af6d63f512a614d85ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c27ea6a6_2fc7793d",
+        "filename": "services/audio/test/in_process_audio_service_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-30T14:14:50Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "range": {
+        "startLine": 126,
+        "startChar": 10,
+        "endLine": 126,
+        "endChar": 27
+      },
+      "revId": "b447b81df9c659f904725af6d63f512a614d85ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea576685_da4ce419",
+        "filename": "services/audio/test/in_process_audio_service_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-30T14:14:50Z",
+      "side": 1,
+      "message": "This is cool :).",
+      "revId": "b447b81df9c659f904725af6d63f512a614d85ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
