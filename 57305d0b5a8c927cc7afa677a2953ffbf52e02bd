@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "4783640c_6a0d39c9",
+        "filename": "extensions/browser/api/web_request/web_request_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-30T00:04:02Z",
+      "side": 1,
+      "message": "Sorry, my wording was inaccurate. info *is* null if it\u0027s a WebSocket request. WS requests don\u0027t go through the resource loading path, which is where ResourceRequestInfo comes from.",
+      "parentUuid": "5602bca5_c5c71fe4",
+      "range": {
+        "startLine": 128,
+        "startChar": 8,
+        "endLine": 128,
+        "endChar": 24
+      },
+      "revId": "57305d0b5a8c927cc7afa677a2953ffbf52e02bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd0302b1_ed175c64",
         "filename": "extensions/browser/api/web_request/web_request_info.cc",
         "patchSetId": 8
