@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "8bdc1ba0_13bb5024",
+        "filename": "ash/accessibility/accessibility_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-30T00:26:23Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "4d0eab1f2637f2cfc39a90280d2fcd5cfe35585e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85f550da_6065290d",
+        "filename": "ash/accessibility/accessibility_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-30T00:26:23Z",
+      "side": 1,
+      "message": "I removed this. LockStateController should not expect an no-op on ash-side when spoken feedback is not enabled I believe. Another way is to run the callback with duration zero when !spoken_feedback_enabled_?\n\nIt should be handled in chrome side: https://cs.chromium.org/chromium/src/chrome/browser/chromeos/accessibility/accessibility_manager.cc?sq\u003dpackage:chromium\u0026l\u003d531",
+      "revId": "4d0eab1f2637f2cfc39a90280d2fcd5cfe35585e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2ff7e1a_048e1b5b",
         "filename": "ash/public/interfaces/accessibility_controller.mojom",
         "patchSetId": 6
@@ -48,6 +82,54 @@
     },
     {
       "key": {
+        "uuid": "09fe6acf_db53035f",
+        "filename": "ash/public/interfaces/accessibility_controller.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-30T00:26:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33e72551_00e18ffd",
+      "range": {
+        "startLine": 54,
+        "startChar": 47,
+        "endLine": 54,
+        "endChar": 56
+      },
+      "revId": "4d0eab1f2637f2cfc39a90280d2fcd5cfe35585e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed5306bb_1ff233f6",
+        "filename": "ash/public/interfaces/accessibility_controller.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-30T00:26:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2ff7e1a_048e1b5b",
+      "range": {
+        "startLine": 54,
+        "startChar": 5,
+        "endLine": 54,
+        "endChar": 9
+      },
+      "revId": "4d0eab1f2637f2cfc39a90280d2fcd5cfe35585e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0908495e_3efaa729",
         "filename": "ash/wm/lock_state_controller.cc",
         "patchSetId": 6
@@ -59,6 +141,24 @@
       "writtenOn": "2017-11-29T18:24:54Z",
       "side": 1,
       "message": "Drive-by:\n\nIMO, the new code structure that split StartRealShutdownTimer into MaybePlayShutdownSound and OnGetShutdownSoundDuration is undesirable.\n\nHow about make AccessibilityController::PlayShutdownSound takes a callback then we don\u0027t need to the split and can use a lambda for the callback to keep related code together.\n\ne.g.\n\nHaving this:\nvoid AccessibilityController::PlayShutdownSound(base::OnceCallback\u003cvoid(base::TimeDelta)\u003e callback) {\n  ...\n   client_-\u003ePlayShutdownSound(std::move(callback));\n}\n\nThen we can:\nvoid LockStateController::StartRealShutdownTimer(bool with_animation_time) {\n  base::TimeDelta duration \u003d\n      base::TimeDelta::FromMilliseconds(kShutdownRequestDelayMs);\n  if (with_animation_time) {\n   ...\n  }\n\n  Shell::Get()-\u003eaccessibility_controller()-\u003ePlayShutdownSound(\n    base::BindOnce([](LockStateController* self, base::TimeDelta duration,\n                      base::TimeDelta sound_duration) {\n      sound_duration \u003d std::min(...);\n      duration \u003d std::min(...);\n      self-\u003ereal_shutdown_timer_.Start(...);\n    })\n  );\n}",
+      "revId": "4d0eab1f2637f2cfc39a90280d2fcd5cfe35585e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19341035_db80d540",
+        "filename": "ash/wm/lock_state_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-30T00:26:23Z",
+      "side": 1,
+      "message": "done. Also thanks for offline help.",
+      "parentUuid": "0908495e_3efaa729",
       "revId": "4d0eab1f2637f2cfc39a90280d2fcd5cfe35585e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
