@@ -152,12 +152,14 @@ Main.Main = class {
         Runtime.experiments.enableForTest('changesDrawer');
       if (testPath.indexOf('console-sidebar/') !== -1)
         Runtime.experiments.enableForTest('logManagement');
+      if (testPath.indexOf('overrides/') !== -1)
+        Runtime.experiments.enableForTest('networkPersistence');
     }
 
     Runtime.experiments.setDefaultExperiments([
       'continueToLocationMarkers', 'autoAttachToCrossProcessSubframes', 'objectPreviews', 'persistence2',
-      'networkGroupingRequests', 'timelineColorByProduct', 'accessibilityInspection', 'networkPersistence',
-      'logManagement', 'performanceMonitor'
+      'networkGroupingRequests', 'timelineColorByProduct', 'accessibilityInspection', 'logManagement',
+      'performanceMonitor'
     ]);
   }
 
