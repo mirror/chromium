@@ -716,7 +716,15 @@ void AppMenuModel::Build() {
   AddItemWithStringId(IDC_FIND, IDS_FIND);
   if (extensions::util::IsNewBookmarkAppsEnabled() &&
       banners::AppBannerManager::IsExperimentalAppBannersEnabled()) {
-    AddItemWithStringId(IDC_CREATE_HOSTED_APP, IDS_ADD_TO_OS_LAUNCH_SURFACE);
+    const banners::AppBannerManager::Installable installable =
+        banners::AppBannerManager::GetInstallable(
+            browser_->tab_strip_model()->GetActiveWebContents());
+    if (installable == banners::AppBannerManager::Installable::YES) {
+      AddItemWithStringId(IDC_CREATE_HOSTED_APP,
+                          IDS_INSTALL_TO_OS_LAUNCH_SURFACE);
+    } else {
+      AddItemWithStringId(IDC_CREATE_HOSTED_APP, IDS_ADD_TO_OS_LAUNCH_SURFACE);
+    }
   }
 
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
