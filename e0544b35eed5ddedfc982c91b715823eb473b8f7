@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc9ef095_60ff75d6",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-11-30T19:43:27Z",
+      "side": 1,
+      "message": "Is duplicating the file descriptor for stdout portable enough to work on Windows?",
+      "range": {
+        "startLine": 208,
+        "startChar": 15,
+        "endLine": 208,
+        "endChar": 23
+      },
+      "revId": "e0544b35eed5ddedfc982c91b715823eb473b8f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
