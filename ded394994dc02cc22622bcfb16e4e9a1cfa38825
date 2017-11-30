@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea47430b_41a3e184",
+        "filename": "chrome/browser/extensions/api/cookies/cookies_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-30T16:14:32Z",
+      "side": 1,
+      "message": "Any reason to not just pass in \u0026store_browser_cookie_manager_?",
+      "revId": "ded394994dc02cc22622bcfb16e4e9a1cfa38825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99e3f7e0_b9e2687b",
+        "filename": "chrome/browser/extensions/api/cookies/cookies_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-30T16:14:32Z",
+      "side": 1,
+      "message": "Presumably GetAllCookies() sets the appropriate options?",
+      "revId": "ded394994dc02cc22622bcfb16e4e9a1cfa38825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dc51998_e7de280b",
+        "filename": "chrome/browser/extensions/api/cookies/cookies_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-30T16:14:32Z",
+      "side": 1,
+      "message": "ditto here (and for following functions)",
+      "revId": "ded394994dc02cc22622bcfb16e4e9a1cfa38825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86f83eaf_0549ffb7",
+        "filename": "chrome/browser/extensions/api/cookies/cookies_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-30T16:14:32Z",
+      "side": 1,
+      "message": "Would it be worth having a CreateCookieOptions() helper since we\u0027re using this config in 3 places?  That way, we ensure that we keep them in sync.",
+      "revId": "ded394994dc02cc22622bcfb16e4e9a1cfa38825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ea2d804_c74d4386",
+        "filename": "chrome/browser/extensions/api/cookies/cookies_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-30T16:14:32Z",
+      "side": 1,
+      "message": "It looks like this was a problem before your change, but we should never be setting both error_ and results_.  Could you add a TODO to fix that?",
+      "revId": "ded394994dc02cc22622bcfb16e4e9a1cfa38825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6ca439f_334f39ca",
+        "filename": "chrome/browser/extensions/extension_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 4961,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-30T16:14:32Z",
+      "side": 1,
+      "message": "nit: I think it\u0027s slightly more common to pass RunLoop::QuitClosure() and then just run it here rather than passing the RunLoop directly.",
+      "revId": "ded394994dc02cc22622bcfb16e4e9a1cfa38825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "178ee325_e32ee45d",
+        "filename": "chrome/browser/extensions/extension_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 5020,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-30T16:14:32Z",
+      "side": 1,
+      "message": "nit: rather than using a unique ptr and resetting it, let\u0027s just scope these:\n\n{\n  bool set_result \u003d false;\n  base::RunLoop run_loop;\n  cookie_manager_ptr-\u003eSetCanonicalCookie(...);\n  run_loop.Run();\n  EXPECT_TRUE(set_result);\n}\n\n{\n  base::RunLoop run_loop;\n  std::vector\u003cnet::CanonicalCookie\u003e cookies_result;\n  ...\n}",
+      "revId": "ded394994dc02cc22622bcfb16e4e9a1cfa38825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f54d25b2_2da9180c",
+        "filename": "chrome/browser/extensions/extension_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 5074,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-30T16:14:32Z",
+      "side": 1,
+      "message": "(similar to above, let\u0027s scope these rather than clearing them)",
+      "revId": "ded394994dc02cc22622bcfb16e4e9a1cfa38825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
