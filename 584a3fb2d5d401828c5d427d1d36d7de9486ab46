@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "140a486d_95a4bef9",
+        "filename": "third_party/WebKit/Source/core/css/ImmutableCSSPropertyValueSet.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-11-30T00:46:36Z",
+      "side": 1,
+      "message": "Should we simply not declare this destructor?",
+      "range": {
+        "startLine": 56,
+        "startChar": 30,
+        "endLine": 56,
+        "endChar": 61
+      },
+      "revId": "584a3fb2d5d401828c5d427d1d36d7de9486ab46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8018cf21_f4a761b5",
+        "filename": "third_party/WebKit/Source/core/css/MutableCSSPropertyValueSet.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-11-30T00:46:36Z",
+      "side": 1,
+      "message": "Can this instead stay in CSSPropertyValueSet.cpp",
+      "revId": "584a3fb2d5d401828c5d427d1d36d7de9486ab46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
