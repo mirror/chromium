@@ -8,6 +8,22 @@
 var scope = 'cross_site_xfer_scope/';
 var script = 'cross_site_xfer.js';
 
+function waitForActivated(reg) {
+    if (!reg)
+      return Promise.reject(new Error('The registration'));
+    let worker = reg.installing || reg.waiting || reg.active;
+    if (worker.state === 'activated')
+      return Promise.resolve();
+    if (worker.state === 'redundant')
+      return Promise.reject(new Error('The worker is redundant'));
+    return new Promise(resolve => {
+        worker.addEventListener('statechange', () => {
+            if (worker.state === 'activated')
+              resolve();
+          });
+      });
+  }
+
 navigator.serviceWorker.getRegistration(scope)
 .then(function(registration) {
   if (registration)
@@ -24,6 +40,9 @@ navigator.serviceWorker.getRegistration(scope)
 .then(function(_) {
   console.log('unregistration done');
   return navigator.serviceWorker.register(script, {scope: scope});
+})
+.then(function(registration) {
+  return waitForActivated(registration);
 })
 .then(function(_) {
   console.log('second registration done');
