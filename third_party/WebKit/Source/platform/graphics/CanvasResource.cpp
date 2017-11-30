@@ -14,7 +14,7 @@
 namespace blink {
 
 CanvasResource::CanvasResource(
-    WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper)
+    base::WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper)
     : context_provider_wrapper_(std::move(context_provider_wrapper)) {}
 
 CanvasResource::~CanvasResource() {
@@ -57,13 +57,14 @@ void CanvasResource::WaitSyncTokenBeforeRelease() {
 
 CanvasResource_Skia::CanvasResource_Skia(
     sk_sp<SkImage> image,
-    WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper)
+    base::WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper)
     : CanvasResource(std::move(context_provider_wrapper)),
       image_(std::move(image)) {}
 
 std::unique_ptr<CanvasResource_Skia> CanvasResource_Skia::Create(
     sk_sp<SkImage> image,
-    WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper) {
+    base::WeakPtr<WebGraphicsContext3DProviderWrapper>
+        context_provider_wrapper) {
   std::unique_ptr<CanvasResource_Skia> resource =
       WTF::WrapUnique(new CanvasResource_Skia(
           std::move(image), std::move(context_provider_wrapper)));
@@ -98,7 +99,7 @@ GLuint CanvasResource_Skia::TextureId() const {
 CanvasResource_GpuMemoryBuffer::CanvasResource_GpuMemoryBuffer(
     const IntSize& size,
     const CanvasColorParams& color_params,
-    WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper)
+    base::WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper)
     : CanvasResource(std::move(context_provider_wrapper)),
       color_params_(color_params) {
   if (!context_provider_wrapper_)
@@ -138,7 +139,8 @@ std::unique_ptr<CanvasResource_GpuMemoryBuffer>
 CanvasResource_GpuMemoryBuffer::Create(
     const IntSize& size,
     const CanvasColorParams& color_params,
-    WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper) {
+    base::WeakPtr<WebGraphicsContext3DProviderWrapper>
+        context_provider_wrapper) {
   std::unique_ptr<CanvasResource_GpuMemoryBuffer> resource =
       WTF::WrapUnique(new CanvasResource_GpuMemoryBuffer(
           size, color_params, context_provider_wrapper));

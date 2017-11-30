@@ -47,7 +47,8 @@ class PLATFORM_EXPORT TextureHolder {
   virtual void Abandon() { is_abandoned_ = true; }  // Overrides must call base.
 
   // Methods that have exactly the same impelmentation for all sub-classes
-  WeakPtr<WebGraphicsContext3DProviderWrapper> ContextProviderWrapper() const {
+  base::WeakPtr<WebGraphicsContext3DProviderWrapper> ContextProviderWrapper()
+      const {
     return context_provider_wrapper_;
   }
 
@@ -59,8 +60,8 @@ class PLATFORM_EXPORT TextureHolder {
   bool IsAbandoned() const { return is_abandoned_; }
 
  protected:
-  TextureHolder(
-      WeakPtr<WebGraphicsContext3DProviderWrapper>&& context_provider_wrapper)
+  TextureHolder(base::WeakPtr<WebGraphicsContext3DProviderWrapper>&&
+                    context_provider_wrapper)
       : context_provider_wrapper_(std::move(context_provider_wrapper)) {}
 
  private:
@@ -69,7 +70,7 @@ class PLATFORM_EXPORT TextureHolder {
   // another thread, and the original thread gone out of scope, and that we need
   // to clear the resouces associated with that AcceleratedStaticBitmapImage on
   // the original thread.
-  WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper_;
+  base::WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper_;
   bool is_abandoned_ = false;
 };
 
