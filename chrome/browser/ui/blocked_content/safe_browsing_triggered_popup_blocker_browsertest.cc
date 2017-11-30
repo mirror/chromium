@@ -17,16 +17,19 @@
 #include "base/test/scoped_feature_list.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/content_settings/tab_specific_content_settings.h"
+#include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/safe_browsing/test_safe_browsing_database_helper.h"
 #include "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/chrome_paths.h"
+#include "chrome/common/pref_names.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/ui_test_utils.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "components/content_settings/core/common/content_settings_types.h"
+#include "components/prefs/pref_service.h"
 #include "components/safe_browsing/db/safebrowsing.pb.h"
 #include "components/safe_browsing/db/v4_embedded_test_server_util.h"
 #include "components/safe_browsing/db/v4_test_util.h"
@@ -263,6 +266,28 @@ IN_PROC_BROWSER_TEST_F(SafeBrowsingTriggeredPopupBlockerBrowserTest,
 }
 
 IN_PROC_BROWSER_TEST_F(SafeBrowsingTriggeredPopupBlockerBrowserTest,
+                       DisabledByPolicy_AllowCreatingNewWindows) {
+  // Disable Abusive enforcement.
+  browser()->profile()->GetPrefs()->SetBoolean(prefs::kAbusiveExperienceEnforce,
+                                               false);
+
+  const char kWindowOpenPath[] = "/subresource_filter/window_open.html";
+  GURL a_url(embedded_test_server()->GetURL("a.com", kWindowOpenPath));
+  ConfigureAsAbusive(a_url);
+
+  // Navigate to a_url, should not trigger the popup blocker.
+  ui_test_utils::NavigateToURL(browser(), a_url);
+  bool opened_window = false;
+  content::WebContents* web_contents =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  EXPECT_TRUE(content::ExecuteScriptAndExtractBool(web_contents, "openWindow()",
+                                                   &opened_window));
+  EXPECT_TRUE(opened_window);
+  EXPECT_FALSE(TabSpecificContentSettings::FromWebContents(web_contents)
+                   ->IsContentBlocked(CONTENT_SETTINGS_TYPE_POPUPS));
+}
+
+IN_PROC_BROWSER_TEST_F(SafeBrowsingTriggeredPopupBlockerBrowserTest,
                        NoFeature_NoMessages) {
   // Disable Abusive enforcement, but keep the notifications coming from the
   // SubresourceFilter.
@@ -334,6 +359,44 @@ IN_PROC_BROWSER_TEST_F(SafeBrowsingTriggeredPopupBlockerBrowserTest,
 
 IN_PROC_BROWSER_TEST_F(SafeBrowsingTriggeredPopupBlockerBrowserTest,
                        BlockCreatingNewWindows) {
+  const char kWindowOpenPath[] = "/subresource_filter/window_open.html";
+  GURL a_url(embedded_test_server()->GetURL("a.com", kWindowOpenPath));
+  GURL b_url(embedded_test_server()->GetURL("b.com", kWindowOpenPath));
+  ConfigureAsAbusive(a_url);
+
+  // Navigate to a_url, should trigger the popup blocker.
+  ui_test_utils::NavigateToURL(browser(), a_url);
+  bool opened_window = false;
+  content::WebContents* web_contents =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  EXPECT_TRUE(content::ExecuteScriptAndExtractBool(web_contents, "openWindow()",
+                                                   &opened_window));
+  EXPECT_FALSE(opened_window);
+  // Make sure the popup UI was shown.
+  EXPECT_TRUE(TabSpecificContentSettings::FromWebContents(web_contents)
+                  ->IsContentBlocked(CONTENT_SETTINGS_TYPE_POPUPS));
+
+  // Block again.
+  EXPECT_TRUE(content::ExecuteScriptAndExtractBool(web_contents, "openWindow()",
+                                                   &opened_window));
+  EXPECT_FALSE(opened_window);
+
+  // Navigate to |b_url|, which should successfully open the popup.
+  ui_test_utils::NavigateToURL(browser(), b_url);
+  opened_window = false;
+  EXPECT_TRUE(content::ExecuteScriptAndExtractBool(web_contents, "openWindow()",
+                                                   &opened_window));
+  EXPECT_TRUE(opened_window);
+  // Popup UI should not be shown.
+  EXPECT_FALSE(TabSpecificContentSettings::FromWebContents(web_contents)
+                   ->IsContentBlocked(CONTENT_SETTINGS_TYPE_POPUPS));
+}
+
+IN_PROC_BROWSER_TEST_F(SafeBrowsingTriggeredPopupBlockerBrowserTest,
+                       EnabledByPolicy_BlockCreatingNewWindows) {
+  browser()->profile()->GetPrefs()->SetBoolean(prefs::kAbusiveExperienceEnforce,
+                                               true);
+
   const char kWindowOpenPath[] = "/subresource_filter/window_open.html";
   GURL a_url(embedded_test_server()->GetURL("a.com", kWindowOpenPath));
   GURL b_url(embedded_test_server()->GetURL("b.com", kWindowOpenPath));
