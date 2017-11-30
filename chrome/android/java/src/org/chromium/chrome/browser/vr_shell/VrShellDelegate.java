@@ -95,7 +95,8 @@ public class VrShellDelegate
 
     private static final int VR_NOT_AVAILABLE = 0;
     private static final int VR_CARDBOARD = 1;
-    private static final int VR_DAYDREAM = 2; // Supports both Cardboard and Daydream viewer.
+    /* package */
+    static final int VR_DAYDREAM = 2; // Supports both Cardboard and Daydream viewer.
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({VR_NOT_AVAILABLE, VR_CARDBOARD, VR_DAYDREAM})
@@ -105,6 +106,9 @@ public class VrShellDelegate
     /* package */
     static final String VR_ENTRY_RESULT_ACTION =
             "org.chromium.chrome.browser.vr_shell.VrEntryResult";
+    static final int DAYDREAM_MIN_SDK_VERSION = Build.VERSION_CODES.N;
+
+    private static final String MIN_SDK_VERSION_PARAM_NAME = "min_sdk_version";
 
     private static final long REENTER_VR_TIMEOUT_MS = 1000;
     private static final int EXPECT_DON_TIMEOUT_MS = 2000;
@@ -315,9 +319,9 @@ public class VrShellDelegate
      * Returns the current {@VrSupportLevel}.
      */
     public static int getVrSupportLevel(VrDaydreamApi daydreamApi,
-            VrCoreVersionChecker versionChecker, Tab tabToShowInfobarIn) {
+            VrCoreVersionChecker versionChecker, int minSdkVersion, Tab tabToShowInfobarIn) {
         if (versionChecker == null || daydreamApi == null
-                || !isVrCoreCompatible(versionChecker, tabToShowInfobarIn)) {
+                || !isVrCoreCompatible(versionChecker, minSdkVersion, tabToShowInfobarIn)) {
             return VR_NOT_AVAILABLE;
         }
 
@@ -344,8 +348,8 @@ public class VrShellDelegate
                 if (wrapper == null) return null;
                 VrDaydreamApi api = wrapper.createVrDaydreamApi(activity);
                 if (api == null) return null;
-                int vrSupportLevel =
-                        getVrSupportLevel(api, wrapper.createVrCoreVersionChecker(), null);
+                int vrSupportLevel = getVrSupportLevel(
+                        api, wrapper.createVrCoreVersionChecker(), DAYDREAM_MIN_SDK_VERSION, null);
                 if (!isVrShellEnabled(vrSupportLevel)) return null;
                 return api;
             }
@@ -712,8 +716,8 @@ public class VrShellDelegate
         if (mVrDaydreamApi == null) {
             mVrDaydreamApi = mVrClassesWrapper.createVrDaydreamApi(mActivity);
         }
-        int supportLevel = getVrSupportLevel(
-                mVrDaydreamApi, mVrCoreVersionChecker, mActivity.getActivityTab());
+        int supportLevel = getVrSupportLevel(mVrDaydreamApi, mVrCoreVersionChecker,
+                getCardboardMinSdkVersion(), mActivity.getActivityTab());
         if (supportLevel == mVrSupportLevel) return;
         mVrSupportLevel = supportLevel;
     }
@@ -894,7 +898,9 @@ public class VrShellDelegate
         // We remove the VR-specific system UI flags here so that the system UI shows up properly
         // when Chrome is resumed in non-VR mode.
         mActivity.getWindow().getDecorView().setSystemUiVisibility(0);
-        mVrDaydreamApi.launchVrHomescreen();
+
+        boolean launched = mVrDaydreamApi.launchVrHomescreen();
+        assert launched;
 
         // Some Samsung devices change the screen density after exiting VR mode which causes
         // us to restart Chrome with the VR intent that originally started it. We don't want to
@@ -922,6 +928,7 @@ public class VrShellDelegate
         if (VrIntentUtils.getHandlerInstance().isTrustedDaydreamIntent(intent)) {
             if (DEBUG_LOGS) Log.i(TAG, "onNewIntentWithNative: autopresent");
             assert activitySupportsAutopresentation(activity);
+            assert instance.getVrSupportLevel() == VR_DAYDREAM;
             instance.mAutopresentWebVr = true;
             if (!ChromeFeatureList.isEnabled(ChromeFeatureList.WEBVR_AUTOPRESENT_FROM_INTENT)) {
                 instance.onEnterVrUnsupported();
@@ -1595,9 +1602,21 @@ public class VrShellDelegate
         promptForFeedback(mActivity.getActivityTab());
     }
 
-    private static boolean isVrCoreCompatible(
-            final VrCoreVersionChecker versionChecker, final Tab tabToShowInfobarIn) {
-        final int vrCoreCompatibility = versionChecker.getVrCoreCompatibility();
+    /* package */ static int getCardboardMinSdkVersion() {
+        // Supported Build version is determined by the webvr cardboard support feature.
+        // Default is KITKAT unless specified via server side finch config.
+        return ChromeFeatureList.getFieldTrialParamByFeatureAsInt(
+                ChromeFeatureList.WEBVR_CARDBOARD_SUPPORT, MIN_SDK_VERSION_PARAM_NAME,
+                Build.VERSION_CODES.KITKAT);
+    }
+
+    private static boolean isVrCoreCompatible(final VrCoreVersionChecker versionChecker,
+            int minSdkVersion, final Tab tabToShowInfobarIn) {
+        final int vrCoreCompatibility;
+        if (Build.VERSION.SDK_INT < minSdkVersion)
+            vrCoreCompatibility = VR_NOT_AVAILABLE;
+        else
+            vrCoreCompatibility = versionChecker.getVrCoreCompatibility();
         boolean needsUpdate = vrCoreCompatibility == VrCoreCompatibility.VR_NOT_AVAILABLE
                 || vrCoreCompatibility == VrCoreCompatibility.VR_OUT_OF_DATE;
         if (tabToShowInfobarIn != null && needsUpdate) {
