@@ -36,7 +36,6 @@
 #include "ui/gl/gpu_preference.h"
 
 struct GPUCommandBufferConsoleMessage;
-struct GpuCommandBufferMsg_SwapBuffersCompleted_Params;
 class GURL;
 
 namespace base {
@@ -44,8 +43,8 @@ class SharedMemory;
 }
 
 namespace gpu {
-struct GpuProcessHostedCALayerTreeParamsMac;
 struct Mailbox;
+struct SwapBuffersCompleteParams;
 struct SyncToken;
 
 namespace gles2 {
@@ -139,9 +138,8 @@ class GPU_EXPORT CommandBufferProxyImpl : public gpu::CommandBuffer,
 
   bool EnsureBackbuffer();
 
-  using SwapBuffersCompletionCallback = base::Callback<void(
-      const gfx::SwapResponse& response,
-      const gpu::GpuProcessHostedCALayerTreeParamsMac* params_mac)>;
+  using SwapBuffersCompletionCallback =
+      base::Callback<void(const SwapBuffersCompleteParams& params)>;
   void SetSwapBuffersCompletionCallback(
       const SwapBuffersCompletionCallback& callback);
 
@@ -185,8 +183,7 @@ class GPU_EXPORT CommandBufferProxyImpl : public gpu::CommandBuffer,
                    gpu::error::Error error);
   void OnConsoleMessage(const GPUCommandBufferConsoleMessage& message);
   void OnSignalAck(uint32_t id, const CommandBuffer::State& state);
-  void OnSwapBuffersCompleted(
-      const GpuCommandBufferMsg_SwapBuffersCompleted_Params& params);
+  void OnSwapBuffersCompleted(const SwapBuffersCompleteParams& params);
   void OnUpdateVSyncParameters(base::TimeTicks timebase,
                                base::TimeDelta interval);
 
