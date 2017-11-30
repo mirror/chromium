@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b15a402_f1c99f56",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadSchedulerTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-30T18:35:43Z",
+      "side": 1,
+      "message": "0 /* comment */ or use const variable for readability?",
+      "range": {
+        "startLine": 92,
+        "startChar": 54,
+        "endLine": 92,
+        "endChar": 55
+      },
+      "revId": "f3c520fac36a90425b09af99706657a8bde5c546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cf637ff_20de4229",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceRequest.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-30T18:35:43Z",
+      "side": 1,
+      "message": "needs a comment to explain what the intra priority is, and how different these priorities are?",
+      "revId": "f3c520fac36a90425b09af99706657a8bde5c546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
