@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b670c2f_c6f5f666",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-30T10:43:46Z",
+      "side": 1,
+      "message": "chasej@, can you advise on how to do this without exposing ExecutionContext to content/?",
+      "range": {
+        "startLine": 409,
+        "startChar": 8,
+        "endLine": 409,
+        "endChar": 9
+      },
+      "revId": "f0f7dbe71711cd658b3e4f7252b95b9fe03972cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
