@@ -6,6 +6,7 @@
 
 #include "base/bind.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/strings/stringprintf.h"
 #include "platform/WebFrameScheduler.h"
 #include "platform/instrumentation/resource_coordinator/RendererResourceCoordinator.h"
 #include "platform/scheduler/renderer/renderer_scheduler_impl.h"
@@ -230,6 +231,15 @@ void RendererMetricsHelper::RecordTaskMetrics(MainThreadTaskQueue* queue,
 
   UMA_HISTOGRAM_CUSTOM_COUNTS("RendererScheduler.TaskTime2",
                               duration.InMicroseconds(), 1, 1000 * 1000, 50);
+
+  if (task.location()) {
+    std::string filename =
+        base::StringPrintf("/tmp/issue-780785-%d.csv", getpid());
+    FILE* fp = fopen(filename.c_str(), "a");
+    fprintf(fp, "%s,%ld\n", task.location()->ToString().c_str(),
+            duration.InMicroseconds());
+    fclose(fp);
+  }
 
   // We want to measure thread time here, but for efficiency reasons
   // we stick with wall time.

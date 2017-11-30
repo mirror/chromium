@@ -8,6 +8,7 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/optional.h"
 #include "base/sequenced_task_runner.h"
 
 namespace base {
@@ -18,7 +19,8 @@ class BASE_EXPORT SequencedTaskRunnerHandle {
   // run after the current task is finished and will satisfy a SequenceChecker.
   // It should only be called if IsSet() returns true (see the comment there for
   // the requirements).
-  static scoped_refptr<SequencedTaskRunner> Get();
+  static scoped_refptr<SequencedTaskRunner> Get(
+      Optional<Location> from_here = nullopt);
 
   // Returns true if one of the following conditions is fulfilled:
   // a) A SequencedTaskRunner has been assigned to the current thread by
