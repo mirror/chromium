@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96170cdd_a015f8a2",
+        "filename": "services/ui/ws/platform_display_mirror.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-30T05:12:21Z",
+      "side": 1,
+      "message": "It\u0027s not clear to me if PlatformDisplayMirror is created when running with --mus. If it is, then this function wouldn\u0027t want to d do much work (see [1]), and instead would want to send the widget_ back to the window-manager (something like [2]).\n\n[1] https://cs.chromium.org/chromium/src/services/ui/ws/platform_display_default.cc?l\u003d245\n[2] https://cs.chromium.org/chromium/src/services/ui/ws/window_tree.cc?l\u003d188",
+      "revId": "a51cf6c2a8bbfc16fa0ceff2ece5a602e797c28c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
