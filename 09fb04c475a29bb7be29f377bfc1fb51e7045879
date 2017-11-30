@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "77273013_a3e2d758",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-11-30T00:34:41Z",
+      "side": 1,
+      "message": "Actually, it seems to work well if we roll it into _linkifyString...().  The a string is too long it will become ExpandableFragment, otherwise Linkifier should process it.",
+      "parentUuid": "d8f8c1ec_39b7b751",
+      "revId": "09fb04c475a29bb7be29f377bfc1fb51e7045879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6dd5a80e_26f66261",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ExpandableText.js",
         "patchSetId": 5
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "4158b84f_763569f2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ExpandableText.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-11-30T00:34:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6dd5a80e_26f66261",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "09fb04c475a29bb7be29f377bfc1fb51e7045879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48ca1c22_0d0a15c0",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ExpandableText.js",
         "patchSetId": 5
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "265f3c39_f31c16d4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ExpandableText.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-11-30T00:34:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48ca1c22_0d0a15c0",
+      "revId": "09fb04c475a29bb7be29f377bfc1fb51e7045879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5141bf0f_d40a7210",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ExpandableText.js",
         "patchSetId": 5
@@ -70,6 +130,24 @@
       "writtenOn": "2017-11-29T22:21:36Z",
       "side": 1,
       "message": "Let\u0027s return null when it\u0027s short, and handle that in clients.",
+      "revId": "09fb04c475a29bb7be29f377bfc1fb51e7045879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adbe7937_1731fe46",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ExpandableText.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-11-30T00:34:41Z",
+      "side": 1,
+      "message": "If we roll this into _linkify...() we can make it a helper function!",
+      "parentUuid": "5141bf0f_d40a7210",
       "revId": "09fb04c475a29bb7be29f377bfc1fb51e7045879",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
