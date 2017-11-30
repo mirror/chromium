@@ -68,6 +68,24 @@
       "revId": "a2fd32a543c748c59064b1286e70c5638a10d221",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b981afc_7419a9ba",
+        "filename": "third_party/WebKit/Source/bindings/templates/dictionary_v8.cpp.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-30T14:03:00Z",
+      "side": 1,
+      "message": "This function still uses lowerCamelCase for other variable names. (e.g. creationContext, {{member.name}}HasValueOrDefault.) I think it better not to mix styles in a function.",
+      "parentUuid": "7769fe56_ed85cd70",
+      "revId": "a2fd32a543c748c59064b1286e70c5638a10d221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
