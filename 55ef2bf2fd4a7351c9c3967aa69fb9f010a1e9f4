@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d12545b0_dc1d85b1",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 3273,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-11-30T22:54:21Z",
+      "side": 1,
+      "message": "I had a Feature then dropped it as I stumbled my way through the change :)\n\nAdded it back.",
+      "parentUuid": "d7262597_f3fe1215",
+      "range": {
+        "startLine": 3270,
+        "startChar": 0,
+        "endLine": 3273,
+        "endChar": 21
+      },
+      "revId": "55ef2bf2fd4a7351c9c3967aa69fb9f010a1e9f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40d90090_043d591c",
         "filename": "testing/variations/fieldtrial_testing_config.json",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "55ef2bf2fd4a7351c9c3967aa69fb9f010a1e9f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecda1eaf_e2680f75",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 3280,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-11-30T22:54:21Z",
+      "side": 1,
+      "message": "Thanks. Swapped the order.",
+      "parentUuid": "40d90090_043d591c",
+      "range": {
+        "startLine": 3275,
+        "startChar": 16,
+        "endLine": 3280,
+        "endChar": 17
+      },
+      "revId": "55ef2bf2fd4a7351c9c3967aa69fb9f010a1e9f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
