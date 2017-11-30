@@ -106,6 +106,24 @@
       "revId": "87e0f0a43dd4b87068d11e73a055515189b23fdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a883bea0_5a3e5905",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/fileapi/resources/delete-temp-file.cgi",
+        "patchSetId": 27
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-30T03:37:03Z",
+      "side": 1,
+      "message": "rel2abs is also removed now",
+      "parentUuid": "d832c933_6a46d300",
+      "revId": "87e0f0a43dd4b87068d11e73a055515189b23fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
