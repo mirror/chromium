@@ -96,6 +96,10 @@ class MockFetchContext : public FetchContext {
     return url_loader_factory_->CreateURLLoader(wrapped, task_runner);
   }
 
+  bool ShouldTightenResourceLoadThrottlingInitially() const override {
+    return true;
+  }
+
   WebFrameScheduler* GetFrameScheduler() override {
     return frame_scheduler_.get();
   }
