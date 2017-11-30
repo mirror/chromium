@@ -267,7 +267,7 @@ class SiteEngagementService : public KeyedService,
 
   // Overridden from history::HistoryServiceObserver:
   void OnURLsDeleted(history::HistoryService* history_service,
-                     bool all_history,
+                     const history::DeletionTimeRange& time_range,
                      bool expired,
                      const history::URLRows& deleted_rows,
                      const std::set<GURL>& favicon_urls) override;

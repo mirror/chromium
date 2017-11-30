@@ -2489,6 +2489,15 @@ public class Tab
     }
 
     /**
+     * Called when navigation entries were removed.
+     */
+    @CalledByNative
+    private void onNavigationListPruned() {
+        mIsTabStateDirty = true;
+        for (TabObserver observer : mObservers) observer.onNavigationListPruned(this);
+    }
+
+    /**
      * Returns the SnackbarManager for the activity that owns this Tab, if any. May
      * return null.
      */
