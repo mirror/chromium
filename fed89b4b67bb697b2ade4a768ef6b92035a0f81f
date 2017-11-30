@@ -67,6 +67,24 @@
       "revId": "fed89b4b67bb697b2ade4a768ef6b92035a0f81f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fef74e60_e15a13cf",
+        "filename": "third_party/android_platform/development/scripts/stack_core.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-11-30T22:40:00Z",
+      "side": 1,
+      "message": "Sorry, disregard, I somehow missed the code above which is indeed handling multiple stack frames correctly in stack traces.",
+      "parentUuid": "74c2421e_157a623e",
+      "revId": "fed89b4b67bb697b2ade4a768ef6b92035a0f81f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
