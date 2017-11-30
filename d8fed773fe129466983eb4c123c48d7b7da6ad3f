@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86972a67_04998d04",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1139,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-30T19:00:03Z",
+      "side": 1,
+      "message": "Why Aura only?",
+      "range": {
+        "startLine": 1139,
+        "startChar": 12,
+        "endLine": 1139,
+        "endChar": 20
+      },
+      "revId": "d8fed773fe129466983eb4c123c48d7b7da6ad3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7a900c9_7dcd22e6",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1151,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-30T19:00:03Z",
+      "side": 1,
+      "message": "You can probably just append this switch for all platforms.",
+      "range": {
+        "startLine": 1151,
+        "startChar": 41,
+        "endLine": 1151,
+        "endChar": 75
+      },
+      "revId": "d8fed773fe129466983eb4c123c48d7b7da6ad3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1bf3072_a19c1e9a",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1279,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-30T19:00:03Z",
+      "side": 1,
+      "message": "Guessing this is left over from debugging?",
+      "range": {
+        "startLine": 1279,
+        "startChar": 6,
+        "endLine": 1279,
+        "endChar": 10
+      },
+      "revId": "d8fed773fe129466983eb4c123c48d7b7da6ad3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b772548_3cb29996",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 930,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-30T19:00:03Z",
+      "side": 1,
+      "message": "Stale comment? This doesn\u0027t update state nor is it LayoutFrameRoot specific.",
+      "range": {
+        "startLine": 930,
+        "startChar": 6,
+        "endLine": 930,
+        "endChar": 47
+      },
+      "revId": "d8fed773fe129466983eb4c123c48d7b7da6ad3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
