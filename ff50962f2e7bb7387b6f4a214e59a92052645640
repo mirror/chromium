@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfa4aee8_985b2830",
+        "filename": "third_party/WebKit/Source/core/inspector/ThreadDebugger.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-30T06:43:35Z",
+      "side": 1,
+      "message": "It\u0027s worth noting that the WTF StringView is quite heavy, so it\u0027s often a binary size increase.",
+      "revId": "ff50962f2e7bb7387b6f4a214e59a92052645640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9d34045_fe0d1019",
+        "filename": "third_party/WebKit/common/message_port/message_port.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-30T06:43:35Z",
+      "side": 1,
+      "message": "Can this comment describe what the elements of the array represent? Why do we need an array? et cetera",
+      "revId": "ff50962f2e7bb7387b6f4a214e59a92052645640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
