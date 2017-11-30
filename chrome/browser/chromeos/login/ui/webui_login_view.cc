@@ -627,12 +627,12 @@ bool WebUILoginView::MoveFocusToSystemTray(bool reverse) {
 void WebUILoginView::OnLoginPromptVisible() {
   // If we're hidden than will generate this signal once we're shown.
   if (is_hidden_ || webui_visible_) {
-    VLOG(1) << "Login WebUI >> not emitting signal, hidden: " << is_hidden_;
+    LOG(ERROR) << "JAMES Login WebUI >> not emitting signal, hidden: " << is_hidden_;
     return;
   }
   TRACE_EVENT0("chromeos", "WebUILoginView::OnLoginPromptVisible");
   if (should_emit_login_prompt_visible_) {
-    VLOG(1) << "Login WebUI >> login-prompt-visible";
+    LOG(ERROR) << "JAMES Login WebUI >> login-prompt-visible";
     chromeos::DBusThreadManager::Get()
         ->GetSessionManagerClient()
         ->EmitLoginPromptVisible();

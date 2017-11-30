@@ -192,6 +192,9 @@ ChromeURLRequestContextGetter::GetURLRequestContext() {
     factory_.reset();
   }
 
+  if (!url_request_context_) {
+    LOG(ERROR) << "JAMES returning null url_request_context_";
+  }
   return url_request_context_;
 }
 
@@ -200,6 +203,7 @@ void ChromeURLRequestContextGetter::NotifyContextShuttingDown() {
 
   factory_.reset();
   url_request_context_ = nullptr;
+  LOG(ERROR) << "JAMES NotifyContextShuttingDown";
   URLRequestContextGetter::NotifyContextShuttingDown();
 }
 

@@ -1162,6 +1162,11 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
       IsBrowserSideNavigationEnabled() &&
       IsResourceTypeFrame(request_data.resource_type);
 
+  LOG(ERROR) << "JAMES request_data.url.spec() " << request_data.url.spec();
+  if (request_data.url.spec() == "chrome://resources/html/polymer.html") {
+    LOG(ERROR) << "JAMES match";
+  }
+
   ResourceContext* resource_context = nullptr;
   net::URLRequestContext* request_context = nullptr;
   requester_info->GetContexts(request_data.resource_type, &resource_context,
@@ -1177,7 +1182,15 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
     return;
   }
 
+  //JAMES work around shutdown crash
+  // if (!request_context) {
+  //   AbortRequestBeforeItStarts(requester_info->filter(), sync_result_handler,
+  //                              request_id, std::move(url_loader_client));
+  //   return;
+  // }
+
   // Construct the request.
+  CHECK(request_context);
   std::unique_ptr<net::URLRequest> new_request = request_context->CreateRequest(
       is_navigation_stream_request ? request_data.resource_body_stream_url
                                    : request_data.url,

@@ -49,6 +49,7 @@
 
 #if defined(CHROMEOS)
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
+#include "chrome/browser/chromeos/login/ui/login_display_host.h"//JAMES
 #include "chromeos/chromeos_switches.h"
 #endif
 
@@ -303,6 +304,7 @@ class DefaultProfileExtensionBrowserTest : public ExtensionBrowserTest {
 // testing for the signin profile, where we explicitly disallow all
 // extension hosts unless it's the off-the-record profile.
 IN_PROC_BROWSER_TEST_F(DefaultProfileExtensionBrowserTest, NoExtensionHosts) {
+  LOG(ERROR) << "JAMES start test";
   // Explicitly get the original and off-the-record-profiles, since on CrOS,
   // the signin profile (profile()) is the off-the-record version.
   Profile* original = profile()->GetOriginalProfile();
@@ -317,6 +319,12 @@ IN_PROC_BROWSER_TEST_F(DefaultProfileExtensionBrowserTest, NoExtensionHosts) {
 
   pm = ProcessManager::Get(otr);
   EXPECT_EQ(0u, pm->background_hosts().size());
+
+#if defined(OS_CHROMEOS)
+    base::ThreadTaskRunnerHandle::Get()->DeleteSoon(
+      FROM_HERE, chromeos::LoginDisplayHost::default_host());
+#endif
+  LOG(ERROR) << "JAMES end test";
 }
 
 // Test that basic extension loading creates the appropriate ExtensionHosts

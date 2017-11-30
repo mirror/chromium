@@ -430,6 +430,7 @@ LoginDisplayHostWebUI::LoginDisplayHostWebUI(const gfx::Rect& wallpaper_bounds)
       startup_sound_played_(StartupUtils::IsOobeCompleted()),
       pointer_factory_(this),
       animation_weak_ptr_factory_(this) {
+  LOG(ERROR) << "JAMES new LoginDisplayHostWebUI";
   if (ash_util::IsRunningInMash()) {
     // Animation, and initializing hidden, are not currently supported for Mash.
     finalize_animation_type_ = ANIMATION_NONE;
@@ -522,7 +523,7 @@ LoginDisplayHostWebUI::LoginDisplayHostWebUI(const gfx::Rect& wallpaper_bounds)
     registrar_.Add(this, chrome::NOTIFICATION_LOGIN_NETWORK_ERROR_SHOWN,
                    content::NotificationService::AllSources());
   }
-  VLOG(1) << "Login WebUI >> "
+  LOG(ERROR) << "Login WebUI >> "
           << "zero_delay: " << zero_delay_enabled
           << " wait_for_wp_load_: " << waiting_for_wallpaper_load_
           << " wait_for_pods_: " << waiting_for_user_pods_
@@ -543,6 +544,7 @@ LoginDisplayHostWebUI::LoginDisplayHostWebUI(const gfx::Rect& wallpaper_bounds)
 }
 
 LoginDisplayHostWebUI::~LoginDisplayHostWebUI() {
+  LOG(ERROR) << "JAMES del LoginDisplayHostWebUI";
   DBusThreadManager::Get()->GetSessionManagerClient()->RemoveObserver(this);
   CrasAudioHandler::Get()->RemoveAudioObserver(this);
   display::Screen::GetScreen()->RemoveObserver(this);
@@ -1087,6 +1089,7 @@ void LoginDisplayHostWebUI::OnUserSwitchAnimationFinished() {
 // LoginDisplayHostWebUI, private
 
 void LoginDisplayHostWebUI::ShutdownDisplayHost(bool post_quit_task) {
+  LOG(ERROR) << "JAMES ShutdownDisplayHost " << post_quit_task;
   if (shutting_down_)
     return;
 
