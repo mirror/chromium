@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70a6a4c7_28e9c450",
+        "filename": "media/mojo/services/mojo_video_decoder_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-30T00:50:20Z",
+      "side": 1,
+      "message": "Sorry I missed this in liberato\u0027s CL. The |decoder_| should be declared after the |cdm_|. See https://cs.chromium.org/chromium/src/media/mojo/services/mojo_audio_decoder_service.h?rcl\u003de283dbed8c83a98c3e011a04bd02fbf927973437\u0026l\u003d72",
+      "revId": "1ecbec112c7f74200dbead2de3a0eae71e2314ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
