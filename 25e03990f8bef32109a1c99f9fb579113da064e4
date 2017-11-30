@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "89e9788d_6bb1deb1",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-30T13:25:57Z",
+      "side": 1,
+      "message": "If you\u0027re willing, I\u0027d suggest changing the variable name (and reversing its sense) to \"throttle_delayable_requests_\".  Otherwise, just add a comment here and above indicating that the html body hasn\u0027t actually been seen at this point, but the class is acting as if it has because the throttling that would normally cause is being done in the renderer.",
+      "parentUuid": "5d2c922b_6c97c715",
+      "revId": "25e03990f8bef32109a1c99f9fb579113da064e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1f5920cd_42dae51d",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
         "patchSetId": 1
