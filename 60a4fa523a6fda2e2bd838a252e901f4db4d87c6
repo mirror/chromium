@@ -180,6 +180,53 @@
     },
     {
       "key": {
+        "uuid": "0a9fab13_ed3a90a7",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-30T22:11:11Z",
+      "side": 1,
+      "message": "If devtools is enabled, we may send bonus headers.  So for any testing of what we send, should have devtools open.\n\nNote:  I\u0027m not at all familiar with what we feed to the renderer when, so this could just be fine (Or we may not care, if devtools is open), but I\u0027m not sure that\u0027s the case.",
+      "parentUuid": "5e84e125_cca41f96",
+      "range": {
+        "startLine": 35,
+        "startChar": 17,
+        "endLine": 35,
+        "endChar": 34
+      },
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a660d48_0775e28f",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-30T22:11:11Z",
+      "side": 1,
+      "message": "Detach() does this already.",
+      "range": {
+        "startLine": 49,
+        "startChar": 25,
+        "endLine": 49,
+        "endChar": 28
+      },
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fcffd6ae_13e2e92a",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 15
@@ -309,6 +356,30 @@
       "side": 1,
       "message": "\u003e This gets us into indeterminant state.  We\u0027re reading from the ResourceLoader 1 byte at a time (Which seems bad, as it could have perf impact), but then we\u0027re telling the sender 0 bytes were read, which indicates completion.  We do this for each read, which violates the API contract.\n\nI think this is done at most once (only when should_block_response_ is true), since we\u0027ll cancel or detach the next time we get to OnWillRead.\n\nNon-blocked responses won\u0027t ever hit this case.",
       "parentUuid": "9c5ae93e_2c63aeb1",
+      "range": {
+        "startLine": 77,
+        "startChar": 15,
+        "endLine": 77,
+        "endChar": 17
+      },
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b429a8f8_f328cb36",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-30T22:11:11Z",
+      "side": 1,
+      "message": "Oops, you\u0027re right - I completely missed the blocked_read_completed_ somehow.",
+      "parentUuid": "e59474f1_a7293598",
       "range": {
         "startLine": 77,
         "startChar": 15,
