@@ -1768,6 +1768,10 @@ enum WebFeature {
   kWindowOpenRealmMismatch = 2247,
   kGridRowTrackPercentIndefiniteHeight = 2248,
   kVRGetDisplaysSupportsPresent = 2249,
+  kV8RTCPeerConnection_GetSenders_Method = 2250,
+  kV8RTCPeerConnection_GetReceivers_Method = 2251,
+  kV8RTCPeerConnection_AddTrack_Method = 2252,
+  kV8RTCPeerConnection_RemoveTrack_Method = 2253,
 
   // Add new features immediately above this line. Don't change assigned
   // numbers of any item, and don't reuse removed slots.
