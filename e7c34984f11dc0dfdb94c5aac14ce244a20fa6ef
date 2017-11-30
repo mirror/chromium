@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eabf18dd_1ecb17d8",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-30T21:10:43Z",
+      "side": 1,
+      "message": "Didn\u0027t know about this superpower! Useful!\n\nnit: remove spaces around \u003d when used for named paramters",
+      "revId": "e7c34984f11dc0dfdb94c5aac14ce244a20fa6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
