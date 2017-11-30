@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bea8a638_c8beac30",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-30T01:47:21Z",
+      "side": 1,
+      "message": "Now that we set |cert_status| unconditionally (not just when devtools is enabled), we should be able to get rid of this field; it\u0027s redundant with cert_status. I can do that in a follow-up.",
+      "range": {
+        "startLine": 86,
+        "startChar": 19,
+        "endLine": 86,
+        "endChar": 47
+      },
+      "revId": "6bbf591a4539782c3c2fa9a9c688d1475cc5fc5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
