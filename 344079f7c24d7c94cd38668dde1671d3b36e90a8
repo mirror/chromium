@@ -121,6 +121,24 @@
       "revId": "344079f7c24d7c94cd38668dde1671d3b36e90a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "226f8a05_f2294b05",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 3300,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-30T20:18:59Z",
+      "side": 1,
+      "message": "Sounds like we just need a test that when we stop calling raf it\u0027s no longer set to true the next frame? As long as ServiceScriptedAnimations is called when there are no scripted animations it should be okay.",
+      "parentUuid": "36473601_3afeb3da",
+      "revId": "344079f7c24d7c94cd38668dde1671d3b36e90a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
