@@ -20,6 +20,7 @@
 #include "content/public/common/content_switches.h"
 #include "media/gpu/features.h"
 #include "sandbox/linux/bpf_dsl/policy.h"
+#include "sandbox/linux/syscall_broker/broker_command.h"
 #include "sandbox/linux/syscall_broker/broker_file_permission.h"
 #include "sandbox/linux/syscall_broker/broker_process.h"
 #include "services/service_manager/embedder/set_process_title.h"
@@ -202,11 +203,10 @@ void AddStandardGpuWhiteList(std::vector<BrokerFilePermission>* permissions) {
 
 std::vector<BrokerFilePermission> FilePermissionsForGpu(
     const service_manager::SandboxSeccompBPF::Options& options) {
-  std::vector<BrokerFilePermission> permissions;
-
   // All GPU process policies need this file brokered out.
   static const char kDriRcPath[] = "/etc/drirc";
-  permissions.push_back(BrokerFilePermission::ReadOnly(kDriRcPath));
+  std::vector<BrokerFilePermission> permissions = {
+      BrokerFilePermission::ReadOnly(kDriRcPath)};
 
   if (IsChromeOS()) {
     if (UseV4L2Codec())
@@ -320,6 +320,16 @@ bool LoadLibrariesForGpu(
   return true;
 }
 
+uint32_t CommandMaskForGPU(
+    const service_manager::SandboxLinux::Options& options) {
+  // TODO(tsepez): prune down the command on a per-gpu basis.
+  return sandbox::syscall_broker::kBrokerCommandAccessMask |
+         sandbox::syscall_broker::kBrokerCommandOpenMask |
+         sandbox::syscall_broker::kBrokerCommandReadlinkMask |
+         sandbox::syscall_broker::kBrokerCommandRenameMask |
+         sandbox::syscall_broker::kBrokerCommandStatMask;
+}
+
 bool BrokerProcessPreSandboxHook(
     service_manager::BPFBasePolicy* policy,
     service_manager::SandboxLinux::Options options) {
@@ -335,9 +345,9 @@ bool BrokerProcessPreSandboxHook(
 bool GpuProcessPreSandboxHook(service_manager::BPFBasePolicy* policy,
                               service_manager::SandboxLinux::Options options) {
   auto* instance = service_manager::SandboxLinux::GetInstance();
-  instance->StartBrokerProcess(policy, FilePermissionsForGpu(options),
-                               base::BindOnce(BrokerProcessPreSandboxHook),
-                               options);
+  instance->StartBrokerProcess(
+      policy, CommandMaskForGPU(options), FilePermissionsForGpu(options),
+      base::BindOnce(BrokerProcessPreSandboxHook), options);
 
   if (!LoadLibrariesForGpu(options))
     return false;

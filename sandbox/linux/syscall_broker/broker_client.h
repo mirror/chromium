@@ -10,7 +10,7 @@
 #include <unistd.h>
 
 #include "base/macros.h"
-#include "sandbox/linux/syscall_broker/broker_common.h"
+#include "sandbox/linux/syscall_broker/broker_command.h"
 
 namespace sandbox {
 namespace syscall_broker {
@@ -32,6 +32,7 @@ class BrokerClient {
   // |fast_check_in_client| should be set to true and
   // |quiet_failures_for_tests| to false unless you are writing tests.
   BrokerClient(const BrokerPolicy& policy,
+               uint32_t allowed_command_mask,
                bool fast_check_in_client,
                bool quiet_failures_for_tests);
   ~BrokerClient();
@@ -67,17 +68,18 @@ class BrokerClient {
 
  private:
   int PathAndFlagsSyscall(int ipc_channel,
-                          IPCCommand syscall_type,
+                          BrokerCommand syscall_type,
                           const char* pathname,
                           int flags) const;
 
   int StatFamilySyscall(int ipc_channel,
-                        IPCCommand syscall_type,
+                        BrokerCommand syscall_type,
                         const char* pathname,
                         void* result_ptr,
                         size_t expected_result_size) const;
 
   const BrokerPolicy& broker_policy_;
+  const uint32_t allowed_command_mask_;
   const bool fast_check_in_client_;  // Whether to forward a request that we
                                      // know will be denied to the broker. (Used
                                      // for tests).
