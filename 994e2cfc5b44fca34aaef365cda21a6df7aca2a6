@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5f13abf_ec9fc34e",
+        "filename": "chrome/browser/signin/dice_tab_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-30T15:36:06Z",
+      "side": 0,
+      "message": "We could probably make this work with the new URL (by removing the query parameters probably), but I\u0027m not sure this check is really worth it.",
+      "revId": "994e2cfc5b44fca34aaef365cda21a6df7aca2a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
