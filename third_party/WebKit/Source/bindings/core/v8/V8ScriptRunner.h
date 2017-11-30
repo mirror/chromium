@@ -64,13 +64,16 @@ class CORE_EXPORT V8ScriptRunner final {
 
   // For the following methods, the caller sites have to hold
   // a HandleScope and a ContextScope.
-  // CachedMetadataHandler is set when metadata caching is supported.
   static v8::MaybeLocal<v8::Script> CompileScript(ScriptState*,
                                                   const ScriptSourceCode&,
                                                   CachedMetadataHandler*,
                                                   AccessControlStatus,
                                                   V8CacheOptions,
                                                   const ReferrerScriptInfo&);
+  // CachedMetadataHandler is set when metadata caching is supported. For
+  // normal scripe resources, CachedMetadataHandler is from ScriptResource.
+  // For worker script, there is no corresponding ScriptResource but
+  // CachedMetadataHandler may be set.
   static v8::MaybeLocal<v8::Script> CompileScript(ScriptState*,
                                                   v8::Local<v8::String>,
                                                   const String& file_name,

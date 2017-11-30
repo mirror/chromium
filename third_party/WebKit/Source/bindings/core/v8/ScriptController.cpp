@@ -94,7 +94,7 @@ V8CacheOptions CacheOptions(const CachedMetadataHandler* cache_handler,
   }
   // If the resource is served from CacheStorage, generate the V8 code cache in
   // the first load.
-  if (cache_handler && cache_handler->IsServedFromCacheStorage())
+  if (cache_handler && !cache_handler->CacheStorageCacheName().IsNull())
     return kV8CacheOptionsCodeWithoutHeatCheck;
   return v8_cache_options;
 }
