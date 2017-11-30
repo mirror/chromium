@@ -5,6 +5,7 @@
 #include "chromeos/login/auth/authpolicy_login_helper.h"
 
 #include "base/files/file_util.h"
+#include "base/strings/string_split.h"
 #include "base/task_scheduler/post_task.h"
 #include "chromeos/cryptohome/cryptohome_util.h"
 #include "chromeos/dbus/auth_policy_client.h"
@@ -76,20 +77,31 @@ bool AuthPolicyLoginHelper::IsAdLocked() {
 bool AuthPolicyLoginHelper::LockDeviceActiveDirectoryForTesting(
     const std::string& realm) {
   return cu::InstallAttributesSet("enterprise.owned", "true") &&
-         cu::InstallAttributesSet("enterprise.mode", "enterprise_ad") &&
+         cu::InstallAttributesSet(kAttrMode, kDeviceModeEnterpriseAD) &&
          cu::InstallAttributesSet("enterprise.realm", realm) &&
          cu::InstallAttributesFinalize();
 }
 
 void AuthPolicyLoginHelper::JoinAdDomain(const std::string& machine_name,
+                                         const std::string& domain,
+                                         const std::string& organizational_unit,
                                          const std::string& username,
                                          const std::string& password,
                                          JoinCallback callback) {
   DCHECK(!IsAdLocked());
   DCHECK(!weak_factory_.HasWeakPtrs()) << "Another operation is in progress";
   authpolicy::JoinDomainRequest request;
-  request.set_machine_name(machine_name);
-  request.set_user_principal_name(username);
+  if (!machine_name.empty())
+    request.set_machine_name(machine_name);
+  if (!domain.empty())
+    request.set_domain(domain);
+  std::vector<std::string> split_res =
+      base::SplitString(organizational_unit, ",", base::TRIM_WHITESPACE,
+                        base::SPLIT_WANT_NONEMPTY);
+  for (auto it = split_res.rbegin(); it != split_res.rend(); ++it)
+    request.add_organizational_unit()->swap(*it);
+  if (!username.empty())
+    request.set_user_principal_name(username);
   chromeos::DBusThreadManager::Get()->GetAuthPolicyClient()->JoinAdDomain(
       request, GetDataReadPipe(password).get(),
       base::BindOnce(&AuthPolicyLoginHelper::OnJoinCallback,

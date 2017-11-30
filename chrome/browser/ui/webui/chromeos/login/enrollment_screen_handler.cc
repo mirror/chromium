@@ -569,13 +569,15 @@ void EnrollmentScreenHandler::HandleCompleteLogin(
 
 void EnrollmentScreenHandler::HandleAdCompleteLogin(
     const std::string& machine_name,
+    const std::string& domain,
+    const std::string& organizational_unit,
     const std::string& user_name,
     const std::string& password) {
   observe_network_failure_ = false;
   DCHECK(controller_);
   DCHECK(authpolicy_login_helper_);
   authpolicy_login_helper_->JoinAdDomain(
-      machine_name, user_name, password,
+      machine_name, domain, organizational_unit, user_name, password,
       base::BindOnce(&EnrollmentScreenHandler::HandleAdDomainJoin,
                      weak_ptr_factory_.GetWeakPtr(), machine_name, user_name));
 }

@@ -19,6 +19,8 @@
 Polymer({
   is: 'offline-ad-login',
 
+  behaviors: [I18nBehavior],
+
   properties: {
     /**
      * Whether the UI disabled.
@@ -49,6 +51,14 @@ Polymer({
      */
     machineNameError: String,
   },
+
+  /** @private */
+  // Used for 'More options' dialog.
+  storedDomain: String,
+
+  /** @private */
+  // Used for 'More options' dialog.
+  storedOrgUnit: String,
 
   /** @private */
   realmChanged_: function() {
@@ -127,10 +137,42 @@ Polymer({
       user += this.userRealm;
     var msg = {
       'machinename': this.$.machineNameInput.value,
+      'domain': this.$.domainInput.value,
+      'organizational_unit': this.$.orgUnitInput.value,
       'username': user,
       'password': this.$.passwordInput.value
     };
     this.$.passwordInput.value = '';
     this.fire('authCompleted', msg);
   },
+
+  onMoreOptionsClicked_: function() {
+    this.disabled = true;
+    this.fire('dialogShown');
+    this.storedDomain = this.$.domainInput.value;
+    this.storedOrgUnit = this.$.orgUnitInput.value;
+    this.$$('#moreOptionsDlg').showModal();
+    this.$$('#gaiaCard').classList.add('full-disabled');
+  },
+
+  onMoreOptionsConfirmTap_: function() {
+    this.storedDomain = null;
+    this.storedOrgUnit = null;
+    this.$$('#moreOptionsDlg').close();
+  },
+
+  onMoreOptionsCancelTap_: function() {
+    this.$$('#moreOptionsDlg').close();
+  },
+
+  onMoreOptionsClosed_: function() {
+    if (this.storedDomain)
+      this.$.domainInput.value = this.storedDomain;
+    if (this.storedOrgUnit)
+      this.$.orgUnitInput.value = this.storedOrgUnit;
+    this.fire('dialogHidden');
+    this.disabled = false;
+    this.$$('#gaiaCard').classList.remove('full-disabled');
+  },
+
 });

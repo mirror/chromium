@@ -57,8 +57,36 @@
               i18n-values="error:adLoginInvalidPassword;
                            label:adLoginPassword">
           </gaia-input>
+          <gaia-button type="link" on-tap="onMoreOptionsClicked_">
+            [[i18nDynamic(locale, 'adMoreOptions')]]
+          </gaia-button>
         </gaia-input-form>
       </div>
     </gaia-card>
+
+    <dialog is="cr-dialog" id="moreOptionsDlg"
+        on-close="onMoreOptionsClosed_">
+      <div slot="title">
+        [[i18nDynamic(locale, 'adMoreOptions')]]
+      </div>
+      <div slot="body">
+          <gaia-input id="domainInput"
+              label="[[i18nDynamic(locale, 'adDomain')]]" required>
+          </gaia-input>
+          <gaia-input id="orgUnitInput"
+              label="[[i18nDynamic(locale, 'adOrgUnit')]]" required>
+          </gaia-input>
+      </div>
+      <div slot="button-container">
+        <paper-button autofocus on-tap="onMoreOptionsCancelTap_"
+            class="action-button">
+          [[i18nDynamic(locale, 'adCancel')]]
+        </paper-button>
+        <paper-button autofocus on-tap="onMoreOptionsConfirmTap_"
+            class="action-button">
+          [[i18nDynamic(locale, 'adConfirm')]]
+        </paper-button>
+      </div>
+    </dialog>
   </template>
 </dom-module>

@@ -83,6 +83,8 @@ class EnrollmentScreenHandler
   void HandleCompleteLogin(const std::string& user,
                            const std::string& auth_code);
   void HandleAdCompleteLogin(const std::string& machine_name,
+                             const std::string& domain,
+                             const std::string& organizational_unit,
                              const std::string& user_name,
                              const std::string& password);
   void HandleRetry();

@@ -47,10 +47,16 @@ class CHROMEOS_EXPORT AuthPolicyLoginHelper {
   // Packs arguments and calls AuthPolicyClient::JoinAdDomain. Joins machine to
   // Active directory domain. Then it calls RefreshDevicePolicy to cache the
   // policy on the authpolicyd side. |machine_name| is a name for a local
-  // machine. |username|, |password| are credentials of the Active directory
-  // account which has right to join the machine to the domain. |callback| is
-  // called after getting (or failing to get) D-BUS response.
+  // machine. If |domain| is not empty |machine| would be joined to it.
+  // Otherwise |machine| would be joined to domain of the |username|. If
+  // |organizational_unit| is not empty |machine| would be put into that
+  // organizational units structure. |username|, |password| are credentials of
+  // the Active directory account which has right to join the machine to the
+  // domain. |callback| is called after getting (or failing to get) D-BUS
+  // response.
   void JoinAdDomain(const std::string& machine_name,
+                    const std::string& domain,
+                    const std::string& organizational_unit,
                     const std::string& username,
                     const std::string& password,
                     JoinCallback callback);

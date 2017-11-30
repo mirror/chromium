@@ -4205,6 +4205,21 @@
   <message name="IDS_AD_PASSWORD_CHANGE_PASSWORDS_MISMATCH_ERROR" desc="Error message in case new password fields does not match on the Active Directory password change dialog.">
     Passwords do not match.
   </message>
+  <message name="IDS_AD_MORE_OPTIONS_BUTTON" desc="Text on the 'More options' button on the Acitve Directory domain join screen.">
+    More options
+  </message>
+  <message name="IDS_AD_DOMAIN_HINT" desc="Hint for the Active Directory domain input on the 'More options' dialog.">
+    Domain (e.g. domain.example.com)
+  </message>
+  <message name="IDS_AD_ORG_UNIT_HINT" desc="Hint for the Active Directory Organizational units input on the 'More options' dialog.">
+    Organizational units (e.g. leaf,root)
+  </message>
+  <message name="IDS_AD_CONFIRM_BUTTON" desc="Text on the 'Confirm' button on the 'More options' dialog.">
+    Confirm
+  </message>
+  <message name="IDS_AD_CANCEL_BUTTON" desc="Text on the 'Cancel' button on the 'More options' dialog.">
+    Cancel
+  </message>
   <message name="IDS_AD_DOMAIN_JOIN_UNKNOWN_ERROR" desc="Default error text on the Active Directory join screen">
     Oops!  Something went wrong when trying to join the domain. Please try again.
   </message>
