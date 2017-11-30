@@ -16,6 +16,24 @@
       "revId": "97c386024a602189a9a8f2344c6729c35ce1fb3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1adcda0_9e7f3746",
+        "filename": "content/public/browser/web_contents_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-30T13:07:58Z",
+      "side": 1,
+      "message": "Regarding the anti-pattern, because we do not have a `Tab` in the //chrome layer, it\u0027s unclear what else can I do if I want to interact with the WebContents.\n\nGetOriginalOpener() seems relevant but wasn\u0027t working at all (pretty much always null). It\u0027s unclear how it is set and being used.",
+      "parentUuid": "2302b912_dad8c553",
+      "revId": "97c386024a602189a9a8f2344c6729c35ce1fb3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
