@@ -77,6 +77,17 @@ void PrintJob::Initialize(PrintJobWorkerOwner* job,
   new_doc->set_page_count(page_count);
   UpdatePrintedDocument(new_doc);
 
+#if defined(OS_WIN)
+  std::vector<int> pages = PageRange::GetPages(settings_.ranges());
+  if (pages.empty()) {
+    for (int i = 0; i < page_count; i++)
+      pdf_page_mapping_.push_back(i);
+  } else {
+    for (int page : pages)
+      pdf_page_mapping_.push_back(page);
+  }
+#endif
+
   // Don't forget to register to our own messages.
   registrar_.Add(this, chrome::NOTIFICATION_PRINT_JOB_EVENT,
                  content::Source<PrintJob>(this));
@@ -252,10 +263,6 @@ class PrintJob::PdfConversionState {
   gfx::Rect content_area_;
   std::unique_ptr<PdfConverter> converter_;
 };
-
-void PrintJob::AppendPrintedPage(int page_number) {
-  pdf_page_mapping_.push_back(page_number);
-}
 
 void PrintJob::StartPdfToEmfConversion(
     const scoped_refptr<base::RefCountedMemory>& bytes,

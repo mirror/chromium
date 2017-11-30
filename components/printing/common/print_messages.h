@@ -287,7 +287,7 @@ IPC_STRUCT_BEGIN(PrintHostMsg_DidPrintPage_Params)
   // Cookie for the document to ensure correctness.
   IPC_STRUCT_MEMBER(int, document_cookie)
 
-  // Page number.
+  // Page number for the first page in the document.
   IPC_STRUCT_MEMBER(int, page_number)
 
   // The size of the page the page author specified.
@@ -375,8 +375,8 @@ IPC_MESSAGE_ROUTED1(PrintHostMsg_DidGetDocumentCookie,
 // Tells the browser that the print dialog has been shown.
 IPC_MESSAGE_ROUTED0(PrintHostMsg_DidShowPrintDialog)
 
-// Sends back to the browser the rendered "printed page" that was requested by
-// a PrintMsg_PrintPages message or from scripted printing. The memory handle in
+// Sends back to the browser the rendered document that was requested by a
+// PrintMsg_PrintPages message or from scripted printing. The memory handle in
 // this message is already valid in the browser process.
 IPC_MESSAGE_ROUTED1(PrintHostMsg_DidPrintPage,
                     PrintHostMsg_DidPrintPage_Params /* page content */)
