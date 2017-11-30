@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ca61f43_4a28fc7c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 92863,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-30T16:28:48Z",
+      "side": 1,
+      "message": "On a second thought. I\u0027m not sure if it helps us to generalize that. This enum is connected to https://cs.chromium.org/chromium/src/chrome/browser/vr/metrics_helper.cc?rcl\u003deb767ea45759a15d2fd7e38739afbdbcfc970256\u0026l\u003d36. If we generalize it here and other people start using it we may lose flexibility. As discussed, that doesn\u0027t need to be super stable and can be changed in the future. Shouldn\u0027t we do it when we really need a more general enum?",
+      "range": {
+        "startLine": 92863,
+        "startChar": 10,
+        "endLine": 92863,
+        "endChar": 25
+      },
+      "revId": "9983ce44f0d117715511309dc3683c6b671067e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
