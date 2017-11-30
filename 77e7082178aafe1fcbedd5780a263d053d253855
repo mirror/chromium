@@ -227,6 +227,24 @@
       "revId": "77e7082178aafe1fcbedd5780a263d053d253855",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa272b72_9edf7b4b",
+        "filename": "chrome/common/media_router/mojo/media_router.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-30T01:01:23Z",
+      "side": 1,
+      "message": "In the latest patch I\u0027ve added UNKNOWN to C++ but not to Mojo, and made provider_id an optional argument for the MediaSink ctor.",
+      "parentUuid": "4505fc37_a80c2629",
+      "revId": "77e7082178aafe1fcbedd5780a263d053d253855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
