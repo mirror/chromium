@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30fba58c_e35429f7",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-30T19:28:03Z",
+      "side": 1,
+      "message": "s/correspodning/corresponding",
+      "range": {
+        "startLine": 242,
+        "startChar": 67,
+        "endLine": 242,
+        "endChar": 80
+      },
+      "revId": "fa5fc53374a68aefe093b645a7f8b2039bfeb6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12462577_f69a8bfd",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-30T19:28:03Z",
+      "side": 1,
+      "message": "s/t\\ (/t \\(",
+      "range": {
+        "startLine": 243,
+        "startChar": 24,
+        "endLine": 243,
+        "endChar": 25
+      },
+      "revId": "fa5fc53374a68aefe093b645a7f8b2039bfeb6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0db9899c_d7db14fc",
+        "filename": "third_party/WebKit/public/platform/WebPointerEvent.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-30T19:28:03Z",
+      "side": 1,
+      "message": "1) Can you move this to be with the other bools so it is packed correctly?\n2) I think probably may_cause_scrolling_ or pointer_movement_scrolls  which matches the InputDeviceCapabilities is more descriptive.",
+      "revId": "fa5fc53374a68aefe093b645a7f8b2039bfeb6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
