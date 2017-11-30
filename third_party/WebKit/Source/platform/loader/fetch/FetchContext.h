@@ -234,6 +234,12 @@ class PLATFORM_EXPORT FetchContext
     return nullptr;
   }
 
+  // Returns true if the context wants to tighten the throtting policy
+  // initially.
+  virtual bool ShouldTightenResourceLoadThrottlingInitially() const {
+    return false;
+  }
+
   virtual bool IsDetached() const { return false; }
 
   // Obtains WebFrameScheduler instance that is used in the attached frame.
