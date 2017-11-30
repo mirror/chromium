@@ -46,6 +46,30 @@
       "revId": "0d2f4e482c050346a4bb4d19ee27159be447c106",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7254a44a_ac3b46bd",
+        "filename": "extensions/renderer/worker_thread_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-30T23:40:24Z",
+      "side": 1,
+      "message": "This seems OK, also +1 for the note in CreateBindingsSystem about threads.",
+      "parentUuid": "ddf4b057_855174f7",
+      "range": {
+        "startLine": 162,
+        "startChar": 8,
+        "endLine": 162,
+        "endChar": 56
+      },
+      "revId": "0d2f4e482c050346a4bb4d19ee27159be447c106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
