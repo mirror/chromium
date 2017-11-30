@@ -172,6 +172,24 @@
     },
     {
       "key": {
+        "uuid": "fbf3d35d_7e69ef83",
+        "filename": "chrome/browser/ui/views/payments/payment_request_browsertest_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-30T18:14:49Z",
+      "side": 1,
+      "message": "Discussed over hangouts; opted for option 3 (precedent here: https://cs.chromium.org/chromium/src/components/leveldb_proto/proto_database_impl.h)",
+      "parentUuid": "c3dd05e0_314c709c",
+      "revId": "32880c82b5385cbb95708662a6f260af859f9cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3411045b_519fc86d",
         "filename": "chrome/browser/ui/views/payments/payment_request_browsertest_base.cc",
         "patchSetId": 1
