@@ -5,14 +5,18 @@
 #ifndef CHROME_BROWSER_UI_VIEWS_FRAME_GLOBAL_MENU_BAR_REGISTRAR_X11_H_
 #define CHROME_BROWSER_UI_VIEWS_FRAME_GLOBAL_MENU_BAR_REGISTRAR_X11_H_
 
-#include <gio/gio.h>
-
 #include <set>
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/singleton.h"
 #include "ui/base/glib/glib_signal.h"
+
+namespace dbus {
+class Bus;
+class ObjectProxy;
+class Signal;
+}  // namespace dbus
 
 // Advertises our menu bars to Unity.
 //
@@ -37,12 +41,11 @@ class GlobalMenuBarRegistrarX11 {
   void RegisterXID(unsigned long xid);
   void UnregisterXID(unsigned long xid);
 
-  CHROMEG_CALLBACK_1(GlobalMenuBarRegistrarX11, void, OnProxyCreated,
-                     GObject*, GAsyncResult*);
-  CHROMEG_CALLBACK_1(GlobalMenuBarRegistrarX11, void, OnNameOwnerChanged,
-                     GObject*, GParamSpec*);
+  void OnNameOwnerChanged(dbus::Signal* signal);
 
-  GDBusProxy* registrar_proxy_;
+  std::unique_ptr<base::Thread> dbus_thread_;
+  scoped_refptr<dbus::Bus> bus_;
+  dbus::ObjectProxy* registrar_proxy_;
 
   // Window XIDs which want to be registered, but haven't yet been because
   // we're waiting for the proxy to become available.
