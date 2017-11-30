@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "51bb5740_3ba63df3",
+        "filename": "gpu/command_buffer/common/swap_buffers_complete_params.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-30T23:19:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ce02b7a_ea0f8103",
+      "revId": "6957eb88ae3bc5369604bd8de5262aa720911734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97e15939_4f3ae207",
         "filename": "ui/gfx/ca_layer_params.h",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-30T21:49:20Z",
       "side": 1,
       "message": "nit: add copy operator\u003d (rule-of-3)",
+      "revId": "6957eb88ae3bc5369604bd8de5262aa720911734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28b96398_5dfabe52",
+        "filename": "ui/gfx/ca_layer_params.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-30T23:19:54Z",
+      "side": 1,
+      "message": "(also added \u0026\u0026, since this is moved sometimes).",
+      "parentUuid": "97e15939_4f3ae207",
       "revId": "6957eb88ae3bc5369604bd8de5262aa720911734",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "56b4ffd6_505a8063",
+        "filename": "ui/gfx/ca_layer_params.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-30T23:19:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "17725e22_50299650",
+      "revId": "6957eb88ae3bc5369604bd8de5262aa720911734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11baad70_d20f9fef",
         "filename": "ui/gfx/ipc/gfx_param_traits_macros.h",
         "patchSetId": 10
@@ -64,6 +118,41 @@
       "writtenOn": "2017-11-30T21:49:20Z",
       "side": 1,
       "message": "nit: would it make sense to *not* send this one over, so that we\u0027re guaranteed to get the per-platform default value, and we don\u0027t risk privilege escalation if the GPU process is compromized and tries to fake this value? I suspect it can\u0027t do much now, but just in case for future refactoring....",
+      "revId": "6957eb88ae3bc5369604bd8de5262aa720911734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "579c0302_cd161321",
+        "filename": "ui/gfx/ipc/gfx_param_traits_macros.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-30T23:19:54Z",
+      "side": 1,
+      "message": "I\u0027ll put it as const and take it out of the ipc.\n\nIf it gets in the way of writing tests, we can re-evaluate it then (for now nobody reads it).",
+      "parentUuid": "11baad70_d20f9fef",
+      "revId": "6957eb88ae3bc5369604bd8de5262aa720911734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9896d2f9_162dd9c2",
+        "filename": "ui/gfx/ipc/gfx_param_traits_macros.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-30T23:19:54Z",
+      "side": 1,
+      "message": "FYI, removed fullscreen_low_power to resolve against\nhttps://chromium-review.googlesource.com/c/chromium/src/+/802020",
       "revId": "6957eb88ae3bc5369604bd8de5262aa720911734",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
