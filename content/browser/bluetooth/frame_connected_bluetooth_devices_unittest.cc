@@ -18,6 +18,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace content {
+namespace frame_connected_bluetooth_devices_unittest {
 
 typedef testing::NiceMock<device::MockBluetoothAdapter>
     NiceMockBluetoothAdapter;
@@ -28,8 +29,6 @@ typedef testing::NiceMock<device::MockBluetoothGattConnection>
 using testing::Return;
 using testing::StrEq;
 using testing::_;
-
-namespace {
 
 const WebBluetoothDeviceId kDeviceId0("000000000000000000000A==");
 constexpr char kDeviceAddress0[] = "0";
@@ -44,8 +43,6 @@ blink::mojom::WebBluetoothServerClientAssociatedPtr CreateServerClient() {
   mojo::MakeRequestAssociatedWithDedicatedPipe(&client);
   return client;
 }
-
-}  // namespace
 
 class FrameConnectedBluetoothDevicesTest
     : public RenderViewHostImplTestHarness {
@@ -432,4 +429,5 @@ TEST_F(FrameConnectedBluetoothDevicesTest,
   DeleteContents();
 }
 
+}  // namespace frame_connected_bluetooth_devices_unittest
 }  // namespace content

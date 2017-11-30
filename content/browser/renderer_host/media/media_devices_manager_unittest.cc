@@ -30,8 +30,7 @@ using testing::_;
 using testing::SaveArg;
 
 namespace content {
-
-namespace {
+namespace media_devices_manager_unittest {
 
 // Number of client enumerations to simulate on each test run.
 // This allows testing that a single call to low-level enumeration functions
@@ -123,8 +122,6 @@ class MockMediaDeviceChangeSubscriber : public MediaDeviceChangeSubscriber {
   MOCK_METHOD2(OnDevicesChanged,
                void(MediaDeviceType, const MediaDeviceInfoArray&));
 };
-
-}  // namespace
 
 class MediaDevicesManagerTest : public ::testing::Test {
  public:
@@ -584,4 +581,5 @@ TEST_F(MediaDevicesManagerTest, SubscribeDeviceChanges) {
   EXPECT_EQ(num_audio_output_devices, notification_all_audio_output.size());
 }
 
+}  // namespace media_devices_manager_unittest
 }  // namespace content

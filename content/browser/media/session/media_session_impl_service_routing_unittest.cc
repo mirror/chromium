@@ -25,8 +25,7 @@ using ::testing::InvokeWithoutArgs;
 using ::testing::NiceMock;
 
 namespace content {
-
-namespace {
+namespace media_session_impl_service_routing_unittest {
 
 static const int kPlayerId = 0;
 
@@ -76,8 +75,6 @@ class MockMediaSessionPlayerObserver : public MediaSessionPlayerObserver {
  private:
   RenderFrameHost* render_frame_host_;
 };
-
-}  // anonymous namespace
 
 class MediaSessionImplServiceRoutingTest
     : public RenderViewHostImplTestHarness {
@@ -414,4 +411,5 @@ TEST_F(MediaSessionImplServiceRoutingTest,
       ->DidReceiveAction(blink::mojom::MediaSessionAction::PAUSE);
 }
 
+}  // namespace media_session_impl_service_routing_unittest
 }  // namespace content

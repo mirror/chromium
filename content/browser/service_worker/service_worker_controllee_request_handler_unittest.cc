@@ -38,12 +38,9 @@
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 
 namespace content {
-
-namespace {
+namespace service_worker_controllee_request_handler_unittest {
 
 int kMockProviderId = 1;
-
-}
 
 class ServiceWorkerControlleeRequestHandlerTest : public testing::Test {
  public:
@@ -435,4 +432,5 @@ TEST_F(ServiceWorkerControlleeRequestHandlerTest, FallbackWithNoOfflineHeader) {
 }
 #endif  // BUILDFLAG(ENABLE_OFFLINE_PAGE
 
+}  // namespace service_worker_controllee_request_handler_unittest
 }  // namespace content
