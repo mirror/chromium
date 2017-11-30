@@ -52,6 +52,24 @@
       "revId": "da5143e4046858eaab9ed8b084402f2e4601e050",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc622302_a369d2a5",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8ObjectConstructor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-30T14:29:38Z",
+      "side": 1,
+      "message": "Done.\nI use CHECK() where we returned empty handles in old V8PerContextData::ConstructorForTypeSlowCase(),\nexcept for #82 in this PS, which should be checked in call sites.",
+      "parentUuid": "364d2f46_814ef39b",
+      "revId": "da5143e4046858eaab9ed8b084402f2e4601e050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
