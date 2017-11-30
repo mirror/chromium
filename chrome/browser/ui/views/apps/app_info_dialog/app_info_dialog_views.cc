@@ -8,9 +8,11 @@
 
 #include "base/bind.h"
 #include "base/command_line.h"
+#include "base/lazy_instance.h"
 #include "build/build_config.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/ui/apps/app_info_dialog.h"
 #include "chrome/browser/ui/views/apps/app_info_dialog/app_info_dialog_container.h"
 #include "chrome/browser/ui/views/apps/app_info_dialog/app_info_footer_panel.h"
 #include "chrome/browser/ui/views/apps/app_info_dialog/app_info_header_panel.h"
@@ -104,6 +106,13 @@ void ShowAppInfoInNativeDialog(content::WebContents* web_contents,
         constrained_window::CreateBrowserModalDialogViews(dialog, window);
     dialog_widget->Show();
   }
+  if (GetAppInfoDialogCreatedCallbackForTesting())
+    std::move(GetAppInfoDialogCreatedCallbackForTesting()).Run();
+}
+
+base::OnceClosure& GetAppInfoDialogCreatedCallbackForTesting() {
+  CR_DEFINE_STATIC_LOCAL(base::OnceClosure, closure, ());
+  return closure;
 }
 
 AppInfoDialog::AppInfoDialog(gfx::NativeWindow parent_window,
