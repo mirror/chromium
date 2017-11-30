@@ -9,7 +9,8 @@ option optimize_for = LITE_RUNTIME;
 package net.nqe.internal;
 
 // NetworkIDProto contains data that can be used to uniquely identify a network
-// type. Next id: 3
+// type.
+// Next id: 4
 message NetworkIDProto {
   // Connection type of the network mapped from
   // net::NetworkChangeNotifier::ConnectionType.
@@ -17,4 +18,6 @@ message NetworkIDProto {
   // Name of this network. This is set to WiFi SSID or the MCCMNC of the
   // network.
   optional string id = 2;
+  // Signal strength of the network.
+  optional int32 signal_strength = 3;
 }
