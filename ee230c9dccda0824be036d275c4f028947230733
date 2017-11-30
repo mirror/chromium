@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "947d4d11_5dd9c2b1",
+        "filename": "third_party/WebKit/Source/core/dom/Document.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-30T10:46:35Z",
+      "side": 1,
+      "message": "This should be an observable change, and should be possible to write a test for that would fail before this change. Or is the trouble that even with the new conversion logic (turning unpaired surrogates into U+FFFD), there\u0027s another check in the setter that throws an exception, that also threw the same exception before?",
+      "range": {
+        "startLine": 97,
+        "startChar": 21,
+        "endLine": 97,
+        "endChar": 27
+      },
+      "revId": "ee230c9dccda0824be036d275c4f028947230733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
