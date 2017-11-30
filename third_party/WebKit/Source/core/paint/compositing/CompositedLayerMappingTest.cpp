@@ -2129,8 +2129,8 @@ TEST_P(CompositedLayerMappingTest, StickyPositionNotSquashed) {
   PaintLayer* sticky3 =
       ToLayoutBlock(GetLayoutObjectByElementId("sticky3"))->Layer();
   EXPECT_EQ(kPaintsIntoOwnBacking, sticky1->GetCompositingState());
-  EXPECT_EQ(kNotComposited, sticky2->GetCompositingState());
-  EXPECT_EQ(kNotComposited, sticky3->GetCompositingState());
+  EXPECT_NE(kPaintsIntoGroupedBacking, sticky2->GetCompositingState());
+  EXPECT_NE(kPaintsIntoGroupedBacking, sticky3->GetCompositingState());
 
   PaintLayer* scroller =
       ToLayoutBlock(GetLayoutObjectByElementId("scroller"))->Layer();
