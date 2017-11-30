@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1a32f61_6ffde5f8",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-30T21:27:18Z",
+      "side": 1,
+      "message": "That message doesn\u0027t sound correct... e.g. BUILD_DIR \u003d \"out/coverage/\" and the target is \"out/coverage/unit_tests\". That would be OK, but actually command is not relative to the build directory, it is relative to SRC_ROOT_PATH, right?\n\nI think we need to have two asserts here:\n\n1) assert binary_path.startswith(BUILD_DIR), (\u0027Target executable \"%s\" is outside of the given build directory: \"%s\"\u0027 % (binary_path, BUILD_DIR))\n\n2) assert os.path.exists(os.path.join(SRC_ROOT_PATH, binary_path)), (\u0027Command: \"%s\" is not relative to the local Chromium checkout \"%s\"\u0027 % (command, SRC_ROOT_PATH))",
+      "range": {
+        "startLine": 351,
+        "startChar": 62,
+        "endLine": 352,
+        "endChar": 76
+      },
+      "revId": "490c4d5c871a80b763bf5235d92639f080f0ff54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
