@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b9a349a_2f64614b",
+        "filename": "content/browser/service_worker/service_worker_url_request_job_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-30T03:48:39Z",
+      "side": 1,
+      "message": "This is due to the change yesterday: https://chromium.googlesource.com/chromium/src/+/67025f67e9bfe35a583e843db1f447c24db5c5fe",
+      "range": {
+        "startLine": 714,
+        "startChar": 2,
+        "endLine": 716,
+        "endChar": 48
+      },
+      "revId": "7525f1f94f9985b81360a812fd0ff859f517f0bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

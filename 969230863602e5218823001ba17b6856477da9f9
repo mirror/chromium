@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "66eadd74_531bbff0",
+        "filename": "mojo/public/cpp/bindings/binding_set.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-30T03:48:39Z",
+      "side": 1,
+      "message": "Got it. I think I can understand the 2 concerns and agree we do that separately. Filed a new issue crbug.com/789816 for this. Thank you ;-)",
+      "parentUuid": "81164c04_d5383308",
+      "range": {
+        "startLine": 188,
+        "startChar": 24,
+        "endLine": 188,
+        "endChar": 42
+      },
+      "revId": "969230863602e5218823001ba17b6856477da9f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2151d0de_97dedae8",
         "filename": "mojo/public/cpp/bindings/binding_set.h",
         "patchSetId": 13
