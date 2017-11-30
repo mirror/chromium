@@ -82,6 +82,7 @@
 #include "ash/system/night_light/night_light_controller.h"
 #include "ash/system/palette/palette_tray.h"
 #include "ash/system/palette/palette_welcome_bubble.h"
+#include "ash/system/power/display_forced_off_setter.h"
 #include "ash/system/power/peripheral_battery_notifier.h"
 #include "ash/system/power/power_button_controller.h"
 #include "ash/system/power/power_event_observer.h"
@@ -600,7 +601,6 @@ Shell::Shell(std::unique_ptr<ShellDelegate> shell_delegate,
       shutdown_controller_(std::make_unique<ShutdownController>()),
       system_tray_controller_(std::make_unique<SystemTrayController>()),
       system_tray_notifier_(std::make_unique<SystemTrayNotifier>()),
-      tray_action_(std::make_unique<TrayAction>()),
       vpn_list_(std::make_unique<VpnList>()),
       window_cycle_controller_(std::make_unique<WindowCycleController>()),
       window_selector_controller_(std::make_unique<WindowSelectorController>()),
@@ -725,8 +725,11 @@ Shell::~Shell() {
   toplevel_window_event_handler_.reset();
   visibility_controller_.reset();
 
+  tray_action_.reset();
+
   power_button_controller_.reset();
   lock_state_controller_.reset();
+  display_forced_off_setter_.reset();
 
   screen_pinning_controller_.reset();
 
@@ -1010,6 +1013,10 @@ void Shell::Init(const ShellInitParams& init_params) {
 
   sticky_keys_controller_.reset(new StickyKeysController);
   screen_pinning_controller_ = std::make_unique<ScreenPinningController>();
+
+  display_forced_off_setter_ = std::make_unique<DisplayForcedOffSetter>();
+
+  tray_action_ = std::make_unique<TrayAction>();
 
   lock_state_controller_ =
       std::make_unique<LockStateController>(shutdown_controller_.get());
