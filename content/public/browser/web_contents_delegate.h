@@ -544,6 +544,10 @@ class CONTENT_EXPORT WebContentsDelegate {
   virtual void AdjustPreviewsStateForNavigation(PreviewsState* previews_state) {
   }
 
+  // Returns the WebContents opener if any and still alive. Returns null if
+  // there was no opener or it was destroyed.
+  virtual WebContents* GetWebContentsOpener(WebContents* web_contents);
+
  protected:
   virtual ~WebContentsDelegate();
 

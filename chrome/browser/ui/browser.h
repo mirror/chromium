@@ -675,6 +675,8 @@ class Browser : public TabStripModelObserver,
       const base::Callback<void(bool)>& callback) override;
   gfx::Size GetSizeForNewRenderView(
       content::WebContents* web_contents) const override;
+  content::WebContents* GetWebContentsOpener(
+      content::WebContents* web_contents) override;
 
   // Overridden from CoreTabHelperDelegate:
   // Note that the caller is responsible for deleting |old_contents|.
