@@ -59,6 +59,29 @@
     },
     {
       "key": {
+        "uuid": "104cd29e_c0cdd04b",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-30T15:08:51Z",
+      "side": 1,
+      "message": "Looks like you want a static local. See an example here: https://cs.chromium.org/chromium/src/chrome/browser/vr/gltf_asset.cc?rcl\u003dbe1e40e8555a6489a1bb76bd6c686df0f7fc2f23\u0026l\u003d21",
+      "range": {
+        "startLine": 188,
+        "startChar": 38,
+        "endLine": 188,
+        "endChar": 50
+      },
+      "revId": "d0d089d66ce998dd575cfb73df89bfd2efec398d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71781c38_3f9133e2",
         "filename": "device/vr/vr_device.h",
         "patchSetId": 1
