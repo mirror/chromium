@@ -52,6 +52,24 @@
       "revId": "b36aa0db3106c495b9fdf44681acf4d525d9bc2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f093883_acf291c5",
+        "filename": "ios/chrome/browser/snapshots/web_controller_snapshot_helper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-11-30T05:37:14Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "eb7d1dbf_5fa9ef25",
+      "revId": "b36aa0db3106c495b9fdf44681acf4d525d9bc2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

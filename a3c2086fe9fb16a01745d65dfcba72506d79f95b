@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "c4f0c5f3_79de6501",
+        "filename": "ios/chrome/browser/tabs/tab_model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-11-30T05:37:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f23b723b_448c08e2",
+      "range": {
+        "startLine": 130,
+        "startChar": 25,
+        "endLine": 130,
+        "endChar": 37
+      },
+      "revId": "a3c2086fe9fb16a01745d65dfcba72506d79f95b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c10d5d99_06bc561d",
         "filename": "ios/chrome/browser/tabs/tab_model.h",
         "patchSetId": 3
@@ -144,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "ea20c66a_aff5ce8d",
+        "filename": "ios/chrome/browser/tabs/tab_model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-11-30T05:37:14Z",
+      "side": 1,
+      "message": "I started implementing this approach but it\u0027s not as nice as I\u0027d hope. There are 3 issues:\n\n1. If TabModelDelegate is just a protocol and implemented by BrowserViewWrangler, it becomes harder to use real WebState in tests that call [TabModel alloc] directly. There are two remaining use case after this change: perf_test_with_bvc_ios.mm and TabModelWithWebStateTest.PersistSelectionChange. We can mitigate this by making TabModelDelegate an @interface instead of @protocol.\n\n2. Even in unittests that don\u0027t need real WebState, each needs to provide their own TestTabModelDelegate implementation. Currently there are 4 such unit tests:\nc/b/tabs/tab_model_unittest.mm\nc/b/tabs/tab_model_list_unittest.mm\nc/b/ui/tabs/tab_strip_controller_unittest.mm\nc/b/ui/ntp/new_tab_page_controller_unittest.mm\n\nI can provide a common implementation in ios/chrome/browser/tabs and create a testonly BUILD target so it can be used outside of c/b/tabs.\n\n3. tab_model currently uses C++ binding:\n\nDeserializeWebStateList(\n      _webStateList.get(), window,\n      base::BindRepeating(\u0026web::WebState::CreateWithStorageSession,\n                          createParams));\n\nWith the delegate defined in Objective-C, it becomes this mess:\n\nbase::BindRepeating([createParams](CRWSessionStorage* sessionStorage) -\u003e std::unique_ptr\u003cweb::WebState\u003e {\n  return [_delegate webStateWithParams:createParams sessionStorage:sessionStorage];\n}));\n\nWe can perhaps change DeserializeWebStateList() to take a block. The only other caller of this function is BrowserListSessionServiceImpl and BrowserListSessionServiceFactory. We\u0027d need to change them to use ObjC block.\n\nLet\u0027s call all of the above Option 1.\n\nOption 2 is to define TabModelDelegate as a set of C++ objects. TabModelDelegateImpl will be used for #1. TestModelDelegate will be used for #2. Because this is a C++ object, #3 is a non-issue.\n\nWDYT?",
+      "parentUuid": "edabaafd_b8bc3d84",
+      "range": {
+        "startLine": 136,
+        "startChar": 22,
+        "endLine": 136,
+        "endChar": 37
+      },
+      "revId": "a3c2086fe9fb16a01745d65dfcba72506d79f95b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d11b2bbe_41f9057f",
         "filename": "ios/chrome/browser/tabs/tab_model_unittest.mm",
         "patchSetId": 3
@@ -190,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "0fcbfd95_0720f1be",
+        "filename": "ios/web/public/test/fakes/test_session_certificate_policy_cache.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-11-30T05:37:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d68ffb5_0ffddf26",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 39
+      },
+      "revId": "a3c2086fe9fb16a01745d65dfcba72506d79f95b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27f01baa_77780085",
         "filename": "ios/web/public/test/fakes/test_session_certificate_policy_cache.h",
         "patchSetId": 3
@@ -210,6 +282,30 @@
       "revId": "a3c2086fe9fb16a01745d65dfcba72506d79f95b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a124a297_c34144c4",
+        "filename": "ios/web/public/test/fakes/test_session_certificate_policy_cache.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-11-30T05:37:14Z",
+      "side": 1,
+      "message": "Chrome style check complains that this is a complex class so can\u0027t have inlined constructor and destructor.",
+      "parentUuid": "27f01baa_77780085",
+      "range": {
+        "startLine": 35,
+        "startChar": 35,
+        "endLine": 35,
+        "endChar": 68
+      },
+      "revId": "a3c2086fe9fb16a01745d65dfcba72506d79f95b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +353,30 @@
       "revId": "a3c2086fe9fb16a01745d65dfcba72506d79f95b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f4ead72_5a01cc49",
+        "filename": "ios/web/public/web_state/web_state.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-11-30T05:37:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca016f5a_c084a5a1",
+      "range": {
+        "startLine": 339,
+        "startChar": 6,
+        "endLine": 339,
+        "endChar": 29
+      },
+      "revId": "a3c2086fe9fb16a01745d65dfcba72506d79f95b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
