@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e76a9174_3c418835",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-11-30T23:44:42Z",
+      "side": 1,
+      "message": "Textfield early-exits for this. It also does not update the cursor.",
+      "parentUuid": "27f4ec2b_78d16b3b",
+      "revId": "a57369949bda0e072375a1954eee940716102984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c4f11a35_b7319eb7",
         "filename": "ash/login/ui/login_password_view.cc",
         "patchSetId": 4
@@ -30,6 +48,30 @@
       "writtenOn": "2017-11-30T23:30:51Z",
       "side": 1,
       "message": "q: Should this be calling AppendText, or maybe AppendNumber is a misnomer and it intends to replace selected text?",
+      "range": {
+        "startLine": 486,
+        "startChar": 14,
+        "endLine": 486,
+        "endChar": 33
+      },
+      "revId": "a57369949bda0e072375a1954eee940716102984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cc49190_db5b093c",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-11-30T23:44:42Z",
+      "side": 1,
+      "message": "I can call the function InsertNumber? But I believe behavior here is correct - if the user has something highlighted we will replace it. We will insert at cursor location/etc.",
+      "parentUuid": "c4f11a35_b7319eb7",
       "range": {
         "startLine": 486,
         "startChar": 14,
