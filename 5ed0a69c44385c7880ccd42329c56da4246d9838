@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8799e172_b82fe07d",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-11-30T17:31:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a6b74b9_f6c48efe",
+      "range": {
+        "startLine": 55,
+        "startChar": 40,
+        "endLine": 55,
+        "endChar": 53
+      },
+      "revId": "5ed0a69c44385c7880ccd42329c56da4246d9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2f9aaf6_2e1b4f82",
         "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.cc",
         "patchSetId": 5
@@ -39,6 +63,24 @@
       "revId": "5ed0a69c44385c7880ccd42329c56da4246d9838",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23951833_ca6f21de",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-11-30T17:31:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2f9aaf6_2e1b4f82",
+      "revId": "5ed0a69c44385c7880ccd42329c56da4246d9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "16fff2b6_01fb2e7f",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-11-30T17:31:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f166f59_1bb6cdbc",
+      "range": {
+        "startLine": 178,
+        "startChar": 34,
+        "endLine": 178,
+        "endChar": 43
+      },
+      "revId": "5ed0a69c44385c7880ccd42329c56da4246d9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84d6f27f_0545817a",
         "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.cc",
         "patchSetId": 5
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "500c4393_27512a18",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-11-30T17:31:28Z",
+      "side": 1,
+      "message": "That\u0027s right. Except then this code would be dependent on the default value being true.",
+      "parentUuid": "84d6f27f_0545817a",
+      "revId": "5ed0a69c44385c7880ccd42329c56da4246d9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7918ee9_abb7b4a3",
         "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_browsertest.cc",
         "patchSetId": 5
@@ -96,6 +180,24 @@
       "revId": "5ed0a69c44385c7880ccd42329c56da4246d9838",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3802114c_789797e7",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-11-30T17:31:28Z",
+      "side": 1,
+      "message": "I think they should be in separate tests since the policy is set with \u0027dynamic\u0027 as false \u003d\u003e browser needs a restart to get the latest policy value",
+      "parentUuid": "a7918ee9_abb7b4a3",
+      "revId": "5ed0a69c44385c7880ccd42329c56da4246d9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
