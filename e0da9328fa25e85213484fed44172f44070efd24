@@ -46,6 +46,30 @@
       "revId": "e0da9328fa25e85213484fed44172f44070efd24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d114d174_7b8e623c",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-30T20:10:49Z",
+      "side": 1,
+      "message": "You\u0027re breaking it when the network service is disabled.\n\nNavigationUIData is incrementally updated on the IO thread.  The offline data is attached by the OfflineURLRequestJob (i.e., long after navigation starts), and then the updated NavigationUIData is passed to RDHDelegate once the OfflineURLRequestJob starts providing data.\n\nBy removing the old path, you\u0027re breaking that logic.  I\u0027m not concerned about breaking the network service case (Which, as you say, isn\u0027t working in the first place).",
+      "parentUuid": "0edd5f5d_261b9349",
+      "range": {
+        "startLine": 550,
+        "startChar": 6,
+        "endLine": 550,
+        "endChar": 25
+      },
+      "revId": "e0da9328fa25e85213484fed44172f44070efd24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
