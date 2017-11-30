@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25215a15_22d7d396",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-30T13:18:06Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "45b5606fac39df4cff9c0f00308fba98257c3217",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c9ed7d1_1f4a813e",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-30T13:18:06Z",
+      "side": 1,
+      "message": "Should this rather call a method like ReportAll()? Resetting in order to report feels slightly weird, and also keeping it would make it easier to log stray requests after this point (regardless of whether you make the change in this cl or not)",
+      "revId": "45b5606fac39df4cff9c0f00308fba98257c3217",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
