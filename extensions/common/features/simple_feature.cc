@@ -8,6 +8,7 @@
 #include <map>
 #include <utility>
 #include <vector>
+#include <iostream>
 
 #include "base/bind.h"
 #include "base/command_line.h"
@@ -589,29 +590,34 @@ Feature::Availability SimpleFeature::GetManifestAvailability(
     return CreateAvailability(INVALID_TYPE, type);
   }
 
-  if (!blacklist_.empty() && IsIdInBlacklist(hashed_id))
+  if (!blacklist_.empty() && IsIdInBlacklist(hashed_id)) {
     return CreateAvailability(FOUND_IN_BLACKLIST);
+  }
 
   // TODO(benwells): don't grant all component extensions.
   // See http://crbug.com/370375 for more details.
   // Component extensions can access any feature.
   // NOTE: Deliberately does not match EXTERNAL_COMPONENT.
-  if (component_extensions_auto_granted_ && location == Manifest::COMPONENT)
+  if (component_extensions_auto_granted_ && location == Manifest::COMPONENT) {
     return CreateAvailability(IS_AVAILABLE);
+  }
 
   if (!whitelist_.empty() && !IsIdInWhitelist(hashed_id) &&
       !IsWhitelistedForTest(hashed_id)) {
     return CreateAvailability(NOT_FOUND_IN_WHITELIST);
   }
 
-  if (location_ && !MatchesManifestLocation(location))
+  if (location_ && !MatchesManifestLocation(location)) {
     return CreateAvailability(INVALID_LOCATION);
+  }
 
-  if (min_manifest_version_ && manifest_version < *min_manifest_version_)
+  if (min_manifest_version_ && manifest_version < *min_manifest_version_) {
     return CreateAvailability(INVALID_MIN_MANIFEST_VERSION);
+  }
 
-  if (max_manifest_version_ && manifest_version > *max_manifest_version_)
+  if (max_manifest_version_ && manifest_version > *max_manifest_version_) {
     return CreateAvailability(INVALID_MAX_MANIFEST_VERSION);
+  }
 
   return CreateAvailability(IS_AVAILABLE);
 }

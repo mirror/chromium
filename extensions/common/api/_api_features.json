@@ -269,7 +269,19 @@
       "chrome://bookmarks/*",
       "chrome://settings/*"
     ]
-  }],
+  }, {
+    "channel": "stable",
+    "contexts": ["blessed_extension"],
+    "extension_types": ["extension"],
+    "whitelist": [
+      "CBCC42ABED43A4B58FE3810E62AFFA010EB0349F"   // PDF Viewer
+    ]
+  }
+  /*, {
+    "channel": "stable",
+    "contexts": ["blessed_extension"]
+  }*/
+  ],
   "metricsPrivate.getIsCrashReportingEnabled": {
     "whitelist": [
       // This function inherits the extension restrictions of metricsPrivate,

@@ -12,6 +12,8 @@
 #include <list>
 #include <memory>
 
+#include <iostream>
+
 #include "base/logging.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
@@ -586,13 +588,17 @@ void OutOfProcessInstance::HandleMessage(const pp::Var& message) {
       NOTREACHED();
     }
   } else if (type == kJSPrintType) {
+    std::cerr << "kJSPrintType" << std::endl;
     Print();
   } else if (type == kJSSaveType) {
+    std::cerr << "kJSSaveType" << std::endl;
     engine_->KillFormFocus();
     pp::PDF::SaveAs(this);
   } else if (type == kJSRotateClockwiseType) {
+    std::cerr << "kJSRotateClockwiseType" << std::endl;
     RotateClockwise();
   } else if (type == kJSRotateCounterclockwiseType) {
+    std::cerr << "kJSRotateCounterclockwiseType" << std::endl;
     RotateCounterclockwise();
   } else if (type == kJSSelectAllType) {
     engine_->SelectAll();
