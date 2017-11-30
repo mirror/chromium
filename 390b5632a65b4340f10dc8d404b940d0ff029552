@@ -16,6 +16,24 @@
       "revId": "390b5632a65b4340f10dc8d404b940d0ff029552",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d62fa6c_cbb8166d",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 2313,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-30T15:31:21Z",
+      "side": 1,
+      "message": "I stayed away from that because it says the function is banned, where base::Bind() is not (yet). But can change it.",
+      "parentUuid": "8d1b8904_166e9d4a",
+      "revId": "390b5632a65b4340f10dc8d404b940d0ff029552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
