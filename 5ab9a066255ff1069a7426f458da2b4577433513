@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41f7ae51_90862291",
+        "filename": "chrome/browser/ui/sync/one_click_signin_sync_starter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-30T12:22:05Z",
+      "side": 1,
+      "message": "This code was copy/pasted to make it more readable.",
+      "range": {
+        "startLine": 348,
+        "startChar": 32,
+        "endLine": 348,
+        "endChar": 74
+      },
+      "revId": "5ab9a066255ff1069a7426f458da2b4577433513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
