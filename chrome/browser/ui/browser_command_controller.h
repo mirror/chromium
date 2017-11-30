@@ -160,7 +160,7 @@ class BrowserCommandController : public CommandUpdaterDelegate,
   inline BrowserWindow* window();
   inline Profile* profile();
 
-  Browser* const browser_;
+  Browser* const browser_;  // Never nullptr.
 
   // The CommandUpdater that manages the browser window commands.
   CommandUpdater command_updater_;

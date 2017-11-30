@@ -108,7 +108,7 @@ ToolbarActionsBar::ToolbarActionsBar(ToolbarActionsBarDelegate* delegate,
       is_showing_bubble_(false),
       tab_strip_observer_(this),
       weak_ptr_factory_(this) {
-  if (model_)  // |model_| can be null in unittests.
+  if (model_)
     model_observer_.Add(model_);
 
   tab_strip_observer_.Add(browser_->tab_strip_model());
@@ -127,16 +127,6 @@ ToolbarActionsBar::~ToolbarActionsBar() {
 int ToolbarActionsBar::IconWidth(bool include_padding) {
   return IconHeight() +
          (include_padding ? GetLayoutConstant(TOOLBAR_STANDARD_SPACING) : 0);
-}
-
-// static
-int ToolbarActionsBar::IconHeight() {
-#if defined(OS_MACOSX)
-  // On the Mac, the spec is a 24x24 button in a 28x28 space.
-  return 24;
-#else
-  return 28;
-#endif
 }
 
 // static
@@ -445,7 +435,7 @@ void ToolbarActionsBar::OnAnimationEnded() {
   // message bubble, or to show a popup.
   if (pending_bubble_controller_) {
     ShowToolbarActionBubble(std::move(pending_bubble_controller_));
-  } else if (!popped_out_closure_.is_null()) {
+  } else if (popped_out_closure_) {
     popped_out_closure_.Run();
     popped_out_closure_.Reset();
   }

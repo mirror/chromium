@@ -153,7 +153,7 @@ class RecentTabsSubMenuModel : public ui::SimpleMenuModel,
   void OnSyncConfigurationCompleted(syncer::SyncService* sync) override;
   void OnForeignSessionUpdated(syncer::SyncService* sync) override;
 
-  Browser* const browser_;  // Weak.
+  Browser* const browser_;  // Weak. Never nullptr.
 
   sync_sessions::OpenTabsUIDelegate* open_tabs_delegate_;  // Weak.
 

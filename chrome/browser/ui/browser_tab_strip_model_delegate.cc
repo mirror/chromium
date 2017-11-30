@@ -110,7 +110,7 @@ void BrowserTabStripModelDelegate::CreateHistoricalTab(
     content::WebContents* contents) {
   // We don't create historical tabs for incognito windows or windows without
   // profiles.
-  if (!browser_->profile() || browser_->profile()->IsOffTheRecord())
+  if (browser_->profile()->IsOffTheRecord())
     return;
 
   sessions::TabRestoreService* service =
