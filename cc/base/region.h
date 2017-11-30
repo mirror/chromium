@@ -22,6 +22,10 @@ class TracedValue;
 }
 }
 
+namespace gfx {
+class Vector2d;
+}
+
 namespace cc {
 class SimpleEnclosedRegion;
 
@@ -56,6 +60,8 @@ class CC_BASE_EXPORT Region {
   void Union(const Region& region);
   void Intersect(const gfx::Rect& rect);
   void Intersect(const Region& region);
+
+  void Offset(const gfx::Vector2d& offset);
 
   bool Equals(const Region& other) const {
     return skregion_ == other.skregion_;

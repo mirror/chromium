@@ -9,6 +9,7 @@
 #include "base/trace_event/trace_event_argument.h"
 #include "base/values.h"
 #include "cc/base/simple_enclosed_region.h"
+#include "ui/gfx/geometry/vector2d.h"
 
 namespace cc {
 
@@ -111,6 +112,10 @@ void Region::Intersect(const gfx::Rect& rect) {
 
 void Region::Intersect(const Region& region) {
   skregion_.op(region.skregion_, SkRegion::kIntersect_Op);
+}
+
+void Region::Offset(const gfx::Vector2d& offset) {
+  skregion_.translate(offset.x(), offset.y());
 }
 
 std::string Region::ToString() const {
