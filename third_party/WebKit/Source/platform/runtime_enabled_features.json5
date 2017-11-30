@@ -83,6 +83,9 @@
       status: "stable",
     },
     {
+      name: "AllowWebPaymentsLocalhostUrls",
+    },
+    {
       name: "AnimationWorklet",
       status: "experimental",
     },

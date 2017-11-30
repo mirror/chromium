@@ -72,3 +72,35 @@ function install(method) {  // eslint-disable-line no-unused-vars
         output('serviceWorker.getRegistration()', error);
       });
 }
+
+/**
+ * Checks whether a payment can be made.
+ * @param {String} method - The payment method name to check.
+ */
+function canMakePayment(method) {  // eslint-disable-line no-unused-vars
+  let paymentRequest;
+  try {
+    paymentRequest = new PaymentRequest(
+        [{supportedMethods: method}],
+        {total: {label: 'Total', amount: {currency: 'USD', value: '1.00'}}});
+  } catch (error) {
+    output('new PaymentRequest()', error);
+    return;
+  }
+
+  paymentRequest.canMakePayment()
+      .then((result) => {
+        if (result) {
+          output(
+              'paymentRequest.canMakePayment()',
+              'Can make payments with "' + method + '".');
+        } else {
+          output(
+              'paymentRequest.canMakePayment()',
+              'Cannot make payments with "' + method + '".');
+        }
+      })
+      .catch((error) => {
+        output('paymentRequest.canMakePayment()', error);
+      });
+}
