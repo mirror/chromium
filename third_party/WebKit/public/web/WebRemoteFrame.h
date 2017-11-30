@@ -23,6 +23,7 @@ class WebString;
 class WebView;
 struct WebRect;
 struct WebRemoteScrollProperties;
+struct WebResourceTimingInfo;
 
 class WebRemoteFrame : public WebFrame {
  public:
@@ -91,6 +92,7 @@ class WebRemoteFrame : public WebFrame {
   virtual void SetReplicatedPotentiallyTrustworthyUniqueOrigin(bool) = 0;
 
   virtual void DispatchLoadEventOnFrameOwner() = 0;
+  virtual void AddResourceTiming(const WebResourceTimingInfo&) = 0;
 
   virtual void DidStartLoading() = 0;
   virtual void DidStopLoading() = 0;
