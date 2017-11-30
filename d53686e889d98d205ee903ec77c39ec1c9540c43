@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "570d89af_1595807c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-30T00:23:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcf0154f_72d94dd7",
+      "range": {
+        "startLine": 398,
+        "startChar": 12,
+        "endLine": 400,
+        "endChar": 46
+      },
+      "revId": "d53686e889d98d205ee903ec77c39ec1c9540c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6fbe3e2_02a30a31",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/ChromeHomePromoDialog.java",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "d53686e889d98d205ee903ec77c39ec1c9540c43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cd2a7a1_ee73ce55",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/ChromeHomePromoDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-30T00:23:58Z",
+      "side": 1,
+      "message": "Yeah that was broken. Fixed",
+      "parentUuid": "b6fbe3e2_02a30a31",
+      "revId": "d53686e889d98d205ee903ec77c39ec1c9540c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
