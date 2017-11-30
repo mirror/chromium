@@ -194,13 +194,19 @@ void BrowserProcessPlatformPart::DestroySystemClock() {
 }
 
 void BrowserProcessPlatformPart::AddCompatibleCrOSComponent(
-    const std::string& name) {
-  compatible_cros_components_.insert(name);
+    const std::string& name,
+    const std::string& path) {
+  compatible_cros_components_[name] = path;
 }
 
 bool BrowserProcessPlatformPart::IsCompatibleCrOSComponent(
     const std::string& name) {
   return compatible_cros_components_.count(name) > 0;
+}
+
+std::string BrowserProcessPlatformPart::GetCompatibleCrOSComponentPath(
+    const std::string& name) {
+  return compatible_cros_components_[name];
 }
 
 ui::InputDeviceControllerClient*
