@@ -46,6 +46,8 @@ public class ChromeHomeSurveyController {
     private static final String TRIAL_NAME = "ChromeHome";
     private static final String MAX_NUMBER = "MaxNumber";
 
+    private static boolean sForceUserQualifies = false;
+
     static final long ONE_WEEK_IN_MILLIS = 604800000L;
     static final String SURVEY_INFOBAR_DISMISSED_KEY = "chrome_home_survey_info_bar_dismissed";
     static final String DATE_LAST_ROLLED_KEY = "chrome_home_date_last_rolled_for_survey";
@@ -260,7 +262,7 @@ public class ChromeHomeSurveyController {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            if (!mController.doesUserQualifyForSurvey()) return false;
+            if (!mController.doesUserQualifyForSurvey() && !sForceUserQualifies) return false;
             return mController.isRandomlySelectedForSurvey()
                     || CommandLine.getInstance().hasSwitch(
                                ChromeSwitches.CHROME_HOME_FORCE_ENABLE_SURVEY);
@@ -270,5 +272,11 @@ public class ChromeHomeSurveyController {
         protected void onPostExecute(Boolean result) {
             if (result) mController.startDownload(mContext, mSelector);
         }
+    }
+
+    // Qualify the user for surveys for testing purposes.
+    @VisibleForTesting
+    public static void setUserQualifiesForTesting (boolean userQualifies) {
+        sForceUserQualifies = userQualifies;
     }
 }
