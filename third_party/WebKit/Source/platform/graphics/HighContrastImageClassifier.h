@@ -37,6 +37,26 @@ class PLATFORM_EXPORT HighContrastImageClassifier {
  private:
   enum class ColorMode { kColor = 0, kGrayscale = 1 };
 
+  // Creates cluster centers for color and grayscale images.
+  void CreateClusterCenters();
+  void CreateClusterCentersForColorMode(const ColorMode&);
+
+  // Two sets of predefined SkColor clusters for color and grayscale modes.
+  struct ClusterSet {
+    // Centers of SkColor clusters.
+    std::vector<SkColor> centers;
+
+    // To assign colors to clusters fast, a given 24 bit color is converted
+    // into a 12 bit color (by dropping loweset 4 bits of each channel). For
+    // ecah low precision color, the mapper keeps the list of all cluster
+    // centers which are closest to a 24 bit color with this low precision
+    // representation.
+    std::vector<std::set<int>> mappers;
+  } cluster_sets_[2];
+
+  // Finds the closest cluster in the priovided set to the given SkColor.
+  int FindClosestCluster(const SkColor&, const ClusterSet&);
+
   // Computes the features vector for a given image.
   bool ComputeImageFeatures(Image&, std::vector<float>*);
 
