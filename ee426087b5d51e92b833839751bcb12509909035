@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eba23089_d26e73db",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/datareduction/DataReductionDataUseItem.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-30T18:47:59Z",
+      "side": 1,
+      "message": "Rather than two steps (Formatter.formatFileSize and then DataReductionUtils.setSpanForBytes), I\u0027d create a single helper like DataReductionUtils.formatFileSize() that calls Formatter.formatFileSize internally and returns a CharSequence with the TtsSpan attached.",
+      "revId": "ee426087b5d51e92b833839751bcb12509909035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "466e9aa2_f9569f3a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/datareduction/DataReductionUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-30T18:47:59Z",
+      "side": 1,
+      "message": "\"byte\" still needs to be translated into other languages\n\nThere\u0027s no need to do this only if the number is less than 1000.\nYou can format any number of bytes with a MeasureBuilder.",
+      "revId": "ee426087b5d51e92b833839751bcb12509909035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
