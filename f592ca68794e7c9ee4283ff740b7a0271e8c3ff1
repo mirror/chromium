@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e41250f_61e3c0ec",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-30T18:37:53Z",
+      "side": 1,
+      "message": "This comment reads like the implementation. Maybe:\n\"Enabled state is governed by both a feature flag and a pref (which can be controlled by enterprise policy).\"\n\nI don\u0027t think the specifics need to be here.",
+      "revId": "f592ca68794e7c9ee4283ff740b7a0271e8c3ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fcf63a2_0edaf187",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-30T18:37:53Z",
+      "side": 1,
+      "message": "I think you should just be able to do browser()-\u003eprofile().",
+      "revId": "f592ca68794e7c9ee4283ff740b7a0271e8c3ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78d934ba_613ef621",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-30T18:37:53Z",
+      "side": 1,
+      "message": "Why does this test need this but not the other test? They should ideally have the exact same setup except for the pref.",
+      "revId": "f592ca68794e7c9ee4283ff740b7a0271e8c3ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
