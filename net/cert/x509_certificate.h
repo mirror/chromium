@@ -111,6 +111,12 @@ class NET_EXPORT X509Certificate
   // Returns NULL on failure.
   static scoped_refptr<X509Certificate> CreateFromBytes(const char* data,
                                                         size_t length);
+  // Create an X509Certificate with non-standard parsing options.
+  // Do not use without consulting //net owners.
+  static scoped_refptr<X509Certificate> CreateFromBytesUnsafeOptions(
+      const char* data,
+      size_t length,
+      UnsafeCreateOptions options);
 
   // Create an X509Certificate from the representation stored in the given
   // pickle.  The data for this object is found relative to the given
