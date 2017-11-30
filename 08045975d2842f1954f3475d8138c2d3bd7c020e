@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fece0dc6_28389813",
+        "filename": "docs/testing/json_test_results_format.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-11-30T22:39:14Z",
+      "side": 1,
+      "message": "Nice, I like this.",
+      "revId": "08045975d2842f1954f3475d8138c2d3bd7c020e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
