@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "7b1387d4_06f4ddf9",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-30T13:13:26Z",
+      "side": 1,
+      "message": "\u003e So this check to match the logic.\nhttps://cs.chromium.org/chromium/src/chrome/browser/chromeos/arc/arc_session_manager.cc?l\u003d594\n\nThen, we may be revisit the condition?\n\nOr, we need to have another condition which is;\n\n- PlayStore will never be launched with the current container being started\n\nE.g., ArcSessionManager::IsArcPlayStoreLaunchable() \u003d\u003d false etc? Maybe better if the method is tied to current container status, and explicitly to document that, if the condition is changed, ToS may need to be displayed somehow.\n\nIsArcPlayStoreAvailable() should be a subset of the new condition.\nShouldArcAlwaysStart() sounds like an independent concept.\n\nAlthough it may be just naming issue, but because we have lots of complex conditions there,\nit looks better to have clear naming and documentation to avoid accidents.\n\nWDYT?",
+      "parentUuid": "9e33831a_5c10d559",
+      "revId": "743ca4c52e700ea83b75bf21646b3e8e5f571734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c22776b2_060473d0",
         "filename": "chrome/browser/chromeos/login/wizard_controller.cc",
         "patchSetId": 2
@@ -138,6 +156,24 @@
       "side": 1,
       "message": "Probably it makes sense to remove L1624-28 to match the logic for all cases.",
       "parentUuid": "f96fd202_83a5f7e7",
+      "revId": "743ca4c52e700ea83b75bf21646b3e8e5f571734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db0dc0fd_da8e83ba",
+        "filename": "chrome/browser/chromeos/login/wizard_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1630,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-30T13:13:26Z",
+      "side": 1,
+      "message": "Thank you for explanation.\nI understand your concept, but I still worried about keeping ShouldArcAlwaysStart() here.\nCould you refer my another comments for more details?",
+      "parentUuid": "94c17f76_7fb67170",
       "revId": "743ca4c52e700ea83b75bf21646b3e8e5f571734",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
