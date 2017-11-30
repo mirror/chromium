@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "3f14f81e_3b8d832e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 34
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-30T23:43:40Z",
+      "side": 1,
+      "message": "Typo. Same in the follow up CL.",
+      "range": {
+        "startLine": 7,
+        "startChar": 48,
+        "endLine": 7,
+        "endChar": 58
+      },
+      "revId": "345287247db43c052bdaa4a1b437e64d5a907f2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf593f61_091db68b",
         "filename": "chrome/browser/chromeos/file_manager/volume_manager_unittest.cc",
         "patchSetId": 34
