@@ -53,7 +53,8 @@ class InputStreamPreprocessor {
   // Returns whether we succeeded in peeking at the next character.
   // The only way we can fail to peek is if there are no more
   // characters in |source| (after collapsing \r\n, etc).
-  ALWAYS_INLINE bool Peek(SegmentedString& source) {
+  template <bool supports16bit>
+  ALWAYS_INLINE bool Peek(SegmentedStringImpl<supports16bit>& source) {
     next_input_character_ = source.CurrentChar();
 
     // Every branch in this function is expensive, so we have a
@@ -69,7 +70,8 @@ class InputStreamPreprocessor {
   }
 
   // Returns whether there are more characters in |source| after advancing.
-  ALWAYS_INLINE bool Advance(SegmentedString& source) {
+  template <bool supports16bit>
+  ALWAYS_INLINE bool Advance(SegmentedStringImpl<supports16bit>& source) {
     source.AdvanceAndUpdateLineNumber();
     if (source.IsEmpty())
       return false;
@@ -84,7 +86,8 @@ class InputStreamPreprocessor {
   }
 
  private:
-  bool ProcessNextInputCharacter(SegmentedString& source) {
+  template <bool supports16bit>
+  bool ProcessNextInputCharacter(SegmentedStringImpl<supports16bit>& source) {
   ProcessAgain:
     DCHECK_EQ(next_input_character_, source.CurrentChar());
 
@@ -120,7 +123,9 @@ class InputStreamPreprocessor {
     return true;
   }
 
-  bool ShouldTreatNullAsEndOfFileMarker(SegmentedString& source) const {
+  template <bool supports16bit>
+  bool ShouldTreatNullAsEndOfFileMarker(
+      SegmentedStringImpl<supports16bit>& source) const {
     return source.IsClosed() && source.length() == 1;
   }
 

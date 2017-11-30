@@ -348,7 +348,7 @@ void HTMLParserScriptRunner::ExecuteParsingBlockingScripts() {
     DCHECK(document_->IsScriptExecutionReady());
 
     // 6. "Let the insertion point be just before the next input character."
-    InsertionPointRecord insertion_point_record(host_->InputStream());
+    InsertionPointRecord insertion_point_record(host_);
 
     // 1., 7.--9.
     ExecutePendingScriptAndDispatchEvent(parser_blocking_script_,
@@ -496,7 +496,7 @@ void HTMLParserScriptRunner::ProcessScriptElementInternal(
     // "Let the old insertion point have the same value as the current
     //  insertion point.
     //  Let the insertion point be just before the next input character."
-    InsertionPointRecord insertion_point_record(host_->InputStream());
+    InsertionPointRecord insertion_point_record(host_);
 
     // "Increment the parser's script nesting level by one."
     HTMLParserReentryPermit::ScriptNestingLevelIncrementer
