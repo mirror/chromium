@@ -679,6 +679,8 @@ ui::TextEditCommand GetTextEditCommandForMenuAction(SEL action) {
 }
 
 - (void)setFrameSize:(NSSize)newSize {
+  TRACE_EVENT2("views", "-[BridgedContentView setFrameSize", "width",
+               newSize.width, "height", newSize.height);
   // The size passed in here does not always use
   // -[NSWindow contentRectForFrameRect]. The following ensures that the
   // contentView for a frameless window can extend over the titlebar of the new
