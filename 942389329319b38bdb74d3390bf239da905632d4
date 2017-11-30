@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "609bdfcf_35d73c20",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/css3/filters/fedisplacementmap-tainted.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-30T01:14:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea8d118b_cff740a2",
+      "revId": "942389329319b38bdb74d3390bf239da905632d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a35535be_2caa6b0d",
         "filename": "third_party/WebKit/LayoutTests/http/tests/css3/filters/fedisplacementmap-tainted.html",
         "patchSetId": 5
@@ -62,6 +80,30 @@
       "revId": "942389329319b38bdb74d3390bf239da905632d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f04fbf1d_c9f1873e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/css3/filters/fedisplacementmap-tainted.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-30T01:14:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a35535be_2caa6b0d",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 17
+      },
+      "revId": "942389329319b38bdb74d3390bf239da905632d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "ce2db1e0_59e1b236",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/css3/filters/fedisplacementmap-tainted.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-30T01:14:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "049d6842_26910fb7",
+      "range": {
+        "startLine": 19,
+        "startChar": 3,
+        "endLine": 19,
+        "endChar": 43
+      },
+      "revId": "942389329319b38bdb74d3390bf239da905632d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "437ca6b1_786aed7f",
         "filename": "third_party/WebKit/LayoutTests/http/tests/css3/filters/fedisplacementmap-tainted.html",
         "patchSetId": 5
@@ -108,6 +174,30 @@
       "revId": "942389329319b38bdb74d3390bf239da905632d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcc3d2f0_cd6ffabd",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/css3/filters/fedisplacementmap-tainted.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-30T01:14:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "437ca6b1_786aed7f",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 30
+      },
+      "revId": "942389329319b38bdb74d3390bf239da905632d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -146,6 +236,30 @@
       "side": 1,
       "message": "Actually, considering that a (local) referenced fragment can contain \u0027currentColor\u0027, and \u003cimage\u003e et.c, !cached_image_ should probably taint...",
       "parentUuid": "e2b3c4b3_8f784b16",
+      "range": {
+        "startLine": 168,
+        "startChar": 41,
+        "endLine": 168,
+        "endChar": 74
+      },
+      "revId": "942389329319b38bdb74d3390bf239da905632d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d55512b_4917562e",
+        "filename": "third_party/WebKit/Source/core/svg/SVGFEImageElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-30T01:14:47Z",
+      "side": 1,
+      "message": "\u003e We should probably pass/plumb the SecurityOrigin associated with the canvas context here to be extra strict.\n\nHmm. If it\u0027s possible to embed content from a cross-origin frame into a canvas from \ndifferent frame, then I think it\u0027s too hard to implement tainting here, because the\ntainting would have to know the end destination. If not, then the approach here seems\nsufficient.\n\nIf I need to remove tainting here, there will be more tests that need to be rebaselined.\n\nI went ahead and reverted changes to this file in the latest patchset, with rebaselines.\n\n\u003e Actually, considering that a (local) referenced fragment can contain \u0027currentColor\u0027, and \u003cimage\u003e et.c, !cached_image_ should probably taint...\n\nNot sure what you mean here. Do you mean currentColor can come from the SVGFEImageElement\nbefore load, or be inherited from an earlier filter in the chain?",
+      "parentUuid": "d177b656_4e238d08",
       "range": {
         "startLine": 168,
         "startChar": 41,
@@ -204,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "96969841_82fb585a",
+        "filename": "third_party/WebKit/Source/modules/canvas/canvas2d/BaseRenderingContext2D.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1319,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-30T01:14:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87cd53de_8f388651",
+      "range": {
+        "startLine": 1318,
+        "startChar": 4,
+        "endLine": 1319,
+        "endChar": 45
+      },
+      "revId": "942389329319b38bdb74d3390bf239da905632d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9eb8492_057074c2",
         "filename": "third_party/WebKit/Source/modules/canvas/canvas2d/BaseRenderingContext2D.cpp",
         "patchSetId": 5
@@ -224,6 +362,30 @@
       "revId": "942389329319b38bdb74d3390bf239da905632d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35bed854_eb65054f",
+        "filename": "third_party/WebKit/Source/modules/canvas/canvas2d/BaseRenderingContext2D.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1321,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-30T01:14:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9eb8492_057074c2",
+      "range": {
+        "startLine": 1320,
+        "startChar": 4,
+        "endLine": 1321,
+        "endChar": 25
+      },
+      "revId": "942389329319b38bdb74d3390bf239da905632d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -250,6 +412,30 @@
     },
     {
       "key": {
+        "uuid": "ecaf9878_031dd94e",
+        "filename": "third_party/WebKit/Source/modules/canvas/canvas2d/CanvasRenderingContext2DState.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-30T01:14:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02bf0c98_261b28e7",
+      "range": {
+        "startLine": 306,
+        "startChar": 18,
+        "endLine": 310,
+        "endChar": 3
+      },
+      "revId": "942389329319b38bdb74d3390bf239da905632d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94c5f88d_dceb211e",
         "filename": "third_party/WebKit/Source/modules/canvas/canvas2d/CanvasRenderingContext2DState.cpp",
         "patchSetId": 5
@@ -273,6 +459,30 @@
     },
     {
       "key": {
+        "uuid": "efba1713_df98a7f5",
+        "filename": "third_party/WebKit/Source/modules/canvas/canvas2d/CanvasRenderingContext2DState.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-30T01:14:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94c5f88d_dceb211e",
+      "range": {
+        "startLine": 360,
+        "startChar": 36,
+        "endLine": 360,
+        "endChar": 58
+      },
+      "revId": "942389329319b38bdb74d3390bf239da905632d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4a49ecc_4b50bcf2",
         "filename": "third_party/WebKit/Source/platform/graphics/filters/FEDisplacementMap.cpp",
         "patchSetId": 5
@@ -293,6 +503,30 @@
       "revId": "942389329319b38bdb74d3390bf239da905632d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c045d0e5_92b6e503",
+        "filename": "third_party/WebKit/Source/platform/graphics/filters/FEDisplacementMap.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-30T01:14:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4a49ecc_4b50bcf2",
+      "range": {
+        "startLine": 120,
+        "startChar": 5,
+        "endLine": 120,
+        "endChar": 76
+      },
+      "revId": "942389329319b38bdb74d3390bf239da905632d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
