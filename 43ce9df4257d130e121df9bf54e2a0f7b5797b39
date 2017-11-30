@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "feb00b20_8e26793a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 6416,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-11-30T21:26:13Z",
+      "side": 1,
+      "message": "This seems wrong. Did you intend to obsolete this?\n\nAlso, when obsoleting, don\u0027t remove the summary since someone may still look at old data and want to know what the histogram was.",
+      "revId": "43ce9df4257d130e121df9bf54e2a0f7b5797b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
