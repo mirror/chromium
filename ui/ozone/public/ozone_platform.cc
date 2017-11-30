@@ -44,11 +44,11 @@ void OzonePlatform::InitializeForUI(const InitParams& args) {
     return;
   g_platform_initialized_ui = true;
   instance_->InitializeUI(args);
-  if (!instance_callback.Get().is_null())
-    std::move(instance_callback.Get()).Run(instance_);
   // This is deliberately created after initializing so that the platform can
   // create its own version of DDM.
   DeviceDataManager::CreateInstance();
+  if (!instance_callback.Get().is_null())
+    std::move(instance_callback.Get()).Run(instance_);
 }
 
 // static
@@ -58,7 +58,7 @@ void OzonePlatform::InitializeForGPU(const InitParams& args) {
     return;
   g_platform_initialized_gpu = true;
   instance_->InitializeGPU(args);
-  if (!instance_callback.Get().is_null())
+  if (!args.single_process && !instance_callback.Get().is_null())
     std::move(instance_callback.Get()).Run(instance_);
 }
 
@@ -101,7 +101,7 @@ void OzonePlatform::RegisterStartupCallback(
   OzonePlatform* inst = nullptr;
   {
     base::AutoLock lock(GetOzoneInstanceLock());
-    if (!instance_) {
+    if (!instance_ || !g_platform_initialized_ui) {
       instance_callback.Get() = std::move(callback);
       return;
     }
