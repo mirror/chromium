@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75537fcc_74c04246",
+        "filename": "ui/views/widget/desktop_aura/desktop_window_tree_host_x11.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1795,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-30T02:51:48Z",
+      "side": 0,
+      "message": "Can you add this DCHECK() to verify that the two hosts have the same scale-factor in the callsites above?",
+      "revId": "834326fe51d439cfaa9cfb5c75ffb4dada683c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
