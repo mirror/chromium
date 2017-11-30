@@ -53,17 +53,6 @@ class SecurityOriginTest : public ::testing::Test {
   }
 };
 
-TEST_F(SecurityOriginTest, InvalidPortsCreateUniqueOrigins) {
-  int ports[] = {-100, -1, kMaxAllowedPort + 1, 1000000};
-
-  for (size_t i = 0; i < WTF_ARRAY_LENGTH(ports); ++i) {
-    scoped_refptr<SecurityOrigin> origin =
-        SecurityOrigin::Create("http", "example.com", ports[i]);
-    EXPECT_TRUE(origin->IsUnique())
-        << "Port " << ports[i] << " should have generated a unique origin.";
-  }
-}
-
 TEST_F(SecurityOriginTest, ValidPortsCreateNonUniqueOrigins) {
   int ports[] = {0, 80, 443, 5000, kMaxAllowedPort};
 
