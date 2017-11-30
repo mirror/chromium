@@ -10,6 +10,7 @@
 #include <unordered_map>
 
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/observer_list.h"
 #include "base/sequence_checker.h"
 #include "base/time/time.h"
@@ -22,6 +23,8 @@ namespace previews {
 // Get the human readable description of the log event for InfoBar messages
 // based on the |type| of Previews.
 std::string GetDescriptionForInfoBarDescription(previews::PreviewsType type);
+
+typedef std::vector<PreviewsEligibilityReason> PassedPreviewsEligibilities;
 
 class PreviewsLoggerObserver;
 
@@ -81,11 +84,15 @@ class PreviewsLogger {
                                     base::Time time);
 
   // Add a MessageLog for the a decision that was made about the state of
-  // previews and blacklist. Virtualized in testing.
-  virtual void LogPreviewDecisionMade(PreviewsEligibilityReason reason,
-                                      const GURL& url,
-                                      base::Time time,
-                                      PreviewsType type);
+  // previews and blacklist. |passed_reasons| is an ordered list of
+  // PreviewsEligibilityReasons that got pass the decision. Virtualized in
+  // testing.
+  virtual void LogPreviewDecisionMade(
+      PreviewsEligibilityReason reason,
+      const GURL& url,
+      base::Time time,
+      PreviewsType type,
+      PassedPreviewsEligibilities&& passed_reasons);
 
   // Notify observers that |host| is blacklisted at |time|. Virtualized in
   // testing.
