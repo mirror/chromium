@@ -11,6 +11,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "media/base/android/media_codec_bridge_impl.h"
 #include "media/base/android/media_codec_util.h"
 #include "media/base/bind_to_current_loop.h"
@@ -104,8 +105,7 @@ MediaCodecVideoDecoder::MediaCodecVideoDecoder(
     std::unique_ptr<AndroidVideoSurfaceChooser> surface_chooser,
     AndroidOverlayMojoFactoryCB overlay_factory_cb,
     RequestOverlayInfoCB request_overlay_info_cb,
-    std::unique_ptr<VideoFrameFactory> video_frame_factory,
-    std::unique_ptr<service_manager::ServiceContextRef> context_ref)
+    std::unique_ptr<VideoFrameFactory> video_frame_factory)
     : output_cb_(output_cb),
       codec_allocator_(codec_allocator),
       request_overlay_info_cb_(std::move(request_overlay_info_cb)),
@@ -119,7 +119,7 @@ MediaCodecVideoDecoder::MediaCodecVideoDecoder(
       device_info_(device_info),
       enable_threaded_texture_mailboxes_(
           gpu_preferences.enable_threaded_texture_mailboxes),
-      context_ref_(std::move(context_ref)),
+      task_runner_(base::SequencedTaskRunnerHandle::Get()),
       weak_factory_(this),
       codec_allocator_weak_factory_(this) {
   DVLOG(2) << __func__;
@@ -766,19 +766,9 @@ AndroidOverlayFactoryCB MediaCodecVideoDecoder::CreateOverlayFactoryCb() {
   if (!overlay_factory_cb_ || !overlay_info_.HasValidRoutingToken())
     return AndroidOverlayFactoryCB();
 
-  // This wrapper forwards its arguments and clones a context ref on each call.
-  auto wrapper = [](AndroidOverlayMojoFactoryCB overlay_factory_cb,
-                    service_manager::ServiceContextRef* context_ref,
-                    base::UnguessableToken routing_token,
-                    AndroidOverlayConfig config) {
-    return overlay_factory_cb.Run(context_ref->Clone(),
-                                  std::move(routing_token), std::move(config));
-  };
-
-  // Pass ownership of a new context ref into the callback.
-  return base::Bind(wrapper, overlay_factory_cb_,
-                    base::Owned(context_ref_->Clone().release()),
-                    *overlay_info_.routing_token);
+  // TODO(liberato): Do we need to send |task_runner_|?  I don't see why we
+  // would, but i don't see why we needed to send in the context ref either.
+  return base::Bind(overlay_factory_cb_, *overlay_info_.routing_token);
 }
 
 std::string MediaCodecVideoDecoder::GetDisplayName() const {
