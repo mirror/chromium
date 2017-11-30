@@ -184,19 +184,23 @@ static constexpr float kLaserWidth = 0.01f;
 static constexpr float kReticleWidth = 0.025f;
 static constexpr float kReticleHeight = 0.025f;
 
-static constexpr float kOmniboxContainerWidth = 4.5;
-static constexpr float kOmniboxContainerHeight = 12 * 0.02f;
-static constexpr float kOmniboxContainerCornerRadius = 0.01;
-static constexpr float kOmniboxContainerVeriticalOffset = 0.7;
-static constexpr float kOmniboxTextHeight = 0.05;
-static constexpr float kOmniboxCloseButtonVerticalOffset = -0.5;
-static constexpr float kSuggestionGap = 0.01f;
+static constexpr float kOmniboxContainerWidth = 0.848f;
+static constexpr float kOmniboxContainerHeight = 0.088f;
+// static constexpr float kOmniboxContainerCornerRadius = 0.01;
+static constexpr float kOmniboxContainerVerticalOffsetDMM = -0.1f;
+static constexpr float kOmniboxTextHeight = 0.032f;
+static constexpr float kOmniboxTextMargin = 0.024f;
+static constexpr float kOmniboxCloseButtonVerticalOffsetDMM = -0.5;
+
+static constexpr float kSuggestionHeight = 0.088f;
+static constexpr float kSuggestionGap = 0.008f;
 static constexpr float kSuggestionLineGap = 0.01f;
-static constexpr float kSuggestionIconGap = 0.01f;
-static constexpr float kSuggestionIconSize = 0.1f;
-static constexpr float kSuggestionTextFieldWidth = 0.3f;
-static constexpr float kSuggestionContentTextHeight = 0.02f;
-static constexpr float kSuggestionDescriptionTextHeight = 0.015f;
+static constexpr float kSuggestionIconSize = 0.036f;
+static constexpr float kSuggestionIconFieldWidth = 0.104f;
+static constexpr float kSuggestionTextFieldWidth = (0.848f - 0.104f - 0.024f);
+static constexpr float kSuggestionContentTextHeight = 0.024f;
+static constexpr float kSuggestionDescriptionTextHeight = 0.020f;
+static constexpr float kSuggestionRightMargin = 0.024f;
 
 static constexpr int kControllerFadeInMs = 200;
 static constexpr int kControllerFadeOutMs = 550;
