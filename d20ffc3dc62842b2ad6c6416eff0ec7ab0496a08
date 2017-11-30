@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "06898469_c8649b3d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-11-30T00:42:43Z",
+      "side": 1,
+      "message": "Correct bug reference? Seems to be about a removing WTF::MakeUnique.",
+      "revId": "d20ffc3dc62842b2ad6c6416eff0ec7ab0496a08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6236d4ca_c1f40b6b",
         "filename": "third_party/WebKit/public/web/README.md",
         "patchSetId": 1
