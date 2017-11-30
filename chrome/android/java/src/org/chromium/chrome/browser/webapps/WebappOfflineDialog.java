@@ -27,17 +27,17 @@ public class WebappOfflineDialog {
      * @param isWebApk Whether the app above is a WebAPK.
      */
     public void show(final Activity activity, String appName, boolean isWebApk) {
-        @StringRes int messageID = isWebApk
-                ? R.string.webapk_offline_dialog : R.string.webapp_twa_offline_dialog;
+        @StringRes
+        int messageID =
+                isWebApk ? R.string.webapk_offline_dialog : R.string.webapp_twa_offline_dialog;
         AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.AlertDialogTheme);
         builder.setMessage(activity.getString(messageID, appName))
-                .setPositiveButton(R.string.ok,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                ApiCompatibilityUtils.finishAndRemoveTask(activity);
-                            }
-                        });
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ApiCompatibilityUtils.finishAndRemoveTask(activity);
+                    }
+                });
 
         mDialog = builder.create();
         mDialog.setCanceledOnTouchOutside(false);

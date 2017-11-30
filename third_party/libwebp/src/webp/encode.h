@@ -47,32 +47,52 @@ WEBP_EXTERN int WebPGetEncoderVersion(void);
 // can go from 0 (smaller output, lower quality) to 100 (best quality,
 // larger output).
 WEBP_EXTERN size_t WebPEncodeRGB(const uint8_t* rgb,
-                                 int width, int height, int stride,
-                                 float quality_factor, uint8_t** output);
+                                 int width,
+                                 int height,
+                                 int stride,
+                                 float quality_factor,
+                                 uint8_t** output);
 WEBP_EXTERN size_t WebPEncodeBGR(const uint8_t* bgr,
-                                 int width, int height, int stride,
-                                 float quality_factor, uint8_t** output);
+                                 int width,
+                                 int height,
+                                 int stride,
+                                 float quality_factor,
+                                 uint8_t** output);
 WEBP_EXTERN size_t WebPEncodeRGBA(const uint8_t* rgba,
-                                  int width, int height, int stride,
-                                  float quality_factor, uint8_t** output);
+                                  int width,
+                                  int height,
+                                  int stride,
+                                  float quality_factor,
+                                  uint8_t** output);
 WEBP_EXTERN size_t WebPEncodeBGRA(const uint8_t* bgra,
-                                  int width, int height, int stride,
-                                  float quality_factor, uint8_t** output);
+                                  int width,
+                                  int height,
+                                  int stride,
+                                  float quality_factor,
+                                  uint8_t** output);
 
 // These functions are the equivalent of the above, but compressing in a
 // lossless manner. Files are usually larger than lossy format, but will
 // not suffer any compression loss.
 WEBP_EXTERN size_t WebPEncodeLosslessRGB(const uint8_t* rgb,
-                                         int width, int height, int stride,
+                                         int width,
+                                         int height,
+                                         int stride,
                                          uint8_t** output);
 WEBP_EXTERN size_t WebPEncodeLosslessBGR(const uint8_t* bgr,
-                                         int width, int height, int stride,
+                                         int width,
+                                         int height,
+                                         int stride,
                                          uint8_t** output);
 WEBP_EXTERN size_t WebPEncodeLosslessRGBA(const uint8_t* rgba,
-                                          int width, int height, int stride,
+                                          int width,
+                                          int height,
+                                          int stride,
                                           uint8_t** output);
 WEBP_EXTERN size_t WebPEncodeLosslessBGRA(const uint8_t* bgra,
-                                          int width, int height, int stride,
+                                          int width,
+                                          int height,
+                                          int stride,
                                           uint8_t** output);
 
 // Releases memory returned by the WebPEncode*() functions above.
@@ -253,7 +273,8 @@ WEBP_EXTERN void WebPMemoryWriterClear(WebPMemoryWriter* writer);
 // The custom writer to be used with WebPMemoryWriter as custom_ptr. Upon
 // completion, writer.mem and writer.size will hold the coded data.
 // writer.mem must be freed by calling WebPMemoryWriterClear.
-WEBP_EXTERN int WebPMemoryWrite(const uint8_t* data, size_t data_size,
+WEBP_EXTERN int WebPMemoryWrite(const uint8_t* data,
+                                size_t data_size,
                                 const WebPPicture* picture);
 
 // Progress hook, called from time to time to report progress. It can return
@@ -396,12 +417,16 @@ WEBP_EXTERN int WebPPictureCopy(const WebPPicture* src, WebPPicture* dst);
 // 'x_step' is the horizontal stride (in bytes) between samples.
 // 'src/ref_stride' is the byte distance between rows.
 // Returns false in case of error (bad parameter, memory allocation error, ...).
-WEBP_EXTERN int WebPPlaneDistortion(const uint8_t* src, size_t src_stride,
-                                    const uint8_t* ref, size_t ref_stride,
-                                    int width, int height,
+WEBP_EXTERN int WebPPlaneDistortion(const uint8_t* src,
+                                    size_t src_stride,
+                                    const uint8_t* ref,
+                                    size_t ref_stride,
+                                    int width,
+                                    int height,
                                     size_t x_step,
-                                    int type,   // 0 = PSNR, 1 = SSIM, 2 = LSIM
-                                    float* distortion, float* result);
+                                    int type,  // 0 = PSNR, 1 = SSIM, 2 = LSIM
+                                    float* distortion,
+                                    float* result);
 
 // Compute PSNR, SSIM or LSIM distortion metric between two pictures. Results
 // are in dB, stored in result[] in the B/G/R/A/All order. The distortion is
@@ -409,8 +434,9 @@ WEBP_EXTERN int WebPPlaneDistortion(const uint8_t* src, size_t src_stride,
 // picture will be internally converted to ARGB (just for the measurement).
 // Warning: this function is rather CPU-intensive.
 WEBP_EXTERN int WebPPictureDistortion(
-    const WebPPicture* src, const WebPPicture* ref,
-    int metric_type,           // 0 = PSNR, 1 = SSIM, 2 = LSIM
+    const WebPPicture* src,
+    const WebPPicture* ref,
+    int metric_type,  // 0 = PSNR, 1 = SSIM, 2 = LSIM
     float result[5]);
 
 // self-crops a picture to the rectangle defined by top/left/width/height.
@@ -422,7 +448,10 @@ WEBP_EXTERN int WebPPictureDistortion(
 // picture uses the YUV420 colorspace, the top and left coordinates will be
 // snapped to even values.
 WEBP_EXTERN int WebPPictureCrop(WebPPicture* picture,
-                                int left, int top, int width, int height);
+                                int left,
+                                int top,
+                                int width,
+                                int height);
 
 // Extracts a view from 'src' picture into 'dst'. The rectangle for the view
 // is defined by the top-left corner pixel coordinates (left, top) as well
@@ -436,7 +465,10 @@ WEBP_EXTERN int WebPPictureCrop(WebPPicture* picture,
 // be overwritten.
 // Returns false in case of memory allocation error or invalid parameters.
 WEBP_EXTERN int WebPPictureView(const WebPPicture* src,
-                                int left, int top, int width, int height,
+                                int left,
+                                int top,
+                                int width,
+                                int height,
                                 WebPPicture* dst);
 
 // Returns true if the 'picture' is actually a view and therefore does
@@ -454,24 +486,30 @@ WEBP_EXTERN int WebPPictureRescale(WebPPicture* pic, int width, int height);
 // Previous buffer will be free'd, if any.
 // *rgb buffer should have a size of at least height * rgb_stride.
 // Returns false in case of memory error.
-WEBP_EXTERN int WebPPictureImportRGB(
-    WebPPicture* picture, const uint8_t* rgb, int rgb_stride);
+WEBP_EXTERN int WebPPictureImportRGB(WebPPicture* picture,
+                                     const uint8_t* rgb,
+                                     int rgb_stride);
 // Same, but for RGBA buffer.
-WEBP_EXTERN int WebPPictureImportRGBA(
-    WebPPicture* picture, const uint8_t* rgba, int rgba_stride);
+WEBP_EXTERN int WebPPictureImportRGBA(WebPPicture* picture,
+                                      const uint8_t* rgba,
+                                      int rgba_stride);
 // Same, but for RGBA buffer. Imports the RGB direct from the 32-bit format
 // input buffer ignoring the alpha channel. Avoids needing to copy the data
 // to a temporary 24-bit RGB buffer to import the RGB only.
-WEBP_EXTERN int WebPPictureImportRGBX(
-    WebPPicture* picture, const uint8_t* rgbx, int rgbx_stride);
+WEBP_EXTERN int WebPPictureImportRGBX(WebPPicture* picture,
+                                      const uint8_t* rgbx,
+                                      int rgbx_stride);
 
 // Variants of the above, but taking BGR(A|X) input.
-WEBP_EXTERN int WebPPictureImportBGR(
-    WebPPicture* picture, const uint8_t* bgr, int bgr_stride);
-WEBP_EXTERN int WebPPictureImportBGRA(
-    WebPPicture* picture, const uint8_t* bgra, int bgra_stride);
-WEBP_EXTERN int WebPPictureImportBGRX(
-    WebPPicture* picture, const uint8_t* bgrx, int bgrx_stride);
+WEBP_EXTERN int WebPPictureImportBGR(WebPPicture* picture,
+                                     const uint8_t* bgr,
+                                     int bgr_stride);
+WEBP_EXTERN int WebPPictureImportBGRA(WebPPicture* picture,
+                                      const uint8_t* bgra,
+                                      int bgra_stride);
+WEBP_EXTERN int WebPPictureImportBGRX(WebPPicture* picture,
+                                      const uint8_t* bgrx,
+                                      int bgrx_stride);
 
 // Converts picture->argb data to the YUV420A format. The 'colorspace'
 // parameter is deprecated and should be equal to WEBP_YUV420.
@@ -486,8 +524,9 @@ WEBP_EXTERN int WebPPictureARGBToYUVA(WebPPicture* picture,
 // pseudo-random dithering with a strength 'dithering' between
 // 0.0 (no dithering) and 1.0 (maximum dithering). This is useful
 // for photographic picture.
-WEBP_EXTERN int WebPPictureARGBToYUVADithered(
-    WebPPicture* picture, WebPEncCSP colorspace, float dithering);
+WEBP_EXTERN int WebPPictureARGBToYUVADithered(WebPPicture* picture,
+                                              WebPEncCSP colorspace,
+                                              float dithering);
 
 // Performs 'sharp' RGBA->YUVA420 downsampling and colorspace conversion.
 // Downsampling is handled with extra care in case of color clipping. This

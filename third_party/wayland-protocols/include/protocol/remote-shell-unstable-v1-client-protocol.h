@@ -164,38 +164,38 @@ enum zcr_remote_shell_v1_container {
  * Defines common show states for shell surfaces.
  */
 enum zcr_remote_shell_v1_state_type {
-	/**
-	 * normal window state
-	 */
-	ZCR_REMOTE_SHELL_V1_STATE_TYPE_NORMAL = 1,
-	/**
-	 * minimized window state
-	 */
-	ZCR_REMOTE_SHELL_V1_STATE_TYPE_MINIMIZED = 2,
-	/**
-	 * maximized window state
-	 */
-	ZCR_REMOTE_SHELL_V1_STATE_TYPE_MAXIMIZED = 3,
-	/**
-	 * fullscreen window state
-	 */
-	ZCR_REMOTE_SHELL_V1_STATE_TYPE_FULLSCREEN = 4,
-	/**
-	 * pinned window state
-	 */
-	ZCR_REMOTE_SHELL_V1_STATE_TYPE_PINNED = 5,
-	/**
-	 * trusted pinned window state
-	 */
-	ZCR_REMOTE_SHELL_V1_STATE_TYPE_TRUSTED_PINNED = 6,
-	/**
-	 * moving window state
-	 */
-	ZCR_REMOTE_SHELL_V1_STATE_TYPE_MOVING = 7,
-	/**
-	 * resizing window state
-	 */
-	ZCR_REMOTE_SHELL_V1_STATE_TYPE_RESIZING = 8,
+  /**
+   * normal window state
+   */
+  ZCR_REMOTE_SHELL_V1_STATE_TYPE_NORMAL = 1,
+  /**
+   * minimized window state
+   */
+  ZCR_REMOTE_SHELL_V1_STATE_TYPE_MINIMIZED = 2,
+  /**
+   * maximized window state
+   */
+  ZCR_REMOTE_SHELL_V1_STATE_TYPE_MAXIMIZED = 3,
+  /**
+   * fullscreen window state
+   */
+  ZCR_REMOTE_SHELL_V1_STATE_TYPE_FULLSCREEN = 4,
+  /**
+   * pinned window state
+   */
+  ZCR_REMOTE_SHELL_V1_STATE_TYPE_PINNED = 5,
+  /**
+   * trusted pinned window state
+   */
+  ZCR_REMOTE_SHELL_V1_STATE_TYPE_TRUSTED_PINNED = 6,
+  /**
+   * moving window state
+   */
+  ZCR_REMOTE_SHELL_V1_STATE_TYPE_MOVING = 7,
+  /**
+   * resizing window state
+   */
+  ZCR_REMOTE_SHELL_V1_STATE_TYPE_RESIZING = 8,
 };
 #endif /* ZCR_REMOTE_SHELL_V1_STATE_TYPE_ENUM */
 
@@ -560,22 +560,23 @@ struct zcr_remote_surface_v1_listener {
 			  int32_t origin_offset_y,
 			  struct wl_array *states,
 			  uint32_t serial);
-	/**
-	 * announce window geometry commit
-	 *
-	 * Notify the client of committed window geometry.
-	 *
-	 * The compositor sends this event when it commits window geometry.
-	 * The client may use this information to convert coordinates of
-	 * input events using the latest committed geometry.
-	 * @since 9
-	 */
-	void (*window_geometry_changed)(void *data,
-					struct zcr_remote_surface_v1 *zcr_remote_surface_v1,
-					int32_t x,
-					int32_t y,
-					int32_t width,
-					int32_t height);
+        /**
+         * announce window geometry commit
+         *
+         * Notify the client of committed window geometry.
+         *
+         * The compositor sends this event when it commits window geometry.
+         * The client may use this information to convert coordinates of
+         * input events using the latest committed geometry.
+         * @since 9
+         */
+        void (*window_geometry_changed)(
+            void* data,
+            struct zcr_remote_surface_v1* zcr_remote_surface_v1,
+            int32_t x,
+            int32_t y,
+            int32_t width,
+            int32_t height);
 };
 
 /**
@@ -861,7 +862,8 @@ zcr_remote_surface_v1_set_rectangular_shadow(struct zcr_remote_surface_v1 *zcr_r
 /**
  * @ingroup iface_zcr_remote_surface_v1
  *
- * [Deprecated] Suggests the window's background opacity when the shadow is requested.
+ * [Deprecated] Suggests the window's background opacity when the shadow is
+ * requested.
  */
 static inline void
 zcr_remote_surface_v1_set_rectangular_shadow_background_opacity(struct zcr_remote_surface_v1 *zcr_remote_surface_v1, wl_fixed_t opacity)
@@ -1213,11 +1215,10 @@ zcr_remote_surface_v1_set_window_type(struct zcr_remote_surface_v1 *zcr_remote_s
  * The compositor may ignore resize requests depending on the state of the
  * surface, e.g. fullscreen or maximized.
  */
-static inline void
-zcr_remote_surface_v1_resize(struct zcr_remote_surface_v1 *zcr_remote_surface_v1)
-{
-	wl_proxy_marshal((struct wl_proxy *) zcr_remote_surface_v1,
-			 ZCR_REMOTE_SURFACE_V1_RESIZE);
+static inline void zcr_remote_surface_v1_resize(
+    struct zcr_remote_surface_v1* zcr_remote_surface_v1) {
+  wl_proxy_marshal((struct wl_proxy*)zcr_remote_surface_v1,
+                   ZCR_REMOTE_SURFACE_V1_RESIZE);
 }
 
 /**
@@ -1230,11 +1231,11 @@ zcr_remote_surface_v1_resize(struct zcr_remote_surface_v1 *zcr_remote_surface_v1
  * region of the root surface is expanded to allow for some leeway around
  * visible bounds when starting a user-driven resize.
  */
-static inline void
-zcr_remote_surface_v1_set_resize_outset(struct zcr_remote_surface_v1 *zcr_remote_surface_v1, int32_t outset)
-{
-	wl_proxy_marshal((struct wl_proxy *) zcr_remote_surface_v1,
-			 ZCR_REMOTE_SURFACE_V1_SET_RESIZE_OUTSET, outset);
+static inline void zcr_remote_surface_v1_set_resize_outset(
+    struct zcr_remote_surface_v1* zcr_remote_surface_v1,
+    int32_t outset) {
+  wl_proxy_marshal((struct wl_proxy*)zcr_remote_surface_v1,
+                   ZCR_REMOTE_SURFACE_V1_SET_RESIZE_OUTSET, outset);
 }
 
 #define ZCR_NOTIFICATION_SURFACE_V1_DESTROY 0

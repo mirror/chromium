@@ -240,11 +240,10 @@ RendererSchedulerImpl::MainThreadOnly::MainThreadOnly(
           "RendererScheduler.LoadingTaskEstimatedCostMs",
           renderer_scheduler_impl,
           TimeDeltaToMilliseconds),
-      timer_task_estimated_cost(
-          base::TimeDelta(),
-          "RendererScheduler.TimerTaskEstimatedCostMs",
-          renderer_scheduler_impl,
-          TimeDeltaToMilliseconds),
+      timer_task_estimated_cost(base::TimeDelta(),
+                                "RendererScheduler.TimerTaskEstimatedCostMs",
+                                renderer_scheduler_impl,
+                                TimeDeltaToMilliseconds),
       loading_tasks_seem_expensive(
           false,
           "RendererScheduler.LoadingTasksSeemExpensive",

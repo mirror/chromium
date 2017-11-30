@@ -20,8 +20,8 @@
 #include "webp/config.h"
 #endif
 
-#include "./metadata.h"
 #include "./jpegdec.h"
+#include "./metadata.h"
 #include "./pngdec.h"
 #include "./pnmdec.h"
 #include "./tiffdec.h"

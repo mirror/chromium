@@ -680,6 +680,7 @@ bool PasswordAutofillAgent::TextDidChangeInTextField(
 
 void PasswordAutofillAgent::UpdateStateForTextChange(
     const blink::WebInputElement& element) {
+  LOG(ERROR) << "update " << element.NameForAutofill().Utf8();
   // TODO(vabr): Get a mutable argument instead. http://crbug.com/397083
   blink::WebInputElement mutable_element = element;  // We need a non-const.
 
@@ -1247,6 +1248,7 @@ void PasswordAutofillAgent::FrameDetached() {
 
 void PasswordAutofillAgent::WillSendSubmitEvent(
     const blink::WebFormElement& form) {
+  LOG(ERROR) << "WillSendSubmitEvent";
   // Forms submitted via XHR are not seen by WillSubmitForm if the default
   // onsubmit handler is overridden. Such submission first gets detected in
   // DidStartProvisionalLoad, which no longer knows about the particular form,
@@ -1265,6 +1267,7 @@ void PasswordAutofillAgent::WillSendSubmitEvent(
 }
 
 void PasswordAutofillAgent::WillSubmitForm(const blink::WebFormElement& form) {
+  LOG(ERROR) << "WillSubmitForm";
   std::unique_ptr<RendererSavePasswordProgressLogger> logger;
   if (logging_state_active_) {
     logger.reset(new RendererSavePasswordProgressLogger(
@@ -1275,6 +1278,7 @@ void PasswordAutofillAgent::WillSubmitForm(const blink::WebFormElement& form) {
 
   std::unique_ptr<PasswordForm> submitted_form =
       GetPasswordFormFromWebForm(form);
+  LOG(ERROR) << "submit " << submitted_form->username_value;
 
   // If there is a provisionally saved password, copy over the previous
   // password value so we get the user's typed password, not the value that
@@ -1751,6 +1755,7 @@ void PasswordAutofillAgent::ProvisionallySavePassword(
   if (!password_form)
     return;
 
+  LOG(ERROR) << "prov save " << password_form->username_value;
   bool has_password = !password_form->password_value.empty() ||
                       !password_form->new_password_value.empty();
   if (restriction == RESTRICTION_NON_EMPTY_PASSWORD && !has_password)
