@@ -34,6 +34,24 @@
       "revId": "5325a13a5e28b34b3641891f26c2d55933fd854b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37e4569c_8a0e1594",
+        "filename": "chrome/app/media_router_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-30T23:47:00Z",
+      "side": 1,
+      "message": "Ok, removed \"only\" so now it reads \"Remote screen\". Leaving the title string as is for now.",
+      "parentUuid": "fe3699f3_cc8afa34",
+      "revId": "5325a13a5e28b34b3641891f26c2d55933fd854b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
