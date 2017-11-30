@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d0bddcd_561bd485",
+        "filename": "third_party/WebKit/LayoutTests/virtual/spv175/compositing/overflow/border-radius-on-parent-composited-grandchild-expected.png",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-30T05:47:12Z",
+      "side": 1,
+      "message": "This new baseline has only 1 invisible pixel difference on the edge of the border with radius.",
+      "revId": "8080a5c44dd2a060f1da1fbf248cd09146739ef7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00fe25d3_78429b74",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-30T05:47:12Z",
+      "side": 1,
+      "message": "This for accessing private methods of CompositedLayerMapping (e.g. ClipInheritanceAncestor()).",
+      "revId": "8080a5c44dd2a060f1da1fbf248cd09146739ef7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7b94e7e_883b37b7",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingLayerPropertyUpdater.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-30T05:47:12Z",
+      "side": 1,
+      "message": "I really don\u0027t quite understand the subpixel positions. AncestorClippingMaskLayer itself has integral position, but I\u0027m not sure about the subpixel situation of other layers between the layer and clip_inheritance_ancestor_graphics_layer and how to handle it. Ideas are welcome.",
+      "revId": "8080a5c44dd2a060f1da1fbf248cd09146739ef7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

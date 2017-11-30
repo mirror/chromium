@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98f67918_da65438a",
+        "filename": "third_party/WebKit/LayoutTests/virtual/spv175/compositing/overflow/border-radius-on-parent-composited-grandchild-expected.png",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-30T05:47:12Z",
+      "side": 1,
+      "message": "There is only 1 invisible pixel change at the edge of the border.",
+      "revId": "d9a661801852448150c0f7ecb827e3bf219769fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

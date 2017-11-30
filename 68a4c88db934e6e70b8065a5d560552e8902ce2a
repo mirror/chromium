@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8949be62_a3b3aaf4",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 983,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-30T05:47:12Z",
+      "side": 0,
+      "message": "For SPv1, the kPaintLayerPaintingAncestorClippingMaskPhase case is already included in NeedsToClip(), so it\u0027s not necessary here. This was for SPv175+ to execute line FillMaskingFragment() at line 1020 which is now called from PaintChildClippingMaskForFragments().",
+      "revId": "68a4c88db934e6e70b8065a5d560552e8902ce2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
