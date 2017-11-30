@@ -953,6 +953,7 @@ void PaintLayerScrollableArea::ClampScrollOffsetAfterOverflowChange() {
     return;
   }
 
+  UpdateScrollDimensions();
   if (ScrollOriginChanged())
     SetScrollOffsetUnconditionally(ClampScrollOffset(GetScrollOffset()));
   else
