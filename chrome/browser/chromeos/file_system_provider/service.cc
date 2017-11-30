@@ -126,8 +126,11 @@ base::File::Error Service::MountFileSystemInternal(
   ProvidingExtensionInfo provider_info;
   // TODO(mtomasz): Set up a testing extension in unit tests.
   ProviderInterface* provider = GetProvider(provider_id);
+
   Capabilities capabilities;
-  provider->GetCapabilities(profile_, provider_id, capabilities);
+  if (!provider->GetCapabilities(profile_, provider_id, capabilities))
+    return base::File::FILE_ERROR_FAILED;
+
   // Store the file system descriptor. Use the mount point name as the file
   // system provider file system id.
   // Examples:
