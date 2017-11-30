@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a30098ef_70368889",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrDaydreamApiImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-30T19:20:40Z",
+      "side": 1,
+      "message": "Ack. Will leave this since you\u0027re probably right that we should be returning boolean here.",
+      "parentUuid": "b2a20d4c_5a4342d1",
+      "range": {
+        "startLine": 108,
+        "startChar": 11,
+        "endLine": 108,
+        "endChar": 18
+      },
+      "revId": "05bd6aeecca455343eac3a6d70b69c9a3bfa6cc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82e30c02_4798e1af",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrIntentUtils.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "05bd6aeecca455343eac3a6d70b69c9a3bfa6cc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d1c72ff_f90cc65c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrIntentUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-30T19:20:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "82e30c02_4798e1af",
+      "range": {
+        "startLine": 37,
+        "startChar": 21,
+        "endLine": 37,
+        "endChar": 36
+      },
+      "revId": "05bd6aeecca455343eac3a6d70b69c9a3bfa6cc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +176,30 @@
     },
     {
       "key": {
+        "uuid": "425e3059_83e8b53a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-30T19:20:40Z",
+      "side": 1,
+      "message": "No it does not unfortunately :(\nWe need to expose the int.",
+      "parentUuid": "da5db5b8_486edb80",
+      "range": {
+        "startLine": 103,
+        "startChar": 4,
+        "endLine": 103,
+        "endChar": 11
+      },
+      "revId": "05bd6aeecca455343eac3a6d70b69c9a3bfa6cc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b7e6f21_e5b4d015",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 3
@@ -168,6 +240,48 @@
     },
     {
       "key": {
+        "uuid": "5fa6b381_725e2644",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1614,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-30T19:20:40Z",
+      "side": 1,
+      "message": "Spoke to you offline. Removing this in favor of just adding a check for native in VrCoreVersionChecker.",
+      "parentUuid": "9b7e6f21_e5b4d015",
+      "range": {
+        "startLine": 1614,
+        "startChar": 16,
+        "endLine": 1614,
+        "endChar": 29
+      },
+      "revId": "05bd6aeecca455343eac3a6d70b69c9a3bfa6cc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e22f49cb_5357c0a0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1614,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-30T19:20:40Z",
+      "side": 1,
+      "message": "No, the main reason for this was that we can\u0027t call versionChecker.getVrCoreCompatibility directly from VrIntentUtil because native library is not yet available (and getVrCoreCompatability does a min build check for using ChromeFeatureList that depends on native). It\u0027s obsolete in the latest PS though.",
+      "parentUuid": "885c90cb_c21118c5",
+      "revId": "05bd6aeecca455343eac3a6d70b69c9a3bfa6cc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8fa1d3be_c9bca243",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 3
@@ -188,6 +302,30 @@
       "revId": "05bd6aeecca455343eac3a6d70b69c9a3bfa6cc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a782a139_a1b35ad2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1616,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-30T19:20:40Z",
+      "side": 1,
+      "message": "N/A in latest patchset.",
+      "parentUuid": "8fa1d3be_c9bca243",
+      "range": {
+        "startLine": 1616,
+        "startChar": 50,
+        "endLine": 1616,
+        "endChar": 0
+      },
+      "revId": "05bd6aeecca455343eac3a6d70b69c9a3bfa6cc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
