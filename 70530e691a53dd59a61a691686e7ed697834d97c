@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3d4389e8_e343c362",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/inheritance/inherited-csp-list-modifications-are-local.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-11-30T15:45:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95e845fd_f58157c6",
+      "revId": "70530e691a53dd59a61a691686e7ed697834d97c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dafb46c7_b92a6c53",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/inheritance/inherited-csp-list-modifications-are-local.html",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "70530e691a53dd59a61a691686e7ed697834d97c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a28ea2a6_c48b84e6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/inheritance/inherited-csp-list-modifications-are-local.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-11-30T15:45:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dafb46c7_b92a6c53",
+      "revId": "70530e691a53dd59a61a691686e7ed697834d97c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
