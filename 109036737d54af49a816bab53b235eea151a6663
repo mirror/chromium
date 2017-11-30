@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "475b214a_c2e73174",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-30T16:07:59Z",
+      "side": 1,
+      "message": "sgtm, thanks for explanation!",
+      "parentUuid": "9bd58d96_bcdcc32a",
+      "range": {
+        "startLine": 346,
+        "startChar": 5,
+        "endLine": 346,
+        "endChar": 17
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5c9b417_98aa8fc4",
         "filename": "components/cronet/ios/cronet_metrics.h",
         "patchSetId": 22
@@ -143,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "835d62dd_e326eca9",
+        "filename": "components/cronet/ios/cronet_metrics.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-30T16:07:59Z",
+      "side": 1,
+      "message": "Oops, now I think ObjC ref counting may require them to be non-const. \nAndrei, could you confirm one way or another?",
+      "parentUuid": "4e2f7095_e7c2d83f",
+      "range": {
+        "startLine": 67,
+        "startChar": 54,
+        "endLine": 67,
+        "endChar": 70
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b6bb6958_d19ce771",
         "filename": "components/cronet/ios/cronet_metrics.h",
         "patchSetId": 22
@@ -190,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "30a3607d_fa195a07",
+        "filename": "components/cronet/ios/cronet_metrics.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-30T16:07:59Z",
+      "side": 1,
+      "message": "Hrm, Ok. I think we can refactor that, but I don\u0027t think it is really important.",
+      "parentUuid": "ffaebd3c_98ca7eb7",
+      "range": {
+        "startLine": 70,
+        "startChar": 9,
+        "endLine": 70,
+        "endChar": 12
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7875099_1140b91a",
         "filename": "components/cronet/ios/cronet_metrics.mm",
         "patchSetId": 22
@@ -225,6 +297,30 @@
       "side": 1,
       "message": "This would be nice, but I did a quick test, and when using Cronet, the TransactionMetrics populated by iOS contains only nil fields.",
       "parentUuid": "d7875099_1140b91a",
+      "range": {
+        "startLine": 92,
+        "startChar": 49,
+        "endLine": 92,
+        "endChar": 50
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea322c99_5370d5ae",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-30T16:07:59Z",
+      "side": 1,
+      "message": "G\u0027Ah, that\u0027s annoying.",
+      "parentUuid": "527f733b_994551d8",
       "range": {
         "startLine": 92,
         "startChar": 49,
@@ -319,6 +415,30 @@
       "side": 1,
       "message": "I can make this be NSURLSessionTaskMetricsResourceFetchTypeLocalCache if was_cached is true; do you know how to distinguish between NetworkLoad and ServerPush?",
       "parentUuid": "42f611b0_4b6cb7cb",
+      "range": {
+        "startLine": 122,
+        "startChar": 25,
+        "endLine": 122,
+        "endChar": 49
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cffd6b7a_dd9a29a8",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-30T16:07:59Z",
+      "side": 1,
+      "message": "FWIW LoadTimingInfo has push_start and push_end timestamps:\n\nhttps://cs.chromium.org/chromium/src/net/base/load_timing_info.h?rcl\u003d2dc65f0d49b20c16af3d00eb1585d0ebf8b14d96\u0026l\u003d149\n\nI\u0027d suspect that they are not empty in case of push.",
+      "parentUuid": "3fdb270e_930c6a24",
       "range": {
         "startLine": 122,
         "startChar": 25,
@@ -472,6 +592,30 @@
     },
     {
       "key": {
+        "uuid": "267bfcd9_dd99e7b5",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-30T16:07:59Z",
+      "side": 1,
+      "message": "I *think* they go after else, but I don\u0027t have exact reference at hand.",
+      "parentUuid": "790f205c_4f1c3898",
+      "range": {
+        "startLine": 197,
+        "startChar": 15,
+        "endLine": 197,
+        "endChar": 16
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0d4b27a_80fa92ec",
         "filename": "components/cronet/ios/cronet_metrics.mm",
         "patchSetId": 22
@@ -553,6 +697,30 @@
       "side": 1,
       "message": "The comment there says that return value is empty \"if no protocol was negotiated, the protocol is not known, or when using plain HTTP or HTTPS.\"\n\nIf the first two cases can be ruled out (can Cronet even use protocols other than HTTP/HTTP2/QUIC?), then I think it\u0027s safe to default to http/1.1; if not, I wouldn\u0027t want to touch it.\n\nIt seems worth noting, though, that the protocol string is a literal \"unknown\", not the empty string.  Is this a bug in net, or is the comment in the android code wrong?",
       "parentUuid": "ab50df74_75acf523",
+      "range": {
+        "startLine": 167,
+        "startChar": 7,
+        "endLine": 167,
+        "endChar": 10
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d894b587_0ae04c32",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-30T16:07:59Z",
+      "side": 1,
+      "message": "Interesting. That appears to be coming from HttpResponseInfo::ConnectionInfoToString() which should handle http/1.1 appropriately. \n\nI wonder whether test server response contains \"HTTP/1.1 200 OK\"? Looking at https://cs.chromium.org/chromium/src/net/test/embedded_test_server/http_response.cc?rcl\u003d2828d5e04f291bc0832d39220a1fb8802389415c\u0026l\u003d53 it seems that it should, but would be nice to verify in debugger.",
+      "parentUuid": "b77ed03c_5029eb13",
       "range": {
         "startLine": 167,
         "startChar": 7,
@@ -753,6 +921,30 @@
     },
     {
       "key": {
+        "uuid": "444b6b4b_ff29b26e",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-30T16:07:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a0a213f7_ea7da494",
+      "range": {
+        "startLine": 149,
+        "startChar": 26,
+        "endLine": 149,
+        "endChar": 42
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4706ae9f_8faefbb5",
         "filename": "ios/net/crn_http_protocol_handler.mm",
         "patchSetId": 22
@@ -844,6 +1036,30 @@
       "revId": "109036737d54af49a816bab53b235eea151a6663",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "156e8568_7f23d279",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-30T16:07:59Z",
+      "side": 1,
+      "message": "I agree, we definitely don\u0027t want to keep the pointer to net_request_-\u003eresponse_info() as it WILL go away.",
+      "parentUuid": "f5258ff1_39c1c365",
+      "range": {
+        "startLine": 744,
+        "startChar": 57,
+        "endLine": 744,
+        "endChar": 70
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
