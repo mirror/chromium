@@ -34,6 +34,24 @@
       "revId": "97c386024a602189a9a8f2344c6729c35ce1fb3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9102604e_c6c55dbc",
+        "filename": "content/public/browser/web_contents_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-30T13:20:12Z",
+      "side": 1,
+      "message": "s/WebContents/WebContentsDelegate/. And to give more details, I need access to the TabStrip associated with a given WebContents. The best way is to access the Browser which is an implementation of WebContentsDelegate. I can\u0027t find any place in //chrome that safely assume that WebContentsDelegate is a Browser instance. Happy to do this though if you prefer.",
+      "parentUuid": "e1adcda0_9e7f3746",
+      "revId": "97c386024a602189a9a8f2344c6729c35ce1fb3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
