@@ -39,6 +39,131 @@
       "revId": "423b5f334f3062e9ad0bbce29a4e1dc4da3b9b35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02ee5c47_40c0be2b",
+        "filename": "services/network/udp_socket_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-11-30T23:53:52Z",
+      "side": 1,
+      "message": "Style bikeshedding: I think it is more common to do \"false /* is_client_socket */\".",
+      "range": {
+        "startLine": 35,
+        "startChar": 21,
+        "endLine": 35,
+        "endChar": 48
+      },
+      "revId": "423b5f334f3062e9ad0bbce29a4e1dc4da3b9b35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c1ea76e_e3c78f5d",
+        "filename": "services/network/udp_socket_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-11-30T23:53:52Z",
+      "side": 1,
+      "message": "Here because |data| is a const ref, std::move() doesn\u0027t really help.\n\nOne solution is to use mojo.common.mojom.ReadOnlyBuffer, which is typemapped to base::span\u003cconst uint8_t\u003e and at the receiver side it actually points to the contents in the incoming message. So there will be one less copy.\n\nCurrently: incoming message -\u003e copy to std::vector\u003cuint8_t\u003e -\u003e make a copy of std::vector\u003cuint8_t\u003e\nAfter change: incoming message -\u003e base::span\u003cconst uint8_t\u003e -\u003e copy to std::vector\u003cuint8_t\u003e.\n\nActually, if we store a net::IOBufferWithSize in PendingSendRequest, we don\u0027t really need to copy to std::vector\u003c\u003e at all. Instead we directly copy from base::span\u003c\u003e to net::IOBufferWithSize.\n\nSorry the original code was written in the early days when Mojo didn\u0027t support typemapping and used a home-made move-only array type.",
+      "revId": "423b5f334f3062e9ad0bbce29a4e1dc4da3b9b35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35a46801_4edec9cc",
+        "filename": "services/network/udp_socket_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-11-30T23:53:52Z",
+      "side": 1,
+      "message": "Why do we need |binding_|? I don\u0027t see where it is used. It is a weak pointer to the StrongBinding, so holding it is not helpful for lifespan management.",
+      "revId": "423b5f334f3062e9ad0bbce29a4e1dc4da3b9b35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42872be6_2bf48912",
+        "filename": "services/network/udp_socket_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-11-30T23:53:52Z",
+      "side": 1,
+      "message": "nit: it is more natural to swap the two arms of the if:\nif (is_client_socket_) {\n  ...\n} else {\n  ...\n}",
+      "revId": "423b5f334f3062e9ad0bbce29a4e1dc4da3b9b35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfe68adf_c67bc326",
+        "filename": "services/network/udp_socket_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-11-30T23:53:52Z",
+      "side": 1,
+      "message": "Similarly, we could use mojo.common.mojom.ReadOnlyBuffer here as well.",
+      "revId": "423b5f334f3062e9ad0bbce29a4e1dc4da3b9b35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d134ed2_eb94e01f",
+        "filename": "services/network/udp_socket_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-11-30T23:53:52Z",
+      "side": 1,
+      "message": "Alternatively we could pass in a mojom::UDPSocketReceiverPtr[Info]. That seems more natural than a Request output parameter.",
+      "revId": "423b5f334f3062e9ad0bbce29a4e1dc4da3b9b35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4ec3666_ca2adead",
+        "filename": "services/network/udp_socket_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-11-30T23:53:52Z",
+      "side": 1,
+      "message": "FYI, base::circular_deque has a smaller overhead than std::deque. (Please see https://cs.chromium.org/chromium/src/base/containers/README.md?rcl\u003db3c9f7ef2db5f5eba1c980778fce7dd2da7eacb2\u0026l\u003d221)\n\nBesides, we could use std::unique_ptr\u003cPendingSendRequest\u003e as elements now.",
+      "revId": "423b5f334f3062e9ad0bbce29a4e1dc4da3b9b35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
