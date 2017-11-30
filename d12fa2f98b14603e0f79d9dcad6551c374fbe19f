@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a9696fd9_0a2797cf",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBoxModelObject.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-11-30T23:38:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bb4e2bc_66a88921",
+      "revId": "d12fa2f98b14603e0f79d9dcad6551c374fbe19f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f0040e6_4127cf25",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
         "patchSetId": 12
@@ -30,6 +48,30 @@
       "writtenOn": "2017-11-30T23:08:00Z",
       "side": 1,
       "message": "I\u0027m surprised this is only for the root layer. I suppose if a non-root scroller is composited then we promote the sticky descendants anyways because we have already \"lost\" lcd text (even though we haven\u0027t always).",
+      "range": {
+        "startLine": 2004,
+        "startChar": 6,
+        "endLine": 2004,
+        "endChar": 28
+      },
+      "revId": "d12fa2f98b14603e0f79d9dcad6551c374fbe19f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64f16fa5_47832d24",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 2004,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-11-30T23:38:56Z",
+      "side": 1,
+      "message": "I\u0027ll try a patch without and see what happens.",
+      "parentUuid": "0f0040e6_4127cf25",
       "range": {
         "startLine": 2004,
         "startChar": 6,
