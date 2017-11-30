@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f9e0d40_9b264f37",
+        "filename": "net/reporting/reporting_policy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-11-30T17:04:40Z",
+      "side": 1,
+      "message": ":D",
+      "revId": "64443076683d364728977e7acccd2c27cf218dc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
