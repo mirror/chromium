@@ -34,6 +34,7 @@
 #include "chromeos/dbus/debug_daemon_client.h"
 #include "chromeos/printing/ppd_cache.h"
 #include "chromeos/printing/ppd_provider.h"
+#include "components/version_info/version_info.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/web_ui.h"
@@ -567,8 +568,8 @@ void CupsPrintersHandler::HandleAddCupsPrinter(const base::ListValue* args) {
     // model.
     bool found = false;
     for (const auto& resolved_printer : resolved_printers_[ppd_manufacturer]) {
-      if (resolved_printer.first == ppd_model) {
-        *printer->mutable_ppd_reference() = resolved_printer.second;
+      if (resolved_printer.name == ppd_model) {
+        *(printer->mutable_ppd_reference()) = resolved_printer.ppd_ref;
         found = true;
         break;
       }
@@ -745,7 +746,7 @@ void CupsPrintersHandler::ResolvePrintersDone(
   if (result_code == PpdProvider::SUCCESS) {
     resolved_printers_[manufacturer] = printers;
     for (const auto& printer : printers) {
-      printers_value->AppendString(printer.first);
+      printers_value->AppendString(printer.name);
     }
   }
   base::DictionaryValue response;
