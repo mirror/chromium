@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f7fa7f8b_a7a68b62",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2017-11-30T14:47:34Z",
+      "side": 1,
+      "message": "\u003e Or to be consistent, we should do the check in the main routine instead of here.\n\nDone.",
+      "parentUuid": "ad3a28d2_8be65571",
+      "revId": "4ec5ddcde9f3989ff6df80c6dbb00ee529b85fc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10066d57_10f6fcae",
         "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathImpl.cpp",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "4ec5ddcde9f3989ff6df80c6dbb00ee529b85fc9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3fb3cf9_a9203056",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2017-11-30T14:47:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10066d57_10f6fcae",
+      "revId": "4ec5ddcde9f3989ff6df80c6dbb00ee529b85fc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
