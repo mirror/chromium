@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8f3e004c_063c97ce",
+        "filename": "chrome/browser/resources/md_extensions/install_warnings_dialog.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-30T16:40:03Z",
+      "side": 1,
+      "message": "Done. I initially used pink to match the color of the old UI.",
+      "parentUuid": "f356054f_79da2e6b",
+      "revId": "e6b45ae066704255a36baa4cdfe28616b634c7c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7451c4a_4f486010",
         "filename": "chrome/browser/resources/md_extensions/install_warnings_dialog.js",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "e6b45ae066704255a36baa4cdfe28616b634c7c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13810071_5de1af07",
+        "filename": "chrome/browser/resources/md_extensions/install_warnings_dialog.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-30T16:40:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7451c4a_4f486010",
+      "revId": "e6b45ae066704255a36baa4cdfe28616b634c7c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "727120b4_7b031fa1",
+        "filename": "chrome/browser/resources/md_extensions/install_warnings_dialog.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-30T16:40:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db81c432_9e672304",
+      "revId": "e6b45ae066704255a36baa4cdfe28616b634c7c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45ab0765_ace7a537",
         "filename": "chrome/browser/resources/md_extensions/install_warnings_dialog.js",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-30T02:39:03Z",
       "side": 1,
       "message": "If this is relying on being within a template with a stamp, that seems worth commenting/documenting explicitly. Or maybe move this out of attached.",
+      "revId": "e6b45ae066704255a36baa4cdfe28616b634c7c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c94d1ea_3c15159f",
+        "filename": "chrome/browser/resources/md_extensions/install_warnings_dialog.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-30T16:40:03Z",
+      "side": 1,
+      "message": "Using restamp along with calling showModal() within attached() is a very common pattern in the codebase, see examples at [1], often enough such that we don\u0027t seem to document this in every occasion. I\u0027ll add the docs if you think it is not clear without one, just mentioning that it is following a frequent pattern.\n\nOn the other hand, moving this outside of attached makes it more complicated, since the parent needs to wait with this.async() for the template to render, before calling showModal() from the outside, whereas attached() is the right signal for this, and avoids any calls to async().\n\n[1] https://cs.chromium.org/search/?q\u003d%22this.$.dialog.showModal()%22\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "parentUuid": "45ab0765_ace7a537",
       "revId": "e6b45ae066704255a36baa4cdfe28616b634c7c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "fdd8c5e6_e9f47903",
+        "filename": "chrome/browser/resources/md_extensions/item.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-30T16:40:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "313007bc_9e053e14",
+      "revId": "e6b45ae066704255a36baa4cdfe28616b634c7c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "106ee0dc_8cffaa00",
         "filename": "chrome/browser/ui/webui/extensions/extensions_ui.cc",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "e6b45ae066704255a36baa4cdfe28616b634c7c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1424b59e_8fa0ebd2",
+        "filename": "chrome/browser/ui/webui/extensions/extensions_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-30T16:40:03Z",
+      "side": 1,
+      "message": "\u003e Is the word Settings intentional here? (it looks like a whoops).\n\nIt was intentional. This was copied from https://cs.chromium.org/chromium/src/chrome/browser/ui/webui/extensions/extension_settings_handler.cc?l\u003d96,97 which is used in the old UI.\n\nChanged per suggestion.",
+      "parentUuid": "106ee0dc_8cffaa00",
+      "revId": "e6b45ae066704255a36baa4cdfe28616b634c7c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
