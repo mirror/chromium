@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "103b1a73_e28d8fe2",
+        "filename": "chrome/browser/extensions/crx_installer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-11-30T22:54:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71518365_2b43b468",
+      "revId": "3149b9d3ace91f0c0e87782b611734c79a8b8e7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35ca85f1_093fd48e",
         "filename": "chrome/browser/extensions/crx_installer_browsertest.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "3149b9d3ace91f0c0e87782b611734c79a8b8e7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b19046ab_be9f9dd5",
+        "filename": "chrome/browser/extensions/crx_installer_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-11-30T22:54:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35ca85f1_093fd48e",
+      "revId": "3149b9d3ace91f0c0e87782b611734c79a8b8e7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "96d612e7_233667f3",
+        "filename": "extensions/browser/updater/extension_installer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-11-30T22:54:59Z",
+      "side": 1,
+      "message": "I change the wording on the comment of ExtensionInstaller::Install after discussing with Sorin. The thread calling ExtensionInstaller::Install is the one the component updater is running on, which is a blocking thread with background priority - this can be changed in the future.",
+      "parentUuid": "aa436fe3_0987e7a3",
+      "revId": "3149b9d3ace91f0c0e87782b611734c79a8b8e7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f1e0f51_c6ec9d4b",
         "filename": "extensions/browser/updater/extension_installer_unittest.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "3149b9d3ace91f0c0e87782b611734c79a8b8e7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62a37fa6_7799f505",
+        "filename": "extensions/browser/updater/extension_installer_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-11-30T22:54:59Z",
+      "side": 1,
+      "message": "Both MakeAbsoluteFilePath() and NormalizeFilePath() don\u0027t work. They both fail if the file to check doesn\u0027t not exist.",
+      "parentUuid": "7f1e0f51_c6ec9d4b",
+      "revId": "3149b9d3ace91f0c0e87782b611734c79a8b8e7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
