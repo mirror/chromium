@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dade2155_7b8e75d9",
+        "filename": "ui/file_manager/file_manager/background/js/app_window_wrapper.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-11-30T02:29:47Z",
+      "side": 1,
+      "message": "Did you forget to remove this?",
+      "range": {
+        "startLine": 306,
+        "startChar": 6,
+        "endLine": 306,
+        "endChar": 7
+      },
+      "revId": "4bcf7814bf75e85fe980fbc696e29e5f0bcb0e1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
