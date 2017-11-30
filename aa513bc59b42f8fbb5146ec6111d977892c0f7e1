@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f6ee1824_d11af44f",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-30T15:27:31Z",
+      "side": 1,
+      "message": "Good point. Shutting down the ContextProvider/CommandBuffer does a sync IPC guarantees that when the Display/OutputSurface is destroyed the GPU end has been destroyed.\n\nWe lose synchronization with GPU process tasks and the ui::Compositor. This was the reason sadrul@ had to fix a bunch of GLX context stuff, because the browser was destroying the XWindow early and causing the GPU to crash when the MakeCurrent failed.\n\nI\u0027m not sure what the right solution is though, we don\u0027t want to introduce a sync IPC to destroy top level windows again I\u0027d assume? I could track HWNDs that are maybe waiting on GpuProcessHost::SetChildSurface(), but that only solves this problem and not any of the related issues.",
+      "parentUuid": "a4022f44_2ec4eb26",
+      "revId": "aa513bc59b42f8fbb5146ec6111d977892c0f7e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d43bddc_a9104174",
         "filename": "ui/gfx/win/rendering_window_manager.cc",
         "patchSetId": 21
@@ -33,6 +51,24 @@
       "revId": "aa513bc59b42f8fbb5146ec6111d977892c0f7e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0bfac6a_4c492d78",
+        "filename": "ui/gfx/win/rendering_window_manager.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-30T15:27:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d43bddc_a9104174",
+      "revId": "aa513bc59b42f8fbb5146ec6111d977892c0f7e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
