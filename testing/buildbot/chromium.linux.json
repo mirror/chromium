@@ -3452,9 +3452,13 @@
       "mojo_system_unittests",
       "net_unittests",
       "service_manager_unittests",
+      "snapshot_unittests",
       "skia_unittests",
       "sql_unittests",
-      "ui_base_unittests"
+      "ui_base_unittests",
+      "url_unittests",
+      "wm_unittests",
+      "wtf_unittests"
     ]
   },
   "Fuchsia ARM64 Cast Audio": {
@@ -3479,7 +3483,11 @@
       "mojo_system_unittests",
       "net_unittests",
       "service_manager_unittests",
-      "ui_base_unittests"
+      "snapshot_unittests",
+      "ui_base_unittests",
+      "url_unittests",
+      "wm_unittests",
+      "wtf_unittests"
     ],
     "gtest_tests": [
       {
