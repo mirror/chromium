@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cfa4dfd9_e81e7995",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/cpu_time_budget_pool.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2017-11-30T11:57:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd9f7872_2be04c02",
+      "range": {
+        "startLine": 31,
+        "startChar": 47,
+        "endLine": 31,
+        "endChar": 60
+      },
+      "revId": "7ac6d27275b57bf5056d50b1f3d267220a01bc13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9283c4e6_bbec9503",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/cpu_time_budget_pool.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "691314f0_b201bbc7",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/cpu_time_budget_pool.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2017-11-30T11:57:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9283c4e6_bbec9503",
+      "range": {
+        "startLine": 116,
+        "startChar": 60,
+        "endLine": 116,
+        "endChar": 66
+      },
+      "revId": "7ac6d27275b57bf5056d50b1f3d267220a01bc13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c07aa3eb_98a104ce",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/cpu_time_budget_pool.cc",
         "patchSetId": 1
@@ -65,6 +113,47 @@
         "endLine": 118,
         "endChar": 37
       },
+      "revId": "7ac6d27275b57bf5056d50b1f3d267220a01bc13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12fce8f9_35214b68",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/cpu_time_budget_pool.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2017-11-30T11:57:17Z",
+      "side": 1,
+      "message": "Some of them. Let\u0027s treat counter as an accumulator and don\u0027t define binary operations (otherwise it\u0027s not obvious which type should be as a result and the Style Guide says \"Define overloaded operators only if their meaning is obvious, unsurprising, and consistent with the corresponding built-in operators\"). Happy with +\u003d, -\u003d though.",
+      "parentUuid": "c07aa3eb_98a104ce",
+      "range": {
+        "startLine": 118,
+        "startChar": 29,
+        "endLine": 118,
+        "endChar": 37
+      },
+      "revId": "7ac6d27275b57bf5056d50b1f3d267220a01bc13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bcfa75f_13867744",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/cpu_time_budget_pool.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2017-11-30T11:57:17Z",
+      "side": 1,
+      "message": "We can replace get() with -\u003e here, should we?",
       "revId": "7ac6d27275b57bf5056d50b1f3d267220a01bc13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
