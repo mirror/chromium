@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b0d15b97_e3cbac80",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-30T19:19:44Z",
+      "side": 1,
+      "message": "I think the easy way is to do the sync IPC, which would be no regression over the current behavior without viz. But agreed that over the long term we\u0027d want an asynchronous solution.",
+      "parentUuid": "f6ee1824_d11af44f",
+      "revId": "aa513bc59b42f8fbb5146ec6111d977892c0f7e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d43bddc_a9104174",
         "filename": "ui/gfx/win/rendering_window_manager.cc",
         "patchSetId": 21
