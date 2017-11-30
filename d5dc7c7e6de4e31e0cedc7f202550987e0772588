@@ -1,0 +1,255 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17ba487b_182e849d",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T02:21:59Z",
+      "side": 1,
+      "message": "It\u0027s strange to be going through Assets in the VrShell constructor. See also below about the naming.",
+      "revId": "d5dc7c7e6de4e31e0cedc7f202550987e0772588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "362fbecf_999f76f9",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T02:21:59Z",
+      "side": 1,
+      "message": "Again, this has nothing to do with Assets.",
+      "revId": "d5dc7c7e6de4e31e0cedc7f202550987e0772588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5534e79_1b6f046b",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T02:21:59Z",
+      "side": 1,
+      "message": "This existing file is incorrectly named.",
+      "range": {
+        "startLine": 49,
+        "startChar": 6,
+        "endLine": 49,
+        "endChar": 21
+      },
+      "revId": "d5dc7c7e6de4e31e0cedc7f202550987e0772588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9c1a4db_608aa305",
+        "filename": "chrome/browser/vr/assets.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T02:21:59Z",
+      "side": 1,
+      "message": "It\u0027s strange that Assets owns the (seemingly) generic \"Metrics Helper.\"",
+      "revId": "d5dc7c7e6de4e31e0cedc7f202550987e0772588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ee328b2_2b03699b",
+        "filename": "chrome/browser/vr/metrics_helper.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T02:21:59Z",
+      "side": 1,
+      "message": "We should avoid duplicating this string literal to prevent mistakes in the future. We can build the extensions in the code. This should also simplify the switch statements.",
+      "range": {
+        "startLine": 16,
+        "startChar": 5,
+        "endLine": 16,
+        "endChar": 38
+      },
+      "revId": "d5dc7c7e6de4e31e0cedc7f202550987e0772588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38325fa6_fb3c66d9",
+        "filename": "chrome/browser/vr/metrics_helper.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T02:21:59Z",
+      "side": 1,
+      "message": "Ditto here and below.",
+      "range": {
+        "startLine": 37,
+        "startChar": 12,
+        "endLine": 37,
+        "endChar": 15
+      },
+      "revId": "d5dc7c7e6de4e31e0cedc7f202550987e0772588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4efff418_64dd0ebd",
+        "filename": "chrome/browser/vr/metrics_helper.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T02:21:59Z",
+      "side": 1,
+      "message": "Can we instead pick the string in the switch statement then log the enumeration once?",
+      "revId": "d5dc7c7e6de4e31e0cedc7f202550987e0772588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdb57e2c_c103fe43",
+        "filename": "chrome/browser/vr/metrics_helper.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T02:21:59Z",
+      "side": 1,
+      "message": "I don\u0027t think I understand this comment.",
+      "revId": "d5dc7c7e6de4e31e0cedc7f202550987e0772588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2660e4ab_7b0b3255",
+        "filename": "chrome/browser/vr/metrics_helper.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T02:21:59Z",
+      "side": 1,
+      "message": "OnEnter() appears to be called every time we switch between WebVR presentation and browsing. Do you intend to record these metrics in each of those cases?",
+      "revId": "d5dc7c7e6de4e31e0cedc7f202550987e0772588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93642380_e2ff0dc1",
+        "filename": "chrome/browser/vr/metrics_helper.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T02:21:59Z",
+      "side": 1,
+      "message": "This is confusing. It looks like it sets a local variable before exiting the function. I think we should find a better way to do this.",
+      "revId": "d5dc7c7e6de4e31e0cedc7f202550987e0772588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f963495f_24fcfcc4",
+        "filename": "chrome/browser/vr/metrics_helper.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T02:21:59Z",
+      "side": 1,
+      "message": "We now have vr_shell::VrMetricsHelper and vr::MetricsHelper. This is confusing.\n\nThis appears to be AssetsMetricsHelper, though that changes too in https://crrev.com/c/791332.",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 19
+      },
+      "revId": "d5dc7c7e6de4e31e0cedc7f202550987e0772588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8f893a1_5e7ddc35",
+        "filename": "chrome/browser/vr/metrics_helper.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T02:21:59Z",
+      "side": 1,
+      "message": "\"Log\" is a misleading term. I would use \"Record\" or something like that.",
+      "range": {
+        "startLine": 30,
+        "startChar": 7,
+        "endLine": 30,
+        "endChar": 10
+      },
+      "revId": "d5dc7c7e6de4e31e0cedc7f202550987e0772588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adc46d1a_a38dfbc4",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 108971,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T02:21:59Z",
+      "side": 1,
+      "message": "Should the affected histograms be together at the bottom?\n\nI\u0027ve fixed this in https://crrev.com/c/798733.",
+      "revId": "d5dc7c7e6de4e31e0cedc7f202550987e0772588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
