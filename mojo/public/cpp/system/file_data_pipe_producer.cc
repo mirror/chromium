@@ -28,6 +28,40 @@ namespace {
 // 64 MB chunks whenever a producer is writable.
 constexpr uint32_t kDefaultMaxReadSize = 64 * 1024 * 1024;
 
+MojoResult FileErrorToMojoResult(base::File::Error error) {
+  switch (error) {
+    case base::File::FILE_OK:
+      return MOJO_RESULT_OK;
+    case base::File::FILE_ERROR_FAILED:
+      return MOJO_RESULT_UNKNOWN;
+    case base::File::FILE_ERROR_EXISTS:
+      return MOJO_RESULT_ALREADY_EXISTS;
+    case base::File::FILE_ERROR_NOT_FOUND:
+      return MOJO_RESULT_NOT_FOUND;
+    case base::File::FILE_ERROR_SECURITY:
+    // fallthrough
+    case base::File::FILE_ERROR_ACCESS_DENIED:
+      return MOJO_RESULT_PERMISSION_DENIED;
+    case base::File::FILE_ERROR_TOO_MANY_OPENED:
+      return MOJO_RESULT_RESOURCE_EXHAUSTED;
+    case base::File::FILE_ERROR_NO_MEMORY:
+      return MOJO_RESULT_RESOURCE_EXHAUSTED;
+    case base::File::FILE_ERROR_NO_SPACE:
+      return MOJO_RESULT_RESOURCE_EXHAUSTED;
+    case base::File::FILE_ERROR_ABORT:
+      return MOJO_RESULT_ABORTED;
+    case base::File::FILE_ERROR_MAX:
+    case base::File::FILE_ERROR_NOT_A_DIRECTORY:
+    case base::File::FILE_ERROR_IN_USE:
+    case base::File::FILE_ERROR_INVALID_OPERATION:
+    case base::File::FILE_ERROR_NOT_A_FILE:
+    case base::File::FILE_ERROR_NOT_EMPTY:
+    case base::File::FILE_ERROR_INVALID_URL:
+    case base::File::FILE_ERROR_IO:
+      return MOJO_RESULT_UNKNOWN;
+  }
+}
+
 }  // namespace
 
 class FileDataPipeProducer::FileSequenceState
@@ -41,12 +75,14 @@ class FileDataPipeProducer::FileSequenceState
       ScopedDataPipeProducerHandle producer_handle,
       scoped_refptr<base::SequencedTaskRunner> file_task_runner,
       CompletionCallback callback,
-      scoped_refptr<base::SequencedTaskRunner> callback_task_runner)
+      scoped_refptr<base::SequencedTaskRunner> callback_task_runner,
+      DataPipeProducerObserver* observer)
       : base::RefCountedDeleteOnSequence<FileSequenceState>(file_task_runner),
         file_task_runner_(std::move(file_task_runner)),
         callback_task_runner_(std::move(callback_task_runner)),
         producer_handle_(std::move(producer_handle)),
-        callback_(std::move(callback)) {}
+        callback_(std::move(callback)),
+        observer_(std::move(observer)) {}
 
   void Cancel() {
     base::AutoLock lock(lock_);
@@ -138,6 +174,17 @@ class FileDataPipeProducer::FileSequenceState
           std::min(static_cast<size_t>(size), max_bytes_remaining));
       int read_size = file_.ReadAtCurrentPos(static_cast<char*>(pipe_buffer),
                                              attempted_read_size);
+      base::File::Error read_error;
+      if (read_size < 0) {
+        read_error = base::File::GetLastFileError();
+        if (observer_)
+          observer_->OnReadComplete(pipe_buffer, 0, read_error);
+      } else {
+        read_error = base::File::FILE_OK;
+        if (observer_)
+          observer_->OnReadComplete(pipe_buffer, read_size,
+                                    base::File::FILE_OK);
+      }
       producer_handle_->EndWriteData(
           read_size >= 0 ? static_cast<uint32_t>(read_size) : 0);
 
@@ -150,9 +197,7 @@ class FileDataPipeProducer::FileSequenceState
       DCHECK_LE(bytes_transferred_, max_bytes_);
 
       if (read_size < attempted_read_size) {
-        // ReadAtCurrentPos makes a best effort to read all requested bytes. We
-        // reasonably assume if it fails to read what we ask for, we've hit EOF.
-        Finish(MOJO_RESULT_OK);
+        Finish(FileErrorToMojoResult(read_error));
         return;
       }
 
@@ -185,17 +230,23 @@ class FileDataPipeProducer::FileSequenceState
   // Guards |is_cancelled_|.
   base::Lock lock_;
   bool is_cancelled_ = false;
+  DataPipeProducerObserver* observer_;
 
   DISALLOW_COPY_AND_ASSIGN(FileSequenceState);
 };
 
 FileDataPipeProducer::FileDataPipeProducer(
-    ScopedDataPipeProducerHandle producer)
-    : producer_(std::move(producer)), weak_factory_(this) {}
+    ScopedDataPipeProducerHandle producer,
+    std::unique_ptr<DataPipeProducerObserver> observer)
+    : producer_(std::move(producer)),
+      observer_(std::move(observer)),
+      weak_factory_(this) {}
 
 FileDataPipeProducer::~FileDataPipeProducer() {
   if (file_sequence_state_)
     file_sequence_state_->Cancel();
+  if (observer_)
+    observer_->DoneReading();
 }
 
 void FileDataPipeProducer::WriteFromFile(base::File file,
@@ -225,7 +276,7 @@ void FileDataPipeProducer::InitializeNewRequest(CompletionCallback callback) {
       std::move(producer_), file_task_runner,
       base::BindOnce(&FileDataPipeProducer::OnWriteComplete,
                      weak_factory_.GetWeakPtr(), std::move(callback)),
-      base::SequencedTaskRunnerHandle::Get());
+      base::SequencedTaskRunnerHandle::Get(), observer_.get());
 }
 
 void FileDataPipeProducer::OnWriteComplete(

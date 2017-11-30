@@ -456,7 +456,6 @@ using content::PosixFileDescriptorInfo;
 using extensions::APIPermission;
 using extensions::ChromeContentBrowserClientExtensionsPart;
 using extensions::Extension;
-using extensions::InfoMap;
 using extensions::Manifest;
 #endif
 
@@ -830,6 +829,17 @@ GetSystemRequestContextOnUIThread() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   return scoped_refptr<net::URLRequestContextGetter>(
       g_browser_process->system_request_context());
+}
+
+extensions::InfoMap* GetFrameHostExtensionsInfoMap(
+    content::RenderFrameHost* frame_host) {
+  const content::RenderProcessHost* rph = frame_host->GetProcess();
+  content::BrowserContext* browser_context = rph->GetBrowserContext();
+  content::ResourceContext* resource_context =
+      browser_context->GetResourceContext();
+  const ProfileIOData* io_data =
+      ProfileIOData::FromResourceContext(resource_context);
+  return io_data->GetExtensionInfoMap();
 }
 
 }  // namespace
@@ -3690,7 +3700,8 @@ void ChromeContentBrowserClient::RegisterNonNetworkNavigationURLLoaderFactories(
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   factories->emplace(
       extensions::kExtensionScheme,
-      extensions::CreateExtensionNavigationURLLoaderFactory(frame_host));
+      extensions::CreateExtensionNavigationURLLoaderFactory(
+          frame_host, GetFrameHostExtensionsInfoMap(frame_host)));
 #endif
 }
 
@@ -3701,7 +3712,7 @@ void ChromeContentBrowserClient::
         NonNetworkURLLoaderFactoryMap* factories) {
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   auto factory = extensions::MaybeCreateExtensionSubresourceURLLoaderFactory(
-      frame_host, frame_url);
+      frame_host, frame_url, GetFrameHostExtensionsInfoMap(frame_host));
   if (factory)
     factories->emplace(extensions::kExtensionScheme, std::move(factory));
 #endif

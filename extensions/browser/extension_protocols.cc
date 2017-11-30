@@ -651,23 +651,94 @@ ExtensionProtocolHandler::MaybeCreateJob(
                                     verify_job);
 }
 
+class FileLoaderObserver : public content::FileURLLoaderObserver {
+ public:
+  FileLoaderObserver(scoped_refptr<ContentVerifyJob> verify_job)
+      : verify_job_(std::move(verify_job)) {}
+  ~FileLoaderObserver() override {
+    UMA_HISTOGRAM_COUNTS("ExtensionUrlRequest.TotalKbRead", bytes_read_ / 1024);
+    UMA_HISTOGRAM_COUNTS("ExtensionUrlRequest.SeekPosition", seek_position_);
+    if (request_timer_.get())
+      UMA_HISTOGRAM_TIMES("ExtensionUrlRequest.Latency",
+                          request_timer_->Elapsed());
+  }
+
+  void Start() override { request_timer_.reset(new base::ElapsedTimer()); }
+
+  void OnOpenComplete(int result) override {
+    if (result < 0) {
+      // This can happen when the file is unreadable (which can happen during
+      // corruption or third-party interaction). We need to be sure to inform
+      // the verification job that we've finished reading so that it can
+      // proceed; see crbug.com/703888.
+      if (verify_job_.get()) {
+        std::string tmp;
+        verify_job_->BytesRead(0, base::string_as_array(&tmp));
+        verify_job_->DoneReading();
+      }
+    }
+  }
+
+  void OnSeekComplete(int64_t result) override {
+    DCHECK_EQ(seek_position_, 0);
+    seek_position_ = result;
+    // TODO(asargent) - we'll need to add proper support for range headers.
+    // crbug.com/369895.
+    if (result > 0 && verify_job_.get())
+      verify_job_ = nullptr;
+  }
+
+  void OnReadComplete(const void* data,
+                      int bytes_read,
+                      base::File::Error read_result) override {
+    if (read_result == base::File::FILE_OK) {
+      UMA_HISTOGRAM_COUNTS("ExtensionUrlRequest.OnReadCompleteResult",
+                           read_result);
+      bytes_read_ += bytes_read;
+      if (verify_job_.get())
+        verify_job_->BytesRead(bytes_read, static_cast<const char*>(data));
+    } else {
+      net::Error net_error = net::FileErrorToNetError(read_result);
+      UMA_HISTOGRAM_SPARSE_SLOWLY("ExtensionUrlRequest.OnReadCompleteError",
+                                  net_error);
+    }
+  }
+
+  void DoneReading() override {
+    if (verify_job_.get())
+      verify_job_->DoneReading();
+  }
+
+ private:
+  int64_t bytes_read_ = 0;
+  int64_t seek_position_ = 0;
+  std::unique_ptr<base::ElapsedTimer> request_timer_;
+  scoped_refptr<ContentVerifyJob> verify_job_;
+
+  DISALLOW_COPY_AND_ASSIGN(FileLoaderObserver);
+};
+
 void LoadExtensionResourceFromFileOnBackgroundSequence(
     const content::ResourceRequest& request,
     const std::string& extension_id,
     const base::FilePath& directory_path,
     const base::FilePath& relative_path,
     content::mojom::URLLoaderRequest loader,
-    content::mojom::URLLoaderClientPtrInfo client_info) {
+    content::mojom::URLLoaderClientPtrInfo client_info,
+    scoped_refptr<ContentVerifyJob> verify_job) {
   // NOTE: ExtensionResource::GetFilePath() must be called on a sequence which
   // tolerates blocking operations.
   ExtensionResource resource(extension_id, directory_path, relative_path);
   content::mojom::URLLoaderClientPtr client;
   client.Bind(std::move(client_info));
 
+  auto loader_observer =
+      std::make_unique<FileLoaderObserver>(std::move(verify_job));
+
   content::ResourceRequest file_request = request;
   file_request.url = net::FilePathToFileURL(resource.GetFilePath());
   content::CreateFileURLLoader(file_request, std::move(loader),
-                               std::move(client));
+                               std::move(client), std::move(loader_observer));
 }
 
 class ExtensionURLLoaderFactory : public content::mojom::URLLoaderFactory {
@@ -676,9 +747,13 @@ class ExtensionURLLoaderFactory : public content::mojom::URLLoaderFactory {
   // loading a subresource. For navigation requests, |frame_url| is empty; for
   // subresource requests it's the URL of the currently committed navigation on
   // |frame_host|.
-  explicit ExtensionURLLoaderFactory(content::RenderFrameHost* frame_host,
-                                     const GURL& frame_url)
-      : frame_host_(frame_host), frame_url_(frame_url) {}
+  explicit ExtensionURLLoaderFactory(
+      content::RenderFrameHost* frame_host,
+      const GURL& frame_url,
+      extensions::InfoMap* const extension_info_map)
+      : frame_host_(frame_host),
+        frame_url_(frame_url),
+        extension_info_map_(extension_info_map) {}
   ~ExtensionURLLoaderFactory() override = default;
 
   // content::mojom::URLLoaderFactory:
@@ -799,6 +874,14 @@ class ExtensionURLLoaderFactory : public content::mojom::URLLoaderFactory {
     // resource requests. This is roughly the point at which we'd want to create
     // a ContentVerifyJob and somehow hook it into the file URLLoader we set up
     // below.
+    scoped_refptr<ContentVerifyJob> verify_job = nullptr;
+    ContentVerifier* verifier = extension_info_map_->content_verifier();
+    if (verifier) {
+      verify_job =
+          verifier->CreateJobFor(extension_id, directory_path, relative_path);
+      if (verify_job)
+        verify_job->Start();
+    }
 
     auto task_runner = base::CreateSequencedTaskRunnerWithTraits(
         {base::MayBlock(), base::TaskPriority::BACKGROUND});
@@ -806,7 +889,8 @@ class ExtensionURLLoaderFactory : public content::mojom::URLLoaderFactory {
         FROM_HERE,
         base::BindOnce(&LoadExtensionResourceFromFileOnBackgroundSequence,
                        request, extension_id, directory_path, relative_path,
-                       std::move(loader), client.PassInterface()));
+                       std::move(loader), client.PassInterface(),
+                       std::move(verify_job)));
   }
 
   void Clone(content::mojom::URLLoaderFactoryRequest request) override {
@@ -816,6 +900,7 @@ class ExtensionURLLoaderFactory : public content::mojom::URLLoaderFactory {
  private:
   content::RenderFrameHost* const frame_host_;
   const GURL frame_url_;
+  extensions::InfoMap* const extension_info_map_;
 
   mojo::BindingSet<content::mojom::URLLoaderFactory> bindings_;
 
@@ -875,14 +960,17 @@ void SetExtensionProtocolTestHandler(ExtensionProtocolTestHandler* handler) {
 
 std::unique_ptr<content::mojom::URLLoaderFactory>
 CreateExtensionNavigationURLLoaderFactory(
-    content::RenderFrameHost* frame_host) {
-  return std::make_unique<ExtensionURLLoaderFactory>(frame_host, GURL());
+    content::RenderFrameHost* frame_host,
+    extensions::InfoMap* const extension_info_map) {
+  return std::make_unique<ExtensionURLLoaderFactory>(frame_host, GURL(),
+                                                     extension_info_map);
 }
 
 std::unique_ptr<content::mojom::URLLoaderFactory>
 MaybeCreateExtensionSubresourceURLLoaderFactory(
     content::RenderFrameHost* frame_host,
-    const GURL& frame_url) {
+    const GURL& frame_url,
+    extensions::InfoMap* const extension_info_map) {
   // Ensure we have a non-empty URL so that the factory we create knows it's
   // only for subresources.
   CHECK(!frame_url.is_empty());
@@ -893,7 +981,8 @@ MaybeCreateExtensionSubresourceURLLoaderFactory(
   // any extension's web accessible resources. For now we always create a
   // factory, because the loader itself correctly prevents disallowed resources
   // from loading in an invalid context.
-  return std::make_unique<ExtensionURLLoaderFactory>(frame_host, frame_url);
+  return std::make_unique<ExtensionURLLoaderFactory>(frame_host, frame_url,
+                                                     extension_info_map);
 }
 
 }  // namespace extensions

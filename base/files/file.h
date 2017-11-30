@@ -334,6 +334,12 @@ class BASE_EXPORT File {
   static Error OSErrorToFileError(int saved_errno);
 #endif
 
+  // Gets the last global error (errno or GetLastError()) and converts it to the
+  // closest |Error| equivalent via OSErrorToFileError(). The returned value is
+  // only trustworthy immediately after another |File| method fails. |File|
+  // never resets the global error to zero.
+  static Error GetLastFileError();
+
   // Converts an error value to a human-readable form. Used for logging.
   static std::string ErrorToString(Error error);
 

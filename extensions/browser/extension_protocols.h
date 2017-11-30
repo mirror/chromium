@@ -59,7 +59,9 @@ void SetExtensionProtocolTestHandler(ExtensionProtocolTestHandler* handler);
 // Creates a new content::mojom::URLLoaderFactory implementation suitable for
 // handling navigation requests to extension URLs.
 std::unique_ptr<content::mojom::URLLoaderFactory>
-CreateExtensionNavigationURLLoaderFactory(content::RenderFrameHost* frame_host);
+CreateExtensionNavigationURLLoaderFactory(
+    content::RenderFrameHost* frame_host,
+    extensions::InfoMap* const extension_info_map);
 
 // Attempts to create a content::mojom::URLLoaderFactory implementation suitable
 // for handling subresource requests for extension URLs from |frame_host|. May
@@ -68,7 +70,8 @@ CreateExtensionNavigationURLLoaderFactory(content::RenderFrameHost* frame_host);
 std::unique_ptr<content::mojom::URLLoaderFactory>
 MaybeCreateExtensionSubresourceURLLoaderFactory(
     content::RenderFrameHost* frame_host,
-    const GURL& frame_url);
+    const GURL& frame_url,
+    extensions::InfoMap* const extension_info_map);
 
 }  // namespace extensions
 

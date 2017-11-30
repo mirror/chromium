@@ -537,4 +537,9 @@ void File::SetPlatformFile(PlatformFile file) {
   file_.reset(file);
 }
 
+// static
+File::Error File::GetLastFileError() {
+  return base::File::OSErrorToFileError(errno);
+}
+
 }  // namespace base
