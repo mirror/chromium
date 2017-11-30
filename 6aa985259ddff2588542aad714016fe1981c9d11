@@ -70,6 +70,30 @@
       "revId": "6aa985259ddff2588542aad714016fe1981c9d11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5b7bea4_3267938a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 8435,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-30T23:42:04Z",
+      "side": 1,
+      "message": "Makes sense, I\u0027ll send a followup CL now.",
+      "parentUuid": "2ece4f49_3358360b",
+      "range": {
+        "startLine": 8435,
+        "startChar": 18,
+        "endLine": 8435,
+        "endChar": 30
+      },
+      "revId": "6aa985259ddff2588542aad714016fe1981c9d11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
