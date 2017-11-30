@@ -53,8 +53,7 @@ bool Event::Wait(int milliseconds) {
 #elif defined(WEBRTC_POSIX)
 
 Event::Event(bool manual_reset, bool initially_signaled)
-    : is_manual_reset_(manual_reset),
-      event_status_(initially_signaled) {
+    : is_manual_reset_(manual_reset), event_status_(initially_signaled) {
   RTC_CHECK(pthread_mutex_init(&event_mutex_, nullptr) == 0);
   RTC_CHECK(pthread_cond_init(&event_cond_, nullptr) == 0);
 }
@@ -82,8 +81,8 @@ bool Event::Wait(int milliseconds) {
 
   struct timespec ts;
   if (milliseconds != kForever) {
-    // Converting from seconds and microseconds (1e-6) plus
-    // milliseconds (1e-3) to seconds and nanoseconds (1e-9).
+// Converting from seconds and microseconds (1e-6) plus
+// milliseconds (1e-3) to seconds and nanoseconds (1e-9).
 
 #ifdef HAVE_PTHREAD_COND_TIMEDWAIT_RELATIVE
     // Use relative time version, which tends to be more efficient for
@@ -109,8 +108,8 @@ bool Event::Wait(int milliseconds) {
   if (milliseconds != kForever) {
     while (!event_status_ && error == 0) {
 #ifdef HAVE_PTHREAD_COND_TIMEDWAIT_RELATIVE
-      error = pthread_cond_timedwait_relative_np(
-          &event_cond_, &event_mutex_, &ts);
+      error =
+          pthread_cond_timedwait_relative_np(&event_cond_, &event_mutex_, &ts);
 #else
       error = pthread_cond_timedwait(&event_cond_, &event_mutex_, &ts);
 #endif
