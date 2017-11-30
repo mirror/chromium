@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bc3b2280_c10939cd",
+        "filename": "chrome/browser/android/vr_shell/vr_metrics_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-30T20:15:05Z",
+      "side": 1,
+      "message": "I\u0027ll leave off the GVR_UNKNOWN, because it is unexpected, and the NOTREACHED, or seeing the VRRuntimeVersion.GVR.Unknown value should catch it.\n\nAdded the NOTREACHED though.",
+      "parentUuid": "2dc11033_7bb988d1",
+      "revId": "d0d089d66ce998dd575cfb73df89bfd2efec398d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68688fd4_13a82c72",
         "filename": "chrome/browser/android/vr_shell/vr_metrics_util.cc",
         "patchSetId": 1
@@ -69,6 +87,24 @@
       "revId": "d0d089d66ce998dd575cfb73df89bfd2efec398d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a69a3ad0_b514c1f9",
+        "filename": "chrome/browser/android/vr_shell/vr_metrics_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-30T20:15:05Z",
+      "side": 1,
+      "message": "This is called when we enter VR.  GVR is initialized through a different codepath for magic window (NonPresentingGvrContext).",
+      "parentUuid": "e3d7219a_7263c81b",
+      "revId": "d0d089d66ce998dd575cfb73df89bfd2efec398d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -143,6 +179,30 @@
     },
     {
       "key": {
+        "uuid": "bc98c9dd_2faf1384",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-30T20:15:05Z",
+      "side": 1,
+      "message": "Yes, this should be equivalent to how it works with GVR/vrshellgl.  I do want to reconcile these and have one point in the code where they are triggered, but not something I want to rush today.",
+      "parentUuid": "de8093d3_56bb072a",
+      "range": {
+        "startLine": 181,
+        "startChar": 19,
+        "endLine": 181,
+        "endChar": 41
+      },
+      "revId": "d0d089d66ce998dd575cfb73df89bfd2efec398d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "104cd29e_c0cdd04b",
         "filename": "device/vr/openvr/openvr_device.cc",
         "patchSetId": 1
@@ -163,6 +223,30 @@
       "revId": "d0d089d66ce998dd575cfb73df89bfd2efec398d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e604d14e_03080c55",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-30T20:15:05Z",
+      "side": 1,
+      "message": "I\u0027d argue not, but don\u0027t feel strongly.\n\nThe only reason to make it initialize one time is if it\u0027s too expensive to initialize when used.  However if it is too expensive to initialize when used then it is probably too expensive to initialize at dll load (this isn\u0027t called in a tight loop), and we\u0027re making startup slower.\n\nThat said, it\u0027s probably not a noticeable amount of time to initialize either way.  I\u0027d argue that this is simpler.\n\nAll that said, if this is the established pattern, I\u0027ll follow it.",
+      "parentUuid": "104cd29e_c0cdd04b",
+      "range": {
+        "startLine": 188,
+        "startChar": 38,
+        "endLine": 188,
+        "endChar": 50
+      },
+      "revId": "d0d089d66ce998dd575cfb73df89bfd2efec398d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -203,6 +287,48 @@
       "revId": "d0d089d66ce998dd575cfb73df89bfd2efec398d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a05ca406_29d514cc",
+        "filename": "device/vr/vr_device.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-30T20:15:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9428890a_db296f4e",
+      "range": {
+        "startLine": 15,
+        "startChar": 11,
+        "endLine": 15,
+        "endChar": 21
+      },
+      "revId": "d0d089d66ce998dd575cfb73df89bfd2efec398d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e28e54ae_8152c22d",
+        "filename": "device/vr/vr_device.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-30T20:15:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71781c38_3f9133e2",
+      "revId": "d0d089d66ce998dd575cfb73df89bfd2efec398d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -277,6 +403,24 @@
     },
     {
       "key": {
+        "uuid": "8521e264_b5ee72b0",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 43163,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-30T20:15:05Z",
+      "side": 1,
+      "message": "The current metric is only when presentation has started (vr browsing or webvr).  For non-presenting magic window devices, this won\u0027t trigger.  We could reuse the same enum for \"device type\" if that makes sense to also measure (I think it does).\n\nI\u0027ll add orientation_sensor now.",
+      "parentUuid": "1263c8da_da158a56",
+      "revId": "d0d089d66ce998dd575cfb73df89bfd2efec398d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1c083d7_f052705d",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
@@ -312,6 +456,24 @@
     },
     {
       "key": {
+        "uuid": "93e31444_97558903",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 43167,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-30T20:15:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f650b47f_88cb8555",
+      "revId": "d0d089d66ce998dd575cfb73df89bfd2efec398d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "146f30e3_71fe2216",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
@@ -329,6 +491,24 @@
     },
     {
       "key": {
+        "uuid": "4b588623_10fc74ae",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 43168,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-30T20:15:05Z",
+      "side": 1,
+      "message": "We have a fake device for testing.  Carry over from my more exhaustive change to try triggering the metric when the VRDevice is created in VRDeviceManager - we should never report this, but the c++ enum can use it for testing purposes.",
+      "parentUuid": "146f30e3_71fe2216",
+      "revId": "d0d089d66ce998dd575cfb73df89bfd2efec398d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1035460b_bb7b44df",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
@@ -340,6 +520,24 @@
       "writtenOn": "2017-11-30T07:00:04Z",
       "side": 1,
       "message": "We had talked about maybe skipping some values to reserve for future devices. Does that not make sense or is it discouraged?",
+      "revId": "d0d089d66ce998dd575cfb73df89bfd2efec398d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffb77454_c4666332",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 43169,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-30T20:15:05Z",
+      "side": 1,
+      "message": "I\u0027ll have to get guidance from metrics owners - I don\u0027t know whether gaps are recommended/discouraged, or whether ordering matters.\n\nisherman@chromium.org, can you weigh in here?",
+      "parentUuid": "1035460b_bb7b44df",
       "revId": "d0d089d66ce998dd575cfb73df89bfd2efec398d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
