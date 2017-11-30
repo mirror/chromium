@@ -118,19 +118,6 @@ CookieStore CreateCookieStore(Profile* profile,
   return cookie_store;
 }
 
-void GetCookieListFromStore(
-    net::CookieStore* cookie_store,
-    const GURL& url,
-    net::CookieMonster::GetCookieListCallback callback) {
-  DCHECK(cookie_store);
-  if (!url.is_empty()) {
-    DCHECK(url.is_valid());
-    cookie_store->GetAllCookiesForURLAsync(url, std::move(callback));
-  } else {
-    cookie_store->GetAllCookiesAsync(std::move(callback));
-  }
-}
-
 GURL GetURLFromCanonicalCookie(const net::CanonicalCookie& cookie) {
   const std::string& domain_key = cookie.Domain();
   const std::string scheme =
