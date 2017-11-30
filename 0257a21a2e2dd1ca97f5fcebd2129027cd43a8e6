@@ -22,6 +22,30 @@
       "revId": "0257a21a2e2dd1ca97f5fcebd2129027cd43a8e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93049516_3f4d5362",
+        "filename": "components/omnibox/browser/omnibox_metrics_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-11-30T20:10:59Z",
+      "side": 1,
+      "message": "I want |result_indeces| to have a random permutation of all indeces from 0 to `log-\u003eresult.size()`. \n\nIf you are asking this because the default suggestion should not be logged, note that it will be ignored on L139 I am skipping suggestions that don\u0027t have a subtype_identifier. I would rather keep the code simple (i.e. iterate over a random permutation of all suggestions).",
+      "parentUuid": "c6123bc4_b437cb5f",
+      "range": {
+        "startLine": 133,
+        "startChar": 58,
+        "endLine": 133,
+        "endChar": 59
+      },
+      "revId": "0257a21a2e2dd1ca97f5fcebd2129027cd43a8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
