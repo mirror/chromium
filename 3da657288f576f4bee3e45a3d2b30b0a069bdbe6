@@ -22,6 +22,30 @@
       "revId": "3da657288f576f4bee3e45a3d2b30b0a069bdbe6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cadab51_b67c2fe8",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 3078,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-30T10:24:30Z",
+      "side": 0,
+      "message": "This is meant to set the \"high media engagement\" bool on the frame. However, since we call this in the MEI code from ReadyToCommitNavigation the frame is still the frame of the previous page. In most cases this won\u0027t matter but if the user is navigating on the same origin the boolean will be set on the old frame and not the new one.\n\nTherefore we no longer set the bit when the function is called, but we let SendDidCommitProvisionalLoad set it on the new frame instead.",
+      "parentUuid": "7403abde_b1690dc4",
+      "range": {
+        "startLine": 3073,
+        "startChar": 0,
+        "endLine": 3078,
+        "endChar": 3
+      },
+      "revId": "3da657288f576f4bee3e45a3d2b30b0a069bdbe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

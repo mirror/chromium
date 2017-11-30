@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2330330e_a9a3521d",
+        "filename": "chrome/browser/media/media_engagement_autoplay_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-30T10:24:30Z",
+      "side": 1,
+      "message": "They are not filtered out. When we navigate to a new origin we have two routes based on the number of visits:\n\n - Low number of visits: only enable autoplay if the origin is on the preloaded list.\n - High number of visits: only enable autoplay if the user\u0027s personal MEI score is high enough.\n\nThis is to ensure that the user\u0027s personal MEI score takes priority over the preloaded list over time.",
+      "parentUuid": "b3219c20_b2d2d1f9",
+      "range": {
+        "startLine": 289,
+        "startChar": 0,
+        "endLine": 289,
+        "endChar": 36
+      },
+      "revId": "ea03ba4db5a3574f3de7898599a8d35d34c4d4ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4975e5ca_97aea346",
         "filename": "chrome/browser/media/media_engagement_preloaded_list.h",
         "patchSetId": 13
@@ -45,6 +69,30 @@
       "revId": "ea03ba4db5a3574f3de7898599a8d35d34c4d4ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e31f559d_697c1f73",
+        "filename": "chrome/browser/media/media_engagement_preloaded_list.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-30T10:24:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4975e5ca_97aea346",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 34
+      },
+      "revId": "ea03ba4db5a3574f3de7898599a8d35d34c4d4ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
