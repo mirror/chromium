@@ -46,6 +46,15 @@ Polymer({
       notify: true,
     },
 
+    /**
+     * The threshold at which the toolbar will change from normal to narrow
+     * mode.
+     */
+    narrowThreshold: {
+      type: Number,
+      value: 900,
+    },
+
     closeMenuPromo: String,
 
     /** @private */
