@@ -8,8 +8,10 @@
 #include "media/gpu/va_surface.h"
 #include "media/gpu/vaapi_wrapper.h"
 #include "ui/gfx/gpu_memory_buffer.h"
+#include "ui/gfx/linux/native_pixmap_dmabuf.h"
 #include "ui/gfx/native_pixmap.h"
 #include "ui/gl/gl_bindings.h"
+#include "ui/gl/gl_context.h"
 #include "ui/gl/gl_image_native_pixmap.h"
 #include "ui/gl/scoped_binders.h"
 
@@ -72,12 +74,15 @@ bool VaapiDrmPicture::Initialize() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(pixmap_);
 
+  // Create a |va_surface_| from dmabuf fds (pixmap->GetDmaBufFd)
   va_surface_ = vaapi_wrapper_->CreateVASurfaceForPixmap(pixmap_);
   if (!va_surface_) {
     LOG(ERROR) << "Failed creating VASurface for NativePixmap";
     return false;
   }
 
+#if defined(USE_OZONE)
+  // Import dmabuf fds into the output gl texture through EGLImage.
   if (texture_id_ != 0 && !make_context_current_cb_.is_null()) {
     if (!make_context_current_cb_.Run())
       return false;
@@ -107,20 +112,69 @@ bool VaapiDrmPicture::Initialize() {
       return false;
     }
   }
+#else
+  // On non-ozone, no need to import dmabuf fds into output the gl texture
+  // because the dmabuf fds have been made from it.
+  DCHECK(pixmap_->AreDmaBufFdsValid());
+#endif
 
   return true;
 }
 
 bool VaapiDrmPicture::Allocate(gfx::BufferFormat format) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
+// The goal of this method (ozone and non-ozone) is to allocate the
+// |pixmap_| which is a gl::GLImageNativePixmap.
 #if defined(USE_OZONE)
   ui::OzonePlatform* platform = ui::OzonePlatform::GetInstance();
   ui::SurfaceFactoryOzone* factory = platform->GetSurfaceFactoryOzone();
   pixmap_ = factory->CreateNativePixmap(gfx::kNullAcceleratedWidget, size_,
                                         format, gfx::BufferUsage::SCANOUT);
 #else
-  // TODO(jisorce): Implement non-ozone case, see crbug.com/785201.
-  NOTIMPLEMENTED();
+  // Export the gl texture as dmabuf.
+  if (texture_id_ != 0 && !make_context_current_cb_.is_null()) {
+    if (!make_context_current_cb_.Run())
+      return false;
+
+    if (!gl::GLContext::GetCurrent()) {
+      DLOG(ERROR) << "No gl context bound to the current thread.";
+      return false;
+    }
+
+    EGLContext context =
+        reinterpret_cast<EGLContext>(gl::GLContext::GetCurrent()->GetHandle());
+
+    gl::ScopedTextureBinder texture_binder(GL_TEXTURE_2D, texture_id_);
+
+    scoped_refptr<gl::GLImageNativePixmap> image(new gl::GLImageNativePixmap(
+        size_, BufferFormatToInternalFormat(format)));
+
+    // Create an EGLImage from a gl texture
+    scoped_refptr<gl::GLImageEGL> base_image = image;
+    if (!base_image->Initialize(context, EGL_GL_TEXTURE_2D_KHR,
+                                reinterpret_cast<EGLClientBuffer>(texture_id_),
+                                nullptr)) {
+      DLOG(ERROR) << "Failed to initialize eglimage from texture id: "
+                  << texture_id_;
+      return false;
+    }
+
+    // Export the EGLImage as dmabuf.
+    gfx::NativePixmapHandle native_pixmap_handle = image->ExportHandle();
+
+    // Convert NativePixmapHandle to NativePixmapDmaBuf.
+    scoped_refptr<gfx::NativePixmap> native_pixmap_dmabuf(
+        new gfx::NativePixmapDmaBuf(size_, format, native_pixmap_handle));
+    if (!native_pixmap_dmabuf->AreDmaBufFdsValid()) {
+      DLOG(ERROR) << "Failed to export EGLImage as dmabuf fds.";
+      return false;
+    }
+
+    // No need to keep a ref on the EGLImage because the |pixmap_| takes
+    // ownership of the dmabuf fds.
+    pixmap_ = native_pixmap_dmabuf;
+  }
 #endif  // USE_OZONE
 
   if (!pixmap_) {
