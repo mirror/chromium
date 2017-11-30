@@ -962,6 +962,7 @@ void PaintLayerPainter::PaintFragmentWithPhase(
 
   Optional<ScopedPaintChunkProperties> fragment_paint_chunk_properties;
   if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
+    DCHECK(!(paint_flags & kPaintLayerPaintingAncestorClippingMaskPhase));
     PaintChunkProperties chunk_properties(
         *fragment.fragment_data->LocalBorderBoxProperties());
     chunk_properties.backface_hidden =
@@ -979,8 +980,7 @@ void PaintLayerPainter::PaintFragmentWithPhase(
   DisplayItemClient* client = &paint_layer_.GetLayoutObject();
   Optional<LayerClipRecorder> clip_recorder;
   if (clip_state != kHasClipped &&
-      (NeedsToClip(painting_info, clip_rect, paint_flags) ||
-       paint_flags & kPaintLayerPaintingAncestorClippingMaskPhase)) {
+      NeedsToClip(painting_info, clip_rect, paint_flags)) {
     DisplayItem::Type clip_type =
         DisplayItem::PaintPhaseToClipLayerFragmentType(phase);
     LayerClipRecorder::BorderRadiusClippingRule clipping_rule;
@@ -1220,6 +1220,32 @@ void PaintLayerPainter::PaintChildClippingMaskForFragments(
   Optional<DisplayItemCacheSkipper> cache_skipper;
   if (layer_fragments.size() > 1)
     cache_skipper.emplace(context);
+
+  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled() &&
+      (paint_flags & kPaintLayerPaintingAncestorClippingMaskPhase)) {
+    ScopedPaintChunkProperties properties(
+        context.GetPaintController(),
+        paint_layer_.GetLayoutObject()
+            .FirstFragment()
+            .GetRarePaintData()
+            ->PreEffectProperties(),
+        paint_layer_,
+        DisplayItem::PaintPhaseToDrawingType(PaintPhase::kClippingMask));
+    LOG(ERROR) << "Paint ancestor clipping mask: " << paint_layer_.DebugName()
+               << " state="
+               << paint_layer_.GetLayoutObject()
+                      .FirstFragment()
+                      .GetRarePaintData()
+                      ->PreEffectProperties()
+                      .ToTreeString()
+                      .Utf8()
+                      .data();
+    const DisplayItemClient& client =
+        *paint_layer_.GetCompositedLayerMapping()->AncestorClippingMaskLayer();
+    for (auto& fragment : layer_fragments)
+      FillMaskingFragment(context, fragment.foreground_rect, client);
+    return;
+  }
 
   for (auto& fragment : layer_fragments) {
     PaintFragmentWithPhase(PaintPhase::kClippingMask, fragment, context,
