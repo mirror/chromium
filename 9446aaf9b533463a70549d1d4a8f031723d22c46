@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80057afe_e3aaa19b",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-30T21:52:41Z",
+      "side": 1,
+      "message": "If you really want the \"enterprise policy not set\" check, you may want to use !Preference::IsManaged() instead.\n\nHowever, you\u0027d probably have to change the browsertest to actually simulate policy, e.g. using policy::MockConfigurationPolicyProvider.",
+      "range": {
+        "startLine": 185,
+        "startChar": 12,
+        "endLine": 185,
+        "endChar": 26
+      },
+      "revId": "9446aaf9b533463a70549d1d4a8f031723d22c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59e8e19a_e12b0cd4",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 10771,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-30T21:52:41Z",
+      "side": 1,
+      "message": "Why is this? The mapped pref is re-evaluated on each ShouldApplyStrongPopupBlocker call IIUC, so it should react to changes without chrome process restart?",
+      "range": {
+        "startLine": 10771,
+        "startChar": 27,
+        "endLine": 10771,
+        "endChar": 32
+      },
+      "revId": "9446aaf9b533463a70549d1d4a8f031723d22c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aac8d98f_3d0109b7",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 10776,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-30T21:52:41Z",
+      "side": 1,
+      "message": "Should \u0027Intervention\u0027 be part of the policy name / the pref name? Or was it left out for brevity?\nBecause IIUC, the intervention is what we\u0027re actually enforcing.",
+      "range": {
+        "startLine": 10776,
+        "startChar": 39,
+        "endLine": 10776,
+        "endChar": 51
+      },
+      "revId": "9446aaf9b533463a70549d1d4a8f031723d22c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2947e47f_50d22d65",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 10778,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-30T21:52:41Z",
+      "side": 1,
+      "message": "Does this stronger pop-up blocker have a name we could refer to?",
+      "range": {
+        "startLine": 10778,
+        "startChar": 43,
+        "endLine": 10778,
+        "endChar": 66
+      },
+      "revId": "9446aaf9b533463a70549d1d4a8f031723d22c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70103d30_5c9e2aed",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 10778,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-30T21:52:41Z",
+      "side": 1,
+      "message": "maybe: ... or should not be used for any sites?",
+      "range": {
+        "startLine": 10778,
+        "startChar": 138,
+        "endLine": 10778,
+        "endChar": 160
+      },
+      "revId": "9446aaf9b533463a70549d1d4a8f031723d22c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
