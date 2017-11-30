@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0048ddbc_4d283f3e",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-30T05:51:53Z",
+      "side": 1,
+      "message": "This won\u0027t compile on Android (where AppBannerManagerDesktop doesn\u0027t exist). You\u0027ll want to\n\n#include \"build/build_config.h\"\n\n...\n\n#if defined(OS_ANDROID)\n AppBannerManager* manager \u003d AppBannerManagerAndroid::FromWebContents(web_contents);\n#else\n AppBannerManager* manager \u003d AppBannerManagerDesktop::FromWebContents(web_contents);\n#end\n\n(and similar for the #include tags. chrome/browser/engagement/site_engagement_service.cc has an example of this exact pattern; it\u0027s reasonably common).",
+      "range": {
+        "startLine": 275,
+        "startChar": 15,
+        "endLine": 275,
+        "endChar": 38
+      },
+      "revId": "6eb54590ae87dcac25f918e62c4be1b50c84de10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3cb1ab1_966399d7",
+        "filename": "chrome/browser/banners/app_banner_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-30T05:51:53Z",
+      "side": 1,
+      "message": "Nit: This private can be deleted. :)",
+      "range": {
+        "startLine": 334,
+        "startChar": 1,
+        "endLine": 334,
+        "endChar": 8
+      },
+      "revId": "6eb54590ae87dcac25f918e62c4be1b50c84de10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
