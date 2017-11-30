@@ -914,3 +914,18 @@ void TabSpecificContentSettings::BlockAllContentForTesting() {
       media_blocked,
       std::string(), std::string(), std::string(), std::string());
 }
+
+void TabSpecificContentSettings::InsertContentSettingsChangedToDefault(
+    ContentSettingsType type) {
+  content_settings_changed_to_default_.insert(type);
+}
+
+bool TabSpecificContentSettings::IsContentSettingsChangedToDefault(
+    ContentSettingsType type) const {
+  return content_settings_changed_to_default_.find(type) !=
+         content_settings_changed_to_default_.end();
+}
+
+void TabSpecificContentSettings::ClearChangedToDefaultContentSettings() {
+  content_settings_changed_to_default_.clear();
+}

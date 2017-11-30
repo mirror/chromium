@@ -380,6 +380,12 @@ class TabSpecificContentSettings
   // Block all content. Used for testing content setting bubbles.
   void BlockAllContentForTesting();
 
+  void InsertContentSettingsChangedToDefault(ContentSettingsType type);
+
+  bool IsContentSettingsChangedToDefault(ContentSettingsType type) const;
+
+  void ClearChangedToDefaultContentSettings();
+
  private:
   friend class content::WebContentsUserData<TabSpecificContentSettings>;
 
@@ -475,6 +481,10 @@ class TabSpecificContentSettings
 
   // Observer to watch for content settings changed.
   ScopedObserver<HostContentSettingsMap, content_settings::Observer> observer_;
+
+  // Stores content settings changed from non-default to default, cleared on
+  // DidStartNavigation.
+  std::set<ContentSettingsType> content_settings_changed_to_default_;
 
   DISALLOW_COPY_AND_ASSIGN(TabSpecificContentSettings);
 };
