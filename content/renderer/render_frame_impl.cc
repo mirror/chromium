@@ -46,6 +46,7 @@
 #include "content/common/associated_interface_provider_impl.h"
 #include "content/common/associated_interfaces.mojom.h"
 #include "content/common/clipboard.mojom.h"
+#include "content/common/color_chooser.mojom.h"
 #include "content/common/content_constants_internal.h"
 #include "content/common/content_security_policy/csp_context.h"
 #include "content/common/content_security_policy_header.h"
@@ -4424,12 +4425,13 @@ blink::WebColorChooser* RenderFrameImpl::CreateColorChooser(
     const blink::WebVector<blink::WebColorSuggestion>& suggestions) {
   RendererWebColorChooserImpl* color_chooser =
       new RendererWebColorChooserImpl(this, client);
-  std::vector<ColorSuggestion> color_suggestions;
+  std::vector<content::mojom::ColorSuggestionPtr> color_suggestions;
   for (size_t i = 0; i < suggestions.size(); i++) {
-    color_suggestions.push_back(
-        ColorSuggestion(suggestions[i].color, suggestions[i].label.Utf16()));
+    color_suggestions.push_back(content::mojom::ColorSuggestion::New(
+        suggestions[i].color, suggestions[i].label.Utf8()));
   }
-  color_chooser->Open(static_cast<SkColor>(initial_color), color_suggestions);
+  color_chooser->Open(static_cast<SkColor>(initial_color),
+                      std::move(color_suggestions));
   return color_chooser;
 }
 

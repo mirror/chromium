@@ -1,7 +1,9 @@
 include_rules = [
+  "+content/common/color_chooser.mojom.h",
   "+content/public/browser",
   "+content/public/common",
   "+jni",
+  "+mojo/public/cpp",
   "+ui/android",
   "+ui/base",
   "+ui/gfx"

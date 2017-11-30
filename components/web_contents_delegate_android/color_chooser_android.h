@@ -12,13 +12,18 @@
 #include "base/macros.h"
 #include "base/strings/string16.h"
 #include "content/public/browser/color_chooser.h"
+#include "mojo/public/cpp/bindings/struct_ptr.h"
 
 using base::android::AttachCurrentThread;
 using base::android::ScopedJavaLocalRef;
 
 namespace content {
 class WebContents;
-struct ColorSuggestion;
+
+namespace mojom {
+class ColorSuggestion;
+using ColorSuggestionPtr = mojo::InlinedStructPtr<ColorSuggestion>;
+}  // namespace mojom
 }
 
 namespace web_contents_delegate_android {
@@ -26,9 +31,10 @@ namespace web_contents_delegate_android {
 // Glues the Java (ColorPickerChooser.java) picker with the native part.
 class ColorChooserAndroid : public content::ColorChooser {
  public:
-  ColorChooserAndroid(content::WebContents* tab,
-                      SkColor initial_color,
-                      const std::vector<content::ColorSuggestion>& suggestions);
+  ColorChooserAndroid(
+      content::WebContents* tab,
+      SkColor initial_color,
+      const std::vector<content::mojom::ColorSuggestionPtr>& suggestions);
   ~ColorChooserAndroid() override;
 
   void OnColorChosen(JNIEnv* env,
