@@ -192,6 +192,7 @@ AppBannerManager::AppBannerManager(content::WebContents* web_contents)
       load_finished_(false),
       triggered_by_devtools_(false),
       status_reporter_(std::make_unique<NullStatusReporter>()),
+      installable_(Installable::UNKNOWN),
       weak_factory_(this) {
   DCHECK(manager_);
 
@@ -266,11 +267,18 @@ void AppBannerManager::PerformInstallableCheck() {
                                GetWeakPtr()));
 }
 
+AppBannerManager::Installable AppBannerManager::IsInstallable() const {
+  return installable_;
+}
+
 void AppBannerManager::OnDidPerformInstallableCheck(
     const InstallableData& data) {
   UpdateState(State::ACTIVE);
   if (data.has_worker && data.valid_manifest)
     TrackDisplayEvent(DISPLAY_EVENT_WEB_APP_BANNER_REQUESTED);
+
+  installable_ =
+      data.error_code == NO_ERROR_DETECTED ? Installable::YES : Installable::NO;
 
   if (data.error_code != NO_ERROR_DETECTED) {
     if (data.error_code == NO_MATCHING_SERVICE_WORKER)
