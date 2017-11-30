@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f1fc7ba7_efa5afe9",
+        "filename": "components/viz/service/display_embedder/display_output_surface_ozone.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-30T17:51:27Z",
+      "side": 1,
+      "message": "This is probably easier to just do now?",
+      "parentUuid": "7320a4e7_6807d8a7",
+      "range": {
+        "startLine": 34,
+        "startChar": 6,
+        "endLine": 34,
+        "endChar": 31
+      },
+      "revId": "4d6f8230a00a52a62a440fc203790df353519295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d0713e7_4b352bb1",
         "filename": "components/viz/service/display_embedder/gpu_display_provider.cc",
         "patchSetId": 3
@@ -383,6 +407,24 @@
     },
     {
       "key": {
+        "uuid": "3c23cca4_de3c74ee",
+        "filename": "components/viz/service/display_embedder/software_output_surface.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-30T17:51:27Z",
+      "side": 1,
+      "message": "sgtm.",
+      "parentUuid": "33481153_9d3520d2",
+      "revId": "4d6f8230a00a52a62a440fc203790df353519295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea6eb6d6_6f2394ce",
         "filename": "components/viz/service/display_embedder/software_output_surface.h",
         "patchSetId": 3
@@ -427,6 +469,30 @@
       "revId": "4d6f8230a00a52a62a440fc203790df353519295",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "026ce531_36056452",
+        "filename": "components/viz/service/display_embedder/software_output_surface.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-30T17:51:27Z",
+      "side": 1,
+      "message": "TIL.",
+      "parentUuid": "ab632c44_6193bec8",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 10
+      },
+      "revId": "4d6f8230a00a52a62a440fc203790df353519295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
