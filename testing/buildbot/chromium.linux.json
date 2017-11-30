@@ -3457,6 +3457,7 @@
       "sql_unittests",
       "ui_base_unittests",
       "url_unittests",
+      "webkit_unit_tests",
       "wm_unittests",
       "wtf_unittests"
     ]
@@ -3486,6 +3487,7 @@
       "snapshot_unittests",
       "ui_base_unittests",
       "url_unittests",
+      "webkit_unit_tests",
       "wm_unittests",
       "wtf_unittests"
     ],
