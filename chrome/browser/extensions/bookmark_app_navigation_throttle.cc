@@ -8,6 +8,7 @@
 
 #include "base/bind.h"
 #include "base/logging.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/extensions/launch_util.h"
 #include "chrome/browser/prerender/prerender_contents.h"
@@ -21,6 +22,7 @@
 #include "chrome/common/extensions/api/url_handlers/url_handlers_parser.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
@@ -162,6 +164,16 @@ BookmarkAppNavigationThrottle::ProcessNavigation() {
       prerender_contents->Destroy(
           prerender::FINAL_STATUS_NAVIGATION_INTERCEPTED);
       return content::NavigationThrottle::CANCEL_AND_IGNORE;
+    }
+
+    content::NavigationEntry* last_entry = navigation_handle()
+                                               ->GetWebContents()
+                                               ->GetController()
+                                               .GetLastCommittedEntry();
+    if (last_entry && !last_entry->GetTimestamp().is_null()) {
+      UMA_HISTOGRAM_MEDIUM_TIMES(
+          "Extensions.BookmarkApp.DeltaSinceLastNavigation",
+          base::Time::Now() - last_entry->GetTimestamp());
     }
 
     return OpenInAppWindowAndCloseTabIfNecessary(target_app_ref);
