@@ -1858,6 +1858,9 @@ void FakeBluetoothDeviceClient::CreateTestDevice(
     properties->service_data.set_valid(true);
   }
 
+  properties->paired.ReplaceValue(true);
+  properties->services_resolved.ReplaceValue(true);
+
   properties_map_.insert(std::make_pair(device_path, std::move(properties)));
   device_list_.push_back(device_path);
   for (auto& observer : observers_)
