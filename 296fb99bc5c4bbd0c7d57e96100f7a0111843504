@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5013955d_fa4d548d",
+        "filename": "chrome/browser/resources/md_extensions/item_list.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-30T19:12:11Z",
+      "side": 1,
+      "message": "@private",
+      "revId": "296fb99bc5c4bbd0c7d57e96100f7a0111843504",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de14dac1_6ce80d29",
+        "filename": "chrome/browser/resources/md_extensions/item_list.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-30T19:12:11Z",
+      "side": 1,
+      "message": "Nit (optional): Perhaps drop the parameter and the @param annotation and just use this.computedFilter_ directly.",
+      "revId": "296fb99bc5c4bbd0c7d57e96100f7a0111843504",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
