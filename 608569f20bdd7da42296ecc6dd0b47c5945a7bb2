@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8e16d2f2_9e8af321",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-30T00:20:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73bdecfe_964c844d",
+      "revId": "608569f20bdd7da42296ecc6dd0b47c5945a7bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1e4604e_dd2fe79e",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/CachedMetadataHandler.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "608569f20bdd7da42296ecc6dd0b47c5945a7bb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "318e2ac2_b4e657d5",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/CachedMetadataHandler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-30T00:20:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1e4604e_dd2fe79e",
+      "revId": "608569f20bdd7da42296ecc6dd0b47c5945a7bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +158,24 @@
       "revId": "608569f20bdd7da42296ecc6dd0b47c5945a7bb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aab29cb_63e0e1d9",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-30T00:20:00Z",
+      "side": 1,
+      "message": "Thanks for suggestions!\nUpdated the CL with IsServedFromCacheStorage().",
+      "parentUuid": "553aacc8_8ae79334",
+      "revId": "608569f20bdd7da42296ecc6dd0b47c5945a7bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
