@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19bc7706_3c7ceda3",
+        "filename": "chrome/browser/resources/local_ntp/most_visited_single.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-11-30T10:46:14Z",
+      "side": 1,
+      "message": "I would sooner put --tile-title-color: #323232 in the above html{} block, so that defaults are in one place, but your call here.",
+      "revId": "542b8689c949d6b0fc32f6f7537854d45b17fd78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

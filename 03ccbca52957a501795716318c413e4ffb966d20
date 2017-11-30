@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bb2ae80_2bd48bf5",
+        "filename": "chrome/browser/resources/local_ntp/most_visited_single.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-11-30T10:46:14Z",
+      "side": 0,
+      "message": "This one seems to have gone missing, to flip the gradient for rtl.",
+      "revId": "03ccbca52957a501795716318c413e4ffb966d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
