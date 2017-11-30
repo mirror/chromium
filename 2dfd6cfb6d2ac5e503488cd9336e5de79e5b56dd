@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d23b04ae_ff1a0730",
+        "filename": "ios/chrome/browser/ssl/captive_portal_metrics_tab_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-30T00:35:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eddb99db_7d9c1d47",
+      "range": {
+        "startLine": 12,
+        "startChar": 24,
+        "endLine": 12,
+        "endChar": 33
+      },
+      "revId": "2dfd6cfb6d2ac5e503488cd9336e5de79e5b56dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "152c07de_0cc55b14",
         "filename": "ios/chrome/browser/ssl/captive_portal_metrics_tab_helper.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "2dfd6cfb6d2ac5e503488cd9336e5de79e5b56dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b971e25_ef53d032",
+        "filename": "ios/chrome/browser/ssl/captive_portal_metrics_tab_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-30T00:35:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "152c07de_0cc55b14",
+      "range": {
+        "startLine": 21,
+        "startChar": 19,
+        "endLine": 21,
+        "endChar": 24
+      },
+      "revId": "2dfd6cfb6d2ac5e503488cd9336e5de79e5b56dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a419352c_043753d2",
+        "filename": "ios/chrome/browser/ssl/captive_portal_metrics_tab_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-30T00:35:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2e32b8f_40a540bb",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 22
+      },
+      "revId": "2dfd6cfb6d2ac5e503488cd9336e5de79e5b56dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a490669b_ff25cfd8",
         "filename": "ios/chrome/browser/ssl/captive_portal_metrics_tab_helper.h",
         "patchSetId": 3
@@ -85,6 +157,24 @@
       "revId": "2dfd6cfb6d2ac5e503488cd9336e5de79e5b56dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c6a4d66_fe7acfc8",
+        "filename": "ios/chrome/browser/ssl/captive_portal_metrics_tab_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-30T00:35:55Z",
+      "side": 1,
+      "message": "Nope, removed.",
+      "parentUuid": "a490669b_ff25cfd8",
+      "revId": "2dfd6cfb6d2ac5e503488cd9336e5de79e5b56dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "501794c1_0bef7f54",
+        "filename": "ios/chrome/browser/ssl/captive_portal_metrics_tab_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-30T00:35:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fac5964e_92958f54",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 26
+      },
+      "revId": "2dfd6cfb6d2ac5e503488cd9336e5de79e5b56dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b07743bd_3ee48f8d",
         "filename": "ios/chrome/browser/ssl/captive_portal_metrics_tab_helper.mm",
         "patchSetId": 3
@@ -131,6 +245,30 @@
       "revId": "2dfd6cfb6d2ac5e503488cd9336e5de79e5b56dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6280fe93_6909c173",
+        "filename": "ios/chrome/browser/ssl/captive_portal_metrics_tab_helper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-30T00:35:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b07743bd_3ee48f8d",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 7,
+        "endChar": 7
+      },
+      "revId": "2dfd6cfb6d2ac5e503488cd9336e5de79e5b56dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "e62953c1_1fd92e20",
+        "filename": "ios/chrome/browser/ssl/captive_portal_metrics_tab_helper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-30T00:35:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d974e99_e124cba3",
+      "range": {
+        "startLine": 14,
+        "startChar": 35,
+        "endLine": 14,
+        "endChar": 44
+      },
+      "revId": "2dfd6cfb6d2ac5e503488cd9336e5de79e5b56dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "566e0c6f_0f7ccb6b",
         "filename": "ios/chrome/browser/ssl/captive_portal_metrics_tab_helper.mm",
         "patchSetId": 3
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "f100cd22_5a3c4558",
+        "filename": "ios/chrome/browser/ssl/captive_portal_metrics_tab_helper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-30T00:35:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "566e0c6f_0f7ccb6b",
+      "range": {
+        "startLine": 22,
+        "startChar": 11,
+        "endLine": 22,
+        "endChar": 48
+      },
+      "revId": "2dfd6cfb6d2ac5e503488cd9336e5de79e5b56dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "852db330_a3dbcf9f",
         "filename": "ios/chrome/browser/ssl/captive_portal_metrics_tab_helper.mm",
         "patchSetId": 3
@@ -194,6 +380,24 @@
       "revId": "2dfd6cfb6d2ac5e503488cd9336e5de79e5b56dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10046bbc_0e1a558f",
+        "filename": "ios/chrome/browser/ssl/captive_portal_metrics_tab_helper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-30T00:35:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "852db330_a3dbcf9f",
+      "revId": "2dfd6cfb6d2ac5e503488cd9336e5de79e5b56dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -220,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "6c37fd6b_78263a57",
+        "filename": "ios/chrome/browser/ssl/captive_portal_metrics_tab_helper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-30T00:35:55Z",
+      "side": 1,
+      "message": "No, I think during development it had more of a purpose, removed.",
+      "parentUuid": "3dc31dd1_84f07b32",
+      "range": {
+        "startLine": 54,
+        "startChar": 16,
+        "endLine": 54,
+        "endChar": 0
+      },
+      "revId": "2dfd6cfb6d2ac5e503488cd9336e5de79e5b56dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff696f39_5cc69783",
         "filename": "ios/chrome/browser/ssl/captive_portal_metrics_tab_helper.mm",
         "patchSetId": 3
@@ -240,6 +468,30 @@
       "revId": "2dfd6cfb6d2ac5e503488cd9336e5de79e5b56dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "444323bb_ed52af2b",
+        "filename": "ios/chrome/browser/ssl/captive_portal_metrics_tab_helper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-30T00:35:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff696f39_5cc69783",
+      "range": {
+        "startLine": 58,
+        "startChar": 29,
+        "endLine": 58,
+        "endChar": 41
+      },
+      "revId": "2dfd6cfb6d2ac5e503488cd9336e5de79e5b56dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -266,6 +518,30 @@
     },
     {
       "key": {
+        "uuid": "722c5b67_975c4a84",
+        "filename": "ios/chrome/browser/ssl/captive_portal_metrics_tab_helper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-30T00:35:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67b86b51_c4f89fec",
+      "range": {
+        "startLine": 125,
+        "startChar": 24,
+        "endLine": 125,
+        "endChar": 45
+      },
+      "revId": "2dfd6cfb6d2ac5e503488cd9336e5de79e5b56dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eca3b394_d7eac472",
         "filename": "ios/chrome/browser/ssl/captive_portal_metrics_tab_helper.mm",
         "patchSetId": 3
@@ -286,6 +562,30 @@
       "revId": "2dfd6cfb6d2ac5e503488cd9336e5de79e5b56dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d357b16b_b64040eb",
+        "filename": "ios/chrome/browser/ssl/captive_portal_metrics_tab_helper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-30T00:35:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eca3b394_d7eac472",
+      "range": {
+        "startLine": 126,
+        "startChar": 20,
+        "endLine": 126,
+        "endChar": 53
+      },
+      "revId": "2dfd6cfb6d2ac5e503488cd9336e5de79e5b56dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
