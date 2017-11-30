@@ -22,6 +22,30 @@
       "revId": "417ab2cc5bb3c6c8b7198223f29cc903b072bf8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46df5529_096db18c",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBValueWrapping.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-30T13:02:35Z",
+      "side": 1,
+      "message": "Done. Thank you for pointing this out!",
+      "parentUuid": "f86b5ce3_c86b6f87",
+      "range": {
+        "startLine": 112,
+        "startChar": 21,
+        "endLine": 112,
+        "endChar": 32
+      },
+      "revId": "417ab2cc5bb3c6c8b7198223f29cc903b072bf8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

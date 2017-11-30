@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e294689_68f51385",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBObjectStore.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-30T13:02:35Z",
+      "side": 1,
+      "message": "This is https://crrev.com/c/799951 -- I\u0027d like to land it separately in case we want to merge it.",
+      "revId": "242547e33d864e23d4bd809fc31384364da55565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
