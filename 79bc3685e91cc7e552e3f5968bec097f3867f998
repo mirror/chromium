@@ -16,6 +16,24 @@
       "revId": "79bc3685e91cc7e552e3f5968bec097f3867f998",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eedbd470_7c446c66",
+        "filename": "third_party/WebKit/Source/modules/navigatorcontentutils/NavigatorContentUtils.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1233284
+      },
+      "writtenOn": "2017-11-30T02:10:09Z",
+      "side": 1,
+      "message": "Current implementation doesn\u0027t consider how many %s are included in the url. So I\u0027m planning to fix it after checking what is correct way to handle it.",
+      "parentUuid": "12280932_fd049b2a",
+      "revId": "79bc3685e91cc7e552e3f5968bec097f3867f998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
