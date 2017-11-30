@@ -386,6 +386,30 @@
       "revId": "11efe26dbb93ac3f00d8a2f190c23cd3432868a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "133bcfad_8535e791",
+        "filename": "gpu/ipc/service/gpu_command_buffer_stub.h",
+        "patchSetId": 63
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-30T21:43:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "25651f3a_1eeca39f",
+      "range": {
+        "startLine": 182,
+        "startChar": 7,
+        "endLine": 182,
+        "endChar": 26
+      },
+      "revId": "11efe26dbb93ac3f00d8a2f190c23cd3432868a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
