@@ -1,0 +1,1189 @@
+diff --git a/.cipd/pkgs/0/_current b/.cipd/pkgs/0/_current
+new file mode 120000
+index 000000000000..4b9461650d57
+--- /dev/null
++++ b/.cipd/pkgs/0/_current
+@@ -0,0 +1 @@
++b5ec1e56e58e56bc1a0c77d43111c37f9b512c8a
+\ No newline at end of file
+diff --git a/.cipd/pkgs/0/b5ec1e56e58e56bc1a0c77d43111c37f9b512c8a/.cipdpkg/manifest.json b/.cipd/pkgs/0/b5ec1e56e58e56bc1a0c77d43111c37f9b512c8a/.cipdpkg/manifest.json
+new file mode 100644
+index 000000000000..e95b4dd2c086
+--- /dev/null
++++ b/.cipd/pkgs/0/b5ec1e56e58e56bc1a0c77d43111c37f9b512c8a/.cipdpkg/manifest.json
+@@ -0,0 +1,10 @@
++{
++  "format_version": "1",
++  "package_name": "chromium/third_party/accessibility-test-framework",
++  "files": [
++    {
++      "name": "lib/accessibility-test-framework.jar",
++      "size": 156117
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/.cipd/pkgs/0/b5ec1e56e58e56bc1a0c77d43111c37f9b512c8a/lib/accessibility-test-framework.jar b/.cipd/pkgs/0/b5ec1e56e58e56bc1a0c77d43111c37f9b512c8a/lib/accessibility-test-framework.jar
+new file mode 100644
+index 000000000000..1cd83a3dbaba
+Binary files /dev/null and b/.cipd/pkgs/0/b5ec1e56e58e56bc1a0c77d43111c37f9b512c8a/lib/accessibility-test-framework.jar differ
+diff --git a/.cipd/pkgs/0/description.json b/.cipd/pkgs/0/description.json
+new file mode 100644
+index 000000000000..aff641f8b415
+--- /dev/null
++++ b/.cipd/pkgs/0/description.json
+@@ -0,0 +1,4 @@
++{
++  "subdir": "third_party/accessibility_test_framework",
++  "package_name": "chromium/third_party/accessibility-test-framework"
++}
+\ No newline at end of file
+diff --git a/.cipd/pkgs/1/96d4bf848cd210fdcbca6bcc8c1b4b39cbd93141/.cipdpkg/manifest.json b/.cipd/pkgs/1/96d4bf848cd210fdcbca6bcc8c1b4b39cbd93141/.cipdpkg/manifest.json
+new file mode 100644
+index 000000000000..aaf8609333cf
+--- /dev/null
++++ b/.cipd/pkgs/1/96d4bf848cd210fdcbca6bcc8c1b4b39cbd93141/.cipdpkg/manifest.json
+@@ -0,0 +1,18 @@
++{
++  "format_version": "1",
++  "package_name": "chromium/third_party/android_support_test_runner",
++  "files": [
++    {
++      "name": "lib/exposed-instrumentation-api-publish-no-dep.jar",
++      "size": 2106
++    },
++    {
++      "name": "lib/rules.aar",
++      "size": 35419
++    },
++    {
++      "name": "lib/runner-release-no-dep.jar",
++      "size": 135974
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/.cipd/pkgs/1/96d4bf848cd210fdcbca6bcc8c1b4b39cbd93141/lib/exposed-instrumentation-api-publish-no-dep.jar b/.cipd/pkgs/1/96d4bf848cd210fdcbca6bcc8c1b4b39cbd93141/lib/exposed-instrumentation-api-publish-no-dep.jar
+new file mode 100644
+index 000000000000..6a81749b4403
+Binary files /dev/null and b/.cipd/pkgs/1/96d4bf848cd210fdcbca6bcc8c1b4b39cbd93141/lib/exposed-instrumentation-api-publish-no-dep.jar differ
+diff --git a/.cipd/pkgs/1/96d4bf848cd210fdcbca6bcc8c1b4b39cbd93141/lib/rules.aar b/.cipd/pkgs/1/96d4bf848cd210fdcbca6bcc8c1b4b39cbd93141/lib/rules.aar
+new file mode 100644
+index 000000000000..35eac27d3806
+Binary files /dev/null and b/.cipd/pkgs/1/96d4bf848cd210fdcbca6bcc8c1b4b39cbd93141/lib/rules.aar differ
+diff --git a/.cipd/pkgs/1/96d4bf848cd210fdcbca6bcc8c1b4b39cbd93141/lib/runner-release-no-dep.jar b/.cipd/pkgs/1/96d4bf848cd210fdcbca6bcc8c1b4b39cbd93141/lib/runner-release-no-dep.jar
+new file mode 100644
+index 000000000000..140907245988
+Binary files /dev/null and b/.cipd/pkgs/1/96d4bf848cd210fdcbca6bcc8c1b4b39cbd93141/lib/runner-release-no-dep.jar differ
+diff --git a/.cipd/pkgs/1/_current b/.cipd/pkgs/1/_current
+new file mode 120000
+index 000000000000..d301f790aaee
+--- /dev/null
++++ b/.cipd/pkgs/1/_current
+@@ -0,0 +1 @@
++96d4bf848cd210fdcbca6bcc8c1b4b39cbd93141
+\ No newline at end of file
+diff --git a/.cipd/pkgs/1/description.json b/.cipd/pkgs/1/description.json
+new file mode 100644
+index 000000000000..f6009bef3a20
+--- /dev/null
++++ b/.cipd/pkgs/1/description.json
+@@ -0,0 +1,4 @@
++{
++  "subdir": "third_party/android_support_test_runner",
++  "package_name": "chromium/third_party/android_support_test_runner"
++}
+\ No newline at end of file
+diff --git a/.cipd/pkgs/10/37eccfc658fe79695d6abb6dd497463c4372032f/.cipdpkg/manifest.json b/.cipd/pkgs/10/37eccfc658fe79695d6abb6dd497463c4372032f/.cipdpkg/manifest.json
+new file mode 100644
+index 000000000000..640d3c920dd9
+--- /dev/null
++++ b/.cipd/pkgs/10/37eccfc658fe79695d6abb6dd497463c4372032f/.cipdpkg/manifest.json
+@@ -0,0 +1,18 @@
++{
++  "format_version": "1",
++  "package_name": "chromium/third_party/hamcrest",
++  "files": [
++    {
++      "name": "lib/hamcrest-core.jar",
++      "size": 44125
++    },
++    {
++      "name": "lib/hamcrest-integration.jar",
++      "size": 3921
++    },
++    {
++      "name": "lib/hamcrest-library.jar",
++      "size": 52171
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/.cipd/pkgs/10/37eccfc658fe79695d6abb6dd497463c4372032f/lib/hamcrest-core.jar b/.cipd/pkgs/10/37eccfc658fe79695d6abb6dd497463c4372032f/lib/hamcrest-core.jar
+new file mode 100644
+index 000000000000..51f4b24cec75
+Binary files /dev/null and b/.cipd/pkgs/10/37eccfc658fe79695d6abb6dd497463c4372032f/lib/hamcrest-core.jar differ
+diff --git a/.cipd/pkgs/10/37eccfc658fe79695d6abb6dd497463c4372032f/lib/hamcrest-integration.jar b/.cipd/pkgs/10/37eccfc658fe79695d6abb6dd497463c4372032f/lib/hamcrest-integration.jar
+new file mode 100644
+index 000000000000..6e2f02e414ac
+Binary files /dev/null and b/.cipd/pkgs/10/37eccfc658fe79695d6abb6dd497463c4372032f/lib/hamcrest-integration.jar differ
+diff --git a/.cipd/pkgs/10/37eccfc658fe79695d6abb6dd497463c4372032f/lib/hamcrest-library.jar b/.cipd/pkgs/10/37eccfc658fe79695d6abb6dd497463c4372032f/lib/hamcrest-library.jar
+new file mode 100644
+index 000000000000..197ecb33152a
+Binary files /dev/null and b/.cipd/pkgs/10/37eccfc658fe79695d6abb6dd497463c4372032f/lib/hamcrest-library.jar differ
+diff --git a/.cipd/pkgs/10/_current b/.cipd/pkgs/10/_current
+new file mode 120000
+index 000000000000..fc572d47d94c
+--- /dev/null
++++ b/.cipd/pkgs/10/_current
+@@ -0,0 +1 @@
++37eccfc658fe79695d6abb6dd497463c4372032f
+\ No newline at end of file
+diff --git a/.cipd/pkgs/10/description.json b/.cipd/pkgs/10/description.json
+new file mode 100644
+index 000000000000..5290fcdf3f38
+--- /dev/null
++++ b/.cipd/pkgs/10/description.json
+@@ -0,0 +1,4 @@
++{
++  "subdir": "third_party/hamcrest",
++  "package_name": "chromium/third_party/hamcrest"
++}
+\ No newline at end of file
+diff --git a/.cipd/pkgs/11/_current b/.cipd/pkgs/11/_current
+new file mode 120000
+index 000000000000..28b8bcc7f513
+--- /dev/null
++++ b/.cipd/pkgs/11/_current
+@@ -0,0 +1 @@
++e87e5bed2b4935913ee26a3ebd0b723ee2344354
+\ No newline at end of file
+diff --git a/.cipd/pkgs/11/description.json b/.cipd/pkgs/11/description.json
+new file mode 100644
+index 000000000000..acec69857f2e
+--- /dev/null
++++ b/.cipd/pkgs/11/description.json
+@@ -0,0 +1,4 @@
++{
++  "subdir": "third_party/icu4j",
++  "package_name": "chromium/third_party/icu4j"
++}
+\ No newline at end of file
+diff --git a/.cipd/pkgs/11/e87e5bed2b4935913ee26a3ebd0b723ee2344354/.cipdpkg/manifest.json b/.cipd/pkgs/11/e87e5bed2b4935913ee26a3ebd0b723ee2344354/.cipdpkg/manifest.json
+new file mode 100644
+index 000000000000..aa428fd906bc
+--- /dev/null
++++ b/.cipd/pkgs/11/e87e5bed2b4935913ee26a3ebd0b723ee2344354/.cipdpkg/manifest.json
+@@ -0,0 +1,10 @@
++{
++  "format_version": "1",
++  "package_name": "chromium/third_party/icu4j",
++  "files": [
++    {
++      "name": "lib/icu4j.jar",
++      "size": 9709288
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/.cipd/pkgs/11/e87e5bed2b4935913ee26a3ebd0b723ee2344354/lib/icu4j.jar b/.cipd/pkgs/11/e87e5bed2b4935913ee26a3ebd0b723ee2344354/lib/icu4j.jar
+new file mode 100644
+index 000000000000..2c3ff8bbfd47
+Binary files /dev/null and b/.cipd/pkgs/11/e87e5bed2b4935913ee26a3ebd0b723ee2344354/lib/icu4j.jar differ
+diff --git a/.cipd/pkgs/12/77c2721b024b36ee073402c08e6d8428c0295336/.cipdpkg/manifest.json b/.cipd/pkgs/12/77c2721b024b36ee073402c08e6d8428c0295336/.cipdpkg/manifest.json
+new file mode 100644
+index 000000000000..03db9d2ad3b7
+--- /dev/null
++++ b/.cipd/pkgs/12/77c2721b024b36ee073402c08e6d8428c0295336/.cipdpkg/manifest.json
+@@ -0,0 +1,10 @@
++{
++  "format_version": "1",
++  "package_name": "chromium/third_party/intellij",
++  "files": [
++    {
++      "name": "lib/annotations.jar",
++      "size": 20195
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/.cipd/pkgs/12/77c2721b024b36ee073402c08e6d8428c0295336/lib/annotations.jar b/.cipd/pkgs/12/77c2721b024b36ee073402c08e6d8428c0295336/lib/annotations.jar
+new file mode 100644
+index 000000000000..7f8b3620e85d
+Binary files /dev/null and b/.cipd/pkgs/12/77c2721b024b36ee073402c08e6d8428c0295336/lib/annotations.jar differ
+diff --git a/.cipd/pkgs/12/_current b/.cipd/pkgs/12/_current
+new file mode 120000
+index 000000000000..4b68a87b9a76
+--- /dev/null
++++ b/.cipd/pkgs/12/_current
+@@ -0,0 +1 @@
++77c2721b024b36ee073402c08e6d8428c0295336
+\ No newline at end of file
+diff --git a/.cipd/pkgs/12/description.json b/.cipd/pkgs/12/description.json
+new file mode 100644
+index 000000000000..97e3074dba4b
+--- /dev/null
++++ b/.cipd/pkgs/12/description.json
+@@ -0,0 +1,4 @@
++{
++  "subdir": "third_party/intellij",
++  "package_name": "chromium/third_party/intellij"
++}
+\ No newline at end of file
+diff --git a/.cipd/pkgs/13/_current b/.cipd/pkgs/13/_current
+new file mode 120000
+index 000000000000..cecce681e926
+--- /dev/null
++++ b/.cipd/pkgs/13/_current
+@@ -0,0 +1 @@
++f0520d8908d1cf3cf65b353f690b8f222f47d4a9
+\ No newline at end of file
+diff --git a/.cipd/pkgs/13/description.json b/.cipd/pkgs/13/description.json
+new file mode 100644
+index 000000000000..36dd6c3ea310
+--- /dev/null
++++ b/.cipd/pkgs/13/description.json
+@@ -0,0 +1,4 @@
++{
++  "subdir": "third_party/javax_inject",
++  "package_name": "chromium/third_party/javax_inject"
++}
+\ No newline at end of file
+diff --git a/.cipd/pkgs/13/f0520d8908d1cf3cf65b353f690b8f222f47d4a9/.cipdpkg/manifest.json b/.cipd/pkgs/13/f0520d8908d1cf3cf65b353f690b8f222f47d4a9/.cipdpkg/manifest.json
+new file mode 100644
+index 000000000000..5345cfd42f07
+--- /dev/null
++++ b/.cipd/pkgs/13/f0520d8908d1cf3cf65b353f690b8f222f47d4a9/.cipdpkg/manifest.json
+@@ -0,0 +1,10 @@
++{
++  "format_version": "1",
++  "package_name": "chromium/third_party/javax_inject",
++  "files": [
++    {
++      "name": "lib/javax.inject.jar",
++      "size": 2497
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/.cipd/pkgs/13/f0520d8908d1cf3cf65b353f690b8f222f47d4a9/lib/javax.inject.jar b/.cipd/pkgs/13/f0520d8908d1cf3cf65b353f690b8f222f47d4a9/lib/javax.inject.jar
+new file mode 100644
+index 000000000000..b2a9d0bf7bd4
+Binary files /dev/null and b/.cipd/pkgs/13/f0520d8908d1cf3cf65b353f690b8f222f47d4a9/lib/javax.inject.jar differ
+diff --git a/.cipd/pkgs/14/9e367f55e5a65781ee77bfcbaa88fb82b30e75c0/.cipdpkg/manifest.json b/.cipd/pkgs/14/9e367f55e5a65781ee77bfcbaa88fb82b30e75c0/.cipdpkg/manifest.json
+new file mode 100644
+index 000000000000..3aea1aaa226e
+--- /dev/null
++++ b/.cipd/pkgs/14/9e367f55e5a65781ee77bfcbaa88fb82b30e75c0/.cipdpkg/manifest.json
+@@ -0,0 +1,10 @@
++{
++  "format_version": "1",
++  "package_name": "chromium/third_party/objenesis",
++  "files": [
++    {
++      "name": "lib/objenesis.jar",
++      "size": 51286
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/.cipd/pkgs/14/9e367f55e5a65781ee77bfcbaa88fb82b30e75c0/lib/objenesis.jar b/.cipd/pkgs/14/9e367f55e5a65781ee77bfcbaa88fb82b30e75c0/lib/objenesis.jar
+new file mode 100644
+index 000000000000..4610efbfc725
+Binary files /dev/null and b/.cipd/pkgs/14/9e367f55e5a65781ee77bfcbaa88fb82b30e75c0/lib/objenesis.jar differ
+diff --git a/.cipd/pkgs/14/_current b/.cipd/pkgs/14/_current
+new file mode 120000
+index 000000000000..c6f2a2f4f3d3
+--- /dev/null
++++ b/.cipd/pkgs/14/_current
+@@ -0,0 +1 @@
++9e367f55e5a65781ee77bfcbaa88fb82b30e75c0
+\ No newline at end of file
+diff --git a/.cipd/pkgs/14/description.json b/.cipd/pkgs/14/description.json
+new file mode 100644
+index 000000000000..0d6f7cb9c82f
+--- /dev/null
++++ b/.cipd/pkgs/14/description.json
+@@ -0,0 +1,4 @@
++{
++  "subdir": "third_party/objenesis",
++  "package_name": "chromium/third_party/objenesis"
++}
+\ No newline at end of file
+diff --git a/.cipd/pkgs/15/0dcaea8bd839b3f2eb8415c327b40e8e398a373e/.cipdpkg/manifest.json b/.cipd/pkgs/15/0dcaea8bd839b3f2eb8415c327b40e8e398a373e/.cipdpkg/manifest.json
+new file mode 100644
+index 000000000000..02370d4809a5
+--- /dev/null
++++ b/.cipd/pkgs/15/0dcaea8bd839b3f2eb8415c327b40e8e398a373e/.cipdpkg/manifest.json
+@@ -0,0 +1,26 @@
++{
++  "format_version": "1",
++  "package_name": "chromium/third_party/ow2_asm",
++  "files": [
++    {
++      "name": "lib/asm-analysis.jar",
++      "size": 20445
++    },
++    {
++      "name": "lib/asm-commons.jar",
++      "size": 41718
++    },
++    {
++      "name": "lib/asm-tree.jar",
++      "size": 29038
++    },
++    {
++      "name": "lib/asm-util.jar",
++      "size": 43307
++    },
++    {
++      "name": "lib/asm.jar",
++      "size": 53217
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/.cipd/pkgs/15/0dcaea8bd839b3f2eb8415c327b40e8e398a373e/lib/asm-analysis.jar b/.cipd/pkgs/15/0dcaea8bd839b3f2eb8415c327b40e8e398a373e/lib/asm-analysis.jar
+new file mode 100644
+index 000000000000..af4a00108518
+Binary files /dev/null and b/.cipd/pkgs/15/0dcaea8bd839b3f2eb8415c327b40e8e398a373e/lib/asm-analysis.jar differ
+diff --git a/.cipd/pkgs/15/0dcaea8bd839b3f2eb8415c327b40e8e398a373e/lib/asm-commons.jar b/.cipd/pkgs/15/0dcaea8bd839b3f2eb8415c327b40e8e398a373e/lib/asm-commons.jar
+new file mode 100644
+index 000000000000..b1f76966a710
+Binary files /dev/null and b/.cipd/pkgs/15/0dcaea8bd839b3f2eb8415c327b40e8e398a373e/lib/asm-commons.jar differ
+diff --git a/.cipd/pkgs/15/0dcaea8bd839b3f2eb8415c327b40e8e398a373e/lib/asm-tree.jar b/.cipd/pkgs/15/0dcaea8bd839b3f2eb8415c327b40e8e398a373e/lib/asm-tree.jar
+new file mode 100644
+index 000000000000..3b1a3461151c
+Binary files /dev/null and b/.cipd/pkgs/15/0dcaea8bd839b3f2eb8415c327b40e8e398a373e/lib/asm-tree.jar differ
+diff --git a/.cipd/pkgs/15/0dcaea8bd839b3f2eb8415c327b40e8e398a373e/lib/asm-util.jar b/.cipd/pkgs/15/0dcaea8bd839b3f2eb8415c327b40e8e398a373e/lib/asm-util.jar
+new file mode 100644
+index 000000000000..fb8d282291d3
+Binary files /dev/null and b/.cipd/pkgs/15/0dcaea8bd839b3f2eb8415c327b40e8e398a373e/lib/asm-util.jar differ
+diff --git a/.cipd/pkgs/15/0dcaea8bd839b3f2eb8415c327b40e8e398a373e/lib/asm.jar b/.cipd/pkgs/15/0dcaea8bd839b3f2eb8415c327b40e8e398a373e/lib/asm.jar
+new file mode 100644
+index 000000000000..eeb3bc6f9885
+Binary files /dev/null and b/.cipd/pkgs/15/0dcaea8bd839b3f2eb8415c327b40e8e398a373e/lib/asm.jar differ
+diff --git a/.cipd/pkgs/15/_current b/.cipd/pkgs/15/_current
+new file mode 120000
+index 000000000000..af1f2db75714
+--- /dev/null
++++ b/.cipd/pkgs/15/_current
+@@ -0,0 +1 @@
++0dcaea8bd839b3f2eb8415c327b40e8e398a373e
+\ No newline at end of file
+diff --git a/.cipd/pkgs/15/description.json b/.cipd/pkgs/15/description.json
+new file mode 100644
+index 000000000000..f3485c1aeca0
+--- /dev/null
++++ b/.cipd/pkgs/15/description.json
+@@ -0,0 +1,4 @@
++{
++  "subdir": "third_party/ow2_asm",
++  "package_name": "chromium/third_party/ow2_asm"
++}
+\ No newline at end of file
+diff --git a/.cipd/pkgs/16/_current b/.cipd/pkgs/16/_current
+new file mode 120000
+index 000000000000..c7b9b29a5b72
+--- /dev/null
++++ b/.cipd/pkgs/16/_current
+@@ -0,0 +1 @@
++df992370f4ce703487d6d7aac43037de31bd80de
+\ No newline at end of file
+diff --git a/.cipd/pkgs/16/description.json b/.cipd/pkgs/16/description.json
+new file mode 100644
+index 000000000000..41c206a682b8
+--- /dev/null
++++ b/.cipd/pkgs/16/description.json
+@@ -0,0 +1,4 @@
++{
++  "subdir": "third_party/robolectric",
++  "package_name": "chromium/third_party/robolectric"
++}
+\ No newline at end of file
+diff --git a/.cipd/pkgs/16/df992370f4ce703487d6d7aac43037de31bd80de/.cipdpkg/manifest.json b/.cipd/pkgs/16/df992370f4ce703487d6d7aac43037de31bd80de/.cipdpkg/manifest.json
+new file mode 100644
+index 000000000000..ce4648556239
+--- /dev/null
++++ b/.cipd/pkgs/16/df992370f4ce703487d6d7aac43037de31bd80de/.cipdpkg/manifest.json
+@@ -0,0 +1,22 @@
++{
++  "format_version": "1",
++  "package_name": "chromium/third_party/robolectric",
++  "files": [
++    {
++      "name": "lib/android-all-4.3_r2-robolectric-0.jar",
++      "size": 33644619
++    },
++    {
++      "name": "lib/android-all-5.0.0_r2-robolectric-1.jar",
++      "size": 42868636
++    },
++    {
++      "name": "lib/android-all-7.1.0_r7-robolectric-0.jar",
++      "size": 64235845
++    },
++    {
++      "name": "lib/android-all-o-preview-4-robolectric-0.jar",
++      "size": 70142130
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/.cipd/pkgs/16/df992370f4ce703487d6d7aac43037de31bd80de/lib/android-all-4.3_r2-robolectric-0.jar b/.cipd/pkgs/16/df992370f4ce703487d6d7aac43037de31bd80de/lib/android-all-4.3_r2-robolectric-0.jar
+new file mode 100644
+index 000000000000..c9dffbc13710
+Binary files /dev/null and b/.cipd/pkgs/16/df992370f4ce703487d6d7aac43037de31bd80de/lib/android-all-4.3_r2-robolectric-0.jar differ
+diff --git a/.cipd/pkgs/16/df992370f4ce703487d6d7aac43037de31bd80de/lib/android-all-5.0.0_r2-robolectric-1.jar b/.cipd/pkgs/16/df992370f4ce703487d6d7aac43037de31bd80de/lib/android-all-5.0.0_r2-robolectric-1.jar
+new file mode 100644
+index 000000000000..7ba2a9085804
+Binary files /dev/null and b/.cipd/pkgs/16/df992370f4ce703487d6d7aac43037de31bd80de/lib/android-all-5.0.0_r2-robolectric-1.jar differ
+diff --git a/.cipd/pkgs/16/df992370f4ce703487d6d7aac43037de31bd80de/lib/android-all-7.1.0_r7-robolectric-0.jar b/.cipd/pkgs/16/df992370f4ce703487d6d7aac43037de31bd80de/lib/android-all-7.1.0_r7-robolectric-0.jar
+new file mode 100644
+index 000000000000..8e20762efa75
+Binary files /dev/null and b/.cipd/pkgs/16/df992370f4ce703487d6d7aac43037de31bd80de/lib/android-all-7.1.0_r7-robolectric-0.jar differ
+diff --git a/.cipd/pkgs/16/df992370f4ce703487d6d7aac43037de31bd80de/lib/android-all-o-preview-4-robolectric-0.jar b/.cipd/pkgs/16/df992370f4ce703487d6d7aac43037de31bd80de/lib/android-all-o-preview-4-robolectric-0.jar
+new file mode 100644
+index 000000000000..47c03b41cc52
+Binary files /dev/null and b/.cipd/pkgs/16/df992370f4ce703487d6d7aac43037de31bd80de/lib/android-all-o-preview-4-robolectric-0.jar differ
+diff --git a/.cipd/pkgs/17/889660698187baa7c8b0d79f7bf58563125fbd66/.cipdpkg/manifest.json b/.cipd/pkgs/17/889660698187baa7c8b0d79f7bf58563125fbd66/.cipdpkg/manifest.json
+new file mode 100644
+index 000000000000..1bd019c1ac62
+--- /dev/null
++++ b/.cipd/pkgs/17/889660698187baa7c8b0d79f7bf58563125fbd66/.cipdpkg/manifest.json
+@@ -0,0 +1,30 @@
++{
++  "format_version": "1",
++  "package_name": "chromium/third_party/sqlite4java",
++  "files": [
++    {
++      "name": "lib/linux-x86/libsqlite4java.so",
++      "size": 732637
++    },
++    {
++      "name": "lib/linux-x86_64/libsqlite4java.so",
++      "size": 790986
++    },
++    {
++      "name": "lib/mac-x86_64/libsqlite4java.jnilib",
++      "size": 1433640
++    },
++    {
++      "name": "lib/sqlite4java.jar",
++      "size": 129381
++    },
++    {
++      "name": "lib/windows-x86/sqlite4java.dll",
++      "size": 462848
++    },
++    {
++      "name": "lib/windows-x86_64/sqlite4java.dll",
++      "size": 622080
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/.cipd/pkgs/17/889660698187baa7c8b0d79f7bf58563125fbd66/lib/linux-x86/libsqlite4java.so b/.cipd/pkgs/17/889660698187baa7c8b0d79f7bf58563125fbd66/lib/linux-x86/libsqlite4java.so
+new file mode 100644
+index 000000000000..10763fd0c716
+Binary files /dev/null and b/.cipd/pkgs/17/889660698187baa7c8b0d79f7bf58563125fbd66/lib/linux-x86/libsqlite4java.so differ
+diff --git a/.cipd/pkgs/17/889660698187baa7c8b0d79f7bf58563125fbd66/lib/linux-x86_64/libsqlite4java.so b/.cipd/pkgs/17/889660698187baa7c8b0d79f7bf58563125fbd66/lib/linux-x86_64/libsqlite4java.so
+new file mode 100644
+index 000000000000..9bb63e96f567
+Binary files /dev/null and b/.cipd/pkgs/17/889660698187baa7c8b0d79f7bf58563125fbd66/lib/linux-x86_64/libsqlite4java.so differ
+diff --git a/.cipd/pkgs/17/889660698187baa7c8b0d79f7bf58563125fbd66/lib/mac-x86_64/libsqlite4java.jnilib b/.cipd/pkgs/17/889660698187baa7c8b0d79f7bf58563125fbd66/lib/mac-x86_64/libsqlite4java.jnilib
+new file mode 100644
+index 000000000000..d11ccf1450d4
+Binary files /dev/null and b/.cipd/pkgs/17/889660698187baa7c8b0d79f7bf58563125fbd66/lib/mac-x86_64/libsqlite4java.jnilib differ
+diff --git a/.cipd/pkgs/17/889660698187baa7c8b0d79f7bf58563125fbd66/lib/sqlite4java.jar b/.cipd/pkgs/17/889660698187baa7c8b0d79f7bf58563125fbd66/lib/sqlite4java.jar
+new file mode 100644
+index 000000000000..686098fe4b08
+Binary files /dev/null and b/.cipd/pkgs/17/889660698187baa7c8b0d79f7bf58563125fbd66/lib/sqlite4java.jar differ
+diff --git a/.cipd/pkgs/17/889660698187baa7c8b0d79f7bf58563125fbd66/lib/windows-x86/sqlite4java.dll b/.cipd/pkgs/17/889660698187baa7c8b0d79f7bf58563125fbd66/lib/windows-x86/sqlite4java.dll
+new file mode 100644
+index 000000000000..bf85116e05cb
+Binary files /dev/null and b/.cipd/pkgs/17/889660698187baa7c8b0d79f7bf58563125fbd66/lib/windows-x86/sqlite4java.dll differ
+diff --git a/.cipd/pkgs/17/889660698187baa7c8b0d79f7bf58563125fbd66/lib/windows-x86_64/sqlite4java.dll b/.cipd/pkgs/17/889660698187baa7c8b0d79f7bf58563125fbd66/lib/windows-x86_64/sqlite4java.dll
+new file mode 100644
+index 000000000000..0d7f2bbfb216
+Binary files /dev/null and b/.cipd/pkgs/17/889660698187baa7c8b0d79f7bf58563125fbd66/lib/windows-x86_64/sqlite4java.dll differ
+diff --git a/.cipd/pkgs/17/_current b/.cipd/pkgs/17/_current
+new file mode 120000
+index 000000000000..b2b781369d5d
+--- /dev/null
++++ b/.cipd/pkgs/17/_current
+@@ -0,0 +1 @@
++889660698187baa7c8b0d79f7bf58563125fbd66
+\ No newline at end of file
+diff --git a/.cipd/pkgs/17/description.json b/.cipd/pkgs/17/description.json
+new file mode 100644
+index 000000000000..08c7f8db5cae
+--- /dev/null
++++ b/.cipd/pkgs/17/description.json
+@@ -0,0 +1,4 @@
++{
++  "subdir": "third_party/sqlite4java",
++  "package_name": "chromium/third_party/sqlite4java"
++}
+\ No newline at end of file
+diff --git a/.cipd/pkgs/18/4278b1b78b86ab7a1a29e64d5aec9a47a9aab0fe/.cipdpkg/manifest.json b/.cipd/pkgs/18/4278b1b78b86ab7a1a29e64d5aec9a47a9aab0fe/.cipdpkg/manifest.json
+new file mode 100644
+index 000000000000..f044ddfbf245
+--- /dev/null
++++ b/.cipd/pkgs/18/4278b1b78b86ab7a1a29e64d5aec9a47a9aab0fe/.cipdpkg/manifest.json
+@@ -0,0 +1,10 @@
++{
++  "format_version": "1",
++  "package_name": "chromium/third_party/xstream",
++  "files": [
++    {
++      "name": "lib/xstream.jar",
++      "size": 538830
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/.cipd/pkgs/18/4278b1b78b86ab7a1a29e64d5aec9a47a9aab0fe/lib/xstream.jar b/.cipd/pkgs/18/4278b1b78b86ab7a1a29e64d5aec9a47a9aab0fe/lib/xstream.jar
+new file mode 100644
+index 000000000000..a493c3b99d5f
+Binary files /dev/null and b/.cipd/pkgs/18/4278b1b78b86ab7a1a29e64d5aec9a47a9aab0fe/lib/xstream.jar differ
+diff --git a/.cipd/pkgs/18/_current b/.cipd/pkgs/18/_current
+new file mode 120000
+index 000000000000..1aeedbe2b2cf
+--- /dev/null
++++ b/.cipd/pkgs/18/_current
+@@ -0,0 +1 @@
++4278b1b78b86ab7a1a29e64d5aec9a47a9aab0fe
+\ No newline at end of file
+diff --git a/.cipd/pkgs/18/description.json b/.cipd/pkgs/18/description.json
+new file mode 100644
+index 000000000000..e03d12fa1fd4
+--- /dev/null
++++ b/.cipd/pkgs/18/description.json
+@@ -0,0 +1,4 @@
++{
++  "subdir": "third_party/xstream",
++  "package_name": "chromium/third_party/xstream"
++}
+\ No newline at end of file
+diff --git a/.cipd/pkgs/2/8742c4d657de4618557a182069b5482e3af71f58/.cipdpkg/manifest.json b/.cipd/pkgs/2/8742c4d657de4618557a182069b5482e3af71f58/.cipdpkg/manifest.json
+new file mode 100644
+index 000000000000..3ca49adfdabd
+--- /dev/null
++++ b/.cipd/pkgs/2/8742c4d657de4618557a182069b5482e3af71f58/.cipdpkg/manifest.json
+@@ -0,0 +1,14 @@
++{
++  "format_version": "1",
++  "package_name": "chromium/third_party/android_system_sdk",
++  "files": [
++    {
++      "name": "android-stubs-src.jar",
++      "size": 3315894
++    },
++    {
++      "name": "android_system.jar",
++      "size": 26677349
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/.cipd/pkgs/2/8742c4d657de4618557a182069b5482e3af71f58/android-stubs-src.jar b/.cipd/pkgs/2/8742c4d657de4618557a182069b5482e3af71f58/android-stubs-src.jar
+new file mode 100644
+index 000000000000..1ba284834ae8
+Binary files /dev/null and b/.cipd/pkgs/2/8742c4d657de4618557a182069b5482e3af71f58/android-stubs-src.jar differ
+diff --git a/.cipd/pkgs/2/8742c4d657de4618557a182069b5482e3af71f58/android_system.jar b/.cipd/pkgs/2/8742c4d657de4618557a182069b5482e3af71f58/android_system.jar
+new file mode 100644
+index 000000000000..0d2093384991
+Binary files /dev/null and b/.cipd/pkgs/2/8742c4d657de4618557a182069b5482e3af71f58/android_system.jar differ
+diff --git a/.cipd/pkgs/2/_current b/.cipd/pkgs/2/_current
+new file mode 120000
+index 000000000000..cbdd5d247cd4
+--- /dev/null
++++ b/.cipd/pkgs/2/_current
+@@ -0,0 +1 @@
++8742c4d657de4618557a182069b5482e3af71f58
+\ No newline at end of file
+diff --git a/.cipd/pkgs/2/description.json b/.cipd/pkgs/2/description.json
+new file mode 100644
+index 000000000000..f59d1712cbce
+--- /dev/null
++++ b/.cipd/pkgs/2/description.json
+@@ -0,0 +1,4 @@
++{
++  "subdir": "third_party/android_system_sdk",
++  "package_name": "chromium/third_party/android_system_sdk"
++}
+\ No newline at end of file
+diff --git a/.cipd/pkgs/3/_current b/.cipd/pkgs/3/_current
+new file mode 120000
+index 000000000000..3e4dd2186803
+--- /dev/null
++++ b/.cipd/pkgs/3/_current
+@@ -0,0 +1 @@
++b603e99dca9b90d6a99519c232cd811878283b08
+\ No newline at end of file
+diff --git a/.cipd/pkgs/3/b603e99dca9b90d6a99519c232cd811878283b08/.cipdpkg/manifest.json b/.cipd/pkgs/3/b603e99dca9b90d6a99519c232cd811878283b08/.cipdpkg/manifest.json
+new file mode 100644
+index 000000000000..4c392af9db7f
+--- /dev/null
++++ b/.cipd/pkgs/3/b603e99dca9b90d6a99519c232cd811878283b08/.cipdpkg/manifest.json
+@@ -0,0 +1,10 @@
++{
++  "format_version": "1",
++  "package_name": "chromium/third_party/apk-patch-size-estimator",
++  "files": [
++    {
++      "name": "lib/file-by-file-tools.jar",
++      "size": 150256
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/.cipd/pkgs/3/b603e99dca9b90d6a99519c232cd811878283b08/lib/file-by-file-tools.jar b/.cipd/pkgs/3/b603e99dca9b90d6a99519c232cd811878283b08/lib/file-by-file-tools.jar
+new file mode 100644
+index 000000000000..c764fac3105b
+Binary files /dev/null and b/.cipd/pkgs/3/b603e99dca9b90d6a99519c232cd811878283b08/lib/file-by-file-tools.jar differ
+diff --git a/.cipd/pkgs/3/description.json b/.cipd/pkgs/3/description.json
+new file mode 100644
+index 000000000000..517caba573d0
+--- /dev/null
++++ b/.cipd/pkgs/3/description.json
+@@ -0,0 +1,4 @@
++{
++  "subdir": "third_party/apk-patch-size-estimator",
++  "package_name": "chromium/third_party/apk-patch-size-estimator"
++}
+\ No newline at end of file
+diff --git a/.cipd/pkgs/4/787205522c1cd341049db3a3c6175a081f7d75b1/.cipdpkg/manifest.json b/.cipd/pkgs/4/787205522c1cd341049db3a3c6175a081f7d75b1/.cipdpkg/manifest.json
+new file mode 100644
+index 000000000000..e55a7111b835
+--- /dev/null
++++ b/.cipd/pkgs/4/787205522c1cd341049db3a3c6175a081f7d75b1/.cipdpkg/manifest.json
+@@ -0,0 +1,10 @@
++{
++  "format_version": "1",
++  "package_name": "chromium/third_party/bazel",
++  "files": [
++    {
++      "name": "desugar/Desugar.jar",
++      "size": 10243835
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/.cipd/pkgs/4/787205522c1cd341049db3a3c6175a081f7d75b1/desugar/Desugar.jar b/.cipd/pkgs/4/787205522c1cd341049db3a3c6175a081f7d75b1/desugar/Desugar.jar
+new file mode 100644
+index 000000000000..fbb9e4e150ff
+Binary files /dev/null and b/.cipd/pkgs/4/787205522c1cd341049db3a3c6175a081f7d75b1/desugar/Desugar.jar differ
+diff --git a/.cipd/pkgs/4/_current b/.cipd/pkgs/4/_current
+new file mode 120000
+index 000000000000..84134b92fc76
+--- /dev/null
++++ b/.cipd/pkgs/4/_current
+@@ -0,0 +1 @@
++787205522c1cd341049db3a3c6175a081f7d75b1
+\ No newline at end of file
+diff --git a/.cipd/pkgs/4/description.json b/.cipd/pkgs/4/description.json
+new file mode 100644
+index 000000000000..64168ca6d8f2
+--- /dev/null
++++ b/.cipd/pkgs/4/description.json
+@@ -0,0 +1,4 @@
++{
++  "subdir": "third_party/bazel",
++  "package_name": "chromium/third_party/bazel"
++}
+\ No newline at end of file
+diff --git a/.cipd/pkgs/5/_current b/.cipd/pkgs/5/_current
+new file mode 120000
+index 000000000000..edb4d1f4c56e
+--- /dev/null
++++ b/.cipd/pkgs/5/_current
+@@ -0,0 +1 @@
++c078e87552ba26e776566fdaf0f22cd8712743d0
+\ No newline at end of file
+diff --git a/.cipd/pkgs/5/c078e87552ba26e776566fdaf0f22cd8712743d0/.cipdpkg/manifest.json b/.cipd/pkgs/5/c078e87552ba26e776566fdaf0f22cd8712743d0/.cipdpkg/manifest.json
+new file mode 100644
+index 000000000000..686dc9854a79
+--- /dev/null
++++ b/.cipd/pkgs/5/c078e87552ba26e776566fdaf0f22cd8712743d0/.cipdpkg/manifest.json
+@@ -0,0 +1,10 @@
++{
++  "format_version": "1",
++  "package_name": "chromium/third_party/bouncycastle",
++  "files": [
++    {
++      "name": "lib/bcprov-jdk16.jar",
++      "size": 1876535
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/.cipd/pkgs/5/c078e87552ba26e776566fdaf0f22cd8712743d0/lib/bcprov-jdk16.jar b/.cipd/pkgs/5/c078e87552ba26e776566fdaf0f22cd8712743d0/lib/bcprov-jdk16.jar
+new file mode 100644
+index 000000000000..27d3481e6b4f
+Binary files /dev/null and b/.cipd/pkgs/5/c078e87552ba26e776566fdaf0f22cd8712743d0/lib/bcprov-jdk16.jar differ
+diff --git a/.cipd/pkgs/5/description.json b/.cipd/pkgs/5/description.json
+new file mode 100644
+index 000000000000..249c0b43daed
+--- /dev/null
++++ b/.cipd/pkgs/5/description.json
+@@ -0,0 +1,4 @@
++{
++  "subdir": "third_party/bouncycastle",
++  "package_name": "chromium/third_party/bouncycastle"
++}
+\ No newline at end of file
+diff --git a/.cipd/pkgs/6/249c53dfece87df481be27ba5ab1109ecdbe2d60/.cipdpkg/manifest.json b/.cipd/pkgs/6/249c53dfece87df481be27ba5ab1109ecdbe2d60/.cipdpkg/manifest.json
+new file mode 100644
+index 000000000000..3b0bd196e16c
+--- /dev/null
++++ b/.cipd/pkgs/6/249c53dfece87df481be27ba5ab1109ecdbe2d60/.cipdpkg/manifest.json
+@@ -0,0 +1,10 @@
++{
++  "format_version": "1",
++  "package_name": "chromium/third_party/byte_buddy",
++  "files": [
++    {
++      "name": "lib/byte-buddy.jar",
++      "size": 2507580
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/.cipd/pkgs/6/249c53dfece87df481be27ba5ab1109ecdbe2d60/lib/byte-buddy.jar b/.cipd/pkgs/6/249c53dfece87df481be27ba5ab1109ecdbe2d60/lib/byte-buddy.jar
+new file mode 100644
+index 000000000000..b32ecebcb18b
+Binary files /dev/null and b/.cipd/pkgs/6/249c53dfece87df481be27ba5ab1109ecdbe2d60/lib/byte-buddy.jar differ
+diff --git a/.cipd/pkgs/6/_current b/.cipd/pkgs/6/_current
+new file mode 120000
+index 000000000000..cf793cd12f8c
+--- /dev/null
++++ b/.cipd/pkgs/6/_current
+@@ -0,0 +1 @@
++249c53dfece87df481be27ba5ab1109ecdbe2d60
+\ No newline at end of file
+diff --git a/.cipd/pkgs/6/description.json b/.cipd/pkgs/6/description.json
+new file mode 100644
+index 000000000000..c4c508415571
+--- /dev/null
++++ b/.cipd/pkgs/6/description.json
+@@ -0,0 +1,4 @@
++{
++  "subdir": "third_party/byte_buddy",
++  "package_name": "chromium/third_party/byte_buddy"
++}
+\ No newline at end of file
+diff --git a/.cipd/pkgs/7/_current b/.cipd/pkgs/7/_current
+new file mode 120000
+index 000000000000..acec863174f8
+--- /dev/null
++++ b/.cipd/pkgs/7/_current
+@@ -0,0 +1 @@
++c92dcfc4e894555a0b3c309f2b7939640eb1fee4
+\ No newline at end of file
+diff --git a/.cipd/pkgs/7/c92dcfc4e894555a0b3c309f2b7939640eb1fee4/.cipdpkg/manifest.json b/.cipd/pkgs/7/c92dcfc4e894555a0b3c309f2b7939640eb1fee4/.cipdpkg/manifest.json
+new file mode 100644
+index 000000000000..d9b9118a78da
+--- /dev/null
++++ b/.cipd/pkgs/7/c92dcfc4e894555a0b3c309f2b7939640eb1fee4/.cipdpkg/manifest.json
+@@ -0,0 +1,26 @@
++{
++  "format_version": "1",
++  "package_name": "chromium/third_party/espresso",
++  "files": [
++    {
++      "name": "lib/espresso-contrib-release-no-dep.jar",
++      "size": 34748
++    },
++    {
++      "name": "lib/espresso-core-release-no-dep.jar",
++      "size": 2948420
++    },
++    {
++      "name": "lib/espresso-idling-resource-release-no-dep.jar",
++      "size": 2281
++    },
++    {
++      "name": "lib/espresso-intents-release-no-dep.jar",
++      "size": 51107
++    },
++    {
++      "name": "lib/espresso-web-release-no-dep.jar",
++      "size": 230524
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/.cipd/pkgs/7/c92dcfc4e894555a0b3c309f2b7939640eb1fee4/lib/espresso-contrib-release-no-dep.jar b/.cipd/pkgs/7/c92dcfc4e894555a0b3c309f2b7939640eb1fee4/lib/espresso-contrib-release-no-dep.jar
+new file mode 100644
+index 000000000000..736712db6dde
+Binary files /dev/null and b/.cipd/pkgs/7/c92dcfc4e894555a0b3c309f2b7939640eb1fee4/lib/espresso-contrib-release-no-dep.jar differ
+diff --git a/.cipd/pkgs/7/c92dcfc4e894555a0b3c309f2b7939640eb1fee4/lib/espresso-core-release-no-dep.jar b/.cipd/pkgs/7/c92dcfc4e894555a0b3c309f2b7939640eb1fee4/lib/espresso-core-release-no-dep.jar
+new file mode 100644
+index 000000000000..5f534322249a
+Binary files /dev/null and b/.cipd/pkgs/7/c92dcfc4e894555a0b3c309f2b7939640eb1fee4/lib/espresso-core-release-no-dep.jar differ
+diff --git a/.cipd/pkgs/7/c92dcfc4e894555a0b3c309f2b7939640eb1fee4/lib/espresso-idling-resource-release-no-dep.jar b/.cipd/pkgs/7/c92dcfc4e894555a0b3c309f2b7939640eb1fee4/lib/espresso-idling-resource-release-no-dep.jar
+new file mode 100644
+index 000000000000..7a2b7a88604c
+Binary files /dev/null and b/.cipd/pkgs/7/c92dcfc4e894555a0b3c309f2b7939640eb1fee4/lib/espresso-idling-resource-release-no-dep.jar differ
+diff --git a/.cipd/pkgs/7/c92dcfc4e894555a0b3c309f2b7939640eb1fee4/lib/espresso-intents-release-no-dep.jar b/.cipd/pkgs/7/c92dcfc4e894555a0b3c309f2b7939640eb1fee4/lib/espresso-intents-release-no-dep.jar
+new file mode 100644
+index 000000000000..b0330f30a3c9
+Binary files /dev/null and b/.cipd/pkgs/7/c92dcfc4e894555a0b3c309f2b7939640eb1fee4/lib/espresso-intents-release-no-dep.jar differ
+diff --git a/.cipd/pkgs/7/c92dcfc4e894555a0b3c309f2b7939640eb1fee4/lib/espresso-web-release-no-dep.jar b/.cipd/pkgs/7/c92dcfc4e894555a0b3c309f2b7939640eb1fee4/lib/espresso-web-release-no-dep.jar
+new file mode 100644
+index 000000000000..df78b50b1cae
+Binary files /dev/null and b/.cipd/pkgs/7/c92dcfc4e894555a0b3c309f2b7939640eb1fee4/lib/espresso-web-release-no-dep.jar differ
+diff --git a/.cipd/pkgs/7/description.json b/.cipd/pkgs/7/description.json
+new file mode 100644
+index 000000000000..81d24c9e292c
+--- /dev/null
++++ b/.cipd/pkgs/7/description.json
+@@ -0,0 +1,4 @@
++{
++  "subdir": "third_party/espresso",
++  "package_name": "chromium/third_party/espresso"
++}
+\ No newline at end of file
+diff --git a/.cipd/pkgs/8/681931c9778045903a0ed59856ce2dd8dd7bf7ca/.cipdpkg/manifest.json b/.cipd/pkgs/8/681931c9778045903a0ed59856ce2dd8dd7bf7ca/.cipdpkg/manifest.json
+new file mode 100644
+index 000000000000..911ee9b99551
+--- /dev/null
++++ b/.cipd/pkgs/8/681931c9778045903a0ed59856ce2dd8dd7bf7ca/.cipdpkg/manifest.json
+@@ -0,0 +1,10 @@
++{
++  "format_version": "1",
++  "package_name": "chromium/third_party/gson",
++  "files": [
++    {
++      "name": "lib/gson.jar",
++      "size": 231952
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/.cipd/pkgs/8/681931c9778045903a0ed59856ce2dd8dd7bf7ca/lib/gson.jar b/.cipd/pkgs/8/681931c9778045903a0ed59856ce2dd8dd7bf7ca/lib/gson.jar
+new file mode 100644
+index 000000000000..1235f63816c5
+Binary files /dev/null and b/.cipd/pkgs/8/681931c9778045903a0ed59856ce2dd8dd7bf7ca/lib/gson.jar differ
+diff --git a/.cipd/pkgs/8/_current b/.cipd/pkgs/8/_current
+new file mode 120000
+index 000000000000..b36ade6f6b9f
+--- /dev/null
++++ b/.cipd/pkgs/8/_current
+@@ -0,0 +1 @@
++681931c9778045903a0ed59856ce2dd8dd7bf7ca
+\ No newline at end of file
+diff --git a/.cipd/pkgs/8/description.json b/.cipd/pkgs/8/description.json
+new file mode 100644
+index 000000000000..9b01ff13573a
+--- /dev/null
++++ b/.cipd/pkgs/8/description.json
+@@ -0,0 +1,4 @@
++{
++  "subdir": "third_party/gson",
++  "package_name": "chromium/third_party/gson"
++}
+\ No newline at end of file
+diff --git a/.cipd/pkgs/9/40abcbf24ba1f544fb34a14096688539aba0f413/.cipdpkg/manifest.json b/.cipd/pkgs/9/40abcbf24ba1f544fb34a14096688539aba0f413/.cipdpkg/manifest.json
+new file mode 100644
+index 000000000000..4d70edd58b01
+--- /dev/null
++++ b/.cipd/pkgs/9/40abcbf24ba1f544fb34a14096688539aba0f413/.cipdpkg/manifest.json
+@@ -0,0 +1,10 @@
++{
++  "format_version": "1",
++  "package_name": "chromium/third_party/guava",
++  "files": [
++    {
++      "name": "lib/guava.jar",
++      "size": 2442625
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/.cipd/pkgs/9/40abcbf24ba1f544fb34a14096688539aba0f413/lib/guava.jar b/.cipd/pkgs/9/40abcbf24ba1f544fb34a14096688539aba0f413/lib/guava.jar
+new file mode 100644
+index 000000000000..632772f3a4d2
+Binary files /dev/null and b/.cipd/pkgs/9/40abcbf24ba1f544fb34a14096688539aba0f413/lib/guava.jar differ
+diff --git a/.cipd/pkgs/9/_current b/.cipd/pkgs/9/_current
+new file mode 120000
+index 000000000000..eb9fc82f34da
+--- /dev/null
++++ b/.cipd/pkgs/9/_current
+@@ -0,0 +1 @@
++40abcbf24ba1f544fb34a14096688539aba0f413
+\ No newline at end of file
+diff --git a/.cipd/pkgs/9/description.json b/.cipd/pkgs/9/description.json
+new file mode 100644
+index 000000000000..9cf6bee5719d
+--- /dev/null
++++ b/.cipd/pkgs/9/description.json
+@@ -0,0 +1,4 @@
++{
++  "subdir": "third_party/guava",
++  "package_name": "chromium/third_party/guava"
++}
+\ No newline at end of file
+diff --git a/.cipd/tagcache.db b/.cipd/tagcache.db
+new file mode 100644
+index 000000000000..d8fcf13f2d4e
+--- /dev/null
++++ b/.cipd/tagcache.db
+@@ -0,0 +1,42 @@
++
++Ã
++‘
++1chromium/third_party/accessibility-test-frameworkversion:2.1-cr0(b5ec1e56e58e56bc1a0c77d43111c37f9b512c8a"!chrome-infra-packages.appspot.com
++
++0chromium/third_party/android_support_test_runnerversion:0.5-cr0(96d4bf848cd210fdcbca6bcc8c1b4b39cbd93141"!chrome-infra-packages.appspot.com
++…
++'chromium/third_party/android_system_sdkversion:0-cr0(8742c4d657de4618557a182069b5482e3af71f58"!chrome-infra-packages.appspot.com
++
++-chromium/third_party/apk-patch-size-estimatorversion:0.2-cr0(b603e99dca9b90d6a99519c232cd811878283b08"!chrome-infra-packages.appspot.com
++x
++chromium/third_party/bazelversion:0-cr0(787205522c1cd341049db3a3c6175a081f7d75b1"!chrome-infra-packages.appspot.com
++‚
++!chromium/third_party/bouncycastleversion:1.46-cr0(c078e87552ba26e776566fdaf0f22cd8712743d0"!chrome-infra-packages.appspot.com
++‚
++chromium/third_party/byte_buddyversion:1.4.17-cr0(249c53dfece87df481be27ba5ab1109ecdbe2d60"!chrome-infra-packages.appspot.com
++
++chromium/third_party/espressoversion:2.2.1-cr0(c92dcfc4e894555a0b3c309f2b7939640eb1fee4"!chrome-infra-packages.appspot.com
++{
++chromium/third_party/gsonversion:2.8.0-cr0(681931c9778045903a0ed59856ce2dd8dd7bf7ca"!chrome-infra-packages.appspot.com
++{
++chromium/third_party/guavaversion:20.0-cr0(40abcbf24ba1f544fb34a14096688539aba0f413"!chrome-infra-packages.appspot.com
++}
++chromium/third_party/hamcrestversion:1.3-cr0(37eccfc658fe79695d6abb6dd497463c4372032f"!chrome-infra-packages.appspot.com
++{
++chromium/third_party/icu4jversion:53.1-cr0(e87e5bed2b4935913ee26a3ebd0b723ee2344354"!chrome-infra-packages.appspot.com
++~
++chromium/third_party/intellijversion:12.0-cr0(77c2721b024b36ee073402c08e6d8428c0295336"!chrome-infra-packages.appspot.com
++
++!chromium/third_party/javax_injectversion:1-cr0(f0520d8908d1cf3cf65b353f690b8f222f47d4a9"!chrome-infra-packages.appspot.com
++~
++chromium/third_party/objenesisversion:2.4-cr0(9e367f55e5a65781ee77bfcbaa88fb82b30e75c0"!chrome-infra-packages.appspot.com
++~
++chromium/third_party/ow2_asmversion:5.0.1-cr0(0dcaea8bd839b3f2eb8415c327b40e8e398a373e"!chrome-infra-packages.appspot.com
++€
++ chromium/third_party/robolectricversion:3.2-cr0(e0d12bdebdd52b661c7ee36ad306dbb63a24fca5"!chrome-infra-packages.appspot.com
++‚
++ chromium/third_party/sqlite4javaversion:0.282-cr0(889660698187baa7c8b0d79f7bf58563125fbd66"!chrome-infra-packages.appspot.com
++~
++chromium/third_party/xstreamversion:1.4.8-cr0(4278b1b78b86ab7a1a29e64d5aec9a47a9aab0fe"!chrome-infra-packages.appspot.com
++~
++ chromium/third_party/robolectricversion:3.4.2(df992370f4ce703487d6d7aac43037de31bd80de"!chrome-infra-packages.appspot.como´Ð•m0¾ŸQÃH*uÞ
+\ No newline at end of file
+diff --git a/build/config/gclient_args.gni b/build/config/gclient_args.gni
+new file mode 100644
+index 000000000000..aca420dcf8d1
+--- /dev/null
++++ b/build/config/gclient_args.gni
+@@ -0,0 +1,3 @@
++# Generated from '.DEPS.git'
++checkout_libaom = false
++checkout_nacl = true
+diff --git a/chrome/browser/policy/configuration_policy_handler_list_factory.cc b/chrome/browser/policy/configuration_policy_handler_list_factory.cc
+index ab4a81906de5..333c4b571b16 100644
+--- a/chrome/browser/policy/configuration_policy_handler_list_factory.cc
++++ b/chrome/browser/policy/configuration_policy_handler_list_factory.cc
+@@ -714,6 +714,9 @@ const PolicyToPreferenceMapEntry kSimplePolicyMap[] = {
+   { key::kBrowserNetworkTimeQueriesEnabled,
+     network_time::prefs::kNetworkTimeQueriesEnabled,
+     base::Value::Type::BOOLEAN },
++  { key::kAbusiveExperienceEnforce,
++    prefs::kAbusiveExperienceEnforce,
++    base::Value::Type::BOOLEAN },
+ };
+ // clang-format on
+ 
+diff --git a/chrome/browser/prefs/browser_prefs.cc b/chrome/browser/prefs/browser_prefs.cc
+index 7202b128415a..f0ab9b009eb8 100644
+--- a/chrome/browser/prefs/browser_prefs.cc
++++ b/chrome/browser/prefs/browser_prefs.cc
+@@ -56,6 +56,7 @@
+ #include "chrome/browser/task_manager/task_manager_interface.h"
+ #include "chrome/browser/tracing/chrome_tracing_delegate.h"
+ #include "chrome/browser/ui/app_list/app_list_service.h"
++#include "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.h"
+ #include "chrome/browser/ui/browser_ui_prefs.h"
+ #include "chrome/browser/ui/navigation_correction_tab_observer.h"
+ #include "chrome/browser/ui/network_profile_bubble.h"
+@@ -488,6 +489,7 @@ void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
+   PushMessagingAppIdentifier::RegisterProfilePrefs(registry);
+   RegisterBrowserUserPrefs(registry);
+   safe_browsing::RegisterProfilePrefs(registry);
++  SafeBrowsingTriggeredPopupBlocker::RegisterProfilePrefs(registry);
+   SessionStartupPref::RegisterProfilePrefs(registry);
+   signin::RegisterAccountConsistencyProfilePrefs(registry);
+   syncer::SyncPrefs::RegisterProfilePrefs(registry);
+diff --git a/chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.cc b/chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.cc
+index 58d539046cca..f5607b3e921c 100644
+--- a/chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.cc
++++ b/chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.cc
+@@ -9,6 +9,8 @@
+ #include "base/memory/ptr_util.h"
+ #include "base/metrics/field_trial_params.h"
+ #include "base/metrics/histogram_macros.h"
++#include "chrome/common/pref_names.h"
++#include "components/pref_registry/pref_registry_syncable.h"
+ #include "components/safe_browsing/db/util.h"
+ #include "components/safe_browsing/db/v4_protocol_manager_util.h"
+ #include "content/public/browser/navigation_handle.h"
+@@ -44,6 +46,12 @@ SafeBrowsingTriggeredPopupBlocker::PageData::~PageData() {
+   }
+ }
+ 
++// static
++void SafeBrowsingTriggeredPopupBlocker::RegisterProfilePrefs(
++    user_prefs::PrefRegistrySyncable* registry) {
++  registry->RegisterBooleanPref(prefs::kAbusiveExperienceEnforce, true);
++}
++
+ // static
+ std::unique_ptr<SafeBrowsingTriggeredPopupBlocker>
+ SafeBrowsingTriggeredPopupBlocker::MaybeCreate(
+diff --git a/chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.h b/chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.h
+index cd4d4c5ad9ca..b0431f6ed2cf 100644
+--- a/chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.h
++++ b/chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.h
+@@ -16,6 +16,10 @@
+ #include "components/subresource_filter/content/browser/subresource_filter_observer_manager.h"
+ #include "content/public/browser/web_contents_observer.h"
+ 
++namespace user_prefs {
++class PrefRegistrySyncable;
++}
++
+ namespace content {
+ struct OpenURLParams;
+ class WebContents;
+@@ -66,6 +70,8 @@ class SafeBrowsingTriggeredPopupBlocker
+     kCount
+   };
+ 
++  static void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry);
++
+   static std::unique_ptr<SafeBrowsingTriggeredPopupBlocker> MaybeCreate(
+       content::WebContents* web_contents);
+   ~SafeBrowsingTriggeredPopupBlocker() override;
+diff --git a/chrome/common/pref_names.cc b/chrome/common/pref_names.cc
+index 171c69145adb..37196ecc81c1 100644
+--- a/chrome/common/pref_names.cc
++++ b/chrome/common/pref_names.cc
+@@ -17,6 +17,10 @@ namespace prefs {
+ // *************** PROFILE PREFS ***************
+ // These are attached to the user profile
+ 
++// A bool pref that indicates whether interventions for abusive experiences
++// should be enforced.
++const char kAbusiveExperienceEnforce[] = "abusive_experience_enforce";
++
+ // A bool pref that keeps whether the child status for this profile was already
+ // successfully checked via ChildAccountService.
+ const char kChildAccountStatusKnown[] = "child_account_status_known";
+diff --git a/chrome/common/pref_names.h b/chrome/common/pref_names.h
+index 7f630dfd366c..f891d4536949 100644
+--- a/chrome/common/pref_names.h
++++ b/chrome/common/pref_names.h
+@@ -20,6 +20,7 @@
+ namespace prefs {
+ 
+ // Profile prefs. Please add Local State prefs below instead.
++extern const char kAbusiveExperienceEnforce[];
+ extern const char kChildAccountStatusKnown[];
+ extern const char kDefaultApps[];
+ extern const char kSafeBrowsingForTrustedSourcesEnabled[];
+diff --git a/chrome/test/data/policy/policy_test_cases.json b/chrome/test/data/policy/policy_test_cases.json
+index 312d4ac303b2..3f551a58ee8b 100644
+--- a/chrome/test/data/policy/policy_test_cases.json
++++ b/chrome/test/data/policy/policy_test_cases.json
+@@ -3318,6 +3318,16 @@
+     ]
+   },
+ 
++  "AbusiveExperienceEnforce": {
++    "os": ["win", "linux", "mac", "chromeos"],
++    "test_policy": {
++      "AbusiveExperienceEnforce": false
++    },
++    "pref_mappings": [
++      { "pref": "abusive_experience_enforce"}
++    ]
++  },
++
+   "----- Chrome Frame policies -------------------------------------------": {},
+ 
+   "ChromeFrameRendererSettings": {
+diff --git a/components/policy/resources/policy_templates.json b/components/policy/resources/policy_templates.json
+index 75b9e187a54d..87ef57730c6a 100644
+--- a/components/policy/resources/policy_templates.json
++++ b/components/policy/resources/policy_templates.json
+@@ -146,7 +146,7 @@
+ #   persistent IDs for all fields (but not for groups!) are needed. These are
+ #   specified by the 'id' keys of each policy. NEVER CHANGE EXISTING IDs,
+ #   because doing so would break the deployed wire format!
+-#   For your editing convenience: highest ID currently used: 397
++#   For your editing convenience: highest ID currently used: 398
+ #   And don't forget to also update the EnterprisePolicies enum of
+ #   histograms.xml (run 'python tools/metrics/histograms/update_policies.py').
+ #
+@@ -10646,6 +10646,25 @@
+ 
+       Changes to the policy will only be applied while ARC is not running, e.g. while Chrome OS is starting.''',
+     },
++    {
++      'name': 'AbusiveExperienceEnforce',
++      'type': 'main',
++      'schema': { 'type': 'boolean' },
++      'supported_on': [
++        'chrome.*:64-',
++      ],
++      'future': False,
++      'features': {
++        'dynamic_refresh': False,
++        'per_profile': True,
++      },
++      'example_value': False,
++      'id': 398,
++      'caption': '''Abusive Experience Intervention Enforce''',
++      'tags': [],
++      'desc': '''Allows you to set whether stronger pop-up blocker should be enforced for sites with abusive experiences or should not be enforced for all sites.
++If this policy is left not set, â€˜Falseâ€™ will be used.''',
++    },
+   ],
+   'messages': {
+     # Messages that are not associated to any policies.
+diff --git a/third_party/content_shell_fonts/content_shell_test_fonts.tar.gz b/third_party/content_shell_fonts/content_shell_test_fonts.tar.gz
+new file mode 100644
+index 000000000000..9980266cbc3e
+Binary files /dev/null and b/third_party/content_shell_fonts/content_shell_test_fonts.tar.gz differ
+diff --git a/third_party/content_shell_fonts/content_shell_test_fonts/DejaVuSans.ttf b/third_party/content_shell_fonts/content_shell_test_fonts/DejaVuSans.ttf
+new file mode 100644
+index 000000000000..e5f7eecce43b
+Binary files /dev/null and b/third_party/content_shell_fonts/content_shell_test_fonts/DejaVuSans.ttf differ
+diff --git a/third_party/content_shell_fonts/content_shell_test_fonts/Lohit-Devanagari.ttf b/third_party/content_shell_fonts/content_shell_test_fonts/Lohit-Devanagari.ttf
+new file mode 100644
+index 000000000000..ea00eded5bd2
+Binary files /dev/null and b/third_party/content_shell_fonts/content_shell_test_fonts/Lohit-Devanagari.ttf differ
+diff --git a/third_party/content_shell_fonts/content_shell_test_fonts/Lohit-Tamil.ttf b/third_party/content_shell_fonts/content_shell_test_fonts/Lohit-Tamil.ttf
+new file mode 100644
+index 000000000000..d972aadad749
+Binary files /dev/null and b/third_party/content_shell_fonts/content_shell_test_fonts/Lohit-Tamil.ttf differ
+diff --git a/third_party/content_shell_fonts/content_shell_test_fonts/MuktiNarrow.ttf b/third_party/content_shell_fonts/content_shell_test_fonts/MuktiNarrow.ttf
+new file mode 100644
+index 000000000000..7c80f981c4a4
+Binary files /dev/null and b/third_party/content_shell_fonts/content_shell_test_fonts/MuktiNarrow.ttf differ
+diff --git a/tools/metrics/histograms/enums.xml b/tools/metrics/histograms/enums.xml
+index 2157b2f80d3d..73b1c7267060 100644
+--- a/tools/metrics/histograms/enums.xml
++++ b/tools/metrics/histograms/enums.xml
+@@ -11930,6 +11930,7 @@ Called by update_net_error_codes.py.-->
+   <int value="395" label="PromptForDownloadLocation"/>
+   <int value="396" label="DeviceLoginScreenAutoSelectCertificateForUrls"/>
+   <int value="397" label="UnaffiliatedArcAllowed"/>
++  <int value="398" label="AbusiveExperienceEnforce"/>
+ </enum>
+ 
+ <enum name="EnterprisePolicyInvalidations">

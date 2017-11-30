@@ -1,0 +1,184 @@
+diff --git a/chrome/browser/policy/configuration_policy_handler_list_factory.cc b/chrome/browser/policy/configuration_policy_handler_list_factory.cc
+index d4ec9e33c13b..52e013a35211 100644
+--- a/chrome/browser/policy/configuration_policy_handler_list_factory.cc
++++ b/chrome/browser/policy/configuration_policy_handler_list_factory.cc
+@@ -722,6 +722,11 @@ const PolicyToPreferenceMapEntry kSimplePolicyMap[] = {
+   { key::kSitePerProcess,
+     prefs::kSitePerProcess,
+     base::Value::Type::BOOLEAN },
++
++  { key::kAbusiveExperienceEnforce,
++    prefs::kAbusiveExperienceEnforce,
++    base::Value::Type::BOOLEAN },
++
+ };
+ // clang-format on
+ 
+diff --git a/chrome/browser/prefs/browser_prefs.cc b/chrome/browser/prefs/browser_prefs.cc
+index a4cfc776af67..7653d62438bc 100644
+--- a/chrome/browser/prefs/browser_prefs.cc
++++ b/chrome/browser/prefs/browser_prefs.cc
+@@ -56,6 +56,7 @@
+ #include "chrome/browser/task_manager/task_manager_interface.h"
+ #include "chrome/browser/tracing/chrome_tracing_delegate.h"
+ #include "chrome/browser/ui/app_list/app_list_service.h"
++#include "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.h"
+ #include "chrome/browser/ui/browser_ui_prefs.h"
+ #include "chrome/browser/ui/navigation_correction_tab_observer.h"
+ #include "chrome/browser/ui/network_profile_bubble.h"
+@@ -491,6 +492,7 @@ void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
+   RegisterBrowserUserPrefs(registry);
+   safe_browsing::RegisterProfilePrefs(registry);
+   secure_origin_whitelist::RegisterProfilePrefs(registry);
++  SafeBrowsingTriggeredPopupBlocker::RegisterProfilePrefs(registry);
+   SessionStartupPref::RegisterProfilePrefs(registry);
+   signin::RegisterAccountConsistencyProfilePrefs(registry);
+   syncer::SyncPrefs::RegisterProfilePrefs(registry);
+diff --git a/chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.cc b/chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.cc
+index 58d539046cca..f5607b3e921c 100644
+--- a/chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.cc
++++ b/chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.cc
+@@ -9,6 +9,8 @@
+ #include "base/memory/ptr_util.h"
+ #include "base/metrics/field_trial_params.h"
+ #include "base/metrics/histogram_macros.h"
++#include "chrome/common/pref_names.h"
++#include "components/pref_registry/pref_registry_syncable.h"
+ #include "components/safe_browsing/db/util.h"
+ #include "components/safe_browsing/db/v4_protocol_manager_util.h"
+ #include "content/public/browser/navigation_handle.h"
+@@ -44,6 +46,12 @@ SafeBrowsingTriggeredPopupBlocker::PageData::~PageData() {
+   }
+ }
+ 
++// static
++void SafeBrowsingTriggeredPopupBlocker::RegisterProfilePrefs(
++    user_prefs::PrefRegistrySyncable* registry) {
++  registry->RegisterBooleanPref(prefs::kAbusiveExperienceEnforce, true);
++}
++
+ // static
+ std::unique_ptr<SafeBrowsingTriggeredPopupBlocker>
+ SafeBrowsingTriggeredPopupBlocker::MaybeCreate(
+diff --git a/chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.h b/chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.h
+index cd4d4c5ad9ca..206a685cb1b3 100644
+--- a/chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.h
++++ b/chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.h
+@@ -21,6 +21,9 @@ struct OpenURLParams;
+ class WebContents;
+ }  // namespace content
+ 
++namespace user_prefs {
++class PrefRegistrySyncable;
++}
+ 
+ extern const base::Feature kAbusiveExperienceEnforce;
+ 
+@@ -66,6 +69,8 @@ class SafeBrowsingTriggeredPopupBlocker
+     kCount
+   };
+ 
++  static void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry);
++
+   static std::unique_ptr<SafeBrowsingTriggeredPopupBlocker> MaybeCreate(
+       content::WebContents* web_contents);
+   ~SafeBrowsingTriggeredPopupBlocker() override;
+diff --git a/chrome/common/pref_names.cc b/chrome/common/pref_names.cc
+index 53bf29f9af68..c36bd29bb931 100644
+--- a/chrome/common/pref_names.cc
++++ b/chrome/common/pref_names.cc
+@@ -17,6 +17,10 @@ namespace prefs {
+ // *************** PROFILE PREFS ***************
+ // These are attached to the user profile
+ 
++// A bool pref that indicates whether interventions for abusive experiences
++// should be enforced.
++const char kAbusiveExperienceEnforce[] = "abusive_experience_enforce";
++
+ // A bool pref that keeps whether the child status for this profile was already
+ // successfully checked via ChildAccountService.
+ const char kChildAccountStatusKnown[] = "child_account_status_known";
+diff --git a/chrome/common/pref_names.h b/chrome/common/pref_names.h
+index 2c7f5e1b75ab..50400fb6f4fb 100644
+--- a/chrome/common/pref_names.h
++++ b/chrome/common/pref_names.h
+@@ -20,6 +20,7 @@
+ namespace prefs {
+ 
+ // Profile prefs. Please add Local State prefs below instead.
++extern const char kAbusiveExperienceEnforce[];
+ extern const char kChildAccountStatusKnown[];
+ extern const char kDefaultApps[];
+ extern const char kSafeBrowsingForTrustedSourcesEnabled[];
+diff --git a/chrome/test/data/policy/policy_test_cases.json b/chrome/test/data/policy/policy_test_cases.json
+index a1d51d2e051d..9475d8eb54a7 100644
+--- a/chrome/test/data/policy/policy_test_cases.json
++++ b/chrome/test/data/policy/policy_test_cases.json
+@@ -3352,6 +3352,16 @@
+     ]
+   },
+ 
++  "AbusiveExperienceEnforce": {
++    "os": ["win", "linux", "mac", "chromeos"],
++    "test_policy": {
++      "AbusiveExperienceEnforce": false
++    },
++    "pref_mappings": [
++      { "pref": "abusive_experience_enforce"}
++    ]
++  },
++
+   "----- Chrome Frame policies -------------------------------------------": {},
+ 
+   "ChromeFrameRendererSettings": {
+diff --git a/components/policy/resources/policy_templates.json b/components/policy/resources/policy_templates.json
+index 3f90b4172c9d..beb2ac263c1e 100644
+--- a/components/policy/resources/policy_templates.json
++++ b/components/policy/resources/policy_templates.json
+@@ -146,7 +146,7 @@
+ #   persistent IDs for all fields (but not for groups!) are needed. These are
+ #   specified by the 'id' keys of each policy. NEVER CHANGE EXISTING IDs,
+ #   because doing so would break the deployed wire format!
+-#   For your editing convenience: highest ID currently used: 401
++#   For your editing convenience: highest ID currently used: 402
+ #   And don't forget to also update the EnterprisePolicies enum of
+ #   histograms.xml (run 'python tools/metrics/histograms/update_policies.py').
+ #
+@@ -10739,8 +10739,24 @@
+       If you do not set this policy, <ph name="PRODUCT_NAME">$1<ex>Google Chrome</ex></ph> will use its usual default directory (platform-specific).
+ 
+       See https://www.chromium.org/administrators/policy-list-3/user-data-directory-variables for a list of variables that can be used.''',
+-    }
++    },
++    {
++      'name': 'AbusiveExperienceEnforce',
++      'type': 'main',
++      'schema': { 'type': 'boolean' },
++      'supported_on': [
++        'chrome.*:64-',
++      ],
++      'future': False,
++      'example_value': True,
++      'id': 402,
++      'caption': '''Abusive Experience Intervention Enforce''',
++      'tags': [],
++      'desc': '''Allows you to set whether stronger pop-up blocker should be enforced for sites with abusive experiences or should not be enforced for all sites.
++If this policy is left not set, "True" will be used.''',
++   },
+   ],
++
+   'messages': {
+     # Messages that are not associated to any policies.
+     'win_supported_winxpsp2': {
+diff --git a/tools/metrics/histograms/enums.xml b/tools/metrics/histograms/enums.xml
+index 441c06d3a383..e029441b7af2 100644
+--- a/tools/metrics/histograms/enums.xml
++++ b/tools/metrics/histograms/enums.xml
+@@ -11943,6 +11943,7 @@ Called by update_net_error_codes.py.-->
+   <int value="399" label="SitePerProcess"/>
+   <int value="400" label="UnsafelyTreatInsecureOriginAsSecure"/>
+   <int value="401" label="DefaultDownloadDirectory"/>
++  <int value="402" label="AbusiveExperienceEnforce"/>
+ </enum>
+ 
+ <enum name="EnterprisePolicyInvalidations">
