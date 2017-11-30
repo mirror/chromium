@@ -13,6 +13,7 @@ content::PreviewsState DetermineClientPreviewsState(
     previews::PreviewsDecider* previews_decider) {
   content::PreviewsState previews_state = content::PREVIEWS_UNSPECIFIED;
 
+  LOG(WARNING) << "XXXXX previews::DetermineClientPreviewsState  request: " << url_request.url();
   if (!url_request.url().SchemeIsHTTPOrHTTPS()) {
     return previews_state;
   }
@@ -20,12 +21,14 @@ content::PreviewsState DetermineClientPreviewsState(
   // Check for client-side previews in precendence order.
   // Note: this for for the beginning of navigation so we should not
   // check for https here (since an http request may redirect to https).
+  LOG(WARNING) << "XXXXX previews::DetermineClientPreviewsState  call ShouldAllowPreviewAtECT " ;
   if (previews_decider->ShouldAllowPreviewAtECT(
           url_request, previews::PreviewsType::NOSCRIPT,
           previews::params::GetECTThresholdForPreview(
               previews::PreviewsType::NOSCRIPT),
           std::vector<std::string>())) {
     previews_state |= content::NOSCRIPT_ON;
+  LOG(WARNING) << "XXXXX previews::DetermineClientPreviewsState  NOSCRIPT case PS: " << previews_state;
     return previews_state;
   }
 
@@ -38,6 +41,7 @@ content::PreviewsState DetermineClientPreviewsState(
     return previews_state;
   }
 
+  LOG(WARNING) << "XXXXX previews::DetermineClientPreviewsState  fall-thru case PS: " << previews_state;
   return previews_state;
 }
 
