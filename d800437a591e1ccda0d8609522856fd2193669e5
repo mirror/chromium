@@ -34,6 +34,24 @@
       "revId": "d800437a591e1ccda0d8609522856fd2193669e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "355cb2c3_6172f98d",
+        "filename": "mojo/edk/embedder/scoped_platform_handle.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-11-30T21:23:25Z",
+      "side": 1,
+      "message": "Done. Thanks!",
+      "parentUuid": "6e7c1fac_26a36182",
+      "revId": "d800437a591e1ccda0d8609522856fd2193669e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
