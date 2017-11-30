@@ -138,6 +138,30 @@
       "revId": "63eef50fca7c577c5bf28a89530c6463ee1ce56f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ce1e6a5_02a56bd9",
+        "filename": "third_party/WebKit/Source/core/inspector/ThreadDebugger.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-30T23:28:50Z",
+      "side": 0,
+      "message": "Yes, it should be the same.",
+      "parentUuid": "86e46daa_0e353089",
+      "range": {
+        "startLine": 282,
+        "startChar": 19,
+        "endLine": 282,
+        "endChar": 27
+      },
+      "revId": "63eef50fca7c577c5bf28a89530c6463ee1ce56f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
