@@ -22,6 +22,30 @@
       "revId": "046cac8ae06b09bd2ef66a6ecea11fbb25ddfc4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feee6c92_9a67072a",
+        "filename": "chrome/browser/ui/tabs/tab_activity_watcher_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-30T06:54:01Z",
+      "side": 1,
+      "message": "That\u0027s a good suggestion, but we can\u0027t exactly clear the entries from the UKM recorder. We can Purge() the recorder, but that clears entries *and sources*. We need those sources to exist to verify that new events are logged for the right URLs, which is important.\n\nWe could add a ClearEntries() function to the test recorder, but that situation doesn\u0027t happen in the real code, and it\u0027ll still cause problems when we try to test multiple related entries later.\n\nI do think the test fixture could track the size, so the test doesn\u0027t have to hard-code expected counts. As long as the test always calls ExpectEntry(...) when an entry is recorder -- which is something we should enforce anyway -- we can just increment a counter in that function.\n\nI\u0027ve reworked the expect methods.",
+      "parentUuid": "796d9078_9adb895d",
+      "range": {
+        "startLine": 356,
+        "startChar": 14,
+        "endLine": 356,
+        "endChar": 16
+      },
+      "revId": "046cac8ae06b09bd2ef66a6ecea11fbb25ddfc4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
