@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ba72c3f_ea19b252",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logging_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-30T00:23:58Z",
+      "side": 1,
+      "message": "nit: it seems we don\u0027t need to store the pointers for the three",
+      "revId": "ea75bec72643061fcbe4426f21c4f7a058e306d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
