@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f299ebd_6ccc95a3",
+        "filename": "third_party/openvr/src/src/jsoncpp.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2610,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-30T21:19:53Z",
+      "side": 1,
+      "message": "Should these change back to throw?",
+      "range": {
+        "startLine": 2610,
+        "startChar": 2,
+        "endLine": 2610,
+        "endChar": 19
+      },
+      "revId": "b32f6bb5d1fcf396f590e62be3dd176a5b37ab27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
