@@ -119,6 +119,10 @@ TEST_F(CRWWebViewScrollViewProxyTest, testScrollViewPresent) {
 
   [[[mockScrollView_ expect] andReturnValue:@NO] scrollsToTop];
   EXPECT_FALSE([webViewScrollViewProxy_ scrollsToTop]);
+
+  NSArray<__kindof UIView*>* subviews = [NSArray array];
+  [[[mockScrollView_ expect] andReturn:subviews] subviews];
+  EXPECT_EQ(subviews, [webViewScrollViewProxy_ subviews]);
 }
 
 // Tests that CRWWebViewScrollViewProxy returns the correct property values when
@@ -138,6 +142,7 @@ TEST_F(CRWWebViewScrollViewProxyTest, testScrollViewAbsent) {
   EXPECT_FALSE([webViewScrollViewProxy_ isDecelerating]);
   EXPECT_FALSE([webViewScrollViewProxy_ isDragging]);
   EXPECT_FALSE([webViewScrollViewProxy_ scrollsToTop]);
+  EXPECT_EQ((NSUInteger)0, [webViewScrollViewProxy_ subviews].count);
 
   // Make sure setting the properties is fine too.
   // Arbitrary point.

@@ -161,6 +161,10 @@
   return [_scrollView gestureRecognizers];
 }
 
+- (NSArray<__kindof UIView*>*)subviews {
+  return _scrollView ? [_scrollView subviews] : @[];
+}
+
 #pragma mark -
 #pragma mark UIScrollViewDelegate callbacks
 
