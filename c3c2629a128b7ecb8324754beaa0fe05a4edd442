@@ -34,6 +34,24 @@
       "revId": "c3c2629a128b7ecb8324754beaa0fe05a4edd442",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e9d3552_f0faab90",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-11-30T01:05:27Z",
+      "side": 1,
+      "message": "Looks like problem in webview. when focus goes into webview onDocumentFocus_ is not called...",
+      "parentUuid": "e5d0fac9_1d96d851",
+      "revId": "c3c2629a128b7ecb8324754beaa0fe05a4edd442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
