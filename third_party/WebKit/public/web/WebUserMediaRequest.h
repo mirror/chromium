@@ -78,6 +78,7 @@ class BLINK_EXPORT WebUserMediaRequest {
   bool Video() const;
   WebMediaConstraints AudioConstraints() const;
   WebMediaConstraints VideoConstraints() const;
+  bool ShouldDisableHardwareNoiseSuppression() const;
 
   WebSecurityOrigin GetSecurityOrigin() const;
   WebDocument OwnerDocument() const;
