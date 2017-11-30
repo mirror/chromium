@@ -69,6 +69,24 @@
       "revId": "a54054a64b51199defced644bcf06ebf5c3cfab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc89befb_4fc1b2af",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-30T18:33:41Z",
+      "side": 1,
+      "message": "Ah, right, forgot the dialog wouldn\u0027t exist yet.  If it did, there\u0027d be no point in the data binding, but with async it makes sense.\n\nWould that be worth a comment in the code?  Something like:\n// We have to leverage data bindings here (rather than just assigning the\n// installWarnings on the dialog) because the dialog hasn\u0027t been stamped in\n// the DOM yet.",
+      "parentUuid": "69d56b45_64210d02",
+      "revId": "a54054a64b51199defced644bcf06ebf5c3cfab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
