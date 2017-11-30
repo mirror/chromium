@@ -22,6 +22,23 @@
       "revId": "9b10783b6731e3ba8156e1a05645a1dca10f59b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab638ece_6735f696",
+        "filename": "components/signin/ios/browser/ios_signin_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-30T10:44:22Z",
+      "side": 0,
+      "message": "I agree with you about the OAuth2-related code being dead code. I would remove that code in a CL before this one and rebase this onto it, so that this CL is just a straight refactoring CL. In general I try to have my refactoring CLs ensure that the codebase is in exactly the same state after the refactoring as it was before the refactoring when possible.\n\nYou\u0027ll end up with a few conflicts on ios_signin_client.* when you rebase this branch onto the previous one, but those will be easy to resolve since you\u0027re just getting rid of the whole class in this branch anyway (i.e., you can just \"git rm\" ios_signin_client.* to resolve the conflicts).",
+      "revId": "9b10783b6731e3ba8156e1a05645a1dca10f59b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
