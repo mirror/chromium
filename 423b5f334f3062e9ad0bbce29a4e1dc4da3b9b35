@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83b1fc11_ab5b62fe",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-11-30T23:09:42Z",
+      "side": 1,
+      "message": "We are supposed to acquire a UDPSocket interface pointer and a UDPSocketReceiver interface request.",
+      "range": {
+        "startLine": 11,
+        "startChar": 31,
+        "endLine": 11,
+        "endChar": 48
+      },
+      "revId": "423b5f334f3062e9ad0bbce29a4e1dc4da3b9b35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae7581bd_568e48ac",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-11-30T23:09:42Z",
+      "side": 1,
+      "message": "Can this be returned when acquiring the UDPSocket, so we don\u0027t have to have such a getter?",
+      "revId": "423b5f334f3062e9ad0bbce29a4e1dc4da3b9b35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
