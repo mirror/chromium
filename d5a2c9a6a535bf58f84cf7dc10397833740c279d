@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9593aa39_a630ac14",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-11-30T21:50:29Z",
+      "side": 1,
+      "message": "We will have a separate logic to handle file and content URL.",
+      "parentUuid": "fa952d43_2d8a9be7",
+      "range": {
+        "startLine": 317,
+        "startChar": 50,
+        "endLine": 317,
+        "endChar": 59
+      },
+      "revId": "d5a2c9a6a535bf58f84cf7dc10397833740c279d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35542d3a_0c801240",
         "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "61fc7e67_ef4f99a6",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-11-30T21:50:29Z",
+      "side": 1,
+      "message": "We could either have a flag in OfflinePageItem to tell if it is trusted or not. Or more simply, we can check if the offline file resides in the internal directory. If you feel OK with the 2nd approach, I am going to add that check.",
+      "parentUuid": "35542d3a_0c801240",
+      "revId": "d5a2c9a6a535bf58f84cf7dc10397833740c279d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48dfdb40_70e2eca3",
         "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
         "patchSetId": 2
@@ -53,6 +95,24 @@
       "writtenOn": "2017-11-29T22:31:35Z",
       "side": 1,
       "message": "this seems to be providing only a single page, which was OK until now, but I think we may have multiple options (some could be not trusted, while some others are trusted.)\n\nWould it make sense to get a list of items ordered by preference here?",
+      "revId": "d5a2c9a6a535bf58f84cf7dc10397833740c279d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f964eaa_d6998110",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-11-30T21:50:29Z",
+      "side": 1,
+      "message": "This is only used to serve trusted offline pages.",
+      "parentUuid": "48dfdb40_70e2eca3",
       "revId": "d5a2c9a6a535bf58f84cf7dc10397833740c279d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
