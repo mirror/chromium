@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c1ac69d_5a7c577e",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-11-30T06:24:16Z",
+      "side": 1,
+      "message": "Not used in this CL -- but will be used in a follow-up!",
+      "range": {
+        "startLine": 37,
+        "startChar": 29,
+        "endLine": 37,
+        "endChar": 40
+      },
+      "revId": "87698ebefd03f75ddd615642803bbe9cdd4b9366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
