@@ -15,6 +15,7 @@
 #include "components/viz/service/display/output_surface_frame.h"
 #include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
+#include "gpu/command_buffer/common/swap_buffers_complete_params.h"
 #include "ui/gl/gl_utils.h"
 
 namespace viz {
@@ -135,10 +136,12 @@ void DisplayOutputSurface::DidReceiveSwapBuffersAck(gfx::SwapResult result) {
 }
 
 void DisplayOutputSurface::OnGpuSwapBuffersCompleted(
-    const gfx::SwapResponse& response,
-    const gpu::GpuProcessHostedCALayerTreeParamsMac* params_mac) {
-  DidReceiveSwapBuffersAck(response.result);
-  latency_info_cache_.OnSwapBuffersCompleted(response);
+    const gpu::SwapBuffersCompleteParams& params) {
+  // TODO(ccameron): Route |params.ca_layer_params|.
+  if (!params.texture_in_use_responses.empty())
+    client_->DidReceiveTextureInUseResponses(params.texture_in_use_responses);
+  DidReceiveSwapBuffersAck(params.swap_response.result);
+  latency_info_cache_.OnSwapBuffersCompleted(params.swap_response);
 }
 
 void DisplayOutputSurface::LatencyInfoCompleted(

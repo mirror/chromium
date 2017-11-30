@@ -330,20 +330,7 @@ void GpuCommandBufferStub::DidCreateAcceleratedSurfaceChildWindow(
 
 void GpuCommandBufferStub::DidSwapBuffersComplete(
     SwapBuffersCompleteParams params) {
-  GpuCommandBufferMsg_SwapBuffersCompleted_Params send_params;
-#if defined(OS_MACOSX)
-  send_params.ca_context_id = params.ca_context_id;
-  send_params.fullscreen_low_power_ca_context_valid =
-      params.fullscreen_low_power_ca_context_valid;
-  send_params.fullscreen_low_power_ca_context_id =
-      params.fullscreen_low_power_ca_context_id;
-  send_params.io_surface = params.io_surface;
-  send_params.pixel_size = params.pixel_size;
-  send_params.scale_factor = params.scale_factor;
-  send_params.in_use_responses = params.in_use_responses;
-#endif
-  send_params.response = std::move(params.response);
-  Send(new GpuCommandBufferMsg_SwapBuffersCompleted(route_id_, send_params));
+  Send(new GpuCommandBufferMsg_SwapBuffersCompleted(route_id_, params));
 }
 
 const gles2::FeatureInfo* GpuCommandBufferStub::GetFeatureInfo() const {
