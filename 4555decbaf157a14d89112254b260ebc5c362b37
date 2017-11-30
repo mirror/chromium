@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9aa9306a_9589fd8a",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-30T22:58:57Z",
+      "side": 1,
+      "message": "This bit of logic is new, and will be used in conjunction with the followup CL https://chromium-review.googlesource.com/c/chromium/src/+/802236.",
+      "range": {
+        "startLine": 319,
+        "startChar": 0,
+        "endLine": 326,
+        "endChar": 3
+      },
+      "revId": "4555decbaf157a14d89112254b260ebc5c362b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
