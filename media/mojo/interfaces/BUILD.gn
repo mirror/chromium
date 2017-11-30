@@ -57,6 +57,11 @@ mojom("interfaces") {
   } else {
     sources += [ "media_service.mojom" ]
   }
+
+  component_output_prefix = "media_mojo_interfaces_interfaces"
+  export_class_attribute = "MEDIA_MOJO_EXPORT"
+  export_define = "MEDIA_MOJO_IMPLEMENTATION=1"
+  export_header = "media/mojo/services/media_mojo_export.h"
 }
 
 mojom("constants") {
