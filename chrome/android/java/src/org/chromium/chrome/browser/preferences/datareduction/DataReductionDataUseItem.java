@@ -61,8 +61,10 @@ public class DataReductionDataUseItem {
      * @param context An Android context.
      * @return A formatted string of the data used.
      */
-    public String getFormattedDataUsed(Context context) {
-        return Formatter.formatFileSize(context, mDataUsed);
+    public CharSequence getFormattedDataUsed(Context context) {
+        String formatted = Formatter.formatFileSize(context, mDataUsed);
+        // For some languages TTS does not speak "B" as "bytes", so the text is wrapped with a span.
+        return DataReductionUtils.setSpanForBytes(mDataUsed, formatted);
     }
 
     /**
@@ -72,8 +74,10 @@ public class DataReductionDataUseItem {
      * @param context An Android context.
      * @return A formatted string of the data saved.
      */
-    public String getFormattedDataSaved(Context context) {
-        if (mDataUsed > mOriginalSize) return Formatter.formatFileSize(context, 0);
-        return Formatter.formatFileSize(context, mOriginalSize - mDataUsed);
+    public CharSequence getFormattedDataSaved(Context context) {
+        final long savedTotalBytes = (mDataUsed > mOriginalSize) ? 0 : (mOriginalSize - mDataUsed);
+        String formatted = Formatter.formatFileSize(context, savedTotalBytes);
+        // For some languages TTS does not speak "B" as "bytes", so the text is wrapped with a span.
+        return DataReductionUtils.setSpanForBytes(savedTotalBytes, formatted);
     }
 }
