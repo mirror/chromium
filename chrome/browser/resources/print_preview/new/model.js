@@ -301,7 +301,9 @@ Polymer({
         'settings.selectionOnly.available',
         this.documentInfo.isModifiable && this.documentInfo.hasSelection);
     this.set('settings.headerFooter.available', this.documentInfo.isModifiable);
-    this.set('settings.rasterize.available', !this.documentInfo.isModifiable);
+    this.set(
+        'settings.rasterize.available',
+        !this.documentInfo.isModifiable && !cr.isWindows && !cr.isMac);
   },
 
   /** @param {?print_preview.CddCapabilities} caps The printer capabilities. */
