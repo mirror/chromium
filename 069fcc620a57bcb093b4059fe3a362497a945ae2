@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a43f3983_5a5a5246",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-30T14:05:29Z",
+      "side": 1,
+      "message": "s/New/ChromeSyncEndpoint",
+      "range": {
+        "startLine": 360,
+        "startChar": 65,
+        "endLine": 360,
+        "endChar": 76
+      },
+      "revId": "069fcc620a57bcb093b4059fe3a362497a945ae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "095fa8f8_6d77d8f0",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-30T14:05:29Z",
+      "side": 1,
+      "message": "s/new/Chrome sync",
+      "range": {
+        "startLine": 383,
+        "startChar": 31,
+        "endLine": 383,
+        "endChar": 34
+      },
+      "revId": "069fcc620a57bcb093b4059fe3a362497a945ae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99e10c8d_4357c08d",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-30T14:05:29Z",
+      "side": 1,
+      "message": "Remove this - this is not needed anymore.",
+      "range": {
+        "startLine": 234,
+        "startChar": 8,
+        "endLine": 234,
+        "endChar": 35
+      },
+      "revId": "069fcc620a57bcb093b4059fe3a362497a945ae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "754c0813_cf755f73",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-30T14:05:29Z",
+      "side": 1,
+      "message": "Remove this (not needed).",
+      "range": {
+        "startLine": 365,
+        "startChar": 4,
+        "endLine": 365,
+        "endChar": 13
+      },
+      "revId": "069fcc620a57bcb093b4059fe3a362497a945ae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
