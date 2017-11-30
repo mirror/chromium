@@ -21,7 +21,7 @@ namespace printing {
 Image::Image(const Metafile& metafile)
     : row_length_(0),
       ignore_alpha_(true) {
-  LoadMetafile(metafile);
+  CHECK(LoadMetafile(metafile));
 }
 
 Image::Image(const Image& image)
