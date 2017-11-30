@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a7c714b_4c531373",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-30T01:16:51Z",
+      "side": 1,
+      "message": "I see what\u0027s next on your list of fixes :)",
+      "range": {
+        "startLine": 335,
+        "startChar": 41,
+        "endLine": 336,
+        "endChar": 17
+      },
+      "revId": "402acd9e46f4b8a56676d020983076d66baed862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a30df349_d7132220",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-30T01:16:51Z",
+      "side": 1,
+      "message": "What\u0027s funky about it and how does it end up not just being a mirror of the LTR version?\n\n(Will not withhold LG for that, but that does bother me as something that should work but we don\u0027t fully understand.)",
+      "range": {
+        "startLine": 341,
+        "startChar": 28,
+        "endLine": 341,
+        "endChar": 46
+      },
+      "revId": "402acd9e46f4b8a56676d020983076d66baed862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
