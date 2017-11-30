@@ -47,9 +47,7 @@ static_library("browser") {
   ]
 
   if (is_android) {
-    sources += [
-      "distillable_page_utils_android.cc",
-    ]
+    sources += [ "distillable_page_utils_android.cc" ]
     deps += [ "android:jni_headers" ]
   }
 }

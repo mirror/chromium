@@ -1487,7 +1487,9 @@ if (enable_java_templates) {
         if (defined(invoker.proguard_config_exclusions)) {
           _rebased_proguard_config_exclusions =
               rebase_path(invoker.proguard_config_exclusions, root_build_dir)
-          args += [ "--proguard-config-exclusions=$_rebased_proguard_config_exclusions" ]
+          args += [
+            "--proguard-config-exclusions=$_rebased_proguard_config_exclusions",
+          ]
         }
       }
     } else {
@@ -1929,7 +1931,9 @@ if (enable_java_templates) {
         _native_libs_deps += [ "//build/android:cpplib_stripped" ]
       }
       if (_secondary_abi_shared_libraries_is_valid) {
-        _secondary_abi_native_libs_deps += [ "//build/android:cpplib_stripped($android_secondary_abi_toolchain)" ]
+        _secondary_abi_native_libs_deps += [
+          "//build/android:cpplib_stripped($android_secondary_abi_toolchain)",
+        ]
       }
     }
 
@@ -2339,7 +2343,9 @@ if (enable_java_templates) {
         if (defined(invoker.proguard_config_exclusions)) {
           _rebased_proguard_config_exclusions =
               rebase_path(invoker.proguard_config_exclusions, root_build_dir)
-          args += [ "--proguard-config-exclusions=$_rebased_proguard_config_exclusions" ]
+          args += [
+            "--proguard-config-exclusions=$_rebased_proguard_config_exclusions",
+          ]
         }
 
         if (defined(invoker.apk_under_test)) {

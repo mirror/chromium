@@ -650,7 +650,9 @@ if (is_win) {
     }
 
     foreach(locale, locales_as_mac_outputs) {
-      outputs += [ "$target_gen_dir/app_infoplist_strings/$locale.lproj/InfoPlist.strings" ]
+      outputs += [
+        "$target_gen_dir/app_infoplist_strings/$locale.lproj/InfoPlist.strings",
+      ]
     }
 
     args =

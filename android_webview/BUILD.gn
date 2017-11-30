@@ -944,7 +944,9 @@ android_library("android_webview_platform_services_java") {
 }
 
 android_library("android_webview_commandline_java") {
-  java_files = [ "java/src/org/chromium/android_webview/command_line/CommandLineUtil.java" ]
+  java_files = [
+    "java/src/org/chromium/android_webview/command_line/CommandLineUtil.java",
+  ]
 
   deps = [
     "//base:base_java",

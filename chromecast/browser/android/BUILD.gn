@@ -11,9 +11,8 @@ assert(is_android)
 cast_shell_android_manifest =
     "$root_gen_dir/cast_shell_manifest/AndroidManifest.xml"
 
-manifest_variables = [
-  "cast_build_enable_background_activities=$enable_background_activities",
-]
+manifest_variables =
+    [ "cast_build_enable_background_activities=$enable_background_activities" ]
 
 jinja_template("cast_shell_manifest") {
   input = "apk/AndroidManifest.xml.jinja2"

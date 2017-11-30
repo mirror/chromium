@@ -244,7 +244,9 @@ if (is_android) {
       "//content/public/android:*",
       "//services:*",
     ]
-    java_files = [ "android/java/src/org/chromium/services/device/InterfaceRegistrar.java" ]
+    java_files = [
+      "android/java/src/org/chromium/services/device/InterfaceRegistrar.java",
+    ]
     deps = [
       "//base:base_java",
       "//mojo/android:system_java",
