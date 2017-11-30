@@ -437,6 +437,17 @@ const NSInteger BookmarkFolderSectionCount = 2;
 
 - (void)bookmarkNodeDeleted:(const BookmarkNode*)bookmarkNode
                  fromFolder:(const BookmarkNode*)folder {
+  // Remove node from editedNodes if it is already deleted (possibly remotely by
+  // another sync device).
+  if (_editedNodes.find(bookmarkNode) != _editedNodes.end()) {
+    _editedNodes.erase(bookmarkNode);
+    // if editedNodes becomes empty, nothing to move.  Exit the folder picker.
+    if (_editedNodes.empty()) {
+      [self.delegate folderPickerDidCancel:self];
+      return;
+    }
+  }
+
   if (!bookmarkNode->is_folder())
     return;
 
