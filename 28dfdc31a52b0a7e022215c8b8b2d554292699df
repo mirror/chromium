@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "3244d28b_385e14c5",
+        "filename": "chrome/test/data/extensions/api_test/webrequest/test_unload5.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-30T18:01:36Z",
+      "side": 1,
+      "message": "Hmm... interesting.  I\u0027m not *super* worried about this being visible to other extensions, though it does raise a couple interesting questions.  For instance, we protect requests made by extensions from other extensions, but we currently only apply that to requests from a dedicated extension process (and even then, I think it\u0027s mostly just a best-effort).  If we can deterministically tell whether an extension content script made a request, it might be worth protecting those requests from other extensions - though it\u0027s hard to say if that would break anything we consider important.  There\u0027s also the possibility that an extension would target another extension, blocking all its requests, but I don\u0027t think that\u0027s a much greater risk (the content script requests weren\u0027t protected before, so any determined bad extension could just look for a request pattern or similar).\n\nOne thing I would like to check, though, is whether the change in ResourceFetcher.cpp would visible to the server in any way?  We deliberately hide the fact that a request is coming from an extension when it goes to the server.",
+      "parentUuid": "62954601_a5837461",
+      "revId": "28dfdc31a52b0a7e022215c8b8b2d554292699df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0903d53_2f051451",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 14
