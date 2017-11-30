@@ -236,23 +236,22 @@ importer.DefaultMediaScanner.prototype.crawlDirectory_ =
  * @return {!Promise}
  * @private
  */
-importer.DefaultMediaScanner.prototype.onFileEntryFound_ =
-    function(scan, entry) {
+importer.DefaultMediaScanner.prototype.onFileEntryFound_ = function(
+    scan, entry) {
 
-  return this.getDisposition_(entry, importer.Destination.GOOGLE_DRIVE,
-                              scan.mode)
-      .then(
-          (/**
-           * @param {!importer.Disposition} disposition The disposition
-           *     of the entry. Either some sort of dupe, or an original.
-           * @return {!Promise}
-           * @this {importer.DefaultMediaScanner}
-           */
-          function(disposition) {
-            return disposition === importer.Disposition.ORIGINAL ?
-                this.onUniqueFileFound_(scan, entry) :
-                this.onDuplicateFileFound_(scan, entry, disposition);
-          }).bind(this));
+  return this
+      .getDisposition_(entry, importer.Destination.GOOGLE_DRIVE, scan.mode)
+      .then((/**
+              * @param {!importer.Disposition} disposition The disposition
+              *     of the entry. Either some sort of dupe, or an original.
+              * @return {!Promise}
+              * @this {importer.DefaultMediaScanner}
+              */
+             function(disposition) {
+               return disposition === importer.Disposition.ORIGINAL ?
+                   this.onUniqueFileFound_(scan, entry) :
+                   this.onDuplicateFileFound_(scan, entry, disposition);
+             }).bind(this));
 };
 
 /**
