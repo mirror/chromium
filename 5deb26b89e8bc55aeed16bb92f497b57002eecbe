@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "567ba35d_60e157c0",
+        "filename": "chrome/app/theme/default_200_percent/common/turn_on_sync_illustration.png",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-30T17:02:55Z",
+      "side": 1,
+      "message": "Trent: We do not yet have the final asset (this is just a placeholder that UX provided). Is this acceptable to add this placeholder until we get the asset, or should we simply add some empty padding in the menu instead of this PNG file?",
+      "revId": "5deb26b89e8bc55aeed16bb92f497b57002eecbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74deba6f_425e6ce7",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-30T17:02:55Z",
+      "side": 1,
+      "message": "We should probably keep 2 consts here:\nconst int kFixedMenuWidthPreDice \u003d 240;\nconst int KFixedMenuWidthDice \u003d 288;\n\nAnd choose the value in the constructor.",
+      "range": {
+        "startLine": 105,
+        "startChar": 13,
+        "endLine": 105,
+        "endChar": 28
+      },
+      "revId": "5deb26b89e8bc55aeed16bb92f497b57002eecbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
