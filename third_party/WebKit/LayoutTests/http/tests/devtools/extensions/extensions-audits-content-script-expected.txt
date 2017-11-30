@@ -1,6 +1,7 @@
+CONSOLE WARNING: line 48: Passing resultCount to audits.addCategory() is deprecated. Use AuditResult.updateProgress() instead.
 Tests audit formatters performing evals on content scripts in WebInspector Extensions API
 
- Started extension.
+Started extension.
 Running tests...
 RUNNING TEST: extension_testAudits
     Extension audits
