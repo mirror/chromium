@@ -46,6 +46,30 @@
       "revId": "875cf13e107f44d264b24b579fba5abeb51d4c99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbc80153_7a32a867",
+        "filename": "components/arc/connection_holder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-30T16:12:53Z",
+      "side": 0,
+      "message": "Ah actually now that I think about it, this _might_ be exactly it! Let\u0027s say there\u0027s a Java service that wants to reconnect to the host. Since Java objects are not guaranteed to be destroyed (and due to https://crbug.com/725661 the object might linger a bit after it\u0027s stopped being used), the closing might happen later than the connection.\n\nIn other news, I totally messed up the clearing of |instance_|. You\u0027re right, I shouldn\u0027t have cleared it. I think I\u0027ll just keep it alive for the time being and rely on instance() returning nullptr when it\u0027s not connected. Doing that in another change.",
+      "parentUuid": "dbacf72d_65461051",
+      "range": {
+        "startLine": 133,
+        "startChar": 0,
+        "endLine": 134,
+        "endChar": 0
+      },
+      "revId": "875cf13e107f44d264b24b579fba5abeb51d4c99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
