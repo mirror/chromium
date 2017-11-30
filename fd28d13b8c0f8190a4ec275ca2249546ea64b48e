@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6d857664_dad16590",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-11-30T02:13:10Z",
+      "side": 1,
+      "message": "Is our main interest to measure traffic / request_count until the frame load completion? If so, we could emit the metrics at OnNetworkQuiet().",
+      "parentUuid": "a4cb9c86_3d476f73",
+      "range": {
+        "startLine": 230,
+        "startChar": 2,
+        "endLine": 230,
+        "endChar": 30
+      },
+      "revId": "fd28d13b8c0f8190a4ec275ca2249546ea64b48e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2733328b_b9eeede1",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
         "patchSetId": 6
