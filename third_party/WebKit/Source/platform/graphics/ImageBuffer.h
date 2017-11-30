@@ -148,7 +148,7 @@ class PLATFORM_EXPORT ImageBuffer {
   // have reference to Canvas2DLayerBridge. See crbug.com/776806.
   void OnCanvasDisposed();
 
-  WeakPtrFactory<ImageBuffer> weak_ptr_factory_;
+  base::WeakPtrFactory<ImageBuffer> weak_ptr_factory_;
 
  protected:
   ImageBuffer(std::unique_ptr<ImageBufferSurface>);

@@ -7,6 +7,7 @@
 #include <memory>
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
+#include "base/memory/weak_ptr.h"
 #include "cc/resources/layer_tree_resource_provider.h"
 #include "cc/resources/video_resource_updater.h"
 #include "components/viz/common/quads/render_pass.h"
@@ -14,7 +15,6 @@
 #include "components/viz/common/quads/texture_draw_quad.h"
 #include "components/viz/common/quads/yuv_video_draw_quad.h"
 #include "media/base/video_frame.h"
-#include "platform/wtf/WeakPtr.h"
 
 namespace cc {
 class VideoFrameExternalResources;

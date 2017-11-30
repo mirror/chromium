@@ -218,7 +218,7 @@ class CORE_EXPORT HTMLCanvasElement final
 
   // OffscreenCanvasPlaceholder implementation.
   void SetPlaceholderFrame(scoped_refptr<StaticBitmapImage>,
-                           WeakPtr<OffscreenCanvasFrameDispatcher>,
+                           base::WeakPtr<OffscreenCanvasFrameDispatcher>,
                            scoped_refptr<WebTaskRunner>,
                            unsigned resource_id) override;
   virtual void Trace(blink::Visitor*);

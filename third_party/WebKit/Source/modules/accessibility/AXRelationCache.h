@@ -29,11 +29,11 @@
 #ifndef AXRelationCache_h
 #define AXRelationCache_h
 
+#include "base/memory/weak_ptr.h"
 #include "modules/ModulesExport.h"
 #include "modules/accessibility/AXObjectCacheImpl.h"
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/HashSet.h"
-#include "platform/wtf/WeakPtr.h"
 
 namespace blink {
 

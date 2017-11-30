@@ -30,7 +30,8 @@ class PLATFORM_EXPORT SharedGpuContext {
   // instead.
   static bool IsGpuCompositingEnabled();
   // May re-create context if context was lost
-  static WeakPtr<WebGraphicsContext3DProviderWrapper> ContextProviderWrapper();
+  static base::WeakPtr<WebGraphicsContext3DProviderWrapper>
+  ContextProviderWrapper();
   static bool AllowSoftwareToAcceleratedCanvasUpgrade();
   static bool IsValidWithoutRestoring();
 
