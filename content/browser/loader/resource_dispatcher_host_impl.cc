@@ -44,6 +44,7 @@
 #include "content/browser/child_process_security_policy_impl.h"
 #include "content/browser/frame_host/navigation_request_info.h"
 #include "content/browser/loader/async_resource_handler.h"
+#include "content/browser/loader/cross_site_document_resource_handler.h"
 #include "content/browser/loader/detachable_resource_handler.h"
 #include "content/browser/loader/intercepting_resource_handler.h"
 #include "content/browser/loader/loader_delegate.h"
@@ -1571,6 +1572,12 @@ ResourceDispatcherHostImpl::AddStandardHandlers(
   } else {
     DCHECK(!navigation_loader_core);
     DCHECK(!stream_handle);
+  }
+
+  if (!IsResourceTypeFrame(resource_type)) {
+    // Add a throttle to block cross-site documents from the renderer process.
+    handler.reset(new CrossSiteDocumentResourceHandler(std::move(handler),
+                                                       request, resource_type));
   }
 
   PluginService* plugin_service = nullptr;

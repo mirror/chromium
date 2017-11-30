@@ -13,6 +13,7 @@
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/content_browser_test.h"
 #include "content/public/test/content_browser_test_utils.h"
+#include "content/public/test/test_utils.h"
 #include "content/shell/browser/shell.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -133,6 +134,12 @@ class SiteIsolationStatsGathererBrowserTest
 
 IN_PROC_BROWSER_TEST_P(SiteIsolationStatsGathererBrowserTest,
                        CrossSiteDocumentBlockingForMimeType) {
+  // This test is disabled in --site-per-process, since the documents are
+  // blocked before arriving in the renderer process and thus the existing
+  // histograms do not work.
+  if (AreAllSitesIsolatedForTesting())
+    return;
+
   // Load a page that issues illegal cross-site document requests to bar.com.
   // The page uses XHR to request HTML/XML/JSON documents from bar.com, and
   // inspects if any of them were successfully received. Currently, on illegal
