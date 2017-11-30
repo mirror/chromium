@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5573d96a_a7981259",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/longtask-timing/longtask-in-childiframe-crossorigin.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-30T13:36:10Z",
+      "side": 1,
+      "message": "How confident are we that sandboxing is equivalent to being cross-origin?",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 37
+      },
+      "revId": "f3ec0b56ca56a0a1338827f093ea69cad5ba13fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0bb61cf_eb0eb3e7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/longtask-timing/longtask-in-sibling-iframe.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-30T13:36:10Z",
+      "side": 1,
+      "message": "Nit on existing code: should this data be more structured?\nIt might be nicer to assert on a set of key:value pairs than on a big string.",
+      "range": {
+        "startLine": 12,
+        "startChar": 20,
+        "endLine": 12,
+        "endChar": 26
+      },
+      "revId": "f3ec0b56ca56a0a1338827f093ea69cad5ba13fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
