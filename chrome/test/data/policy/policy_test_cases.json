@@ -2689,6 +2689,21 @@
     ]
   },
 
+  "SecondaryGoogleAccountSigninEnabled": {
+    "os": ["chromeos"],
+    "test_policy": { "SecondaryGoogleAccountSigninEnabled": true },
+    "pref_mappings": [
+      { "pref": "account_consistency_mirror.required",
+        "indicator_tests": [
+          { "policy": { "SecondaryGoogleAccountSigninEnabled": true },
+            "value": false },
+          { "policy": { "SecondaryGoogleAccountSigninEnabled": false },
+            "value": true }
+        ]
+      }
+    ]
+  },
+
   "NativeMessagingBlacklist": {
     "os": ["win", "linux", "mac"],
     "test_policy": { "NativeMessagingBlacklist": ["*"] },
