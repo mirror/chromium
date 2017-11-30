@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "cec11f0d_92f50597",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/AnnotationProcessingUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-30T15:30:20Z",
+      "side": 1,
+      "message": "Done, wdyt?",
+      "parentUuid": "e03d5871_54f3b776",
+      "range": {
+        "startLine": 138,
+        "startChar": 20,
+        "endLine": 138,
+        "endChar": 30
+      },
+      "revId": "ee5af2de25de3a1634c3e0da2082206a9f0106b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cfdf3fde_0d48db30",
         "filename": "base/test/android/javatests/src/org/chromium/base/test/util/AnnotationProcessingUtils.java",
         "patchSetId": 11
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "Yes\n\n    @Foo\n    public @interface Foo {}\n\nIs valid java code. Also to to shave off redundant visits. The annotations are declared on classes, but when going through annotation instances, we might encounter the same type multiple times.",
       "parentUuid": "cfdf3fde_0d48db30",
+      "range": {
+        "startLine": 152,
+        "startChar": 33,
+        "endLine": 152,
+        "endChar": 43
+      },
+      "revId": "ee5af2de25de3a1634c3e0da2082206a9f0106b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f38992d_acfc1261",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/AnnotationProcessingUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-30T15:30:20Z",
+      "side": 1,
+      "message": "Laying it out to make sure my logic is correct:\n\n    @interface Important { boolean value() default true; }\n    \n    @Important\n    @interface Bar {}\n    \n    @Important(false)\n    @interface Baz {}\n    \n    @Baz\n    @EnableFeatures(\"F1\")\n    class FooTestBase {\n    }\n    \n    @Bar\n    @EnableFeatures(\"F2\", \"F3\")\n    class FooTest extends FooTestBase{\n    \n      @Baz\n      @EnableFeatures(\"F4\")\n      void testBaz() {}\n    }\n    \n    \nWe would collect (output will be in reverse order):\n\n     - @Baz                            testBaz\n     - @EnableFeatures(\"F4\")           testBaz\n     - @Important(false)               @Baz\n     - @Bar                            FooTest\n     - @EnableFeatures(\"F2\", \"F3\")     FooTest\n     - @Important                      @Bar\n     - @Baz                            FooTestBase\n     - @EnableFeatures(\"F1\")           FooTestBase\n     - \u003c@Important(false) skipped\u003e     @Baz\n    \n    \nWe skipped an annotation that was carrying a value that could have been useful, but we already got an instance of that. Maybe the order would have been important but we don\u0027t have much control over that anyway. So I don\u0027t think skipping meta annotations on a visited annotation would cause issues. Am I missing something?",
+      "parentUuid": "888171d9_96dcdaba",
       "range": {
         "startLine": 152,
         "startChar": 33,
