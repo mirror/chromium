@@ -16,6 +16,24 @@
       "revId": "c3c2629a128b7ecb8324754beaa0fe05a4edd442",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5d0fac9_1d96d851",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-11-30T00:38:26Z",
+      "side": 1,
+      "message": "Thank you for pointing this.\nI tried to implement based on this but it works weird. In case I use Shift+TAB it works as expected. But when I use TAB it goes to background page and stacks there. Could you please take a look new code and check if you see anything wrong. To double check I added log tracing and when overlay is active it returns overlay container.",
+      "parentUuid": "277f3a8a_4d8471bd",
+      "revId": "c3c2629a128b7ecb8324754beaa0fe05a4edd442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
