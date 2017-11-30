@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9800324b_a6d2b235",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-11-30T12:12:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a05f42b_8f9a4bc8",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 4
+      },
+      "revId": "9364b64653407e419f7033447bf080f27818eab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3859877b_558e2ce0",
         "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "9364b64653407e419f7033447bf080f27818eab5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddd5f96c_13047624",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-11-30T12:12:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3859877b_558e2ce0",
+      "range": {
+        "startLine": 130,
+        "startChar": 2,
+        "endLine": 130,
+        "endChar": 10
+      },
+      "revId": "9364b64653407e419f7033447bf080f27818eab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "58b34993_0b86fe63",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-11-30T12:12:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d9e5fc5_a8a1a003",
+      "range": {
+        "startLine": 350,
+        "startChar": 10,
+        "endLine": 354,
+        "endChar": 3
+      },
+      "revId": "9364b64653407e419f7033447bf080f27818eab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a41d121f_73f14745",
         "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "9364b64653407e419f7033447bf080f27818eab5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be4a2b8f_8bd5aafa",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-11-30T12:12:11Z",
+      "side": 1,
+      "message": "\u003e In PasswordManager non password fields might be only usernames. Wouldn\u0027t it be better to name this variable something like username_fields_level?\n\nAgree. Changed.",
+      "parentUuid": "a41d121f_73f14745",
+      "range": {
+        "startLine": 502,
+        "startChar": 22,
+        "endLine": 502,
+        "endChar": 47
+      },
+      "revId": "9364b64653407e419f7033447bf080f27818eab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "0f81f74b_3868eb2a",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1562,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-11-30T12:12:11Z",
+      "side": 1,
+      "message": "\u003e As far as I understand the problem that was reported on a bug, Invisible username field was skipped. Here this case is not tested (\"cached username\" is from visible field). Could you please test it.\n\nNope, the username field is visible, has no user input, but it contains a cached value (AFAIU, chrome caches non-password values). Invisible username was tested in PasswordFormConversionUtilsTest.UserInput, but the password was invisible as well. This is an idea for another test. I\u0027ll do it.\n\n\u003e My feeling that the same choosing of username/password fields would be even without this patch. Is it right?\n\nNope, username fields have no user input. So, before this patch they all would be ignored and username will be empty.",
+      "parentUuid": "45f10196_44c9c8fd",
+      "range": {
+        "startLine": 1562,
+        "startChar": 28,
+        "endLine": 1562,
+        "endChar": 49
+      },
+      "revId": "9364b64653407e419f7033447bf080f27818eab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "273f4389_b5bddc2e",
         "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
         "patchSetId": 4
@@ -137,6 +257,30 @@
       "revId": "9364b64653407e419f7033447bf080f27818eab5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e30f0cda_ee7b3792",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1565,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-11-30T12:12:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "273f4389_b5bddc2e",
+      "range": {
+        "startLine": 1565,
+        "startChar": 12,
+        "endLine": 1565,
+        "endChar": 33
+      },
+      "revId": "9364b64653407e419f7033447bf080f27818eab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
