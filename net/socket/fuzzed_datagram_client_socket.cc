@@ -64,6 +64,8 @@ FuzzedDatagramClientSocket::GetBoundNetwork() const {
   return NetworkChangeNotifier::kInvalidNetworkHandle;
 }
 
+void FuzzedDatagramClientSocket::Tag(const SocketTag& tag) {}
+
 void FuzzedDatagramClientSocket::Close() {
   connected_ = false;
   read_pending_ = false;

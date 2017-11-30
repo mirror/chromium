@@ -15,6 +15,7 @@
 #include "net/base/completion_callback.h"
 #include "net/base/net_export.h"
 #include "net/socket/connection_attempts.h"
+#include "net/socket/socket_tag.h"
 #include "net/socket/stream_socket.h"
 #include "net/socket/tcp_socket.h"
 
@@ -61,6 +62,11 @@ class NET_EXPORT TCPClientSocket : public StreamSocket {
   bool WasAlpnNegotiated() const override;
   NextProto GetNegotiatedProtocol() const override;
   bool GetSSLInfo(SSLInfo* ssl_info) override;
+  void GetConnectionAttempts(ConnectionAttempts* out) const override;
+  void ClearConnectionAttempts() override;
+  void AddConnectionAttempts(const ConnectionAttempts& attempts) override;
+  int64_t GetTotalReceivedBytes() const override;
+  void Tag(const SocketTag& tag) override;
 
   // Socket implementation.
   // Multiple outstanding requests are not supported.
@@ -79,11 +85,6 @@ class NET_EXPORT TCPClientSocket : public StreamSocket {
 
   virtual bool SetKeepAlive(bool enable, int delay);
   virtual bool SetNoDelay(bool no_delay);
-
-  void GetConnectionAttempts(ConnectionAttempts* out) const override;
-  void ClearConnectionAttempts() override;
-  void AddConnectionAttempts(const ConnectionAttempts& attempts) override;
-  int64_t GetTotalReceivedBytes() const override;
 
  private:
   // State machine for connecting the socket.
@@ -157,6 +158,10 @@ class NET_EXPORT TCPClientSocket : public StreamSocket {
 
   // Total number of bytes received by the socket.
   int64_t total_received_bytes_;
+
+  // Current socket tag if |socket_| is valid, otherwise the tag to apply when
+  // |socket_| is opened.
+  SocketTag tag_;
 
   DISALLOW_COPY_AND_ASSIGN(TCPClientSocket);
 };

@@ -21,6 +21,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/strings/string16.h"
 #include "base/time/time.h"
+#include "build/build_config.h"
 #include "net/base/address_list.h"
 #include "net/base/io_buffer.h"
 #include "net/base/net_errors.h"
@@ -590,6 +591,7 @@ class MockClientSocket : public SSLClientSocket {
   void ClearConnectionAttempts() override {}
   void AddConnectionAttempts(const ConnectionAttempts& attempts) override {}
   int64_t GetTotalReceivedBytes() const override;
+  void Tag(const SocketTag& tag) override {}
 
   // SSLClientSocket implementation.
   void GetSSLCertRequestInfo(SSLCertRequestInfo* cert_request_info) override;
@@ -790,6 +792,7 @@ class MockUDPClientSocket : public DatagramClientSocket, public AsyncSocket {
                           const IPEndPoint& address) override;
   int ConnectUsingDefaultNetwork(const IPEndPoint& address) override;
   NetworkChangeNotifier::NetworkHandle GetBoundNetwork() const override;
+  void Tag(const SocketTag& tag) override;
 
   // AsyncSocket implementation.
   void OnReadComplete(const MockRead& data) override;
@@ -1051,6 +1054,12 @@ int64_t CountReadBytes(const MockRead reads[], size_t reads_size);
 
 // Helper function to get the total data size of the MockWrites in |writes|.
 int64_t CountWriteBytes(const MockWrite writes[], size_t writes_size);
+
+#if defined(OS_ANDROID)
+// Query the system to find out how many bytes were received with tag
+// |expected_tag| for our UID.  Return the count of recieved bytes.
+uint64_t GetTaggedBytes(int32_t expected_tag);
+#endif
 
 }  // namespace net
 
