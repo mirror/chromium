@@ -4,6 +4,8 @@
 
 #include "components/ukm/ukm_recorder_impl.h"
 
+#include <limits>
+
 #include "base/metrics/field_trial.h"
 #include "base/metrics/field_trial_params.h"
 #include "base/metrics/histogram_macros.h"
@@ -141,6 +143,38 @@ void UkmRecorderImpl::StoreRecordingsInReport(Report* report) {
     if (!ShouldRecordInitialUrl())
       proto_source->clear_initial_url();
   }
+  for (const auto& event_and_aggregate : event_aggregations_) {
+    if (event_and_aggregate.second.metrics.empty())
+      continue;
+    const EventAggregate& event_aggregate = event_and_aggregate.second;
+    Aggregate* proto_aggregate = report->add_aggregates();
+    proto_aggregate->set_event_hash(event_and_aggregate.first);
+    proto_aggregate->set_total_count(event_aggregate.total_count);
+    proto_aggregate->set_dropped_due_to_limits(
+        event_aggregate.dropped_due_to_limits);
+    proto_aggregate->set_dropped_due_to_sampling(
+        event_aggregate.dropped_due_to_sampling);
+    for (const auto& metric_and_aggregate : event_aggregate.metrics) {
+      const MetricAggregate& aggregate = metric_and_aggregate.second;
+      Aggregate::Metric* proto_metric = proto_aggregate->add_metrics();
+      proto_metric->set_metric_hash(metric_and_aggregate.first);
+      proto_metric->set_value_sum(aggregate.value_sum);
+      proto_metric->set_value_square_sum(aggregate.value_square_sum);
+      if (aggregate.total_count != event_aggregate.total_count) {
+        proto_metric->set_total_count(aggregate.total_count);
+      }
+      if (aggregate.dropped_due_to_limits !=
+          event_aggregate.dropped_due_to_limits) {
+        proto_metric->set_dropped_due_to_limits(
+            aggregate.dropped_due_to_limits);
+      }
+      if (aggregate.dropped_due_to_sampling !=
+          event_aggregate.dropped_due_to_sampling) {
+        proto_metric->set_dropped_due_to_sampling(
+            aggregate.dropped_due_to_sampling);
+      }
+    }
+  }
 
   UMA_HISTOGRAM_COUNTS_1000("UKM.Sources.SerializedCount",
                             sources_.size() - unsent_sources.size());
@@ -174,6 +208,9 @@ bool UkmRecorderImpl::ShouldRestrictToWhitelistedSourceIds() const {
   return base::GetFieldTrialParamByFeatureAsBool(
       kUkmFeature, "RestrictToWhitelistedSourceIds", true);
 }
+
+UkmRecorderImpl::EventAggregate::EventAggregate() = default;
+UkmRecorderImpl::EventAggregate::~EventAggregate() = default;
 
 void UkmRecorderImpl::UpdateSourceURL(SourceId source_id, const GURL& url) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
@@ -214,14 +251,28 @@ void UkmRecorderImpl::AddEntry(mojom::UkmEntryPtr entry) {
     RecordDroppedEntry(DroppedDataReason::RECORDING_DISABLED);
     return;
   }
-  if (entries_.size() >= GetMaxEntries()) {
-    RecordDroppedEntry(DroppedDataReason::MAX_HIT);
-    return;
-  }
 
   if (!whitelisted_entry_hashes_.empty() &&
       !base::ContainsKey(whitelisted_entry_hashes_, entry->event_hash)) {
     RecordDroppedEntry(DroppedDataReason::NOT_WHITELISTED);
+    return;
+  }
+
+  EventAggregate& event_aggregate = event_aggregations_[entry->event_hash];
+  event_aggregate.total_count++;
+  for (const auto& metric : entry->metrics) {
+    MetricAggregate& aggregate = event_aggregate.metrics[metric->metric_hash];
+    double value = metric->value;
+    aggregate.total_count++;
+    aggregate.value_sum += value;
+    aggregate.value_square_sum += value * value;
+  }
+
+  if (entries_.size() >= GetMaxEntries()) {
+    RecordDroppedEntry(DroppedDataReason::MAX_HIT);
+    event_aggregate.dropped_due_to_limits++;
+    for (auto& metric : entry->metrics)
+      event_aggregate.metrics[metric->metric_hash].dropped_due_to_limits++;
     return;
   }
 
