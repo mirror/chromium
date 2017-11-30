@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e0511a3_edc42f9c",
+        "filename": "printing/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-30T23:45:55Z",
+      "side": 1,
+      "message": "Is this because there is no sources_assignment_filter for Fuchsia?",
+      "revId": "1012321752f99a49f486debf9b0d39d19825da37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
