@@ -26,7 +26,8 @@ class MOJO_SYSTEM_IMPL_EXPORT ScopedPlatformHandle {
 
   ScopedPlatformHandle& operator=(ScopedPlatformHandle&& other) {
     if (this != &other)
-      handle_ = other.release();
+      reset(other.release());
+
     return *this;
   }
 
