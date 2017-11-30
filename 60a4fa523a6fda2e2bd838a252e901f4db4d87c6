@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfbb9593_9126ee08",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-30T18:22:02Z",
+      "side": 1,
+      "message": "nit: \"block it from reaching the renderer\"? It currently reads to me as though we want to tell the renderer to block it.",
+      "range": {
+        "startLine": 16,
+        "startChar": 3,
+        "endLine": 16,
+        "endChar": 29
+      },
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc9e133f_5633a2a6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-30T18:22:02Z",
+      "side": 1,
+      "message": "nit: Is it worthwhile pointing out that this is not the full work and we plan on improving on that?",
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c89f8c6_e95fd486",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-30T18:22:02Z",
+      "side": 1,
+      "message": "I would suggest adding a TRACE_EVENT macro here to capture this in chrome://tracing, which will make troubleshooting this in release builds much easier.",
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "987e5395_f95775cb",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-30T18:22:02Z",
+      "side": 1,
+      "message": "nit: Is this include needed here?",
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4afc9790_6584d9a3",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-30T18:22:02Z",
+      "side": 1,
+      "message": "ResourceHandler",
+      "range": {
+        "startLine": 19,
+        "startChar": 5,
+        "endLine": 19,
+        "endChar": 21
+      },
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4abee57f_54aee4d8",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1595,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-30T18:22:02Z",
+      "side": 1,
+      "message": "This adds a ResourceHandler, not a throttle.",
+      "range": {
+        "startLine": 1595,
+        "startChar": 13,
+        "endLine": 1595,
+        "endChar": 21
+      },
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
