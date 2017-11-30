@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00254b0e_a91d5fe2",
+        "filename": "chrome/app/md_extensions_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-30T16:59:38Z",
+      "side": 1,
+      "message": "Identical strings already exist as IDS_DOWNLOAD_SEARCHRESULTSFOR, IDS_SETTINGS_SEARCH_RESULTS and IDS_MD_BOOKMARK_MANAGER_SEARCH_RESULTS, see [1].\n\nCan we re-use one of them? Or at least add a TODO to unify all those strings in a follow up.\n\n[1] https://cs.chromium.org/search/?q\u003d%22Search+results+for+%22\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "revId": "7d5dac182cbb6228dea6f3ec8d46adf3f5179811",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc2b7796_ed73dc17",
+        "filename": "chrome/browser/resources/md_extensions/item_list.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-30T16:59:38Z",
+      "side": 1,
+      "message": "Instead of having to async wait here (and call computeFilter_() a 2nd time), how about the following?\n\nthis.shownExtensionsCount_ and this.shownAppsCount_ are updated only when a dom-change fires, which is after the search has completed. So would this work?\n\n 1) add an observer like \"onShownItemsChanged_(shownExtensionsCount_, shownAppsCount_)\"\n 2) When the observer fires, if there is a non-empty filder, trigger the iron-announce event.",
+      "revId": "7d5dac182cbb6228dea6f3ec8d46adf3f5179811",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
