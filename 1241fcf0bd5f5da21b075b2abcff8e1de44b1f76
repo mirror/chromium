@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3d64c25e_1b4b4f46",
+        "filename": "third_party/WebKit/Source/modules/navigatorcontentutils/NavigatorContentUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-30T05:00:18Z",
+      "side": 1,
+      "message": "Why does whether %s appears at the end matter? Isn\u0027t it a too special case?",
+      "revId": "1241fcf0bd5f5da21b075b2abcff8e1de44b1f76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65050a3e_f0a59c30",
         "filename": "third_party/WebKit/Source/modules/navigatorcontentutils/NavigatorContentUtils.cpp",
         "patchSetId": 2
