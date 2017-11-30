@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c4297d2_76a448ae",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-11-30T10:02:04Z",
+      "side": 1,
+      "message": "nit: move \"style.UserModify() !\u003d EUserModify::kReadOnly\" next to the LayoutNGEabled() check? This one is probably the rarest condition, better to fail earlier.",
+      "revId": "548ff7f1b539922e9b9b63a2d6dd0db601aad9f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
