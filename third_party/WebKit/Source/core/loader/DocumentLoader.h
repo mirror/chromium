@@ -39,7 +39,6 @@
 #include "core/dom/WeakIdentifierMap.h"
 #include "core/frame/FrameTypes.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
-#include "core/html/parser/ParserSynchronizationPolicy.h"
 #include "core/loader/DocumentLoadTiming.h"
 #include "core/loader/FrameLoaderTypes.h"
 #include "core/loader/LinkLoader.h"
@@ -260,7 +259,6 @@ class CORE_EXPORT DocumentLoader
                           const AtomicString& mime_type,
                           const AtomicString& encoding,
                           InstallNewDocumentReason,
-                          ParserSynchronizationPolicy,
                           const KURL& overriding_url);
   void DidInstallNewDocument(Document*);
   void WillCommitNavigation();

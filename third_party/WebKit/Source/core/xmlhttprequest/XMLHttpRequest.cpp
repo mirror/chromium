@@ -1779,8 +1779,7 @@ void XMLHttpRequest::ParseDocumentChunk(const char* data, unsigned len) {
     if (!response_document_)
       return;
 
-    response_document_parser_ =
-        response_document_->ImplicitOpen(kAllowAsynchronousParsing);
+    response_document_parser_ = response_document_->ImplicitOpen();
     response_document_parser_->AddClient(this);
   }
   DCHECK(response_document_parser_);
