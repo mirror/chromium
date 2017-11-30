@@ -173,6 +173,30 @@
     },
     {
       "key": {
+        "uuid": "2c877ab8_c31fbb21",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/path/property/d-interpolation-001.svg",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-30T13:23:27Z",
+      "side": 1,
+      "message": "Hmm, it worked for me... This is what I tested:\n\n\u003csvg xmlns\u003d\"http://www.w3.org/2000/svg\" xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\"\u003e\n  \u003cscript xlink:href\u003d\"../../../external/wpt/resources/testharness.js\"/\u003e\n  \u003cscript xlink:href\u003d\"../../../external/wpt/resources/testharnessreport.js\"/\u003e\n  \u003crect width\u003d\"100\" height\u003d\"100\" fill\u003d\"blue\"/\u003e\n  \u003cscript\u003e\n    test(function() {\n      assert_true(true, \u0027anything\u0027);\n    }, \u0027foo\u0027);\n  \u003c/script\u003e\n\u003c/svg\u003e\n\n(Maybe you forgot to open the xlink NS?)",
+      "parentUuid": "f2271830_ae5cadba",
+      "range": {
+        "startLine": 13,
+        "startChar": 3,
+        "endLine": 13,
+        "endChar": 43
+      },
+      "revId": "9b1ebe27934d75017a3d520bf15d7622388c1ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33bc1080_f38b2239",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/path/property/getComputedStyle.svg",
         "patchSetId": 3
