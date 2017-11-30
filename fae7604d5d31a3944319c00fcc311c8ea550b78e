@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52687eab_5b4c51f0",
+        "filename": "content/browser/service_worker/service_worker_fetch_event_result.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-30T07:59:26Z",
+      "side": 1,
+      "message": "Use modern names with kCamelCase style and don\u0027t need to repeat the class type. kFallback and kResponse? Maybe kShouldFallback and kGotResponse are more descriptive?",
+      "revId": "fae7604d5d31a3944319c00fcc311c8ea550b78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82d745db_f9191f73",
+        "filename": "content/browser/service_worker/service_worker_fetch_event_result.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-30T07:59:26Z",
+      "side": 1,
+      "message": "I don\u0027t know that we need a new file for this. Is it only used for the callback from ServiceWorkerFetchDispatcher? Could it just be a type in service_worker_fetch_dispatcher.h?",
+      "revId": "fae7604d5d31a3944319c00fcc311c8ea550b78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
