@@ -36,6 +36,8 @@
 #include "core/loader/FrameLoader.h"
 #include "core/page/Page.h"
 #include "core/plugins/PluginView.h"
+#include "core/timing/DOMWindowPerformance.h"
+#include "core/timing/Performance.h"
 #include "platform/heap/HeapAllocator.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "public/platform/modules/fetch/fetch_api_request.mojom-shared.h"
@@ -201,6 +203,13 @@ void HTMLFrameOwnerElement::FrameOwnerPropertiesChanged() {
 
 void HTMLFrameOwnerElement::DispatchLoad() {
   DispatchScopedEvent(Event::Create(EventTypeNames::load));
+}
+
+void HTMLFrameOwnerElement::AddResourceTiming(const ResourceTimingInfo& info) {
+  // Resource timing info should only be reported if the subframe is attached.
+  DCHECK(ContentFrame());
+  DOMWindowPerformance::performance(*GetDocument().domWindow())
+      ->GenerateAndAddResourceTiming(info);
 }
 
 const ParsedFeaturePolicy& HTMLFrameOwnerElement::ContainerPolicy() const {

@@ -97,6 +97,7 @@ class CORE_EXPORT HTMLFrameOwnerElement : public HTMLElement,
   void SetContentFrame(Frame&) final;
   void ClearContentFrame() final;
   void DispatchLoad() final;
+  void AddResourceTiming(const ResourceTimingInfo&) final;
   SandboxFlags GetSandboxFlags() const final { return sandbox_flags_; }
   bool CanRenderFallbackContent() const override { return false; }
   void RenderFallbackContent() override {}
