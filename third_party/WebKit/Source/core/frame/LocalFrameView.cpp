@@ -3714,6 +3714,34 @@ IntPoint LocalFrameView::ConvertSelfToChild(const EmbeddedContentView& child,
   return new_point;
 }
 
+IntRect LocalFrameView::AbsoluteToRootFrame(
+    const IntRect& absolute_rect) const {
+  IntRect rect_in_frame(absolute_rect);
+  // With RLS turned on, this will be a no-op.
+  rect_in_frame.Move(-ScrollOffsetInt());
+  return ConvertToRootFrame(rect_in_frame);
+}
+
+IntRect LocalFrameView::RootFrameToDocument(const IntRect& rect_in_root_frame) {
+  IntSize offset =
+      FlooredIntSize(RootFrameToDocument(rect_in_root_frame.Location()));
+  IntRect local_rect = rect_in_root_frame;
+  local_rect.Move(offset);
+  return local_rect;
+}
+
+FloatPoint LocalFrameView::RootFrameToDocument(
+    const FloatPoint& point_in_root_frame) {
+  FloatPoint local_frame = ConvertFromRootFrame(point_in_root_frame);
+  return local_frame + LayoutViewportScrollableArea()->GetScrollOffset();
+}
+
+DoublePoint LocalFrameView::DocumentToAbsolute(
+    const DoublePoint& point_in_document) const {
+  return point_in_document -
+         GetLayoutViewItem().GetScrollableArea()->GetScrollOffset();
+}
+
 IntRect LocalFrameView::ConvertToContainingEmbeddedContentView(
     const IntRect& local_rect) const {
   if (LocalFrameView* parent = ParentFrameView()) {
