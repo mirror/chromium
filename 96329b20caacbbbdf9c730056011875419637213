@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06fab4c5_086bc6d5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/application_test_runner/ResourcesTestRunner.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-30T17:48:35Z",
+      "side": 1,
+      "message": "Let\u0027s change the protocol!",
+      "revId": "96329b20caacbbbdf9c730056011875419637213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
