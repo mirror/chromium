@@ -13,6 +13,7 @@
 #include "ash/public/interfaces/accessibility_controller.mojom.h"
 #include "ash/session/session_observer.h"
 #include "base/macros.h"
+#include "base/time/time.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
 class PrefChangeRegistrar;
@@ -56,6 +57,14 @@ class ASH_EXPORT AccessibilityController
 
   // Triggers an accessibility alert to give the user feedback.
   void TriggerAccessibilityAlert(mojom::AccessibilityAlert alert);
+
+  // Plays an earcon. Earcons are brief and distinctive sounds that indicate
+  // that their mapped event has occurred. The |sound_key| enums can be found in
+  // chromeos/audio/chromeos_sounds.h.
+  void PlayEarcon(int32_t sound_key);
+
+  // Initiates play of shutdown sound.
+  void PlayShutdownSound(base::OnceCallback<void(base::TimeDelta)> callback);
 
   // mojom::AccessibilityController:
   void SetClient(mojom::AccessibilityControllerClientPtr client) override;
