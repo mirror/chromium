@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0da4749_5d73c81f",
+        "filename": "third_party/robolectric/README.chromium",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-30T20:39:40Z",
+      "side": 1,
+      "message": "Nit: Should we also mention that you need to update this file?\n\n  local/robolectric/src/main/resources/robolectric-version.properties",
+      "revId": "a114ef8a7b13da157f45064516ca874284bd0cd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
