@@ -16,6 +16,24 @@
       "revId": "1579eb807c3ffb7b99f424b1c92d4fcde8072b4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e99ebc7_46434a43",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1789,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-30T16:27:38Z",
+      "side": 1,
+      "message": "OIC! Thanks, done.",
+      "parentUuid": "ef1fcb49_a9ca3200",
+      "revId": "1579eb807c3ffb7b99f424b1c92d4fcde8072b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
