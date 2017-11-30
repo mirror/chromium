@@ -56,6 +56,7 @@ const UkmMetricMap kBasicMetricValues({
     {TabManager_TabMetrics::kMouseEventCountName, 0},
     {TabManager_TabMetrics::kSiteEngagementScoreName, 0},
     {TabManager_TabMetrics::kTouchEventCountName, 0},
+    {TabManager_TabMetrics::kWasRecentlyAudibleName, 0},
 });
 
 // Helper class to respond to WebContents lifecycle events we can't
@@ -303,6 +304,9 @@ TEST_F(TabActivityWatcherTest, TabMetrics) {
   SiteEngagementService::Get(profile())->ResetBaseScoreForURL(kTestUrls[1], 45);
   expected_metrics[TabManager_TabMetrics::kSiteEngagementScoreName] = 40;
 
+  WebContentsTester::For(test_contents_2)->SetWasRecentlyAudible(true);
+  expected_metrics[TabManager_TabMetrics::kWasRecentlyAudibleName] = 1;
+
   // Pin the background tab to log an event. (This moves it to index 0.)
   tab_strip_model->SetTabPinned(1, true);
   expected_metrics[TabManager_TabMetrics::kIsPinnedName] = 1;
@@ -315,6 +319,9 @@ TEST_F(TabActivityWatcherTest, TabMetrics) {
   // Site engagement score for the new domain is 0.
   WebContentsTester::For(test_contents_2)->NavigateAndCommit(kTestUrls[2]);
   WebContentsTester::For(test_contents_2)->TestSetIsLoading(false);
+
+  WebContentsTester::For(test_contents_2)->SetWasRecentlyAudible(false);
+  expected_metrics[TabManager_TabMetrics::kWasRecentlyAudibleName] = 0;
   expected_metrics[TabManager_TabMetrics::kSiteEngagementScoreName] = 0;
   {
     SCOPED_TRACE("");
