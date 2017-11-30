@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6aad511b_1b4ccec8",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceServerTiming.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-30T02:55:17Z",
+      "side": 1,
+      "message": "I purposely use WebVector here, because it\u0027s a bit easier to plumb.\n\nWe could use Vector as well, but then I need to do some explicit conversions...",
+      "revId": "27e55c783c3628c0264213980f7bcf22d9514ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

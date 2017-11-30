@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c291fb8_e3f903c0",
+        "filename": "third_party/WebKit/Source/core/frame/Frame.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-30T02:55:17Z",
+      "side": 0,
+      "message": "Originally, I was planning on plumbing this directly through the parent frame. However, there is a potential race condition there: if we pass it directly to the parent, it is possible that the parent will have navigated somewhere else before we report the timing information. This would leak information about an iframe load on a previous Document. To fix this, I moved this plumbing to FrameOwner: we report the timing information through *this* frame\u0027s RenderFrameProxy. That way, if the parent Document navigates, the RenderFrameProxy will be destroyed, and the resource timing will be ignored.",
+      "revId": "7701e5df73e1d9b3ad873497c47ddaeece7679e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75221856_77b0c74e",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceServerTiming.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-30T02:55:17Z",
+      "side": 0,
+      "message": "I got rid of the typedef, because I think it makes the code easier to understand when you can see if you have vectors of the C++ DOM object or vectors of just the data.",
+      "revId": "7701e5df73e1d9b3ad873497c47ddaeece7679e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e66a428_89c49db8",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceServerTiming.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-30T02:55:17Z",
+      "side": 0,
+      "message": "This isn\u0027t needed anymore, because we simply don\u0027t set the fields if we shouldn\u0027t expose the information.\n\nWe don\u0027t do a similar thing for PerformanceResourceTiming in this CL because it\u0027s a lot more complicated... (though I\u0027m hoping to do this in a followup)",
+      "revId": "7701e5df73e1d9b3ad873497c47ddaeece7679e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
