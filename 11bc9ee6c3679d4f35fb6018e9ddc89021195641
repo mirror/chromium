@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de0fa413_5952aa29",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1212,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-30T23:38:47Z",
+      "side": 1,
+      "message": "IIUC WillAddClient() is placed after SetResource(),\n- To check GetResource() outside SetResource(Fetch()), and\n- As raw resources will be notified asynchronously, reordering WillAddClient() after AddClient() is safe.\nright?",
+      "revId": "11bc9ee6c3679d4f35fb6018e9ddc89021195641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
