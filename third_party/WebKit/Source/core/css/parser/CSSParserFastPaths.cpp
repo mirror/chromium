@@ -196,7 +196,8 @@ static inline bool IsColorPropertyID(CSSPropertyID property_id) {
 template <typename CharacterType>
 static int CheckForValidDouble(const CharacterType* string,
                                const CharacterType* end,
-                               const char terminator) {
+                               const char terminator,
+                               const bool should_whitespace_terminate) {
   int length = end - string;
   if (length < 1)
     return 0;
@@ -205,7 +206,8 @@ static int CheckForValidDouble(const CharacterType* string,
   int processed_length = 0;
 
   for (int i = 0; i < length; ++i) {
-    if (string[i] == terminator) {
+    if (string[i] == terminator || (should_whitespace_terminate &&
+                                    IsHTMLSpace<CharacterType>(string[i]))) {
       processed_length = i;
       break;
     }
@@ -229,8 +231,10 @@ template <typename CharacterType>
 static int ParseDouble(const CharacterType* string,
                        const CharacterType* end,
                        const char terminator,
+                       const bool should_whitespace_terminate,
                        double& value) {
-  int length = CheckForValidDouble(string, end, terminator);
+  int length =
+      CheckForValidDouble(string, end, terminator, should_whitespace_terminate);
   if (!length)
     return 0;
 
@@ -267,6 +271,7 @@ template <typename CharacterType>
 static bool ParseColorIntOrPercentage(const CharacterType*& string,
                                       const CharacterType* end,
                                       const char terminator,
+                                      bool should_whitespace_terminate,
                                       CSSPrimitiveValue::UnitType& expect,
                                       int& value) {
   const CharacterType* current = string;
@@ -303,7 +308,8 @@ static bool ParseColorIntOrPercentage(const CharacterType*& string,
     // We already parsed the integral part, try to parse
     // the fraction part of the percentage value.
     double percentage = 0;
-    int num_characters_parsed = ParseDouble(current, end, '%', percentage);
+    int num_characters_parsed =
+        ParseDouble(current, end, '%', false, percentage);
     if (!num_characters_parsed)
       return false;
     current += num_characters_parsed;
@@ -328,8 +334,16 @@ static bool ParseColorIntOrPercentage(const CharacterType*& string,
 
   while (current != end && IsHTMLSpace<CharacterType>(*current))
     current++;
-  if (current == end || *current++ != terminator)
-    return false;
+
+  if (current == end || *current != terminator) {
+    if (!should_whitespace_terminate ||
+        !IsHTMLSpace<CharacterType>(*(current - 1)))
+      return false;
+  } else {
+    should_whitespace_terminate = false;
+    current++;
+  }
+
   // Clamp negative values at zero.
   value = negative ? 0 : static_cast<int>(local_value);
   string = current;
@@ -375,7 +389,7 @@ static inline bool ParseAlphaValue(const CharacterType*& string,
     return false;
 
   if (string[0] != '0' && string[0] != '1' && string[0] != '.') {
-    if (CheckForValidDouble(string, end, terminator)) {
+    if (CheckForValidDouble(string, end, terminator, false)) {
       value = negative ? 0 : 255;
       string = end;
       return true;
@@ -400,7 +414,7 @@ static inline bool ParseAlphaValue(const CharacterType*& string,
   }
 
   double alpha = 0;
-  if (!ParseDouble(string, end, terminator, alpha))
+  if (!ParseDouble(string, end, terminator, false, alpha))
     return false;
   value =
       negative ? 0 : static_cast<int>(roundf(std::min(alpha, 1.0) * 255.0f));
@@ -409,26 +423,16 @@ static inline bool ParseAlphaValue(const CharacterType*& string,
 }
 
 template <typename CharacterType>
-static inline bool MightBeRGBA(const CharacterType* characters,
-                               unsigned length) {
-  if (length < 5)
-    return false;
-  return characters[4] == '(' &&
-         IsASCIIAlphaCaselessEqual(characters[0], 'r') &&
-         IsASCIIAlphaCaselessEqual(characters[1], 'g') &&
-         IsASCIIAlphaCaselessEqual(characters[2], 'b') &&
-         IsASCIIAlphaCaselessEqual(characters[3], 'a');
-}
-
-template <typename CharacterType>
-static inline bool MightBeRGB(const CharacterType* characters,
-                              unsigned length) {
+static inline bool MightBeRGBOrRGBA(const CharacterType* characters,
+                                    unsigned length) {
   if (length < 4)
     return false;
-  return characters[3] == '(' &&
-         IsASCIIAlphaCaselessEqual(characters[0], 'r') &&
+  return IsASCIIAlphaCaselessEqual(characters[0], 'r') &&
          IsASCIIAlphaCaselessEqual(characters[1], 'g') &&
-         IsASCIIAlphaCaselessEqual(characters[2], 'b');
+         IsASCIIAlphaCaselessEqual(characters[2], 'b') &&
+         (characters[3] == '(' ||
+          (IsASCIIAlphaCaselessEqual(characters[3], 'a') &&
+           characters[4] == '('));
 }
 
 template <typename CharacterType>
@@ -446,45 +450,47 @@ static bool FastParseColorInternal(RGBA32& rgb,
       return true;
   }
 
-  // Try rgba() syntax.
-  if (MightBeRGBA(characters, length)) {
-    const CharacterType* current = characters + 5;
+  // rgb() and rgba() have the same syntax
+  if (MightBeRGBOrRGBA(characters, length)) {
+    int length_to_add = (characters[3] == 'a') ? 5 : 4;
+    const CharacterType* current = characters + length_to_add;
     const CharacterType* end = characters + length;
     int red;
     int green;
     int blue;
     int alpha;
+    bool should_have_alpha = false;
+    bool should_whitespace_terminate = true;
 
-    if (!ParseColorIntOrPercentage(current, end, ',', expect, red))
+    if (!ParseColorIntOrPercentage(current, end, ',',
+                                   should_whitespace_terminate, expect, red))
       return false;
-    if (!ParseColorIntOrPercentage(current, end, ',', expect, green))
+    if (!ParseColorIntOrPercentage(current, end, ',',
+                                   should_whitespace_terminate, expect, green))
       return false;
-    if (!ParseColorIntOrPercentage(current, end, ',', expect, blue))
-      return false;
-    if (!ParseAlphaValue(current, end, ')', alpha))
-      return false;
-    if (current != end)
-      return false;
-    rgb = MakeRGBA(red, green, blue, alpha);
-    return true;
-  }
+    if (!ParseColorIntOrPercentage(current, end, ',', false, expect, blue)) {
+      // Might have slash as separator
+      if (ParseColorIntOrPercentage(current, end, '/', false, expect, blue))
+        should_have_alpha = true;
+      // Might not have alpha
+      else if (!ParseColorIntOrPercentage(current, end, ')', false, expect,
+                                          blue))
+        return false;
+    } else {
+      should_have_alpha = true;
+    }
 
-  // Try rgb() syntax.
-  if (MightBeRGB(characters, length)) {
-    const CharacterType* current = characters + 4;
-    const CharacterType* end = characters + length;
-    int red;
-    int green;
-    int blue;
-    if (!ParseColorIntOrPercentage(current, end, ',', expect, red))
-      return false;
-    if (!ParseColorIntOrPercentage(current, end, ',', expect, green))
-      return false;
-    if (!ParseColorIntOrPercentage(current, end, ')', expect, blue))
-      return false;
-    if (current != end)
-      return false;
-    rgb = MakeRGB(red, green, blue);
+    if (should_have_alpha) {
+      if (!ParseAlphaValue(current, end, ')', alpha))
+        return false;
+      if (current != end)
+        return false;
+      rgb = MakeRGBA(red, green, blue, alpha);
+    } else {
+      if (current != end)
+        return false;
+      rgb = MakeRGB(red, green, blue);
+    }
     return true;
   }
 

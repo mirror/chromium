@@ -549,9 +549,7 @@ static int ClampRGBComponent(const CSSPrimitiveValue& value) {
   return clampTo<int>(result, 0, 255);
 }
 
-static bool ParseRGBParameters(CSSParserTokenRange& range,
-                               RGBA32& result,
-                               bool parse_alpha) {
+static bool ParseRGBParameters(CSSParserTokenRange& range, RGBA32& result) {
   DCHECK(range.Peek().FunctionId() == CSSValueRgb ||
          range.Peek().FunctionId() == CSSValueRgba);
   CSSParserTokenRange args = ConsumeFunction(range);
@@ -563,8 +561,11 @@ static bool ParseRGBParameters(CSSParserTokenRange& range,
   const bool is_percent = color_parameter->IsPercentage();
   int color_array[3];
   color_array[0] = ClampRGBComponent(*color_parameter);
+  bool requires_commas = false;
   for (int i = 1; i < 3; i++) {
-    if (!ConsumeCommaIncludingWhitespace(args))
+    if (ConsumeCommaIncludingWhitespace(args))
+      requires_commas = true;
+    else if (requires_commas)
       return false;
     color_parameter = is_percent ? ConsumePercent(args, kValueRangeAll)
                                  : ConsumeInteger(args);
@@ -572,12 +573,14 @@ static bool ParseRGBParameters(CSSParserTokenRange& range,
       return false;
     color_array[i] = ClampRGBComponent(*color_parameter);
   }
-  if (parse_alpha) {
-    if (!ConsumeCommaIncludingWhitespace(args))
-      return false;
+  if (ConsumeCommaIncludingWhitespace(args) ||
+      ConsumeSlashIncludingWhitespace(args)) {
     double alpha;
-    if (!ConsumeNumberRaw(args, alpha))
-      return false;
+    if (!ConsumeNumberRaw(args, alpha)) {
+      alpha = ConsumePercent(args, kValueRangeAll)->GetDoubleValue() / 100.0f;
+      if (!alpha)
+        return false;
+    }
     // W3 standard stipulates a 2.55 alpha value multiplication factor.
     int alpha_component =
         static_cast<int>(lroundf(clampTo<double>(alpha, 0.0, 1.0) * 255.0f));
@@ -664,7 +667,7 @@ static bool ParseColorFunction(CSSParserTokenRange& range, RGBA32& result) {
     return false;
   CSSParserTokenRange color_range = range;
   if ((function_id <= CSSValueRgba &&
-       !ParseRGBParameters(color_range, result, function_id == CSSValueRgba)) ||
+       !ParseRGBParameters(color_range, result)) ||
       (function_id >= CSSValueHsl &&
        !ParseHSLParameters(color_range, result, function_id == CSSValueHsla)))
     return false;
