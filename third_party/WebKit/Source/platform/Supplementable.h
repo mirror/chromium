@@ -146,7 +146,12 @@ class Supplementable : public GarbageCollectedMixin {
   WTF_MAKE_NONCOPYABLE(Supplementable);
 
  public:
+  ~Supplementable() {
+    LOG(ERROR) << "Supplementable::~Supplementable " << static_cast<void*>(this);
+  }
+
   void ProvideSupplement(const char* key, Supplement<T>* supplement) {
+    //LOG(ERROR) << "Supplementable::ProvideSupplement " << static_cast<void*>(this) << "key" << key << " supplement " << static_cast<void*>(supplement);
 #if DCHECK_IS_ON()
     DCHECK_EQ(creation_thread_id_, CurrentThread());
 #endif
@@ -173,7 +178,12 @@ class Supplementable : public GarbageCollectedMixin {
 #endif
   }
 
-  virtual void Trace(blink::Visitor* visitor) { visitor->Trace(supplements_); }
+  virtual void Trace(blink::Visitor* visitor) {
+    LOG(ERROR) << "Supplementable::Trace " << static_cast<void*>(this) << " GetHeapObjectHeader " << static_cast<void*>(GetHeapObjectHeader());
+    for (const auto& supplement : supplements_.Values())
+      LOG(ERROR) << "  supplement " << static_cast<void*>(supplement.Get());
+    visitor->Trace(supplements_);
+  }
   virtual void TraceWrappers(const ScriptWrappableVisitor* visitor) const {
     for (const auto& supplement : supplements_.Values())
       visitor->TraceWrappers(supplement);
@@ -191,6 +201,7 @@ class Supplementable : public GarbageCollectedMixin {
         creation_thread_id_(CurrentThread())
 #endif
   {
+    LOG(ERROR) << "Supplementable::Supplementable " << static_cast<void*>(this);
   }
 
 #if DCHECK_IS_ON()

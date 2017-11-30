@@ -109,18 +109,20 @@ AXObjectCacheImpl::AXObjectCacheImpl(Document& document)
                                this,
                                &AXObjectCacheImpl::NotificationPostTimerFired),
       accessibility_event_permission_(mojom::PermissionStatus::ASK),
-      permission_observer_binding_(this) {
+      permission_observer_binding_(this) {LOG(ERROR) << "AXObjectCacheImpl::AXObjectCacheImpl";
   if (document_->LoadEventFinished())
     AddPermissionStatusListener();
 }
 
 AXObjectCacheImpl::~AXObjectCacheImpl() {
+  LOG(ERROR) << "AXObjectCacheImpl::~AXObjectCacheImpl " << static_cast<void*>(this);
 #if DCHECK_IS_ON()
   DCHECK(has_been_disposed_);
 #endif
 }
 
 void AXObjectCacheImpl::Dispose() {
+  LOG(ERROR) << "AXObjectCacheImpl::Dispose " << static_cast<void*>(this);
   notification_post_timer_.Stop();
 
   for (auto& entry : objects_) {
@@ -132,6 +134,7 @@ void AXObjectCacheImpl::Dispose() {
 #if DCHECK_IS_ON()
   has_been_disposed_ = true;
 #endif
+  LOG(ERROR) << "AXObjectCacheImpl::Dispose END";
 }
 
 AXObject* AXObjectCacheImpl::Root() {
@@ -541,7 +544,7 @@ void AXObjectCacheImpl::Remove(AXID ax_id) {
   AXObject* obj = objects_.at(ax_id);
   if (!obj)
     return;
-
+  //LOG(ERROR) << "AXObjectCacheImpl::Remove " << static_cast<void*>(obj);
   obj->Detach();
   RemoveAXID(obj);
 
@@ -621,6 +624,7 @@ AXID AXObjectCacheImpl::GetOrCreateAXID(AXObject* obj) {
 
   ids_in_use_.insert(new_axid);
   obj->SetAXObjectID(new_axid);
+  //LOG(ERROR) << "AXObjectCacheImpl::GetOrCreateAXID " << static_cast<void*>(obj);
   objects_.Set(new_axid, obj);
 
   return new_axid;
@@ -1282,6 +1286,7 @@ void AXObjectCacheImpl::ContextDestroyed(ExecutionContext*) {
 }
 
 void AXObjectCacheImpl::Trace(blink::Visitor* visitor) {
+  LOG(ERROR) << "AXObjectCacheImpl::Trace " << static_cast<void*>(this);
   visitor->Trace(document_);
   visitor->Trace(accessible_node_mapping_);
   visitor->Trace(node_object_mapping_);

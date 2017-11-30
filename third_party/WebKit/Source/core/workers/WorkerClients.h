@@ -42,7 +42,7 @@ namespace blink {
 // attached to WorkerOrWorkletGlobalScope when it is created.
 // This class can be used to provide "client" implementations to workers or
 // worklets.
-class CORE_EXPORT WorkerClients final : public GarbageCollected<WorkerClients>,
+class CORE_EXPORT WorkerClients final : public GarbageCollectedFinalized<WorkerClients>,
                                         public Supplementable<WorkerClients> {
   USING_GARBAGE_COLLECTED_MIXIN(WorkerClients);
   WTF_MAKE_NONCOPYABLE(WorkerClients);

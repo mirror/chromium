@@ -2098,8 +2098,10 @@ void HashTable<Key,
   // register a weakProcessing callback which will perform weak processing if
   // needed.
   if (Traits::kWeakHandlingFlag == kNoWeakHandlingInCollections) {
+    LOG(ERROR) << "HashTable::Trace Allocator::MarkNoTracing " << static_cast<void*>(this) << " table_ " << static_cast<void*>(table_);
     Allocator::MarkNoTracing(visitor, table_);
   } else {
+    LOG(ERROR) << "HashTable::Trace RegisterDelayedMarkNoTracing " << static_cast<void*>(this) << " table_ " << static_cast<void*>(table_);
     Allocator::RegisterDelayedMarkNoTracing(visitor, table_);
     // Since we're delaying marking this HashTable, it is possible that the
     // registerWeakMembers is called multiple times (in rare
@@ -2124,6 +2126,10 @@ void HashTable<Key,
     // http://dl.acm.org/citation.cfm?doid=263698.263733 - see also
     // http://www.jucs.org/jucs_14_21/eliminating_cycles_in_weak
 #if DCHECK_IS_ON()
+    if (!(!Enqueued() || Allocator::WeakTableRegistered(visitor, this))) {
+      LOG(ERROR) << !Enqueued();
+      LOG(ERROR) << Allocator::WeakTableRegistered(visitor, this);
+    }
     DCHECK(!Enqueued() || Allocator::WeakTableRegistered(visitor, this));
 #endif
     if (!Enqueued()) {
@@ -2146,9 +2152,11 @@ void HashTable<Key,
   }
   for (ValueType* element = table_ + table_size_ - 1; element >= table_;
        element--) {
-    if (!IsEmptyOrDeletedBucket(*element))
+    if (!IsEmptyOrDeletedBucket(*element)) {
+      LOG(ERROR) << "HashTable::Trace trace element " << static_cast<void*>(element);
       Allocator::template Trace<VisitorDispatcher, ValueType, Traits>(visitor,
                                                                       *element);
+    }
   }
 }
 
