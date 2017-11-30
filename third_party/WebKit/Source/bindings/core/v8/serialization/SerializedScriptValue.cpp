@@ -606,6 +606,31 @@ void SerializedScriptValue::RegisterMemoryAllocatedWithCurrentScriptContext() {
   }
 }
 
+// static
+bool SerializedScriptValue::Bundle::PredicateIsTrue(
+    v8::ValueSerializer::VersionPredicate predicate,
+    uint32_t bundle_type,
+    const Vector<uint8_t>& bundle_version) {
+  v8::MemorySpan<const uint8_t> v8_version =
+      v8::ValueSerializer::BundleVersion(bundle_type);
+
+  bool version_equals =
+      bundle_version.size() == v8_version.size() &&
+      std::equal(v8_version.data(), v8_version.data() + v8_version.size(),
+                 bundle_version.data());
+  switch (predicate) {
+    case v8::ValueSerializer::VersionPredicate::kAlways:
+      return true;
+    case v8::ValueSerializer::VersionPredicate::kIfVersionEquals:
+      return version_equals;
+    case v8::ValueSerializer::VersionPredicate::kIfVersionDoesNotEqual:
+      return !version_equals;
+  }
+
+  NOTREACHED();
+  return true;
+}
+
 // This ensures that the version number published in
 // WebSerializedScriptValueVersion.h matches the serializer's understanding.
 // TODO(jbroman): Fix this to also account for the V8-side version. See
