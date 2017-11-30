@@ -16,6 +16,24 @@
       "revId": "134cd4ad7ed8ba59600d15b4dea0f497c022590c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8795f91a_b74b00de",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/SecondTapMlOverride.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-30T20:35:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e440d3f_9d84be83",
+      "revId": "134cd4ad7ed8ba59600d15b4dea0f497c022590c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
