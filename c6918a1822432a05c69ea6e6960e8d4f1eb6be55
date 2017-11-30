@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a7a8d806_be7cdd8b",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-30T00:41:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ed12b37_eaed3c1a",
+      "revId": "c6918a1822432a05c69ea6e6960e8d4f1eb6be55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1864cb34_b8adc87e",
         "filename": "testing/scripts/upload_test_result_artifacts.py",
         "patchSetId": 13
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-29T15:34:33Z",
       "side": 1,
       "message": "It\u0027d be good to add additional context to this, perhaps as it works its way back through the recursive call stack. Otherwise, you could wind up with\n\n  \"expected PASS to be a dict\"\n\nwith no other context.",
+      "revId": "c6918a1822432a05c69ea6e6960e8d4f1eb6be55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adfa1c35_4d8b3397",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-30T00:41:21Z",
+      "side": 1,
+      "message": "I don\u0027t want to figure out the logic necessary to pass in context, and I\u0027m hopeful that this function realistically won\u0027t break that much.\n\nI\u0027ve added a comment saying that if you get an error here, file a bug and cc me and I\u0027ll take a look at it.",
+      "parentUuid": "1864cb34_b8adc87e",
       "revId": "c6918a1822432a05c69ea6e6960e8d4f1eb6be55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -89,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "ea3137b7_c835de20",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-30T00:41:21Z",
+      "side": 1,
+      "message": "Switched to google_storage_helper",
+      "parentUuid": "cd26a780_cedf22b0",
+      "revId": "c6918a1822432a05c69ea6e6960e8d4f1eb6be55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29ef05ae_aadc9691",
         "filename": "testing/scripts/upload_test_result_artifacts.py",
         "patchSetId": 13
@@ -106,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "632956d5_f1516787",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-30T00:41:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29ef05ae_aadc9691",
+      "revId": "c6918a1822432a05c69ea6e6960e8d4f1eb6be55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbcd9041_e48fee1b",
         "filename": "testing/scripts/upload_test_result_artifacts.py",
         "patchSetId": 13
@@ -117,6 +189,24 @@
       "writtenOn": "2017-11-29T15:34:33Z",
       "side": 1,
       "message": "Consider using https://codesearch.chromium.org/chromium/src/third_party/catapult/common/py_utils/py_utils/tempfile_ext.py?rcl\u003dcbba42a8e6eb4e5f35b02a1e1611e515e7f5013f\u0026l\u003d12 ?",
+      "revId": "c6918a1822432a05c69ea6e6960e8d4f1eb6be55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c42c57ff_d2826089",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-30T00:41:21Z",
+      "side": 1,
+      "message": "I don\u0027t like having to modify the system path to import that. If you really want me to I can, just a preference on my part.",
+      "parentUuid": "cbcd9041_e48fee1b",
       "revId": "c6918a1822432a05c69ea6e6960e8d4f1eb6be55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -146,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "7316947a_b8afcef6",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-30T00:41:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de307ebc_c06c8ef8",
+      "range": {
+        "startLine": 135,
+        "startChar": 49,
+        "endLine": 135,
+        "endChar": 73
+      },
+      "revId": "c6918a1822432a05c69ea6e6960e8d4f1eb6be55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fe7bd45_20ec3bef",
         "filename": "testing/scripts/upload_test_result_artifacts.py",
         "patchSetId": 13
@@ -160,6 +274,24 @@
       "revId": "c6918a1822432a05c69ea6e6960e8d4f1eb6be55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0feeda9e_cec7bad7",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-30T00:41:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fe7bd45_20ec3bef",
+      "revId": "c6918a1822432a05c69ea6e6960e8d4f1eb6be55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +312,24 @@
     },
     {
       "key": {
+        "uuid": "c0237f8f_682df276",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-30T00:41:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2561ea1_9d2f250f",
+      "revId": "c6918a1822432a05c69ea6e6960e8d4f1eb6be55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2a26841_c7dec3bb",
         "filename": "testing/scripts/upload_test_result_artifacts.py",
         "patchSetId": 13
@@ -194,6 +344,24 @@
       "revId": "c6918a1822432a05c69ea6e6960e8d4f1eb6be55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ef94560_a0d1d45d",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-30T00:41:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2a26841_c7dec3bb",
+      "revId": "c6918a1822432a05c69ea6e6960e8d4f1eb6be55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -214,6 +382,24 @@
     },
     {
       "key": {
+        "uuid": "52f1e5ff_f7de1a78",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-30T00:41:21Z",
+      "side": 1,
+      "message": "Changed to return 1.",
+      "parentUuid": "d219e13d_3e435f57",
+      "revId": "c6918a1822432a05c69ea6e6960e8d4f1eb6be55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c297721d_5539775e",
         "filename": "testing/scripts/upload_test_result_artifacts.py",
         "patchSetId": 13
@@ -228,6 +414,24 @@
       "revId": "c6918a1822432a05c69ea6e6960e8d4f1eb6be55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56b1cab5_9878f228",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-30T00:41:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c297721d_5539775e",
+      "revId": "c6918a1822432a05c69ea6e6960e8d4f1eb6be55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
