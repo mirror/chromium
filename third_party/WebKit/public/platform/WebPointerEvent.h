@@ -29,6 +29,13 @@ class WebPointerEvent : public WebInputEvent, public WebPointerProperties {
                                         const WebTouchPoint&);
   BLINK_PLATFORM_EXPORT WebPointerEvent(WebInputEvent::Type,
                                         const WebMouseEvent&);
+  // Creates a PointerCausedUaAction pointer event.
+  BLINK_PLATFORM_EXPORT WebPointerEvent(WebPointerProperties::PointerType,
+                                        double time_stamp_seconds);
+
+  // True if this pointer was processed as part of gesture detection and it may
+  // cause scrolling.
+  bool scroll_capable;
 
   // TODO(crbug.com/736014): We need a clarified definition of the scale and
   // the coordinate space on these attributes.
