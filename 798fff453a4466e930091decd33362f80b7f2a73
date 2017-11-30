@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a7473a9_b6e4f2f2",
+        "filename": "chrome/browser/signin/dice_response_handler_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-30T13:36:05Z",
+      "side": 1,
+      "message": "Update this comment.",
+      "range": {
+        "startLine": 332,
+        "startChar": 0,
+        "endLine": 332,
+        "endChar": 65
+      },
+      "revId": "798fff453a4466e930091decd33362f80b7f2a73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6916983_19d7b75a",
+        "filename": "chrome/browser/signin/dice_response_handler_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-30T13:36:05Z",
+      "side": 1,
+      "message": "Update this comment.",
+      "range": {
+        "startLine": 361,
+        "startChar": 0,
+        "endLine": 361,
+        "endChar": 65
+      },
+      "revId": "798fff453a4466e930091decd33362f80b7f2a73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5756f68b_15288de3",
+        "filename": "chrome/browser/signin/dice_response_handler_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-30T13:36:05Z",
+      "side": 1,
+      "message": "Update this comment.",
+      "range": {
+        "startLine": 391,
+        "startChar": 0,
+        "endLine": 391,
+        "endChar": 65
+      },
+      "revId": "798fff453a4466e930091decd33362f80b7f2a73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
