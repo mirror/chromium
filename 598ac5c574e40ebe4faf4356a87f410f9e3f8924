@@ -22,6 +22,30 @@
       "revId": "598ac5c574e40ebe4faf4356a87f410f9e3f8924",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99e4b361_0e057900",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation.html",
+        "patchSetId": 18
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-30T18:51:03Z",
+      "side": 1,
+      "message": "Not supported yet, see https://github.com/w3c/webcomponents/issues/624.",
+      "parentUuid": "9abb572a_d7b833ae",
+      "range": {
+        "startLine": 15,
+        "startChar": 4,
+        "endLine": 15,
+        "endChar": 27
+      },
+      "revId": "598ac5c574e40ebe4faf4356a87f410f9e3f8924",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
