@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <utility>
 
+#include "base/base64.h"
 #include "base/command_line.h"
 #include "base/run_loop.h"
 #include "base/test/scoped_feature_list.h"
@@ -23,6 +24,8 @@
 #include "content/public/browser/storage_partition.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
+#include "crypto/sha2.h"
+#include "net/cert/asn1_util.h"
 #include "net/dns/mock_host_resolver.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/url_request/url_request_context_getter.h"
@@ -32,6 +35,29 @@ namespace payments {
 namespace {
 
 static const char kDefaultScope[] = "/app1/";
+
+// Returns the Sha256 hash of the SPKI of |cert|.
+net::HashValue GetSPKIHash(net::X509Certificate* cert) {
+  std::string der_data;
+  EXPECT_TRUE(
+      net::X509Certificate::GetDEREncoded(cert->os_cert_handle(), &der_data));
+  base::StringPiece der_bytes(der_data);
+  base::StringPiece spki_bytes;
+  EXPECT_TRUE(net::asn1::ExtractSPKIFromDERCert(der_bytes, &spki_bytes));
+  net::HashValue sha256(net::HASH_VALUE_SHA256);
+  crypto::SHA256HashString(spki_bytes, sha256.data(), crypto::kSHA256Length);
+  return sha256;
+}
+
+static std::string MakeCertSPKIFingerprint(net::X509Certificate* cert) {
+  net::HashValue hash = GetSPKIHash(cert);
+  std::string hash_base64;
+  base::Base64Encode(
+      base::StringPiece(reinterpret_cast<const char*>(hash.data()),
+                        hash.size()),
+      &hash_base64);
+  return hash_base64;
+}
 
 }  // namespace
 
@@ -53,7 +79,10 @@ class ServiceWorkerPaymentAppFactoryBrowserTest : public InProcessBrowserTest {
     // HTTPS server only serves a valid cert for localhost, so this is needed to
     // load pages from the test servers with custom hostnames without an
     // interstitial.
-    command_line->AppendSwitch(switches::kIgnoreCertificateErrors);
+    std::string whitelist_flag =
+        MakeCertSPKIFingerprint(alicepay_.GetCertificate().get());
+    command_line->AppendSwitchASCII(switches::kIgnoreCertificateErrorsSPKIList,
+                                    whitelist_flag);
   }
 
   // Starts the test severs and opens a test page on alicepay.com.
