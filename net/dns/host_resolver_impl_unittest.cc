@@ -21,9 +21,11 @@
 #include "base/strings/stringprintf.h"
 #include "base/synchronization/condition_variable.h"
 #include "base/synchronization/lock.h"
+#include "base/test/simple_test_tick_clock.h"
 #include "base/test/test_timeouts.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "base/time/default_tick_clock.h"
 #include "base/time/time.h"
 #include "net/base/address_list.h"
 #include "net/base/ip_address.h"
@@ -635,6 +637,8 @@ class HostResolverImplTest : public testing::Test {
     DCHECK(resolver_.get());
     resolver_->GetHostCache()->OnNetworkChange();
   }
+
+  void SetClock(base::TickClock* clock) { HostResolverImpl::SetClock(clock); }
 
   scoped_refptr<MockHostResolverProc> proc_;
   std::unique_ptr<HostResolverImpl> resolver_;
@@ -1376,6 +1380,98 @@ TEST_F(HostResolverImplTest, AddressFamilyWithRawIPs) {
   request = CreateRequest("::1", 80,  MEDIUM, ADDRESS_FAMILY_UNSPECIFIED);
   EXPECT_THAT(request->Resolve(), IsOk());
   EXPECT_TRUE(request->HasOneAddress("::1", 80));
+}
+
+TEST_F(HostResolverImplTest, ResolveWithoutRefresher) {
+  base::SimpleTestTickClock clock;
+  SetClock(&clock);
+  proc_->AddRuleForAllFamilies("just.testing", "192.168.1.42");
+  proc_->SignalMultiple(1u);  // Need only one.
+  HostResolver::RequestInfo info(HostPortPair("just.testing", 80));
+
+  // First query will miss the cache.
+  EXPECT_EQ(ERR_DNS_CACHE_MISS,
+            CreateRequest(info, DEFAULT_PRIORITY)->ResolveFromCache());
+
+  // This time, we fetch normally.
+  EXPECT_THAT(CreateRequest(info, DEFAULT_PRIORITY)->Resolve(),
+              IsError(ERR_IO_PENDING));
+  EXPECT_THAT(requests_[1]->WaitForResult(), IsOk());
+
+  // Now we should be able to fetch from the cache.
+  EXPECT_THAT(CreateRequest(info, DEFAULT_PRIORITY)->ResolveFromCache(),
+              IsOk());
+  // Advance less than the default TTL.
+  clock.Advance(base::TimeDelta::FromSeconds(45));
+
+  // We should still be able to fetch from the cache.
+  EXPECT_THAT(CreateRequest(info, DEFAULT_PRIORITY)->ResolveFromCache(),
+              IsOk());
+
+  // Advance more than the TTL.
+  clock.Advance(base::TimeDelta::FromSeconds(30));
+
+  // Spin the event loop.
+  do {
+    proc_->SignalAll();
+    // Let other threads run.
+    base::PlatformThread::Sleep(base::TimeDelta::FromMilliseconds(1));
+    base::RunLoop().RunUntilIdle();
+  } while (proc_->HasBlockedRequests());
+
+  // Now this should be a cache miss.
+  EXPECT_EQ(ERR_DNS_CACHE_MISS,
+            CreateRequest(info, DEFAULT_PRIORITY)->ResolveFromCache());
+
+  // Cleanup after ourselves.
+  SetClock(base::DefaultTickClock::GetInstance());
+}
+
+TEST_F(HostResolverImplTest, ResolveWithRefresher) {
+  base::SimpleTestTickClock clock;
+  SetClock(&clock);
+  proc_->AddRuleForAllFamilies("just.testing", "192.168.1.42");
+  proc_->SignalMultiple(1u);  // Need only one.
+  resolver_->SetDnsRefresherEnabled(true);
+
+  HostResolver::RequestInfo info(HostPortPair("just.testing", 80));
+
+  // First query will miss the cache.
+  EXPECT_EQ(ERR_DNS_CACHE_MISS,
+            CreateRequest(info, DEFAULT_PRIORITY)->ResolveFromCache());
+
+  // This time, we fetch normally.
+  EXPECT_THAT(CreateRequest(info, DEFAULT_PRIORITY)->Resolve(),
+              IsError(ERR_IO_PENDING));
+  EXPECT_THAT(requests_[1]->WaitForResult(), IsOk());
+
+  // Now we should be able to fetch from the cache.
+  EXPECT_THAT(CreateRequest(info, DEFAULT_PRIORITY)->ResolveFromCache(),
+              IsOk());
+  // Advance less than the default TTL.
+  clock.Advance(base::TimeDelta::FromSeconds(45));
+
+  // We should still be able to fetch from the cache and this should
+  // trigger a refresh.
+  EXPECT_THAT(CreateRequest(info, DEFAULT_PRIORITY)->ResolveFromCache(),
+              IsOk());
+
+  // Advance more than the TTL
+  clock.Advance(base::TimeDelta::FromSeconds(45));
+  // Spin the event loop
+  do {
+    proc_->SignalAll();
+    // Let other threads run.
+    base::PlatformThread::Sleep(base::TimeDelta::FromMilliseconds(1));
+    base::RunLoop().RunUntilIdle();
+  } while (proc_->HasBlockedRequests());
+
+  // Now this should be a cache hit because of the refresh.
+  EXPECT_THAT(CreateRequest(info, DEFAULT_PRIORITY)->ResolveFromCache(),
+              IsOk());
+
+  // Cleanup after ourselves.
+  SetClock(base::DefaultTickClock::GetInstance());
 }
 
 TEST_F(HostResolverImplTest, ResolveFromCache) {

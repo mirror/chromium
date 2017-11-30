@@ -118,6 +118,8 @@ HostResolver::~HostResolver() {
 void HostResolver::SetDnsClientEnabled(bool enabled) {
 }
 
+void HostResolver::SetDnsRefresherEnabled(bool enabled) {}
+
 HostCache* HostResolver::GetHostCache() {
   return nullptr;
 }

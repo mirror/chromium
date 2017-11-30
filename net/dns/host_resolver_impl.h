@@ -142,6 +142,8 @@ class NET_EXPORT HostResolverImpl
                        AddressList* addresses,
                        const NetLogWithSource& source_net_log) override;
   void SetDnsClientEnabled(bool enabled) override;
+  void SetDnsRefresherEnabled(bool enabled) override;
+
   HostCache* GetHostCache() override;
   std::unique_ptr<base::Value> GetDnsConfigAsValue() const override;
 
@@ -324,6 +326,8 @@ class NET_EXPORT HostResolverImpl
     return dispatcher_->num_running_jobs();
   }
 
+  static void SetClock(base::TickClock* clock);
+
   // Cache of host resolution results.
   std::unique_ptr<HostCache> cache_;
 
@@ -367,6 +371,9 @@ class NET_EXPORT HostResolverImpl
 
   // Allow fallback to ProcTask if DnsTask fails.
   bool fallback_to_proctask_;
+
+  // Enable the asynchronous DNS refresher.
+  bool dns_refresher_enabled_;
 
   // Task runner used for DNS lookups using the system resolver. Normally a
   // TaskScheduler task runner, but can be overridden for tests.

@@ -157,6 +157,9 @@ FuzzedHostResolver::FuzzedHostResolver(const Options& options,
 
 FuzzedHostResolver::~FuzzedHostResolver() {}
 
+void FuzzedHostResolver::SetDnsRefresherEnabled(bool enabled) {
+  HostResolverImpl::SetDnsRefresherEnabled(enabled);
+}
 void FuzzedHostResolver::SetDnsClientEnabled(bool enabled) {
   if (!enabled) {
     HostResolverImpl::SetDnsClientEnabled(false);

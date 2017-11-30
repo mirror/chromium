@@ -68,6 +68,8 @@ const char kQuicHostWhitelist[] = "host_whitelist";
 const char kAsyncDnsFieldTrialName[] = "AsyncDNS";
 // Name of boolean to enable AsyncDNS experiment.
 const char kAsyncDnsEnable[] = "enable";
+// Name of boolean to enable AsyncDNS refresher
+const char kAsyncDnsRefresher[] = "refresher";
 
 // Stale DNS (StaleHostResolver) experiment dictionary name.
 const char kStaleDnsFieldTrialName[] = "StaleDNS";
@@ -201,6 +203,7 @@ void URLRequestContextConfig::ParseAndSetExperimentalOptions(
   }
 
   bool async_dns_enable = false;
+  bool async_dns_refresher = false;
   bool stale_dns_enable = false;
   bool host_resolver_rules_enable = false;
   bool disable_ipv6_on_wifi = false;
@@ -333,6 +336,9 @@ void URLRequestContextConfig::ParseAndSetExperimentalOptions(
         continue;
       }
       async_dns_args->GetBoolean(kAsyncDnsEnable, &async_dns_enable);
+      if (async_dns_enable) {
+        async_dns_args->GetBoolean(kAsyncDnsRefresher, &async_dns_refresher);
+      }
     } else if (it.key() == kStaleDnsFieldTrialName) {
       const base::DictionaryValue* stale_dns_args = nullptr;
       if (!it.value().GetAsDictionary(&stale_dns_args)) {
@@ -438,8 +444,11 @@ void URLRequestContextConfig::ParseAndSetExperimentalOptions(
     }
     if (disable_ipv6_on_wifi)
       host_resolver->SetNoIPv6OnWifi(true);
-    if (async_dns_enable)
+    if (async_dns_enable) {
       host_resolver->SetDnsClientEnabled(true);
+      if (async_dns_refresher)
+        host_resolver->SetDnsRefresherEnabled(true);
+    }
     if (host_resolver_rules_enable) {
       std::unique_ptr<net::MappedHostResolver> remapped_resolver(
           new net::MappedHostResolver(std::move(host_resolver)));
