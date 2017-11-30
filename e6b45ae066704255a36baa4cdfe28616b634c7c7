@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f356054f_79da2e6b",
+        "filename": "chrome/browser/resources/md_extensions/install_warnings_dialog.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-11-30T02:39:03Z",
+      "side": 1,
+      "message": "I\u0027m guessing that bettes@ will want something else entirely, but in the meantime how about --paper-pink-50 or --paper-red-100 instead of pink.\n\n(Pink is #FFC0CB and those look close-ish).",
+      "revId": "e6b45ae066704255a36baa4cdfe28616b634c7c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7451c4a_4f486010",
+        "filename": "chrome/browser/resources/md_extensions/install_warnings_dialog.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-11-30T02:39:03Z",
+      "side": 1,
+      "message": "blank line?",
+      "revId": "e6b45ae066704255a36baa4cdfe28616b634c7c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db81c432_9e672304",
+        "filename": "chrome/browser/resources/md_extensions/install_warnings_dialog.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-11-30T02:39:03Z",
+      "side": 1,
+      "message": "Maybe add trailing _ or make it non-private.",
+      "revId": "e6b45ae066704255a36baa4cdfe28616b634c7c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45ab0765_ace7a537",
+        "filename": "chrome/browser/resources/md_extensions/install_warnings_dialog.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-11-30T02:39:03Z",
+      "side": 1,
+      "message": "If this is relying on being within a template with a stamp, that seems worth commenting/documenting explicitly. Or maybe move this out of attached.",
+      "revId": "e6b45ae066704255a36baa4cdfe28616b634c7c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "313007bc_9e053e14",
+        "filename": "chrome/browser/resources/md_extensions/item.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-11-30T02:39:03Z",
+      "side": 1,
+      "message": "Because CSS variables are styled the same (--foo-bar), maybe state that this is a command line arg.",
+      "revId": "e6b45ae066704255a36baa4cdfe28616b634c7c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "106ee0dc_8cffaa00",
+        "filename": "chrome/browser/ui/webui/extensions/extensions_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-11-30T02:39:03Z",
+      "side": 1,
+      "message": "Is the word Settings intentional here? (it looks like a whoops).\n\nSeparately: the extensions prefix seems to be uncommon in this file. Maybe drop that (too)?",
+      "revId": "e6b45ae066704255a36baa4cdfe28616b634c7c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
