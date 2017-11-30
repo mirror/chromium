@@ -32,14 +32,15 @@ class TextTexture : public UiTexture {
 
   void SetTextWidth(float width) { SetAndDirty(&text_width_, width); }
 
-  int rendered_lines() { return rendered_lines_; }
+  gfx::SizeF GetDrawnSize() const override { return size_; }
+
+  std::vector<std::unique_ptr<gfx::RenderText>> LayOutText(
+      const gfx::Size& texture_size);
 
  private:
   gfx::Size GetPreferredTextureSize(int width) const override {
     return gfx::Size(width, width);
   }
-
-  gfx::SizeF GetDrawnSize() const override { return size_; }
 
   void Draw(SkCanvas* sk_canvas, const gfx::Size& texture_size) override;
 
@@ -51,9 +52,6 @@ class TextTexture : public UiTexture {
   TextAlignment alignment_ = kTextAlignmentCenter;
   bool multiline_ = true;
   SkColor color_ = SK_ColorBLACK;
-
-  // The number of lines generated in the last draw operation.
-  int rendered_lines_ = 0;
 
   DISALLOW_COPY_AND_ASSIGN(TextTexture);
 };
@@ -83,25 +81,30 @@ void Text::OnSetSize(gfx::SizeF size) {
   texture_->SetTextWidth(size.width());
 }
 
-int Text::NumRenderedLinesForTest() const {
-  return texture_->rendered_lines();
+std::vector<std::unique_ptr<gfx::RenderText>> Text::LayOutTextForTest(
+    const gfx::Size& texture_size) {
+  return texture_->LayOutText(texture_size);
+}
+
+gfx::SizeF Text::GetTextureSizeForTest() const {
+  return texture_->GetDrawnSize();
 }
 
 UiTexture* Text::GetTexture() const {
   return texture_.get();
 }
 
-void TextTexture::Draw(SkCanvas* sk_canvas, const gfx::Size& texture_size) {
-  cc::SkiaPaintCanvas paint_canvas(sk_canvas);
-  gfx::Canvas gfx_canvas(&paint_canvas, 1.0f);
-  gfx::Canvas* canvas = &gfx_canvas;
-
+// This method does all text preparation for the element other than drawing to
+// the texture. This allows for deeper unit testing of the Text element without
+// having to mock canvases and simulate frame rendering. The state of the
+// texture is modified here.
+std::vector<std::unique_ptr<gfx::RenderText>> TextTexture::LayOutText(
+    const gfx::Size& texture_size) {
   gfx::FontList fonts;
   float pixels_per_meter = texture_size.width() / text_width_;
   int pixel_font_height = static_cast<int>(font_height_ * pixels_per_meter);
   GetDefaultFontList(pixel_font_height, text_, &fonts);
-  gfx::Rect text_bounds(texture_size.width(),
-                        multiline_ ? 0 : texture_size.height());
+  gfx::Rect text_bounds(texture_size.width(), 0);
 
   std::vector<std::unique_ptr<gfx::RenderText>> lines =
       // TODO(vollick): if this subsumes all text, then we should probably move
@@ -110,18 +113,20 @@ void TextTexture::Draw(SkCanvas* sk_canvas, const gfx::Size& texture_size) {
           text_, fonts, color_, &text_bounds, alignment_,
           multiline_ ? kWrappingBehaviorWrap : kWrappingBehaviorNoWrap);
 
-  // Draw the text.
-  for (auto& render_text : lines)
-    render_text->Draw(canvas);
-
   // Note, there is no padding here whatsoever.
   size_ = gfx::SizeF(text_bounds.size());
 
-  rendered_lines_ = lines.size();
+  return lines;
 }
 
-UiTexture* Text::GetTextureForTest() const {
-  return texture_.get();
+void TextTexture::Draw(SkCanvas* sk_canvas, const gfx::Size& texture_size) {
+  cc::SkiaPaintCanvas paint_canvas(sk_canvas);
+  gfx::Canvas gfx_canvas(&paint_canvas, 1.0f);
+  gfx::Canvas* canvas = &gfx_canvas;
+
+  auto lines = LayOutText(texture_size);
+  for (auto& render_text : lines)
+    render_text->Draw(canvas);
 }
 
 }  // namespace vr
