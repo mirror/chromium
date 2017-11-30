@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96a0effd_2194ff48",
+        "filename": "chrome/common/extensions/docs/templates/articles/npapi.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-30T01:46:09Z",
+      "side": 1,
+      "message": "This can probably be phrased better. Ideas?",
+      "range": {
+        "startLine": 4,
+        "startChar": 178,
+        "endLine": 4,
+        "endChar": 218
+      },
+      "revId": "b3d5c2d42497eb7d590b4ac691f80a84b89b99ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
