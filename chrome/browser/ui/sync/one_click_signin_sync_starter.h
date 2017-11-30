@@ -168,6 +168,10 @@ class OneClickSigninSyncStarter : public SigninTracker::Observer,
   // in-progress auth credentials currently stored in this object.
   void CreateNewSignedInProfile();
 
+  void ShowSigninInNewProfile(Profile* new_profile);
+
+  void CopyCredentialsToNewProfileAndFinishSignin(Profile* new_profile);
+
   // Helper function that loads policy with the cached |dm_token_| and
   // |client_id|, then completes the signin process.
   void LoadPolicyWithCachedCredentials();
