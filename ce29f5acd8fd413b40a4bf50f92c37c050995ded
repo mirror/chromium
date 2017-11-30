@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3538ff2c_c7c97444",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMath.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-30T16:07:09Z",
+      "side": 1,
+      "message": "Nit: \"DCHECKs the\" -\u003e \"DCHECKS that\"",
+      "revId": "ce29f5acd8fd413b40a4bf50f92c37c050995ded",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55fab4a1_2398fd02",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMath.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-11-30T16:07:09Z",
+      "side": 1,
+      "message": "Do you know if the compiler is smart enough to elide this entire for loop because the body is (essentially) empty in a release build?\n\nMaybe we can wrap the entire for loop with #if DCHECK_IS_ON()?",
+      "revId": "ce29f5acd8fd413b40a4bf50f92c37c050995ded",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
