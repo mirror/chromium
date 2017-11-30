@@ -121,6 +121,23 @@
     },
     {
       "key": {
+        "uuid": "41abfc7e_a88bbb65",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-11-30T22:39:28Z",
+      "side": 1,
+      "message": "nit: can you assign this to a temp variable so it\u0027s more readable?",
+      "revId": "0054a4ddc0a1f5452abec80af2c931c497aaf782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e397dd53_b905dd3b",
         "filename": "chrome/browser/component_updater/cros_component_installer_unittest.cc",
         "patchSetId": 4

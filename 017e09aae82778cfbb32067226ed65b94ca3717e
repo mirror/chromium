@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c98ad1f_909e32a8",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-11-30T22:39:28Z",
+      "side": 0,
+      "message": "What should be done about components that were already installed on user\u0027s machines?\n\nAlso does this mean other user\u0027s on the machine can\u0027t use the components installed by one user?",
+      "revId": "017e09aae82778cfbb32067226ed65b94ca3717e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
