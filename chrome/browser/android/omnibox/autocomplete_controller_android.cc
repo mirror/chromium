@@ -247,14 +247,15 @@ void AutocompleteControllerAndroid::OnSuggestionSelected(
         ClipboardRecentContent::GetInstance()->GetClipboardContentAge());
   }
   OmniboxLog log(
+      current_url,
       // For zero suggest, record an empty input string instead of the
       // current URL.
       input_.from_omnibox_focus() ? base::string16() : input_.text(),
-      false, /* don't know */
+      /*just_deleted_text=*/false, /* don't know */
       input_.type(),
-      true,
+      /*is_popup_open=*/true,
       selected_index,
-      false,
+      /*is_paste_and_go=*/false,
       SessionTabHelper::IdForTab(web_contents),
       current_page_classification,
       base::TimeDelta::FromMilliseconds(elapsed_time_since_first_modified),
