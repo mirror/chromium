@@ -197,6 +197,16 @@ public abstract class ToolbarLayout extends FrameLayout implements Toolbar {
             public boolean isOfflinePage() {
                 return false;
             }
+
+            @Override
+            public int getSecurityLevel() {
+                return 0;
+            }
+
+            @Override
+            public int getSecurityIconResource() {
+                return 0;
+            }
         };
 
         // Set menu button background in case it was previously called before inflation

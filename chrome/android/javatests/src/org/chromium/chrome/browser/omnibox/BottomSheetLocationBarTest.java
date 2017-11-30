@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.omnibox;
 import android.annotation.SuppressLint;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
+import android.text.TextUtils;
 import android.widget.ImageButton;
 
 import org.junit.After;
@@ -26,6 +27,7 @@ import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.TabModelSelectorTabObserver;
+import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
 import org.chromium.chrome.test.BottomSheetTestRule;
 import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
@@ -78,12 +80,13 @@ public class BottomSheetLocationBarTest {
     }
 
     /**
-     * Test whether the color of the Location bar is correct for HTTPS scheme.
+     * Test whether the contents of the location bar are correct for HTTPS scheme.
      */
     @Test
     @SmallTest
     @SkipCommandLineParameterization
-    public void testHttpsLocationBarColor() throws Exception {
+    @CommandLineFlags.Add({"enable-features=" + ChromeFeatureList.CHROME_HOME_CLEAR_URL_ON_OPEN})
+    public void testHttpsLocationBar() throws Exception {
         final String testHttpsUrl = mTestServer.getURL(THEME_COLOR_TEST_PAGE);
 
         mBottomSheetTestRule.loadUrl(testHttpsUrl);
@@ -102,5 +105,19 @@ public class BottomSheetLocationBarTest {
                 securityButton.getId());
 
         Assert.assertTrue(locationBarLayout.shouldEmphasizeHttpsScheme());
+
+        mBottomSheetTestRule.setSheetState(BottomSheet.SHEET_STATE_HALF, false);
+
+        securityIcon = locationBarLayout.isSecurityButtonShown();
+        Assert.assertFalse("Omnibox should not have a Security icon", securityIcon);
+        Assert.assertTrue("Url bar text should be empty.",
+                TextUtils.isEmpty(locationBarLayout.mUrlBar.getText()));
+
+        mBottomSheetTestRule.setSheetState(BottomSheet.SHEET_STATE_PEEK, false);
+
+        securityIcon = locationBarLayout.isSecurityButtonShown();
+        Assert.assertTrue("Omnibox should have a Security icon", securityIcon);
+        Assert.assertFalse("Url bar text should not be empty.",
+                TextUtils.isEmpty(locationBarLayout.mUrlBar.getText()));
     }
 }
