@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f20a9efc_9105ebaa",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/longtask-timing/longtask-in-childiframe-crossorigin.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-30T15:47:10Z",
+      "side": 1,
+      "message": "It\u0027s not equivalent. Sandbox implies that the content is treated as being from a different origin, among other things. The property is set to \"allow-scripts\" because sandbox also disables scripts by default.",
+      "parentUuid": "5573d96a_a7981259",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 37
+      },
+      "revId": "f3ec0b56ca56a0a1338827f093ea69cad5ba13fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0bb61cf_eb0eb3e7",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/longtask-timing/longtask-in-sibling-iframe.html",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "f3ec0b56ca56a0a1338827f093ea69cad5ba13fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3154c788_a9328f6b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/longtask-timing/longtask-in-sibling-iframe.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-30T15:47:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0bb61cf_eb0eb3e7",
+      "range": {
+        "startLine": 12,
+        "startChar": 20,
+        "endLine": 12,
+        "endChar": 26
+      },
+      "revId": "f3ec0b56ca56a0a1338827f093ea69cad5ba13fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
