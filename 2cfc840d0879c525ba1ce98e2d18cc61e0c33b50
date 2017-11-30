@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfe05503_155da7b0",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-11-30T18:46:19Z",
+      "side": 1,
+      "message": "The intent of this flag was actually to expose drivers like this on channels other than stable. \n\nNot sure whether we *have* that information though.\n\nI could see an argument that we should *just* do milestone restrictions though.  Sean, do you have an opinion here? \n\nI\u0027d rather just nuke the flag than have a flag that means \"don\u0027t use this\".",
+      "revId": "2cfc840d0879c525ba1ce98e2d18cc61e0c33b50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eaa9e81_5f6d5607",
+        "filename": "chromeos/printing/ppd_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-11-30T18:46:19Z",
+      "side": 1,
+      "message": "Is there a reason to still expose this to the caller?  \n\nNot against it, just don\u0027t see a reason for it.",
+      "revId": "2cfc840d0879c525ba1ce98e2d18cc61e0c33b50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
