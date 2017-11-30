@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3203b75c_5717501e",
+        "filename": "chrome/browser/page_load_metrics/observers/ukm_page_load_metrics_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-30T02:28:09Z",
+      "side": 1,
+      "message": "Love it!",
+      "revId": "ed6a0552f0d8d8c2843c6018decb91ffaa859120",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08aba5c0_20996ccf",
+        "filename": "chrome/browser/page_load_metrics/observers/ukm_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-30T02:28:09Z",
+      "side": 1,
+      "message": "/* was_cached */ and same below.",
+      "range": {
+        "startLine": 317,
+        "startChar": 14,
+        "endLine": 317,
+        "endChar": 24
+      },
+      "revId": "ed6a0552f0d8d8c2843c6018decb91ffaa859120",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
