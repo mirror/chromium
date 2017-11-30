@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "91108833_8bf75814",
+        "filename": "device/vr/vr_device.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-30T21:27:37Z",
+      "side": 1,
+      "message": "Unless you are confident that no data has been emitted with the value \u00274\u0027 meaning \u0027FAKE_DEVICE\u0027, it\u0027s not appropriate to renumber this enum value.  Please see the best practices documentation here: https://chromium.googlesource.com/chromium/src/+/HEAD/tools/metrics/histograms/README.md#Enum-Histograms",
+      "range": {
+        "startLine": 20,
+        "startChar": 18,
+        "endLine": 20,
+        "endChar": 0
+      },
+      "revId": "972a6036fa34a2cd04093a5ed68abb85730c62a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c52becda_7e44bcf4",
+        "filename": "device/vr/vr_device.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-30T21:27:37Z",
+      "side": 1,
+      "message": "nit: I\u0027d suggest \"COUNT\" rather than \"MAX\", as \"max\" is typically used as an alias for the last item in an enum, whereas \"count\" is more typically used to count the number of values in the enum.",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 17
+      },
+      "revId": "972a6036fa34a2cd04093a5ed68abb85730c62a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7a2fe57_85ac5ec2",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 2
@@ -13,6 +59,24 @@
       "writtenOn": "2017-11-30T20:51:36Z",
       "side": 1,
       "message": "The order of these two doesn\u0027t match the enum.",
+      "revId": "972a6036fa34a2cd04093a5ed68abb85730c62a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3248a69b_90477923",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 43167,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-30T21:27:37Z",
+      "side": 1,
+      "message": "And as I commented on the C++ enum side, it\u0027s probably the C++ enum order that should be changed, rather than the XML.  Otherwise, the value \u00274\u0027 would have inconsistent semantics over time.",
+      "parentUuid": "c7a2fe57_85ac5ec2",
       "revId": "972a6036fa34a2cd04093a5ed68abb85730c62a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
