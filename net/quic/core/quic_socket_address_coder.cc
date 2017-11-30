@@ -17,12 +17,12 @@ const uint16_t kIPv6 = 10;
 
 }  // namespace
 
-QuicSocketAddressCoder::QuicSocketAddressCoder() {}
+QuicSocketAddressCoder::QuicSocketAddressCoder() = default;
 
 QuicSocketAddressCoder::QuicSocketAddressCoder(const QuicSocketAddress& address)
     : address_(address) {}
 
-QuicSocketAddressCoder::~QuicSocketAddressCoder() {}
+QuicSocketAddressCoder::~QuicSocketAddressCoder() = default;
 
 string QuicSocketAddressCoder::Encode() const {
   string serialized;

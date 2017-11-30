@@ -44,7 +44,7 @@ MockCryptoClientStream::MockCryptoClientStream(
   crypto_framer_.set_visitor(this);
 }
 
-MockCryptoClientStream::~MockCryptoClientStream() {}
+MockCryptoClientStream::~MockCryptoClientStream() = default;
 
 void MockCryptoClientStream::OnHandshakeMessage(
     const CryptoHandshakeMessage& message) {

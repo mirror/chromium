@@ -42,6 +42,6 @@ QuicTransmissionInfo::QuicTransmissionInfo(
 QuicTransmissionInfo::QuicTransmissionInfo(const QuicTransmissionInfo& other) =
     default;
 
-QuicTransmissionInfo::~QuicTransmissionInfo() {}
+QuicTransmissionInfo::~QuicTransmissionInfo() = default;
 
 }  // namespace net

@@ -177,7 +177,7 @@ class TestSocketPerformanceWatcher : public SocketPerformanceWatcher {
                                bool* rtt_notification_received)
       : should_notify_updated_rtt_(should_notify_updated_rtt),
         rtt_notification_received_(rtt_notification_received) {}
-  ~TestSocketPerformanceWatcher() override {}
+  ~TestSocketPerformanceWatcher() override = default;
 
   bool ShouldNotifyUpdatedRTT() const override {
     return *should_notify_updated_rtt_;
@@ -203,7 +203,7 @@ class TestSocketPerformanceWatcherFactory
       : watcher_count_(0u),
         should_notify_updated_rtt_(true),
         rtt_notification_received_(false) {}
-  ~TestSocketPerformanceWatcherFactory() override {}
+  ~TestSocketPerformanceWatcherFactory() override = default;
 
   // SocketPerformanceWatcherFactory implementation:
   std::unique_ptr<SocketPerformanceWatcher> CreateSocketPerformanceWatcher(

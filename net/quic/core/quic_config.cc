@@ -51,12 +51,12 @@ QuicErrorCode ReadUint32(const CryptoHandshakeMessage& msg,
 
 QuicConfigValue::QuicConfigValue(QuicTag tag, QuicConfigPresence presence)
     : tag_(tag), presence_(presence) {}
-QuicConfigValue::~QuicConfigValue() {}
+QuicConfigValue::~QuicConfigValue() = default;
 
 QuicNegotiableValue::QuicNegotiableValue(QuicTag tag,
                                          QuicConfigPresence presence)
     : QuicConfigValue(tag, presence), negotiated_(false) {}
-QuicNegotiableValue::~QuicNegotiableValue() {}
+QuicNegotiableValue::~QuicNegotiableValue() = default;
 
 QuicNegotiableUint32::QuicNegotiableUint32(QuicTag tag,
                                            QuicConfigPresence presence)
@@ -64,7 +64,7 @@ QuicNegotiableUint32::QuicNegotiableUint32(QuicTag tag,
       max_value_(0),
       default_value_(0),
       negotiated_value_(0) {}
-QuicNegotiableUint32::~QuicNegotiableUint32() {}
+QuicNegotiableUint32::~QuicNegotiableUint32() = default;
 
 void QuicNegotiableUint32::set(uint32_t max, uint32_t default_value) {
   DCHECK_LE(default_value, max);
@@ -119,7 +119,7 @@ QuicFixedUint32::QuicFixedUint32(QuicTag tag, QuicConfigPresence presence)
     : QuicConfigValue(tag, presence),
       has_send_value_(false),
       has_receive_value_(false) {}
-QuicFixedUint32::~QuicFixedUint32() {}
+QuicFixedUint32::~QuicFixedUint32() = default;
 
 bool QuicFixedUint32::HasSendValue() const {
   return has_send_value_;
@@ -184,7 +184,7 @@ QuicFixedUint128::QuicFixedUint128(QuicTag tag, QuicConfigPresence presence)
     : QuicConfigValue(tag, presence),
       has_send_value_(false),
       has_receive_value_(false) {}
-QuicFixedUint128::~QuicFixedUint128() {}
+QuicFixedUint128::~QuicFixedUint128() = default;
 
 bool QuicFixedUint128::HasSendValue() const {
   return has_send_value_;
@@ -254,7 +254,7 @@ QuicFixedTagVector::QuicFixedTagVector(QuicTag name,
 QuicFixedTagVector::QuicFixedTagVector(const QuicFixedTagVector& other) =
     default;
 
-QuicFixedTagVector::~QuicFixedTagVector() {}
+QuicFixedTagVector::~QuicFixedTagVector() = default;
 
 bool QuicFixedTagVector::HasSendValues() const {
   return has_send_values_;
@@ -325,7 +325,7 @@ QuicFixedSocketAddress::QuicFixedSocketAddress(QuicTag tag,
       has_send_value_(false),
       has_receive_value_(false) {}
 
-QuicFixedSocketAddress::~QuicFixedSocketAddress() {}
+QuicFixedSocketAddress::~QuicFixedSocketAddress() = default;
 
 bool QuicFixedSocketAddress::HasSendValue() const {
   return has_send_value_;
@@ -409,7 +409,7 @@ QuicConfig::QuicConfig()
 
 QuicConfig::QuicConfig(const QuicConfig& other) = default;
 
-QuicConfig::~QuicConfig() {}
+QuicConfig::~QuicConfig() = default;
 
 bool QuicConfig::SetInitialReceivedConnectionOptions(
     const QuicTagVector& tags) {

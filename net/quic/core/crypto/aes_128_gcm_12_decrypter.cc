@@ -28,7 +28,7 @@ Aes128Gcm12Decrypter::Aes128Gcm12Decrypter()
   static_assert(kNonceSize <= kMaxNonceSize, "nonce size too big");
 }
 
-Aes128Gcm12Decrypter::~Aes128Gcm12Decrypter() {}
+Aes128Gcm12Decrypter::~Aes128Gcm12Decrypter() = default;
 
 uint32_t Aes128Gcm12Decrypter::cipher_id() const {
   if (FLAGS_quic_reloadable_flag_quic_use_tls13_cipher_suites) {

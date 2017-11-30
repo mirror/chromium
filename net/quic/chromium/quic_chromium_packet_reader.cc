@@ -32,7 +32,7 @@ QuicChromiumPacketReader::QuicChromiumPacketReader(
       net_log_(net_log),
       weak_factory_(this) {}
 
-QuicChromiumPacketReader::~QuicChromiumPacketReader() {}
+QuicChromiumPacketReader::~QuicChromiumPacketReader() = default;
 
 void QuicChromiumPacketReader::StartReading() {
   for (;;) {

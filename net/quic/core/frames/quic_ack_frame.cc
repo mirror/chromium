@@ -23,7 +23,7 @@ PacketNumberQueue::const_iterator::const_iterator(const const_iterator& other) =
     default;
 PacketNumberQueue::const_iterator::const_iterator(const_iterator&& other) =
     default;
-PacketNumberQueue::const_iterator::~const_iterator() {}
+PacketNumberQueue::const_iterator::~const_iterator() = default;
 
 PacketNumberQueue::const_iterator::const_iterator(
     typename QuicIntervalSet<QuicPacketNumber>::const_iterator it)
@@ -33,7 +33,7 @@ PacketNumberQueue::const_reverse_iterator::const_reverse_iterator(
     const const_reverse_iterator& other) = default;
 PacketNumberQueue::const_reverse_iterator::const_reverse_iterator(
     const_reverse_iterator&& other) = default;
-PacketNumberQueue::const_reverse_iterator::~const_reverse_iterator() {}
+PacketNumberQueue::const_reverse_iterator::~const_reverse_iterator() = default;
 
 PacketNumberQueue::const_iterator::const_iterator(
     typename QuicDeque<Interval<QuicPacketNumber>>::const_iterator it)
@@ -62,7 +62,7 @@ QuicAckFrame::QuicAckFrame()
 
 QuicAckFrame::QuicAckFrame(const QuicAckFrame& other) = default;
 
-QuicAckFrame::~QuicAckFrame() {}
+QuicAckFrame::~QuicAckFrame() = default;
 
 std::ostream& operator<<(std::ostream& os, const QuicAckFrame& ack_frame) {
   os << "{ largest_acked: " << LargestAcked(ack_frame)
@@ -101,7 +101,7 @@ PacketNumberQueue::PacketNumberQueue()
 
 PacketNumberQueue::PacketNumberQueue(const PacketNumberQueue& other) = default;
 PacketNumberQueue::PacketNumberQueue(PacketNumberQueue&& other) = default;
-PacketNumberQueue::~PacketNumberQueue() {}
+PacketNumberQueue::~PacketNumberQueue() = default;
 
 PacketNumberQueue& PacketNumberQueue::operator=(
     const PacketNumberQueue& other) = default;

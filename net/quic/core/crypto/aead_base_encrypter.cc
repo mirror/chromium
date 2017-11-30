@@ -49,7 +49,7 @@ AeadBaseEncrypter::AeadBaseEncrypter(const EVP_AEAD* aead_alg,
   DCHECK_GE(kMaxNonceSize, nonce_size_);
 }
 
-AeadBaseEncrypter::~AeadBaseEncrypter() {}
+AeadBaseEncrypter::~AeadBaseEncrypter() = default;
 
 bool AeadBaseEncrypter::SetKey(QuicStringPiece key) {
   DCHECK_EQ(key.size(), key_size_);
