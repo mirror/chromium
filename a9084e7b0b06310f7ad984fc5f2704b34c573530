@@ -22,6 +22,30 @@
       "revId": "a9084e7b0b06310f7ad984fc5f2704b34c573530",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5b0989f_9a186d61",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 4367,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-30T18:56:17Z",
+      "side": 1,
+      "message": "Ultimately, no, it should be fine.\n\nHowever, given that we have no Xenial swarming capacity at the moment, we\u0027ll probably need to ratchet this up gradually. You can also use the \"serialize_tests\" setting (see examples elsewhere in this file) to run them one-at-a-time, rather than in parallel. That makes the cycle time longer but requires fewer builders.",
+      "parentUuid": "f71bc3ed_409014d1",
+      "range": {
+        "startLine": 4367,
+        "startChar": 5,
+        "endLine": 4367,
+        "endChar": 16
+      },
+      "revId": "a9084e7b0b06310f7ad984fc5f2704b34c573530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
