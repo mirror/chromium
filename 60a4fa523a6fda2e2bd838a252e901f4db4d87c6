@@ -110,6 +110,29 @@
     },
     {
       "key": {
+        "uuid": "dbac3b54_f7b705a2",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-30T21:52:26Z",
+      "side": 1,
+      "message": "You can also unittest this class with a MockResourceLoader above and a TestResourceLoader as the next ResourceHandler.  Tests are a little complicated, but as simple as I could manage.  I recommend setting up unit tests, even for temporary code, because it gives us a lot more flexibility it testing corner cases.",
+      "range": {
+        "startLine": 31,
+        "startChar": 39,
+        "endLine": 31,
+        "endChar": 56
+      },
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "298dfdd4_f5783e4b",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 15
