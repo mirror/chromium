@@ -22,6 +22,30 @@
       "revId": "b242ea1a743157438ff94f448fdd997d5493fc13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "135f16fc_1e03a866",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-11-30T20:29:52Z",
+      "side": 1,
+      "message": "Put them around their own if tag since the next block of strings are for context menus. Also included |not is_ios|",
+      "parentUuid": "4d532972_be156955",
+      "range": {
+        "startLine": 332,
+        "startChar": 21,
+        "endLine": 332,
+        "endChar": 39
+      },
+      "revId": "b242ea1a743157438ff94f448fdd997d5493fc13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
