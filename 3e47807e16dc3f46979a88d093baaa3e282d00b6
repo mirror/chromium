@@ -16,6 +16,24 @@
       "revId": "3e47807e16dc3f46979a88d093baaa3e282d00b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f2dfe24_b2e7114b",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/background_task_scheduler/NativeBackgroundTaskTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-30T20:09:29Z",
+      "side": 1,
+      "message": "Creating it at class loading time caused issues b/c TaskParameters creates a Bundle in its constructor, before Robolectric initializes its classloading modifications. (Under the hood, that caused a NoSuchMethodError on System.arraycopy.) I looked through robolectric\u0027s changes and android\u0027s changes but wasn\u0027t able to figure out what change may have caused this to break between 3.4.2 and 3.5.1, unfortunately.\n\nIn any event, creating it after Robolectric is initialized works without issue.",
+      "parentUuid": "f67695e1_ff6f6d21",
+      "revId": "3e47807e16dc3f46979a88d093baaa3e282d00b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
