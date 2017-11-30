@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e65fe4c7_5424592a",
+        "filename": "third_party/WebKit/Source/core/css/StyleRuleImport.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-11-30T18:32:10Z",
+      "side": 1,
+      "message": "I was keeping the ResourceOwner model of SetResource/ClearResource being protected. I have mixed feelings about changing that. I think it\u0027s good for a ResourceClient subclass to be solely responsible for its own Resource management as that makes for more predictable and encapsulated code, but it does lead to some weird layering, and there are a couple cases (notably in this patch, SVGElementProxy) where more major changes would be needed.",
+      "parentUuid": "a46be2c9_c2418cd1",
+      "range": {
+        "startLine": 84,
+        "startChar": 9,
+        "endLine": 84,
+        "endChar": 21
+      },
+      "revId": "67c5196d8bd7b16fa7aad80e23e61271941069db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19d56f59_621bc745",
         "filename": "third_party/WebKit/Source/core/html/parser/CSSPreloadScanner.h",
         "patchSetId": 5
