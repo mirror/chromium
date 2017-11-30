@@ -201,10 +201,6 @@ void RenderWidgetHostViewChildFrame::InitAsChild(gfx::NativeView parent_view) {
   NOTREACHED();
 }
 
-RenderWidgetHost* RenderWidgetHostViewChildFrame::GetRenderWidgetHost() const {
-  return host_;
-}
-
 void RenderWidgetHostViewChildFrame::SetSize(const gfx::Size& size) {
   host_->WasResized();
 }
@@ -682,6 +678,11 @@ bool RenderWidgetHostViewChildFrame::IsMouseLocked() {
     return false;
 
   return host_->delegate()->HasMouseLock(host_);
+}
+
+RenderWidgetHostImpl* RenderWidgetHostViewChildFrame::GetRenderWidgetHostImpl()
+    const {
+  return host_;
 }
 
 viz::FrameSinkId RenderWidgetHostViewChildFrame::GetFrameSinkId() {
