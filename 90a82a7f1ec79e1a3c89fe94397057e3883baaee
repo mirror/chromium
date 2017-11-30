@@ -16,6 +16,24 @@
       "revId": "90a82a7f1ec79e1a3c89fe94397057e3883baaee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "433312cf_c2d0590a",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_runner_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-30T21:10:58Z",
+      "side": 1,
+      "message": "As discussed offline, this doesn\u0027t work well with the flow in the cleaner binary. I suggest renaming the switch \"--with-scanning-mode-logs\" (and maybe adding a parallel --with-cleaning-mode-logs) since the main point of confusion for me is what \"cleanup logging\" means for \"scanning\" mode.",
+      "parentUuid": "4e91f7cb_09d4049b",
+      "revId": "90a82a7f1ec79e1a3c89fe94397057e3883baaee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
