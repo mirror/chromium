@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e91f7cb_09d4049b",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_runner_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-30T20:19:17Z",
+      "side": 1,
+      "message": "We\u0027re also passing the mode in a switch. Would it make more sense to just pass an \"enable cleanup logging\" switch that\u0027s always included in cleanup mode, and only sometimes in scanning mode?",
+      "revId": "90a82a7f1ec79e1a3c89fe94397057e3883baaee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
