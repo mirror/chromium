@@ -8,9 +8,21 @@
 #import <Foundation/Foundation.h>
 
 #include "components/grpc_support/include/bidirectional_stream_c.h"
+#import "ios/net/crn_http_protocol_handler.h"
+#include "net/http/http_network_session.h"
+
+// These are internal versions of NSURLSessionTaskTransactionMetrics and
+// NSURLSessionTaskMetrics, defined primarily so that Cronet can
+// initialize them and set their properties (the iOS classes are readonly).
+
+// The correspondences are
+//   CronetTransactionMetrics -> NSURLSessionTaskTransactionMetrics
+//   CronetMetrics -> NSURLSessionTaskMetrics
 
 FOUNDATION_EXPORT GRPC_SUPPORT_EXPORT NS_AVAILABLE_IOS(10.0)
-@interface CronetMetrics : NSURLSessionTaskTransactionMetrics
+@interface CronetTransactionMetrics : NSURLSessionTaskTransactionMetrics
+
+// All of the below redefined as readwrite.
 
 @property(copy, readwrite) NSURLRequest* request;
 @property(copy, readwrite) NSURLResponse* response;
@@ -32,6 +44,43 @@ FOUNDATION_EXPORT GRPC_SUPPORT_EXPORT NS_AVAILABLE_IOS(10.0)
 @property(assign, readwrite, getter=isReusedConnection) BOOL reusedConnection;
 @property(assign, readwrite)
     NSURLSessionTaskMetricsResourceFetchType resourceFetchType;
+
+@end
+
+NS_AVAILABLE_IOS(10.0) @interface CronetMetrics : NSURLSessionTaskMetrics
+// Redefined as readwrite.
+@property(copy, readwrite)
+    NSArray<NSURLSessionTaskTransactionMetrics*>* transactionMetrics;
+@end
+
+using Metrics = net::MetricsDelegate::Metrics;
+
+namespace cronet {
+
+// net::MetricsDelegate for Cronet.
+class CronetMetricsDelegate : public net::MetricsDelegate {
+ public:
+  CronetMetricsDelegate() {}
+  void OnStopNetRequest(std::unique_ptr<Metrics> metrics) override;
+
+  // Returns the metrics collected for a specific task (removing that task's
+  // entry from the map in the process).
+  // It is called exactly once by the swizzled delegate proxy (see below),
+  // uses it to retrieve metrics data collected by net/ and pass them on to the
+  // client.
+  // If there is no metrics data for the passed task, this returns nullptr.
+  static std::unique_ptr<Metrics> MetricsForTask(const NSURLSessionTask* task);
+
+ private:
+  static std::map<const NSURLSessionTask*, std::unique_ptr<Metrics>>
+      task_metrics_map_ NS_AVAILABLE_IOS(10.0);
+};
+
+}  // namespace
+
+@interface NSURLSession (Cronet)
+
++ (void)swizzleSessionWithConfiguration;
 
 @end
 
