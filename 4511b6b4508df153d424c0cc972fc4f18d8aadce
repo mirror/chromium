@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2a19c057_fb30853a",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 3896,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-30T19:41:42Z",
+      "side": 1,
+      "message": "Ack.",
+      "parentUuid": "232a2a0c_00a6521c",
+      "revId": "4511b6b4508df153d424c0cc972fc4f18d8aadce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "205e14f9_044ecb7a",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 14
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "I tried this, but it seems it causes layout tests to start failing (incorrect output). I\u0027ve added a TODO to investigate why this is happening, but for now let\u0027s leave this as is.",
       "parentUuid": "205e14f9_044ecb7a",
+      "revId": "4511b6b4508df153d424c0cc972fc4f18d8aadce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "333f28af_d7663176",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 3910,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-30T19:41:42Z",
+      "side": 1,
+      "message": "Ack. As discussed offline, it probably reflects a problem for OOPIF subframes.",
+      "parentUuid": "e60a4090_979844b2",
       "revId": "4511b6b4508df153d424c0cc972fc4f18d8aadce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -104,6 +140,24 @@
       "revId": "4511b6b4508df153d424c0cc972fc4f18d8aadce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3874c78b_30289ae7",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 5289,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-30T19:41:42Z",
+      "side": 1,
+      "message": "My mistake, I think I was looking at the wrong place in ScrollingCoordinator and I thought there was a behavior change.",
+      "parentUuid": "e80cf8a4_f149b5ff",
+      "revId": "4511b6b4508df153d424c0cc972fc4f18d8aadce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
