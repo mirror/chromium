@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9bd58d96_bcdcc32a",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-30T07:35:14Z",
+      "side": 1,
+      "message": "That method is declared in cronet_metrics.h (and defined in cronet_metrics.mm).\n\nAndrei suggests it would be more appropriate in this file, I think.  Do you agree?",
+      "parentUuid": "577afb8a_eebf1839",
+      "range": {
+        "startLine": 346,
+        "startChar": 5,
+        "endLine": 346,
+        "endChar": 17
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5c9b417_98aa8fc4",
         "filename": "components/cronet/ios/cronet_metrics.h",
         "patchSetId": 22
@@ -45,6 +69,30 @@
       "revId": "109036737d54af49a816bab53b235eea151a6663",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da58e685_c33b763a",
+        "filename": "components/cronet/ios/cronet_metrics.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-30T07:35:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5c9b417_98aa8fc4",
+      "range": {
+        "startLine": 56,
+        "startChar": 6,
+        "endLine": 56,
+        "endChar": 27
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4e2f7095_e7c2d83f",
+        "filename": "components/cronet/ios/cronet_metrics.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-30T07:35:14Z",
+      "side": 1,
+      "message": "Done.  It requires a change to the type of the map as well, but I don\u0027t think it\u0027s a problem.",
+      "parentUuid": "0e0f5249_ea86f38c",
+      "range": {
+        "startLine": 67,
+        "startChar": 54,
+        "endLine": 67,
+        "endChar": 70
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6bb6958_d19ce771",
         "filename": "components/cronet/ios/cronet_metrics.h",
         "patchSetId": 22
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-29T21:36:35Z",
       "side": 1,
       "message": "Do this and MetricsForTask have to be static? \nWe have a singleton MetricsDelegate anyway.",
+      "range": {
+        "startLine": 70,
+        "startChar": 9,
+        "endLine": 70,
+        "endChar": 12
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffaebd3c_98ca7eb7",
+        "filename": "components/cronet/ios/cronet_metrics.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-30T07:35:14Z",
+      "side": 1,
+      "message": "The didFinishCollectingMetrics callback in cronet_metrics.mm needs to be able to access this, and I\u0027m not sure if that function is able to get at the CronetMetricsDelegate instance.",
+      "parentUuid": "b6bb6958_d19ce771",
       "range": {
         "startLine": 70,
         "startChar": 9,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "527f733b_994551d8",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-30T07:35:14Z",
+      "side": 1,
+      "message": "This would be nice, but I did a quick test, and when using Cronet, the TransactionMetrics populated by iOS contains only nil fields.",
+      "parentUuid": "d7875099_1140b91a",
+      "range": {
+        "startLine": 92,
+        "startChar": 49,
+        "endLine": 92,
+        "endChar": 50
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "286027fd_53db42d3",
         "filename": "components/cronet/ios/cronet_metrics.mm",
         "patchSetId": 22
@@ -128,6 +248,30 @@
       "writtenOn": "2017-11-29T21:36:35Z",
       "side": 1,
       "message": "It looks like it should be set to \u0027YES\u0027 unless Cronet establishes new connection for this request, in which case it would have meaningful connect_timing info.",
+      "range": {
+        "startLine": 121,
+        "startChar": 5,
+        "endLine": 121,
+        "endChar": 24
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f24e1d9_063b90c2",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-30T07:35:14Z",
+      "side": 1,
+      "message": "I made a tentative implementation of this idea.  PTAL.",
+      "parentUuid": "286027fd_53db42d3",
       "range": {
         "startLine": 121,
         "startChar": 5,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "3fdb270e_930c6a24",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-30T07:35:14Z",
+      "side": 1,
+      "message": "I can make this be NSURLSessionTaskMetricsResourceFetchTypeLocalCache if was_cached is true; do you know how to distinguish between NetworkLoad and ServerPush?",
+      "parentUuid": "42f611b0_4b6cb7cb",
+      "range": {
+        "startLine": 122,
+        "startChar": 25,
+        "endLine": 122,
+        "endChar": 49
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c527a8f_693fce79",
         "filename": "components/cronet/ios/cronet_metrics.mm",
         "patchSetId": 22
@@ -183,6 +351,30 @@
       "revId": "109036737d54af49a816bab53b235eea151a6663",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0057dc95_856fea5a",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-30T07:35:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c527a8f_693fce79",
+      "range": {
+        "startLine": 139,
+        "startChar": 17,
+        "endLine": 139,
+        "endChar": 18
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "5c159351_1b9acbec",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-30T07:35:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf5f913d_e20fed00",
+      "range": {
+        "startLine": 156,
+        "startChar": 13,
+        "endLine": 156,
+        "endChar": 14
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8c3aaec_bcce6dff",
         "filename": "components/cronet/ios/cronet_metrics.mm",
         "patchSetId": 22
@@ -229,6 +445,30 @@
       "revId": "109036737d54af49a816bab53b235eea151a6663",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "790f205c_4f1c3898",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-30T07:35:14Z",
+      "side": 1,
+      "message": "Do comments on else blocks go after the |else| line?  I couldn\u0027t find anything in the style guide about this.",
+      "parentUuid": "c8c3aaec_bcce6dff",
+      "range": {
+        "startLine": 197,
+        "startChar": 15,
+        "endLine": 197,
+        "endChar": 16
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +541,30 @@
     },
     {
       "key": {
+        "uuid": "b77ed03c_5029eb13",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-30T07:35:14Z",
+      "side": 1,
+      "message": "The comment there says that return value is empty \"if no protocol was negotiated, the protocol is not known, or when using plain HTTP or HTTPS.\"\n\nIf the first two cases can be ruled out (can Cronet even use protocols other than HTTP/HTTP2/QUIC?), then I think it\u0027s safe to default to http/1.1; if not, I wouldn\u0027t want to touch it.\n\nIt seems worth noting, though, that the protocol string is a literal \"unknown\", not the empty string.  Is this a bug in net, or is the comment in the android code wrong?",
+      "parentUuid": "ab50df74_75acf523",
+      "range": {
+        "startLine": 167,
+        "startChar": 7,
+        "endLine": 167,
+        "endChar": 10
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d116199_684595b8",
         "filename": "components/cronet/ios/test/test_server.cc",
         "patchSetId": 22
@@ -321,6 +585,30 @@
       "revId": "109036737d54af49a816bab53b235eea151a6663",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc666291_72e5ae7d",
+        "filename": "components/cronet/ios/test/test_server.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-30T07:35:14Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s a good idea.  I changed the url itself to better conform as well.",
+      "parentUuid": "0d116199_684595b8",
+      "range": {
+        "startLine": 122,
+        "startChar": 30,
+        "endLine": 122,
+        "endChar": 41
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -347,6 +635,30 @@
     },
     {
       "key": {
+        "uuid": "9db04675_4c703edb",
+        "filename": "ios/net/crn_http_protocol_handler.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-30T07:35:14Z",
+      "side": 1,
+      "message": "Agreed.",
+      "parentUuid": "26494e98_50ca7e73",
+      "range": {
+        "startLine": 39,
+        "startChar": 7,
+        "endLine": 39,
+        "endChar": 14
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88c526df_b7bc2650",
         "filename": "ios/net/crn_http_protocol_handler.h",
         "patchSetId": 22
@@ -367,6 +679,30 @@
       "revId": "109036737d54af49a816bab53b235eea151a6663",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a13bbaee_9850dd95",
+        "filename": "ios/net/crn_http_protocol_handler.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-30T07:35:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88c526df_b7bc2650",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 18
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -393,6 +729,30 @@
     },
     {
       "key": {
+        "uuid": "a0a213f7_ea7da494",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-30T07:35:14Z",
+      "side": 1,
+      "message": "My understanding is that a constructor with NSURLSessionTask is supported on all iOS versions we care about (I think \u003e 8.0?), but Andrei knows more, I think.",
+      "parentUuid": "dc18f32a_533c052d",
+      "range": {
+        "startLine": 149,
+        "startChar": 26,
+        "endLine": 149,
+        "endChar": 42
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4706ae9f_8faefbb5",
         "filename": "ios/net/crn_http_protocol_handler.mm",
         "patchSetId": 22
@@ -416,6 +776,30 @@
     },
     {
       "key": {
+        "uuid": "160147c1_9734919b",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-30T07:35:14Z",
+      "side": 1,
+      "message": "Ah, good catch.",
+      "parentUuid": "4706ae9f_8faefbb5",
+      "range": {
+        "startLine": 740,
+        "startChar": 18,
+        "endLine": 740,
+        "endChar": 35
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98531873_fb6a6659",
         "filename": "ios/net/crn_http_protocol_handler.mm",
         "patchSetId": 22
@@ -427,6 +811,30 @@
       "writtenOn": "2017-11-29T21:36:35Z",
       "side": 1,
       "message": "Hrm, I wonder how expensive is copying of the response_info?",
+      "range": {
+        "startLine": 744,
+        "startChar": 57,
+        "endLine": 744,
+        "endChar": 70
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5258ff1_39c1c365",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-30T07:35:14Z",
+      "side": 1,
+      "message": "I don\u0027t know how much we can do about that - I don\u0027t know if we can guarantee that the metrics data won\u0027t outlive the URLRequest* pointer, and if not, we have to copy the info.",
+      "parentUuid": "98531873_fb6a6659",
       "range": {
         "startLine": 744,
         "startChar": 57,
