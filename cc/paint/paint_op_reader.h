@@ -86,7 +86,7 @@ class CC_PAINT_EXPORT PaintOpReader {
 
   // Attempts to align the memory to the given alignment. Returns false if there
   // is unsufficient bytes remaining to do this padding.
-  bool AlignMemory(size_t alignment);
+  void AlignMemory(size_t alignment);
 
   const volatile char* memory_ = nullptr;
   size_t remaining_bytes_ = 0u;

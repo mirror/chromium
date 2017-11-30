@@ -94,8 +94,6 @@ template <typename T>
 void PaintOpReader::ReadSimple(T* val) {
   static_assert(base::is_trivially_copyable<T>::value,
                 "Not trivially copyable");
-  if (!AlignMemory(alignof(T)))
-    valid_ = false;
   if (remaining_bytes_ < sizeof(T))
     valid_ = false;
   if (!valid_)
@@ -116,9 +114,7 @@ void PaintOpReader::ReadFlattenable(sk_sp<T>* val) {
   size_t bytes = 0;
   ReadSimple(&bytes);
   if (remaining_bytes_ < bytes)
-    valid_ = false;
-  if (!SkIsAlign4(reinterpret_cast<uintptr_t>(memory_)))
-    valid_ = false;
+    SetInvalid();
   if (!valid_)
     return;
   if (bytes == 0)
@@ -127,6 +123,7 @@ void PaintOpReader::ReadFlattenable(sk_sp<T>* val) {
   // This is assumed safe from TOCTOU violations as the flattenable
   // deserializing function uses an SkReadBuffer which reads each piece of
   // memory once much like PaintOpReader does.
+  DCHECK(SkIsAlign4(reinterpret_cast<uintptr_t>(memory_)));
   val->reset(static_cast<T*>(SkValidatingDeserializeFlattenable(
       const_cast<const char*>(memory_), bytes, T::GetFlattenableType())));
   if (!val)
@@ -220,8 +217,11 @@ void PaintOpReader::Read(PaintFlags* flags) {
   // Flattenables must be read at 4-byte boundary, which should be the case
   // here.
   ReadFlattenable(&flags->path_effect_);
+  AlignMemory(4);
   ReadFlattenable(&flags->mask_filter_);
+  AlignMemory(4);
   ReadFlattenable(&flags->color_filter_);
+  AlignMemory(4);
   ReadFlattenable(&flags->draw_looper_);
 
   Read(&flags->shader_);
@@ -465,7 +465,7 @@ void PaintOpReader::Read(SkMatrix* matrix) {
   FixupMatrixPostSerialization(matrix);
 }
 
-bool PaintOpReader::AlignMemory(size_t alignment) {
+void PaintOpReader::AlignMemory(size_t alignment) {
   // Due to the math below, alignment must be a power of two.
   DCHECK_GT(alignment, 0u);
   DCHECK_EQ(alignment & (alignment - 1), 0u);
@@ -476,12 +476,9 @@ bool PaintOpReader::AlignMemory(size_t alignment) {
   // because alignment is a power of two. This doesn't use modulo operator
   // however, since it can be slow.
   size_t padding = ((memory + alignment - 1) & ~(alignment - 1)) - memory;
-  if (padding > remaining_bytes_)
-    return false;
 
   memory_ += padding;
   remaining_bytes_ -= padding;
-  return true;
 }
 
 }  // namespace cc
