@@ -1,0 +1,349 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23f1bc75_1794a025",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T21:47:23Z",
+      "side": 1,
+      "message": "Does this need to be a CHECK, or can it be a DCHECK?  i.e. is it a bug in Chromium for Start to be called more-than-once, or is Start potentially triggered by external input like web content, or user input?\n\nPut another way: do we need Start() at all? Could we do this initialization work entirely in the constructor instead?",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 16
+      },
+      "revId": "eca34ae567971ea214823673a4ed80d08bf3a32c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "475b1010_8f2972ff",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T21:47:23Z",
+      "side": 1,
+      "message": "As noted for the other cases of this early-exit - is it valid for the caller to invoke ForceSinkDiscoveryCallback without having first called Start()?",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 11
+      },
+      "revId": "eca34ae567971ea214823673a4ed80d08bf3a32c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10881f1d_366edc5a",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T21:47:23Z",
+      "side": 1,
+      "message": "The GetForProcess() API just says \"must be called on the thread on which the Connection was created\".  How do we know we are calling it on the right thread?  Looks like we should have a thread-check here, at the very least?",
+      "range": {
+        "startLine": 91,
+        "startChar": 2,
+        "endLine": 91,
+        "endChar": 60
+      },
+      "revId": "eca34ae567971ea214823673a4ed80d08bf3a32c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5da49256_2894d883",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T21:47:23Z",
+      "side": 1,
+      "message": "Suggest putting this on its own line, at the end of the comment, rather than documenting it separately for each callback, so that it stands out better - harder to miss.",
+      "range": {
+        "startLine": 56,
+        "startChar": 53,
+        "endLine": 57,
+        "endChar": 39
+      },
+      "revId": "eca34ae567971ea214823673a4ed80d08bf3a32c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90a14737_4e615f52",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T21:47:23Z",
+      "side": 1,
+      "message": "This isn\u0027t virtual, so I don\u0027t think it can be overridden?",
+      "range": {
+        "startLine": 77,
+        "startChar": 2,
+        "endLine": 77,
+        "endChar": 64
+      },
+      "revId": "eca34ae567971ea214823673a4ed80d08bf3a32c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9465d2f5_ce2e3b58",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T21:47:23Z",
+      "side": 1,
+      "message": "nit: This would be cleaner if DeviceDescriptionService had a Handler interface that DialMediaSinkServiceImpl could implement, rather than using Callbacks.",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 45
+      },
+      "revId": "eca34ae567971ea214823673a4ed80d08bf3a32c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c4d7622_ae9155d6",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T21:47:23Z",
+      "side": 1,
+      "message": "nit: IIUC it is sufficient that |connector| is \"suitable to use on |task_runner|\"?",
+      "range": {
+        "startLine": 35,
+        "startChar": 17,
+        "endLine": 36,
+        "endChar": 29
+      },
+      "revId": "eca34ae567971ea214823673a4ed80d08bf3a32c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "166da809_c0103a25",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T21:47:23Z",
+      "side": 1,
+      "message": "Please add a brief comment to explain what this is used for.",
+      "range": {
+        "startLine": 97,
+        "startChar": 2,
+        "endLine": 97,
+        "endChar": 57
+      },
+      "revId": "eca34ae567971ea214823673a4ed80d08bf3a32c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29f35d83_913f8cef",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T21:47:23Z",
+      "side": 1,
+      "message": "nit: If calling Start multiple times is a bug in calling code then consider DCHECK here, instead.\n\nAlso, is there any real need for Start() to be separate from the constructor, especially since all it does is some setup?",
+      "range": {
+        "startLine": 111,
+        "startChar": 2,
+        "endLine": 111,
+        "endChar": 16
+      },
+      "revId": "eca34ae567971ea214823673a4ed80d08bf3a32c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7d22cba_70498f85",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T21:47:23Z",
+      "side": 1,
+      "message": "nit: This looks strange; it seems we\u0027re kicking off mDNS discovery, only to then immediately post a task to attempt connections - don\u0027t we need to wait for the forced discovery to have a chance to return one or more devices?",
+      "range": {
+        "startLine": 147,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 39
+      },
+      "revId": "eca34ae567971ea214823673a4ed80d08bf3a32c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9ae3a3e_be2716cd",
+        "filename": "chrome/common/media_router/discovery/media_sink_service_base.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T21:47:23Z",
+      "side": 1,
+      "message": "nit: This function should also stop() the timer - there\u0027s no point dispatching the sink discovery callback and then notifying it again a few seconds later, if nothing changed in-between.",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 57
+      },
+      "revId": "eca34ae567971ea214823673a4ed80d08bf3a32c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42afbdab_2e3eecd9",
+        "filename": "chrome/common/media_router/discovery/media_sink_service_base.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T21:47:23Z",
+      "side": 1,
+      "message": "nit: This seems to duplicate \"this class is not thread safe\" - suggest having one line or the other, but not both.",
+      "range": {
+        "startLine": 23,
+        "startChar": 3,
+        "endLine": 23,
+        "endChar": 50
+      },
+      "revId": "eca34ae567971ea214823673a4ed80d08bf3a32c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d687b365_cd9e3689",
+        "filename": "chrome/common/media_router/discovery/media_sink_service_base.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T21:47:23Z",
+      "side": 1,
+      "message": "Reading through the calling code, these APIs seem misleadingly named:\n\nThis class is just a rate-limiter (we might rename it to SinkDiscoveryRateLimiter, or similar, for example). It needs to be notified whenever the set of sinks changes, and it then takes care of only notifying the callback as often as the hard-wired interval allows.\n\nThe API here should really just be ScheduleSinkDiscoveryCallback(), instead of StartTimer/RestartTimer; as noted for the class-level comment, the caller doesn\u0027t really know or care that there is a Timer involved, they just care about whether the discovery callback gets invoked immediately, or with rate-limiting (i.e. Force vs Schedule).\n\n(It also doesn\u0027t seem necessary for it to be a base-class; that is only required for RecordDeviceCounts, which could be performed in the |callback| supplied by the SinkService implementation.)",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 22
+      },
+      "revId": "eca34ae567971ea214823673a4ed80d08bf3a32c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ae44d8c_cbcf2232",
+        "filename": "chrome/common/media_router/discovery/media_sink_service_base.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T21:47:23Z",
+      "side": 1,
+      "message": "Do we need this member? I can\u0027t see anywhere where it gets set, other than the constructor?",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 28
+      },
+      "revId": "eca34ae567971ea214823673a4ed80d08bf3a32c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1554fdd_a4bbfe2d",
+        "filename": "chrome/common/media_router/discovery/media_sink_service_base.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T21:47:23Z",
+      "side": 1,
+      "message": "nit: This phrasing is misleading; this timer is the \"batching\" timer, right?",
+      "range": {
+        "startLine": 70,
+        "startChar": 5,
+        "endLine": 70,
+        "endChar": 57
+      },
+      "revId": "eca34ae567971ea214823673a4ed80d08bf3a32c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

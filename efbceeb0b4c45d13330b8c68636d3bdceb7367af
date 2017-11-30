@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "991e3030_0754fe7a",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T21:47:23Z",
+      "side": 1,
+      "message": "The CastSocketService comments explicitly state that it must be \"called on the IO thread\", so presumably that is what callers should arrange to do?",
+      "parentUuid": "40e9825e_0f944c2c",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 3
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "73b77027_7d0e832f",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
         "patchSetId": 17
@@ -707,6 +731,30 @@
     },
     {
       "key": {
+        "uuid": "0a1d7b7d_7cd3a780",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T21:47:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1697e73a_c6663aa8",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 3
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6a35284_daa207c9",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
         "patchSetId": 17
@@ -930,6 +978,30 @@
     },
     {
       "key": {
+        "uuid": "19720d04_b03545cf",
+        "filename": "chrome/common/media_router/discovery/media_sink_service_base.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T21:47:23Z",
+      "side": 1,
+      "message": "nit: OK, but we should describe this as e.g. \"rate-limits notifications to |callback|, so that multiple updates received in quick succession will be batched\".  From the caller\u0027s point of view, there is no \"timeout\" involved in using this API.",
+      "parentUuid": "27fa10be_b1a76261",
+      "range": {
+        "startLine": 20,
+        "startChar": 9,
+        "endLine": 21,
+        "endChar": 47
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9242e24e_e9229c3b",
         "filename": "chrome/common/media_router/discovery/media_sink_service_base.h",
         "patchSetId": 17
@@ -974,6 +1046,30 @@
       "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e19799f7_739bfc29",
+        "filename": "chrome/common/media_router/discovery/media_sink_service_base.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T21:47:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "439cf638_5a6461af",
+      "range": {
+        "startLine": 48,
+        "startChar": 51,
+        "endLine": 49,
+        "endChar": 35
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

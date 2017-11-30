@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "377e80b1_167583f6",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T21:47:23Z",
+      "side": 1,
+      "message": "FWIW there are similar bind-to-sequence templates e.g. in media/, and there has been substantial push-back against making a generic equivalent in base/ because of the lack of clarity as to where a callback will actually run, as a result; we should be wary of over-generalizing this and ending up with code that is harder to follow!",
+      "parentUuid": "29745b21_299aa568",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7d3cc73_52aaffae",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
         "patchSetId": 8
