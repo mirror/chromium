@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f8cb31d_a4043361",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T04:44:54Z",
+      "side": 1,
+      "message": "Why does OnLibraryAvailable() map to launching the browser? See also below regarding the meaning of \"Browser.\"",
+      "revId": "012937f927c8257c3a6317ca290631c82aafd6c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4301b470_7866ca01",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 92837,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T04:44:54Z",
+      "side": 1,
+      "message": "See changes in https://crrev.com/c/798733/4/chrome/browser/vr/metrics_helper.cc.",
+      "revId": "012937f927c8257c3a6317ca290631c82aafd6c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb970276_35249733",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 92837,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T04:44:54Z",
+      "side": 1,
+      "message": "What specifically does \"Browser\" mean? Does this mean launching Chrome in VR? I think this is ambiguous and also could be confused with \"VR browsing.\"",
+      "range": {
+        "startLine": 92837,
+        "startChar": 57,
+        "endLine": 92837,
+        "endChar": 64
+      },
+      "revId": "012937f927c8257c3a6317ca290631c82aafd6c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2790247_b8ecb978",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 92840,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T04:44:54Z",
+      "side": 1,
+      "message": "\"in VR\"?",
+      "range": {
+        "startLine": 92840,
+        "startChar": 33,
+        "endLine": 92840,
+        "endChar": 34
+      },
+      "revId": "012937f927c8257c3a6317ca290631c82aafd6c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
