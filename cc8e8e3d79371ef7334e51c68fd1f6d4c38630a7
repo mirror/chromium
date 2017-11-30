@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d7bda27_c35a5de2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-11-30T02:44:05Z",
+      "side": 1,
+      "message": "did you mean \u0027recently\u0027?",
+      "range": {
+        "startLine": 9,
+        "startChar": 17,
+        "endLine": 9,
+        "endChar": 25
+      },
+      "revId": "cc8e8e3d79371ef7334e51c68fd1f6d4c38630a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "716bbc4d_ee50a0e4",
+        "filename": "chromeos/network/network_state_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-11-30T02:44:05Z",
+      "side": 1,
+      "message": "nit: seems like \u0027notifying_observers_\u0027 is set/unset when notifying network related events, i wonder if we should reflect that in the variable name \n (e.g. \u0027notifying_network_events_\u0027). otherwise, when I read the code, it looks to me that the code forgets to update \u0027notifying_observers_\u0027 in certain scenarios.",
+      "range": {
+        "startLine": 563,
+        "startChar": 7,
+        "endLine": 563,
+        "endChar": 27
+      },
+      "revId": "cc8e8e3d79371ef7334e51c68fd1f6d4c38630a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
