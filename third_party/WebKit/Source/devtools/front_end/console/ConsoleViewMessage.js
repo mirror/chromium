@@ -1300,6 +1300,9 @@ Console.ConsoleViewMessage = class {
    * @return {!DocumentFragment}
    */
   static _linkifyWithCustomLinkifier(string, linkifier) {
+    var maxLength = Console.ConsoleViewMessage._MaxTokenizableStringLength;
+    if (string.length > maxLength)
+      return createExpandableFragment(string);
     var container = createDocumentFragment();
     var tokens = this._tokenizeMessageText(string);
     for (var token of tokens) {
@@ -1321,6 +1324,29 @@ Console.ConsoleViewMessage = class {
       }
     }
     return container;
+
+    /**
+     * @param {string} text
+     * @return {!DocumentFragment}
+     */
+    function createExpandableFragment(text) {
+      var fragment = createDocumentFragment();
+      fragment.textContent = text.slice(0, maxLength);
+
+      var hiddenText = text.slice(maxLength);
+      var expandButton = fragment.createChild('span', 'console-expand-button');
+      expandButton.textContent = Common.UIString('Show all');
+      expandButton.title = Common.UIString(
+          'Expand truncated content (%s more characters)', Number.withThousandsSeparator(hiddenText.length));
+
+      expandButton.addEventListener('click', () => {
+        if (expandButton.parentElement)
+          expandButton.parentElement.insertBefore(createTextNode(hiddenText), expandButton);
+        expandButton.remove();
+      });
+
+      return fragment;
+    }
   }
 
   /**
