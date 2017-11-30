@@ -5,7 +5,6 @@
 package org.chromium.chrome.browser.preferences.datareduction;
 
 import android.content.Context;
-import android.text.format.Formatter;
 
 /**
  * Stores the data used and saved by a hostname.
@@ -61,8 +60,8 @@ public class DataReductionDataUseItem {
      * @param context An Android context.
      * @return A formatted string of the data used.
      */
-    public String getFormattedDataUsed(Context context) {
-        return Formatter.formatFileSize(context, mDataUsed);
+    public CharSequence getFormattedDataUsed(Context context) {
+        return DataReductionUtils.formatFileSize(context, mDataUsed);
     }
 
     /**
@@ -72,8 +71,8 @@ public class DataReductionDataUseItem {
      * @param context An Android context.
      * @return A formatted string of the data saved.
      */
-    public String getFormattedDataSaved(Context context) {
-        if (mDataUsed > mOriginalSize) return Formatter.formatFileSize(context, 0);
-        return Formatter.formatFileSize(context, mOriginalSize - mDataUsed);
+    public CharSequence getFormattedDataSaved(Context context) {
+        final long savedTotalBytes = (mDataUsed > mOriginalSize) ? 0 : (mOriginalSize - mDataUsed);
+        return DataReductionUtils.formatFileSize(context, savedTotalBytes);
     }
 }
