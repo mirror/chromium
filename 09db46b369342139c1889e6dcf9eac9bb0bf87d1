@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04455b6e_19d2e767",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-30T21:31:38Z",
+      "side": 1,
+      "message": "Do we still use/need this? How easier would it be if we kept this and made it return this.getClass().isAssignableFrom(FirstRunActivityBase.class)?",
+      "range": {
+        "startLine": 360,
+        "startChar": 22,
+        "endLine": 360,
+        "endChar": 51
+      },
+      "revId": "09db46b369342139c1889e6dcf9eac9bb0bf87d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
