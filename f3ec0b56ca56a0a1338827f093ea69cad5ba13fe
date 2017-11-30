@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "cdced586_0ec58299",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/longtask-timing/longtask-in-childiframe-crossorigin.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-30T18:40:00Z",
+      "side": 1,
+      "message": "Why so? What we care about in this test is the origin of the iframe, and sandboxing it is a way to achieve the perception of it being cross-origin. Are you aware of a better way to do this?\n\nI suppose I could rename it to longtask-in-sandboxed-childiframe.html. The question then would be whether we still need the cross-origin equivalent...",
+      "parentUuid": "f4b330b8_7f18b10b",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 37
+      },
+      "revId": "f3ec0b56ca56a0a1338827f093ea69cad5ba13fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0bb61cf_eb0eb3e7",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/longtask-timing/longtask-in-sibling-iframe.html",
         "patchSetId": 2
