@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f8e984e_87cdda44",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/AppHooks.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-30T20:43:01Z",
+      "side": 1,
+      "message": "Nit: I think maybe only this one is needed now?",
+      "revId": "3be146d6077d22f458d840d296a640a831fd68d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
