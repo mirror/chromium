@@ -28,6 +28,20 @@ message Diagnostics {
   repeated PerceptionSample perception_sample = 1;
 }
 
+message VideoStreamParam {
+  // This is used to identify the video stream that the following parameters
+  // should be applied to. For example, "FaceDetection" or "VideoCapture".
+  optional string id = 1;
+
+  // Frame width in pixels.
+  optional int32 width = 2;
+
+  // Frame height in pixels.
+  optional int32 height = 3;
+
+  optional float frame_rate = 4;
+}
+
 message State {
   enum Status {
     STATUS_UNSPECIFIED = 0;  // Unused required default value for Proto enums.
@@ -45,6 +59,10 @@ message State {
   // Device context so that the media analytics process can better select the
   // right video device to open.
   optional string device_context = 2;
+
+  // A list of parameters that the media analytics process should use to process
+  // the video stream.
+  repeated VideoStreamParam video_stream_param = 3;
 }
 
 // This is the output of the MediaPerceptionSinkCalculator.
