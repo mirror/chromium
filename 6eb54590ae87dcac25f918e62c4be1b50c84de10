@@ -45,6 +45,40 @@
       "revId": "6eb54590ae87dcac25f918e62c4be1b50c84de10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8e929e1_64e333a5",
+        "filename": "chrome/browser/ui/toolbar/app_menu_model.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-30T07:52:34Z",
+      "side": 1,
+      "message": "is this used?",
+      "revId": "6eb54590ae87dcac25f918e62c4be1b50c84de10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f48bb3d_d1d64b94",
+        "filename": "chrome/browser/ui/toolbar/app_menu_model.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-30T07:52:34Z",
+      "side": 1,
+      "message": "I think AppMenuModel is cached on each browser window. It doesn\u0027t make sense to get the active web contents here, since it won\u0027t be rebuilt when the webcontents changes.\n\nI think you want IsItemForCommandIdDynamic and GetLabelForCommandId\n\nAlso AppMenuModel::UpdateZoomControls() checks for a valid tab_strip_model() -- do you need to do that?",
+      "revId": "6eb54590ae87dcac25f918e62c4be1b50c84de10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
