@@ -915,6 +915,10 @@ bool DiskMountManager::Disk::IsAutoMountable() const {
   return !on_boot_device_;
 };
 
+bool DiskMountManager::Disk::IsStatefulPartition() const {
+  return mount_path_ == "/mnt/stateful_partition";
+}
+
 bool DiskMountManager::AddDiskForTest(std::unique_ptr<Disk> disk) {
   return false;
 }
