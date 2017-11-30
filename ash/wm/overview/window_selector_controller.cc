@@ -154,16 +154,20 @@ void WindowSelectorController::OnOverviewButtonTrayLongPressed(
   auto* split_view_controller = Shell::Get()->split_view_controller();
   // Exit split view mode if we are already in it.
   if (split_view_controller->IsSplitViewModeActive()) {
-    aura::Window* active_window = split_view_controller->left_window()
-                                      ? split_view_controller->left_window()
-                                      : split_view_controller->right_window();
+    // In some cases the window returned by wm::GetActiveWindow will be an item
+    // in overview mode. Manually set |active_window| as the left or right
+    // window if |active_window| is an overview window item.
+    aura::Window* active_window = wm::GetActiveWindow();
+    if (active_window != split_view_controller->left_window() &&
+        active_window != split_view_controller->right_window()) {
+      active_window = split_view_controller->left_window()
+                          ? split_view_controller->left_window()
+                          : split_view_controller->right_window();
+    }
     DCHECK(active_window);
     split_view_controller->EndSplitView();
     if (IsSelecting())
       ToggleOverview();
-    // In some cases the window returned by wm::GetActiveWindow will be an item
-    // in overview mode. To work around this set |active_window| before exiting
-    // split view.
     wm::ActivateWindow(active_window);
     return;
   }
