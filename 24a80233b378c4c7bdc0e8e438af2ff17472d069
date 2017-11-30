@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "295fe93d_610eaf15",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptedAnimationControllerTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-11-30T04:31:49Z",
+      "side": 1,
+      "message": "Ah, I see. There are different users that take Once and Repeating. OK, let\u0027s leave as is.",
+      "parentUuid": "a4eae18b_32c628b8",
+      "range": {
+        "startLine": 47,
+        "startChar": 7,
+        "endLine": 47,
+        "endChar": 23
+      },
+      "revId": "24a80233b378c4c7bdc0e8e438af2ff17472d069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c3c9dbe_2975d301",
         "filename": "third_party/WebKit/Source/modules/nfc/NFC.cpp",
         "patchSetId": 4
@@ -372,6 +396,30 @@
       "side": 1,
       "message": "Re explicit: Removing explicit causes compile errors in a few places where the code does legitimate conversions from RepeatingCB. I could keep explicit here but didn\u0027t because:\n\n(1) It\u0027s very tedious to manually write static_cast\u003cWTF::Function\u003cFUNCTION SIGNATURE\u003e\u003e in every place that does the conversion; and\n(2) Function\u003c\u003e is going to be removed eventually, and after that, we\u0027ll anyway have an implicit conversion from base::RepeatingCB to base::OnceCB (unless you have a plan to remove the implicit conversion in the future).\n\nRe Callback vs RepeatingCallback: I simply wanted to emphasize you could convert a repeating callback to Function, which mostly represents a once callback after this patch. I don\u0027t have a strong opinion, but I want to learn the principle how you choose one of these two names before proceeding to revert this.",
       "parentUuid": "1786fb30_7245068e",
+      "range": {
+        "startLine": 293,
+        "startChar": 1,
+        "endLine": 293,
+        "endChar": 2
+      },
+      "revId": "24a80233b378c4c7bdc0e8e438af2ff17472d069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3371edbb_0b2794fc",
+        "filename": "third_party/WebKit/Source/platform/wtf/Functional.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-11-30T04:31:49Z",
+      "side": 1,
+      "message": "For `explicit`, OK, let\u0027s leave this without explicit.\n\nFor Callback vs RepeatingCallback, Callback is for legacy ones, that implies the user need to update it to either OnceCallback or RepeatingCallback. In contrast, RepeatingCallback implies it\u0027s already done.",
+      "parentUuid": "81b01d4d_3f513ef8",
       "range": {
         "startLine": 293,
         "startChar": 1,
