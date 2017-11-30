@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20b9737d_8aef0178",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 45708,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-11-30T19:15:32Z",
+      "side": 1,
+      "message": "units\u003d\"ms\"?  For both histograms.",
+      "range": {
+        "startLine": 45708,
+        "startChar": 51,
+        "endLine": 45708,
+        "endChar": 52
+      },
+      "revId": "df439949847649bec8c66b3e0b04648982b0c285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
