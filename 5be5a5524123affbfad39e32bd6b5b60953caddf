@@ -22,6 +22,47 @@
       "revId": "5be5a5524123affbfad39e32bd6b5b60953caddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "457c2250_db8cbfc7",
+        "filename": "components/arc/connection_holder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-30T07:30:19Z",
+      "side": 1,
+      "message": "Oh, good point. I agreed with you.\nHow about working on it in another CL to make the focus of each CL clearer?",
+      "parentUuid": "ee5aff51_862b8c54",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 111,
+        "endChar": 65
+      },
+      "revId": "5be5a5524123affbfad39e32bd6b5b60953caddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bae21ecd_6d9b2549",
+        "filename": "components/arc/connection_holder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-30T07:30:19Z",
+      "side": 1,
+      "message": "I didn\u0027t noticed in previous code review (and when I wrote...), but there\u0027s a race.\n\nIf connection is closed while (new) Init() is called, then OnConnectionClosed() is called, but OnConnectionReady() wasn\u0027t called before?\n\nWe assumed even if async Init() is inflight, if SetInstance(nullptr) is called, which means the instance is being destroyed, the callback won\u0027t be called.\nIf we support unbinding stale connection, should we cancel the callback explicitly? WDYT?\nBetter to document the responsibility of callback lifetime in our case.",
+      "revId": "5be5a5524123affbfad39e32bd6b5b60953caddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
