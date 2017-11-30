@@ -92851,18 +92851,19 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram base="true" name="VR.AssetsComponent.ReadyLatency.OnEnter"
-    units="ms">
-  <owner>tiborg@chromium.org</owner>
-  <summary>
-    Duration from entering a VR mode until VR assets component is ready to use.
-  </summary>
-</histogram>
-
-<histogram base="true" name="VR.AssetsComponent.Status.OnEnter"
+<histogram base="true" name="VR.Component.Assets.Status.OnEnter"
     enum="ComponentStatus">
   <owner>tiborg@chromium.org</owner>
   <summary>Status of the VR assets component when entering a VR mode.</summary>
+</histogram>
+
+<histogram base="true" name="VR.Component.Assets.TimeUntilReadyOnEnter"
+    units="ms">
+  <owner>tiborg@chromium.org</owner>
+  <summary>
+    Duration from entering a VR mode until the VR assets component is ready to
+    use.
+  </summary>
 </histogram>
 
 <histogram base="true" name="VR.DataConnection.OnEnter"
@@ -108980,12 +108981,12 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram_suffixes>
 
 <histogram_suffixes name="VR.Mode" separator=".">
-  <affected-histogram name="VR.AssetsComponent.ReadyLatency.OnEnter"/>
   <suffix name="VR" label="Entered either VR Browsing or WebVR mode."/>
   <suffix name="VRBrowsing" label="Entered VR Browsing Mode."/>
   <suffix name="WebVR"
       label="Entered WebVR mode (also includes splash screen)."/>
-  <affected-histogram name="VR.AssetsComponent.Status.OnEnter"/>
+  <affected-histogram name="VR.Component.Assets.Status.OnEnter"/>
+  <affected-histogram name="VR.Component.Assets.TimeUntilReadyOnEnter"/>
   <affected-histogram name="VR.DataConnection.OnEnter"/>
 </histogram_suffixes>
 

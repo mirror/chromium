@@ -12,14 +12,14 @@ namespace vr {
 
 namespace {
 
-constexpr char kStatusVr[] = "VR.AssetsComponent.Status.OnEnter.VR";
+constexpr char kStatusVr[] = "VR.Component.Assets.Status.OnEnter.VR";
 constexpr char kStatusVrBrowsing[] =
-    "VR.AssetsComponent.Status.OnEnter.VRBrowsing";
-constexpr char kStatusWebVr[] = "VR.AssetsComponent.Status.OnEnter.WebVR";
+    "VR.Component.Assets.Status.OnEnter.VRBrowsing";
+constexpr char kStatusWebVr[] = "VR.Component.Assets.Status.OnEnter.WebVR";
 constexpr char kLatencyVrBrowsing[] =
-    "VR.AssetsComponent.ReadyLatency.OnEnter.VRBrowsing";
+    "VR.Component.Assets.TimeUntilReadyOnEnter.VRBrowsing";
 constexpr char kLatencyWebVr[] =
-    "VR.AssetsComponent.ReadyLatency.OnEnter.WebVR";
+    "VR.Component.Assets.TimeUntilReadyOnEnter.WebVR";
 constexpr char kDataConnectionRegisterComponent[] =
     "VR.DataConnection.OnRegisterAssetsComponent";
 constexpr char kDataConnectionVr[] = "VR.DataConnection.OnEnter.VR";
