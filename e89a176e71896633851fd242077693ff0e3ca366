@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9845227d_9cf07da0",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-30T04:41:51Z",
+      "side": 1,
+      "message": "Coolz. Forget that Mac has TOOLKIT_VIEWS enabled by default now. Removed.",
+      "parentUuid": "7c99a44f_78d5efe1",
+      "revId": "e89a176e71896633851fd242077693ff0e3ca366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aed28b53_a71ffcd6",
         "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e86af41c_7f9b7df0",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-30T04:41:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aed28b53_a71ffcd6",
+      "revId": "e89a176e71896633851fd242077693ff0e3ca366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b89c313f_1f981fa9",
         "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
         "patchSetId": 8
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-29T04:53:33Z",
       "side": 1,
       "message": "is this used?",
+      "revId": "e89a176e71896633851fd242077693ff0e3ca366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e75c55c9_da42f641",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-30T04:41:51Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "b89c313f_1f981fa9",
       "revId": "e89a176e71896633851fd242077693ff0e3ca366",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "a64bd999_92a11c88",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-30T04:41:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63267bfe_5ff9e678",
+      "revId": "e89a176e71896633851fd242077693ff0e3ca366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9df9c76c_d3f37d4b",
         "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
         "patchSetId": 8
@@ -81,6 +153,24 @@
       "writtenOn": "2017-11-29T04:53:33Z",
       "side": 1,
       "message": "can you steal some ideas from PlatformAppBrowserTest, MAYBE_ConstrainedWindowRequest)?\n\n  WebContentsModalDialogManager* web_contents_modal_dialog_manager \u003d\n      WebContentsModalDialogManager::FromWebContents(web_contents);\n  WebContentsModalDialogManager::TestApi test_api(\n      web_contents_modal_dialog_manager);\n\n(and use IsDialogActive() or update WebContentsModalDialogManager::TestApi  to extract the `gfx::NativeWindow dialog;` from |child_dialogs_|",
+      "revId": "e89a176e71896633851fd242077693ff0e3ca366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e6bc6e8_a7790ba3",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-30T04:41:51Z",
+      "side": 1,
+      "message": "As discussed, browser modal windows aren\u0027t tracked by WCMDM.",
+      "parentUuid": "9df9c76c_d3f37d4b",
       "revId": "e89a176e71896633851fd242077693ff0e3ca366",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -101,6 +191,24 @@
       "revId": "e89a176e71896633851fd242077693ff0e3ca366",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c14273d4_c8d5a273",
+        "filename": "chrome/browser/ui/views/apps/app_info_dialog/app_info_dialog_views.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-30T04:41:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3849162c_7be7bc45",
+      "revId": "e89a176e71896633851fd242077693ff0e3ca366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
