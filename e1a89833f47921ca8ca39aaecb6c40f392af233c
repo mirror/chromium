@@ -52,6 +52,24 @@
       "revId": "e1a89833f47921ca8ca39aaecb6c40f392af233c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2575c76b_1aa960ed",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.cc",
+        "patchSetId": 59
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-30T00:39:07Z",
+      "side": 1,
+      "message": "You\u0027re right, I\u0027ve removed the callback support in GpuFenceManager entirely and simplified the usage in GpuCommandBufferStub and InProcessCommandBuffer to retrieve a handle from the assumed-existing entry directly, and it looks a good bit simpler now.\n\nI think my earlier resistance to this was based on a misunderstanding - somehow I was assuming that a ShallowFlushCHROMIUM just transferred commands to the service, but it actually also ensures that they are processed before returning, so the GetGpuFence is sequenced correctly.",
+      "parentUuid": "2f57b0c8_fccdc1e0",
+      "revId": "e1a89833f47921ca8ca39aaecb6c40f392af233c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
