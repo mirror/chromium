@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9d624a84_ba20ae99",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-11-30T16:19:31Z",
+      "side": 1,
+      "message": "Yeah, don\u0027t add java enums. There\u0027s a few places in our public API where we use them because we\u0027re stuck with it for compat reasons, but we shouldn\u0027t add them anywhere else. Use @IntDef and the like to make a \"fake\" IDE-enforced enum (there\u0027s a number of examples of this in the code).",
+      "parentUuid": "42f49aa9_c7704575",
+      "range": {
+        "startLine": 138,
+        "startChar": 4,
+        "endLine": 138,
+        "endChar": 8
+      },
+      "revId": "3210aa6bd82d00e9657a31222a1051c15ea56d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a6a9c69_baf26549",
         "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-30T00:45:00Z",
       "side": 1,
       "message": "I think there\u0027s a penalty in code size each time we use this function (I\u0027ve been told this is true for the C++ macro). I think we\u0027ll reduce impact by adding a helper function (with only a single parameter for the enum value).",
+      "range": {
+        "startLine": 1643,
+        "startChar": 12,
+        "endLine": 1643,
+        "endChar": 94
+      },
+      "revId": "3210aa6bd82d00e9657a31222a1051c15ea56d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e64eb06d_1a93ac71",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1643,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-11-30T16:19:31Z",
+      "side": 1,
+      "message": "I suspect this doesn\u0027t apply to the java version but it\u0027s probably nicer to add a helper function anyway.",
+      "parentUuid": "3a6a9c69_baf26549",
       "range": {
         "startLine": 1643,
         "startChar": 12,
