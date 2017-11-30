@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37931b88_e5f1ff01",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarModelImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-30T02:17:15Z",
+      "side": 1,
+      "message": "I don\u0027t really like this, but isOfflinePage() is also used in LocationBarLayout#updateVerboseStatusVisibility(). Another option is to introduce a new ToolbarDataProvider#shouldShowVerboseStatus(), and add a boolean shouldShowSecurityIcon to #getSecurityIconResource below that can be used to early return 0.",
+      "revId": "eb9e6d1336c8b946b3ba9c957dba92f94e46219c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f10848b1_e68e7349",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarModelImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-30T02:17:15Z",
+      "side": 1,
+      "message": "Kingston wanted this behind a feature flag to measure impact. The method name could be better.. but this check should be temporary.",
+      "range": {
+        "startLine": 246,
+        "startChar": 19,
+        "endLine": 246,
+        "endChar": 95
+      },
+      "revId": "eb9e6d1336c8b946b3ba9c957dba92f94e46219c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "937f31e5_fc159b1b",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/omnibox/BottomSheetLocationBarTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-30T02:17:15Z",
+      "side": 1,
+      "message": "I got a test failure on this line. It\u0027s probably just because the sheet state needs to be explicitly set to peek before the test is run. I\u0027ll debug tomorrow.",
+      "range": {
+        "startLine": 103,
+        "startChar": 8,
+        "endLine": 103,
+        "endChar": 79
+      },
+      "revId": "eb9e6d1336c8b946b3ba9c957dba92f94e46219c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8c5afa6_713062c9",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/toolbar/ToolbarSecurityIconTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-30T02:17:15Z",
+      "side": 1,
+      "message": "nit: This should say something like \"Wrong security level returned for \"",
+      "revId": "eb9e6d1336c8b946b3ba9c957dba92f94e46219c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
