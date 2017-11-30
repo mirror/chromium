@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "89b5b447_2c36e5e7",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-11-30T19:11:35Z",
+      "side": 1,
+      "message": "I wasn\u0027t aware that the \"unstable\" meant channels not named \"stable.\"  I thought we might expose the option to use \"unstable\" PPDs in the future.\n\nI think we should talk to weifangsun@ if we want to expose different PPDs to Stable vs Beta as it could lead to user confusion.\n\nChannel information can be obtained here: https://cs.chromium.org/chromium/src/chrome/common/channel_info.h?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d37",
+      "parentUuid": "cfe05503_155da7b0",
+      "revId": "2cfc840d0879c525ba1ce98e2d18cc61e0c33b50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3eaa9e81_5f6d5607",
         "filename": "chromeos/printing/ppd_provider.h",
         "patchSetId": 4
@@ -30,6 +48,47 @@
       "writtenOn": "2017-11-30T18:46:19Z",
       "side": 1,
       "message": "Is there a reason to still expose this to the caller?  \n\nNot against it, just don\u0027t see a reason for it.",
+      "revId": "2cfc840d0879c525ba1ce98e2d18cc61e0c33b50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d19e0435_0556da6c",
+        "filename": "chromeos/printing/ppd_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-11-30T19:11:35Z",
+      "side": 1,
+      "message": "We can probably remove it.  There might be a niche use case where we\u0027d want to display it somewhere but I\u0027m not sure what the use case for that would be right now.",
+      "parentUuid": "3eaa9e81_5f6d5607",
+      "revId": "2cfc840d0879c525ba1ce98e2d18cc61e0c33b50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afc1a118_9da1675f",
+        "filename": "chromeos/printing/ppd_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-11-30T19:11:35Z",
+      "side": 1,
+      "message": "nit: a more realistic version string would be \"40.0.1234.57\"",
+      "range": {
+        "startLine": 84,
+        "startChar": 46,
+        "endLine": 84,
+        "endChar": 53
+      },
       "revId": "2cfc840d0879c525ba1ce98e2d18cc61e0c33b50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
