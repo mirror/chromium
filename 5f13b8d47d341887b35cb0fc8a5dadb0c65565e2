@@ -16,6 +16,24 @@
       "revId": "5f13b8d47d341887b35cb0fc8a5dadb0c65565e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bd3f775_0c05b3c7",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingRequirementsUpdater.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-11-30T21:05:44Z",
+      "side": 1,
+      "message": "If I remove this change, then I can actually see fixed position objects over-scroll (i.e., exceed their sticky constraints).  If the sticky object is composited, then the compositor will use StickyPositionNodeData to prevent that from happening.\n\nFixed position doesn\u0027t have this same problem, since it doesn\u0027t need a location adjustment based on a compositing ancestor\u0027s scroll.",
+      "parentUuid": "93483fcd_23006089",
+      "revId": "5f13b8d47d341887b35cb0fc8a5dadb0c65565e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
