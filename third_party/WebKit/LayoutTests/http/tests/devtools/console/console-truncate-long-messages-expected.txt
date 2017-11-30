@@ -1,0 +1,13 @@
+Tests that console logging large messages will be truncated.
+
+Evaluating in console: "b".repeat(10000 * 20)
+Evaluating in page: console.log("a".repeat(10000 * 2))
+Message: 0, length: 22
+Message: 1, length: 10010
+Message: 2, length: 10008
+
+Expanding hidden texts
+Message: 0, length: 22
+Message: 1, length: 200002
+Message: 2, length: 20000
+

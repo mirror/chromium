@@ -1333,9 +1333,35 @@ Console.ConsoleViewMessage = class {
    * @return {!DocumentFragment}
    */
   static _linkifyStringAsFragment(string) {
+    var maxLength = Console.ConsoleViewMessage._MaxTokenizableStringLength;
+    if (string.length > maxLength)
+      return createExpandableFragment(string);
     return Console.ConsoleViewMessage._linkifyWithCustomLinkifier(string, (text, url, lineNumber, columnNumber) => {
       return Components.Linkifier.linkifyURL(url, {text, lineNumber, columnNumber});
     });
+
+    /**
+     * @param {string} text
+     * @return {!DocumentFragment}
+     */
+    function createExpandableFragment(text) {
+      var fragment = createDocumentFragment();
+      fragment.textContent = text.slice(0, maxLength);
+
+      var hiddenText = text.slice(maxLength);
+      var expandButton = fragment.createChild('span', 'console-expand-button');
+      expandButton.textContent = Common.UIString('Show all');
+      expandButton.title = Common.UIString(
+          'Expand truncated content (%s more characters)', Number.withThousandsSeparator(hiddenText.length));
+
+      expandButton.addEventListener('click', () => {
+        if (expandButton.parentElement)
+          expandButton.parentElement.insertBefore(createTextNode(hiddenText), expandButton);
+        expandButton.remove();
+      });
+
+      return fragment;
+    }
   }
 
   /**
@@ -1467,4 +1493,8 @@ Console.ConsoleGroupViewMessage = class extends Console.ConsoleViewMessage {
  */
 Console.ConsoleViewMessage.MaxLengthForLinks = 40;
 
+/**
+ * @const
+ * @type {number}
+ */
 Console.ConsoleViewMessage._MaxTokenizableStringLength = 10000;
