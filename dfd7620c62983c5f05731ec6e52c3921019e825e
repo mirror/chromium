@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78b45b5e_4c30c599",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T04:49:52Z",
+      "side": 1,
+      "message": "I think we should name this .Total such that \".DLA\" is not ambiguous and does not have any data. Thoughts?",
+      "revId": "dfd7620c62983c5f05731ec6e52c3921019e825e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "433fb7b0_102f0cd9",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T04:49:52Z",
+      "side": 1,
+      "message": "Please use `Session.Time`. See https://crrev.com/c/795034.",
+      "range": {
+        "startLine": 68,
+        "startChar": 42,
+        "endLine": 68,
+        "endChar": 53
+      },
+      "revId": "dfd7620c62983c5f05731ec6e52c3921019e825e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
