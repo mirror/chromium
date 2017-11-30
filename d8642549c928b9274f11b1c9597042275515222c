@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7750b18b_ddae8c33",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-30T01:39:57Z",
+      "side": 1,
+      "message": "style: don\u0027t use all caps for variable names. Should be aa or aA",
+      "revId": "d8642549c928b9274f11b1c9597042275515222c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eebc9cad_ab8ac403",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-30T01:39:57Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "d8642549c928b9274f11b1c9597042275515222c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
