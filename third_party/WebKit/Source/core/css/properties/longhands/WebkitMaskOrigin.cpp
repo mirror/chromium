@@ -17,7 +17,7 @@ const CSSValue* WebkitMaskOrigin::ParseSingleValue(
     const CSSParserLocalContext&) const {
   return CSSPropertyParserHelpers::ConsumeCommaSeparatedList(
       CSSPropertyBackgroundUtils::ConsumePrefixedBackgroundBox, range,
-      AllowTextValue::kForbid);
+      AllowTextValue::kNotAllowed);
 }
 
 }  // namespace CSSLonghand

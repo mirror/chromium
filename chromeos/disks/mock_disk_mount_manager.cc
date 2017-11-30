@@ -66,7 +66,8 @@ MockDiskMountManager::MockDiskMountManager() {
           this, &MockDiskMountManager::EnsureMountInfoRefreshedInternal));
 }
 
-MockDiskMountManager::~MockDiskMountManager() = default;
+MockDiskMountManager::~MockDiskMountManager() {
+}
 
 void MockDiskMountManager::NotifyDeviceInsertEvents() {
   std::unique_ptr<DiskMountManager::Disk> disk1_ptr =

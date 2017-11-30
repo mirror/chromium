@@ -18,9 +18,6 @@
 namespace ash {
 namespace {
 
-// System tray shows a limited number of bluetooth devices.
-const int kMaximumDevicesShown = 50;
-
 void BluetoothSetDiscoveringError() {
   LOG(ERROR) << "BluetoothSetDiscovering failed.";
 }
@@ -30,17 +27,6 @@ void BluetoothDeviceConnectError(
 
 ash::SystemTrayNotifier* GetSystemTrayNotifier() {
   return Shell::Get()->system_tray_notifier();
-}
-
-BluetoothDeviceInfo GetBluetoothDeviceInfo(device::BluetoothDevice* device) {
-  BluetoothDeviceInfo info;
-  info.address = device->GetAddress();
-  info.display_name = device->GetNameForDisplay();
-  info.connected = device->IsConnected();
-  info.connecting = device->IsConnecting();
-  info.paired = device->IsPaired();
-  info.device_type = device->GetDeviceType();
-  return info;
 }
 
 }  // namespace
@@ -74,25 +60,18 @@ void TrayBluetoothHelper::InitializeOnAdapterReady(
 }
 
 BluetoothDeviceList TrayBluetoothHelper::GetAvailableBluetoothDevices() const {
-  BluetoothDeviceList device_list;
-  device::BluetoothAdapter::DeviceList devices = adapter_->GetDevices();
-  for (device::BluetoothDevice* device : devices) {
-    if (device_list.size() == kMaximumDevicesShown)
-      break;
-
-    if (device->IsPaired() || device->IsConnecting())
-      device_list.push_back(GetBluetoothDeviceInfo(device));
+  BluetoothDeviceList list;
+  for (device::BluetoothDevice* device : adapter_->GetDevices()) {
+    BluetoothDeviceInfo info;
+    info.address = device->GetAddress();
+    info.display_name = device->GetNameForDisplay();
+    info.connected = device->IsConnected();
+    info.connecting = device->IsConnecting();
+    info.paired = device->IsPaired();
+    info.device_type = device->GetDeviceType();
+    list.push_back(info);
   }
-
-  for (device::BluetoothDevice* device : devices) {
-    if (device_list.size() == kMaximumDevicesShown)
-      break;
-
-    if (!device->IsPaired() && !device->IsConnecting())
-      device_list.push_back(GetBluetoothDeviceInfo(device));
-  }
-
-  return device_list;
+  return list;
 }
 
 void TrayBluetoothHelper::StartBluetoothDiscovering() {

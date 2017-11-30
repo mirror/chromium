@@ -790,11 +790,8 @@ TEST_F(StyleEngineTest, ModifyStyleRuleMatchedPropertiesCache) {
 
   CSSStyleSheet* sheet = ToCSSStyleSheet(GetDocument().StyleSheets().item(0));
   ASSERT_TRUE(sheet);
-  DummyExceptionStateForTesting exception_state;
-  ASSERT_TRUE(sheet->cssRules(exception_state));
-  CSSStyleRule* style_rule =
-      ToCSSStyleRule(sheet->cssRules(exception_state)->item(0));
-  ASSERT_FALSE(exception_state.HadException());
+  ASSERT_TRUE(sheet->cssRules());
+  CSSStyleRule* style_rule = ToCSSStyleRule(sheet->cssRules()->item(0));
   ASSERT_TRUE(style_rule);
   ASSERT_TRUE(style_rule->style());
 

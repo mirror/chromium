@@ -291,8 +291,8 @@ ServiceWorkerVersion::ServiceWorkerVersion(
       binding_(this),
       context_(context),
       script_cache_map_(this, context),
-      tick_clock_(base::DefaultTickClock::GetInstance()),
-      clock_(base::DefaultClock::GetInstance()),
+      tick_clock_(std::make_unique<base::DefaultTickClock>()),
+      clock_(std::make_unique<base::DefaultClock>()),
       ping_controller_(new PingController(this)),
       validator_(TrialPolicyImpl::CreateValidatorForPolicy()),
       weak_factory_(this) {
@@ -840,12 +840,14 @@ void ServiceWorkerVersion::SimulatePingTimeoutForTesting() {
   ping_controller_->SimulateTimeoutForTesting();
 }
 
-void ServiceWorkerVersion::SetTickClockForTesting(base::TickClock* tick_clock) {
-  tick_clock_ = tick_clock;
+void ServiceWorkerVersion::SetTickClockForTesting(
+    std::unique_ptr<base::TickClock> tick_clock) {
+  tick_clock_ = std::move(tick_clock);
 }
 
-void ServiceWorkerVersion::SetClockForTesting(base::Clock* clock) {
-  clock_ = clock;
+void ServiceWorkerVersion::SetClockForTesting(
+    std::unique_ptr<base::Clock> clock) {
+  clock_ = std::move(clock);
 }
 
 const net::HttpResponseInfo*
@@ -1407,6 +1409,38 @@ void ServiceWorkerVersion::OnClaimClients(int request_id) {
 
 void ServiceWorkerVersion::OnPongFromWorker() {
   ping_controller_->OnPongReceived();
+}
+
+void ServiceWorkerVersion::RegisterForeignFetchScopes(
+    const std::vector<GURL>& sub_scopes,
+    const std::vector<url::Origin>& origins) {
+  DCHECK(status() == INSTALLING || status() == REDUNDANT) << status();
+  // Renderer should have already verified all these urls are inside the
+  // worker's scope, but verify again here on the browser process side.
+  GURL origin = scope_.GetOrigin();
+  std::string scope_path = scope_.path();
+  for (const GURL& url : sub_scopes) {
+    if (!url.is_valid() || url.GetOrigin() != origin ||
+        !base::StartsWith(url.path(), scope_path,
+                          base::CompareCase::SENSITIVE)) {
+      DVLOG(1) << "Received unexpected invalid URL from renderer process.";
+      BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
+                              base::BindOnce(&KillEmbeddedWorkerProcess,
+                                             embedded_worker_->process_id()));
+      return;
+    }
+  }
+  for (const url::Origin& url : origins) {
+    if (url.unique()) {
+      DVLOG(1) << "Received unexpected unique origin from renderer process.";
+      BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
+                              base::BindOnce(&KillEmbeddedWorkerProcess,
+                                             embedded_worker_->process_id()));
+      return;
+    }
+  }
+  set_foreign_fetch_scopes(sub_scopes);
+  set_foreign_fetch_origins(origins);
 }
 
 void ServiceWorkerVersion::DidEnsureLiveRegistrationForStartWorker(

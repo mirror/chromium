@@ -121,11 +121,9 @@ void SharedWorkerServiceImpl::ConnectToWorker(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   if (RenderFrameHost::FromID(process_id, frame_id)) {
-    RenderFrameHost* main_frame =
-        RenderFrameHostImpl::FromID(process_id, frame_id)
-            ->frame_tree_node()
-            ->frame_tree()
-            ->GetMainFrame();
+    RenderFrameHost* main_frame = RenderFrameHost::FromID(process_id, frame_id)
+                                      ->GetRenderViewHost()
+                                      ->GetMainFrame();
 
     if (!GetContentClient()->browser()->AllowSharedWorker(
             info->url, main_frame->GetLastCommittedURL(), info->name,

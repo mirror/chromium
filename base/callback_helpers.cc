@@ -6,7 +6,7 @@
 
 namespace base {
 
-ScopedClosureRunner::ScopedClosureRunner() = default;
+ScopedClosureRunner::ScopedClosureRunner() {}
 
 ScopedClosureRunner::ScopedClosureRunner(OnceClosure closure)
     : closure_(std::move(closure)) {}

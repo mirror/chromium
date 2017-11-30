@@ -43,7 +43,7 @@ bool TabletModeEventHandler::ToggleFullscreen(const ui::TouchEvent& event) {
     return false;
 
   WindowState* window_state = GetWindowState(window);
-  if (!window_state->IsFullscreen() || window_state->IsInImmersiveFullscreen())
+  if (!window_state->IsFullscreen() || window_state->in_immersive_fullscreen())
     return false;
 
   // Test that the touch happened in the top or bottom lines.

@@ -39,6 +39,7 @@ class FrameCoordinationUnitImpl
   FrameCoordinationUnitImpl* GetParentFrameCoordinationUnit() const;
   PageCoordinationUnitImpl* GetPageCoordinationUnit() const;
   ProcessCoordinationUnitImpl* GetProcessCoordinationUnit() const;
+  bool IsAlmostIdle() const;
   bool IsMainFrame() const;
 
   base::TimeTicks last_audible_time() const { return last_audible_time_; }

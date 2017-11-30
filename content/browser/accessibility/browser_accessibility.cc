@@ -335,9 +335,8 @@ gfx::Rect BrowserAccessibility::GetFrameBoundsRect() const {
   return RelativeToAbsoluteBounds(gfx::RectF(), true);
 }
 
-gfx::Rect BrowserAccessibility::GetPageBoundsRect(bool* offscreen,
-                                                  bool clip_bounds) const {
-  return RelativeToAbsoluteBounds(gfx::RectF(), false, offscreen, clip_bounds);
+gfx::Rect BrowserAccessibility::GetPageBoundsRect(bool* offscreen) const {
+  return RelativeToAbsoluteBounds(gfx::RectF(), false, offscreen);
 }
 
 gfx::Rect BrowserAccessibility::GetPageBoundsForRange(int start, int len)
@@ -833,12 +832,11 @@ base::string16 BrowserAccessibility::GetInnerText() const {
 gfx::Rect BrowserAccessibility::RelativeToAbsoluteBounds(
     gfx::RectF bounds,
     bool frame_only,
-    bool* offscreen,
-    bool clip_bounds) const {
+    bool* offscreen) const {
   const BrowserAccessibility* node = this;
   while (node) {
     bounds = node->manager()->ax_tree()->RelativeToTreeBounds(
-        node->node(), bounds, offscreen, clip_bounds);
+        node->node(), bounds, offscreen);
 
     // On some platforms we need to unapply root scroll offsets.
     const BrowserAccessibility* root = node->manager()->GetRoot();

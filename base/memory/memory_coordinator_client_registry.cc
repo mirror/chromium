@@ -17,7 +17,7 @@ MemoryCoordinatorClientRegistry::GetInstance() {
 MemoryCoordinatorClientRegistry::MemoryCoordinatorClientRegistry()
     : clients_(new ClientList) {}
 
-MemoryCoordinatorClientRegistry::~MemoryCoordinatorClientRegistry() = default;
+MemoryCoordinatorClientRegistry::~MemoryCoordinatorClientRegistry() {}
 
 void MemoryCoordinatorClientRegistry::Register(
     MemoryCoordinatorClient* client) {

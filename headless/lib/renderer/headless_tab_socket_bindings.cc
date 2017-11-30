@@ -22,7 +22,7 @@ HeadlessTabSocketBindings::HeadlessTabSocketBindings(
       world_id_(world_id),
       installed_(false) {}
 
-HeadlessTabSocketBindings::~HeadlessTabSocketBindings() = default;
+HeadlessTabSocketBindings::~HeadlessTabSocketBindings() {}
 
 bool HeadlessTabSocketBindings::InitializeTabSocketBindings() {
   if (installed_)

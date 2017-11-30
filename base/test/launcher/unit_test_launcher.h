@@ -7,9 +7,6 @@
 
 #include <stddef.h>
 
-#include <string>
-#include <vector>
-
 #include "base/callback.h"
 #include "base/files/file_path.h"
 #include "base/macros.h"
@@ -19,7 +16,7 @@
 namespace base {
 
 // Callback that runs a test suite and returns exit code.
-using RunTestSuiteCallback = Callback<int(void)>;
+typedef base::Callback<int(void)> RunTestSuiteCallback;
 
 // Launches unit tests in given test suite. Returns exit code.
 int LaunchUnitTests(int argc,

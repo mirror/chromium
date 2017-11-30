@@ -324,8 +324,7 @@ VisiblePosition VisualWordPosition(const VisiblePosition& visible_position,
       return VisiblePosition();
 
     InlineBoxPosition box_position = ComputeInlineBoxPosition(
-        PositionWithAffinity(adjacent_character_position.DeepEquivalent(),
-                             TextAffinity::kUpstream));
+        adjacent_character_position.DeepEquivalent(), TextAffinity::kUpstream);
     InlineBox* box = box_position.inline_box;
     int offset_in_box = box_position.offset_in_box;
 

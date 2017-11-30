@@ -28,16 +28,6 @@ cr.define('extensions', function() {
       inDevMode: Boolean,
     },
 
-    /**
-     * @param {string} description
-     * @param {string} fallback
-     * @return {string}
-     * @private
-     */
-    getDescription_: function(description, fallback) {
-      return description || fallback;
-    },
-
     /** @private */
     onCloseButtonTap_: function() {
       extensions.navigation.navigateTo({page: Page.LIST});
@@ -214,8 +204,8 @@ cr.define('extensions', function() {
 
     /** @private */
     computeSourceString_: function() {
-      return this.data.locationText ||
-          extensions.getItemSourceString(extensions.getItemSource(this.data));
+      return extensions.getItemSourceString(
+          extensions.getItemSource(this.data));
     },
 
     /**

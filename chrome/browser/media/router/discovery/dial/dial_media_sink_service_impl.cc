@@ -15,17 +15,9 @@ using content::BrowserThread;
 namespace media_router {
 
 DialMediaSinkServiceImpl::DialMediaSinkServiceImpl(
-    std::unique_ptr<service_manager::Connector> connector,
     const OnSinksDiscoveredCallback& callback,
     net::URLRequestContextGetter* request_context)
     : MediaSinkServiceBase(callback),
-      connector_(std::move(connector)),
-      description_service_(std::make_unique<DeviceDescriptionService>(
-          connector_.get(),
-          base::Bind(&DialMediaSinkServiceImpl::OnDeviceDescriptionAvailable,
-                     base::Unretained(this)),
-          base::Bind(&DialMediaSinkServiceImpl::OnDeviceDescriptionError,
-                     base::Unretained(this)))),
       observer_(nullptr),
       request_context_(request_context) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
@@ -78,6 +70,13 @@ void DialMediaSinkServiceImpl::OnUserGesture() {
 
 DeviceDescriptionService* DialMediaSinkServiceImpl::GetDescriptionService() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  if (!description_service_.get()) {
+    description_service_.reset(new DeviceDescriptionService(
+        base::Bind(&DialMediaSinkServiceImpl::OnDeviceDescriptionAvailable,
+                   base::Unretained(this)),
+        base::Bind(&DialMediaSinkServiceImpl::OnDeviceDescriptionError,
+                   base::Unretained(this))));
+  }
   return description_service_.get();
 }
 
@@ -100,6 +99,7 @@ void DialMediaSinkServiceImpl::SetDialRegistryForTest(
 
 void DialMediaSinkServiceImpl::SetDescriptionServiceForTest(
     std::unique_ptr<DeviceDescriptionService> description_service) {
+  DCHECK(!description_service_);
   description_service_ = std::move(description_service);
 }
 

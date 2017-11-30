@@ -533,20 +533,8 @@ void NotificationViewMD::ScrollRectToVisible(const gfx::Rect& rect) {
 }
 
 gfx::NativeCursor NotificationViewMD::GetCursor(const ui::MouseEvent& event) {
-  // Do not change the cursor on a notification that isn't clickable.
-  if (!clickable_)
-    return views::View::GetCursor(event);
-
-  // Do not change the cursor on the actions row.
-  if (expanded_) {
-    DCHECK(actions_row_);
-    gfx::Point point_in_child = event.location();
-    ConvertPointToTarget(this, actions_row_, &point_in_child);
-    if (actions_row_->HitTestPoint(point_in_child))
-      return views::View::GetCursor(event);
-  }
-
-  return views::GetNativeHandCursor();
+  return clickable_ ? views::GetNativeHandCursor()
+                    : views::View::GetCursor(event);
 }
 
 void NotificationViewMD::OnMouseEntered(const ui::MouseEvent& event) {

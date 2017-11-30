@@ -27,7 +27,6 @@ class InternetDetailDialog : public SystemWebDialogDelegate {
   ~InternetDetailDialog() override;
 
   // ui::WebDialogDelegate
-  void GetDialogSize(gfx::Size* size) const override;
   std::string GetDialogArgs() const override;
 
  private:

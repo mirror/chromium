@@ -15,6 +15,6 @@ MockShillManagerClient::MockShillManagerClient() {
   EXPECT_CALL(*this, Init(_)).Times(AnyNumber());
 }
 
-MockShillManagerClient::~MockShillManagerClient() = default;
+MockShillManagerClient::~MockShillManagerClient() {}
 
 }  // namespace chromeos

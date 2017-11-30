@@ -32,8 +32,6 @@
 #include "chrome/browser/media/webrtc/media_capture_devices_dispatcher.h"
 #include "chrome/browser/media/webrtc/media_stream_capture_indicator.h"
 #include "chrome/browser/profiles/profile_manager.h"
-#include "chrome/browser/vr/assets.h"
-#include "chrome/browser/vr/metrics_helper.h"
 #include "chrome/browser/vr/toolbar_helper.h"
 #include "chrome/browser/vr/vr_tab_helper.h"
 #include "chrome/browser/vr/web_contents_event_forwarder.h"
@@ -133,8 +131,6 @@ VrShell::VrShell(JNIEnv* env,
                  int display_width_pixels,
                  int display_height_pixels)
     : vr_shell_enabled_(base::FeatureList::IsEnabled(features::kVrBrowsing)),
-      web_vr_autopresentation_expected_(
-          ui_initial_state.web_vr_autopresentation_expected),
       window_(window),
       compositor_(base::MakeUnique<VrCompositor>(window_)),
       delegate_provider_(delegate),
@@ -165,8 +161,6 @@ VrShell::VrShell(JNIEnv* env,
       ui_initial_state.web_vr_autopresentation_expected) {
     UMA_HISTOGRAM_BOOLEAN("VRAutopresentedWebVR", !ui_initial_state.in_web_vr);
   }
-
-  vr::Assets::GetInstance()->GetMetricsHelper()->OnEnter(vr::Mode::kVr);
 }
 
 void VrShell::Destroy(JNIEnv* env, const JavaParamRef<jobject>& obj) {
@@ -223,7 +217,7 @@ void VrShell::SwapContents(
   // tabs. crbug.com/684661
   metrics_helper_ = base::MakeUnique<VrMetricsHelper>(
       GetNonNativePageWebContents(),
-      webvr_mode_ ? vr::Mode::kWebVr : vr::Mode::kVrBrowsingRegular);
+      webvr_mode_ ? VRMode::WEBVR : VRMode::VR_BROWSER);
 }
 
 void VrShell::SetUiState() {
@@ -421,13 +415,6 @@ void VrShell::SetWebVrMode(JNIEnv* env,
   PostToGlThread(FROM_HERE, base::Bind(&VrShellGl::SetWebVrMode,
                                        gl_thread_->GetVrShellGl(), enabled));
   ui_->SetWebVrMode(enabled, show_toast);
-
-  if (!webvr_mode_ && !web_vr_autopresentation_expected_) {
-    vr::Assets::GetInstance()->GetMetricsHelper()->OnEnter(
-        vr::Mode::kVrBrowsing);
-  } else {
-    vr::Assets::GetInstance()->GetMetricsHelper()->OnEnter(vr::Mode::kWebVr);
-  }
 }
 
 void VrShell::OnFullscreenChanged(bool enabled) {
@@ -688,7 +675,7 @@ void VrShell::OnUnsupportedMode(vr::UiUnsupportedMode mode) {
       Java_VrShellImpl_onUnhandledPageInfo(env, j_vr_shell_);
       return;
     }
-    case vr::UiUnsupportedMode::kVoiceSearchNeedsRecordAudioOsPermission: {
+    case vr::UiUnsupportedMode::kAndroidPermissionNeeded: {
       JNIEnv* env = base::android::AttachCurrentThread();
       Java_VrShellImpl_onUnhandledPermissionPrompt(env, j_vr_shell_);
       return;
@@ -716,14 +703,14 @@ void VrShell::OnExitVrPromptResult(vr::UiUnsupportedMode reason,
       break;
   }
 
-  if (reason ==
-      vr::UiUnsupportedMode::kVoiceSearchNeedsRecordAudioOsPermission) {
-    // Note that we already measure the number of times the user exits VR
-    // because of the record audio permission through
-    // VR.Shell.EncounteredUnsupportedMode histogram. This histogram measures
-    // whether the user chose to proceed to grant the OS record audio permission
-    // through the reported Boolean.
-    UMA_HISTOGRAM_BOOLEAN("VR.VoiceSearch.RecordAudioOsPermissionPromptChoice",
+  if (reason == vr::UiUnsupportedMode::kAndroidPermissionNeeded) {
+    // Note that we already measure the number of times user exit VR because of
+    // audio permission through VR.Shell.EncounteredUnsupportedMode histogram.
+    // The reason we introduce this new histogram is to measure how likely user
+    // chose to not give audio permission through the reported true and false.
+    // Its purpose is different from EncounteredUnsupportedMode so we added
+    // this new histogram instead of plumbing the information into existing one.
+    UMA_HISTOGRAM_BOOLEAN("VR.Shell.AudioPermission.ExitVRChoice",
                           choice == vr::ExitVrPromptChoice::CHOICE_EXIT);
   }
 
@@ -769,8 +756,7 @@ void VrShell::SetVoiceSearchActive(bool active) {
     return;
 
   if (!HasAudioPermission()) {
-    OnUnsupportedMode(
-        vr::UiUnsupportedMode::kVoiceSearchNeedsRecordAudioOsPermission);
+    OnUnsupportedMode(vr::UiUnsupportedMode::kAndroidPermissionNeeded);
     return;
   }
 

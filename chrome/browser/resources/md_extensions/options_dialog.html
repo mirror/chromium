@@ -14,7 +14,6 @@
         height: 32px;
         width: 32px;
       }
-
       #icon-and-name-wrapper {
         align-items: center;
         display: flex;
@@ -22,20 +21,11 @@
 
       ExtensionOptions {
         display: block;
-        min-width: 300px;
       }
 
       dialog {
-        width: fit-content;
-        --cr-dialog-body: {
-          overflow: hidden;
-          padding: 0;
-        };
-
-        --cr-dialog-body-container: {
-          border: none;
-          min-height: initial;
-        };
+        /* Initially as wide as possible. This will be adjusted by js-code. */
+        width: 100%;
       }
     </style>
 

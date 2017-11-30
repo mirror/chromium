@@ -31,7 +31,7 @@ bool AppBannerManagerDesktop::IsEnabled() {
     return false;
 
   return base::FeatureList::IsEnabled(features::kAppBanners) ||
-         IsExperimentalAppBannersEnabled();
+         base::FeatureList::IsEnabled(features::kExperimentalAppBanners);
 }
 
 void AppBannerManagerDesktop::DisableTriggeringForTesting() {
@@ -48,29 +48,19 @@ void AppBannerManagerDesktop::DidFinishCreatingBookmarkApp(
     const extensions::Extension* extension,
     const WebApplicationInfo& web_app_info) {
   content::WebContents* contents = web_contents();
-  if (!contents)
-    return;
+  if (contents) {
+    // A null extension pointer indicates that the bookmark app install was not
+    // successful. Call Terminate() to terminate the flow but don't record a
+    // dismiss metric here because the banner isn't necessarily dismissed.
+    if (extension == nullptr) {
+      Terminate();
+    } else {
+      SendBannerAccepted();
 
-  if (extension) {
-    SendBannerAccepted();
-    AppBannerSettingsHelper::RecordBannerInstallEvent(
-        contents, GetAppIdentifier(), AppBannerSettingsHelper::WEB);
-    return;
+      AppBannerSettingsHelper::RecordBannerInstallEvent(
+          contents, GetAppIdentifier(), AppBannerSettingsHelper::WEB);
+    }
   }
-
-  // |extension| is null, so we assume that the confirmation dialog was
-  // cancelled. Alternatively, the extension installation may have failed, but
-  // we can't tell the difference here.
-  // TODO(crbug.com/789381): plumb through enough information to be able to
-  // distinguish between extension install failures and user-cancellations of
-  // the app install dialog.
-  if (IsExperimentalAppBannersEnabled()) {
-    SendBannerPromptRequest();  // Reprompt.
-    return;
-  }
-  // Call Terminate() to terminate the flow but don't record a dismiss metric
-  // here because the banner isn't necessarily dismissed.
-  Terminate();
 }
 
 bool AppBannerManagerDesktop::IsWebAppConsideredInstalled(

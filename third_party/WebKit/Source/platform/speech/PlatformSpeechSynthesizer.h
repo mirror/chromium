@@ -27,8 +27,6 @@
 #define PlatformSpeechSynthesizer_h
 
 #include <memory>
-
-#include "base/macros.h"
 #include "platform/PlatformExport.h"
 #include "platform/heap/Handle.h"
 #include "platform/speech/PlatformSpeechSynthesisVoice.h"
@@ -56,11 +54,13 @@ class PLATFORM_EXPORT PlatformSpeechSynthesizerClient
   virtual void VoicesDidChange() = 0;
 
  protected:
-  virtual ~PlatformSpeechSynthesizerClient() = default;
+  virtual ~PlatformSpeechSynthesizerClient() {}
 };
 
 class PLATFORM_EXPORT PlatformSpeechSynthesizer
     : public GarbageCollectedFinalized<PlatformSpeechSynthesizer> {
+  WTF_MAKE_NONCOPYABLE(PlatformSpeechSynthesizer);
+
  public:
   static PlatformSpeechSynthesizer* Create(PlatformSpeechSynthesizerClient*);
 
@@ -105,8 +105,6 @@ class PLATFORM_EXPORT PlatformSpeechSynthesizer
 
   std::unique_ptr<WebSpeechSynthesizer> web_speech_synthesizer_;
   Member<WebSpeechSynthesizerClientImpl> web_speech_synthesizer_client_;
-
-  DISALLOW_COPY_AND_ASSIGN(PlatformSpeechSynthesizer);
 };
 
 }  // namespace blink

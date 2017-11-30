@@ -8,7 +8,6 @@
 #include <initializer_list>
 #include <memory>
 #include <string>
-#include <vector>
 
 #include "base/callback.h"
 #include "base/optional.h"
@@ -31,31 +30,18 @@ using XmlParserCallback =
     base::OnceCallback<void(std::unique_ptr<base::Value> value,
                             const base::Optional<std::string>& error)>;
 
-// Parses |unsafe_xml| using the data_decoder service which, whenever feasible,
-// will be run in an isolated sandboxed process. Invokes |callback| when
+// Parses |unsafe_xml| safely in a utility process and invokes |callback| when
 // done. The XML document is transformed into a base::Value dictionary
 // structure, with special keys holding the tag name and child nodes.
-// See xml_parser.mojom for details on the format.
-// |connector| is the Connector to use when connecting to the data_decoder
-// service. This should be retrieved from whichever service is requesting the
-// decode operation.
-// If |batch_id| is non-empty, the system may batch this parse request with
-// other parse requests using the same |batch_id| in an effort to amortize the
-// overhead of a single request. The trade-off is that batch requests may not be
-// well-isolated from each other, so this should be used with appropriate
-// caution.
+// |connector| is the connector provided by the service manager and is used to
+// retrieve the XML parser service. It's commonly retrieved from a service
+// manager connection context object that the embedder provides.
 void ParseXml(service_manager::Connector* connector,
               const std::string& unsafe_xml,
-              XmlParserCallback callback,
-              const std::string& batch_id = "");
+              XmlParserCallback callback);
 
 // Below are convenience methods for handling the elements returned by
 // ParseXml().
-
-// Returns the qualified name |name_space|:|name| or simply |name| if
-// |name_space| is empty.
-std::string GetXmlQualifiedName(const std::string& name_space,
-                                const std::string& name);
 
 // Returns true if |element| is an XML element with a tag name |name|, false
 // otherwise.
@@ -76,15 +62,6 @@ bool GetXmlElementTagName(const base::Value& element, std::string* name);
 // CData node).
 bool GetXmlElementText(const base::Value& element, std::string* text);
 
-// If a namespace with a URI |namespace_uri| is defined in |element|, sets the
-// prefix for that namespace in |prefix| and returns true.
-// Returns false if no such namespace was found.
-// Note that for the default namespace, the prefix is set to the empty string
-// and the function returns true.
-bool GetXmlElementNamespacePrefix(const base::Value& element,
-                                  const std::string& namespace_uri,
-                                  std::string* prefix);
-
 // Returns the number of children of |element| named |name|.
 int GetXmlElementChildrenCount(const base::Value& element,
                                const std::string& name);
@@ -101,12 +78,6 @@ const base::Value* GetXmlElementChildWithType(const base::Value& element,
 const base::Value* GetXmlElementChildWithTag(const base::Value& element,
                                              const std::string& tag);
 
-// Populates |children| with all the children of |element| with the tag |tag|.
-// Returns true if such elements were found, false otherwise.
-bool GetAllXmlElementChildrenWithTag(const base::Value& element,
-                                     const std::string& tag,
-                                     std::vector<const base::Value*>* children);
-
 // Returns the value of the element path |path| starting at |element|, or null
 // if any element in |path| is missing. Note that if there are more than one
 // element matching any part of the path, the first one is used and
@@ -116,11 +87,6 @@ const base::Value* FindXmlElementPath(
     const base::Value& element,
     std::initializer_list<base::StringPiece> path,
     bool* unique_path);
-
-// Returns the value of the attribute named |attribute_name| in |element|, or
-// an empty string if there is no such attribute.
-std::string GetXmlElementAttribute(const base::Value& element,
-                                   const std::string& attribute_name);
 
 }  // namespace data_decoder
 

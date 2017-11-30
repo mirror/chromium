@@ -47,7 +47,7 @@ class TrayNetwork : public SystemTrayItem,
   void OnCaptivePortalDetected(const std::string& guid) override;
 
   // TrayNetworkStateObserver::Delegate
-  void NetworkStateChanged(bool notify_a11y) override;
+  void NetworkStateChanged() override;
 
  private:
   tray::NetworkTrayView* tray_;

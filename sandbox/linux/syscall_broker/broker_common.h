@@ -32,8 +32,6 @@ enum IPCCommand {
   COMMAND_INVALID = 0,
   COMMAND_OPEN,
   COMMAND_ACCESS,
-  COMMAND_STAT,
-  COMMAND_STAT64,
 };
 
 }  // namespace syscall_broker

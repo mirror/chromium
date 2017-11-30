@@ -32,7 +32,6 @@
 #include "components/feature_engagement/public/tracker.h"
 #include "components/metrics/metrics_pref_names.h"
 #include "components/metrics/metrics_service.h"
-#include "components/ntp_snippets/content_suggestions_service.h"
 #include "components/payments/core/features.h"
 #include "components/prefs/pref_change_registrar.h"
 #include "components/signin/core/browser/signin_manager.h"
@@ -84,7 +83,6 @@
 #include "ios/chrome/browser/metrics/first_user_action_recorder.h"
 #import "ios/chrome/browser/metrics/previous_session_info.h"
 #import "ios/chrome/browser/net/cookie_util.h"
-#include "ios/chrome/browser/ntp_snippets/ios_chrome_content_suggestions_service_factory.h"
 #include "ios/chrome/browser/payments/ios_payment_instrument_launcher.h"
 #include "ios/chrome/browser/payments/ios_payment_instrument_launcher_factory.h"
 #import "ios/chrome/browser/payments/payment_request_constants.h"
@@ -702,12 +700,6 @@ const int kExternalFilesCleanupDelaySeconds = 60;
     startInIncognito = NO;
 
   [MDCTypography setFontLoader:[MDFRobotoFontLoader sharedInstance]];
-
-  if ([PreviousSessionInfo sharedInstance].isFirstSessionAfterLanguageChange) {
-    IOSChromeContentSuggestionsServiceFactory::GetForBrowserState(
-        chromeBrowserState)
-        ->ClearAllCachedSuggestions();
-  }
 
   [self createInitialUI:(startInIncognito ? ApplicationMode::INCOGNITO
                                           : ApplicationMode::NORMAL)];

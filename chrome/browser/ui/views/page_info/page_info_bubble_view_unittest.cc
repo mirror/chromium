@@ -10,7 +10,7 @@
 #include "chrome/browser/ui/exclusive_access/exclusive_access_manager.h"
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "chrome/browser/ui/views/hover_button.h"
-#include "chrome/browser/ui/views/page_info/chosen_object_view.h"
+#include "chrome/browser/ui/views/page_info/chosen_object_row.h"
 #include "chrome/browser/ui/views/page_info/permission_selector_row.h"
 #include "chrome/browser/usb/usb_chooser_context.h"
 #include "chrome/browser/usb/usb_chooser_context_factory.h"
@@ -294,7 +294,7 @@ TEST_F(PageInfoBubbleViewTest, SetPermissionInfoWithUsbDevice) {
   api_->SetPermissionInfo(list);
   EXPECT_EQ(kExpectedChildren + 1, api_->permissions_view()->child_count());
 
-  ChosenObjectView* object_view = static_cast<ChosenObjectView*>(
+  ChosenObjectRow* object_view = static_cast<ChosenObjectRow*>(
       api_->permissions_view()->child_at(kExpectedChildren));
   EXPECT_EQ(3, object_view->child_count());
 

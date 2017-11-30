@@ -144,7 +144,7 @@ TEST_F('SettingsPasswordSectionBrowserTest', 'uiTests', function() {
    */
   function createPasswordListItem(passwordItem) {
     var passwordListItem = document.createElement('password-list-item');
-    passwordListItem.item = {entry: passwordItem, password: ''};
+    passwordListItem.item = passwordItem;
     document.body.appendChild(passwordListItem);
     Polymer.dom.flush();
     return passwordListItem;
@@ -158,7 +158,7 @@ TEST_F('SettingsPasswordSectionBrowserTest', 'uiTests', function() {
    */
   function createPasswordDialog(passwordItem) {
     var passwordDialog = document.createElement('password-edit-dialog');
-    passwordDialog.item = {entry: passwordItem, password: ''};
+    passwordDialog.item = passwordItem;
     document.body.appendChild(passwordDialog);
     Polymer.dom.flush();
     return passwordDialog;
@@ -250,9 +250,7 @@ TEST_F('SettingsPasswordSectionBrowserTest', 'uiTests', function() {
 
       // Assert that the data is passed into the iron list. If this fails,
       // then other expectations will also fail.
-      assertDeepEquals(
-          passwordList,
-          passwordsSection.$.passwordList.items.map(entry => entry.entry));
+      assertEquals(passwordList, passwordsSection.$.passwordList.items);
 
       validatePasswordList(passwordsSection.$.passwordList, passwordList);
 
@@ -274,12 +272,10 @@ TEST_F('SettingsPasswordSectionBrowserTest', 'uiTests', function() {
       validatePasswordList(passwordsSection.$.passwordList, passwordList);
       // Simulate 'longwebsite.com' being removed from the list.
       passwordsSection.splice('savedPasswords', 1, 1);
-      passwordList.splice(1, 1);
       flushPasswordSection(passwordsSection);
 
-      assertFalse(listContainsUrl(
-          passwordsSection.savedPasswords.map(entry => entry.entry),
-          'longwebsite.com'));
+      assertFalse(listContainsUrl(passwordsSection.savedPasswords,
+                                       'longwebsite.com'));
       assertFalse(listContainsUrl(passwordList, 'longwebsite.com'));
 
       validatePasswordList(passwordsSection.$.passwordList, passwordList);
@@ -499,7 +495,7 @@ TEST_F('SettingsPasswordSectionBrowserTest', 'uiTests', function() {
 
       assertFalse(passwordDialog.$.showPasswordButton.hidden);
 
-      passwordDialog.set('item.password', PASSWORD);
+      passwordDialog.password = PASSWORD;
       Polymer.dom.flush();
 
       assertEquals(PASSWORD,
@@ -517,7 +513,7 @@ TEST_F('SettingsPasswordSectionBrowserTest', 'uiTests', function() {
       // Hidden passwords should be disabled.
       assertTrue(passwordListItem.$$('#password').disabled);
 
-      passwordListItem.set('item.password', PASSWORD);
+      passwordListItem.password = PASSWORD;
       Polymer.dom.flush();
 
       assertEquals(PASSWORD, passwordListItem.$$('#password').value);
@@ -540,10 +536,9 @@ TEST_F('SettingsPasswordSectionBrowserTest', 'uiTests', function() {
         var actualItem = event.detail.item;
         assertEquals(
             expectedItem.loginPair.urls.origin,
-            actualItem.entry.loginPair.urls.origin);
+            actualItem.loginPair.urls.origin);
         assertEquals(
-            expectedItem.loginPair.username,
-            actualItem.entry.loginPair.username);
+            expectedItem.loginPair.username, actualItem.loginPair.username);
         done();
       });
 
@@ -558,10 +553,9 @@ TEST_F('SettingsPasswordSectionBrowserTest', 'uiTests', function() {
         var actualItem = event.detail.item;
         assertEquals(
             expectedItem.loginPair.urls.origin,
-            actualItem.entry.loginPair.urls.origin);
+            actualItem.loginPair.urls.origin);
         assertEquals(
-            expectedItem.loginPair.username,
-            actualItem.entry.loginPair.username);
+            expectedItem.loginPair.username, actualItem.loginPair.username);
         done();
       });
 

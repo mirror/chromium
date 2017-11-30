@@ -186,7 +186,7 @@ HistogramSamples::HistogramSamples(uint64_t id, Metadata* meta)
 
 // This mustn't do anything with |meta_|. It was passed to the ctor and may
 // be invalid by the time this dtor gets called.
-HistogramSamples::~HistogramSamples() = default;
+HistogramSamples::~HistogramSamples() {}
 
 void HistogramSamples::Add(const HistogramSamples& other) {
   IncreaseSumAndCount(other.sum(), other.redundant_count());
@@ -262,7 +262,7 @@ void HistogramSamples::RecordNegativeSample(NegativeSampleReason reason,
                               static_cast<int32_t>(id()));
 }
 
-SampleCountIterator::~SampleCountIterator() = default;
+SampleCountIterator::~SampleCountIterator() {}
 
 bool SampleCountIterator::GetBucketIndex(size_t* index) const {
   DCHECK(!Done());
@@ -280,7 +280,7 @@ SingleSampleIterator::SingleSampleIterator(HistogramBase::Sample min,
                                            size_t bucket_index)
     : min_(min), max_(max), bucket_index_(bucket_index), count_(count) {}
 
-SingleSampleIterator::~SingleSampleIterator() = default;
+SingleSampleIterator::~SingleSampleIterator() {}
 
 bool SingleSampleIterator::Done() const {
   return count_ == 0;

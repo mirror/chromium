@@ -4,10 +4,6 @@
 
 #include "chrome/browser/ui/views/frame/immersive_context_mus.h"
 
-#include "ash/public/cpp/immersive/immersive_fullscreen_controller.h"
-#include "ash/public/cpp/window_properties.h"
-#include "ui/aura/client/aura_constants.h"
-#include "ui/aura/window.h"
 #include "ui/views/mus/mus_client.h"
 #include "ui/views/mus/pointer_watcher_event_router.h"
 #include "ui/views/pointer_watcher.h"
@@ -26,11 +22,11 @@ void ImmersiveContextMus::InstallResizeHandleWindowTargeter(
 void ImmersiveContextMus::OnEnteringOrExitingImmersive(
     ash::ImmersiveFullscreenController* controller,
     bool entering) {
-  aura::Window* window = controller->widget()->GetNativeWindow();
-  // Auto hide the shelf in immersive fullscreen instead of hiding it.
-  window->SetProperty(ash::kHideShelfWhenFullscreenKey, !entering);
-  // Update the window's immersive mode state for the window manager.
-  window->SetProperty(aura::client::kImmersiveFullscreenKey, entering);
+  // TODO: see implementation in ImmersiveContextAsh, this needs to use mojo
+  // to poke some state in mash (shelf model, in immersive, shelf
+  // visibility...).
+  // http://crbug.com/640371.
+  NOTIMPLEMENTED();
 }
 
 gfx::Rect ImmersiveContextMus::GetDisplayBoundsInScreen(views::Widget* widget) {

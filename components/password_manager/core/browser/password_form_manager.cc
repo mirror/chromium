@@ -213,7 +213,6 @@ PasswordFormManager::PasswordFormManager(
     std::unique_ptr<FormSaver> form_saver,
     FormFetcher* form_fetcher)
     : observed_form_(observed_form),
-      observed_form_signature_(CalculateFormSignature(observed_form.form_data)),
       other_possible_username_action_(
           PasswordFormManager::IGNORE_OTHER_POSSIBLE_USERNAMES),
       form_path_segments_(
@@ -338,7 +337,8 @@ PasswordFormManager::MatchResultMask PasswordFormManager::DoesManage(
 
   result |= RESULT_ORIGINS_OR_FRAMES_MATCH;
 
-  if (CalculateFormSignature(form.form_data) == observed_form_signature_)
+  if (CalculateFormSignature(form.form_data) ==
+      CalculateFormSignature(observed_form_.form_data))
     result |= RESULT_SIGNATURE_MATCH;
 
   if (!form.form_data.name.empty() &&

@@ -78,7 +78,7 @@ VlogInfo::VlogInfo(const std::string& v_switch,
   }
 }
 
-VlogInfo::~VlogInfo() = default;
+VlogInfo::~VlogInfo() {}
 
 namespace {
 

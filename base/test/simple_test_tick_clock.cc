@@ -8,9 +8,9 @@
 
 namespace base {
 
-SimpleTestTickClock::SimpleTestTickClock() = default;
+SimpleTestTickClock::SimpleTestTickClock() {}
 
-SimpleTestTickClock::~SimpleTestTickClock() = default;
+SimpleTestTickClock::~SimpleTestTickClock() {}
 
 TimeTicks SimpleTestTickClock::NowTicks() {
   AutoLock lock(lock_);

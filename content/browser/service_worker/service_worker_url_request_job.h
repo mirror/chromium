@@ -98,9 +98,11 @@ class CONTENT_EXPORT ServiceWorkerURLRequestJob : public net::URLRequestJob {
   // When an in-flight request possibly needs CORS check, use
   // FallbackToNetworkOrRenderer. This method will decide whether the request
   // can directly go to the network or should fallback to a renderer to send
-  // CORS preflight. You can use FallbackToNetwork only when it's apparent that
-  // the request can go to the network directly (e.g., main resource requests or
-  // same-origin requests).
+  // CORS preflight. You can use FallbackToNetwork only when, like main resource
+  // or foreign fetch cases, it's apparent that the request should go to the
+  // network directly.
+  // TODO(shimazu): Update the comment when what should we do at foreign fetch
+  // fallback is determined: crbug.com/604084
   void FallbackToNetwork();
   void FallbackToNetworkOrRenderer();
   void ForwardToServiceWorker();

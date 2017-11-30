@@ -10,9 +10,9 @@ namespace chromeos {
 
 namespace tether {
 
-HostScanCacheEntry::Builder::Builder() = default;
+HostScanCacheEntry::Builder::Builder() {}
 
-HostScanCacheEntry::Builder::~Builder() = default;
+HostScanCacheEntry::Builder::~Builder() {}
 
 std::unique_ptr<HostScanCacheEntry> HostScanCacheEntry::Builder::Build() {
   DCHECK(!tether_network_guid_.empty());
@@ -71,10 +71,15 @@ HostScanCacheEntry::HostScanCacheEntry(const std::string& tether_network_guid,
       signal_strength(signal_strength),
       setup_required(setup_required) {}
 
-HostScanCacheEntry::HostScanCacheEntry(const HostScanCacheEntry& other) =
-    default;
+HostScanCacheEntry::HostScanCacheEntry(const HostScanCacheEntry& other)
+    : tether_network_guid(other.tether_network_guid),
+      device_name(other.device_name),
+      carrier(other.carrier),
+      battery_percentage(other.battery_percentage),
+      signal_strength(other.signal_strength),
+      setup_required(other.setup_required) {}
 
-HostScanCacheEntry::~HostScanCacheEntry() = default;
+HostScanCacheEntry::~HostScanCacheEntry() {}
 
 bool HostScanCacheEntry::operator==(const HostScanCacheEntry& other) const {
   return tether_network_guid == other.tether_network_guid &&

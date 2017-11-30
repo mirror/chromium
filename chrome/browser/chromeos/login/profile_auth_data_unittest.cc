@@ -221,29 +221,21 @@ void ProfileAuthDataTest::PopulateBrowserContext(
       base::BindOnce(&ProfileAuthDataTest::QuitLoop, base::Unretained(this)));
   run_loop_->Run();
 
-  cookies->SetCanonicalCookieAsync(
-      net::CanonicalCookie::CreateSanitizedCookie(
-          GURL(kSAMLIdPCookieURL), kCookieName, cookie_value,
-          kSAMLIdPCookieDomainWithWildcard, std::string(), base::Time(),
-          base::Time(), base::Time(), true, false,
-          net::CookieSameSite::DEFAULT_MODE, net::COOKIE_PRIORITY_DEFAULT),
-      true /*secure_source*/, true /*modify_http_only*/,
+  cookies->SetCookieWithDetailsAsync(
+      GURL(kSAMLIdPCookieURL), kCookieName, cookie_value,
+      kSAMLIdPCookieDomainWithWildcard, std::string(), base::Time(),
+      base::Time(), base::Time(), true, false,
+      net::CookieSameSite::DEFAULT_MODE, net::COOKIE_PRIORITY_DEFAULT,
       net::CookieStore::SetCookiesCallback());
-
-  cookies->SetCanonicalCookieAsync(
-      net::CanonicalCookie::CreateSanitizedCookie(
-          GURL(kSAMLIdPCookieURL), kCookieName, cookie_value, std::string(),
-          std::string(), base::Time(), base::Time(), base::Time(), true, false,
-          net::CookieSameSite::DEFAULT_MODE, net::COOKIE_PRIORITY_DEFAULT),
-      true /*secure_source*/, true /*modify_http_only*/,
+  cookies->SetCookieWithDetailsAsync(
+      GURL(kSAMLIdPCookieURL), kCookieName, cookie_value, std::string(),
+      std::string(), base::Time(), base::Time(), base::Time(), true, false,
+      net::CookieSameSite::DEFAULT_MODE, net::COOKIE_PRIORITY_DEFAULT,
       net::CookieStore::SetCookiesCallback());
-
-  cookies->SetCanonicalCookieAsync(
-      net::CanonicalCookie::CreateSanitizedCookie(
-          GURL(kGAIACookieURL), kCookieName, cookie_value, std::string(),
-          std::string(), base::Time(), base::Time(), base::Time(), true, false,
-          net::CookieSameSite::DEFAULT_MODE, net::COOKIE_PRIORITY_DEFAULT),
-      true /*secure_source*/, true /*modify_http_only*/,
+  cookies->SetCookieWithDetailsAsync(
+      GURL(kGAIACookieURL), kCookieName, cookie_value, std::string(),
+      std::string(), base::Time(), base::Time(), base::Time(), true, false,
+      net::CookieSameSite::DEFAULT_MODE, net::COOKIE_PRIORITY_DEFAULT,
       net::CookieStore::SetCookiesCallback());
 
   GetChannelIDs(browser_context)

@@ -45,7 +45,7 @@ class MockNetworkConfigurationRemover : public NetworkConfigurationRemover {
  public:
   MockNetworkConfigurationRemover()
       : NetworkConfigurationRemover(nullptr, nullptr) {}
-  ~MockNetworkConfigurationRemover() override = default;
+  ~MockNetworkConfigurationRemover() override {}
 
   MOCK_METHOD1(RemoveNetworkConfiguration, void(const std::string&));
 };
@@ -55,7 +55,7 @@ class MockNetworkConfigurationRemover : public NetworkConfigurationRemover {
 class TetherNetworkDisconnectionHandlerTest : public NetworkStateTest {
  protected:
   TetherNetworkDisconnectionHandlerTest() : NetworkStateTest() {}
-  ~TetherNetworkDisconnectionHandlerTest() override = default;
+  ~TetherNetworkDisconnectionHandlerTest() override {}
 
   void SetUp() override {
     DBusThreadManager::Initialize();

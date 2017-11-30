@@ -951,7 +951,7 @@ SkFilterQuality GraphicsContext::ComputeFilterQuality(
   if (Printing()) {
     resampling = kInterpolationNone;
   } else if (image->CurrentFrameIsLazyDecoded()) {
-    resampling = kInterpolationDefault;
+    resampling = kInterpolationHigh;
   } else {
     resampling = ComputeInterpolationQuality(
         SkScalarToFloat(src.Width()), SkScalarToFloat(src.Height()),
@@ -966,7 +966,7 @@ SkFilterQuality GraphicsContext::ComputeFilterQuality(
     }
   }
   return static_cast<SkFilterQuality>(
-      std::min(resampling, ImageInterpolationQuality()));
+      LimitInterpolationQuality(*this, resampling));
 }
 
 void GraphicsContext::DrawTiledImage(Image* image,

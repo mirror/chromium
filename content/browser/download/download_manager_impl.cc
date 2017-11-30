@@ -980,9 +980,8 @@ void DownloadManagerImpl::BeginDownloadInternal(
   download::InProgressCache* in_progress_cache =
       GetBrowserContext()->GetDownloadManagerDelegate()->GetInProgressCache();
   if (in_progress_cache) {
-    in_progress_cache->AddOrReplaceEntry(
-        download::DownloadEntry(params->guid(), params->request_origin(),
-                                ToDownloadSource(params->download_source())));
+    in_progress_cache->AddOrReplaceEntry(download::DownloadEntry(
+        params.get()->guid(), params.get()->request_origin()));
   }
 
   if (base::FeatureList::IsEnabled(features::kNetworkService)) {

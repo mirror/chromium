@@ -186,7 +186,7 @@ void TrayVPN::OnDetailedViewDestroyed() {
   detailed_ = nullptr;
 }
 
-void TrayVPN::NetworkStateChanged(bool /* notify_a11y */) {
+void TrayVPN::NetworkStateChanged() {
   if (default_)
     default_->Update();
   if (detailed_)

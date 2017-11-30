@@ -1992,9 +1992,12 @@ LayoutBlock* LayoutBlock::CreateAnonymousWithParentAndDisplay(
 
 bool LayoutBlock::RecalcNormalFlowChildOverflowIfNeeded(
     LayoutObject* layout_object) {
-  if (layout_object->IsOutOfFlowPositioned())
+  if (layout_object->IsOutOfFlowPositioned() ||
+      !layout_object->NeedsOverflowRecalcAfterStyleChange())
     return false;
-  return layout_object->RecalcOverflowAfterStyleChange();
+
+  DCHECK(layout_object->IsLayoutBlock());
+  return ToLayoutBlock(layout_object)->RecalcOverflowAfterStyleChange();
 }
 
 bool LayoutBlock::RecalcChildOverflowAfterStyleChange() {
@@ -2026,13 +2029,21 @@ bool LayoutBlock::RecalcPositionedDescendantsOverflowAfterStyleChange() {
     return children_overflow_changed;
 
   for (auto* box : *positioned_descendants) {
-    if (box->RecalcOverflowAfterStyleChange())
-      children_overflow_changed = true;
+    if (!box->NeedsOverflowRecalcAfterStyleChange())
+      continue;
+    LayoutBlock* block = ToLayoutBlock(box);
+    if (!block->RecalcOverflowAfterStyleChange() ||
+        box->Style()->GetPosition() == EPosition::kFixed)
+      continue;
+
+    children_overflow_changed = true;
   }
   return children_overflow_changed;
 }
 
 bool LayoutBlock::RecalcOverflowAfterStyleChange() {
+  DCHECK(NeedsOverflowRecalcAfterStyleChange());
+
   bool children_overflow_changed = false;
   if (ChildNeedsOverflowRecalcAfterStyleChange())
     children_overflow_changed = RecalcChildOverflowAfterStyleChange();

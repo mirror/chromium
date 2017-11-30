@@ -1277,8 +1277,8 @@ TEST_F(TraceEventTestFixture, EnabledObserverFiresOnDisable) {
 class AfterStateChangeEnabledStateObserver
     : public TraceLog::EnabledStateObserver {
  public:
-  AfterStateChangeEnabledStateObserver() = default;
-  ~AfterStateChangeEnabledStateObserver() override = default;
+  AfterStateChangeEnabledStateObserver() {}
+  ~AfterStateChangeEnabledStateObserver() override {}
 
   // TraceLog::EnabledStateObserver overrides:
   void OnTraceLogEnabled() override {
@@ -1308,8 +1308,8 @@ TEST_F(TraceEventTestFixture, ObserversFireAfterStateChange) {
 class SelfRemovingEnabledStateObserver
     : public TraceLog::EnabledStateObserver {
  public:
-  SelfRemovingEnabledStateObserver() = default;
-  ~SelfRemovingEnabledStateObserver() override = default;
+  SelfRemovingEnabledStateObserver() {}
+  ~SelfRemovingEnabledStateObserver() override {}
 
   // TraceLog::EnabledStateObserver overrides:
   void OnTraceLogEnabled() override {}
@@ -1406,7 +1406,7 @@ TEST_F(TraceEventTestFixture, AddMetadataEvent) {
   class Convertable : public ConvertableToTraceFormat {
    public:
     explicit Convertable(int* num_calls) : num_calls_(num_calls) {}
-    ~Convertable() override = default;
+    ~Convertable() override {}
     void AppendAsTraceFormat(std::string* out) const override {
       (*num_calls_)++;
       out->append("\"metadata_value\"");
@@ -2153,8 +2153,8 @@ TEST_F(TraceEventTestFixture, TraceWithDisabledByDefaultCategoryFilters) {
 
 class MyData : public ConvertableToTraceFormat {
  public:
-  MyData() = default;
-  ~MyData() override = default;
+  MyData() {}
+  ~MyData() override {}
 
   void AppendAsTraceFormat(std::string* out) const override {
     out->append("{\"foo\":1}");

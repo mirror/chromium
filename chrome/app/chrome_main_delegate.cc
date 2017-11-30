@@ -178,10 +178,7 @@ base::LazyInstance<ChromeCrashReporterClient>::Leaky g_chrome_crash_client =
 #endif
 
 extern int NaClMain(const content::MainFunctionParams&);
-
-#if !defined(OS_CHROMEOS)
 extern int CloudPrintServiceProcessMain(const content::MainFunctionParams&);
-#endif
 
 const char* const ChromeMainDelegate::kNonWildcardDomainNonPortSchemes[] = {
     extensions::kExtensionScheme, chrome::kChromeSearchScheme};
@@ -973,8 +970,7 @@ int ChromeMainDelegate::RunProcess(
 // Android.
 #if !defined(OS_ANDROID)
   static const MainFunction kMainFunctions[] = {
-#if BUILDFLAG(ENABLE_PRINT_PREVIEW) && !defined(CHROME_MULTIPLE_DLL_CHILD) && \
-    !defined(OS_CHROMEOS)
+#if BUILDFLAG(ENABLE_PRINT_PREVIEW) && !defined(CHROME_MULTIPLE_DLL_CHILD)
     {switches::kCloudPrintServiceProcess, CloudPrintServiceProcessMain},
 #endif
 

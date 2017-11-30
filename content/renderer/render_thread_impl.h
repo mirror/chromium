@@ -147,6 +147,7 @@ class P2PSocketDispatcher;
 class PeerConnectionDependencyFactory;
 class PeerConnectionTracker;
 class QuotaDispatcher;
+class QuotaMessageFilter;
 class RenderThreadObserver;
 class RendererBlinkPlatformImpl;
 class ResourceDispatcher;
@@ -296,7 +297,7 @@ class CONTENT_EXPORT RenderThreadImpl
       const GURL& url,
       const LayerTreeFrameSinkCallback& callback);
 
-  blink::AssociatedInterfaceRegistry* GetAssociatedInterfaceRegistry();
+  AssociatedInterfaceRegistry* GetAssociatedInterfaceRegistry();
 
   std::unique_ptr<cc::SwapPromise> RequestCopyOfOutputForLayoutTest(
       int32_t routing_id,
@@ -356,6 +357,10 @@ class CONTENT_EXPORT RenderThreadImpl
 
   QuotaDispatcher* quota_dispatcher() const {
     return quota_dispatcher_.get();
+  }
+
+  QuotaMessageFilter* quota_message_filter() const {
+    return quota_message_filter_.get();
   }
 
   ResourceDispatcher* resource_dispatcher() const {
@@ -659,6 +664,7 @@ class CONTENT_EXPORT RenderThreadImpl
   scoped_refptr<MidiMessageFilter> midi_message_filter_;
   scoped_refptr<ServiceWorkerMessageFilter> service_worker_message_filter_;
   scoped_refptr<ChildResourceMessageFilter> resource_message_filter_;
+  scoped_refptr<QuotaMessageFilter> quota_message_filter_;
 
   std::unique_ptr<BrowserPluginManager> browser_plugin_manager_;
 
@@ -837,7 +843,7 @@ class CONTENT_EXPORT RenderThreadImpl
   // A mojo connection to the CompositingModeReporter service.
   viz::mojom::CompositingModeReporterPtr compositing_mode_reporter_;
   // The class is a CompositingModeWatcher, which is bound to mojo through
-  // this member.
+  // this memeber.
   mojo::Binding<viz::mojom::CompositingModeWatcher>
       compositing_mode_watcher_binding_;
 

@@ -33,7 +33,6 @@
 #include "base/memory/shared_memory.h"
 #include "base/memory/shared_memory_handle.h"
 #include "base/message_loop/message_loop.h"
-#include "base/metrics/histogram_base.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/persistent_histogram_allocator.h"
 #include "base/metrics/persistent_memory_allocator.h"
@@ -152,7 +151,6 @@
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/notification_types.h"
-#include "content/public/browser/quota_permission_context.h"
 #include "content/public/browser/render_process_host_factory.h"
 #include "content/public/browser/render_process_host_observer.h"
 #include "content/public/browser/render_widget_host.h"
@@ -1774,6 +1772,9 @@ void RenderProcessHostImpl::CreateMessageFilters() {
 
   AddFilter(new TraceMessageFilter(GetID()));
   AddFilter(new ResolveProxyMsgHelper(request_context.get()));
+  AddFilter(new QuotaDispatcherHost(
+      GetID(), storage_partition_impl_->GetQuotaManager(),
+      GetContentClient()->browser()->CreateQuotaPermissionContext()));
 
   scoped_refptr<ServiceWorkerContextWrapper> service_worker_context(
       static_cast<ServiceWorkerContextWrapper*>(
@@ -1911,12 +1912,6 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
   registry->AddInterface(
       base::Bind(&metrics::CreateSingleSampleMetricsProvider));
 
-  registry->AddInterface(base::Bind(
-      QuotaDispatcherHost::Create, GetID(),
-      base::RetainedRef(storage_partition_impl_->GetQuotaManager()),
-      base::WrapRefCounted(
-          GetContentClient()->browser()->CreateQuotaPermissionContext())));
-
   registry->AddInterface(
       base::Bind(&CreateReportingServiceProxy, storage_partition_impl_));
 
@@ -1925,7 +1920,7 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
   associated_interfaces_.reset(new AssociatedInterfaceRegistryImpl());
   GetContentClient()->browser()->ExposeInterfacesToRenderer(
       registry.get(), associated_interfaces_.get(), this);
-  blink::AssociatedInterfaceRegistry* associated_registry =
+  AssociatedInterfaceRegistry* associated_registry =
       associated_interfaces_.get();
   associated_registry->AddInterface(base::Bind(
       &RenderProcessHostImpl::BindRouteProvider, base::Unretained(this)));
@@ -2740,15 +2735,15 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     renderer_cmd->AppendSwitch(switches::kDisableDatabases);
   }
 
-#if !defined(OS_ANDROID) && !defined(OS_CHROMEOS)
+#if !defined(OS_ANDROID)
   // If gpu compositing is not being used, tell the renderer at startup. This
   // is inherently racey, as it may change while the renderer is being launched,
   // but the renderer will hear about the correct state eventually. This
   // optimizes the common case to avoid wasted work.
-  // Note: There is no ImageTransportFactory with Mus, but there is also no
-  // software compositing on ChromeOS where Mus is used, so no need to check
-  // this state and forward it.
-  if (ImageTransportFactory::GetInstance()->IsGpuCompositingDisabled())
+  // Note: There is no ImageTransportFactory with Mash or Viz.
+  // TODO(danakj): Get this info somewhere for viz mode.
+  if (!IsUsingMus() && !browser_cmd.HasSwitch(switches::kEnableViz) &&
+      ImageTransportFactory::GetInstance()->IsGpuCompositingDisabled())
     renderer_cmd->AppendSwitch(switches::kDisableGpuCompositing);
 #endif
 
@@ -4159,7 +4154,7 @@ void RenderProcessHostImpl::GetBrowserHistogram(
   if (!histogram) {
     histogram_json = "{}";
   } else {
-    histogram->WriteJSON(&histogram_json, base::JSON_VERBOSITY_LEVEL_FULL);
+    histogram->WriteJSON(&histogram_json);
   }
   std::move(callback).Run(histogram_json);
 }

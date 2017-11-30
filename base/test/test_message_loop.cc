@@ -7,7 +7,7 @@
 
 namespace base {
 
-TestMessageLoop::TestMessageLoop() = default;
+TestMessageLoop::TestMessageLoop() {}
 
 TestMessageLoop::TestMessageLoop(MessageLoop::Type type) : loop_(type) {}
 

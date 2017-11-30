@@ -26,9 +26,7 @@ const base::Feature kAllowContentInitiatedDataUrlNavigations{
 const base::Feature kAsmJsToWebAssembly{"AsmJsToWebAssembly",
                                         base::FEATURE_ENABLED_BY_DEFAULT};
 
-// Enables async wheel events. Note that this feature depends on
-// TouchpadAndWheelScrollLatching and enabling it when latching is disabled
-// won't have any impacts.
+// Enables async wheel events.
 const base::Feature kAsyncWheelEvents{"AsyncWheelEvents",
                                       base::FEATURE_DISABLED_BY_DEFAULT};
 
@@ -116,7 +114,7 @@ const base::Feature kFontCacheScaling{"FontCacheScaling",
 // same-origin to the top frame, or if a user gesture is being processed.
 const base::Feature kFramebustingNeedsSameOriginOrUserGesture{
     "FramebustingNeedsSameOriginOrUserGesture",
-    base::FEATURE_ENABLED_BY_DEFAULT};
+    base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Enables extended Gamepad API features like motion tracking and haptics.
 const base::Feature kGamepadExtensions{"GamepadExtensions",
@@ -174,7 +172,7 @@ const base::Feature kMojoBlobs{"MojoBlobs", base::FEATURE_ENABLED_BY_DEFAULT};
 
 // Mojo-based Input Event routing.
 const base::Feature kMojoInputMessages{"MojoInputMessages",
-                                       base::FEATURE_ENABLED_BY_DEFAULT};
+                                       base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Mojo-based Session Storage.
 const base::Feature kMojoSessionStorage{"MojoSessionStorage",
@@ -419,13 +417,6 @@ const base::Feature kWebUsb{"WebUSB", base::FEATURE_ENABLED_BY_DEFAULT};
 // Enables/disables the Image Capture API.
 const base::Feature kImageCaptureAPI{"ImageCaptureAPI",
                                      base::FEATURE_ENABLED_BY_DEFAULT};
-
-// Alternative to switches::kIsolateOrigins, for turning on origin isolation.
-// List of origins to isolate has to be specified via
-// kIsolateOriginsFieldTrialParamName.
-const base::Feature kIsolateOrigins{"IsolateOrigins",
-                                    base::FEATURE_DISABLED_BY_DEFAULT};
-const char kIsolateOriginsFieldTrialParamName[] = "OriginsList";
 
 const base::Feature kKeepAliveRendererForKeepaliveRequests{
     "KeepAliveRendererForKeepaliveRequests", base::FEATURE_ENABLED_BY_DEFAULT};

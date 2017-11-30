@@ -19,7 +19,7 @@ namespace {
 
 class TestDiscardableSharedMemory : public DiscardableSharedMemory {
  public:
-  TestDiscardableSharedMemory() = default;
+  TestDiscardableSharedMemory() {}
 
   explicit TestDiscardableSharedMemory(SharedMemoryHandle handle)
       : DiscardableSharedMemory(handle) {}

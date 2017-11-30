@@ -18,7 +18,7 @@ HeadlessBrowserMainParts::HeadlessBrowserMainParts(HeadlessBrowserImpl* browser)
     : browser_(browser)
     , devtools_http_handler_started_(false) {}
 
-HeadlessBrowserMainParts::~HeadlessBrowserMainParts() = default;
+HeadlessBrowserMainParts::~HeadlessBrowserMainParts() {}
 
 void HeadlessBrowserMainParts::PreMainMessageLoopRun() {
   const base::CommandLine* command_line =

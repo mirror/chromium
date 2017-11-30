@@ -48,6 +48,8 @@ const ComputedStyle* ComputedStylePropertyMap::UpdateStyle() {
 
 const CSSValue* ComputedStylePropertyMap::GetProperty(
     CSSPropertyID property_id) {
+  if (property_id == CSSPropertyInvalid)
+    return nullptr;
   const ComputedStyle* style = UpdateStyle();
   if (!style)
     return nullptr;

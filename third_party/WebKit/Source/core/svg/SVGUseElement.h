@@ -33,7 +33,7 @@ namespace blink {
 
 class SVGUseElement final : public SVGGraphicsElement,
                             public SVGURIReference,
-                            public ResourceClient {
+                            public DocumentResourceClient {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(SVGUseElement);
   USING_PRE_FINALIZER(SVGUseElement, Dispose);

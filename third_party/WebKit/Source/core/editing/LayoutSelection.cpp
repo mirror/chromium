@@ -190,28 +190,6 @@ void PrintOldSelectedLayoutObjects(
   }
   LOG(INFO) << stream.str();
 }
-
-void PrintSelectionPaintRange(const SelectionPaintRange& paint_range) {
-  std::stringstream stream;
-  stream << std::endl << "layout_objects:" << std::endl;
-  for (LayoutObject* layout_object : paint_range) {
-    PrintLayoutObjectForSelection(stream, layout_object);
-    stream << std::endl;
-  }
-  LOG(INFO) << stream.str();
-}
-
-void PrintSelectionStateInLayoutView(const FrameSelection& selection) {
-  std::stringstream stream;
-  stream << std::endl << "layout_objects:" << std::endl;
-  LayoutView* layout_view = selection.GetDocument().GetLayoutView();
-  for (LayoutObject* layout_object = layout_view; layout_object;
-       layout_object = layout_object->NextInPreOrder()) {
-    PrintLayoutObjectForSelection(stream, layout_object);
-    stream << std::endl;
-  }
-  LOG(INFO) << stream.str();
-}
 #endif
 
 static SelectedLayoutObjects CollectInvalidationSet(
@@ -746,12 +724,10 @@ IntRect LayoutSelection::SelectionBounds() {
 
   // Create a single bounding box rect that encloses the whole selection.
   LayoutRect selected_rect;
-  for (LayoutObject* layout_object : paint_range_) {
-    const SelectionState state = layout_object->GetSelectionState();
-    if (state == SelectionState::kContain || state == SelectionState::kNone)
-      continue;
+  const SelectedLayoutObjects& current_map =
+      CollectInvalidationSet(paint_range_);
+  for (auto layout_object : current_map)
     selected_rect.Unite(SelectionRectForLayoutObject(layout_object));
-  }
 
   return PixelSnappedIntRect(selected_rect);
 }

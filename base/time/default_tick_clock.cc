@@ -8,7 +8,7 @@
 
 namespace base {
 
-DefaultTickClock::~DefaultTickClock() = default;
+DefaultTickClock::~DefaultTickClock() {}
 
 TimeTicks DefaultTickClock::NowTicks() {
   return TimeTicks::Now();

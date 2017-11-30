@@ -9,7 +9,7 @@ namespace trace_event {
 
 HeapProfilerSerializationState::HeapProfilerSerializationState()
     : heap_profiler_breakdown_threshold_bytes_(0) {}
-HeapProfilerSerializationState::~HeapProfilerSerializationState() = default;
+HeapProfilerSerializationState::~HeapProfilerSerializationState() {}
 
 void HeapProfilerSerializationState::SetStackFrameDeduplicator(
     std::unique_ptr<StackFrameDeduplicator> stack_frame_deduplicator) {

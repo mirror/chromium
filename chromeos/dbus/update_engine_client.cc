@@ -93,7 +93,7 @@ class UpdateEngineClientImpl : public UpdateEngineClient {
   UpdateEngineClientImpl()
       : update_engine_proxy_(NULL), last_status_(), weak_ptr_factory_(this) {}
 
-  ~UpdateEngineClientImpl() override = default;
+  ~UpdateEngineClientImpl() override {}
 
   // UpdateEngineClient implementation:
   void AddObserver(Observer* observer) override {
@@ -601,7 +601,7 @@ class UpdateEngineClientFakeImpl : public UpdateEngineClientStubImpl {
   UpdateEngineClientFakeImpl() : weak_factory_(this) {
   }
 
-  ~UpdateEngineClientFakeImpl() override = default;
+  ~UpdateEngineClientFakeImpl() override {}
 
   // UpdateEngineClient implementation:
   void AddObserver(Observer* observer) override {
@@ -690,9 +690,11 @@ class UpdateEngineClientFakeImpl : public UpdateEngineClientStubImpl {
   DISALLOW_COPY_AND_ASSIGN(UpdateEngineClientFakeImpl);
 };
 
-UpdateEngineClient::UpdateEngineClient() = default;
+UpdateEngineClient::UpdateEngineClient() {
+}
 
-UpdateEngineClient::~UpdateEngineClient() = default;
+UpdateEngineClient::~UpdateEngineClient() {
+}
 
 // static
 UpdateEngineClient::UpdateCheckCallback

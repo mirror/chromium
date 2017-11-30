@@ -39,7 +39,6 @@
 
 namespace blink {
 
-class ExceptionState;
 class Interpolation;
 
 // Time independent representation of an Animation's content.
@@ -51,10 +50,6 @@ class CORE_EXPORT EffectModel : public GarbageCollectedFinalized<EffectModel> {
     kCompositeReplace,
     kCompositeAdd,
   };
-  static bool StringToCompositeOperation(String,
-                                         CompositeOperation&,
-                                         ExceptionState* = nullptr);
-  static String CompositeOperationToString(CompositeOperation);
 
   EffectModel() {}
   virtual ~EffectModel() {}

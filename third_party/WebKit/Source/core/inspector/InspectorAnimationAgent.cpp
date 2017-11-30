@@ -12,11 +12,9 @@
 #include "core/animation/ComputedTimingProperties.h"
 #include "core/animation/EffectModel.h"
 #include "core/animation/ElementAnimation.h"
-#include "core/animation/ElementAnimations.h"
 #include "core/animation/KeyframeEffectModel.h"
 #include "core/animation/KeyframeEffectReadOnly.h"
 #include "core/animation/StringKeyframe.h"
-#include "core/animation/css/CSSAnimations.h"
 #include "core/css/CSSKeyframeRule.h"
 #include "core/css/CSSKeyframesRule.h"
 #include "core/css/CSSRuleList.h"
@@ -105,7 +103,8 @@ BuildObjectForAnimationEffect(KeyframeEffectReadOnly* effect,
   if (is_transition) {
     // Obtain keyframes and convert keyframes back to delay
     DCHECK(effect->Model()->IsKeyframeEffectModel());
-    const KeyframeVector& keyframes = effect->Model()->GetFrames();
+    const KeyframeVector& keyframes =
+        ToKeyframeEffectModelBase(effect->Model())->GetFrames();
     if (keyframes.size() == 3) {
       DCHECK(!IsNull(keyframes.at(1)->Offset()));
       delay = keyframes.at(1)->Offset() * duration;
@@ -150,7 +149,8 @@ static std::unique_ptr<protocol::Animation::KeyframesRule>
 BuildObjectForAnimationKeyframes(const KeyframeEffectReadOnly* effect) {
   if (!effect || !effect->Model() || !effect->Model()->IsKeyframeEffectModel())
     return nullptr;
-  const KeyframeEffectModelBase* model = effect->Model();
+  const KeyframeEffectModelBase* model =
+      ToKeyframeEffectModelBase(effect->Model());
   Vector<double> computed_offsets =
       KeyframeEffectModelBase::GetComputedOffsets(model->GetFrames());
   std::unique_ptr<protocol::Array<protocol::Animation::KeyframeStyle>>
@@ -293,8 +293,9 @@ blink::Animation* InspectorAnimationAgent::AnimationClone(
     KeyframeEffectReadOnly* old_effect =
         ToKeyframeEffectReadOnly(animation->effect());
     DCHECK(old_effect->Model()->IsKeyframeEffectModel());
-    KeyframeEffectModelBase* old_model = old_effect->Model();
-    KeyframeEffectModelBase* new_model = nullptr;
+    KeyframeEffectModelBase* old_model =
+        ToKeyframeEffectModelBase(old_effect->Model());
+    EffectModel* new_model = nullptr;
     // Clone EffectModel.
     // TODO(samli): Determine if this is an animations bug.
     if (old_model->IsStringKeyframeEffectModel()) {
@@ -382,8 +383,9 @@ Response InspectorAnimationAgent::setTiming(const String& animation_id,
   String type = id_to_animation_type_.at(animation_id);
   if (type == AnimationType::CSSTransition) {
     KeyframeEffect* effect = ToKeyframeEffect(animation->effect());
+    KeyframeEffectModelBase* model = ToKeyframeEffectModelBase(effect->Model());
     const TransitionKeyframeEffectModel* old_model =
-        ToTransitionKeyframeEffectModel(effect->Model());
+        ToTransitionKeyframeEffectModel(model);
     // Refer to CSSAnimations::calculateTransitionUpdateForProperty() for the
     // structure of transitions.
     const KeyframeVector& frames = old_model->GetFrames();
@@ -394,7 +396,7 @@ Response InspectorAnimationAgent::setTiming(const String& animation_id,
     // Update delay, represented by the distance between the first two
     // keyframes.
     new_frames[1]->SetOffset(delay / (delay + duration));
-    effect->Model()->SetFrames(new_frames);
+    model->SetFrames(new_frames);
 
     AnimationEffectTiming* timing = effect->timing();
     UnrestrictedDoubleOrString unrestricted_duration;

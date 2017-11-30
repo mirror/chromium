@@ -400,7 +400,7 @@ void VrShellGl::SubmitFrame(int16_t frame_index,
   }
   // Always notify the client that we're done with the mailbox even
   // if we haven't drawn it, so that it's eligible for destruction.
-  submit_client_->OnSubmitFrameTransferred(true);
+  submit_client_->OnSubmitFrameTransferred();
   if (!swapped) {
     // We dropped without drawing, report this as completed rendering
     // now to unblock the client. We're not going to receive it in
@@ -459,10 +459,9 @@ void VrShellGl::OnWebVRFrameAvailable() {
 
   ui_->OnWebVrFrameAvailable();
 
+  DrawFrame(frame_index, base::TimeTicks::Now());
   if (web_vr_mode_)
     ++webvr_frames_received_;
-
-  DrawFrame(frame_index, base::TimeTicks::Now());
   ScheduleOrCancelWebVrFrameTimeout();
 }
 
@@ -949,15 +948,12 @@ void VrShellGl::DrawIntoAcquiredFrame(int16_t frame_index,
 
   // At this point, we draw non-WebVR content that could, potentially, fill the
   // viewport.  NB: this is not just 2d browsing stuff, we may have a splash
-  // screen showing in WebVR mode that must also fill the screen. That said,
-  // while the splash screen is up ShouldDrawWebVr() will return false.
-  if (!ShouldDrawWebVr()) {
-    ui_->ui_renderer()->Draw(render_info_primary_);
+  // screen showing in WebVR mode that must also fill the screen.
+  ui_->ui_renderer()->Draw(render_info_primary_);
 
-    // Draw keyboard. TODO(ymalik,crbug.com/780135): Keyboard should be a UI
-    // element and this special rendering logic should move out of here.
-    DrawKeyboard();
-  }
+  // Draw keyboard. TODO(ymalik,crbug.com/780135): Keyboard should be a UI
+  // element and this special rendering logic should move out of here.
+  DrawKeyboard();
 
   content_frame_available_ = false;
   acquired_frame_.Unbind();

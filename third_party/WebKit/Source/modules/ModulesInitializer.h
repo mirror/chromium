@@ -29,6 +29,8 @@ class MODULES_EXPORT ModulesInitializer : public CoreInitializer {
                                  InspectorDOMAgent*,
                                  InspectedFrames*,
                                  Page*) const override;
+  LinkResource* CreateServiceWorkerLinkResource(
+      HTMLLinkElement*) const override;
   void OnClearWindowObjectInMainWorld(Document&,
                                       const Settings&) const override;
   std::unique_ptr<WebMediaPlayer> CreateWebMediaPlayer(

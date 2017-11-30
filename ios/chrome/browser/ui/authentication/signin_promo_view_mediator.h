@@ -95,9 +95,6 @@ class PrefRegistrySyncable;
 // called.
 - (void)signinPromoViewRemoved;
 
-// Returns YES if the sign-in promo view is |Invalid|, |Closed| or |Invisible|.
-- (BOOL)isInvalidClosedOrNeverVisible;
-
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_AUTHENTICATION_SIGNIN_PROMO_VIEW_MEDIATOR_H_

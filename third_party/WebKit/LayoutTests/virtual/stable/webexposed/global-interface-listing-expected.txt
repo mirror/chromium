@@ -4336,12 +4336,10 @@ interface RTCPeerConnection : EventTarget
     getter onnegotiationneeded
     getter onremovestream
     getter onsignalingstatechange
-    getter ontrack
     getter remoteDescription
     getter signalingState
     method addIceCandidate
     method addStream
-    method addTrack
     method close
     method constructor
     method createAnswer
@@ -4351,10 +4349,8 @@ interface RTCPeerConnection : EventTarget
     method getLocalStreams
     method getReceivers
     method getRemoteStreams
-    method getSenders
     method getStats
     method removeStream
-    method removeTrack
     method setConfiguration
     method setLocalDescription
     method setRemoteDescription
@@ -4366,7 +4362,6 @@ interface RTCPeerConnection : EventTarget
     setter onnegotiationneeded
     setter onremovestream
     setter onsignalingstatechange
-    setter ontrack
 interface RTCPeerConnectionIceEvent : Event
     attribute @@toStringTag
     getter candidate
@@ -4381,10 +4376,6 @@ interface RTCRtpReceiver
     getter track
     method constructor
     method getContributingSources
-interface RTCRtpSender
-    attribute @@toStringTag
-    getter track
-    method constructor
 interface RTCSessionDescription
     attribute @@toStringTag
     getter sdp
@@ -4404,12 +4395,6 @@ interface RTCStatsReport
     method has
     method keys
     method values
-interface RTCTrackEvent : Event
-    attribute @@toStringTag
-    getter receiver
-    getter streams
-    getter track
-    method constructor
 interface RadioNodeList : NodeList
     attribute @@toStringTag
     getter value
@@ -7786,12 +7771,10 @@ interface webkitRTCPeerConnection : EventTarget
     getter onnegotiationneeded
     getter onremovestream
     getter onsignalingstatechange
-    getter ontrack
     getter remoteDescription
     getter signalingState
     method addIceCandidate
     method addStream
-    method addTrack
     method close
     method constructor
     method createAnswer
@@ -7801,10 +7784,8 @@ interface webkitRTCPeerConnection : EventTarget
     method getLocalStreams
     method getReceivers
     method getRemoteStreams
-    method getSenders
     method getStats
     method removeStream
-    method removeTrack
     method setConfiguration
     method setLocalDescription
     method setRemoteDescription
@@ -7816,7 +7797,6 @@ interface webkitRTCPeerConnection : EventTarget
     setter onnegotiationneeded
     setter onremovestream
     setter onsignalingstatechange
-    setter ontrack
 interface webkitSpeechGrammar
     attribute @@toStringTag
     getter src

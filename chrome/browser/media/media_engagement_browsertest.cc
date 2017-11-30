@@ -6,7 +6,6 @@
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/scoped_feature_list.h"
-#include "base/test/simple_test_clock.h"
 #include "base/test/test_mock_time_task_runner.h"
 #include "base/time/time.h"
 #include "chrome/browser/media/media_engagement_contents_observer.h"
@@ -71,8 +70,7 @@ class WasRecentlyAudibleWatcher {
 class MediaEngagementBrowserTest : public InProcessBrowserTest {
  public:
   MediaEngagementBrowserTest()
-      : test_clock_(new base::SimpleTestClock()),
-        task_runner_(new base::TestMockTimeTaskRunner()) {
+      : task_runner_(new base::TestMockTimeTaskRunner()) {
     http_server_.ServeFilesFromSourceDirectory(kMediaEngagementTestDataPath);
     http_server_origin2_.ServeFilesFromSourceDirectory(
         kMediaEngagementTestDataPath);
@@ -88,8 +86,6 @@ class MediaEngagementBrowserTest : public InProcessBrowserTest {
         media::kRecordMediaEngagementScores);
 
     InProcessBrowserTest::SetUp();
-
-    injected_clock_ = false;
   };
 
   void LoadTestPage(const std::string& page) {
@@ -114,10 +110,7 @@ class MediaEngagementBrowserTest : public InProcessBrowserTest {
   };
 
   void Advance(base::TimeDelta time) {
-    DCHECK(injected_clock_);
     task_runner_->FastForwardBy(time);
-    static_cast<base::SimpleTestClock*>(GetService()->clock_.get())
-        ->Advance(time);
     base::RunLoop().RunUntilIdle();
   }
 
@@ -206,11 +199,6 @@ class MediaEngagementBrowserTest : public InProcessBrowserTest {
   }
 
   void InjectTimerTaskRunner() {
-    if (!injected_clock_) {
-      GetService()->clock_ = std::move(test_clock_);
-      injected_clock_ = true;
-    }
-
     contents_observer()->SetTaskRunnerForTest(task_runner_);
   }
 
@@ -223,10 +211,6 @@ class MediaEngagementBrowserTest : public InProcessBrowserTest {
     DCHECK(mei_service->contents_observers_.size() == 1);
     return *mei_service->contents_observers_.begin();
   }
-
-  bool injected_clock_ = false;
-
-  std::unique_ptr<base::SimpleTestClock> test_clock_;
 
   net::EmbeddedTestServer http_server_;
   net::EmbeddedTestServer http_server_origin2_;
@@ -447,12 +431,4 @@ IN_PROC_BROWSER_TEST_F(MediaEngagementBrowserTest, MultipleElements) {
   AdvanceMeaningfulPlaybackTime();
   CloseTab();
   ExpectScores(1, 1, 3, 2);
-}
-
-IN_PROC_BROWSER_TEST_F(MediaEngagementBrowserTest,
-                       RecordAudibleBasedOnShortTime) {
-  LoadTestPageAndWaitForPlayAndAudible("engagement_test.html", false);
-  Advance(base::TimeDelta::FromSeconds(4));
-  CloseTab();
-  ExpectScores(1, 0, 1, 0);
 }

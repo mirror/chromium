@@ -137,10 +137,7 @@ base::TickClock* SchedulerHelper::GetClock() const {
 }
 
 base::TimeTicks SchedulerHelper::NowTicks() const {
-  if (task_queue_manager_)
-    return task_queue_manager_->NowTicks();
-  // We may need current time for tracing when shutting down worker thread.
-  return base::TimeTicks::Now();
+  return task_queue_manager_->NowTicks();
 }
 
 }  // namespace scheduler

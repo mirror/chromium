@@ -10,11 +10,23 @@
 
 namespace blink {
 
-namespace {
+bool CSSVariableParser::IsValidVariableName(const CSSParserToken& token) {
+  if (token.GetType() != kIdentToken)
+    return false;
 
-bool IsValidVariableReference(CSSParserTokenRange);
+  StringView value = token.Value();
+  return value.length() >= 2 && value[0] == '-' && value[1] == '-';
+}
 
-bool ClassifyBlock(CSSParserTokenRange range, bool& has_references) {
+bool CSSVariableParser::IsValidVariableName(const String& string) {
+  return string.length() >= 2 && string[0] == '-' && string[1] == '-';
+}
+
+bool IsValidVariableReference(CSSParserTokenRange, bool& has_at_apply_rule);
+
+bool ClassifyBlock(CSSParserTokenRange range,
+                   bool& has_references,
+                   bool& has_at_apply_rule) {
   size_t block_stack_size = 0;
 
   while (!range.AtEnd()) {
@@ -23,7 +35,7 @@ bool ClassifyBlock(CSSParserTokenRange range, bool& has_references) {
     if (range.Peek().GetBlockType() == CSSParserToken::kBlockStart &&
         range.Peek().FunctionId() == CSSValueVar) {
       CSSParserTokenRange block = range.ConsumeBlock();
-      if (!IsValidVariableReference(block))
+      if (!IsValidVariableReference(block, has_at_apply_rule))
         return false;  // Bail if any references are invalid
       has_references = true;
       continue;
@@ -59,7 +71,8 @@ bool ClassifyBlock(CSSParserTokenRange range, bool& has_references) {
   return true;
 }
 
-bool IsValidVariableReference(CSSParserTokenRange range) {
+bool IsValidVariableReference(CSSParserTokenRange range,
+                              bool& has_at_apply_rule) {
   range.ConsumeWhitespace();
   if (!CSSVariableParser::IsValidVariableName(
           range.ConsumeIncludingWhitespace()))
@@ -73,12 +86,14 @@ bool IsValidVariableReference(CSSParserTokenRange range) {
     return false;
 
   bool has_references = false;
-  return ClassifyBlock(range, has_references);
+  return ClassifyBlock(range, has_references, has_at_apply_rule);
 }
 
-CSSValueID ClassifyVariableRange(CSSParserTokenRange range,
-                                 bool& has_references) {
+static CSSValueID ClassifyVariableRange(CSSParserTokenRange range,
+                                        bool& has_references,
+                                        bool& has_at_apply_rule) {
   has_references = false;
+  has_at_apply_rule = false;
 
   range.ConsumeWhitespace();
   if (range.Peek().GetType() == kIdentToken) {
@@ -88,30 +103,19 @@ CSSValueID ClassifyVariableRange(CSSParserTokenRange range,
       return id;
   }
 
-  if (ClassifyBlock(range, has_references))
+  if (ClassifyBlock(range, has_references, has_at_apply_rule))
     return CSSValueInternalVariableValue;
   return CSSValueInvalid;
-}
-
-}  // namespace
-
-bool CSSVariableParser::IsValidVariableName(const CSSParserToken& token) {
-  if (token.GetType() != kIdentToken)
-    return false;
-
-  StringView value = token.Value();
-  return value.length() >= 2 && value[0] == '-' && value[1] == '-';
-}
-
-bool CSSVariableParser::IsValidVariableName(const String& string) {
-  return string.length() >= 2 && string[0] == '-' && string[1] == '-';
 }
 
 bool CSSVariableParser::ContainsValidVariableReferences(
     CSSParserTokenRange range) {
   bool has_references;
-  CSSValueID type = ClassifyVariableRange(range, has_references);
-  return type == CSSValueInternalVariableValue && has_references;
+  bool has_at_apply_rule;
+  CSSValueID type =
+      ClassifyVariableRange(range, has_references, has_at_apply_rule);
+  return type == CSSValueInternalVariableValue && has_references &&
+         !has_at_apply_rule;
 }
 
 CSSCustomPropertyDeclaration* CSSVariableParser::ParseDeclarationValue(
@@ -122,14 +126,17 @@ CSSCustomPropertyDeclaration* CSSVariableParser::ParseDeclarationValue(
     return nullptr;
 
   bool has_references;
-  CSSValueID type = ClassifyVariableRange(range, has_references);
+  bool has_at_apply_rule;
+  CSSValueID type =
+      ClassifyVariableRange(range, has_references, has_at_apply_rule);
 
   if (type == CSSValueInvalid)
     return nullptr;
   if (type == CSSValueInternalVariableValue) {
     return CSSCustomPropertyDeclaration::Create(
         variable_name,
-        CSSVariableData::Create(range, is_animation_tainted, has_references));
+        CSSVariableData::Create(range, is_animation_tainted,
+                                has_references || has_at_apply_rule));
   }
   return CSSCustomPropertyDeclaration::Create(variable_name, type);
 }
@@ -143,12 +150,15 @@ CSSVariableReferenceValue* CSSVariableParser::ParseRegisteredPropertyValue(
     return nullptr;
 
   bool has_references;
-  CSSValueID type = ClassifyVariableRange(range, has_references);
+  bool has_at_apply_rule;
+  CSSValueID type =
+      ClassifyVariableRange(range, has_references, has_at_apply_rule);
 
   if (type != CSSValueInternalVariableValue)
     return nullptr;  // Invalid or a css-wide keyword
   if (require_var_reference && !has_references)
     return nullptr;
+  // TODO(timloh): Should this be hasReferences || hasAtApplyRule?
   return CSSVariableReferenceValue::Create(
       CSSVariableData::Create(range, is_animation_tainted, has_references),
       context);

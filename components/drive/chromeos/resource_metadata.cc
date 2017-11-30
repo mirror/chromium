@@ -270,7 +270,7 @@ FileError ResourceMetadata::AddEntry(const ResourceEntry& entry,
 
     if (error == FILE_ERROR_OK)
       return FILE_ERROR_EXISTS;
-    if (error != FILE_ERROR_NOT_FOUND)
+    else if (error != FILE_ERROR_NOT_FOUND)
       return error;
   }
 

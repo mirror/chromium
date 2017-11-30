@@ -75,7 +75,7 @@ Canvas log:
             }
             paint : {
                 color : "#FF000000"
-                filterLevel : "Medium"
+                filterLevel : "High"
                 flags : "AntiAlias"
                 hinting : "Normal"
                 strokeCap : "Butt"

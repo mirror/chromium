@@ -35,7 +35,7 @@ class ThreadLocalStorageRunner : public DelegateSimpleThread::Delegate {
   explicit ThreadLocalStorageRunner(int* tls_value_ptr)
       : tls_value_ptr_(tls_value_ptr) {}
 
-  ~ThreadLocalStorageRunner() override = default;
+  ~ThreadLocalStorageRunner() override {}
 
   void Run() override {
     *tls_value_ptr_ = kInitialTlsValue;

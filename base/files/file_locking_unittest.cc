@@ -121,7 +121,7 @@ MULTIPROCESS_TEST_MAIN(ChildMain) {
 
 class FileLockingTest : public testing::Test {
  public:
-  FileLockingTest() = default;
+  FileLockingTest() {}
 
  protected:
   void SetUp() override {

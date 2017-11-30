@@ -40,8 +40,7 @@ class BookmarkAppNavigationThrottle : public content::NavigationThrottle {
  private:
   // Decides if the navigation should be opened in a new tab, in a new App
   // Window, or if the navigation should continue normally.
-  content::NavigationThrottle::ThrottleCheckResult ProcessNavigation(
-      bool is_redirect);
+  content::NavigationThrottle::ThrottleCheckResult ProcessNavigation();
 
   // Opens the current target url in an App window. May post a task to do so if
   // opening the app synchronously could result in the app opening in the

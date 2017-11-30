@@ -529,7 +529,7 @@ namespace {
 // Publicly exposes the ClaimBytes interface for testing.
 class TestingPickle : public Pickle {
  public:
-  TestingPickle() = default;
+  TestingPickle() {}
 
   void* ClaimBytes(size_t num_bytes) { return Pickle::ClaimBytes(num_bytes); }
 };

@@ -11,7 +11,7 @@ namespace tether {
 MockTetherHostResponseRecorder::MockTetherHostResponseRecorder()
     : TetherHostResponseRecorder(nullptr) {}
 
-MockTetherHostResponseRecorder::~MockTetherHostResponseRecorder() = default;
+MockTetherHostResponseRecorder::~MockTetherHostResponseRecorder() {}
 
 }  // namespace tether
 

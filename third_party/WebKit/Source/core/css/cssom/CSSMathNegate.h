@@ -55,7 +55,6 @@ class CORE_EXPORT CSSMathNegate : public CSSMathValue {
 
   // From CSSNumericValue
   CSSNumericValue* Negate() final { return value_.Get(); }
-  WTF::Optional<CSSNumericSumValue> SumValue() const final;
 
   Member<CSSNumericValue> value_;
   DISALLOW_COPY_AND_ASSIGN(CSSMathNegate);

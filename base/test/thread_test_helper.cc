@@ -31,7 +31,7 @@ bool ThreadTestHelper::Run() {
 
 void ThreadTestHelper::RunTest() { set_test_result(true); }
 
-ThreadTestHelper::~ThreadTestHelper() = default;
+ThreadTestHelper::~ThreadTestHelper() {}
 
 void ThreadTestHelper::RunOnSequence() {
   RunTest();

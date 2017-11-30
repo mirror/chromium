@@ -22,7 +22,6 @@
 #endif
 
 #ifdef CLANG_BUILD
-  #define ALPHAVAL  (-1)
   #define ADDVI_H(a, b)  __msa_addvi_h((v8i16)a, b)
   #define ADDVI_W(a, b)  __msa_addvi_w((v4i32)a, b)
   #define SRAI_B(a, b)  __msa_srai_b((v16i8)a, b)
@@ -33,7 +32,6 @@
   #define ANDI_B(a, b)  __msa_andi_b((v16u8)a, b)
   #define ORI_B(a, b)   __msa_ori_b((v16u8)a, b)
 #else
-  #define ALPHAVAL  (0xff)
   #define ADDVI_H(a, b)  (a + b)
   #define ADDVI_W(a, b)  (a + b)
   #define SRAI_B(a, b)  (a >> b)

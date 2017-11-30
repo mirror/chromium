@@ -6,9 +6,9 @@
 
 namespace base {
 
-SimpleTestClock::SimpleTestClock() = default;
+SimpleTestClock::SimpleTestClock() {}
 
-SimpleTestClock::~SimpleTestClock() = default;
+SimpleTestClock::~SimpleTestClock() {}
 
 Time SimpleTestClock::Now() {
   AutoLock lock(lock_);

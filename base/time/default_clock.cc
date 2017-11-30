@@ -8,7 +8,7 @@
 
 namespace base {
 
-DefaultClock::~DefaultClock() = default;
+DefaultClock::~DefaultClock() {}
 
 Time DefaultClock::Now() {
   return Time::Now();

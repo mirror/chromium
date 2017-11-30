@@ -3487,8 +3487,8 @@ TEST_F(WebContentsImplTest, LoadResourceWithEmptySecurityInfo) {
   ASSERT_TRUE(state_delegate);
   state_delegate->AllowCert(test_url.host(), *cert.get(), 1);
   EXPECT_TRUE(state_delegate->HasAllowException(test_url.host()));
-  contents()->controller_.ssl_manager()->DidStartResourceResponse(
-      test_url, false, 0, RESOURCE_TYPE_MAIN_FRAME);
+  contents()->controller_.ssl_manager()->DidStartResourceResponse(test_url,
+                                                                  false, 0);
 
   EXPECT_TRUE(state_delegate->HasAllowException(test_url.host()));
 

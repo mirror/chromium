@@ -30,7 +30,7 @@ SampleVectorBase::SampleVectorBase(uint64_t id,
   CHECK_GE(bucket_ranges_->bucket_count(), 1u);
 }
 
-SampleVectorBase::~SampleVectorBase() = default;
+SampleVectorBase::~SampleVectorBase() {}
 
 void SampleVectorBase::Accumulate(Sample value, Count count) {
   const size_t bucket_index = GetBucketIndex(value);
@@ -327,7 +327,7 @@ PersistentSampleVector::PersistentSampleVector(
   }
 }
 
-PersistentSampleVector::~PersistentSampleVector() = default;
+PersistentSampleVector::~PersistentSampleVector() {}
 
 bool PersistentSampleVector::MountExistingCountsStorage() const {
   // There is no early exit if counts is not yet mounted because, given that
@@ -384,7 +384,7 @@ SampleVectorIterator::SampleVectorIterator(
   SkipEmptyBuckets();
 }
 
-SampleVectorIterator::~SampleVectorIterator() = default;
+SampleVectorIterator::~SampleVectorIterator() {}
 
 bool SampleVectorIterator::Done() const {
   return index_ >= counts_size_;

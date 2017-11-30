@@ -17,7 +17,6 @@ import("//components/signin/features.gni")
 import("//components/spellcheck/spellcheck_build_features.gni")
 import("//extensions/features/features.gni")
 import("//media/media_options.gni")
-import("//mojo/public/tools/bindings/mojom.gni")
 import("//ppapi/features/features.gni")
 import("//remoting/remoting_enable.gni")
 import("//rlz/features/features.gni")
@@ -174,6 +173,14 @@ static_library("test_support") {
     "//ui/gl",
   ]
 
+  if (enable_plugins) {
+    public_deps += [ "//ppapi/shared_impl" ]
+  }
+
+  if (enable_message_center) {
+    public_deps += [ "//ui/message_center:test_support" ]
+  }
+
   if (is_android) {
     sources -= [
       "base/dialog_test_browser_window.cc",
@@ -185,10 +192,22 @@ static_library("test_support") {
     public_deps += [ "//components/zoom:test_support" ]
   }
 
+  if (enable_extensions) {
+    public_deps += [
+      "//apps:test_support",
+      "//chrome/common/extensions/api",
+      "//components/guest_view/browser:test_support",
+      "//extensions:test_support",
+    ]
+  }
+
+  if (enable_offline_pages) {
+    public_deps += [ "//components/offline_pages/core:test_support" ]
+  }
+
   if (is_linux) {
     public_deps += [ "//crypto:platform" ]
   }
-
   if (is_mac) {
     sources += [
       "//chrome/app/chrome_crash_reporter_client.cc",
@@ -200,7 +219,6 @@ static_library("test_support") {
       "//third_party/ocmock",
     ]
   }
-
   if (is_win) {
     sources += [ "//chrome/app/chrome_crash_reporter_client_win.cc" ]
     public_deps += [
@@ -210,7 +228,6 @@ static_library("test_support") {
       "//third_party/wtl",
     ]
   }
-
   if (is_chromeos) {
     sources += [
       "../browser/chromeos/accessibility/speech_monitor.cc",
@@ -245,31 +262,6 @@ static_library("test_support") {
       "views/chrome_views_test_base.cc",
       "views/chrome_views_test_base.h",
     ]
-  }
-
-  if (enable_extensions) {
-    public_deps += [
-      "//apps:test_support",
-      "//chrome/common/extensions/api",
-      "//components/guest_view/browser:test_support",
-      "//extensions:test_support",
-    ]
-  }
-
-  if (enable_message_center) {
-    public_deps += [ "//ui/message_center:test_support" ]
-  }
-
-  if (enable_offline_pages) {
-    public_deps += [ "//components/offline_pages/core:test_support" ]
-  }
-
-  if (enable_plugins) {
-    public_deps += [ "//ppapi/shared_impl" ]
-  }
-
-  if (enable_print_preview && !is_chromeos) {
-    public_deps += [ "//chrome/service" ]
   }
 }
 
@@ -628,6 +620,11 @@ test("browser_tests") {
       "../browser/prerender/prerender_test_utils.h",
       "../browser/previews/previews_browsertest.cc",
       "../browser/previews/previews_service_browser_test.cc",
+      "../browser/printing/cloud_print/test/cloud_print_policy_browsertest.cc",
+      "../browser/printing/cloud_print/test/cloud_print_proxy_process_browsertest.cc",
+      "../browser/printing/print_browsertest.cc",
+      "../browser/printing/print_preview_dialog_controller_browsertest.cc",
+      "../browser/printing/print_preview_pdf_generated_browsertest.cc",
       "../browser/printing/pwg_raster_converter_browsertest.cc",
       "../browser/process_singleton_browsertest.cc",
       "../browser/profile_resetter/profile_resetter_browsertest.cc",
@@ -658,6 +655,7 @@ test("browser_tests") {
       "../browser/search/suggestions/image_fetcher_impl_browsertest.cc",
       "../browser/search_engines/template_url_scraper_browsertest.cc",
       "../browser/secure_origin_whitelist_browsertest.cc",
+      "../browser/service_process/service_process_control_browsertest.cc",
       "../browser/sessions/better_session_restore_browsertest.cc",
       "../browser/sessions/persistent_tab_restore_service_browsertest.cc",
       "../browser/sessions/session_restore_browsertest.cc",
@@ -758,7 +756,6 @@ test("browser_tests") {
       "../browser/ui/search/instant_theme_browsertest.cc",
       "../browser/ui/search/local_ntp_browsertest.cc",
       "../browser/ui/search/local_ntp_doodle_browsertest.cc",
-      "../browser/ui/search/local_ntp_js_browsertest.cc",
       "../browser/ui/search/local_ntp_one_google_bar_browsertest.cc",
       "../browser/ui/search/local_ntp_test_utils.cc",
       "../browser/ui/search/local_ntp_test_utils.h",
@@ -791,7 +788,7 @@ test("browser_tests") {
       "../browser/ui/views/try_chrome_dialog_win/try_chrome_dialog_browsertest.cc",
       "../browser/ui/webui/bookmarks_ui_browsertest.cc",
       "../browser/ui/webui/chrome_url_data_manager_browsertest.cc",
-      "../browser/ui/webui/chromeos/bluetooth_pairing_dialog_browsertest-inl.h",
+      "../browser/ui/webui/chromeos/bluetooth_pairing_ui_browsertest-inl.h",
       "../browser/ui/webui/constrained_web_dialog_ui_browsertest.cc",
       "../browser/ui/webui/extensions/extension_settings_browsertest.cc",
       "../browser/ui/webui/extensions/extension_settings_browsertest.h",
@@ -809,6 +806,7 @@ test("browser_tests") {
       "../browser/ui/webui/policy_tool_ui_browsertest.cc",
       "../browser/ui/webui/policy_ui_browsertest.cc",
       "../browser/ui/webui/prefs_internals_browsertest.cc",
+      "../browser/ui/webui/print_preview/print_preview_ui_browsertest.cc",
       "../browser/ui/webui/profile_helper_browsertest.cc",
       "../browser/ui/webui/set_as_default_browser_ui_browsertest_win.cc",
       "../browser/ui/webui/settings/md_settings_ui_browsertest.cc",
@@ -1080,6 +1078,7 @@ test("browser_tests") {
         "../browser/extensions/api/browser/browser_apitest.cc",
         "../browser/extensions/api/browsing_data/browsing_data_test.cc",
         "../browser/extensions/api/cast_streaming/cast_streaming_apitest.cc",
+        "../browser/extensions/api/cloud_print_private/cloud_print_private_apitest.cc",
         "../browser/extensions/api/command_line_private/command_line_private_apitest.cc",
         "../browser/extensions/api/commands/command_service_browsertest.cc",
         "../browser/extensions/api/content_settings/content_settings_apitest.cc",
@@ -1253,7 +1252,6 @@ test("browser_tests") {
         "../browser/extensions/updater/extension_cache_fake.h",
         "../browser/extensions/view_extension_source_browsertest.cc",
         "../browser/extensions/wake_event_page_apitest.cc",
-        "../browser/extensions/wasm_app_browsertest.cc",
         "../browser/extensions/web_contents_browsertest.cc",
         "../browser/extensions/webstore_inline_installer_browsertest.cc",
         "../browser/extensions/webstore_installer_browsertest.cc",
@@ -1288,10 +1286,7 @@ test("browser_tests") {
         "//extensions/common/api",
       ]
 
-      data += [
-        "//chrome/test/data/extensions/",
-        "//extensions/test/data/",
-      ]
+      data += [ "//extensions/test/data/" ]
     }
 
     if (use_aura) {
@@ -1606,6 +1601,7 @@ test("browser_tests") {
 
         # chromeos does not support profile list avatar menu
         "../browser/profiles/profile_list_desktop_browsertest.cc",
+        "../browser/service_process/service_process_control_browsertest.cc",
         "../browser/ui/views/external_protocol_dialog_browsertest.cc",
 
         # inline login UI is disabled on chromeos
@@ -1883,30 +1879,30 @@ test("browser_tests") {
         "//third_party/widevine/cdm:widevinecdmadapter",
       ]
     }
-    if (enable_print_preview) {
-      sources += [
+    if (!enable_print_preview) {
+      sources -= [
         "../browser/printing/print_browsertest.cc",
         "../browser/printing/print_preview_dialog_controller_browsertest.cc",
         "../browser/printing/print_preview_pdf_generated_browsertest.cc",
+        "../browser/service_process/service_process_control_browsertest.cc",
         "../browser/ui/webui/print_preview/print_preview_ui_browsertest.cc",
       ]
-      if (enable_extensions && !is_chromeos) {
-        sources += [ "../browser/extensions/api/cloud_print_private/cloud_print_private_apitest.cc" ]
+      if (enable_extensions) {
+        sources -= [ "../browser/extensions/api/cloud_print_private/cloud_print_private_apitest.cc" ]
       }
-      if (!is_mac && !is_chromeos) {
-        sources += [
-          # This test depends on GetCommandLineForRelaunch, which is not
-          # available on Mac. It is also not intended to run on ChromeOS.
-          "../browser/printing/cloud_print/test/cloud_print_policy_browsertest.cc",
-        ]
-      }
-      if (!is_chromeos) {
-        sources += [
-          # Not intended to run on ChromeOS.
-          "../browser/printing/cloud_print/test/cloud_print_proxy_process_browsertest.cc",
-          "../browser/service_process/service_process_control_browsertest.cc",
-        ]
-      }
+    }
+    if (!enable_print_preview || is_mac || is_chromeos) {
+      sources -= [
+        # This test depends on GetCommandLineForRelaunch, which is not
+        # available on Mac. It is also not intended to run on ChromeOS.
+        "../browser/printing/cloud_print/test/cloud_print_policy_browsertest.cc",
+      ]
+    }
+    if (!enable_print_preview || is_chromeos) {
+      sources -= [
+        # Not intended to run on ChromeOS.
+        "../browser/printing/cloud_print/test/cloud_print_proxy_process_browsertest.cc",
+      ]
     }
     if (enable_mdns) {
       sources += [ "../browser/ui/webui/local_discovery/local_discovery_ui_browsertest.cc" ]
@@ -2054,17 +2050,6 @@ group("angle_perftests") {
     "//testing/scripts/run_gtest_perf_test.py",
     "//tools/perf/generate_legacy_perf_dashboard_json.py",
   ]
-}
-
-if (is_mac) {
-  mojom("firefox_importer_interface") {
-    sources = [
-      "../utility/importer/firefox_importer_unittest_utils_mac.mojom",
-    ]
-    public_deps = [
-      "//components/autofill/content/common:mojo_types",
-    ]
-  }
 }
 
 test("unit_tests") {
@@ -2890,17 +2875,16 @@ test("unit_tests") {
       "../utility/importer/bookmarks_file_importer_unittest.cc",
       "../utility/importer/edge_database_reader_unittest_win.cc",
       "../utility/importer/firefox_importer_unittest.cc",
+      "../utility/importer/firefox_importer_unittest_messages_internal.h",
       "../utility/importer/firefox_importer_unittest_utils.h",
       "../utility/importer/firefox_importer_unittest_utils_mac.cc",
       "../utility/importer/safari_importer_unittest.mm",
     ]
     deps += [
       "//components/signin/core/browser:signin_features",
+      "//ipc",
       "//third_party/libaddressinput",
     ]
-    if (is_mac) {
-      deps += [ ":firefox_importer_interface" ]
-    }
   }
 
   if (!is_android) {
@@ -2917,7 +2901,6 @@ test("unit_tests") {
       "../browser/media/router/discovery/dial/dial_media_sink_service_proxy_unittest.cc",
       "../browser/media/router/discovery/dial/dial_registry_unittest.cc",
       "../browser/media/router/discovery/dial/dial_service_unittest.cc",
-      "../browser/media/router/discovery/dial/safe_dial_device_description_parser_unittest.cc",
       "../browser/media/router/discovery/mdns/cast_media_sink_service_impl_unittest.cc",
       "../browser/media/router/discovery/mdns/cast_media_sink_service_unittest.cc",
       "../browser/media/router/discovery/mdns/dns_sd_registry_unittest.cc",
@@ -2955,6 +2938,7 @@ test("unit_tests") {
       "../browser/ui/webui/media_router/media_router_webui_message_handler_unittest.cc",
       "../browser/ui/webui/media_router/query_result_manager_unittest.cc",
       "../common/media_router/mojo/media_router_struct_traits_unittest.cc",
+      "../utility/media_router/dial_device_description_parser_impl_unittest.cc",
     ]
     deps += [ "//components/bubble:test_support" ]
 
@@ -3573,6 +3557,7 @@ test("unit_tests") {
 
   if (enable_print_preview) {
     sources += [
+      "../browser/printing/cloud_print/cloud_print_proxy_service_unittest.cc",
       "../browser/printing/print_job_unittest.cc",
       "../browser/printing/print_preview_dialog_controller_unittest.cc",
       "../browser/printing/print_preview_test.cc",
@@ -3584,6 +3569,17 @@ test("unit_tests") {
       "../browser/ui/webui/print_preview/print_preview_handler_unittest.cc",
       "../browser/ui/webui/print_preview/print_preview_ui_unittest.cc",
       "../browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+      "../common/cloud_print/cloud_print_helpers_unittest.cc",
+      "../common/service_process_util_mac_unittest.mm",
+      "../common/service_process_util_unittest.cc",
+      "../service/cloud_print/cloud_print_service_helpers_unittest.cc",
+      "../service/cloud_print/cloud_print_token_store_unittest.cc",
+      "../service/cloud_print/cloud_print_url_fetcher_unittest.cc",
+      "../service/cloud_print/connector_settings_unittest.cc",
+      "../service/cloud_print/printer_job_handler_unittest.cc",
+      "../service/cloud_print/printer_job_queue_handler_unittest.cc",
+      "../service/service_ipc_server_unittest.cc",
+      "../service/service_process_prefs_unittest.cc",
       "../utility/cloud_print/pwg_encoder_unittest.cc",
     ]
 
@@ -3591,23 +3587,6 @@ test("unit_tests") {
       "//ipc",
       "//printing:test_support",
     ]
-
-    if (!is_chromeos) {
-      sources += [
-        "../browser/printing/cloud_print/cloud_print_proxy_service_unittest.cc",
-        "../common/cloud_print/cloud_print_helpers_unittest.cc",
-        "../common/service_process_util_mac_unittest.mm",
-        "../common/service_process_util_unittest.cc",
-        "../service/cloud_print/cloud_print_service_helpers_unittest.cc",
-        "../service/cloud_print/cloud_print_token_store_unittest.cc",
-        "../service/cloud_print/cloud_print_url_fetcher_unittest.cc",
-        "../service/cloud_print/connector_settings_unittest.cc",
-        "../service/cloud_print/printer_job_handler_unittest.cc",
-        "../service/cloud_print/printer_job_queue_handler_unittest.cc",
-        "../service/service_ipc_server_unittest.cc",
-        "../service/service_process_prefs_unittest.cc",
-      ]
-    }
   }
 
   if (enable_captive_portal_detection) {
@@ -4359,7 +4338,6 @@ if (is_android) {
       "../browser/ui/browser_focus_uitest.cc",
       "../browser/ui/cocoa/apps/app_shim_menu_controller_mac_interactive_uitest.mm",
       "../browser/ui/cocoa/apps/quit_with_apps_controller_mac_interactive_uitest.mm",
-      "../browser/ui/cocoa/status_bubble_mac_interactive_uitest.mm",
       "../browser/ui/cocoa/tab_contents/web_contents_view_mac_interactive_uitest.mm",
       "../browser/ui/exclusive_access/flash_fullscreen_interactive_browsertest.cc",
       "../browser/ui/exclusive_access/fullscreen_controller_interactive_browsertest.cc",

@@ -231,12 +231,14 @@ bool Shell::initially_hide_cursor_ = false;
 // Shell, public:
 
 // static
-Shell* Shell::CreateInstance(ShellInitParams init_params) {
+Shell* Shell::CreateInstance(const ShellInitParams& init_params) {
   CHECK(!instance_);
-  instance_ = new Shell(std::move(init_params.delegate),
-                        std::move(init_params.shell_port));
-  instance_->Init(init_params.context_factory,
-                  init_params.context_factory_private);
+  ShellPort* shell_port = init_params.shell_port;
+  if (!shell_port)
+    shell_port = new ShellPortClassic();
+  instance_ = new Shell(base::WrapUnique<ShellDelegate>(init_params.delegate),
+                        base::WrapUnique<ShellPort>(shell_port));
+  instance_->Init(init_params);
   return instance_;
 }
 
@@ -816,8 +818,7 @@ Shell::~Shell() {
   instance_ = nullptr;
 }
 
-void Shell::Init(ui::ContextFactory* context_factory,
-                 ui::ContextFactoryPrivate* context_factory_private) {
+void Shell::Init(const ShellInitParams& init_params) {
   const Config config = shell_port_->GetAshConfig();
 
   // These controllers call Shell::Get() in their constructors, so they cannot
@@ -933,9 +934,9 @@ void Shell::Init(ui::ContextFactory* context_factory,
   if (config == Config::CLASSIC) {
     display_manager_->RefreshFontParams();
 
-    aura::Env::GetInstance()->set_context_factory(context_factory);
+    aura::Env::GetInstance()->set_context_factory(init_params.context_factory);
     aura::Env::GetInstance()->set_context_factory_private(
-        context_factory_private);
+        init_params.context_factory_private);
   }
 
   // The WindowModalityController needs to be at the front of the input event

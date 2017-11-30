@@ -17,7 +17,6 @@
 #include "chrome/browser/chromeos/policy/device_cloud_policy_validator.h"
 #include "chrome/browser/chromeos/policy/enrollment_config.h"
 #include "chrome/browser/chromeos/settings/install_attributes.h"
-#include "chromeos/dbus/auth_policy_client.h"
 #include "components/policy/core/common/cloud/cloud_policy_client.h"
 #include "components/policy/core/common/cloud/cloud_policy_constants.h"
 #include "components/policy/core/common/cloud/cloud_policy_store.h"
@@ -198,7 +197,7 @@ class EnrollmentHandlerChromeOS : public CloudPolicyClient::Observer,
   void HandleStoreRobotAuthTokenResult(bool result);
 
   // Handles result from device policy refresh via authpolicyd.
-  void HandleActiveDirectoryPolicyRefreshed(authpolicy::ErrorType error);
+  void HandleActiveDirectoryPolicyRefreshed(bool success);
 
   // Drops any ongoing actions.
   void Stop();

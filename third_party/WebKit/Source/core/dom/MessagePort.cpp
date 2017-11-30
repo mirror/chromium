@@ -127,7 +127,7 @@ void MessagePort::start() {
   channel_.SetCallback(
       ConvertToBaseCallback(CrossThreadBind(
           &MessagePort::MessageAvailable, WrapCrossThreadWeakPersistent(this))),
-      task_runner_);
+      task_runner_->ToSingleThreadTaskRunner());
   started_ = true;
   MessageAvailable();
 }

@@ -1955,12 +1955,6 @@ const FeatureEntry kFeatureEntries[] = {
      SINGLE_VALUE_TYPE(extensions::switches::kEnableEmbeddedExtensionOptions)},
 #endif  // ENABLE_EXTENSIONS
 #if !defined(OS_ANDROID)
-#if defined(OS_CHROMEOS)
-    {"enable-ash-sidebar", flag_descriptions::kAshSidebarName,
-     flag_descriptions::kAshSidebarDescription, kOsCrOS,
-     ENABLE_DISABLE_VALUE_TYPE(ash::switches::kAshSidebarEnabled,
-                               ash::switches::kAshSidebarDisabled)},
-#endif  // OS_CHROMEOS
     {"enable-message-center-new-style-notification",
      flag_descriptions::kMessageCenterNewStyleNotificationName,
      flag_descriptions::kMessageCenterNewStyleNotificationDescription,
@@ -2754,10 +2748,6 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kNewRemotePlaybackPipelineName,
      flag_descriptions::kNewRemotePlaybackPipelineDescription, kOsAll,
      FEATURE_VALUE_TYPE(media::kNewRemotePlaybackPipeline)},
-    {"enable-surfaces-for-videos",
-     flag_descriptions::kUseSurfaceLayerForVideoName,
-     flag_descriptions::kUseSurfaceLayerForVideoDescription, kOsAll,
-     FEATURE_VALUE_TYPE(media::kUseSurfaceLayerForVideo)},
 #if defined(OS_CHROMEOS)
     {"quick-unlock-pin", flag_descriptions::kQuickUnlockPinName,
      flag_descriptions::kQuickUnlockPinDescription, kOsCrOS,
@@ -3278,6 +3268,9 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnablePictureInPictureDescription, kOsDesktop,
      SINGLE_VALUE_TYPE(switches::kEnablePictureInPicture)},
 #endif  // !defined(OS_ANDROID)
+    {"browser-side-navigation", flag_descriptions::kBrowserSideNavigationName,
+     flag_descriptions::kBrowserSideNavigationDescription, kOsAll,
+     FEATURE_VALUE_TYPE(features::kBrowserSideNavigation)},
     {"navigation-mojo-response", flag_descriptions::kNavigationMojoResponseName,
      flag_descriptions::kNavigationMojoResponseDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kNavigationMojoResponse)},
@@ -3622,11 +3615,6 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kAv1DecoderDescription, kOsDesktop,
      FEATURE_VALUE_TYPE(media::kAv1Decoder)},
 #endif  // ENABLE_AV1_DECODER
-
-    {"enable-wheel-scroll-latching",
-     flag_descriptions::kEnableTouchpadAndWheelScrollLatchingName,
-     flag_descriptions::kEnableTouchpadAndWheelScrollLatchingDescription,
-     kOsAll, FEATURE_VALUE_TYPE(features::kTouchpadAndWheelScrollLatching)},
 
     // NOTE: Adding a new flag requires adding a corresponding entry to enum
     // "LoginCustomFlags" in tools/metrics/histograms/enums.xml. See "Flag

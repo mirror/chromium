@@ -20,7 +20,7 @@ class FakeWebTaskRunner::Data : public WTF::ThreadSafeRefCounted<Data> {
  public:
   Data() {}
 
-  void PostDelayedTask(base::OnceClosure task, base::TimeDelta delay) {
+  void PostTask(base::OnceClosure task, base::TimeDelta delay) {
     task_queue_.emplace_back(std::move(task), time_ + delay);
   }
 
@@ -43,10 +43,38 @@ class FakeWebTaskRunner::Data : public WTF::ThreadSafeRefCounted<Data> {
   DISALLOW_COPY_AND_ASSIGN(Data);
 };
 
-FakeWebTaskRunner::FakeWebTaskRunner() : data_(base::AdoptRef(new Data)) {}
+class FakeWebTaskRunner::BaseTaskRunner : public base::SingleThreadTaskRunner {
+ public:
+  explicit BaseTaskRunner(scoped_refptr<Data> data) : data_(std::move(data)) {}
 
-FakeWebTaskRunner::FakeWebTaskRunner(scoped_refptr<Data> data)
-    : data_(std::move(data)) {}
+  bool PostDelayedTask(const base::Location& from_here,
+                       base::OnceClosure task,
+                       base::TimeDelta delay) override {
+    data_->PostTask(std::move(task), delay);
+    return true;
+  }
+
+  bool PostNonNestableDelayedTask(const base::Location& from_here,
+                                  base::OnceClosure task,
+                                  base::TimeDelta delay) override {
+    data_->PostTask(std::move(task), delay);
+    return true;
+  }
+
+  bool RunsTasksInCurrentSequence() const { return true; }
+
+ private:
+  scoped_refptr<Data> data_;
+};
+
+FakeWebTaskRunner::FakeWebTaskRunner()
+    : data_(base::AdoptRef(new Data)),
+      base_task_runner_(new BaseTaskRunner(data_)) {}
+
+FakeWebTaskRunner::FakeWebTaskRunner(
+    scoped_refptr<Data> data,
+    scoped_refptr<BaseTaskRunner> base_task_runner)
+    : data_(std::move(data)), base_task_runner_(std::move(base_task_runner)) {}
 
 FakeWebTaskRunner::~FakeWebTaskRunner() {
 }
@@ -55,12 +83,17 @@ void FakeWebTaskRunner::SetTime(base::TimeTicks new_time) {
   data_->time_ = new_time;
 }
 
-bool FakeWebTaskRunner::RunsTasksInCurrentSequence() const {
+bool FakeWebTaskRunner::RunsTasksInCurrentSequence() {
   return true;
 }
 
 double FakeWebTaskRunner::MonotonicallyIncreasingVirtualTimeSeconds() const {
   return (data_->time_ - base::TimeTicks()).InSecondsF();
+}
+
+scoped_refptr<base::SingleThreadTaskRunner>
+FakeWebTaskRunner::ToSingleThreadTaskRunner() {
+  return base_task_runner_;
 }
 
 void FakeWebTaskRunner::RunUntilIdle() {
@@ -91,16 +124,7 @@ FakeWebTaskRunner::TakePendingTasksForTesting() {
 bool FakeWebTaskRunner::PostDelayedTask(const base::Location& location,
                                         base::OnceClosure task,
                                         base::TimeDelta delay) {
-  data_->PostDelayedTask(std::move(task), delay);
-  return true;
-}
-
-bool FakeWebTaskRunner::PostNonNestableDelayedTask(
-    const base::Location& location,
-    base::OnceClosure task,
-    base::TimeDelta delay) {
-  data_->PostDelayedTask(std::move(task), delay);
-  return true;
+  return base_task_runner_->PostDelayedTask(location, std::move(task), delay);
 }
 
 }  // namespace scheduler

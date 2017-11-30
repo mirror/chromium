@@ -169,7 +169,8 @@ void ExtendedAuthenticatorImpl::TransformKeyIfNeeded(
   callback.Run(transformed_context);
 }
 
-ExtendedAuthenticatorImpl::~ExtendedAuthenticatorImpl() = default;
+ExtendedAuthenticatorImpl::~ExtendedAuthenticatorImpl() {
+}
 
 void ExtendedAuthenticatorImpl::OnSaltObtained(const std::string& system_salt) {
   salt_obtained_ = true;

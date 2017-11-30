@@ -1840,10 +1840,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="25" label="Kerberos ticket expired while renewing credentials"/>
   <int value="26" label="klist exited with unspecified error"/>
   <int value="27" label="kinit failed because of bad machine name."/>
-  <int value="28" label="New password was rejected during password change."/>
-  <int value="29"
-      label="Could not store device policy since install attributes are not
-             locked yet; stored policy in cache instead."/>
 </enum>
 
 <enum name="AutocheckoutBubble">
@@ -3766,11 +3762,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1" label="Panel was open"/>
 </enum>
 
-<enum name="BooleanPasswordSavedWithFallback">
-  <int value="0" label="Automatic prompt"/>
-  <int value="1" label="Manual fallback"/>
-</enum>
-
 <enum name="BooleanPending">
   <int value="0" label="Decided"/>
   <int value="1" label="Pending"/>
@@ -4774,37 +4765,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="20" label="Downloaded file"/>
   <int value="21" label="Old image"/>
   <int value="22" label="Profile image"/>
-</enum>
-
-<enum name="ChromePDFViewerAnnotationType">
-  <int value="0" label="Unknown"/>
-  <int value="1" label="Text"/>
-  <int value="2" label="Link"/>
-  <int value="3" label="FreeText"/>
-  <int value="4" label="Line"/>
-  <int value="5" label="Square"/>
-  <int value="6" label="Circle"/>
-  <int value="7" label="Polygon"/>
-  <int value="8" label="Polyline"/>
-  <int value="9" label="Highlight"/>
-  <int value="10" label="Underline"/>
-  <int value="11" label="Squiggly"/>
-  <int value="12" label="StrikeOut"/>
-  <int value="13" label="Stamp"/>
-  <int value="14" label="Caret"/>
-  <int value="15" label="Ink"/>
-  <int value="16" label="Popup"/>
-  <int value="17" label="FileAttachment"/>
-  <int value="18" label="Sound"/>
-  <int value="19" label="Movie"/>
-  <int value="20" label="Widget"/>
-  <int value="21" label="Screen"/>
-  <int value="22" label="PrinterMark"/>
-  <int value="23" label="TrapNet"/>
-  <int value="24" label="Watermark"/>
-  <int value="25" label="3D"/>
-  <int value="26" label="RichMedia"/>
-  <int value="27" label="XFAWidget"/>
 </enum>
 
 <enum name="ChromePDFViewerLoadStatus">
@@ -8403,13 +8363,6 @@ Called by update_net_error_codes.py.-->
   <int value="1" label="ChallengePassed"/>
   <int value="2" label="ChallengeFailed"/>
   <int value="3" label="NeedInjectEntropy"/>
-</enum>
-
-<enum name="DetachableBasePendingRWUpdate">
-  <int value="0" label="CommunicationError"/>
-  <int value="1" label="NoUpdate"/>
-  <int value="2" label="CriticalUpdate"/>
-  <int value="3" label="NonCriticalUpdate"/>
 </enum>
 
 <enum name="DetachableBaseROUpdateResult">
@@ -14116,7 +14069,6 @@ Called by update_net_error_codes.py.-->
   <int value="1200" label="MEDIAPERCEPTIONPRIVATE_SETANALYTICSCOMPONENT"/>
   <int value="1201" label="ACCESSIBILITY_PRIVATE_SETHIGHLIGHTS"/>
   <int value="1202" label="WEBRTCLOGGINGPRIVATE_GETLOGSDIRECTORY"/>
-  <int value="1203" label="VIRTUALKEYBOARDPRIVATE_SETDRAGGABLEAREA"/>
 </enum>
 
 <enum name="ExtensionIconState">
@@ -17091,8 +17043,6 @@ Called by update_net_error_codes.py.-->
   <int value="2246"
       label="HTMLAnchorElementDownloadInSandboxWithoutUserGesture"/>
   <int value="2247" label="WindowOpenRealmMismatch"/>
-  <int value="2248" label="GridRowTrackPercentIndefiniteHeight"/>
-  <int value="2249" label="VRGetDisplaysSupportsPresent"/>
 </enum>
 
 <enum name="FeedbackSource">
@@ -24961,7 +24911,6 @@ from previous Chrome versions.
   <int value="-600792432" label="WebVrAutopresentFromIntent:disabled"/>
   <int value="-599932554" label="DoodlesOnLocalNtp:disabled"/>
   <int value="-598050737" label="disable-es3-apis"/>
-  <int value="-596337171" label="disable-ash-sidebar"/>
   <int value="-593536514" label="ExperimentalTabController:enabled"/>
   <int value="-589096918" label="ash-enable-fullscreen-app-list"/>
   <int value="-579192400" label="disable-input-view"/>
@@ -25010,7 +24959,6 @@ from previous Chrome versions.
   <int value="-457174225" label="Av1Decoder:enabled"/>
   <int value="-455203267" label="use_new_features_summary"/>
   <int value="-449465495" label="disable-browser-task-scheduler"/>
-  <int value="-436470115" label="TouchpadAndWheelScrollLatching:enabled"/>
   <int value="-435914745" label="ClipboardContentSetting:disabled"/>
   <int value="-430360431" label="disable-password-generation"/>
   <int value="-428599163" label="NTPDownloadSuggestions:enabled"/>
@@ -25295,7 +25243,6 @@ from previous Chrome versions.
   <int value="400322063" label="ash-disable-screen-orientation-lock"/>
   <int value="401983950" label="enable-spdy4"/>
   <int value="402143634" label="enable-search-button-in-omnibox-always"/>
-  <int value="403288255" label="enable-wheel-scroll-latching"/>
   <int value="405329388"
       label="FramebustingNeedsSameOriginOrUserGesture:enabled"/>
   <int value="411250226" label="AutoplayMutedVideos:disabled"/>
@@ -25831,7 +25778,6 @@ from previous Chrome versions.
   <int value="1847024354" label="enable-hotword-hardware"/>
   <int value="1849379463" label="OfflinePagesCTV2:enabled"/>
   <int value="1851085023" label="PwaMinimalUi:enabled"/>
-  <int value="1851358497" label="enable-ash-sidebar"/>
   <int value="1852630189" label="NTPBookmarkSuggestions:disabled"/>
   <int value="1855524566" label="allow-insecure-websocket-from-https-origin"/>
   <int value="1858385315" label="ChromeHomeBottomNavLabels:enabled"/>
@@ -25899,7 +25845,6 @@ from previous Chrome versions.
   <int value="2000091128" label="enable-touch-hover"/>
   <int value="2001562962"
       label="enable-manual-fallback-for-password-saving:enabled"/>
-  <int value="2003568209" label="TouchpadAndWheelScrollLatching:disabled"/>
   <int value="2003811018" label="enable-touch-support-for-screen-magnifier"/>
   <int value="2004483175" label="multi-instance-merge-tabs"/>
   <int value="2004829262" label="enable-webgl-draft-extensions"/>
@@ -25929,7 +25874,6 @@ from previous Chrome versions.
   <int value="2093235103" label="default-tile-width"/>
   <int value="2097048479" label="disable-auto-hiding-toolbar-threshold"/>
   <int value="2098714203" label="enable-generic-sensors"/>
-  <int value="2098907258" label="UseSurfaceLayerForVideo:disabled"/>
   <int value="2101151142" label="disable-direct-write"/>
   <int value="2104788328" label="use-winrt-midi-api"/>
   <int value="2119964154" label="enable-download-resumption"/>
@@ -25943,7 +25887,6 @@ from previous Chrome versions.
   <int value="2129929643" label="enable-use-zoom-for-dsf"/>
   <int value="2137347307" label="enable-drive-apps-in-app-list"/>
   <int value="2137599770" label="enable-win32k-renderer-lockdown"/>
-  <int value="2139048614" label="UseSurfaceLayerForVideo:enabled"/>
   <int value="2141463681" label="enable-offer-upload-credit-cards"/>
   <int value="2142979536" label="EnableManualFallbacksFilling:disabled"/>
 </enum>
@@ -43141,11 +43084,6 @@ Called by update_traffic_annotation_histograms.py.-->
   <int value="4" label="L2TP/IPSec None"/>
   <int value="5" label="L2TP/IPSec Certificate"/>
   <int value="6" label="L2TP/IPSec Username/Password"/>
-</enum>
-
-<enum name="VRAssetsComponentEnterStatus">
-  <int value="0" label="Component is ready to use"/>
-  <int value="1" label="Component is not ready to use. Reason not known."/>
 </enum>
 
 <enum name="VRSuppressedElement">

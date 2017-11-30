@@ -1165,6 +1165,21 @@
             ]
         }
     ],
+    "DefaultPassthroughCommandDecoder": [
+        {
+            "platforms": [
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "DefaultPassthroughCommandDecoder",
+                    "enable_features": [
+                        "DefaultPassthroughCommandDecoder"
+                    ]
+                }
+            ]
+        }
+    ],
     "DelayNavigation": [
         {
             "platforms": [
@@ -2102,29 +2117,6 @@
                     "params": {
                         "version": "5_shortname-control"
                     }
-                }
-            ]
-        }
-    ],
-    "NTPUseGoogleLocalNtp": [
-        {
-            "platforms": [
-                "chromeos",
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled",
-                    "params": {
-                        "local_ntp_interactive_doodles": "false"
-                    },
-                    "enable_features": [
-                        "DoodlesOnLocalNtp",
-                        "UseGoogleLocalNtp",
-                        "VoiceSearchOnLocalNtp"
-                    ]
                 }
             ]
         }
@@ -4079,6 +4071,24 @@
                     "name": "Enabled",
                     "enable_features": [
                         "ViewsSimplifiedFullscreenUI"
+                    ]
+                }
+            ]
+        }
+    ],
+    "VoiceSearchOnLocalNtp": [
+        {
+            "platforms": [
+                "chromeos",
+                "linux",
+                "mac",
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "Enabled",
+                    "enable_features": [
+                        "VoiceSearchOnLocalNtp"
                     ]
                 }
             ]

@@ -298,8 +298,7 @@ bool ConsumeGridTemplateRowsAndAreasAndColumns(bool important,
     if (!CSSPropertyParserHelpers::ConsumeSlashIncludingWhitespace(range))
       return false;
     template_columns = CSSPropertyGridUtils::ConsumeGridTrackList(
-        range, context.Mode(),
-        CSSPropertyGridUtils::TrackListType::kGridTemplateNoRepeat);
+        range, context.Mode(), CSSPropertyGridUtils::kGridTemplateNoRepeat);
     if (!template_columns || !range.AtEnd())
       return false;
   } else {
@@ -375,7 +374,7 @@ CSSValue* CSSPropertyGridUtils::ConsumeGridTrackList(
     CSSParserTokenRange& range,
     CSSParserMode css_parser_mode,
     TrackListType track_list_type) {
-  bool allow_grid_line_names = track_list_type != TrackListType::kGridAuto;
+  bool allow_grid_line_names = track_list_type != kGridAuto;
   CSSValueList* values = CSSValueList::CreateSpaceSeparated();
   CSSGridLineNamesValue* line_names = ConsumeGridLineNames(range);
   if (line_names) {
@@ -384,7 +383,7 @@ CSSValue* CSSPropertyGridUtils::ConsumeGridTrackList(
     values->Append(*line_names);
   }
 
-  bool allow_repeat = track_list_type == TrackListType::kGridTemplate;
+  bool allow_repeat = track_list_type == kGridTemplate;
   bool seen_auto_repeat = false;
   bool all_tracks_are_fixed_sized = true;
   do {
@@ -492,8 +491,7 @@ CSSValue* CSSPropertyGridUtils::ConsumeGridTemplatesRowsOrColumns(
     CSSParserMode css_parser_mode) {
   if (range.Peek().Id() == CSSValueNone)
     return CSSPropertyParserHelpers::ConsumeIdent(range);
-  return ConsumeGridTrackList(range, css_parser_mode,
-                              TrackListType::kGridTemplate);
+  return ConsumeGridTrackList(range, css_parser_mode, kGridTemplate);
 }
 
 bool CSSPropertyGridUtils::ConsumeGridItemPositionShorthand(
@@ -547,10 +545,8 @@ bool CSSPropertyGridUtils::ConsumeGridTemplateShorthand(
   }
 
   // 2- <grid-template-rows> / <grid-template-columns>
-  if (!template_rows) {
-    template_rows = ConsumeGridTrackList(range, context.Mode(),
-                                         TrackListType::kGridTemplate);
-  }
+  if (!template_rows)
+    template_rows = ConsumeGridTrackList(range, context.Mode(), kGridTemplate);
 
   if (template_rows) {
     if (!CSSPropertyParserHelpers::ConsumeSlashIncludingWhitespace(range))

@@ -29,18 +29,12 @@ class TestUpstartClient : public FakeUpstartClient {
   ~TestUpstartClient() override {}
 
   // Overrides behavior to queue start requests.
-  void StartMediaAnalytics(const std::vector<std::string>& upstart_env,
-                           const UpstartCallback& callback) override {
+  void StartMediaAnalytics(const UpstartCallback& callback) override {
     HandleUpstartRequest(callback);
   }
 
   // Overrides behavior to queue restart requests.
   void RestartMediaAnalytics(const UpstartCallback& callback) override {
-    HandleUpstartRequest(callback);
-  }
-
-  // Overrides behavior to queue stop requests.
-  void StopMediaAnalytics(const UpstartCallback& callback) override {
     HandleUpstartRequest(callback);
   }
 
@@ -57,8 +51,7 @@ class TestUpstartClient : public FakeUpstartClient {
       return true;
     }
 
-    std::vector<std::string> upstart_env;
-    FakeUpstartClient::StartMediaAnalytics(upstart_env, callback);
+    FakeUpstartClient::StartMediaAnalytics(callback);
     return true;
   }
 
@@ -193,26 +186,6 @@ TEST_F(MediaPerceptionAPIManagerTest, UpstartFailure) {
   EXPECT_EQ(media_perception::SERVICE_ERROR_SERVICE_NOT_RUNNING, service_error);
 
   // Check that after a failed request, setState RUNNING will go through.
-  upstart_client_->set_enqueue_requests(false);
-  EXPECT_EQ(media_perception::SERVICE_ERROR_NONE,
-            SetStateAndWaitForResponse(manager_.get(), state));
-}
-
-TEST_F(MediaPerceptionAPIManagerTest, UpstartStopFailure) {
-  upstart_client_->set_enqueue_requests(true);
-  media_perception::State state;
-  state.status = media_perception::STATUS_STOPPED;
-
-  base::RunLoop run_loop;
-  media_perception::ServiceError service_error;
-  manager_->SetState(state,
-                     base::Bind(&RecordServiceErrorFromStateAndRunClosure,
-                                run_loop.QuitClosure(), &service_error));
-  EXPECT_TRUE(upstart_client_->HandleNextUpstartRequest(false));
-  run_loop.Run();
-  EXPECT_EQ(media_perception::SERVICE_ERROR_SERVICE_UNREACHABLE, service_error);
-
-  // Check that after a failed request, setState STOPPED will go through.
   upstart_client_->set_enqueue_requests(false);
   EXPECT_EQ(media_perception::SERVICE_ERROR_NONE,
             SetStateAndWaitForResponse(manager_.get(), state));

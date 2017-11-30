@@ -44,12 +44,6 @@ TabSwitcherPanelOverlayType PanelOverlayTypeFromSignInPanelsType(
                     presenter:(id<SigninPresenter, SyncPresenter>)presenter
                    dispatcher:
                        (id<ApplicationCommands, BrowserCommands>)dispatcher;
-
-// Should be called when the tab switcher was shown.
-- (void)wasShown;
-// Should be called when the tab switcher was hidden.
-- (void)wasHidden;
-
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_TAB_SWITCHER_TAB_SWITCHER_PANEL_OVERLAY_VIEW_H_

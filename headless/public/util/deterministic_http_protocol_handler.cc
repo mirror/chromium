@@ -19,8 +19,8 @@ namespace headless {
 class DeterministicHttpProtocolHandler::NopGenericURLRequestJobDelegate
     : public GenericURLRequestJob::Delegate {
  public:
-  NopGenericURLRequestJobDelegate() = default;
-  ~NopGenericURLRequestJobDelegate() override = default;
+  NopGenericURLRequestJobDelegate() {}
+  ~NopGenericURLRequestJobDelegate() override {}
 
   void OnResourceLoadFailed(const Request* request, net::Error error) override {
   }

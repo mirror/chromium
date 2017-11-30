@@ -2,11 +2,10 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-import("//build/config/jumbo.gni")
 import("//build/config/ui.gni")
 import("//testing/test.gni")
 
-jumbo_component("aura") {
+component("aura") {
   public = [
     "client/aura_constants.h",
     "client/capture_client.h",
@@ -217,7 +216,7 @@ jumbo_component("aura") {
   }
 }
 
-jumbo_static_library("test_support") {
+static_library("test_support") {
   testonly = true
   sources = [
     "test/aura_mus_test_base.cc",

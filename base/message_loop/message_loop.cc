@@ -71,11 +71,14 @@ std::unique_ptr<MessagePump> ReturnPump(std::unique_ptr<MessagePump> pump) {
 
 //------------------------------------------------------------------------------
 
-MessageLoop::TaskObserver::TaskObserver() = default;
+MessageLoop::TaskObserver::TaskObserver() {
+}
 
-MessageLoop::TaskObserver::~TaskObserver() = default;
+MessageLoop::TaskObserver::~TaskObserver() {
+}
 
-MessageLoop::DestructionObserver::~DestructionObserver() = default;
+MessageLoop::DestructionObserver::~DestructionObserver() {
+}
 
 //------------------------------------------------------------------------------
 

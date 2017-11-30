@@ -396,34 +396,26 @@ void CookiesSetFunction::SetCookieOnIOThread() {
   }
 
   // clang-format off
-  std::unique_ptr<net::CanonicalCookie> cc(
-      net::CanonicalCookie::CreateSanitizedCookie(
-          url_, parsed_args_->details.name.get() ? *parsed_args_->details.name
-                                                 : std::string(),
-          parsed_args_->details.value.get() ? *parsed_args_->details.value
-                                                 : std::string(),
-          parsed_args_->details.domain.get() ? *parsed_args_->details.domain
+  cookie_store->SetCookieWithDetailsAsync(
+      url_, parsed_args_->details.name.get() ? *parsed_args_->details.name
                                              : std::string(),
-          parsed_args_->details.path.get() ? *parsed_args_->details.path
-                                           : std::string(),
-          base::Time(),
-          expiration_time,
-          base::Time(),
-          parsed_args_->details.secure.get() ? *parsed_args_->details.secure
-                                             : false,
-          parsed_args_->details.http_only.get() ?
-              *parsed_args_->details.http_only :
-              false,
-          same_site,
-          net::COOKIE_PRIORITY_DEFAULT));
-  // clang-format on
-  if (!cc) {
-    PullCookie(false);
-    return;
-  }
-  cookie_store->SetCanonicalCookieAsync(
-      std::move(cc), url_.SchemeIsCryptographic(), true /*modify_http_only*/,
+      parsed_args_->details.value.get() ? *parsed_args_->details.value
+                                        : std::string(),
+      parsed_args_->details.domain.get() ? *parsed_args_->details.domain
+                                         : std::string(),
+      parsed_args_->details.path.get() ? *parsed_args_->details.path
+                                       : std::string(),
+      base::Time(),
+      expiration_time,
+      base::Time(),
+      parsed_args_->details.secure.get() ? *parsed_args_->details.secure
+                                         : false,
+      parsed_args_->details.http_only.get() ? *parsed_args_->details.http_only
+                                            : false,
+      same_site,
+      net::COOKIE_PRIORITY_DEFAULT,
       base::BindOnce(&CookiesSetFunction::PullCookie, this));
+  // clang-format on
 }
 
 void CookiesSetFunction::PullCookie(bool set_cookie_result) {

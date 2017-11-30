@@ -7,7 +7,7 @@
 namespace base {
 namespace trace_event {
 
-TracingAgent::~TracingAgent() = default;
+TracingAgent::~TracingAgent() {}
 
 bool TracingAgent::SupportsExplicitClockSync() {
   return false;

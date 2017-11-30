@@ -20,7 +20,6 @@
 #include "components/autofill/core/browser/field_types.h"
 #include "components/autofill/core/browser/form_structure.h"
 #include "components/autofill/core/common/password_form.h"
-#include "components/autofill/core/common/signatures_util.h"
 #include "components/password_manager/core/browser/form_fetcher.h"
 #include "components/password_manager/core/browser/password_form_metrics_recorder.h"
 #include "components/password_manager/core/browser/password_form_user_action.h"
@@ -478,9 +477,6 @@ class PasswordFormManager : public FormFetcher::Consumer {
 
   // The PasswordForm from the page or dialog managed by |this|.
   const autofill::PasswordForm observed_form_;
-
-  // The form signature of |observed_form_|
-  const autofill::FormSignature observed_form_signature_;
 
   // Stores a submitted form.
   std::unique_ptr<const autofill::PasswordForm> submitted_form_;

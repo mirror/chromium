@@ -51,9 +51,7 @@ class CORE_EXPORT HTMLOutputElement final : public HTMLFormControlElement {
   void setDefaultValue(const String&);
   DOMTokenList* htmlFor() const;
 
-  bool CanContainRangeEndPoint() const override {
-    return is_default_value_mode_;
-  }
+  bool CanContainRangeEndPoint() const override { return false; }
 
   void Trace(blink::Visitor*) override;
 

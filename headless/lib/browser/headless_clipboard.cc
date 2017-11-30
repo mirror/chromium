@@ -13,7 +13,7 @@ namespace headless {
 HeadlessClipboard::HeadlessClipboard()
     : default_store_type_(ui::CLIPBOARD_TYPE_COPY_PASTE) {}
 
-HeadlessClipboard::~HeadlessClipboard() = default;
+HeadlessClipboard::~HeadlessClipboard() {}
 
 void HeadlessClipboard::OnPreShutdown() {}
 
@@ -182,7 +182,7 @@ HeadlessClipboard::DataStore::DataStore() : sequence_number(0) {}
 
 HeadlessClipboard::DataStore::DataStore(const DataStore& other) = default;
 
-HeadlessClipboard::DataStore::~DataStore() = default;
+HeadlessClipboard::DataStore::~DataStore() {}
 
 void HeadlessClipboard::DataStore::Clear() {
   data.clear();

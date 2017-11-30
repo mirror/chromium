@@ -59,7 +59,7 @@ class AuthPolicyClientImpl : public AuthPolicyClient {
  public:
   AuthPolicyClientImpl() : weak_ptr_factory_(this) {}
 
-  ~AuthPolicyClientImpl() override = default;
+  ~AuthPolicyClientImpl() override {}
 
   // AuthPolicyClient override.
   void JoinAdDomain(const authpolicy::JoinDomainRequest& request,
@@ -168,11 +168,12 @@ class AuthPolicyClientImpl : public AuthPolicyClient {
                                    dbus::Response* response) {
     if (!response) {
       DLOG(ERROR) << "RefreshDevicePolicy: failed to call to authpolicy";
-      std::move(callback).Run(authpolicy::ERROR_DBUS_FAILURE);
+      std::move(callback).Run(false);
       return;
     }
     dbus::MessageReader reader(response);
-    std::move(callback).Run(GetErrorFromReader(&reader));
+    std::move(callback).Run(GetErrorFromReader(&reader) ==
+                            authpolicy::ERROR_NONE);
   }
 
   void HandleJoinCallback(JoinCallback callback, dbus::Response* response) {
@@ -207,9 +208,9 @@ class AuthPolicyClientImpl : public AuthPolicyClient {
 
 }  // namespace
 
-AuthPolicyClient::AuthPolicyClient() = default;
+AuthPolicyClient::AuthPolicyClient() {}
 
-AuthPolicyClient::~AuthPolicyClient() = default;
+AuthPolicyClient::~AuthPolicyClient() {}
 
 // static
 AuthPolicyClient* AuthPolicyClient::Create() {

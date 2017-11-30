@@ -23,8 +23,7 @@ namespace {
 class TestRefCounted : public RefCountedThreadSafe<TestRefCounted> {
  private:
   friend class RefCountedThreadSafe<TestRefCounted>;
-  ~TestRefCounted() = default;
-  ;
+  ~TestRefCounted() {};
 };
 
 void Increment(int* count) { (*count)++; }

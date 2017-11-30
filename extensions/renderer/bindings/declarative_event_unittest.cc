@@ -93,6 +93,7 @@ class DeclarativeEventTest : public APIBindingTest {
 
     request_handler_ = std::make_unique<APIRequestHandler>(
         base::Bind(&DeclarativeEventTest::OnRequest, base::Unretained(this)),
+        base::Bind(&RunFunctionOnGlobalAndIgnoreResult),
         APILastError(APILastError::GetParent(), binding::AddConsoleError()),
         nullptr);
   }

@@ -504,7 +504,8 @@ DiskInfo::DiskInfo(const std::string& device_path, dbus::Response* response)
   InitializeFromResponse(response);
 }
 
-DiskInfo::~DiskInfo() = default;
+DiskInfo::~DiskInfo() {
+}
 
 // Initializes |this| from |response| given by the cros-disks service.
 // Below is an example of |response|'s raw message (long string is ellipsized).
@@ -669,9 +670,9 @@ void DiskInfo::InitializeFromResponse(dbus::Response* response) {
 ////////////////////////////////////////////////////////////////////////////////
 // CrosDisksClient
 
-CrosDisksClient::CrosDisksClient() = default;
+CrosDisksClient::CrosDisksClient() {}
 
-CrosDisksClient::~CrosDisksClient() = default;
+CrosDisksClient::~CrosDisksClient() {}
 
 // static
 CrosDisksClient* CrosDisksClient::Create(DBusClientImplementationType type) {

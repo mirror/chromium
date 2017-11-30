@@ -22,7 +22,6 @@ namespace vr {
 
 constexpr uint32_t kCompatibleMajorVrAssetsComponentVersion = 0;
 
-class MetricsHelper;
 struct AssetsSingletonTrait;
 
 // Manages VR assets such as the environment. Gets updated by the VR assets
@@ -49,8 +48,6 @@ class Assets {
   // assets are loaded. |on_loaded| will be called on the caller's thread.
   void LoadWhenComponentReady(OnAssetsLoadedCallback on_loaded);
 
-  MetricsHelper* GetMetricsHelper();
-
  private:
   static void LoadAssetsTask(
       scoped_refptr<base::SingleThreadTaskRunner> task_runner,
@@ -69,7 +66,6 @@ class Assets {
   OnAssetsLoadedCallback on_assets_loaded_;
   scoped_refptr<base::SingleThreadTaskRunner> on_assets_loaded_task_runner_;
   scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner_;
-  std::unique_ptr<MetricsHelper> metrics_helper_;
 
   base::WeakPtrFactory<Assets> weak_ptr_factory_;
 

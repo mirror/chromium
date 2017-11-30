@@ -51,7 +51,7 @@ void AsynchronousShutdownObjectContainerImpl::Factory::SetInstanceForTesting(
   factory_instance_ = factory;
 }
 
-AsynchronousShutdownObjectContainerImpl::Factory::~Factory() = default;
+AsynchronousShutdownObjectContainerImpl::Factory::~Factory() {}
 
 std::unique_ptr<AsynchronousShutdownObjectContainer>
 AsynchronousShutdownObjectContainerImpl::Factory::BuildInstance(

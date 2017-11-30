@@ -16,7 +16,10 @@ class CSSPropertyCounterUtils {
   STATIC_ONLY(CSSPropertyCounterUtils);
 
  public:
-  static CSSValue* ConsumeCounter(CSSParserTokenRange&, int default_value);
+  static const int kResetDefaultValue = 0;
+  static const int kIncrementDefaultValue = 1;
+
+  static CSSValue* ConsumeCounter(CSSParserTokenRange&, int);
 };
 
 }  // namespace blink

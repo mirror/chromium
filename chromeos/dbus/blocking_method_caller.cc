@@ -37,7 +37,8 @@ BlockingMethodCaller::BlockingMethodCaller(dbus::Bus* bus,
           base::WaitableEvent::ResetPolicy::AUTOMATIC,
           base::WaitableEvent::InitialState::NOT_SIGNALED) {}
 
-BlockingMethodCaller::~BlockingMethodCaller() = default;
+BlockingMethodCaller::~BlockingMethodCaller() {
+}
 
 std::unique_ptr<dbus::Response> BlockingMethodCaller::CallMethodAndBlock(
     dbus::MethodCall* method_call) {

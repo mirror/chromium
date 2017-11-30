@@ -5,7 +5,6 @@
 #ifndef MultipartParser_h
 #define MultipartParser_h
 
-#include "base/macros.h"
 #include "modules/ModulesExport.h"
 #include "platform/heap/Handle.h"
 #include "platform/network/HTTPHeaderMap.h"
@@ -25,6 +24,8 @@ namespace blink {
 //   called anymore.
 class MODULES_EXPORT MultipartParser final
     : public GarbageCollectedFinalized<MultipartParser> {
+  WTF_MAKE_NONCOPYABLE(MultipartParser);
+
  public:
   // Client recieves parsed part header fields and data.
   class MODULES_EXPORT Client : public GarbageCollectedMixin {
@@ -105,8 +106,6 @@ class MODULES_EXPORT MultipartParser final
     kCancelled,
     kFinished
   } state_;
-
-  DISALLOW_COPY_AND_ASSIGN(MultipartParser);
 };
 
 }  // namespace blink

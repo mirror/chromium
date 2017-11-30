@@ -19,7 +19,7 @@
 #include "core/html/custom/CustomElementDefinitionBuilder.h"
 #include "core/html/custom/CustomElementDescriptor.h"
 #include "core/html/custom/CustomElementTestHelpers.h"
-#include "core/testing/PageTestBase.h"
+#include "core/testing/DummyPageHolder.h"
 #include "platform/bindings/ScriptForbiddenScope.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/text/AtomicString.h"
@@ -27,16 +27,22 @@
 
 namespace blink {
 
-class CustomElementRegistryTest : public PageTestBase {
+class CustomElementRegistryTest : public ::testing::Test {
  protected:
-  void SetUp() { PageTestBase::SetUp(IntSize(1, 1)); }
+  void SetUp() {
+    page_.reset(DummyPageHolder::Create(IntSize(1, 1)).release());
+  }
+
+  void TearDown() { page_ = nullptr; }
+
+  Document& GetDocument() { return page_->GetDocument(); }
 
   CustomElementRegistry& Registry() {
-    return *GetFrame().DomWindow()->customElements();
+    return *page_->GetFrame().DomWindow()->customElements();
   }
 
   ScriptState* GetScriptState() {
-    return ToScriptStateForMainWorld(&GetFrame());
+    return ToScriptStateForMainWorld(&page_->GetFrame());
   }
 
   void CollectCandidates(const CustomElementDescriptor& desc,
@@ -51,6 +57,9 @@ class CustomElementRegistryTest : public PageTestBase {
     return element->attachShadow(GetScriptState(), shadow_root_init,
                                  no_exceptions);
   }
+
+ private:
+  std::unique_ptr<DummyPageHolder> page_;
 };
 
 TEST_F(CustomElementRegistryTest,

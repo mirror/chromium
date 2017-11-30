@@ -6,8 +6,6 @@ package org.chromium.chrome.browser.feedback;
 
 import android.util.Pair;
 
-import org.chromium.base.SysUtils;
-import org.chromium.base.metrics.JSONVerbosityLevel;
 import org.chromium.base.metrics.StatisticsRecorderAndroid;
 import org.chromium.chrome.browser.profiles.Profile;
 
@@ -26,10 +24,6 @@ public class HistogramFeedbackSource implements FeedbackSource {
     @Override
     public Pair<String, String> getLogs() {
         if (mIsOffTheRecord) return null;
-        int jsonVerbosityLevel = JSONVerbosityLevel.JSON_VERBOSITY_LEVEL_FULL;
-        if (SysUtils.isLowEndDevice()) {
-            jsonVerbosityLevel = JSONVerbosityLevel.JSON_VERBOSITY_LEVEL_OMIT_BUCKETS;
-        }
-        return Pair.create(HISTOGRAMS_KEY, StatisticsRecorderAndroid.toJson(jsonVerbosityLevel));
+        return Pair.create(HISTOGRAMS_KEY, StatisticsRecorderAndroid.toJson());
     }
 }

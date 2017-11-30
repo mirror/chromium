@@ -1165,17 +1165,11 @@ are declared in build/common.gypi.
 
       <!-- Download Shelf-->
       <if expr="use_titlecase">
-        <message name="IDS_HIDE_DOWNLOADS" desc="Button label for screenreader users, for button at the corner of the download shelf that closes the download shelf (title case)">
-          Close Downloads Bar
-        </message>
         <message name="IDS_SHOW_ALL_DOWNLOADS" desc="Button label shown at the corner of the download shelf that opens the downloads page (title case)">
           Show All
         </message>
       </if>
       <if expr="not use_titlecase">
-        <message name="IDS_HIDE_DOWNLOADS" desc="Button label for screenreader users, for button at the corner of the download shelf that closes the download shelf (sentence case)">
-          Close downloads bar
-        </message>
         <message name="IDS_SHOW_ALL_DOWNLOADS" desc="Button label shown at the corner of the download shelf that opens the downloads page (sentence case)">
           Show all
         </message>
@@ -3291,6 +3285,9 @@ From <ph name="DOWNLOAD_DOMAIN">$3<ex>example.com</ex></ph>
           PWG Raster Convertor
         </message>
       </if>
+      <message name="IDS_UTILITY_PROCESS_DIAL_DEVICE_DESCRIPTION_PARSER_NAME" desc="The name of the utility process used for parsing XML of uPnP device descriptions of DIAL devices.">
+        DIAL Device Description Parser
+      </message>
       <message name="IDS_UTILITY_PROCESS_PATCH_NAME" desc="The name of the utility process used for patching file operations.">
           Patch Service
       </message>
@@ -6735,20 +6732,18 @@ I don't think this site should be blocked!
         <message name="IDS_GOOGLE_CLOUD_PRINT" desc="The name of the Google Cloud Print product.">
           Google Cloud Print
         </message>
-        <if expr="not chromeos">
-          <message name="IDS_CLOUD_PRINT_CONNECTOR_DISABLED_BUTTON" desc="The label of the cloud connector configure button when it hasn't been set up yet.">
-            Add printers
-          </message>
-          <message name="IDS_CLOUD_PRINT_CONNECTOR_ENABLED_LABEL" desc="The label of the cloud print setup button when it has been set up.">
-            You have registered your printers with <ph name="CLOUD_PRINT_NAME">$1<ex>Google Cloud Print</ex></ph> using the account <ph name="EMAIL">$2<ex>foo@bar.com</ex></ph>
-          </message>
-          <message name="IDS_CLOUD_PRINT_CONNECTOR_ENABLED_BUTTON" desc="The label of the cloud print connector configure button when it has been set up.">
-            Disconnect printers
-          </message>
-          <message name="IDS_CLOUD_PRINT_CONNECTOR_ENABLING_BUTTON" desc="The label of the cloud connector configure button while it is being set up.">
-            Enabling...
-          </message>
-        </if>
+        <message name="IDS_CLOUD_PRINT_CONNECTOR_DISABLED_BUTTON" desc="The label of the cloud connector configure button when it hasn't been set up yet.">
+          Add printers
+        </message>
+        <message name="IDS_CLOUD_PRINT_CONNECTOR_ENABLED_LABEL" desc="The label of the cloud print setup button when it has been set up.">
+          You have registered your printers with <ph name="CLOUD_PRINT_NAME">$1<ex>Google Cloud Print</ex></ph> using the account <ph name="EMAIL">$2<ex>foo@bar.com</ex></ph>
+        </message>
+        <message name="IDS_CLOUD_PRINT_CONNECTOR_ENABLED_BUTTON" desc="The label of the cloud print connector configure button when it has been set up.">
+          Disconnect printers
+        </message>
+        <message name="IDS_CLOUD_PRINT_CONNECTOR_ENABLING_BUTTON" desc="The label of the cloud connector configure button while it is being set up.">
+          Enabling...
+        </message>
 
         <message name="IDS_CONTROLLED_SETTING_POLICY" desc="Text displayed in the controlled settings bubble when a setting's value is enforced by policy.">
           This setting is enforced by your administrator.
@@ -6964,9 +6959,6 @@ I don't think this site should be blocked!
       </message>
       <message name="IDS_COLLECTED_COOKIES_BLOCKED_AUX_TEXT" desc="The text used to label a cookie which has been marked as blocked.">
         Blocked
-      </message>
-      <message name="IDS_COLLECTED_COOKIES_CLEAR_ON_EXIT_AUX_TEXT" desc="The text used to label a cookie which has been marked to be cleared on exit.">
-        Cleared on Exit
       </message>
       <message name="IDS_COLLECTED_COOKIES_INFOBAR_MESSAGE" desc="The string shown in the infobar after the user has changed the allowed/blocked state of a cookie, reminding them to reload the page in order for the new cookies to take effect.">
         New cookie settings will take effect after reloading the page.
@@ -7478,9 +7470,6 @@ I don't think this site should be blocked!
       </message>
       <message name="IDS_PROFILES_SETTINGS_LINK" desc="The link text to the Chrome settings page in the account removal view.">
         settings
-      </message>
-      <message name="IDS_PROFILES_SYNCED_TO_TITLE" desc="Title of the profile card when sync is complete.">
-        Synced to
       </message>
       <message name="IDS_PROFILES_SYNC_SETTINGS_LINK" desc="The link text to the Chrome sync settings page in the avatar menu tutorial card.">
         Settings
@@ -8702,9 +8691,6 @@ Please help our engineers fix this problem. Tell us what happened right before y
         <message name="IDS_SAVE_PAGE_MAC" desc="The Mac menu item to save a page in the file menu.">
           Save Page As...
         </message>
-        <message name="IDS_EMAIL_LINK_MAC" desc="The Mac menu item to email a link to the current page in the share submenu">
-          Email Link
-        </message>
         <message name="IDS_EMAIL_PAGE_LOCATION_MAC" desc="The Mac menu item to email the page location in the file menu.">
           Email Page Location
         </message>
@@ -8898,8 +8884,8 @@ Please help our engineers fix this problem. Tell us what happened right before y
         <message name="IDS_DUPLICATE_TAB_MAC" desc="The Mac menu item for duplicating the selected tab(s).">
           Duplicate Tab
         </message>
-        <message name="IDS_MUTE_SITE_MAC" desc="The Mac menu item for muting the selected tab(s).">
-          Mute Site
+        <message name="IDS_MUTE_TAB_MAC" desc="The Mac menu item for muting the selected tab(s).">
+          Mute Tab
         </message>
         <message name="IDS_PIN_TAB_MAC" desc="The Mac menu item for pinning the selected tab(s).">
           Pin Tab
@@ -10179,14 +10165,12 @@ For more information, visit our <ph name="BEGIN_LINK">&lt;a target="_blank" href
         <message name="IDS_LOCAL_DISCOVERY_MY_DEVICES" desc="Title for 'my devices' section in devices page">
           My devices
         </message>
-        <if expr="not chromeos">
-          <message name="IDS_LOCAL_DISCOVERY_CLOUD_PRINT_CONNECTOR_DISABLED_LABEL" desc="In local discovery page: The label of the cloud print setup button when it hasn't been set up yet.">
-            You can add classic printers connected to your computer to <ph name="CLOUD_PRINT_NAME">$1<ex>Google Cloud Print</ex></ph>.
-          </message>
-          <message name="IDS_LOCAL_DISCOVERY_CONNECTOR_SECTION" desc="In local discovery page: Title of cloud print connector section.">
-            Classic printers
-          </message>
-        </if>
+        <message name="IDS_LOCAL_DISCOVERY_CLOUD_PRINT_CONNECTOR_DISABLED_LABEL" desc="In local discovery page: The label of the cloud print setup button when it hasn't been set up yet.">
+          You can add classic printers connected to your computer to <ph name="CLOUD_PRINT_NAME">$1<ex>Google Cloud Print</ex></ph>.
+        </message>
+        <message name="IDS_LOCAL_DISCOVERY_CONNECTOR_SECTION" desc="In local discovery page: Title of cloud print connector section.">
+          Classic printers
+        </message>
         <message name="IDS_LOCAL_DISCOVERY_NOTIFICATIONS_DISABLE_BUTTON_LABEL" desc="Label for button disabling local device notifications">
           Don't show this again
         </message>

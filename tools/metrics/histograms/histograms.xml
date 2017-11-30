@@ -6644,7 +6644,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 <histogram name="Blink.Compositing.UpdateTime" units="microseconds">
   <owner>paint-dev@chromium.org</owner>
   <summary>
-    Time spent updating compositing in the Blink document lifecycle.
+    Time spent updating compositing in the Blink document lifecyce.
   </summary>
 </histogram>
 
@@ -30338,14 +30338,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="interstitial.ssl.good_cert_seen_type_is_frame" enum="Boolean">
-  <owner>jam@chromium.org</owner>
-  <summary>
-    Whether the resource type for a request that succeeded with a good cert and
-    revoked a certificate exception is for a frame (as opposed to subresource).
-  </summary>
-</histogram>
-
 <histogram name="interstitial.ssl.severity_score.authority_invalid" units="%">
   <obsolete>
     Deprecated Jan 2015 (M42).
@@ -34331,9 +34323,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Media.Remoting.CapacityOverMediaBitrate" units="kbps">
-  <obsolete>
-    Deprecated 11/2017 in issue 788940.
-  </obsolete>
   <owner>miu@chromium.org</owner>
   <summary>
     The difference between the estimated transmission capacity and the media
@@ -34342,9 +34331,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Media.Remoting.MediaBitrateOverCapacity" units="kbps">
-  <obsolete>
-    Deprecated 11/2017 in issue 788940.
-  </obsolete>
   <owner>miu@chromium.org</owner>
   <summary>
     The difference between the media bitrate and the estimated transmission
@@ -34402,9 +34388,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Media.Remoting.StartMediaBitrate" units="kbps">
-  <obsolete>
-    Deprecated 11/2017 in issue 788940.
-  </obsolete>
   <owner>miu@chromium.org</owner>
   <summary>
     The estimated content bitrate (including both audio and video) when starting
@@ -34435,9 +34418,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Media.Remoting.TransmissionCapacity" units="kbps">
-  <obsolete>
-    Deprecated 11/2017 in issue 788940.
-  </obsolete>
   <owner>miu@chromium.org</owner>
   <summary>
     The estimated transmission capacity when starting a remoting session.
@@ -58891,30 +58871,12 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="PasswordManager.PasswordSavedWithManualFallback"
-    enum="BooleanPasswordSavedWithFallback">
-  <owner>kolos@chromium.org</owner>
-  <summary>
-    Measures whether users save passwords with automatic prompt or manual
-    fallback.
-  </summary>
-</histogram>
-
 <histogram name="PasswordManager.PasswordSyncState" enum="PasswordSyncState">
   <owner>gcasto@chromium.org</owner>
   <owner>rouslan@chromium.org</owner>
   <summary>
     Whether the passwords are syncing and, if not, then what's causing sync
     failures. Recorded after the first sync attempt either succeeds or fails.
-  </summary>
-</histogram>
-
-<histogram name="PasswordManager.PasswordUpdatedWithManualFallback"
-    enum="BooleanPasswordSavedWithFallback">
-  <owner>kolos@chromium.org</owner>
-  <summary>
-    Measures whether users update passwords with automatic prompt or manual
-    fallback.
   </summary>
 </histogram>
 
@@ -59765,14 +59727,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Whether the flow was completed when the user had suggestions offered for
     each requested information.
-  </summary>
-</histogram>
-
-<histogram name="PDF.AnnotationType" enum="ChromePDFViewerAnnotationType">
-  <owner>hnakashima@chromium.org</owner>
-  <summary>
-    Tracks documents opened in the PDF viewer that displayed one or more pages
-    with the given annotation type.
   </summary>
 </histogram>
 
@@ -60735,23 +60689,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     enum="DetachableBasePairResult">
   <owner>kitching@google.com</owner>
   <summary>Result of a detachable base pair operation.</summary>
-</histogram>
-
-<histogram name="Platform.DetachableBase.PendingRWUpdate"
-    enum="DetachableBasePendingRWUpdate">
-  <owner>kitching@google.com</owner>
-  <summary>
-    Detachable base firmware updates can be configured to only occur on boot. In
-    this mode, any update will be considered &quot;pending&quot; until the
-    system is rebooted, at which point the update may take place.  Every time a
-    detachable base is connected to the system, a metric representing the
-    pending update status is recorded.  Its possible values are as follows: (0)
-    communication error; (1) no update available; (2) critical update available;
-    or (3) non-critical update available.  The definition of
-    &quot;critical&quot; is up to the software performing updates, and would
-    typically be used in the case of a security issue, or broken functionality
-    in a previous firmware version.
-  </summary>
 </histogram>
 
 <histogram name="Platform.DetachableBase.ROUpdateResult"
@@ -72795,17 +72732,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="SB2.RemoteCall.CheckDelta" units="microseconds">
-  <owner>csharrison@chromium.org</owner>
-  <owner>vakh@chromium.org</owner>
-  <summary>
-    The microseconds between sending the Safe Browsing API call and receiving
-    the response. Logged in java code and does not include any thread hops or
-    extra work. Note that this does include task queue time to respond to the
-    IPC (and that queue time is often non-trivial).
-  </summary>
-</histogram>
-
 <histogram name="SB2.RemoteCall.ChecksPending" units="calls">
   <obsolete>
     Deprecated in M64 (Nov 2017). No longer generated.
@@ -73079,15 +73005,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="SBClientDownload.DmgFileArchivedBinariesCount" units="count">
-  <owner>nparker@chromium.org</owner>
-  <summary>
-    The original number of archived_binaries found in a DMG-like file when it's
-    scanned, if at least one is found.  The actual number sent in the download
-    request may be capped below this value.
-  </summary>
-</histogram>
-
 <histogram name="SBClientDownload.DmgFileFailureByType"
     enum="SBClientDownloadExtensions">
   <owner>nparker@chromium.org</owner>
@@ -73341,15 +73258,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Records how often different file extensions are downloaded with schemes that
     aren't supported by Safe Browsing (e.g. ftp, gopher, content, cid, etc).
-  </summary>
-</histogram>
-
-<histogram name="SBClientDownload.ZipFileArchivedBinariesCount" units="count">
-  <owner>nparker@chromium.org</owner>
-  <summary>
-    The original number of archived_binaries found in a zip-like file when it's
-    scanned, if at least one is found.  The actual number sent in the download
-    request may be capped below this value.
   </summary>
 </histogram>
 
@@ -74500,17 +74408,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     not, due to running experiment.
 
     The interval is only recorded when every BeginImplFrame wants to draw.
-  </summary>
-</histogram>
-
-<histogram name="Scheduling.ImageInvalidationUpdateDuration"
-    units="microseconds">
-  <owner>khushalsagar@chromium.org</owner>
-  <summary>
-    Duration for updating animated images and invalidating layers for images
-    invalidated on the sync tree in the compositor. This interval is recorded
-    each time the sync tree is updated after a commit or an impl-side
-    invalidation.
   </summary>
 </histogram>
 
@@ -91484,15 +91381,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="V8.CompileScriptMicroSeconds.BackgroundThread"
-    units="microseconds">
-  <owner>rmcilroy@chromium.org</owner>
-  <summary>
-    Total time spent in compiling a script (incl. parsing) on a background
-    thread.
-  </summary>
-</histogram>
-
 <histogram name="V8.CompileScriptMicroSeconds.ConsumeCache"
     units="microseconds">
   <owner>leszeks@chromium.org</owner>
@@ -92851,36 +92739,19 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram base="true" name="VR.AssetsComponent.ReadyLatency.OnEnter"
-    units="ms">
-  <owner>tiborg@chromium.org</owner>
+<histogram name="VR.Shell.AudioPermission.ExitVRChoice" enum="BooleanChoice">
+  <owner>bshe@chromium.org</owner>
   <summary>
-    Duration from entering a VR mode until VR assets component is ready to use.
+    When audio permission is needed, we show an exit VR prompt. The prompt gives
+    user two choices: CANCEL or CONTINUE. This tracks which choice did user
+    select.
   </summary>
-</histogram>
-
-<histogram base="true" name="VR.AssetsComponent.Status.OnEnter"
-    enum="VRAssetsComponentEnterStatus">
-  <owner>tiborg@chromium.org</owner>
-  <summary>Status of the VR assets component when entering a VR mode.</summary>
-</histogram>
-
-<histogram base="true" name="VR.DataConnection.OnEnter"
-    enum="NetworkConnectionType">
-  <owner>tiborg@chromium.org</owner>
-  <summary>Data connection when entering a VR mode.</summary>
-</histogram>
-
-<histogram name="VR.DataConnection.OnRegisterAssetsComponent"
-    enum="NetworkConnectionType">
-  <owner>tiborg@chromium.org</owner>
-  <summary>Data connection when registering the VR assets component.</summary>
 </histogram>
 
 <histogram name="VR.Shell.EncounteredSuppressedUI" enum="VRSuppressedElement">
   <owner>asimjour@chromium.org</owner>
   <summary>
-    We must suppress monocularly rendered ui elements in VR. This records which
+    We must suppress monocularly rendered ui elements in VR. This tracks which
     ui element suppressions are encountered in practice.
   </summary>
 </histogram>
@@ -92888,18 +92759,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 <histogram name="VR.Shell.EncounteredUnsupportedMode" enum="VRUnsupportedMode">
   <owner>vollick@chromium.org</owner>
   <summary>
-    We must exit VR mode when browsing in certain situations. This records which
+    We must exit VR mode when browsing in certain situations. This tracks which
     situations are encountered in practice.
-  </summary>
-</histogram>
-
-<histogram name="VR.VoiceSearch.RecordAudioOsPermissionPromptChoice"
-    enum="BooleanChoice">
-  <owner>bshe@chromium.org</owner>
-  <summary>
-    Chrome shows a prompt when the OS's record audio permission is needed for
-    voice search. The prompt gives user two choices: CANCEL or CONTINUE. This
-    records the user's selection.
   </summary>
 </histogram>
 
@@ -95598,15 +95459,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="WebRTC.Audio.EchoCanceller.Erl" units="dB (shifted)">
-  <owner>gustaf@chromium.org</owner>
-  <summary>
-    This histogram logs the echo return loss achieved by the WebRTC echo
-    canceller as described in ITU G.168. When the echo canceller is being used,
-    one value is logged every 10 seconds per ongoing WebRTC call.
-  </summary>
-</histogram>
-
 <histogram name="WebRTC.Audio.EchoCanceller.ErlBand0" units="dB (shifted)">
   <owner>peah@chromium.org</owner>
   <summary>
@@ -95620,15 +95472,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     This histogram logs the echo return loss achieved by the WebRTC echo
     canceller between 4 and 8 kHz. A new value is logged every 10 seconds.
-  </summary>
-</histogram>
-
-<histogram name="WebRTC.Audio.EchoCanceller.Erle" units="dB">
-  <owner>gustaf@chromium.org</owner>
-  <summary>
-    This histogram logs the echo return loss enhancement achieved by the WebRTC
-    echo canceller as described in ITU G.168. When the echo canceller is being
-    used, one value is logged every 10 seconds per ongoing WebRTC call.
   </summary>
 </histogram>
 
@@ -95819,14 +95662,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     The target bitrate in kbps that the audio codec should try to produce on
     average. Sampled every time the rate is updated.
-  </summary>
-</histogram>
-
-<histogram name="WebRTC.Audio.TargetJitterBufferDelayMs" units="ms">
-  <owner>hlundin@chromium.org</owner>
-  <summary>
-    The target jitter buffer delay for the receiving side. Sampled once every 10
-    ms per WebRTC receive stream when WebRTC audio is playing.
   </summary>
 </histogram>
 
@@ -99527,7 +99362,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     ordering="prefix">
   <suffix name="Browser"/>
   <suffix name="Renderer"/>
-  <affected-histogram name="Scheduling.ImageInvalidationUpdateDuration"/>
   <affected-histogram name="Scheduling.PendingTreeDuration"/>
   <affected-histogram name="Scheduling.PendingTreeRasterDuration"/>
 </histogram_suffixes>
@@ -108979,16 +108813,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="WebRTC.Video.Encoded.Qp"/>
 </histogram_suffixes>
 
-<histogram_suffixes name="VR.Mode" separator=".">
-  <affected-histogram name="VR.AssetsComponent.ReadyLatency.OnEnter"/>
-  <suffix name="VR" label="Entered either VR Browsing or WebVR mode."/>
-  <suffix name="VRBrowsing" label="Entered VR Browsing Mode."/>
-  <suffix name="WebVR"
-      label="Entered WebVR mode (also includes splash screen)."/>
-  <affected-histogram name="VR.AssetsComponent.Status.OnEnter"/>
-  <affected-histogram name="VR.DataConnection.OnEnter"/>
-</histogram_suffixes>
-
 <histogram_suffixes name="VRFreNotCompleteType" separator=".">
   <suffix name="VrBrowser" label="FRE not complete when starting Chrome"/>
   <suffix name="WebVRAutopresent"
@@ -109091,14 +108915,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
       label="On missed cache and intervention triggered"/>
   <affected-histogram name="WebFont.DownloadTime.1.10KBTo50KB"/>
   <affected-histogram name="WebFont.DownloadTime.1.10KBTo50KB"/>
-</histogram_suffixes>
-
-<histogram_suffixes name="WebRTCEchoCancellerEstimate" separator=".">
-  <suffix name="Value" label="The last estimated value of the time interval"/>
-  <suffix name="Max" label="The maximum over the time interval"/>
-  <suffix name="Min" label="The minimum over the time interval"/>
-  <affected-histogram name="WebRTC.Audio.EchoCanceller.Erl"/>
-  <affected-histogram name="WebRTC.Audio.EchoCanceller.Erle"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="WebRTCEchoCancellerStatisticType" separator=".">

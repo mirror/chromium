@@ -8,9 +8,9 @@ namespace chromeos {
 
 namespace tether {
 
-MockHostConnectionMetricsLogger::MockHostConnectionMetricsLogger() = default;
+MockHostConnectionMetricsLogger::MockHostConnectionMetricsLogger() {}
 
-MockHostConnectionMetricsLogger::~MockHostConnectionMetricsLogger() = default;
+MockHostConnectionMetricsLogger::~MockHostConnectionMetricsLogger() {}
 
 }  // namespace tether
 

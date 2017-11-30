@@ -141,6 +141,10 @@ SecurityOrigin* WebSecurityOrigin::Get() const {
   return private_.Get();
 }
 
+void WebSecurityOrigin::GrantLoadLocalResources() const {
+  Get()->GrantLoadLocalResources();
+}
+
 WebSecurityOrigin::WebSecurityOrigin(const url::Origin& origin) {
   *this = SecurityOrigin::CreateFromUrlOrigin(origin);
 }

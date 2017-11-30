@@ -13,19 +13,19 @@
 //
 // Author: Skal (pascal.massimino@gmail.com)
 
-#ifndef WEBP_UTILS_BIT_READER_INL_UTILS_H_
-#define WEBP_UTILS_BIT_READER_INL_UTILS_H_
+#ifndef WEBP_UTILS_BIT_READER_INL_H_
+#define WEBP_UTILS_BIT_READER_INL_H_
 
 #ifdef HAVE_CONFIG_H
-#include "src/webp/config.h"
+#include "../webp/config.h"
 #endif
 
 #include <string.h>  // for memcpy
 
-#include "src/dsp/dsp.h"
-#include "src/utils/bit_reader_utils.h"
-#include "src/utils/endian_inl_utils.h"
-#include "src/utils/utils.h"
+#include "../dsp/dsp.h"
+#include "./bit_reader_utils.h"
+#include "./endian_inl_utils.h"
+#include "./utils.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -187,4 +187,4 @@ static WEBP_INLINE int VP8GetBitAlt(VP8BitReader* const br, int prob) {
 }    // extern "C"
 #endif
 
-#endif   // WEBP_UTILS_BIT_READER_INL_UTILS_H_
+#endif   // WEBP_UTILS_BIT_READER_INL_H_

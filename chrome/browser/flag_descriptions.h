@@ -52,9 +52,6 @@ extern const char kAllowNaclSocketApiDescription[];
 extern const char kAppBannersName[];
 extern const char kAppBannersDescription[];
 
-extern const char kAshSidebarName[];
-extern const char kAshSidebarDescription[];
-
 extern const char kAsyncImageDecodingName[];
 extern const char kAsyncImageDecodingDescription[];
 
@@ -77,6 +74,9 @@ extern const char kBleAdvertisingInExtensionsDescription[];
 
 extern const char kBlockTabUndersName[];
 extern const char kBlockTabUndersDescription[];
+
+extern const char kBrowserSideNavigationName[];
+extern const char kBrowserSideNavigationDescription[];
 
 extern const char kNavigationMojoResponseName[];
 extern const char kNavigationMojoResponseDescription[];
@@ -330,9 +330,6 @@ extern const char kEnablePWAFullCodeCacheDescription[];
 extern const char kEnableTokenBindingName[];
 extern const char kEnableTokenBindingDescription[];
 
-extern const char kEnableTouchpadAndWheelScrollLatchingName[];
-extern const char kEnableTouchpadAndWheelScrollLatchingDescription[];
-
 extern const char kEnableUsernameCorrectionName[];
 extern const char kEnableUsernameCorrectionDescription[];
 
@@ -546,9 +543,6 @@ extern const char kNewBookmarkAppsDescription[];
 
 extern const char kNewRemotePlaybackPipelineName[];
 extern const char kNewRemotePlaybackPipelineDescription[];
-
-extern const char kUseSurfaceLayerForVideoName[];
-extern const char kUseSurfaceLayerForVideoDescription[];
 
 extern const char kNewUsbBackendName[];
 extern const char kNewUsbBackendDescription[];

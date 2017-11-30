@@ -136,6 +136,7 @@ class CONTENT_EXPORT RendererWebMediaPlayerDelegate
 
   // Clock used for calculating when players have become stale. May be
   // overridden for testing.
+  std::unique_ptr<base::DefaultTickClock> default_tick_clock_;
   base::TickClock* tick_clock_;
 
 #if defined(OS_ANDROID)

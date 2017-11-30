@@ -17,7 +17,8 @@ File::Info::Info()
       is_symbolic_link(false) {
 }
 
-File::Info::~Info() = default;
+File::Info::~Info() {
+}
 
 File::File()
     : error_details_(FILE_ERROR_FAILED),

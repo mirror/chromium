@@ -35,8 +35,8 @@
 #include "platform/PlatformExport.h"
 #include "platform/network/ParsedContentHeaderFieldParameters.h"
 #include "platform/wtf/Allocator.h"
-#include "platform/wtf/Optional.h"
-#include "platform/wtf/text/WTFString.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/text/StringHash.h"
 
 namespace blink {
 
@@ -57,18 +57,15 @@ class PLATFORM_EXPORT ParsedContentType final {
   // Note that in the case of multiple values for the same name, the last value
   // is returned.
   String ParameterValueForName(const String& name) const {
-    return IsValid() ? parameters_->ParameterValueForName(name) : String();
+    return parameters_.ParameterValueForName(name);
   }
-  const ParsedContentHeaderFieldParameters& GetParameters() const {
-    DCHECK(IsValid());
-    return *parameters_;
-  }
+  size_t ParameterCount() const { return parameters_.ParameterCount(); }
 
-  bool IsValid() const { return !!parameters_; }
+  bool IsValid() const { return parameters_.IsValid(); }
 
  private:
   String mime_type_;
-  WTF::Optional<ParsedContentHeaderFieldParameters> parameters_;
+  ParsedContentHeaderFieldParameters parameters_;
 };
 
 }  // namespace blink

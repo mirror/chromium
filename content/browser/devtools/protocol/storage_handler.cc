@@ -306,8 +306,11 @@ Response StorageHandler::ClearDataForOrigin(
     return Response::InvalidParams("No valid storage type specified");
 
   partition->ClearDataForOrigin(
-      remove_mask, StoragePartition::QUOTA_MANAGED_STORAGE_MASK_ALL,
-      GURL(origin), partition->GetURLRequestContext());
+      remove_mask,
+      StoragePartition::QUOTA_MANAGED_STORAGE_MASK_ALL,
+      GURL(origin),
+      partition->GetURLRequestContext(),
+      base::Bind(&base::DoNothing));
   return Response::OK();
 }
 

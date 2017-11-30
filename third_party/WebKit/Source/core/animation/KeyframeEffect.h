@@ -33,7 +33,7 @@
 
 #include "core/CoreExport.h"
 #include "core/animation/AnimationEffectTiming.h"
-#include "core/animation/KeyframeEffectModel.h"
+#include "core/animation/EffectModel.h"
 #include "core/animation/KeyframeEffectReadOnly.h"
 
 namespace blink {
@@ -49,7 +49,7 @@ class CORE_EXPORT KeyframeEffect final : public KeyframeEffectReadOnly {
 
  public:
   static KeyframeEffect* Create(Element*,
-                                KeyframeEffectModelBase*,
+                                EffectModel*,
                                 const Timing&,
                                 KeyframeEffectReadOnly::Priority =
                                     KeyframeEffectReadOnly::kDefaultPriority,
@@ -69,16 +69,13 @@ class CORE_EXPORT KeyframeEffect final : public KeyframeEffectReadOnly {
 
   ~KeyframeEffect() override;
 
-  // IDL implementation.
-  void setComposite(String);
-
   bool IsKeyframeEffect() const override { return true; }
 
   AnimationEffectTiming* timing() override;
 
  private:
   KeyframeEffect(Element*,
-                 KeyframeEffectModelBase*,
+                 EffectModel*,
                  const Timing&,
                  KeyframeEffectReadOnly::Priority,
                  EventDelegate*);

@@ -10,9 +10,11 @@
 
 namespace chromeos {
 
-MockAuthStatusConsumer::MockAuthStatusConsumer() = default;
+MockAuthStatusConsumer::MockAuthStatusConsumer() {
+}
 
-MockAuthStatusConsumer::~MockAuthStatusConsumer() = default;
+MockAuthStatusConsumer::~MockAuthStatusConsumer() {
+}
 
 // static
 void MockAuthStatusConsumer::OnRetailModeSuccessQuit(

@@ -153,19 +153,6 @@ class VirtualKeyboardPrivateSetModeFunction
   ResponseAction Run() override;
 };
 
-class VirtualKeyboardPrivateSetDraggableAreaFunction
-    : public VirtualKeyboardPrivateFunction {
- public:
-  DECLARE_EXTENSION_FUNCTION("virtualKeyboardPrivate.setDraggableArea",
-                             VIRTUALKEYBOARDPRIVATE_SETDRAGGABLEAREA);
-
- protected:
-  ~VirtualKeyboardPrivateSetDraggableAreaFunction() override {}
-
-  // ExtensionFunction:
-  ResponseAction Run() override;
-};
-
 class VirtualKeyboardPrivateSetKeyboardStateFunction
     : public VirtualKeyboardPrivateFunction {
  public:

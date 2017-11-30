@@ -14,7 +14,6 @@
 #include "base/values.h"
 #include "content/public/browser/browser_thread.h"
 #include "extensions/common/api/virtual_keyboard.h"
-#include "extensions/common/api/virtual_keyboard_private.h"
 
 namespace extensions {
 
@@ -75,11 +74,6 @@ class VirtualKeyboardDelegate {
 
   // Sets virtual keyboard window mode.
   virtual bool SetVirtualKeyboardMode(int mode_enum) = 0;
-
-  // Sets virtual keyboard draggable area bounds.
-  // Returns whether the draggable area is set successful.
-  virtual bool SetDraggableArea(
-      const api::virtual_keyboard_private::Bounds& bounds) = 0;
 
   // Sets requested virtual keyboard state.
   virtual bool SetRequestedKeyboardState(int state_enum) = 0;

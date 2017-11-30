@@ -516,8 +516,9 @@ WebString GetErrorString(const CORSError error,
 void ExtractCorsExposedHeaderNamesList(const WebURLResponse& response,
                                        WebHTTPHeaderSet& header_set) {
   // If a response was fetched via a service worker, it will always have
-  // CorsExposedHeaderNames set from the Access-Control-Expose-Headers header.
-  // For requests that didn't come from a service worker, just parse the CORS
+  // CorsExposedHeaderNames set, either from the Access-Control-Expose-Headers
+  // header, or explicitly via foreign fetch. For requests that didn't come from
+  // a service worker, foreign fetch doesn't apply so just parse the CORS
   // header.
   if (response.WasFetchedViaServiceWorker()) {
     for (const auto& header : response.CorsExposedHeaderNames())

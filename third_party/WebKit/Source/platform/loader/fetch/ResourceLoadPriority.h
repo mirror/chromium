@@ -26,11 +26,39 @@
 #ifndef ResourceLoadPriority_h
 #define ResourceLoadPriority_h
 
-#include "public/platform/WebURLRequest.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
-using ResourceLoadPriority = WebURLRequest::Priority;
+enum ResourceLoadPriority : int8_t {
+  // The unresolved priority is here for the convenience of the clients. It
+  // should not be passed to the ResourceLoadScheduler.
+  kResourceLoadPriorityUnresolved = -1,
+  kResourceLoadPriorityVeryLow = 0,
+  kResourceLoadPriorityLow,
+  kResourceLoadPriorityMedium,
+  kResourceLoadPriorityHigh,
+  kResourceLoadPriorityVeryHigh,
+  kResourceLoadPriorityLowest = kResourceLoadPriorityVeryLow,
+  kResourceLoadPriorityHighest = kResourceLoadPriorityVeryHigh,
+};
+
+struct ResourcePriority final {
+  STACK_ALLOCATED();
+
+ public:
+  enum VisibilityStatus {
+    kNotVisible,
+    kVisible,
+  };
+
+  ResourcePriority() : ResourcePriority(kNotVisible, 0) {}
+  ResourcePriority(VisibilityStatus status, int intra_value)
+      : visibility(status), intra_priority_value(intra_value) {}
+
+  VisibilityStatus visibility;
+  int intra_priority_value;
+};
 
 }  // namespace blink
 

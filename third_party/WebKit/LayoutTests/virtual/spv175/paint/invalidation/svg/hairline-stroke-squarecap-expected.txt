@@ -8,12 +8,12 @@
       "paintInvalidations": [
         {
           "object": "LayoutSVGPath path id='path'",
-          "rect": [197, 197, 107, 107],
+          "rect": [198, 198, 105, 105],
           "reason": "appeared"
         },
         {
           "object": "LayoutSVGRoot svg",
-          "rect": [97, 97, 106, 106],
+          "rect": [98, 98, 104, 104],
           "reason": "disappeared"
         }
       ]

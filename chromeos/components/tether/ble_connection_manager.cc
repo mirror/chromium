@@ -51,7 +51,7 @@ BleConnectionManager::ConnectionMetadata::ConnectionMetadata(
       manager_(manager),
       weak_ptr_factory_(this) {}
 
-BleConnectionManager::ConnectionMetadata::~ConnectionMetadata() = default;
+BleConnectionManager::ConnectionMetadata::~ConnectionMetadata() {}
 
 void BleConnectionManager::ConnectionMetadata::RegisterConnectionReason(
     const MessageType& connection_reason) {

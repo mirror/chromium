@@ -285,7 +285,7 @@ BackgroundSyncManager::BackgroundSyncManager(
       parameters_(new BackgroundSyncParameters()),
       disabled_(false),
       num_firing_registrations_(0),
-      clock_(base::DefaultClock::GetInstance()),
+      clock_(new base::DefaultClock()),
       weak_ptr_factory_(this) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 

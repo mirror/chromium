@@ -1210,7 +1210,8 @@ TEST_F(RemoteSuggestionsProviderImplTest, ClearSuggestionsOnInit) {
       /*use_mock_prefetched_pages_tracker=*/false,
       /*use_fake_breaking_news_listener=*/false,
       /*use_mock_remote_suggestions_status_service=*/false);
-  provider->ClearCachedSuggestions();
+  provider->ClearCachedSuggestions(Category::FromRemoteCategory(1));
+  provider->ClearCachedSuggestions(Category::FromRemoteCategory(2));
 
   // The suggestions in both categories should have been cleared after the init.
   WaitForSuggestionsProviderInitialization(provider.get());
@@ -1282,7 +1283,7 @@ TEST_F(RemoteSuggestionsProviderImplTest, Clear) {
   EXPECT_THAT(provider->GetSuggestionsForTesting(articles_category()),
               SizeIs(1));
 
-  provider->ClearCachedSuggestions();
+  provider->ClearCachedSuggestions(articles_category());
   EXPECT_THAT(provider->GetSuggestionsForTesting(articles_category()),
               IsEmpty());
 }

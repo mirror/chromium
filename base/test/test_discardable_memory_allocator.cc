@@ -53,9 +53,11 @@ class DiscardableMemoryImpl : public DiscardableMemory {
 
 }  // namespace
 
-TestDiscardableMemoryAllocator::TestDiscardableMemoryAllocator() = default;
+TestDiscardableMemoryAllocator::TestDiscardableMemoryAllocator() {
+}
 
-TestDiscardableMemoryAllocator::~TestDiscardableMemoryAllocator() = default;
+TestDiscardableMemoryAllocator::~TestDiscardableMemoryAllocator() {
+}
 
 std::unique_ptr<DiscardableMemory>
 TestDiscardableMemoryAllocator::AllocateLockedDiscardableMemory(size_t size) {

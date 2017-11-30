@@ -12,7 +12,7 @@ namespace headless {
 HeadlessContentClient::HeadlessContentClient(HeadlessBrowser::Options* options)
     : options_(options) {}
 
-HeadlessContentClient::~HeadlessContentClient() = default;
+HeadlessContentClient::~HeadlessContentClient() {}
 
 std::string HeadlessContentClient::GetProduct() const {
   return options_->product_name_and_version;

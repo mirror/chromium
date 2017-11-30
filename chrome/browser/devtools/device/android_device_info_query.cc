@@ -74,6 +74,11 @@ const BrowserDescriptor kBrowserDescriptors[] = {
     kChromeDefaultName
   },
   {
+    "com.chrome.work",
+    kChromeDefaultSocket,
+    "Work Chrome"
+  },
+  {
     "org.chromium.android_webview.shell",
     "webview_devtools_remote",
     "WebView Test Shell"

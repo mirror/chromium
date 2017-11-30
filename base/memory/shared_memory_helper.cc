@@ -30,24 +30,23 @@ using ScopedPathUnlinker =
 
 #if !defined(OS_ANDROID)
 bool CreateAnonymousSharedMemory(const SharedMemoryCreateOptions& options,
-                                 ScopedFD* fd,
+                                 ScopedFILE* fp,
                                  ScopedFD* readonly_fd,
                                  FilePath* path) {
-#if defined(OS_LINUX)
+#if !(defined(OS_MACOSX) && !defined(OS_IOS)) && !defined(OS_FUCHSIA)
   // It doesn't make sense to have a open-existing private piece of shmem
   DCHECK(!options.open_existing_deprecated);
-#endif  // defined(OS_LINUX)
+#endif  // !(defined(OS_MACOSX) && !defined(OS_IOS)
   // Q: Why not use the shm_open() etc. APIs?
   // A: Because they're limited to 4mb on OS X.  FFFFFFFUUUUUUUUUUU
   FilePath directory;
   ScopedPathUnlinker path_unlinker;
-  ScopedFILE fp;
   if (!GetShmemTempDir(options.executable, &directory))
     return false;
 
-  fp.reset(base::CreateAndOpenTemporaryFileInDir(directory, path));
+  fp->reset(base::CreateAndOpenTemporaryFileInDir(directory, path));
 
-  if (!fp)
+  if (!*fp)
     return false;
 
   // Deleting the file prevents anyone else from mapping it in (making it
@@ -60,20 +59,20 @@ bool CreateAnonymousSharedMemory(const SharedMemoryCreateOptions& options,
     readonly_fd->reset(HANDLE_EINTR(open(path->value().c_str(), O_RDONLY)));
     if (!readonly_fd->is_valid()) {
       DPLOG(ERROR) << "open(\"" << path->value() << "\", O_RDONLY) failed";
+      fp->reset();
       return false;
     }
   }
-  fd->reset(fileno(fp.release()));
   return true;
 }
 
-bool PrepareMapFile(ScopedFD fd,
+bool PrepareMapFile(ScopedFILE fp,
                     ScopedFD readonly_fd,
                     int* mapped_file,
                     int* readonly_mapped_file) {
   DCHECK_EQ(-1, *mapped_file);
   DCHECK_EQ(-1, *readonly_mapped_file);
-  if (!fd.is_valid())
+  if (fp == nullptr)
     return false;
 
   // This function theoretically can block on the disk, but realistically
@@ -83,7 +82,7 @@ bool PrepareMapFile(ScopedFD fd,
 
   if (readonly_fd.is_valid()) {
     struct stat st = {};
-    if (fstat(fd.get(), &st))
+    if (fstat(fileno(fp.get()), &st))
       NOTREACHED();
 
     struct stat readonly_st = {};
@@ -95,7 +94,7 @@ bool PrepareMapFile(ScopedFD fd,
     }
   }
 
-  *mapped_file = HANDLE_EINTR(dup(fd.get()));
+  *mapped_file = HANDLE_EINTR(dup(fileno(fp.get())));
   if (*mapped_file == -1) {
     NOTREACHED() << "Call to dup failed, errno=" << errno;
 

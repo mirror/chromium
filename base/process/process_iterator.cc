@@ -10,7 +10,7 @@ namespace base {
 #if defined(OS_POSIX)
 ProcessEntry::ProcessEntry() : pid_(0), ppid_(0), gid_(0) {}
 ProcessEntry::ProcessEntry(const ProcessEntry& other) = default;
-ProcessEntry::~ProcessEntry() = default;
+ProcessEntry::~ProcessEntry() {}
 #endif
 
 const ProcessEntry* ProcessIterator::NextProcessEntry() {
@@ -52,7 +52,8 @@ NamedProcessIterator::NamedProcessIterator(
 #endif
 }
 
-NamedProcessIterator::~NamedProcessIterator() = default;
+NamedProcessIterator::~NamedProcessIterator() {
+}
 
 int GetProcessCount(const FilePath::StringType& executable_name,
                     const ProcessFilter* filter) {

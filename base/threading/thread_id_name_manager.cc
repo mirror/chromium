@@ -28,7 +28,8 @@ ThreadIdNameManager::ThreadIdNameManager()
   name_to_interned_name_[kDefaultName] = g_default_name;
 }
 
-ThreadIdNameManager::~ThreadIdNameManager() = default;
+ThreadIdNameManager::~ThreadIdNameManager() {
+}
 
 ThreadIdNameManager* ThreadIdNameManager::GetInstance() {
   return Singleton<ThreadIdNameManager,

@@ -9,7 +9,8 @@ TEST COMPLETE
 PASS A focus event was dispatched on frame1 input element.
 ===> Making a first frame with a focused element inactive by focus() for second frame.
 PASS A blur event was dispatched on frame1 input element.
-PASS frame1.contentDocument.activeElement is doc.body
+PASS frame1.contentDocument.activeElement is input
 ===> Making the first frame active again by focus() for first frame.
-PASS frame1.contentDocument.activeElement is doc.body
+PASS A focus event was dispatched on frame1 input element.
+PASS frame1.contentDocument.activeElement is input
  

@@ -32,7 +32,7 @@ class TrayVPN : public SystemTrayItem,
   void OnDetailedViewDestroyed() override;
 
   // TrayNetworkStateObserver::Delegate
-  void NetworkStateChanged(bool notify_a11y) override;
+  void NetworkStateChanged() override;
 
  private:
   tray::VpnDefaultView* default_;

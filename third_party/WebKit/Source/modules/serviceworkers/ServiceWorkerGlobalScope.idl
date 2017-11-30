@@ -46,4 +46,5 @@
   attribute EventHandler onfetch;
   attribute EventHandler oninstall;
   attribute EventHandler onmessage;
+  [OriginTrialEnabled=ForeignFetch] attribute EventHandler onforeignfetch;
 };

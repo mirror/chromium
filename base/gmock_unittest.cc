@@ -23,8 +23,8 @@ namespace {
 // for easy mocking.
 class SampleClass {
  public:
-  SampleClass() = default;
-  virtual ~SampleClass() = default;
+  SampleClass() {}
+  virtual ~SampleClass() {}
 
   virtual int ReturnSomething() {
     return -1;

@@ -907,7 +907,8 @@ void CryptohomeAuthenticator::Resolve() {
   }
 }
 
-CryptohomeAuthenticator::~CryptohomeAuthenticator() = default;
+CryptohomeAuthenticator::~CryptohomeAuthenticator() {
+}
 
 CryptohomeAuthenticator::AuthState CryptohomeAuthenticator::ResolveState() {
   DCHECK(task_runner_->RunsTasksInCurrentSequence());

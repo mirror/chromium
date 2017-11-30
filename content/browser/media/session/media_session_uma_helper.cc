@@ -15,7 +15,8 @@ namespace content {
 using HistogramBase = base::HistogramBase;
 
 MediaSessionUmaHelper::MediaSessionUmaHelper()
-    : clock_(base::DefaultTickClock::GetInstance()) {}
+    : clock_(new base::DefaultTickClock())
+{}
 
 MediaSessionUmaHelper::~MediaSessionUmaHelper()
 {}
@@ -65,8 +66,9 @@ void MediaSessionUmaHelper::OnSessionInactive() {
   total_active_time_ = base::TimeDelta();
 }
 
-void MediaSessionUmaHelper::SetClockForTest(base::TickClock* testing_clock) {
-  clock_ = testing_clock;
+void MediaSessionUmaHelper::SetClockForTest(
+    std::unique_ptr<base::TickClock> testing_clock) {
+  clock_ = std::move(testing_clock);
 }
 
 }  // namespace content

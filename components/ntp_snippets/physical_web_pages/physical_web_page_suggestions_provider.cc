@@ -166,7 +166,8 @@ void PhysicalWebPageSuggestionsProvider::ClearHistory(
   ClearDismissedSuggestionsForDebugging(provided_category_);
 }
 
-void PhysicalWebPageSuggestionsProvider::ClearCachedSuggestions() {
+void PhysicalWebPageSuggestionsProvider::ClearCachedSuggestions(
+    Category category) {
   // Ignored
 }
 

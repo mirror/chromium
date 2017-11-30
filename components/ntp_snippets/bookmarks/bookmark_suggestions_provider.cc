@@ -145,7 +145,8 @@ void BookmarkSuggestionsProvider::ClearHistory(
   FetchBookmarks();
 }
 
-void BookmarkSuggestionsProvider::ClearCachedSuggestions() {
+void BookmarkSuggestionsProvider::ClearCachedSuggestions(Category category) {
+  DCHECK_EQ(category, provided_category_);
   // Ignored.
 }
 

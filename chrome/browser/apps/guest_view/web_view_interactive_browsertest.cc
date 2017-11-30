@@ -1011,7 +1011,14 @@ IN_PROC_BROWSER_TEST_P(WebViewNewWindowInteractiveTest, NewWindow_NoName) {
              NEEDS_TEST_SERVER);
 }
 
-IN_PROC_BROWSER_TEST_P(WebViewNewWindowInteractiveTest, NewWindow_Redirect) {
+// Flaky on win_chromium_rel_ng. https://crbug.com/504054
+#if defined(OS_WIN)
+#define MAYBE_NewWindow_Redirect DISABLED_NewWindow_Redirect
+#else
+#define MAYBE_NewWindow_Redirect NewWindow_Redirect
+#endif
+IN_PROC_BROWSER_TEST_P(WebViewNewWindowInteractiveTest,
+                       MAYBE_NewWindow_Redirect) {
   TestHelper("testNewWindowRedirect",
              "web_view/newwindow",
              NEEDS_TEST_SERVER);
@@ -1257,7 +1264,14 @@ IN_PROC_BROWSER_TEST_P(WebViewInteractiveTest, ExecuteCode) {
       "platform_apps/web_view/common", "execute_code")) << message_;
 }
 
-IN_PROC_BROWSER_TEST_F(WebViewPopupInteractiveTest, PopupPositioningBasic) {
+// Causes problems on windows: http://crbug.com/544037
+#if defined(OS_WIN)
+#define MAYBE_PopupPositioningBasic DISABLED_PopupPositioningBasic
+#else
+#define MAYBE_PopupPositioningBasic PopupPositioningBasic
+#endif
+IN_PROC_BROWSER_TEST_F(WebViewPopupInteractiveTest,
+                       MAYBE_PopupPositioningBasic) {
   TestHelper("testBasic", "web_view/popup_positioning", NO_TEST_SERVER);
   ASSERT_TRUE(guest_web_contents());
   PopupTestHelper(gfx::Point());
@@ -1267,7 +1281,8 @@ IN_PROC_BROWSER_TEST_F(WebViewPopupInteractiveTest, PopupPositioningBasic) {
 }
 
 // Flaky on ChromeOS and Linux: http://crbug.com/526886
-#if defined(OS_CHROMEOS) || defined(OS_LINUX)
+// Causes problems on windows: http://crbug.com/544998
+#if defined(OS_CHROMEOS) || defined(OS_WIN) || defined(OS_LINUX)
 #define MAYBE_PopupPositioningMoved DISABLED_PopupPositioningMoved
 #else
 #define MAYBE_PopupPositioningMoved PopupPositioningMoved
@@ -1318,15 +1333,8 @@ IN_PROC_BROWSER_TEST_P(WebViewInteractiveTest, Navigation_BackForwardKeys) {
 
 // Trips over a DCHECK in content::MouseLockDispatcher::OnLockMouseACK; see
 // https://crbug.com/761783.
-#if defined(OS_WIN)
-#define MAYBE_PointerLock_PointerLockLostWithFocus \
-  PointerLock_PointerLockLostWithFocus
-#else
-#define MAYBE_PointerLock_PointerLockLostWithFocus \
-  DISABLED_PointerLock_PointerLockLostWithFocus
-#endif
 IN_PROC_BROWSER_TEST_P(WebViewPointerLockInteractiveTest,
-                       MAYBE_PointerLock_PointerLockLostWithFocus) {
+                       DISABLED_PointerLock_PointerLockLostWithFocus) {
   TestHelper("testPointerLockLostWithFocus",
              "web_view/pointerlock",
              NO_TEST_SERVER);

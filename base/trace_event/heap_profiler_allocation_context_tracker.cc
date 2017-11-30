@@ -87,7 +87,7 @@ AllocationContextTracker::AllocationContextTracker()
   tracked_stack_.reserve(kMaxStackDepth);
   task_contexts_.reserve(kMaxTaskDepth);
 }
-AllocationContextTracker::~AllocationContextTracker() = default;
+AllocationContextTracker::~AllocationContextTracker() {}
 
 // static
 void AllocationContextTracker::SetCurrentThreadName(const char* name) {

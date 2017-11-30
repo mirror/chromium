@@ -8,13 +8,11 @@
 #include "base/scoped_observer.h"
 #include "base/strings/sys_string_conversions.h"
 #include "components/bookmarks/browser/bookmark_model.h"
-#include "ios/chrome/browser/ui/bookmarks/bookmark_model_bridge_observer.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_consumer.h"
 #import "ios/chrome/browser/web_state_list/web_state_list.h"
 #import "ios/chrome/browser/web_state_list/web_state_list_observer_bridge.h"
 #import "ios/public/provider/chrome/browser/voice/voice_search_provider.h"
 #import "ios/web/public/navigation_manager.h"
-#import "ios/web/public/web_client.h"
 #include "ios/web/public/web_state/web_state.h"
 #import "ios/web/public/web_state/web_state_observer_bridge.h"
 
@@ -22,9 +20,7 @@
 #error "This file requires ARC support."
 #endif
 
-@interface ToolbarMediator ()<BookmarkModelBridgeObserver,
-                              CRWWebStateObserver,
-                              WebStateListObserving>
+@interface ToolbarMediator ()<CRWWebStateObserver, WebStateListObserving>
 
 // The current web state associated with the toolbar.
 @property(nonatomic, assign) web::WebState* webState;
@@ -34,8 +30,6 @@
 @implementation ToolbarMediator {
   std::unique_ptr<web::WebStateObserverBridge> _webStateObserver;
   std::unique_ptr<WebStateListObserverBridge> _webStateListObserver;
-  // Bridge to register for bookmark changes.
-  std::unique_ptr<bookmarks::BookmarkModelBridge> _bookmarkModelBridge;
 }
 
 @synthesize bookmarkModel = _bookmarkModel;
@@ -75,7 +69,6 @@
     _webStateObserver.reset();
     _webState = nullptr;
   }
-  _bookmarkModelBridge.reset();
 }
 
 #pragma mark - CRWWebStateObserver
@@ -209,11 +202,6 @@
   if (self.webState && self.consumer) {
     [self updateConsumer];
   }
-  _bookmarkModelBridge.reset();
-  if (bookmarkModel) {
-    _bookmarkModelBridge =
-        std::make_unique<bookmarks::BookmarkModelBridge>(self, bookmarkModel);
-  }
 }
 
 #pragma mark - Helper methods
@@ -224,8 +212,9 @@
   DCHECK(self.consumer);
   [self updateConsumerForWebState:self.webState];
   [self.consumer setIsLoading:self.webState->IsLoading()];
-  [self updateBookmarks];
-  [self updateShareMenu];
+  [self.consumer setPageBookmarked:self.bookmarkModel &&
+                                   self.bookmarkModel->IsBookmarked(
+                                       self.webState->GetLastCommittedURL())];
 }
 
 // Updates the consumer with the new forward and back states.
@@ -235,56 +224,6 @@
   [self.consumer
       setCanGoForward:webState->GetNavigationManager()->CanGoForward()];
   [self.consumer setCanGoBack:webState->GetNavigationManager()->CanGoBack()];
-}
-
-// Updates the bookmark state of the consumer.
-- (void)updateBookmarks {
-  if (self.webState) {
-    GURL URL = self.webState->GetVisibleURL();
-    [self.consumer setPageBookmarked:self.bookmarkModel &&
-                                     self.bookmarkModel->IsBookmarked(URL)];
-  }
-}
-
-// Uodates the Share Menu button of the consumer.
-- (void)updateShareMenu {
-  const GURL& URL = self.webState->GetLastCommittedURL();
-  BOOL shareMenuEnabled =
-      URL.is_valid() && !web::GetWebClient()->IsAppSpecificURL(URL);
-  [self.consumer setShareMenuEnabled:shareMenuEnabled];
-}
-
-#pragma mark - BookmarkModelBridgeObserver
-
-// If an added or removed bookmark is the same as the current url, update the
-// toolbar so the star highlight is kept in sync.
-- (void)bookmarkNodeChildrenChanged:
-    (const bookmarks::BookmarkNode*)bookmarkNode {
-  [self updateBookmarks];
-}
-
-// If all bookmarks are removed, update the toolbar so the star highlight is
-// kept in sync.
-- (void)bookmarkModelRemovedAllNodes {
-  [self updateBookmarks];
-}
-
-// In case we are on a bookmarked page before the model is loaded.
-- (void)bookmarkModelLoaded {
-  [self updateBookmarks];
-}
-
-- (void)bookmarkNodeChanged:(const bookmarks::BookmarkNode*)bookmarkNode {
-  // No-op -- required by BookmarkModelBridgeObserver but not used.
-}
-- (void)bookmarkNode:(const bookmarks::BookmarkNode*)bookmarkNode
-     movedFromParent:(const bookmarks::BookmarkNode*)oldParent
-            toParent:(const bookmarks::BookmarkNode*)newParent {
-  // No-op -- required by BookmarkModelBridgeObserver but not used.
-}
-- (void)bookmarkNodeDeleted:(const bookmarks::BookmarkNode*)node
-                 fromFolder:(const bookmarks::BookmarkNode*)folder {
-  // No-op -- required by BookmarkModelBridgeObserver but not used.
 }
 
 @end

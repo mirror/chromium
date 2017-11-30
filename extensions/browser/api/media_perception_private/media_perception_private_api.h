@@ -79,10 +79,6 @@ class MediaPerceptionPrivateSetAnalyticsComponentFunction
   // ExtensionFunction:
   ResponseAction Run() override;
 
-  void OnAnalyticsComponentSet(
-      extensions::api::media_perception_private::ComponentState
-          component_state);
-
   DISALLOW_COPY_AND_ASSIGN(MediaPerceptionPrivateSetAnalyticsComponentFunction);
 };
 

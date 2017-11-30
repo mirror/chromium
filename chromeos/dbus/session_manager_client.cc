@@ -1071,9 +1071,11 @@ class SessionManagerClientStubImpl : public SessionManagerClient {
   DISALLOW_COPY_AND_ASSIGN(SessionManagerClientStubImpl);
 };
 
-SessionManagerClient::SessionManagerClient() = default;
+SessionManagerClient::SessionManagerClient() {
+}
 
-SessionManagerClient::~SessionManagerClient() = default;
+SessionManagerClient::~SessionManagerClient() {
+}
 
 SessionManagerClient* SessionManagerClient::Create(
     DBusClientImplementationType type) {

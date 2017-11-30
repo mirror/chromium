@@ -172,7 +172,6 @@ test("components_unittests") {
     ]
   } else {  # !iOS
     deps += [
-      "//components/app_modal:unit_tests",
       "//components/autofill/content/browser:unit_tests",
       "//components/autofill/content/common:unit_tests",
       "//components/autofill/content/renderer:unit_tests",

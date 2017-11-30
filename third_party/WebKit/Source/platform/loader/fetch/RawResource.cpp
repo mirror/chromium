@@ -206,8 +206,7 @@ void RawResource::ResponseReceived(
     // not be reused.
     // Note: This logic is needed here because DocumentThreadableLoader handles
     // CORS independently from ResourceLoader. Fix it.
-    if (IsMainThread())
-      GetMemoryCache()->Remove(this);
+    GetMemoryCache()->Remove(this);
   }
 
   bool is_successful_revalidation =
@@ -283,7 +282,7 @@ bool RawResource::MatchPreload(const FetchParameters& params,
   DCHECK_EQ(GetDataBufferingPolicy(), kBufferData);
 
   // Preloading for raw resources are not cached.
-  DCHECK(!IsMainThread() || !GetMemoryCache()->Contains(this));
+  DCHECK(!GetMemoryCache()->Contains(this));
 
   constexpr auto kCapacity = 32 * 1024;
   mojo::ScopedDataPipeProducerHandle producer;

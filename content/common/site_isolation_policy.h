@@ -5,13 +5,9 @@
 #ifndef CONTENT_COMMON_SITE_ISOLATION_POLICY_H_
 #define CONTENT_COMMON_SITE_ISOLATION_POLICY_H_
 
-#include <vector>
-
-#include "base/gtest_prod_util.h"
 #include "base/macros.h"
-#include "base/strings/string_piece_forward.h"
 #include "content/common/content_export.h"
-#include "url/origin.h"
+#include "url/gurl.h"
 
 namespace content {
 
@@ -19,7 +15,7 @@ namespace content {
 // site isolation, --site-per-process, and related features.
 //
 // This is currently static because all these modes are controlled by command-
-// line flags or field trials.
+// line flags.
 //
 // These methods can be called from any thread.
 class CONTENT_EXPORT SiteIsolationPolicy {
@@ -31,20 +27,13 @@ class CONTENT_EXPORT SiteIsolationPolicy {
   // different process from the main frame.
   static bool IsTopDocumentIsolationEnabled();
 
-  // Returns true if isolated origins feature is enabled.
+  // Returns true if there exist origins that require process isolation.  Such
+  // origins require a dedicated process, and hence they make cross-process
+  // iframes possible.
   static bool AreIsolatedOriginsEnabled();
-
-  // Returns the origins to isolate.  See also AreIsolatedOriginsEnabled.
-  // This list applies globally to the whole browser in all profiles.
-  // TODO(lukasza): Make sure this list also includes the origins returned by
-  // ContentBrowserClient::GetOriginsRequiringDedicatedProcess.
-  static std::vector<url::Origin> GetIsolatedOrigins();
 
  private:
   SiteIsolationPolicy();  // Not instantiable.
-
-  FRIEND_TEST_ALL_PREFIXES(SiteIsolationPolicyTest, ParseIsolatedOrigins);
-  static std::vector<url::Origin> ParseIsolatedOrigins(base::StringPiece arg);
 
   DISALLOW_COPY_AND_ASSIGN(SiteIsolationPolicy);
 };

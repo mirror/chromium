@@ -129,7 +129,8 @@ LoginState::LoginState() : logged_in_state_(LOGGED_IN_NONE),
                            always_logged_in_(AlwaysLoggedInByDefault()) {
 }
 
-LoginState::~LoginState() = default;
+LoginState::~LoginState() {
+}
 
 void LoginState::NotifyObservers() {
   for (auto& observer : observer_list_)

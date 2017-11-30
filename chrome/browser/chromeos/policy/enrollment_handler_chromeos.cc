@@ -667,10 +667,10 @@ void EnrollmentHandlerChromeOS::HandleStoreRobotAuthTokenResult(bool result) {
 }
 
 void EnrollmentHandlerChromeOS::HandleActiveDirectoryPolicyRefreshed(
-    authpolicy::ErrorType error) {
+    bool success) {
   DCHECK_EQ(STEP_STORE_POLICY, enrollment_step_);
 
-  if (error != authpolicy::ERROR_NONE) {
+  if (!success) {
     LOG(ERROR) << "Failed to load Active Directory policy.";
     ReportResult(EnrollmentStatus::ForStatus(
         EnrollmentStatus::ACTIVE_DIRECTORY_POLICY_FETCH_FAILED));

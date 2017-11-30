@@ -43,6 +43,7 @@
 #include "ui/gfx/geometry/size_conversions.h"
 #include "ui/gfx/gpu_memory_buffer.h"
 #include "ui/gfx/path.h"
+#include "ui/gfx/skia_util.h"
 #include "ui/gfx/transform_util.h"
 #include "ui/views/widget/widget.h"
 
@@ -237,7 +238,7 @@ void Surface::Attach(Buffer* buffer) {
 void Surface::Damage(const gfx::Rect& damage) {
   TRACE_EVENT1("exo", "Surface::Damage", "damage", damage.ToString());
 
-  pending_damage_.Union(damage);
+  pending_damage_.op(gfx::RectToSkIRect(damage), SkRegion::kUnion_Op);
 }
 
 void Surface::RequestFrameCallback(const FrameCallback& callback) {
@@ -253,14 +254,16 @@ void Surface::RequestPresentationCallback(
   pending_presentation_callbacks_.push_back(callback);
 }
 
-void Surface::SetOpaqueRegion(const cc::Region& region) {
-  TRACE_EVENT1("exo", "Surface::SetOpaqueRegion", "region", region.ToString());
+void Surface::SetOpaqueRegion(const SkRegion& region) {
+  TRACE_EVENT1("exo", "Surface::SetOpaqueRegion", "region",
+               gfx::SkIRectToRect(region.getBounds()).ToString());
 
   pending_state_.opaque_region = region;
 }
 
-void Surface::SetInputRegion(const cc::Region& region) {
-  TRACE_EVENT1("exo", "Surface::SetInputRegion", "region", region.ToString());
+void Surface::SetInputRegion(const SkRegion& region) {
+  TRACE_EVENT1("exo", "Surface::SetInputRegion", "region",
+               gfx::SkIRectToRect(region.getBounds()).ToString());
 
   pending_state_.input_region = region;
 }
@@ -471,7 +474,7 @@ void Surface::CommitSurfaceHierarchy(bool synchronized) {
     pending_state_.only_visible_on_secure_output = false;
 
     window_->SetEventTargetingPolicy(
-        state_.input_region.IsEmpty()
+        state_.input_region.isEmpty()
             ? ui::mojom::EventTargetingPolicy::DESCENDANTS_ONLY
             : ui::mojom::EventTargetingPolicy::TARGET_AND_DESCENDANTS);
 
@@ -519,15 +522,16 @@ void Surface::CommitSurfaceHierarchy(bool synchronized) {
       sub_surfaces_changed_ = false;
     }
 
-    gfx::Rect output_rect(content_size_);
+    SkIRect output_rect =
+        SkIRect::MakeWH(content_size_.width(), content_size_.height());
     if (needs_full_damage) {
-      damage_ = output_rect;
+      damage_.setRect(output_rect);
     } else {
       // pending_damage_ is in Surface coordinates.
-      damage_.Swap(&pending_damage_);
-      damage_.Intersect(output_rect);
+      damage_.swap(pending_damage_);
+      damage_.intersects(output_rect);
     }
-    pending_damage_.Clear();
+    pending_damage_.setEmpty();
   }
 
   surface_hierarchy_content_bounds_ = gfx::Rect(content_size_);
@@ -591,31 +595,34 @@ bool Surface::IsSynchronized() const {
 }
 
 gfx::Rect Surface::GetHitTestBounds() const {
-  gfx::Rect bounds(content_size_);
-  bounds.Intersect(state_.input_region.bounds());
-  return bounds;
+  SkIRect bounds = state_.input_region.getBounds();
+  if (!bounds.intersect(gfx::RectToSkIRect(gfx::Rect(content_size_))))
+    return gfx::Rect();
+  return gfx::SkIRectToRect(bounds);
 }
 
 bool Surface::HitTestRect(const gfx::Rect& rect) const {
   if (HasHitTestMask())
-    return state_.input_region.Intersects(rect);
+    return state_.input_region.intersects(gfx::RectToSkIRect(rect));
 
   return rect.Intersects(gfx::Rect(content_size_));
 }
 
 bool Surface::HasHitTestMask() const {
-  return !state_.input_region.Contains(gfx::Rect(content_size_));
+  return !state_.input_region.contains(
+      gfx::RectToSkIRect(gfx::Rect(content_size_)));
 }
 
 void Surface::GetHitTestMask(gfx::Path* mask) const {
-  state_.input_region.GetBoundaryPath(mask);
+  state_.input_region.getBoundaryPath(mask);
 }
 
 std::unique_ptr<aura::WindowTargeter::HitTestRects>
 Surface::GetHitTestShapeRects() const {
   auto rects = std::make_unique<aura::WindowTargeter::HitTestRects>();
-  for (cc::Region::Iterator it(state_.input_region); it.has_rect(); it.next())
-    rects->push_back(it.rect());
+  SkRegion::Iterator it(state_.input_region);
+  for (const SkIRect& rect = it.rect(); !it.done(); it.next())
+    rects->push_back(gfx::SkIRectToRect(rect));
   return rects;
 }
 
@@ -684,13 +691,14 @@ void Surface::SurfaceHierarchyResourcesLost() {
 bool Surface::FillsBoundsOpaquely() const {
   return !current_resource_has_alpha_ ||
          state_.blend_mode == SkBlendMode::kSrc ||
-         state_.opaque_region.Contains(gfx::Rect(content_size_));
+         state_.opaque_region.contains(
+             gfx::RectToSkIRect(gfx::Rect(content_size_)));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Buffer, private:
 
-Surface::State::State() : input_region(SkRegion(SkIRect::MakeLargest())) {}
+Surface::State::State() : input_region(SkIRect::MakeLargest()) {}
 
 Surface::State::~State() = default;
 
@@ -798,13 +806,13 @@ void Surface::AppendContentsToFrame(const gfx::Point& origin,
 
   // Surface bounds are in DIPs, but |damage_rect| and |output_rect| are in
   // pixels, so we need to scale by the |device_scale_factor|.
-  gfx::Rect damage_rect = damage_.bounds();
+  gfx::Rect damage_rect = gfx::SkIRectToRect(damage_.getBounds());
   if (!damage_rect.IsEmpty()) {
     // Outset damage by 1 DIP to as damage is in surface coordinate space and
     // client might not be aware of |device_scale_factor| and the
     // scaling/filtering it requires.
     damage_rect.Inset(-1, -1);
-    damage_rect += origin.OffsetFromOrigin();
+    damage_rect.Offset(origin.x(), origin.y());
     damage_rect.Intersect(output_rect);
     render_pass->damage_rect.Union(
         gfx::ConvertRectToPixel(device_scale_factor, damage_rect));
@@ -828,9 +836,9 @@ void Surface::AppendContentsToFrame(const gfx::Point& origin,
   quad_to_target_transform.ConcatTransform(
       gfx::Transform(viewport_to_target_matrix));
 
-  bool are_contents_opaque = !current_resource_has_alpha_ ||
-                             state_.blend_mode == SkBlendMode::kSrc ||
-                             state_.opaque_region.Contains(output_rect);
+  bool are_contents_opaque =
+      !current_resource_has_alpha_ || state_.blend_mode == SkBlendMode::kSrc ||
+      state_.opaque_region.contains(gfx::RectToSkIRect(output_rect));
 
   viz::SharedQuadState* quad_state =
       render_pass->CreateAndAppendSharedQuadState();

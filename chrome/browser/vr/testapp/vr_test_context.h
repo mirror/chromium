@@ -31,8 +31,6 @@ class VrTestContext : public vr::UiBrowserInterface {
   ~VrTestContext() override;
 
   void OnGlInitialized();
-  // TODO(vollick): we should refactor VrShellGl's rendering logic and use it
-  // directly. crbug.com/767282
   void DrawFrame();
   void HandleInput(ui::Event* event);
 
@@ -55,7 +53,6 @@ class VrTestContext : public vr::UiBrowserInterface {
  private:
   unsigned int CreateFakeContentTexture();
   void CreateFakeOmniboxSuggestions();
-  void CreateFakeVoiceSearchResult();
   void CycleWebVrModes();
   void ToggleSplashScreen();
   gfx::Transform ProjectionMatrix() const;
@@ -82,7 +79,6 @@ class VrTestContext : public vr::UiBrowserInterface {
   bool incognito_ = false;
 
   bool show_web_vr_splash_screen_ = false;
-  bool voice_search_enabled_ = false;
 
   ControllerModel last_controller_model_;
 

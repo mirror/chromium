@@ -23,7 +23,6 @@ class ImageFactory;
 }  // namespace gpu
 
 namespace viz {
-class CompositingModeReporterImpl;
 class Display;
 
 // In-process implementation of DisplayProvider.
@@ -32,8 +31,7 @@ class VIZ_SERVICE_EXPORT GpuDisplayProvider : public DisplayProvider {
   GpuDisplayProvider(
       uint32_t restart_id,
       scoped_refptr<gpu::InProcessCommandBuffer::Service> gpu_service,
-      gpu::GpuChannelManager* gpu_channel_manager,
-      CompositingModeReporterImpl* compositing_mode_reporter);
+      gpu::GpuChannelManager* gpu_channel_manager);
   ~GpuDisplayProvider() override;
 
   // DisplayProvider:
@@ -48,8 +46,7 @@ class VIZ_SERVICE_EXPORT GpuDisplayProvider : public DisplayProvider {
   const uint32_t restart_id_;
   scoped_refptr<gpu::InProcessCommandBuffer::Service> gpu_service_;
   std::unique_ptr<gpu::GpuMemoryBufferManager> gpu_memory_buffer_manager_;
-  gpu::ImageFactory* const image_factory_;
-  CompositingModeReporterImpl* const compositing_mode_reporter_;
+  gpu::ImageFactory* image_factory_;
 
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 

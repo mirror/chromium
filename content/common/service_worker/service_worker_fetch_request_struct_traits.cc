@@ -284,6 +284,8 @@ EnumTraits<ServiceWorkerFetchType, content::ServiceWorkerFetchType>::ToMojom(
   switch (input) {
     case content::ServiceWorkerFetchType::FETCH:
       return ServiceWorkerFetchType::FETCH;
+    case content::ServiceWorkerFetchType::FOREIGN_FETCH:
+      return ServiceWorkerFetchType::FOREIGN_FETCH;
   }
 
   NOTREACHED();
@@ -296,6 +298,9 @@ bool EnumTraits<ServiceWorkerFetchType, content::ServiceWorkerFetchType>::
   switch (input) {
     case ServiceWorkerFetchType::FETCH:
       *out = content::ServiceWorkerFetchType::FETCH;
+      return true;
+    case ServiceWorkerFetchType::FOREIGN_FETCH:
+      *out = content::ServiceWorkerFetchType::FOREIGN_FETCH;
       return true;
   }
 

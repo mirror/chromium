@@ -32,7 +32,6 @@ const char kDefaultContentSecurityPolicy[] =
 #define PLATFORM_APP_LOCAL_CSP_SOURCES \
     "'self' blob: filesystem: data: chrome-extension-resource:"
 
-// clang-format off
 const char kDefaultPlatformAppContentSecurityPolicy[] =
     // Platform apps can only use local resources by default.
     "default-src 'self' blob: filesystem: chrome-extension-resource:;"
@@ -48,11 +47,7 @@ const char kDefaultPlatformAppContentSecurityPolicy[] =
     //    spotty connectivity.
     // 2. Fetching via XHR and serving via blob: URLs currently does not allow
     //    streaming or partial buffering.
-    " media-src * data: blob: filesystem:;"
-    // Scripts are allowed to use WebAssembly
-    " script-src 'self' blob: filesystem: chrome-extension-resource:"
-    " 'wasm-eval';";
-// clang-format on
+    " media-src * data: blob: filesystem:;";
 
 int GetValidatorOptions(Extension* extension) {
   int options = csp_validator::OPTIONS_NONE;

@@ -47,10 +47,10 @@ CSSValue* ConsumeBackgroundComponent(CSSPropertyID resolved_property,
       return CSSPropertyParserHelpers::ConsumeColor(range, context.Mode());
     case CSSPropertyWebkitMaskClip:
       return CSSPropertyBackgroundUtils::ConsumePrefixedBackgroundBox(
-          range, AllowTextValue::kAllow);
+          range, AllowTextValue::kAllowed);
     case CSSPropertyWebkitMaskOrigin:
       return CSSPropertyBackgroundUtils::ConsumePrefixedBackgroundBox(
-          range, AllowTextValue::kForbid);
+          range, AllowTextValue::kNotAllowed);
     default:
       break;
   };

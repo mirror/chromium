@@ -44,8 +44,8 @@ const char kTetherGuid[] = "tether-guid";
 
 class TestNetworkConnectionObserver : public NetworkConnectionObserver {
  public:
-  TestNetworkConnectionObserver() = default;
-  ~TestNetworkConnectionObserver() override = default;
+  TestNetworkConnectionObserver() {}
+  ~TestNetworkConnectionObserver() override {}
 
   // NetworkConnectionObserver
   void ConnectToNetworkRequested(const std::string& service_path) override {
@@ -87,7 +87,7 @@ class FakeTetherDelegate : public NetworkConnectionHandler::TetherDelegate {
  public:
   FakeTetherDelegate()
       : last_delegate_function_type_(DelegateFunctionType::NONE) {}
-  ~FakeTetherDelegate() override = default;
+  ~FakeTetherDelegate() override {}
 
   enum class DelegateFunctionType { NONE, CONNECT, DISCONNECT };
 
@@ -138,7 +138,7 @@ class NetworkConnectionHandlerImplTest : public NetworkStateTest {
       : scoped_task_environment_(
             base::test::ScopedTaskEnvironment::MainThreadType::UI) {}
 
-  ~NetworkConnectionHandlerImplTest() override = default;
+  ~NetworkConnectionHandlerImplTest() override {}
 
   void SetUp() override {
     ASSERT_TRUE(test_nssdb_.is_open());

@@ -46,7 +46,9 @@ class QuicEndpoint : public Endpoint,
   inline QuicConnection* connection() { return &connection_; }
   inline QuicByteCount bytes_to_transfer() const { return bytes_to_transfer_; }
   inline QuicByteCount bytes_transferred() const { return bytes_transferred_; }
-  QuicByteCount bytes_received() const;
+  inline QuicByteCount bytes_received() {
+    return connection_.GetStats().stream_bytes_received;
+  }
   inline size_t write_blocked_count() { return write_blocked_count_; }
   inline bool wrong_data_received() const { return wrong_data_received_; }
 
@@ -154,9 +156,6 @@ class QuicEndpoint : public Endpoint,
   // Set to true if the endpoint receives stream data different from what it
   // expects.
   bool wrong_data_received_;
-
-  // Record of received offsets in the data stream.
-  QuicIntervalSet<QuicStreamOffset> offsets_received_;
 };
 
 // Multiplexes multiple connections at the same host on the network.

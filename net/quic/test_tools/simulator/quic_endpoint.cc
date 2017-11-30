@@ -107,14 +107,6 @@ QuicEndpoint::QuicEndpoint(Simulator* simulator,
 
 QuicEndpoint::~QuicEndpoint() {}
 
-QuicByteCount QuicEndpoint::bytes_received() const {
-  QuicByteCount total = 0;
-  for (auto& interval : offsets_received_) {
-    total += interval.max() - interval.min();
-  }
-  return total;
-}
-
 void QuicEndpoint::AddBytesToTransfer(QuicByteCount bytes) {
   if (bytes_to_transfer_ > 0) {
     Schedule(clock_->Now());
@@ -154,16 +146,13 @@ void QuicEndpoint::OnPacketDequeued() {
 }
 
 void QuicEndpoint::OnStreamFrame(const QuicStreamFrame& frame) {
-  // Verify that the data received always matches the expected.
+  // Verify that the data received always matches the output of DataAtOffset().
   DCHECK(frame.stream_id == kDataStream);
   for (size_t i = 0; i < frame.data_length; i++) {
     if (frame.data_buffer[i] != kStreamDataContents) {
       wrong_data_received_ = true;
     }
   }
-  offsets_received_.Add(frame.offset, frame.offset + frame.data_length);
-  // Sanity check against very pathological connections.
-  DCHECK_LE(offsets_received_.Size(), 1000u);
 }
 void QuicEndpoint::OnCanWrite() {
   WriteStreamData();

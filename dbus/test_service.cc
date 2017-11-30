@@ -40,7 +40,8 @@ TestService::Options::Options()
     : request_ownership_options(Bus::REQUIRE_PRIMARY) {
 }
 
-TestService::Options::~Options() = default;
+TestService::Options::~Options() {
+}
 
 TestService::TestService(const Options& options)
     : base::Thread("TestService"),

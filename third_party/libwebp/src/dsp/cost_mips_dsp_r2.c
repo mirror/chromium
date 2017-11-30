@@ -9,13 +9,13 @@
 //
 // Author: Djordje Pesut (djordje.pesut@imgtec.com)
 
-#include "src/dsp/dsp.h"
+#include "./dsp.h"
 
 #if defined(WEBP_USE_MIPS_DSP_R2)
 
-#include "src/enc/cost_enc.h"
+#include "../enc/cost_enc.h"
 
-static int GetResidualCost_MIPSdspR2(int ctx0, const VP8Residual* const res) {
+static int GetResidualCost(int ctx0, const VP8Residual* const res) {
   int temp0, temp1;
   int v_reg, ctx_reg;
   int n = res->first;
@@ -97,7 +97,7 @@ static int GetResidualCost_MIPSdspR2(int ctx0, const VP8Residual* const res) {
 extern void VP8EncDspCostInitMIPSdspR2(void);
 
 WEBP_TSAN_IGNORE_FUNCTION void VP8EncDspCostInitMIPSdspR2(void) {
-  VP8GetResidualCost = GetResidualCost_MIPSdspR2;
+  VP8GetResidualCost = GetResidualCost;
 }
 
 #else  // !WEBP_USE_MIPS_DSP_R2

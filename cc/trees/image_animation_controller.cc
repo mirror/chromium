@@ -38,7 +38,6 @@ void ImageAnimationController::RegisterAnimationDriver(
   auto it = animation_state_map_.find(paint_image_id);
   DCHECK(it != animation_state_map_.end());
   it->second.AddDriver(driver);
-  registered_animations_.insert(paint_image_id);
 }
 
 void ImageAnimationController::UnregisterAnimationDriver(
@@ -47,8 +46,6 @@ void ImageAnimationController::UnregisterAnimationDriver(
   auto it = animation_state_map_.find(paint_image_id);
   DCHECK(it != animation_state_map_.end());
   it->second.RemoveDriver(driver);
-  if (!it->second.has_drivers())
-    registered_animations_.erase(paint_image_id);
 }
 
 const PaintImageIdFlatSet& ImageAnimationController::AnimateForSyncTree(
@@ -59,13 +56,12 @@ const PaintImageIdFlatSet& ImageAnimationController::AnimateForSyncTree(
   notifier_.WillAnimate();
   base::Optional<base::TimeTicks> next_invalidation_time;
 
-  for (auto id : registered_animations_) {
+  for (auto id : active_animations_) {
     auto it = animation_state_map_.find(id);
     DCHECK(it != animation_state_map_.end());
     AnimationState& state = it->second;
 
     // Is anyone still interested in animating this image?
-    state.UpdateStateFromDrivers();
     if (!state.ShouldAnimate())
       continue;
 
@@ -103,18 +99,21 @@ void ImageAnimationController::UpdateStateFromDrivers(base::TimeTicks now) {
   TRACE_EVENT0("cc", "UpdateStateFromAnimationDrivers");
 
   base::Optional<base::TimeTicks> next_invalidation_time;
-  for (auto image_id : registered_animations_) {
-    auto it = animation_state_map_.find(image_id);
-    DCHECK(it != animation_state_map_.end());
-    AnimationState& state = it->second;
+  for (auto& it : animation_state_map_) {
+    AnimationState& state = it.second;
     state.UpdateStateFromDrivers();
 
+    // If we don't need to animate this image anymore, remove it from the list
+    // of active animations.
     // Note that by not updating the |next_invalidation_time| from this image
     // here, we will cancel any pending invalidation scheduled for this image
     // when updating the |notifier_| at the end of this loop.
-    if (!state.ShouldAnimate())
+    if (!state.ShouldAnimate()) {
+      active_animations_.erase(it.first);
       continue;
+    }
 
+    active_animations_.insert(it.first);
     if (!next_invalidation_time.has_value()) {
       next_invalidation_time.emplace(state.next_desired_frame_time());
     } else {

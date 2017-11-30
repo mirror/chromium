@@ -92,7 +92,8 @@ FileEnumerator::FileEnumerator(const FilePath& root_path,
   pending_paths_.push(root_path);
 }
 
-FileEnumerator::~FileEnumerator() = default;
+FileEnumerator::~FileEnumerator() {
+}
 
 FilePath FileEnumerator::Next() {
   AssertBlockingAllowed();

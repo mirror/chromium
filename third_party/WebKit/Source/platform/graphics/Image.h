@@ -40,7 +40,6 @@
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/ThreadSafeRefCounted.h"
-#include "platform/wtf/Time.h"
 #include "platform/wtf/WeakPtr.h"
 #include "third_party/skia/include/core/SkRefCnt.h"
 
@@ -153,7 +152,7 @@ class PLATFORM_EXPORT Image : public ThreadSafeRefCounted<Image> {
   virtual ImageAnimationPolicy AnimationPolicy() {
     return kImageAnimationPolicyAllowed;
   }
-  virtual void AdvanceTime(TimeDelta delta) {}
+  virtual void AdvanceTime(double delta_time_in_seconds) {}
 
   // Advances an animated image. For BitmapImage (e.g., animated gifs) this
   // will advance to the next frame. For SVGImage, this will trigger an

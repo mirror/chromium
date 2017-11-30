@@ -88,16 +88,4 @@ uint32_t VaapiPictureFactory::GetGLTextureTarget() {
 #endif
 }
 
-gfx::BufferFormat VaapiPictureFactory::GetBufferFormatForAllocateMode() {
-#if defined(USE_OZONE)
-  return gfx::BufferFormat::BGRX_8888;
-#else
-  return gfx::BufferFormat::RGBX_8888;
-#endif
-}
-
-gfx::BufferFormat VaapiPictureFactory::GetBufferFormatForImportMode() {
-  return gfx::BufferFormat::YVU_420;
-}
-
 }  // namespace media

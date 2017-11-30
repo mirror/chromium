@@ -162,10 +162,8 @@ void WorkerFetchContextImpl::WillSendRequest(blink::WebURLRequest& request) {
   if (!IsControlledByServiceWorker() &&
       request.GetServiceWorkerMode() !=
           blink::WebURLRequest::ServiceWorkerMode::kNone) {
-    // TODO(falken): Is still this needed? It used to set kForeign for foreign
-    // fetch.
     request.SetServiceWorkerMode(
-        blink::WebURLRequest::ServiceWorkerMode::kNone);
+        blink::WebURLRequest::ServiceWorkerMode::kForeign);
   }
 }
 

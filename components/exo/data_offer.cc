@@ -19,7 +19,6 @@
 namespace exo {
 namespace {
 
-constexpr char kTextMimeTypeUtf8[] = "text/plain;charset=utf-8";
 constexpr char kUriListSeparator[] = "\r\n";
 
 class RefCountedString16 : public base::RefCountedMemory {
@@ -71,11 +70,13 @@ void DataOffer::RemoveObserver(DataOfferObserver* observer) {
   observers_.RemoveObserver(observer);
 }
 
-void DataOffer::Accept(const std::string& mime_type) {}
+void DataOffer::Accept(const std::string& mime_type) {
+  NOTIMPLEMENTED();
+}
 
 void DataOffer::Receive(const std::string& mime_type, base::ScopedFD fd) {
-  const auto it = data_.find(mime_type);
-  if (it == data_.end()) {
+  const auto it = drop_data_.find(mime_type);
+  if (it == drop_data_.end()) {
     DLOG(ERROR) << "Unexpected mime type is requested";
     return;
   }
@@ -85,7 +86,9 @@ void DataOffer::Receive(const std::string& mime_type, base::ScopedFD fd) {
       base::BindOnce(&WriteFileDescriptor, std::move(fd), it->second));
 }
 
-void DataOffer::Finish() {}
+void DataOffer::Finish() {
+  NOTIMPLEMENTED();
+}
 
 void DataOffer::SetActions(const base::flat_set<DndAction>& dnd_actions,
                            DndAction preferred_action) {
@@ -101,12 +104,13 @@ void DataOffer::SetSourceActions(
 
 void DataOffer::SetDropData(FileHelper* file_helper,
                             const ui::OSExchangeData& data) {
-  DCHECK_EQ(0u, data_.size());
+  DCHECK_EQ(0u, drop_data_.size());
   if (data.HasString()) {
     base::string16 string_content;
     if (data.GetString(&string_content)) {
-      data_.emplace(std::string(ui::Clipboard::kMimeTypeText),
-                    RefCountedString16::TakeString(std::move(string_content)));
+      drop_data_.emplace(
+          std::string(ui::Clipboard::kMimeTypeText),
+          RefCountedString16::TakeString(std::move(string_content)));
     }
   }
   if (data.HasFile()) {
@@ -121,27 +125,11 @@ void DataOffer::SetDropData(FileHelper* file_helper,
           url_list += base::UTF8ToUTF16(url.spec());
         }
       }
-      data_.emplace(file_helper->GetMimeTypeForUriList(),
-                    RefCountedString16::TakeString(std::move(url_list)));
+      drop_data_.emplace(file_helper->GetMimeTypeForUriList(),
+                         RefCountedString16::TakeString(std::move(url_list)));
     }
   }
-  for (const auto& pair : data_) {
-    delegate_->OnOffer(pair.first);
-  }
-}
-
-void DataOffer::SetClipboardData(FileHelper* file_helper,
-                                 const ui::Clipboard& data) {
-  DCHECK_EQ(0u, data_.size());
-  if (data.IsFormatAvailable(ui::Clipboard::GetPlainTextWFormatType(),
-                             ui::CLIPBOARD_TYPE_COPY_PASTE)) {
-    base::string16 content;
-    data.ReadText(ui::CLIPBOARD_TYPE_COPY_PASTE, &content);
-    std::string utf8_content = base::UTF16ToUTF8(content);
-    data_.emplace(std::string(kTextMimeTypeUtf8),
-                  base::RefCountedString::TakeString(&utf8_content));
-  }
-  for (const auto& pair : data_) {
+  for (const auto& pair : drop_data_) {
     delegate_->OnOffer(pair.first);
   }
 }

@@ -20,15 +20,23 @@ const char kIncludedCategoriesParam[] = "included_categories";
 const char kExcludedCategoriesParam[] = "excluded_categories";
 }
 
-TraceConfigCategoryFilter::TraceConfigCategoryFilter() = default;
+TraceConfigCategoryFilter::TraceConfigCategoryFilter() {}
 
 TraceConfigCategoryFilter::TraceConfigCategoryFilter(
-    const TraceConfigCategoryFilter& other) = default;
+    const TraceConfigCategoryFilter& other)
+    : included_categories_(other.included_categories_),
+      disabled_categories_(other.disabled_categories_),
+      excluded_categories_(other.excluded_categories_) {}
 
-TraceConfigCategoryFilter::~TraceConfigCategoryFilter() = default;
+TraceConfigCategoryFilter::~TraceConfigCategoryFilter() {}
 
 TraceConfigCategoryFilter& TraceConfigCategoryFilter::operator=(
-    const TraceConfigCategoryFilter& rhs) = default;
+    const TraceConfigCategoryFilter& rhs) {
+  included_categories_ = rhs.included_categories_;
+  disabled_categories_ = rhs.disabled_categories_;
+  excluded_categories_ = rhs.excluded_categories_;
+  return *this;
+}
 
 void TraceConfigCategoryFilter::InitializeFromString(
     const StringPiece& category_filter_string) {

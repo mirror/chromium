@@ -421,7 +421,6 @@ class ServiceWorkerURLRequestJobTest
   // ---------------------------------------------------------------------------
 
   TestBrowserThreadBundle thread_bundle_;
-  base::SimpleTestTickClock tick_clock_;
 
   std::unique_ptr<TestBrowserContext> browser_context_;
   std::unique_ptr<EmbeddedWorkerTestHelper> helper_;
@@ -711,8 +710,11 @@ TEST_F(ServiceWorkerURLRequestJobTest, CustomTimeout) {
   version_->SetStatus(ServiceWorkerVersion::ACTIVATED);
 
   // Set mock clock on version_ to check timeout behavior.
-  tick_clock_.SetNowTicks(base::TimeTicks::Now());
-  version_->SetTickClockForTesting(&tick_clock_);
+  {
+    auto tick_clock = std::make_unique<base::SimpleTestTickClock>();
+    tick_clock->SetNowTicks(base::TimeTicks::Now());
+    version_->SetTickClockForTesting(std::move(tick_clock));
+  }
 
   protocol_handler_->set_custom_timeout(base::TimeDelta::FromSeconds(5));
   TestRequest(200, "OK", std::string(), true /* expect_valid_ssl */);

@@ -13,6 +13,7 @@
 
 namespace device {
 
+class GvrDelegateProvider;
 class GvrDevice;
 
 class DEVICE_VR_EXPORT GvrDeviceProvider : public VRDeviceProvider {
@@ -20,15 +21,12 @@ class DEVICE_VR_EXPORT GvrDeviceProvider : public VRDeviceProvider {
   GvrDeviceProvider();
   ~GvrDeviceProvider() override;
 
-  void Initialize(base::Callback<void(VRDevice*)> add_device_callback,
-                  base::Callback<void(VRDevice*)> remove_device_callback,
-                  base::OnceClosure initialization_complete) override;
-
-  bool Initialized() override;
+  void GetDevices(std::vector<VRDevice*>* devices) override;
+  void Initialize() override;
 
  private:
+  void Initialize(device::GvrDelegateProvider* provider);
   std::unique_ptr<GvrDevice> vr_device_;
-  bool initialized_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(GvrDeviceProvider);
 };

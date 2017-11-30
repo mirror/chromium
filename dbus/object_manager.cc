@@ -26,7 +26,8 @@ ObjectManager::Object::Object()
   : object_proxy(nullptr) {
 }
 
-ObjectManager::Object::~Object() = default;
+ObjectManager::Object::~Object() {
+}
 
 ObjectManager::ObjectManager(Bus* bus,
                              const std::string& service_name,

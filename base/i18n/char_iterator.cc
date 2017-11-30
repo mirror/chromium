@@ -21,7 +21,8 @@ UTF8CharIterator::UTF8CharIterator(const std::string* str)
     U8_NEXT(str_, next_pos_, len_, char_);
 }
 
-UTF8CharIterator::~UTF8CharIterator() = default;
+UTF8CharIterator::~UTF8CharIterator() {
+}
 
 bool UTF8CharIterator::Advance() {
   if (array_pos_ >= len_)
@@ -57,7 +58,8 @@ UTF16CharIterator::UTF16CharIterator(const char16* str, size_t str_len)
     ReadChar();
 }
 
-UTF16CharIterator::~UTF16CharIterator() = default;
+UTF16CharIterator::~UTF16CharIterator() {
+}
 
 bool UTF16CharIterator::Advance() {
   if (array_pos_ >= len_)

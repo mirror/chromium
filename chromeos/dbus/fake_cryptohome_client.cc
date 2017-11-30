@@ -56,7 +56,7 @@ FakeCryptohomeClient::FakeCryptohomeClient()
     LoadInstallAttributes();
 }
 
-FakeCryptohomeClient::~FakeCryptohomeClient() = default;
+FakeCryptohomeClient::~FakeCryptohomeClient() {}
 
 void FakeCryptohomeClient::Init(dbus::Bus* bus) {
 }

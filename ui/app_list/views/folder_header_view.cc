@@ -41,12 +41,6 @@ class FolderHeaderView::FolderNameView : public views::Textfield {
 
   ~FolderNameView() override {}
 
-  void OnFocus() override {
-    if (features::IsAppListFocusEnabled())
-      SelectAll(false);
-    Textfield::OnFocus();
-  }
-
  private:
   DISALLOW_COPY_AND_ASSIGN(FolderNameView);
 };

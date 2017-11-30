@@ -68,7 +68,7 @@ class ListenerThatExpectsOK : public IPC::Listener {
   ListenerThatExpectsOK(base::Closure quit_closure)
       : received_ok_(false), quit_closure_(quit_closure) {}
 
-  ~ListenerThatExpectsOK() override = default;
+  ~ListenerThatExpectsOK() override {}
 
   bool OnMessageReceived(const IPC::Message& message) override {
     base::PickleIterator iter(message);
@@ -98,7 +98,7 @@ class TestListenerBase : public IPC::Listener {
  public:
   TestListenerBase(base::Closure quit_closure) : quit_closure_(quit_closure) {}
 
-  ~TestListenerBase() override = default;
+  ~TestListenerBase() override {}
 
   void OnChannelError() override { quit_closure_.Run(); }
 
@@ -332,7 +332,7 @@ class ListenerThatExpectsMessagePipe : public TestListenerBase {
   ListenerThatExpectsMessagePipe(base::Closure quit_closure)
       : TestListenerBase(quit_closure) {}
 
-  ~ListenerThatExpectsMessagePipe() override = default;
+  ~ListenerThatExpectsMessagePipe() override {}
 
   bool OnMessageReceived(const IPC::Message& message) override {
     base::PickleIterator iter(message);
@@ -393,7 +393,7 @@ class ListenerThatExpectsMessagePipeUsingParamTrait : public TestListenerBase {
       bool receiving_valid)
       : TestListenerBase(quit_closure), receiving_valid_(receiving_valid) {}
 
-  ~ListenerThatExpectsMessagePipeUsingParamTrait() override = default;
+  ~ListenerThatExpectsMessagePipeUsingParamTrait() override {}
 
   bool OnMessageReceived(const IPC::Message& message) override {
     base::PickleIterator iter(message);
@@ -533,7 +533,7 @@ class ListenerWithSimpleAssociatedInterface
 
   ListenerWithSimpleAssociatedInterface() : binding_(this) {}
 
-  ~ListenerWithSimpleAssociatedInterface() override = default;
+  ~ListenerWithSimpleAssociatedInterface() override {}
 
   bool OnMessageReceived(const IPC::Message& message) override {
     base::PickleIterator iter(message);
@@ -589,7 +589,7 @@ const int ListenerWithSimpleAssociatedInterface::kNumMessages = 1000;
 
 class ListenerSendingAssociatedMessages : public IPC::Listener {
  public:
-  ListenerSendingAssociatedMessages() = default;
+  ListenerSendingAssociatedMessages() {}
 
   bool OnMessageReceived(const IPC::Message& message) override { return true; }
 
@@ -718,7 +718,7 @@ class ListenerWithSimpleProxyAssociatedInterface
 
   ListenerWithSimpleProxyAssociatedInterface() : binding_(this) {}
 
-  ~ListenerWithSimpleProxyAssociatedInterface() override = default;
+  ~ListenerWithSimpleProxyAssociatedInterface() override {}
 
   bool OnMessageReceived(const IPC::Message& message) override {
     base::PickleIterator iter(message);
@@ -856,7 +856,7 @@ class ListenerWithIndirectProxyAssociatedInterface
  public:
   ListenerWithIndirectProxyAssociatedInterface()
       : driver_binding_(this), ping_receiver_binding_(this) {}
-  ~ListenerWithIndirectProxyAssociatedInterface() override = default;
+  ~ListenerWithIndirectProxyAssociatedInterface() override {}
 
   // IPC::Listener:
   bool OnMessageReceived(const IPC::Message& message) override { return true; }
@@ -942,7 +942,7 @@ class ListenerWithSyncAssociatedInterface
       public IPC::mojom::SimpleTestDriver {
  public:
   ListenerWithSyncAssociatedInterface() : binding_(this) {}
-  ~ListenerWithSyncAssociatedInterface() override = default;
+  ~ListenerWithSyncAssociatedInterface() override {}
 
   void set_sync_sender(IPC::Sender* sync_sender) { sync_sender_ = sync_sender; }
 
@@ -1015,7 +1015,7 @@ class ListenerWithSyncAssociatedInterface
 class SyncReplyReader : public IPC::MessageReplyDeserializer {
  public:
   explicit SyncReplyReader(int32_t* storage) : storage_(storage) {}
-  ~SyncReplyReader() override = default;
+  ~SyncReplyReader() override {}
 
  private:
   // IPC::MessageReplyDeserializer:
@@ -1232,7 +1232,7 @@ class ExpectValueSequenceListener : public IPC::Listener {
  public:
   explicit ExpectValueSequenceListener(base::queue<int32_t>* expected_values)
       : expected_values_(expected_values) {}
-  ~ExpectValueSequenceListener() override = default;
+  ~ExpectValueSequenceListener() override {}
 
   // IPC::Listener:
   bool OnMessageReceived(const IPC::Message& message) override {
@@ -1434,7 +1434,7 @@ class ListenerThatExpectsFileAndMessagePipe : public TestListenerBase {
   ListenerThatExpectsFileAndMessagePipe(base::Closure quit_closure)
       : TestListenerBase(quit_closure) {}
 
-  ~ListenerThatExpectsFileAndMessagePipe() override = default;
+  ~ListenerThatExpectsFileAndMessagePipe() override {}
 
   bool OnMessageReceived(const IPC::Message& message) override {
     base::PickleIterator iter(message);

@@ -844,7 +844,8 @@ bool ExtensionService::UninstallExtension(
       NOTREACHED();
   }
 
-  extensions::DataDeleter::StartDeleting(profile_, extension.get());
+  extensions::DataDeleter::StartDeleting(profile_, extension.get(),
+                                         base::Bind(&base::DoNothing));
 
   extension_registrar_.UntrackTerminatedExtension(extension->id());
 

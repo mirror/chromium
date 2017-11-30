@@ -17,7 +17,7 @@ ThrottledDispatcher::ThrottledDispatcher(
     : ExpeditedDispatcher(std::move(io_thread_task_runner)),
       requests_paused_(false) {}
 
-ThrottledDispatcher::~ThrottledDispatcher() = default;
+ThrottledDispatcher::~ThrottledDispatcher() {}
 
 void ThrottledDispatcher::PauseRequests() {
   base::AutoLock lock(lock_);

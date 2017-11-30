@@ -1418,9 +1418,8 @@ void LayoutTableSection::ComputeOverflowFromDescendants() {
 #endif
 }
 
-bool LayoutTableSection::RecalcOverflowAfterStyleChange() {
-  if (!ChildNeedsOverflowRecalcAfterStyleChange())
-    return false;
+bool LayoutTableSection::RecalcChildOverflowAfterStyleChange() {
+  DCHECK(ChildNeedsOverflowRecalcAfterStyleChange());
   ClearChildNeedsOverflowRecalcAfterStyleChange();
   unsigned total_rows = grid_.size();
   bool children_overflow_changed = false;
@@ -1434,7 +1433,7 @@ bool LayoutTableSection::RecalcOverflowAfterStyleChange() {
     unsigned n_cols = NumCols(r);
     for (unsigned c = 0; c < n_cols; c++) {
       auto* cell = OriginatingCellAt(r, c);
-      if (!cell)
+      if (!cell || !cell->NeedsOverflowRecalcAfterStyleChange())
         continue;
       row_children_overflow_changed |= cell->RecalcOverflowAfterStyleChange();
     }

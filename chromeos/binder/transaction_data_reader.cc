@@ -29,7 +29,7 @@ TransactionDataReader::TransactionDataReader(const TransactionData& data)
     : reader_(reinterpret_cast<const char*>(data.GetData()),
               data.GetDataSize()) {}
 
-TransactionDataReader::~TransactionDataReader() = default;
+TransactionDataReader::~TransactionDataReader() {}
 
 bool TransactionDataReader::HasMoreData() const {
   return reader_.HasMoreData();

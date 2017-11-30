@@ -30,7 +30,6 @@
 
 #include "platform/graphics/BitmapImage.h"
 
-#include "base/test/simple_test_tick_clock.h"
 #include "platform/SharedBuffer.h"
 #include "platform/graphics/BitmapImageMetrics.h"
 #include "platform/graphics/DeferredImageDecoder.h"
@@ -353,13 +352,17 @@ class BitmapImageTestWithMockDecoder : public BitmapImageTest,
                                        public MockImageDecoderClient {
  public:
   void SetUp() override {
-    BitmapImageTest::SetUp();
-    image_->SetTickClockForTesting(&clock_);
+    original_time_function_ = SetTimeFunctionsForTesting([] { return now_; });
 
+    BitmapImageTest::SetUp();
     auto decoder = MockImageDecoder::Create(this);
     decoder->SetSize(10, 10);
     image_->SetDecoderForTesting(
         DeferredImageDecoder::CreateForTesting(std::move(decoder)));
+  }
+
+  void TearDown() override {
+    SetTimeFunctionsForTesting(original_time_function_);
   }
 
   void DecoderBeingDestroyed() override {}
@@ -373,18 +376,17 @@ class BitmapImageTestWithMockDecoder : public BitmapImageTest,
   int RepetitionCount() const override { return repetition_count_; }
   TimeDelta FrameDuration() const override { return duration_; }
 
-  void SetClock(int seconds) {
-    clock_.SetNowTicks(base::TimeTicks() + TimeDelta::FromSeconds(seconds));
-  }
-
  protected:
   TimeDelta duration_;
   int repetition_count_;
   size_t frame_count_;
   bool last_frame_complete_;
 
-  base::SimpleTestTickClock clock_;
+  static double now_;
+  TimeFunction original_time_function_;
 };
+
+double BitmapImageTestWithMockDecoder::now_ = 0;
 
 TEST_F(BitmapImageTestWithMockDecoder, ImageMetadataTracking) {
   // For a zero duration, we should make it non-zero when creating a PaintImage.
@@ -462,7 +464,7 @@ TEST_F(BitmapImageTestWithMockDecoder, DontAdvanceToIncompleteFrame) {
   frame_count_ = 3u;
   last_frame_complete_ = false;
   duration_ = TimeDelta::FromSeconds(10);
-  SetClock(10);
+  now_ = 10;
 
   // Last frame of the image is incomplete for a completely loaded image. We
   // still won't advance it.
@@ -479,13 +481,13 @@ TEST_F(BitmapImageTestWithMockDecoder, DontAdvanceToIncompleteFrame) {
   EXPECT_EQ(image_->PaintImageForCurrentFrame().frame_index(), 0u);
 
   // Run the timer task, image advanced to the second frame.
-  SetClock(20);
+  now_ = 20;
   task_runner->AdvanceTimeAndRun(10);
   EXPECT_EQ(image_->PaintImageForCurrentFrame().frame_index(), 1u);
 
   // Go past the desired time for the next frame, call StartAnimation. The frame
   // still isn't advanced because its incomplete.
-  SetClock(45);
+  now_ = 45;
   StartAnimation();
   EXPECT_EQ(image_->PaintImageForCurrentFrame().frame_index(), 1u);
 }
@@ -497,7 +499,7 @@ TEST_F(BitmapImageTestWithMockDecoder, FrameSkipTracking) {
   frame_count_ = 7u;
   last_frame_complete_ = false;
   duration_ = TimeDelta::FromSeconds(10);
-  SetClock(10);
+  now_ = 10;
 
   // Start with an image that is incomplete, and the last frame is not fully
   // received.
@@ -537,7 +539,7 @@ TEST_F(BitmapImageTestWithMockDecoder, FrameSkipTracking) {
   // advance the frame.
   // Since the animation started at 10s, and each frame has a duration of 10s,
   // we should see the fourth frame at 41 seconds.
-  SetClock(41);
+  now_ = 41;
   task_runner->SetTime(41);
   StartAnimation();
 
@@ -554,7 +556,7 @@ TEST_F(BitmapImageTestWithMockDecoder, FrameSkipTracking) {
   // At 70s, we would want to display the last frame and would skip 2 frames.
   // But because its incomplete, we advanced to the sixth frame and only skipped
   // 1 frame.
-  SetClock(71);
+  now_ = 71;
   task_runner->SetTime(71);
   StartAnimation();
   EXPECT_EQ(image_->PaintImageForCurrentFrame().frame_index(), 5u);

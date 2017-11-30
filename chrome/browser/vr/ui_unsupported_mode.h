@@ -16,7 +16,7 @@ enum class UiUnsupportedMode : int {
   // kCouldNotElideURL = 1,  // Obsolete.
   kUnhandledPageInfo = 2,
   // kURLWithStrongRTLChars = 3,  // Obsolete.
-  kVoiceSearchNeedsRecordAudioOsPermission = 4,  // TODO(ddorwin): Android only.
+  kAndroidPermissionNeeded = 4,  // TODO(ddorwin): Rename to match enums.xml.
 
   // This must be last.
   kCount,

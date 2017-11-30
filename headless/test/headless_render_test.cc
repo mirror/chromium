@@ -23,7 +23,7 @@ void SetVirtualTimePolicyDoneCallback(
 
 HeadlessRenderTest::HeadlessRenderTest() : weak_ptr_factory_(this) {}
 
-HeadlessRenderTest::~HeadlessRenderTest() = default;
+HeadlessRenderTest::~HeadlessRenderTest() {}
 
 void HeadlessRenderTest::PostRunAsynchronousTest() {
   // Make sure the test did complete.

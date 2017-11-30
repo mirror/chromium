@@ -32,9 +32,7 @@
 #define ApplicationCacheHost_h
 
 #include <memory>
-
 #include "base/gtest_prod_util.h"
-#include "base/macros.h"
 #include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
 #include "platform/weborigin/KURL.h"
@@ -51,6 +49,8 @@ class ResourceResponse;
 class CORE_EXPORT ApplicationCacheHost final
     : public GarbageCollectedFinalized<ApplicationCacheHost>,
       public WebApplicationCacheHostClient {
+  WTF_MAKE_NONCOPYABLE(ApplicationCacheHost);
+
  public:
   static ApplicationCacheHost* Create(DocumentLoader* loader) {
     return new ApplicationCacheHost(loader);
@@ -219,8 +219,6 @@ class CORE_EXPORT ApplicationCacheHost final
 
   FRIEND_TEST_ALL_PREFIXES(DocumentTest, SandboxDisablesAppCache);
   FRIEND_TEST_ALL_PREFIXES(DocumentTest, SuboriginDisablesAppCache);
-
-  DISALLOW_COPY_AND_ASSIGN(ApplicationCacheHost);
 };
 
 }  // namespace blink

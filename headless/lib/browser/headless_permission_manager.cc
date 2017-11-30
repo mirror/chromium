@@ -14,7 +14,7 @@ HeadlessPermissionManager::HeadlessPermissionManager(
     content::BrowserContext* browser_context)
     : browser_context_(browser_context) {}
 
-HeadlessPermissionManager::~HeadlessPermissionManager() = default;
+HeadlessPermissionManager::~HeadlessPermissionManager() {}
 
 int HeadlessPermissionManager::RequestPermission(
     content::PermissionType permission,

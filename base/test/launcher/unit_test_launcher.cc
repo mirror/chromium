@@ -4,10 +4,6 @@
 
 #include "base/test/launcher/unit_test_launcher.h"
 
-#include <map>
-#include <memory>
-#include <utility>
-
 #include "base/base_switches.h"
 #include "base/bind.h"
 #include "base/callback_helpers.h"
@@ -112,7 +108,8 @@ void PrintUsage() {
 
 class DefaultUnitTestPlatformDelegate : public UnitTestPlatformDelegate {
  public:
-  DefaultUnitTestPlatformDelegate() = default;
+  DefaultUnitTestPlatformDelegate() {
+  }
 
  private:
   // UnitTestPlatformDelegate:
@@ -226,7 +223,7 @@ int LaunchUnitTestsInternal(const RunTestSuiteCallback& run_test_suite,
     return 0;
   }
 
-  TimeTicks start_time(TimeTicks::Now());
+  base::TimeTicks start_time(base::TimeTicks::Now());
 
   gtest_init.Run();
   TestTimeouts::Initialize();
@@ -250,11 +247,11 @@ int LaunchUnitTestsInternal(const RunTestSuiteCallback& run_test_suite,
   DefaultUnitTestPlatformDelegate platform_delegate;
   UnitTestLauncherDelegate delegate(
       &platform_delegate, batch_limit, use_job_objects);
-  TestLauncher launcher(&delegate, parallel_jobs);
+  base::TestLauncher launcher(&delegate, parallel_jobs);
   bool success = launcher.Run();
 
   fprintf(stdout, "Tests took %" PRId64 " seconds.\n",
-          (TimeTicks::Now() - start_time).InSeconds());
+          (base::TimeTicks::Now() - start_time).InSeconds());
   fflush(stdout);
 
   return (success ? 0 : 1);
@@ -608,7 +605,7 @@ void RunUnitTestsSerially(
   // Create a dedicated temporary directory to store the xml result data
   // per run to ensure clean state and make it possible to launch multiple
   // processes in parallel.
-  FilePath output_file;
+  base::FilePath output_file;
   CHECK(platform_delegate->CreateTemporaryFile(&output_file));
 
   auto observer = std::make_unique<SerialUnitTestProcessLifetimeObserver>(
@@ -638,7 +635,7 @@ void RunUnitTestsBatch(
   // Create a dedicated temporary directory to store the xml result data
   // per run to ensure clean state and make it possible to launch multiple
   // processes in parallel.
-  FilePath output_file;
+  base::FilePath output_file;
   CHECK(platform_delegate->CreateTemporaryFile(&output_file));
 
   auto observer = std::make_unique<ParallelUnitTestProcessLifetimeObserver>(
@@ -653,7 +650,8 @@ void RunUnitTestsBatch(
   // depending on how many tests ran and how many remain.
   // Note: do NOT parse child's stdout to do that, it's known to be
   // unreliable (e.g. buffering issues can mix up the output).
-  TimeDelta timeout = test_names.size() * TestTimeouts::test_launcher_timeout();
+  base::TimeDelta timeout =
+      test_names.size() * TestTimeouts::test_launcher_timeout();
 
   TestLauncher::LaunchOptions options;
   options.flags = launch_flags;

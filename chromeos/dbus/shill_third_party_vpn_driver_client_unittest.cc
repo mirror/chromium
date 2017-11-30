@@ -25,8 +25,8 @@ const char kExampleIPConfigPath[] = "/foo/bar";
 
 class MockShillThirdPartyVpnObserver : public ShillThirdPartyVpnObserver {
  public:
-  MockShillThirdPartyVpnObserver() = default;
-  ~MockShillThirdPartyVpnObserver() override = default;
+  MockShillThirdPartyVpnObserver() {}
+  ~MockShillThirdPartyVpnObserver() override {}
   MOCK_METHOD1(OnPacketReceived, void(const std::vector<char>& data));
   MOCK_METHOD1(OnPlatformMessage, void(uint32_t message));
 };

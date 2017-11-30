@@ -150,8 +150,8 @@ namespace {
 template <size_t alignment>
 class AlignedData {
  public:
-  AlignedData() = default;
-  ~AlignedData() = default;
+  AlignedData() {}
+  ~AlignedData() {}
   alignas(alignment) char data_[alignment];
 };
 

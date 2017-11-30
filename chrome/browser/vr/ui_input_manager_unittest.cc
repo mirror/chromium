@@ -330,8 +330,7 @@ TEST_F(UiInputManagerContentTest, ExitPromptHitTesting) {
 }
 
 TEST_F(UiInputManagerContentTest, AudioPermissionPromptHitTesting) {
-  model_->active_modal_prompt_type =
-      kModalPromptTypeExitVRForVoiceSearchRecordAudioOsPermission;
+  model_->active_modal_prompt_type = kModalPromptTypeExitVRForAudioPermission;
   EXPECT_TRUE(RunFor(MsToDelta(500)));
 
   UiElement* url_bar = scene_->GetUiElementByName(UiElementName::kUrlBar);
