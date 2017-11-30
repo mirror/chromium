@@ -44,7 +44,10 @@ cr.define('extensions', function() {
      */
     inspectItemView(id, view) {}
 
-    /** @param {string} id */
+    /**
+     * @param {string} id
+     * @return {!Promise}
+     */
     reloadItem(id) {}
 
     /** @param {string} id */
@@ -151,7 +154,9 @@ cr.define('extensions', function() {
 
     /** @private */
     onReloadTap_: function() {
-      this.delegate.reloadItem(this.data.id);
+      this.delegate.reloadItem(this.data.id).catch(loadError => {
+        this.fire('load-error', loadError);
+      });
     },
 
     /** @private */

@@ -167,13 +167,15 @@ cr.define('extension_item_tests', function() {
       item.set('data.state', chrome.developerPrivate.ExtensionState.TERMINATED);
       Polymer.dom.flush();
       mockDelegate.testClickingCalls(
-          item.$$('#terminated-reload-button'), 'reloadItem', [item.data.id]);
+          item.$$('#terminated-reload-button'), 'reloadItem', [item.data.id],
+          new Promise((resolve, reject) => { resolve(); }));
 
       item.set('data.location', chrome.developerPrivate.Location.UNPACKED);
       item.set('data.state', chrome.developerPrivate.ExtensionState.ENABLED);
       Polymer.dom.flush();
       mockDelegate.testClickingCalls(
-          item.$$('#dev-reload-button'), 'reloadItem', [item.data.id]);
+          item.$$('#dev-reload-button'), 'reloadItem', [item.data.id],
+          new Promise((resolve, reject) => { resolve(); }));
     });
 
     test(assert(TestNames.Warnings), function() {
