@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bbc5069_0c5f2d5d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-30T17:43:36Z",
+      "side": 1,
+      "message": "nit: Wrap long lines around 80 char, like code\n\nSee \"Writing commit descriptions\" section of\nhttps://www.chromium.org/developers/contributing-code",
+      "revId": "8d2cf68802941a8bd85d8994e82a277e1a837aae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "276a21eb_fbc9ee39",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-30T17:43:36Z",
+      "side": 1,
+      "message": "nit: one space before bug #\ni.e.\nBug: 787393",
+      "revId": "8d2cf68802941a8bd85d8994e82a277e1a837aae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
