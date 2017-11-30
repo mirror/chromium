@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c8892e6_d54b41a0",
+        "filename": "ash/wm/lock_state_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-30T17:58:23Z",
+      "side": 1,
+      "message": "Think we need a \n  if (!self)\n    return;\nbefore Line 318.\n\nOtherwise, WeakPtr is not really used and we still crash here.",
+      "range": {
+        "startLine": 322,
+        "startChar": 8,
+        "endLine": 322,
+        "endChar": 12
+      },
+      "revId": "09d525a9a5fb5da068a415342f9fe91b7cd267b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
