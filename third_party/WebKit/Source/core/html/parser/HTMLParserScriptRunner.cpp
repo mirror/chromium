@@ -29,7 +29,6 @@
 #include <memory>
 #include "core/dom/DocumentParserTiming.h"
 #include "core/dom/Element.h"
-#include "core/dom/IgnoreDestructiveWriteCountIncrementer.h"
 #include "core/dom/ScriptLoader.h"
 #include "core/frame/LocalFrame.h"
 #include "core/html/parser/HTMLInputStream.h"
@@ -227,9 +226,6 @@ void HTMLParserScriptRunner::ExecutePendingScriptAndDispatchEvent(
     HTMLParserReentryPermit::ScriptNestingLevelIncrementer
         nesting_level_incrementer =
             reentry_permit_->IncrementScriptNestingLevel();
-
-    IgnoreDestructiveWriteCountIncrementer
-        ignore_destructive_write_count_incrementer(document_);
 
     // 8. "Execute the script."
     DCHECK(IsExecutingScript());
