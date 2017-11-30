@@ -23,6 +23,7 @@
 #include "build/build_config.h"
 #include "components/network_session_configurator/common/network_switches.h"
 #include "content/public/browser/browser_main_runner.h"
+#include "content/public/common/content_switches.h"
 #include "content/public/common/url_constants.h"
 #include "content/shell/browser/layout_test/blink_test_controller.h"
 #include "content/shell/browser/layout_test/test_info_extractor.h"
@@ -109,6 +110,28 @@ int RunTests(const std::unique_ptr<content::BrowserMainRunner>& main_runner) {
   return 0;
 }
 
+// Whitelists the test server's certificate fingerprint with the
+// --ignore-crtificate-errors-spki-list flag. Appends to any existing value if
+// the flag is already set.
+void AppendTestServerCertificateSPKI() {
+  std::string existing =
+      base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
+          switches::kIgnoreCertificateErrorsSPKIList);
+  // |kIgnoreCertificateErrors| doesn't work with the network service, but
+  // ||kIgnoreCertificateErrorsSPKIList| does. To work when the network service
+  // |is enabled, specifically ignore the layout test web server
+  // |certificate. This fingerprint can be generated with the following
+  // |commands:
+  //
+  // openssl x509 -noout -pubkey -in webkit-httpd.pem | \
+  // openssl pkey -pubin -outform der | \
+  // openssl dgst -sha256 -binary | \
+  // base64
+  base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
+      switches::kIgnoreCertificateErrorsSPKIList,
+      "ylBbKl6HK+s8AP18Q62DDHLwNXuIFVDZPN+U/vs3MW0=," + existing);
+}
+
 }  // namespace
 
 // Main routine for running as the Browser process.
@@ -122,6 +145,7 @@ int LayoutTestBrowserMain(
       !browser_context_path_for_layout_tests.GetPath().MaybeAsASCII().empty());
   base::CommandLine::ForCurrentProcess()->AppendSwitch(
       switches::kIgnoreCertificateErrors);
+  AppendTestServerCertificateSPKI();
   base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
       switches::kContentShellDataPath,
       browser_context_path_for_layout_tests.GetPath().MaybeAsASCII());
