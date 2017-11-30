@@ -92,15 +92,16 @@ class BookmarkContextMenuController
   void BookmarkModelChanged() override;
 
   gfx::NativeWindow parent_window_;
-  BookmarkContextMenuControllerDelegate* delegate_;
-  Browser* const browser_;
-  Profile* profile_;
+  BookmarkContextMenuControllerDelegate* const delegate_;  // Nullptr in tests.
+  Browser* const browser_;                                 // Nullptr in tests.
+  Profile* const profile_;                                 // Never nullptr.
   content::PageNavigator* navigator_;
-  const bookmarks::BookmarkNode* parent_;
+  const bookmarks::BookmarkNode* const parent_;  // Never nullptr.
   std::vector<const bookmarks::BookmarkNode*> selection_;
-  bookmarks::BookmarkModel* model_;
+  bookmarks::BookmarkModel* const model_;  // Never nullptr;
   std::unique_ptr<ui::SimpleMenuModel> menu_model_;
-  // Used to detect deletion of |this| executing a command.
+
+  // Used to detect deletion of |this| executing a command. Must be last.
   base::WeakPtrFactory<BookmarkContextMenuController> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(BookmarkContextMenuController);

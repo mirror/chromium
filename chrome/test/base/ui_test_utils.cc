@@ -244,16 +244,17 @@ void NavigateToURLWithDispositionBlockUntilNavigationsComplete(
   if (disposition == WindowOpenDisposition::CURRENT_TAB) {
     same_tab_observer.Wait();
     return;
-  } else if (web_contents) {
+  }
+  if (web_contents) {
     content::TestNavigationObserver observer(
         web_contents, number_of_navigations,
         content::MessageLoopRunner::QuitMode::DEFERRED);
     observer.Wait();
     return;
   }
-  EXPECT_TRUE(NULL != web_contents) << " Unable to wait for navigation to \""
-                                    << url.spec() << "\""
-                                    << " because we can't get the tab contents";
+  EXPECT_TRUE(web_contents)
+      << " Unable to wait for navigation to \"" << url.spec()
+      << "\" because we can't get the tab contents";
 }
 
 void NavigateToURLWithDisposition(Browser* browser,
@@ -574,6 +575,7 @@ void WaitForHistoryToLoad(history::HistoryService* history_service) {
 
 BrowserActivationWaiter::BrowserActivationWaiter(const Browser* browser)
     : browser_(browser), observed_(false) {
+  DCHECK(browser_);
   if (chrome::FindLastActive() == browser_) {
     observed_ = true;
     return;

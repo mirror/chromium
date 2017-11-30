@@ -3,6 +3,8 @@
 // found in the LICENSE file.
 
 #include "chrome/browser/ui/cocoa/find_bar/find_bar_bridge.h"
+
+#include "base/memory/ptr_util.h"
 #include "chrome/browser/ui/cocoa/test/cocoa_test_helper.h"
 #include "chrome/browser/ui/find_bar/find_bar_controller.h"
 
@@ -14,16 +16,15 @@ class FindBarBridgeTest : public CocoaTest {
 TEST_F(FindBarBridgeTest, Creation) {
   // Make sure the FindBarBridge constructor doesn't crash and
   // properly initializes its FindBarCocoaController.
-  FindBarBridge bridge(NULL);
-  EXPECT_TRUE(bridge.find_bar_cocoa_controller() != NULL);
+  FindBarBridge bridge(nullptr);
+  EXPECT_TRUE(bridge.find_bar_cocoa_controller());
 }
 
 TEST_F(FindBarBridgeTest, Accessors) {
   // Get/SetFindBarController are virtual methods implemented in
   // FindBarBridge, so we test them here.
-  FindBarBridge* bridge = new FindBarBridge(NULL);
-  FindBarController controller(bridge,  // takes ownership of |bridge|.
-                               nullptr);
+  FindBarBridge* bridge = new FindBarBridge(nullptr);
+  FindBarController controller(base::WrapUnique(bridge), nullptr);
   bridge->SetFindBarController(&controller);
 
   EXPECT_EQ(&controller, bridge->GetFindBarController());
