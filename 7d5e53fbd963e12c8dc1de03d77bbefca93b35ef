@@ -16,6 +16,24 @@
       "revId": "7d5e53fbd963e12c8dc1de03d77bbefca93b35ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90771abf_0f631111",
+        "filename": "extensions/browser/extension_error.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-30T16:07:53Z",
+      "side": 1,
+      "message": "Actually it looks great with the NL removed and clang-format run. Thanks.",
+      "parentUuid": "419da203_67111b69",
+      "revId": "7d5e53fbd963e12c8dc1de03d77bbefca93b35ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
