@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2de6625b_bfac029e",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-11-30T02:11:35Z",
+      "side": 1,
+      "message": "I tried with few numbers, it look like if the number is more than 0.00000001, the matrix is invertible. \n\nWhen the number is less than that, the rect is mapped to an empty rect. So |current_sqs_intersects_occlusion| is set to false and this new fast path that I added here will not the run. As a result, the DCHECK will not fail and the draw quad will remain in the compositor frame.",
+      "parentUuid": "93f11d34_73b7b4ab",
+      "revId": "cf13c052e8603e2af3b7fcbcf89760b070cde35c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0333723d_9af03097",
         "filename": "components/viz/service/display/display.cc",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "cbef12a3_e0eb4ac4",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-11-30T02:11:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0333723d_9af03097",
+      "revId": "cf13c052e8603e2af3b7fcbcf89760b070cde35c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4632c1cc_8106a007",
         "filename": "components/viz/service/display/display.cc",
         "patchSetId": 10
@@ -50,6 +86,24 @@
       "revId": "cf13c052e8603e2af3b7fcbcf89760b070cde35c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4bc776a_27fd8251",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-11-30T02:11:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4632c1cc_8106a007",
+      "revId": "cf13c052e8603e2af3b7fcbcf89760b070cde35c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
