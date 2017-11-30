@@ -16,6 +16,24 @@
       "revId": "fd34e48b916a17b95d29367376efaece58ee069b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4de7df5a_db35e89d",
+        "filename": "ash/system/palette/palette_welcome_bubble_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-30T03:36:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8062697_17b8dce6",
+      "revId": "fd34e48b916a17b95d29367376efaece58ee069b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
