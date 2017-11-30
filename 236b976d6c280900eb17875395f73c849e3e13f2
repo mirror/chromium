@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd75a02d_3368c04b",
+        "filename": "chrome/browser/data_use_measurement/chrome_data_use_ascriber.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-30T21:06:21Z",
+      "side": 1,
+      "message": "This seems impossible considering those two maps should be disjoint in the entries they add. It seems like they both only get new entries added rather than entries from somewhere else. Is there something I\u0027m missing?",
+      "revId": "236b976d6c280900eb17875395f73c849e3e13f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8041a243_a78ac34f",
+        "filename": "chrome/browser/data_use_measurement/chrome_data_use_ascriber.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-30T21:06:21Z",
+      "side": 1,
+      "message": "This seems like it should never be needed since entry-\u003eMovePendingURLRequestTo() should delete each one of the requests.",
+      "revId": "236b976d6c280900eb17875395f73c849e3e13f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
