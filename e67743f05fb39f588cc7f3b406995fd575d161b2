@@ -88,6 +88,24 @@
       "revId": "e67743f05fb39f588cc7f3b406995fd575d161b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e98919c_bd54787e",
+        "filename": "ash/wm/default_state.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-30T01:28:52Z",
+      "side": 1,
+      "message": "I updated the patch using the pre_auto_manage_window_bounds for pre_added_to_workspace_window_bounds if it exists.",
+      "parentUuid": "285a4d6f_c85fc257",
+      "revId": "e67743f05fb39f588cc7f3b406995fd575d161b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
