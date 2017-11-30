@@ -247,21 +247,23 @@ public class DownloadForegroundServiceManager {
         // Pause: only try to detach, do not kill notification.
         // Complete/failed: try to detach, if that doesn't work, kill.
         // Cancel: don't even try to detach, just kill.
+        // For pre-Lollipop phones (API < 21), we need to kill the notification regardless.
         boolean detachNotification = downloadStatus == DownloadStatus.PAUSE
                 || downloadStatus == DownloadStatus.COMPLETE
                 || downloadStatus == DownloadStatus.FAIL;
         boolean killNotification = downloadStatus == DownloadStatus.CANCEL
                 || downloadStatus == DownloadStatus.COMPLETE
-                || downloadStatus == DownloadStatus.FAIL;
+                || downloadStatus == DownloadStatus.FAIL || Build.VERSION.SDK_INT < 21;
 
         boolean notificationHandledProperly =
                 stopAndUnbindServiceInternal(detachNotification, killNotification);
         mBoundService = null;
 
-        // If the download is completed,  need to relaunch the notification so it is no longer
-        // pinned to the foreground service.
-        if ((downloadStatus == DownloadStatus.COMPLETE || downloadStatus == DownloadStatus.FAIL)
-                && Build.VERSION.SDK_INT < 24) {
+        // Relaunch notification so it is no longer pinned to the foreground service when the
+        // download is completed/failed or if the phone is pre-Lollipop (API < 21).
+        if (((downloadStatus == DownloadStatus.COMPLETE || downloadStatus == DownloadStatus.FAIL)
+                    && Build.VERSION.SDK_INT < 24)
+                || Build.VERSION.SDK_INT < 21) {
             relaunchPinnedNotification();
         }
 
