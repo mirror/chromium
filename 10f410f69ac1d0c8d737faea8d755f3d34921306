@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1352e452_a4233e81",
+        "filename": "ios/web/interstitials/html_web_interstitial_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-30T01:00:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2c07112_5243052c",
+      "revId": "10f410f69ac1d0c8d737faea8d755f3d34921306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90344fcf_bb9d3d52",
         "filename": "ios/web/interstitials/html_web_interstitial_unittest.mm",
         "patchSetId": 10
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "9ca55031_d59abb10",
+        "filename": "ios/web/interstitials/html_web_interstitial_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-30T01:00:29Z",
+      "side": 1,
+      "message": "Nope, removed.",
+      "parentUuid": "90344fcf_bb9d3d52",
+      "range": {
+        "startLine": 53,
+        "startChar": 15,
+        "endLine": 53,
+        "endChar": 20
+      },
+      "revId": "10f410f69ac1d0c8d737faea8d755f3d34921306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59bf87a8_5be6a44e",
         "filename": "ios/web/interstitials/html_web_interstitial_unittest.mm",
         "patchSetId": 10
@@ -62,6 +104,30 @@
       "revId": "10f410f69ac1d0c8d737faea8d755f3d34921306",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfddfd7b_b34ed286",
+        "filename": "ios/web/interstitials/html_web_interstitial_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-30T01:00:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59bf87a8_5be6a44e",
+      "range": {
+        "startLine": 69,
+        "startChar": 32,
+        "endLine": 69,
+        "endChar": 44
+      },
+      "revId": "10f410f69ac1d0c8d737faea8d755f3d34921306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
