@@ -70,6 +70,30 @@
       "revId": "e0da9328fa25e85213484fed44172f44070efd24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "967b90af_ec8613d0",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-11-30T20:36:41Z",
+      "side": 1,
+      "message": "This CL shouldn\u0027t break the offline page code path when network service is disabled. \nIt just moves the logic from ChromeResourceDispatcherHostDelegate to ChromeContentBrowserClient. Before the CL, whether MHTML should be downloaded is determined in mime_sniffing_resource_handler.cc, and this CL won\u0027t change that logic, we are still making the same call there.\n\nHowever, this is a design issue, how can we get the modified NavigationUIData for network service. Can we pass it to the UrlLoader and then retrieve it in the callbacks to URLLoaderClient?",
+      "parentUuid": "d114d174_7b8e623c",
+      "range": {
+        "startLine": 550,
+        "startChar": 6,
+        "endLine": 550,
+        "endChar": 25
+      },
+      "revId": "e0da9328fa25e85213484fed44172f44070efd24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
