@@ -16,6 +16,24 @@
       "revId": "4ce9b381c13ab7469738d97d6e50dc260570fd82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a73b05c8_c351b4f0",
+        "filename": "chrome/browser/ui/omnibox/omnibox_view_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1264,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-30T12:23:00Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "94f67dcf_63d2cb9f",
+      "revId": "4ce9b381c13ab7469738d97d6e50dc260570fd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
