@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ba08214_63ee5b7b",
+        "filename": "ui/views/accessibility/native_view_accessibility_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-30T03:39:39Z",
+      "side": 1,
+      "message": "Things like http-auth are DialogDelegate but not BubbleDialogDelegate - are they also affected? E.g. https://httpbin.org/basic-auth/user/passwd",
+      "revId": "bdd3b47e78c09e95d697e3ce4714278bd3b808b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86cd4ac4_6b2b5ea0",
+        "filename": "ui/views/accessibility/native_view_accessibility_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-30T03:39:39Z",
+      "side": 1,
+      "message": "Note I\u0027m not 100% sure we can safely rely on the lifetime of |anchor_widget|. If an a11y message comes in at an awkward time, it might be possible for bubble_view-\u003eanchor_widget() to be a deleted object. Also anchor_view (and therefore anchor_widget) is not set for all bubbles (e.g. permissions requests in fullscreen). I think it would be better to use BubbleDialogDelegateView::parent_window() and Widget::GetWidgetForNativeView()",
+      "revId": "bdd3b47e78c09e95d697e3ce4714278bd3b808b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
