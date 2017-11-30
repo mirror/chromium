@@ -243,6 +243,9 @@ class GL_EXPORT GLSurface : public base::RefCounted<GLSurface> {
   virtual bool SupportsSwapTimestamps() const;
   virtual void SetEnableSwapTimestamps();
 
+  virtual void BeginCATransaction() {}
+  virtual void CommitAndFlushCATransaction() {}
+
   static GLSurface* GetCurrent();
 
  protected:

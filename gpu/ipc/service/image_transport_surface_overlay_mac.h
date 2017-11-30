@@ -65,6 +65,9 @@ class ImageTransportSurfaceOverlayMac : public gl::GLSurface,
   // ui::GpuSwitchingObserver implementation.
   void OnGpuSwitched() override;
 
+  void BeginCATransaction() override;
+  void CommitAndFlushCATransaction() override;
+
  private:
   ~ImageTransportSurfaceOverlayMac() override;
 

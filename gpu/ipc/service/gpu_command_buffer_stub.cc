@@ -291,6 +291,10 @@ bool GpuCommandBufferStub::OnMessageReceived(const IPC::Message& message) {
                         OnRegisterTransferBuffer);
     IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_DestroyTransferBuffer,
                         OnDestroyTransferBuffer);
+    IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_BeginCATransaction,
+                        OnBeginCATransaction)
+    IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_CommitAndFlushCATransaction,
+                        OnCommitAndFlushCATransaction)
     IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_WaitSyncToken, OnWaitSyncToken)
     IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_SignalSyncToken, OnSignalSyncToken)
     IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_SignalQuery, OnSignalQuery)
@@ -1092,6 +1096,14 @@ void GpuCommandBufferStub::OnRescheduleAfterFinished() {
 
   command_buffer_->SetScheduled(true);
   channel_->OnCommandBufferScheduled(this);
+}
+
+void GpuCommandBufferStub::OnBeginCATransaction() {
+  surface_->BeginCATransaction();
+}
+
+void GpuCommandBufferStub::OnCommitAndFlushCATransaction() {
+  surface_->CommitAndFlushCATransaction();
 }
 
 bool GpuCommandBufferStub::OnWaitSyncToken(const SyncToken& sync_token) {

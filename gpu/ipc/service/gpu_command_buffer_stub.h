@@ -102,6 +102,9 @@ class GPU_EXPORT GpuCommandBufferStub
   void OnDescheduleUntilFinished() override;
   void OnRescheduleAfterFinished() override;
 
+  void OnBeginCATransaction();
+  void OnCommitAndFlushCATransaction();
+
 // ImageTransportSurfaceDelegate implementation:
 #if defined(OS_WIN)
   void DidCreateAcceleratedSurfaceChildWindow(
