@@ -360,6 +360,13 @@ bool InitDatabase(sql::Connection* db,
   return CreateSchema(db);
 }
 
+bool CloseDatabaseSync(sql::Connection* db) {
+  if (!db || !db->is_open())
+    return false;
+  db->Close();
+  return true;
+}
+
 void RecordLoadResult(OfflinePageMetadataStore::LoadStatus status,
                       int32_t page_count) {
   UMA_HISTOGRAM_ENUMERATION("OfflinePages.LoadStatus", status,
@@ -533,7 +540,8 @@ OfflinePageMetadataStoreSQL::OfflinePageMetadataStoreSQL(
     : background_task_runner_(std::move(background_task_runner)),
       in_memory_(true),
       state_(StoreState::NOT_LOADED),
-      weak_ptr_factory_(this) {}
+      weak_ptr_factory_(this),
+      closing_weak_ptr_factory_(this) {}
 
 OfflinePageMetadataStoreSQL::OfflinePageMetadataStoreSQL(
     scoped_refptr<base::SequencedTaskRunner> background_task_runner,
@@ -542,7 +550,8 @@ OfflinePageMetadataStoreSQL::OfflinePageMetadataStoreSQL(
       in_memory_(false),
       db_file_path_(path.AppendASCII("OfflinePages.db")),
       state_(StoreState::NOT_LOADED),
-      weak_ptr_factory_(this) {}
+      weak_ptr_factory_(this),
+      closing_weak_ptr_factory_(this) {}
 
 OfflinePageMetadataStoreSQL::~OfflinePageMetadataStoreSQL() {
   if (db_.get() &&
@@ -634,6 +643,21 @@ void OfflinePageMetadataStoreSQL::OnInitializeInternalDone(
 
   if (state_ == StoreState::FAILED_LOADING)
     state_ = StoreState::NOT_LOADED;
+}
+
+void OfflinePageMetadataStoreSQL::CloseInternal() {
+  base::PostTaskAndReplyWithResult(
+      background_task_runner_.get(), FROM_HERE,
+      base::BindOnce(&CloseDatabaseSync, db_.get()),
+      base::BindOnce(&OfflinePageMetadataStoreSQL::CloseInternalDone,
+                     weak_ptr_factory_.GetWeakPtr(), std::move(db_)));
+}
+
+void OfflinePageMetadataStoreSQL::CloseInternalDone(
+    std::unique_ptr<sql::Connection> db,
+    bool db_close_called) {
+  // Report UMA.
+  // db will be reset with this once callback.
 }
 
 }  // namespace offline_pages
