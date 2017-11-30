@@ -49,6 +49,8 @@ component("gfx") {
     "android/view_configuration.cc",
     "android/view_configuration.h",
     "break_list.h",
+    "ca_layer_params.cc",
+    "ca_layer_params.h",
     "color_analysis.cc",
     "color_analysis.h",
     "color_palette.h",
