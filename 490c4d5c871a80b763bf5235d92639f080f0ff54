@@ -22,6 +22,30 @@
       "revId": "490c4d5c871a80b763bf5235d92639f080f0ff54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e19461ba_941e0b0f",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-30T22:02:34Z",
+      "side": 1,
+      "message": "Nice catch! But I don\u0027t think we need the second assert, because BUILD_DIR is relative to the root of the checkout, so if binary_path starts with BUILD_DIR, it must be also relative to the root of the checkout.",
+      "parentUuid": "b1a32f61_6ffde5f8",
+      "range": {
+        "startLine": 351,
+        "startChar": 62,
+        "endLine": 352,
+        "endChar": 76
+      },
+      "revId": "490c4d5c871a80b763bf5235d92639f080f0ff54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
