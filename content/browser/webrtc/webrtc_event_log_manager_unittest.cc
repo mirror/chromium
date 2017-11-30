@@ -491,7 +491,7 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogFilenameMatchesExpectedFormat) {
                                   std::to_string(kLocalPeerConnectionId);
   expected_filename += base::FilePath::kExtensionSeparator + std::string("log");
 
-  EXPECT_EQ(expected_filename, file_path.BaseName().value());
+  EXPECT_EQ(base::StringPiece(expected_filename), file_path.BaseName().value());
 }
 
 TEST_F(WebRtcEventLogManagerTest,
@@ -525,7 +525,8 @@ TEST_F(WebRtcEventLogManagerTest,
   const std::string expected_filename_1 = expected_filename +
                                           base::FilePath::kExtensionSeparator +
                                           std::string("log");
-  ASSERT_EQ(expected_filename_1, file_path_1.BaseName().value());
+  ASSERT_EQ(base::StringPiece(expected_filename_1),
+            file_path_1.BaseName().value());
 
   LocalWebRtcEventLogStop(kRenderProcessId, kLocalPeerConnectionId,
                           ExpectedResult::kSuccess);
@@ -538,7 +539,8 @@ TEST_F(WebRtcEventLogManagerTest,
 
   // Goal of the test - starting the same log again produces a new file, with
   // an expected new filename.
-  EXPECT_EQ(expected_filename_2, file_path_2.BaseName().value());
+  EXPECT_EQ(base::StringPiece(expected_filename_2),
+            file_path_2.BaseName().value());
 }
 
 TEST_F(WebRtcEventLogManagerTest, LocalLogMayNotBeStartedTwice) {
