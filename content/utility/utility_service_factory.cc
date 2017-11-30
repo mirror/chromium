@@ -123,6 +123,8 @@ UtilityServiceFactory::~UtilityServiceFactory() {}
 void UtilityServiceFactory::CreateService(
     service_manager::mojom::ServiceRequest request,
     const std::string& name) {
+  LOG(ERROR) << "Begin UtilityServiceFactory::CreateService() name = " << name;
+  LOG(ERROR) << "base::Process::Current().Pid() = " << base::Process::Current().Pid();
   auto* trace_log = base::trace_event::TraceLog::GetInstance();
   if (trace_log->IsProcessNameEmpty())
     trace_log->set_process_name("Service: " + name);

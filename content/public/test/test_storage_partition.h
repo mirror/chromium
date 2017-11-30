@@ -154,6 +154,7 @@ class TestStoragePartition : public StoragePartition {
   void Flush() override;
 
   void ClearBluetoothAllowedDevicesMapForTesting() override;
+  void FlushNetworkInterfaceForTesting() override;
 
   void SetNetworkFactoryForTesting(
       mojom::URLLoaderFactory* test_factory) override;
