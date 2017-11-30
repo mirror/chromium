@@ -82,6 +82,9 @@ component("printing") {
     "units.cc",
     "units.h",
   ]
+  if (is_fuchsia) {
+    sources += [ "image_fuchsia.cc" ]
+  }
 
   cflags = []
   defines = [ "PRINTING_IMPLEMENTATION" ]
