@@ -167,3 +167,22 @@
 .cm-s-default .cm-link {color: #00c;}
 
 .cm-s-default .cm-error {color: #f00;}
+
+
+x-link.valid-link {
+    color: rgb(17, 85, 204);
+    text-decoration: underline;
+}
+
+x-link [is=ui-icon] {
+    vertical-align: middle;
+}
+
+x-link[data-keyboard-focus="true"]:focus {
+    outline-width: unset;
+}
+
+.-theme-with-dark-background x-link.valid-link,
+:host-context(.-theme-with-dark-background) x-link.valid-link {
+    color: hsl(0, 0%, 67%);
+}

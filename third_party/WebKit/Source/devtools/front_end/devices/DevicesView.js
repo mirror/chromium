@@ -8,18 +8,31 @@ Devices.DevicesView = class extends UI.VBox {
     this.registerRequiredCSS('devices/devicesView.css');
     this.contentElement.classList.add('devices-view');
 
-    var hbox = this.contentElement.createChild('div', 'hbox devices-container');
-    var sidebar = hbox.createChild('div', 'devices-sidebar');
-    sidebar.createChild('div', 'devices-view-title').createTextChild(Common.UIString('Devices'));
-    this._sidebarList = sidebar.createChild('div', 'devices-sidebar-list');
+    this._template = UI.html`
+      <x-hbox children=stretch flex=stretch overflow=hidden>
+        <x-vbox children=stretch flex=150px padding-top=15px>
+          <x-vbox margin='0 0 15px 15px' padding-top=1px font-size=16px>Devices</x-vbox>
+          <x-vbox flex=none>
+            <x-vbox flex=none el=spacer></x-vbox>
+          </x-vbox>
+        </x-vbox>
+        <x-vbox children=stretch flex=auto el=viewContainer></x-vbox>
+      </x-hbox>
+      <x-hbox flex=none overflow=hidden padding='3px 10px' border-top='1px solid #cdcdcd' background-color=#f3f3f3>
+        <span el=deviceCount></span>
+        <x-text> Read <x-link
+            href='https://developers.google.com/chrome-developer-tools/docs/remote-debugging'
+            >remote debugging documentation</x-link> for more information</x-text>
+      </x-hbox>
+    `;
+    this.contentElement.appendChild(this._template);
 
     this._discoveryView = new Devices.DevicesView.DiscoveryView();
-    this._sidebarListSpacer = this._sidebarList.createChild('div', 'devices-sidebar-spacer');
-    this._discoveryListItem = this._sidebarList.createChild('div', 'devices-sidebar-item');
-    this._discoveryListItem.textContent = Common.UIString('Settings');
-    this._discoveryListItem.addEventListener(
-        'click', this._selectSidebarListItem.bind(this, this._discoveryListItem, this._discoveryView));
-
+    this._discoveryListItem = this._createSidebarListItem(this._discoveryView);
+    this._discoveryListItem.el('title').textContent = s`Settings`;
+    this._discoveryListItem.el('status').parentNode.remove();
+    this._template.el('spacer').parentNode.appendChild(this._discoveryListItem);
+    
     /** @type {!Map<string, !Devices.DevicesView.DeviceView>} */
     this._viewById = new Map();
     /** @type {!Array<!Adb.Device>} */
@@ -31,15 +44,6 @@ Devices.DevicesView = class extends UI.VBox {
     /** @type {?UI.Widget} */
     this._visibleView = null;
 
-    this._viewContainer = hbox.createChild('div', 'flex-auto vbox');
-
-    var discoveryFooter = this.contentElement.createChild('div', 'devices-footer');
-    this._deviceCountSpan = discoveryFooter.createChild('span');
-    discoveryFooter.createChild('span').textContent = Common.UIString(' Read ');
-    discoveryFooter.appendChild(UI.createExternalLink(
-        'https://developers.google.com/chrome-developer-tools/docs/remote-debugging',
-        Common.UIString('remote debugging documentation')));
-    discoveryFooter.createChild('span').textContent = Common.UIString(' for more information.');
     this._updateFooter();
     this._selectSidebarListItem(this._discoveryListItem, this._discoveryView);
 
@@ -66,21 +70,27 @@ Devices.DevicesView = class extends UI.VBox {
 
   /**
    * @param {!Element} listItem
-   * @param {!UI.Widget} view
+   * @param {!UI.Widget|!Element} view
    */
   _selectSidebarListItem(listItem, view) {
     if (this._selectedListItem === listItem)
       return;
 
     if (this._selectedListItem) {
-      this._selectedListItem.classList.remove('selected');
-      this._visibleView.detach();
+      this._selectedListItem.toggle('selected', false);
+      if (this._visibleView._widget)
+        this._visibleView._widget.remove();
+      else
+        this._visibleView.detach();
     }
 
     this._visibleView = view;
     this._selectedListItem = listItem;
-    this._visibleView.show(this._viewContainer);
-    this._selectedListItem.classList.add('selected');
+    if (this._visibleView._widget)
+      this._template.el('viewContainer').appendChild(this._visibleView._widget);
+    else
+      this._visibleView.show(this._template.el('viewContainer'));
+    this._selectedListItem.toggle('selected', true);
   }
 
   /**
@@ -121,13 +131,12 @@ Devices.DevicesView = class extends UI.VBox {
         this._viewById.set(device.id, view);
         listItem = this._createSidebarListItem(view);
         this._listItemById.set(device.id, listItem);
-        this._sidebarList.insertBefore(listItem, this._sidebarListSpacer);
+        this._template.el('spacer').parentNode.insertBefore(listItem, this._template.el('spacer'));
       }
 
-      listItem._title.textContent = device.adbModel;
-      listItem._status.textContent =
-          device.adbConnected ? Common.UIString('Connected') : Common.UIString('Pending Authorization');
-      listItem.classList.toggle('device-connected', device.adbConnected);
+      listItem.el('title').textContent = device.adbModel;
+      listItem.el('status').textContent = device.adbConnected ? s`Connected` : s`Pending Authorization`;
+      listItem.el('connection').toggle('connected', device.adbConnected);
       view.update(device);
     }
 
@@ -138,15 +147,23 @@ Devices.DevicesView = class extends UI.VBox {
   }
 
   /**
-   * @param {!UI.Widget} view
+   * @param {!UI.Widget|!Element} view
    * @return {!Element}
    */
   _createSidebarListItem(view) {
-    var listItem = createElementWithClass('div', 'devices-sidebar-item');
-    listItem.addEventListener('click', this._selectSidebarListItem.bind(this, listItem, view));
-    listItem._title = listItem.createChild('div', 'devices-sidebar-item-title');
-    listItem._status = listItem.createChild('div', 'devices-sidebar-item-status');
-    return listItem;
+    var item = UI.cachedHtml`
+      <x-vbox flex=auto padding='6px 6px 6px 16px' color=#222 font-size=14px
+          selected='border-left: 6px solid #666; padding-left: 10px;'>
+        <div el=title></div>
+        <div>
+          <x-text el=connection margin='0 2px 0 -10px' color=red font-size=16px
+              connected='color: green;'>\u25cf</x-text>
+          <x-span el=status font-size=12px></x-span>
+        </div>
+      </x-vbox>
+    `;
+    item.addEventListener('click', () => this._selectSidebarListItem(item, view), false);
+    return item;
   }
 
   /**
@@ -175,10 +192,9 @@ Devices.DevicesView = class extends UI.VBox {
   }
 
   _updateFooter() {
-    this._deviceCountSpan.textContent = !this._devices.length ?
-        Common.UIString('No devices detected.') :
-        this._devices.length === 1 ? Common.UIString('1 device detected.') :
-                                     Common.UIString('%d devices detected.', this._devices.length);
+    this._template.el('deviceCount').textContent = !this._devices.length ?
+        s`No devices detected.` :
+        this._devices.length === 1 ? s`1 device detected.` : s`${this._devices.length} devices detected.`;
   }
 
   /**
@@ -202,29 +218,29 @@ Devices.DevicesView = class extends UI.VBox {
   }
 };
 
-Devices.DevicesView.DiscoveryView = class extends UI.VBox {
+Devices.DevicesView.DiscoveryView = class {
   constructor() {
-    super();
-    this.setMinimumSize(100, 100);
-    this.element.classList.add('discovery-view');
+    // TODO: this used to have this.setMinimumSize(100, 100);
 
-    this.contentElement.createChild('div', 'hbox device-text-row').createChild('div', 'view-title').textContent =
-        Common.UIString('Settings');
-
-    var discoverUsbDevicesCheckbox = UI.CheckboxLabel.create(Common.UIString('Discover USB devices'));
-    discoverUsbDevicesCheckbox.classList.add('usb-checkbox');
-    this.element.appendChild(discoverUsbDevicesCheckbox);
-    this._discoverUsbDevicesCheckbox = discoverUsbDevicesCheckbox.checkboxElement;
-    this._discoverUsbDevicesCheckbox.addEventListener('click', () => {
-      this._config.discoverUsbDevices = this._discoverUsbDevicesCheckbox.checked;
+    this._widget = UI.html`
+      <x-widget overflow-x=hidden overflow-y=auto padding='15px 15px 0 0'>
+        <x-hbox children=baseline flex=none margin-right=25px>
+          <x-text flex=none font-size=16px>Settings</x-text>
+        </x-hbox>
+        <x-checkbox el=discoverUsbDevices flex=none padding-bottom=8px margin-top=20px>Discover USB devices</x-checkbox>
+        <x-text flex=none margin='5px 0 25px 25px'>Need help? Read Chrome <x-link
+            href='https://developers.google.com/chrome-developer-tools/docs/remote-debugging'
+            >remote debugging documentation.</x-link>
+        </x-text>
+      </x-widget>
+    `;
+    this._widget.registerRequiredCSS('devices/devicesView.css');
+    
+    this._widget.el('discoverUsbDevices').addEventListener('click', () => {
+      // TODO: this does not update!
+      this._config.discoverUsbDevices = this._widget.el('discoverUsbDevices').checked;
       InspectorFrontendHost.setDevicesDiscoveryConfig(this._config);
     }, false);
-
-    var help = this.element.createChild('div', 'discovery-help');
-    help.createChild('span').textContent = Common.UIString('Need help? Read Chrome ');
-    help.appendChild(UI.createExternalLink(
-        'https://developers.google.com/chrome-developer-tools/docs/remote-debugging',
-        Common.UIString('remote debugging documentation.')));
 
     /** @type {!Adb.Config} */
     this._config;
@@ -236,14 +252,33 @@ Devices.DevicesView.DiscoveryView = class extends UI.VBox {
         this._config.portForwardingConfig[rule.port] = rule.address;
       InspectorFrontendHost.setDevicesDiscoveryConfig(this._config);
     });
-    this._portForwardingView.show(this.element);
+    this._portForwardingView.element.style.setProperty('flex', 'none');
 
     this._networkDiscoveryView = new Devices.DevicesView.NetworkDiscoveryView(false, (enabled, config) => {
       this._config.networkDiscoveryEnabled = enabled;
       this._config.networkDiscoveryConfig = config;
       InspectorFrontendHost.setDevicesDiscoveryConfig(this._config);
     });
-    this._networkDiscoveryView.show(this.element);
+    this._networkDiscoveryView.element.style.setProperty('flex', 'none');
+    
+    // TODO: |first| is a hack!
+    var first = true;
+    this._widget.onShow = () => {
+      console.log('shown');
+      if (first) {
+        this._portForwardingView.show(this._widget);
+        this._networkDiscoveryView.show(this._widget);
+        first = false;
+      }
+    };
+
+    this._widget.onHide = () => {
+      console.log('hidden');
+    };
+
+    this._widget.onResize = () => {
+      console.log('resized');
+    };
   }
 
   /**
@@ -251,7 +286,7 @@ Devices.DevicesView.DiscoveryView = class extends UI.VBox {
    */
   discoveryConfigChanged(config) {
     this._config = config;
-    this._discoverUsbDevicesCheckbox.checked = config.discoverUsbDevices;
+    this._widget.el('discoverUsbDevices').checked = config.discoverUsbDevices;
     this._portForwardingView.discoveryConfigChanged(config.portForwardingEnabled, config.portForwardingConfig);
     this._networkDiscoveryView.discoveryConfigChanged(config.networkDiscoveryEnabled, config.networkDiscoveryConfig);
   }
