@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "842b292e_b3fefdd8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/SecondTapMlOverride.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-30T06:10:49Z",
+      "side": 1,
+      "message": "Note that the code from here down was copied from the old file.  Too bad git didn\u0027t track where it came from.",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 29
+      },
+      "revId": "e4a1959ce8c8b2e5dc5f47a1c401c9433f5874e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
