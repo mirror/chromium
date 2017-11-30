@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "27952938_13f2bfcc",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-30T20:54:05Z",
+      "side": 1,
+      "message": "I think I did what you want.",
+      "parentUuid": "2daa3c1f_d8f24801",
+      "range": {
+        "startLine": 561,
+        "startChar": 4,
+        "endLine": 566,
+        "endChar": 68
+      },
+      "revId": "d901037d8495e60c5b3b9ff325e2b9a33dbc1296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2a3aecf_9237c8f2",
         "filename": "chrome/browser/ui/views/tabs/tab_icon.cc",
         "patchSetId": 8
@@ -65,6 +89,30 @@
     },
     {
       "key": {
+        "uuid": "9673f704_7c02d262",
+        "filename": "chrome/browser/ui/views/tabs/tab_icon.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-30T20:54:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2a3aecf_9237c8f2",
+      "range": {
+        "startLine": 180,
+        "startChar": 12,
+        "endLine": 180,
+        "endChar": 18
+      },
+      "revId": "d901037d8495e60c5b3b9ff325e2b9a33dbc1296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d6e4adc_dbd8484b",
         "filename": "chrome/browser/ui/views/tabs/tab_icon.h",
         "patchSetId": 8
@@ -76,6 +124,30 @@
       "writtenOn": "2017-11-30T17:23:35Z",
       "side": 1,
       "message": "optional: it would be nice if we were consistent and used throbber everywhere. I\u0027m ok with the inverse too (loading), but that means more changes to things like PaintThrobber.",
+      "range": {
+        "startLine": 47,
+        "startChar": 35,
+        "endLine": 47,
+        "endChar": 43
+      },
+      "revId": "d901037d8495e60c5b3b9ff325e2b9a33dbc1296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9da08bb_d4cc7dcd",
+        "filename": "chrome/browser/ui/views/tabs/tab_icon.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-30T20:54:05Z",
+      "side": 1,
+      "message": "I changed the variables and comments in this header to use \"loading animation\" which I prefer to avoid ambiguity with the tab throbber which pulses the whole tab. It\u0027s also the name used by TabRendererData. But the shared painting and state types from gfx:: still have Throbber in the name. I think this is kind of OK, because the tab loading animation can be a throbber, but the inverse could not be true.",
+      "parentUuid": "6d6e4adc_dbd8484b",
       "range": {
         "startLine": 47,
         "startChar": 35,
@@ -111,6 +183,30 @@
     },
     {
       "key": {
+        "uuid": "1f3faa78_50507145",
+        "filename": "chrome/browser/ui/views/tabs/tab_icon.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-30T20:54:05Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s a requirement and it doesn\u0027t matter here.",
+      "parentUuid": "7a7ccec5_00337832",
+      "range": {
+        "startLine": 104,
+        "startChar": 2,
+        "endLine": 104,
+        "endChar": 6
+      },
+      "revId": "d901037d8495e60c5b3b9ff325e2b9a33dbc1296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc5f7217_9a22f296",
         "filename": "chrome/browser/ui/views/tabs/tab_icon.h",
         "patchSetId": 8
@@ -131,6 +227,30 @@
       "revId": "d901037d8495e60c5b3b9ff325e2b9a33dbc1296",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "297baebc_98e5285b",
+        "filename": "chrome/browser/ui/views/tabs/tab_icon.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-30T20:54:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc5f7217_9a22f296",
+      "range": {
+        "startLine": 105,
+        "startChar": 7,
+        "endLine": 105,
+        "endChar": 34
+      },
+      "revId": "d901037d8495e60c5b3b9ff325e2b9a33dbc1296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
