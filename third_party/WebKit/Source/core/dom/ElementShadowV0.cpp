@@ -177,7 +177,7 @@ void ElementShadowV0::Distribute() {
         if (ElementShadow* shadow =
                 ShadowWhereNodeCanBeDistributedForV0(*point)) {
           if (!(RuntimeEnabledFeatures::IncrementalShadowDOMEnabled() &&
-                shadow->IsV1()))
+                (shadow->IsV1())))
             shadow->SetNeedsDistributionRecalc();
         }
       }
