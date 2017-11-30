@@ -16,6 +16,24 @@
       "revId": "0ae589ea543040a0f0ace7b0f2ac7f79cff0feeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8959ab66_ad0993f7",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-30T22:59:23Z",
+      "side": 0,
+      "message": "Yes, still being used at https://cs.chromium.org/chromium/src/chrome/browser/resources/md_extensions/view_manager.js?l\u003d106.",
+      "parentUuid": "7d2cae33_3f2683c7",
+      "revId": "0ae589ea543040a0f0ace7b0f2ac7f79cff0feeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
