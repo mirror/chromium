@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7eae6792_73624d8c",
+        "filename": "chrome/browser/resources/chromeos/arc_support/arc_optin_focus_manager.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-11-30T17:39:21Z",
+      "side": 1,
+      "message": "Actually copy-paste  :) but I tested and this works without this",
+      "parentUuid": "a82eaee8_b496c61b",
+      "range": {
+        "startLine": 12,
+        "startChar": 2,
+        "endLine": 12,
+        "endChar": 36
+      },
+      "revId": "2d4bdc69b54991b67e1074857f72bc89b349ea9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f591a78_072b2cf9",
         "filename": "chrome/browser/resources/chromeos/arc_support/arc_optin_focus_manager.js",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "2d4bdc69b54991b67e1074857f72bc89b349ea9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "472c8493_0d278028",
+        "filename": "chrome/browser/resources/chromeos/arc_support/arc_optin_focus_manager.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-11-30T17:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f591a78_072b2cf9",
+      "revId": "2d4bdc69b54991b67e1074857f72bc89b349ea9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
