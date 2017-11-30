@@ -42,6 +42,15 @@ public interface BackendProvider {
         void updateLastAccessTime(String downloadGuid, boolean isOffTheRecord);
     }
 
+    /** */
+    public static interface UIDelegate {
+        /** */
+        void deleteItem(DownloadHistoryItemWrapper item);
+
+        /** */
+        void shareItem(DownloadHistoryItemWrapper item);
+    }
+
     /** Returns the {@link DownloadDelegate} that works with the Downloads backend. */
     DownloadDelegate getDownloadDelegate();
 
@@ -53,6 +62,9 @@ public interface BackendProvider {
 
     /** Returns the {@link SelectionDelegate} that tracks selected items. */
     SelectionDelegate<DownloadHistoryItemWrapper> getSelectionDelegate();
+
+    /** Returns the {@link UIDelegate} responsible for handling download system UI events. */
+    UIDelegate getUIDelegate();
 
     /** Destroys the BackendProvider. */
     void destroy();
