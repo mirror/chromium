@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "42b39f65_c98197a2",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 92854,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T17:58:13Z",
+      "side": 1,
+      "message": "I guess the question is whether we need to have \"Status\" as a separate level. For example,\n  Status.OnEnter\n  Status.OnChromeStart\nvs.\n  StatusOnEnter\n  StatusOnChromeStart",
+      "parentUuid": "aed8af87_9d1995a5",
+      "range": {
+        "startLine": 92854,
+        "startChar": 49,
+        "endLine": 92854,
+        "endChar": 63
+      },
+      "revId": "b0d6e4505504f75ff24153d9c76277e77332d7f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "90518536_c9e76707",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -65,6 +89,53 @@
         "startChar": 49,
         "endLine": 92860,
         "endChar": 70
+      },
+      "revId": "b0d6e4505504f75ff24153d9c76277e77332d7f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8df83066_2a753e90",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 92860,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T17:58:13Z",
+      "side": 1,
+      "message": "DurationUntilReady?\n\nI think whether it is .OnEnter is the same question as above.",
+      "parentUuid": "90518536_c9e76707",
+      "range": {
+        "startLine": 92860,
+        "startChar": 49,
+        "endLine": 92860,
+        "endChar": 70
+      },
+      "revId": "b0d6e4505504f75ff24153d9c76277e77332d7f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eff27fca_169f6140",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 92869,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T17:58:13Z",
+      "side": 1,
+      "message": "These should be renamed NetworkConnectionType to match the enum nomenclature and include `Type`.\ntiborg: Is there a reason you used `Data`?",
+      "range": {
+        "startLine": 92869,
+        "startChar": 32,
+        "endLine": 92869,
+        "endChar": 46
       },
       "revId": "b0d6e4505504f75ff24153d9c76277e77332d7f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -113,6 +184,87 @@
         "endLine": 92875,
         "endChar": 54
       },
+      "revId": "b0d6e4505504f75ff24153d9c76277e77332d7f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42caada8_c207d9e5",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 92875,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T17:58:13Z",
+      "side": 1,
+      "message": "Yes. I was just noting why I renamed it and did not include \"Assets.\"",
+      "parentUuid": "189dfb5a_738f924d",
+      "range": {
+        "startLine": 92875,
+        "startChar": 45,
+        "endLine": 92875,
+        "endChar": 54
+      },
+      "revId": "b0d6e4505504f75ff24153d9c76277e77332d7f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b21f9ad7_0179e772",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 108984,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T17:58:13Z",
+      "side": 1,
+      "message": "This should probably be `Total`.",
+      "range": {
+        "startLine": 108984,
+        "startChar": 16,
+        "endLine": 108984,
+        "endChar": 18
+      },
+      "revId": "b0d6e4505504f75ff24153d9c76277e77332d7f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dc308b6_c4ee2026",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 108985,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T17:58:13Z",
+      "side": 1,
+      "message": "`VR` is redundant and should be removed.",
+      "revId": "b0d6e4505504f75ff24153d9c76277e77332d7f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "443b89f0_a5579dbf",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 108986,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T17:58:13Z",
+      "side": 1,
+      "message": "This should probably be `WebVRPresentation`.",
       "revId": "b0d6e4505504f75ff24153d9c76277e77332d7f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
