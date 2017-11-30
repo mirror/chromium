@@ -4033,3 +4033,14 @@ crbug.com/789533 virtual/gpu/fast/canvas/OffscreenCanvas-2d-imageSmoothing.html 
 crbug.com/789707 [ Mac ] editing/selection/4975120.html [ Pass Failure ]
 # Sheriff failures 2017-11-30
 crbug.com/789485 [ Win ] virtual/scroll_customization/fast/events/touch/gesture/gesture-tap-mouse-events-between-frames.html [ Pass Failure ]
+
+# Double tap on modern media controls is a bit more complicated on Mac but
+# since we are not targeting Mac yet we can come back and fix this later.
+crbug.com/783154 [ Mac ] virtual/modern-media-controls/media/controls/modern/doubletap-to-jump-backwards.html [ Skip ]
+crbug.com/783154 [ Mac ] virtual/modern-media-controls/media/controls/modern/doubletap-to-jump-forwards.html [ Skip ]
+crbug.com/783154 [ Mac ] virtual/modern-media-controls/media/controls/modern/doubletap-to-jump-forwards-too-short.html [ Skip ]
+crbug.com/783154 [ Mac ] virtual/modern-media-controls/media/controls/modern/doubletap-on-play-button.html [ Skip ]
+crbug.com/783154 [ Mac ] virtual/modern-media-controls/media/controls/modern/doubletap-to-toggle-fullscreen.html [ Skip ]
+crbug.com/783154 [ Mac ] virtual/modern-media-controls/media/controls/modern/singletap-on-outside.html [ Skip ]
+crbug.com/783154 [ Mac ] virtual/modern-media-controls/media/controls/modern/singletap-on-play-button.html [ Skip ]
+crbug.com/783154 [ Mac ] virtual/modern-media-controls/media/controls/modern/slow-doubletap.html [ Skip ]
