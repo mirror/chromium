@@ -335,6 +335,18 @@ be describing additional metrics about the same event.
   </metric>
 </event>
 
+<event name="Compositor.Rendering">
+  <owner>khushalsagar@chromium.org</owner>
+  <summary>
+    Metrics related to rendering in the compositor.
+  </summary>
+  <metric name="CheckerboardedImagesCount">
+    <summary>
+      The number of images checker-imaged and re-rasterized on this page.
+    </summary>
+  </metric>
+</event>
+
 <event name="ContextualSearch">
   <owner>donnd@chromium.org</owner>
   <summary>
