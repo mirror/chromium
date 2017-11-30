@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "607599ac_77c2a811",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-11-30T22:19:12Z",
+      "side": 1,
+      "message": "Nei... norsk latin. I\u0027ll change it to English Latin. :)",
+      "parentUuid": "0a898fd7_95b5012b",
+      "range": {
+        "startLine": 7,
+        "startChar": 40,
+        "endLine": 7,
+        "endChar": 45
+      },
+      "revId": "ea3d7f1dcad97f68f60321d68eb99bdc5d2717f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "998c26ca_14c37a50",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "ea3d7f1dcad97f68f60321d68eb99bdc5d2717f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d71ae520_b9440a20",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-11-30T22:19:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "998c26ca_14c37a50",
+      "revId": "ea3d7f1dcad97f68f60321d68eb99bdc5d2717f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
