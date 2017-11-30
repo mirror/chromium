@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1eaa5ae1_3956251f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-30T14:09:33Z",
+      "side": 1,
+      "message": "Much clearer now, thank you! :)",
+      "parentUuid": "60e0a16a_91ce317d",
+      "range": {
+        "startLine": 586,
+        "startChar": 0,
+        "endLine": 586,
+        "endChar": 49
+      },
+      "revId": "f76e8f416b3cba1845ba7f602facc0ea18cc9a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e07acbda_6ddf1998",
         "filename": "chrome/android/java/strings/android_chrome_strings.grd",
         "patchSetId": 12
