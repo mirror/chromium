@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5821d29c_c44819bc",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_io_data.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-30T22:03:56Z",
+      "side": 1,
+      "message": "Please delete this last phrase: \", except when the user is in the previews control group\"\n(since we no longer have that control group support).",
+      "range": {
+        "startLine": 106,
+        "startChar": 18,
+        "endLine": 106,
+        "endChar": 73
+      },
+      "revId": "ee84defe4f4e2696c58faef88cf2b52111d5a9b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
