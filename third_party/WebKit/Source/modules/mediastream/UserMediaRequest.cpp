@@ -46,6 +46,7 @@
 #include "modules/mediastream/MediaStream.h"
 #include "modules/mediastream/MediaStreamConstraints.h"
 #include "modules/mediastream/MediaTrackConstraints.h"
+#include "modules/mediastream/OverconstrainedError.h"
 #include "modules/mediastream/UserMediaController.h"
 #include "platform/mediastream/MediaStreamCenter.h"
 #include "platform/mediastream/MediaStreamDescriptor.h"
@@ -326,12 +327,43 @@ WebMediaConstraints ParseOptions(ExecutionContext* context,
 
 }  // namespace
 
+class UserMediaRequest::V8Callbacks final : public UserMediaRequest::Callbacks {
+ public:
+  static V8Callbacks* Create(
+      V8NavigatorUserMediaSuccessCallback* success_callback,
+      V8NavigatorUserMediaErrorCallback* error_callback) {
+    return new V8Callbacks(success_callback, error_callback);
+  }
+
+  ~V8Callbacks() override = default;
+
+  void OnSuccess(ScriptWrappable* callback_this_value,
+                 MediaStream* stream) override {
+    success_callback_->InvokeAndReportException(callback_this_value, stream);
+  }
+  void OnError(ScriptWrappable* callback_this_value,
+               DOMExceptionOrOverconstrainedError error) override {
+    error_callback_->InvokeAndReportException(callback_this_value, error);
+  }
+
+ private:
+  V8Callbacks(V8NavigatorUserMediaSuccessCallback* success_callback,
+              V8NavigatorUserMediaErrorCallback* error_callback)
+      : success_callback_(success_callback), error_callback_(error_callback) {}
+
+  V8NavigatorUserMediaSuccessCallback::Persistent<
+      V8NavigatorUserMediaSuccessCallback>
+      success_callback_;
+  V8NavigatorUserMediaErrorCallback::Persistent<
+      V8NavigatorUserMediaErrorCallback>
+      error_callback_;
+};
+
 UserMediaRequest* UserMediaRequest::Create(
     ExecutionContext* context,
     UserMediaController* controller,
     const MediaStreamConstraints& options,
-    NavigatorUserMediaSuccessCallback* success_callback,
-    NavigatorUserMediaErrorCallback* error_callback,
+    Callbacks* callbacks,
     MediaErrorState& error_state) {
   WebMediaConstraints audio =
       ParseOptions(context, options.audio(), error_state);
@@ -354,29 +386,37 @@ UserMediaRequest* UserMediaRequest::Create(
   if (!video.IsNull())
     CountVideoConstraintUses(context, video);
 
-  return new UserMediaRequest(context, controller, audio, video,
-                              success_callback, error_callback);
+  return new UserMediaRequest(context, controller, audio, video, callbacks);
+}
+
+UserMediaRequest* UserMediaRequest::Create(
+    ExecutionContext* context,
+    UserMediaController* controller,
+    const MediaStreamConstraints& options,
+    V8NavigatorUserMediaSuccessCallback* success_callback,
+    V8NavigatorUserMediaErrorCallback* error_callback,
+    MediaErrorState& error_state) {
+  return Create(context, controller, options,
+                V8Callbacks::Create(success_callback, error_callback),
+                error_state);
 }
 
 UserMediaRequest* UserMediaRequest::CreateForTesting(
     const WebMediaConstraints& audio,
     const WebMediaConstraints& video) {
-  return new UserMediaRequest(nullptr, nullptr, audio, video, nullptr, nullptr);
+  return new UserMediaRequest(nullptr, nullptr, audio, video, nullptr);
 }
 
-UserMediaRequest::UserMediaRequest(
-    ExecutionContext* context,
-    UserMediaController* controller,
-    WebMediaConstraints audio,
-    WebMediaConstraints video,
-    NavigatorUserMediaSuccessCallback* success_callback,
-    NavigatorUserMediaErrorCallback* error_callback)
+UserMediaRequest::UserMediaRequest(ExecutionContext* context,
+                                   UserMediaController* controller,
+                                   WebMediaConstraints audio,
+                                   WebMediaConstraints video,
+                                   Callbacks* callbacks)
     : ContextLifecycleObserver(context),
       audio_(audio),
       video_(video),
       controller_(controller),
-      success_callback_(success_callback),
-      error_callback_(error_callback) {}
+      callbacks_(callbacks) {}
 
 UserMediaRequest::~UserMediaRequest() {}
 
@@ -481,7 +521,7 @@ void UserMediaRequest::Succeed(MediaStreamDescriptor* stream_descriptor) {
     (*iter)->SetConstraints(video_);
   }
 
-  success_callback_->handleEvent(stream);
+  callbacks_->OnSuccess(nullptr, stream);
 }
 
 void UserMediaRequest::FailConstraint(const String& constraint_name,
@@ -489,9 +529,9 @@ void UserMediaRequest::FailConstraint(const String& constraint_name,
   DCHECK(!constraint_name.IsEmpty());
   if (!GetExecutionContext())
     return;
-  error_callback_->handleEvent(
-      DOMExceptionOrOverconstrainedError::FromOverconstrainedError(
-          OverconstrainedError::Create(constraint_name, message)));
+  callbacks_->OnError(
+      nullptr, DOMExceptionOrOverconstrainedError::FromOverconstrainedError(
+                   OverconstrainedError::Create(constraint_name, message)));
 }
 
 void UserMediaRequest::Fail(WebUserMediaRequest::Error name,
@@ -528,9 +568,9 @@ void UserMediaRequest::Fail(WebUserMediaRequest::Error name,
     default:
       NOTREACHED();
   }
-  error_callback_->handleEvent(
-      DOMExceptionOrOverconstrainedError::FromDOMException(
-          DOMException::Create(ec, message)));
+  callbacks_->OnError(nullptr,
+                      DOMExceptionOrOverconstrainedError::FromDOMException(
+                          DOMException::Create(ec, message)));
 }
 
 void UserMediaRequest::ContextDestroyed(ExecutionContext*) {
@@ -542,8 +582,7 @@ void UserMediaRequest::ContextDestroyed(ExecutionContext*) {
 
 void UserMediaRequest::Trace(blink::Visitor* visitor) {
   visitor->Trace(controller_);
-  visitor->Trace(success_callback_);
-  visitor->Trace(error_callback_);
+  visitor->Trace(callbacks_);
   ContextLifecycleObserver::Trace(visitor);
 }
 
