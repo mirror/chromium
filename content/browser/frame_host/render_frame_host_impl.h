@@ -132,6 +132,7 @@ struct FileChooserParams;
 struct NavigationParams;
 struct RequestNavigationParams;
 struct ResourceResponse;
+struct ResourceTimingInfo;
 struct SubresourceLoaderParams;
 struct StartNavigationParams;
 
@@ -822,6 +823,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
                          const BeginNavigationParams& begin_params);
   void OnAbortNavigation();
   void OnDispatchLoad();
+  void OnAddResourceTiming(const ResourceTimingInfo& resource_timing);
   void OnAccessibilityEvents(
       const std::vector<AccessibilityHostMsg_EventParams>& params,
       int reset_token,
