@@ -12,6 +12,19 @@
 
 namespace device {
 
+// Must match VRViewerType in enums.xml.
+enum class VrViewerType {
+  GVR_UNKNOWN = 0,
+  GVR_CARDBOARD = 1,
+  GVR_DAYDREAM = 2,
+  FAKE_DEVICE = 3,
+  ORIENTATION_SENSOR_DEVICE = 4,
+  OPENVR_UNKNOWN = 5,
+  OPENVR_VIVE = 6,
+  OPENVR_RIFT_CV1 = 7,
+  VIEWER_TYPE_MAX,
+};
+
 const unsigned int VR_DEVICE_LAST_ID = 0xFFFFFFFF;
 
 // Represents one of the platform's VR devices. Owned by the respective
