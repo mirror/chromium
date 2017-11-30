@@ -18,6 +18,7 @@
 #include "ash/root_window_controller.h"
 #include "ash/session/session_controller.h"
 #include "ash/shelf/app_list_button.h"
+#include "ash/shelf/back_button.h"
 #include "ash/shelf/overflow_bubble.h"
 #include "ash/shelf/overflow_bubble_view.h"
 #include "ash/shelf/overflow_bubble_view_test_api.h"
@@ -2262,6 +2263,7 @@ class ShelfViewInkDropTest : public ShelfViewTest {
  protected:
   void InitAppListButtonInkDrop() {
     app_list_button_ = shelf_view_->GetAppListButton();
+    back_button_ = shelf_view_->GetBackButton();
 
     auto app_list_button_ink_drop =
         std::make_unique<InkDropSpy>(std::make_unique<views::InkDropImpl>(
@@ -2290,6 +2292,7 @@ class ShelfViewInkDropTest : public ShelfViewTest {
   }
 
   AppListButton* app_list_button_ = nullptr;
+  BackButton* back_button_ = nullptr;
   InkDropSpy* app_list_button_ink_drop_ = nullptr;
   ShelfButton* browser_button_ = nullptr;
   InkDropSpy* browser_button_ink_drop_ = nullptr;
@@ -2646,164 +2649,6 @@ TEST_F(ShelfViewInkDropTest, ShelfButtonWithMenuPressRelease) {
               ElementsAre(views::InkDropState::ACTIVATED,
                           views::InkDropState::DEACTIVATED));
 }
-
-// Ensure the app list button ink drop is disabled during bounds animations.
-// TODO(crbug.com/758402): Update ink drop bounds with app list button bounds.
-TEST_F(ShelfViewInkDropTest, AppListButtonInkDropDisabledOnAnimations) {
-  InitAppListButtonInkDrop();
-
-  // Display the app list.
-  TestAppListPresenterImpl app_list_presenter_impl;
-  app_list_presenter_impl.ShowAndRunLoop(GetPrimaryDisplay().id());
-  EXPECT_EQ(views::InkDropState::ACTIVATED,
-            app_list_button_ink_drop_->GetTargetInkDropState());
-  EXPECT_THAT(app_list_button_ink_drop_->GetAndResetRequestedStates(),
-              ElementsAre(views::InkDropState::ACTIVATED));
-
-  // The ink drop should be hidden during the animation to enter tablet mode.
-  Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(true);
-  EXPECT_THAT(app_list_button_ink_drop_->GetAndResetRequestedStates(),
-              ElementsAre(views::InkDropState::DEACTIVATED));
-  test_api_->RunMessageLoopUntilAnimationsDone();
-  EXPECT_EQ(views::InkDropState::ACTIVATED,
-            app_list_button_ink_drop_->GetTargetInkDropState());
-  EXPECT_THAT(app_list_button_ink_drop_->GetAndResetRequestedStates(),
-              ElementsAre(views::InkDropState::ACTIVATED));
-
-  // The ink drop should be hidden during the animation to exit tablet mode.
-  Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(false);
-  EXPECT_THAT(app_list_button_ink_drop_->GetAndResetRequestedStates(),
-              ElementsAre(views::InkDropState::DEACTIVATED));
-  test_api_->RunMessageLoopUntilAnimationsDone();
-  EXPECT_EQ(views::InkDropState::ACTIVATED,
-            app_list_button_ink_drop_->GetTargetInkDropState());
-  EXPECT_THAT(app_list_button_ink_drop_->GetAndResetRequestedStates(),
-              ElementsAre(views::InkDropState::ACTIVATED));
-}
-
-namespace {
-
-// Test fixture to run app list button ink drop tests for both mouse and touch
-// events.
-class AppListButtonInkDropTest
-    : public ShelfViewInkDropTest,
-      public testing::WithParamInterface<ui::EventPointerType> {
- public:
-  AppListButtonInkDropTest() : pointer_type_(GetParam()) {}
-
-  ~AppListButtonInkDropTest() override = default;
-
-  void MovePointerTo(const gfx::Point& point) {
-    if (pointer_type_ == ui::EventPointerType::POINTER_TYPE_MOUSE)
-      GetEventGenerator().MoveMouseTo(point);
-    else if (pointer_type_ == ui::EventPointerType::POINTER_TYPE_TOUCH)
-      GetEventGenerator().MoveTouch(point);
-  }
-
-  void PressPointer() {
-    if (pointer_type_ == ui::EventPointerType::POINTER_TYPE_MOUSE)
-      GetEventGenerator().PressLeftButton();
-    else if (pointer_type_ == ui::EventPointerType::POINTER_TYPE_TOUCH)
-      GetEventGenerator().PressTouch();
-  }
-
-  void ReleasePointer() {
-    if (pointer_type_ == ui::EventPointerType::POINTER_TYPE_MOUSE)
-      GetEventGenerator().ReleaseLeftButton();
-    else if (pointer_type_ == ui::EventPointerType::POINTER_TYPE_TOUCH)
-      GetEventGenerator().ReleaseTouch();
-  }
-
- private:
-  ui::EventPointerType pointer_type_;
-
-  DISALLOW_COPY_AND_ASSIGN(AppListButtonInkDropTest);
-};
-
-const ui::EventPointerType kPointerTypes[] = {
-    ui::EventPointerType::POINTER_TYPE_MOUSE,
-    ui::EventPointerType::POINTER_TYPE_TOUCH};
-
-}  // namespace
-
-// Tests that clicking/tapping on the app list button in tablet mode (when
-// it has two functionalities), transitions the ink drop state correctly.
-TEST_P(AppListButtonInkDropTest, AppListButtonInTabletMode) {
-  InitAppListButtonInkDrop();
-  // Finish all setup tasks. In particular we want to finish the GetSwitchStates
-  // post task in (Fake)PowerManagerClient which is triggered by
-  // TabletModeController otherwise this will cause tablet mode to exit while we
-  // wait for animations in the test.
-  RunAllPendingInMessageLoop();
-
-  // Verify the app list button bounds change when we enter tablet mode.
-  const gfx::Rect old_bounds = app_list_button_->GetBoundsInScreen();
-  Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(true);
-  test_api_->RunMessageLoopUntilAnimationsDone();
-
-  gfx::Rect new_bounds = app_list_button_->GetBoundsInScreen();
-  EXPECT_EQ(new_bounds.height(), old_bounds.height());
-  EXPECT_GT(new_bounds.width(), old_bounds.width());
-
-  gfx::Point point_on_circle = app_list_button_->GetAppListButtonCenterPoint();
-  views::View::ConvertPointToScreen(app_list_button_, &point_on_circle);
-  gfx::Point point_on_back_button =
-      app_list_button_->GetBackButtonCenterPoint();
-  views::View::ConvertPointToScreen(app_list_button_, &point_on_back_button);
-
-  // Verify the ink drop state transitions as expected when we press and
-  // release on the app list circle part of the app list button. Taps on the
-  // app list circle, which shows the app list, should end up in the activated
-  // state.
-  MovePointerTo(point_on_circle);
-  PressPointer();
-  EXPECT_EQ(views::InkDropState::ACTION_PENDING,
-            app_list_button_ink_drop_->GetTargetInkDropState());
-  EXPECT_THAT(app_list_button_ink_drop_->GetAndResetRequestedStates(),
-              ElementsAre(views::InkDropState::ACTION_PENDING));
-  ReleasePointer();
-
-  // Trigger a mock button notification that the app list was shown.
-  app_list_button_->OnAppListShown();
-  FinishAppListVisibilityChange();
-  EXPECT_EQ(views::InkDropState::ACTIVATED,
-            app_list_button_ink_drop_->GetTargetInkDropState());
-  EXPECT_THAT(app_list_button_ink_drop_->GetAndResetRequestedStates(),
-              ElementsAre(views::InkDropState::ACTIVATED));
-
-  // Trigger a mock button notification that the app list was dismissed.
-  app_list_button_->OnAppListDismissed();
-  FinishAppListVisibilityChange();
-  EXPECT_EQ(views::InkDropState::HIDDEN,
-            app_list_button_ink_drop_->GetTargetInkDropState());
-  EXPECT_THAT(app_list_button_ink_drop_->GetAndResetRequestedStates(),
-              ElementsAre(views::InkDropState::DEACTIVATED));
-
-  // Verify the ink drop state transitions as expected when we tap on the back
-  // button part of the app list button.
-  MovePointerTo(point_on_back_button);
-  PressPointer();
-  EXPECT_EQ(views::InkDropState::ACTION_PENDING,
-            app_list_button_ink_drop_->GetTargetInkDropState());
-  EXPECT_THAT(app_list_button_ink_drop_->GetAndResetRequestedStates(),
-              ElementsAre(views::InkDropState::ACTION_PENDING));
-  ReleasePointer();
-  EXPECT_EQ(views::InkDropState::HIDDEN,
-            app_list_button_ink_drop_->GetTargetInkDropState());
-  EXPECT_THAT(app_list_button_ink_drop_->GetAndResetRequestedStates(),
-              ElementsAre(views::InkDropState::ACTION_TRIGGERED));
-
-  // Verify that the bounds after leaving tablet mode match the original bounds.
-  Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(false);
-  test_api_->RunMessageLoopUntilAnimationsDone();
-  new_bounds = app_list_button_->GetBoundsInScreen();
-  EXPECT_EQ(new_bounds, old_bounds);
-}
-
-INSTANTIATE_TEST_CASE_P(
-    /* prefix intentionally left blank due to only one parameterization */,
-    AppListButtonInkDropTest,
-    ::testing::ValuesIn(kPointerTypes));
 
 namespace {
 

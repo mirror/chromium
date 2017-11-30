@@ -40,6 +40,8 @@ class MenuRunner;
 
 namespace ash {
 class AppListButton;
+class AppListBackButtonBackgroundView;
+class BackButton;
 class DragImageView;
 class OverflowBubble;
 class OverflowButton;
@@ -99,6 +101,7 @@ class ASH_EXPORT ShelfView : public views::View,
   }
 
   AppListButton* GetAppListButton() const;
+  BackButton* GetBackButton() const;
 
   // Returns true if the mouse cursor exits the area for launcher tooltip.
   // There are thin gaps between launcher buttons but the tooltip shouldn't hide
@@ -406,6 +409,9 @@ class ASH_EXPORT ShelfView : public views::View,
   mutable int last_visible_index_ = -1;
 
   std::unique_ptr<views::BoundsAnimator> bounds_animator_;
+
+  AppListBackButtonBackgroundView* app_list_back_button_background_view_ =
+      nullptr;
 
   OverflowButton* overflow_button_ = nullptr;
 

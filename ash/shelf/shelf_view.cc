@@ -14,7 +14,9 @@
 #include "ash/public/cpp/shelf_model.h"
 #include "ash/scoped_root_window_for_new_windows.h"
 #include "ash/screen_util.h"
+#include "ash/shelf/app_list_back_button_background_view.h"
 #include "ash/shelf/app_list_button.h"
+#include "ash/shelf/back_button.h"
 #include "ash/shelf/overflow_bubble.h"
 #include "ash/shelf/overflow_bubble_view.h"
 #include "ash/shelf/overflow_button.h"
@@ -102,8 +104,8 @@ class BoundsAnimatorDisabler {
 // the ViewModel.
 class ShelfFocusSearch : public views::FocusSearch {
  public:
-  explicit ShelfFocusSearch(views::ViewModel* view_model)
-      : FocusSearch(nullptr, true, true), view_model_(view_model) {}
+  ShelfFocusSearch(ShelfView* shelf_view, views::ViewModel* view_model)
+      : FocusSearch(nullptr, true, true), shelf_view_(shelf_view), view_model_(view_model) {}
   ~ShelfFocusSearch() override = default;
 
   // views::FocusSearch overrides:
@@ -113,9 +115,28 @@ class ShelfFocusSearch : public views::FocusSearch {
                               bool check_starting_view,
                               views::FocusTraversable** focus_traversable,
                               View** focus_traversable_view) override {
+    const bool tablet_mode =
+        Shell::Get()->tablet_mode_controller()->IsTabletModeWindowManagerEnabled();
     int index = view_model_->GetIndexOfView(starting_view);
+    if (starting_view == shelf_view_->GetAppListButton() ||
+        starting_view == shelf_view_->GetBackButton()) {
+      index = 0;
+    }
     if (index == -1)
       return view_model_->view_at(0);
+
+    if (tablet_mode) {
+      if (index == 0) {
+        if (reverse && starting_view == shelf_view_->GetAppListButton())
+          return shelf_view_->GetBackButton();
+        if (!reverse && starting_view == shelf_view_->GetBackButton())
+          return shelf_view_->GetAppListButton();
+      } else if (index == 1 && reverse) {
+        return shelf_view_->GetAppListButton();
+      } else if (index == view_model_->view_size() - 1 && !reverse) {
+        return shelf_view_->GetBackButton();
+      }
+    }
 
     if (reverse) {
       --index;
@@ -126,10 +147,15 @@ class ShelfFocusSearch : public views::FocusSearch {
       if (index >= view_model_->view_size())
         index = 0;
     }
+
+    if (index == 0)
+      return shelf_view_->GetAppListButton();
+
     return view_model_->view_at(index);
   }
 
  private:
+  ShelfView* shelf_view_;
   views::ViewModel* view_model_;
 
   DISALLOW_COPY_AND_ASSIGN(ShelfFocusSearch);
@@ -252,7 +278,7 @@ ShelfView::ShelfView(ShelfModel* model, Shelf* shelf, ShelfWidget* shelf_widget)
   bounds_animator_.reset(new views::BoundsAnimator(this));
   bounds_animator_->AddObserver(this);
   set_context_menu_controller(this);
-  focus_search_.reset(new ShelfFocusSearch(view_model_.get()));
+  focus_search_.reset(new ShelfFocusSearch(this, view_model_.get()));
 }
 
 ShelfView::~ShelfView() {
@@ -358,8 +384,10 @@ AppListButton* ShelfView::GetAppListButton() const {
   for (int i = 0; i < model_->item_count(); ++i) {
     if (model_->items()[i].type == TYPE_APP_LIST) {
       views::View* view = view_model_->view_at(i);
-      CHECK_EQ(AppListButton::kViewClassName, view->GetClassName());
-      return static_cast<AppListButton*>(view);
+      CHECK_EQ(AppListBackButtonBackgroundView::kViewClassName,
+               view->GetClassName());
+      return static_cast<AppListBackButtonBackgroundView*>(view)
+          ->app_list_button();
     }
   }
 
@@ -367,10 +395,26 @@ AppListButton* ShelfView::GetAppListButton() const {
   return nullptr;
 }
 
+BackButton* ShelfView::GetBackButton() const {
+  for (int i = 0; i < model_->item_count(); ++i) {
+    if (model_->items()[i].type == TYPE_APP_LIST) {
+      views::View* view = view_model_->view_at(i);
+      CHECK_EQ(AppListBackButtonBackgroundView::kViewClassName,
+               view->GetClassName());
+      return static_cast<AppListBackButtonBackgroundView*>(view)->back_button();
+    }
+  }
+
+  NOTREACHED() << "Back button not found";
+  return nullptr;
+}
+
 bool ShelfView::ShouldHideTooltip(const gfx::Point& cursor_location) const {
   gfx::Rect tooltip_bounds;
   for (int i = 0; i < child_count(); ++i) {
     const views::View* child = child_at(i);
+    if (child == app_list_back_button_background_view_)
+      child = GetAppListButton();
     if (child != overflow_button_ && ShouldShowTooltipForView(child))
       tooltip_bounds.Union(child->GetMirroredBounds());
   }
@@ -421,6 +465,10 @@ void ShelfView::ButtonPressed(views::Button* sender,
 
   // Record the index for the last pressed shelf item.
   last_pressed_index_ = view_model_->GetIndexOfView(sender);
+  if (sender == GetAppListButton()) {
+    last_pressed_index_ =
+        view_model_->GetIndexOfView(app_list_back_button_background_view_);
+  }
   DCHECK_LT(-1, last_pressed_index_);
 
   // Place new windows on the same display as the button.
@@ -666,6 +714,9 @@ bool ShelfView::ShouldEventActivateButton(View* view, const ui::Event& event) {
   if (event.flags() & ui::EF_IS_DOUBLE_CLICK)
     return false;
 
+  if (view == GetAppListButton())
+    return true;
+
   // Ignore if this is a repost event on the last pressed shelf item.
   int index = view_model_->GetIndexOfView(view);
   if (index == -1)
@@ -686,7 +737,7 @@ void ShelfView::PointerPressedOnButton(views::View* view,
   if (index == -1 || view_model_->view_size() <= 1)
     return;  // View is being deleted, ignore request.
 
-  if (view == GetAppListButton())
+  if (view == app_list_back_button_background_view_)
     return;  // View is not draggable, ignore request.
 
   // Only when the repost event occurs on the same shelf item, we should ignore
@@ -747,14 +798,14 @@ void ShelfView::LayoutToIdealBounds() {
 }
 
 void ShelfView::UpdateShelfItemBackground(SkColor color) {
-  GetAppListButton()->UpdateShelfItemBackground(color);
+  app_list_back_button_background_view_->UpdateShelfItemBackground(color);
   overflow_button_->UpdateShelfItemBackground(color);
 }
 
 double ShelfView::GetAppListButtonAnimationCurrentValue() {
   DCHECK(bounds_animator_);
-  const gfx::SlideAnimation* animation =
-      bounds_animator_->GetAnimationForView(GetAppListButton());
+  const gfx::SlideAnimation* animation = bounds_animator_->GetAnimationForView(
+      app_list_back_button_background_view_);
   if (!animation)
     return 0.0;
 
@@ -805,7 +856,7 @@ void ShelfView::CalculateIdealBounds(gfx::Rect* overflow_bounds) const {
     int height = h;
     // If this is the app list button and we are in tablet mode, make space for
     // the back button (which is part of the app list button).
-    if (i == 0 && is_tablet_mode) {
+    if (is_tablet_mode && i == 0) {
       width = shelf_->PrimaryAxisValue(2 * w, w);
       height = shelf_->PrimaryAxisValue(h, 2 * h);
     }
@@ -955,8 +1006,8 @@ void ShelfView::AnimateToIdealBounds() {
     if (i && view->border())
       view->SetBorder(views::NullBorder());
 
-    if (view == GetAppListButton())
-      GetAppListButton()->OnBoundsAnimationStarted();
+    if (view == app_list_back_button_background_view_)
+      app_list_back_button_background_view_->OnBoundsAnimationStarted();
   }
   overflow_button_->SetBoundsRect(overflow_bounds);
 }
@@ -977,7 +1028,11 @@ views::View* ShelfView::CreateViewForItem(const ShelfItem& item) {
     }
 
     case TYPE_APP_LIST: {
-      view = new AppListButton(this, this, shelf_);
+      app_list_back_button_background_view_ =
+          new AppListBackButtonBackgroundView(this, this, shelf_);
+      app_list_back_button_background_view_->app_list_button()
+          ->set_context_menu_controller(this);
+      view = static_cast<View*>(app_list_back_button_background_view_);
       break;
     }
 
@@ -1720,6 +1775,7 @@ void ShelfView::AfterItemSelected(
     } else {
       ink_drop->AnimateToState(views::InkDropState::ACTION_TRIGGERED);
     }
+  } else {
   }
   scoped_root_window_for_new_windows_.reset();
 }
@@ -1899,8 +1955,8 @@ void ShelfView::OnBoundsAnimatorDone(views::BoundsAnimator* animator) {
     }
   }
 
-  if (GetAppListButton())
-    GetAppListButton()->OnBoundsAnimationFinished();
+  if (app_list_back_button_background_view_)
+    app_list_back_button_background_view_->OnBoundsAnimationFinished();
 }
 
 bool ShelfView::IsRepostEvent(const ui::Event& event) {
@@ -1913,7 +1969,9 @@ bool ShelfView::IsRepostEvent(const ui::Event& event) {
 }
 
 const ShelfItem* ShelfView::ShelfItemForView(const views::View* view) const {
-  const int view_index = view_model_->GetIndexOfView(view);
+  int view_index = view_model_->GetIndexOfView(view);
+  if (view == GetAppListButton())
+    view_index = 0;
   return (view_index < 0) ? nullptr : &(model_->items()[view_index]);
 }
 
