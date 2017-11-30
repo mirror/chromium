@@ -4334,6 +4334,13 @@ void RenderFrameImpl::DispatchLoad() {
   Send(new FrameHostMsg_DispatchLoad(routing_id_));
 }
 
+void RenderFrameImpl::AddResourceTiming(
+    const blink::WebResourceTimingInfo& web_resource_timing) {
+  // TODO(dcheng): This is sad. Move this to Mojo.
+  content::ResourceTimingInfo resource_timing;
+  Send(new FrameHostMsg_AddResourceTiming(routing_id_, resource_timing));
+}
+
 blink::WebEffectiveConnectionType
 RenderFrameImpl::GetEffectiveConnectionType() {
   return effective_connection_type_;
