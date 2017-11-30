@@ -2,6 +2,374 @@
   "comments": [
     {
       "key": {
+        "uuid": "7fe65e98_fb184117",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T02:07:12Z",
+      "side": 1,
+      "message": "The more common ways to handle this would be either:\n\n1. Stipulate that the callback is invoked on whatever sequence the Start() call is made on.\n\nor\n\n2. State explicitly that the caller cannot assume anything about the sequence it is called on, and must arrange to PostTask and/or cancel the callback as necessary.\n\nIf you go with #1, so that you invoke the callback on the same sequence that the service is torn-down from, then you are able to guarantee that the callback won\u0027t be invoked after the service has been torn-down, which is more intuitive.\n\nIf you go with #2, or with your current API, then you need to be explicit that the caller must cope with the callback being invoked even _after_ service teardown.",
+      "range": {
+        "startLine": 50,
+        "startChar": 5,
+        "endLine": 51,
+        "endChar": 52
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5f72221_d6a8ad1b",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T02:07:12Z",
+      "side": 1,
+      "message": "See below re the delegation aspect.",
+      "range": {
+        "startLine": 57,
+        "startChar": 5,
+        "endLine": 57,
+        "endChar": 25
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3de27588_2f3db00a",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T02:07:12Z",
+      "side": 1,
+      "message": "nit: The delegating to |impl_| seems implicit; the purpose of this comment is presumably to make clear that all this call does is trigger immediate discovery.\n\nIf that\u0027s all it does, is there any reason not to just call it ManuallyInitiateDiscovery(), or similar? Is the fact that it is trigger by a user-gesture relevant to this class?",
+      "range": {
+        "startLine": 61,
+        "startChar": 5,
+        "endLine": 61,
+        "endChar": 28
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ab6d902_5dd5c531",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T02:07:12Z",
+      "side": 1,
+      "message": "The pattern we usually use for objects with a \"core\" implementation component that runs on a background sequence is to have the owning object own the core, and hold a reference to the TaskRunner on which it should be used.  So you\u0027d have:\n\nunique_ptr\u003cImpl\u003e impl_;\nscoped_refptr\u003cTaskRunner\u003e impl_task_runner_;\n\nand then just\n\nimpl_task_runner_-\u003ePostTask(...)\n\nThat has the advantage that the Impl can be read as a simple single-threaded class, and all the threading aspects are in one place, in the owning implementation object.",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 3
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73b77027_7d0e832f",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T02:07:12Z",
+      "side": 1,
+      "message": "nit: Add a comment to clarify that this may only be non-null in tests.",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 3
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83e3c94b_3254b92b",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T02:07:12Z",
+      "side": 1,
+      "message": "Start() should only be called at-most-once, right?",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 15
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44c117e9_e4752264",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T02:07:12Z",
+      "side": 1,
+      "message": "|impl_| can only be null if we weren\u0027t Start()ed; it seems a violation of the API contract for the caller to do that, so I\u0027d suggest DCHECK(impl_) here, instead, or just letting the dereference below hit the null-deref , which should be an acceptably clean crash.",
+      "range": {
+        "startLine": 138,
+        "startChar": 0,
+        "endLine": 139,
+        "endChar": 11
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7c98693_d9310261",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T02:07:12Z",
+      "side": 1,
+      "message": "See above re this being null.",
+      "range": {
+        "startLine": 152,
+        "startChar": 0,
+        "endLine": 153,
+        "endChar": 11
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9df4f466_4eaba026",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T02:07:12Z",
+      "side": 1,
+      "message": "See above; there doesn\u0027t seem to be any way for this to be null unless the caller forgot to Start() us, which is an API violation - I\u0027d recommend just letting the de-reference crash, or DCHECK(impl_)ing at the top of this function.",
+      "range": {
+        "startLine": 191,
+        "startChar": 0,
+        "endLine": 191,
+        "endChar": 14
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "364c03e2_55a756ac",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T02:07:12Z",
+      "side": 1,
+      "message": "nit: No need to DCHECK(impl_) here, or below; the operator-\u003e will already do that for you.",
+      "range": {
+        "startLine": 202,
+        "startChar": 0,
+        "endLine": 202,
+        "endChar": 16
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0166c928_88840245",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T02:07:12Z",
+      "side": 1,
+      "message": "Similarly, no need for this check.",
+      "range": {
+        "startLine": 214,
+        "startChar": 2,
+        "endLine": 214,
+        "endChar": 14
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18a109fc_02d98150",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T02:07:12Z",
+      "side": 1,
+      "message": "I would recommend against talking about |impl_| in this API description. I\u0027d also recommend simply returning a callback that has the target SequencedTaskRunner bound into it already, and PostTask()s to it, if necessary, when Run() - then you can state here that the callback can be run on any sequence.",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 30
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bed9a99_fdff44c9",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T02:07:12Z",
+      "side": 1,
+      "message": "nit: See previous comments re \"delegates to\".\n\nSuggest just \"Causes the sink discovery callback to be invoked as soon as possible, with the current list of discovered sinks.\"",
+      "range": {
+        "startLine": 54,
+        "startChar": 5,
+        "endLine": 54,
+        "endChar": 26
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e42f60e_9d159267",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T02:07:12Z",
+      "side": 1,
+      "message": "nit: See DMSS re the naming of this.",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 23
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9830047_79697828",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T02:07:12Z",
+      "side": 1,
+      "message": "As noted for DMSSImpl, the more common pattern is to have the owning object hold the TaskRunner reference, to use to PostTask. Then this class just uses SequencedTaskRunnerHandle::Get() at the couple of call-sites where it needs to PostTask to itself.",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 3
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6a35284_daa207c9",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T02:07:12Z",
+      "side": 1,
+      "message": "nit: Clarify that the callback is safe to invoke even after the CMSSImpl is gone.",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 32
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e480124_02884b74",
         "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
         "patchSetId": 17
@@ -13,6 +381,121 @@
       "writtenOn": "2017-11-29T23:26:38Z",
       "side": 1,
       "message": "I thought this was idea abandoned because of the overhead of Mojo vs. JNI.",
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aee46226_59389241",
+        "filename": "chrome/common/media_router/discovery/media_sink_internal.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T02:07:12Z",
+      "side": 1,
+      "message": "nit: Doesn\u0027t look like this is used?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 26
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff1e395b_8232f43b",
+        "filename": "chrome/common/media_router/discovery/media_sink_internal.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T02:07:12Z",
+      "side": 1,
+      "message": "nit: Doesn\u0027t look like these are used?",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 39
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63914da8_02c62e7e",
+        "filename": "chrome/common/media_router/discovery/media_sink_service_base.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T02:07:12Z",
+      "side": 1,
+      "message": "nit: The use of a Timer is not really important; what\u0027s important is that it throttles the callback rate to some value - what isn\u0027t clear is where that value comes from?",
+      "range": {
+        "startLine": 20,
+        "startChar": 9,
+        "endLine": 21,
+        "endChar": 47
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9242e24e_e9229c3b",
+        "filename": "chrome/common/media_router/discovery/media_sink_service_base.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T02:07:12Z",
+      "side": 1,
+      "message": "nit: This is a strange API; it sounds like the idea is that the caller must have called either SetTimerForTest, or StartTimer, before this gets called?  So should we just DCHECK(timer) in the RestartTimer() function?\n\nIn general, it is preferable to document the intended expectations wrt to the API (i.e. \"must come after StartTimer\") rather than to the implementation (\"must be called while the timer exists\").",
+      "range": {
+        "startLine": 48,
+        "startChar": 51,
+        "endLine": 49,
+        "endChar": 35
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9e19157_888d4abd",
+        "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T02:07:12Z",
+      "side": 1,
+      "message": "Won\u0027t this mean we silently ignore the new listener |details|?\n\nShould we instead CHECK(!message_handler_), if this must be called at-most-once?\n\nOr should we reset the |cast_socket_service_| and |message_handler_| in this case?",
+      "range": {
+        "startLine": 178,
+        "startChar": 0,
+        "endLine": 180,
+        "endChar": 0
+      },
       "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -155,6 +155,30 @@
     },
     {
       "key": {
+        "uuid": "2c2ef647_b0e15cca",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T02:07:12Z",
+      "side": 1,
+      "message": "I\u0027m not sure what you mean by \"the callback really has nothing to do with DMMS itself\" - this is invoking the sink-added callback that the caller provided to DMSS::Start(), so it\u0027s reasonable for the caller to assume that once the service is torn-down, the callback won\u0027t be invoked.\n\nIs the issue here that we have three distinct sequences involved? i.e:\n1. The one that the DMSS is created, called and destroyed on.\n2. The one that the DMSS actually does work on.\n3. The one that the caller wants to be notified on.\n\nWhy are #1 and #3 not the same sequence, for example?",
+      "parentUuid": "66415477_47f6136f",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 1
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "675eb480_f74d1a1b",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
         "patchSetId": 8
@@ -202,6 +226,30 @@
     },
     {
       "key": {
+        "uuid": "fa3ba850_7ae6fc54",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T02:07:12Z",
+      "side": 1,
+      "message": "If the constructor actually *needs* to be called on the UI thread then let\u0027s leave the DCHECK for that in here.",
+      "parentUuid": "07e3e896_670a52b8",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 41
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86866422_18e8c48c",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
         "patchSetId": 8
@@ -237,6 +285,30 @@
       "side": 1,
       "message": "The contract states subsequent Start() calls are no-op. It is only expected to be called once by MediaRouterDesktop.",
       "parentUuid": "86866422_18e8c48c",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 11
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "941ae75a_216e9b60",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T02:07:12Z",
+      "side": 1,
+      "message": "Right; what I\u0027m asking is why do we give that API contract? Why not stipulate that it must be called at-most-once?",
+      "parentUuid": "693dc1fb_2bdbd1e0",
       "range": {
         "startLine": 52,
         "startChar": 0,
@@ -988,6 +1060,30 @@
     },
     {
       "key": {
+        "uuid": "a81ca3e9_c0ea9da8",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T02:07:12Z",
+      "side": 1,
+      "message": "OK, but we then need to document in the CMSS API that callers must cope with the callback potentially being invoked _after_ the CMSS has been torn-down.\n\nYou should also document on the CMSS::GetDialSinkAddedCallback that it is safe to invoke even after teardown, since that is actually a requirement in order for it to be passed to the DMSS safely.",
+      "parentUuid": "67aa9356_ff7d96cb",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 61
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c792743_450d25d6",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
         "patchSetId": 8
@@ -1106,6 +1202,24 @@
       "side": 1,
       "message": "Yes, we can do that (see latest PS), but exposing the internals of CMSS is not ideal in terms of layering. But I did it anyway so we can save 1 thread hop, and because this code will likely change again later to merge DMSS/CMSS into a single class managed by Cast MRP.",
       "parentUuid": "c34c97f7_2eabfe2d",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9236d66_d520a48e",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T02:07:12Z",
+      "side": 1,
+      "message": "My point was rather about the fact that the Impl objects have a task_runner() that they themselves never use, but that their owning object uses.  That\u0027s not a pattern we really use in Chromium code, in my experience; usually the owning object maintains the TaskRunner reference, to use to PostTask to the Impl.\n\nRe the thread-bouncing: Mark, it is important to bounce IO-\u003eUI-\u003eIO when invoking CastMediaSinkServiceImpl::OnDialSinkAdded(), to maintain correct ordering with respect to the Impl\u0027s teardown - if you simple PostTask directly from IO-thread to IO-thread then it is possible that the UI thread has DeleteSoon()\u0027d the Impl before the IO-\u003eIO task is processed. That\u0027s the limitation of the unique_ptr\u003c\u003e/DeleteSoon() model.\n\nIf we want to be able to invoke directly, on the IO thread, we would just need to return a callback object that is bound directly to a WeakPtr\u003cImpl\u003e, and it\u0027s SequencedTaskRunner, e.g.\n\n// static\nvoid Impl::RunOnDialSinkAdded(scoped_refptr\u003cSequenceTaskRunner\u003e runner, WeakPtr\u003cImpl\u003e impl, Sink sink) {\n  // (Optionally shortcut if we\u0027re already running on |runner|).\n  runner-\u003ePostTask(Bind(\u0026Impl::OnDialSinkAdded, impl, sink));\n}\n\nCallback CMSS::GetDialSinkAddedCallback() {\n  return Bind(\u0026RunOnDialSinkAdded, impl_runner_, impl_weak_ptr_);\n}",
+      "parentUuid": "97dcb5b0_76cb2762",
       "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -1558,6 +1672,30 @@
       "side": 1,
       "message": "s/when/with",
       "parentUuid": "81c6781c_9a8f0431",
+      "range": {
+        "startLine": 30,
+        "startChar": 37,
+        "endLine": 30,
+        "endChar": 63
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4b09e043_2145a2d5",
+        "filename": "chrome/common/media_router/discovery/media_sink_service_base.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T02:07:12Z",
+      "side": 1,
+      "message": "OK, but it doesn\u0027t look like you actually made that change. :)",
+      "parentUuid": "8464b453_e1a6c331",
       "range": {
         "startLine": 30,
         "startChar": 37,
