@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e34e960_e2cc888b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-30T23:30:19Z",
+      "side": 1,
+      "message": "I\u0027ve also documented the cases that will differ: I\u0027m going to explore tracking whether or not it\u0027s the initial navigation in a followup CL, and gating it based on that. Unfortunately, the currently exposed fields on NavigationHandle that seem like they *should* help don\u0027t actually correspond to what we need... (the AUTO_SUBFRAME PageTransition doesn\u0027t quite correspond to the bit of information we care about, since it\u0027s set if the navigation has replacement enabled)",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 44
+      },
+      "revId": "3f77a35b5b84a61f79d8aedcda24dac0be444336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
