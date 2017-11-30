@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "6668dd67_dd0c0aa2",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-30T09:47:19Z",
+      "side": 1,
+      "message": "I think I prefer OnNetworkQuiet() approach better (for total counts), frame shutdown time could be very unreliable.",
+      "parentUuid": "3737ceeb_21e1fdfd",
+      "range": {
+        "startLine": 230,
+        "startChar": 2,
+        "endLine": 230,
+        "endChar": 30
+      },
+      "revId": "fd28d13b8c0f8190a4ec275ca2249546ea64b48e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2733328b_b9eeede1",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
         "patchSetId": 6

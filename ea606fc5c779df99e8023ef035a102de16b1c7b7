@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80bfdf1f_f2e87acf",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-30T09:47:19Z",
+      "side": 1,
+      "message": "It feels this should return base::HistogramBase::Sample, not int",
+      "revId": "ea606fc5c779df99e8023ef035a102de16b1c7b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1990648e_15fcdb9c",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-30T09:47:19Z",
+      "side": 1,
+      "message": "nit: prefer initializing here, i.e. valid_ \u003d false; encoded_data_length_ \u003d 0; etc and just use \u003d default for the default constructor (which feels less error-prone)",
+      "revId": "ea606fc5c779df99e8023ef035a102de16b1c7b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cbc7d41_2d5d8a0c",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-30T09:47:19Z",
+      "side": 1,
+      "message": "Rport -\u003e Report\n\nare -\u003e is, since it\u0027s a struct (while the name is in plural form)?",
+      "revId": "ea606fc5c779df99e8023ef035a102de16b1c7b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
