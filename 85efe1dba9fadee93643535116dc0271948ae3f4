@@ -16,6 +16,24 @@
       "revId": "85efe1dba9fadee93643535116dc0271948ae3f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cc839c6_96b65e83",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-30T09:28:02Z",
+      "side": 1,
+      "message": "I also think \"if (button_string_id)\" is fine here (we do not need the extra DCHECK as that adds coupling between the profile switcher and GetMessagesForAvatarSyncError.",
+      "parentUuid": "6bc0e1bc_dc8ca411",
+      "revId": "85efe1dba9fadee93643535116dc0271948ae3f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
