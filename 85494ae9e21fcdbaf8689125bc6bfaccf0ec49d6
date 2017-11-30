@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fcf20e5_e612f550",
+        "filename": "gpu/perftests/measurements.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-30T19:08:03Z",
+      "side": 1,
+      "message": "nit: could this also be \u003ddefault? I believe default-initializing all these member variables will be correct.",
+      "revId": "85494ae9e21fcdbaf8689125bc6bfaccf0ec49d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
