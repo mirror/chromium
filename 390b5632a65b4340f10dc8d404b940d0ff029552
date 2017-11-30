@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d1b8904_166e9d4a",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 2313,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-30T06:39:01Z",
+      "side": 1,
+      "message": "Is it possible to add this to _BANNED_CPP_FUNCTIONS instead? It\u0027s configurable as a warning or error there.",
+      "revId": "390b5632a65b4340f10dc8d404b940d0ff029552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
