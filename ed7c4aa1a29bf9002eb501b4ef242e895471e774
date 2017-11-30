@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1d727329_dc86d04b",
+        "filename": "chrome/browser/autocomplete/autocomplete_classifier_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-30T22:22:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66f40688_4938d90f",
+      "revId": "ed7c4aa1a29bf9002eb501b4ef242e895471e774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a2972af_a0a02bff",
         "filename": "chrome/browser/autocomplete/autocomplete_classifier_factory.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "ed7c4aa1a29bf9002eb501b4ef242e895471e774",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f324f0e0_eadc07bf",
+        "filename": "chrome/browser/autocomplete/autocomplete_classifier_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-30T22:22:59Z",
+      "side": 1,
+      "message": "I spent more time than I should have trying to get that to work. It works in a local, isolated test, but not the build. The complaint is that the AutocompleteController\u0027s constructor doesn\u0027t know how to deal with the unique_ptr. I suspect that it has something to do with the compiler version, -std\u003dc++14 or another flag, colliding with the variadic args. (I believe I copied the template functions correctly, and std::move doesn\u0027t make any difference.)",
+      "parentUuid": "3a2972af_a0a02bff",
+      "revId": "ed7c4aa1a29bf9002eb501b4ef242e895471e774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
