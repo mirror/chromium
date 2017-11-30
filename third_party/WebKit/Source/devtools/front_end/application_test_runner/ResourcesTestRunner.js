@@ -7,6 +7,19 @@
  * @suppress {accessControls}
  */
 
+/**
+ * Many application panel tests are flaky because storage state (e.g. IndexedDB)
+ * doesn't get reset between tests.
+ */
+(function resetState() {
+  var securityOrigin = new Common.ParsedURL(TestRunner.url()).securityOrigin();
+  var storageTypes =
+      ['appcache', 'cache_storage', 'cookies', 'indexeddb', 'local_storage', 'service_workers', 'websql'];
+  // TODO(chenwilliam): This has a race condition because clearDataForOrigin is asynchronous
+  // with no notification of when it completes the task.
+  TestRunner.mainTarget.storageAgent().clearDataForOrigin(securityOrigin, storageTypes.join(','));
+})();
+
 ApplicationTestRunner.createWebSQLDatabase = function(name) {
   return TestRunner.evaluateInPageAsync(`_openWebSQLDatabase("${name}")`);
 };
