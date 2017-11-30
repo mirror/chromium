@@ -22,6 +22,7 @@ class BASE_EXPORT ThreadTaskRunnerHandle {
  public:
   // Gets the SingleThreadTaskRunner for the current thread.
   static scoped_refptr<SingleThreadTaskRunner> Get();
+  static scoped_refptr<SingleThreadTaskRunner> Get(const Location& from_here);
 
   // Returns true if the SingleThreadTaskRunner is already created for
   // the current thread.
