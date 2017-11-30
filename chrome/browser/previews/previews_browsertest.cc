@@ -51,6 +51,7 @@ class PreviewsBrowserTest : public InProcessBrowserTest {
   ~PreviewsBrowserTest() override {}
 
   void SetUpCommandLine(base::CommandLine* cmd) override {
+    LOG(WARNING) << "XXXXXX  SetUpCommandLine  add switches for DRP and ECT";
     cmd->AppendSwitch("enable-spdy-proxy-auth");
     cmd->AppendSwitchASCII("force-effective-connection-type", "Slow-2G");
   }
@@ -64,6 +65,7 @@ class PreviewsBrowserTest : public InProcessBrowserTest {
  private:
   // Called by |https_server_|.
   void MonitorResourceRequest(const net::test_server::HttpRequest& request) {
+    LOG(WARNING) << "XXXXXX  MonitorResourceRequest " << request.GetURL();
     if (request.GetURL().spec().find("noscript_test.css") !=
         std::string::npos) {
       noscript_css_requested_ = true;
@@ -123,13 +125,17 @@ class PreviewsNoScriptBrowserTest : public PreviewsBrowserTest {
 // Previews InfoBar (which these tests triggers) does not work on Mac.
 // See crbug.com/782322 for detail.
 #if defined(OS_MACOSX)
-#define MAYBE_NoScriptPreviewsEnabled DISABLED_NoScriptPreviewsEnabled
+//#define MAYBE_NoScriptPreviewsEnabled DISABLED_NoScriptPreviewsEnabled
+//#define MAYBE_NoScriptPreviewsEnabledHttpRedirectToHttps \
+//  DISABLED_NoScriptPreviewsEnabledHttpRedirectToHttps
+#define MAYBE_NoScriptPreviewsEnabled NoScriptPreviewsEnabled
 #define MAYBE_NoScriptPreviewsEnabledHttpRedirectToHttps \
-  DISABLED_NoScriptPreviewsEnabledHttpRedirectToHttps
+  NoScriptPreviewsEnabledHttpRedirectToHttps
 #else
 // Flaky on win7_chromium_rel_ng. crbug.com/789542
 #if defined(OS_WIN)
-#define MAYBE_NoScriptPreviewsEnabled DISABLED_NoScriptPreviewsEnabled
+//#define MAYBE_NoScriptPreviewsEnabled DISABLED_NoScriptPreviewsEnabled
+#define MAYBE_NoScriptPreviewsEnabled NoScriptPreviewsEnabled
 #else
 #define MAYBE_NoScriptPreviewsEnabled NoScriptPreviewsEnabled
 #endif
@@ -142,7 +148,9 @@ class PreviewsNoScriptBrowserTest : public PreviewsBrowserTest {
 // script resource is not loaded.
 IN_PROC_BROWSER_TEST_F(PreviewsNoScriptBrowserTest,
                        MAYBE_NoScriptPreviewsEnabled) {
+    LOG(WARNING) << "XXXXXX  TEST NoScriptPreviewsEnabled ";
   ui_test_utils::NavigateToURL(browser(), https_url());
+    LOG(WARNING) << "XXXXXX  TEST   NoScriptPreviewsEnabled navigated ";
 
   // Verify loaded noscript tag triggered css resource but not js one.
   EXPECT_TRUE(noscript_css_requested());
@@ -206,6 +214,8 @@ class PreviewsOptimizationGuideBrowserTest : public PreviewsBrowserTest {
   NoScriptPreviewsEnabledByWhitelist
 #endif
 
+#define MAYBE_NoScriptPreviewsEnabledByWhitelist \
+  NoScriptPreviewsEnabledByWhitelist
 IN_PROC_BROWSER_TEST_F(PreviewsOptimizationGuideBrowserTest,
                        MAYBE_NoScriptPreviewsEnabledByWhitelist) {
   // Whitelist test URL for NoScript.
