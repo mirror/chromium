@@ -555,11 +555,12 @@ void AutocompleteMatch::GetMatchComponents(
 
 // static
 url_formatter::FormatUrlTypes AutocompleteMatch::GetFormatTypes(
+    bool has_scheme,
     bool preserve_scheme,
     bool preserve_subdomain,
     bool preserve_after_host) {
   auto format_types = url_formatter::kFormatUrlOmitDefaults;
-  if (preserve_scheme) {
+  if (has_scheme || preserve_scheme) {
     format_types &= ~url_formatter::kFormatUrlOmitHTTP;
   } else if (base::FeatureList::IsEnabled(
                  omnibox::kUIExperimentHideSuggestionUrlScheme)) {
