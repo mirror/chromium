@@ -48,6 +48,23 @@
     },
     {
       "key": {
+        "uuid": "888bdb05_7943e334",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrIntentUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-30T17:17:20Z",
+      "side": 1,
+      "message": "would it make sense to rename this to canLaunchToVr or something? canHandleVrIntent is too general and VR intent is kind of ambiguous.",
+      "revId": "05bd6aeecca455343eac3a6d70b69c9a3bfa6cc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63476ddd_4dbcb622",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrIntentUtils.java",
         "patchSetId": 3
@@ -65,6 +82,23 @@
         "endLine": 66,
         "endChar": 34
       },
+      "revId": "05bd6aeecca455343eac3a6d70b69c9a3bfa6cc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2d038e4_052edfe7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrIntentUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-30T17:17:20Z",
+      "side": 1,
+      "message": "Would be nice to explain why support level is VR_DAYDREAM means canHandleVrIntent or whatever function name you choose. It is not super obvious. For example, one might wonder why VR_CARDBOARD can\u0027t handle VrIntent?",
       "revId": "05bd6aeecca455343eac3a6d70b69c9a3bfa6cc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -111,6 +145,23 @@
         "endLine": 1614,
         "endChar": 29
       },
+      "revId": "05bd6aeecca455343eac3a6d70b69c9a3bfa6cc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "885c90cb_c21118c5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1614,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-30T17:17:20Z",
+      "side": 1,
+      "message": "If I understand correctly, you want to shortcut N- devices to directly return VR_NOT_AVAILABLE at some callsites. I am not I understand why do you want to do this. Is it because of speed or something?",
       "revId": "05bd6aeecca455343eac3a6d70b69c9a3bfa6cc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
