@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4e377c4_14dde2d6",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-30T21:47:02Z",
+      "side": 1,
+      "message": "Set a reminder to clean this up when remoting is default enabled :-)",
+      "revId": "9bd5b27ac49d145161381b4401771b836ec6f19c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
