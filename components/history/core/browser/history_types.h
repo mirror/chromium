@@ -583,6 +583,47 @@ struct ExpireHistoryArgs {
   base::Time end_time;
 };
 
+// Represents the time range of a history deletion. If |is_valid()| is false,
+// a time range doesn't apply to this deletion e.g. because only a list of urls
+// was deleted.
+class DeletionTimeRange {
+ public:
+  DeletionTimeRange(base::Time begin, base::Time end)
+      : is_valid_(true), begin_(begin), end_(end) {}
+
+  base::Time begin() const {
+    DCHECK(is_valid_);
+    return begin_;
+  }
+
+  base::Time end() const {
+    DCHECK(is_valid_);
+    return end_;
+  }
+
+  bool is_valid() const { return is_valid_; }
+
+  // Returns true if this time range covers history from the beginning of time.
+  bool IsAllTime() const {
+    return is_valid_ && begin_.is_null() && (end_.is_null() || end_.is_max());
+  }
+
+  static DeletionTimeRange AllTime() {
+    return DeletionTimeRange(base::Time(), base::Time::Max());
+  }
+
+  static DeletionTimeRange Invalid() { return DeletionTimeRange(); }
+
+ private:
+  DeletionTimeRange() : is_valid_(false), begin_(), end_() {}
+  // Whether this is a valid time range.
+  const bool is_valid_;
+  // Begin of a history deletion.
+  const base::Time begin_;
+  // End of a history deletion.
+  const base::Time end_;
+};
+
 }  // namespace history
 
 #endif  // COMPONENTS_HISTORY_CORE_BROWSER_HISTORY_TYPES_H_

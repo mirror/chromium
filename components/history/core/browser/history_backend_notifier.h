@@ -45,7 +45,7 @@ class HistoryBackendNotifier {
   // deletion is due to expiration, then |expired| is true. |favicon_urls| is
   // the list of favicon URLs that correspond to the deleted URLs (empty if
   // |all_history| is true).
-  virtual void NotifyURLsDeleted(bool all_history,
+  virtual void NotifyURLsDeleted(const DeletionTimeRange& time_range,
                                  bool expired,
                                  const URLRows& deleted_urls,
                                  const std::set<GURL>& favicon_urls) = 0;
