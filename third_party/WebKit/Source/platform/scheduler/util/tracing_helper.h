@@ -134,30 +134,26 @@ class TraceableCounter {
     Trace();
   }
 
-  TraceableCounter& operator =(const T& value) {
+  TraceableCounter& operator=(const T& value) {
     value_ = value;
     Trace();
     return *this;
   }
-  TraceableCounter& operator =(const TraceableCounter& another) {
+  TraceableCounter& operator=(const TraceableCounter& another) {
     value_ = another.value_;
     Trace();
     return *this;
   }
 
-  const T& get() const {
-    return value_;
-  }
-  operator T() const {
-    return value_;
-  }
+  const T& get() const { return value_; }
+  operator T() const { return value_; }
 
   void Trace() {
     TRACE_COUNTER_ID1(category, name_, object_, converter_(value_));
   }
 
  private:
-  const char* const name_;  // Not owned.
+  const char* const name_;    // Not owned.
   const void* const object_;  // Not owned.
   const ConverterFuncPtr converter_;
 

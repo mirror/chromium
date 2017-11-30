@@ -164,9 +164,10 @@ WEBP_EXTERN int VP8CheckSignature(const uint8_t* const data, size_t data_size);
 // can be passed NULL.
 WEBP_EXTERN int VP8GetInfo(
     const uint8_t* data,
-    size_t data_size,    // data available so far
-    size_t chunk_size,   // total data size expected in the chunk
-    int* const width, int* const height);
+    size_t data_size,   // data available so far
+    size_t chunk_size,  // total data size expected in the chunk
+    int* const width,
+    int* const height);
 
 // Returns true if the next byte(s) in data is a VP8L signature.
 WEBP_EXTERN int VP8LCheckSignature(const uint8_t* const data, size_t size);
@@ -174,12 +175,14 @@ WEBP_EXTERN int VP8LCheckSignature(const uint8_t* const data, size_t size);
 // Validates the VP8L data-header and retrieves basic header information viz
 // width, height and alpha. Returns 0 in case of formatting error.
 // width/height/has_alpha can be passed NULL.
-WEBP_EXTERN int VP8LGetInfo(
-    const uint8_t* data, size_t data_size,  // data available so far
-    int* const width, int* const height, int* const has_alpha);
+WEBP_EXTERN int VP8LGetInfo(const uint8_t* data,
+                            size_t data_size,  // data available so far
+                            int* const width,
+                            int* const height,
+                            int* const has_alpha);
 
 #ifdef __cplusplus
 }    // extern "C"
 #endif
 
-#endif  /* WEBP_DEC_VP8_DEC_H_ */
+#endif /* WEBP_DEC_VP8_DEC_H_ */

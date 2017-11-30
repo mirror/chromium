@@ -14,13 +14,13 @@
 #ifndef WEBP_DEC_VP8I_DEC_H_
 #define WEBP_DEC_VP8I_DEC_H_
 
-#include <string.h>     // for memcpy()
+#include <string.h>  // for memcpy()
 #include "src/dec/common_dec.h"
 #include "src/dec/vp8li_dec.h"
+#include "src/dsp/dsp.h"
 #include "src/utils/bit_reader_utils.h"
 #include "src/utils/random_utils.h"
 #include "src/utils/thread_utils.h"
-#include "src/dsp/dsp.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -316,4 +316,4 @@ const uint8_t* VP8DecompressAlphaRows(VP8Decoder* const dec,
 }    // extern "C"
 #endif
 
-#endif  /* WEBP_DEC_VP8I_DEC_H_ */
+#endif /* WEBP_DEC_VP8I_DEC_H_ */
