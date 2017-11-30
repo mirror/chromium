@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a0ee993b_6189883f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-30T13:57:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6d7a361_f3a49168",
+      "range": {
+        "startLine": 7,
+        "startChar": 9,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "41781688d01ff0d026fdb8614f23d091a4f8298b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9021ae79_f1937854",
         "filename": "chrome/browser/ui/cocoa/profiles/signin_view_controller_delegate_mac.h",
         "patchSetId": 14
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-29T19:22:40Z",
       "side": 1,
       "message": "Please only one factory function. Make the width base::Optional.",
+      "range": {
+        "startLine": 89,
+        "startChar": 2,
+        "endLine": 92,
+        "endChar": 25
+      },
+      "revId": "41781688d01ff0d026fdb8614f23d091a4f8298b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57f2e019_fdc61518",
+        "filename": "chrome/browser/ui/cocoa/profiles/signin_view_controller_delegate_mac.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-30T13:57:51Z",
+      "side": 1,
+      "message": "Thanks for the suggestion! Didn\u0027t know about base::Optional. I changed this in both .cc and .mm, PTAL at diff between patch 14..16, thanks!",
+      "parentUuid": "9021ae79_f1937854",
       "range": {
         "startLine": 89,
         "startChar": 2,
