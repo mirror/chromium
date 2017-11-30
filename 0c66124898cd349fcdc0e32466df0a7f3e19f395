@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "848f0495_0e9f73c0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/SearchEngineAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-30T05:40:55Z",
+      "side": 0,
+      "message": "It seems that this will always show the website settings now. Will that look weird if the link just says \"turn on location in system settings\" or whatever it is when notifications are off, location is on but disabled?",
+      "revId": "0c66124898cd349fcdc0e32466df0a7f3e19f395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cf251ac_434f9ebc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/SearchEngineAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-30T05:40:55Z",
+      "side": 1,
+      "message": "Nit: can this linkSpan stuff move into the if (!message.isEmpty()) block?",
+      "revId": "b19fd775b399df3a37dc7ef056ca96b0aad33d8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
