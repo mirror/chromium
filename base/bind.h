@@ -260,6 +260,13 @@ Callback<Signature> Bind(Callback<Signature> closure) {
   return closure;
 }
 
+// A variant of Bind() that can bind capturing lambda for testing.
+// This doesn't support extra argument binding as the lambda itself can do.
+template <typename F>
+auto BindLambdaForTesting(F&& f) {
+  return BindRepeating([](const F& f) { return f(); }, std::forward<F>(f));
+}
+
 }  // namespace base
 
 #endif  // BASE_BIND_H_
