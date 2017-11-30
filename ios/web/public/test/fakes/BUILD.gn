@@ -29,6 +29,7 @@ source_set("fakes") {
     "fake_download_controller_delegate.mm",
     "fake_navigation_context.h",
     "fake_navigation_context.mm",
+    "mock_session_certificate_policy_cache.h",
     "test_browser_state.cc",
     "test_browser_state.h",
     "test_java_script_dialog_presenter.h",

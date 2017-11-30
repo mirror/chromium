@@ -106,7 +106,6 @@
     DCHECK(snapshotManager);
     DCHECK(tab);
     DCHECK(tab.tabId);
-    DCHECK([tab webController]);
     _snapshotManager = snapshotManager;
     _webController = [tab webController];
     _tab = tab;
@@ -128,6 +127,7 @@
                 (CRWWebController*)webController
                                          withOverlays:(NSArray*)overlays
                                      visibleFrameOnly:(BOOL)visibleFrameOnly {
+  DCHECK(webController);
   UIImage* result = [self generateSnapshotForWebController:webController
                                               withOverlays:overlays
                                           visibleFrameOnly:visibleFrameOnly];
@@ -138,6 +138,7 @@
                                sessionID:(NSString*)sessionID
                             withOverlays:(NSArray*)overlays
                                 callback:(void (^)(UIImage* image))callback {
+  DCHECK(webController);
   [_snapshotManager
       retrieveImageForSessionID:sessionID
                        callback:^(UIImage* image) {
@@ -158,6 +159,7 @@
                                 withOverlays:(NSArray*)overlays
                                     callback:
                                         (void (^)(UIImage* image))callback {
+  DCHECK(webController);
   [_snapshotManager
       retrieveGreyImageForSessionID:sessionID
                            callback:^(UIImage* image) {
@@ -182,6 +184,7 @@
   // Remove this when all uses of the "CRWWebController" are dropped from the
   // methods names since it is already retained by us and not necessary to be
   // passed in.
+  DCHECK(webController);
   DCHECK_EQ([_tab webController], webController);
   UIImage* snapshot =
       [self generateSnapshotOrDefaultForWebController:webController
@@ -210,6 +213,7 @@
 - (UIImage*)generateSnapshotForWebController:(CRWWebController*)webController
                                 withOverlays:(NSArray*)overlays
                             visibleFrameOnly:(BOOL)visibleFrameOnly {
+  DCHECK(webController);
   if (![webController canUseViewForGeneratingOverlayPlaceholderView])
     return nil;
   CGRect visibleFrame = (visibleFrameOnly ? [_tab snapshotContentArea]

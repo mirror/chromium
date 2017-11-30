@@ -95,6 +95,9 @@ class WebState : public base::SupportsUserData {
     bool is_renderer_initiated;
   };
 
+  // Factory methods for creating WebState. See also WebStateCreationFactory
+  // for a convenient pattern for managing dependency injection.
+
   // Creates a new WebState.
   static std::unique_ptr<WebState> Create(const CreateParams& params);
 
@@ -329,6 +332,26 @@ class WebState : public base::SupportsUserData {
   virtual base::WeakPtr<WebState> AsWeakPtr() = 0;
 
   DISALLOW_COPY_AND_ASSIGN(WebState);
+};
+
+// Factory interface for creating WebState. This is useful for implementing
+// dependency injection in a class that uses WebState.
+class WebStateCreationFactory {
+ public:
+  virtual ~WebStateCreationFactory() = default;
+
+  // Returns the default factory that creates WebState objects with the default
+  // implementation.
+  static std::unique_ptr<WebStateCreationFactory> Create();
+
+  // Creates a new WebState.
+  virtual std::unique_ptr<WebState> Create(
+      const WebState::CreateParams& params) = 0;
+
+  // Creates a new WebState from a serialized representation of the session.
+  virtual std::unique_ptr<WebState> CreateWithStorageSession(
+      const WebState::CreateParams& params,
+      CRWSessionStorage* session_storage) = 0;
 };
 
 }  // namespace web

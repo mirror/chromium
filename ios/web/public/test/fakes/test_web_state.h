@@ -100,6 +100,7 @@ class TestWebState : public WebState {
   void SetIsCrashed(bool value);
   void SetIsEvicted(bool value);
   void SetWebViewProxy(CRWWebViewProxyType web_view_proxy);
+  void SetSessionStorage(CRWSessionStorage* session_storage);
 
   // Getters for test data.
   CRWContentView* GetTransientContentView();
@@ -129,6 +130,8 @@ class TestWebState : public WebState {
   std::unique_ptr<NavigationManager> navigation_manager_;
   UIView* view_;
   CRWWebViewProxyType web_view_proxy_;
+  CRWSessionStorage* session_storage_;
+  std::unique_ptr<SessionCertificatePolicyCache> certificate_policy_cache_;
 
   // A list of observers notified when page state changes. Weak references.
   base::ObserverList<WebStateObserver, true> observers_;

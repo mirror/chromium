@@ -176,12 +176,13 @@ bool TestNavigationManager::CanPruneAllButLastCommittedItem() const {
 
 // Adds a new navigation item of |transition| type at the end of this
 // navigation manager.
-void TestNavigationManager::AddItem(const GURL& url,
-                                    ui::PageTransition transition) {
+NavigationItem* TestNavigationManager::AddItem(const GURL& url,
+                                               ui::PageTransition transition) {
   items_.push_back(web::NavigationItem::Create());
   items_.back()->SetTransitionType(transition);
   items_.back()->SetURL(url);
   SetLastCommittedItemIndex(GetItemCount() - 1);
+  return items_.back().get();
 }
 
 void TestNavigationManager::SetBrowserState(web::BrowserState* browser_state) {

@@ -9,6 +9,8 @@
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/threading/sequenced_task_runner_handle.h"
+#import "ios/web/public/crw_session_storage.h"
+#include "ios/web/public/test/fakes/mock_session_certificate_policy_cache.h"
 #import "ios/web/public/web_state/ui/crw_content_view.h"
 #include "ios/web/public/web_state/web_state_observer.h"
 #include "ui/gfx/image/image.h"
@@ -37,7 +39,10 @@ TestWebState::TestWebState()
       has_opener_(false),
       trust_level_(kAbsolute),
       content_is_html_(true),
-      web_view_proxy_(nil) {}
+      web_view_proxy_(nil),
+      session_storage_(nil),
+      certificate_policy_cache_(
+          base::MakeUnique<MockSessionCertificatePolicyCache>()) {}
 
 TestWebState::~TestWebState() {
   for (auto& observer : observers_)
@@ -96,16 +101,16 @@ NavigationManager* TestWebState::GetNavigationManager() {
 
 const SessionCertificatePolicyCache*
 TestWebState::GetSessionCertificatePolicyCache() const {
-  return nullptr;
+  return certificate_policy_cache_.get();
 }
 
 SessionCertificatePolicyCache*
 TestWebState::GetSessionCertificatePolicyCache() {
-  return nullptr;
+  return certificate_policy_cache_.get();
 }
 
 CRWSessionStorage* TestWebState::BuildSessionStorage() {
-  return nil;
+  return session_storage_;
 }
 
 void TestWebState::SetNavigationManager(
@@ -129,6 +134,10 @@ void TestWebState::SetIsEvicted(bool value) {
 
 void TestWebState::SetWebViewProxy(CRWWebViewProxyType web_view_proxy) {
   web_view_proxy_ = web_view_proxy;
+}
+
+void TestWebState::SetSessionStorage(CRWSessionStorage* session_storage) {
+  session_storage_ = session_storage;
 }
 
 CRWJSInjectionReceiver* TestWebState::GetJSInjectionReceiver() const {

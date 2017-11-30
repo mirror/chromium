@@ -373,6 +373,18 @@ class WebStateImpl : public WebState, public NavigationManagerDelegate {
   DISALLOW_COPY_AND_ASSIGN(WebStateImpl);
 };
 
+class WebStateCreationFactoryImpl : public WebStateCreationFactory {
+ public:
+  ~WebStateCreationFactoryImpl() override = default;
+
+  std::unique_ptr<WebState> CreateWithStorageSession(
+      const WebState::CreateParams& params,
+      CRWSessionStorage* session_storage) override;
+
+  std::unique_ptr<WebState> Create(
+      const WebState::CreateParams& params) override;
+};
+
 }  // namespace web
 
 #endif  // IOS_WEB_WEB_STATE_WEB_STATE_IMPL_H_
