@@ -49,6 +49,7 @@ class AccessPolicy;
 class DisplayManager;
 class Display;
 class DragTargetConnection;
+class PlatformDisplay;
 class ServerWindow;
 class TargetedEvent;
 class WindowManagerDisplayRoot;
@@ -93,7 +94,7 @@ class WindowTree : public mojom::WindowTree,
     return automatically_create_display_roots_;
   }
 
-  void OnAcceleratedWidgetAvailableForDisplay(Display* display);
+  void OnAcceleratedWidgetAvailableForDisplay(PlatformDisplay* display);
 
   ClientSpecificId id() const { return id_; }
 

@@ -39,6 +39,7 @@ class AccessPolicy;
 class Display;
 class DisplayManager;
 class GpuHost;
+class PlatformDisplay;
 class ServerWindow;
 class ThreadedImageCursorsFactory;
 class UserActivityMonitor;
@@ -245,7 +246,7 @@ class WindowServer : public ServerWindowDelegate,
   WindowTree* GetCurrentDragLoopInitiator();
   bool in_drag_loop() const { return !!current_drag_loop_; }
 
-  void OnDisplayReady(Display* display, bool is_first);
+  void OnDisplayReady(PlatformDisplay* display, bool is_first);
   void OnDisplayDestroyed(Display* display);
   void OnNoMoreDisplays();
   WindowManagerState* GetWindowManagerStateForUser(const UserId& user_id);

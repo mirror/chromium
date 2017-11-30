@@ -181,12 +181,13 @@ void WindowTree::Init(std::unique_ptr<WindowTreeBinding> binding,
                     drawn, root->current_local_surface_id());
 }
 
-void WindowTree::OnAcceleratedWidgetAvailableForDisplay(Display* display) {
+void WindowTree::OnAcceleratedWidgetAvailableForDisplay(
+    PlatformDisplay* display) {
   DCHECK(window_manager_internal_);
   // TODO(sad): Use GpuSurfaceTracker on platforms where a gpu::SurfaceHandle is
   // not the same as a gfx::AcceleratedWidget.
   window_manager_internal_->WmOnAcceleratedWidgetForDisplay(
-      display->GetId(), display->platform_display()->GetAcceleratedWidget());
+      display->GetId(), display->GetAcceleratedWidget());
 }
 
 void WindowTree::ConfigureWindowManager(
