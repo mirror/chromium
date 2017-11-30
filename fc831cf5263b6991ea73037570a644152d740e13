@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd332e51_18dd05a0",
+        "filename": "media/audio/win/audio_low_latency_input_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-30T12:43:40Z",
+      "side": 1,
+      "message": "DCHECK?",
+      "revId": "fc831cf5263b6991ea73037570a644152d740e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c58c704_8b931807",
+        "filename": "media/audio/win/audio_low_latency_input_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-30T12:43:40Z",
+      "side": 1,
+      "message": "Could you fix this comment while you\u0027re at it? :)",
+      "range": {
+        "startLine": 640,
+        "startChar": 37,
+        "endLine": 640,
+        "endChar": 40
+      },
+      "revId": "fc831cf5263b6991ea73037570a644152d740e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "369aa4c3_e92a0d03",
+        "filename": "media/audio/win/audio_low_latency_input_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-30T12:43:40Z",
+      "side": 1,
+      "message": "Could you add a comment here explaining why you\u0027re comparing to S_OK rather than using a macro?",
+      "revId": "fc831cf5263b6991ea73037570a644152d740e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
