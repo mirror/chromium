@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "base/memory/weak_ptr.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/command_buffer/common/mailbox.h"
 #include "gpu/command_buffer/common/sync_token.h"
@@ -35,12 +36,12 @@ class PLATFORM_EXPORT CanvasResource {
   void WaitSyncTokenBeforeRelease();
 
  protected:
-  CanvasResource(WeakPtr<WebGraphicsContext3DProviderWrapper>);
+  CanvasResource(base::WeakPtr<WebGraphicsContext3DProviderWrapper>);
 
   gpu::Mailbox gpu_mailbox_;
   // Sync token that was provided when resource was released
   gpu::SyncToken sync_token_for_release_;
-  WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper_;
+  base::WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper_;
 };
 
 // Resource type for skia Bitmaps (RAM and texture backed)
@@ -48,7 +49,7 @@ class PLATFORM_EXPORT CanvasResource_Skia final : public CanvasResource {
  public:
   static std::unique_ptr<CanvasResource_Skia> Create(
       sk_sp<SkImage>,
-      WeakPtr<WebGraphicsContext3DProviderWrapper>);
+      base::WeakPtr<WebGraphicsContext3DProviderWrapper>);
   virtual ~CanvasResource_Skia() { Abandon(); }
 
   // Not recyclable: Skia handles texture recycling internally and bitmaps are
@@ -60,7 +61,7 @@ class PLATFORM_EXPORT CanvasResource_Skia final : public CanvasResource {
 
  private:
   CanvasResource_Skia(sk_sp<SkImage>,
-                      WeakPtr<WebGraphicsContext3DProviderWrapper>);
+                      base::WeakPtr<WebGraphicsContext3DProviderWrapper>);
 
   sk_sp<SkImage> image_;
 };
@@ -72,7 +73,7 @@ class PLATFORM_EXPORT CanvasResource_GpuMemoryBuffer final
   static std::unique_ptr<CanvasResource_GpuMemoryBuffer> Create(
       const IntSize&,
       const CanvasColorParams&,
-      WeakPtr<WebGraphicsContext3DProviderWrapper>);
+      base::WeakPtr<WebGraphicsContext3DProviderWrapper>);
   virtual ~CanvasResource_GpuMemoryBuffer() { Abandon(); }
   bool IsRecycleable() const final { return IsValid(); }
   bool IsValid() const { return context_provider_wrapper_ && image_id_; }
@@ -80,9 +81,10 @@ class PLATFORM_EXPORT CanvasResource_GpuMemoryBuffer final
   GLuint TextureId() const final { return texture_id_; }
 
  private:
-  CanvasResource_GpuMemoryBuffer(const IntSize&,
-                                 const CanvasColorParams&,
-                                 WeakPtr<WebGraphicsContext3DProviderWrapper>);
+  CanvasResource_GpuMemoryBuffer(
+      const IntSize&,
+      const CanvasColorParams&,
+      base::WeakPtr<WebGraphicsContext3DProviderWrapper>);
 
   std::unique_ptr<gfx::GpuMemoryBuffer> gpu_memory_buffer_;
   GLuint image_id_ = 0;
