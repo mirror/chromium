@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "542c433e_1b03db80",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-30T19:02:00Z",
+      "side": 1,
+      "message": "drop it, it\u0027s redundant.",
+      "revId": "2700fac3f9f4b6b077071e6c555b30a8c870ca8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b7d7b3e_f5e21c4f",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-30T19:02:00Z",
+      "side": 1,
+      "message": "This one is confusing -- you\u0027re not really processing any response from the client here, you\u0027re just trying to re-use a piece of code in ProcessItnerceptionResponse() for proxying a redirect to the caller, and have to forge dummy Modifications to do that. Let\u0027s extract a method for that instead, it\u0027s going to be way more readable.",
+      "revId": "2700fac3f9f4b6b077071e6c555b30a8c870ca8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
