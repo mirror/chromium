@@ -19,6 +19,121 @@
     },
     {
       "key": {
+        "uuid": "2daa3c1f_d8f24801",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-30T17:23:35Z",
+      "side": 1,
+      "message": "I think it would be better to put this code in TabIcon. Specifically the typical pattern for sizing child views is to ask the child for its preferred size and then use that. So, make TabIcon override GetPreferredSize() and have it return the GetIdealWidth(). The height isn\u0027t as important given you make it fill the height. This means you can get rid of GetIdealWidth().",
+      "range": {
+        "startLine": 561,
+        "startChar": 4,
+        "endLine": 566,
+        "endChar": 68
+      },
+      "revId": "d901037d8495e60c5b3b9ff325e2b9a33dbc1296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2a3aecf_9237c8f2",
+        "filename": "chrome/browser/ui/views/tabs/tab_icon.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-30T17:23:35Z",
+      "side": 1,
+      "message": "optional: How about naming this icon_bounds?",
+      "range": {
+        "startLine": 180,
+        "startChar": 12,
+        "endLine": 180,
+        "endChar": 18
+      },
+      "revId": "d901037d8495e60c5b3b9ff325e2b9a33dbc1296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d6e4adc_dbd8484b",
+        "filename": "chrome/browser/ui/views/tabs/tab_icon.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-30T17:23:35Z",
+      "side": 1,
+      "message": "optional: it would be nice if we were consistent and used throbber everywhere. I\u0027m ok with the inverse too (loading), but that means more changes to things like PaintThrobber.",
+      "range": {
+        "startLine": 47,
+        "startChar": 35,
+        "endLine": 47,
+        "endChar": 43
+      },
+      "revId": "d901037d8495e60c5b3b9ff325e2b9a33dbc1296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a7ccec5_00337832",
+        "filename": "chrome/browser/ui/views/tabs/tab_icon.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-30T17:23:35Z",
+      "side": 1,
+      "message": "Do we typically use uint32_t for bitmasks? Does it really matter?",
+      "range": {
+        "startLine": 104,
+        "startChar": 2,
+        "endLine": 104,
+        "endChar": 6
+      },
+      "revId": "d901037d8495e60c5b3b9ff325e2b9a33dbc1296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc5f7217_9a22f296",
+        "filename": "chrome/browser/ui/views/tabs/tab_icon.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-30T17:23:35Z",
+      "side": 1,
+      "message": "This is worth a comment.",
+      "range": {
+        "startLine": 105,
+        "startChar": 7,
+        "endLine": 105,
+        "endChar": 34
+      },
+      "revId": "d901037d8495e60c5b3b9ff325e2b9a33dbc1296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fd7b411_38d598b0",
         "filename": "ui/gfx/geometry/rect.h",
         "patchSetId": 8
