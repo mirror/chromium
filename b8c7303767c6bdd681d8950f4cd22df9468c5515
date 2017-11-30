@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7e82db0f_141d1443",
+        "filename": "content/browser/compositor/software_browser_compositor_output_surface.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-30T15:36:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfb36567_a7c403e2",
+      "range": {
+        "startLine": 62,
+        "startChar": 18,
+        "endLine": 62,
+        "endChar": 26
+      },
+      "revId": "b8c7303767c6bdd681d8950f4cd22df9468c5515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "350560e4_9db6e505",
         "filename": "gpu/command_buffer/common/presentation_feedback.h",
         "patchSetId": 40
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-29T22:38:45Z",
       "side": 1,
       "message": "Would it make sense for the swap_id to be part of this struct as you put in the doc?\n\nIt would be convenient if we returned PresentationFeedback as part of other IPCs that include information for different swap_ids. Not a big deal since we can change where the swap_id goes when we get there.",
+      "revId": "b8c7303767c6bdd681d8950f4cd22df9468c5515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed812572_ff520d62",
+        "filename": "gpu/command_buffer/common/presentation_feedback.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-30T15:36:32Z",
+      "side": 1,
+      "message": "I considered it. but I found out it will make GLSuerface implementation complex. All implementations have to duplicate same code for swap_id. Especially, some implementations may call PresentationCallback for different situations. So I feel it is easier to allocate swap_id in a single place in upper layer. And I plan to land this CL first, we can continue discussing it, if we think the swap_id should be allocated in GLSurface, we may do it in a separate CL. WDYT?",
+      "parentUuid": "350560e4_9db6e505",
       "revId": "b8c7303767c6bdd681d8950f4cd22df9468c5515",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "271af54a_c52ccf46",
+        "filename": "gpu/ipc/service/direct_composition_surface_win_unittest.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-30T15:36:32Z",
+      "side": 1,
+      "message": "why static?",
+      "parentUuid": "5f160687_dfa95ec6",
+      "revId": "b8c7303767c6bdd681d8950f4cd22df9468c5515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d783c6af_bcf0b5e2",
         "filename": "gpu/ipc/service/pass_through_image_transport_surface.cc",
         "patchSetId": 40
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "d1abbf89_45955301",
+        "filename": "gpu/ipc/service/pass_through_image_transport_surface.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-30T15:36:32Z",
+      "side": 1,
+      "message": "It is useful for avoiding an extra IPC per frame. When we implement presentation feedback for all GLSurface implementations, we can begin dedicate the VSyncUpdate and remove this flag.",
+      "parentUuid": "d783c6af_bcf0b5e2",
+      "revId": "b8c7303767c6bdd681d8950f4cd22df9468c5515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d55670fc_c7e5d67a",
         "filename": "gpu/ipc/service/pass_through_image_transport_surface.h",
         "patchSetId": 40
@@ -87,6 +165,24 @@
       "writtenOn": "2017-11-29T22:38:45Z",
       "side": 1,
       "message": "Can this be deleted now?",
+      "revId": "b8c7303767c6bdd681d8950f4cd22df9468c5515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00939875_1b80a34a",
+        "filename": "gpu/ipc/service/pass_through_image_transport_surface.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-30T15:36:32Z",
+      "side": 1,
+      "message": "I think we still need it. We can continue discussing swap_id allocating in GLSurface. If we decide to move it into GLSurface, we can do it in separate CL.",
+      "parentUuid": "d55670fc_c7e5d67a",
       "revId": "b8c7303767c6bdd681d8950f4cd22df9468c5515",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
