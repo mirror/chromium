@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dec348cf_def3a3b9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/main/Main.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-30T17:42:31Z",
+      "side": 1,
+      "message": "Let\u0027s make this more readable:\n\nvar localStorage;\nif (!Host.isUnderTest(prefs) \u0026\u0026 window.localStorage) \n  localStorage \u003d new Common.SettingsStorage(window.localStorage, undefined,\n      undefined, () \u003d\u003e window.localStorage.clear(), storagePrefix);\n} else {\n  localStorage \u003d new Common.SettingsStorage({}, undefined, undefined, undefined, storagePrefix);\n}",
+      "revId": "1b658e9d5964c774eb4739eba479d7078cc6510b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
