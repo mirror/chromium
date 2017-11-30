@@ -21,6 +21,7 @@
 #include "content/public/common/media_stream_request.h"
 #include "content/public/common/previews_state.h"
 #include "content/public/common/window_container_type.mojom.h"
+#include "mojo/public/cpp/bindings/struct_ptr.h"
 #include "third_party/WebKit/public/platform/WebDisplayMode.h"
 #include "third_party/WebKit/public/platform/WebDragOperation.h"
 #include "third_party/WebKit/public/platform/WebSecurityStyle.h"
@@ -48,13 +49,17 @@ class SessionStorageNamespace;
 class SiteInstance;
 class WebContents;
 class WebContentsImpl;
-struct ColorSuggestion;
 struct ContextMenuParams;
 struct DropData;
 struct FileChooserParams;
 struct NativeWebKeyboardEvent;
 struct Referrer;
 struct SecurityStyleExplanations;
+
+namespace mojom {
+class ColorSuggestion;
+using ColorSuggestionPtr = mojo::InlinedStructPtr<ColorSuggestion>;
+}  // namespace mojom
 }  // namespace content
 
 namespace gfx {
@@ -340,7 +345,7 @@ class CONTENT_EXPORT WebContentsDelegate {
   virtual ColorChooser* OpenColorChooser(
       WebContents* web_contents,
       SkColor color,
-      const std::vector<ColorSuggestion>& suggestions);
+      const std::vector<content::mojom::ColorSuggestionPtr>& suggestions);
 
   // Called when a file selection is to be done.
   virtual void RunFileChooser(RenderFrameHost* render_frame_host,
