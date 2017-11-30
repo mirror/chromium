@@ -81,6 +81,24 @@
       "revId": "0aff973fec356bafd7da3c3d2f8ee287bf95f5dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "933ba498_78318dc3",
+        "filename": "chromeos/printing/ppd_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1241692
+      },
+      "writtenOn": "2017-11-30T18:31:04Z",
+      "side": 1,
+      "message": "Ok, I\u0027ve dealt with it. I moved the GetVersionNumber() call into the ppd_provider_factory.cc helper file and avoided all the scary BUILD/DEPS changed messages.",
+      "parentUuid": "e7048d18_7d2a8a18",
+      "revId": "0aff973fec356bafd7da3c3d2f8ee287bf95f5dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
