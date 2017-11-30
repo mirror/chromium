@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebfaa29e_c59a5178",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-30T14:40:37Z",
+      "side": 1,
+      "message": "Should be possible to make this \"String previous_line_\".",
+      "range": {
+        "startLine": 141,
+        "startChar": 2,
+        "endLine": 141,
+        "endChar": 23
+      },
+      "revId": "23628c4c930a72bfe222308e6e9006040b8e80fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d1fc16d_97182037",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-30T14:40:37Z",
+      "side": 1,
+      "message": "I think this would be better suited as a |state_|.",
+      "range": {
+        "startLine": 143,
+        "startChar": 7,
+        "endLine": 143,
+        "endChar": 23
+      },
+      "revId": "23628c4c930a72bfe222308e6e9006040b8e80fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3df4977a_a0962298",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-30T14:40:37Z",
+      "side": 1,
+      "message": "Maybe call this current_region_.",
+      "range": {
+        "startLine": 144,
+        "startChar": 20,
+        "endLine": 144,
+        "endChar": 27
+      },
+      "revId": "23628c4c930a72bfe222308e6e9006040b8e80fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
