@@ -27,6 +27,7 @@
 #include "chrome/browser/media/webrtc/media_stream_capture_indicator.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/chrome_switches.h"
+#include "chrome/common/interstitial_page_renderer.mojom.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/render_messages.h"
 #include "chrome/common/renderer_configuration.mojom.h"
@@ -51,6 +52,7 @@
 #include "content/public/common/content_constants.h"
 #include "net/base/registry_controlled_domains/registry_controlled_domain.h"
 #include "net/cookies/canonical_cookie.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 #include "storage/common/fileapi/file_system_types.h"
 
 using content::BrowserThread;
@@ -785,8 +787,10 @@ void TabSpecificContentSettings::RenderFrameForInterstitialPageCreated(
     content::RenderFrameHost* render_frame_host) {
   // We want to tell the renderer-side code to ignore content settings for this
   // page.
-  render_frame_host->Send(new ChromeViewMsg_SetAsInterstitial(
-      render_frame_host->GetRoutingID()));
+  chrome::mojom::InterstitialPageRendererPtr interstitial_page;
+  render_frame_host->GetRemoteInterfaces()->GetInterface(&interstitial_page);
+  DCHECK(interstitial_page);
+  interstitial_page->SetAsInterstitial();
 }
 
 bool TabSpecificContentSettings::OnMessageReceived(

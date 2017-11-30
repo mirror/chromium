@@ -13,6 +13,7 @@
 #include "base/gtest_prod_util.h"
 #include "base/time/time.h"
 #include "chrome/common/insecure_content_renderer.mojom.h"
+#include "chrome/common/interstitial_page_renderer.mojom.h"
 #include "components/content_settings/core/common/content_settings.h"
 #include "components/content_settings/core/common/content_settings_types.h"
 #include "content/public/renderer/render_frame_observer.h"
@@ -40,7 +41,8 @@ class ContentSettingsObserver
     : public content::RenderFrameObserver,
       public content::RenderFrameObserverTracker<ContentSettingsObserver>,
       public blink::WebContentSettingsClient,
-      public chrome::mojom::InsecureContentRenderer {
+      public chrome::mojom::InsecureContentRenderer,
+      public chrome::mojom::InterstitialPageRenderer {
  public:
   // Set |should_whitelist| to true if |render_frame()| contains content that
   // should be whitelisted for content settings.
@@ -121,9 +123,14 @@ class ContentSettingsObserver
   void OnInsecureContentRendererRequest(
       chrome::mojom::InsecureContentRendererRequest request);
 
+  // chrome::mojom::InterstitialPageRenderer:
+  void SetAsInterstitial() override;
+
+  void OnInterstitialPageRendererRequest(
+      chrome::mojom::InterstitialPageRendererRequest request);
+
   // Message handlers.
   void OnLoadBlockedPlugins(const std::string& identifier);
-  void OnSetAsInterstitial();
   void OnRequestFileSystemAccessAsyncResponse(int request_id, bool allowed);
 
   // Resets the |content_blocked_| array.
@@ -184,6 +191,9 @@ class ContentSettingsObserver
 
   mojo::BindingSet<chrome::mojom::InsecureContentRenderer>
       insecure_content_renderer_bindings_;
+
+  mojo::BindingSet<chrome::mojom::InterstitialPageRenderer>
+      interstitial_page_renderer_bindings_;
 
   DISALLOW_COPY_AND_ASSIGN(ContentSettingsObserver);
 };
