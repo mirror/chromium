@@ -88,6 +88,24 @@
       "revId": "110c56e7d9eddd2af2fb6b4c067b3691afe4ce12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f8accc2_c4526b72",
+        "filename": "chrome/browser/banners/app_banner_manager_desktop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-30T00:22:02Z",
+      "side": 1,
+      "message": "OK; I\u0027ve added those calls (but used \"SHOWING_APP_INSTALLATION_DIALOG instead of SHOWING_BOOKMARK_APP_INSTALLATION_DIALOG\"). I haven\u0027t tracked bubble ignores, because as you say, they should be rare, and because we don\u0027t count ignores for the existing bookmark dialogs.",
+      "parentUuid": "5d950191_8ae99b17",
+      "revId": "110c56e7d9eddd2af2fb6b4c067b3691afe4ce12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
