@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e87fc214_d6d266a8",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasResource.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-11-30T20:18:52Z",
+      "side": 1,
+      "message": "Why do you put the implementation in the cpp file for CanvasResource_GpuMemoryBuffer but not do the same to CanvasResource_Skia? Any specific reason?",
+      "revId": "051231832e5c34f0aa68f32e1446d75bdd27acfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
