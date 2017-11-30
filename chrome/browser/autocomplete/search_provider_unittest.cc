@@ -1000,7 +1000,7 @@ TEST_F(SearchProviderTest, KeywordOrderingAndDescriptions) {
   profile_.BlockUntilHistoryProcessesPendingRequests();
 
   AutocompleteController controller(
-      base::WrapUnique(new ChromeAutocompleteProviderClient(&profile_)),
+      base::MakeUnique<ChromeAutocompleteProviderClient>(&profile_)),
       nullptr, AutocompleteProvider::TYPE_SEARCH);
   AutocompleteInput input(ASCIIToUTF16("k t"),
                           metrics::OmniboxEventProto::OTHER,
