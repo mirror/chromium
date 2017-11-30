@@ -6756,6 +6756,11 @@ Called by update_net_error_codes.py.-->
   <int value="1" label="Unseen"/>
 </enum>
 
+<enum name="ContextualSearchResultsSeenBoolean">
+  <int value="0" label="Unseen"/>
+  <int value="1" label="Seen"/>
+</enum>
+
 <enum name="ContextualSearchSearchRequestStatus">
   <int value="0" label="Not Failed"/>
   <int value="1" label="Failed"/>
