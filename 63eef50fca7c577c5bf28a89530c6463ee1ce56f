@@ -114,6 +114,30 @@
       "revId": "63eef50fca7c577c5bf28a89530c6463ee1ce56f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86e46daa_0e353089",
+        "filename": "third_party/WebKit/Source/core/inspector/ThreadDebugger.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-11-30T22:39:18Z",
+      "side": 0,
+      "message": "Sorry I miss this. I am not very familiar with this domain. haraken should have better knowledge of this part I think.",
+      "parentUuid": "9b5ef24f_6e233823",
+      "range": {
+        "startLine": 282,
+        "startChar": 19,
+        "endLine": 282,
+        "endChar": 27
+      },
+      "revId": "63eef50fca7c577c5bf28a89530c6463ee1ce56f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
