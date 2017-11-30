@@ -31,6 +31,9 @@ CWV_EXPORT
 @property(nonatomic, readonly, getter=isDecelerating) BOOL decelerating;
 @property(nonatomic, readonly, getter=isDragging) BOOL dragging;
 @property(nonatomic) BOOL scrollsToTop;
+@property(nonatomic)
+    UIScrollViewContentInsetAdjustmentBehavior contentInsetAdjustmentBehavior
+        API_AVAILABLE(ios(11.0));
 @property(nonatomic, readonly) UIPanGestureRecognizer* panGestureRecognizer;
 
 // KVO compliant.
