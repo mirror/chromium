@@ -1431,6 +1431,8 @@ NetworkChangeNotifier::NetworkHandle MockUDPClientSocket::GetBoundNetwork()
   return network_;
 }
 
+void MockUDPClientSocket::Tag(const SocketTag& tag) override {}
+
 void MockUDPClientSocket::OnReadComplete(const MockRead& data) {
   if (!data_)
     return;

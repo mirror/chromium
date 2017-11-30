@@ -31,6 +31,7 @@ namespace net {
 class IPAddress;
 class NetLog;
 struct NetLogSource;
+class SocketTag;
 
 class NET_EXPORT UDPSocketPosix {
  public:
@@ -237,6 +238,9 @@ class NET_EXPORT UDPSocketPosix {
 
   // Resets the thread to be used for thread-safety checks.
   void DetachFromThread();
+
+  // Apply |tag| to this socket.
+  void Tag(const SocketTag& tag);
 
  private:
   enum SocketOptions {
