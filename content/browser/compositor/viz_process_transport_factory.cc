@@ -29,6 +29,10 @@
 #include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
 #include "ui/compositor/reflector.h"
 
+#if defined(OS_WIN)
+#include "ui/gfx/win/rendering_window_manager.h"
+#endif
+
 namespace content {
 namespace {
 
@@ -148,6 +152,11 @@ void VizProcessTransportFactory::ConnectHostFrameSinkManager() {
 
 void VizProcessTransportFactory::CreateLayerTreeFrameSink(
     base::WeakPtr<ui::Compositor> compositor) {
+#if defined(OS_WIN)
+  gfx::RenderingWindowManager::GetInstance()->UnregisterParent(
+      compositor->widget());
+#endif
+
   if (is_gpu_compositing_disabled_ || compositor->force_software_compositor()) {
     OnEstablishedGpuChannel(compositor, nullptr);
     return;
@@ -164,6 +173,13 @@ VizProcessTransportFactory::SharedMainThreadContextProvider() {
 }
 
 void VizProcessTransportFactory::RemoveCompositor(ui::Compositor* compositor) {
+#if defined(OS_WIN)
+  // TODO(kylechar): Make sure that GpuProcessHost::SetChildSurface() doesn't
+  // crash the GPU process after parent is unregistered.
+  gfx::RenderingWindowManager::GetInstance()->UnregisterParent(
+      compositor->widget());
+#endif
+
   compositor_data_map_.erase(compositor);
 }
 
@@ -377,6 +393,11 @@ void VizProcessTransportFactory::OnEstablishedGpuChannel(
     return;
   }
 
+#if defined(OS_WIN)
+  gfx::RenderingWindowManager::GetInstance()->RegisterParent(
+      compositor->widget());
+#endif
+
   // TODO(crbug.com/776050): Deal with context loss.
 
   // Create interfaces for a root CompositorFrameSink.
@@ -419,6 +440,11 @@ void VizProcessTransportFactory::OnEstablishedGpuChannel(
       std::make_unique<viz::ClientLayerTreeFrameSink>(
           compositor_context_provider_, shared_worker_context_provider_,
           &params));
+
+#if defined(OS_WIN)
+  gfx::RenderingWindowManager::GetInstance()->DoSetParentOnChild(
+      compositor->widget());
+#endif
 }
 
 bool VizProcessTransportFactory::CreateContextProviders(
