@@ -22,6 +22,11 @@ class SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT OSMetrics {
   static bool FillOSMemoryDump(base::ProcessId pid, mojom::RawOSMemDump* dump);
   static bool FillProcessMemoryMaps(base::ProcessId, mojom::RawOSMemDump*);
 
+  static void MemoryMapsAsValueInto(
+      const std::vector<mojom::VmRegionPtr>& memory_maps,
+      base::trace_event::TracedValue* value,
+      bool is_argument_filtering_enabled);
+
  private:
   FRIEND_TEST_ALL_PREFIXES(OSMetricsTest, ParseProcSmaps);
   FRIEND_TEST_ALL_PREFIXES(OSMetricsTest, TestWinModuleReading);
