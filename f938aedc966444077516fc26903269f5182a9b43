@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f819dd9e_764c74e3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-30T15:47:34Z",
+      "side": 1,
+      "message": "Why are you keeping both?",
+      "revId": "f938aedc966444077516fc26903269f5182a9b43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
