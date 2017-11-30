@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecbfc25f_025e8538",
+        "filename": "content/test/data/tall_page_with_local_iframe.html",
+        "patchSetId": 18
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-30T21:40:40Z",
+      "side": 1,
+      "message": "nit: maybe use css absolute positioning to guarantee it?",
+      "revId": "fe9cc6bfbea43d49ab29a3f814392f1a8a689124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
