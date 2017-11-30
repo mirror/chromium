@@ -22,6 +22,30 @@
       "revId": "f67545864b02f7c611a8bc1ee59e97cbb5b3826a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da95dd57_e39849ee",
+        "filename": "chrome/browser/ui/tabs/tab_activity_watcher.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-30T01:44:34Z",
+      "side": 1,
+      "message": "Done.\n\nThe WebContentsData objects would will still be created for incognito WebContents, resulting in this function being called. I can prevent that in WatchWebContents().",
+      "parentUuid": "0819e2e2_4fd8c76e",
+      "range": {
+        "startLine": 129,
+        "startChar": 2,
+        "endLine": 130,
+        "endChar": 11
+      },
+      "revId": "f67545864b02f7c611a8bc1ee59e97cbb5b3826a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
