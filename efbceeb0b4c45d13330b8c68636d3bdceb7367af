@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a8767816_04cbb64e",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-30T07:15:43Z",
+      "side": 1,
+      "message": "I added a comment that the callback can be invoked after DMSS is destroyed.",
+      "parentUuid": "7fe65e98_fb184117",
+      "range": {
+        "startLine": 50,
+        "startChar": 5,
+        "endLine": 51,
+        "endChar": 52
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5f72221_d6a8ad1b",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
         "patchSetId": 17
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-30T02:07:12Z",
       "side": 1,
       "message": "See below re the delegation aspect.",
+      "range": {
+        "startLine": 57,
+        "startChar": 5,
+        "endLine": 57,
+        "endChar": 25
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "828a25b5_1d3545dc",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-30T07:15:43Z",
+      "side": 1,
+      "message": "Removed the \"Delegates to |impl_| to\" part.",
+      "parentUuid": "e5f72221_d6a8ad1b",
       "range": {
         "startLine": 57,
         "startChar": 5,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "590b260a_83c3716e",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-30T07:15:43Z",
+      "side": 1,
+      "message": "I agree the naming can be more explicit, but I would prefer to leave renaming out of this patch at this point. I added a TODO to address this when we merge this service with the in-browser MRP.",
+      "parentUuid": "3de27588_2f3db00a",
+      "range": {
+        "startLine": 61,
+        "startChar": 5,
+        "endLine": 61,
+        "endChar": 28
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ab6d902_5dd5c531",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h",
         "patchSetId": 17
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-30T02:07:12Z",
       "side": 1,
       "message": "The pattern we usually use for objects with a \"core\" implementation component that runs on a background sequence is to have the owning object own the core, and hold a reference to the TaskRunner on which it should be used.  So you\u0027d have:\n\nunique_ptr\u003cImpl\u003e impl_;\nscoped_refptr\u003cTaskRunner\u003e impl_task_runner_;\n\nand then just\n\nimpl_task_runner_-\u003ePostTask(...)\n\nThat has the advantage that the Impl can be read as a simple single-threaded class, and all the threading aspects are in one place, in the owning implementation object.",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 3
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40e9825e_0f944c2c",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-30T07:15:43Z",
+      "side": 1,
+      "message": "That makes sense to me but it isn\u0027t clear to me at the time whether this can be done for singleton objects like CastSocketService, which is why I went with the pattern I have now, and I did the same for non-singleton classes for consistency. We are transitioning the MediaSinkServices into singletons in the near future so there\u0027s opportunity to revisit this.",
+      "parentUuid": "3ab6d902_5dd5c531",
       "range": {
         "startLine": 51,
         "startChar": 0,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "3684771d_4361c3f3",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-30T07:15:43Z",
+      "side": 1,
+      "message": "Done. There\u0027s some room for improvement for the MockDnsSdRegistry API so we don\u0027t have to do this.",
+      "parentUuid": "73b77027_7d0e832f",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 3
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "83e3c94b_3254b92b",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
         "patchSetId": 17
@@ -128,6 +248,30 @@
       "writtenOn": "2017-11-30T02:07:12Z",
       "side": 1,
       "message": "Start() should only be called at-most-once, right?",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 15
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e2a5790_caf99571",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-30T07:15:43Z",
+      "side": 1,
+      "message": "Changed to CHECK(!impl_);",
+      "parentUuid": "83e3c94b_3254b92b",
       "range": {
         "startLine": 117,
         "startChar": 0,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "e1460f95_7937827b",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-30T07:15:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44c117e9_e4752264",
+      "range": {
+        "startLine": 138,
+        "startChar": 0,
+        "endLine": 139,
+        "endChar": 11
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7c98693_d9310261",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
         "patchSetId": 17
@@ -183,6 +351,30 @@
       "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "235fb080_52b9f2e7",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-30T07:15:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7c98693_d9310261",
+      "range": {
+        "startLine": 152,
+        "startChar": 0,
+        "endLine": 153,
+        "endChar": 11
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "fd4a4b8c_9b4facd4",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-30T07:15:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9df4f466_4eaba026",
+      "range": {
+        "startLine": 191,
+        "startChar": 0,
+        "endLine": 191,
+        "endChar": 14
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "364c03e2_55a756ac",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
         "patchSetId": 17
@@ -229,6 +445,30 @@
       "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d172083d_ced029c0",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-30T07:15:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "364c03e2_55a756ac",
+      "range": {
+        "startLine": 202,
+        "startChar": 0,
+        "endLine": 202,
+        "endChar": 16
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "064507e1_a19311be",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-30T07:15:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0166c928_88840245",
+      "range": {
+        "startLine": 214,
+        "startChar": 2,
+        "endLine": 214,
+        "endChar": 14
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18a109fc_02d98150",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.h",
         "patchSetId": 17
@@ -266,6 +530,30 @@
       "writtenOn": "2017-11-30T02:07:12Z",
       "side": 1,
       "message": "I would recommend against talking about |impl_| in this API description. I\u0027d also recommend simply returning a callback that has the target SequencedTaskRunner bound into it already, and PostTask()s to it, if necessary, when Run() - then you can state here that the callback can be run on any sequence.",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 30
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7d7950d_7e20ed1a",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-30T07:15:43Z",
+      "side": 1,
+      "message": "Will revisit this with the redesign coming soon.",
+      "parentUuid": "18a109fc_02d98150",
       "range": {
         "startLine": 41,
         "startChar": 0,
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "92d82131_5a471952",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-30T07:15:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bed9a99_fdff44c9",
+      "range": {
+        "startLine": 54,
+        "startChar": 5,
+        "endLine": 54,
+        "endChar": 26
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e42f60e_9d159267",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.h",
         "patchSetId": 17
@@ -312,6 +624,30 @@
       "writtenOn": "2017-11-30T02:07:12Z",
       "side": 1,
       "message": "nit: See DMSS re the naming of this.",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 23
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d38ed927_6f693c0b",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-30T07:15:43Z",
+      "side": 1,
+      "message": "Ack.",
+      "parentUuid": "2e42f60e_9d159267",
       "range": {
         "startLine": 59,
         "startChar": 2,
@@ -347,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "1697e73a_c6663aa8",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-30T07:15:43Z",
+      "side": 1,
+      "message": "See other comment.",
+      "parentUuid": "b9830047_79697828",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 3
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a6a35284_daa207c9",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
         "patchSetId": 17
@@ -370,6 +730,30 @@
     },
     {
       "key": {
+        "uuid": "f19b333c_c2a8c197",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-30T07:15:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6a35284_daa207c9",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 32
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e480124_02884b74",
         "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
         "patchSetId": 17
@@ -387,6 +771,24 @@
     },
     {
       "key": {
+        "uuid": "3f77d321_dc0da5eb",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-30T07:15:43Z",
+      "side": 1,
+      "message": "I recall that there were some potential concerns identified but it has not been explored further  to assess actual impact, so my understanding is that we put the idea in the backburner. FWIW I still think it\u0027s worth building a prototype and see how things go, but it\u0027s obviously not high priority.",
+      "parentUuid": "0e480124_02884b74",
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aee46226_59389241",
         "filename": "chrome/common/media_router/discovery/media_sink_internal.cc",
         "patchSetId": 17
@@ -398,6 +800,30 @@
       "writtenOn": "2017-11-30T02:07:12Z",
       "side": 1,
       "message": "nit: Doesn\u0027t look like this is used?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 26
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bb4caad_fac3e845",
+        "filename": "chrome/common/media_router/discovery/media_sink_internal.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-30T07:15:43Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "aee46226_59389241",
       "range": {
         "startLine": 9,
         "startChar": 0,
@@ -433,6 +859,30 @@
     },
     {
       "key": {
+        "uuid": "402eb673_a6408563",
+        "filename": "chrome/common/media_router/discovery/media_sink_internal.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-30T07:15:43Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "ff1e395b_8232f43b",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 39
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63914da8_02c62e7e",
         "filename": "chrome/common/media_router/discovery/media_sink_service_base.h",
         "patchSetId": 17
@@ -444,6 +894,30 @@
       "writtenOn": "2017-11-30T02:07:12Z",
       "side": 1,
       "message": "nit: The use of a Timer is not really important; what\u0027s important is that it throttles the callback rate to some value - what isn\u0027t clear is where that value comes from?",
+      "range": {
+        "startLine": 20,
+        "startChar": 9,
+        "endLine": 21,
+        "endChar": 47
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27fa10be_b1a76261",
+        "filename": "chrome/common/media_router/discovery/media_sink_service_base.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-30T07:15:43Z",
+      "side": 1,
+      "message": "The timeout amount is an implementation detail, so I removed the part about Timer and added \"fixed timeout\". We can also declare the timeout in .h but it didn\u0027t seem necessary to do so.",
+      "parentUuid": "63914da8_02c62e7e",
       "range": {
         "startLine": 20,
         "startChar": 9,
@@ -479,6 +953,30 @@
     },
     {
       "key": {
+        "uuid": "439cf638_5a6461af",
+        "filename": "chrome/common/media_router/discovery/media_sink_service_base.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-30T07:15:43Z",
+      "side": 1,
+      "message": "Yeah, the way it is written is to accommodate unit tests and/or to save a helper method, I think. But it ended up being more confusing to read. I changed it so that RestartTimer is only valid to call after StartTimer is called, and a comment in why discovery_timer_ can be non-null in Start().",
+      "parentUuid": "9242e24e_e9229c3b",
+      "range": {
+        "startLine": 48,
+        "startChar": 51,
+        "endLine": 49,
+        "endChar": 35
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9e19157_888d4abd",
         "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
         "patchSetId": 17
@@ -490,6 +988,30 @@
       "writtenOn": "2017-11-30T02:07:12Z",
       "side": 1,
       "message": "Won\u0027t this mean we silently ignore the new listener |details|?\n\nShould we instead CHECK(!message_handler_), if this must be called at-most-once?\n\nOr should we reset the |cast_socket_service_| and |message_handler_| in this case?",
+      "range": {
+        "startLine": 178,
+        "startChar": 0,
+        "endLine": 180,
+        "endChar": 0
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "003eadb5_f2b02ec7",
+        "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-30T07:15:43Z",
+      "side": 1,
+      "message": "OnListenerAdded can be called twice, since CastChannelAPI listens for two event types. There\u0027s another case is if the dev version of MR extension is loaded while there is a release version running, but this is a corner case that occurs during development so we don\u0027t design our code to deal with multiple extensions specifically.",
+      "parentUuid": "e9e19157_888d4abd",
       "range": {
         "startLine": 178,
         "startChar": 0,

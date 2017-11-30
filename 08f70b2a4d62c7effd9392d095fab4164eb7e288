@@ -179,6 +179,30 @@
     },
     {
       "key": {
+        "uuid": "51cd92cf_f393ba97",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-30T07:15:43Z",
+      "side": 1,
+      "message": "What I meant is that the callback is passed through from DMSS to DMSSImpl. It is possible to structure it so that DMSS acts as the trampoline in order to support the assumption you described, but this results in an extra thread hop because DMSS is only safe to access on UI thread. I agree it is a reasonable API contract to enforce, and I am happy to look into this after this patch.",
+      "parentUuid": "2c2ef647_b0e15cca",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 1
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "675eb480_f74d1a1b",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
         "patchSetId": 8
@@ -309,6 +333,30 @@
       "side": 1,
       "message": "Right; what I\u0027m asking is why do we give that API contract? Why not stipulate that it must be called at-most-once?",
       "parentUuid": "693dc1fb_2bdbd1e0",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 11
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10b06668_c0f3f941",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-30T07:15:43Z",
+      "side": 1,
+      "message": "Ok, I am doing a CHECK(!impl_); here and in CMSS.",
+      "parentUuid": "941ae75a_216e9b60",
       "range": {
         "startLine": 52,
         "startChar": 0,
@@ -1084,6 +1132,30 @@
     },
     {
       "key": {
+        "uuid": "7e5be717_a6d0e3ba",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-30T07:15:43Z",
+      "side": 1,
+      "message": "Added comments.",
+      "parentUuid": "a81ca3e9_c0ea9da8",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 61
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c792743_450d25d6",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
         "patchSetId": 8
@@ -1220,6 +1292,24 @@
       "side": 1,
       "message": "My point was rather about the fact that the Impl objects have a task_runner() that they themselves never use, but that their owning object uses.  That\u0027s not a pattern we really use in Chromium code, in my experience; usually the owning object maintains the TaskRunner reference, to use to PostTask to the Impl.\n\nRe the thread-bouncing: Mark, it is important to bounce IO-\u003eUI-\u003eIO when invoking CastMediaSinkServiceImpl::OnDialSinkAdded(), to maintain correct ordering with respect to the Impl\u0027s teardown - if you simple PostTask directly from IO-thread to IO-thread then it is possible that the UI thread has DeleteSoon()\u0027d the Impl before the IO-\u003eIO task is processed. That\u0027s the limitation of the unique_ptr\u003c\u003e/DeleteSoon() model.\n\nIf we want to be able to invoke directly, on the IO thread, we would just need to return a callback object that is bound directly to a WeakPtr\u003cImpl\u003e, and it\u0027s SequencedTaskRunner, e.g.\n\n// static\nvoid Impl::RunOnDialSinkAdded(scoped_refptr\u003cSequenceTaskRunner\u003e runner, WeakPtr\u003cImpl\u003e impl, Sink sink) {\n  // (Optionally shortcut if we\u0027re already running on |runner|).\n  runner-\u003ePostTask(Bind(\u0026Impl::OnDialSinkAdded, impl, sink));\n}\n\nCallback CMSS::GetDialSinkAddedCallback() {\n  return Bind(\u0026RunOnDialSinkAdded, impl_runner_, impl_weak_ptr_);\n}",
       "parentUuid": "97dcb5b0_76cb2762",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e8f6bba_b84c2d4a",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-30T07:15:43Z",
+      "side": 1,
+      "message": "That\u0027s similar to what I have done, except the callback returned here is a CMSSImpl member function bound with WeakPtr and runner-\u003ePostTask is done in DMSS rather than in CMSSImpl.\n\nSee other comment regarding task_runner() pattern.",
+      "parentUuid": "b9236d66_d520a48e",
       "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -1696,6 +1786,30 @@
       "side": 1,
       "message": "OK, but it doesn\u0027t look like you actually made that change. :)",
       "parentUuid": "8464b453_e1a6c331",
+      "range": {
+        "startLine": 30,
+        "startChar": 37,
+        "endLine": 30,
+        "endChar": 63
+      },
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "794587d2_ecec2ebc",
+        "filename": "chrome/common/media_router/discovery/media_sink_service_base.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-30T07:15:43Z",
+      "side": 1,
+      "message": "Ok, done for real.",
+      "parentUuid": "4b09e043_2145a2d5",
       "range": {
         "startLine": 30,
         "startChar": 37,
