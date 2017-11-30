@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c64c412_54b0d8c7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-30T22:47:45Z",
+      "side": 1,
+      "message": "It\u0027s -1..-2^64, inclusive: https://tools.ietf.org/html/rfc7049#section-2.1",
+      "range": {
+        "startLine": 10,
+        "startChar": 49,
+        "endLine": 10,
+        "endChar": 64
+      },
+      "revId": "086933d88ca9e0bcec716fba460cbe4f156c644c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb14fc15_5080241c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-30T22:47:45Z",
+      "side": 1,
+      "message": "int64_t can represent -2^63.",
+      "range": {
+        "startLine": 11,
+        "startChar": 50,
+        "endLine": 11,
+        "endChar": 57
+      },
+      "revId": "086933d88ca9e0bcec716fba460cbe4f156c644c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84a46394_8ffee3d8",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-30T22:47:45Z",
+      "side": 1,
+      "message": "Could you make this check a different function instead of changing the interface of this function?",
+      "range": {
+        "startLine": 214,
+        "startChar": 2,
+        "endLine": 214,
+        "endChar": 45
+      },
+      "revId": "086933d88ca9e0bcec716fba460cbe4f156c644c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3510d4d_f0a2f516",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-30T22:47:45Z",
+      "side": 1,
+      "message": "In C++ you write this as `struct NegativeIntTestCase {`",
+      "range": {
+        "startLine": 72,
+        "startChar": 2,
+        "endLine": 72,
+        "endChar": 17
+      },
+      "revId": "086933d88ca9e0bcec716fba460cbe4f156c644c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aa1f2b4_be841357",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-30T22:47:45Z",
+      "side": 1,
+      "message": "You should be able to write this as\n  SCOPED_TRACE(testing::Message() \u003c\u003c \"testing negative int at index : \" \u003c\u003c test_case_index++);",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 93,
+        "endChar": 32
+      },
+      "revId": "086933d88ca9e0bcec716fba460cbe4f156c644c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2b7309e_958d53b0",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-11-30T22:47:45Z",
+      "side": 1,
+      "message": "I\u0027m tempted to have CBORValue model all integers as signed int64_t values. That loses the [-2^64,-2^63) and [2^63, 2^64) ranges that are representable in CBOR itself, but I don\u0027t think CTAP or web packaging actually need to use those ranges.\n\nThoughts, Kim and Balazs?",
+      "range": {
+        "startLine": 78,
+        "startChar": 11,
+        "endLine": 79,
+        "endChar": 58
+      },
+      "revId": "086933d88ca9e0bcec716fba460cbe4f156c644c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
