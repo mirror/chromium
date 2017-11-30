@@ -16,6 +16,24 @@
       "revId": "81ff5ac467fa7967cb81a9fd98dbf17804e8cb59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "546dfa76_dad5d331",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-11-30T21:36:00Z",
+      "side": 0,
+      "message": "Will do. I\u0027ll move the SetDefersLoading() change over as well, since that\u0027s kind of random and only semi-related to either patch.",
+      "parentUuid": "6fc5d180_853b469b",
+      "revId": "81ff5ac467fa7967cb81a9fd98dbf17804e8cb59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
