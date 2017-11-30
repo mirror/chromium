@@ -71,6 +71,10 @@ class CORE_EXPORT RarePaintData {
   // This is the complete set of property nodes that is inherited
   // from the ancestor before applying any local CSS properties,
   // but includes paint offset transform.
+  PropertyTreeState PreLocalProperties() const;
+
+  // Same as *LocalBorderBoxProperties() except that the effect node is the
+  // state before applying any local effects.
   PropertyTreeState PreEffectProperties() const;
 
   // This is the complete set of property nodes that can be used to

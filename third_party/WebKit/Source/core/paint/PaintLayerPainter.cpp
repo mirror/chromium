@@ -968,11 +968,6 @@ void PaintLayerPainter::PaintFragmentWithPhase(
         *fragment.fragment_data->LocalBorderBoxProperties());
     chunk_properties.backface_hidden =
         paint_layer_.GetLayoutObject().HasHiddenBackface();
-    if (phase == PaintPhase::kMask) {
-      const auto* properties = fragment.fragment_data->PaintProperties();
-      DCHECK(properties && properties->Mask());
-      chunk_properties.property_tree_state.SetEffect(properties->Mask());
-    }
     fragment_paint_chunk_properties.emplace(
         context.GetPaintController(), chunk_properties, paint_layer_,
         DisplayItem::PaintPhaseToDrawingType(phase));
@@ -1227,15 +1222,15 @@ void PaintLayerPainter::PaintAncestorClippingMaskForFragments(
     const DisplayItemClient& client =
         *paint_layer_.GetCompositedLayerMapping()->AncestorClippingMaskLayer();
     // This applies the paint properties from the CompositedLayerMapping::
-    // ClipInheritanceAncestor's PreEffectProperties (the GraphicsLayer's state)
-    // to |paint_layer_|'s PreEffectProperties, which contains the clip nodes
+    // ClipInheritanceAncestor's PreLocalProperties (the GraphicsLayer's state)
+    // to |paint_layer_|'s PreLocalProperties, which contains the clip nodes
     // for ancestor border radius clip on this layer.
     ScopedPaintChunkProperties properties(
         context.GetPaintController(),
         paint_layer_.GetLayoutObject()
             .FirstFragment()
             .GetRarePaintData()
-            ->PreEffectProperties(),
+            ->PreLocalProperties(),
         client,
         DisplayItem::PaintPhaseToDrawingType(PaintPhase::kClippingMask));
     for (auto& fragment : layer_fragments)
@@ -1264,7 +1259,7 @@ void PaintLayerPainter::PaintChildClippingMaskForFragments(
         *paint_layer_.GetCompositedLayerMapping()->ChildClippingMaskLayer();
     for (auto& fragment : layer_fragments) {
       // This applies the paint properties from |paint_layer_|'s
-      // PreEffectProperties (the GraphicsLayer's state) to the fragment's
+      // PreLocalProperties (the GraphicsLayer's state) to the fragment's
       // ContentsProperties, which contains the clip nodes for border radius
       // clip that should be applied on children.
       ScopedPaintChunkProperties fragment_paint_chunk_properties(
