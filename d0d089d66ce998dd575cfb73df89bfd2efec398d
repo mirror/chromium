@@ -76,6 +76,23 @@
     },
     {
       "key": {
+        "uuid": "ee581fd7_72c0c893",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 43163,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T07:40:15Z",
+      "side": 1,
+      "message": "If this is intended to support not just presentation modes then we should probably reserve ORIENTATION_SENSOR or something like that for offenwanger\u0027s work.",
+      "revId": "d0d089d66ce998dd575cfb73df89bfd2efec398d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1c083d7_f052705d",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
