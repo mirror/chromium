@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "88c197fe_c1797501",
+        "filename": "chrome/test/chromedriver/chrome/navigation_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-11-30T15:22:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76eb80ee_15bd890c",
+      "range": {
+        "startLine": 432,
+        "startChar": 36,
+        "endLine": 432,
+        "endChar": 64
+      },
+      "revId": "84afc388627edef1da3e277ffd9d03f6bd9bc600",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38105937_8cd3cb85",
         "filename": "chrome/test/chromedriver/test/test_expectations",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d0473321_013ba3cc",
+        "filename": "chrome/test/chromedriver/test/test_expectations",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-11-30T15:22:05Z",
+      "side": 1,
+      "message": "This test was probably originally written for an issue noticed on Firefox, but there is nothing specific about Firefox in the test itself. It loads an HTML page with a document.writeln() in the onload event handler, and that was causing problems in Chrome v63 with PlzNavigate.",
+      "parentUuid": "38105937_8cd3cb85",
+      "range": {
+        "startLine": 119,
+        "startChar": 58,
+        "endLine": 119,
+        "endChar": 65
+      },
+      "revId": "84afc388627edef1da3e277ffd9d03f6bd9bc600",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e6cd35e_82dc71bd",
         "filename": "chrome/test/chromedriver/test/test_expectations",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "84afc388627edef1da3e277ffd9d03f6bd9bc600",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e11491b_e8201ed4",
+        "filename": "chrome/test/chromedriver/test/test_expectations",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-11-30T15:22:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9e6cd35e_82dc71bd",
+      "range": {
+        "startLine": 120,
+        "startChar": 37,
+        "endLine": 120,
+        "endChar": 53
+      },
+      "revId": "84afc388627edef1da3e277ffd9d03f6bd9bc600",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
