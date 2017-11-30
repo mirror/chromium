@@ -22,6 +22,30 @@
       "revId": "e58c1e694d1b3799cc465f62c81e49fdf4fb20ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd19cac8_5989d8c6",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-11-30T00:14:44Z",
+      "side": 1,
+      "message": "Done. base.evaluate() is left out since we don\u0027t necessarily want to run whatever we\u0027re given on the UI thread, but everything else is handled on the UI thread.",
+      "parentUuid": "108bc82c_72754225",
+      "range": {
+        "startLine": 124,
+        "startChar": 28,
+        "endLine": 124,
+        "endChar": 49
+      },
+      "revId": "e58c1e694d1b3799cc465f62c81e49fdf4fb20ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
