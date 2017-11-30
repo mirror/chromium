@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f71bc3ed_409014d1",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 4367,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-11-30T01:06:33Z",
+      "side": 1,
+      "message": "I just copied this straight out of Linux Tests.  Is this way too many things?",
+      "range": {
+        "startLine": 4367,
+        "startChar": 5,
+        "endLine": 4367,
+        "endChar": 16
+      },
+      "revId": "a9084e7b0b06310f7ad984fc5f2704b34c573530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
