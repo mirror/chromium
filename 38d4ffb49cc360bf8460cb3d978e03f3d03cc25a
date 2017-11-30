@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f26f54f_1f9c48c6",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-30T21:59:28Z",
+      "side": 1,
+      "message": "Using redirect_ here does not look right. Is it even guaranteed to be set at this point?",
+      "revId": "38d4ffb49cc360bf8460cb3d978e03f3d03cc25a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91c33665_b8322450",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-30T21:59:28Z",
+      "side": 1,
+      "message": "just move this to the top?",
+      "revId": "38d4ffb49cc360bf8460cb3d978e03f3d03cc25a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
