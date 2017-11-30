@@ -46,6 +46,30 @@
       "revId": "be872012fe17853b803265ff54adc2281064a504",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1d3d784e_47e182aa",
+        "filename": "components/sessions/core/serialized_navigation_entry.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-30T18:46:15Z",
+      "side": 1,
+      "message": "There is a revision number that you can bump. But I agree it isn\u0027t really worth it for this, which is why I +1 the patch.",
+      "parentUuid": "9c99d698_06a066ff",
+      "range": {
+        "startLine": 251,
+        "startChar": 2,
+        "endLine": 252,
+        "endChar": 29
+      },
+      "revId": "be872012fe17853b803265ff54adc2281064a504",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
