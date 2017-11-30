@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ebe3a446_b3b566e3",
+        "filename": "components/signin/ios/browser/delay_callback_helper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-11-30T23:23:33Z",
+      "side": 1,
+      "message": "Done. PTAL.",
+      "parentUuid": "af104b00_01367269",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 25
+      },
+      "revId": "fe832d60bc9d78204f60b377711bd8c9846daad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c39c9c19_a9b7671b",
         "filename": "ios/web_view/internal/signin/ios_web_view_signin_client.mm",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-30T10:44:22Z",
       "side": 1,
       "message": "as an aside, it seems unnecessary for this method to be in the client at all: the client already exposes a method to get the URLRequestContext, the parameters are passed in from the core component code, and SigninCookieChangedSubscription is also core component code. Maybe a candidate for refactoring in a followup CL?",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 101,
+        "endChar": 15
+      },
+      "revId": "fe832d60bc9d78204f60b377711bd8c9846daad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4fd6dc9_573fb35b",
+        "filename": "ios/web_view/internal/signin/ios_web_view_signin_client.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-11-30T23:23:33Z",
+      "side": 1,
+      "message": "I\u0027m OK either way. It makes sense for the client to handle the creation of this subscription, but I\u0027ll defer to the signin owners.",
+      "parentUuid": "c39c9c19_a9b7671b",
       "range": {
         "startLine": 101,
         "startChar": 2,

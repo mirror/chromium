@@ -39,6 +39,24 @@
       "revId": "9b10783b6731e3ba8156e1a05645a1dca10f59b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f24064d1_89573291",
+        "filename": "components/signin/ios/browser/ios_signin_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-11-30T23:23:33Z",
+      "side": 0,
+      "message": "Sounds good. Created another CL and reparented this one to it.",
+      "parentUuid": "ab638ece_6735f696",
+      "revId": "9b10783b6731e3ba8156e1a05645a1dca10f59b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
