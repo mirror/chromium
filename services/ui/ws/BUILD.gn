@@ -73,6 +73,8 @@ static_library("lib") {
     "platform_display_default.h",
     "platform_display_delegate.h",
     "platform_display_factory.h",
+    "platform_display_mirror.cc",
+    "platform_display_mirror.h",
     "remote_event_dispatcher.cc",
     "remote_event_dispatcher.h",
     "server_window.cc",
