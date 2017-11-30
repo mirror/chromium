@@ -118,11 +118,14 @@ class OfflinePageMetadataStoreSQL : public OfflinePageMetadataStore {
     }
 
     sql::Connection* db = state_ == StoreState::LOADED ? db_.get() : nullptr;
+    closing_weak_ptr_factory_.InvalidateWeakPtrs();
 
     base::PostTaskAndReplyWithResult(
         background_task_runner_.get(), FROM_HERE,
         base::BindOnce(std::move(run_callback), db),
-        std::move(result_callback));
+        base::BindOnce(&OfflinePageMetadataStoreSQL::RescheduleClosing<T>,
+                       weak_ptr_factory_.GetWeakPtr(),
+                       std::move(result_callback)));
   }
 
   // Helper function used to force incorrect state for testing purposes.
@@ -135,6 +138,13 @@ class OfflinePageMetadataStoreSQL : public OfflinePageMetadataStore {
   // Used to conclude opening/resetting DB connection.
   void OnInitializeInternalDone(base::OnceClosure pending_command,
                                 bool success);
+
+  // Timed closing.
+  template <typename T>
+  void RescheduleClosing(ResultCallback<T> result_callback, T result);
+  void CloseInternal();
+  void CloseInternalDone(std::unique_ptr<sql::Connection> db,
+                         bool db_close_called);
 
   // Background thread where all SQL access should be run.
   scoped_refptr<base::SequencedTaskRunner> background_task_runner_;
@@ -152,6 +162,7 @@ class OfflinePageMetadataStoreSQL : public OfflinePageMetadataStore {
   StoreState state_;
 
   base::WeakPtrFactory<OfflinePageMetadataStoreSQL> weak_ptr_factory_;
+  base::WeakPtrFactory<OfflinePageMetadataStoreSQL> closing_weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(OfflinePageMetadataStoreSQL);
 };
