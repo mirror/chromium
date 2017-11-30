@@ -90,10 +90,10 @@ namespace {
 // current entries are [google, digg, yahoo], with the current entry google,
 // and the user types in cnet, then digg and yahoo are pruned.
 void NotifyPrunedEntries(NavigationControllerImpl* nav_controller,
-                         bool from_front,
+                         PrunedPosition position,
                          int count) {
   PrunedDetails details;
-  details.from_front = from_front;
+  details.position = position;
   details.count = count;
   nav_controller->delegate()->NotifyNavigationListPruned(details);
 }
@@ -1700,6 +1700,9 @@ bool NavigationControllerImpl::CanPruneAllButLastCommitted() {
 }
 
 void NavigationControllerImpl::PruneAllButLastCommitted() {
+  LOG(ERROR) << "Prune All";
+  int entries_front = last_committed_entry_index_;
+  int entries_back = GetEntryCount() - last_committed_entry_index_;
   PruneAllButLastCommittedInternal();
 
   DCHECK_EQ(0, last_committed_entry_index_);
@@ -1707,6 +1710,10 @@ void NavigationControllerImpl::PruneAllButLastCommitted() {
 
   delegate_->SetHistoryOffsetAndLength(last_committed_entry_index_,
                                        GetEntryCount());
+  if (entries_front > 0)
+    NotifyPrunedEntries(this, PrunedPosition::FRONT, entries_front);
+  if (entries_back > 0)
+    NotifyPrunedEntries(this, PrunedPosition::BACK, entries_back);
 }
 
 void NavigationControllerImpl::PruneAllButLastCommittedInternal() {
@@ -1719,6 +1726,36 @@ void NavigationControllerImpl::PruneAllButLastCommittedInternal() {
                  entries_.begin() + last_committed_entry_index_);
   entries_.erase(entries_.begin() + 1, entries_.end());
   last_committed_entry_index_ = 0;
+}
+
+void NavigationControllerImpl::PruneNavigationEntries(
+    const DeletionPredicate& deletionPredicate) {
+  DCHECK(CanPruneAllButLastCommitted());
+  int pruned = 0;
+  for (size_t i = 0; i < entries_.size(); i++) {
+    if (i != static_cast<size_t>(last_committed_entry_index_) &&
+        deletionPredicate.Run(*entries_[i]))
+      pruned++;
+  }
+  LOG(ERROR) << "pruning: " << pruned;
+  if (pruned == 0)
+    return;
+  if (pruned == GetEntryCount() - 1)
+    return PruneAllButLastCommitted();
+
+  // Do the actual deletion.
+  for (size_t i = 0; i < entries_.size();) {
+    if (i != static_cast<size_t>(last_committed_entry_index_) &&
+        deletionPredicate.Run(*entries_[i])) {
+      LOG(ERROR) << "entry deleted: " << entries_[i]->GetURL();
+      RemoveEntryAtIndex(i);
+      NotifyPrunedEntries(this, PrunedPosition::INDEX, i);
+    } else {
+      i++;
+    }
+  }
+  delegate_->SetHistoryOffsetAndLength(last_committed_entry_index_,
+                                       GetEntryCount());
 }
 
 void NavigationControllerImpl::ClearAllScreenshots() {
@@ -1888,7 +1925,7 @@ void NavigationControllerImpl::InsertOrReplaceEntry(
       current_size--;
     }
     if (num_pruned > 0)  // Only notify if we did prune something.
-      NotifyPrunedEntries(this, false, num_pruned);
+      NotifyPrunedEntries(this, PrunedPosition::BACK, num_pruned);
   }
 
   PruneOldestEntryIfFull();
@@ -1902,7 +1939,7 @@ void NavigationControllerImpl::PruneOldestEntryIfFull() {
     DCHECK_EQ(max_entry_count(), entries_.size());
     DCHECK_GT(last_committed_entry_index_, 0);
     RemoveEntryAtIndex(0);
-    NotifyPrunedEntries(this, true, 1);
+    NotifyPrunedEntries(this, PrunedPosition::FRONT, 1);
   }
 }
 
