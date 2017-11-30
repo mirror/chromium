@@ -6,6 +6,7 @@
 
 #include "base/files/file_util.h"
 #include "base/huffman_trie.h"
+#include "base/memory/singleton.h"
 #include "base/path_service.h"
 #include "chrome/browser/media/media_engagement_preload.pb.h"
 #include "url/origin.h"
@@ -17,11 +18,32 @@ static const char kEndOfTable = 127;
 
 }  // namespace
 
-MediaEngagementPreloadedList::MediaEngagementPreloadedList() = default;
+// static
+MediaEngagementPreloadedList* MediaEngagementPreloadedList::GetInstance() {
+  return base::Singleton<MediaEngagementPreloadedList>::get();
+}
 
-MediaEngagementPreloadedList::~MediaEngagementPreloadedList() = default;
+MediaEngagementPreloadedList::MediaEngagementPreloadedList() {
+  DETACH_FROM_SEQUENCE(sequence_checker_);
+}
+
+MediaEngagementPreloadedList::~MediaEngagementPreloadedList() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+}
+
+bool MediaEngagementPreloadedList::IsLoaded() const {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  return is_loaded_;
+}
+
+bool MediaEngagementPreloadedList::IsEmpty() const {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  return trie_bits_ == 0;
+}
 
 bool MediaEngagementPreloadedList::CheckOriginIsPresent(url::Origin origin) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
   bool found = false;
   DCHECK(CheckStringIsPresent(origin.Serialize(), &found));
   return found;
@@ -163,6 +185,8 @@ bool MediaEngagementPreloadedList::CheckStringIsPresent(std::string input,
 }
 
 bool MediaEngagementPreloadedList::LoadFromFile(base::FilePath path) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
   // Check the file exists.
   if (!base::PathExists(path))
     return false;
