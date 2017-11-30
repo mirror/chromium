@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "74427083_92301b89",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2369,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-30T06:54:49Z",
+      "side": 1,
+      "message": "I\u0027ve confirmed that this is the behavior which happens without this CL \u003d\u003d with an empty ClientCertStore(*).\nAdded a comment to make that clear. \n\n(*) Specifically, I\u0027ve removed the feature and ran the new browsertest WebviewClientCertsLoginTest.ClientCertRequestedInOtherWebView - it worked fine, and it verifies that it gets \"got no client cert\" from the test server, which means that the client responded with no client certificate instead of aborting.\nTo test that that\u0027s the case, I\u0027ve re-added the feature again and removed the ContinueWithCertificate(nullptr,nullptr) - now the browsertest fails, because it gets an error page.",
+      "parentUuid": "2479e131_f36a361c",
+      "revId": "b0fe67d5f07516a3af1251bb6b642582f5c557e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31f2de84_22a69a1a",
         "filename": "chrome/browser/chrome_content_browser_client.cc",
         "patchSetId": 6
@@ -87,6 +105,24 @@
       "revId": "b0fe67d5f07516a3af1251bb6b642582f5c557e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a53ee4b6_cf9cdf37",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2407,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-30T06:54:49Z",
+      "side": 1,
+      "message": "Same as above - added a comment that this is what we intend to do to mimic the \"no client certificates present\" case.",
+      "parentUuid": "31f2de84_22a69a1a",
+      "revId": "b0fe67d5f07516a3af1251bb6b642582f5c557e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
