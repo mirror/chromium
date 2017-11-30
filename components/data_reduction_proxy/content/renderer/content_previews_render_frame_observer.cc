@@ -64,6 +64,7 @@ ContentPreviewsRenderFrameObserver::GetPreviewsStateFromResponse(
     return content::PREVIEWS_OFF;
   }
 
+  LOG(WARNING) << "XXXXX   ContentPreviewsRenderFrameObserver::GetPreviewsStateFromResponse   ps: " << original_state;
   // Don't update the state if server previews were not enabled.
   if (!(original_state & content::SERVER_LITE_PAGE_ON)) {
     return original_state;
