@@ -22,7 +22,11 @@ Keyframe::PropertySpecificKeyframe::CreateInterpolation(
 
 void Keyframe::AddKeyframePropertiesToV8Object(
     V8ObjectBuilder& object_builder) const {
-  object_builder.Add("offset", offset_);
+  if (IsNull(offset_)) {
+    object_builder.AddNull("offset");
+  } else {
+    object_builder.Add("offset", offset_);
+  }
   object_builder.Add("easing", easing_->ToString());
   if (composite_.has_value()) {
     object_builder.AddString(
