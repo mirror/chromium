@@ -111,7 +111,7 @@ STDMETHODIMP BrowserAccessibilityComWin::get_appName(BSTR* app_name) {
   std::vector<std::string> product_components =
       base::SplitString(GetContentClient()->GetProduct(), "/",
                         base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
-  DCHECK_EQ(2U, product_components.size());
+  // DCHECK_EQ(2U, product_components.size());
   if (product_components.size() != 2)
     return E_FAIL;
   *app_name = SysAllocString(base::UTF8ToUTF16(product_components[0]).c_str());
@@ -130,7 +130,7 @@ STDMETHODIMP BrowserAccessibilityComWin::get_appVersion(BSTR* app_version) {
   std::vector<std::string> product_components =
       base::SplitString(GetContentClient()->GetProduct(), "/",
                         base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
-  DCHECK_EQ(2U, product_components.size());
+  // DCHECK_EQ(2U, product_components.size());
   if (product_components.size() != 2)
     return E_FAIL;
   *app_version =
@@ -1713,7 +1713,7 @@ void BrowserAccessibilityComWin::ComputeStylesIfNeeded() {
     return;
 
   std::map<int, std::vector<base::string16>> attributes_map;
-  if (owner()->PlatformIsLeaf() || owner()->IsSimpleTextControl()) {
+  if (owner()->PlatformIsLeaf() || owner()->IsPlainTextField()) {
     attributes_map[0] = ComputeTextAttributes();
     const std::map<int, std::vector<base::string16>> spelling_attributes =
         GetSpellingAttributes();
@@ -2135,7 +2135,7 @@ BrowserAccessibilityComWin::GetSpellingAttributes() {
       spelling_attributes[end_offset] = end_attributes;
     }
   }
-  if (owner()->IsSimpleTextControl()) {
+  if (owner()->IsPlainTextField()) {
     int start_offset = 0;
     for (BrowserAccessibility* static_text =
              BrowserAccessibilityManager::NextTextOnlyObject(
