@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e585e82a_34ea6cd4",
+        "filename": "ui/views/controls/slider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-30T02:53:43Z",
+      "side": 1,
+      "message": "DCHECK instead.",
+      "revId": "6122000f038fa5ec346bcbd7ef8043aea2d80d23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
