@@ -13,22 +13,25 @@ namespace vr {
 
 namespace {
 
-constexpr char kStatusVr[] = "VR.AssetsComponent.Status.OnEnter.VR";
+constexpr char kStatusVr[] = "VR.Component.Assets.Status.OnEnter.AllVR";
 constexpr char kStatusVrBrowsing[] =
-    "VR.AssetsComponent.Status.OnEnter.VRBrowsing";
-constexpr char kStatusWebVr[] = "VR.AssetsComponent.Status.OnEnter.WebVR";
+    "VR.Component.Assets.Status.OnEnter.VRBrowsing";
+constexpr char kStatusWebVr[] =
+    "VR.Component.Assets.Status.OnEnter.WebVRPresentation";
 constexpr char kLatencyVrBrowsing[] =
-    "VR.AssetsComponent.ReadyLatency.OnEnter.VRBrowsing";
+    "VR.Component.Assets.DurationUntilReady.OnEnter.VRBrowsing";
 constexpr char kLatencyWebVr[] =
-    "VR.AssetsComponent.ReadyLatency.OnEnter.WebVR";
+    "VR.Component.Assets.DurationUntilReady.OnEnter.WebVRPresentation";
 constexpr char kComponentUpdateStatus[] = "VR.AssetsComponent.UpdateStatus";
 constexpr char kAssetsLoadStatus[] = "VR.AssetsComponent.LoadStatus";
-constexpr char kDataConnectionRegisterComponent[] =
-    "VR.DataConnection.OnRegisterAssetsComponent";
-constexpr char kDataConnectionVr[] = "VR.DataConnection.OnEnter.VR";
-constexpr char kDataConnectionVrBrowsing[] =
-    "VR.DataConnection.OnEnter.VRBrowsing";
-constexpr char kDataConnectionWebVr[] = "VR.DataConnection.OnEnter.WebVR";
+constexpr char kNetworkConnectionTypeRegisterComponent[] =
+    "VR.NetworkConnectionType.OnRegisterComponent";
+constexpr char kNetworkConnectionTypeVr[] =
+    "VR.NetworkConnectionType.OnEnter.AllVR";
+constexpr char kNetworkConnectionTypeVrBrowsing[] =
+    "VR.NetworkConnectionType.OnEnter.VRBrowsing";
+constexpr char kNetworkConnectionTypeWebVr[] =
+    "VR.NetworkConnectionType.OnEnter.WebVRPresentation";
 
 const auto kMinLatency = base::TimeDelta::FromMilliseconds(500);
 const auto kMaxLatency = base::TimeDelta::FromHours(1);
@@ -85,17 +88,17 @@ void LogConnectionType(Mode mode,
   switch (mode) {
     case Mode::kVr:
       UMA_HISTOGRAM_ENUMERATION(
-          kDataConnectionVr, type,
+          kNetworkConnectionTypeVr, type,
           net::NetworkChangeNotifier::ConnectionType::CONNECTION_LAST + 1);
       return;
     case Mode::kVrBrowsing:
       UMA_HISTOGRAM_ENUMERATION(
-          kDataConnectionVrBrowsing, type,
+          kNetworkConnectionTypeVrBrowsing, type,
           net::NetworkChangeNotifier::ConnectionType::CONNECTION_LAST + 1);
       return;
     case Mode::kWebVr:
       UMA_HISTOGRAM_ENUMERATION(
-          kDataConnectionWebVr, type,
+          kNetworkConnectionTypeWebVr, type,
           net::NetworkChangeNotifier::ConnectionType::CONNECTION_LAST + 1);
       return;
     default:
@@ -153,7 +156,7 @@ void MetricsHelper::OnEnter(Mode mode) {
 
 void MetricsHelper::OnRegisteredComponent() {
   UMA_HISTOGRAM_ENUMERATION(
-      kDataConnectionRegisterComponent,
+      kNetworkConnectionTypeRegisterComponent,
       net::NetworkChangeNotifier::GetConnectionType(),
       net::NetworkChangeNotifier::ConnectionType::CONNECTION_LAST + 1);
 }
