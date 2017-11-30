@@ -22,6 +22,30 @@
       "revId": "c4d41995b8ce8557c4a2ab9912a19e73487c0445",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c62212d_ac464a67",
+        "filename": "services/metrics/public/cpp/metrics_utils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-11-30T00:03:22Z",
+      "side": 1,
+      "message": "Maybe GetExponentialBucketMin?  I think it should probably take the log base as a parameter, since it seems like not everything would want to use 1.3 (and you might want to mention that number in the metric description).\n\nI think it\u0027s probably fine to not static-const the log of the base, since it shouldn\u0027t be that expensive, or alternatively you could maybe take it as a template parameter.",
+      "parentUuid": "dff68290_db1c1bc9",
+      "range": {
+        "startLine": 16,
+        "startChar": 23,
+        "endLine": 16,
+        "endChar": 46
+      },
+      "revId": "c4d41995b8ce8557c4a2ab9912a19e73487c0445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
