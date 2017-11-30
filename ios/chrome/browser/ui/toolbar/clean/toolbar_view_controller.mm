@@ -174,10 +174,18 @@
 }
 
 - (void)setConstraints {
+  // Constraint so Toolbar stackview never overlaps with the Status Bar.
+  NSLayoutYAxisAnchor* topAnchor;
+  if (@available(iOS 11, *)) {
+    topAnchor = self.view.safeAreaLayoutGuide.topAnchor;
+  } else {
+    topAnchor = self.topLayoutGuide.bottomAnchor;
+  }
+
   self.view.translatesAutoresizingMaskIntoConstraints = NO;
   NSArray* constraints = @[
-    [self.stackView.topAnchor constraintEqualToAnchor:self.view.topAnchor
-                                             constant:kVerticalMargin],
+    [self.stackView.heightAnchor
+        constraintEqualToConstant:kToolbarHeight - 2 * kVerticalMargin],
     [self.stackView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor
                                                 constant:-kVerticalMargin],
     [self.stackView.leadingAnchor
@@ -202,27 +210,16 @@
         constraintEqualToAnchor:self.locationBarContainer.trailingAnchor],
     [self.bookmarkButton.trailingAnchor
         constraintEqualToAnchor:self.voiceSearchButton.leadingAnchor],
+    [self.stackView.topAnchor
+        constraintGreaterThanOrEqualToAnchor:topAnchor
+                                    constant:kVerticalMargin],
+    [self.view.bottomAnchor constraintEqualToAnchor:topAnchor
+                                           constant:kToolbarHeight],
   ];
-
-  // Constraint so Toolbar stackview never overlaps with the Status Bar.
-  NSLayoutYAxisAnchor* topAnchor;
-  if (@available(iOS 11, *)) {
-    topAnchor = self.view.safeAreaLayoutGuide.topAnchor;
-  } else {
-    topAnchor = self.topLayoutGuide.topAnchor;
-  }
-  [self.stackView.topAnchor
-      constraintGreaterThanOrEqualToAnchor:topAnchor
-                                  constant:kVerticalMargin]
-      .active = YES;
-  [self.view.bottomAnchor constraintEqualToAnchor:topAnchor
-                                         constant:kToolbarHeight]
-      .active = YES;
 
   // Set the constraints priority to UILayoutPriorityDefaultHigh so these are
   // not broken when the views are hidden or the VC's view size is 0.
-  [self activateConstraints:constraints
-               withPriority:UILayoutPriorityDefaultHigh];
+  [self activateConstraints:constraints withPriority:UILayoutPriorityRequired];
 }
 
 #pragma mark - Components Setup
@@ -345,7 +342,7 @@
   // Set the button constraint priority to UILayoutPriorityDefaultHigh so
   // these are not broken when being hidden by the StackView.
   [self activateConstraints:buttonConstraints
-               withPriority:UILayoutPriorityDefaultHigh];
+               withPriority:UILayoutPriorityRequired];
 }
 
 - (void)setUpLocationBarContainer {
