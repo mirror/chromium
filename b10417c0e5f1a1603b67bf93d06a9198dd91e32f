@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7ae8dcd_09d3c914",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-30T19:53:50Z",
+      "side": 1,
+      "message": "Might be a bit confusing to call this from ParseTextSymbolsFile (you\u0027d assume the function would return what\u0027s in the file). Probably better to fix up the IDs after the call (in the loop on line 254).\n\nNote: no need to fix ids for the second call to ParseTextSymbolsFiles(). Those IDs are already wrong to start with :P",
+      "revId": "b10417c0e5f1a1603b67bf93d06a9198dd91e32f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "693d8599_7c5f45ca",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-30T19:53:50Z",
+      "side": 1,
+      "message": "nit: 2 lines here please",
+      "revId": "b10417c0e5f1a1603b67bf93d06a9198dd91e32f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcbaad75_d78a3eea",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-30T19:53:50Z",
+      "side": 1,
+      "message": "comment nit: The code says what it does, your comment should say why it does it :)",
+      "revId": "b10417c0e5f1a1603b67bf93d06a9198dd91e32f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec17107e_1b3462d8",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-30T19:53:50Z",
+      "side": 1,
+      "message": "nit: could we simplify to:\n\nre.sub(r\u00270x\\d\\d\u0027, r\u00270x7f\u0027, resource_value)\n\nThe old code doesn\u0027t leave 0x01 alone, and no need for \u003ctail\u003e afaict.\n\nnit #2: Can you add a comment that this must work for arrays like:\n# int[] styleable FontFamily { 0x7f040002, 0x7f040003, ... }\n\nand call the function _FixPackageIds()",
+      "revId": "b10417c0e5f1a1603b67bf93d06a9198dd91e32f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
