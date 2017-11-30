@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef34a1c1_8227a7c4",
+        "filename": "chrome/browser/resources/md_extensions/item.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-30T17:03:19Z",
+      "side": 1,
+      "message": "nit: instead of \"|manifestErrors|\", let\u0027s say \"|[manifest|runtime]Errors|\" or \"|manifestErrors| and |runtimeErrors|\" or something like that.\n\nnit2: typo: *is* used.",
+      "revId": "a54054a64b51199defced644bcf06ebf5c3cfab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c407863_3ba825cb",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-30T17:03:19Z",
+      "side": 1,
+      "message": "I find this a bit weird, since installWarnings is very specific to a certain extensions.  What about instead just assigning the property on the dialog itself?\n\nonShowInstallWarnings_: function(e) {\n  // Note: assumes adding an id to the dialog.\n  this.$.installWarningsDialog.installWarnings \u003d\n      /** @type{!Array\u003cstring\u003e} */ (e.detail);\n  this.showInstallWarningsDialog_ \u003d true;\n},",
+      "revId": "a54054a64b51199defced644bcf06ebf5c3cfab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
