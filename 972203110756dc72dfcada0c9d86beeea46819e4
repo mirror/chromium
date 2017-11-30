@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8afd7832_03081e09",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/SourceLocation.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-30T15:45:56Z",
+      "side": 1,
+      "message": "Why get rid of WrapUnique? It\u0027s still recommended both in internal C++ (as absl::WrapUnique; https://abseil.io/tips/126 or go/totw/126) and within non-Blink Chromium (as base::WrapUnique), in cases where make_unique doesn\u0027t work.\n\nWe also already have compiler checking on the use of WrapUnique for GC types, and it avoids having to spell out the contained type again (until C++17).",
+      "revId": "972203110756dc72dfcada0c9d86beeea46819e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f75fb4c6_0ff02b7f",
         "filename": "third_party/WebKit/Source/modules/fetch/DataConsumerHandleTestUtil.h",
         "patchSetId": 4
