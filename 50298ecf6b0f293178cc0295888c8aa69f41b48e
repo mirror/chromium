@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77216542_06922cb1",
+        "filename": "chrome/browser/signin/dice_response_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-30T13:33:27Z",
+      "side": 1,
+      "message": "should we check the email as well? Or DCHECK?",
+      "range": {
+        "startLine": 315,
+        "startChar": 8,
+        "endLine": 315,
+        "endChar": 37
+      },
+      "revId": "50298ecf6b0f293178cc0295888c8aa69f41b48e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "511b40d1_dfd19fa1",
+        "filename": "chrome/browser/ui/sync/one_click_signin_sync_starter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-30T13:33:27Z",
+      "side": 1,
+      "message": "As discussed offline please add a comment saying that this does not copy the token and the user will need to reauth, whereas in the other case the user does not need to reauth.",
+      "revId": "50298ecf6b0f293178cc0295888c8aa69f41b48e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0b49d9b_ded41ff2",
+        "filename": "components/signin/core/browser/signin_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-30T13:33:27Z",
+      "side": 1,
+      "message": "s/truen/true/",
+      "range": {
+        "startLine": 106,
+        "startChar": 33,
+        "endLine": 106,
+        "endChar": 38
+      },
+      "revId": "50298ecf6b0f293178cc0295888c8aa69f41b48e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "116562e5_bd681f24",
+        "filename": "components/signin/core/browser/signin_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-30T13:33:27Z",
+      "side": 1,
+      "message": "I don\u0027t like the naming here.\nIt\u0027s strange to have a function called SignoutAndRemoveAllAccounts() with a |remove_all_accounts| parameter that can be false.\n\nWhat about changing the SignOut() function:\n\nvoid SignOut(signin_metrics::ProfileSignout signout_source_metric,\n             signin_metrics::SignoutDelete signout_delete_metric,\n             RemoveAccountsMode mode \u003d RemoveAccountsMode::kDefault);\n\nwith\nenum class RemoveAccountMode {\n  kDefault,  // Keeps accounts if Dice is enabled, removes otherwise.\n  kKeepAccounts,\n  kRemoveAllAccounts\n};\n\n\nOr two functions:\nSignoutAndRemoveAllAccounts()\nSignoutAndKeepAccounts()",
+      "range": {
+        "startLine": 108,
+        "startChar": 1,
+        "endLine": 111,
+        "endChar": 39
+      },
+      "revId": "50298ecf6b0f293178cc0295888c8aa69f41b48e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
