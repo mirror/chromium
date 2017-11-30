@@ -142,6 +142,7 @@ class CORE_EXPORT LayoutBoxModelObject : public LayoutObject {
   // Populates StickyPositionConstraints, setting the sticky box rect,
   // containing block rect and updating the constraint offsets according to the
   // available space.
+  bool IsSlowRepaintConstrainedObject() const;
   FloatRect ComputeStickyConstrainingRect() const;
   void UpdateStickyPositionConstraints() const;
   LayoutSize StickyPositionOffset() const;
