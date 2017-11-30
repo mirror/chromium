@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6df044a4_814c8fcf",
+        "filename": "content/gpu/gpu_sandbox_hook_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-11-30T08:29:31Z",
+      "side": 1,
+      "message": "The only issue with this is that the path may not necessarily be the same on all distros (see for example how LoadStandardLibraries hardcodes the Chrome OS path for the i965 driver).\n\nPatch https://chromium-review.googlesource.com/c/chromium/src/+/666138 gives a solution to this problem, hopefully we will be able to merge it soon?",
+      "revId": "a6bfc66aca56d8089d62ed75450600d1ed308b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e85d9af_c5e758d9",
+        "filename": "content/gpu/gpu_sandbox_hook_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-11-30T08:29:31Z",
+      "side": 1,
+      "message": "This will change to libva.so.2 soonish, so you may want to work with libva 2 to anticipate.",
+      "revId": "a6bfc66aca56d8089d62ed75450600d1ed308b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79f82931_55f3baea",
+        "filename": "content/gpu/gpu_sandbox_hook_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-11-30T08:29:31Z",
+      "side": 1,
+      "message": "This looks redundant with LoadStandardLibraries()?",
+      "revId": "a6bfc66aca56d8089d62ed75450600d1ed308b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
