@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ab2f3ec_eaa1b7c8",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_impl_win.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-30T21:21:34Z",
+      "side": 1,
+      "message": "Typo: \"controller controller\". Also it looks like some words are missing. I assume this means \"is NOT on an idle state\".",
+      "revId": "55b160d3b96898adc4da67ca352d21b49a029483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9d7a726_8b110ff0",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_impl_win.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-30T21:21:34Z",
+      "side": 1,
+      "message": "Nit: I prefer \"SetStateForTesting\"",
+      "revId": "55b160d3b96898adc4da67ca352d21b49a029483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59f25f8e_1dc82578",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_win.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-30T21:21:34Z",
+      "side": 1,
+      "message": "Nit: blank line after this, please.",
+      "range": {
+        "startLine": 143,
+        "startChar": 11,
+        "endLine": 143,
+        "endChar": 12
+      },
+      "revId": "55b160d3b96898adc4da67ca352d21b49a029483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
