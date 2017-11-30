@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60d69079_12741ecf",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-30T02:34:34Z",
+      "side": 1,
+      "message": "Nit: Use Array#includes() instead.\nhttps://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes",
+      "range": {
+        "startLine": 332,
+        "startChar": 48,
+        "endLine": 332,
+        "endChar": 55
+      },
+      "revId": "8d72833e7ab86d21ad7264b6b62e18c0314c6a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "827914b4_ba129918",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-30T02:34:34Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 334,
+        "startChar": 51,
+        "endLine": 334,
+        "endChar": 58
+      },
+      "revId": "8d72833e7ab86d21ad7264b6b62e18c0314c6a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
