@@ -293,6 +293,24 @@
     },
     {
       "key": {
+        "uuid": "e1239ab1_2226be68",
+        "filename": "third_party/zlib/deflate.c",
+        "patchSetId": 18
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-11-30T23:19:19Z",
+      "side": 1,
+      "message": "\u003e What I think Noel pointed is that if (for whatever reason) the adler32 optimization was disabled, that would make the original Intel patches to be also disabled because it relies on x86_check_features() initializing some state variables.\n\n\u003e So unless I\u0027m mistaken, the code as it is now is ok (i.e. won\u0027t disable anything) *but* it is a change on the dependencies chain.\n\nYes, a change on the dependencies chain, since contribs depends on contribs.  Adding an include guard around x86_check_features() that depended on the adler32 contrib, would inadvertently remove the deflate contrib if had to disable ADLER32_SIMD_SSE3 for some reason.\n\nx86_check_features() can be used on any platform, since it currently has a stub, without include guards.  We might change that in future on the relevant bug, but for now I suggest not changing / adding include guards to x86_check_features(), to decouple the current CL from that issue and keep it focussed on the CRC changes.\n\n\u003e No no, iOS x86 no longer gets the x86 optimizations.\n\nYikes: seems like that needs to be addressed.  Re BUILD issues: wasn\u0027t clear to me why a static library was used instead a source_set?\n\nI also have unaddressed review comments awaiting replies, and have more review comments to come, but with the different gerrit/patches/issues in play, I\u0027m not sure where we are reviewing this patch anymore :/",
+      "parentUuid": "3abfd974_5d286fa1",
+      "revId": "46b0cd54825ba2a05183e9a882f67ecf60e94786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1821df04_f7f23fe3",
         "filename": "third_party/zlib/inflate.c",
         "patchSetId": 18
