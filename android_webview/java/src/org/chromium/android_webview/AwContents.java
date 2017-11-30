@@ -57,6 +57,7 @@ import org.chromium.base.TraceEvent;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
+import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.blink_public.web.WebReferrerPolicy;
 import org.chromium.components.autofill.AutofillProvider;
 import org.chromium.components.navigation_interception.InterceptNavigationDelegate;
@@ -133,6 +134,8 @@ public class AwContents implements SmartClipProvider {
                     || !nativeHasRequiredHardwareExtensions();
         }
     }
+
+    enum HistoryUrlIs { EMPTY, BASEURL, UNIQUE, COUNT }
 
     /**
      * WebKit hit test related data structure. These are used to implement
@@ -1634,6 +1637,18 @@ public class AwContents implements SmartClipProvider {
         LoadUrlParams loadUrlParams;
         baseUrl = fixupBase(baseUrl);
         historyUrl = fixupHistory(historyUrl);
+
+        RecordHistogram.initialize();
+        if (historyUrl.equals(ContentUrlConstants.ABOUT_BLANK_DISPLAY_URL)) {
+            RecordHistogram.recordEnumeratedHistogram("WebView.LoadDataWithBaseUrl.HistoryUrl",
+                    HistoryUrlIs.EMPTY.ordinal(), HistoryUrlIs.COUNT.ordinal());
+        } else if (historyUrl.equals(baseUrl)) {
+            RecordHistogram.recordEnumeratedHistogram("WebView.LoadDataWithBaseUrl.HistoryUrl",
+                    HistoryUrlIs.BASEURL.ordinal(), HistoryUrlIs.COUNT.ordinal());
+        } else {
+            RecordHistogram.recordEnumeratedHistogram("WebView.LoadDataWithBaseUrl.HistoryUrl",
+                    HistoryUrlIs.UNIQUE.ordinal(), HistoryUrlIs.COUNT.ordinal());
+        }
 
         if (baseUrl.startsWith("data:")) {
             // For backwards compatibility with WebViewClassic, we use the value of |encoding|

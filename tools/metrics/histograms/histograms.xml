@@ -97550,6 +97550,10 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="WebView.LoadDataWithBaseUrl.HistoryUrl" enum="HistoryUrlEnum">
+  <owner>jamwalla@chromium.org</owner>
+</histogram>
+
 <histogram name="Welcome.SignInPromptResult" enum="WelcomeSignInPromptOutcome">
   <owner>tmartino@chromium.org</owner>
   <summary>
