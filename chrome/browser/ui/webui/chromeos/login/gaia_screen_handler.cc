@@ -478,6 +478,12 @@ void GaiaScreenHandler::DeclareLocalizedValues(
                IDS_AD_PASSWORD_CHANGE_NEW_PASSWORD_REJECTED_SHORT_ERROR);
   builder->Add("adPassChangePasswordsMismatch",
                IDS_AD_PASSWORD_CHANGE_PASSWORDS_MISMATCH_ERROR);
+
+  builder->Add("adMoreOptions", IDS_AD_MORE_OPTIONS_BUTTON);
+  builder->Add("adDomain", IDS_AD_DOMAIN_HINT);
+  builder->Add("adOrgUnit", IDS_AD_ORG_UNIT_HINT);
+  builder->Add("adCancel", IDS_AD_CANCEL_BUTTON);
+  builder->Add("adConfirm", IDS_AD_CONFIRM_BUTTON);
 }
 
 void GaiaScreenHandler::Initialize() {
