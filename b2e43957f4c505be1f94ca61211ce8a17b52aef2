@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd8abda5_13ba2f26",
+        "filename": "content/common/loader_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-30T16:01:16Z",
+      "side": 1,
+      "message": "I wonder about these two flags - should blink be setting them instead?  It has the information to do so, and it can set request.load_flags.  It could set them all, but LOAD_VERIFY_EV_CERT has security implications, and we probably want to set it on non-renderer-initiated requests as well.  I don\u0027t care one way or the other about who sets LOAD_IGNORE_LIMITS.",
+      "range": {
+        "startLine": 153,
+        "startChar": 3,
+        "endLine": 153,
+        "endChar": 0
+      },
+      "revId": "b2e43957f4c505be1f94ca61211ce8a17b52aef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "501db482_74b87bb4",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-30T16:01:16Z",
+      "side": 1,
+      "message": "nit:  explicit.  May also want a blank line between this and the IntercepCallback definition",
+      "range": {
+        "startLine": 187,
+        "startChar": 27,
+        "endLine": 187,
+        "endChar": 44
+      },
+      "revId": "b2e43957f4c505be1f94ca61211ce8a17b52aef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56fb2b2e_b74466f4",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-30T16:01:16Z",
+      "side": 1,
+      "message": "Should call net::URLRequestFilter::GetInstance()-\u003eClearHandlers() on teardown.",
+      "range": {
+        "startLine": 343,
+        "startChar": 42,
+        "endLine": 343,
+        "endChar": 59
+      },
+      "revId": "b2e43957f4c505be1f94ca61211ce8a17b52aef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
