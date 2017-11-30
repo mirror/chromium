@@ -34,6 +34,24 @@
       "revId": "4e06e791a91c187649110577832dc7ad5a896180",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "625e83ce_05d7f5b7",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1246,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-11-30T19:29:16Z",
+      "side": 1,
+      "message": "It looks like you applied this fix and the issue is still happening, IIUC.\n\nIs it possible that SVG documents do not fire a load event? Or that the load event isn\u0027t properly instrumented by our code that tracks load event firing in blink?\n\nAs a near term workaround since we know we get first paint notifications, could we change the line waiter-\u003eAddPageExpectation(TimingField::LOAD_EVENT); to waiter-\u003eAddPageExpectation(TimingField::FIRST_PAINT); and see if that gets the test passing?",
+      "parentUuid": "d8f6e791_228776de",
+      "revId": "4e06e791a91c187649110577832dc7ad5a896180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
