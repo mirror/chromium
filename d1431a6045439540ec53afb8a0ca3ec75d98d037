@@ -606,6 +606,24 @@
     },
     {
       "key": {
+        "uuid": "04472721_be0c4c7c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-30T12:04:23Z",
+      "side": 1,
+      "message": "Thanks, I rewrote the code and add more comments, new code should be clear.",
+      "parentUuid": "4c4d3e4b_a093dc0e",
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b1a61a2_e7518479",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
         "patchSetId": 4
@@ -759,6 +777,30 @@
     },
     {
       "key": {
+        "uuid": "17c0e116_44d72d52",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-30T12:04:23Z",
+      "side": 1,
+      "message": "Done, Thanks for your tips, I made a simple observer mode in Manager for this case so we can get rid of the extra interface.",
+      "parentUuid": "cd190747_d7afec7e",
+      "range": {
+        "startLine": 146,
+        "startChar": 7,
+        "endLine": 156,
+        "endChar": 9
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6390617_496de52f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
         "patchSetId": 4
@@ -827,6 +869,30 @@
       "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44155676_882af45c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-11-30T12:04:23Z",
+      "side": 1,
+      "message": "Done, Added extra comments in LanguagesPreferencesBridge too.",
+      "parentUuid": "477a817d_6ca9b26e",
+      "range": {
+        "startLine": 163,
+        "startChar": 12,
+        "endLine": 169,
+        "endChar": 0
+      },
+      "revId": "d1431a6045439540ec53afb8a0ca3ec75d98d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
