@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9f8b602_68432483",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2017-11-30T18:40:30Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 9,
+        "startChar": 15,
+        "endLine": 9,
+        "endChar": 26
+      },
+      "revId": "19aaa4ef26d4060ab53eb6675b19c114dc9eab89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac6fbd6b_e6409398",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2017-11-30T18:40:30Z",
+      "side": 1,
+      "message": "are these method being called from outter classes at all? If not, there is not need to include them on the very base interface (PlatformWindow) and add stubs all over. in other words, can\u0027t them be non-virtual methods in X11WindowBase and WaylandWindow?",
+      "revId": "19aaa4ef26d4060ab53eb6675b19c114dc9eab89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "668b28f3_c91245cc",
+        "filename": "ui/ozone/platform/wayland/wayland_window_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2017-11-30T18:40:30Z",
+      "side": 1,
+      "message": "minor: use c++ static_cast rather than c-style cast.",
+      "revId": "19aaa4ef26d4060ab53eb6675b19c114dc9eab89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b51d0e3e_406b2e40",
+        "filename": "ui/ozone/platform/wayland/xdg_surface_wrapper_v5.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2017-11-30T18:40:30Z",
+      "side": 1,
+      "message": "Maybe say \"that compilers like g++/arm64 does not support\" , if the problem does not affect clang/x86_64?",
+      "revId": "19aaa4ef26d4060ab53eb6675b19c114dc9eab89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9225116_38a5cbc2",
+        "filename": "ui/ozone/platform/wayland/xdg_surface_wrapper_v6.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2017-11-30T18:40:30Z",
+      "side": 1,
+      "message": "shame we need to duplicate this code here and above? any way to come up with a helper?",
+      "revId": "19aaa4ef26d4060ab53eb6675b19c114dc9eab89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5d849ce_7393d999",
+        "filename": "ui/platform_window/platform_window.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2017-11-30T18:40:30Z",
+      "side": 1,
+      "message": "minor if we are really keeping these methods: \"Tells\" does not read well here. Maybe leave these declarations without comment and group them together with \"ToogleFullscreen, Maximize, Minimize amd Restore\" above?",
+      "revId": "19aaa4ef26d4060ab53eb6675b19c114dc9eab89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
