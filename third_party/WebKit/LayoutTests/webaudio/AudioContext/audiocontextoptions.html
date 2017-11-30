@@ -31,6 +31,9 @@
               context = new AudioContext()
             }, 'context = new AudioContext()').notThrow();
 
+            should(context.sampleRate,
+              `context.sampleRate (${context.sampleRate} Hz)`).beGreaterThan(0);
+
             defaultLatency = context.baseLatency;
             should(defaultLatency, 'default baseLatency').beGreaterThan(0);
 
@@ -96,7 +99,7 @@
                     'interactiveLatency/2})')
                 .notThrow();
             should(context.baseLatency, 'double-constructor baseLatency small')
-                .beEqualTo(interactiveLatency);
+                .beLessThanOrEqualTo(interactiveLatency);
             closingPromises.push(context.close());
 
             // Verify that exact latency in range works as expected
