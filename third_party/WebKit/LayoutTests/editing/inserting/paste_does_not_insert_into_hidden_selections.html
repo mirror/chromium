@@ -1,0 +1,57 @@
+<!doctype html>
+<title>A hidden selection/cursor should not receive past-events</title>
+<link rel="help" href="https://www.w3.org/TR/clipboard-apis/#fire-a-clipboard-event">
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+
+<input type="checkbox" id="checkbox">
+<textarea>HEY</textarea>
+
+<script>
+test(() => {
+  assert_exists(window, 'eventSender', 'This test requires window.eventSender.');
+  let textarea_paste_count = 0;
+  let document_paste_count = 0;
+  let last_target;
+  textareaLog = function(e) {
+    console.log("Textarea got " + ++textarea_paste_count + " paste-events! Last target: " + e.target);
+    last_target = e.target;
+  }
+  documentLog = function(e) {
+    console.log("Document got " + ++document_paste_count + " paste-events! Last target: " + e.target);
+    last_target = e.target;
+  }
+  let textarea = document.querySelector("textarea");
+  textarea.addEventListener("paste", textareaLog);
+  document.addEventListener("paste", documentLog);
+
+  eventSender.keyDown('v', ['ctrlKey']);
+  assert_equals(textarea_paste_count, 0,    "The <textarea> should not receive any paste-events.")
+  assert_equals(document_paste_count, 1,    "The document should receive one paste-event.")
+  assert_equals(last_target, document.body, "The document body should be the paste-event's target.")
+
+  textarea.focus();
+  eventSender.keyDown('v', ['ctrlKey']);
+  assert_equals(textarea_paste_count, 1, "The <textarea> should receive one paste-event.")
+  assert_equals(document_paste_count, 2, "The document should receive one (bubbled) paste-event.")
+  assert_equals(last_target, textarea,   "The <textarea> should be the paste-event's target.")
+
+  checkbox.focus();
+  eventSender.keyDown('v', ['ctrlKey']);
+  assert_equals(textarea_paste_count, 1,    "The <textarea> is unfocused so it should not get any new paste-events.")
+  assert_equals(document_paste_count, 3,    "The document should receive another paste-event.")
+  assert_equals(last_target, document.body, "The document body should be the paste-event's target.")
+
+  checkbox.blur();
+  eventSender.keyDown('v', ['ctrlKey']);
+  assert_equals(textarea_paste_count, 1,    "The <textarea> is unfocused so it should not get any new paste-events.")
+  assert_equals(document_paste_count, 4,    "The document should receive another paste-event.")
+  assert_equals(last_target, document.body, "The document body should be the paste-event's target.")
+
+  document.body.focus();
+  eventSender.keyDown('v', ['ctrlKey']);
+  assert_equals(textarea_paste_count, 1,    "The <textarea> is unfocused so it should not get any new paste-events.")
+  assert_equals(document_paste_count, 5,    "The document should receive another paste-event.")
+  assert_equals(last_target, document.body, "The document body should be the paste-event's target.")
+});
+</script>

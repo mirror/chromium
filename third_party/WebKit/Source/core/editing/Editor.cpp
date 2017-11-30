@@ -812,6 +812,12 @@ Element* Editor::FindEventTargetFrom(const VisibleSelection& selection) const {
 }
 
 Element* Editor::FindEventTargetFromSelection() const {
+  // Spec says:
+  //  "Set target to be the element that contains the start of the selection in
+  //   document order, or the body element if there is no selection or cursor."
+  // We treat unfocused selections as "no selection or cursor".
+  if (!GetFrameSelection().SelectionHasFocus())
+    return GetFrameSelection().GetDocument().body();
   return FindEventTargetFrom(
       GetFrameSelection().ComputeVisibleSelectionInDOMTreeDeprecated());
 }
