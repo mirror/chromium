@@ -22,6 +22,30 @@
       "revId": "766bdbcce46d409f41cc33e284589ce6eef5efb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "655cc36e_017ec02a",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-30T20:11:24Z",
+      "side": 1,
+      "message": "DCHECK_EQ() requires a WebSecurityOrigin-\u003estring conversion method, and I felt it is too much only for using DCHECK_EQ() here.",
+      "parentUuid": "6cf79206_b42eea06",
+      "range": {
+        "startLine": 293,
+        "startChar": 0,
+        "endLine": 293,
+        "endChar": 50
+      },
+      "revId": "766bdbcce46d409f41cc33e284589ce6eef5efb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
