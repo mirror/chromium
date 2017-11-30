@@ -258,8 +258,7 @@ class ExperimentalSwReporterInstallerTest : public SwReporterInstallerTest {
 };
 
 TEST_P(SwReporterInstallerTest, Default) {
-  SwReporterInstallerPolicy policy(launched_callback_, false, invocation_type_,
-                                   OnReporterSequenceDone());
+  SwReporterInstallerPolicy policy(launched_callback_, false, invocation_type_);
   ExpectEmptyAttributes(policy);
   policy.ComponentReady(default_version_, default_path_,
                         std::make_unique<base::DictionaryValue>());
@@ -277,8 +276,7 @@ INSTANTIATE_TEST_CASE_P(
 TEST_P(ExperimentalSwReporterInstallerTest, NoExperimentConfig) {
   // Even if the experiment is supported on this hardware, the user shouldn't
   // be enrolled unless enabled through variations.
-  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_,
-                                   OnReporterSequenceDone());
+  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_);
   ExpectEmptyAttributes(policy);
   policy.ComponentReady(default_version_, default_path_,
                         std::make_unique<base::DictionaryValue>());
@@ -288,8 +286,7 @@ TEST_P(ExperimentalSwReporterInstallerTest, NoExperimentConfig) {
 TEST_P(ExperimentalSwReporterInstallerTest, ExperimentUnsupported) {
   // Even if the experiment config is enabled in variations, the user shouldn't
   // be enrolled if the hardware doesn't support it.
-  SwReporterInstallerPolicy policy(launched_callback_, false, invocation_type_,
-                                   OnReporterSequenceDone());
+  SwReporterInstallerPolicy policy(launched_callback_, false, invocation_type_);
   CreateFeatureWithTag(kExperimentTag);
   ExpectEmptyAttributes(policy);
   policy.ComponentReady(default_version_, default_path_,
@@ -298,8 +295,7 @@ TEST_P(ExperimentalSwReporterInstallerTest, ExperimentUnsupported) {
 }
 
 TEST_P(ExperimentalSwReporterInstallerTest, ExperimentMissingTag) {
-  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_,
-                                   OnReporterSequenceDone());
+  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_);
   CreateFeatureWithoutTag();
   ExpectAttributesWithTag(policy, kMissingTag);
   histograms_.ExpectUniqueSample(kErrorHistogramName,
@@ -307,8 +303,7 @@ TEST_P(ExperimentalSwReporterInstallerTest, ExperimentMissingTag) {
 }
 
 TEST_P(ExperimentalSwReporterInstallerTest, ExperimentInvalidTag) {
-  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_,
-                                   OnReporterSequenceDone());
+  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_);
   CreateFeatureWithTag("tag with invalid whitespace chars");
   ExpectAttributesWithTag(policy, kMissingTag);
   histograms_.ExpectUniqueSample(kErrorHistogramName,
@@ -316,8 +311,7 @@ TEST_P(ExperimentalSwReporterInstallerTest, ExperimentInvalidTag) {
 }
 
 TEST_P(ExperimentalSwReporterInstallerTest, ExperimentTagTooLong) {
-  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_,
-                                   OnReporterSequenceDone());
+  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_);
   std::string tag_too_long(500, 'x');
   CreateFeatureWithTag(tag_too_long);
   ExpectAttributesWithTag(policy, kMissingTag);
@@ -326,8 +320,7 @@ TEST_P(ExperimentalSwReporterInstallerTest, ExperimentTagTooLong) {
 }
 
 TEST_P(ExperimentalSwReporterInstallerTest, ExperimentEmptyTag) {
-  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_,
-                                   OnReporterSequenceDone());
+  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_);
   CreateFeatureWithTag("");
   ExpectAttributesWithTag(policy, kMissingTag);
   histograms_.ExpectUniqueSample(kErrorHistogramName,
@@ -335,8 +328,7 @@ TEST_P(ExperimentalSwReporterInstallerTest, ExperimentEmptyTag) {
 }
 
 TEST_P(ExperimentalSwReporterInstallerTest, SingleInvocation) {
-  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_,
-                                   OnReporterSequenceDone());
+  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_);
   CreateFeatureWithTag(kExperimentTag);
   ExpectAttributesWithTag(policy, kExperimentTag);
 
@@ -379,8 +371,7 @@ TEST_P(ExperimentalSwReporterInstallerTest, SingleInvocation) {
 }
 
 TEST_P(ExperimentalSwReporterInstallerTest, MultipleInvocations) {
-  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_,
-                                   OnReporterSequenceDone());
+  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_);
   CreateFeatureWithTag(kExperimentTag);
   ExpectAttributesWithTag(policy, kExperimentTag);
 
@@ -442,8 +433,7 @@ TEST_P(ExperimentalSwReporterInstallerTest, MultipleInvocations) {
 }
 
 TEST_P(ExperimentalSwReporterInstallerTest, MissingSuffix) {
-  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_,
-                                   OnReporterSequenceDone());
+  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_);
   CreateFeatureWithTag(kExperimentTag);
 
   static constexpr char kTestManifest[] =
@@ -460,8 +450,7 @@ TEST_P(ExperimentalSwReporterInstallerTest, MissingSuffix) {
 }
 
 TEST_P(ExperimentalSwReporterInstallerTest, EmptySuffix) {
-  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_,
-                                   OnReporterSequenceDone());
+  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_);
   CreateFeatureWithTag(kExperimentTag);
 
   static constexpr char kTestManifest[] =
@@ -479,8 +468,7 @@ TEST_P(ExperimentalSwReporterInstallerTest, EmptySuffix) {
 }
 
 TEST_P(ExperimentalSwReporterInstallerTest, MissingSuffixAndArgs) {
-  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_,
-                                   OnReporterSequenceDone());
+  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_);
   CreateFeatureWithTag(kExperimentTag);
 
   static constexpr char kTestManifest[] =
@@ -496,8 +484,7 @@ TEST_P(ExperimentalSwReporterInstallerTest, MissingSuffixAndArgs) {
 }
 
 TEST_P(ExperimentalSwReporterInstallerTest, EmptySuffixAndArgs) {
-  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_,
-                                   OnReporterSequenceDone());
+  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_);
   CreateFeatureWithTag(kExperimentTag);
 
   static constexpr char kTestManifest[] =
@@ -515,8 +502,7 @@ TEST_P(ExperimentalSwReporterInstallerTest, EmptySuffixAndArgs) {
 }
 
 TEST_P(ExperimentalSwReporterInstallerTest, EmptySuffixAndArgs2) {
-  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_,
-                                   OnReporterSequenceDone());
+  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_);
   CreateFeatureWithTag(kExperimentTag);
 
   static constexpr char kTestManifest[] =
@@ -534,8 +520,7 @@ TEST_P(ExperimentalSwReporterInstallerTest, EmptySuffixAndArgs2) {
 }
 
 TEST_P(ExperimentalSwReporterInstallerTest, MissingArguments) {
-  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_,
-                                   OnReporterSequenceDone());
+  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_);
   CreateFeatureWithTag(kExperimentTag);
 
   static constexpr char kTestManifest[] =
@@ -552,8 +537,7 @@ TEST_P(ExperimentalSwReporterInstallerTest, MissingArguments) {
 }
 
 TEST_P(ExperimentalSwReporterInstallerTest, EmptyArguments) {
-  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_,
-                                   OnReporterSequenceDone());
+  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_);
   CreateFeatureWithTag(kExperimentTag);
 
   static constexpr char kTestManifest[] =
@@ -571,8 +555,7 @@ TEST_P(ExperimentalSwReporterInstallerTest, EmptyArguments) {
 }
 
 TEST_P(ExperimentalSwReporterInstallerTest, EmptyArguments2) {
-  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_,
-                                   OnReporterSequenceDone());
+  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_);
   CreateFeatureWithTag(kExperimentTag);
 
   static constexpr char kTestManifest[] =
@@ -590,8 +573,7 @@ TEST_P(ExperimentalSwReporterInstallerTest, EmptyArguments2) {
 }
 
 TEST_P(ExperimentalSwReporterInstallerTest, EmptyManifest) {
-  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_,
-                                   OnReporterSequenceDone());
+  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_);
   CreateFeatureWithTag(kExperimentTag);
 
   static constexpr char kTestManifest[] = "{}";
@@ -606,8 +588,7 @@ TEST_P(ExperimentalSwReporterInstallerTest, EmptyManifest) {
 }
 
 TEST_P(ExperimentalSwReporterInstallerTest, EmptyLaunchParams) {
-  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_,
-                                   OnReporterSequenceDone());
+  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_);
   CreateFeatureWithTag(kExperimentTag);
 
   static constexpr char kTestManifest[] = "{\"launch_params\": []}";
@@ -622,8 +603,7 @@ TEST_P(ExperimentalSwReporterInstallerTest, EmptyLaunchParams) {
 }
 
 TEST_P(ExperimentalSwReporterInstallerTest, EmptyLaunchParams2) {
-  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_,
-                                   OnReporterSequenceDone());
+  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_);
   CreateFeatureWithTag(kExperimentTag);
 
   static constexpr char kTestManifest[] = "{\"launch_params\": {}}";
@@ -638,8 +618,7 @@ TEST_P(ExperimentalSwReporterInstallerTest, EmptyLaunchParams2) {
 }
 
 TEST_P(ExperimentalSwReporterInstallerTest, BadSuffix) {
-  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_,
-                                   OnReporterSequenceDone());
+  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_);
   CreateFeatureWithTag(kExperimentTag);
 
   static constexpr char kTestManifest[] =
@@ -660,8 +639,7 @@ TEST_P(ExperimentalSwReporterInstallerTest, BadSuffix) {
 }
 
 TEST_P(ExperimentalSwReporterInstallerTest, SuffixTooLong) {
-  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_,
-                                   OnReporterSequenceDone());
+  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_);
   CreateFeatureWithTag(kExperimentTag);
 
   static constexpr char kTestManifest[] =
@@ -686,8 +664,7 @@ TEST_P(ExperimentalSwReporterInstallerTest, SuffixTooLong) {
 
 TEST_P(ExperimentalSwReporterInstallerTest,
        BadTypesInManifest_ArgumentsIsNotAList) {
-  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_,
-                                   OnReporterSequenceDone());
+  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_);
   CreateFeatureWithTag(kExperimentTag);
 
   // This has a string instead of a list for "arguments".
@@ -710,8 +687,7 @@ TEST_P(ExperimentalSwReporterInstallerTest,
 
 TEST_P(ExperimentalSwReporterInstallerTest,
        BadTypesInManifest_InvocationParamsIsNotAList) {
-  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_,
-                                   OnReporterSequenceDone());
+  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_);
   CreateFeatureWithTag(kExperimentTag);
 
   // This has the invocation parameters as direct children of "launch_params",
@@ -734,8 +710,7 @@ TEST_P(ExperimentalSwReporterInstallerTest,
 }
 
 TEST_P(ExperimentalSwReporterInstallerTest, BadTypesInManifest_SuffixIsAList) {
-  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_,
-                                   OnReporterSequenceDone());
+  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_);
   CreateFeatureWithTag(kExperimentTag);
 
   // This has a list for suffix as well as for arguments.
@@ -758,8 +733,7 @@ TEST_P(ExperimentalSwReporterInstallerTest, BadTypesInManifest_SuffixIsAList) {
 
 TEST_P(ExperimentalSwReporterInstallerTest,
        BadTypesInManifest_PromptIsNotABoolean) {
-  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_,
-                                   OnReporterSequenceDone());
+  SwReporterInstallerPolicy policy(launched_callback_, true, invocation_type_);
   CreateFeatureWithTag(kExperimentTag);
 
   // This has an int instead of a bool for prompt.
