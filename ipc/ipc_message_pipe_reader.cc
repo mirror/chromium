@@ -90,6 +90,10 @@ void MessagePipeReader::Receive(
   Message message(
       data.empty() ? "" : reinterpret_cast<const char*>(data.data()),
       static_cast<uint32_t>(data.size()));
+  if (!message.IsValid()) {
+    delegate_->OnBrokenDataReceived();
+    return;
+  }
 
   DVLOG(4) << "Receive " << message.type() << ": " << message.size();
   MojoResult write_result =
