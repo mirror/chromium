@@ -211,6 +211,14 @@ ChromeCleanerController::ChromeCleanerController() = default;
 ChromeCleanerController::~ChromeCleanerController() = default;
 
 bool ChromeCleanerControllerImpl::ShouldShowCleanupInSettingsUI() {
+  // When user-initiated cleanups are enabled, the cleanup card is always shown,
+  // since it's not rendered at the top of chrome://settings.
+  if (delegate_->UserInitiatedCleanupsFeatureEnabled())
+    return true;
+
+  // When user-initiated cleanups are disabled, the cleanup card is only shown
+  // when the controller's current state provides useful information about a
+  // cleanup to the user.
   return state_ == State::kInfected || state_ == State::kCleaning ||
          state_ == State::kRebootRequired ||
          (state_ == State::kIdle &&
