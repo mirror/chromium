@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe9e7129_29912eea",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-30T17:43:00Z",
+      "side": 1,
+      "message": "maybe: ... successfully done, or if Play Store is ...",
+      "revId": "59e6349c5ae21c965a581b309268b51ba781b151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ef15560_e602247f",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-30T17:43:00Z",
+      "side": 1,
+      "message": "How about:\n\nthen directly start ARC with skipping Play Store ToS.",
+      "revId": "59e6349c5ae21c965a581b309268b51ba781b151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "721bf84a_ea0106ff",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-30T17:43:00Z",
+      "side": 1,
+      "message": "nit: Store.",
+      "range": {
+        "startLine": 409,
+        "startChar": 38,
+        "endLine": 409,
+        "endChar": 44
+      },
+      "revId": "59e6349c5ae21c965a581b309268b51ba781b151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43f63d08_866b4bb5",
+        "filename": "chrome/browser/chromeos/login/wizard_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-30T17:43:00Z",
+      "side": 1,
+      "message": "Should this be IsPlayStoreAvailable() too?",
+      "revId": "59e6349c5ae21c965a581b309268b51ba781b151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
