@@ -46,6 +46,30 @@
       "revId": "c4d41995b8ce8557c4a2ab9912a19e73487c0445",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b3ce6a5_7c12fbf9",
+        "filename": "services/metrics/public/cpp/metrics_utils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-30T00:47:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c62212d_ac464a67",
+      "range": {
+        "startLine": 16,
+        "startChar": 23,
+        "endLine": 16,
+        "endChar": 46
+      },
+      "revId": "c4d41995b8ce8557c4a2ab9912a19e73487c0445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
