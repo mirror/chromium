@@ -25,6 +25,53 @@
     },
     {
       "key": {
+        "uuid": "8c4a0c5e_cfdf9294",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeAlertDialog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-30T22:16:34Z",
+      "side": 1,
+      "message": "We\u0027ve been doing something similar to put dialog views in a different container than the Android Dialog for making the dialog \"tab modal\", but in a slightly different way. I believe it is very possible that the VR permission dialogs and the tab modal dialogs can be migrated into one framework.\n\nMore details in crbug.com/687010 and in pending CL https://chromium-review.googlesource.com/c/chromium/src/+/757166.",
+      "parentUuid": "8a9cb72e_cf7617be",
+      "range": {
+        "startLine": 17,
+        "startChar": 32,
+        "endLine": 17,
+        "endChar": 34
+      },
+      "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d26d7a11_538083e6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeAlertDialog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-30T22:16:34Z",
+      "side": 1,
+      "message": "It seems a little odd to me that this class extends AlertDialog but the DialogHandler part of it doesn\u0027t use the functionalities of AlertDialog.",
+      "range": {
+        "startLine": 19,
+        "startChar": 13,
+        "endLine": 19,
+        "endChar": 30
+      },
+      "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9269f8a_dbec5fd8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeAlertDialog.java",
         "patchSetId": 7
@@ -87,6 +134,29 @@
         "startChar": 10,
         "endLine": 79,
         "endChar": 14
+      },
+      "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "231b681f_024ec95c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeAlertDialog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-30T22:16:34Z",
+      "side": 1,
+      "message": "Should we call sDialogHandler.dismiss() here? It seems strange that sDialogHandler.dismiss() is not handling all the logic for dismissal.\n\nAlso I\u0027m curious: is there any other way to close the dialog on VR besides clicking on the buttons?",
+      "range": {
+        "startLine": 100,
+        "startChar": 12,
+        "endLine": 100,
+        "endChar": 26
       },
       "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -186,6 +256,52 @@
     },
     {
       "key": {
+        "uuid": "c26e7018_de057905",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrAlertDialog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-30T22:16:34Z",
+      "side": 1,
+      "message": "nit: Can use lambda here. Same for similar places below.",
+      "range": {
+        "startLine": 80,
+        "startChar": 34,
+        "endLine": 80,
+        "endChar": 37
+      },
+      "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4e5c621_2d288cf9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrAlertDialog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-30T22:16:34Z",
+      "side": 1,
+      "message": "Why is ThreadUtils used here but the OnClickListener above is not?\nIs there any case that this method is not called on UI thread initially?",
+      "range": {
+        "startLine": 99,
+        "startChar": 46,
+        "endLine": 99,
+        "endChar": 54
+      },
+      "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8384aac5_f786ff0c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShell.java",
         "patchSetId": 7
@@ -202,6 +318,29 @@
         "startChar": 9,
         "endLine": 38,
         "endChar": 22
+      },
+      "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7765d7b_813483f3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-30T22:16:34Z",
+      "side": 1,
+      "message": "nit: move this to where variables are usually defined.",
+      "range": {
+        "startLine": 289,
+        "startChar": 24,
+        "endLine": 289,
+        "endChar": 31
       },
       "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -226,6 +365,23 @@
         "endLine": 290,
         "endChar": 36
       },
+      "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdb1a9c4_d0b95571",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrView.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-30T22:16:34Z",
+      "side": 1,
+      "message": "Is this class supposed to be a generic class for handling communication for different views (not just dialogs)? If so, I wonder if VrAlertDialog should implement DialogRenderer instead.",
       "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
