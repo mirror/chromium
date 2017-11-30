@@ -46,6 +46,30 @@
       "revId": "490c4d5c871a80b763bf5235d92639f080f0ff54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2faf2de2_d696d22a",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-11-30T22:27:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e19461ba_941e0b0f",
+      "range": {
+        "startLine": 351,
+        "startChar": 62,
+        "endLine": 352,
+        "endChar": 76
+      },
+      "revId": "490c4d5c871a80b763bf5235d92639f080f0ff54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
