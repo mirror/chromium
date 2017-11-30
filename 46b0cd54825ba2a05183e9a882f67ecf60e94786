@@ -252,6 +252,24 @@
     },
     {
       "key": {
+        "uuid": "3abfd974_5d286fa1",
+        "filename": "third_party/zlib/deflate.c",
+        "patchSetId": 18
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-11-30T09:53:15Z",
+      "side": 1,
+      "message": "No no, iOS x86 no longer gets the x86 optimizations.",
+      "parentUuid": "09054ef9_4b9cd56a",
+      "revId": "46b0cd54825ba2a05183e9a882f67ecf60e94786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1821df04_f7f23fe3",
         "filename": "third_party/zlib/inflate.c",
         "patchSetId": 18
