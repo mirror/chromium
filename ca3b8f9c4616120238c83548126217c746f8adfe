@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "32f9a386_aee220e3",
+        "filename": "sandbox/linux/syscall_broker/broker_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-30T01:08:07Z",
+      "side": 1,
+      "message": "It looks like MAX_PATH is 4k on my system, and I\u0027d imagine its commonplace to make a call with a MAX_PATH buffer, so we\u0027d fail here. not good.\n\nThe new plan is to not tell the broker side any size info, have it use a MAX_PATH buffer to get the info, send the variable-length result back if it can fit in 4k like any other message, and double check on the client at the end of the routine that the original buffer can accommodate it, otherwise ETOOLONG.\n\nThat avoids all these comparisons and magic numbers, with a potential cost of having to marshall data, transmit it, unmarshall it, and then throw it away. But I\u0027d bet most of the time, the caller has already provided ample space ...",
+      "parentUuid": "0514fe16_e359d9d2",
+      "revId": "ca3b8f9c4616120238c83548126217c746f8adfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f739b286_d6cd76eb",
         "filename": "sandbox/linux/syscall_broker/broker_client.h",
         "patchSetId": 6
@@ -30,6 +48,30 @@
       "writtenOn": "2017-11-29T22:52:48Z",
       "side": 1,
       "message": "Missing an \u0027e\u0027 here on \u0027size\u0027.",
+      "range": {
+        "startLine": 69,
+        "startChar": 51,
+        "endLine": 69,
+        "endChar": 57
+      },
+      "revId": "ca3b8f9c4616120238c83548126217c746f8adfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8514f3ba_cc4041f5",
+        "filename": "sandbox/linux/syscall_broker/broker_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-30T01:08:07Z",
+      "side": 1,
+      "message": "Ok, man 2 readlink calls this \"bufsiz\" without an e, hence this name, but I\u0027ll add the \"e\" everywhere.",
+      "parentUuid": "f739b286_d6cd76eb",
       "range": {
         "startLine": 69,
         "startChar": 51,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "6f0b988d_314fb450",
+        "filename": "sandbox/linux/syscall_broker/broker_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-30T01:08:07Z",
+      "side": 1,
+      "message": "No longer present in this approach.",
+      "parentUuid": "215b63c4_06c5abea",
+      "range": {
+        "startLine": 234,
+        "startChar": 40,
+        "endLine": 234,
+        "endChar": 42
+      },
+      "revId": "ca3b8f9c4616120238c83548126217c746f8adfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "367f5559_e10099e7",
         "filename": "sandbox/linux/syscall_broker/broker_process.cc",
         "patchSetId": 6
@@ -79,6 +145,24 @@
       "revId": "ca3b8f9c4616120238c83548126217c746f8adfe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "847344d3_857a1479",
+        "filename": "sandbox/linux/syscall_broker/broker_process.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-30T01:08:07Z",
+      "side": 1,
+      "message": "Good catch.  Done.",
+      "parentUuid": "367f5559_e10099e7",
+      "revId": "ca3b8f9c4616120238c83548126217c746f8adfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
