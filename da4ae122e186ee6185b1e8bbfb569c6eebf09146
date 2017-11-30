@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "354bc82b_d509ae7b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-30T22:18:18Z",
+      "side": 1,
+      "message": "Please fix the wrapping issues here.",
+      "revId": "da4ae122e186ee6185b1e8bbfb569c6eebf09146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcbb2698_688c7b1c",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-30T22:18:18Z",
+      "side": 1,
+      "message": "nit: return is_locked_ ? ... : ...;",
+      "revId": "da4ae122e186ee6185b1e8bbfb569c6eebf09146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f8e3a0e_4bc73b84",
+        "filename": "ash/message_center/message_center_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-30T22:18:18Z",
+      "side": 1,
+      "message": "What are we making this public? If we need it public in a follow up CL, please make it public there.",
+      "revId": "da4ae122e186ee6185b1e8bbfb569c6eebf09146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
