@@ -91,20 +91,24 @@ unsigned NGInlineItem::SetBidiLevel(Vector<NGInlineItem>& items,
                                     unsigned index,
                                     unsigned end_offset,
                                     UBiDiLevel level) {
-  for (; items[index].end_offset_ < end_offset; index++)
-    items[index].bidi_level_ = level;
-  items[index].bidi_level_ = level;
-
-  if (items[index].end_offset_ == end_offset) {
-    // Let close items have the same bidi-level as the previous item.
-    while (index + 1 < items.size() &&
-           items[index + 1].Type() == NGInlineItem::kCloseTag) {
-      items[++index].bidi_level_ = level;
+  DCHECK_GT(end_offset, items[index].start_offset_);
+  DCHECK_LE(end_offset, items.back().end_offset_);
+  for (;; index++) {
+    NGInlineItem& item = items[index];
+    if (!item.Length()) {
+      // Items without characters should have bidi_level 0, so that they are not
+      // reordered. E.g., open/close tag items.
+      item.bidi_level_ = 0;
+      continue;
     }
-  } else {
-    Split(items, index, end_offset);
+    item.bidi_level_ = level;
+    if (end_offset == item.end_offset_)
+      break;
+    if (end_offset < item.end_offset_) {
+      Split(items, index, end_offset);
+      break;
+    }
   }
-
   return index + 1;
 }
 
