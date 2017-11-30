@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7320a4e7_6807d8a7",
+        "filename": "components/viz/service/display_embedder/display_output_surface_ozone.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-30T17:17:17Z",
+      "side": 1,
+      "message": "It should but I was trying to limit the lines of change. Do you want that in this CL?",
+      "parentUuid": "275a6f3d_e60e30e3",
+      "range": {
+        "startLine": 34,
+        "startChar": 6,
+        "endLine": 34,
+        "endChar": 31
+      },
+      "revId": "4d6f8230a00a52a62a440fc203790df353519295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d0713e7_4b352bb1",
         "filename": "components/viz/service/display_embedder/gpu_display_provider.cc",
         "patchSetId": 3
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "2e663f14_414cdc3e",
+        "filename": "components/viz/service/display_embedder/gpu_display_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-30T17:17:17Z",
+      "side": 1,
+      "message": "o ok!",
+      "parentUuid": "3d0713e7_4b352bb1",
+      "revId": "4d6f8230a00a52a62a440fc203790df353519295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c8b251e_e185c858",
         "filename": "components/viz/service/display_embedder/gpu_display_provider.cc",
         "patchSetId": 3
@@ -53,6 +95,24 @@
       "writtenOn": "2017-11-30T14:56:01Z",
       "side": 1,
       "message": "How about a helper like \"std::unique_ptr\u003cSoftwareOutputDevice\u003e CreateSoftwareOutputDevice(widget)\" to encapsulate all the #ifdef?",
+      "revId": "4d6f8230a00a52a62a440fc203790df353519295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4550e07_5f0b0942",
+        "filename": "components/viz/service/display_embedder/gpu_display_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-30T17:17:17Z",
+      "side": 1,
+      "message": "Sure",
+      "parentUuid": "6c8b251e_e185c858",
       "revId": "4d6f8230a00a52a62a440fc203790df353519295",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "b63b7192_c70e5829",
+        "filename": "components/viz/service/display_embedder/software_output_surface.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-30T17:17:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f347d27_646b0e2b",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "4d6f8230a00a52a62a440fc203790df353519295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da8c86eb_66e87582",
         "filename": "components/viz/service/display_embedder/software_output_surface.cc",
         "patchSetId": 3
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "e11fa276_200141eb",
+        "filename": "components/viz/service/display_embedder/software_output_surface.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-30T17:17:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da8c86eb_66e87582",
+      "range": {
+        "startLine": 30,
+        "startChar": 47,
+        "endLine": 30,
+        "endChar": 50
+      },
+      "revId": "4d6f8230a00a52a62a440fc203790df353519295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d991c9f_34006a16",
         "filename": "components/viz/service/display_embedder/software_output_surface.cc",
         "patchSetId": 3
@@ -116,6 +224,24 @@
       "writtenOn": "2017-11-30T14:56:01Z",
       "side": 1,
       "message": "What do you mean send to RenderWidgetHostImpl? There is ui::LatencyTracker that has been extracted out of RWHILatencyTracker to handle LatencyInfo stuff in the GPU process.",
+      "revId": "4d6f8230a00a52a62a440fc203790df353519295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebaad42b_8ad1f86c",
+        "filename": "components/viz/service/display_embedder/software_output_surface.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-30T17:17:17Z",
+      "side": 1,
+      "message": "Oh ok then it will have to go to here. I just meant it needs to replace this line which is what was in content/browser/compositor. I\u0027ll mention ui::LatencyTracker.",
+      "parentUuid": "3d991c9f_34006a16",
       "revId": "4d6f8230a00a52a62a440fc203790df353519295",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "38453c20_99cec03a",
+        "filename": "components/viz/service/display_embedder/software_output_surface.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-30T17:17:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a48a58f1_e6acc86e",
+      "revId": "4d6f8230a00a52a62a440fc203790df353519295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94615694_8d5ea313",
         "filename": "components/viz/service/display_embedder/software_output_surface.h",
         "patchSetId": 3
@@ -159,6 +303,30 @@
       "revId": "4d6f8230a00a52a62a440fc203790df353519295",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0760fcf9_ac2ee1cc",
+        "filename": "components/viz/service/display_embedder/software_output_surface.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-30T17:17:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94615694_8d5ea313",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "4d6f8230a00a52a62a440fc203790df353519295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -197,6 +365,24 @@
     },
     {
       "key": {
+        "uuid": "33481153_9d3520d2",
+        "filename": "components/viz/service/display_embedder/software_output_surface.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-30T17:17:17Z",
+      "side": 1,
+      "message": "I think the other ones will just get deleted once we flip on viz.",
+      "parentUuid": "e6a1b4a1_9843eddf",
+      "revId": "4d6f8230a00a52a62a440fc203790df353519295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea6eb6d6_6f2394ce",
         "filename": "components/viz/service/display_embedder/software_output_surface.h",
         "patchSetId": 3
@@ -208,6 +394,30 @@
       "writtenOn": "2017-11-30T14:56:01Z",
       "side": 1,
       "message": "Remove explicit.",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 10
+      },
+      "revId": "4d6f8230a00a52a62a440fc203790df353519295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab632c44_6193bec8",
+        "filename": "components/viz/service/display_embedder/software_output_surface.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-30T17:17:17Z",
+      "side": 1,
+      "message": "Done. fwiw explicit still does something good in c++11 here.\n\nclass D {\n public:\n  D() {}\n  D(int, int) {}\n  explicit D(int, int, int) {}\n};\n\n\nint main()\n{\n  D d1;\n  D d2;\n  d1 \u003d {1, 2};\n  d2 \u003d {1, 2, 3};\n  return 0;\n}\n\nmain.cpp:43:16: error: converting to \u0027D\u0027 from initializer list would use explicit constructor \u0027D::D(int, int, int)\u0027\n   d2 \u003d {1, 2, 3};\n\nThe first one works cuz of no explicit, it implicitly converts from initializer list.",
+      "parentUuid": "ea6eb6d6_6f2394ce",
       "range": {
         "startLine": 18,
         "startChar": 2,
@@ -243,6 +453,30 @@
     },
     {
       "key": {
+        "uuid": "dbe8a968_4e901c9b",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-30T17:17:17Z",
+      "side": 1,
+      "message": "If !gpu_compositing, then the service already knows and made that decision on its own. This is \"force\" only. In other cases this root sink will be in a mode determined by the CompositingModeReporter",
+      "parentUuid": "a678519f_a65bed68",
+      "range": {
+        "startLine": 406,
+        "startChar": 6,
+        "endLine": 406,
+        "endChar": 45
+      },
+      "revId": "4d6f8230a00a52a62a440fc203790df353519295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2992ace4_a4d92122",
         "filename": "services/ui/ws/window_server.cc",
         "patchSetId": 3
@@ -254,6 +488,24 @@
       "writtenOn": "2017-11-30T14:56:01Z",
       "side": 1,
       "message": "This is more of a question than anything, should this be constexpr? I\u0027d assume this is optimized away regardless but constexpr makes it kind of explicit it\u0027s just a constant used for the name.",
+      "revId": "4d6f8230a00a52a62a440fc203790df353519295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "752d4e6f_6b984c34",
+        "filename": "services/ui/ws/window_server.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-30T17:17:17Z",
+      "side": 1,
+      "message": "ehhh, yeah idk that it does anything tbh. constexpr is helpful if passing this variable to another constexpr expression maybe, but |false| is already marked constexpr in the AST probably, so not sure the compiler needs a hint? Generally I\u0027ve been not for writing const(expr) on local variables like this, cuz it feels like its just more noise to read than its worth, unless you want to show off that it wont change cuz the code is complicated.",
+      "parentUuid": "2992ace4_a4d92122",
       "revId": "4d6f8230a00a52a62a440fc203790df353519295",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
