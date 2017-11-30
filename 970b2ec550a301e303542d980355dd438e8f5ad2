@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ba7e4af3_e57aee11",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feedback/SystemInfoFeedbackSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-30T18:33:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e9c8f01_76a46750",
+      "range": {
+        "startLine": 34,
+        "startChar": 48,
+        "endLine": 34,
+        "endChar": 56
+      },
+      "revId": "970b2ec550a301e303542d980355dd438e8f5ad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2e719ad_2a8ffbbc",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/feedback/SystemInfoFeedbackSource.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "970b2ec550a301e303542d980355dd438e8f5ad2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a703bdd_23e12064",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feedback/SystemInfoFeedbackSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-30T18:33:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d2e719ad_2a8ffbbc",
+      "range": {
+        "startLine": 94,
+        "startChar": 43,
+        "endLine": 94,
+        "endChar": 45
+      },
+      "revId": "970b2ec550a301e303542d980355dd438e8f5ad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
