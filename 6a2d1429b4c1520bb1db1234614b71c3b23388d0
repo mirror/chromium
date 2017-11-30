@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ed00d12_52e984f2",
+        "filename": "ios/web/web_state/ui/crw_web_view_scroll_view_proxy_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-30T16:00:21Z",
+      "side": 1,
+      "message": "s/(NSUInteger)0/OU\n\nC-Style casting is not allowed by C++ Style Guide:\nhttps://google.github.io/styleguide/cppguide.html#Casting",
+      "range": {
+        "startLine": 145,
+        "startChar": 13,
+        "endLine": 145,
+        "endChar": 23
+      },
+      "revId": "6a2d1429b4c1520bb1db1234614b71c3b23388d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
