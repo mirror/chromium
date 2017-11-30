@@ -103,8 +103,20 @@ void ResourceLoader::Start() {
   loader_ =
       Context().CreateURLLoader(request, GetTaskRunnerFor(request, Context()));
   DCHECK_EQ(ResourceLoadScheduler::kInvalidClientId, scheduler_client_id_);
-  const auto throttle_option =
-      scheduler_->CanThrottle(request, resource_->Options().synchronous_policy);
+  auto throttle_option = ResourceLoadScheduler::ThrottleOption::kCanBeThrottled;
+
+  // Synchronous requests should not work with a throttling. Also, tentatively
+  // disables throttling for fetch requests that could keep on holding an active
+  // connection until data is read by JavaScript.
+  if (resource_->Options().synchronous_policy == kRequestSynchronously ||
+      request.GetRequestContext() == WebURLRequest::kRequestContextFetch) {
+    throttle_option = ResourceLoadScheduler::ThrottleOption::kCanNotBeThrottled;
+  }
+
+  if (throttle_option ==
+      ResourceLoadScheduler::ThrottleOption::kCanBeThrottled) {
+    throttle_option = scheduler_->CanThrottle(request.Priority());
+  }
 
   scheduler_->Request(this, throttle_option, request.Priority(),
                       request.IntraPriorityValue(), &scheduler_client_id_);
@@ -171,6 +183,8 @@ void ResourceLoader::DidChangePriority(ResourceLoadPriority load_priority,
         static_cast<WebURLRequest::Priority>(load_priority),
         intra_priority_value);
   }
+  scheduler_->SetPriority(scheduler_client_id_, load_priority,
+                          intra_priority_value);
 }
 
 void ResourceLoader::ScheduleCancel() {
