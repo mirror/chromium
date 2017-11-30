@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ef80753_641140c1",
+        "filename": "third_party/WebKit/LayoutTests/compositing/overflow/border-radius-on-squashed-layers.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-30T21:36:38Z",
+      "side": 1,
+      "message": "Does having two containers make the test more useful? Suggest removing container2 and contents2.",
+      "revId": "79facfbaaa52621f060d17c9ea72ace90ce733b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0294ff8d_331c3c25",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 3151,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-30T21:36:38Z",
+      "side": 1,
+      "message": "Can you change around the type of ancestor_to_local_offset to reduce copying data around\nbetween representations?",
+      "revId": "79facfbaaa52621f060d17c9ea72ace90ce733b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
