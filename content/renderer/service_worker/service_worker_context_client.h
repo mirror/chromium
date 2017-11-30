@@ -75,8 +75,9 @@ class WebWorkerFetchContext;
 //
 // Unless otherwise noted (here or in base class documentation), all methods are
 // called on the worker thread.
-class ServiceWorkerContextClient : public blink::WebServiceWorkerContextClient,
-                                   public mojom::ServiceWorkerEventDispatcher {
+class CONTENT_EXPORT ServiceWorkerContextClient
+    : public blink::WebServiceWorkerContextClient,
+      public mojom::ServiceWorkerEventDispatcher {
  public:
   // Returns a thread-specific client instance.  This does NOT create a
   // new instance.
@@ -96,7 +97,9 @@ class ServiceWorkerContextClient : public blink::WebServiceWorkerContextClient,
       blink::mojom::ServiceWorkerHostAssociatedPtrInfo service_worker_host,
       mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host,
       mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info,
-      std::unique_ptr<EmbeddedWorkerInstanceClientImpl> embedded_worker_client);
+      std::unique_ptr<EmbeddedWorkerInstanceClientImpl> embedded_worker_client,
+      scoped_refptr<ThreadSafeSender> sender,
+      scoped_refptr<base::SingleThreadTaskRunner> io_thread_task_runner);
   ~ServiceWorkerContextClient() override;
 
   // Called on the main thread.
