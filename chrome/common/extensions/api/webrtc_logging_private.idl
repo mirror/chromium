@@ -43,6 +43,7 @@ namespace webrtcLoggingPrivate {
     // time limit has elapsed, or by a manual call).
     boolean didStop;
 
+    // TODO: !!! Update comments.
     // Indicates if recording was stopped manually through a
     // stopAudioDebugRecordings() or stopWebRtcEventLogging() call.
     boolean didManualStop;
@@ -67,6 +68,7 @@ namespace webrtcLoggingPrivate {
                             MetaDataEntry[] metaData,
                             GenericDoneCallback callback);
 
+    // TODO: !!!
     // Starts logging. If logging has already been started for this render
     // process, the call will be ignored. |appSessionId| is the unique session
     // ID which will be added to the log.
@@ -82,6 +84,7 @@ namespace webrtcLoggingPrivate {
                                        DOMString securityOrigin,
                                        boolean shouldUpload);
 
+    // TODO: !!!
     // Stops logging. After stop has finished, either upload() or discard()
     // should be called, otherwise the log will be kept in memory until the
     // render process is closed or logging restarted.
@@ -153,26 +156,6 @@ namespace webrtcLoggingPrivate {
     static void stopAudioDebugRecordings(RequestInfo request,
                                          DOMString securityOrigin,
                                          RecordingDoneCallback callback);
-
-    // Starts WebRTC event logging.
-    // startWebRtcEventLogging() logs the most recent events that happened
-    // before the call, and then keep logging for |seconds| seconds into the
-    // future. |callback| is invoked once the logging stops.
-    // If |seconds| is zero, the logging will continue until
-    // stopWebRtcEventLogging() is explicitly called. In this case,
-    // |callback| is invoked once recording starts and will report
-    // that recording has not stopped.
-    // If |seconds| is negative, startWebRtcEventLogging() fails.
-    static void startWebRtcEventLogging(RequestInfo request,
-                                        DOMString securityOrigin,
-                                        long seconds,
-                                        RecordingDoneCallback callback);
-
-    // Stops RTC event logging. |callback| is invoked once the logging stops.
-    // If there is no recording in progress, stopWebRtcEventLogging() fails.
-    static void stopWebRtcEventLogging(RequestInfo request,
-                                       DOMString securityOrigin,
-                                       RecordingDoneCallback callback);
 
     // Returns the directory entry for the "WebRTC Logs" directory. If the
     // directory doesn't exist yet, this will create it. If the directory
