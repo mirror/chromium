@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8924caa0_4692147f",
+        "filename": "content/browser/notifications/blink_notification_service_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-30T16:56:50Z",
+      "side": 1,
+      "message": "Done (Also removed browser_context.h for the same reason)",
+      "parentUuid": "2a59f62d_1b4e2c36",
+      "revId": "40662bd774d35b3323e7a0bd65eebe38c50ecae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6dc8cc37_80e5552e",
         "filename": "content/browser/notifications/blink_notification_service_impl.cc",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-29T14:47:53Z",
       "side": 1,
       "message": "It\u0027d be worth documenting why using base::Unretained() here is safe.",
+      "revId": "40662bd774d35b3323e7a0bd65eebe38c50ecae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cb6db32_007fdc44",
+        "filename": "content/browser/notifications/blink_notification_service_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-30T16:56:50Z",
+      "side": 1,
+      "message": "Agree documenting why it\u0027s safe would be a good idea. Not sure I fully understand why it *is* safe though. Is it because the mojo service is a singleton, so guaranteed to always be alive?",
+      "parentUuid": "6dc8cc37_80e5552e",
       "revId": "40662bd774d35b3323e7a0bd65eebe38c50ecae5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7507eef3_7058a4b7",
+        "filename": "third_party/WebKit/Source/modules/notifications/Notification.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-30T16:56:50Z",
+      "side": 1,
+      "message": "Sorry about that, I should have checked it compiled before uploading.\n\nAgree a test would be good. But how do I emulate the context going away? From what we discussed, I guess I\u0027ll need an iframe in my test case and then test what happens if I try to invoke the constructor of a notification created by the iframe from the containing page, is that right? If so I\u0027m still going to need some help to figure out how to communicate between the iframe and the page. Are there any tests doing something similar I can copy from?",
+      "parentUuid": "1b9d7e53_b4d7271c",
+      "revId": "40662bd774d35b3323e7a0bd65eebe38c50ecae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d382e93_7f832858",
         "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.cpp",
         "patchSetId": 11
@@ -67,6 +121,24 @@
       "revId": "40662bd774d35b3323e7a0bd65eebe38c50ecae5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afec1f9d_96127ac0",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-30T16:56:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d382e93_7f832858",
+      "revId": "40662bd774d35b3323e7a0bd65eebe38c50ecae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "0bfbe356_baa00c87",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-30T16:56:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c626dd78_4d963b8a",
+      "revId": "40662bd774d35b3323e7a0bd65eebe38c50ecae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fffcee1_b343508a",
         "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.h",
         "patchSetId": 11
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "8afe2707_6a9d13f0",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-30T16:56:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fffcee1_b343508a",
+      "revId": "40662bd774d35b3323e7a0bd65eebe38c50ecae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d152fbf9_fb6fbaf2",
         "filename": "third_party/WebKit/public/platform/modules/notifications/notification_service.mojom",
         "patchSetId": 11
@@ -118,6 +226,24 @@
       "revId": "40662bd774d35b3323e7a0bd65eebe38c50ecae5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "101ca6f8_56890892",
+        "filename": "third_party/WebKit/public/platform/modules/notifications/notification_service.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-30T16:56:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d152fbf9_fb6fbaf2",
+      "revId": "40662bd774d35b3323e7a0bd65eebe38c50ecae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
