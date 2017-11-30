@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0bacce84_f76937a5",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-30T16:10:03Z",
+      "side": 1,
+      "message": "This gets called every time the browser process starts. Browser in this case means all of Chrome. Not only Chrome VR.",
+      "parentUuid": "2f8cb31d_a4043361",
+      "revId": "012937f927c8257c3a6317ca290631c82aafd6c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4301b470_7866ca01",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -59,6 +77,48 @@
     },
     {
       "key": {
+        "uuid": "6728eea2_0278956f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 92837,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-30T16:10:03Z",
+      "side": 1,
+      "message": "I would like to add the metrics first since we need that data. Let\u0027s think about better names after if we can get it in before branch.",
+      "parentUuid": "4301b470_7866ca01",
+      "revId": "012937f927c8257c3a6317ca290631c82aafd6c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a9dc39ff_ddf0af91",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 92837,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-30T16:10:03Z",
+      "side": 1,
+      "message": "In my naming system I have\n.OnLaunchBrowser: App started\n.OnEnter.VR: User entered any VR mode\n.OnEnter.VRBrowsing: User entered VR mode\n.OnEnter.WebVR: User entered WebVR mode",
+      "parentUuid": "bb970276_35249733",
+      "range": {
+        "startLine": 92837,
+        "startChar": 57,
+        "endLine": 92837,
+        "endChar": 64
+      },
+      "revId": "012937f927c8257c3a6317ca290631c82aafd6c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2790247_b8ecb978",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -79,6 +139,30 @@
       "revId": "012937f927c8257c3a6317ca290631c82aafd6c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a75b10cb_aa40886e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 92840,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-30T16:10:03Z",
+      "side": 1,
+      "message": "Nope, here I\u0027m measuring from starting the app until the component is ready to use.",
+      "parentUuid": "b2790247_b8ecb978",
+      "range": {
+        "startLine": 92840,
+        "startChar": 33,
+        "endLine": 92840,
+        "endChar": 34
+      },
+      "revId": "012937f927c8257c3a6317ca290631c82aafd6c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
