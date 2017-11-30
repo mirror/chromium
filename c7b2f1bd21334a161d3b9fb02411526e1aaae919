@@ -418,6 +418,24 @@
     },
     {
       "key": {
+        "uuid": "9a27b1bb_7b836e4f",
+        "filename": "ipc/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-30T22:28:31Z",
+      "side": 1,
+      "message": "Oh I see, good point. Yeah, I was going to put \"the side you *don\u0027t* call BindInterface on\" but I see what you mean, it\u0027s a little confusing. Just got rid of this bit and left \"instantiates the implementation\", that\u0027s pretty clear I think.",
+      "parentUuid": "17f874c2_b4282df4",
+      "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4512e845_2f02e2f2",
         "filename": "ipc/README.md",
         "patchSetId": 1
