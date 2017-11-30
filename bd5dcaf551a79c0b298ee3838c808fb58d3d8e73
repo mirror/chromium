@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7c2e7272_3fb137e1",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1118104
+      },
+      "writtenOn": "2017-11-30T02:21:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4159e24d_4e4efbae",
+      "range": {
+        "startLine": 47,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 57
+      },
+      "revId": "bd5dcaf551a79c0b298ee3838c808fb58d3d8e73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aa337a6_dc29b93d",
         "filename": "cr-buildbucket.cfg",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "bd5dcaf551a79c0b298ee3838c808fb58d3d8e73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39416f14_f47311c1",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1118104
+      },
+      "writtenOn": "2017-11-30T02:21:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5aa337a6_dc29b93d",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 52,
+        "endChar": 3
+      },
+      "revId": "bd5dcaf551a79c0b298ee3838c808fb58d3d8e73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d2ba7d80_a1382ea1",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1118104
+      },
+      "writtenOn": "2017-11-30T02:21:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb052c3a_9298d7fb",
+      "range": {
+        "startLine": 220,
+        "startChar": 2,
+        "endLine": 220,
+        "endChar": 20
+      },
+      "revId": "bd5dcaf551a79c0b298ee3838c808fb58d3d8e73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1d9ef76_10705d6b",
         "filename": "cr-buildbucket.cfg",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "b3814e55_f770e36b",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1118104
+      },
+      "writtenOn": "2017-11-30T02:21:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1d9ef76_10705d6b",
+      "range": {
+        "startLine": 223,
+        "startChar": 4,
+        "endLine": 223,
+        "endChar": 49
+      },
+      "revId": "bd5dcaf551a79c0b298ee3838c808fb58d3d8e73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0bd8beb8_4b079f36",
         "filename": "cr-buildbucket.cfg",
         "patchSetId": 1
@@ -105,6 +201,30 @@
       "writtenOn": "2017-11-29T22:02:02Z",
       "side": 1,
       "message": "afair, findit will specify recipe (build / name) per each job anyway, so you don\u0027t have to define this here.",
+      "range": {
+        "startLine": 236,
+        "startChar": 7,
+        "endLine": 237,
+        "endChar": 39
+      },
+      "revId": "bd5dcaf551a79c0b298ee3838c808fb58d3d8e73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d47ce6f9_178913cd",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1118104
+      },
+      "writtenOn": "2017-11-30T02:21:23Z",
+      "side": 1,
+      "message": "Presubmit fails if this is not defined. As you said, Findit overrides it on every build request.",
+      "parentUuid": "0bd8beb8_4b079f36",
       "range": {
         "startLine": 236,
         "startChar": 7,
