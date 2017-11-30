@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9dd9b869_37f32dd5",
+        "filename": "cc/paint/paint_op_reader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-11-30T01:59:06Z",
+      "side": 0,
+      "message": "Not sure about this. reamining_bytes_ might overflow? We don\u0027t have to return true/false but maybe just mark the thing as invalid? Or is this an important if for speed?",
+      "revId": "049d66673ccfc41690e102476943c4b70ce8bfa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
