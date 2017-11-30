@@ -73,6 +73,11 @@ void VoidPolymorphic1(T t) {
 void TakesMoveOnly(std::unique_ptr<int>) {
 }
 
+struct NonEmptyFunctor {
+  int x;
+  void operator()() const {}
+};
+
 // TODO(hans): Remove .* and update the static_assert expectations once we roll
 // past Clang r313315. https://crbug.com/765692.
 
@@ -304,6 +309,11 @@ void WontCompile() {
   Bind(&TakesMoveOnly, std::move(x));
 }
 
+#elif defined(NCTEST_BIND_NON_EMPTY_FUNCTOR)  // [r"fatal error: implicit instantiation of undefined template 'base::internal::FunctorTraits<base::NonEmptyFunctor, void>'"]
+
+void WontCompile() {
+  Bind(NonEmptyFunctor());
+}
 
 #endif
 
