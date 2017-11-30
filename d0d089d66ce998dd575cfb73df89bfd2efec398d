@@ -421,6 +421,24 @@
     },
     {
       "key": {
+        "uuid": "0280f0e0_80149a36",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 43163,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-30T20:20:28Z",
+      "side": 1,
+      "message": "Ok, I misunderstood. I only considered WebVR as presenting. We didn\u0027t call VR browsing mode presenting so far.",
+      "parentUuid": "8521e264_b5ee72b0",
+      "revId": "d0d089d66ce998dd575cfb73df89bfd2efec398d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1c083d7_f052705d",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
