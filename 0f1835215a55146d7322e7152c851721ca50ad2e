@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5ef3ebc_3ad45cc3",
+        "filename": "third_party/WebKit/Source/core/frame/UseCounterTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2017-11-30T02:24:32Z",
+      "side": 1,
+      "message": "The kViewSourceDocument UseCounter becomes useless with this change, you should probably remove it at the same time (maybe check the history to see who added it, and possibly confirm they\u0027re ok with loosing the ability to track this).  You can use any other counter here in the test.",
+      "range": {
+        "startLine": 293,
+        "startChar": 41,
+        "endLine": 293,
+        "endChar": 42
+      },
+      "revId": "0f1835215a55146d7322e7152c851721ca50ad2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da802d3c_ad632335",
+        "filename": "third_party/WebKit/Source/core/page/Page.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2017-11-30T02:24:32Z",
+      "side": 1,
+      "message": "why move this out of the GetDocument check?  Perhaps there\u0027s some reason not to clear the console if GetDocument is somehow null?  I\u0027m not sure.",
+      "range": {
+        "startLine": 624,
+        "startChar": 4,
+        "endLine": 624,
+        "endChar": 28
+      },
+      "revId": "0f1835215a55146d7322e7152c851721ca50ad2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca65b528_c5ea44e7",
+        "filename": "third_party/WebKit/Source/core/page/Page.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2017-11-30T02:24:32Z",
+      "side": 1,
+      "message": "Exposing a SetUseCounterContext method exposes something that was previously internal state (or at least state that only changed internally), which will at a minimum make your test matrix more complex.  I suggest you pass a isDisabled boolean to DidCommitLoad along with the URL.\n\nIn fact, shouldn\u0027t the NTP logic (\"ShouldTrackUseCounter\") be using this same mechanism too?  Unless I\u0027m missing it, NTP pages will still have a non-disabled UseCounter context and so have buckets (other than PageVisits) reported still!  Conceptually both NTP and view-source pages should be behaving exactly like chrome:// and file:// pages, right?\n\nAlternately perhaps DidCommitLoad should be taking a LocalFrame instead of a URL, then you can keep all the \"should be disabled\" logic encapsulated inside the UseCounter class.  Eg. should you be duplicating this logic at the LocalFrame::ForceSynchronousDocumentInstall callsite as well?",
+      "revId": "0f1835215a55146d7322e7152c851721ca50ad2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
