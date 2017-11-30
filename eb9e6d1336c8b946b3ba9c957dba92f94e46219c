@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9d94f574_4b827fc4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-30T21:22:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88447d97_e94e4e3d",
+      "range": {
+        "startLine": 917,
+        "startChar": 16,
+        "endLine": 917,
+        "endChar": 29
+      },
+      "revId": "eb9e6d1336c8b946b3ba9c957dba92f94e46219c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13b9019a_e4246ba8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "eb9e6d1336c8b946b3ba9c957dba92f94e46219c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b629f6cd_6954de25",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1338,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-30T21:22:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13b9019a_e4246ba8",
+      "revId": "eb9e6d1336c8b946b3ba9c957dba92f94e46219c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "fbf7aa67_8a33c4e4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1439,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-30T21:22:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87adcfc6_ba74ee6b",
+      "range": {
+        "startLine": 1439,
+        "startChar": 20,
+        "endLine": 1439,
+        "endChar": 40
+      },
+      "revId": "eb9e6d1336c8b946b3ba9c957dba92f94e46219c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f5970df_381c04d8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/searchwidget/SearchBoxDataProvider.java",
         "patchSetId": 3
@@ -79,6 +145,24 @@
       "revId": "eb9e6d1336c8b946b3ba9c957dba92f94e46219c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe533a11_c339d755",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/searchwidget/SearchBoxDataProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-30T21:22:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f5970df_381c04d8",
+      "revId": "eb9e6d1336c8b946b3ba9c957dba92f94e46219c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -102,6 +186,30 @@
       "revId": "eb9e6d1336c8b946b3ba9c957dba92f94e46219c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "376eb487_63b13450",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarLayout.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-30T21:22:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d33032d_7dde643f",
+      "range": {
+        "startLine": 203,
+        "startChar": 23,
+        "endLine": 203,
+        "endChar": 24
+      },
+      "revId": "eb9e6d1336c8b946b3ba9c957dba92f94e46219c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -160,6 +268,30 @@
       "revId": "eb9e6d1336c8b946b3ba9c957dba92f94e46219c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09142583_330a299b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarModelImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-30T21:22:20Z",
+      "side": 1,
+      "message": "I added @ConnectionSecurityLevel.",
+      "parentUuid": "819a41f1_8c6c1017",
+      "range": {
+        "startLine": 212,
+        "startChar": 11,
+        "endLine": 212,
+        "endChar": 14
+      },
+      "revId": "eb9e6d1336c8b946b3ba9c957dba92f94e46219c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -250,6 +382,24 @@
     },
     {
       "key": {
+        "uuid": "feedc70d_3b0d2017",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/omnibox/BottomSheetLocationBarTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-30T21:22:20Z",
+      "side": 1,
+      "message": "Couldn\u0027t hurt. Done.",
+      "parentUuid": "53e5fb5c_766dde66",
+      "revId": "eb9e6d1336c8b946b3ba9c957dba92f94e46219c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f78b35dc_60fdadd7",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/omnibox/BottomSheetLocationBarTest.java",
         "patchSetId": 3
@@ -273,6 +423,30 @@
     },
     {
       "key": {
+        "uuid": "8da5e42d_be6c4a8c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/omnibox/BottomSheetLocationBarTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-30T21:22:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f78b35dc_60fdadd7",
+      "range": {
+        "startLine": 113,
+        "startChar": 15,
+        "endLine": 113,
+        "endChar": 25
+      },
+      "revId": "eb9e6d1336c8b946b3ba9c957dba92f94e46219c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1175a37a_a5e4e580",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/omnibox/BottomSheetLocationBarTest.java",
         "patchSetId": 3
@@ -293,6 +467,30 @@
       "revId": "eb9e6d1336c8b946b3ba9c957dba92f94e46219c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00df82b6_ff6e704f",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/omnibox/BottomSheetLocationBarTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-30T21:22:20Z",
+      "side": 1,
+      "message": "Removed getUrlBarTextForTests.",
+      "parentUuid": "1175a37a_a5e4e580",
+      "range": {
+        "startLine": 114,
+        "startChar": 59,
+        "endLine": 114,
+        "endChar": 60
+      },
+      "revId": "eb9e6d1336c8b946b3ba9c957dba92f94e46219c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

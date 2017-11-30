@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "68dec747_fee69bad",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarDataProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-30T21:22:20Z",
+      "side": 1,
+      "message": "I in-lined the check.",
+      "parentUuid": "86f5567b_d920fd08",
+      "revId": "89b7efa001cc16ac45e2757216ff8d751c68506f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fecf087_cb9e87e9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarModelImpl.java",
         "patchSetId": 5
@@ -33,6 +51,41 @@
       "revId": "89b7efa001cc16ac45e2757216ff8d751c68506f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e733da8_a7d85d27",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarModelImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-30T21:22:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fecf087_cb9e87e9",
+      "revId": "89b7efa001cc16ac45e2757216ff8d751c68506f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e18bdc7_5ed38472",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarModelImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-30T21:22:20Z",
+      "side": 1,
+      "message": "Ted, fyi, I removed the isBottomSheetOpen check from getSecurityLevel since the security level should be unaffected by whether the sheet is opened.",
+      "revId": "89b7efa001cc16ac45e2757216ff8d751c68506f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
