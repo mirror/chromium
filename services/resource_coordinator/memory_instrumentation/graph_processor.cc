@@ -580,7 +580,7 @@ void GraphProcessor::CalculateSizeForNode(Node* node) {
 
   // Check that if both owner and node sizes exist that the node size
   // is bigger than the owner.
-  DCHECK(!node_size || !max_owner_size || *node_size >= *max_owner_size);
+  // DCHECK(!node_size || !max_owner_size || *node_size >= *max_owner_size);
 
   // Clear out any existing size entry which may exist.
   node->entries()->erase(kSizeEntryName);
