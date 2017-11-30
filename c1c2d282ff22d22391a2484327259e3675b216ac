@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "74b69efc_48ad129d",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-11-30T12:07:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea619ae2_680d02d1",
+      "range": {
+        "startLine": 5,
+        "startChar": 1,
+        "endLine": 5,
+        "endChar": 8
+      },
+      "revId": "c1c2d282ff22d22391a2484327259e3675b216ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37792859_42043ee4",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 25
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "6a6cf708_be33630a",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-11-30T12:07:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37792859_42043ee4",
+      "revId": "c1c2d282ff22d22391a2484327259e3675b216ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13451dad_6fcdacdc",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 25
@@ -56,6 +98,24 @@
       "revId": "c1c2d282ff22d22391a2484327259e3675b216ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4e297a4_54712cef",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-11-30T12:07:13Z",
+      "side": 1,
+      "message": "Hmm, there is no code of assignment of ScopedBitstreamBuffer in this code.\nSo it seems to not be required.",
+      "parentUuid": "13451dad_6fcdacdc",
+      "revId": "c1c2d282ff22d22391a2484327259e3675b216ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "ce3cd315_b46c2f4a",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-11-30T12:07:13Z",
+      "side": 1,
+      "message": "BitstreamBuffer has automatically generated copy assignment constructor. cf.) http://en.cppreference.com/w/cpp/language/copy_assignment.\nSo \"bitstream_buffer_ \u003d std::move(bitstream_buffer)\" becomes copy assignment constructor.\nIn my understanding, even if a class doesn\u0027t have move constructor, we can use its rvalue reference as an argument.\nFurthermore, in this case, this is only called in l.515, and media::BitstreamBuffer is rvalue there. So it seems natural to me to use rvalue reference argument here.\nIt is worth noting that const lvalue reference argument is possible here, since rvalue reference can implicitly translated to const lvalue reference.",
+      "parentUuid": "84d680ef_d5869694",
+      "range": {
+        "startLine": 92,
+        "startChar": 55,
+        "endLine": 92,
+        "endChar": 57
+      },
+      "revId": "c1c2d282ff22d22391a2484327259e3675b216ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdd6072c_b265921d",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 25
@@ -102,6 +186,30 @@
       "revId": "c1c2d282ff22d22391a2484327259e3675b216ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "def169d4_88c75308",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-11-30T12:07:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdd6072c_b265921d",
+      "range": {
+        "startLine": 96,
+        "startChar": 35,
+        "endLine": 96,
+        "endChar": 36
+      },
+      "revId": "c1c2d282ff22d22391a2484327259e3675b216ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "b6ad5bf0_d9f73c2d",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-11-30T12:07:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17cc3bc3_0ab0482b",
+      "range": {
+        "startLine": 187,
+        "startChar": 2,
+        "endLine": 187,
+        "endChar": 12
+      },
+      "revId": "c1c2d282ff22d22391a2484327259e3675b216ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "474ac78f_54ecac65",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 25
@@ -148,6 +280,30 @@
       "revId": "c1c2d282ff22d22391a2484327259e3675b216ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4933bb9e_e411d1af",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-11-30T12:07:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "474ac78f_54ecac65",
+      "range": {
+        "startLine": 516,
+        "startChar": 47,
+        "endLine": 516,
+        "endChar": 57
+      },
+      "revId": "c1c2d282ff22d22391a2484327259e3675b216ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "fff85a53_8f72a92a",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-11-30T12:07:13Z",
+      "side": 1,
+      "message": "That is exclusive.\nIf |id| is int32_t, a compailer warns the comparison in l.538, id \u003c count (int32_t vs. uint32_t).\nPerhaps, we should define private noname enum in GAVDA and moved the variables between l.46 and l.56 there? The type problem is resolved by that.",
+      "parentUuid": "69391d30_f59eb3a1",
+      "range": {
+        "startLine": 538,
+        "startChar": 29,
+        "endLine": 538,
+        "endChar": 49
+      },
+      "revId": "c1c2d282ff22d22391a2484327259e3675b216ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e00dfa2_eb522adb",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 25
@@ -197,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "38e064a1_f4f0bbf8",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-11-30T12:07:13Z",
+      "side": 1,
+      "message": "That is correct.\nhttps://cs.chromium.org/chromium/src/ui/ozone/ozone.gni?q\u003dozone.gni\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d66",
+      "parentUuid": "6e00dfa2_eb522adb",
+      "range": {
+        "startLine": 552,
+        "startChar": 4,
+        "endLine": 552,
+        "endChar": 23
+      },
+      "revId": "c1c2d282ff22d22391a2484327259e3675b216ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f215e30c_89342c13",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 25
@@ -217,6 +421,30 @@
       "revId": "c1c2d282ff22d22391a2484327259e3675b216ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2607d443_a11adaa0",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-11-30T12:07:13Z",
+      "side": 1,
+      "message": "Well, it seems natural to resize protected_output_handles_ in AssignPictureBuffers only if secure mdoe.",
+      "parentUuid": "f215e30c_89342c13",
+      "range": {
+        "startLine": 561,
+        "startChar": 48,
+        "endLine": 561,
+        "endChar": 68
+      },
+      "revId": "c1c2d282ff22d22391a2484327259e3675b216ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
