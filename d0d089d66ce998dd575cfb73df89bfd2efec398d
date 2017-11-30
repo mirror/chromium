@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8d1b950f_5949d751",
+        "filename": "chrome/browser/android/vr_shell/vr_metrics_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T20:02:47Z",
+      "side": 1,
+      "message": "I see. The GVR instance is actually created elsewhere.",
+      "parentUuid": "e3d7219a_7263c81b",
+      "revId": "d0d089d66ce998dd575cfb73df89bfd2efec398d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27d065d2_7dd4d524",
         "filename": "device/vr/openvr/openvr_device.cc",
         "patchSetId": 1
@@ -98,6 +116,30 @@
       "revId": "d0d089d66ce998dd575cfb73df89bfd2efec398d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d70e5540_ee192a5b",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T20:02:47Z",
+      "side": 1,
+      "message": "Ignore, per above.",
+      "parentUuid": "de8093d3_56bb072a",
+      "range": {
+        "startLine": 181,
+        "startChar": 19,
+        "endLine": 181,
+        "endChar": 41
+      },
+      "revId": "d0d089d66ce998dd575cfb73df89bfd2efec398d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -193,6 +235,24 @@
       "side": 1,
       "message": "It is also for non-presenting VR modes IIUC.",
       "parentUuid": "ee581fd7_72c0c893",
+      "revId": "d0d089d66ce998dd575cfb73df89bfd2efec398d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae2bc972_04c4d188",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 43163,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T20:02:47Z",
+      "side": 1,
+      "message": "Where do we use it that way? (I\u0027m find with adding this, regardless. After all the GVR values and before OPENVR values.)",
+      "parentUuid": "1263c8da_da158a56",
       "revId": "d0d089d66ce998dd575cfb73df89bfd2efec398d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
