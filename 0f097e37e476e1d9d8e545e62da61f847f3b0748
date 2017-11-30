@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "877f0721_eefd81ec",
+        "filename": "chrome/browser/ui/tabs/tab_activity_watcher_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-30T02:53:55Z",
+      "side": 1,
+      "message": "Please document what this (what the char* and int64_t represent).",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 16
+      },
+      "revId": "0f097e37e476e1d9d8e545e62da61f847f3b0748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5402319a_83f3ee07",
+        "filename": "chrome/browser/ui/tabs/tab_activity_watcher_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-30T02:53:55Z",
+      "side": 1,
+      "message": "Your extensive use of auto makes this code really hard to follow for someone not familiar with ukm_recorder(). Please use a type at least for entries.",
+      "range": {
+        "startLine": 101,
+        "startChar": 10,
+        "endLine": 101,
+        "endChar": 15
+      },
+      "revId": "0f097e37e476e1d9d8e545e62da61f847f3b0748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
