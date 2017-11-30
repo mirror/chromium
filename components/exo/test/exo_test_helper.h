@@ -7,8 +7,10 @@
 
 #include <memory>
 
+#include "ash/public/cpp/shell_window_ids.h"
 #include "base/compiler_specific.h"
 #include "base/macros.h"
+#include "components/exo/shell_surface.h"
 #include "ui/gfx/buffer_types.h"
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/size.h"
@@ -19,6 +21,7 @@ class GpuMemoryBuffer;
 
 namespace exo {
 class Buffer;
+class ClientControlledShellSurface;
 class Surface;
 class ShellSurface;
 
@@ -54,6 +57,8 @@ class ExoTestHelper {
 
   // Creates window of size (width, height) at center of screen.
   ExoTestWindow CreateWindow(int width, int height, bool is_modal);
+  std::unique_ptr<ClientControlledShellSurface>
+  CreateClientControlledShellSurface(Surface* surface, bool is_modal = false);
 
  private:
   DISALLOW_COPY_AND_ASSIGN(ExoTestHelper);
