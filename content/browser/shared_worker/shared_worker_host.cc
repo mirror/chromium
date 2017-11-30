@@ -265,7 +265,9 @@ void SharedWorkerHost::GetInterface(
     return;
 
   BindWorkerInterface(interface_name, std::move(interface_pipe), process,
-                      url::Origin::Create(instance()->url()));
+                      url::Origin::Create(instance()->url()),
+                      WebContextType::kSharedWorker,
+                      mojo::GetBadMessageCallback());
 }
 
 }  // namespace content
