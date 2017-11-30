@@ -103,11 +103,12 @@ class SigninManager : public SigninManagerBase,
 
   // Signs a user out, removing the preference, erasing all keys
   // associated with the authenticated user, and canceling all auth in progress.
-  // It removes removes all accounts from Chrome by revoking all refresh
-  // tokens.
+  // If |remove_all_accounts| is truen, then it also removes all accounts from
+  // Chrome by revoking all refresh tokens.
   void SignOutAndRemoveAllAccounts(
       signin_metrics::ProfileSignout signout_source_metric,
-      signin_metrics::SignoutDelete signout_delete_metric);
+      signin_metrics::SignoutDelete signout_delete_metric,
+      bool remove_all_accounts = true);
 
   // On platforms where SigninManager is responsible for dealing with
   // invalid username policy updates, we need to check this during
@@ -220,11 +221,6 @@ class SigninManager : public SigninManagerBase,
   // to |error|, sends out a notification of login failure and clears the
   // transient signin data.
   void HandleAuthError(const GoogleServiceAuthError& error);
-
-  // Starts the sign out process.
-  void StartSignOut(signin_metrics::ProfileSignout signout_source_metric,
-                    signin_metrics::SignoutDelete signout_delete_metric,
-                    bool remove_all_accounts);
 
   void OnSigninAllowedPrefChanged();
   void OnGoogleServicesUsernamePatternChanged();

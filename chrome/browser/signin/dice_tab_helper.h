@@ -34,10 +34,6 @@ class DiceTabHelper : public content::WebContentsUserData<DiceTabHelper>,
   // Sets the sign-in reason. Should be called only once.
   void SetSigninReason(signin_metrics::Reason reason);
 
-  // content::WebContentsObserver:
-  void DidStartNavigation(
-      content::NavigationHandle* navigation_handle) override;
-
  private:
   friend class content::WebContentsUserData<DiceTabHelper>;
   explicit DiceTabHelper(content::WebContents* web_contents);
