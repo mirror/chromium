@@ -165,7 +165,7 @@ public class OmniboxTestUtils {
         }
 
         @Override
-        public void startZeroSuggest(Profile profile, String omniboxText, String url,
+        public void startZeroSuggest(Profile profile, String omniboxText, String url, String title,
                 boolean focusedFromFakebox) {
             mZeroSuggestCalledCount++;
         }
