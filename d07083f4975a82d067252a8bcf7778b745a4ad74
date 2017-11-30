@@ -34,6 +34,24 @@
       "revId": "d07083f4975a82d067252a8bcf7778b745a4ad74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57f33f11_fe038655",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-30T14:56:01Z",
+      "side": 1,
+      "message": "I totally agree this parameter list is getting unmanageable. How do you feel about making a mojom::RootCompositorFrameSinkParams object?",
+      "parentUuid": "2f95a577_ce19a77a",
+      "revId": "d07083f4975a82d067252a8bcf7778b745a4ad74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

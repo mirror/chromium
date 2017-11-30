@@ -2,6 +2,166 @@
   "comments": [
     {
       "key": {
+        "uuid": "275a6f3d_e60e30e3",
+        "filename": "components/viz/service/display_embedder/display_output_surface_ozone.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-30T14:56:01Z",
+      "side": 1,
+      "message": "Should this be GLOutputSurfaceOzone?",
+      "range": {
+        "startLine": 34,
+        "startChar": 6,
+        "endLine": 34,
+        "endChar": 31
+      },
+      "revId": "4d6f8230a00a52a62a440fc203790df353519295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d0713e7_4b352bb1",
+        "filename": "components/viz/service/display_embedder/gpu_display_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-30T14:56:01Z",
+      "side": 1,
+      "message": "gpu::SurfaceHandle \u003d\u003d gfx::Accelerated widget when GPU_SURFACE_HANDLE_IS_ACCELERATED_WINDOW so the cast shouldn\u0027t be necessary?",
+      "revId": "4d6f8230a00a52a62a440fc203790df353519295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c8b251e_e185c858",
+        "filename": "components/viz/service/display_embedder/gpu_display_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-30T14:56:01Z",
+      "side": 1,
+      "message": "How about a helper like \"std::unique_ptr\u003cSoftwareOutputDevice\u003e CreateSoftwareOutputDevice(widget)\" to encapsulate all the #ifdef?",
+      "revId": "4d6f8230a00a52a62a440fc203790df353519295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f347d27_646b0e2b",
+        "filename": "components/viz/service/display_embedder/software_output_surface.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-30T14:56:01Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "4d6f8230a00a52a62a440fc203790df353519295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da8c86eb_66e87582",
+        "filename": "components/viz/service/display_embedder/software_output_surface.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-30T14:56:01Z",
+      "side": 1,
+      "message": "\u003d default;",
+      "range": {
+        "startLine": 30,
+        "startChar": 47,
+        "endLine": 30,
+        "endChar": 50
+      },
+      "revId": "4d6f8230a00a52a62a440fc203790df353519295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d991c9f_34006a16",
+        "filename": "components/viz/service/display_embedder/software_output_surface.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-30T14:56:01Z",
+      "side": 1,
+      "message": "What do you mean send to RenderWidgetHostImpl? There is ui::LatencyTracker that has been extracted out of RWHILatencyTracker to handle LatencyInfo stuff in the GPU process.",
+      "revId": "4d6f8230a00a52a62a440fc203790df353519295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a48a58f1_e6acc86e",
+        "filename": "components/viz/service/display_embedder/software_output_surface.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-30T14:56:01Z",
+      "side": 1,
+      "message": "Can you reorder this to the bottom?",
+      "revId": "4d6f8230a00a52a62a440fc203790df353519295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94615694_8d5ea313",
+        "filename": "components/viz/service/display_embedder/software_output_surface.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-30T14:56:01Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "4d6f8230a00a52a62a440fc203790df353519295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b41781c_7ce91a49",
         "filename": "components/viz/service/display_embedder/software_output_surface.h",
         "patchSetId": 3
@@ -13,6 +173,87 @@
       "writtenOn": "2017-11-29T23:39:15Z",
       "side": 1,
       "message": "I copied this from SoftwareBrowserCompositorOutputSurface",
+      "revId": "4d6f8230a00a52a62a440fc203790df353519295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6a1b4a1_9843eddf",
+        "filename": "components/viz/service/display_embedder/software_output_surface.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-30T14:56:01Z",
+      "side": 1,
+      "message": "It would be nice if we could merge some of this code. It\u0027s really only the ReflectorImpl parts of BrowserCompositorOutputSurface that need content and  SoftwareBrowserCompositorOutputSurface doesn\u0027t use the reflector bits. TODO maybe?",
+      "parentUuid": "6b41781c_7ce91a49",
+      "revId": "4d6f8230a00a52a62a440fc203790df353519295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea6eb6d6_6f2394ce",
+        "filename": "components/viz/service/display_embedder/software_output_surface.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-30T14:56:01Z",
+      "side": 1,
+      "message": "Remove explicit.",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 10
+      },
+      "revId": "4d6f8230a00a52a62a440fc203790df353519295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a678519f_a65bed68",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-30T14:56:01Z",
+      "side": 1,
+      "message": "Should this be !gpu_compositing?",
+      "range": {
+        "startLine": 406,
+        "startChar": 6,
+        "endLine": 406,
+        "endChar": 45
+      },
+      "revId": "4d6f8230a00a52a62a440fc203790df353519295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2992ace4_a4d92122",
+        "filename": "services/ui/ws/window_server.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-30T14:56:01Z",
+      "side": 1,
+      "message": "This is more of a question than anything, should this be constexpr? I\u0027d assume this is optimized away regardless but constexpr makes it kind of explicit it\u0027s just a constant used for the name.",
       "revId": "4d6f8230a00a52a62a440fc203790df353519295",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
