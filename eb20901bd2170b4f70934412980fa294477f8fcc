@@ -22,6 +22,30 @@
       "revId": "eb20901bd2170b4f70934412980fa294477f8fcc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00ed6b51_9b3172b5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-30T04:40:16Z",
+      "side": 1,
+      "message": "Yeah. I think this works because we know we\u0027re coming from Daydream, and the user has some version of VR Core. That\u0027s enough for launchVrHomescreen. In any case, this is NA in the latest patch.",
+      "parentUuid": "b781a326_272c18a2",
+      "range": {
+        "startLine": 924,
+        "startChar": 23,
+        "endLine": 924,
+        "endChar": 66
+      },
+      "revId": "eb20901bd2170b4f70934412980fa294477f8fcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
