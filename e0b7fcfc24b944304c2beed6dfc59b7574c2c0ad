@@ -22,6 +22,30 @@
       "revId": "e0b7fcfc24b944304c2beed6dfc59b7574c2c0ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b4b4caa_08778a42",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-30T22:58:36Z",
+      "side": 1,
+      "message": "Yes, it will be from NetworkService. \nI added some unit tests. Hope they can shed some light on how this receiver interface is used?",
+      "parentUuid": "90f39736_d404e3bb",
+      "range": {
+        "startLine": 86,
+        "startChar": 10,
+        "endLine": 86,
+        "endChar": 27
+      },
+      "revId": "e0b7fcfc24b944304c2beed6dfc59b7574c2c0ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

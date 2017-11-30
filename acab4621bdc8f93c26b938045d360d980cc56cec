@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c4e2bbdc_aed01503",
+        "filename": "services/network/public/interfaces/net_address.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-30T22:58:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73ce3af4_890cf7ee",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 16
+      },
+      "revId": "acab4621bdc8f93c26b938045d360d980cc56cec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebc1a8dc_9605faf0",
         "filename": "services/network/public/interfaces/network_error.mojom",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "acab4621bdc8f93c26b938045d360d980cc56cec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11dcef23_f9f913a5",
+        "filename": "services/network/public/interfaces/network_error.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-30T22:58:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebc1a8dc_9605faf0",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 21
+      },
+      "revId": "acab4621bdc8f93c26b938045d360d980cc56cec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "176588e9_e82a0e42",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-30T22:58:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d86780b_1bad76ec",
+      "range": {
+        "startLine": 72,
+        "startChar": 21,
+        "endLine": 72,
+        "endChar": 36
+      },
+      "revId": "acab4621bdc8f93c26b938045d360d980cc56cec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe117c57_16b1e751",
         "filename": "services/network/public/interfaces/udp_socket.mojom",
         "patchSetId": 3
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "c231f702_7dd44799",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-30T22:58:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe117c57_16b1e751",
+      "range": {
+        "startLine": 82,
+        "startChar": 29,
+        "endLine": 82,
+        "endChar": 33
+      },
+      "revId": "acab4621bdc8f93c26b938045d360d980cc56cec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b308d2d8_9f45b878",
         "filename": "services/network/public/interfaces/udp_socket.mojom",
         "patchSetId": 3
@@ -128,6 +224,30 @@
       "writtenOn": "2017-11-29T19:15:00Z",
       "side": 1,
       "message": "Can we only send one packet at a time?  That\u0027s the API UdpSocket supports.  If so, that potentially limits throughput, due to IPC latency.  If not, there\u0027s no back pressure mechanism.  Either way, behavior needs to be documented.",
+      "range": {
+        "startLine": 83,
+        "startChar": 37,
+        "endLine": 83,
+        "endChar": 38
+      },
+      "revId": "acab4621bdc8f93c26b938045d360d980cc56cec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c005009_df96f5bc",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-30T22:58:36Z",
+      "side": 1,
+      "message": "What about NegotiateMaxPendingSendRequests() ? That will allow consumer to specify how many packets they want pending at a time right? SendTo() will return ERR_INSUFFICIENT_RESOURCES so consumer knows about back pressure.",
+      "parentUuid": "b308d2d8_9f45b878",
       "range": {
         "startLine": 83,
         "startChar": 37,
