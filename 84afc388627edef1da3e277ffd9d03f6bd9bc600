@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76eb80ee_15bd890c",
+        "filename": "chrome/test/chromedriver/chrome/navigation_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1002882
+      },
+      "writtenOn": "2017-11-30T07:54:50Z",
+      "side": 1,
+      "message": "Mind a comment on why this is needed?",
+      "range": {
+        "startLine": 432,
+        "startChar": 36,
+        "endLine": 432,
+        "endChar": 64
+      },
+      "revId": "84afc388627edef1da3e277ffd9d03f6bd9bc600",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38105937_8cd3cb85",
+        "filename": "chrome/test/chromedriver/test/test_expectations",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002882
+      },
+      "writtenOn": "2017-11-30T07:54:50Z",
+      "side": 1,
+      "message": "Why it still runs with Chrome?",
+      "range": {
+        "startLine": 119,
+        "startChar": 58,
+        "endLine": 119,
+        "endChar": 65
+      },
+      "revId": "84afc388627edef1da3e277ffd9d03f6bd9bc600",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e6cd35e_82dc71bd",
+        "filename": "chrome/test/chromedriver/test/test_expectations",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002882
+      },
+      "writtenOn": "2017-11-30T07:54:50Z",
+      "side": 1,
+      "message": "I remember this one. It was once broken by a Chromium commit as well.",
+      "range": {
+        "startLine": 120,
+        "startChar": 37,
+        "endLine": 120,
+        "endChar": 53
+      },
+      "revId": "84afc388627edef1da3e277ffd9d03f6bd9bc600",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
