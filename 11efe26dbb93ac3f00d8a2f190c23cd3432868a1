@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4e8b70ae_639aeca2",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.cc",
+        "patchSetId": 63
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-30T20:11:19Z",
+      "side": 1,
+      "message": "Removed. Since getting the GpuFence can potentially fail, I initially thought that it is simpler conceptually if the stored entries are always fully constructed and errors are detected and reported early, and I had also needed to keep the GpuFence alive to keep the handle valid. But the restuctured approach seems simpler overall.",
+      "parentUuid": "d9510d1f_619ad705",
+      "revId": "11efe26dbb93ac3f00d8a2f190c23cd3432868a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "baac72c6_3d42ab70",
         "filename": "gpu/command_buffer/service/gpu_fence_manager.h",
         "patchSetId": 63
@@ -33,6 +51,24 @@
       "revId": "11efe26dbb93ac3f00d8a2f190c23cd3432868a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad61298d_7e1318fa",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.h",
+        "patchSetId": 63
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-30T20:11:19Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "baac72c6_3d42ab70",
+      "revId": "11efe26dbb93ac3f00d8a2f190c23cd3432868a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "94a3654c_8a829306",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.h",
+        "patchSetId": 63
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-30T20:11:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a0bf5be_0527e7e5",
+      "revId": "11efe26dbb93ac3f00d8a2f190c23cd3432868a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b7c5a59_fbcd57e2",
         "filename": "gpu/command_buffer/service/gpu_fence_manager.h",
         "patchSetId": 63
@@ -67,6 +121,24 @@
       "revId": "11efe26dbb93ac3f00d8a2f190c23cd3432868a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ef28246_01f35208",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.h",
+        "patchSetId": 63
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-30T20:11:19Z",
+      "side": 1,
+      "message": "Done, using CreateGpuFenceFromHandle.",
+      "parentUuid": "8b7c5a59_fbcd57e2",
+      "revId": "11efe26dbb93ac3f00d8a2f190c23cd3432868a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "2d3ecaba_00890a1d",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.h",
+        "patchSetId": 63
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-30T20:11:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4d81de4_0ca0c1ab",
+      "revId": "11efe26dbb93ac3f00d8a2f190c23cd3432868a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1837a75e_1df5cd0f",
         "filename": "gpu/command_buffer/service/gpu_fence_manager.h",
         "patchSetId": 63
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "1347bf37_b530a9eb",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.h",
+        "patchSetId": 63
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-30T20:11:19Z",
+      "side": 1,
+      "message": "I renamed the method to GpuFenceServerWait.",
+      "parentUuid": "1837a75e_1df5cd0f",
+      "revId": "11efe26dbb93ac3f00d8a2f190c23cd3432868a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83897458_f937d7b0",
         "filename": "gpu/ipc/client/command_buffer_proxy_impl.cc",
         "patchSetId": 63
@@ -118,6 +226,24 @@
       "revId": "11efe26dbb93ac3f00d8a2f190c23cd3432868a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb88bb30_3ff13925",
+        "filename": "gpu/ipc/client/command_buffer_proxy_impl.cc",
+        "patchSetId": 63
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-30T20:11:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83897458_f937d7b0",
+      "revId": "11efe26dbb93ac3f00d8a2f190c23cd3432868a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

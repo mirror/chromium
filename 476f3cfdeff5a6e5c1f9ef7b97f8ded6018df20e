@@ -457,6 +457,24 @@
     },
     {
       "key": {
+        "uuid": "d50a2a28_bc27cf94",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-30T20:11:19Z",
+      "side": 1,
+      "message": "Thank you for clarifying, I see the problem now. I created http://crbug.com/790550 with an explanation (and idea for a potential fix via modified IdAllocator) and added that as a TODO in the code for context. This could be a blocker issue for building The Matrix since it keeps people from spending their entire lives in VR ;-)",
+      "parentUuid": "72742ef7_bab959df",
+      "revId": "476f3cfdeff5a6e5c1f9ef7b97f8ded6018df20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b1e294e_b870ce42",
         "filename": "gpu/command_buffer/client/gles2_implementation.cc",
         "patchSetId": 46

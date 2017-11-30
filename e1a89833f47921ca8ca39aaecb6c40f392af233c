@@ -88,6 +88,24 @@
       "revId": "e1a89833f47921ca8ca39aaecb6c40f392af233c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b39e2a8b_cdfa4bcf",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.cc",
+        "patchSetId": 59
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-30T20:11:19Z",
+      "side": 1,
+      "message": "Thanks for the explanation! I\u0027ve added the following to gpu_synchronization.md\u0027s Implementation Notes section. Can you sanity check that I got it right?\n\n------------------------------\n\nGPU control tasks are processed out of band and are only partially ordered in\nrespect to GL commands. A gpu_control task always happens before any following\nGL commands issued on the same IPC channel. It usually executes before any\npreceding unflushed GL commands, but this is not guaranteed. A\n`ShallowFlushCHROMIUM` ensures that any following gpu_control tasks will execute\nafter the flushed GL commands.\n\nIn this example, DoTask will execute after GLCommandA and before GLCommandD, but\nthere is no ordering guarantee relative to CommandB and CommandC:\n\n```c++\n  // gles2_implementation.cc\n\n  helper_-\u003eGLCommandA();\n  ShallowFlushCHROMIUM();\n  \n  helper_-\u003eGLCommandB();\n  helper_-\u003eGLCommandC();\n  gpu_control_-\u003eDoTask();\n  \n  helper_-\u003eGLCommandD();\n  \n  // Execution order is one of:\n  //   A | DoTask B C | D\n  //   A | B DoTask C | D\n  //   A | B C DoTask | D\n```\n\nThe shallow flush adds the pending GL commands to the service\u0027s task queue, and\nthis task queue is also used by incoming gpu control tasks and processed in\norder. The `ShallowFlushCHROMIUM` command returns as soon as the tasks are\nqueued and does not wait for them to be processed.\n\n------------------------------",
+      "parentUuid": "761c4ea4_54fc8897",
+      "revId": "e1a89833f47921ca8ca39aaecb6c40f392af233c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
