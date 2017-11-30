@@ -48,32 +48,6 @@ namespace component_updater {
 
 using ConfigMap = std::map<std::string, std::map<std::string, std::string>>;
 
-void LogRegistrationResult(base::Optional<bool> result) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  if (!result.has_value()) {
-    DVLOG(1) << "Call to imageloader service failed.";
-    return;
-  }
-  if (!result.value()) {
-    DVLOG(1) << "Component registration failed";
-    return;
-  }
-}
-
-void ImageLoaderRegistration(const std::string& version,
-                             const base::FilePath& install_dir,
-                             const std::string& name) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  chromeos::ImageLoaderClient* loader =
-      chromeos::DBusThreadManager::Get()->GetImageLoaderClient();
-  if (loader) {
-    loader->RegisterComponent(name, version, install_dir.value(),
-                              base::BindOnce(&LogRegistrationResult));
-  } else {
-    DVLOG(1) << "Failed to get ImageLoaderClient object.";
-  }
-}
-
 ComponentConfig::ComponentConfig(const std::string& name,
                                  const std::string& env_version,
                                  const std::string& sha2hashstr)
@@ -105,23 +79,10 @@ update_client::CrxInstaller::Result
 CrOSComponentInstallerPolicy::OnCustomInstall(
     const base::DictionaryValue& manifest,
     const base::FilePath& install_dir) {
-  std::string version;
-  if (!manifest.GetString("version", &version)) {
-    return ToInstallerResult(update_client::InstallError::GENERIC_ERROR);
-  }
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&ImageLoaderRegistration, version, install_dir, name));
   return update_client::CrxInstaller::Result(update_client::InstallError::NONE);
 }
 
 void CrOSComponentInstallerPolicy::OnCustomUninstall() {
-  chromeos::ImageLoaderClient* loader =
-      chromeos::DBusThreadManager::Get()->GetImageLoaderClient();
-  if (loader) {
-    loader->RemoveComponent(
-        name, base::BindOnce(base::Callback<void(base::Optional<bool>)>()));
-  }
 }
 
 void CrOSComponentInstallerPolicy::ComponentReady(
@@ -131,7 +92,8 @@ void CrOSComponentInstallerPolicy::ComponentReady(
   std::string min_env_version;
   if (manifest && manifest->GetString("min_env_version", &min_env_version)) {
     if (IsCompatible(env_version, min_env_version)) {
-      g_browser_process->platform_part()->AddCompatibleCrOSComponent(GetName());
+      g_browser_process->platform_part()->AddCompatibleCrOSComponent(
+          GetName(), path.value());
     }
   }
 }
@@ -194,8 +156,11 @@ static void LoadComponentInternal(
   chromeos::ImageLoaderClient* loader =
       chromeos::DBusThreadManager::Get()->GetImageLoaderClient();
   if (loader) {
-    loader->LoadComponent(
-        name, base::BindOnce(&LoadResult, std::move(load_callback)));
+    loader->LoadComponentAtPath(
+        name,
+        g_browser_process->platform_part()->GetCompatibleCrOSComponentPath(
+            name),
+        base::BindOnce(&LoadResult, std::move(load_callback)));
   } else {
     base::PostTask(FROM_HERE, base::BindOnce(std::move(load_callback), ""));
   }
