@@ -1128,6 +1128,10 @@ mojom::FrameInputHandler* RenderFrameHostImpl::GetFrameInputHandler() {
   return frame_input_handler_.get();
 }
 
+viz::mojom::InputTargetClient* RenderFrameHostImpl::GetInputTargetClient() {
+  return input_target_client_.get();
+}
+
 bool RenderFrameHostImpl::CreateRenderFrame(int proxy_routing_id,
                                             int opener_routing_id,
                                             int parent_routing_id,
@@ -3599,6 +3603,7 @@ void RenderFrameHostImpl::SetUpMojoIfNeeded() {
   } else {
     legacy_frame_input_handler_.reset(new LegacyIPCFrameInputHandler(this));
   }
+  GetRemoteInterfaces()->GetInterface(&input_target_client_);
 }
 
 void RenderFrameHostImpl::InvalidateMojoConnection() {
