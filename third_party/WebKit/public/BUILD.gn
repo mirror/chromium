@@ -786,6 +786,7 @@ mojom("mojo_bindings") {
     "platform/modules/keyboard_lock/keyboard_lock.mojom",
     "platform/modules/manifest/manifest.mojom",
     "platform/modules/manifest/manifest_manager.mojom",
+    "platform/modules/mediastream/media_devices.mojom",
     "platform/modules/notifications/notification.mojom",
     "platform/modules/notifications/notification_service.mojom",
     "platform/modules/payments/payment_app.mojom",
@@ -820,6 +821,8 @@ mojom("mojo_bindings") {
     "//device/bluetooth/public/interfaces",
     "//device/geolocation/public/interfaces",
     "//device/screen_orientation/public/interfaces",
+    "//media/capture/mojo:capture_types",
+    "//media/mojo/interfaces",
     "//mojo/common:common_custom_types",
     "//services/network/public/interfaces:interfaces",
     "//services/service_manager/public/interfaces",
@@ -829,7 +832,10 @@ mojom("mojo_bindings") {
     "//url/mojo:url_mojom_origin",
   ]
 
-  overridden_deps = [ "//third_party/WebKit/common:mojo_platform_bindings" ]
+  overridden_deps = [
+    "//media/mojo/interfaces",
+    "//third_party/WebKit/common:mojo_platform_bindings",
+  ]
   component_deps = [ "//third_party/WebKit/common:blink_common" ]
 
   component_output_prefix = "blink_mojo_bindings"
