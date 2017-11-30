@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c713e357_82149432",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1070,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-11-30T06:27:11Z",
+      "side": 1,
+      "message": "So this ensures that the frames (are we talking about the frames in ref_frames_ here?) are deleted in the decoder thread, while at the same time moving the destruction of the accelerator and decoder, which were created in the main thread, to that same decoder thread.\n\nSo in the end we still have objects created in one thread and deleted in another, which is not great design. Besides it kind of defeats the purpose of unique_ptr to explicitly release our objects.\n\nLast, above the declaration of various accelerators, we have the following comment:\n\n    // Accelerators come after vaapi_wrapper_ to ensure they are destroyed first.\n\nBy moving their destruction to another thread, I don\u0027t think that guarantee still holds.\n\nThere is probably a safer way to achieve what you need. The issue is that the frames are refcounted and leak to another thread which should have no business with them. This probably means that the frames are surviving for longer than they should.\n\nIntuitively, I\u0027d say that the decoder thread should clear ref_frames_ as soon as it doesn\u0027t need them anymore. Maybe when the stream ends, or the decoder is interrupted - I am not familiar enough with this code to point out exactly where this should happens, but you probably get the idea.\n\nIn the worst case, we could ask the decoder thread to run VPXDecoder::Reset() here, which would have the effect of releasing the references to the frames (you would also need to sync with the decoder thread to ensure the accelerator objects are still alive by the time the method runs), but the description of the accelerators themselves should remain in the main thread.",
+      "revId": "a6395581227e52448c030ec65ba63d2de1ec023f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
