@@ -1578,7 +1578,8 @@ static CSSValue* CreateTransitionPropertyValue(
   DCHECK_EQ(property.property_type,
             CSSTransitionData::kTransitionKnownProperty);
   return CSSCustomIdentValue::Create(
-      getPropertyNameAtomicString(property.unresolved_property));
+      CSSProperty::Get(property.unresolved_property)
+          .GetPropertyNameAtomicString());
 }
 
 static CSSValue* ValueForTransitionProperty(
