@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6159501a_f584d259",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-30T01:17:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5ed9d74_aee990ef",
+      "revId": "ede460b20bc83ab4fc22c792c5cef19b551ecd92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7161db67_a6b2248a",
         "filename": "ash/wallpaper/wallpaper_controller.h",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-29T01:39:36Z",
       "side": 1,
       "message": "Why make it Optional? It looks like SetPathId(..) should be guaranteed to be called.",
+      "revId": "ede460b20bc83ab4fc22c792c5cef19b551ecd92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfe8cf0b_7f8edfc9",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-30T01:17:20Z",
+      "side": 1,
+      "message": "Currently these values are initialized with an impossible value like -1, and there\u0027s DCHECK before use (https://cs.chromium.org/chromium/src/chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc?type\u003dcs\u0026l\u003d657)\n\nI think if we want to keep the DCHECK then using an optional is better than -1, otherwise we can remove the DCHECK?",
+      "parentUuid": "7161db67_a6b2248a",
       "revId": "ede460b20bc83ab4fc22c792c5cef19b551ecd92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f423a136_bdc484c2",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-30T01:17:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "269e5fb8_f588c5ae",
+      "revId": "ede460b20bc83ab4fc22c792c5cef19b551ecd92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcdcc42a_480cd79d",
         "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
         "patchSetId": 8
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-29T01:39:36Z",
       "side": 1,
       "message": "Q: is there any problem to make it remain in the constructor?",
+      "revId": "ede460b20bc83ab4fc22c792c5cef19b551ecd92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42eb9320_a83a5e90",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-30T01:17:20Z",
+      "side": 1,
+      "message": "The problem is within WallpaperManager constructor, the WallpaperController instance in //ash isn\u0027t created yet. But InitializeWallpaper() signals that WallpaperController is ready.",
+      "parentUuid": "dcdcc42a_480cd79d",
       "revId": "ede460b20bc83ab4fc22c792c5cef19b551ecd92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
