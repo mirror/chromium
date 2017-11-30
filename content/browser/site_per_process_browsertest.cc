@@ -8494,8 +8494,16 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, CrossSiteIframeDisplayNone) {
 
 // Test that a cross-origin iframe can be blocked by X-Frame-Options and CSP
 // frame-ancestors.
+#if defined(OS_LINUX)
+// https://crbug.com/790683
+#define MAYBE_CrossSiteIframeBlockedByXFrameOptionsOrCSP \
+  DISABLED_CrossSiteIframeBlockedByXFrameOptionsOrCSP
+#else
+#define MAYBE_CrossSiteIframeBlockedByXFrameOptionsOrCSP \
+  CrossSiteIframeBlockedByXFrameOptionsOrCSP
+#endif
 IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
-                       CrossSiteIframeBlockedByXFrameOptionsOrCSP) {
+                       MAYBE_CrossSiteIframeBlockedByXFrameOptionsOrCSP) {
   GURL main_url(embedded_test_server()->GetURL(
       "a.com", "/cross_site_iframe_factory.html?a(a)"));
   EXPECT_TRUE(NavigateToURL(shell(), main_url));
