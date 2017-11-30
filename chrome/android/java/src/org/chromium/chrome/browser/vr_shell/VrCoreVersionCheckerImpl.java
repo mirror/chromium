@@ -13,7 +13,6 @@ import com.google.vr.vrcore.base.api.VrCoreUtils;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
 import org.chromium.base.PackageUtils;
-import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.vr_shell.VrCoreInfo.GvrVersion;
 
 /**
@@ -22,17 +21,7 @@ import org.chromium.chrome.browser.vr_shell.VrCoreInfo.GvrVersion;
 public class VrCoreVersionCheckerImpl implements VrCoreVersionChecker {
     private static final String TAG = "VrCoreVersionChecker";
 
-    private static final String MIN_SDK_VERSION_PARAM_NAME = "min_sdk_version";
-
     public VrCoreInfo getVrCoreInfo() {
-        // Supported Build version is determined by the webvr cardboard support feature.
-        // Default is KITKAT unless specified via server side finch config.
-        if (Build.VERSION.SDK_INT < ChromeFeatureList.getFieldTrialParamByFeatureAsInt(
-                                            ChromeFeatureList.WEBVR_CARDBOARD_SUPPORT,
-                                            MIN_SDK_VERSION_PARAM_NAME,
-                                            Build.VERSION_CODES.KITKAT)) {
-            return new VrCoreInfo(null, VrCoreCompatibility.VR_NOT_SUPPORTED);
-        }
         try {
             String vrCoreSdkLibraryVersionString = VrCoreUtils.getVrCoreSdkLibraryVersion(
                     ContextUtils.getApplicationContext());
@@ -70,6 +59,12 @@ public class VrCoreVersionCheckerImpl implements VrCoreVersionChecker {
 
     @Override
     public long makeNativeVrCoreInfo() {
-        return getVrCoreInfo().makeNativeVrCoreInfo();
+        VrCoreInfo info;
+        if (Build.VERSION.SDK_INT < VrShellDelegate.getCardboardMinSdkVersion()) {
+            info = new VrCoreInfo(null, VrCoreCompatibility.VR_NOT_SUPPORTED);
+        } else {
+            info = getVrCoreInfo();
+        }
+        return info.makeNativeVrCoreInfo();
     }
 }
