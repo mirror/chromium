@@ -16,6 +16,24 @@
       "revId": "75b44180c14733006209449bbbe04824b57f5d59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5ad5e4b_45453b81",
+        "filename": "components/omnibox/browser/fake_autocomplete_provider_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-30T22:07:18Z",
+      "side": 1,
+      "message": "scoped_task_environment_.RunUntilIdle() makes it pass, but requires that we use the object. There\u0027s no static function.\n\nI added calls to all the tests using this Fake... but maybe a better design would be to pass the environment in. I don\u0027t know though; it seems a shame to tie the test\u0027s task model, in a completely different file, to a random helper class.",
+      "parentUuid": "649aa3af_51f0285b",
+      "revId": "75b44180c14733006209449bbbe04824b57f5d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

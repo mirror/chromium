@@ -113,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "3331bef3_e5b366fb",
+        "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-30T22:07:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efeb04b0_b0e42c2c",
+      "revId": "0f13858e09248257f65634b5a9938604d6747ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aed81180_86489e88",
         "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
         "patchSetId": 7
@@ -142,6 +160,24 @@
       "side": 1,
       "message": "File was reverted.",
       "parentUuid": "aed81180_86489e88",
+      "revId": "0f13858e09248257f65634b5a9938604d6747ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e2a426a8_7a23d632",
+        "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-30T22:07:18Z",
+      "side": 1,
+      "message": "Restored the file, and made it call reset(). Added a few MakeRefCounted() too.",
+      "parentUuid": "d0d43d1e_0d01cb7b",
       "revId": "0f13858e09248257f65634b5a9938604d6747ec3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
