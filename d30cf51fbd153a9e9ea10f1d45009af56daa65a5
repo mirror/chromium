@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2245154e_e63c0822",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-30T09:30:00Z",
+      "side": 1,
+      "message": "Can we add some documentation?  E.g. \u0027Frame loading should normally start with kTight throttling, as the frame will be in layout-blocking state until the \u003cbody\u003e tag is inserted.\u0027",
+      "revId": "d30cf51fbd153a9e9ea10f1d45009af56daa65a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f0e63d3_fbd27fea",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-30T09:30:00Z",
+      "side": 1,
+      "message": "While you\u0027re there could we also improve this documentation (fine with doing it in a follow-up), to briefly explain what scheduling policy/ies this supports and what flag enables each.",
+      "revId": "d30cf51fbd153a9e9ea10f1d45009af56daa65a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a14329f_9cd07136",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-30T09:30:00Z",
+      "side": 1,
+      "message": "Given that we only use this flag for layout-blocking mode I prefer stating that more directly, i.e.\n\nResourceLoadScheduler has two policies: |kTight| and |kNormal|. Currently this is used to support aggressive throttling while the corresponding frame is in layout-blocking phase.\nThere is only one state transition, ..., which can be done by |LoosenThrottlingPolicy|.",
+      "revId": "d30cf51fbd153a9e9ea10f1d45009af56daa65a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28cda2d9_62f71e18",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-30T09:30:00Z",
+      "side": 1,
+      "message": "// Used to limit outstanding requests when |policy_| is kTight.\n\n(We\u0027re going to change this value when the flag is enabled, is that right?)",
+      "revId": "d30cf51fbd153a9e9ea10f1d45009af56daa65a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e91c1d3_985e3241",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-30T09:30:00Z",
+      "side": 1,
+      "message": "// Used to limit outstanding requests when |policy_| is kNormal.",
+      "revId": "d30cf51fbd153a9e9ea10f1d45009af56daa65a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c8e9646_2f9170d6",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadSchedulerTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-30T09:30:00Z",
+      "side": 1,
+      "message": "// Start with normal scheduling policy.",
+      "revId": "d30cf51fbd153a9e9ea10f1d45009af56daa65a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b1dd2ff_b233b2ff",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadSchedulerTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-30T09:30:00Z",
+      "side": 1,
+      "message": "// MockFetchContext\u0027s initial scheduling policy is kTight, setting the\n// outstanding limit for the normal mode doesn\u0027t take effect.",
+      "revId": "d30cf51fbd153a9e9ea10f1d45009af56daa65a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e64b731_4b6a6947",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadSchedulerTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-30T09:30:00Z",
+      "side": 1,
+      "message": "// ...and change the scheduling policy to kNormal, where priority \u003e\u003d kMedium\n// requests are not throttled.",
+      "revId": "d30cf51fbd153a9e9ea10f1d45009af56daa65a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
