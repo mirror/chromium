@@ -426,6 +426,30 @@
     },
     {
       "key": {
+        "uuid": "c757d4b4_f85f8dba",
+        "filename": "media/capture/video/win/photo_callback_factory_mf_win.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-30T16:24:48Z",
+      "side": 1,
+      "message": "I guess I should elaborate on my \"You\u0027d need to square that with the \nunit tests.\". \n\nAdd this to video_capture_device_mf_win.*:\n\n- to the public section of the class declaration, and in the appropriate place:\n\n  using CreateMFPhotoCallbackCB \u003d\n      base::Callback(scoped_refptr\u003cIMFCaptureEngineOnSampleCallback\u003e(\n          VideoCaptureDevice::TakePhotoCallback callback,\n          VideoCaptureFormat format));\n\n  void set_photo_callback_factory_for_testing(CreateMFPhotoCallbackCB cb) {\n    create_mf_photo_callback_ \u003d cb;\n  }\n\n- to the private section of the class declaration:\n  CreateMFPhotoCallbackCB create_mf_photo_callback_;\n\n- to the unnamed namespace of the .cc file:\nscoped_refptr\u003cIMFCaptureEngineOnSampleCallback\u003e CreateMFPhotoCallback(\n    VideoCaptureDevice::TakePhotoCallback callback,\n    VideoCaptureFormat format) {\n  return scoped_refptr\u003cIMFCaptureEngineOnSampleCallback\u003e(\n      new MFPhotoCallback(std::move(callback), format));\n}\n\n- and finally to the initialization list of the ctor:\n    create_mf_photo_callback_(base::Bind(\u0026CreateMFPhotoCallback))\n\n- and where now you call CreateCallback(), do instead:\n\n  create_mf_photo_callback_.Run(std::move(callback), format);\n\n\nIn the unittests:\n\n- remove the MockMFPhotoCallbackFactory,\n- add a method to VideoCaptureDeviceTest:\n\n#if defined(OS_WIN)\n  scoped_refptr\u003cIMFCaptureEngineOnSampleCallback\u003e CreateMockPhotoCallback(\n      MockMFPhotoCallback mock_photo_callback,\n      VideoCaptureDevice::TakePhotoCallback callback,\n      VideoCaptureFormat format) override {\n    return scoped_refptr\u003cIMFCaptureEngineOnSampleCallback\u003e(mock_photo_callback);\n  }\n#endif\n\n(note that MockMFPhotoCallback is ref-counted, so please\ndon\u0027t use it via std::unique_ptr\u003c\u003e, it\u0027s confusing).\n\n- then in the test case itself:\n\n  static_cast\u003cVideoCaptureDeviceMFWin*\u003e(device.get())\n      -\u003eset_photo_callback_factory_for_testing(\n          base::Bind(\u0026VideoCaptureDeviceTest::CreateMockPhotoCallback,\n                     base::Unretained(this),\n                     callback));\n\nwhere we\u0027re currying the first parameter:\nhttps://chromium.googlesource.com/chromium/src/+/lkcr/docs/callback.md",
+      "parentUuid": "7cc3cf21_4cb31529",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 25
+      },
+      "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80baf449_0e924787",
         "filename": "media/capture/video/win/photo_callback_factory_mf_win.cc",
         "patchSetId": 31
