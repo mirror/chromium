@@ -92,6 +92,8 @@ class MapsIntegrationTest(
     pixel_expectations_file = args[0]
     action_runner = tab.action_runner
     action_runner.Navigate(url)
+    action_runner.WaitForJavaScriptCondition('window.startTest != undefined')
+    action_runner.EvaluateJavaScript('window.startTest()')
     action_runner.WaitForJavaScriptCondition(
         'window.testDone', timeout=320)
 
