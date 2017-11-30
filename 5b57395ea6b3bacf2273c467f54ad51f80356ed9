@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f32db45c_6d33d9d2",
+        "filename": "chrome/browser/resources/hangout_services/manifest.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-11-30T13:40:29Z",
+      "side": 1,
+      "message": "I think you need to rebase. The current version is 1.3.6.",
+      "revId": "5b57395ea6b3bacf2273c467f54ad51f80356ed9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
