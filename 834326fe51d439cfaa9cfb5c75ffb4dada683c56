@@ -16,6 +16,24 @@
       "revId": "834326fe51d439cfaa9cfb5c75ffb4dada683c56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2821a9d8_24aa7488",
+        "filename": "ui/views/widget/desktop_aura/desktop_window_tree_host_x11.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1795,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-11-30T09:22:37Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "75537fcc_74c04246",
+      "revId": "834326fe51d439cfaa9cfb5c75ffb4dada683c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
