@@ -711,6 +711,9 @@ const PolicyToPreferenceMapEntry kSimplePolicyMap[] = {
   { key::kRoamingProfileSupportEnabled,
     syncer::prefs::kEnableLocalSyncBackend,
     base::Value::Type::BOOLEAN },
+  { key::kSyncCustomPassphraseRequired,
+    syncer::prefs::kSyncRequireCustomPassphrase,
+    base::Value::Type::BOOLEAN },
 
   { key::kBrowserNetworkTimeQueriesEnabled,
     network_time::prefs::kNetworkTimeQueriesEnabled,
