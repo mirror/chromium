@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "aa487ba1_7ff80885",
+        "filename": "components/favicon/ios/web_favicon_driver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-30T21:44:00Z",
+      "side": 1,
+      "message": "Thank you for catching this. I blindly reverted Sylvain\u0027s CL, without realizing that fetch_favicon_url_ is not used.",
+      "parentUuid": "c0df36a2_41b3c352",
+      "range": {
+        "startLine": 79,
+        "startChar": 7,
+        "endLine": 79,
+        "endChar": 25
+      },
+      "revId": "0a014f2674cbf24e0e710cfd5c85afebbd60d725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b43126a9_14d2b23a",
         "filename": "ios/web/web_state/web_state_impl_unittest.mm",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "0a014f2674cbf24e0e710cfd5c85afebbd60d725",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0de59f30_09983a7f",
+        "filename": "ios/web/web_state/web_state_impl_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-30T21:44:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b43126a9_14d2b23a",
+      "range": {
+        "startLine": 779,
+        "startChar": 48,
+        "endLine": 779,
+        "endChar": 49
+      },
+      "revId": "0a014f2674cbf24e0e710cfd5c85afebbd60d725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8052b301_904a7632",
+        "filename": "ios/web/web_state/web_state_impl_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-30T21:44:00Z",
+      "side": 1,
+      "message": "Was a copy-paste. Done.",
+      "parentUuid": "0dd23d11_092809d3",
+      "range": {
+        "startLine": 789,
+        "startChar": 13,
+        "endLine": 789,
+        "endChar": 29
+      },
+      "revId": "0a014f2674cbf24e0e710cfd5c85afebbd60d725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d86468b7_57b55092",
         "filename": "ios/web/web_state/web_state_impl_unittest.mm",
         "patchSetId": 6
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "3375402f_bd8459a5",
+        "filename": "ios/web/web_state/web_state_impl_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-30T21:44:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d86468b7_57b55092",
+      "range": {
+        "startLine": 797,
+        "startChar": 13,
+        "endLine": 797,
+        "endChar": 29
+      },
+      "revId": "0a014f2674cbf24e0e710cfd5c85afebbd60d725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e8a9541_7c3c828c",
         "filename": "ios/web/web_state/web_state_impl_unittest.mm",
         "patchSetId": 6
@@ -114,6 +210,30 @@
       "revId": "0a014f2674cbf24e0e710cfd5c85afebbd60d725",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d2bbd5b_1abcec22",
+        "filename": "ios/web/web_state/web_state_impl_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-30T21:44:00Z",
+      "side": 1,
+      "message": "EXPECT allows to continue test execution. ASSERT returns. The next line will access first object in icon_sizes, which can crash if icon_sizes is empty. ASSERT simply prevents potential crash by returning.",
+      "parentUuid": "6e8a9541_7c3c828c",
+      "range": {
+        "startLine": 806,
+        "startChar": 2,
+        "endLine": 806,
+        "endChar": 11
+      },
+      "revId": "0a014f2674cbf24e0e710cfd5c85afebbd60d725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
