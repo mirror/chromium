@@ -294,6 +294,30 @@
     },
     {
       "key": {
+        "uuid": "adeb5fe6_cbaafe3a",
+        "filename": "gpu/ipc/service/gpu_command_buffer_stub.h",
+        "patchSetId": 63
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-30T21:15:27Z",
+      "side": 1,
+      "message": "Done, using OnCreateGpuFenceFromHandle. I think CreateClientGpuFence would be confusing here since this is low-level IPC that only sees the handle, the client fence was left in the sending process.",
+      "parentUuid": "daca85c2_b49ef002",
+      "range": {
+        "startLine": 180,
+        "startChar": 7,
+        "endLine": 180,
+        "endChar": 27
+      },
+      "revId": "11efe26dbb93ac3f00d8a2f190c23cd3432868a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3faf5928_678671e5",
         "filename": "gpu/ipc/service/gpu_command_buffer_stub.h",
         "patchSetId": 63
@@ -338,6 +362,30 @@
       "revId": "11efe26dbb93ac3f00d8a2f190c23cd3432868a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25651f3a_1eeca39f",
+        "filename": "gpu/ipc/service/gpu_command_buffer_stub.h",
+        "patchSetId": 63
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-30T21:15:27Z",
+      "side": 1,
+      "message": "I think that rename would be misleading since it actually does get a GpuFenceHandle from the IPC caller\u0027s point of view - this is the low-level IPC code which transmits handles cross process. The recipient in CommandBufferProxyImpl then wraps the received handle in a new GpuFence object for its own process.\n\nThe implementation of this method does get a GpuFence from the manager, but that\u0027s just a temporary object used to extract the handle for IPC, it\u0027s not transmitted.",
+      "parentUuid": "6d849317_75efe1a6",
+      "range": {
+        "startLine": 182,
+        "startChar": 7,
+        "endLine": 182,
+        "endChar": 26
+      },
+      "revId": "11efe26dbb93ac3f00d8a2f190c23cd3432868a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
