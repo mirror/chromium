@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bc43ef7_494fcaec",
+        "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-11-30T01:43:41Z",
+      "side": 1,
+      "message": "Could you make this DISALLOW_COPY_AND_ASSIGN?",
+      "revId": "589438f3a26a5f3357c374f6d4813ee578ffd4ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
