@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "368b81db_f397878d",
+        "filename": "chrome/common/extensions/api/file_system_provider.idl",
+        "patchSetId": 9
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-30T03:42:24Z",
+      "side": 1,
+      "message": "sure, I guess it might be worded better.. e.g. remain mounted when user session is restarted, or something along these lines.",
+      "parentUuid": "518e7e99_89a2ecf0",
+      "range": {
+        "startLine": 156,
+        "startChar": 7,
+        "endLine": 156,
+        "endChar": 62
+      },
+      "revId": "175c02c6015473860d4e2fcc6950628a5826e702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8effd37d_3bc580a8",
         "filename": "chrome/common/extensions/api/file_system_provider.idl",
         "patchSetId": 9
@@ -120,6 +144,24 @@
       "side": 1,
       "message": "I\u0027m not very sure about the \"temporary\" naming. What\u0027s wrong with \u0027persistent\u0027 being true by default? We already use the \u0027persistent\u0027 term in Chrome packaged apps for background pages, so it\u0027s a term known to developers.",
       "parentUuid": "f744bafd_23022195",
+      "revId": "175c02c6015473860d4e2fcc6950628a5826e702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ee4681a2_80339dc7",
+        "filename": "chrome/common/extensions/api/file_system_provider.idl",
+        "patchSetId": 9
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-30T03:42:24Z",
+      "side": 1,
+      "message": "I don\u0027t think persistent is necessarily wrong, if you think it\u0027s better in this context, I\u0027m OK with it.\n\nThough, I do think having a property default to false is more intuitive.\ni.e. that  {a: true} is the same as {a: true, b: false} rather than {a: true, b: true}",
+      "parentUuid": "725ec0c0_29108b1e",
       "revId": "175c02c6015473860d4e2fcc6950628a5826e702",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
