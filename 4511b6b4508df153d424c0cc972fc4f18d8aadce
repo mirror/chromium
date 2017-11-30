@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "232a2a0c_00a6521c",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 3896,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-11-30T18:06:36Z",
+      "side": 1,
+      "message": "Line 3901 crashes the first time we call Show() on the local root\u0027s LocalFrameView, since the LFV knows about the Frame but not (yet) vice versa.",
+      "parentUuid": "3cb60036_d669b965",
+      "revId": "4511b6b4508df153d424c0cc972fc4f18d8aadce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "205e14f9_044ecb7a",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 14
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e60a4090_979844b2",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 3910,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-11-30T18:06:36Z",
+      "side": 1,
+      "message": "I tried this, but it seems it causes layout tests to start failing (incorrect output). I\u0027ve added a TODO to investigate why this is happening, but for now let\u0027s leave this as is.",
+      "parentUuid": "205e14f9_044ecb7a",
+      "revId": "4511b6b4508df153d424c0cc972fc4f18d8aadce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba9a7060_6477e10d",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 14
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-29T22:58:34Z",
       "side": 1,
       "message": "This used to set scroll_gesture_region_is_dirty_ in ScrollingCoordinator, but no longer does that. I don\u0027t know -- does that matter?",
+      "revId": "4511b6b4508df153d424c0cc972fc4f18d8aadce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e80cf8a4_f149b5ff",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 5289,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-11-30T18:06:36Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand your concern. We need to still make the call to ScrollingCoordinator as NotifyGeometryChanged sets other state during the call. The fact that it\u0027s updating the local(root) value of scroll_gesture_region_is_dirty_ seems correct to me, as it mimics previous behaviour.",
+      "parentUuid": "ba9a7060_6477e10d",
       "revId": "4511b6b4508df153d424c0cc972fc4f18d8aadce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "a1095169_dc057a14",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-11-30T18:06:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42cfdffa_842750f2",
+      "revId": "4511b6b4508df153d424c0cc972fc4f18d8aadce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8d482e5_c1eb9c4b",
         "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinator.cpp",
         "patchSetId": 14
@@ -84,6 +156,24 @@
       "revId": "4511b6b4508df153d424c0cc972fc4f18d8aadce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b614fbe_3acb7cff",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinator.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-11-30T18:06:36Z",
+      "side": 1,
+      "message": "Removed.\n\nI guess I was just following the pattern below (re page_), but you\u0027re right that it likely doesn\u0027t help.",
+      "parentUuid": "d8d482e5_c1eb9c4b",
+      "revId": "4511b6b4508df153d424c0cc972fc4f18d8aadce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "3be5d0c8_b4e8504f",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinator.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-11-30T18:06:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3d55efb_421b06d8",
+      "revId": "4511b6b4508df153d424c0cc972fc4f18d8aadce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17848a30_58666e04",
         "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinator.cpp",
         "patchSetId": 14
@@ -118,6 +226,24 @@
       "revId": "4511b6b4508df153d424c0cc972fc4f18d8aadce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1dcf22d_c55ea151",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinator.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-11-30T18:06:36Z",
+      "side": 1,
+      "message": "Done.\n\nI was just keeping things the same as they were prior to this CL, but your CL makes sense (perhaps it will fix an existing issue?).",
+      "parentUuid": "17848a30_58666e04",
+      "revId": "4511b6b4508df153d424c0cc972fc4f18d8aadce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
