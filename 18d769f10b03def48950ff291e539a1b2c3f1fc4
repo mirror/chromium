@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eb2a9e55_31fb1ae9",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecBridge.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1230862
+      },
+      "writtenOn": "2017-11-30T23:55:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b18b545a_af335fe6",
+      "range": {
+        "startLine": 668,
+        "startChar": 32,
+        "endLine": 668,
+        "endChar": 39
+      },
+      "revId": "18d769f10b03def48950ff291e539a1b2c3f1fc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "913aa0d5_1f1d0820",
         "filename": "media/base/android/java/src/org/chromium/media/MediaCodecBridge.java",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "18d769f10b03def48950ff291e539a1b2c3f1fc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38cbb24a_a077df15",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecBridge.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1230862
+      },
+      "writtenOn": "2017-11-30T23:55:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "913aa0d5_1f1d0820",
+      "range": {
+        "startLine": 720,
+        "startChar": 5,
+        "endLine": 720,
+        "endChar": 0
+      },
+      "revId": "18d769f10b03def48950ff291e539a1b2c3f1fc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
