@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9b3c9a2b_6683c292",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-11-30T22:36:57Z",
+      "side": 1,
+      "message": "Right, thanks! Refactored this at the last minute and forgot to update the comment.",
+      "parentUuid": "9c3f89b0_6ec5fc63",
+      "range": {
+        "startLine": 47,
+        "startChar": 3,
+        "endLine": 47,
+        "endChar": 11
+      },
+      "revId": "713edfae07efe7fc616318b76273f2bb95e1a459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c53d0bae_c827f2e1",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-30T09:43:46Z",
       "side": 1,
       "message": "Shouldn\u0027t we use bottomAnchor?",
+      "range": {
+        "startLine": 541,
+        "startChar": 43,
+        "endLine": 541,
+        "endChar": 52
+      },
+      "revId": "713edfae07efe7fc616318b76273f2bb95e1a459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69b2a17a_0f729fe6",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-11-30T22:36:57Z",
+      "side": 1,
+      "message": "Yes, good catch! Not sure when was this changed, but fixing it now.",
+      "parentUuid": "c53d0bae_c827f2e1",
       "range": {
         "startLine": 541,
         "startChar": 43,
