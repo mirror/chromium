@@ -52,6 +52,24 @@
       "revId": "b765ea7f6a7f32a3eb33ef496b46803ecf204cdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0464a595_8e094791",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-11-30T21:24:00Z",
+      "side": 1,
+      "message": "No need for the TODO, in my opinion.",
+      "parentUuid": "20bd032c_2543a906",
+      "revId": "b765ea7f6a7f32a3eb33ef496b46803ecf204cdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
