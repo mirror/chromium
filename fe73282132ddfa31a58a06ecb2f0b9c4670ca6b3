@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aad3fa0e_cb67a761",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1116036
+      },
+      "writtenOn": "2017-11-30T19:28:50Z",
+      "side": 1,
+      "message": "Pull the retry logic out of the case statement.\n\nImportant logic like this should be in a separate, well named method.\n\nif (task.failedEntries.length \u003e 0 \u0026\u0026\n          task.failedEntries.length \u003c task.importEntries.length) {\n  this.retryTaskFailedEntries_(task);  // or something like that.\n  break;\n}\n\n// Followed by the standard update progress center logic.",
+      "revId": "fe73282132ddfa31a58a06ecb2f0b9c4670ca6b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b98f07aa_40217e83",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1116036
+      },
+      "writtenOn": "2017-11-30T19:28:50Z",
+      "side": 1,
+      "message": "Formatting only changes now, right? If so, revert. Reformatted lines lose correct attribute in git history.",
+      "revId": "fe73282132ddfa31a58a06ecb2f0b9c4670ca6b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

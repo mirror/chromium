@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8ba4dd0e_fb57c73f",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1116036
+      },
+      "writtenOn": "2017-11-30T19:28:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "38fad842_f96668cf",
+      "revId": "dbf8a54ce889490ca8cd3d3d3f3af20c803c407a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27d1cd74_eb77d5ac",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
         "patchSetId": 15
@@ -160,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "82e4308b_529e08a7",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1116036
+      },
+      "writtenOn": "2017-11-30T19:28:50Z",
+      "side": 1,
+      "message": "Gotcha. I\u0027ll assume someone more recently marinated in JS culture will know that.",
+      "parentUuid": "d1880e1a_e2d6e32b",
+      "revId": "dbf8a54ce889490ca8cd3d3d3f3af20c803c407a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fa6ad1a_6f36687e",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
         "patchSetId": 15
@@ -227,6 +263,24 @@
       "revId": "dbf8a54ce889490ca8cd3d3d3f3af20c803c407a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e0e37bc1_d0b17d89",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1116036
+      },
+      "writtenOn": "2017-11-30T19:28:50Z",
+      "side": 1,
+      "message": "That would be a *perfect* code comment to place immediately above where you register the COMPLETED_EVENT listener.",
+      "parentUuid": "9e701191_ae7eeea4",
+      "revId": "dbf8a54ce889490ca8cd3d3d3f3af20c803c407a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
