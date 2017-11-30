@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a65cc99a_f50dc2ab",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-30T19:41:56Z",
+      "side": 1,
+      "message": "Yep... fixed.",
+      "parentUuid": "897df6eb_48b16381",
+      "range": {
+        "startLine": 402,
+        "startChar": 16,
+        "endLine": 402,
+        "endChar": 33
+      },
+      "revId": "5d0083855fab79607230b447225838a439933fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "559d5a52_222f2347",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-30T17:28:05Z",
       "side": 1,
       "message": "I guess I\u0027d be tempted to show the promo to anyone that hasn\u0027t seen it regardless of the time they\u0027d had Chrome Home enabled.  For people that are coming back to chrome but maybe not finding bookmarks, this might be a good thing.\n\nBut, this is fine as well and we can refine in the future if needed.\n\nOr do we not have a shared pref for whether the promo is shown, so this is the best way we know that we aren\u0027t double showing the promo?",
+      "revId": "5d0083855fab79607230b447225838a439933fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7e2f5cc_52dbcfc6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-30T19:41:56Z",
+      "side": 1,
+      "message": "This was the version that kingston wanted because there was concern that the info might confuse those that already have the feature enabled (they\u0027d be looking for what changed). This will be simple to modify.",
+      "parentUuid": "559d5a52_222f2347",
       "revId": "5d0083855fab79607230b447225838a439933fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
