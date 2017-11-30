@@ -433,9 +433,9 @@ void ModuleEnumerator::ReportThirdPartyMetrics() {
   // comparing how much third party modules affect crash rates compared to
   // the regular user distribution.
   base::debug::SetCrashKeyValue(crash_keys::kThirdPartyModulesLoaded,
-                                base::SizeTToString(third_party_loaded));
+                                base::NumberToString(third_party_loaded));
   base::debug::SetCrashKeyValue(crash_keys::kThirdPartyModulesNotLoaded,
-                                base::SizeTToString(third_party_not_loaded));
+                                base::NumberToString(third_party_not_loaded));
 
   // Report back some metrics regarding third party modules and certificates.
   UMA_HISTOGRAM_CUSTOM_COUNTS("ThirdPartyModules.Certificates.Total",
