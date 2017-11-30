@@ -50,7 +50,7 @@ class SurfaceReferencesTest : public testing::Test {
     LocalSurfaceId local_surface_id(local_id,
                                     base::UnguessableToken::Deserialize(0, 1u));
     GetCompositorFrameSinkSupport(frame_sink_id)
-        .SubmitCompositorFrame(local_surface_id, MakeCompositorFrame());
+        .SubmitCompositorFrame(local_surface_id, MakeDefaultCompositorFrame());
     return SurfaceId(frame_sink_id, local_surface_id);
   }
 
