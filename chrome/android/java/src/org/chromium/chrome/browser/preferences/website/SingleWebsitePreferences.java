@@ -367,9 +367,9 @@ public class SingleWebsitePreferences extends PreferenceFragment
     }
 
     private void setUpNotificationsPreference(Preference preference) {
+        final ContentSetting value = mSite.getNotificationPermission();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
                 && ChromeFeatureList.isEnabled(ChromeFeatureList.SITE_NOTIFICATION_CHANNELS)) {
-            final ContentSetting value = mSite.getNotificationPermission();
             if (!(value == ContentSetting.ALLOW || value == ContentSetting.BLOCK)) {
                 // TODO(crbug.com/735110): Figure out if this is the correct thing to do, for values
                 // that are non-null, but not ALLOW or BLOCK either. (In setupListPreference we
@@ -383,8 +383,16 @@ public class SingleWebsitePreferences extends PreferenceFragment
             newPreference.setKey(preference.getKey());
             setUpPreferenceCommon(newPreference);
 
-            newPreference.setSummary(
-                    getResources().getString(ContentSettingsResources.getSiteSummary(value)));
+            if (isPermissionControlledByDSE(
+                        ContentSettingsType.CONTENT_SETTINGS_TYPE_NOTIFICATIONS)) {
+                newPreference.setSummary(getResources().getString(value == ContentSetting.ALLOW
+                                ? R.string.website_settings_permissions_allow_dse
+                                : R.string.website_settings_permissions_block_dse));
+            } else {
+                newPreference.setSummary(
+                        getResources().getString(ContentSettingsResources.getSiteSummary(value)));
+            }
+
             newPreference.setDefaultValue(value);
 
             // This preference is read-only so should not attempt to persist to shared prefs.
@@ -409,7 +417,11 @@ public class SingleWebsitePreferences extends PreferenceFragment
             getPreferenceScreen().removePreference(preference);
             getPreferenceScreen().addPreference(newPreference);
         } else {
-            setUpListPreference(preference, mSite.getNotificationPermission());
+            setUpListPreference(preference, value);
+            if (isPermissionControlledByDSE(ContentSettingsType.CONTENT_SETTINGS_TYPE_NOTIFICATIONS)
+                    && value != null) {
+                updatePreferenceForDSESetting(preference);
+            }
         }
     }
 
@@ -617,8 +629,9 @@ public class SingleWebsitePreferences extends PreferenceFragment
     private void setUpLocationPreference(Preference preference) {
         ContentSetting permission = mSite.getGeolocationPermission();
         setUpListPreference(preference, permission);
-        if (arePermissionsControlledByDSE() && permission != null) {
-            updateLocationPreferenceForDSESetting(preference);
+        if (isPermissionControlledByDSE(ContentSettingsType.CONTENT_SETTINGS_TYPE_GEOLOCATION)
+                && permission != null) {
+            updatePreferenceForDSESetting(preference);
         }
     }
 
@@ -672,9 +685,9 @@ public class SingleWebsitePreferences extends PreferenceFragment
      * Returns true if the DSE (default search engine) geolocation and notifications permissions
      * are configured for the DSE.
      */
-    private boolean arePermissionsControlledByDSE() {
-        return WebsitePreferenceBridge.arePermissionsControlledByDSE(
-                mSite.getAddress().getOrigin(), false);
+    private boolean isPermissionControlledByDSE(int contentSettingsType) {
+        return WebsitePreferenceBridge.isPermissionControlledByDSE(
+                contentSettingsType, mSite.getAddress().getOrigin(), false);
     }
 
     /**
@@ -682,7 +695,7 @@ public class SingleWebsitePreferences extends PreferenceFragment
      * for searches that happen from the omnibox.
      * @param preference The Location preference to modify.
      */
-    private void updateLocationPreferenceForDSESetting(Preference preference) {
+    private void updatePreferenceForDSESetting(Preference preference) {
         ListPreference listPreference = (ListPreference) preference;
         Resources res = getResources();
         listPreference.setEntries(new String[] {

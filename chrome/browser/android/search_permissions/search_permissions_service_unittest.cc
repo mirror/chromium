@@ -283,25 +283,29 @@ TEST_F(SearchPermissionsServiceTest, Migration) {
       profile()));
 }
 
-TEST_F(SearchPermissionsServiceTest, ArePermissionsControlledByDSE) {
+TEST_F(SearchPermissionsServiceTest, IsPermissionControlledByDSE) {
   // True for origin that matches the CCTLD and meets all requirements.
   test_delegate()->ChangeDSEOrigin(kGoogleURL);
-  EXPECT_TRUE(
-      GetService()->ArePermissionsControlledByDSE(ToOrigin(kGoogleURL)));
+  EXPECT_TRUE(GetService()->IsPermissionControlledByDSE(
+      CONTENT_SETTINGS_TYPE_NOTIFICATIONS, ToOrigin(kGoogleURL)));
 
   // False for different origin.
-  EXPECT_FALSE(
-      GetService()->ArePermissionsControlledByDSE(ToOrigin(kGoogleAusURL)));
+  EXPECT_FALSE(GetService()->IsPermissionControlledByDSE(
+      CONTENT_SETTINGS_TYPE_GEOLOCATION, ToOrigin(kGoogleAusURL)));
 
   // False for http origin.
   test_delegate()->ChangeDSEOrigin(kGoogleHTTPURL);
-  EXPECT_FALSE(
-      GetService()->ArePermissionsControlledByDSE(ToOrigin(kGoogleHTTPURL)));
+  EXPECT_FALSE(GetService()->IsPermissionControlledByDSE(
+      CONTENT_SETTINGS_TYPE_NOTIFICATIONS, ToOrigin(kGoogleHTTPURL)));
 
   // True even for non-Google search engines.
   test_delegate()->ChangeDSEOrigin(kExampleURL);
-  EXPECT_TRUE(
-      GetService()->ArePermissionsControlledByDSE(ToOrigin(kExampleURL)));
+  EXPECT_TRUE(GetService()->IsPermissionControlledByDSE(
+      CONTENT_SETTINGS_TYPE_GEOLOCATION, ToOrigin(kExampleURL)));
+
+  // False for permissions not controlled by the DSE.
+  EXPECT_TRUE(GetService()->IsPermissionControlledByDSE(
+      CONTENT_SETTINGS_TYPE_COOKIES, ToOrigin(kExampleURL)));
 }
 
 TEST_F(SearchPermissionsServiceTest, DSEChanges) {
