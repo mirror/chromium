@@ -394,4 +394,13 @@ void ImageTransportSurfaceOverlayMac::OnGpuSwitched() {
       FROM_HERE, base::Bind(&IOSurfaceContextNoOp, context_on_new_gpu));
 }
 
+void ImageTransportSurfaceOverlayMac::BeginCATransaction() {
+  [CATransaction begin];
+}
+
+void ImageTransportSurfaceOverlayMac::CommitAndFlushCATransaction() {
+  [CATransaction commit];
+  [CATransaction flush];
+}
+
 }  // namespace gpu

@@ -4,10 +4,13 @@
 
 #include "content/browser/compositor/gpu_output_surface_mac.h"
 
+#include <QuartzCore/QuartzCore.h>
+
 #include "components/viz/service/display/output_surface_client.h"
 #include "components/viz/service/display/output_surface_frame.h"
 #include "components/viz/service/display_embedder/compositor_overlay_candidate_validator.h"
 #include "gpu/GLES2/gl2extchromium.h"
+#include "gpu/ipc/client/command_buffer_proxy_impl.h"
 #include "gpu/ipc/client/gpu_process_hosted_ca_layer_tree_params.h"
 #include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
 #include "ui/accelerated_widget_mac/accelerated_widget_mac.h"
@@ -15,6 +18,17 @@
 #include "ui/compositor/compositor.h"
 #include "ui/display/types/display_snapshot.h"
 #include "ui/gfx/mac/io_surface.h"
+
+typedef enum {
+  kCATransactionPhasePreLayout,
+  kCATransactionPhasePreCommit,
+  kCATransactionPhasePostCommit,
+} CATransactionPhase;
+
+@interface CATransaction ()
++ (void)addCommitHandler:(void (^)(void))block
+                forPhase:(CATransactionPhase)phase;
+@end
 
 namespace content {
 
@@ -71,6 +85,7 @@ GpuOutputSurfaceMac::GpuOutputSurfaceMac(
 GpuOutputSurfaceMac::~GpuOutputSurfaceMac() {}
 
 void GpuOutputSurfaceMac::SwapBuffers(viz::OutputSurfaceFrame frame) {
+  GetCommandBufferProxy()->BeginCATransaction();
   GpuSurfacelessBrowserCompositorOutputSurface::SwapBuffers(std::move(frame));
 
   if (should_show_frames_state_ ==
@@ -106,6 +121,11 @@ void GpuOutputSurfaceMac::OnGpuSwapBuffersCompleted(
   client_->DidReceiveTextureInUseResponses(params_mac->responses);
   GpuSurfacelessBrowserCompositorOutputSurface::OnGpuSwapBuffersCompleted(
       response, params_mac);
+
+  [CATransaction addCommitHandler:^{
+    GetCommandBufferProxy()->CommitAndFlushCATransaction();
+  }
+                         forPhase:kCATransactionPhasePostCommit];
 }
 
 void GpuOutputSurfaceMac::SetSurfaceSuspendedForRecycle(bool suspended) {

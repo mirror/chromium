@@ -205,6 +205,12 @@ IPC_MESSAGE_ROUTED1(
     GpuCommandBufferMsg_SwapBuffersCompleted,
     GpuCommandBufferMsg_SwapBuffersCompleted_Params /* params */)
 
+// TODO
+IPC_SYNC_MESSAGE_ROUTED0_0(GpuCommandBufferMsg_BeginCATransaction);
+
+// TODO
+IPC_SYNC_MESSAGE_ROUTED0_0(GpuCommandBufferMsg_CommitAndFlushCATransaction);
+
 // Tells the browser about updated parameters for vsync alignment.
 IPC_MESSAGE_ROUTED2(GpuCommandBufferMsg_UpdateVSyncParameters,
                     base::TimeTicks /* timebase */,

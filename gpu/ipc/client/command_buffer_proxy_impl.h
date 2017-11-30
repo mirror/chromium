@@ -139,6 +139,9 @@ class GPU_EXPORT CommandBufferProxyImpl : public gpu::CommandBuffer,
 
   bool EnsureBackbuffer();
 
+  void BeginCATransaction();
+  void CommitAndFlushCATransaction();
+
   using SwapBuffersCompletionCallback = base::Callback<void(
       const gfx::SwapResponse& response,
       const gpu::GpuProcessHostedCALayerTreeParamsMac* params_mac)>;

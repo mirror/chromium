@@ -290,6 +290,18 @@ void CommandBufferProxyImpl::OrderingBarrierHelper(int32_t put_offset) {
   flushed_fence_sync_release_ = next_fence_sync_release_ - 1;
 }
 
+void CommandBufferProxyImpl::BeginCATransaction() {
+  CheckLock();
+  base::AutoLock lock(last_state_lock_);
+  Send(new GpuCommandBufferMsg_BeginCATransaction(route_id_));
+}
+
+void CommandBufferProxyImpl::CommitAndFlushCATransaction() {
+  CheckLock();
+  base::AutoLock lock(last_state_lock_);
+  Send(new GpuCommandBufferMsg_CommitAndFlushCATransaction(route_id_));
+}
+
 void CommandBufferProxyImpl::SetSwapBuffersCompletionCallback(
     const SwapBuffersCompletionCallback& callback) {
   CheckLock();
