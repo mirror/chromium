@@ -4,17 +4,12 @@
 
 #include "ash/accelerators/accelerator_controller_delegate_mash.h"
 
-#include "ash/window_manager.h"
 #include "base/logging.h"
-#include "mash/public/interfaces/launchable.mojom.h"
-#include "services/service_manager/public/cpp/connector.h"
-#include "services/ui/public/interfaces/constants.mojom.h"
 
 namespace ash {
 
-AcceleratorControllerDelegateMash::AcceleratorControllerDelegateMash(
-    WindowManager* window_manager)
-    : window_manager_(window_manager) {}
+AcceleratorControllerDelegateMash::AcceleratorControllerDelegateMash() =
+    default;
 
 AcceleratorControllerDelegateMash::~AcceleratorControllerDelegateMash() =
     default;
@@ -28,8 +23,6 @@ bool AcceleratorControllerDelegateMash::HandlesAction(
   // should be moved to accelerator_controller.cc/h. See
   // http://crbug.com/612331.
   switch (action) {
-    case TOUCH_HUD_PROJECTION_TOGGLE:
-      return true;
     case DEBUG_TOGGLE_DEVICE_SCALE_FACTOR:
     case DEBUG_TOGGLE_SHOW_DEBUG_BORDERS:
     case DEBUG_TOGGLE_SHOW_FPS_COUNTER:
@@ -55,29 +48,11 @@ bool AcceleratorControllerDelegateMash::CanPerformAction(
     AcceleratorAction action,
     const ui::Accelerator& accelerator,
     const ui::Accelerator& previous_accelerator) {
-  switch (action) {
-    case TOUCH_HUD_PROJECTION_TOGGLE:
-      return true;
-    default:
-      break;
-  }
   return false;
 }
 
 void AcceleratorControllerDelegateMash::PerformAction(
     AcceleratorAction action,
-    const ui::Accelerator& accelerator) {
-  switch (action) {
-    case TOUCH_HUD_PROJECTION_TOGGLE: {
-      mash::mojom::LaunchablePtr launchable;
-      window_manager_->connector()->BindInterface("touch_hud", &launchable);
-      launchable->Launch(mash::mojom::kWindow,
-                         mash::mojom::LaunchMode::DEFAULT);
-      break;
-    }
-    default:
-      NOTREACHED();
-  }
-}
+    const ui::Accelerator& accelerator) {}
 
 }  // namespace ash
