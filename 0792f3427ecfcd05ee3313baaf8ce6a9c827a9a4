@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "331bbcab_8c68f3b6",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-30T08:14:48Z",
+      "side": 1,
+      "message": "Yes, but it\u0027s not specific to SetPriority - if you want to throttle high priority requests, the best way is to modify IsThrottablePriority.",
+      "parentUuid": "e21e3149_53615a2d",
+      "revId": "0792f3427ecfcd05ee3313baaf8ce6a9c827a9a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6e8e562_5951d03f",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "0792f3427ecfcd05ee3313baaf8ce6a9c827a9a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "760f49c8_47323790",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-30T08:14:48Z",
+      "side": 1,
+      "message": "Added a comment.\n\nboolean return value is clearer to me. In order to decouple this and throttle option, In PS5 I moved the IsThrottablePriority call from ResourceLoader to ResourceLoadScheduler.",
+      "parentUuid": "c6e8e562_5951d03f",
+      "revId": "0792f3427ecfcd05ee3313baaf8ce6a9c827a9a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
