@@ -64,6 +64,7 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kCCTRedirectPreconnect,
     &kChromeHomeFeature,
     &kChromeHomeBottomNavLabels,
+    &kChromeHomeClearUrlOnOpen,
     &kChromeHomeDestroySuggestions,
     &kChromeHomeDropAllButFirstThumbnail,
     &kChromeHomeInactivitySheetExpansion,
@@ -182,6 +183,9 @@ const base::Feature kChromeHomeFeature{"ChromeHome",
 
 const base::Feature kChromeHomeBottomNavLabels{
     "ChromeHomeBottomNavLabels", base::FEATURE_DISABLED_BY_DEFAULT};
+
+const base::Feature kChromeHomeClearUrlOnOpen{
+    "ChromeHomeClearUrlOnOpen", base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kChromeHomeDestroySuggestions{
     "ChromeHomeDestroySuggestions", base::FEATURE_ENABLED_BY_DEFAULT};
