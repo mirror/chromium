@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "b9fe70e7_bf11064c",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/AnnotationProcessingUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-30T22:45:59Z",
+      "side": 1,
+      "message": "Thanks!  This looks much clearer to me.",
+      "parentUuid": "cec11f0d_92f50597",
+      "range": {
+        "startLine": 138,
+        "startChar": 20,
+        "endLine": 138,
+        "endChar": 30
+      },
+      "revId": "ee5af2de25de3a1634c3e0da2082206a9f0106b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cfdf3fde_0d48db30",
         "filename": "base/test/android/javatests/src/org/chromium/base/test/util/AnnotationProcessingUtils.java",
         "patchSetId": 11
@@ -285,6 +309,30 @@
     },
     {
       "key": {
+        "uuid": "565dfcfa_9f8b4784",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/AnnotationProcessingUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-30T22:45:59Z",
+      "side": 1,
+      "message": "not necessarily missing anything, just something that could be unexpected based on the documentation.  Just that we skip in certain situations that \"might\" be unexpected.",
+      "parentUuid": "2f38992d_acfc1261",
+      "range": {
+        "startLine": 152,
+        "startChar": 33,
+        "endLine": 152,
+        "endChar": 43
+      },
+      "revId": "ee5af2de25de3a1634c3e0da2082206a9f0106b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "336950eb_5185e6c7",
         "filename": "base/test/android/javatests/src/org/chromium/base/test/util/AnnotationProcessingUtils.java",
         "patchSetId": 11
@@ -329,6 +377,30 @@
       "revId": "ee5af2de25de3a1634c3e0da2082206a9f0106b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6817306_9d7cb013",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/AnnotationProcessingUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-30T22:45:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "be16568e_dea4cf14",
+      "range": {
+        "startLine": 153,
+        "startChar": 21,
+        "endLine": 153,
+        "endChar": 41
+      },
+      "revId": "ee5af2de25de3a1634c3e0da2082206a9f0106b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
