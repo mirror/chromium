@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da63b2f1_3e1b8b2b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/IndexedDBModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-30T18:32:49Z",
+      "side": 1,
+      "message": "entriesUpdated",
+      "range": {
+        "startLine": 324,
+        "startChar": 34,
+        "endLine": 324,
+        "endChar": 48
+      },
+      "revId": "6184d0201dc5785af89b58b176e7736cd7847dfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00701957_4b7b713f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/IndexedDBModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-30T18:32:49Z",
+      "side": 1,
+      "message": "call it entriesUpdated",
+      "range": {
+        "startLine": 351,
+        "startChar": 47,
+        "endLine": 351,
+        "endChar": 61
+      },
+      "revId": "6184d0201dc5785af89b58b176e7736cd7847dfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "767f5c9e_f3d06dc1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/IndexedDBViews.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-30T18:32:49Z",
+      "side": 1,
+      "message": "Unused.",
+      "revId": "6184d0201dc5785af89b58b176e7736cd7847dfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
