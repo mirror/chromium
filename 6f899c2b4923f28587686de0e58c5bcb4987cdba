@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e514ad9f_e67e4e21",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_consumer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-11-30T01:20:53Z",
+      "side": 1,
+      "message": "maybe setLoadingState? I think the Is made it a little more clearer. But setLoading sounds a little bit vague. I don\u0027t think we should try to change this name to match the property setter.",
+      "range": {
+        "startLine": 17,
+        "startChar": 18,
+        "endLine": 17,
+        "endChar": 19
+      },
+      "revId": "6f899c2b4923f28587686de0e58c5bcb4987cdba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85064510_62adb324",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-11-30T01:20:53Z",
+      "side": 1,
+      "message": "nit: What about \"BOOL that keeps track wether a pager is loading or not.\"",
+      "range": {
+        "startLine": 50,
+        "startChar": 28,
+        "endLine": 50,
+        "endChar": 29
+      },
+      "revId": "6f899c2b4923f28587686de0e58c5bcb4987cdba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa293244_63ddcb8d",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-11-30T01:20:53Z",
+      "side": 1,
+      "message": "Could we just change this to NO to make it clearer?",
+      "range": {
+        "startLine": 450,
+        "startChar": 33,
+        "endLine": 450,
+        "endChar": 40
+      },
+      "revId": "6f899c2b4923f28587686de0e58c5bcb4987cdba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12f331f7_bdcb9598",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-11-30T01:20:53Z",
+      "side": 1,
+      "message": "nit: s/Sets/Set or s/hide/hides",
+      "revId": "6f899c2b4923f28587686de0e58c5bcb4987cdba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31787af6_4b816e08",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-11-30T01:20:53Z",
+      "side": 1,
+      "message": "nit: use getter isLoading, or remove getter alias?",
+      "revId": "6f899c2b4923f28587686de0e58c5bcb4987cdba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a1bd12f_31ef304a",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_adapter.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-11-30T01:20:53Z",
+      "side": 1,
+      "message": "Could we please add a comment saying that the mediator is taking care of this? Just so we know why its a no op.",
+      "revId": "6f899c2b4923f28587686de0e58c5bcb4987cdba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
