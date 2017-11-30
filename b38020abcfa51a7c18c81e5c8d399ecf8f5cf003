@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "86813ceb_8e80e7b5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1230115
+      },
+      "writtenOn": "2017-11-30T11:02:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efb71e50_1b1726ff",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 10
+      },
+      "revId": "b38020abcfa51a7c18c81e5c8d399ecf8f5cf003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc6db942_8b52679e",
         "filename": "ui/gl/gl_image_egl.h",
         "patchSetId": 12
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "0f672637_7b278854",
+        "filename": "ui/gl/gl_image_egl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1230115
+      },
+      "writtenOn": "2017-11-30T11:02:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc6db942_8b52679e",
+      "revId": "b38020abcfa51a7c18c81e5c8d399ecf8f5cf003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31548518_78e8c0c2",
         "filename": "ui/gl/gl_image_native_pixmap.cc",
         "patchSetId": 12
@@ -53,6 +95,24 @@
       "writtenOn": "2017-11-29T22:04:41Z",
       "side": 1,
       "message": "Have you verified that the object ownership and transferral into these arrays is correct?",
+      "revId": "b38020abcfa51a7c18c81e5c8d399ecf8f5cf003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f4cb79f_15393e39",
+        "filename": "ui/gl/gl_image_native_pixmap.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1230115
+      },
+      "writtenOn": "2017-11-30T11:02:06Z",
+      "side": 1,
+      "message": "Yes and I will add a comment to clarify.",
+      "parentUuid": "31548518_78e8c0c2",
       "revId": "b38020abcfa51a7c18c81e5c8d399ecf8f5cf003",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "cf641ce0_652d50ed",
+        "filename": "ui/gl/gl_image_native_pixmap_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1230115
+      },
+      "writtenOn": "2017-11-30T11:02:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7770fc0b_4e469a1e",
+      "range": {
+        "startLine": 71,
+        "startChar": 7,
+        "endLine": 71,
+        "endChar": 17
+      },
+      "revId": "b38020abcfa51a7c18c81e5c8d399ecf8f5cf003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e20fb0bc_03310d2e",
         "filename": "ui/gl/gl_image_native_pixmap_unittest.cc",
         "patchSetId": 12
@@ -93,6 +177,30 @@
       "writtenOn": "2017-11-29T22:04:41Z",
       "side": 1,
       "message": "Are you planning to implement and test EGL_EXT_image_dma_buf_import too?",
+      "range": {
+        "startLine": 76,
+        "startChar": 32,
+        "endLine": 76,
+        "endChar": 51
+      },
+      "revId": "b38020abcfa51a7c18c81e5c8d399ecf8f5cf003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e951808_bb2b6c9a",
+        "filename": "ui/gl/gl_image_native_pixmap_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1230115
+      },
+      "writtenOn": "2017-11-30T11:02:06Z",
+      "side": 1,
+      "message": "It is already implemented in ui/gl/gl_image_native_pixmap.cc and tested in ui/ozone/gl/gl_image_ozone_native_pixmap_unittest.cc\nThe implementation works on non-ozone but the test is still ozone_gbm specific.\nI do plan to convert the test and move it to ui/gl. Actually this CL is required for that so it will be useful for that too.\n\nIndeed on ozone_gbm it is possible to create a graphic resource using a simple ioctl(DRM_IOCTL_MODE_CREATE_DUMB) that it can then be exported as a dmabuf. This requires the caller process to be a master of /dev/dri/card0, usually a display server. On non-ozone_gbm (this includes non ozone at all but also ozone_x11/ozone_wayland) the caller process is a client so the only way to get a dmabuf from a graphic resource is using EGL_MESA_image_dma_buf_export, i.e. first create a GL texture then create an EGLImage from it and finally call eglExportDMABUFImageMESA. This is what the new unit test does. (Well there are other ways to get dmabuf fds, like creating a VA API surface and exporting it as dmabuf fds but this is another story).\n\nA unit test can then uses these dmabuf fds to test EGL_EXT_image_dma_buf_import.\n\nFor now I think it is better to keep this CL as minimal as possible but yes I plan to go further as mentioned on top.",
+      "parentUuid": "e20fb0bc_03310d2e",
       "range": {
         "startLine": 76,
         "startChar": 32,
