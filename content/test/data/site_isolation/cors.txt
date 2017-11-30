@@ -1,0 +1,2 @@
+This is an arbitrary string that doesn't match any signatures of HTML/XML/JSON.
+It is accessible via CORS.
