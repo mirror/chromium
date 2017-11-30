@@ -34,6 +34,24 @@
       "revId": "75b44180c14733006209449bbbe04824b57f5d59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7953751_c07d0c2f",
+        "filename": "components/omnibox/browser/fake_autocomplete_provider_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-11-30T22:54:14Z",
+      "side": 1,
+      "message": "\u003e scoped_task_environment_.RunUntilIdle() makes it pass,\n\nYay!\n\n\u003e but requires that we use the object. There\u0027s no static function.\n\nBoo! But this seems reasonable. It\u0027s already the case that using these classes levies the requirement on test fixtures to create a ScopedTaskEnvironment. Further requiring them to call a cleanup method doesn\u0027t seem especially onerous.",
+      "parentUuid": "f5ad5e4b_45453b81",
+      "revId": "75b44180c14733006209449bbbe04824b57f5d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

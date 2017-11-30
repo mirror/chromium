@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e91c0bd3_1437c5e3",
+        "filename": "components/omnibox/browser/fake_autocomplete_provider_client.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-11-30T22:54:14Z",
+      "side": 1,
+      "message": "I think we should remove this and instead document (in this class\u0027 header file) that test fixtures using this class must instantiate a ScopedTaskEnvironment and when done delete this and call RunUntilIdle on the STE.",
+      "revId": "4c51a2e2744bbde9384e8627816ac07b8c91951e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
