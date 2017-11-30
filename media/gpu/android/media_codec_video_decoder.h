@@ -7,7 +7,7 @@
 
 #include "base/containers/circular_deque.h"
 #include "base/optional.h"
-#include "base/single_thread_task_runner.h"
+#include "base/sequenced_task_runner.h"
 #include "base/threading/thread_checker.h"
 #include "base/timer/elapsed_timer.h"
 #include "gpu/command_buffer/service/gpu_preferences.h"
@@ -21,7 +21,6 @@
 #include "media/gpu/android/surface_chooser_helper.h"
 #include "media/gpu/android/video_frame_factory.h"
 #include "media/gpu/media_gpu_export.h"
-#include "services/service_manager/public/cpp/service_context_ref.h"
 
 namespace media {
 
@@ -62,8 +61,7 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder
       std::unique_ptr<AndroidVideoSurfaceChooser> surface_chooser,
       AndroidOverlayMojoFactoryCB overlay_factory_cb,
       RequestOverlayInfoCB request_overlay_info_cb,
-      std::unique_ptr<VideoFrameFactory> video_frame_factory,
-      std::unique_ptr<service_manager::ServiceContextRef> connection_ref);
+      std::unique_ptr<VideoFrameFactory> video_frame_factory);
 
   // VideoDecoder implementation:
   std::string GetDisplayName() const override;
@@ -288,9 +286,9 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder
   // Optional crypto object from the Cdm.
   base::android::ScopedJavaGlobalRef<jobject> media_crypto_;
 
-  // If we're running in a service context this ref lets us keep the service
-  // thread alive until destruction.
-  std::unique_ptr<service_manager::ServiceContextRef> context_ref_;
+  // Hold onto the task runner we use, to keep the sequence around.  Otherwise,
+  // it can be cleaned up if the mojo service context is destroyed.
+  scoped_refptr<base::SequencedTaskRunner> task_runner_;
   base::WeakPtrFactory<MediaCodecVideoDecoder> weak_factory_;
   base::WeakPtrFactory<MediaCodecVideoDecoder> codec_allocator_weak_factory_;
 
