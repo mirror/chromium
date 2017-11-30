@@ -31,6 +31,17 @@ enum class AddToHomescreenTimeoutStatus {
   COUNT,
 };
 
+// This ways that an app install can be triggered.
+// This enum backs a UMA histogram and must be treated as append-only.
+enum class WebAppInstallSource {
+  BANNER,  // install banner.
+  MENU,    // wrench menu.
+  PROMPT,  // BeforeInstallPrompt.prompt().
+  COUNT,
+};
+
+void TrackInstallSource(WebAppInstallSource source);
+
 class InstallableMetrics {
  public:
   class Recorder {
