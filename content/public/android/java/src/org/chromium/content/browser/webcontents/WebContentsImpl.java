@@ -168,6 +168,7 @@ public class WebContentsImpl implements WebContents, RenderFrameHostDelegate {
     private static class WebContentsInternalsImpl implements WebContentsInternals {
         public HashSet<Object> retainedObjects;
         public HashMap<String, Pair<Object, Class>> injectedObjects;
+        public UserDataMap userDataMap;
     }
 
     private WebContentsImpl(
@@ -181,6 +182,8 @@ public class WebContentsImpl implements WebContents, RenderFrameHostDelegate {
         WebContentsInternalsImpl internals = new WebContentsInternalsImpl();
         internals.retainedObjects = new HashSet<Object>();
         internals.injectedObjects = new HashMap<String, Pair<Object, Class>>();
+        internals.userDataMap = new UserDataMap(this);
+        internals.userDataMap.init();
 
         mRenderCoordinates = new RenderCoordinates();
         mRenderCoordinates.reset();
@@ -736,6 +739,13 @@ public class WebContentsImpl implements WebContents, RenderFrameHostDelegate {
      */
     public RenderCoordinates getRenderCoordinates() {
         return mRenderCoordinates;
+    }
+
+    public UserData getUserData(Class<? extends UserData> key) {
+        WebContentsInternals internals = mInternalsHolder.get();
+        if (internals == null) return null;
+        UserDataMap userDataMap = ((WebContentsInternalsImpl) internals).userDataMap;
+        return userDataMap != null ? userDataMap.getUserData(key) : null;
     }
 
     // This is static to avoid exposing a public destroy method on the native side of this class.
