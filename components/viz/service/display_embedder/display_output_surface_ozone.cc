@@ -26,7 +26,7 @@ DisplayOutputSurfaceOzone::DisplayOutputSurfaceOzone(
     gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
     uint32_t target,
     uint32_t internalformat)
-    : DisplayOutputSurface(context_provider, synthetic_begin_frame_source),
+    : GLOutputSurface(context_provider, synthetic_begin_frame_source),
       gl_helper_(context_provider->ContextGL(),
                  context_provider->ContextSupport()) {
   capabilities_.uses_default_gl_framebuffer = false;
@@ -68,8 +68,8 @@ void DisplayOutputSurfaceOzone::Reshape(const gfx::Size& size,
                                         bool has_alpha,
                                         bool use_stencil) {
   reshape_size_ = size;
-  DisplayOutputSurface::Reshape(size, device_scale_factor, color_space,
-                                has_alpha, use_stencil);
+  GLOutputSurface::Reshape(size, device_scale_factor, color_space, has_alpha,
+                           use_stencil);
   buffer_queue_->Reshape(size, device_scale_factor, color_space, use_stencil);
 }
 
@@ -85,7 +85,7 @@ void DisplayOutputSurfaceOzone::SwapBuffers(OutputSurfaceFrame frame) {
       frame.sub_buffer_rect ? *frame.sub_buffer_rect : gfx::Rect(swap_size_);
   buffer_queue_->SwapBuffers(damage_rect);
 
-  DisplayOutputSurface::SwapBuffers(std::move(frame));
+  GLOutputSurface::SwapBuffers(std::move(frame));
 }
 
 uint32_t DisplayOutputSurfaceOzone::GetFramebufferCopyTextureFormat() {
