@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f020f2f0_62bd2fd2",
+        "filename": "content/browser/accessibility/fullscreen_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-30T09:58:56Z",
+      "side": 1,
+      "message": "That\u0027s very useful, thank you! FakeFullscreenDelegate it is.",
+      "parentUuid": "3a86e169_31248819",
+      "revId": "712e4884e89aa4a7c4546be3ad0febb90b645395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ced336ff_462f04f7",
         "filename": "content/browser/accessibility/fullscreen_browsertest.cc",
         "patchSetId": 10
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "de8a14e3_d4ec3ce9",
+        "filename": "content/browser/accessibility/fullscreen_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-30T09:58:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ced336ff_462f04f7",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 51
+      },
+      "revId": "712e4884e89aa4a7c4546be3ad0febb90b645395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a838a6f6_22b0f4ed",
         "filename": "content/browser/accessibility/fullscreen_browsertest.cc",
         "patchSetId": 10
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "cf94e358_01204cc3",
+        "filename": "content/browser/accessibility/fullscreen_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-30T09:58:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a838a6f6_22b0f4ed",
+      "revId": "712e4884e89aa4a7c4546be3ad0febb90b645395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92e5dda6_f75298de",
         "filename": "content/browser/accessibility/fullscreen_browsertest.cc",
         "patchSetId": 10
@@ -70,6 +130,30 @@
       "writtenOn": "2017-11-29T14:45:17Z",
       "side": 1,
       "message": "EXPECT, same for all the ones below. ASSERT_* will stop the tests while EXPECT_* will continue. You should do ASSERT_* when it means things can\u0027t run further or went terribly wrong.",
+      "range": {
+        "startLine": 93,
+        "startChar": 2,
+        "endLine": 93,
+        "endChar": 8
+      },
+      "revId": "712e4884e89aa4a7c4546be3ad0febb90b645395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dce58ee5_2b1984ec",
+        "filename": "content/browser/accessibility/fullscreen_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-30T09:58:56Z",
+      "side": 1,
+      "message": "From this and the below, you might be able to tell that I started out thinking in testarness.js and only partially converting it to the appropriate equivalents. Thanks! The distinction between assert and expect would actually occasionally be useful in JS tests too, maybe a future feature request...",
+      "parentUuid": "92e5dda6_f75298de",
       "range": {
         "startLine": 93,
         "startChar": 2,
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "ccac7239_9f1c3615",
+        "filename": "content/browser/accessibility/fullscreen_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-30T09:58:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dcc26b2_6e60ebe6",
+      "range": {
+        "startLine": 98,
+        "startChar": 2,
+        "endLine": 98,
+        "endChar": 11
+      },
+      "revId": "712e4884e89aa4a7c4546be3ad0febb90b645395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68e54f8e_a75fcca2",
         "filename": "third_party/WebKit/LayoutTests/fullscreen/keyboard-focus.html",
         "patchSetId": 10
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "d2b707f0_5eb4324a",
+        "filename": "third_party/WebKit/LayoutTests/fullscreen/keyboard-focus.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-30T09:58:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68e54f8e_a75fcca2",
+      "range": {
+        "startLine": 14,
+        "startChar": 36,
+        "endLine": 14,
+        "endChar": 44
+      },
+      "revId": "712e4884e89aa4a7c4546be3ad0febb90b645395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fead778f_390f6338",
         "filename": "third_party/WebKit/LayoutTests/fullscreen/keyboard-focus.html",
         "patchSetId": 10
@@ -139,6 +271,30 @@
       "writtenOn": "2017-11-29T14:45:17Z",
       "side": 1,
       "message": "nit/style: here and below, we usually require comments to start with an uppercase and finish with a period.",
+      "range": {
+        "startLine": 23,
+        "startChar": 5,
+        "endLine": 23,
+        "endChar": 12
+      },
+      "revId": "712e4884e89aa4a7c4546be3ad0febb90b645395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d501f36f_606e0f47",
+        "filename": "third_party/WebKit/LayoutTests/fullscreen/keyboard-focus.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-30T09:58:56Z",
+      "side": 1,
+      "message": "Done everywhere.",
+      "parentUuid": "fead778f_390f6338",
       "range": {
         "startLine": 23,
         "startChar": 5,
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "a0ffd37e_0a76fdc8",
+        "filename": "third_party/WebKit/LayoutTests/fullscreen/keyboard-focus.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-30T09:58:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "844dd38b_e06b244a",
+      "range": {
+        "startLine": 28,
+        "startChar": 34,
+        "endLine": 28,
+        "endChar": 43
+      },
+      "revId": "712e4884e89aa4a7c4546be3ad0febb90b645395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8a4d557_4c91f806",
         "filename": "third_party/WebKit/LayoutTests/fullscreen/keyboard-focus.html",
         "patchSetId": 10
@@ -191,6 +371,24 @@
     },
     {
       "key": {
+        "uuid": "ac3ea28e_ebe37290",
+        "filename": "third_party/WebKit/LayoutTests/fullscreen/keyboard-focus.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-30T09:58:56Z",
+      "side": 1,
+      "message": "It\u0027s a thing, and done, added another focusable element inside to show it\u0027s not just a no-op.",
+      "parentUuid": "a8a4d557_4c91f806",
+      "revId": "712e4884e89aa4a7c4546be3ad0febb90b645395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0db6ff8c_a4f7e1f1",
         "filename": "third_party/WebKit/Source/core/dom/Node.cpp",
         "patchSetId": 10
@@ -202,6 +400,24 @@
       "writtenOn": "2017-11-29T16:23:58Z",
       "side": 1,
       "message": "This may not do the right thing if you have both a modal dialog and\na fullscreen element both showing.\n\nPresumably calling showModal on an element that\u0027s outside of a fullscreen\nroot should fail, and calling *requestFullScreen on an element that\u0027s\noutside of a modal dialog should similarly fail. But one nested inside\nthe other would be allowed, right?\n\nI think it\u0027d be fine to leave that as a TODO for now - that\u0027s quite a\ncorner case. Maybe it\u0027d make sense to solve that when switching\nfullscreen to use top layer.\n\nTODO and a bug?",
+      "revId": "712e4884e89aa4a7c4546be3ad0febb90b645395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24247e31_b0c1ce82",
+        "filename": "third_party/WebKit/Source/core/dom/Node.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-30T09:58:56Z",
+      "side": 1,
+      "message": "Good point. While a dialog element itself can\u0027t go fullscreen, other nested/mixed usage of dialog and fullscreen are possible. It turns out I\u0027ve done the right thing here by luck by letting dialog take precedent. That\u0027s because it uses the top layer mechanism and fullscreen\u0027s z-index hack cannot win over that, so the inertness will match what\u0027s being rendered.\n\nHowever, once there\u0027s just top layer, dialog shouldn\u0027t always \"win\", I\u0027ll add a note about that in the existing TODO.",
+      "parentUuid": "0db6ff8c_a4f7e1f1",
       "revId": "712e4884e89aa4a7c4546be3ad0febb90b645395",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
