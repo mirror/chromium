@@ -44,6 +44,7 @@ public final class JunitTestMain {
                 }
             }
         }
+        System.out.println(System.getProperty("java.class.path"));
         List<Class> classes = new ArrayList<Class>();
         for (String jp : testJarPaths) {
             try {
