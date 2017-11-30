@@ -1,6 +1,9 @@
+CONSOLE WARNING: line 48: Passing resultCount to audits.addCategory() is deprecated. Use AuditResult.updateProgress() instead.
+CONSOLE WARNING: line 48: Passing resultCount to audits.addCategory() is deprecated. Use AuditResult.updateProgress() instead.
+CONSOLE ERROR: line 49: Uncaught exception in extension audit event handler: oops!
 Tests audits support in WebInspector Extensions API
 
- Started extension.
+Started extension.
 Running tests...
 RUNNING TEST: extension_testAudits
 Progress: 50%
@@ -45,7 +48,7 @@ Progress: 75%
                     <
                      /span
                     >
-             extensions-audits.html:20
+             inspected-page.html:20
         [spritesheet-smallicons smallicon-green-ball severity] Passed rule
          this rule always passes ok
     Extension audits that fail

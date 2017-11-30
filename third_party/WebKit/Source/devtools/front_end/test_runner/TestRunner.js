@@ -934,14 +934,22 @@ TestRunner._pageNavigated = function() {
  * @param {function():void} callback
  */
 TestRunner.hardReloadPage = function(callback) {
-  TestRunner._innerReloadPage(true, callback);
+  TestRunner._innerReloadPage(true, undefined, callback);
 };
 
 /**
  * @param {function():void} callback
  */
 TestRunner.reloadPage = function(callback) {
-  TestRunner._innerReloadPage(false, callback);
+  TestRunner._innerReloadPage(false, undefined, callback);
+};
+
+/**
+ * @param {(string|undefined)} injectedScript
+ * @param {function():void} callback
+ */
+TestRunner.reloadPageWithInjectedScript = function(injectedScript, callback) {
+  TestRunner._innerReloadPage(false, injectedScript, callback);
 };
 
 /**
@@ -953,12 +961,13 @@ TestRunner.reloadPagePromise = function() {
 
 /**
  * @param {boolean} hardReload
+ * @param {(string|undefined)} injectedScript
  * @param {function():void} callback
  */
-TestRunner._innerReloadPage = function(hardReload, callback) {
+TestRunner._innerReloadPage = function(hardReload, injectedScript, callback) {
   TestRunner._pageLoadedCallback = TestRunner.safeWrap(callback);
   TestRunner.resourceTreeModel.addEventListener(SDK.ResourceTreeModel.Events.Load, TestRunner.pageLoaded);
-  TestRunner.resourceTreeModel.reloadPage(hardReload);
+  TestRunner.resourceTreeModel.reloadPage(hardReload, injectedScript);
 };
 
 TestRunner.pageLoaded = function() {

@@ -42,12 +42,13 @@ ExtensionsTestRunner.showPanel = function(panelId) {
   return UI.inspectorView.showPanel(panelId);
 };
 
-ExtensionsTestRunner.runExtensionTests = async function() {
+ExtensionsTestRunner.runExtensionTests = async function(tests) {
   var result = await TestRunner.RuntimeAgent.evaluate('location.href', 'console', false);
 
   if (!result)
     return;
 
+  ExtensionsTestRunner._pendingTests = tests.join('\n');
   var pageURL = result.value;
   var extensionURL = ((/^https?:/.test(pageURL) ? pageURL.replace(/^(https?:\/\/[^\/]*\/).*$/, '$1') :
                                                   pageURL.replace(/\/devtools\/extensions\/[^\/]*$/, '/http/tests'))) +

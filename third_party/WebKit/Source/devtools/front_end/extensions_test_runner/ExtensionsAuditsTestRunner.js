@@ -35,9 +35,3 @@ ExtensionsTestRunner.dumpAuditProgress = function() {
   var progress = document.querySelector('.progress-indicator').shadowRoot.querySelector('progress');
   TestRunner.addResult('Progress: ' + Math.round(100 * progress.value / progress.max) + '%');
 };
-
-TestRunner.deprecatedInitAsync(`
-  function extension_runAudits(callback) {
-    evaluateOnFrontend('ExtensionsTestRunner.startExtensionAudits(reply);', callback);
-  }
-`);
