@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd7fdd29_4239da51",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-30T16:17:19Z",
+      "side": 1,
+      "message": "should be defined with THREAD_SAFE macro.\nthis was the reason of failure on (service) workers related test failures.",
+      "range": {
+        "startLine": 313,
+        "startChar": 2,
+        "endLine": 313,
+        "endChar": 33
+      },
+      "revId": "b14023491590f3e5b47bf0c307a7b1a940b389ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
