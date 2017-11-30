@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5777b2b_aba02f70",
+        "filename": "net/reporting/reporting_header_parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-30T21:56:39Z",
+      "side": 1,
+      "message": "Is there a spec here?  I guess negative priority is valid?  Is a negative priority first or last?",
+      "range": {
+        "startLine": 117,
+        "startChar": 65,
+        "endLine": 117,
+        "endChar": 0
+      },
+      "revId": "01ba18930e43fe2b3721c248c58485b4fb56223e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55e47b4b_d6a360f2",
+        "filename": "net/reporting/reporting_header_parser_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-30T21:56:39Z",
+      "side": 1,
+      "message": "Check that negative priority works?",
+      "range": {
+        "startLine": 60,
+        "startChar": 22,
+        "endLine": 60,
+        "endChar": 0
+      },
+      "revId": "01ba18930e43fe2b3721c248c58485b4fb56223e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
