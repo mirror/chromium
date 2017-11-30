@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb6892a3_711e2e17",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-30T20:07:44Z",
+      "side": 1,
+      "message": "Isn\u0027t there a more direct way to get the widget of the tray rather than looking at the parent?",
+      "range": {
+        "startLine": 164,
+        "startChar": 6,
+        "endLine": 164,
+        "endChar": 63
+      },
+      "revId": "741cbbf2592890033826cca828ef66fc73bdf726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

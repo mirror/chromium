@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "bae2b0a5_69659a07",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-30T20:07:44Z",
+      "side": 1,
+      "message": "The static_cast is safe because this object is added to Env. During a key event I would always expect the tray have a parent, unless the tray was removed and this object wasn\u0027t destroyed. DCHECK?",
+      "parentUuid": "593b74cb_e8bd0131",
+      "revId": "b3c82b2bb6d24ca42efe4e286fe45886a65075de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "756e1884_a1738f31",
         "filename": "ui/views/bubble/tray_bubble_view.cc",
         "patchSetId": 4
