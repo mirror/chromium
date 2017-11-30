@@ -60,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "6548d46c_16648cad",
+        "filename": "media/blink/webmediacapabilitiesclient_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-30T08:50:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d714ba5f_51a5b83f",
+      "range": {
+        "startLine": 40,
+        "startChar": 7,
+        "endLine": 40,
+        "endChar": 31
+      },
+      "revId": "ae2373ccc245079483816c83d2e94c8e16dbc81f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a585b0e_109cfb16",
         "filename": "media/blink/webmediacapabilitiesclient_impl.cc",
         "patchSetId": 3
@@ -74,6 +98,24 @@
       "revId": "ae2373ccc245079483816c83d2e94c8e16dbc81f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4118a592_3f87664f",
+        "filename": "media/blink/webmediacapabilitiesclient_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-30T08:50:27Z",
+      "side": 1,
+      "message": "Done for all except VideoColorSpace, which is a class type that internally defaults things to be invalid.",
+      "parentUuid": "3a585b0e_109cfb16",
+      "revId": "ae2373ccc245079483816c83d2e94c8e16dbc81f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -100,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "753e19d5_a2bc6cf4",
+        "filename": "media/blink/webmediacapabilitiesclient_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-30T08:50:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72d1f867_ca596593",
+      "range": {
+        "startLine": 70,
+        "startChar": 7,
+        "endLine": 70,
+        "endChar": 31
+      },
+      "revId": "ae2373ccc245079483816c83d2e94c8e16dbc81f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8851d28f_455f15b6",
         "filename": "media/blink/webmediacapabilitiesclient_impl.cc",
         "patchSetId": 3
@@ -120,6 +186,30 @@
       "revId": "ae2373ccc245079483816c83d2e94c8e16dbc81f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7d64d53_9ea8e51c",
+        "filename": "media/blink/webmediacapabilitiesclient_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-30T08:50:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8851d28f_455f15b6",
+      "range": {
+        "startLine": 93,
+        "startChar": 2,
+        "endLine": 93,
+        "endChar": 11
+      },
+      "revId": "ae2373ccc245079483816c83d2e94c8e16dbc81f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
