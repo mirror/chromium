@@ -145,6 +145,24 @@
     },
     {
       "key": {
+        "uuid": "efb8df5d_bc9f2cbd",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-11-30T17:57:57Z",
+      "side": 1,
+      "message": "Done as b/69960761",
+      "parentUuid": "7eb96501_04a135f3",
+      "revId": "743ca4c52e700ea83b75bf21646b3e8e5f571734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c22776b2_060473d0",
         "filename": "chrome/browser/chromeos/login/wizard_controller.cc",
         "patchSetId": 2

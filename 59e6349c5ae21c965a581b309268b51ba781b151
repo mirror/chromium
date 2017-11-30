@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "89a7a096_4a9fa81a",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-11-30T17:57:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe9e7129_29912eea",
+      "revId": "59e6349c5ae21c965a581b309268b51ba781b151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ef15560_e602247f",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "59e6349c5ae21c965a581b309268b51ba781b151",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4953ba5_79649bf8",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-11-30T17:57:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ef15560_e602247f",
+      "revId": "59e6349c5ae21c965a581b309268b51ba781b151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
       "writtenOn": "2017-11-30T17:43:00Z",
       "side": 1,
       "message": "Should this be IsPlayStoreAvailable() too?",
+      "revId": "59e6349c5ae21c965a581b309268b51ba781b151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d462064_d2c88a17",
+        "filename": "chrome/browser/chromeos/login/wizard_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-11-30T17:57:57Z",
+      "side": 1,
+      "message": "Yes, in context of our discussion.",
+      "parentUuid": "43f63d08_866b4bb5",
       "revId": "59e6349c5ae21c965a581b309268b51ba781b151",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
