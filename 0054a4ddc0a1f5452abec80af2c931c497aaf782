@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa43da3e_3cf98544",
+        "filename": "chrome/browser/browser_process_platform_part_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-30T22:17:08Z",
+      "side": 1,
+      "message": "this method should be const",
+      "revId": "0054a4ddc0a1f5452abec80af2c931c497aaf782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "810c3c72_68e3ca3e",
+        "filename": "chrome/browser/browser_process_platform_part_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-30T22:17:08Z",
+      "side": 1,
+      "message": "this method should be const",
+      "revId": "0054a4ddc0a1f5452abec80af2c931c497aaf782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf889512_6de7f16b",
+        "filename": "chrome/browser/browser_process_platform_part_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-30T22:17:08Z",
+      "side": 1,
+      "message": "you\u0027re inserting entries here when invalid names are passed. that doesn\u0027t seem desirable. do you need some way to return failure instead?",
+      "revId": "0054a4ddc0a1f5452abec80af2c931c497aaf782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab5b5bbd_96b945c8",
+        "filename": "chrome/browser/browser_process_platform_part_chromeos.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-30T22:17:08Z",
+      "side": 1,
+      "message": "please add comments to all of these methods documenting what they do.\n\nplease also abbreviate \"Chrome OS\" to \"Cros\" rather than \"CrOS\" in class and method names. \"Cros\" is much more common in the existing code.",
+      "revId": "0054a4ddc0a1f5452abec80af2c931c497aaf782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34130db1_4608e982",
+        "filename": "chrome/browser/browser_process_platform_part_chromeos.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-30T22:17:08Z",
+      "side": 1,
+      "message": "if this is a filesystem path, please use const base::FilePath\u0026",
+      "revId": "0054a4ddc0a1f5452abec80af2c931c497aaf782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06a6bfec_c3077312",
+        "filename": "chrome/browser/browser_process_platform_part_chromeos.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-30T22:17:08Z",
+      "side": 1,
+      "message": "return base::FilePath",
+      "revId": "0054a4ddc0a1f5452abec80af2c931c497aaf782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac41a46d_4c85a453",
+        "filename": "chrome/browser/browser_process_platform_part_chromeos.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-30T22:17:08Z",
+      "side": 1,
+      "message": "please always document what\u0027s used as keys and values in maps; anyone reading this definition won\u0027t have any idea. if one of these is a path, please use base::FilePath as well.",
+      "revId": "0054a4ddc0a1f5452abec80af2c931c497aaf782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e397dd53_b905dd3b",
+        "filename": "chrome/browser/component_updater/cros_component_installer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-30T22:17:08Z",
+      "side": 1,
+      "message": "EXPECT_FALSE",
+      "revId": "0054a4ddc0a1f5452abec80af2c931c497aaf782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57cad5d9_8ccb5051",
+        "filename": "chrome/browser/component_updater/cros_component_installer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-30T22:17:08Z",
+      "side": 1,
+      "message": "EXPECT_TRUE",
+      "revId": "0054a4ddc0a1f5452abec80af2c931c497aaf782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b646e15d_749bec9f",
+        "filename": "chromeos/dbus/fake_image_loader_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-30T22:17:08Z",
+      "side": 1,
+      "message": "const base::FilePath\u0026",
+      "revId": "0054a4ddc0a1f5452abec80af2c931c497aaf782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57c1325f_cf38f250",
+        "filename": "chromeos/dbus/image_loader_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-30T22:17:08Z",
+      "side": 1,
+      "message": "please add a comment like every other method in this interface has",
+      "revId": "0054a4ddc0a1f5452abec80af2c931c497aaf782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c5e39ce_91687838",
+        "filename": "chromeos/dbus/image_loader_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-30T22:17:08Z",
+      "side": 1,
+      "message": "const base::FilePath\u0026",
+      "revId": "0054a4ddc0a1f5452abec80af2c931c497aaf782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
