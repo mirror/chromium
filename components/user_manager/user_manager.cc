@@ -93,6 +93,38 @@ UserManager* UserManager::SetForTesting(UserManager* user_manager) {
   return previous_instance;
 }
 
+UserType UserManager::CalculateUserType(const AccountId& account_id,
+                                        const User* user,
+                                        const bool browser_restart,
+                                        const bool is_child) const {
+  if (IsGuestAccountId(account_id))
+    return USER_TYPE_GUEST;
+
+  if (browser_restart && IsDeviceLocalAccountMarkedForRemoval(account_id))
+    return USER_TYPE_PUBLIC_ACCOUNT;
+
+  if (user) {
+    const UserType user_type = user->GetType();
+    if (is_child && user_type != USER_TYPE_CHILD)
+      LOG(FATAL) << "Incorrect child user type " << user_type;
+
+    if (user_type == USER_TYPE_ACTIVE_DIRECTORY &&
+        account_id.GetAccountType() != AccountType::ACTIVE_DIRECTORY) {
+      LOG(FATAL) << "Incorrect AD user type " << user_type;
+    }
+
+    return user_type;
+  }
+
+  if (is_child)
+    return USER_TYPE_CHILD;
+
+  if (IsSupervisedAccountId(account_id))
+    return USER_TYPE_SUPERVISED;
+
+  return USER_TYPE_REGULAR;
+}
+
 ScopedUserSessionStateObserver::ScopedUserSessionStateObserver(
     UserManager::UserSessionStateObserver* observer)
     : observer_(observer) {
