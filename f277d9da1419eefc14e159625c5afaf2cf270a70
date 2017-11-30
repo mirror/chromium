@@ -68,6 +68,30 @@
       "revId": "f277d9da1419eefc14e159625c5afaf2cf270a70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ac38e59_cb900c77",
+        "filename": "third_party/WebKit/Source/core/html/media/HTMLVideoElement.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1247458
+      },
+      "writtenOn": "2017-11-30T11:01:38Z",
+      "side": 1,
+      "message": "The compositor is remembering sizes, comparing the previous and current frame, but it is decoupled from the HTMLMediaElement that is also queuing the initial resize event when the element is first initialized.\n\nSince 2 components are asking to queue events, there can be duplicates at initialization, which is why we are filtering here instead.",
+      "parentUuid": "ab5abf55_7d32a123",
+      "range": {
+        "startLine": 191,
+        "startChar": 10,
+        "endLine": 191,
+        "endChar": 33
+      },
+      "revId": "f277d9da1419eefc14e159625c5afaf2cf270a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
