@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd3aac7e_ac83da48",
+        "filename": "components/omnibox/browser/omnibox_metrics_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-30T04:42:21Z",
+      "side": 1,
+      "message": "You probably should be using OmniboxEventProto\u0027s ProviderType, not the AutocompleteMatch\u0027s.  The values in AutocompleteMatch can change.",
+      "revId": "f12328eb88538a60610e4770de07f2bf662e9619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
