@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15a89150_d62b1022",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 8435,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-30T21:52:46Z",
+      "side": 1,
+      "message": "nit: \"seems likely\" is imprecise.  Can you simply record this when it failed with a timeout?",
+      "range": {
+        "startLine": 8435,
+        "startChar": 18,
+        "endLine": 8435,
+        "endChar": 30
+      },
+      "revId": "6aa985259ddff2588542aad714016fe1981c9d11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
