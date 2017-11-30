@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "153a6d5a_20ced6c6",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1450,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-30T21:27:39Z",
+      "side": 1,
+      "message": "We don\u0027t allow #ifdefs in cc/, so this will need to be hoisted up a bit.\n\nI think that having a LayerTreeSettings::force_srgb_rasterization flag is the way to go\n\nThe annoying thing about that is that you\u0027ll need to set it in two places:\n[1] For the browser\n[2] For the renderer\n\n[1] https://cs.chromium.org/chromium/src/ui/compositor/compositor.cc?rcl\u003d6bbbf5324e65d016636f23489691b87e7c753c13\u0026l\u003d172\n[2] https://cs.chromium.org/chromium/src/content/renderer/gpu/render_widget_compositor.cc?rcl\u003d955ba583f11e21c4be789358a1e0dda4649ec7f3\u0026l\u003d370\n\nWhat release is this targeted to?\n\nI will likely change [3] to use SRGB and merge to whatever I\u0027m allowed to merge to.\nhttps://cs.chromium.org/chromium/src/ui/compositor/compositor.cc?rcl\u003d6bbbf5324e65d016636f23489691b87e7c753c13\u0026l\u003d368\n\nI think that the best long-term solution is to have a LayerTreeSettings::rasterize_non_wcg_layers_to_srgb setting, and use it everywhere except for Mac.",
+      "revId": "3b0ea367c0e7033c5fc2a32fe1824b532b819e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
