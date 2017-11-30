@@ -34,6 +34,24 @@
       "revId": "0684863fe9415b6cb926790104a1454b34828531",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b17c17c8_09155ed5",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-30T22:22:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1cc2a96f_5fdb75bb",
+      "revId": "0684863fe9415b6cb926790104a1454b34828531",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

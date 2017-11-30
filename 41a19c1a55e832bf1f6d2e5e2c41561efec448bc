@@ -123,6 +123,24 @@
       "revId": "41a19c1a55e832bf1f6d2e5e2c41561efec448bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd3e4d54_b268ee12",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-30T22:22:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "73ab560a_f3d4f2d6",
+      "revId": "41a19c1a55e832bf1f6d2e5e2c41561efec448bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
