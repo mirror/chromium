@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1256c521_95aabdce",
+        "filename": "components/storage_monitor/storage_monitor_chromeos.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-30T23:41:41Z",
+      "side": 1,
+      "message": "Althernatively, you can return base::Optional\u003cStorageInfo\u003e here.",
+      "revId": "2c80a2ab196310e30b13c5fe0bd423dc8356fdb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30eeb419_85c75af7",
+        "filename": "components/storage_monitor/storage_monitor_chromeos.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-30T23:41:41Z",
+      "side": 1,
+      "message": "Add a blank line after this.",
+      "revId": "2c80a2ab196310e30b13c5fe0bd423dc8356fdb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "275ead99_e0243c43",
+        "filename": "components/storage_monitor/storage_monitor_chromeos.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-30T23:41:41Z",
+      "side": 1,
+      "message": "Can there be more than 1 stateful partition?",
+      "revId": "2c80a2ab196310e30b13c5fe0bd423dc8356fdb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f797942_bf014abd",
+        "filename": "components/storage_monitor/storage_monitor_chromeos.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-30T23:41:41Z",
+      "side": 1,
+      "message": "Maybe I need to read the CLs in more detail... Can you explain when these gets called? Isn\u0027t the whole point of a fixed disk to be... fixed? i.e. Does this get called just once on start-up? When does the fixed disk get removed?",
+      "revId": "2c80a2ab196310e30b13c5fe0bd423dc8356fdb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94b09654_a9f17d30",
+        "filename": "components/storage_monitor/storage_monitor_chromeos.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-30T23:41:41Z",
+      "side": 1,
+      "message": "if (base::ContainsKey(mount_map_, disk.mount_path())",
+      "revId": "2c80a2ab196310e30b13c5fe0bd423dc8356fdb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ceb84c7_20624006",
+        "filename": "components/storage_monitor/storage_monitor_chromeos.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-30T23:41:41Z",
+      "side": 1,
+      "message": "Just try erasing, which calls find() internally:\n\nsize_t erased_count \u003d mount_map_.erase(disk.mount_path());\nif (!erased_count)\n  return;\n\nreceiver()-\u003eProcessDetach((info.device_id()));",
+      "revId": "2c80a2ab196310e30b13c5fe0bd423dc8356fdb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94a7e25a_a8b1b6a9",
+        "filename": "components/storage_monitor/storage_monitor_chromeos.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-30T23:41:41Z",
+      "side": 1,
+      "message": "There\u0027s no |mount_info| variable here, only |disk|. Same for RemoveFixedStorageDisk() below.",
+      "revId": "2c80a2ab196310e30b13c5fe0bd423dc8356fdb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
