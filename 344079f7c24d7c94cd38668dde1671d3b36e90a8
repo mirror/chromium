@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c58d9e6e_2962c6c4",
+        "filename": "cc/scheduler/compositor_timing_history.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 911,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-11-30T19:23:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d51ecac7_5d1421fb",
+      "revId": "344079f7c24d7c94cd38668dde1671d3b36e90a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "514c5bc5_e9121347",
         "filename": "third_party/WebKit/Source/core/animation/test_data/two-raf-both-cancelled.html",
         "patchSetId": 3
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "4a1deec1_928babf9",
+        "filename": "third_party/WebKit/Source/core/dom/Document.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1813,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-11-30T19:23:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b0eee26_8b7278a9",
+      "revId": "344079f7c24d7c94cd38668dde1671d3b36e90a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89cbc194_e47e2dbb",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 3
@@ -67,6 +103,24 @@
       "revId": "344079f7c24d7c94cd38668dde1671d3b36e90a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36473601_3afeb3da",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 3300,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-11-30T19:23:08Z",
+      "side": 1,
+      "message": "Hrm. I think you\u0027re right that there\u0027s still work to be done this frame, but I\u0027m concerned that removing this means we depend on ServiceScriptedAnimations being called or we will later report incorrect information.\n\nRemoved, but we should make sure we\u0027re happy that ServiceScriptedAnimations will *always* be called.",
+      "parentUuid": "89cbc194_e47e2dbb",
+      "revId": "344079f7c24d7c94cd38668dde1671d3b36e90a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
