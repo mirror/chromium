@@ -71,7 +71,7 @@ class FirstSummarySelectFilter final : public HTMLContentSelectFilter {
 
 HTMLDetailsElement* HTMLDetailsElement::Create(Document& document) {
   HTMLDetailsElement* details = new HTMLDetailsElement(document);
-  details->EnsureUserAgentShadowRoot();
+  details->EnsureUserAgentShadowRootV0();
   return details;
 }
 
@@ -139,7 +139,7 @@ void HTMLDetailsElement::ParseAttribute(
                 WTF::Bind(&HTMLDetailsElement::DispatchPendingEvent,
                           WrapPersistent(this)));
 
-    Element* content = EnsureUserAgentShadowRoot().getElementById(
+    Element* content = EnsureUserAgentShadowRootV0().getElementById(
         ShadowElementNames::DetailsContent());
     DCHECK(content);
     if (is_open_)
