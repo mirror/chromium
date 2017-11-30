@@ -154,18 +154,13 @@ void SigninManager::HandleAuthError(const GoogleServiceAuthError& error) {
 void SigninManager::SignOut(
     signin_metrics::ProfileSignout signout_source_metric,
     signin_metrics::SignoutDelete signout_delete_metric) {
-  StartSignOut(signout_source_metric, signout_delete_metric,
-               !signin::IsDiceEnabledForProfile(client_->GetPrefs()));
+  bool remove_all_accounts =
+      !signin::IsDiceEnabledForProfile(client_->GetPrefs());
+  SignOutAndRemoveAllAccounts(signout_source_metric, signout_delete_metric,
+                              remove_all_accounts);
 }
 
 void SigninManager::SignOutAndRemoveAllAccounts(
-    signin_metrics::ProfileSignout signout_source_metric,
-    signin_metrics::SignoutDelete signout_delete_metric) {
-  StartSignOut(signout_source_metric, signout_delete_metric,
-               true /* remove_all_tokens */);
-}
-
-void SigninManager::StartSignOut(
     signin_metrics::ProfileSignout signout_source_metric,
     signin_metrics::SignoutDelete signout_delete_metric,
     bool remove_all_accounts) {
