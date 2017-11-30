@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e18f6421_010115af",
+        "filename": "chrome/browser/ui/views/bookmarks/bookmark_bar_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-30T19:16:32Z",
+      "side": 1,
+      "message": "nit: Maybe apply this to each individual member comment, rather than generalizing over all view pts below? ie:\n  // Shows the \"Other Bookmarks\" folder button. Never nullptr after Init().\n  ...\n  // Shows the managed bookmarks entries. Never nullptr after Init().",
+      "revId": "f13ba35a8357ec586e96e7a7decb342bdceb6b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edb92142_afd5acae",
+        "filename": "chrome/browser/ui/views/download/download_shelf_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-30T19:16:32Z",
+      "side": 1,
+      "message": "It seems possible that some classes would support taking null Browser pointers in the ctor... Did you audit all the instantiations for each of these objects?",
+      "revId": "f13ba35a8357ec586e96e7a7decb342bdceb6b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c983970_b8721b78",
+        "filename": "chrome/browser/ui/views/extensions/extension_view_views.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-30T19:16:32Z",
+      "side": 1,
+      "message": "nit: const?",
+      "revId": "f13ba35a8357ec586e96e7a7decb342bdceb6b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ace02d7_58de4335",
+        "filename": "chrome/browser/ui/views/frame/global_menu_bar_x11.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-30T19:16:32Z",
+      "side": 1,
+      "message": "nit: const here and below?",
+      "revId": "f13ba35a8357ec586e96e7a7decb342bdceb6b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbc0ff4b_c928848b",
+        "filename": "chrome/browser/ui/views/toolbar/browser_action_test_util_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-30T19:16:32Z",
+      "side": 1,
+      "message": "nit: maybe DCHECK like this elsewhere in ctors (or at the end of Init()), when the members are marked as never nullptr?",
+      "revId": "f13ba35a8357ec586e96e7a7decb342bdceb6b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
