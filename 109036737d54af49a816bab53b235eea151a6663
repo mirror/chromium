@@ -381,6 +381,30 @@
     },
     {
       "key": {
+        "uuid": "84afa2a7_ea988977",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-30T20:29:29Z",
+      "side": 1,
+      "message": "The net analog of apple diagram is here: https://cs.chromium.org/chromium/src/net/base/load_timing_info.h?rcl\u003d7c51a4f7330b934bdf037902241b295dc817e26b\u0026l\u003d27\n\nIt seems like |request_start| predates proxy, dns, etc. \nI\u0027d use that for FetchStartDate, and use |send_start| / |send_end| for requestStartDate/requestEndDate.",
+      "parentUuid": "8f2db448_27745107",
+      "range": {
+        "startLine": 92,
+        "startChar": 49,
+        "endLine": 92,
+        "endChar": 50
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "286027fd_53db42d3",
         "filename": "components/cronet/ios/cronet_metrics.mm",
         "patchSetId": 22
