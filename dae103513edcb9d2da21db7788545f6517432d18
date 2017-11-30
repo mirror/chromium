@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "563209a3_4bde53b1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-30T19:25:12Z",
+      "side": 1,
+      "message": "Is this the specific thing we\u0027re trying to force? If so, let\u0027s make the the static more specific e.g. sForceUmaEnabledForTesting and put the check here.",
+      "range": {
+        "startLine": 98,
+        "startChar": 13,
+        "endLine": 98,
+        "endChar": 25
+      },
+      "revId": "dae103513edcb9d2da21db7788545f6517432d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
