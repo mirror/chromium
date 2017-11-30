@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "41a93a62_e88f9cbe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-11-30T03:46:46Z",
+      "side": 1,
+      "message": "Done, thanks for catching. I\u0027m using vi extension for Chrome teatarea, but it might have failed.",
+      "parentUuid": "9cf54735_5c9efd2f",
+      "revId": "ef8ac9fc466f68a8089bcff34108973ec3e67ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59a3ca58_3c9fe16d",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_physical_fragment.cc",
         "patchSetId": 17
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2d10a7bc_207c989c",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_physical_fragment.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-11-30T03:46:46Z",
+      "side": 1,
+      "message": "Done, good point, thank you!",
+      "parentUuid": "59a3ca58_3c9fe16d",
+      "revId": "ef8ac9fc466f68a8089bcff34108973ec3e67ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8a94a71_bb86156c",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_physical_fragment.h",
         "patchSetId": 17
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-29T18:31:04Z",
       "side": 1,
       "message": "Ah, hm, I see. So the issue is that we use the cached fragment on LayoutNGBlockFlow but it does not have the right offset? Maybe there\u0027s a way we could fix up the offset when we access the fragment?\n\nI\u0027m fine with this approach for now though. But can you add a comment (here or in the commit message) that the reason the offset is wrong is because we just access the cached_fragment_ in the LayoutNGBlockFlow which is untouched after layout? (Or if I misunderstood the reason, please describe the actual reason :) )",
+      "revId": "ef8ac9fc466f68a8089bcff34108973ec3e67ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df288bcf_82a5fedf",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_physical_fragment.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-11-30T03:46:46Z",
+      "side": 1,
+      "message": "Good point, cache is related! But the root cause is that, flex or table can move children after children were laid out (during its own layout.) We could hook LayoutBox::SetLocation(), but that looks expensive, and we can set the fragment offset only once. We\u0027ll need to change something here if we want to guarantee Offset() is in sync with Location(), but I\u0027m not sure what\u0027s the best way to do this at this moment. Thank you for allowing this to move on for now, and appreciate further discussion.\n\nAdded comments to the relevant section of LayoutNGBlockFlow::UpdateBlockLayout() too. I hope this makes clearer.",
+      "parentUuid": "e8a94a71_bb86156c",
       "revId": "ef8ac9fc466f68a8089bcff34108973ec3e67ac2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
