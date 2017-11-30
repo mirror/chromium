@@ -29,7 +29,7 @@ Coverage.CoverageView = class extends UI.VBox {
         /** @type {!UI.Action }*/ (UI.actionRegistry.action('coverage.start-with-reload'));
     this._startWithReloadButton = UI.Toolbar.createActionButton(startWithReloadAction);
     toolbar.appendToolbarItem(this._startWithReloadButton);
-    this._clearButton = new UI.ToolbarButton(Common.UIString('Clear all'), 'largeicon-clear');
+    this._clearButton = new UI.ToolbarButton(ls`Clear all`, 'largeicon-clear');
     this._clearButton.addEventListener(UI.ToolbarButton.Events.Click, this._clear.bind(this));
     toolbar.appendToolbarItem(this._clearButton);
 
@@ -37,7 +37,7 @@ Coverage.CoverageView = class extends UI.VBox {
     this._textFilterRegExp = null;
 
     toolbar.appendSeparator();
-    this._filterInput = new UI.ToolbarInput(Common.UIString('URL filter'), 0.4, 1);
+    this._filterInput = new UI.ToolbarInput(ls`URL filter`, 0.4, 1);
     this._filterInput.setEnabled(false);
     this._filterInput.addEventListener(UI.ToolbarInput.Event.TextChanged, this._onFilterChanged, this);
     toolbar.appendToolbarItem(this._filterInput);
@@ -46,8 +46,7 @@ Coverage.CoverageView = class extends UI.VBox {
     this._showContentScriptsSetting = Common.settings.createSetting('showContentScripts', false);
     this._showContentScriptsSetting.addChangeListener(this._onFilterChanged, this);
     var contentScriptsCheckbox = new UI.ToolbarSettingCheckbox(
-        this._showContentScriptsSetting, Common.UIString('Include extension content scripts'),
-        Common.UIString('Content scripts'));
+        this._showContentScriptsSetting, ls`Include extension content scripts`, ls`Content scripts`);
     toolbar.appendToolbarItem(contentScriptsCheckbox);
 
     this._coverageResultsElement = this.contentElement.createChild('div', 'coverage-results');

@@ -114,7 +114,7 @@ Sources.JavaScriptSourceFrame = class extends Sources.UISourceCodeFrame {
     if (this.uiSourceCode().project().type() === Workspace.projectTypes.Snippets) {
       result.push(new UI.ToolbarSeparator(true));
       var runSnippet = UI.Toolbar.createActionButtonForId('debugger.run-snippet');
-      runSnippet.setText(Host.isMac() ? Common.UIString('\u2318+Enter') : Common.UIString('Ctrl+Enter'));
+      runSnippet.setText(Host.isMac() ? ls`\u2318+Enter` : ls`Ctrl+Enter`);
       result.push(runSnippet);
     }
 
@@ -134,22 +134,22 @@ Sources.JavaScriptSourceFrame = class extends Sources.UISourceCodeFrame {
     if (this._blackboxInfobar)
       this._blackboxInfobar.dispose();
 
-    var infobar = new UI.Infobar(UI.Infobar.Type.Warning, Common.UIString('This script is blackboxed in debugger'));
+    var infobar = new UI.Infobar(UI.Infobar.Type.Warning, ls`This script is blackboxed in debugger`);
     this._blackboxInfobar = infobar;
 
-    infobar.createDetailsRowMessage(
-        Common.UIString('Debugger will skip stepping through this script, and will not stop on exceptions'));
+    infobar.createDetailsRowMessage(ls
+                                    `Debugger will skip stepping through this script, and will not stop on exceptions`);
 
     var scriptFile = this._scriptFileForDebuggerModel.size ? this._scriptFileForDebuggerModel.valuesArray()[0] : null;
     if (scriptFile && scriptFile.hasSourceMapURL())
-      infobar.createDetailsRowMessage(Common.UIString('Source map found, but ignored for blackboxed file.'));
+      infobar.createDetailsRowMessage(ls`Source map found, but ignored for blackboxed file.`);
     infobar.createDetailsRowMessage();
-    infobar.createDetailsRowMessage(Common.UIString('Possible ways to cancel this behavior are:'));
+    infobar.createDetailsRowMessage(ls`Possible ways to cancel this behavior are:`);
 
     infobar.createDetailsRowMessage(' - ').createTextChild(
-        Common.UIString('Go to "%s" tab in settings', Common.UIString('Blackboxing')));
+        Common.UIString('Go to "%s" tab in settings', ls`Blackboxing`));
     var unblackboxLink = infobar.createDetailsRowMessage(' - ').createChild('span', 'link');
-    unblackboxLink.textContent = Common.UIString('Unblackbox this script');
+    unblackboxLink.textContent = ls`Unblackbox this script`;
     unblackboxLink.addEventListener('click', unblackbox, false);
 
     function unblackbox() {
@@ -224,33 +224,28 @@ Sources.JavaScriptSourceFrame = class extends Sources.UISourceCodeFrame {
                             .filter(breakpoint => !!breakpoint);
       if (!breakpoints.length) {
         contextMenu.debugSection().appendItem(
-            Common.UIString('Add breakpoint'), this._createNewBreakpoint.bind(this, lineNumber, '', true));
+            ls`Add breakpoint`, this._createNewBreakpoint.bind(this, lineNumber, '', true));
         contextMenu.debugSection().appendItem(
-            Common.UIString('Add conditional breakpoint\u2026'),
-            this._editBreakpointCondition.bind(this, lineNumber, null, null));
+            ls`Add conditional breakpoint\u2026`, this._editBreakpointCondition.bind(this, lineNumber, null, null));
         contextMenu.debugSection().appendItem(
-            Common.UIString('Never pause here'), this._createNewBreakpoint.bind(this, lineNumber, 'false', true));
+            ls`Never pause here`, this._createNewBreakpoint.bind(this, lineNumber, 'false', true));
       } else {
         var hasOneBreakpoint = breakpoints.length === 1;
-        var removeTitle =
-            hasOneBreakpoint ? Common.UIString('Remove breakpoint') : Common.UIString('Remove all breakpoints in line');
+        var removeTitle = hasOneBreakpoint ? ls`Remove breakpoint` : ls`Remove all breakpoints in line`;
         contextMenu.debugSection().appendItem(removeTitle, () => breakpoints.map(breakpoint => breakpoint.remove()));
         if (hasOneBreakpoint) {
           contextMenu.debugSection().appendItem(
-              Common.UIString('Edit breakpoint\u2026'),
-              this._editBreakpointCondition.bind(this, lineNumber, breakpoints[0], null));
+              ls`Edit breakpoint\u2026`, this._editBreakpointCondition.bind(this, lineNumber, breakpoints[0], null));
         }
         var hasEnabled = breakpoints.some(breakpoint => breakpoint.enabled());
         if (hasEnabled) {
-          var title = hasOneBreakpoint ? Common.UIString('Disable breakpoint') :
-                                         Common.UIString('Disable all breakpoints in line');
+          var title = hasOneBreakpoint ? ls`Disable breakpoint` : ls`Disable all breakpoints in line`;
           contextMenu.debugSection().appendItem(
               title, () => breakpoints.map(breakpoint => breakpoint.setEnabled(false)));
         }
         var hasDisabled = breakpoints.some(breakpoint => !breakpoint.enabled());
         if (hasDisabled) {
-          var title = hasOneBreakpoint ? Common.UIString('Enable breakpoint') :
-                                         Common.UIString('Enabled all breakpoints in line');
+          var title = hasOneBreakpoint ? ls`Enable breakpoint` : ls`Enabled all breakpoints in line`;
           contextMenu.debugSection().appendItem(
               title, () => breakpoints.map(breakpoint => breakpoint.setEnabled(true)));
         }
@@ -291,7 +286,7 @@ Sources.JavaScriptSourceFrame = class extends Sources.UISourceCodeFrame {
           !Bindings.blackboxManager.isBlackboxedUISourceCode(this._debuggerSourceCode)) {
         if (this._scriptFileForDebuggerModel.size) {
           var scriptFile = this._scriptFileForDebuggerModel.valuesArray()[0];
-          var addSourceMapURLLabel = Common.UIString('Add source map\u2026');
+          var addSourceMapURLLabel = ls`Add source map\u2026`;
           contextMenu.debugSection().appendItem(addSourceMapURLLabel, addSourceMapURL.bind(null, scriptFile));
         }
       }
@@ -1177,14 +1172,14 @@ Sources.JavaScriptSourceFrame = class extends Sources.UISourceCodeFrame {
     var contextMenu = new UI.ContextMenu(event);
     if (decoration.breakpoint) {
       contextMenu.debugSection().appendItem(
-          Common.UIString('Edit breakpoint\u2026'),
+          ls`Edit breakpoint\u2026`,
           this._editBreakpointCondition.bind(this, location.lineNumber, decoration.breakpoint, null));
     } else {
       contextMenu.debugSection().appendItem(
-          Common.UIString('Add conditional breakpoint\u2026'),
+          ls`Add conditional breakpoint\u2026`,
           this._editBreakpointCondition.bind(this, location.lineNumber, null, location));
       contextMenu.debugSection().appendItem(
-          Common.UIString('Never pause here'),
+          ls`Never pause here`,
           this._setBreakpoint.bind(this, location.lineNumber, location.columnNumber, 'false', true));
     }
     contextMenu.show();
@@ -1401,7 +1396,7 @@ Sources.JavaScriptSourceFrame = class extends Sources.UISourceCodeFrame {
     if (this._sourceMapInfobar)
       return;
     this._sourceMapInfobar = UI.Infobar.create(
-        UI.Infobar.Type.Info, Common.UIString('Source Map detected.'),
+        UI.Infobar.Type.Info, ls`Source Map detected.`,
         Common.settings.createSetting('sourceMapInfobarDisabled', false));
     if (this._sourceMapInfobar) {
       this._sourceMapInfobar.createDetailsRowMessage(Common.UIString(
@@ -1443,7 +1438,7 @@ Sources.JavaScriptSourceFrame = class extends Sources.UISourceCodeFrame {
       return;
 
     this._prettyPrintInfobar = UI.Infobar.create(
-        UI.Infobar.Type.Info, Common.UIString('Pretty-print this minified file?'),
+        UI.Infobar.Type.Info, ls`Pretty-print this minified file?`,
         Common.settings.createSetting('prettyPrintInfobarDisabled', false));
     if (!this._prettyPrintInfobar)
       return;

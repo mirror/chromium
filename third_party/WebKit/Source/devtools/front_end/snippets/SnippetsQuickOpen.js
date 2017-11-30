@@ -27,7 +27,7 @@ Snippets.SnippetsQuickOpen = class extends QuickOpen.FilteredListWidget.Provider
    * @return {string}
    */
   notFoundText(query) {
-    return Common.UIString('No snippets found.');
+    return ls`No snippets found.`;
   }
 
   /**

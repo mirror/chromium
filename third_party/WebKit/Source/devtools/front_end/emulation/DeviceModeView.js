@@ -71,7 +71,7 @@ Emulation.DeviceModeView = class extends UI.VBox {
     this._bottomResizerElement.createChild('div', '');
     this._createResizer(this._bottomResizerElement, 0, 1);
     this._bottomResizerElement.addEventListener('dblclick', this._model.setHeight.bind(this._model, 0), false);
-    this._bottomResizerElement.title = Common.UIString('Double-click for full height');
+    this._bottomResizerElement.title = ls`Double-click for full height`;
 
     this._pageArea = this._screenArea.createChild('div', 'device-mode-page-area');
     this._pageArea.createChild('content');
@@ -79,10 +79,7 @@ Emulation.DeviceModeView = class extends UI.VBox {
 
   _populatePresetsContainer() {
     var sizes = [320, 375, 425, 768, 1024, 1440, 2560];
-    var titles = [
-      Common.UIString('Mobile S'), Common.UIString('Mobile M'), Common.UIString('Mobile L'), Common.UIString('Tablet'),
-      Common.UIString('Laptop'), Common.UIString('Laptop L'), Common.UIString('4K')
-    ];
+    var titles = [ls`Mobile S`, ls`Mobile M`, ls`Mobile L`, ls`Tablet`, ls`Laptop`, ls`Laptop L`, ls`4K`];
     this._presetBlocks = [];
     var inner = this._responsivePresetsContainer.createChild('div', 'device-mode-presets-container-inner');
     for (var i = sizes.length - 1; i >= 0; --i) {

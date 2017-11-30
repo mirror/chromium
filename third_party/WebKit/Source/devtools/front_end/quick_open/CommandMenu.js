@@ -226,7 +226,7 @@ QuickOpen.CommandMenuProvider = class extends QuickOpen.FilteredListWidget.Provi
    * @return {string}
    */
   notFoundText() {
-    return Common.UIString('No commands found');
+    return ls`No commands found`;
   }
 };
 

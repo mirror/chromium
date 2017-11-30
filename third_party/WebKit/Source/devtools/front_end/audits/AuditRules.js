@@ -72,7 +72,7 @@ Audits.AuditRules.getDomainToResourcesMap = function(requests, types, needFullRe
  */
 Audits.AuditRules.GzipRule = class extends Audits.AuditRule {
   constructor() {
-    super('network-gzip', Common.UIString('Enable gzip compression'));
+    super('network-gzip', ls`Enable gzip compression`);
   }
 
   /**
@@ -189,7 +189,7 @@ Audits.AuditRules.CombineExternalResourcesRule = class extends Audits.AuditRule 
 Audits.AuditRules.CombineJsResourcesRule = class extends Audits.AuditRules.CombineExternalResourcesRule {
   constructor(allowedPerDomain) {
     super(
-        'page-externaljs', Common.UIString('Combine external JavaScript'), Common.resourceTypes.Script, 'JavaScript',
+        'page-externaljs', ls`Combine external JavaScript`, Common.resourceTypes.Script, 'JavaScript',
         allowedPerDomain);
   }
 };
@@ -199,9 +199,7 @@ Audits.AuditRules.CombineJsResourcesRule = class extends Audits.AuditRules.Combi
  */
 Audits.AuditRules.CombineCssResourcesRule = class extends Audits.AuditRules.CombineExternalResourcesRule {
   constructor(allowedPerDomain) {
-    super(
-        'page-externalcss', Common.UIString('Combine external CSS'), Common.resourceTypes.Stylesheet, 'CSS',
-        allowedPerDomain);
+    super('page-externalcss', ls`Combine external CSS`, Common.resourceTypes.Stylesheet, 'CSS', allowedPerDomain);
   }
 };
 
@@ -210,7 +208,7 @@ Audits.AuditRules.CombineCssResourcesRule = class extends Audits.AuditRules.Comb
  */
 Audits.AuditRules.MinimizeDnsLookupsRule = class extends Audits.AuditRule {
   constructor(hostCountThreshold) {
-    super('network-minimizelookups', Common.UIString('Minimize DNS lookups'));
+    super('network-minimizelookups', ls`Minimize DNS lookups`);
     this._hostCountThreshold = hostCountThreshold;
   }
 
@@ -252,7 +250,7 @@ Audits.AuditRules.MinimizeDnsLookupsRule = class extends Audits.AuditRule {
  */
 Audits.AuditRules.ParallelizeDownloadRule = class extends Audits.AuditRule {
   constructor(optimalHostnameCount, minRequestThreshold, minBalanceThreshold) {
-    super('network-parallelizehosts', Common.UIString('Parallelize downloads across hostnames'));
+    super('network-parallelizehosts', ls`Parallelize downloads across hostnames`);
     this._optimalHostnameCount = optimalHostnameCount;
     this._minRequestThreshold = minRequestThreshold;
     this._minBalanceThreshold = minBalanceThreshold;
@@ -340,7 +338,7 @@ Audits.AuditRules.UnusedCssRule = class extends Audits.AuditRule {
    * so use percentages instead, which gives a better approximation.
    */
   constructor() {
-    super('page-unusedcss', Common.UIString('Remove unused CSS rules'));
+    super('page-unusedcss', ls`Remove unused CSS rules`);
   }
 
   /**
@@ -728,7 +726,7 @@ Audits.AuditRules.CacheControlRule.MillisPerMonth = 1000 * 60 * 60 * 24 * 30;
  */
 Audits.AuditRules.BrowserCacheControlRule = class extends Audits.AuditRules.CacheControlRule {
   constructor() {
-    super('http-browsercache', Common.UIString('Leverage browser caching'));
+    super('http-browsercache', ls`Leverage browser caching`);
   }
 
   /**
@@ -756,8 +754,8 @@ Audits.AuditRules.BrowserCacheControlRule = class extends Audits.AuditRules.Cach
             'The following resources specify a "Vary" header that disables caching in most versions of Internet Explorer:'),
         this._varyCheck, requests, result);
     this.execCheck(
-        Common.UIString('The following cacheable resources have a short freshness lifetime:'),
-        this._oneMonthExpirationCheck, requests, result);
+        ls`The following cacheable resources have a short freshness lifetime:`, this._oneMonthExpirationCheck, requests,
+        result);
 
     // Unable to implement the favicon check due to the WebKit limitations.
     this.execCheck(
@@ -800,7 +798,7 @@ Audits.AuditRules.BrowserCacheControlRule = class extends Audits.AuditRules.Cach
  */
 Audits.AuditRules.ImageDimensionsRule = class extends Audits.AuditRule {
   constructor() {
-    super('page-imagedims', Common.UIString('Specify image dimensions'));
+    super('page-imagedims', ls`Specify image dimensions`);
   }
 
   /**
@@ -940,7 +938,7 @@ Audits.AuditRules.ImageDimensionsRule = class extends Audits.AuditRule {
  */
 Audits.AuditRules.CssInHeadRule = class extends Audits.AuditRule {
   constructor() {
-    super('page-cssinhead', Common.UIString('Put CSS in the document head'));
+    super('page-cssinhead', ls`Put CSS in the document head`);
   }
 
   /**
@@ -980,7 +978,7 @@ Audits.AuditRules.CssInHeadRule = class extends Audits.AuditRule {
           result.addFormatted('Link node %r should be moved to the document head in %r', urlViolations[1][i], url);
         result.violationCount += urlViolations[1].length;
       }
-      summary.value = Common.UIString('CSS in the document body adversely impacts rendering performance.');
+      summary.value = ls`CSS in the document body adversely impacts rendering performance.`;
       callback(result);
     }
 
@@ -1051,7 +1049,7 @@ Audits.AuditRules.CssInHeadRule = class extends Audits.AuditRule {
  */
 Audits.AuditRules.StylesScriptsOrderRule = class extends Audits.AuditRule {
   constructor() {
-    super('page-stylescriptorder', Common.UIString('Optimize the order of styles and scripts'));
+    super('page-stylescriptorder', ls`Optimize the order of styles and scripts`);
   }
 
   /**
@@ -1321,7 +1319,7 @@ Audits.AuditRules.CookieRuleBase = class extends Audits.AuditRule {
  */
 Audits.AuditRules.CookieSizeRule = class extends Audits.AuditRules.CookieRuleBase {
   constructor(avgBytesThreshold) {
-    super('http-cookiesize', Common.UIString('Minimize cookie size'));
+    super('http-cookiesize', ls`Minimize cookie size`);
     this._avgBytesThreshold = avgBytesThreshold;
     this._maxBytesThreshold = 1000;
   }
@@ -1426,7 +1424,7 @@ Audits.AuditRules.CookieSizeRule = class extends Audits.AuditRules.CookieRuleBas
  */
 Audits.AuditRules.StaticCookielessRule = class extends Audits.AuditRules.CookieRuleBase {
   constructor(minResources) {
-    super('http-staticcookieless', Common.UIString('Serve static content from a cookieless domain'));
+    super('http-staticcookieless', ls`Serve static content from a cookieless domain`);
     this._minResources = minResources;
   }
 

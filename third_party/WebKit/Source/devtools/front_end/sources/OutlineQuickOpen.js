@@ -115,9 +115,9 @@ Sources.OutlineQuickOpen = class extends QuickOpen.FilteredListWidget.Provider {
    */
   notFoundText() {
     if (!this._currentUISourceCode())
-      return Common.UIString('No file selected.');
+      return ls`No file selected.`;
     if (!this._active)
-      return Common.UIString('Open a JavaScript or CSS file to see symbols');
-    return Common.UIString('No results found');
+      return ls`Open a JavaScript or CSS file to see symbols`;
+    return ls`No results found`;
   }
 };

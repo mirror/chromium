@@ -577,7 +577,7 @@ QuickOpen.FilteredListWidget.Provider = class {
    * @return {string}
    */
   notFoundText(query) {
-    return Common.UIString('No results found');
+    return ls`No results found`;
   }
 
   detach() {

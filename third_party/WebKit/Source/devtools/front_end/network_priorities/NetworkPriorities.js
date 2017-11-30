@@ -39,11 +39,11 @@ NetworkPriorities.priorityUiLabelMap = function() {
     return map;
 
   map = new Map();
-  map.set(Protocol.Network.ResourcePriority.VeryLow, Common.UIString('Lowest'));
-  map.set(Protocol.Network.ResourcePriority.Low, Common.UIString('Low'));
-  map.set(Protocol.Network.ResourcePriority.Medium, Common.UIString('Medium'));
-  map.set(Protocol.Network.ResourcePriority.High, Common.UIString('High'));
-  map.set(Protocol.Network.ResourcePriority.VeryHigh, Common.UIString('Highest'));
+  map.set(Protocol.Network.ResourcePriority.VeryLow, ls`Lowest`);
+  map.set(Protocol.Network.ResourcePriority.Low, ls`Low`);
+  map.set(Protocol.Network.ResourcePriority.Medium, ls`Medium`);
+  map.set(Protocol.Network.ResourcePriority.High, ls`High`);
+  map.set(Protocol.Network.ResourcePriority.VeryHigh, ls`Highest`);
   NetworkPriorities.priorityUiLabelMap._priorityUiLabelMap = map;
 
   return map;

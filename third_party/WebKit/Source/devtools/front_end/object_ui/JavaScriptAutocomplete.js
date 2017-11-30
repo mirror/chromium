@@ -141,7 +141,7 @@ ObjectUI.JavaScriptAutocomplete._mapCompletions = async function(text, query) {
     }
     var suggestions = caseSensitivePrefix.concat(caseInsensitivePrefix, caseSensitiveAnywhere, caseInsensitiveAnywhere);
     if (suggestions.length)
-      suggestions[0].subtitle = Common.UIString('Keys');
+      suggestions[0].subtitle = ls`Keys`;
     return suggestions;
   }
 };
@@ -236,7 +236,7 @@ ObjectUI.JavaScriptAutocomplete.completionsForExpression = async function(expres
       if (completions.length)
         completions[0].items = completions[0].items.concat(globalNames);
       else
-        completions.push({items: globalNames, title: Common.UIString('Lexical scope variables')});
+        completions.push({items: globalNames, title: ls`Lexical scope variables`});
     }
     return completions;
 
@@ -369,7 +369,7 @@ ObjectUI.JavaScriptAutocomplete._completionsForQuery = function(
       'for',   'function', 'if',     'in',       'instanceof', 'new',    'return', 'switch', 'this',
       'throw', 'try',      'typeof', 'var',      'void',       'while',  'with'
     ];
-    propertyGroups.push({title: Common.UIString('keywords'), items: keywords});
+    propertyGroups.push({title: ls`keywords`, items: keywords});
   }
 
   var result = [];

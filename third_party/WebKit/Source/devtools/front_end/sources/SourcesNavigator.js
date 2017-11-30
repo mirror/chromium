@@ -142,7 +142,7 @@ Sources.FilesNavigatorView = class extends Sources.NavigatorView {
   constructor() {
     super();
     var toolbar = new UI.Toolbar('navigator-toolbar');
-    var title = Common.UIString('Add folder to workspace');
+    var title = ls`Add folder to workspace`;
     var addButton = new UI.ToolbarButton(title, 'largeicon-add', title);
     addButton.addEventListener(
         UI.ToolbarButton.Events.Click, () => Persistence.isolatedFileSystemManager.addFileSystem());
@@ -212,7 +212,7 @@ Sources.OverridesNavigatorView = class extends Sources.NavigatorView {
     var inspectedPageDomain = Persistence.NetworkPersistenceManager.inspectedPageDomain();
     var project = Persistence.networkPersistenceManager.projectForDomain(inspectedPageDomain);
     if (project) {
-      var title = Common.UIString('Enable Overrides');
+      var title = ls`Enable Overrides`;
       var enableCheckbox =
           new UI.ToolbarSettingCheckbox(Common.settings.moduleSetting('persistenceNetworkOverridesEnabled'));
       this._toolbar.appendToolbarItem(enableCheckbox);
@@ -221,7 +221,7 @@ Sources.OverridesNavigatorView = class extends Sources.NavigatorView {
       this._domainElement.classList.remove('hidden');
       return;
     }
-    var title = Common.UIString('Setup Overrides');
+    var title = ls`Setup Overrides`;
     var setupButton = new UI.ToolbarButton(title, 'largeicon-add', title);
     if (!inspectedPageDomain)
       setupButton.setEnabled(false);
@@ -290,7 +290,7 @@ Sources.SnippetsNavigatorView = class extends Sources.NavigatorView {
   constructor() {
     super();
     var toolbar = new UI.Toolbar('navigator-toolbar');
-    var newButton = new UI.ToolbarButton('', 'largeicon-add', Common.UIString('New snippet'));
+    var newButton = new UI.ToolbarButton('', 'largeicon-add', ls`New snippet`);
     newButton.addEventListener(UI.ToolbarButton.Events.Click, this._handleCreateSnippet.bind(this));
     toolbar.appendToolbarItem(newButton);
     this.contentElement.insertBefore(toolbar.element, this.contentElement.firstChild);
@@ -311,7 +311,7 @@ Sources.SnippetsNavigatorView = class extends Sources.NavigatorView {
    */
   handleContextMenu(event) {
     var contextMenu = new UI.ContextMenu(event);
-    contextMenu.headerSection().appendItem(Common.UIString('New'), this._handleCreateSnippet.bind(this));
+    contextMenu.headerSection().appendItem(ls`New`, this._handleCreateSnippet.bind(this));
     contextMenu.show();
   }
 
@@ -324,12 +324,11 @@ Sources.SnippetsNavigatorView = class extends Sources.NavigatorView {
     var uiSourceCode = node.uiSourceCode();
     var contextMenu = new UI.ContextMenu(event);
 
-    contextMenu.headerSection().appendItem(
-        Common.UIString('Run'), this._handleEvaluateSnippet.bind(this, uiSourceCode));
-    contextMenu.newSection().appendItem(Common.UIString('New'), this._handleCreateSnippet.bind(this));
-    contextMenu.editSection().appendItem(Common.UIString('Rename'), this.rename.bind(this, node));
-    contextMenu.editSection().appendItem(Common.UIString('Remove'), this._handleRemoveSnippet.bind(this, uiSourceCode));
-    contextMenu.saveSection().appendItem(Common.UIString('Save as...'), this._handleSaveAs.bind(this, uiSourceCode));
+    contextMenu.headerSection().appendItem(ls`Run`, this._handleEvaluateSnippet.bind(this, uiSourceCode));
+    contextMenu.newSection().appendItem(ls`New`, this._handleCreateSnippet.bind(this));
+    contextMenu.editSection().appendItem(ls`Rename`, this.rename.bind(this, node));
+    contextMenu.editSection().appendItem(ls`Remove`, this._handleRemoveSnippet.bind(this, uiSourceCode));
+    contextMenu.saveSection().appendItem(ls`Save as...`, this._handleSaveAs.bind(this, uiSourceCode));
     contextMenu.show();
   }
 

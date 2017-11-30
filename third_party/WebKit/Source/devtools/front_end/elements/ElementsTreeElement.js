@@ -108,7 +108,7 @@ Elements.ElementsTreeElement = class extends UI.TreeElement {
   static populateForcedPseudoStateItems(contextMenu, node) {
     const pseudoClasses = ['active', 'hover', 'focus', 'visited', 'focus-within'];
     var forcedPseudoState = node.domModel().cssModel().pseudoState(node);
-    var stateMenu = contextMenu.debugSection().appendSubMenuItem(Common.UIString('Force state'));
+    var stateMenu = contextMenu.debugSection().appendSubMenuItem(ls`Force state`);
     for (var i = 0; i < pseudoClasses.length; ++i) {
       var pseudoClassForced = forcedPseudoState.indexOf(pseudoClasses[i]) >= 0;
       stateMenu.defaultSection().appendCheckboxItem(
@@ -244,7 +244,7 @@ Elements.ElementsTreeElement = class extends UI.TreeElement {
   _createHint() {
     if (this.listItemElement && !this._hintElement) {
       this._hintElement = this.listItemElement.createChild('span', 'selected-hint');
-      this._hintElement.title = Common.UIString('Use $0 in the console to refer to this element.');
+      this._hintElement.title = ls`Use $0 in the console to refer to this element.`;
     }
   }
 
@@ -461,19 +461,18 @@ Elements.ElementsTreeElement = class extends UI.TreeElement {
   populateTagContextMenu(contextMenu, event) {
     // Add attribute-related actions.
     var treeElement = this._elementCloseTag ? this.treeOutline.findTreeElement(this._node) : this;
-    contextMenu.editSection().appendItem(
-        Common.UIString('Add attribute'), treeElement._addNewAttribute.bind(treeElement));
+    contextMenu.editSection().appendItem(ls`Add attribute`, treeElement._addNewAttribute.bind(treeElement));
 
     var attribute = event.target.enclosingNodeOrSelfWithClass('webkit-html-attribute');
     var newAttribute = event.target.enclosingNodeOrSelfWithClass('add-attribute');
     if (attribute && !newAttribute) {
       contextMenu.editSection().appendItem(
-          Common.UIString('Edit attribute'), this._startEditingAttribute.bind(this, attribute, event.target));
+          ls`Edit attribute`, this._startEditingAttribute.bind(this, attribute, event.target));
     }
     this.populateNodeContextMenu(contextMenu);
     Elements.ElementsTreeElement.populateForcedPseudoStateItems(contextMenu, treeElement.node());
     this.populateScrollIntoView(contextMenu);
-    contextMenu.viewSection().appendItem(Common.UIString('Focus'), async () => {
+    contextMenu.viewSection().appendItem(ls`Focus`, async () => {
       await this._node.focus();
     });
   }
@@ -482,14 +481,12 @@ Elements.ElementsTreeElement = class extends UI.TreeElement {
    * @param {!UI.ContextMenu} contextMenu
    */
   populateScrollIntoView(contextMenu) {
-    contextMenu.viewSection().appendItem(Common.UIString('Scroll into view'), () => this._node.scrollIntoView());
+    contextMenu.viewSection().appendItem(ls`Scroll into view`, () => this._node.scrollIntoView());
   }
 
   populateTextContextMenu(contextMenu, textNode) {
-    if (!this._editing) {
-      contextMenu.editSection().appendItem(
-          Common.UIString('Edit text'), this._startEditingTextNode.bind(this, textNode));
-    }
+    if (!this._editing)
+      contextMenu.editSection().appendItem(ls`Edit text`, this._startEditingTextNode.bind(this, textNode));
     this.populateNodeContextMenu(contextMenu);
   }
 
@@ -497,49 +494,47 @@ Elements.ElementsTreeElement = class extends UI.TreeElement {
     // Add free-form node-related actions.
     var isEditable = this.hasEditableNode();
     if (isEditable && !this._editing)
-      contextMenu.editSection().appendItem(Common.UIString('Edit as HTML'), this._editAsHTML.bind(this));
+      contextMenu.editSection().appendItem(ls`Edit as HTML`, this._editAsHTML.bind(this));
     var isShadowRoot = this._node.isShadowRoot();
 
     // Place it here so that all "Copy"-ing items stick together.
-    var copyMenu = contextMenu.clipboardSection().appendSubMenuItem(Common.UIString('Copy'));
+    var copyMenu = contextMenu.clipboardSection().appendSubMenuItem(ls`Copy`);
     var createShortcut = UI.KeyboardShortcut.shortcutToString;
     var modifier = UI.KeyboardShortcut.Modifiers.CtrlOrMeta;
     var treeOutline = this.treeOutline;
     var menuItem;
     if (!isShadowRoot) {
       var section = copyMenu.section();
-      menuItem = section.appendItem(
-          Common.UIString('Copy outerHTML'), treeOutline.performCopyOrCut.bind(treeOutline, false, this._node));
+      menuItem =
+          section.appendItem(ls`Copy outerHTML`, treeOutline.performCopyOrCut.bind(treeOutline, false, this._node));
       menuItem.setShortcut(createShortcut('V', modifier));
     }
     if (this._node.nodeType() === Node.ELEMENT_NODE)
-      section.appendItem(Common.UIString('Copy selector'), this._copyCSSPath.bind(this));
+      section.appendItem(ls`Copy selector`, this._copyCSSPath.bind(this));
     if (!isShadowRoot)
-      section.appendItem(Common.UIString('Copy XPath'), this._copyXPath.bind(this));
+      section.appendItem(ls`Copy XPath`, this._copyXPath.bind(this));
     if (!isShadowRoot) {
       menuItem = copyMenu.clipboardSection().appendItem(
-          Common.UIString('Cut element'), treeOutline.performCopyOrCut.bind(treeOutline, true, this._node),
-          !this.hasEditableNode());
+          ls`Cut element`, treeOutline.performCopyOrCut.bind(treeOutline, true, this._node), !this.hasEditableNode());
       menuItem.setShortcut(createShortcut('X', modifier));
       menuItem = copyMenu.clipboardSection().appendItem(
-          Common.UIString('Copy element'), treeOutline.performCopyOrCut.bind(treeOutline, false, this._node));
+          ls`Copy element`, treeOutline.performCopyOrCut.bind(treeOutline, false, this._node));
       menuItem.setShortcut(createShortcut('C', modifier));
       menuItem = copyMenu.clipboardSection().appendItem(
-          Common.UIString('Paste element'), treeOutline.pasteNode.bind(treeOutline, this._node),
-          !treeOutline.canPaste(this._node));
+          ls`Paste element`, treeOutline.pasteNode.bind(treeOutline, this._node), !treeOutline.canPaste(this._node));
       menuItem.setShortcut(createShortcut('V', modifier));
     }
 
     menuItem = contextMenu.debugSection().appendCheckboxItem(
-        Common.UIString('Hide element'), treeOutline.toggleHideElement.bind(treeOutline, this._node),
+        ls`Hide element`, treeOutline.toggleHideElement.bind(treeOutline, this._node),
         treeOutline.isToggledToHidden(this._node));
     menuItem.setShortcut(UI.shortcutRegistry.shortcutTitleForAction('elements.hide-element'));
 
     if (isEditable)
-      contextMenu.editSection().appendItem(Common.UIString('Delete element'), this.remove.bind(this));
+      contextMenu.editSection().appendItem(ls`Delete element`, this.remove.bind(this));
 
-    contextMenu.viewSection().appendItem(Common.UIString('Expand all'), this.expandRecursively.bind(this));
-    contextMenu.viewSection().appendItem(Common.UIString('Collapse all'), this.collapseRecursively.bind(this));
+    contextMenu.viewSection().appendItem(ls`Expand all`, this.expandRecursively.bind(this));
+    contextMenu.viewSection().appendItem(ls`Collapse all`, this.collapseRecursively.bind(this));
   }
 
   _startEditing() {
@@ -627,10 +622,8 @@ Elements.ElementsTreeElement = class extends UI.TreeElement {
     }
 
     var attributeValue = attributeName && attributeValueElement ? this._node.getAttribute(attributeName) : undefined;
-    if (attributeValue !== undefined) {
-      attributeValueElement.setTextContentTruncatedIfNeeded(
-          attributeValue, Common.UIString('<value is too large to edit>'));
-    }
+    if (attributeValue !== undefined)
+      attributeValueElement.setTextContentTruncatedIfNeeded(attributeValue, ls`<value is too large to edit>`);
 
     // Remove zero-width spaces that were added by nodeTitleInfo.
     removeZeroWidthSpaceRecursive(attribute);
@@ -1168,7 +1161,7 @@ Elements.ElementsTreeElement = class extends UI.TreeElement {
       var descendantColors = new Set();
       if (descendantDecorations.length) {
         var element = titles.createChild('div');
-        element.textContent = Common.UIString('Children:');
+        element.textContent = ls`Children:`;
         for (var decoration of descendantDecorations) {
           element = titles.createChild('div');
           element.style.marginLeft = '15px';

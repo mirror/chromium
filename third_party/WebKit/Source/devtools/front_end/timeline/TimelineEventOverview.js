@@ -124,7 +124,7 @@ Timeline.TimelineEventOverviewInput = class extends Timeline.TimelineEventOvervi
  */
 Timeline.TimelineEventOverviewNetwork = class extends Timeline.TimelineEventOverview {
   constructor() {
-    super('network', Common.UIString('NET'));
+    super('network', ls`NET`);
   }
 
   /**
@@ -166,7 +166,7 @@ Timeline.TimelineEventOverviewNetwork = class extends Timeline.TimelineEventOver
  */
 Timeline.TimelineEventOverviewCPUActivity = class extends Timeline.TimelineEventOverview {
   constructor() {
-    super('cpu-activity', Common.UIString('CPU'));
+    super('cpu-activity', ls`CPU`);
     this._backgroundCanvas = this.element.createChild('canvas', 'fill background');
   }
 
@@ -480,7 +480,7 @@ Timeline.TimelineFilmStripOverview.Padding = 2;
  */
 Timeline.TimelineEventOverviewFrames = class extends Timeline.TimelineEventOverview {
   constructor() {
-    super('framerate', Common.UIString('FPS'));
+    super('framerate', ls`FPS`);
   }
 
   /**
@@ -538,7 +538,7 @@ Timeline.TimelineEventOverviewFrames = class extends Timeline.TimelineEventOverv
  */
 Timeline.TimelineEventOverviewMemory = class extends Timeline.TimelineEventOverview {
   constructor() {
-    super('memory', Common.UIString('HEAP'));
+    super('memory', ls`HEAP`);
     this._heapSizeLabel = this.element.createChild('div', 'memory-graph-label');
   }
 

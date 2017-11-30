@@ -28,9 +28,9 @@ Profiler.HeapProfileView = class extends Profiler.ProfileView {
   columnHeader(columnId) {
     switch (columnId) {
       case 'self':
-        return Common.UIString('Self Size (bytes)');
+        return ls`Self Size (bytes)`;
       case 'total':
-        return Common.UIString('Total Size (bytes)');
+        return ls`Total Size (bytes)`;
     }
     return '';
   }
@@ -49,7 +49,7 @@ Profiler.HeapProfileView = class extends Profiler.ProfileView {
  */
 Profiler.SamplingHeapProfileType = class extends Profiler.ProfileType {
   constructor() {
-    super(Profiler.SamplingHeapProfileType.TypeId, Common.UIString('Record allocation profile'));
+    super(Profiler.SamplingHeapProfileType.TypeId, ls`Record allocation profile`);
     this._recording = false;
     Profiler.SamplingHeapProfileType.instance = this;
   }
@@ -79,7 +79,7 @@ Profiler.SamplingHeapProfileType = class extends Profiler.ProfileType {
   }
 
   get buttonTooltip() {
-    return this._recording ? Common.UIString('Stop heap profiling') : Common.UIString('Start heap profiling');
+    return this._recording ? ls`Stop heap profiling` : ls`Start heap profiling`;
   }
 
   /**
@@ -96,11 +96,11 @@ Profiler.SamplingHeapProfileType = class extends Profiler.ProfileType {
   }
 
   get treeItemTitle() {
-    return Common.UIString('ALLOCATION PROFILES');
+    return ls`ALLOCATION PROFILES`;
   }
 
   get description() {
-    return Common.UIString('Allocation profiles show memory allocations from your JavaScript functions.');
+    return ls`Allocation profiles show memory allocations from your JavaScript functions.`;
   }
 
   startRecordingProfile() {
@@ -111,7 +111,7 @@ Profiler.SamplingHeapProfileType = class extends Profiler.ProfileType {
     this.setProfileBeingRecorded(profile);
     SDK.targetManager.suspendAllTargets();
     this.addProfile(profile);
-    profile.updateStatus(Common.UIString('Recording\u2026'));
+    profile.updateStatus(ls`Recording\u2026`);
     this._recording = true;
     heapProfilerModel.startSampling();
   }
@@ -385,14 +385,14 @@ Profiler.HeapFlameChartDataProvider = class extends Profiler.ProfileFlameChartDa
     function pushEntryInfoRow(title, value) {
       entryInfo.push({title: title, value: value});
     }
-    pushEntryInfoRow(Common.UIString('Name'), UI.beautifyFunctionName(node.functionName));
-    pushEntryInfoRow(Common.UIString('Self size'), Number.bytesToString(node.self));
-    pushEntryInfoRow(Common.UIString('Total size'), Number.bytesToString(node.total));
+    pushEntryInfoRow(ls`Name`, UI.beautifyFunctionName(node.functionName));
+    pushEntryInfoRow(ls`Self size`, Number.bytesToString(node.self));
+    pushEntryInfoRow(ls`Total size`, Number.bytesToString(node.total));
     var linkifier = new Components.Linkifier();
     var link = linkifier.maybeLinkifyConsoleCallFrame(
         this._heapProfilerModel ? this._heapProfilerModel.target() : null, node.callFrame);
     if (link)
-      pushEntryInfoRow(Common.UIString('URL'), link.textContent);
+      pushEntryInfoRow(ls`URL`, link.textContent);
     linkifier.dispose();
     return Profiler.ProfileView.buildPopoverTable(entryInfo);
   }

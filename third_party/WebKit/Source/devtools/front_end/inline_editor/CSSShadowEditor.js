@@ -12,18 +12,18 @@ InlineEditor.CSSShadowEditor = class extends UI.VBox {
     this.setDefaultFocusedElement(this.contentElement);
 
     this._typeField = this.contentElement.createChild('div', 'shadow-editor-field shadow-editor-flex-field');
-    this._typeField.createChild('label', 'shadow-editor-label').textContent = Common.UIString('Type');
+    this._typeField.createChild('label', 'shadow-editor-label').textContent = ls`Type`;
     this._outsetButton = this._typeField.createChild('button', 'shadow-editor-button-left');
-    this._outsetButton.textContent = Common.UIString('Outset');
+    this._outsetButton.textContent = ls`Outset`;
     this._outsetButton.addEventListener('click', this._onButtonClick.bind(this), false);
     this._insetButton = this._typeField.createChild('button', 'shadow-editor-button-right');
-    this._insetButton.textContent = Common.UIString('Inset');
+    this._insetButton.textContent = ls`Inset`;
     this._insetButton.addEventListener('click', this._onButtonClick.bind(this), false);
 
     var xField = this.contentElement.createChild('div', 'shadow-editor-field');
-    this._xInput = this._createTextInput(xField, Common.UIString('X offset'));
+    this._xInput = this._createTextInput(xField, ls`X offset`);
     var yField = this.contentElement.createChild('div', 'shadow-editor-field');
-    this._yInput = this._createTextInput(yField, Common.UIString('Y offset'));
+    this._yInput = this._createTextInput(yField, ls`Y offset`);
     this._xySlider = xField.createChild('canvas', 'shadow-editor-2D-slider');
     this._xySlider.width = InlineEditor.CSSShadowEditor.canvasSize;
     this._xySlider.height = InlineEditor.CSSShadowEditor.canvasSize;
@@ -36,11 +36,11 @@ InlineEditor.CSSShadowEditor = class extends UI.VBox {
 
     var blurField =
         this.contentElement.createChild('div', 'shadow-editor-field shadow-editor-flex-field shadow-editor-blur-field');
-    this._blurInput = this._createTextInput(blurField, Common.UIString('Blur'));
+    this._blurInput = this._createTextInput(blurField, ls`Blur`);
     this._blurSlider = this._createSlider(blurField);
 
     this._spreadField = this.contentElement.createChild('div', 'shadow-editor-field shadow-editor-flex-field');
-    this._spreadInput = this._createTextInput(this._spreadField, Common.UIString('Spread'));
+    this._spreadInput = this._createTextInput(this._spreadField, ls`Spread`);
     this._spreadSlider = this._createSlider(this._spreadField);
   }
 

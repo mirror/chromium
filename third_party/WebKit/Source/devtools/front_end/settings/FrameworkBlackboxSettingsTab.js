@@ -12,24 +12,23 @@ Settings.FrameworkBlackboxSettingsTab = class extends UI.VBox {
     super(true);
     this.registerRequiredCSS('settings/frameworkBlackboxSettingsTab.css');
 
-    this.contentElement.createChild('div', 'header').textContent = Common.UIString('Framework Blackbox Patterns');
+    this.contentElement.createChild('div', 'header').textContent = ls`Framework Blackbox Patterns`;
     this.contentElement.createChild('div', 'blackbox-content-scripts')
         .appendChild(UI.SettingsUI.createSettingCheckbox(
-            Common.UIString('Blackbox content scripts'), Common.moduleSetting('skipContentScripts'), true));
+            ls`Blackbox content scripts`, Common.moduleSetting('skipContentScripts'), true));
 
-    this._blackboxLabel = Common.UIString('Blackbox');
-    this._disabledLabel = Common.UIString('Disabled');
+    this._blackboxLabel = ls`Blackbox`;
+    this._disabledLabel = ls`Disabled`;
 
     this._list = new UI.ListWidget(this);
     this._list.element.classList.add('blackbox-list');
     this._list.registerRequiredCSS('settings/frameworkBlackboxSettingsTab.css');
 
     var placeholder = createElementWithClass('div', 'blackbox-list-empty');
-    placeholder.textContent = Common.UIString('No blackboxed patterns');
+    placeholder.textContent = ls`No blackboxed patterns`;
     this._list.setEmptyPlaceholder(placeholder);
     this._list.show(this.contentElement);
-    var addPatternButton =
-        UI.createTextButton(Common.UIString('Add pattern...'), this._addButtonClicked.bind(this), 'add-button');
+    var addPatternButton = UI.createTextButton(ls`Add pattern...`, this._addButtonClicked.bind(this), 'add-button');
     this.contentElement.appendChild(addPatternButton);
 
     this._setting = Common.moduleSetting('skipStackFramesPattern');
@@ -128,9 +127,9 @@ Settings.FrameworkBlackboxSettingsTab = class extends UI.VBox {
     var content = editor.contentElement();
 
     var titles = content.createChild('div', 'blackbox-edit-row');
-    titles.createChild('div', 'blackbox-pattern').textContent = Common.UIString('Pattern');
+    titles.createChild('div', 'blackbox-pattern').textContent = ls`Pattern`;
     titles.createChild('div', 'blackbox-separator blackbox-separator-invisible');
-    titles.createChild('div', 'blackbox-behavior').textContent = Common.UIString('Behavior');
+    titles.createChild('div', 'blackbox-behavior').textContent = ls`Behavior`;
 
     var fields = content.createChild('div', 'blackbox-edit-row');
     fields.createChild('div', 'blackbox-pattern')

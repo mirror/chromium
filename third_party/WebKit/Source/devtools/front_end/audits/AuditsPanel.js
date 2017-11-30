@@ -44,7 +44,7 @@ Audits.AuditsPanel = class extends UI.PanelWithSidebar {
     this._auditsItemTreeElement = new Audits.AuditsSidebarTreeElement(this);
     this._sidebarTree.appendChild(this._auditsItemTreeElement);
 
-    this._auditResultsTreeElement = new UI.TreeElement(Common.UIString('RESULTS'), true);
+    this._auditResultsTreeElement = new UI.TreeElement(ls`RESULTS`, true);
     this._auditResultsTreeElement.selectable = false;
     this._auditResultsTreeElement.listItemElement.classList.add('audits-sidebar-results');
     this._auditResultsTreeElement.expand();
@@ -386,7 +386,7 @@ Audits.AuditRuleResult = class {
    * @return {string}
    */
   static resourceDomain(domain) {
-    return domain || Common.UIString('[empty domain]');
+    return domain || ls`[empty domain]`;
   }
 
   /**
@@ -457,7 +457,7 @@ Audits.AuditsSidebarTreeElement = class extends UI.TreeElement {
    * @param {!Audits.AuditsPanel} panel
    */
   constructor(panel) {
-    super(Common.UIString('Audits'), false);
+    super(ls`Audits`, false);
     this.selectable = true;
     this._panel = panel;
     this.listItemElement.classList.add('audits-sidebar-header');

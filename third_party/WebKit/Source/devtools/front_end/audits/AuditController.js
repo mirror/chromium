@@ -50,7 +50,7 @@ Audits.AuditController = class {
    * @param {function(string, !Array.<!Audits.AuditCategoryResult>)} resultCallback
    */
   _executeAudit(target, categories, resultCallback) {
-    this._progress.setTitle(Common.UIString('Running audit'));
+    this._progress.setTitle(ls`Running audit`);
 
     /**
      * @param {!Audits.AuditCategoryResult} categoryResult

@@ -120,8 +120,8 @@ Network.NetworkLogView = class extends UI.VBox {
     this._textFilterUI.addEventListener(UI.FilterUI.Events.FilterChanged, this._filterChanged, this);
     filterBar.addFilter(this._textFilterUI);
 
-    this._dataURLFilterUI = new UI.CheckboxFilterUI(
-        'hide-data-url', Common.UIString('Hide data URLs'), true, this._networkHideDataURLSetting);
+    this._dataURLFilterUI =
+        new UI.CheckboxFilterUI('hide-data-url', ls`Hide data URLs`, true, this._networkHideDataURLSetting);
     this._dataURLFilterUI.addEventListener(UI.FilterUI.Events.FilterChanged, this._filterChanged.bind(this), this);
     filterBar.addFilter(this._dataURLFilterUI);
 
@@ -143,8 +143,7 @@ Network.NetworkLogView = class extends UI.VBox {
 
     this._summaryBarElement = this.element.createChild('div', 'network-summary-bar');
 
-    new UI.DropTarget(
-        this.element, [UI.DropTarget.Type.File], Common.UIString('Drop HAR files here'), this._handleDrop.bind(this));
+    new UI.DropTarget(this.element, [UI.DropTarget.Type.File], ls`Drop HAR files here`, this._handleDrop.bind(this));
 
     Common.moduleSetting('networkColorCodeResourceTypes')
         .addChangeListener(this._invalidateAllItems.bind(this, false), this);
@@ -599,7 +598,7 @@ Network.NetworkLogView = class extends UI.VBox {
 
     if (this._recording) {
       var recordingText = hintText.createChild('span');
-      recordingText.textContent = Common.UIString('Recording network activity\u2026');
+      recordingText.textContent = ls`Recording network activity\u2026`;
       hintText.createChild('br');
       hintText.appendChild(
           UI.formatLocalized('Perform a request or hit %s to record the reload.', [reloadShortcutNode]));
@@ -1147,48 +1146,44 @@ Network.NetworkLogView = class extends UI.VBox {
    */
   handleContextMenuForRequest(contextMenu, request) {
     contextMenu.appendApplicableItems(request);
-    var copyMenu = contextMenu.clipboardSection().appendSubMenuItem(Common.UIString('Copy'));
+    var copyMenu = contextMenu.clipboardSection().appendSubMenuItem(ls`Copy`);
     var footerSection = copyMenu.footerSection();
     if (request) {
       copyMenu.defaultSection().appendItem(
           UI.copyLinkAddressLabel(), InspectorFrontendHost.copyText.bind(InspectorFrontendHost, request.contentURL()));
       if (request.requestHeadersText()) {
         copyMenu.defaultSection().appendItem(
-            Common.UIString('Copy request headers'), Network.NetworkLogView._copyRequestHeaders.bind(null, request));
+            ls`Copy request headers`, Network.NetworkLogView._copyRequestHeaders.bind(null, request));
       }
 
       if (request.responseHeadersText) {
         copyMenu.defaultSection().appendItem(
-            Common.UIString('Copy response headers'), Network.NetworkLogView._copyResponseHeaders.bind(null, request));
+            ls`Copy response headers`, Network.NetworkLogView._copyResponseHeaders.bind(null, request));
       }
 
       if (request.finished) {
         copyMenu.defaultSection().appendItem(
-            Common.UIString('Copy response'), Network.NetworkLogView._copyResponse.bind(null, request));
+            ls`Copy response`, Network.NetworkLogView._copyResponse.bind(null, request));
       }
 
       if (Host.isWin()) {
-        footerSection.appendItem(
-            Common.UIString('Copy as cURL (cmd)'), this._copyCurlCommand.bind(this, request, 'win'));
-        footerSection.appendItem(
-            Common.UIString('Copy as cURL (bash)'), this._copyCurlCommand.bind(this, request, 'unix'));
-        footerSection.appendItem(Common.UIString('Copy All as cURL (cmd)'), this._copyAllCurlCommand.bind(this, 'win'));
-        footerSection.appendItem(
-            Common.UIString('Copy All as cURL (bash)'), this._copyAllCurlCommand.bind(this, 'unix'));
+        footerSection.appendItem(ls`Copy as cURL (cmd)`, this._copyCurlCommand.bind(this, request, 'win'));
+        footerSection.appendItem(ls`Copy as cURL (bash)`, this._copyCurlCommand.bind(this, request, 'unix'));
+        footerSection.appendItem(ls`Copy All as cURL (cmd)`, this._copyAllCurlCommand.bind(this, 'win'));
+        footerSection.appendItem(ls`Copy All as cURL (bash)`, this._copyAllCurlCommand.bind(this, 'unix'));
       } else {
-        footerSection.appendItem(Common.UIString('Copy as cURL'), this._copyCurlCommand.bind(this, request, 'unix'));
-        footerSection.appendItem(Common.UIString('Copy All as cURL'), this._copyAllCurlCommand.bind(this, 'unix'));
+        footerSection.appendItem(ls`Copy as cURL`, this._copyCurlCommand.bind(this, request, 'unix'));
+        footerSection.appendItem(ls`Copy All as cURL`, this._copyAllCurlCommand.bind(this, 'unix'));
       }
     } else {
-      copyMenu = contextMenu.clipboardSection().appendSubMenuItem(Common.UIString('Copy'));
+      copyMenu = contextMenu.clipboardSection().appendSubMenuItem(ls`Copy`);
     }
-    footerSection.appendItem(Common.UIString('Copy all as HAR'), this._copyAll.bind(this));
+    footerSection.appendItem(ls`Copy all as HAR`, this._copyAll.bind(this));
 
-    contextMenu.saveSection().appendItem(Common.UIString('Save as HAR with content'), this._exportAll.bind(this));
+    contextMenu.saveSection().appendItem(ls`Save as HAR with content`, this._exportAll.bind(this));
 
-    contextMenu.editSection().appendItem(Common.UIString('Clear browser cache'), this._clearBrowserCache.bind(this));
-    contextMenu.editSection().appendItem(
-        Common.UIString('Clear browser cookies'), this._clearBrowserCookies.bind(this));
+    contextMenu.editSection().appendItem(ls`Clear browser cache`, this._clearBrowserCache.bind(this));
+    contextMenu.editSection().appendItem(ls`Clear browser cookies`, this._clearBrowserCookies.bind(this));
 
     if (request) {
       const maxBlockedURLLength = 20;
@@ -1197,8 +1192,7 @@ Network.NetworkLogView = class extends UI.VBox {
 
       var urlWithoutScheme = request.parsedURL.urlWithoutScheme();
       if (urlWithoutScheme && !patterns.find(pattern => pattern.url === urlWithoutScheme)) {
-        contextMenu.debugSection().appendItem(
-            Common.UIString('Block request URL'), addBlockedURL.bind(null, urlWithoutScheme));
+        contextMenu.debugSection().appendItem(ls`Block request URL`, addBlockedURL.bind(null, urlWithoutScheme));
       } else if (urlWithoutScheme) {
         const croppedURL = urlWithoutScheme.trimMiddle(maxBlockedURLLength);
         contextMenu.debugSection().appendItem(
@@ -1207,18 +1201,15 @@ Network.NetworkLogView = class extends UI.VBox {
 
       var domain = request.parsedURL.domain();
       if (domain && !patterns.find(pattern => pattern.url === domain)) {
-        contextMenu.debugSection().appendItem(
-            Common.UIString('Block request domain'), addBlockedURL.bind(null, domain));
+        contextMenu.debugSection().appendItem(ls`Block request domain`, addBlockedURL.bind(null, domain));
       } else if (domain) {
         const croppedDomain = domain.trimMiddle(maxBlockedURLLength);
         contextMenu.debugSection().appendItem(
             Common.UIString('Unblock %s', croppedDomain), removeBlockedURL.bind(null, domain));
       }
 
-      if (SDK.NetworkManager.canReplayRequest(request)) {
-        contextMenu.debugSection().appendItem(
-            Common.UIString('Replay XHR'), SDK.NetworkManager.replayRequest.bind(null, request));
-      }
+      if (SDK.NetworkManager.canReplayRequest(request))
+        contextMenu.debugSection().appendItem(ls`Replay XHR`, SDK.NetworkManager.replayRequest.bind(null, request));
 
       /**
        * @param {string} url
@@ -1290,12 +1281,12 @@ Network.NetworkLogView = class extends UI.VBox {
   }
 
   _clearBrowserCache() {
-    if (confirm(Common.UIString('Are you sure you want to clear browser cache?')))
+    if (confirm(ls`Are you sure you want to clear browser cache?`))
       SDK.multitargetNetworkManager.clearBrowserCache();
   }
 
   _clearBrowserCookies() {
-    if (confirm(Common.UIString('Are you sure you want to clear browser cookies?')))
+    if (confirm(ls`Are you sure you want to clear browser cookies?`))
       SDK.multitargetNetworkManager.clearBrowserCookies();
   }
 

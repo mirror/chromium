@@ -58,7 +58,7 @@ Audits.AuditLauncherView = class extends UI.VBox {
 
     this._headerElement = createElement('h1');
     this._headerElement.className = 'no-audits';
-    this._headerElement.textContent = Common.UIString('No audits to run');
+    this._headerElement.textContent = ls`No audits to run`;
     this._contentElement.appendChild(this._headerElement);
 
     SDK.targetManager.addModelListener(
@@ -220,7 +220,7 @@ Audits.AuditLauncherView = class extends UI.VBox {
 
   _createLauncherUI() {
     this._headerElement = createElement('h1');
-    this._headerElement.textContent = Common.UIString('Select audits to run');
+    this._headerElement.textContent = ls`Select audits to run`;
 
     this._contentElement.removeChildren();
     this._contentElement.appendChild(this._headerElement);
@@ -232,7 +232,7 @@ Audits.AuditLauncherView = class extends UI.VBox {
     function handleSelectAllClick(event) {
       this._selectAllClicked(event.target.checked, true);
     }
-    var categoryElement = this._createCategoryElement(Common.UIString('Select All'), '');
+    var categoryElement = this._createCategoryElement(ls`Select All`, '');
     categoryElement.id = 'audit-launcher-selectall';
     this._selectAllCheckboxElement = categoryElement.checkboxElement;
     this._selectAllCheckboxElement.checked =
@@ -247,18 +247,18 @@ Audits.AuditLauncherView = class extends UI.VBox {
 
     this._buttonContainerElement = this._contentElement.createChild('div', 'button-container');
 
-    var radio = UI.createRadioLabel('audit-mode', Common.UIString('Audit Present State'), true);
+    var radio = UI.createRadioLabel('audit-mode', ls`Audit Present State`, true);
     this._buttonContainerElement.appendChild(radio);
     this._auditPresentStateElement = radio.radioElement;
 
-    radio = UI.createRadioLabel('audit-mode', Common.UIString('Reload Page and Audit on Load'));
+    radio = UI.createRadioLabel('audit-mode', ls`Reload Page and Audit on Load`);
     this._buttonContainerElement.appendChild(radio);
     this._auditReloadedStateElement = radio.radioElement;
 
-    this._launchButton = UI.createTextButton(Common.UIString('Run'), this._launchButtonClicked.bind(this));
+    this._launchButton = UI.createTextButton(ls`Run`, this._launchButtonClicked.bind(this));
     this._buttonContainerElement.appendChild(this._launchButton);
 
-    this._clearButton = UI.createTextButton(Common.UIString('Clear'), this._clearButtonClicked.bind(this));
+    this._clearButton = UI.createTextButton(ls`Clear`, this._clearButtonClicked.bind(this));
     this._buttonContainerElement.appendChild(this._clearButton);
 
     this._selectAllClicked(this._selectAllCheckboxElement.checked);
@@ -288,7 +288,7 @@ Audits.AuditLauncherView = class extends UI.VBox {
   }
 
   _updateButton() {
-    this._launchButton.textContent = this._auditRunning ? Common.UIString('Stop') : Common.UIString('Run');
+    this._launchButton.textContent = this._auditRunning ? ls`Stop` : ls`Run`;
     this._launchButton.disabled = !this._currentCategoriesCount;
   }
 };

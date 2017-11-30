@@ -71,17 +71,14 @@ Timeline.CountersGraph = class extends UI.VBox {
     this._counterUI = [];
 
     this._countersByName = {};
-    this._countersByName['jsHeapSizeUsed'] = this._createCounter(
-        Common.UIString('JS Heap'), Common.UIString('JS Heap: %s'), 'hsl(220, 90%, 43%)', Number.bytesToString);
-    this._countersByName['documents'] =
-        this._createCounter(Common.UIString('Documents'), Common.UIString('Documents: %s'), 'hsl(0, 90%, 43%)');
-    this._countersByName['nodes'] =
-        this._createCounter(Common.UIString('Nodes'), Common.UIString('Nodes: %s'), 'hsl(120, 90%, 43%)');
+    this._countersByName['jsHeapSizeUsed'] =
+        this._createCounter(ls`JS Heap`, ls`JS Heap: %s`, 'hsl(220, 90%, 43%)', Number.bytesToString);
+    this._countersByName['documents'] = this._createCounter(ls`Documents`, ls`Documents: %s`, 'hsl(0, 90%, 43%)');
+    this._countersByName['nodes'] = this._createCounter(ls`Nodes`, ls`Nodes: %s`, 'hsl(120, 90%, 43%)');
     this._countersByName['jsEventListeners'] =
-        this._createCounter(Common.UIString('Listeners'), Common.UIString('Listeners: %s'), 'hsl(38, 90%, 43%)');
-    this._gpuMemoryCounter = this._createCounter(
-        Common.UIString('GPU Memory'), Common.UIString('GPU Memory [KB]: %s'), 'hsl(300, 90%, 43%)',
-        Number.bytesToString);
+        this._createCounter(ls`Listeners`, ls`Listeners: %s`, 'hsl(38, 90%, 43%)');
+    this._gpuMemoryCounter =
+        this._createCounter(ls`GPU Memory`, ls`GPU Memory [KB]: %s`, 'hsl(300, 90%, 43%)', Number.bytesToString);
     this._countersByName['gpuMemoryUsedKB'] = this._gpuMemoryCounter;
   }
 

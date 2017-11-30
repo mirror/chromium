@@ -36,7 +36,7 @@ SourceFrame.XMLView = class extends UI.Widget {
   static createSearchableView(parsedXML) {
     var xmlView = new SourceFrame.XMLView(parsedXML);
     var searchableView = new UI.SearchableView(xmlView);
-    searchableView.setPlaceholder(Common.UIString('Find'));
+    searchableView.setPlaceholder(ls`Find`);
     xmlView._searchableView = searchableView;
     xmlView.show(searchableView.element);
     xmlView.contentElement.setAttribute('tabIndex', 0);

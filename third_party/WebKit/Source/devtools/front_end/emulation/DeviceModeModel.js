@@ -703,10 +703,10 @@ Emulation.DeviceModeModel.Type = {
 
 /** @enum {string} */
 Emulation.DeviceModeModel.UA = {
-  Mobile: Common.UIString('Mobile'),
-  MobileNoTouch: Common.UIString('Mobile (no touch)'),
-  Desktop: Common.UIString('Desktop'),
-  DesktopTouch: Common.UIString('Desktop (touch)')
+  Mobile: ls`Mobile`,
+  MobileNoTouch: ls`Mobile (no touch)`,
+  Desktop: ls`Desktop`,
+  DesktopTouch: ls`Desktop (touch)`
 };
 
 Emulation.DeviceModeModel.MinDeviceSize = 50;

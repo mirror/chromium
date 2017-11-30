@@ -131,7 +131,7 @@ Timeline.TimelineTreeView = class extends UI.VBox {
     this._threadSelector.setMaxWidth(230);
     this._currentThreadSetting = Common.settings.createSetting('timelineTreeCurrentThread', 0);
     toolbar.appendToolbarItem(this._threadSelector);
-    this._textFilterUI = new UI.ToolbarInput(Common.UIString('Filter'));
+    this._textFilterUI = new UI.ToolbarInput(ls`Filter`);
     this._textFilterUI.addEventListener(UI.ToolbarInput.Event.TextChanged, textFilterChanged, this);
     toolbar.appendToolbarItem(this._textFilterUI);
 
@@ -170,7 +170,7 @@ Timeline.TimelineTreeView = class extends UI.VBox {
       this._currentThreadSetting.set(0);
       return;
     }
-    var option = this._threadSelector.createOption(Common.UIString('Main'), '', '0');
+    var option = this._threadSelector.createOption(ls`Main`, '', '0');
     this._threadEvents.push(this._model.timelineModel().mainThreadEvents());
     this._threadSelector.addOption(option);
     for (var thread of this._model.timelineModel().virtualThreads()) {
@@ -286,9 +286,9 @@ Timeline.TimelineTreeView = class extends UI.VBox {
    * @param {!Array<!DataGrid.DataGrid.ColumnDescriptor>} columns
    */
   populateColumns(columns) {
-    columns.push({id: 'self', title: Common.UIString('Self Time'), width: '120px', fixedWidth: true, sortable: true});
-    columns.push({id: 'total', title: Common.UIString('Total Time'), width: '120px', fixedWidth: true, sortable: true});
-    columns.push({id: 'activity', title: Common.UIString('Activity'), disclosure: true, sortable: true});
+    columns.push({id: 'self', title: ls`Self Time`, width: '120px', fixedWidth: true, sortable: true});
+    columns.push({id: 'total', title: ls`Total Time`, width: '120px', fixedWidth: true, sortable: true});
+    columns.push({id: 'activity', title: ls`Activity`, disclosure: true, sortable: true});
   }
 
   _sortingChanged() {
@@ -373,7 +373,7 @@ Timeline.TimelineTreeView = class extends UI.VBox {
     if (selectedNode && this._showDetailsForNode(selectedNode))
       return;
     var banner = this._detailsView.element.createChild('div', 'full-widget-dimmed-banner');
-    banner.createTextChild(Common.UIString('Select item for details.'));
+    banner.createTextChild(ls`Select item for details.`);
   }
 
   /**
@@ -693,9 +693,9 @@ Timeline.AggregatedTimelineTreeView = class extends Timeline.TimelineTreeView {
    */
   _beautifyDomainName(name) {
     if (Timeline.AggregatedTimelineTreeView._isExtensionInternalURL(name))
-      name = Common.UIString('[Chrome extensions overhead]');
+      name = ls`[Chrome extensions overhead]`;
     else if (Timeline.AggregatedTimelineTreeView._isV8NativeURL(name))
-      name = Common.UIString('[V8 Runtime]');
+      name = ls`[V8 Runtime]`;
     else if (name.startsWith('chrome-extension'))
       name = this._executionContextNamesByOrigin.get(name) || name;
     return name;
@@ -709,7 +709,7 @@ Timeline.AggregatedTimelineTreeView = class extends Timeline.TimelineTreeView {
     var categories = Timeline.TimelineUIUtils.categories();
     var color = node.id ? Timeline.TimelineUIUtils.eventColor(/** @type {!SDK.TracingModel.Event} */ (node.event)) :
                           categories['other'].color;
-    var unattributed = Common.UIString('[unattributed]');
+    var unattributed = ls`[unattributed]`;
 
     switch (this._groupBySetting.get()) {
       case Timeline.AggregatedTimelineTreeView.GroupBy.Category:
@@ -728,7 +728,7 @@ Timeline.AggregatedTimelineTreeView = class extends Timeline.TimelineTreeView {
 
       case Timeline.AggregatedTimelineTreeView.GroupBy.EventName:
         var name = node.event.name === TimelineModel.TimelineModel.RecordType.JSFrame ?
-            Common.UIString('JavaScript') :
+            ls`JavaScript` :
             Timeline.TimelineUIUtils.eventTitle(node.event);
         return {
           name: name,
@@ -750,7 +750,7 @@ Timeline.AggregatedTimelineTreeView = class extends Timeline.TimelineTreeView {
 
       case Timeline.AggregatedTimelineTreeView.GroupBy.Frame:
         var frame = this._model.timelineModel().pageFrameById(node.id);
-        var frameName = frame ? Timeline.TimelineUIUtils.displayNameForFrame(frame, 80) : Common.UIString('Page');
+        var frameName = frame ? Timeline.TimelineUIUtils.displayNameForFrame(frame, 80) : ls`Page`;
         return {name: frameName, color: color};
 
       default:
@@ -767,18 +767,18 @@ Timeline.AggregatedTimelineTreeView = class extends Timeline.TimelineTreeView {
     super.populateToolbar(toolbar);
     var groupBy = Timeline.AggregatedTimelineTreeView.GroupBy;
     var options = [
-      {label: Common.UIString('No Grouping'), value: groupBy.None},
-      {label: Common.UIString('Group by Activity'), value: groupBy.EventName},
-      {label: Common.UIString('Group by Category'), value: groupBy.Category},
-      {label: Common.UIString('Group by Domain'), value: groupBy.Domain},
-      {label: Common.UIString('Group by Frame'), value: groupBy.Frame},
-      {label: Common.UIString('Group by Product'), value: groupBy.Product},
-      {label: Common.UIString('Group by Subdomain'), value: groupBy.Subdomain},
-      {label: Common.UIString('Group by URL'), value: groupBy.URL},
+      {label: ls`No Grouping`, value: groupBy.None},
+      {label: ls`Group by Activity`, value: groupBy.EventName},
+      {label: ls`Group by Category`, value: groupBy.Category},
+      {label: ls`Group by Domain`, value: groupBy.Domain},
+      {label: ls`Group by Frame`, value: groupBy.Frame},
+      {label: ls`Group by Product`, value: groupBy.Product},
+      {label: ls`Group by Subdomain`, value: groupBy.Subdomain},
+      {label: ls`Group by URL`, value: groupBy.URL},
     ];
     toolbar.appendToolbarItem(new UI.ToolbarSettingComboBox(options, this._groupBySetting));
     toolbar.appendSpacer();
-    toolbar.appendToolbarItem(this._splitWidget.createShowHideSidebarButton(Common.UIString('heaviest stack')));
+    toolbar.appendToolbarItem(this._splitWidget.createShowHideSidebarButton(ls`heaviest stack`));
   }
 
   /**
@@ -1017,11 +1017,10 @@ Timeline.TimelineStackView = class extends UI.VBox {
   constructor(treeView) {
     super();
     var header = this.element.createChild('div', 'timeline-stack-view-header');
-    header.textContent = Common.UIString('Heaviest stack');
+    header.textContent = ls`Heaviest stack`;
     this._treeView = treeView;
     var columns = /** @type {!Array<!DataGrid.DataGrid.ColumnDescriptor>} */ ([
-      {id: 'total', title: Common.UIString('Total Time'), fixedWidth: true, width: '110px'},
-      {id: 'activity', title: Common.UIString('Activity')}
+      {id: 'total', title: ls`Total Time`, fixedWidth: true, width: '110px'}, {id: 'activity', title: ls`Activity`}
     ]);
     this._dataGrid = new DataGrid.ViewportDataGrid(columns);
     this._dataGrid.setResizeMethod(DataGrid.DataGrid.ResizeMethod.Last);

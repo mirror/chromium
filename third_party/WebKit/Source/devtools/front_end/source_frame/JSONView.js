@@ -60,7 +60,7 @@ SourceFrame.JSONView = class extends UI.VBox {
   static createSearchableView(parsedJSON) {
     var jsonView = new SourceFrame.JSONView(parsedJSON);
     var searchableView = new UI.SearchableView(jsonView);
-    searchableView.setPlaceholder(Common.UIString('Find'));
+    searchableView.setPlaceholder(ls`Find`);
     jsonView._searchableView = searchableView;
     jsonView.show(searchableView.element);
     jsonView.element.setAttribute('tabIndex', 0);

@@ -33,7 +33,7 @@ Resources.CookieItemsView = class extends Resources.StorageItemsView {
    * @param {string} cookieDomain
    */
   constructor(model, cookieDomain) {
-    super(Common.UIString('Cookies'), 'cookiesPanel');
+    super(ls`Cookies`, 'cookiesPanel');
 
     this.element.classList.add('storage-view');
 

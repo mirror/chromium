@@ -194,10 +194,10 @@ Main.Main = class {
 
     UI.shortcutsScreen = new UI.ShortcutsScreen();
     // set order of some sections explicitly
-    UI.shortcutsScreen.section(Common.UIString('Elements Panel'));
-    UI.shortcutsScreen.section(Common.UIString('Styles Pane'));
-    UI.shortcutsScreen.section(Common.UIString('Debugger'));
-    UI.shortcutsScreen.section(Common.UIString('Console'));
+    UI.shortcutsScreen.section(ls`Elements Panel`);
+    UI.shortcutsScreen.section(ls`Styles Pane`);
+    UI.shortcutsScreen.section(ls`Debugger`);
+    UI.shortcutsScreen.section(ls`Console`);
 
     Workspace.fileManager = new Workspace.FileManager();
     Workspace.workspace = new Workspace.Workspace();
@@ -359,46 +359,45 @@ Main.Main = class {
 
   _registerShortcuts() {
     var shortcut = UI.KeyboardShortcut;
-    var section = UI.shortcutsScreen.section(Common.UIString('All Panels'));
+    var section = UI.shortcutsScreen.section(ls`All Panels`);
     var keys = [
       shortcut.makeDescriptor('[', shortcut.Modifiers.CtrlOrMeta),
       shortcut.makeDescriptor(']', shortcut.Modifiers.CtrlOrMeta)
     ];
-    section.addRelatedKeys(keys, Common.UIString('Go to the panel to the left/right'));
+    section.addRelatedKeys(keys, ls`Go to the panel to the left/right`);
 
-    var toggleConsoleLabel = Common.UIString('Show console');
+    var toggleConsoleLabel = ls`Show console`;
     section.addKey(shortcut.makeDescriptor(shortcut.Keys.Tilde, shortcut.Modifiers.Ctrl), toggleConsoleLabel);
-    section.addKey(shortcut.makeDescriptor(shortcut.Keys.Esc), Common.UIString('Toggle drawer'));
+    section.addKey(shortcut.makeDescriptor(shortcut.Keys.Esc), ls`Toggle drawer`);
     if (Components.dockController.canDock()) {
       section.addKey(
           shortcut.makeDescriptor('M', shortcut.Modifiers.CtrlOrMeta | shortcut.Modifiers.Shift),
-          Common.UIString('Toggle device mode'));
+          ls`Toggle device mode`);
       section.addKey(
-          shortcut.makeDescriptor('D', shortcut.Modifiers.CtrlOrMeta | shortcut.Modifiers.Shift),
-          Common.UIString('Toggle dock side'));
+          shortcut.makeDescriptor('D', shortcut.Modifiers.CtrlOrMeta | shortcut.Modifiers.Shift), ls`Toggle dock side`);
     }
-    section.addKey(shortcut.makeDescriptor('f', shortcut.Modifiers.CtrlOrMeta), Common.UIString('Search'));
+    section.addKey(shortcut.makeDescriptor('f', shortcut.Modifiers.CtrlOrMeta), ls`Search`);
 
     var advancedSearchShortcutModifier = Host.isMac() ?
         UI.KeyboardShortcut.Modifiers.Meta | UI.KeyboardShortcut.Modifiers.Alt :
         UI.KeyboardShortcut.Modifiers.Ctrl | UI.KeyboardShortcut.Modifiers.Shift;
     var advancedSearchShortcut = shortcut.makeDescriptor('f', advancedSearchShortcutModifier);
-    section.addKey(advancedSearchShortcut, Common.UIString('Search across all sources'));
+    section.addKey(advancedSearchShortcut, ls`Search across all sources`);
 
     var inspectElementModeShortcuts =
         UI.shortcutRegistry.shortcutDescriptorsForAction('elements.toggle-element-search');
     if (inspectElementModeShortcuts.length)
-      section.addKey(inspectElementModeShortcuts[0], Common.UIString('Select node to inspect'));
+      section.addKey(inspectElementModeShortcuts[0], ls`Select node to inspect`);
 
     var openResourceShortcut = UI.KeyboardShortcut.makeDescriptor('p', UI.KeyboardShortcut.Modifiers.CtrlOrMeta);
-    section.addKey(openResourceShortcut, Common.UIString('Go to source'));
+    section.addKey(openResourceShortcut, ls`Go to source`);
 
     if (Host.isMac()) {
       keys = [
         shortcut.makeDescriptor('g', shortcut.Modifiers.Meta),
         shortcut.makeDescriptor('g', shortcut.Modifiers.Meta | shortcut.Modifiers.Shift)
       ];
-      section.addRelatedKeys(keys, Common.UIString('Find next/previous'));
+      section.addRelatedKeys(keys, ls`Find next/previous`);
     }
   }
 
@@ -590,7 +589,7 @@ Main.Main.SearchActionDelegate = class {
 Main.Main.MainMenuItem = class {
   constructor() {
     this._item = new UI.ToolbarMenuButton(this._handleContextMenu.bind(this), true);
-    this._item.setTitle(Common.UIString('Customize and control DevTools'));
+    this._item.setTitle(ls`Customize and control DevTools`);
   }
 
   /**
@@ -608,17 +607,17 @@ Main.Main.MainMenuItem = class {
     if (Components.dockController.canDock()) {
       var dockItemElement = createElementWithClass('div', 'flex-centered flex-auto');
       var titleElement = dockItemElement.createChild('span', 'flex-auto');
-      titleElement.textContent = Common.UIString('Dock side');
+      titleElement.textContent = ls`Dock side`;
       var toggleDockSideShorcuts = UI.shortcutRegistry.shortcutDescriptorsForAction('main.toggle-dock');
       titleElement.title = Common.UIString(
           'Placement of DevTools relative to the page. (%s to restore last position)', toggleDockSideShorcuts[0].name);
       dockItemElement.appendChild(titleElement);
       var dockItemToolbar = new UI.Toolbar('', dockItemElement);
       dockItemToolbar.makeBlueOnHover();
-      var undock = new UI.ToolbarToggle(Common.UIString('Undock into separate window'), 'largeicon-undock');
-      var bottom = new UI.ToolbarToggle(Common.UIString('Dock to bottom'), 'largeicon-dock-to-bottom');
-      var right = new UI.ToolbarToggle(Common.UIString('Dock to right'), 'largeicon-dock-to-right');
-      var left = new UI.ToolbarToggle(Common.UIString('Dock to left'), 'largeicon-dock-to-left');
+      var undock = new UI.ToolbarToggle(ls`Undock into separate window`, 'largeicon-undock');
+      var bottom = new UI.ToolbarToggle(ls`Dock to bottom`, 'largeicon-dock-to-bottom');
+      var right = new UI.ToolbarToggle(ls`Dock to right`, 'largeicon-dock-to-right');
+      var left = new UI.ToolbarToggle(ls`Dock to left`, 'largeicon-dock-to-left');
       undock.addEventListener(UI.ToolbarButton.Events.MouseDown, event => event.data.consume());
       bottom.addEventListener(UI.ToolbarButton.Events.MouseDown, event => event.data.consume());
       right.addEventListener(UI.ToolbarButton.Events.MouseDown, event => event.data.consume());
@@ -651,11 +650,9 @@ Main.Main.MainMenuItem = class {
     }
 
     contextMenu.defaultSection().appendAction(
-        'main.toggle-drawer',
-        UI.inspectorView.drawerVisible() ? Common.UIString('Hide console drawer') :
-                                           Common.UIString('Show console drawer'));
+        'main.toggle-drawer', UI.inspectorView.drawerVisible() ? ls`Hide console drawer` : ls`Show console drawer`);
     contextMenu.appendItemsAtLocation('mainMenu');
-    var moreTools = contextMenu.defaultSection().appendSubMenuItem(Common.UIString('More tools'));
+    var moreTools = contextMenu.defaultSection().appendSubMenuItem(ls`More tools`);
     var extensions = self.runtime.extensions('view', undefined, true);
     for (var extension of extensions) {
       var descriptor = extension.descriptor();
@@ -667,7 +664,7 @@ Main.Main.MainMenuItem = class {
           extension.title(), UI.viewManager.showView.bind(UI.viewManager, descriptor['id']));
     }
 
-    var helpSubMenu = contextMenu.footerSection().appendSubMenuItem(Common.UIString('Help'));
+    var helpSubMenu = contextMenu.footerSection().appendSubMenuItem(ls`Help`);
     helpSubMenu.defaultSection().appendAction('settings.documentation');
     helpSubMenu.defaultSection().appendItem(
         'Release Notes', () => InspectorFrontendHost.openInNewTab(Help.latestReleaseNote().link));
@@ -684,7 +681,7 @@ Main.Main.NodeIndicator = class {
     this._element = shadowRoot.createChild('div', 'node-icon');
     element.addEventListener('click', () => InspectorFrontendHost.openNodeFrontend(), false);
     this._button = new UI.ToolbarItem(element);
-    this._button.setTitle(Common.UIString('Open dedicated DevTools for Node.js'));
+    this._button.setTitle(ls`Open dedicated DevTools for Node.js`);
     SDK.targetManager.addEventListener(SDK.TargetManager.Events.AvailableNodeTargetsChanged, this._update, this);
     this._button.setVisible(false);
     this._update();
@@ -720,13 +717,13 @@ Main.NetworkPanelIndicator = class {
       var icon = null;
       if (manager.isThrottling()) {
         icon = UI.Icon.create('smallicon-warning');
-        icon.title = Common.UIString('Network throttling is enabled');
+        icon.title = ls`Network throttling is enabled`;
       } else if (SDK.multitargetNetworkManager.isIntercepting()) {
         icon = UI.Icon.create('smallicon-warning');
-        icon.title = Common.UIString('Requests may be rewritten');
+        icon.title = ls`Requests may be rewritten`;
       } else if (manager.isBlocking()) {
         icon = UI.Icon.create('smallicon-warning');
-        icon.title = Common.UIString('Requests may be blocked');
+        icon.title = ls`Requests may be blocked`;
       }
       UI.inspectorView.setPanelIcon('network', icon);
     }
@@ -746,7 +743,7 @@ Main.SourcesPanelIndicator = class {
       var javaScriptDisabled = Common.moduleSetting('javaScriptDisabled').get();
       if (javaScriptDisabled) {
         icon = UI.Icon.create('smallicon-warning');
-        icon.title = Common.UIString('JavaScript is disabled');
+        icon.title = ls`JavaScript is disabled`;
       }
       UI.inspectorView.setPanelIcon('sources', icon);
     }
@@ -819,11 +816,10 @@ Main.RemoteDebuggingTerminatedScreen = class extends UI.VBox {
     super(true);
     this.registerRequiredCSS('main/remoteDebuggingTerminatedScreen.css');
     var message = this.contentElement.createChild('div', 'message');
-    message.createChild('span').textContent = Common.UIString('Debugging connection was closed. Reason: ');
+    message.createChild('span').textContent = ls`Debugging connection was closed. Reason: `;
     message.createChild('span', 'reason').textContent = reason;
-    this.contentElement.createChild('div', 'message').textContent =
-        Common.UIString('Reconnect when ready by reopening DevTools.');
-    var button = UI.createTextButton(Common.UIString('Reconnect DevTools'), () => window.location.reload());
+    this.contentElement.createChild('div', 'message').textContent = ls`Reconnect when ready by reopening DevTools.`;
+    var button = UI.createTextButton(ls`Reconnect DevTools`, () => window.location.reload());
     this.contentElement.createChild('div', 'button').appendChild(button);
   }
 
@@ -851,10 +847,9 @@ Main.TargetCrashedScreen = class extends UI.VBox {
   constructor(hideCallback) {
     super(true);
     this.registerRequiredCSS('main/targetCrashedScreen.css');
+    this.contentElement.createChild('div', 'message').textContent = ls`DevTools was disconnected from the page.`;
     this.contentElement.createChild('div', 'message').textContent =
-        Common.UIString('DevTools was disconnected from the page.');
-    this.contentElement.createChild('div', 'message').textContent =
-        Common.UIString('Once page is reloaded, DevTools will automatically reconnect.');
+        ls`Once page is reloaded, DevTools will automatically reconnect.`;
     this._hideCallback = hideCallback;
   }
 
@@ -939,8 +934,7 @@ Main.ShowMetricsRulersSettingUI = class {
    * @return {?Element}
    */
   settingElement() {
-    return UI.SettingsUI.createSettingCheckbox(
-        Common.UIString('Show rulers'), Common.moduleSetting('showMetricsRulers'));
+    return UI.SettingsUI.createSettingCheckbox(ls`Show rulers`, Common.moduleSetting('showMetricsRulers'));
   }
 };
 

@@ -126,7 +126,7 @@ Sources.NavigatorView = class extends UI.VBox {
       Persistence.isolatedFileSystemManager.addFileSystem();
     }
 
-    var addFolderLabel = Common.UIString('Add folder to workspace');
+    var addFolderLabel = ls`Add folder to workspace`;
     contextMenu.defaultSection().appendItem(addFolderLabel, addFolder);
   }
 
@@ -139,10 +139,10 @@ Sources.NavigatorView = class extends UI.VBox {
       Sources.AdvancedSearchView.openSearch('', path.trim());
     }
 
-    var searchLabel = Common.UIString('Search in folder');
+    var searchLabel = ls`Search in folder`;
     if (!path || !path.trim()) {
       path = '*';
-      searchLabel = Common.UIString('Search in all files');
+      searchLabel = ls`Search in all files`;
     }
     contextMenu.viewSection().appendItem(searchLabel, searchPath);
   }
@@ -542,7 +542,7 @@ Sources.NavigatorView = class extends UI.VBox {
     }
 
     if (!projectOrigin)
-      return Common.UIString('(no domain)');
+      return ls`(no domain)`;
 
     var parsedURL = new Common.ParsedURL(projectOrigin);
     var prettyURL = parsedURL.isValid ? parsedURL.host + (parsedURL.port ? (':' + parsedURL.port) : '') : '';
@@ -669,7 +669,7 @@ Sources.NavigatorView = class extends UI.VBox {
    * @param {string} path
    */
   _handleContextMenuExclude(project, path) {
-    var shouldExclude = window.confirm(Common.UIString('Are you sure you want to exclude this folder?'));
+    var shouldExclude = window.confirm(ls`Are you sure you want to exclude this folder?`);
     if (shouldExclude) {
       UI.startBatchUpdate();
       project.excludeFolder(Persistence.FileSystemWorkspaceBinding.completeURL(project, path));
@@ -681,7 +681,7 @@ Sources.NavigatorView = class extends UI.VBox {
    * @param {!Workspace.UISourceCode} uiSourceCode
    */
   _handleContextMenuDelete(uiSourceCode) {
-    var shouldDelete = window.confirm(Common.UIString('Are you sure you want to delete this file?'));
+    var shouldDelete = window.confirm(ls`Are you sure you want to delete this file?`);
     if (shouldDelete)
       uiSourceCode.project().deleteFile(uiSourceCode);
   }
@@ -697,12 +697,10 @@ Sources.NavigatorView = class extends UI.VBox {
 
     var project = uiSourceCode.project();
     if (project.type() === Workspace.projectTypes.FileSystem) {
+      contextMenu.editSection().appendItem(ls`Rename\u2026`, this._handleContextMenuRename.bind(this, node));
       contextMenu.editSection().appendItem(
-          Common.UIString('Rename\u2026'), this._handleContextMenuRename.bind(this, node));
-      contextMenu.editSection().appendItem(
-          Common.UIString('Make a copy\u2026'), this._handleContextMenuCreate.bind(this, project, '', uiSourceCode));
-      contextMenu.editSection().appendItem(
-          Common.UIString('Delete'), this._handleContextMenuDelete.bind(this, uiSourceCode));
+          ls`Make a copy\u2026`, this._handleContextMenuCreate.bind(this, project, '', uiSourceCode));
+      contextMenu.editSection().appendItem(ls`Delete`, this._handleContextMenuDelete.bind(this, uiSourceCode));
     }
 
     contextMenu.show();
@@ -722,20 +720,19 @@ Sources.NavigatorView = class extends UI.VBox {
     if (project.type() !== Workspace.projectTypes.FileSystem)
       return;
 
+    contextMenu.defaultSection().appendItem(ls`New file`, this._handleContextMenuCreate.bind(this, project, path));
     contextMenu.defaultSection().appendItem(
-        Common.UIString('New file'), this._handleContextMenuCreate.bind(this, project, path));
-    contextMenu.defaultSection().appendItem(
-        Common.UIString('Exclude folder'), this._handleContextMenuExclude.bind(this, project, path));
+        ls`Exclude folder`, this._handleContextMenuExclude.bind(this, project, path));
 
     function removeFolder() {
-      var shouldRemove = window.confirm(Common.UIString('Are you sure you want to remove this folder?'));
+      var shouldRemove = window.confirm(ls`Are you sure you want to remove this folder?`);
       if (shouldRemove)
         project.remove();
     }
 
     Sources.NavigatorView.appendAddFolderItem(contextMenu);
     if (node instanceof Sources.NavigatorGroupTreeNode)
-      contextMenu.defaultSection().appendItem(Common.UIString('Remove folder from workspace'), removeFolder);
+      contextMenu.defaultSection().appendItem(ls`Remove folder from workspace`, removeFolder);
 
     contextMenu.show();
   }

@@ -24,7 +24,7 @@ EventListeners.EventListenersView = class extends UI.VBox {
     this._treeOutline.element.classList.add('monospace');
     this.element.appendChild(this._treeOutline.element);
     this._emptyHolder = createElementWithClass('div', 'gray-info-message');
-    this._emptyHolder.textContent = Common.UIString('No event listeners');
+    this._emptyHolder.textContent = ls`No event listeners`;
     this._linkifier = new Components.Linkifier();
     /** @type {!Map<string, !EventListeners.EventListenersTreeElement>} */
     this._treeItemMap = new Map();
@@ -289,16 +289,16 @@ EventListeners.ObjectEventListenerBar = class extends UI.TreeElement {
 
     if (this._eventListener.canRemove()) {
       var deleteButton = title.createChild('span', 'event-listener-button');
-      deleteButton.textContent = Common.UIString('Remove');
-      deleteButton.title = Common.UIString('Delete event listener');
+      deleteButton.textContent = ls`Remove`;
+      deleteButton.title = ls`Delete event listener`;
       deleteButton.addEventListener('click', removeListener.bind(this), false);
       title.appendChild(deleteButton);
     }
 
     if (this._eventListener.isScrollBlockingType() && this._eventListener.canTogglePassive()) {
       var passiveButton = title.createChild('span', 'event-listener-button');
-      passiveButton.textContent = Common.UIString('Toggle Passive');
-      passiveButton.title = Common.UIString('Toggle whether event listener is passive or blocking');
+      passiveButton.textContent = ls`Toggle Passive`;
+      passiveButton.title = ls`Toggle whether event listener is passive or blocking`;
       passiveButton.addEventListener('click', togglePassiveListener.bind(this), false);
       title.appendChild(passiveButton);
     }

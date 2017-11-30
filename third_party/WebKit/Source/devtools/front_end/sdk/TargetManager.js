@@ -326,8 +326,8 @@ SDK.TargetManager = class extends Common.Object {
   _connectAndCreateMainTarget() {
     if (Runtime.queryParam('nodeFrontend')) {
       var target = new SDK.Target(
-          this, 'main', Common.UIString('Node.js'), SDK.Target.Capability.Target, this._createMainConnection.bind(this),
-          null, this._isSuspended);
+          this, 'main', ls`Node.js`, SDK.Target.Capability.Target, this._createMainConnection.bind(this), null,
+          this._isSuspended);
       target.setInspectedURL('Node.js');
       this._childTargetManagers.set(target, new SDK.ChildTargetManager(this, target));
       Host.userMetrics.actionTaken(Host.UserMetrics.Action.ConnectToNodeJSFromFrontend);
@@ -347,8 +347,7 @@ SDK.TargetManager = class extends Common.Object {
       Host.userMetrics.actionTaken(Host.UserMetrics.Action.ConnectToNodeJSDirectly);
     }
 
-    var target =
-        this.createTarget('main', Common.UIString('Main'), capabilities, this._createMainConnection.bind(this), null);
+    var target = this.createTarget('main', ls`Main`, capabilities, this._createMainConnection.bind(this), null);
     target.runtimeAgent().runIfWaitingForDebugger();
   }
 

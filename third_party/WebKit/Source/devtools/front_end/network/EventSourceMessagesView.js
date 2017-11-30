@@ -15,10 +15,9 @@ Network.EventSourceMessagesView = class extends UI.VBox {
     this._request = request;
 
     var columns = /** @type {!Array<!DataGrid.DataGrid.ColumnDescriptor>} */ ([
-      {id: 'id', title: Common.UIString('Id'), sortable: true, weight: 8},
-      {id: 'type', title: Common.UIString('Type'), sortable: true, weight: 8},
-      {id: 'data', title: Common.UIString('Data'), sortable: false, weight: 88},
-      {id: 'time', title: Common.UIString('Time'), sortable: true, weight: 8}
+      {id: 'id', title: ls`Id`, sortable: true, weight: 8}, {id: 'type', title: ls`Type`, sortable: true, weight: 8},
+      {id: 'data', title: ls`Data`, sortable: false, weight: 88},
+      {id: 'time', title: ls`Time`, sortable: true, weight: 8}
     ]);
 
     this._dataGrid = new DataGrid.SortableDataGrid(columns);

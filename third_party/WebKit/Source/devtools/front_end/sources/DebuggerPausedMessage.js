@@ -42,29 +42,29 @@ Sources.DebuggerPausedMessage = class {
         eventNameForUI =
             SDK.domDebuggerManager.resolveEventListenerBreakpointTitle(/** @type {!Object} */ (details.auxData));
       }
-      messageWrapper = buildWrapper(Common.UIString('Paused on event listener'), eventNameForUI);
+      messageWrapper = buildWrapper(ls`Paused on event listener`, eventNameForUI);
     } else if (details.reason === SDK.DebuggerModel.BreakReason.XHR) {
-      messageWrapper = buildWrapper(Common.UIString('Paused on XHR or fetch'), details.auxData['url'] || '');
+      messageWrapper = buildWrapper(ls`Paused on XHR or fetch`, details.auxData['url'] || '');
     } else if (details.reason === SDK.DebuggerModel.BreakReason.Exception) {
       var description = details.auxData['description'] || details.auxData['value'] || '';
       var descriptionFirstLine = description.split('\n', 1)[0];
-      messageWrapper = buildWrapper(Common.UIString('Paused on exception'), descriptionFirstLine, description);
+      messageWrapper = buildWrapper(ls`Paused on exception`, descriptionFirstLine, description);
     } else if (details.reason === SDK.DebuggerModel.BreakReason.PromiseRejection) {
       var description = details.auxData['description'] || details.auxData['value'] || '';
       var descriptionFirstLine = description.split('\n', 1)[0];
-      messageWrapper = buildWrapper(Common.UIString('Paused on promise rejection'), descriptionFirstLine, description);
+      messageWrapper = buildWrapper(ls`Paused on promise rejection`, descriptionFirstLine, description);
     } else if (details.reason === SDK.DebuggerModel.BreakReason.Assert) {
-      messageWrapper = buildWrapper(Common.UIString('Paused on assertion'));
+      messageWrapper = buildWrapper(ls`Paused on assertion`);
     } else if (details.reason === SDK.DebuggerModel.BreakReason.DebugCommand) {
-      messageWrapper = buildWrapper(Common.UIString('Paused on debugged function'));
+      messageWrapper = buildWrapper(ls`Paused on debugged function`);
     } else if (details.reason === SDK.DebuggerModel.BreakReason.OOM) {
-      messageWrapper = buildWrapper(Common.UIString('Paused before potential out-of-memory crash'));
+      messageWrapper = buildWrapper(ls`Paused before potential out-of-memory crash`);
     } else if (details.callFrames.length) {
       var uiLocation = debuggerWorkspaceBinding.rawLocationToUILocation(details.callFrames[0].location());
       var breakpoint = uiLocation ?
           breakpointManager.findBreakpoint(uiLocation.uiSourceCode, uiLocation.lineNumber, uiLocation.columnNumber) :
           null;
-      var defaultText = breakpoint ? Common.UIString('Paused on breakpoint') : Common.UIString('Debugger paused');
+      var defaultText = breakpoint ? ls`Paused on breakpoint` : ls`Debugger paused`;
       messageWrapper = buildWrapper(defaultText);
     } else {
       console.warn(

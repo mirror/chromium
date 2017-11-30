@@ -43,7 +43,7 @@ UI.FilterBar = class extends UI.HBox {
     this.element.classList.add('filter-bar');
 
     this._stateSetting = Common.settings.createSetting('filterBar-' + name + '-toggled', !!visibleByDefault);
-    this._filterButton = new UI.ToolbarSettingToggle(this._stateSetting, 'largeicon-filter', Common.UIString('Filter'));
+    this._filterButton = new UI.ToolbarSettingToggle(this._stateSetting, 'largeicon-filter', ls`Filter`);
 
     this._filters = [];
 
@@ -177,8 +177,8 @@ UI.TextFilterUI = class extends Common.Object {
     this._prompt = new UI.TextPrompt();
     this._prompt.initialize(this._completions.bind(this), ' ');
     this._proxyElement = this._prompt.attach(this._filterInputElement);
-    this._proxyElement.title = Common.UIString('e.g. /small[\\d]+/ url:a.com/b');
-    this._prompt.setPlaceholder(Common.UIString('Filter'));
+    this._proxyElement.title = ls`e.g. /small[\\d]+/ url:a.com/b`;
+    this._prompt.setPlaceholder(ls`Filter`);
     this._prompt.addEventListener(UI.TextPrompt.Events.TextChanged, this._valueChanged.bind(this));
 
     /** @type {?function(string, string, boolean=):!Promise<!UI.SuggestBox.Suggestions>} */
@@ -262,7 +262,7 @@ UI.NamedBitSetFilterUI = class extends Common.Object {
 
     this._allowedTypes = {};
     this._typeFilterElements = {};
-    this._addBit(UI.NamedBitSetFilterUI.ALL_TYPES, Common.UIString('All'));
+    this._addBit(UI.NamedBitSetFilterUI.ALL_TYPES, ls`All`);
     this._filtersElement.createChild('div', 'filter-bitset-filter-divider');
 
     for (var i = 0; i < items.length; ++i)

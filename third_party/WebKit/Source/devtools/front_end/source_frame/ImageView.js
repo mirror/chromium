@@ -35,7 +35,7 @@ SourceFrame.ImageView = class extends UI.SimpleView {
    * @param {!Common.ContentProvider} contentProvider
    */
   constructor(mimeType, contentProvider) {
-    super(Common.UIString('Image'));
+    super(ls`Image`);
     this.registerRequiredCSS('source_frame/imageView.css');
     this.element.classList.add('image-view');
     this._url = contentProvider.contentURL();
@@ -49,7 +49,7 @@ SourceFrame.ImageView = class extends UI.SimpleView {
       this._uiSourceCode.addEventListener(
           Workspace.UISourceCode.Events.WorkingCopyCommitted, this._workingCopyCommitted, this);
       new UI.DropTarget(
-          this.element, [UI.DropTarget.Type.ImageFile, UI.DropTarget.Type.URI], Common.UIString('Drop image file here'),
+          this.element, [UI.DropTarget.Type.ImageFile, UI.DropTarget.Type.URI], ls`Drop image file here`,
           this._handleDrop.bind(this));
     }
     this._sizeLabel = new UI.ToolbarText();
@@ -125,14 +125,12 @@ SourceFrame.ImageView = class extends UI.SimpleView {
   _contextMenu(event) {
     var contextMenu = new UI.ContextMenu(event);
     if (!this._parsedURL.isDataURL())
-      contextMenu.clipboardSection().appendItem(Common.UIString('Copy image URL'), this._copyImageURL.bind(this));
-    if (this._imagePreviewElement.src) {
-      contextMenu.clipboardSection().appendItem(
-          Common.UIString('Copy image as data URI'), this._copyImageAsDataURL.bind(this));
-    }
+      contextMenu.clipboardSection().appendItem(ls`Copy image URL`, this._copyImageURL.bind(this));
+    if (this._imagePreviewElement.src)
+      contextMenu.clipboardSection().appendItem(ls`Copy image as data URI`, this._copyImageAsDataURL.bind(this));
 
-    contextMenu.clipboardSection().appendItem(Common.UIString('Open image in new tab'), this._openInNewTab.bind(this));
-    contextMenu.clipboardSection().appendItem(Common.UIString('Save\u2026'), this._saveImage.bind(this));
+    contextMenu.clipboardSection().appendItem(ls`Open image in new tab`, this._openInNewTab.bind(this));
+    contextMenu.clipboardSection().appendItem(ls`Save\u2026`, this._saveImage.bind(this));
     contextMenu.show();
   }
 

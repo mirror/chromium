@@ -48,7 +48,7 @@ SourceFrame.ResourceSourceFrame = class extends SourceFrame.SourceFrame {
     var sourceFrame = new SourceFrame.ResourceSourceFrame(resource);
     sourceFrame.setHighlighterType(highlighterType);
     var searchableView = new UI.SearchableView(sourceFrame);
-    searchableView.setPlaceholder(Common.UIString('Find'));
+    searchableView.setPlaceholder(ls`Find`);
     sourceFrame.show(searchableView.element);
     sourceFrame.setSearchableView(searchableView);
     return searchableView;

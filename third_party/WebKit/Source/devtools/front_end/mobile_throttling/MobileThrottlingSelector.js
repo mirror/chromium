@@ -31,9 +31,9 @@ MobileThrottling.MobileThrottlingSelector = class {
    * @return {!MobileThrottling.ConditionsList}
    */
   _populateOptions() {
-    var disabledGroup = {title: Common.UIString('Disabled'), items: [MobileThrottling.NoThrottlingConditions]};
-    var presetsGroup = {title: Common.UIString('Presets'), items: MobileThrottling.mobilePresets};
-    var advancedGroup = {title: Common.UIString('Advanced'), items: MobileThrottling.advancedMobilePresets};
+    var disabledGroup = {title: ls`Disabled`, items: [MobileThrottling.NoThrottlingConditions]};
+    var presetsGroup = {title: ls`Presets`, items: MobileThrottling.mobilePresets};
+    var advancedGroup = {title: ls`Advanced`, items: MobileThrottling.advancedMobilePresets};
     return this._populateCallback([disabledGroup, presetsGroup, advancedGroup]);
   }
 

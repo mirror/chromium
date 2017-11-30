@@ -11,10 +11,10 @@ MobileThrottling.ThrottlingSettingsTab = class extends UI.VBox {
     super(true);
     this.registerRequiredCSS('mobile_throttling/throttlingSettingsTab.css');
 
-    this.contentElement.createChild('div', 'header').textContent = Common.UIString('Network Throttling Profiles');
+    this.contentElement.createChild('div', 'header').textContent = ls`Network Throttling Profiles`;
 
-    var addButton = UI.createTextButton(
-        Common.UIString('Add custom profile...'), this._addButtonClicked.bind(this), 'add-conditions-button');
+    var addButton =
+        UI.createTextButton(ls`Add custom profile...`, this._addButtonClicked.bind(this), 'add-conditions-button');
     this.contentElement.appendChild(addButton);
 
     this._list = new UI.ListWidget(this);
@@ -134,14 +134,13 @@ MobileThrottling.ThrottlingSettingsTab = class extends UI.VBox {
     var content = editor.contentElement();
 
     var titles = content.createChild('div', 'conditions-edit-row');
-    titles.createChild('div', 'conditions-list-text conditions-list-title').textContent =
-        Common.UIString('Profile Name');
+    titles.createChild('div', 'conditions-list-text conditions-list-title').textContent = ls`Profile Name`;
     titles.createChild('div', 'conditions-list-separator conditions-list-separator-invisible');
-    titles.createChild('div', 'conditions-list-text').textContent = Common.UIString('Download');
+    titles.createChild('div', 'conditions-list-text').textContent = ls`Download`;
     titles.createChild('div', 'conditions-list-separator conditions-list-separator-invisible');
-    titles.createChild('div', 'conditions-list-text').textContent = Common.UIString('Upload');
+    titles.createChild('div', 'conditions-list-text').textContent = ls`Upload`;
     titles.createChild('div', 'conditions-list-separator conditions-list-separator-invisible');
-    titles.createChild('div', 'conditions-list-text').textContent = Common.UIString('Latency');
+    titles.createChild('div', 'conditions-list-text').textContent = ls`Latency`;
 
     var fields = content.createChild('div', 'conditions-edit-row');
     fields.createChild('div', 'conditions-list-text conditions-list-title')
@@ -149,18 +148,18 @@ MobileThrottling.ThrottlingSettingsTab = class extends UI.VBox {
     fields.createChild('div', 'conditions-list-separator conditions-list-separator-invisible');
 
     var cell = fields.createChild('div', 'conditions-list-text');
-    cell.appendChild(editor.createInput('download', 'text', Common.UIString('kb/s'), throughputValidator));
-    cell.createChild('div', 'conditions-edit-optional').textContent = Common.UIString('optional');
+    cell.appendChild(editor.createInput('download', 'text', ls`kb/s`, throughputValidator));
+    cell.createChild('div', 'conditions-edit-optional').textContent = ls`optional`;
     fields.createChild('div', 'conditions-list-separator conditions-list-separator-invisible');
 
     cell = fields.createChild('div', 'conditions-list-text');
-    cell.appendChild(editor.createInput('upload', 'text', Common.UIString('kb/s'), throughputValidator));
-    cell.createChild('div', 'conditions-edit-optional').textContent = Common.UIString('optional');
+    cell.appendChild(editor.createInput('upload', 'text', ls`kb/s`, throughputValidator));
+    cell.createChild('div', 'conditions-edit-optional').textContent = ls`optional`;
     fields.createChild('div', 'conditions-list-separator conditions-list-separator-invisible');
 
     cell = fields.createChild('div', 'conditions-list-text');
-    cell.appendChild(editor.createInput('latency', 'text', Common.UIString('ms'), latencyValidator));
-    cell.createChild('div', 'conditions-edit-optional').textContent = Common.UIString('optional');
+    cell.appendChild(editor.createInput('latency', 'text', ls`ms`, latencyValidator));
+    cell.createChild('div', 'conditions-edit-optional').textContent = ls`optional`;
 
     return editor;
 

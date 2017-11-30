@@ -212,7 +212,7 @@ Sources.FilteredUISourceCodeListProvider = class extends QuickOpen.FilteredListW
    * @return {string}
    */
   notFoundText() {
-    return Common.UIString('No files found');
+    return ls`No files found`;
   }
 
   /**

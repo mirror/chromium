@@ -86,9 +86,8 @@ Elements.StylesSidebarPane = class extends Elements.ElementsSidebarPane {
     exclamationElement.className = 'exclamation-mark';
     if (!Elements.StylesSidebarPane.ignoreErrorsForProperty(property))
       exclamationElement.type = 'smallicon-warning';
-    exclamationElement.title = SDK.cssMetadata().isCSSPropertyName(property.name) ?
-        Common.UIString('Invalid property value') :
-        Common.UIString('Unknown property name');
+    exclamationElement.title =
+        SDK.cssMetadata().isCSSPropertyName(property.name) ? ls`Invalid property value` : ls`Unknown property name`;
     return exclamationElement;
   }
 
@@ -596,8 +595,8 @@ Elements.StylesSidebarPane = class extends Elements.ElementsSidebarPane {
     var hbox = container.createChild('div', 'hbox styles-sidebar-pane-toolbar');
     var filterContainerElement = hbox.createChild('div', 'styles-sidebar-pane-filter-box');
     var filterInput = Elements.StylesSidebarPane.createPropertyFilterElement(
-        Common.UIString('Filter'), hbox, this._onFilterChanged.bind(this), 'styles-filter-engaged');
-    UI.ARIAUtils.setAccessibleName(filterInput, Common.UIString('Filter Styles'));
+        ls`Filter`, hbox, this._onFilterChanged.bind(this), 'styles-filter-engaged');
+    UI.ARIAUtils.setAccessibleName(filterInput, ls`Filter Styles`);
     filterContainerElement.appendChild(filterInput);
     var toolbar = new UI.Toolbar('styles-pane-toolbar', hbox);
     toolbar.makeToggledGray();
@@ -718,7 +717,9 @@ Elements.SectionBlock = class {
     var separatorElement = createElement('div');
     separatorElement.className = 'sidebar-separator';
     var link = Components.DOMPresentationUtils.linkifyNodeReference(node);
-    separatorElement.createTextChild(Common.UIString('Inherited from') + ' ');
+    separatorElement.createTextChild(
+        ls`Inherited from` +
+        ' ');
     separatorElement.appendChild(link);
     return new Elements.SectionBlock(separatorElement);
   }
@@ -857,11 +858,11 @@ Elements.StylePropertiesSection = class {
     }
 
     if (rule.isUserAgent())
-      return createTextNode(Common.UIString('user agent stylesheet'));
+      return createTextNode(ls`user agent stylesheet`);
     if (rule.isInjected())
-      return createTextNode(Common.UIString('injected stylesheet'));
+      return createTextNode(ls`injected stylesheet`);
     if (rule.isViaInspector())
-      return createTextNode(Common.UIString('via inspector'));
+      return createTextNode(ls`via inspector`);
 
     if (header && header.ownerNode) {
       var link = Components.DOMPresentationUtils.linkifyDeferredNodeReference(header.ownerNode);
@@ -935,31 +936,31 @@ Elements.StylePropertiesSection = class {
       return;
     var items = [];
 
-    var textShadowButton = new UI.ToolbarButton(Common.UIString('Add text-shadow'), 'largeicon-text-shadow');
+    var textShadowButton = new UI.ToolbarButton(ls`Add text-shadow`, 'largeicon-text-shadow');
     textShadowButton.addEventListener(
         UI.ToolbarButton.Events.Click, this._onInsertShadowPropertyClick.bind(this, 'text-shadow'));
     textShadowButton.element.tabIndex = -1;
     items.push(textShadowButton);
 
-    var boxShadowButton = new UI.ToolbarButton(Common.UIString('Add box-shadow'), 'largeicon-box-shadow');
+    var boxShadowButton = new UI.ToolbarButton(ls`Add box-shadow`, 'largeicon-box-shadow');
     boxShadowButton.addEventListener(
         UI.ToolbarButton.Events.Click, this._onInsertShadowPropertyClick.bind(this, 'box-shadow'));
     boxShadowButton.element.tabIndex = -1;
     items.push(boxShadowButton);
 
-    var colorButton = new UI.ToolbarButton(Common.UIString('Add color'), 'largeicon-foreground-color');
+    var colorButton = new UI.ToolbarButton(ls`Add color`, 'largeicon-foreground-color');
     colorButton.addEventListener(UI.ToolbarButton.Events.Click, this._onInsertColorPropertyClick, this);
     colorButton.element.tabIndex = -1;
     items.push(colorButton);
 
-    var backgroundButton = new UI.ToolbarButton(Common.UIString('Add background-color'), 'largeicon-background-color');
+    var backgroundButton = new UI.ToolbarButton(ls`Add background-color`, 'largeicon-background-color');
     backgroundButton.addEventListener(UI.ToolbarButton.Events.Click, this._onInsertBackgroundColorPropertyClick, this);
     backgroundButton.element.tabIndex = -1;
     items.push(backgroundButton);
 
     var newRuleButton = null;
     if (this._style.parentRule) {
-      newRuleButton = new UI.ToolbarButton(Common.UIString('Insert Style Rule Below'), 'largeicon-add');
+      newRuleButton = new UI.ToolbarButton(ls`Insert Style Rule Below`, 'largeicon-add');
       newRuleButton.addEventListener(UI.ToolbarButton.Events.Click, this._onNewRuleClick, this);
       newRuleButton.element.tabIndex = -1;
       items.push(newRuleButton);
@@ -969,7 +970,7 @@ Elements.StylePropertiesSection = class {
     for (var i = 0; i < items.length; ++i)
       sectionToolbar.appendToolbarItem(items[i]);
 
-    var menuButton = new UI.ToolbarButton(Common.UIString('More tools\u2026'), 'largeicon-menu');
+    var menuButton = new UI.ToolbarButton(ls`More tools\u2026`, 'largeicon-menu');
     menuButton.element.tabIndex = -1;
     sectionToolbar.appendToolbarItem(menuButton);
     setItemsVisibility.call(this, items, false);
@@ -1016,9 +1017,9 @@ Elements.StylePropertiesSection = class {
   _headerText() {
     var node = this._matchedStyles.nodeForStyle(this._style);
     if (this._style.type === SDK.CSSStyleDeclaration.Type.Inline)
-      return this._matchedStyles.isInherited(this._style) ? Common.UIString('Style Attribute') : 'element.style';
+      return this._matchedStyles.isInherited(this._style) ? ls`Style Attribute` : 'element.style';
     if (this._style.type === SDK.CSSStyleDeclaration.Type.Attributes)
-      return node.nodeNameInCorrectCase() + '[' + Common.UIString('Attributes Style') + ']';
+      return node.nodeNameInCorrectCase() + ls`[Attributes Style]`;
     return this._style.parentRule.selectorText();
   }
 
@@ -3265,7 +3266,7 @@ Elements.StylesSidebarPropertyRenderer = class {
  */
 Elements.StylesSidebarPane.ButtonProvider = class {
   constructor() {
-    this._button = new UI.ToolbarButton(Common.UIString('New Style Rule'), 'largeicon-add');
+    this._button = new UI.ToolbarButton(ls`New Style Rule`, 'largeicon-add');
     this._button.addEventListener(UI.ToolbarButton.Events.Click, this._clicked, this);
     var longclickTriangle = UI.Icon.create('largeicon-longclick-triangle', 'long-click-glyph');
     this._button.element.appendChild(longclickTriangle);

@@ -1346,21 +1346,21 @@ SDK.DebuggerModel.Scope = class {
   typeName() {
     switch (this._type) {
       case Protocol.Debugger.ScopeType.Local:
-        return Common.UIString('Local');
+        return ls`Local`;
       case Protocol.Debugger.ScopeType.Closure:
-        return Common.UIString('Closure');
+        return ls`Closure`;
       case Protocol.Debugger.ScopeType.Catch:
-        return Common.UIString('Catch');
+        return ls`Catch`;
       case Protocol.Debugger.ScopeType.Block:
-        return Common.UIString('Block');
+        return ls`Block`;
       case Protocol.Debugger.ScopeType.Script:
-        return Common.UIString('Script');
+        return ls`Script`;
       case Protocol.Debugger.ScopeType.With:
-        return Common.UIString('With Block');
+        return ls`With Block`;
       case Protocol.Debugger.ScopeType.Global:
-        return Common.UIString('Global');
+        return ls`Global`;
       case Protocol.Debugger.ScopeType.Module:
-        return Common.UIString('Module');
+        return ls`Module`;
     }
     return '';
   }

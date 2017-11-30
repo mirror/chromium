@@ -13,13 +13,12 @@ Emulation.DevicesSettingsTab = class extends UI.VBox {
     this.registerRequiredCSS('emulation/devicesSettingsTab.css');
 
     var header = this.element.createChild('header');
-    header.createChild('h3').createTextChild(Common.UIString('Emulated Devices'));
+    header.createChild('h3').createTextChild(ls`Emulated Devices`);
     this.containerElement = this.element.createChild('div', 'help-container-wrapper')
                                 .createChild('div', 'settings-tab help-content help-container');
 
     var buttonsRow = this.containerElement.createChild('div', 'devices-button-row');
-    this._addCustomButton =
-        UI.createTextButton(Common.UIString('Add custom device...'), this._addCustomDevice.bind(this));
+    this._addCustomButton = UI.createTextButton(ls`Add custom device...`, this._addCustomDevice.bind(this));
     buttonsRow.appendChild(this._addCustomButton);
 
     this._list = new UI.ListWidget(this);
@@ -200,16 +199,15 @@ Emulation.DevicesSettingsTab = class extends UI.VBox {
     var content = editor.contentElement();
 
     var fields = content.createChild('div', 'devices-edit-fields');
-    fields.createChild('div', 'hbox')
-        .appendChild(editor.createInput('title', 'text', Common.UIString('Device name'), titleValidator));
+    fields.createChild('div', 'hbox').appendChild(editor.createInput('title', 'text', ls`Device name`, titleValidator));
     var screen = fields.createChild('div', 'hbox');
-    screen.appendChild(editor.createInput('width', 'text', Common.UIString('Width'), sizeValidator));
-    screen.appendChild(editor.createInput('height', 'text', Common.UIString('height'), sizeValidator));
-    var dpr = editor.createInput('scale', 'text', Common.UIString('Device pixel ratio'), scaleValidator);
+    screen.appendChild(editor.createInput('width', 'text', ls`Width`, sizeValidator));
+    screen.appendChild(editor.createInput('height', 'text', ls`height`, sizeValidator));
+    var dpr = editor.createInput('scale', 'text', ls`Device pixel ratio`, scaleValidator);
     dpr.classList.add('device-edit-fixed');
     screen.appendChild(dpr);
     var ua = fields.createChild('div', 'hbox');
-    ua.appendChild(editor.createInput('user-agent', 'text', Common.UIString('User agent string'), () => true));
+    ua.appendChild(editor.createInput('user-agent', 'text', ls`User agent string`, () => true));
     var uaType = editor.createSelect(
         'ua-type',
         [

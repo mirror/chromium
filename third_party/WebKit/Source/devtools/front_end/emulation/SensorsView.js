@@ -41,15 +41,12 @@ Emulation.SensorsView = class extends UI.VBox {
    */
   _createGeolocationSection(geolocation) {
     var geogroup = this.contentElement.createChild('section', 'sensors-group');
-    geogroup.createChild('div', 'sensors-group-title').textContent = Common.UIString('Geolocation');
+    geogroup.createChild('div', 'sensors-group-title').textContent = ls`Geolocation`;
     var fields = geogroup.createChild('div', 'geo-fields');
 
-    const noOverrideOption = {
-      title: Common.UIString('No override'),
-      location: Emulation.SensorsView.NonPresetOptions.NoOverride
-    };
+    const noOverrideOption = {title: ls`No override`, location: Emulation.SensorsView.NonPresetOptions.NoOverride};
     const customLocationOption = {
-      title: Common.UIString('Custom location...'),
+      title: ls`Custom location...`,
       location: Emulation.SensorsView.NonPresetOptions.Custom
     };
     this._locationSelectElement = this.contentElement.createChild('select', 'chrome-select');
@@ -94,8 +91,8 @@ Emulation.SensorsView = class extends UI.VBox {
         SDK.EmulationModel.Geolocation.longitudeValidator, true);
     this._longitudeSetter(String(geolocation.longitude));
 
-    latitudeGroup.createChild('div', 'latlong-title').textContent = Common.UIString('Latitude');
-    longitudeGroup.createChild('div', 'latlong-title').textContent = Common.UIString('Longitude');
+    latitudeGroup.createChild('div', 'latlong-title').textContent = ls`Latitude`;
+    longitudeGroup.createChild('div', 'latlong-title').textContent = ls`Longitude`;
   }
 
   _geolocationSelectChanged() {
@@ -142,16 +139,13 @@ Emulation.SensorsView = class extends UI.VBox {
 
   _createDeviceOrientationSection() {
     var orientationGroup = this.contentElement.createChild('section', 'sensors-group');
-    orientationGroup.createChild('div', 'sensors-group-title').textContent = Common.UIString('Orientation');
+    orientationGroup.createChild('div', 'sensors-group-title').textContent = ls`Orientation`;
     var orientationContent = orientationGroup.createChild('div', 'orientation-content');
     var fields = orientationContent.createChild('div', 'orientation-fields');
 
-    const orientationOffOption = {
-      title: Common.UIString('Off'),
-      orientation: Emulation.SensorsView.NonPresetOptions.NoOverride
-    };
+    const orientationOffOption = {title: ls`Off`, orientation: Emulation.SensorsView.NonPresetOptions.NoOverride};
     const customOrientationOption = {
-      title: Common.UIString('Custom orientation...'),
+      title: ls`Custom orientation...`,
       orientation: Emulation.SensorsView.NonPresetOptions.Custom
     };
     this._orientationSelectElement = this.contentElement.createChild('select', 'chrome-select');
@@ -175,7 +169,7 @@ Emulation.SensorsView = class extends UI.VBox {
     this._deviceOrientationFieldset = this._createDeviceOrientationOverrideElement(this._deviceOrientation);
 
     this._stageElement = orientationContent.createChild('div', 'orientation-stage');
-    this._stageElement.title = Common.UIString('Shift+drag horizontally to rotate around the y-axis');
+    this._stageElement.title = ls`Shift+drag horizontally to rotate around the y-axis`;
     this._orientationLayer = this._stageElement.createChild('div', 'orientation-layer');
     this._boxElement = this._orientationLayer.createChild('section', 'orientation-box orientation-element');
 
@@ -314,21 +308,21 @@ Emulation.SensorsView = class extends UI.VBox {
 
     this._alphaElement = UI.createInput();
     this._alphaElement.setAttribute('step', 'any');
-    this._alphaSetter = this._createAxisInput(cellElement, this._alphaElement, Common.UIString('\u03B1 (alpha)'));
+    this._alphaSetter = this._createAxisInput(cellElement, this._alphaElement, ls`\u03B1 (alpha)`);
     this._alphaSetter(String(deviceOrientation.alpha));
 
     this._betaElement = UI.createInput();
     this._betaElement.setAttribute('step', 'any');
-    this._betaSetter = this._createAxisInput(cellElement, this._betaElement, Common.UIString('\u03B2 (beta)'));
+    this._betaSetter = this._createAxisInput(cellElement, this._betaElement, ls`\u03B2 (beta)`);
     this._betaSetter(String(deviceOrientation.beta));
 
     this._gammaElement = UI.createInput();
     this._gammaElement.setAttribute('step', 'any');
-    this._gammaSetter = this._createAxisInput(cellElement, this._gammaElement, Common.UIString('\u03B3 (gamma)'));
+    this._gammaSetter = this._createAxisInput(cellElement, this._gammaElement, ls`\u03B3 (gamma)`);
     this._gammaSetter(String(deviceOrientation.gamma));
 
-    cellElement.appendChild(UI.createTextButton(
-        Common.UIString('Reset'), this._resetDeviceOrientation.bind(this), 'orientation-reset-button'));
+    cellElement.appendChild(
+        UI.createTextButton(ls`Reset`, this._resetDeviceOrientation.bind(this), 'orientation-reset-button'));
     return fieldsetElement;
   }
 
@@ -425,14 +419,14 @@ Emulation.SensorsView = class extends UI.VBox {
     var title = groupElement.createChild('div', 'sensors-group-title');
     var fieldsElement = groupElement.createChild('div', 'sensors-group-fields');
 
-    title.textContent = Common.UIString('Touch');
+    title.textContent = ls`Touch`;
     var select = fieldsElement.createChild('select', 'chrome-select');
-    select.appendChild(new Option(Common.UIString('Device-based'), 'auto'));
-    select.appendChild(new Option(Common.UIString('Force enabled'), 'enabled'));
+    select.appendChild(new Option(ls`Device-based`, 'auto'));
+    select.appendChild(new Option(ls`Force enabled`, 'enabled'));
     select.addEventListener('change', applyTouch, false);
 
     var reloadWarning = groupElement.createChild('div', 'reload-warning hidden');
-    reloadWarning.textContent = Common.UIString('*Requires reload');
+    reloadWarning.textContent = ls`*Requires reload`;
 
     function applyTouch() {
       for (var emulationModel of SDK.targetManager.models(SDK.EmulationModel))
@@ -467,22 +461,20 @@ Emulation.SensorsView.PresetLocations = [
   {
     title: 'Presets',
     value: [
-      {title: Common.UIString('Berlin'), location: '[52.520007, 13.404954]'},
-      {title: Common.UIString('London'), location: '[51.507351, -0.127758]'},
-      {title: Common.UIString('Moscow'), location: '[55.755826, 37.617300]'},
-      {title: Common.UIString('Mountain View'), location: '[37.386052, -122.083851]'},
-      {title: Common.UIString('Mumbai'), location: '[19.075984, 72.877656]'},
-      {title: Common.UIString('San Francisco'), location: '[37.774929, -122.419416]'},
-      {title: Common.UIString('Shanghai'), location: '[31.230416, 121.473701]'},
-      {title: Common.UIString('São Paulo'), location: '[-23.550520, -46.633309]'},
-      {title: Common.UIString('Tokyo'), location: '[35.689487, 139.691706]'},
+      {title: ls`Berlin`, location: '[52.520007, 13.404954]'},
+      {title: ls`London`, location: '[51.507351, -0.127758]'},
+      {title: ls`Moscow`, location: '[55.755826, 37.617300]'},
+      {title: ls`Mountain View`, location: '[37.386052, -122.083851]'},
+      {title: ls`Mumbai`, location: '[19.075984, 72.877656]'},
+      {title: ls`San Francisco`, location: '[37.774929, -122.419416]'},
+      {title: ls`Shanghai`, location: '[31.230416, 121.473701]'},
+      {title: ls`São Paulo`, location: '[-23.550520, -46.633309]'},
+      {title: ls`Tokyo`, location: '[35.689487, 139.691706]'},
     ]
   },
   {
     title: 'Error',
-    value: [
-      {title: Common.UIString('Location unavailable'), location: Emulation.SensorsView.NonPresetOptions.Unavailable}
-    ]
+    value: [{title: ls`Location unavailable`, location: Emulation.SensorsView.NonPresetOptions.Unavailable}]
   }
 ];
 
@@ -490,12 +482,9 @@ Emulation.SensorsView.PresetLocations = [
 Emulation.SensorsView.PresetOrientations = [{
   title: 'Presets',
   value: [
-    {title: Common.UIString('Portrait'), orientation: '[0, 90, 0]'},
-    {title: Common.UIString('Portrait upside down'), orientation: '[180, -90, 0]'},
-    {title: Common.UIString('Landscape left'), orientation: '[0, 90, -90]'},
-    {title: Common.UIString('Landscape right'), orientation: '[0, 90, 90]'},
-    {title: Common.UIString('Display up'), orientation: '[0, 0, 0]'},
-    {title: Common.UIString('Display down'), orientation: '[0, 180, 0]'}
+    {title: ls`Portrait`, orientation: '[0, 90, 0]'}, {title: ls`Portrait upside down`, orientation: '[180, -90, 0]'},
+    {title: ls`Landscape left`, orientation: '[0, 90, -90]'}, {title: ls`Landscape right`, orientation: '[0, 90, 90]'},
+    {title: ls`Display up`, orientation: '[0, 0, 0]'}, {title: ls`Display down`, orientation: '[0, 180, 0]'}
   ]
 }];
 

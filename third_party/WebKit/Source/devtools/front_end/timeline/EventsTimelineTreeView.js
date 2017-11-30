@@ -91,8 +91,7 @@ Timeline.EventsTimelineTreeView = class extends Timeline.TimelineTreeView {
    * @param {!Array<!DataGrid.DataGrid.ColumnDescriptor>} columns
    */
   populateColumns(columns) {
-    columns.push(
-        {id: 'startTime', title: Common.UIString('Start Time'), width: '80px', fixedWidth: true, sortable: true});
+    columns.push({id: 'startTime', title: ls`Start Time`, width: '80px', fixedWidth: true, sortable: true});
     super.populateColumns(columns);
     columns.filter(c => c.fixedWidth).forEach(c => c.width = '80px');
   }
@@ -155,9 +154,8 @@ Timeline.EventsTimelineTreeView.Filters = class extends Common.Object {
     var durationFilterUI = new UI.ToolbarComboBox(durationFilterChanged.bind(this));
     for (var durationMs of Timeline.EventsTimelineTreeView.Filters._durationFilterPresetsMs) {
       durationFilterUI.addOption(durationFilterUI.createOption(
-          durationMs ? Common.UIString('\u2265 %d\xa0ms', durationMs) : Common.UIString('All'),
-          durationMs ? Common.UIString('Hide records shorter than %d\xa0ms', durationMs) :
-                       Common.UIString('Show all records'),
+          durationMs ? Common.UIString('\u2265 %d\xa0ms', durationMs) : ls`All`,
+          durationMs ? Common.UIString('Hide records shorter than %d\xa0ms', durationMs) : ls`Show all records`,
           String(durationMs)));
     }
     toolbar.appendToolbarItem(durationFilterUI);

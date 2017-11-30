@@ -173,8 +173,8 @@ Console.ConsoleViewMessage = class {
       for (var j = 0; j < columnNames.length; ++j)
         flatValues.push(rowValue[columnNames[j]]);
     }
-    columnNames.unshift(Common.UIString('(index)'));
-    var columnDisplayNames = columnNames.map(name => name === rawValueColumnSymbol ? Common.UIString('Value') : name);
+    columnNames.unshift(ls`(index)`);
+    var columnDisplayNames = columnNames.map(name => name === rawValueColumnSymbol ? ls`Value` : name);
 
     if (flatValues.length) {
       this._dataGrid = DataGrid.SortableDataGrid.create(columnDisplayNames, flatValues);
@@ -207,12 +207,12 @@ Console.ConsoleViewMessage = class {
           if (Common.moduleSetting('preserveConsoleLog').get())
             messageElement.textContent = Common.UIString('console.clear() was prevented due to \'Preserve log\'');
           else
-            messageElement.textContent = Common.UIString('Console was cleared');
+            messageElement.textContent = ls`Console was cleared`;
           messageElement.title =
               Common.UIString('Clear all messages with ' + UI.shortcutRegistry.shortcutTitleForAction('console.clear'));
           break;
         case ConsoleModel.ConsoleMessage.MessageType.Assert:
-          var args = [Common.UIString('Assertion failed:')];
+          var args = [ls`Assertion failed:`];
           if (this._message.parameters)
             args = args.concat(this._message.parameters);
           messageElement = this._format(args);
@@ -593,7 +593,7 @@ Console.ConsoleViewMessage = class {
 
     var note = titleElement.createChild('span', 'object-state-note');
     note.classList.add('info-note');
-    note.title = Common.UIString('Value below was evaluated just now.');
+    note.title = ls`Value below was evaluated just now.`;
 
     var section = new ObjectUI.ObjectPropertiesSection(obj, titleElement, this._linkifier);
     section.element.classList.add('console-view-object-properties-section');
@@ -621,7 +621,7 @@ Console.ConsoleViewMessage = class {
       result.appendChild(functionElement);
       if (targetFunction !== func) {
         var note = result.createChild('span', 'object-info-state-note');
-        note.title = Common.UIString('Function was resolved from bound function.');
+        note.title = ls`Function was resolved from bound function.`;
       }
       result.addEventListener('contextmenu', this._contextMenuEventFired.bind(this, targetFunction), false);
     }
@@ -733,7 +733,7 @@ Console.ConsoleViewMessage = class {
       rootElement.removeChildren();
       if (wasThrown) {
         var element = rootElement.createChild('span');
-        element.textContent = Common.UIString('<exception>');
+        element.textContent = ls`<exception>`;
         element.title = /** @type {string} */ (result.description);
       } else if (isArrayEntry) {
         rootElement.appendChild(this._formatAsArrayEntry(result));
@@ -1380,15 +1380,15 @@ Console.ConsoleViewMessage = class {
     var result = tokens.reduce((acc, token) => {
       var text = token.text;
       if (token.type === 'url')
-        text = Common.UIString('<URL>');
+        text = ls`<URL>`;
       else if (token.type === 'time')
-        text = Common.UIString('took <N>ms');
+        text = ls`took <N>ms`;
       else if (token.type === 'event')
-        text = Common.UIString('<some> event');
+        text = ls`<some> event`;
       else if (token.type === 'milestone')
-        text = Common.UIString(' M<XX>');
+        text = ls` M<XX>`;
       else if (token.type === 'autofill')
-        text = Common.UIString('<attribute>');
+        text = ls`<attribute>`;
       return acc + text;
     }, '');
     return result.replace(/[%]o/g, '');

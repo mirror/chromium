@@ -108,7 +108,7 @@ Timeline.TimelineFlameChartDataProvider = class extends Common.Object {
       if (event.phase === SDK.TracingModel.Phase.AsyncStepInto || event.phase === SDK.TracingModel.Phase.AsyncStepPast)
         return event.name + ':' + event.args['step'];
       if (event._blackboxRoot)
-        return Common.UIString('Blackboxed');
+        return ls`Blackboxed`;
       var name = Timeline.TimelineUIUtils.eventStyle(event).title;
       // TODO(yurys): support event dividers
       var detailsText = Timeline.TimelineUIUtils.buildDetailsTextForTraceEvent(event, this._model.targetByEvent(event));
@@ -200,7 +200,7 @@ Timeline.TimelineFlameChartDataProvider = class extends Common.Object {
 
     this._appendFrameBars();
 
-    this._appendHeader(Common.UIString('Interactions'), this._interactionsHeaderLevel1);
+    this._appendHeader(ls`Interactions`, this._interactionsHeaderLevel1);
     this._appendInteractionRecords();
 
     var eventEntryType = Timeline.TimelineFlameChartDataProvider.EntryType.Event;
@@ -219,10 +219,10 @@ Timeline.TimelineFlameChartDataProvider = class extends Common.Object {
     var threads = this._model.virtualThreads();
     if (!Runtime.experiments.isEnabled('timelinePerFrameTrack')) {
       this._appendThreadTimelineData(
-          Common.UIString('Main'), this._model.mainThreadEvents(), this._model.mainThreadAsyncEvents(), true);
+          ls`Main`, this._model.mainThreadEvents(), this._model.mainThreadAsyncEvents(), true);
     } else {
       this._appendThreadTimelineData(
-          Common.UIString('Page'), this._model.eventsForFrame(TimelineModel.TimelineModel.PageFrame.mainFrameId),
+          ls`Page`, this._model.eventsForFrame(TimelineModel.TimelineModel.PageFrame.mainFrameId),
           this._model.mainThreadAsyncEvents(), true);
       for (var frame of this._model.rootFrames()) {
         // Ignore top frame itself, since it should be part of page events.
@@ -232,7 +232,7 @@ Timeline.TimelineFlameChartDataProvider = class extends Common.Object {
     var compositorThreads = threads.filter(thread => thread.name.startsWith('CompositorTileWorker'));
     var otherThreads = threads.filter(thread => !thread.name.startsWith('CompositorTileWorker'));
     if (compositorThreads.length) {
-      this._appendHeader(Common.UIString('Raster'), this._headerLevel1);
+      this._appendHeader(ls`Raster`, this._headerLevel1);
       for (var i = 0; i < compositorThreads.length; ++i) {
         this._appendSyncEvents(
             compositorThreads[i].events, Common.UIString('Rasterizer Thread %d', i), this._headerLevel2,
@@ -459,7 +459,7 @@ Timeline.TimelineFlameChartDataProvider = class extends Common.Object {
   _appendGPUEvents() {
     var eventType = Timeline.TimelineFlameChartDataProvider.EntryType.Event;
     var gpuEvents = this._model.gpuEvents();
-    if (this._appendSyncEvents(gpuEvents, Common.UIString('GPU'), this._headerLevel1, eventType, false))
+    if (this._appendSyncEvents(gpuEvents, ls`GPU`, this._headerLevel1, eventType, false))
       ++this._currentLevel;
   }
 
@@ -472,7 +472,7 @@ Timeline.TimelineFlameChartDataProvider = class extends Common.Object {
     var screenshots = this._performanceModel.filmStripModel().frames();
     var hasFilmStrip = !!screenshots.length;
     this._framesHeader.collapsible = hasFilmStrip;
-    this._appendHeader(Common.UIString('Frames'), this._framesHeader);
+    this._appendHeader(ls`Frames`, this._framesHeader);
     this._frameGroup = this._timelineData.groups.peekLast();
     var style = Timeline.TimelineUIUtils.markerStyleForFrame();
     this._entryTypeByLevel[this._currentLevel] = Timeline.TimelineFlameChartDataProvider.EntryType.Frame;
@@ -535,10 +535,10 @@ Timeline.TimelineFlameChartDataProvider = class extends Common.Object {
       var frame = /** @type {!TimelineModel.TimelineFrame} */ (this._entryData[entryIndex]);
       time = Common.UIString(
           '%s ~ %.0f\xa0fps', Number.preciseMillisToString(frame.duration, 1), (1000 / frame.duration));
-      title = frame.idle ? Common.UIString('Idle Frame') : Common.UIString('Frame');
+      title = frame.idle ? ls`Idle Frame` : ls`Frame`;
       if (frame.hasWarnings()) {
         warning = createElement('span');
-        warning.textContent = Common.UIString('Long frame');
+        warning.textContent = ls`Long frame`;
       }
     } else {
       return null;

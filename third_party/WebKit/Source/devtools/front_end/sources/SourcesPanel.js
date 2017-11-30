@@ -35,8 +35,7 @@ Sources.SourcesPanel = class extends UI.Panel {
     Sources.SourcesPanel._instance = this;
     this.registerRequiredCSS('sources/sourcesPanel.css');
     new UI.DropTarget(
-        this.element, [UI.DropTarget.Type.Folder], Common.UIString('Drop workspace folder here'),
-        this._handleDrop.bind(this));
+        this.element, [UI.DropTarget.Type.Folder], ls`Drop workspace folder here`, this._handleDrop.bind(this));
 
     this._workspace = Workspace.workspace;
 
@@ -75,7 +74,7 @@ Sources.SourcesPanel = class extends UI.Panel {
     tabbedPane.setMinimumSize(100, 25);
     tabbedPane.element.classList.add('navigator-tabbed-pane');
     var navigatorMenuButton = new UI.ToolbarMenuButton(this._populateNavigatorMenu.bind(this), true);
-    navigatorMenuButton.setTitle(Common.UIString('More options'));
+    navigatorMenuButton.setTitle(ls`More options`);
     tabbedPane.rightToolbar().appendToolbarItem(navigatorMenuButton);
     this.editorView.setSidebarWidget(tabbedPane);
 
@@ -410,8 +409,7 @@ Sources.SourcesPanel = class extends UI.Panel {
     var groupByFolderSetting = Common.moduleSetting('navigatorGroupByFolder');
     contextMenu.appendItemsAtLocation('navigatorMenu');
     contextMenu.viewSection().appendCheckboxItem(
-        Common.UIString('Group by folder'), () => groupByFolderSetting.set(!groupByFolderSetting.get()),
-        groupByFolderSetting.get());
+        ls`Group by folder`, () => groupByFolderSetting.set(!groupByFolderSetting.get()), groupByFolderSetting.get());
   }
 
   /**
@@ -685,8 +683,7 @@ Sources.SourcesPanel = class extends UI.Panel {
   _createDebugToolbar() {
     var debugToolbar = new UI.Toolbar('scripts-debug-toolbar');
 
-    var longResumeButton =
-        new UI.ToolbarButton(Common.UIString('Resume with all pauses blocked for 500 ms'), 'largeicon-play');
+    var longResumeButton = new UI.ToolbarButton(ls`Resume with all pauses blocked for 500 ms`, 'largeicon-play');
     longResumeButton.addEventListener(UI.ToolbarButton.Events.Click, this._longResume, this);
     debugToolbar.appendToolbarItem(UI.Toolbar.createActionButton(this._togglePauseAction, [longResumeButton], []));
 
@@ -708,7 +705,7 @@ Sources.SourcesPanel = class extends UI.Panel {
   _createDebugToolbarDrawer() {
     var debugToolbarDrawer = createElementWithClass('div', 'scripts-debug-toolbar-drawer');
 
-    var label = Common.UIString('Pause on caught exceptions');
+    var label = ls`Pause on caught exceptions`;
     var setting = Common.moduleSetting('pauseOnCaughtException');
     debugToolbarDrawer.appendChild(UI.SettingsUI.createSettingCheckbox(label, setting, true));
 
@@ -786,10 +783,10 @@ Sources.SourcesPanel = class extends UI.Panel {
       var binding = Persistence.persistence.binding(uiSourceCode);
       if (!binding) {
         contextMenu.debugSection().appendItem(
-            Common.UIString('Map to network resource\u2026'), this.mapFileSystemToNetwork.bind(this, uiSourceCode));
+            ls`Map to network resource\u2026`, this.mapFileSystemToNetwork.bind(this, uiSourceCode));
       } else {
         contextMenu.debugSection().appendItem(
-            Common.UIString('Remove network mapping'), this._removeNetworkMapping.bind(this, binding.network));
+            ls`Remove network mapping`, this._removeNetworkMapping.bind(this, binding.network));
       }
     }
 
@@ -806,7 +803,7 @@ Sources.SourcesPanel = class extends UI.Panel {
         return;
       if (this._workspace.uiSourceCodeForURL(uiSourceCode.url()) === uiSourceCode) {
         contextMenu.debugSection().appendItem(
-            Common.UIString('Map to file system resource\u2026'), this.mapNetworkToFileSystem.bind(this, uiSourceCode));
+            ls`Map to file system resource\u2026`, this.mapNetworkToFileSystem.bind(this, uiSourceCode));
       }
     }
   }
@@ -824,7 +821,7 @@ Sources.SourcesPanel = class extends UI.Panel {
     if (!uiSourceCode.project().isServiceProject() &&
         !event.target.isSelfOrDescendant(this._navigatorTabbedLocation.widget().element)) {
       contextMenu.revealSection().appendItem(
-          Common.UIString('Reveal in navigator'), this._handleContextMenuReveal.bind(this, uiSourceCode));
+          ls`Reveal in navigator`, this._handleContextMenuReveal.bind(this, uiSourceCode));
     }
     this._appendUISourceCodeMappingItems(contextMenu, uiSourceCode);
   }
@@ -854,10 +851,8 @@ Sources.SourcesPanel = class extends UI.Panel {
     if (contentType.hasScripts()) {
       var target = UI.context.flavor(SDK.Target);
       var debuggerModel = target ? target.model(SDK.DebuggerModel) : null;
-      if (debuggerModel && debuggerModel.isPaused()) {
-        contextMenu.debugSection().appendItem(
-            Common.UIString('Continue to here'), this._continueToLocation.bind(this, uiLocation));
-      }
+      if (debuggerModel && debuggerModel.isPaused())
+        contextMenu.debugSection().appendItem(ls`Continue to here`, this._continueToLocation.bind(this, uiLocation));
 
       this._callstackPane.appendBlackboxURLContextMenuItems(contextMenu, uiSourceCode);
     }
@@ -880,10 +875,10 @@ Sources.SourcesPanel = class extends UI.Panel {
       return;
     var remoteObject = /** @type {!SDK.RemoteObject} */ (target);
     contextMenu.debugSection().appendItem(
-        Common.UIString('Store as global variable'), this._saveToTempVariable.bind(this, remoteObject));
+        ls`Store as global variable`, this._saveToTempVariable.bind(this, remoteObject));
     if (remoteObject.type === 'function') {
       contextMenu.debugSection().appendItem(
-          Common.UIString('Show function definition'), this._showFunctionDefinition.bind(this, remoteObject));
+          ls`Show function definition`, this._showFunctionDefinition.bind(this, remoteObject));
     }
   }
 
@@ -898,7 +893,7 @@ Sources.SourcesPanel = class extends UI.Panel {
     var uiSourceCode = this._workspace.uiSourceCodeForURL(request.url());
     if (!uiSourceCode)
       return;
-    var openText = Common.UIString('Open in Sources panel');
+    var openText = ls`Open in Sources panel`;
     contextMenu.revealSection().appendItem(openText, this.showUILocation.bind(this, uiSourceCode.uiLocation(0, 0)));
   }
 
@@ -952,7 +947,7 @@ Sources.SourcesPanel = class extends UI.Panel {
      * @param {?SDK.RemoteObject} result
      */
     function failedToSave(result) {
-      var message = Common.UIString('Failed to save to temp variable.');
+      var message = ls`Failed to save to temp variable.`;
       if (result)
         message += ' ' + result.description;
       Common.console.error(message);

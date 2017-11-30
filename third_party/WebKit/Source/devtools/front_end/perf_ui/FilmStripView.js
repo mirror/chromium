@@ -56,7 +56,7 @@ PerfUI.FilmStripView = class extends UI.HBox {
   createFrameElement(frame) {
     var time = frame.timestamp;
     var element = createElementWithClass('div', 'frame');
-    element.title = Common.UIString('Doubleclick to zoom image. Click to view preceding requests.');
+    element.title = ls`Doubleclick to zoom image. Click to view preceding requests.`;
     element.createChild('div', 'time').textContent = Number.millisToString(time - this._zeroTime);
     var imageElement = element.createChild('div', 'thumbnail').createChild('img');
     element.addEventListener(
@@ -225,11 +225,11 @@ PerfUI.FilmStripView.Dialog = class extends UI.VBox {
     var footerElement = this.contentElement.createChild('div', 'filmstrip-dialog-footer');
     footerElement.createChild('div', 'flex-auto');
     var prevButton = UI.createTextButton('\u25C0', this._onPrevFrame.bind(this));
-    prevButton.title = Common.UIString('Previous frame');
+    prevButton.title = ls`Previous frame`;
     footerElement.appendChild(prevButton);
     this._timeLabel = footerElement.createChild('div', 'filmstrip-dialog-label');
     var nextButton = UI.createTextButton('\u25B6', this._onNextFrame.bind(this));
-    nextButton.title = Common.UIString('Next frame');
+    nextButton.title = ls`Next frame`;
     footerElement.appendChild(nextButton);
     footerElement.createChild('div', 'flex-auto');
 

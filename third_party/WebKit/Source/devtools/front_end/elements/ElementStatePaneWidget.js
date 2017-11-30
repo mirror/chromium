@@ -9,7 +9,7 @@ Elements.ElementStatePaneWidget = class extends UI.Widget {
     super(true);
     this.registerRequiredCSS('elements/elementStatePaneWidget.css');
     this.contentElement.className = 'styles-element-state-pane';
-    this.contentElement.createChild('div').createTextChild(Common.UIString('Force element state'));
+    this.contentElement.createChild('div').createTextChild(ls`Force element state`);
     var table = createElementWithClass('table', 'source-code');
 
     var inputs = [];
@@ -105,8 +105,8 @@ Elements.ElementStatePaneWidget = class extends UI.Widget {
  */
 Elements.ElementStatePaneWidget.ButtonProvider = class {
   constructor() {
-    this._button = new UI.ToolbarToggle(Common.UIString('Toggle Element State'), '');
-    this._button.setText(Common.UIString(':hov'));
+    this._button = new UI.ToolbarToggle(ls`Toggle Element State`, '');
+    this._button.setText(ls`:hov`);
     this._button.addEventListener(UI.ToolbarButton.Events.Click, this._clicked, this);
     this._button.element.classList.add('monospace');
     this._view = new Elements.ElementStatePaneWidget();

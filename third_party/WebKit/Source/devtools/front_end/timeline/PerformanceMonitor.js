@@ -26,7 +26,7 @@ Timeline.PerformanceMonitor = class extends UI.HBox {
     var chartContainer = this.contentElement.createChild('div', 'perfmon-chart-container');
     this._canvas = /** @type {!HTMLCanvasElement} */ (chartContainer.createChild('canvas'));
     this.contentElement.createChild('div', 'perfmon-chart-suspend-overlay fill').createChild('div').textContent =
-        Common.UIString('Paused');
+        ls`Paused`;
 
     var mode = Timeline.PerformanceMonitor.MetricMode;
     /** @type {!Map<string, !Timeline.PerformanceMonitor.MetricMode>} */
@@ -427,7 +427,7 @@ Timeline.PerformanceMonitor.ControlPane = class extends Common.Object {
     /** @type {!Array<!Timeline.PerformanceMonitor.ChartInfo>} */
     this._chartsInfo = [
       {
-        title: Common.UIString('CPU usage'),
+        title: ls`CPU usage`,
         metrics: [
           {name: 'TaskDuration', color: '#999'}, {name: 'ScriptDuration', color: 'orange'},
           {name: 'LayoutDuration', color: 'blueviolet'}, {name: 'RecalcStyleDuration', color: 'violet'}
@@ -439,17 +439,17 @@ Timeline.PerformanceMonitor.ControlPane = class extends Common.Object {
         max: 1
       },
       {
-        title: Common.UIString('JS heap size'),
+        title: ls`JS heap size`,
         metrics: [{name: 'JSHeapTotalSize', color: '#99f'}, {name: 'JSHeapUsedSize', color: 'blue'}],
         format: format.Bytes,
         color: 'blue'
       },
-      {title: Common.UIString('DOM Nodes'), metrics: [{name: 'Nodes', color: 'green'}]},
-      {title: Common.UIString('JS event listeners'), metrics: [{name: 'JSEventListeners', color: 'yellowgreen'}]},
-      {title: Common.UIString('Documents'), metrics: [{name: 'Documents', color: 'darkblue'}]},
-      {title: Common.UIString('Frames'), metrics: [{name: 'Frames', color: 'darkcyan'}]},
-      {title: Common.UIString('Layouts / sec'), metrics: [{name: 'LayoutCount', color: 'hotpink'}]},
-      {title: Common.UIString('Style recalcs / sec'), metrics: [{name: 'RecalcStyleCount', color: 'deeppink'}]}
+      {title: ls`DOM Nodes`, metrics: [{name: 'Nodes', color: 'green'}]},
+      {title: ls`JS event listeners`, metrics: [{name: 'JSEventListeners', color: 'yellowgreen'}]},
+      {title: ls`Documents`, metrics: [{name: 'Documents', color: 'darkblue'}]},
+      {title: ls`Frames`, metrics: [{name: 'Frames', color: 'darkcyan'}]},
+      {title: ls`Layouts / sec`, metrics: [{name: 'LayoutCount', color: 'hotpink'}]},
+      {title: ls`Style recalcs / sec`, metrics: [{name: 'RecalcStyleCount', color: 'deeppink'}]}
     ];
     for (var info of this._chartsInfo) {
       for (var metric of info.metrics)

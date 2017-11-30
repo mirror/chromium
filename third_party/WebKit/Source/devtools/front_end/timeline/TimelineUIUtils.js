@@ -44,167 +44,135 @@ Timeline.TimelineUIUtils = class {
     var categories = Timeline.TimelineUIUtils.categories();
 
     var eventStyles = {};
-    eventStyles[recordTypes.Task] = new Timeline.TimelineRecordStyle(Common.UIString('Task'), categories['other']);
-    eventStyles[recordTypes.Program] = new Timeline.TimelineRecordStyle(Common.UIString('Other'), categories['other']);
-    eventStyles[recordTypes.Animation] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Animation'), categories['rendering']);
-    eventStyles[recordTypes.EventDispatch] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Event'), categories['scripting']);
+    eventStyles[recordTypes.Task] = new Timeline.TimelineRecordStyle(ls`Task`, categories['other']);
+    eventStyles[recordTypes.Program] = new Timeline.TimelineRecordStyle(ls`Other`, categories['other']);
+    eventStyles[recordTypes.Animation] = new Timeline.TimelineRecordStyle(ls`Animation`, categories['rendering']);
+    eventStyles[recordTypes.EventDispatch] = new Timeline.TimelineRecordStyle(ls`Event`, categories['scripting']);
     eventStyles[recordTypes.RequestMainThreadFrame] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Request Main Thread Frame'), categories['rendering'], true);
+        new Timeline.TimelineRecordStyle(ls`Request Main Thread Frame`, categories['rendering'], true);
     eventStyles[recordTypes.BeginFrame] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Frame Start'), categories['rendering'], true);
+        new Timeline.TimelineRecordStyle(ls`Frame Start`, categories['rendering'], true);
     eventStyles[recordTypes.BeginMainThreadFrame] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Frame Start (main thread)'), categories['rendering'], true);
+        new Timeline.TimelineRecordStyle(ls`Frame Start (main thread)`, categories['rendering'], true);
     eventStyles[recordTypes.DrawFrame] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Draw Frame'), categories['rendering'], true);
-    eventStyles[recordTypes.HitTest] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Hit Test'), categories['rendering']);
-    eventStyles[recordTypes.ScheduleStyleRecalculation] = new Timeline.TimelineRecordStyle(
-        Common.UIString('Schedule Style Recalculation'), categories['rendering'], true);
+        new Timeline.TimelineRecordStyle(ls`Draw Frame`, categories['rendering'], true);
+    eventStyles[recordTypes.HitTest] = new Timeline.TimelineRecordStyle(ls`Hit Test`, categories['rendering']);
+    eventStyles[recordTypes.ScheduleStyleRecalculation] =
+        new Timeline.TimelineRecordStyle(ls`Schedule Style Recalculation`, categories['rendering'], true);
     eventStyles[recordTypes.RecalculateStyles] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Recalculate Style'), categories['rendering']);
+        new Timeline.TimelineRecordStyle(ls`Recalculate Style`, categories['rendering']);
     eventStyles[recordTypes.UpdateLayoutTree] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Recalculate Style'), categories['rendering']);
+        new Timeline.TimelineRecordStyle(ls`Recalculate Style`, categories['rendering']);
     eventStyles[recordTypes.InvalidateLayout] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Invalidate Layout'), categories['rendering'], true);
-    eventStyles[recordTypes.Layout] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Layout'), categories['rendering']);
-    eventStyles[recordTypes.PaintSetup] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Paint Setup'), categories['painting']);
+        new Timeline.TimelineRecordStyle(ls`Invalidate Layout`, categories['rendering'], true);
+    eventStyles[recordTypes.Layout] = new Timeline.TimelineRecordStyle(ls`Layout`, categories['rendering']);
+    eventStyles[recordTypes.PaintSetup] = new Timeline.TimelineRecordStyle(ls`Paint Setup`, categories['painting']);
     eventStyles[recordTypes.PaintImage] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Paint Image'), categories['painting'], true);
+        new Timeline.TimelineRecordStyle(ls`Paint Image`, categories['painting'], true);
     eventStyles[recordTypes.UpdateLayer] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Update Layer'), categories['painting'], true);
+        new Timeline.TimelineRecordStyle(ls`Update Layer`, categories['painting'], true);
     eventStyles[recordTypes.UpdateLayerTree] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Update Layer Tree'), categories['rendering']);
-    eventStyles[recordTypes.Paint] = new Timeline.TimelineRecordStyle(Common.UIString('Paint'), categories['painting']);
-    eventStyles[recordTypes.RasterTask] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Rasterize Paint'), categories['painting']);
-    eventStyles[recordTypes.ScrollLayer] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Scroll'), categories['rendering']);
+        new Timeline.TimelineRecordStyle(ls`Update Layer Tree`, categories['rendering']);
+    eventStyles[recordTypes.Paint] = new Timeline.TimelineRecordStyle(ls`Paint`, categories['painting']);
+    eventStyles[recordTypes.RasterTask] = new Timeline.TimelineRecordStyle(ls`Rasterize Paint`, categories['painting']);
+    eventStyles[recordTypes.ScrollLayer] = new Timeline.TimelineRecordStyle(ls`Scroll`, categories['rendering']);
     eventStyles[recordTypes.CompositeLayers] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Composite Layers'), categories['painting']);
-    eventStyles[recordTypes.ParseHTML] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Parse HTML'), categories['loading']);
+        new Timeline.TimelineRecordStyle(ls`Composite Layers`, categories['painting']);
+    eventStyles[recordTypes.ParseHTML] = new Timeline.TimelineRecordStyle(ls`Parse HTML`, categories['loading']);
     eventStyles[recordTypes.ParseAuthorStyleSheet] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Parse Stylesheet'), categories['loading']);
+        new Timeline.TimelineRecordStyle(ls`Parse Stylesheet`, categories['loading']);
     eventStyles[recordTypes.TimerInstall] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Install Timer'), categories['scripting']);
-    eventStyles[recordTypes.TimerRemove] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Remove Timer'), categories['scripting']);
-    eventStyles[recordTypes.TimerFire] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Timer Fired'), categories['scripting']);
+        new Timeline.TimelineRecordStyle(ls`Install Timer`, categories['scripting']);
+    eventStyles[recordTypes.TimerRemove] = new Timeline.TimelineRecordStyle(ls`Remove Timer`, categories['scripting']);
+    eventStyles[recordTypes.TimerFire] = new Timeline.TimelineRecordStyle(ls`Timer Fired`, categories['scripting']);
     eventStyles[recordTypes.XHRReadyStateChange] =
-        new Timeline.TimelineRecordStyle(Common.UIString('XHR Ready State Change'), categories['scripting']);
-    eventStyles[recordTypes.XHRLoad] =
-        new Timeline.TimelineRecordStyle(Common.UIString('XHR Load'), categories['scripting']);
+        new Timeline.TimelineRecordStyle(ls`XHR Ready State Change`, categories['scripting']);
+    eventStyles[recordTypes.XHRLoad] = new Timeline.TimelineRecordStyle(ls`XHR Load`, categories['scripting']);
     eventStyles[recordTypes.CompileScript] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Compile Script'), categories['scripting']);
+        new Timeline.TimelineRecordStyle(ls`Compile Script`, categories['scripting']);
     eventStyles[recordTypes.EvaluateScript] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Evaluate Script'), categories['scripting']);
+        new Timeline.TimelineRecordStyle(ls`Evaluate Script`, categories['scripting']);
     eventStyles[recordTypes.CompileModule] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Compile Module'), categories['scripting']);
+        new Timeline.TimelineRecordStyle(ls`Compile Module`, categories['scripting']);
     eventStyles[recordTypes.EvaluateModule] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Evaluate Module'), categories['scripting']);
+        new Timeline.TimelineRecordStyle(ls`Evaluate Module`, categories['scripting']);
     eventStyles[recordTypes.ParseScriptOnBackground] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Parse Script'), categories['scripting']);
-    eventStyles[recordTypes.MarkLoad] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Load event'), categories['scripting'], true);
+        new Timeline.TimelineRecordStyle(ls`Parse Script`, categories['scripting']);
+    eventStyles[recordTypes.MarkLoad] = new Timeline.TimelineRecordStyle(ls`Load event`, categories['scripting'], true);
     eventStyles[recordTypes.MarkDOMContent] =
-        new Timeline.TimelineRecordStyle(Common.UIString('DOMContentLoaded event'), categories['scripting'], true);
+        new Timeline.TimelineRecordStyle(ls`DOMContentLoaded event`, categories['scripting'], true);
     eventStyles[recordTypes.MarkFirstPaint] =
-        new Timeline.TimelineRecordStyle(Common.UIString('First paint'), categories['painting'], true);
-    eventStyles[recordTypes.MarkFMP] =
-        new Timeline.TimelineRecordStyle(Common.UIString('FMP'), categories['rendering'], true);
+        new Timeline.TimelineRecordStyle(ls`First paint`, categories['painting'], true);
+    eventStyles[recordTypes.MarkFMP] = new Timeline.TimelineRecordStyle(ls`FMP`, categories['rendering'], true);
     eventStyles[recordTypes.MarkFMPCandidate] =
-        new Timeline.TimelineRecordStyle(Common.UIString('FMP candidate'), categories['rendering'], true);
-    eventStyles[recordTypes.TimeStamp] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Timestamp'), categories['scripting']);
-    eventStyles[recordTypes.ConsoleTime] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Console Time'), categories['scripting']);
-    eventStyles[recordTypes.UserTiming] =
-        new Timeline.TimelineRecordStyle(Common.UIString('User Timing'), categories['scripting']);
+        new Timeline.TimelineRecordStyle(ls`FMP candidate`, categories['rendering'], true);
+    eventStyles[recordTypes.TimeStamp] = new Timeline.TimelineRecordStyle(ls`Timestamp`, categories['scripting']);
+    eventStyles[recordTypes.ConsoleTime] = new Timeline.TimelineRecordStyle(ls`Console Time`, categories['scripting']);
+    eventStyles[recordTypes.UserTiming] = new Timeline.TimelineRecordStyle(ls`User Timing`, categories['scripting']);
     eventStyles[recordTypes.ResourceSendRequest] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Send Request'), categories['loading']);
+        new Timeline.TimelineRecordStyle(ls`Send Request`, categories['loading']);
     eventStyles[recordTypes.ResourceReceiveResponse] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Receive Response'), categories['loading']);
+        new Timeline.TimelineRecordStyle(ls`Receive Response`, categories['loading']);
     eventStyles[recordTypes.ResourceFinish] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Finish Loading'), categories['loading']);
+        new Timeline.TimelineRecordStyle(ls`Finish Loading`, categories['loading']);
     eventStyles[recordTypes.ResourceReceivedData] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Receive Data'), categories['loading']);
+        new Timeline.TimelineRecordStyle(ls`Receive Data`, categories['loading']);
     eventStyles[recordTypes.RunMicrotasks] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Run Microtasks'), categories['scripting']);
+        new Timeline.TimelineRecordStyle(ls`Run Microtasks`, categories['scripting']);
     eventStyles[recordTypes.FunctionCall] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Function Call'), categories['scripting']);
-    eventStyles[recordTypes.GCEvent] =
-        new Timeline.TimelineRecordStyle(Common.UIString('GC Event'), categories['scripting']);
-    eventStyles[recordTypes.MajorGC] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Major GC'), categories['scripting']);
-    eventStyles[recordTypes.MinorGC] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Minor GC'), categories['scripting']);
-    eventStyles[recordTypes.JSFrame] =
-        new Timeline.TimelineRecordStyle(Common.UIString('JS Frame'), categories['scripting']);
+        new Timeline.TimelineRecordStyle(ls`Function Call`, categories['scripting']);
+    eventStyles[recordTypes.GCEvent] = new Timeline.TimelineRecordStyle(ls`GC Event`, categories['scripting']);
+    eventStyles[recordTypes.MajorGC] = new Timeline.TimelineRecordStyle(ls`Major GC`, categories['scripting']);
+    eventStyles[recordTypes.MinorGC] = new Timeline.TimelineRecordStyle(ls`Minor GC`, categories['scripting']);
+    eventStyles[recordTypes.JSFrame] = new Timeline.TimelineRecordStyle(ls`JS Frame`, categories['scripting']);
     eventStyles[recordTypes.RequestAnimationFrame] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Request Animation Frame'), categories['scripting']);
+        new Timeline.TimelineRecordStyle(ls`Request Animation Frame`, categories['scripting']);
     eventStyles[recordTypes.CancelAnimationFrame] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Cancel Animation Frame'), categories['scripting']);
+        new Timeline.TimelineRecordStyle(ls`Cancel Animation Frame`, categories['scripting']);
     eventStyles[recordTypes.FireAnimationFrame] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Animation Frame Fired'), categories['scripting']);
+        new Timeline.TimelineRecordStyle(ls`Animation Frame Fired`, categories['scripting']);
     eventStyles[recordTypes.RequestIdleCallback] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Request Idle Callback'), categories['scripting']);
+        new Timeline.TimelineRecordStyle(ls`Request Idle Callback`, categories['scripting']);
     eventStyles[recordTypes.CancelIdleCallback] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Cancel Idle Callback'), categories['scripting']);
+        new Timeline.TimelineRecordStyle(ls`Cancel Idle Callback`, categories['scripting']);
     eventStyles[recordTypes.FireIdleCallback] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Fire Idle Callback'), categories['scripting']);
+        new Timeline.TimelineRecordStyle(ls`Fire Idle Callback`, categories['scripting']);
     eventStyles[recordTypes.WebSocketCreate] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Create WebSocket'), categories['scripting']);
+        new Timeline.TimelineRecordStyle(ls`Create WebSocket`, categories['scripting']);
     eventStyles[recordTypes.WebSocketSendHandshakeRequest] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Send WebSocket Handshake'), categories['scripting']);
+        new Timeline.TimelineRecordStyle(ls`Send WebSocket Handshake`, categories['scripting']);
     eventStyles[recordTypes.WebSocketReceiveHandshakeResponse] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Receive WebSocket Handshake'), categories['scripting']);
+        new Timeline.TimelineRecordStyle(ls`Receive WebSocket Handshake`, categories['scripting']);
     eventStyles[recordTypes.WebSocketDestroy] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Destroy WebSocket'), categories['scripting']);
+        new Timeline.TimelineRecordStyle(ls`Destroy WebSocket`, categories['scripting']);
     eventStyles[recordTypes.EmbedderCallback] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Embedder Callback'), categories['scripting']);
-    eventStyles[recordTypes.DecodeImage] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Image Decode'), categories['painting']);
-    eventStyles[recordTypes.ResizeImage] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Image Resize'), categories['painting']);
-    eventStyles[recordTypes.GPUTask] = new Timeline.TimelineRecordStyle(Common.UIString('GPU'), categories['gpu']);
-    eventStyles[recordTypes.LatencyInfo] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Input Latency'), categories['scripting']);
+        new Timeline.TimelineRecordStyle(ls`Embedder Callback`, categories['scripting']);
+    eventStyles[recordTypes.DecodeImage] = new Timeline.TimelineRecordStyle(ls`Image Decode`, categories['painting']);
+    eventStyles[recordTypes.ResizeImage] = new Timeline.TimelineRecordStyle(ls`Image Resize`, categories['painting']);
+    eventStyles[recordTypes.GPUTask] = new Timeline.TimelineRecordStyle(ls`GPU`, categories['gpu']);
+    eventStyles[recordTypes.LatencyInfo] = new Timeline.TimelineRecordStyle(ls`Input Latency`, categories['scripting']);
 
-    eventStyles[recordTypes.GCIdleLazySweep] =
-        new Timeline.TimelineRecordStyle(Common.UIString('DOM GC'), categories['scripting']);
-    eventStyles[recordTypes.GCCompleteSweep] =
-        new Timeline.TimelineRecordStyle(Common.UIString('DOM GC'), categories['scripting']);
-    eventStyles[recordTypes.GCCollectGarbage] =
-        new Timeline.TimelineRecordStyle(Common.UIString('DOM GC'), categories['scripting']);
+    eventStyles[recordTypes.GCIdleLazySweep] = new Timeline.TimelineRecordStyle(ls`DOM GC`, categories['scripting']);
+    eventStyles[recordTypes.GCCompleteSweep] = new Timeline.TimelineRecordStyle(ls`DOM GC`, categories['scripting']);
+    eventStyles[recordTypes.GCCollectGarbage] = new Timeline.TimelineRecordStyle(ls`DOM GC`, categories['scripting']);
 
-    eventStyles[recordTypes.CryptoDoEncrypt] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Encrypt'), categories['scripting']);
+    eventStyles[recordTypes.CryptoDoEncrypt] = new Timeline.TimelineRecordStyle(ls`Encrypt`, categories['scripting']);
     eventStyles[recordTypes.CryptoDoEncryptReply] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Encrypt Reply'), categories['scripting']);
-    eventStyles[recordTypes.CryptoDoDecrypt] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Decrypt'), categories['scripting']);
+        new Timeline.TimelineRecordStyle(ls`Encrypt Reply`, categories['scripting']);
+    eventStyles[recordTypes.CryptoDoDecrypt] = new Timeline.TimelineRecordStyle(ls`Decrypt`, categories['scripting']);
     eventStyles[recordTypes.CryptoDoDecryptReply] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Decrypt Reply'), categories['scripting']);
-    eventStyles[recordTypes.CryptoDoDigest] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Digest'), categories['scripting']);
+        new Timeline.TimelineRecordStyle(ls`Decrypt Reply`, categories['scripting']);
+    eventStyles[recordTypes.CryptoDoDigest] = new Timeline.TimelineRecordStyle(ls`Digest`, categories['scripting']);
     eventStyles[recordTypes.CryptoDoDigestReply] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Digest Reply'), categories['scripting']);
-    eventStyles[recordTypes.CryptoDoSign] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Sign'), categories['scripting']);
+        new Timeline.TimelineRecordStyle(ls`Digest Reply`, categories['scripting']);
+    eventStyles[recordTypes.CryptoDoSign] = new Timeline.TimelineRecordStyle(ls`Sign`, categories['scripting']);
     eventStyles[recordTypes.CryptoDoSignReply] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Sign Reply'), categories['scripting']);
-    eventStyles[recordTypes.CryptoDoVerify] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Verify'), categories['scripting']);
+        new Timeline.TimelineRecordStyle(ls`Sign Reply`, categories['scripting']);
+    eventStyles[recordTypes.CryptoDoVerify] = new Timeline.TimelineRecordStyle(ls`Verify`, categories['scripting']);
     eventStyles[recordTypes.CryptoDoVerifyReply] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Verify Reply'), categories['scripting']);
+        new Timeline.TimelineRecordStyle(ls`Verify Reply`, categories['scripting']);
 
-    eventStyles[recordTypes.AsyncTask] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Async Task'), categories['async']);
+    eventStyles[recordTypes.AsyncTask] = new Timeline.TimelineRecordStyle(ls`Async Task`, categories['async']);
 
     Timeline.TimelineUIUtils._eventStylesMap = eventStyles;
     return eventStyles;
@@ -220,32 +188,32 @@ Timeline.TimelineUIUtils = class {
 
       /** @type {!Map<!TimelineModel.TimelineIRModel.InputEvents, string>} */
       Timeline.TimelineUIUtils._inputEventToDisplayName = new Map([
-        [inputEvent.Char, Common.UIString('Key Character')],
-        [inputEvent.KeyDown, Common.UIString('Key Down')],
-        [inputEvent.KeyDownRaw, Common.UIString('Key Down')],
-        [inputEvent.KeyUp, Common.UIString('Key Up')],
-        [inputEvent.Click, Common.UIString('Click')],
-        [inputEvent.ContextMenu, Common.UIString('Context Menu')],
-        [inputEvent.MouseDown, Common.UIString('Mouse Down')],
-        [inputEvent.MouseMove, Common.UIString('Mouse Move')],
-        [inputEvent.MouseUp, Common.UIString('Mouse Up')],
-        [inputEvent.MouseWheel, Common.UIString('Mouse Wheel')],
-        [inputEvent.ScrollBegin, Common.UIString('Scroll Begin')],
-        [inputEvent.ScrollEnd, Common.UIString('Scroll End')],
-        [inputEvent.ScrollUpdate, Common.UIString('Scroll Update')],
-        [inputEvent.FlingStart, Common.UIString('Fling Start')],
-        [inputEvent.FlingCancel, Common.UIString('Fling Halt')],
-        [inputEvent.Tap, Common.UIString('Tap')],
-        [inputEvent.TapCancel, Common.UIString('Tap Halt')],
-        [inputEvent.ShowPress, Common.UIString('Tap Begin')],
-        [inputEvent.TapDown, Common.UIString('Tap Down')],
-        [inputEvent.TouchCancel, Common.UIString('Touch Cancel')],
-        [inputEvent.TouchEnd, Common.UIString('Touch End')],
-        [inputEvent.TouchMove, Common.UIString('Touch Move')],
-        [inputEvent.TouchStart, Common.UIString('Touch Start')],
-        [inputEvent.PinchBegin, Common.UIString('Pinch Begin')],
-        [inputEvent.PinchEnd, Common.UIString('Pinch End')],
-        [inputEvent.PinchUpdate, Common.UIString('Pinch Update')]
+        [inputEvent.Char, ls`Key Character`],
+        [inputEvent.KeyDown, ls`Key Down`],
+        [inputEvent.KeyDownRaw, ls`Key Down`],
+        [inputEvent.KeyUp, ls`Key Up`],
+        [inputEvent.Click, ls`Click`],
+        [inputEvent.ContextMenu, ls`Context Menu`],
+        [inputEvent.MouseDown, ls`Mouse Down`],
+        [inputEvent.MouseMove, ls`Mouse Move`],
+        [inputEvent.MouseUp, ls`Mouse Up`],
+        [inputEvent.MouseWheel, ls`Mouse Wheel`],
+        [inputEvent.ScrollBegin, ls`Scroll Begin`],
+        [inputEvent.ScrollEnd, ls`Scroll End`],
+        [inputEvent.ScrollUpdate, ls`Scroll Update`],
+        [inputEvent.FlingStart, ls`Fling Start`],
+        [inputEvent.FlingCancel, ls`Fling Halt`],
+        [inputEvent.Tap, ls`Tap`],
+        [inputEvent.TapCancel, ls`Tap Halt`],
+        [inputEvent.ShowPress, ls`Tap Begin`],
+        [inputEvent.TapDown, ls`Tap Down`],
+        [inputEvent.TouchCancel, ls`Touch Cancel`],
+        [inputEvent.TouchEnd, ls`Touch End`],
+        [inputEvent.TouchMove, ls`Touch Move`],
+        [inputEvent.TouchStart, ls`Touch Start`],
+        [inputEvent.PinchBegin, ls`Pinch Begin`],
+        [inputEvent.PinchEnd, ls`Pinch End`],
+        [inputEvent.PinchUpdate, ls`Pinch Update`]
       ]);
     }
     return Timeline.TimelineUIUtils._inputEventToDisplayName.get(inputEventType) || null;
@@ -262,9 +230,9 @@ Timeline.TimelineUIUtils = class {
     const groups = TimelineModel.TimelineJSProfileProcessor.NativeGroups;
     switch (nativeGroup) {
       case groups.Compile:
-        return Common.UIString('Compile');
+        return ls`Compile`;
       case groups.Parse:
-        return Common.UIString('Parse');
+        return ls`Parse`;
     }
     return frame.functionName;
   }
@@ -413,21 +381,12 @@ Timeline.TimelineUIUtils = class {
     if (!map) {
       map = new Map([
         [TimelineModel.TimelineIRModel.Phases.Idle, {color: 'white', label: 'Idle'}],
-        [
-          TimelineModel.TimelineIRModel.Phases.Response,
-          {color: 'hsl(43, 83%, 64%)', label: Common.UIString('Response')}
-        ],
-        [TimelineModel.TimelineIRModel.Phases.Scroll, {color: 'hsl(256, 67%, 70%)', label: Common.UIString('Scroll')}],
-        [TimelineModel.TimelineIRModel.Phases.Fling, {color: 'hsl(256, 67%, 70%)', label: Common.UIString('Fling')}],
-        [TimelineModel.TimelineIRModel.Phases.Drag, {color: 'hsl(256, 67%, 70%)', label: Common.UIString('Drag')}],
-        [
-          TimelineModel.TimelineIRModel.Phases.Animation,
-          {color: 'hsl(256, 67%, 70%)', label: Common.UIString('Animation')}
-        ],
-        [
-          TimelineModel.TimelineIRModel.Phases.Uncategorized,
-          {color: 'hsl(0, 0%, 87%)', label: Common.UIString('Uncategorized')}
-        ]
+        [TimelineModel.TimelineIRModel.Phases.Response, {color: 'hsl(43, 83%, 64%)', label: ls`Response`}],
+        [TimelineModel.TimelineIRModel.Phases.Scroll, {color: 'hsl(256, 67%, 70%)', label: ls`Scroll`}],
+        [TimelineModel.TimelineIRModel.Phases.Fling, {color: 'hsl(256, 67%, 70%)', label: ls`Fling`}],
+        [TimelineModel.TimelineIRModel.Phases.Drag, {color: 'hsl(256, 67%, 70%)', label: ls`Drag`}],
+        [TimelineModel.TimelineIRModel.Phases.Animation, {color: 'hsl(256, 67%, 70%)', label: ls`Animation`}],
+        [TimelineModel.TimelineIRModel.Phases.Uncategorized, {color: 'hsl(0, 0%, 87%)', label: ls`Uncategorized`}]
       ]);
       Timeline.TimelineUIUtils._interactionPhaseStylesMap = map;
     }
@@ -595,15 +554,15 @@ Timeline.TimelineUIUtils = class {
         break;
 
       case recordType.GCIdleLazySweep:
-        detailsText = Common.UIString('idle sweep');
+        detailsText = ls`idle sweep`;
         break;
 
       case recordType.GCCompleteSweep:
-        detailsText = Common.UIString('complete sweep');
+        detailsText = ls`complete sweep`;
         break;
 
       case recordType.GCCollectGarbage:
-        detailsText = Common.UIString('collect');
+        detailsText = ls`collect`;
         break;
 
       case recordType.AsyncTask:
@@ -812,8 +771,8 @@ Timeline.TimelineUIUtils = class {
       contentHelper.appendWarningRow(event, TimelineModel.TimelineModel.WarningType.V8Deopt);
 
     if (detailed) {
-      contentHelper.appendTextRow(Common.UIString('Total Time'), Number.millisToString(event.duration || 0, true));
-      contentHelper.appendTextRow(Common.UIString('Self Time'), Number.millisToString(event.selfTime, true));
+      contentHelper.appendTextRow(ls`Total Time`, Number.millisToString(event.duration || 0, true));
+      contentHelper.appendTextRow(ls`Self Time`, Number.millisToString(event.selfTime, true));
     }
 
     switch (event.name) {
@@ -821,26 +780,26 @@ Timeline.TimelineUIUtils = class {
       case recordTypes.MajorGC:
       case recordTypes.MinorGC:
         var delta = event.args['usedHeapSizeBefore'] - event.args['usedHeapSizeAfter'];
-        contentHelper.appendTextRow(Common.UIString('Collected'), Number.bytesToString(delta));
+        contentHelper.appendTextRow(ls`Collected`, Number.bytesToString(delta));
         break;
       case recordTypes.JSFrame:
       case recordTypes.FunctionCall:
         var detailsNode =
             Timeline.TimelineUIUtils.buildDetailsNodeForTraceEvent(event, model.targetByEvent(event), linkifier);
         if (detailsNode)
-          contentHelper.appendElementRow(Common.UIString('Function'), detailsNode);
+          contentHelper.appendElementRow(ls`Function`, detailsNode);
         break;
       case recordTypes.TimerFire:
       case recordTypes.TimerInstall:
       case recordTypes.TimerRemove:
-        contentHelper.appendTextRow(Common.UIString('Timer ID'), eventData['timerId']);
+        contentHelper.appendTextRow(ls`Timer ID`, eventData['timerId']);
         if (event.name === recordTypes.TimerInstall) {
-          contentHelper.appendTextRow(Common.UIString('Timeout'), Number.millisToString(eventData['timeout']));
-          contentHelper.appendTextRow(Common.UIString('Repeats'), !eventData['singleShot']);
+          contentHelper.appendTextRow(ls`Timeout`, Number.millisToString(eventData['timeout']));
+          contentHelper.appendTextRow(ls`Repeats`, !eventData['singleShot']);
         }
         break;
       case recordTypes.FireAnimationFrame:
-        contentHelper.appendTextRow(Common.UIString('Callback ID'), eventData['id']);
+        contentHelper.appendTextRow(ls`Callback ID`, eventData['id']);
         break;
       case recordTypes.ResourceSendRequest:
       case recordTypes.ResourceReceiveResponse:
@@ -848,101 +807,88 @@ Timeline.TimelineUIUtils = class {
       case recordTypes.ResourceFinish:
         url = timelineData.url;
         if (url)
-          contentHelper.appendElementRow(Common.UIString('Resource'), Components.Linkifier.linkifyURL(url));
+          contentHelper.appendElementRow(ls`Resource`, Components.Linkifier.linkifyURL(url));
         if (eventData['requestMethod'])
-          contentHelper.appendTextRow(Common.UIString('Request Method'), eventData['requestMethod']);
+          contentHelper.appendTextRow(ls`Request Method`, eventData['requestMethod']);
         if (typeof eventData['statusCode'] === 'number')
-          contentHelper.appendTextRow(Common.UIString('Status Code'), eventData['statusCode']);
+          contentHelper.appendTextRow(ls`Status Code`, eventData['statusCode']);
         if (eventData['mimeType'])
-          contentHelper.appendTextRow(Common.UIString('MIME Type'), eventData['mimeType']);
+          contentHelper.appendTextRow(ls`MIME Type`, eventData['mimeType']);
         if ('priority' in eventData) {
           var priority = NetworkPriorities.uiLabelForPriority(eventData['priority']);
-          contentHelper.appendTextRow(Common.UIString('Priority'), priority);
+          contentHelper.appendTextRow(ls`Priority`, priority);
         }
-        if (eventData['encodedDataLength']) {
-          contentHelper.appendTextRow(
-              Common.UIString('Encoded Data'), Common.UIString('%d Bytes', eventData['encodedDataLength']));
-        }
-        if (eventData['decodedBodyLength']) {
-          contentHelper.appendTextRow(
-              Common.UIString('Decoded Body'), Common.UIString('%d Bytes', eventData['decodedBodyLength']));
-        }
+        if (eventData['encodedDataLength'])
+          contentHelper.appendTextRow(ls`Encoded Data`, Common.UIString('%d Bytes', eventData['encodedDataLength']));
+        if (eventData['decodedBodyLength'])
+          contentHelper.appendTextRow(ls`Decoded Body`, Common.UIString('%d Bytes', eventData['decodedBodyLength']));
         break;
       case recordTypes.CompileModule:
-        contentHelper.appendLocationRow(Common.UIString('Module'), event.args['fileName'], 0);
+        contentHelper.appendLocationRow(ls`Module`, event.args['fileName'], 0);
         break;
       case recordTypes.CompileScript:
         url = eventData && eventData['url'];
-        if (url) {
-          contentHelper.appendLocationRow(
-              Common.UIString('Script'), url, eventData['lineNumber'], eventData['columnNumber']);
-        }
-        contentHelper.appendTextRow(Common.UIString('Streamed'), Common.UIString('%s', eventData['streamed']));
+        if (url)
+          contentHelper.appendLocationRow(ls`Script`, url, eventData['lineNumber'], eventData['columnNumber']);
+        contentHelper.appendTextRow(ls`Streamed`, Common.UIString('%s', eventData['streamed']));
         var cacheProduceOptions = eventData && eventData['cacheProduceOptions'];
         if (cacheProduceOptions) {
-          contentHelper.appendTextRow(
-              Common.UIString('Cache Produce Options'), Common.UIString('%s', cacheProduceOptions));
-          contentHelper.appendTextRow(
-              Common.UIString('Produced Cache Size'), Common.UIString('%d', eventData['producedCacheSize']));
+          contentHelper.appendTextRow(ls`Cache Produce Options`, Common.UIString('%s', cacheProduceOptions));
+          contentHelper.appendTextRow(ls`Produced Cache Size`, Common.UIString('%d', eventData['producedCacheSize']));
         }
         var cacheConsumeOptions = eventData && eventData['cacheConsumeOptions'];
         if (cacheConsumeOptions) {
-          contentHelper.appendTextRow(
-              Common.UIString('Cache Consume Options'), Common.UIString('%s', cacheConsumeOptions));
-          contentHelper.appendTextRow(
-              Common.UIString('Consumed Cache Size'), Common.UIString('%d', eventData['consumedCacheSize']));
-          contentHelper.appendTextRow(
-              Common.UIString('Cache Rejected'), Common.UIString('%s', eventData['cacheRejected']));
+          contentHelper.appendTextRow(ls`Cache Consume Options`, Common.UIString('%s', cacheConsumeOptions));
+          contentHelper.appendTextRow(ls`Consumed Cache Size`, Common.UIString('%d', eventData['consumedCacheSize']));
+          contentHelper.appendTextRow(ls`Cache Rejected`, Common.UIString('%s', eventData['cacheRejected']));
         }
         break;
       case recordTypes.EvaluateScript:
         url = eventData && eventData['url'];
-        if (url) {
-          contentHelper.appendLocationRow(
-              Common.UIString('Script'), url, eventData['lineNumber'], eventData['columnNumber']);
-        }
+        if (url)
+          contentHelper.appendLocationRow(ls`Script`, url, eventData['lineNumber'], eventData['columnNumber']);
         break;
       case recordTypes.Paint:
         var clip = eventData['clip'];
-        contentHelper.appendTextRow(Common.UIString('Location'), Common.UIString('(%d, %d)', clip[0], clip[1]));
+        contentHelper.appendTextRow(ls`Location`, Common.UIString('(%d, %d)', clip[0], clip[1]));
         var clipWidth = Timeline.TimelineUIUtils.quadWidth(clip);
         var clipHeight = Timeline.TimelineUIUtils.quadHeight(clip);
-        contentHelper.appendTextRow(Common.UIString('Dimensions'), Common.UIString('%d × %d', clipWidth, clipHeight));
+        contentHelper.appendTextRow(ls`Dimensions`, Common.UIString('%d × %d', clipWidth, clipHeight));
       // Fall-through intended.
 
       case recordTypes.PaintSetup:
       case recordTypes.Rasterize:
       case recordTypes.ScrollLayer:
-        relatedNodeLabel = Common.UIString('Layer Root');
+        relatedNodeLabel = ls`Layer Root`;
         break;
       case recordTypes.PaintImage:
       case recordTypes.DecodeLazyPixelRef:
       case recordTypes.DecodeImage:
       case recordTypes.ResizeImage:
       case recordTypes.DrawLazyPixelRef:
-        relatedNodeLabel = Common.UIString('Owner Element');
+        relatedNodeLabel = ls`Owner Element`;
         url = timelineData.url;
         if (url)
-          contentHelper.appendElementRow(Common.UIString('Image URL'), Components.Linkifier.linkifyURL(url));
+          contentHelper.appendElementRow(ls`Image URL`, Components.Linkifier.linkifyURL(url));
         break;
       case recordTypes.ParseAuthorStyleSheet:
         url = eventData['styleSheetUrl'];
         if (url)
-          contentHelper.appendElementRow(Common.UIString('Stylesheet URL'), Components.Linkifier.linkifyURL(url));
+          contentHelper.appendElementRow(ls`Stylesheet URL`, Components.Linkifier.linkifyURL(url));
         break;
       case recordTypes.UpdateLayoutTree:  // We don't want to see default details.
       case recordTypes.RecalculateStyles:
-        contentHelper.appendTextRow(Common.UIString('Elements Affected'), event.args['elementCount']);
+        contentHelper.appendTextRow(ls`Elements Affected`, event.args['elementCount']);
         break;
       case recordTypes.Layout:
         var beginData = event.args['beginData'];
         contentHelper.appendTextRow(
-            Common.UIString('Nodes That Need Layout'),
+            ls`Nodes That Need Layout`,
             Common.UIString('%s of %s', beginData['dirtyObjects'], beginData['totalObjects']));
-        relatedNodeLabel = Common.UIString('Layout root');
+        relatedNodeLabel = ls`Layout root`;
         break;
       case recordTypes.ConsoleTime:
-        contentHelper.appendTextRow(Common.UIString('Message'), event.name);
+        contentHelper.appendTextRow(ls`Message`, event.name);
         break;
       case recordTypes.WebSocketCreate:
       case recordTypes.WebSocketSendHandshakeRequest:
@@ -950,18 +896,18 @@ Timeline.TimelineUIUtils = class {
       case recordTypes.WebSocketDestroy:
         var initiatorData = initiator ? initiator.args['data'] : eventData;
         if (typeof initiatorData['webSocketURL'] !== 'undefined')
-          contentHelper.appendTextRow(Common.UIString('URL'), initiatorData['webSocketURL']);
+          contentHelper.appendTextRow(ls`URL`, initiatorData['webSocketURL']);
         if (typeof initiatorData['webSocketProtocol'] !== 'undefined')
-          contentHelper.appendTextRow(Common.UIString('WebSocket Protocol'), initiatorData['webSocketProtocol']);
+          contentHelper.appendTextRow(ls`WebSocket Protocol`, initiatorData['webSocketProtocol']);
         if (typeof eventData['message'] !== 'undefined')
-          contentHelper.appendTextRow(Common.UIString('Message'), eventData['message']);
+          contentHelper.appendTextRow(ls`Message`, eventData['message']);
         break;
       case recordTypes.EmbedderCallback:
-        contentHelper.appendTextRow(Common.UIString('Callback Function'), eventData['callbackName']);
+        contentHelper.appendTextRow(ls`Callback Function`, eventData['callbackName']);
         break;
       case recordTypes.Animation:
         if (event.phase === SDK.TracingModel.Phase.NestableAsyncInstant)
-          contentHelper.appendTextRow(Common.UIString('State'), eventData['state']);
+          contentHelper.appendTextRow(ls`State`, eventData['state']);
         break;
       case recordTypes.ParseHTML:
         var beginData = event.args['beginData'];
@@ -969,28 +915,27 @@ Timeline.TimelineUIUtils = class {
         var endLine = event.args['endData'] ? event.args['endData']['endLine'] - 1 : undefined;
         url = beginData['url'];
         if (url)
-          contentHelper.appendLocationRange(Common.UIString('Range'), url, startLine, endLine);
+          contentHelper.appendLocationRange(ls`Range`, url, startLine, endLine);
         break;
 
       case recordTypes.FireIdleCallback:
-        contentHelper.appendTextRow(
-            Common.UIString('Allotted Time'), Number.millisToString(eventData['allottedMilliseconds']));
-        contentHelper.appendTextRow(Common.UIString('Invoked by Timeout'), eventData['timedOut']);
+        contentHelper.appendTextRow(ls`Allotted Time`, Number.millisToString(eventData['allottedMilliseconds']));
+        contentHelper.appendTextRow(ls`Invoked by Timeout`, eventData['timedOut']);
       // Fall-through intended.
 
       case recordTypes.RequestIdleCallback:
       case recordTypes.CancelIdleCallback:
-        contentHelper.appendTextRow(Common.UIString('Callback ID'), eventData['id']);
+        contentHelper.appendTextRow(ls`Callback ID`, eventData['id']);
         break;
       case recordTypes.EventDispatch:
-        contentHelper.appendTextRow(Common.UIString('Type'), eventData['type']);
+        contentHelper.appendTextRow(ls`Type`, eventData['type']);
         break;
 
       default:
         var detailsNode =
             Timeline.TimelineUIUtils.buildDetailsNodeForTraceEvent(event, model.targetByEvent(event), linkifier);
         if (detailsNode)
-          contentHelper.appendElementRow(Common.UIString('Details'), detailsNode);
+          contentHelper.appendElementRow(ls`Details`, detailsNode);
         break;
     }
 
@@ -999,19 +944,17 @@ Timeline.TimelineUIUtils = class {
 
     if (timelineData.timeWaitingForMainThread) {
       contentHelper.appendTextRow(
-          Common.UIString('Time Waiting for Main Thread'),
-          Number.millisToString(timelineData.timeWaitingForMainThread, true));
+          ls`Time Waiting for Main Thread`, Number.millisToString(timelineData.timeWaitingForMainThread, true));
     }
 
     var relatedNode = relatedNodesMap && relatedNodesMap.get(timelineData.backendNodeId);
     if (relatedNode) {
       contentHelper.appendElementRow(
-          relatedNodeLabel || Common.UIString('Related Node'),
-          Components.DOMPresentationUtils.linkifyNodeReference(relatedNode));
+          relatedNodeLabel || ls`Related Node`, Components.DOMPresentationUtils.linkifyNodeReference(relatedNode));
     }
 
     if (event[Timeline.TimelineUIUtils._previewElementSymbol]) {
-      contentHelper.addSection(Common.UIString('Preview'));
+      contentHelper.addSection(ls`Preview`);
       contentHelper.appendElementRow('', event[Timeline.TimelineUIUtils._previewElementSymbol]);
     }
 
@@ -1022,7 +965,7 @@ Timeline.TimelineUIUtils = class {
     var stats = {};
     var showPieChart = detailed && Timeline.TimelineUIUtils._aggregatedStatsForTraceEvent(stats, model, event);
     if (showPieChart) {
-      contentHelper.addSection(Common.UIString('Aggregated Time'));
+      contentHelper.addSection(ls`Aggregated Time`);
       var pieChart = Timeline.TimelineUIUtils.generatePieChart(
           stats, Timeline.TimelineUIUtils.eventStyle(event).category, event.selfTime);
       contentHelper.appendElementRow('', pieChart);
@@ -1187,34 +1130,34 @@ Timeline.TimelineUIUtils = class {
     const contentHelper = new Timeline.TimelineDetailsContentHelper(target, linkifier);
     const category = Timeline.TimelineUIUtils.networkRequestCategory(request);
     const color = Timeline.TimelineUIUtils.networkCategoryColor(category);
-    contentHelper.addSection(Common.UIString('Network request'), color);
+    contentHelper.addSection(ls`Network request`, color);
 
     const duration = request.endTime - (request.startTime || -Infinity);
     if (request.url)
-      contentHelper.appendElementRow(Common.UIString('URL'), Components.Linkifier.linkifyURL(request.url));
+      contentHelper.appendElementRow(ls`URL`, Components.Linkifier.linkifyURL(request.url));
     Timeline.TimelineUIUtils._maybeAppendProductToDetails(contentHelper, badgePool, request.url);
     if (isFinite(duration))
-      contentHelper.appendTextRow(Common.UIString('Duration'), Number.millisToString(duration, true));
+      contentHelper.appendTextRow(ls`Duration`, Number.millisToString(duration, true));
     if (request.requestMethod)
-      contentHelper.appendTextRow(Common.UIString('Request Method'), request.requestMethod);
+      contentHelper.appendTextRow(ls`Request Method`, request.requestMethod);
     if (typeof request.priority === 'string') {
       const priority =
           NetworkPriorities.uiLabelForPriority(/** @type {!Protocol.Network.ResourcePriority} */ (request.priority));
-      contentHelper.appendTextRow(Common.UIString('Priority'), priority);
+      contentHelper.appendTextRow(ls`Priority`, priority);
     }
     if (request.mimeType)
-      contentHelper.appendTextRow(Common.UIString('Mime Type'), request.mimeType);
+      contentHelper.appendTextRow(ls`Mime Type`, request.mimeType);
     var lengthText = '';
     if (request.fromCache)
-      lengthText += Common.UIString(' (from cache)');
+      lengthText += ls` (from cache)`;
     if (request.fromServiceWorker)
-      lengthText += Common.UIString(' (from service worker)');
+      lengthText += ls` (from service worker)`;
     if (request.encodedDataLength || !lengthText)
       lengthText = `${Number.bytesToString(request.encodedDataLength)}${lengthText}`;
-    contentHelper.appendTextRow(Common.UIString('Encoded Data'), lengthText);
+    contentHelper.appendTextRow(ls`Encoded Data`, lengthText);
     if (request.decodedBodyLength)
-      contentHelper.appendTextRow(Common.UIString('Decoded Body'), Number.bytesToString(request.decodedBodyLength));
-    const title = Common.UIString('Initiator');
+      contentHelper.appendTextRow(ls`Decoded Body`, Number.bytesToString(request.decodedBodyLength));
+    const title = ls`Initiator`;
     const sendRequest = request.children[0];
     const topFrame = TimelineModel.TimelineData.forEvent(sendRequest).topFrame();
     if (topFrame) {
@@ -1238,7 +1181,7 @@ Timeline.TimelineUIUtils = class {
           await Components.DOMPresentationUtils.buildImagePreviewContents(target, request.url, false);
     }
     if (request.previewElement)
-      contentHelper.appendElementRow(Common.UIString('Preview'), request.previewElement);
+      contentHelper.appendElementRow(ls`Preview`, request.previewElement);
     return contentHelper.fragment;
   }
 
@@ -1264,55 +1207,54 @@ Timeline.TimelineUIUtils = class {
 
     switch (event.name) {
       case recordTypes.TimerFire:
-        callSiteStackLabel = Common.UIString('Timer Installed');
+        callSiteStackLabel = ls`Timer Installed`;
         break;
       case recordTypes.FireAnimationFrame:
-        callSiteStackLabel = Common.UIString('Animation Frame Requested');
+        callSiteStackLabel = ls`Animation Frame Requested`;
         break;
       case recordTypes.FireIdleCallback:
-        callSiteStackLabel = Common.UIString('Idle Callback Requested');
+        callSiteStackLabel = ls`Idle Callback Requested`;
         break;
       case recordTypes.UpdateLayoutTree:
       case recordTypes.RecalculateStyles:
-        stackLabel = Common.UIString('Recalculation Forced');
+        stackLabel = ls`Recalculation Forced`;
         break;
       case recordTypes.Layout:
-        callSiteStackLabel = Common.UIString('First Layout Invalidation');
-        stackLabel = Common.UIString('Layout Forced');
+        callSiteStackLabel = ls`First Layout Invalidation`;
+        stackLabel = ls`Layout Forced`;
         break;
     }
 
     var timelineData = TimelineModel.TimelineData.forEvent(event);
     // Direct cause.
     if (timelineData.stackTrace && timelineData.stackTrace.length) {
-      contentHelper.addSection(Common.UIString('Call Stacks'));
+      contentHelper.addSection(ls`Call Stacks`);
       contentHelper.appendStackTrace(
-          stackLabel || Common.UIString('Stack Trace'),
-          Timeline.TimelineUIUtils._stackTraceFromCallFrames(timelineData.stackTrace));
+          stackLabel || ls`Stack Trace`, Timeline.TimelineUIUtils._stackTraceFromCallFrames(timelineData.stackTrace));
     }
 
     var initiator = TimelineModel.TimelineData.forEvent(event).initiator();
     // Indirect causes.
     if (TimelineModel.InvalidationTracker.invalidationEventsFor(event) && target) {
       // Full invalidation tracking (experimental).
-      contentHelper.addSection(Common.UIString('Invalidations'));
+      contentHelper.addSection(ls`Invalidations`);
       Timeline.TimelineUIUtils._generateInvalidations(event, target, relatedNodesMap, contentHelper);
     } else if (initiator) {  // Partial invalidation tracking.
       var delay = event.startTime - initiator.startTime;
-      contentHelper.appendTextRow(Common.UIString('Pending for'), Number.preciseMillisToString(delay, 1));
+      contentHelper.appendTextRow(ls`Pending for`, Number.preciseMillisToString(delay, 1));
 
       var link = createElementWithClass('span', 'devtools-link');
-      link.textContent = Common.UIString('reveal');
+      link.textContent = ls`reveal`;
       link.addEventListener('click', () => {
         Timeline.TimelinePanel.instance().select(
             Timeline.TimelineSelection.fromTraceEvent(/** @type {!SDK.TracingModel.Event} */ (initiator)));
       });
-      contentHelper.appendElementRow(Common.UIString('Initiator'), link);
+      contentHelper.appendElementRow(ls`Initiator`, link);
 
       var initiatorStackTrace = TimelineModel.TimelineData.forEvent(initiator).stackTrace;
       if (initiatorStackTrace) {
         contentHelper.appendStackTrace(
-            callSiteStackLabel || Common.UIString('First Invalidated'),
+            callSiteStackLabel || ls`First Invalidated`,
             Timeline.TimelineUIUtils._stackTraceFromCallFrames(initiatorStackTrace));
       }
     }
@@ -1351,13 +1293,13 @@ Timeline.TimelineUIUtils = class {
     var title;
     switch (type) {
       case TimelineModel.TimelineModel.RecordType.StyleRecalcInvalidationTracking:
-        title = Common.UIString('Style Invalidations');
+        title = ls`Style Invalidations`;
         break;
       case TimelineModel.TimelineModel.RecordType.LayoutInvalidationTracking:
-        title = Common.UIString('Layout Invalidations');
+        title = ls`Layout Invalidations`;
         break;
       default:
-        title = Common.UIString('Other Invalidations');
+        title = ls`Other Invalidations`;
         break;
     }
 
@@ -1481,7 +1423,7 @@ Timeline.TimelineUIUtils = class {
     var img = container.createChild('img');
     img.src = imageURL;
     var paintProfilerButton = container.createChild('a');
-    paintProfilerButton.textContent = Common.UIString('Paint Profiler');
+    paintProfilerButton.textContent = ls`Paint Profiler`;
     container.addEventListener(
         'click', () => Timeline.TimelinePanel.instance().select(Timeline.TimelineSelection.fromTraceEvent(event)),
         false);
@@ -1541,21 +1483,17 @@ Timeline.TimelineUIUtils = class {
     if (Timeline.TimelineUIUtils._categories)
       return Timeline.TimelineUIUtils._categories;
     Timeline.TimelineUIUtils._categories = {
-      loading: new Timeline.TimelineCategory(
-          'loading', Common.UIString('Loading'), true, 'hsl(214, 67%, 74%)', 'hsl(214, 67%, 66%)'),
-      scripting: new Timeline.TimelineCategory(
-          'scripting', Common.UIString('Scripting'), true, 'hsl(43, 83%, 72%)', 'hsl(43, 83%, 64%) '),
-      rendering: new Timeline.TimelineCategory(
-          'rendering', Common.UIString('Rendering'), true, 'hsl(256, 67%, 76%)', 'hsl(256, 67%, 70%)'),
-      painting: new Timeline.TimelineCategory(
-          'painting', Common.UIString('Painting'), true, 'hsl(109, 33%, 64%)', 'hsl(109, 33%, 55%)'),
-      gpu: new Timeline.TimelineCategory(
-          'gpu', Common.UIString('GPU'), false, 'hsl(109, 33%, 64%)', 'hsl(109, 33%, 55%)'),
-      async: new Timeline.TimelineCategory(
-          'async', Common.UIString('Async'), false, 'hsl(0, 100%, 50%)', 'hsl(0, 100%, 40%)'),
-      other:
-          new Timeline.TimelineCategory('other', Common.UIString('Other'), false, 'hsl(0, 0%, 87%)', 'hsl(0, 0%, 79%)'),
-      idle: new Timeline.TimelineCategory('idle', Common.UIString('Idle'), false, 'hsl(0, 0%, 98%)', 'hsl(0, 0%, 98%)')
+      loading: new Timeline.TimelineCategory('loading', ls`Loading`, true, 'hsl(214, 67%, 74%)', 'hsl(214, 67%, 66%)'),
+      scripting:
+          new Timeline.TimelineCategory('scripting', ls`Scripting`, true, 'hsl(43, 83%, 72%)', 'hsl(43, 83%, 64%) '),
+      rendering:
+          new Timeline.TimelineCategory('rendering', ls`Rendering`, true, 'hsl(256, 67%, 76%)', 'hsl(256, 67%, 70%)'),
+      painting:
+          new Timeline.TimelineCategory('painting', ls`Painting`, true, 'hsl(109, 33%, 64%)', 'hsl(109, 33%, 55%)'),
+      gpu: new Timeline.TimelineCategory('gpu', ls`GPU`, false, 'hsl(109, 33%, 64%)', 'hsl(109, 33%, 55%)'),
+      async: new Timeline.TimelineCategory('async', ls`Async`, false, 'hsl(0, 100%, 50%)', 'hsl(0, 100%, 40%)'),
+      other: new Timeline.TimelineCategory('other', ls`Other`, false, 'hsl(0, 0%, 87%)', 'hsl(0, 0%, 79%)'),
+      idle: new Timeline.TimelineCategory('idle', ls`Idle`, false, 'hsl(0, 0%, 98%)', 'hsl(0, 0%, 98%)')
     };
     return Timeline.TimelineUIUtils._categories;
   }
@@ -1568,8 +1506,8 @@ Timeline.TimelineUIUtils = class {
     if (!Timeline.TimelineUIUtils._titleForAsyncEventGroupMap) {
       var groups = TimelineModel.TimelineModel.AsyncEventGroup;
       Timeline.TimelineUIUtils._titleForAsyncEventGroupMap = new Map([
-        [groups.animation, Common.UIString('Animation')], [groups.console, Common.UIString('Console')],
-        [groups.userTiming, Common.UIString('User Timing')], [groups.input, Common.UIString('Input')]
+        [groups.animation, ls`Animation`], [groups.console, ls`Console`], [groups.userTiming, ls`User Timing`],
+        [groups.input, ls`Input`]
       ]);
     }
     return Timeline.TimelineUIUtils._titleForAsyncEventGroupMap.get(group) || '';
@@ -1643,13 +1581,13 @@ Timeline.TimelineUIUtils = class {
    */
   static generateDetailsContentForFrame(frame, filmStripFrame) {
     var contentHelper = new Timeline.TimelineDetailsContentHelper(null, null);
-    contentHelper.addSection(Common.UIString('Frame'));
+    contentHelper.addSection(ls`Frame`);
 
     var duration = Timeline.TimelineUIUtils.frameDuration(frame);
-    contentHelper.appendElementRow(Common.UIString('Duration'), duration, frame.hasWarnings());
+    contentHelper.appendElementRow(ls`Duration`, duration, frame.hasWarnings());
     var durationInMillis = frame.endTime - frame.startTime;
-    contentHelper.appendTextRow(Common.UIString('FPS'), Math.floor(1000 / durationInMillis));
-    contentHelper.appendTextRow(Common.UIString('CPU time'), Number.millisToString(frame.cpuTime, true));
+    contentHelper.appendTextRow(ls`FPS`, Math.floor(1000 / durationInMillis));
+    contentHelper.appendTextRow(ls`CPU time`, Number.millisToString(frame.cpuTime, true));
     if (filmStripFrame) {
       var filmStripPreview = createElementWithClass('div', 'timeline-filmstrip-preview');
       filmStripFrame.imageDataPromise()
@@ -1659,11 +1597,8 @@ Timeline.TimelineUIUtils = class {
       filmStripPreview.addEventListener('click', frameClicked.bind(null, filmStripFrame), false);
     }
 
-    if (frame.layerTree) {
-      contentHelper.appendElementRow(
-          Common.UIString('Layer tree'),
-          Components.Linkifier.linkifyRevealable(frame.layerTree, Common.UIString('show')));
-    }
+    if (frame.layerTree)
+      contentHelper.appendElementRow(ls`Layer tree`, Components.Linkifier.linkifyRevealable(frame.layerTree, ls`show`));
 
     /**
      * @param {!SDK.FilmStripModel.Frame} filmStripFrame
@@ -1687,9 +1622,9 @@ Timeline.TimelineUIUtils = class {
     element.createTextChild(durationText);
     if (!frame.hasWarnings())
       return element;
-    element.createTextChild(Common.UIString('. Long frame times are an indication of '));
-    element.appendChild(UI.createExternalLink(
-        'https://developers.google.com/web/fundamentals/performance/rendering/', Common.UIString('jank')));
+    element.createTextChild(ls`. Long frame times are an indication of `);
+    element.appendChild(
+        UI.createExternalLink('https://developers.google.com/web/fundamentals/performance/rendering/', ls`jank`));
     element.createTextChild('.');
     return element;
   }
@@ -1816,7 +1751,7 @@ Timeline.TimelineUIUtils = class {
    */
   static markerStyleForFrame() {
     return {
-      title: Common.UIString('Frame'),
+      title: ls`Frame`,
       color: 'rgba(100, 100, 100, 0.4)',
       lineWidth: 3,
       dashStyle: [3],
@@ -1857,8 +1792,8 @@ Timeline.TimelineUIUtils = class {
       case warnings.ForcedLayout:
         span.appendChild(UI.createDocumentationLink(
             '../../fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing#avoid-forced-synchronous-layouts',
-            Common.UIString('Forced reflow')));
-        span.createTextChild(Common.UIString(' is a likely performance bottleneck.'));
+            ls`Forced reflow`));
+        span.createTextChild(ls` is a likely performance bottleneck.`);
         break;
       case warnings.IdleDeadlineExceeded:
         span.textContent = Common.UIString(
@@ -1872,8 +1807,8 @@ Timeline.TimelineUIUtils = class {
         span.textContent = Common.UIString('Recurring handler took %s', Number.millisToString(event.duration, true));
         break;
       case warnings.V8Deopt:
-        span.appendChild(UI.createExternalLink(
-            'https://github.com/GoogleChrome/devtools-docs/issues/53', Common.UIString('Not optimized')));
+        span.appendChild(
+            UI.createExternalLink('https://github.com/GoogleChrome/devtools-docs/issues/53', ls`Not optimized`));
         span.createTextChild(Common.UIString(': %s', eventData['deoptReason']));
         break;
       default:
@@ -1962,12 +1897,12 @@ Timeline.TimelineUIUtils.InvalidationsGroupElement = class extends UI.TreeElemen
     if (reason)
       title.createTextChild(Common.UIString('%s for ', reason));
     else
-      title.createTextChild(Common.UIString('Unknown cause for '));
+      title.createTextChild(ls`Unknown cause for `);
 
     this._appendTruncatedNodeList(title, this._invalidations);
 
     if (topFrame && this._contentHelper.linkifier()) {
-      title.createTextChild(Common.UIString('. '));
+      title.createTextChild(ls`. `);
       var stack = title.createChild('span', 'monospace');
       stack.createChild('span').textContent = Timeline.TimelineUIUtils.frameDisplayName(topFrame);
       var link = this._contentHelper.linkifier().maybeLinkifyConsoleCallFrame(target, topFrame);
@@ -1989,12 +1924,12 @@ Timeline.TimelineUIUtils.InvalidationsGroupElement = class extends UI.TreeElemen
     var first = this._invalidations[0];
     if (first.cause.stackTrace) {
       var stack = content.createChild('div');
-      stack.createTextChild(Common.UIString('Stack trace:'));
+      stack.createTextChild(ls`Stack trace:`);
       this._contentHelper.createChildStackTraceElement(
           stack, Timeline.TimelineUIUtils._stackTraceFromCallFrames(first.cause.stackTrace));
     }
 
-    content.createTextChild(this._invalidations.length > 1 ? Common.UIString('Nodes:') : Common.UIString('Node:'));
+    content.createTextChild(this._invalidations.length > 1 ? ls`Nodes:` : ls`Node:`);
     var nodeList = content.createChild('div', 'node-list');
     var firstNode = true;
     for (var i = 0; i < this._invalidations.length; i++) {
@@ -2002,7 +1937,7 @@ Timeline.TimelineUIUtils.InvalidationsGroupElement = class extends UI.TreeElemen
       var invalidationNode = this._createInvalidationNode(invalidation, true);
       if (invalidationNode) {
         if (!firstNode)
-          nodeList.createTextChild(Common.UIString(', '));
+          nodeList.createTextChild(ls`, `);
         firstNode = false;
 
         nodeList.appendChild(invalidationNode);
@@ -2050,11 +1985,11 @@ Timeline.TimelineUIUtils.InvalidationsGroupElement = class extends UI.TreeElemen
       parentElement.appendChild(invalidationNodes[0]);
     } else if (invalidationNodes.length === 2) {
       parentElement.appendChild(invalidationNodes[0]);
-      parentElement.createTextChild(Common.UIString(' and '));
+      parentElement.createTextChild(ls` and `);
       parentElement.appendChild(invalidationNodes[1]);
     } else if (invalidationNodes.length >= 3) {
       parentElement.appendChild(invalidationNodes[0]);
-      parentElement.createTextChild(Common.UIString(', '));
+      parentElement.createTextChild(ls`, `);
       parentElement.appendChild(invalidationNodes[1]);
       parentElement.createTextChild(Common.UIString(', and %s others', invalidationNodes.length - 2));
     }
@@ -2075,7 +2010,7 @@ Timeline.TimelineUIUtils.InvalidationsGroupElement = class extends UI.TreeElemen
     }
     if (showUnknownNodes) {
       var nodeSpan = createElement('span');
-      return nodeSpan.createTextChild(Common.UIString('[ unknown node ]'));
+      return nodeSpan.createTextChild(ls`[ unknown node ]`);
     }
   }
 };
@@ -2370,7 +2305,7 @@ Timeline.TimelineDetailsContentHelper = class {
   appendWarningRow(event, warningType) {
     var warning = Timeline.TimelineUIUtils.eventWarning(event, warningType);
     if (warning)
-      this.appendElementRow(Common.UIString('Warning'), warning, true);
+      this.appendElementRow(ls`Warning`, warning, true);
   }
 };
 

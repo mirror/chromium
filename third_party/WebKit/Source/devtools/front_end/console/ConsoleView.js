@@ -38,7 +38,7 @@ Console.ConsoleView = class extends UI.VBox {
     this.registerRequiredCSS('console/consoleView.css');
 
     this._searchableView = new UI.SearchableView(this);
-    this._searchableView.setPlaceholder(Common.UIString('Find string in logs'));
+    this._searchableView.setPlaceholder(ls`Find string in logs`);
     this._searchableView.setMinimalSearchQuerySize(0);
     this._badgePool = new ProductRegistry.BadgePool();
     this._sidebar = new Console.ConsoleSidebar(this._badgePool);
@@ -89,12 +89,12 @@ Console.ConsoleView = class extends UI.VBox {
     this._filterStatusText = new UI.ToolbarText();
     this._filterStatusText.element.classList.add('dimmed');
     this._showSettingsPaneSetting = Common.settings.createSetting('consoleShowSettingsToolbar', false);
-    this._showSettingsPaneButton = new UI.ToolbarSettingToggle(
-        this._showSettingsPaneSetting, 'largeicon-settings-gear', Common.UIString('Console settings'));
+    this._showSettingsPaneButton =
+        new UI.ToolbarSettingToggle(this._showSettingsPaneSetting, 'largeicon-settings-gear', ls`Console settings`);
     this._progressToolbarItem = new UI.ToolbarItem(createElement('div'));
     this._groupSimilarSetting = Common.settings.moduleSetting('consoleGroupSimilar');
     this._groupSimilarSetting.addChangeListener(() => this._updateMessageList());
-    var groupSimilarToggle = new UI.ToolbarSettingCheckbox(this._groupSimilarSetting, Common.UIString('Group similar'));
+    var groupSimilarToggle = new UI.ToolbarSettingCheckbox(this._groupSimilarSetting, ls`Group similar`);
 
     toolbar.appendToolbarItem(UI.Toolbar.createActionButton(
         /** @type {!UI.Action }*/ (UI.actionRegistry.action('console.clear'))));
@@ -111,18 +111,15 @@ Console.ConsoleView = class extends UI.VBox {
     toolbar.appendToolbarItem(this._showSettingsPaneButton);
 
     this._preserveLogCheckbox = new UI.ToolbarSettingCheckbox(
-        Common.moduleSetting('preserveConsoleLog'), Common.UIString('Do not clear log on page reload / navigation'),
-        Common.UIString('Preserve log'));
+        Common.moduleSetting('preserveConsoleLog'), ls`Do not clear log on page reload / navigation`, ls`Preserve log`);
     this._hideNetworkMessagesCheckbox = new UI.ToolbarSettingCheckbox(
-        this._filter._hideNetworkMessagesSetting, this._filter._hideNetworkMessagesSetting.title(),
-        Common.UIString('Hide network'));
+        this._filter._hideNetworkMessagesSetting, this._filter._hideNetworkMessagesSetting.title(), ls`Hide network`);
     var filterByExecutionContextCheckbox = new UI.ToolbarSettingCheckbox(
         this._filter._filterByExecutionContextSetting,
-        Common.UIString('Only show messages from the current context (top, iframe, worker, extension)'),
-        Common.UIString('Selected context only'));
+        ls`Only show messages from the current context (top, iframe, worker, extension)`, ls`Selected context only`);
     var filterConsoleAPICheckbox = new UI.ToolbarSettingCheckbox(
-        Common.moduleSetting('consoleAPIFilterEnabled'), Common.UIString('Only show messages from console API methods'),
-        Common.UIString('User messages only'));
+        Common.moduleSetting('consoleAPIFilterEnabled'), ls`Only show messages from console API methods`,
+        ls`User messages only`);
     var monitoringXHREnabledSetting = Common.moduleSetting('monitoringXHREnabled');
     this._timestampsSetting = Common.moduleSetting('consoleTimestampsEnabled');
     this._consoleHistoryAutocompleteSetting = Common.moduleSetting('consoleHistoryAutocomplete');
@@ -637,7 +634,7 @@ Console.ConsoleView = class extends UI.VBox {
     var sourceElement = event.target.enclosingNodeOrSelfWithClass('console-message-wrapper');
     var consoleMessage = sourceElement ? sourceElement.message.consoleMessage() : null;
 
-    var filterSubMenu = contextMenu.headerSection().appendSubMenuItem(Common.UIString('Filter'));
+    var filterSubMenu = contextMenu.headerSection().appendSubMenuItem(ls`Filter`);
 
     if (consoleMessage && consoleMessage.url) {
       var menuTitle = Common.UIString('Hide messages from %s', new Common.ParsedURL(consoleMessage.url).displayName);
@@ -646,7 +643,7 @@ Console.ConsoleView = class extends UI.VBox {
     }
 
     var unhideAll = filterSubMenu.footerSection().appendItem(
-        Common.UIString('Unhide all'), this._filter.removeMessageURLFilter.bind(this._filter));
+        ls`Unhide all`, this._filter.removeMessageURLFilter.bind(this._filter));
 
     var hasFilters = false;
 
@@ -662,17 +659,15 @@ Console.ConsoleView = class extends UI.VBox {
 
     contextMenu.defaultSection().appendAction('console.clear');
     contextMenu.defaultSection().appendAction('console.clear.history');
-    contextMenu.saveSection().appendItem(Common.UIString('Save as...'), this._saveConsole.bind(this));
+    contextMenu.saveSection().appendItem(ls`Save as...`, this._saveConsole.bind(this));
     if (this.element.hasSelection()) {
       contextMenu.clipboardSection().appendItem(
-          Common.UIString('Copy visible styled selection'), this._viewport.copyWithStyles.bind(this._viewport));
+          ls`Copy visible styled selection`, this._viewport.copyWithStyles.bind(this._viewport));
     }
 
     var request = consoleMessage ? consoleMessage.request : null;
-    if (request && SDK.NetworkManager.canReplayRequest(request)) {
-      contextMenu.debugSection().appendItem(
-          Common.UIString('Replay XHR'), SDK.NetworkManager.replayRequest.bind(null, request));
-    }
+    if (request && SDK.NetworkManager.canReplayRequest(request))
+      contextMenu.debugSection().appendItem(ls`Replay XHR`, SDK.NetworkManager.replayRequest.bind(null, request));
 
     contextMenu.show();
   }
@@ -684,7 +679,7 @@ Console.ConsoleView = class extends UI.VBox {
     var stream = new Bindings.FileOutputStream();
 
     var progressIndicator = new UI.ProgressIndicator();
-    progressIndicator.setTitle(Common.UIString('Writing file…'));
+    progressIndicator.setTitle(ls`Writing file…`);
     progressIndicator.setTotalWork(this.itemCount());
 
     /** @const */
@@ -860,7 +855,7 @@ Console.ConsoleView = class extends UI.VBox {
     this._shortcuts = {};
 
     var shortcut = UI.KeyboardShortcut;
-    var section = UI.shortcutsScreen.section(Common.UIString('Console'));
+    var section = UI.shortcutsScreen.section(ls`Console`);
 
     var shortcutL = shortcut.makeDescriptor('l', UI.KeyboardShortcut.Modifiers.Ctrl);
     var keys = [shortcutL];
@@ -868,25 +863,25 @@ Console.ConsoleView = class extends UI.VBox {
       var shortcutK = shortcut.makeDescriptor('k', UI.KeyboardShortcut.Modifiers.Meta);
       keys.unshift(shortcutK);
     }
-    section.addAlternateKeys(keys, Common.UIString('Clear console'));
+    section.addAlternateKeys(keys, ls`Clear console`);
 
     keys = [shortcut.makeDescriptor(shortcut.Keys.Tab), shortcut.makeDescriptor(shortcut.Keys.Right)];
-    section.addRelatedKeys(keys, Common.UIString('Accept suggestion'));
+    section.addRelatedKeys(keys, ls`Accept suggestion`);
 
     var shortcutU = shortcut.makeDescriptor('u', UI.KeyboardShortcut.Modifiers.Ctrl);
     this._shortcuts[shortcutU.key] = this._clearPromptBackwards.bind(this);
-    section.addAlternateKeys([shortcutU], Common.UIString('Clear console prompt'));
+    section.addAlternateKeys([shortcutU], ls`Clear console prompt`);
 
     keys = [shortcut.makeDescriptor(shortcut.Keys.Down), shortcut.makeDescriptor(shortcut.Keys.Up)];
-    section.addRelatedKeys(keys, Common.UIString('Next/previous line'));
+    section.addRelatedKeys(keys, ls`Next/previous line`);
 
     if (Host.isMac()) {
       keys =
           [shortcut.makeDescriptor('N', shortcut.Modifiers.Alt), shortcut.makeDescriptor('P', shortcut.Modifiers.Alt)];
-      section.addRelatedKeys(keys, Common.UIString('Next/previous command'));
+      section.addRelatedKeys(keys, ls`Next/previous command`);
     }
 
-    section.addKey(shortcut.makeDescriptor(shortcut.Keys.Enter), Common.UIString('Execute command'));
+    section.addKey(shortcut.makeDescriptor(shortcut.Keys.Enter), ls`Execute command`);
   }
 
   _clearPromptBackwards() {
@@ -991,7 +986,7 @@ Console.ConsoleView = class extends UI.VBox {
       this._searchShouldJumpBackwards = !!jumpBackwards;
 
     this._searchProgressIndicator = new UI.ProgressIndicator();
-    this._searchProgressIndicator.setTitle(Common.UIString('Searching…'));
+    this._searchProgressIndicator.setTitle(ls`Searching…`);
     this._searchProgressIndicator.setTotalWork(this._visibleViewMessages.length);
     this._progressToolbarItem.element.appendChild(this._searchProgressIndicator.element);
 
@@ -1189,7 +1184,7 @@ Console.ConsoleViewFilter = class {
     var filterKeys = Object.values(Console.ConsoleFilter.FilterType);
     this._suggestionBuilder = new UI.FilterSuggestionBuilder(filterKeys);
     this._textFilterUI = new UI.ToolbarInput(
-        Common.UIString('Filter'), 0.2, 1, Common.UIString('e.g. /event\\d/ -cdn url:a.com'),
+        ls`Filter`, 0.2, 1, ls`e.g. /event\\d/ -cdn url:a.com`,
         this._suggestionBuilder.completions.bind(this._suggestionBuilder));
     this._textFilterUI.addEventListener(UI.ToolbarInput.Event.TextChanged, this._onFilterChanged, this);
     this._filterParser = new TextUtils.FilterParser(filterKeys);
@@ -1197,10 +1192,10 @@ Console.ConsoleViewFilter = class {
     this._updateCurrentFilter();
 
     this._levelLabels = {};
-    this._levelLabels[ConsoleModel.ConsoleMessage.MessageLevel.Verbose] = Common.UIString('Verbose');
-    this._levelLabels[ConsoleModel.ConsoleMessage.MessageLevel.Info] = Common.UIString('Info');
-    this._levelLabels[ConsoleModel.ConsoleMessage.MessageLevel.Warning] = Common.UIString('Warnings');
-    this._levelLabels[ConsoleModel.ConsoleMessage.MessageLevel.Error] = Common.UIString('Errors');
+    this._levelLabels[ConsoleModel.ConsoleMessage.MessageLevel.Verbose] = ls`Verbose`;
+    this._levelLabels[ConsoleModel.ConsoleMessage.MessageLevel.Info] = ls`Info`;
+    this._levelLabels[ConsoleModel.ConsoleMessage.MessageLevel.Warning] = ls`Warnings`;
+    this._levelLabels[ConsoleModel.ConsoleMessage.MessageLevel.Error] = ls`Errors`;
 
     this._levelMenuButton = new UI.ToolbarButton('');
     this._levelMenuButton.turnIntoSelect();
@@ -1278,14 +1273,14 @@ Console.ConsoleViewFilter = class {
       isAll = isAll && levels[name] === allValue[name];
       isDefault = isDefault && levels[name] === defaultValue[name];
       if (levels[name])
-        text = text ? Common.UIString('Custom levels') : Common.UIString('%s only', this._levelLabels[name]);
+        text = text ? ls`Custom levels` : Common.UIString('%s only', this._levelLabels[name]);
     }
     if (isAll)
-      text = Common.UIString('All levels');
+      text = ls`All levels`;
     else if (isDefault)
-      text = Common.UIString('Default levels');
+      text = ls`Default levels`;
     else
-      text = text || Common.UIString('Hide all');
+      text = text || ls`Hide all`;
     this._levelMenuButton.setText(text);
   }
 
@@ -1301,7 +1296,7 @@ Console.ConsoleViewFilter = class {
         mouseEvent, true /* useSoftMenu */, this._levelMenuButton.element.totalOffsetLeft(),
         this._levelMenuButton.element.totalOffsetTop() + this._levelMenuButton.element.offsetHeight);
     contextMenu.headerSection().appendItem(
-        Common.UIString('Default'), () => setting.set(Console.ConsoleFilter.defaultLevelsFilterValue()));
+        ls`Default`, () => setting.set(Console.ConsoleFilter.defaultLevelsFilterValue()));
     for (var level in this._levelLabels) {
       contextMenu.defaultSection().appendCheckboxItem(
           this._levelLabels[level], toggleShowLevel.bind(null, level), levels[level]);

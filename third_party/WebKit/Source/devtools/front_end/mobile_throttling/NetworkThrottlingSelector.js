@@ -33,9 +33,9 @@ MobileThrottling.NetworkThrottlingSelector = class {
   }
 
   _populateOptions() {
-    var disabledGroup = {title: Common.UIString('Disabled'), items: [SDK.NetworkManager.NoThrottlingConditions]};
-    var presetsGroup = {title: Common.UIString('Presets'), items: MobileThrottling.networkPresets};
-    var customGroup = {title: Common.UIString('Custom'), items: this._customNetworkConditionsSetting.get()};
+    var disabledGroup = {title: ls`Disabled`, items: [SDK.NetworkManager.NoThrottlingConditions]};
+    var presetsGroup = {title: ls`Presets`, items: MobileThrottling.networkPresets};
+    var customGroup = {title: ls`Custom`, items: this._customNetworkConditionsSetting.get()};
     this._options = this._populateCallback([disabledGroup, presetsGroup, customGroup]);
     if (!this._networkConditionsChanged()) {
       for (var i = this._options.length - 1; i >= 0; i--) {

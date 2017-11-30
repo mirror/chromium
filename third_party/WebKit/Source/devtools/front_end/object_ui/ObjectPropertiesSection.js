@@ -271,7 +271,9 @@ ObjectUI.ObjectPropertiesSection = class extends UI.TreeOutlineInShadow {
 
     if (wasThrown) {
       var wrapperElement = createElementWithClass('span', 'error value');
-      wrapperElement.createTextChild('[' + Common.UIString('Exception') + ': ');
+      wrapperElement.createTextChild(
+          '[' + ls`Exception` +
+          ': ');
       wrapperElement.appendChild(valueElement);
       wrapperElement.createTextChild(']');
       return wrapperElement;
@@ -284,7 +286,8 @@ ObjectUI.ObjectPropertiesSection = class extends UI.TreeOutlineInShadow {
      */
     function createUnknownInternalLocationElement() {
       var valueElement = createElementWithClass('span');
-      valueElement.textContent = '<' + Common.UIString('unknown') + '>';
+      valueElement.textContent = '<' + ls`unknown` +
+          '>';
       valueElement.title = description || '';
       return valueElement;
     }
@@ -603,7 +606,7 @@ ObjectUI.ObjectPropertyTreeElement = class extends UI.TreeElement {
     if (treeNode.childCount())
       return;
     var title = createElementWithClass('div', 'gray-info-message');
-    title.textContent = emptyPlaceholder || Common.UIString('No properties');
+    title.textContent = emptyPlaceholder || ls`No properties`;
     var infoElement = new UI.TreeElement(title);
     treeNode.appendChild(infoElement);
   }
@@ -617,11 +620,11 @@ ObjectUI.ObjectPropertyTreeElement = class extends UI.TreeElement {
   static createRemoteObjectAccessorPropertySpan(object, propertyPath, callback) {
     var rootElement = createElement('span');
     var element = rootElement.createChild('span');
-    element.textContent = Common.UIString('(...)');
+    element.textContent = ls`(...)`;
     if (!object)
       return rootElement;
     element.classList.add('object-value-calculate-value-button');
-    element.title = Common.UIString('Invoke property getter');
+    element.title = ls`Invoke property getter`;
     element.addEventListener('click', onInvokeGetterClick, false);
 
     function onInvokeGetterClick(event) {
@@ -775,8 +778,8 @@ ObjectUI.ObjectPropertyTreeElement = class extends UI.TreeElement {
           this.property.parentObject, [this.property.name], this._onInvokeGetterClick.bind(this));
     } else {
       this.valueElement = createElementWithClass('span', 'object-value-undefined');
-      this.valueElement.textContent = Common.UIString('<unreadable>');
-      this.valueElement.title = Common.UIString('No property getter');
+      this.valueElement.textContent = ls`<unreadable>`;
+      this.valueElement.title = ls`No property getter`;
     }
 
     var valueText = this.valueElement.textContent;
@@ -814,7 +817,7 @@ ObjectUI.ObjectPropertyTreeElement = class extends UI.TreeElement {
     if (property.value)
       contextMenu.appendApplicableItems(property.value);
     var copyPathHandler = InspectorFrontendHost.copyText.bind(InspectorFrontendHost, this.nameElement.title);
-    contextMenu.clipboardSection().appendItem(Common.UIString('Copy property path'), copyPathHandler);
+    contextMenu.clipboardSection().appendItem(ls`Copy property path`, copyPathHandler);
     contextMenu.show();
   }
 
@@ -828,7 +831,7 @@ ObjectUI.ObjectPropertyTreeElement = class extends UI.TreeElement {
     if (this.property.value.type === 'string' && typeof text === 'string')
       text = '"' + text + '"';
 
-    this._editableDiv.setTextContentTruncatedIfNeeded(text, Common.UIString('<string is too large to edit>'));
+    this._editableDiv.setTextContentTruncatedIfNeeded(text, ls`<string is too large to edit>`);
     var originalContent = this._editableDiv.textContent;
 
     // Lie about our children to prevent expanding on double click and to collapse subproperties.

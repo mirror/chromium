@@ -537,7 +537,7 @@ Sources.TabbedEditorContainer = class extends Common.Object {
       var icon = null;
       if (Persistence.persistence.hasUnsavedCommittedChanges(uiSourceCode)) {
         icon = UI.Icon.create('smallicon-warning');
-        icon.title = Common.UIString('Changes to this file were not saved to file system.');
+        icon.title = ls`Changes to this file were not saved to file system.`;
       } else {
         icon = Persistence.PersistenceUtils.iconForUISourceCode(uiSourceCode);
       }

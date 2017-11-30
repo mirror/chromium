@@ -39,7 +39,7 @@ Components.DockController = class extends Common.Object {
     super();
     this._canDock = canDock;
 
-    this._closeButton = new UI.ToolbarButton(Common.UIString('Close'), 'largeicon-delete');
+    this._closeButton = new UI.ToolbarButton(ls`Close`, 'largeicon-delete');
     this._closeButton.addEventListener(
         UI.ToolbarButton.Events.Click, InspectorFrontendHost.closeWindow.bind(InspectorFrontendHost));
 
@@ -66,10 +66,7 @@ Components.DockController = class extends Common.Object {
     if (!this._canDock)
       return;
 
-    this._titles = [
-      Common.UIString('Dock to right'), Common.UIString('Dock to bottom'), Common.UIString('Dock to left'),
-      Common.UIString('Undock into separate window')
-    ];
+    this._titles = [ls`Dock to right`, ls`Dock to bottom`, ls`Dock to left`, ls`Undock into separate window`];
     this._dockSideChanged();
   }
 

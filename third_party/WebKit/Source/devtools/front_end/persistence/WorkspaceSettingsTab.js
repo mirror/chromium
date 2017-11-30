@@ -8,7 +8,7 @@ Persistence.WorkspaceSettingsTab = class extends UI.VBox {
     this.registerRequiredCSS('persistence/workspaceSettingsTab.css');
 
     var header = this.element.createChild('header');
-    header.createChild('h3').createTextChild(Common.UIString('Workspace'));
+    header.createChild('h3').createTextChild(ls`Workspace`);
 
     this.containerElement = this.element.createChild('div', 'help-container-wrapper')
                                 .createChild('div', 'settings-tab help-content help-container');
@@ -31,17 +31,16 @@ Persistence.WorkspaceSettingsTab = class extends UI.VBox {
 
     if (Runtime.experiments.isEnabled('persistence2')) {
       var div = this.containerElement.createChild('div', 'settings-info-message');
-      div.createTextChild(Common.UIString('Mappings are inferred automatically. Please '));
+      div.createTextChild(ls`Mappings are inferred automatically. Please `);
       div.appendChild(UI.createExternalLink(
           'https://bugs.chromium.org/p/chromium/issues/entry?template=Defect%20report%20from%20user&components=Platform%3EDevTools%3EAuthoring&comment=DevTools%20failed%20to%20link%20network%20resource%20to%20filesystem.%0A%0APlatform%3A%20%3CLinux%2FWin%2FMac%3E%0AChrome%20version%3A%20%3Cyour%20chrome%20version%3E%0A%0AWhat%20are%20the%20details%20of%20your%20project%3F%0A-%20Source%20code%20(if%20any)%3A%20http%3A%2F%2Fgithub.com%2Fexample%2Fexample%0A-%20Build%20System%3A%20gulp%2Fgrunt%2Fwebpack%2Frollup%2F...%0A-%20HTTP%20server%3A%20node%20HTTP%2Fnginx%2Fapache...%0A%0AAssets%20failed%20to%20link%20(or%20incorrectly%20linked)%3A%0A1.%0A2.%0A3.%0A%0AIf%20possible%2C%20please%20attach%20a%20screenshot%20of%20network%20sources%20navigator%20which%20should%0Ashow%20which%20resources%20failed%20to%20map',
-          Common.UIString('report')));
-      div.createTextChild(Common.UIString(' any bugs.'));
+          ls`report`));
+      div.createTextChild(ls` any bugs.`);
     }
 
     this._fileSystemsListContainer = this.containerElement.createChild('div', '');
 
-    this.containerElement.appendChild(
-        UI.createTextButton(Common.UIString('Add folder\u2026'), this._addFileSystemClicked.bind(this)));
+    this.containerElement.appendChild(UI.createTextButton(ls`Add folder\u2026`, this._addFileSystemClicked.bind(this)));
 
     /** @type {!Map<string, !Element>} */
     this._elementByPath = new Map();
@@ -60,7 +59,7 @@ Persistence.WorkspaceSettingsTab = class extends UI.VBox {
   _createFolderExcludePatternInput() {
     var p = createElement('p');
     var labelElement = p.createChild('label');
-    labelElement.textContent = Common.UIString('Folder exclude pattern');
+    labelElement.textContent = ls`Folder exclude pattern`;
     var inputElement = UI.createInput('', 'text');
     p.appendChild(inputElement);
     inputElement.style.width = '270px';
@@ -120,7 +119,7 @@ Persistence.WorkspaceSettingsTab = class extends UI.VBox {
     path.title = fileSystemPath;
 
     var toolbar = new UI.Toolbar('');
-    var button = new UI.ToolbarButton(Common.UIString('Remove'), 'largeicon-delete');
+    var button = new UI.ToolbarButton(ls`Remove`, 'largeicon-delete');
     button.addEventListener(UI.ToolbarButton.Events.Click, this._removeFileSystemClicked.bind(this, fileSystem));
     toolbar.appendToolbarItem(button);
     header.appendChild(toolbar.element);

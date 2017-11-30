@@ -101,7 +101,7 @@ Elements.ElementsBreadcrumbs = class extends UI.HBox {
           return '::' + domNode.pseudoType();
         return null;
       case Node.TEXT_NODE:
-        return Common.UIString('(text)');
+        return ls`(text)`;
       case Node.COMMENT_NODE:
         return '<!-->';
       case Node.DOCUMENT_TYPE_NODE:

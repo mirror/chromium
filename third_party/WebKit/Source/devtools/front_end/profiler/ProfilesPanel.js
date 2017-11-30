@@ -71,7 +71,7 @@ Profiler.ProfilesPanel = class extends UI.PanelWithSidebar {
     this._toggleRecordButton = UI.Toolbar.createActionButton(this._toggleRecordAction);
     toolbar.appendToolbarItem(this._toggleRecordButton);
 
-    this.clearResultsButton = new UI.ToolbarButton(Common.UIString('Clear all profiles'), 'largeicon-clear');
+    this.clearResultsButton = new UI.ToolbarButton(ls`Clear all profiles`, 'largeicon-clear');
     this.clearResultsButton.addEventListener(UI.ToolbarButton.Events.Click, this._reset, this);
     toolbar.appendToolbarItem(this.clearResultsButton);
     toolbar.appendSeparator();
@@ -301,7 +301,7 @@ Profiler.ProfilesPanel = class extends UI.PanelWithSidebar {
 
     if (this.panelSidebarElement().isSelfOrAncestor(event.srcElement)) {
       contextMenu.defaultSection().appendItem(
-          Common.UIString('Load\u2026'), this._fileSelectorElement.click.bind(this._fileSelectorElement));
+          ls`Load\u2026`, this._fileSelectorElement.click.bind(this._fileSelectorElement));
     }
     contextMenu.show();
   }
@@ -611,7 +611,7 @@ Profiler.ProfileSidebarTreeElement = class extends UI.TreeElement {
 
   _createSaveLink() {
     this._saveLinkElement = this._titleContainer.createChild('span', 'save-link');
-    this._saveLinkElement.textContent = Common.UIString('Save');
+    this._saveLinkElement.textContent = ls`Save`;
     this._saveLinkElement.addEventListener('click', this._saveProfile.bind(this), false);
   }
 
@@ -710,11 +710,11 @@ Profiler.ProfileSidebarTreeElement = class extends UI.TreeElement {
     var contextMenu = new UI.ContextMenu(event);
     // FIXME: use context menu provider
     contextMenu.headerSection().appendItem(
-        Common.UIString('Load\u2026'),
+        ls`Load\u2026`,
         Profiler.ProfilesPanel._fileSelectorElement.click.bind(Profiler.ProfilesPanel._fileSelectorElement));
     if (profile.canSaveToFile())
-      contextMenu.saveSection().appendItem(Common.UIString('Save\u2026'), profile.saveToFile.bind(profile));
-    contextMenu.footerSection().appendItem(Common.UIString('Delete'), this.ondelete.bind(this));
+      contextMenu.saveSection().appendItem(ls`Save\u2026`, profile.saveToFile.bind(profile));
+    contextMenu.footerSection().appendItem(ls`Delete`, this.ondelete.bind(this));
     contextMenu.show();
   }
 
@@ -808,7 +808,7 @@ Profiler.ProfilesSidebarTreeElement = class extends UI.TreeElement {
     this.listItemElement.createChild('div', 'titles no-subtitle')
         .createChild('span', 'title-container')
         .createChild('span', 'title')
-        .textContent = Common.UIString('Profiles');
+        .textContent = ls`Profiles`;
   }
 };
 

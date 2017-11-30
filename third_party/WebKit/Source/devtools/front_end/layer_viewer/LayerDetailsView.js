@@ -40,7 +40,7 @@ LayerViewer.LayerDetailsView = class extends UI.Widget {
     this.registerRequiredCSS('layer_viewer/layerDetailsView.css');
     this._layerViewHost = layerViewHost;
     this._layerViewHost.registerView(this);
-    this._emptyWidget = new UI.EmptyWidget(Common.UIString('Select a layer to see its details'));
+    this._emptyWidget = new UI.EmptyWidget(ls`Select a layer to see its details`);
     this._buildContent();
   }
 
@@ -117,7 +117,7 @@ LayerViewer.LayerDetailsView = class extends UI.Widget {
       return '';
 
     var node = layer.nodeForSelfOrAncestor();
-    var name = node ? Components.DOMPresentationUtils.simpleSelector(node) : Common.UIString('<unnamed>');
+    var name = node ? Components.DOMPresentationUtils.simpleSelector(node) : ls`<unnamed>`;
     return Common.UIString('%s: %s (%s)', title, name, layer.id());
   }
 
@@ -155,10 +155,9 @@ LayerViewer.LayerDetailsView = class extends UI.Widget {
         'Containing Block %d × %d (at %d, %d)', containingBlockRect.width, containingBlockRect.height,
         containingBlockRect.x, containingBlockRect.y);
 
+    this._createStickyAncestorChild(ls`Nearest Layer Shifting Sticky Box`, constraint.nearestLayerShiftingStickyBox());
     this._createStickyAncestorChild(
-        Common.UIString('Nearest Layer Shifting Sticky Box'), constraint.nearestLayerShiftingStickyBox());
-    this._createStickyAncestorChild(
-        Common.UIString('Nearest Layer Shifting Containing Block'), constraint.nearestLayerShiftingContainingBlock());
+        ls`Nearest Layer Shifting Containing Block`, constraint.nearestLayerShiftingContainingBlock());
   }
 
   update() {
@@ -190,14 +189,14 @@ LayerViewer.LayerDetailsView = class extends UI.Widget {
   _buildContent() {
     this._tableElement = this.contentElement.createChild('table');
     this._tbodyElement = this._tableElement.createChild('tbody');
-    this._sizeCell = this._createRow(Common.UIString('Size'));
-    this._compositingReasonsCell = this._createRow(Common.UIString('Compositing Reasons'));
-    this._memoryEstimateCell = this._createRow(Common.UIString('Memory estimate'));
-    this._paintCountCell = this._createRow(Common.UIString('Paint count'));
-    this._scrollRectsCell = this._createRow(Common.UIString('Slow scroll regions'));
-    this._stickyPositionConstraintCell = this._createRow(Common.UIString('Sticky position constraint'));
+    this._sizeCell = this._createRow(ls`Size`);
+    this._compositingReasonsCell = this._createRow(ls`Compositing Reasons`);
+    this._memoryEstimateCell = this._createRow(ls`Memory estimate`);
+    this._paintCountCell = this._createRow(ls`Paint count`);
+    this._scrollRectsCell = this._createRow(ls`Slow scroll regions`);
+    this._stickyPositionConstraintCell = this._createRow(ls`Sticky position constraint`);
     this._paintProfilerButton = this.contentElement.createChild('a', 'hidden link');
-    this._paintProfilerButton.textContent = Common.UIString('Paint Profiler');
+    this._paintProfilerButton.textContent = ls`Paint Profiler`;
     this._paintProfilerButton.addEventListener('click', this._onPaintProfilerButtonClicked.bind(this));
   }
 
@@ -243,56 +242,52 @@ LayerViewer.LayerDetailsView.Events = {
  * @type {!Object.<string, string>}
  */
 LayerViewer.LayerDetailsView.CompositingReasonDetail = {
-  'transform3D': Common.UIString('Composition due to association with an element with a CSS 3D transform.'),
-  'video': Common.UIString('Composition due to association with a <video> element.'),
-  'canvas': Common.UIString('Composition due to the element being a <canvas> element.'),
-  'plugin': Common.UIString('Composition due to association with a plugin.'),
-  'iFrame': Common.UIString('Composition due to association with an <iframe> element.'),
-  'backfaceVisibilityHidden':
-      Common.UIString('Composition due to association with an element with a "backface-visibility: hidden" style.'),
-  'animation': Common.UIString('Composition due to association with an animated element.'),
-  'filters': Common.UIString('Composition due to association with an element with CSS filters applied.'),
-  'scrollDependentPosition': Common.UIString(
-      'Composition due to association with an element with a "position: fixed" or "position: sticky" style.'),
-  'overflowScrollingTouch':
-      Common.UIString('Composition due to association with an element with a "overflow-scrolling: touch" style.'),
-  'blending':
-      Common.UIString('Composition due to association with an element that has blend mode other than "normal".'),
-  'assumedOverlap':
-      Common.UIString('Composition due to association with an element that may overlap other composited elements.'),
-  'overlap': Common.UIString('Composition due to association with an element overlapping other composited elements.'),
-  'negativeZIndexChildren':
-      Common.UIString('Composition due to association with an element with descendants that have a negative z-index.'),
-  'transformWithCompositedDescendants':
-      Common.UIString('Composition due to association with an element with composited descendants.'),
-  'opacityWithCompositedDescendants': Common.UIString(
-      'Composition due to association with an element with opacity applied and composited descendants.'),
-  'maskWithCompositedDescendants':
-      Common.UIString('Composition due to association with a masked element and composited descendants.'),
-  'reflectionWithCompositedDescendants':
-      Common.UIString('Composition due to association with an element with a reflection and composited descendants.'),
+  'transform3D': ls`Composition due to association with an element with a CSS 3D transform.`,
+  'video': ls`Composition due to association with a <video> element.`,
+  'canvas': ls`Composition due to the element being a <canvas> element.`,
+  'plugin': ls`Composition due to association with a plugin.`,
+  'iFrame': ls`Composition due to association with an <iframe> element.`,
+  'backfaceVisibilityHidden': ls
+`Composition due to association with an element with a "backface-visibility: hidden" style.`,
+    'animation': ls`Composition due to association with an animated element.`,
+    'filters': ls`Composition due to association with an element with CSS filters applied.`,
+    'scrollDependentPosition': Common.UIString(
+        'Composition due to association with an element with a "position: fixed" or "position: sticky" style.'),
+    'overflowScrollingTouch': ls
+`Composition due to association with an element with a "overflow-scrolling: touch" style.`,
+    'blending': ls`Composition due to association with an element that has blend mode other than "normal".`,
+    'assumedOverlap': ls`Composition due to association with an element that may overlap other composited elements.`,
+    'overlap': ls`Composition due to association with an element overlapping other composited elements.`,
+    'negativeZIndexChildren': ls
+`Composition due to association with an element with descendants that have a negative z-index.`,
+    'transformWithCompositedDescendants': ls
+`Composition due to association with an element with composited descendants.`,
+    'opacityWithCompositedDescendants': Common.UIString(
+        'Composition due to association with an element with opacity applied and composited descendants.'),
+    'maskWithCompositedDescendants': ls
+`Composition due to association with a masked element and composited descendants.`,
+    'reflectionWithCompositedDescendants': ls
+  `Composition due to association with an element with a reflection and composited descendants.`,
   'filterWithCompositedDescendants': Common.UIString(
       'Composition due to association with an element with CSS filters applied and composited descendants.'),
   'blendingWithCompositedDescendants': Common.UIString(
       'Composition due to association with an element with CSS blending applied and composited descendants.'),
-  'clipsCompositingDescendants':
-      Common.UIString('Composition due to association with an element clipping compositing descendants.'),
-  'perspective': Common.UIString('Composition due to association with an element with perspective applied.'),
-  'preserve3D':
-      Common.UIString('Composition due to association with an element with a "transform-style: preserve-3d" style.'),
-  'root': Common.UIString('Root layer.'),
-  'layerForClip': Common.UIString('Layer for clip.'),
-  'layerForScrollbar': Common.UIString('Layer for scrollbar.'),
-  'layerForScrollingContainer': Common.UIString('Layer for scrolling container.'),
-  'layerForForeground': Common.UIString('Layer for foreground.'),
-  'layerForBackground': Common.UIString('Layer for background.'),
-  'layerForMask': Common.UIString('Layer for mask.'),
-  'layerForVideoOverlay': Common.UIString('Layer for video overlay.'),
+  'clipsCompositingDescendants': ls`Composition due to association with an element clipping compositing descendants.`,
+  'perspective': ls`Composition due to association with an element with perspective applied.`,
+  'preserve3D': ls`Composition due to association with an element with a "transform-style: preserve-3d" style.`,
+  'root': ls`Root layer.`,
+  'layerForClip': ls`Layer for clip.`,
+  'layerForScrollbar': ls`Layer for scrollbar.`,
+  'layerForScrollingContainer': ls`Layer for scrolling container.`,
+  'layerForForeground': ls`Layer for foreground.`,
+  'layerForBackground': ls`Layer for background.`,
+  'layerForMask': ls`Layer for mask.`,
+  'layerForVideoOverlay': ls`Layer for video overlay.`,
 };
 
-LayerViewer.LayerDetailsView._slowScrollRectNames = new Map([
-  [SDK.Layer.ScrollRectType.NonFastScrollable, Common.UIString('Non fast scrollable')],
-  [SDK.Layer.ScrollRectType.TouchEventHandler, Common.UIString('Touch event handler')],
-  [SDK.Layer.ScrollRectType.WheelEventHandler, Common.UIString('Wheel event handler')],
-  [SDK.Layer.ScrollRectType.RepaintsOnScroll, Common.UIString('Repaints on scroll')]
-]);
+  LayerViewer.LayerDetailsView._slowScrollRectNames = new Map([
+    [SDK.Layer.ScrollRectType.NonFastScrollable, ls`Non fast scrollable`],
+    [SDK.Layer.ScrollRectType.TouchEventHandler, ls`Touch event handler`],
+    [SDK.Layer.ScrollRectType.WheelEventHandler, ls`Wheel event handler`],
+    [SDK.Layer.ScrollRectType.RepaintsOnScroll, ls`Repaints on scroll`]
+  ]);

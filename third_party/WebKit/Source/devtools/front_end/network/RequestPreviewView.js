@@ -57,7 +57,7 @@ Network.RequestPreviewView = class extends Network.RequestResponseView {
   async _htmlErrorPreview() {
     var contentData = await this.request.contentData();
     if (contentData.error)
-      return new UI.EmptyWidget(Common.UIString('Failed to load response data'));
+      return new UI.EmptyWidget(ls`Failed to load response data`);
 
     // We can assume the status code has been set already because fetching contentData should wait for request to be
     // finished.
@@ -90,6 +90,6 @@ Network.RequestPreviewView = class extends Network.RequestResponseView {
     var sourceView = await Network.RequestResponseView.sourceViewForRequest(this.request);
     if (sourceView)
       return sourceView;
-    return new UI.EmptyWidget(Common.UIString('Preview not available'));
+    return new UI.EmptyWidget(ls`Preview not available`);
   }
 };

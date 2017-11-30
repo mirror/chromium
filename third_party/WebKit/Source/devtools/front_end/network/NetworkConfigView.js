@@ -22,7 +22,7 @@ Network.NetworkConfigView = class extends UI.VBox {
     var userAgentSetting = Common.settings.createSetting('customUserAgent', '');
     var userAgentSelectElement = createElement('select');
 
-    const customOverride = {title: Common.UIString('Custom...'), value: 'custom'};
+    const customOverride = {title: ls`Custom...`, value: 'custom'};
     userAgentSelectElement.appendChild(new Option(customOverride.title, customOverride.value));
 
     var groups = Network.NetworkConfigView._userAgentGroups;
@@ -40,7 +40,7 @@ Network.NetworkConfigView = class extends UI.VBox {
     var otherUserAgentElement = UI.createInput('', 'text');
     otherUserAgentElement.value = userAgentSetting.get();
     otherUserAgentElement.title = userAgentSetting.get();
-    otherUserAgentElement.placeholder = Common.UIString('Enter a custom user agent');
+    otherUserAgentElement.placeholder = ls`Enter a custom user agent`;
     otherUserAgentElement.required = true;
 
     settingChanged();
@@ -99,21 +99,21 @@ Network.NetworkConfigView = class extends UI.VBox {
   }
 
   _createCacheSection() {
-    var section = this._createSection(Common.UIString('Caching'), 'network-config-disable-cache');
-    section.appendChild(UI.SettingsUI.createSettingCheckbox(
-        Common.UIString('Disable cache'), Common.moduleSetting('cacheDisabled'), true));
+    var section = this._createSection(ls`Caching`, 'network-config-disable-cache');
+    section.appendChild(
+        UI.SettingsUI.createSettingCheckbox(ls`Disable cache`, Common.moduleSetting('cacheDisabled'), true));
   }
 
   _createNetworkThrottlingSection() {
-    var section = this._createSection(Common.UIString('Network throttling'), 'network-config-throttling');
+    var section = this._createSection(ls`Network throttling`, 'network-config-throttling');
     var networkThrottlingSelect =
         /** @type {!HTMLSelectElement} */ (section.createChild('select', 'chrome-select'));
     MobileThrottling.throttlingManager().decorateSelectWithNetworkThrottling(networkThrottlingSelect);
   }
 
   _createUserAgentSection() {
-    var section = this._createSection(Common.UIString('User agent'), 'network-config-ua');
-    var checkboxLabel = UI.CheckboxLabel.create(Common.UIString('Select automatically'), true);
+    var section = this._createSection(ls`User agent`, 'network-config-ua');
+    var checkboxLabel = UI.CheckboxLabel.create(ls`Select automatically`, true);
     section.appendChild(checkboxLabel);
     var autoCheckbox = checkboxLabel.checkboxElement;
 

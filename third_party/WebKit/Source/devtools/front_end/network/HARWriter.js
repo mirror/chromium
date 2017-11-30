@@ -51,7 +51,7 @@ Network.HARWriter = class {
    */
   static async _harStringForRequests(requests, compositeProgress) {
     var progress = compositeProgress.createSubProgress();
-    progress.setTitle(Common.UIString('Collecting content\u2026'));
+    progress.setTitle(ls`Collecting content\u2026`);
     progress.setTotalWork(requests.length);
 
     var harLog = (new NetworkLog.HARLog(requests)).build();
@@ -90,7 +90,7 @@ Network.HARWriter = class {
    */
   static async _writeToStream(stream, compositeProgress, fileContent) {
     var progress = compositeProgress.createSubProgress();
-    progress.setTitle(Common.UIString('Writing file\u2026'));
+    progress.setTitle(ls`Writing file\u2026`);
     progress.setTotalWork(fileContent.length);
     for (var i = 0; i < fileContent.length && !progress.isCanceled(); i += Network.HARWriter._chunkSize) {
       var chunk = fileContent.substr(i, Network.HARWriter._chunkSize);

@@ -39,7 +39,7 @@ Profiler.HeapSnapshotView = class extends UI.SimpleView {
    * @param {!Profiler.HeapProfileHeader} profile
    */
   constructor(dataDisplayDelegate, profile) {
-    super(Common.UIString('Heap Snapshot'));
+    super(ls`Heap Snapshot`);
 
     this.element.classList.add('heap-snapshot-view');
     this._profile = profile;
@@ -103,8 +103,8 @@ Profiler.HeapSnapshotView = class extends UI.SimpleView {
     if (this._allocationStackView) {
       this._tabbedPane = new UI.TabbedPane();
 
-      this._tabbedPane.appendTab('retainers', Common.UIString('Retainers'), this._retainmentWidget);
-      this._tabbedPane.appendTab('allocation-stack', Common.UIString('Allocation stack'), this._allocationStackView);
+      this._tabbedPane.appendTab('retainers', ls`Retainers`, this._retainmentWidget);
+      this._tabbedPane.appendTab('allocation-stack', ls`Allocation stack`, this._allocationStackView);
 
       splitWidgetResizer = this._tabbedPane.headerElement();
       this._objectDetailsView = this._tabbedPane;
@@ -112,7 +112,7 @@ Profiler.HeapSnapshotView = class extends UI.SimpleView {
       var retainmentViewHeader = createElementWithClass('div', 'heap-snapshot-view-resizer');
       var retainingPathsTitleDiv = retainmentViewHeader.createChild('div', 'title');
       var retainingPathsTitle = retainingPathsTitleDiv.createChild('span');
-      retainingPathsTitle.textContent = Common.UIString('Retainers');
+      retainingPathsTitle.textContent = ls`Retainers`;
 
       splitWidgetResizer = retainmentViewHeader;
       this._objectDetailsView = new UI.VBox();
@@ -225,12 +225,12 @@ Profiler.HeapSnapshotView = class extends UI.SimpleView {
   async _retrieveStatistics(heapSnapshotProxy) {
     var statistics = await heapSnapshotProxy.getStatistics();
     this._statisticsView.setTotal(statistics.total);
-    this._statisticsView.addRecord(statistics.code, Common.UIString('Code'), '#f77');
-    this._statisticsView.addRecord(statistics.strings, Common.UIString('Strings'), '#5e5');
-    this._statisticsView.addRecord(statistics.jsArrays, Common.UIString('JS Arrays'), '#7af');
-    this._statisticsView.addRecord(statistics.native, Common.UIString('Typed Arrays'), '#fc5');
-    this._statisticsView.addRecord(statistics.system, Common.UIString('System Objects'), '#98f');
-    this._statisticsView.addRecord(statistics.total, Common.UIString('Total'));
+    this._statisticsView.addRecord(statistics.code, ls`Code`, '#f77');
+    this._statisticsView.addRecord(statistics.strings, ls`Strings`, '#5e5');
+    this._statisticsView.addRecord(statistics.jsArrays, ls`JS Arrays`, '#7af');
+    this._statisticsView.addRecord(statistics.native, ls`Typed Arrays`, '#fc5');
+    this._statisticsView.addRecord(statistics.system, ls`System Objects`, '#98f');
+    this._statisticsView.addRecord(statistics.total, ls`Total`);
     return statistics;
   }
 
@@ -625,7 +625,7 @@ Profiler.HeapSnapshotView = class extends UI.SimpleView {
     var selectedIndex = this._filterSelect.selectedIndex();
 
     this._filterSelect.removeOptions();
-    this._filterSelect.createOption(Common.UIString('All objects'));
+    this._filterSelect.createOption(ls`All objects`);
     for (var i = 0; i < list.length; ++i) {
       var title;
       if (!i)
@@ -746,7 +746,7 @@ Profiler.HeapSnapshotView.Perspective = class {
  */
 Profiler.HeapSnapshotView.SummaryPerspective = class extends Profiler.HeapSnapshotView.Perspective {
   constructor() {
-    super(Common.UIString('Summary'));
+    super(ls`Summary`);
   }
 
   /**
@@ -790,7 +790,7 @@ Profiler.HeapSnapshotView.SummaryPerspective = class extends Profiler.HeapSnapsh
  */
 Profiler.HeapSnapshotView.ComparisonPerspective = class extends Profiler.HeapSnapshotView.Perspective {
   constructor() {
-    super(Common.UIString('Comparison'));
+    super(ls`Comparison`);
   }
 
   /**
@@ -828,7 +828,7 @@ Profiler.HeapSnapshotView.ComparisonPerspective = class extends Profiler.HeapSna
  */
 Profiler.HeapSnapshotView.ContainmentPerspective = class extends Profiler.HeapSnapshotView.Perspective {
   constructor() {
-    super(Common.UIString('Containment'));
+    super(ls`Containment`);
   }
 
   /**
@@ -856,7 +856,7 @@ Profiler.HeapSnapshotView.ContainmentPerspective = class extends Profiler.HeapSn
  */
 Profiler.HeapSnapshotView.AllocationPerspective = class extends Profiler.HeapSnapshotView.Perspective {
   constructor() {
-    super(Common.UIString('Allocation'));
+    super(ls`Allocation`);
     this._allocationSplitWidget = new UI.SplitWidget(false, true, 'heapSnapshotAllocationSplitViewState', 200, 200);
     this._allocationSplitWidget.setSidebarWidget(new UI.VBox());
   }
@@ -873,7 +873,7 @@ Profiler.HeapSnapshotView.AllocationPerspective = class extends Profiler.HeapSna
     var allocatedObjectsView = new UI.VBox();
     var resizer = createElementWithClass('div', 'heap-snapshot-view-resizer');
     var title = resizer.createChild('div', 'title').createChild('span');
-    title.textContent = Common.UIString('Live objects');
+    title.textContent = ls`Live objects`;
     this._allocationSplitWidget.hideDefaultResizer();
     this._allocationSplitWidget.installResizer(resizer);
     allocatedObjectsView.element.appendChild(resizer);
@@ -912,7 +912,7 @@ Profiler.HeapSnapshotView.AllocationPerspective = class extends Profiler.HeapSna
  */
 Profiler.HeapSnapshotView.StatisticsPerspective = class extends Profiler.HeapSnapshotView.Perspective {
   constructor() {
-    super(Common.UIString('Statistics'));
+    super(ls`Statistics`);
   }
 
   /**
@@ -943,7 +943,7 @@ Profiler.HeapSnapshotProfileType = class extends Profiler.ProfileType {
    * @param {string=} title
    */
   constructor(id, title) {
-    super(id || Profiler.HeapSnapshotProfileType.TypeId, title || Common.UIString('Take heap snapshot'));
+    super(id || Profiler.HeapSnapshotProfileType.TypeId, title || ls`Take heap snapshot`);
     SDK.targetManager.observeModels(SDK.HeapProfilerModel, this);
     SDK.targetManager.addModelListener(
         SDK.HeapProfilerModel, SDK.HeapProfilerModel.Events.ResetProfiles, this._resetProfiles, this);
@@ -986,7 +986,7 @@ Profiler.HeapSnapshotProfileType = class extends Profiler.ProfileType {
   }
 
   get buttonTooltip() {
-    return Common.UIString('Take heap snapshot');
+    return ls`Take heap snapshot`;
   }
 
   /**
@@ -1008,7 +1008,7 @@ Profiler.HeapSnapshotProfileType = class extends Profiler.ProfileType {
   }
 
   get treeItemTitle() {
-    return Common.UIString('HEAP SNAPSHOTS');
+    return ls`HEAP SNAPSHOTS`;
   }
 
   get description() {
@@ -1035,7 +1035,7 @@ Profiler.HeapSnapshotProfileType = class extends Profiler.ProfileType {
     var profile = new Profiler.HeapProfileHeader(heapProfilerModel, this);
     this.setProfileBeingRecorded(profile);
     this.addProfile(profile);
-    profile.updateStatus(Common.UIString('Snapshotting\u2026'));
+    profile.updateStatus(ls`Snapshotting\u2026`);
 
     await heapProfilerModel.takeHeapSnapshot(true);
     // ------------ ASYNC ------------
@@ -1095,7 +1095,7 @@ Profiler.HeapSnapshotProfileType.SnapshotReceived = 'SnapshotReceived';
  */
 Profiler.TrackingHeapSnapshotProfileType = class extends Profiler.HeapSnapshotProfileType {
   constructor() {
-    super(Profiler.TrackingHeapSnapshotProfileType.TypeId, Common.UIString('Record allocation timeline'));
+    super(Profiler.TrackingHeapSnapshotProfileType.TypeId, ls`Record allocation timeline`);
   }
 
   /**
@@ -1165,8 +1165,7 @@ Profiler.TrackingHeapSnapshotProfileType = class extends Profiler.HeapSnapshotPr
   }
 
   get buttonTooltip() {
-    return this._recording ? Common.UIString('Stop recording heap profile') :
-                             Common.UIString('Start recording heap profile');
+    return this._recording ? ls`Stop recording heap profile` : ls`Start recording heap profile`;
   }
 
   /**
@@ -1207,13 +1206,13 @@ Profiler.TrackingHeapSnapshotProfileType = class extends Profiler.HeapSnapshotPr
     this.profileBeingRecorded()._profileSamples = this._profileSamples;
     this._recording = true;
     this.addProfile(/** @type {!Profiler.ProfileHeader} */ (this.profileBeingRecorded()));
-    this.profileBeingRecorded().updateStatus(Common.UIString('Recording\u2026'));
+    this.profileBeingRecorded().updateStatus(ls`Recording\u2026`);
     this.dispatchEventToListeners(Profiler.TrackingHeapSnapshotProfileType.TrackingStarted);
     return heapProfilerModel;
   }
 
   async _stopRecordingProfile() {
-    this.profileBeingRecorded().updateStatus(Common.UIString('Snapshotting\u2026'));
+    this.profileBeingRecorded().updateStatus(ls`Snapshotting\u2026`);
     var stopPromise = this.profileBeingRecorded()._heapProfilerModel.stopTrackingHeapObjects(true);
     this._recording = false;
     this.dispatchEventToListeners(Profiler.TrackingHeapSnapshotProfileType.TrackingStopped);
@@ -1245,7 +1244,7 @@ Profiler.TrackingHeapSnapshotProfileType = class extends Profiler.HeapSnapshotPr
   }
 
   get treeItemTitle() {
-    return Common.UIString('ALLOCATION TIMELINES');
+    return ls`ALLOCATION TIMELINES`;
   }
 
   get description() {
@@ -1355,7 +1354,7 @@ Profiler.HeapProfileHeader = class extends Profiler.ProfileHeader {
   _prepareToLoad() {
     console.assert(!this._receiver, 'Already loading');
     this._setupWorker();
-    this.updateStatus(Common.UIString('Loading\u2026'), true);
+    this.updateStatus(ls`Loading\u2026`, true);
   }
 
   _finishLoad() {
@@ -1522,7 +1521,7 @@ Profiler.HeapProfileHeader = class extends Profiler.ProfileHeader {
    * @return {!Promise<?Error>}
    */
   async loadFromFile(file) {
-    this.updateStatus(Common.UIString('Loading\u2026'), true);
+    this.updateStatus(ls`Loading\u2026`, true);
     this._setupWorker();
     var reader = new Bindings.ChunkedFileReader(file, 10000000);
     var success = await reader.read(/** @type {!Common.OutputStream} */ (this._receiver));

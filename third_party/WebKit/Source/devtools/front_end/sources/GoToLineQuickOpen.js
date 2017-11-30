@@ -25,13 +25,13 @@ Sources.GoToLineQuickOpen = class extends QuickOpen.FilteredListWidget.Provider 
    */
   notFoundText(query) {
     if (!this._currentUISourceCode())
-      return Common.UIString('No file selected.');
+      return ls`No file selected.`;
     var position = this._parsePosition(query);
     if (!position)
-      return Common.UIString('Type a number to go to that line.');
-    var text = Common.UIString('Go to line ') + position.line;
+      return ls`Type a number to go to that line.`;
+    var text = ls`Go to line ` + position.line;
     if (position.column && position.column > 1)
-      text += Common.UIString(' and column ') + position.column;
+      text += ls` and column ` + position.column;
     text += '.';
     return text;
   }

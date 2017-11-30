@@ -76,7 +76,7 @@ Network.NetworkPanel = class extends UI.Panel {
     this._progressBarContainer = createElement('div');
 
     this._searchableView = new UI.SearchableView(this);
-    this._searchableView.setPlaceholder(Common.UIString('Find by filename or path'));
+    this._searchableView.setPlaceholder(ls`Find by filename or path`);
 
     /** @type {!Network.NetworkLogView} */
     this._networkLogView =
@@ -166,42 +166,39 @@ Network.NetworkPanel = class extends UI.Panel {
   _setupToolbarButtons() {
     this._panelToolbar.appendToolbarItem(UI.Toolbar.createActionButton(this._toggleRecordAction));
 
-    var clearButton = new UI.ToolbarButton(Common.UIString('Clear'), 'largeicon-clear');
+    var clearButton = new UI.ToolbarButton(ls`Clear`, 'largeicon-clear');
     clearButton.addEventListener(UI.ToolbarButton.Events.Click, () => NetworkLog.networkLog.reset(), this);
     this._panelToolbar.appendToolbarItem(clearButton);
     this._panelToolbar.appendSeparator();
-    var recordFilmStripButton = new UI.ToolbarSettingToggle(
-        this._networkRecordFilmStripSetting, 'largeicon-camera', Common.UIString('Capture screenshots'));
+    var recordFilmStripButton =
+        new UI.ToolbarSettingToggle(this._networkRecordFilmStripSetting, 'largeicon-camera', ls`Capture screenshots`);
     this._panelToolbar.appendToolbarItem(recordFilmStripButton);
 
     this._panelToolbar.appendToolbarItem(this._filterBar.filterButton());
     this._panelToolbar.appendSeparator();
 
-    this._panelToolbar.appendText(Common.UIString('View:'));
+    this._panelToolbar.appendText(ls`View:`);
 
     var largerRequestsButton = new UI.ToolbarSettingToggle(
-        this._networkLogLargeRowsSetting, 'largeicon-large-list', Common.UIString('Use large request rows'),
-        Common.UIString('Use small request rows'));
+        this._networkLogLargeRowsSetting, 'largeicon-large-list', ls`Use large request rows`,
+        ls`Use small request rows`);
     this._panelToolbar.appendToolbarItem(largerRequestsButton);
 
     var showOverviewButton = new UI.ToolbarSettingToggle(
-        this._networkLogShowOverviewSetting, 'largeicon-waterfall', Common.UIString('Show overview'),
-        Common.UIString('Hide overview'));
+        this._networkLogShowOverviewSetting, 'largeicon-waterfall', ls`Show overview`, ls`Hide overview`);
     this._panelToolbar.appendToolbarItem(showOverviewButton);
 
     if (Runtime.experiments.isEnabled('networkGroupingRequests')) {
-      this._panelToolbar.appendToolbarItem(new UI.ToolbarSettingCheckbox(
-          Common.moduleSetting('network.group-by-frame'), '', Common.UIString('Group by frame')));
+      this._panelToolbar.appendToolbarItem(
+          new UI.ToolbarSettingCheckbox(Common.moduleSetting('network.group-by-frame'), '', ls`Group by frame`));
     }
 
     this._panelToolbar.appendSeparator();
     this._panelToolbar.appendToolbarItem(new UI.ToolbarSettingCheckbox(
-        this._preserveLogSetting, Common.UIString('Do not clear log on page reload / navigation'),
-        Common.UIString('Preserve log')));
+        this._preserveLogSetting, ls`Do not clear log on page reload / navigation`, ls`Preserve log`));
 
     var disableCacheCheckbox = new UI.ToolbarSettingCheckbox(
-        Common.moduleSetting('cacheDisabled'), Common.UIString('Disable cache (while DevTools is open)'),
-        Common.UIString('Disable cache'));
+        Common.moduleSetting('cacheDisabled'), ls`Disable cache (while DevTools is open)`, ls`Disable cache`);
     this._panelToolbar.appendToolbarItem(disableCacheCheckbox);
 
     this._panelToolbar.appendSeparator();
@@ -519,7 +516,7 @@ Network.NetworkPanel = class extends UI.Panel {
      * @this {Network.NetworkPanel}
      */
     function appendRevealItem(request) {
-      contextMenu.revealSection().appendItem(Common.UIString('Reveal in Network panel'), reveal.bind(this, request));
+      contextMenu.revealSection().appendItem(ls`Reveal in Network panel`, reveal.bind(this, request));
     }
 
     if (event.target.isSelfOrDescendant(this.element))
@@ -683,7 +680,7 @@ Network.NetworkPanel.FilmStripRecorder = class {
 
   startRecording() {
     this._filmStripView.reset();
-    this._filmStripView.setStatusText(Common.UIString('Recording frames...'));
+    this._filmStripView.setStatusText(ls`Recording frames...`);
     var tracingManagers = SDK.targetManager.models(SDK.TracingManager);
     if (this._tracingManager || !tracingManagers.length)
       return;
@@ -714,7 +711,7 @@ Network.NetworkPanel.FilmStripRecorder = class {
     if (this._resourceTreeModel)
       this._resourceTreeModel.suspendReload();
     this._callback = callback;
-    this._filmStripView.setStatusText(Common.UIString('Fetching frames...'));
+    this._filmStripView.setStatusText(ls`Fetching frames...`);
   }
 };
 

@@ -15,10 +15,10 @@ Coverage.CoverageListView = class extends UI.VBox {
     this._highlightRegExp = null;
     this.registerRequiredCSS('coverage/coverageListView.css');
     var columns = [
-      {id: 'url', title: Common.UIString('URL'), width: '250px', fixedWidth: false, sortable: true},
-      {id: 'type', title: Common.UIString('Type'), width: '45px', fixedWidth: true, sortable: true}, {
+      {id: 'url', title: ls`URL`, width: '250px', fixedWidth: false, sortable: true},
+      {id: 'type', title: ls`Type`, width: '45px', fixedWidth: true, sortable: true}, {
         id: 'size',
-        title: Common.UIString('Total Bytes'),
+        title: ls`Total Bytes`,
         width: '60px',
         fixedWidth: true,
         sortable: true,
@@ -26,7 +26,7 @@ Coverage.CoverageListView = class extends UI.VBox {
       },
       {
         id: 'unusedSize',
-        title: Common.UIString('Unused Bytes'),
+        title: ls`Unused Bytes`,
         width: '100px',
         fixedWidth: true,
         sortable: true,
@@ -203,11 +203,11 @@ Coverage.CoverageListView = class extends UI.VBox {
   static _typeToString(type) {
     var types = [];
     if (type & Coverage.CoverageType.CSS)
-      types.push(Common.UIString('CSS'));
+      types.push(ls`CSS`);
     if (type & Coverage.CoverageType.JavaScriptCoarse)
-      types.push(Common.UIString('JS (coarse)'));
+      types.push(ls`JS (coarse)`);
     else if (type & Coverage.CoverageType.JavaScript)
-      types.push(Common.UIString('JS'));
+      types.push(ls`JS`);
     return types.join('+');
   }
 };
@@ -274,7 +274,7 @@ Coverage.CoverageListView.GridNode = class extends DataGrid.SortableDataGridNode
       case 'type':
         cell.textContent = Coverage.CoverageListView._typeToString(this._coverageInfo.type());
         if (this._coverageInfo.type() & Coverage.CoverageType.JavaScriptCoarse)
-          cell.title = Common.UIString('JS coverage is function-level only. Reload the page for block-level coverage.');
+          cell.title = ls`JS coverage is function-level only. Reload the page for block-level coverage.`;
         break;
       case 'size':
         cell.textContent = Number.withThousandsSeparator(this._coverageInfo.size() || 0);

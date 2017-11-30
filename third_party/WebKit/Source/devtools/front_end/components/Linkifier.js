@@ -345,7 +345,7 @@ Components.Linkifier = class {
     var maxLength = options.maxLength || UI.MaxLengthForDisplayedURLs;
     if (!url || url.trim().toLowerCase().startsWith('javascript:')) {
       var element = createElementWithClass('span', className);
-      element.textContent = text || url || Common.UIString('(unknown)');
+      element.textContent = text || url || ls`(unknown)`;
       return element;
     }
 
@@ -501,10 +501,9 @@ Components.Linkifier = class {
    * @return {!Common.Setting}
    */
   static _linkHandlerSetting() {
-    if (!Components.Linkifier._linkHandlerSettingInstance) {
-      Components.Linkifier._linkHandlerSettingInstance =
-          Common.settings.createSetting('openLinkHandler', Common.UIString('auto'));
-    }
+    if (!Components.Linkifier._linkHandlerSettingInstance)
+      Components.Linkifier._linkHandlerSettingInstance = Common.settings.createSetting('openLinkHandler', ls`auto`);
+
     return Components.Linkifier._linkHandlerSettingInstance;
   }
 
@@ -549,34 +548,21 @@ Components.Linkifier = class {
     var request = url ? NetworkLog.networkLog.requestForURL(url) : null;
     var contentProvider = uiLocation ? uiLocation.uiSourceCode : resource;
 
-    if (info.revealable) {
-      result.push({
-        section: 'reveal',
-        title: Common.UIString('Reveal'),
-        handler: () => Common.Revealer.reveal(info.revealable)
-      });
-    }
+    if (info.revealable)
+      result.push({section: 'reveal', title: ls`Reveal`, handler: () => Common.Revealer.reveal(info.revealable)});
+
     if (uiLocation) {
-      result.push({
-        section: 'reveal',
-        title: Common.UIString('Open in Sources panel'),
-        handler: () => Common.Revealer.reveal(uiLocation)
-      });
+      result.push(
+          {section: 'reveal', title: ls`Open in Sources panel`, handler: () => Common.Revealer.reveal(uiLocation)});
     }
 
     if (resource) {
-      result.push({
-        section: 'reveal',
-        title: Common.UIString('Open in Application panel'),
-        handler: () => Common.Revealer.reveal(resource)
-      });
+      result.push(
+          {section: 'reveal', title: ls`Open in Application panel`, handler: () => Common.Revealer.reveal(resource)});
     }
     if (request) {
-      result.push({
-        section: 'reveal',
-        title: Common.UIString('Open in Network panel'),
-        handler: () => Common.Revealer.reveal(request)
-      });
+      result.push(
+          {section: 'reveal', title: ls`Open in Network panel`, handler: () => Common.Revealer.reveal(request)});
     }
 
     if (contentProvider) {
@@ -712,7 +698,7 @@ Components.Linkifier.LinkHandlerSettingUI = class {
   _update() {
     this._element.removeChildren();
     var names = Components.Linkifier._linkHandlers.keysArray();
-    names.unshift(Common.UIString('auto'));
+    names.unshift(ls`auto`);
     for (var name of names) {
       var option = createElement('option');
       option.textContent = name;
@@ -735,7 +721,7 @@ Components.Linkifier.LinkHandlerSettingUI = class {
    * @return {?Element}
    */
   settingElement() {
-    return UI.SettingsUI.createCustomSetting(Common.UIString('Link handling:'), this._element);
+    return UI.SettingsUI.createCustomSetting(ls`Link handling:`, this._element);
   }
 };
 

@@ -28,13 +28,13 @@
  */
 Resources.ApplicationCacheItemsView = class extends UI.SimpleView {
   constructor(model, frameId) {
-    super(Common.UIString('AppCache'));
+    super(ls`AppCache`);
 
     this._model = model;
 
     this.element.classList.add('storage-view', 'table');
 
-    this._deleteButton = new UI.ToolbarButton(Common.UIString('Delete'), 'largeicon-delete');
+    this._deleteButton = new UI.ToolbarButton(ls`Delete`, 'largeicon-delete');
     this._deleteButton.setVisible(false);
     this._deleteButton.addEventListener(UI.ToolbarButton.Events.Click, this._deleteButtonClicked, this);
 
@@ -45,7 +45,7 @@ Resources.ApplicationCacheItemsView = class extends UI.SimpleView {
 
     this._frameId = frameId;
 
-    this._emptyWidget = new UI.EmptyWidget(Common.UIString('No Application Cache information available.'));
+    this._emptyWidget = new UI.EmptyWidget(ls`No Application Cache information available.`);
     this._emptyWidget.show(this.element);
 
     this._markDirty();
@@ -129,10 +129,10 @@ Resources.ApplicationCacheItemsView = class extends UI.SimpleView {
   updateNetworkState(isNowOnline) {
     if (isNowOnline) {
       this._connectivityIcon.type = 'smallicon-green-ball';
-      this._connectivityIcon.textContent = Common.UIString('Online');
+      this._connectivityIcon.textContent = ls`Online`;
     } else {
       this._connectivityIcon.type = 'smallicon-red-ball';
-      this._connectivityIcon.textContent = Common.UIString('Offline');
+      this._connectivityIcon.textContent = ls`Offline`;
     }
   }
 
@@ -175,9 +175,9 @@ Resources.ApplicationCacheItemsView = class extends UI.SimpleView {
 
   _createDataGrid() {
     var columns = /** @type {!Array<!DataGrid.DataGrid.ColumnDescriptor>} */ ([
-      {id: 'resource', title: Common.UIString('Resource'), sort: DataGrid.DataGrid.Order.Ascending, sortable: true},
-      {id: 'type', title: Common.UIString('Type'), sortable: true},
-      {id: 'size', title: Common.UIString('Size'), align: DataGrid.DataGrid.Align.Right, sortable: true}
+      {id: 'resource', title: ls`Resource`, sort: DataGrid.DataGrid.Order.Ascending, sortable: true},
+      {id: 'type', title: ls`Type`, sortable: true},
+      {id: 'size', title: ls`Size`, align: DataGrid.DataGrid.Align.Right, sortable: true}
     ]);
     this._dataGrid = new DataGrid.DataGrid(columns);
     this._dataGrid.setStriped(true);

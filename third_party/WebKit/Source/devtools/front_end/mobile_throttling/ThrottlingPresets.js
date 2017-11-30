@@ -22,7 +22,7 @@ MobileThrottling.Conditions;
 /** @type {!MobileThrottling.Conditions} */
 MobileThrottling.NoThrottlingConditions = {
   title: SDK.NetworkManager.NoThrottlingConditions.title,
-  description: Common.UIString('No throttling'),
+  description: ls`No throttling`,
   network: SDK.NetworkManager.NoThrottlingConditions,
   cpuThrottlingRate: MobileThrottling.CPUThrottlingRates.NoThrottling,
 };
@@ -30,23 +30,23 @@ MobileThrottling.NoThrottlingConditions = {
 /** @type {!MobileThrottling.Conditions} */
 MobileThrottling.OfflineConditions = {
   title: SDK.NetworkManager.OfflineConditions.title,
-  description: Common.UIString('No internet connectivity'),
+  description: ls`No internet connectivity`,
   network: SDK.NetworkManager.OfflineConditions,
   cpuThrottlingRate: MobileThrottling.CPUThrottlingRates.NoThrottling,
 };
 
 /** @type {!MobileThrottling.Conditions} */
 MobileThrottling.LowEndMobileConditions = {
-  title: Common.UIString('Low-end mobile'),
-  description: Common.UIString('Slow 3G & 6x CPU slowdown'),
+  title: ls`Low-end mobile`,
+  description: ls`Slow 3G & 6x CPU slowdown`,
   network: SDK.NetworkManager.Slow3GConditions,
   cpuThrottlingRate: MobileThrottling.CPUThrottlingRates.LowEndMobile,
 };
 
 /** @type {!MobileThrottling.Conditions} */
 MobileThrottling.MidTierMobileConditions = {
-  title: Common.UIString('Mid-tier mobile'),
-  description: Common.UIString('Fast 3G & 4x CPU slowdown'),
+  title: ls`Mid-tier mobile`,
+  description: ls`Fast 3G & 4x CPU slowdown`,
   network: SDK.NetworkManager.Fast3GConditions,
   cpuThrottlingRate: MobileThrottling.CPUThrottlingRates.MidTierMobile,
 };
@@ -61,8 +61,8 @@ MobileThrottling.PlaceholderConditions;
 
 /** @type {!MobileThrottling.PlaceholderConditions} */
 MobileThrottling.CustomConditions = {
-  title: Common.UIString('Custom'),
-  description: Common.UIString('Check Network and Performance panels'),
+  title: ls`Custom`,
+  description: ls`Check Network and Performance panels`,
 };
 
 /** @typedef {!{title: string, items: !Array<!SDK.NetworkManager.Conditions>}} */

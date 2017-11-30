@@ -77,7 +77,7 @@ Sources.SourcesView = class extends UI.VBox {
       if (!unsavedSourceCodes.length)
         return;
 
-      event.returnValue = Common.UIString('DevTools have unsaved changes that will be permanently lost.');
+      event.returnValue = ls`DevTools have unsaved changes that will be permanently lost.`;
       UI.viewManager.showView('sources');
       for (var i = 0; i < unsavedSourceCodes.length; ++i)
         Common.Revealer.reveal(unsavedSourceCodes[i]);
@@ -95,8 +95,8 @@ Sources.SourcesView = class extends UI.VBox {
    */
   _placeholderElement() {
     var shortcuts = [
-      {actionId: 'quickOpen.show', description: Common.UIString('Open file')},
-      {actionId: 'commandMenu.show', description: Common.UIString('Run command')}
+      {actionId: 'quickOpen.show', description: ls`Open file`},
+      {actionId: 'commandMenu.show', description: ls`Run command`}
     ];
 
     var element = createElementWithClass('span', 'tabbed-pane-placeholder');
@@ -107,7 +107,7 @@ Sources.SourcesView = class extends UI.VBox {
       row.createChild('div', 'tabbed-pane-placeholder-value').textContent = shortcut.description;
     }
     if (Runtime.experiments.isEnabled('persistence2'))
-      element.createChild('div').textContent = Common.UIString('Drop in a folder to add to workspace');
+      element.createChild('div').textContent = ls`Drop in a folder to add to workspace`;
 
     return element;
   }

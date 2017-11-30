@@ -38,7 +38,7 @@ SourceFrame.SourceFrame = class extends UI.SimpleView {
    * @param {function(): !Promise<?string>} lazyContent
    */
   constructor(lazyContent) {
-    super(Common.UIString('Source'));
+    super(ls`Source`);
 
     this._lazyContent = lazyContent;
 

@@ -191,7 +191,7 @@ NetworkLog.NetworkLog = class extends Common.Object {
           if (!topFrame)
             continue;
           type = SDK.NetworkRequest.InitiatorType.Script;
-          url = topFrame.url || Common.UIString('<anonymous>');
+          url = topFrame.url || ls`<anonymous>`;
           lineNumber = topFrame.lineNumber;
           columnNumber = topFrame.columnNumber;
           scriptId = topFrame.scriptId;
@@ -428,7 +428,7 @@ NetworkLog.PageLoad = class {
     var saveDataHeader = this.mainRequest.requestHeaderValue('Save-Data');
     if (!NetworkLog.PageLoad._dataSaverMessageWasShown && saveDataHeader && saveDataHeader === 'on') {
       var message = Common.UIString(
-          'Consider disabling %s while debugging. For more info see: %s', Common.UIString('Chrome Data Saver'),
+          'Consider disabling %s while debugging. For more info see: %s', ls`Chrome Data Saver`,
           'https://support.google.com/chrome/?p=datasaver');
       manager.dispatchEventToListeners(
           SDK.NetworkManager.Events.MessageGenerated,

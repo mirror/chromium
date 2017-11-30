@@ -107,7 +107,7 @@ SDK.OverlayModel = class extends SDK.SDKModel {
 
   _updatePausedInDebuggerMessage() {
     var message = this._debuggerModel.isPaused() && !Common.moduleSetting('disablePausedStateOverlay').get() ?
-        Common.UIString('Paused in debugger') :
+        ls`Paused in debugger` :
         undefined;
     this._overlayAgent.setPausedInDebuggerMessage(message);
   }

@@ -202,10 +202,10 @@ Screencast.ScreencastView = class extends UI.VBox {
 
   _updateGlasspane() {
     if (this._targetInactive) {
-      this._glassPaneElement.textContent = Common.UIString('The tab is inactive');
+      this._glassPaneElement.textContent = ls`The tab is inactive`;
       this._glassPaneElement.classList.remove('hidden');
     } else if (SDK.targetManager.allTargetsSuspended()) {
-      this._glassPaneElement.textContent = Common.UIString('Profiling in progress');
+      this._glassPaneElement.textContent = ls`Profiling in progress`;
       this._glassPaneElement.classList.remove('hidden');
     } else {
       this._glassPaneElement.classList.add('hidden');

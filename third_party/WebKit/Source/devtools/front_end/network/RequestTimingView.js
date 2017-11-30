@@ -51,33 +51,33 @@ Network.RequestTimingView = class extends UI.VBox {
   static _timeRangeTitle(name) {
     switch (name) {
       case Network.RequestTimeRangeNames.Push:
-        return Common.UIString('Receiving Push');
+        return ls`Receiving Push`;
       case Network.RequestTimeRangeNames.Queueing:
-        return Common.UIString('Queueing');
+        return ls`Queueing`;
       case Network.RequestTimeRangeNames.Blocking:
-        return Common.UIString('Stalled');
+        return ls`Stalled`;
       case Network.RequestTimeRangeNames.Connecting:
-        return Common.UIString('Initial connection');
+        return ls`Initial connection`;
       case Network.RequestTimeRangeNames.DNS:
-        return Common.UIString('DNS Lookup');
+        return ls`DNS Lookup`;
       case Network.RequestTimeRangeNames.Proxy:
-        return Common.UIString('Proxy negotiation');
+        return ls`Proxy negotiation`;
       case Network.RequestTimeRangeNames.ReceivingPush:
-        return Common.UIString('Reading Push');
+        return ls`Reading Push`;
       case Network.RequestTimeRangeNames.Receiving:
-        return Common.UIString('Content Download');
+        return ls`Content Download`;
       case Network.RequestTimeRangeNames.Sending:
-        return Common.UIString('Request sent');
+        return ls`Request sent`;
       case Network.RequestTimeRangeNames.ServiceWorker:
-        return Common.UIString('Request to ServiceWorker');
+        return ls`Request to ServiceWorker`;
       case Network.RequestTimeRangeNames.ServiceWorkerPreparation:
-        return Common.UIString('ServiceWorker Preparation');
+        return ls`ServiceWorker Preparation`;
       case Network.RequestTimeRangeNames.SSL:
-        return Common.UIString('SSL');
+        return ls`SSL`;
       case Network.RequestTimeRangeNames.Total:
-        return Common.UIString('Total');
+        return ls`Total`;
       case Network.RequestTimeRangeNames.Waiting:
-        return Common.UIString('Waiting (TTFB)');
+        return ls`Waiting (TTFB)`;
       default:
         return Common.UIString(name);
     }
@@ -214,18 +214,18 @@ Network.RequestTimingView = class extends UI.VBox {
         continue;
       }
       if (rangeName === Network.RequestTimeRangeNames.Push) {
-        createHeader(Common.UIString('Server Push'));
+        createHeader(ls`Server Push`);
       } else if (rangeName === Network.RequestTimeRangeNames.Queueing) {
         queueingHeader = tableElement.createChild('tr', 'network-timing-table-header');
-        queueingHeader.createChild('td').createTextChild(Common.UIString('Resource Scheduling'));
+        queueingHeader.createChild('td').createTextChild(ls`Resource Scheduling`);
         queueingHeader.createChild('td').createTextChild('');
-        queueingHeader.createChild('td').createTextChild(Common.UIString('TIME'));
+        queueingHeader.createChild('td').createTextChild(ls`TIME`);
       } else if (Network.RequestTimingView.ConnectionSetupRangeNames.has(rangeName)) {
         if (!connectionHeader)
-          connectionHeader = createHeader(Common.UIString('Connection Start'));
+          connectionHeader = createHeader(ls`Connection Start`);
       } else {
         if (!dataHeader)
-          dataHeader = createHeader(Common.UIString('Request/Response'));
+          dataHeader = createHeader(ls`Request/Response`);
       }
 
       var left = (scale * (range.start - startTime));
@@ -247,14 +247,13 @@ Network.RequestTimingView = class extends UI.VBox {
     if (!request.finished) {
       var cell = tableElement.createChild('tr').createChild('td', 'caution');
       cell.colSpan = 3;
-      cell.createTextChild(Common.UIString('CAUTION: request is not finished yet!'));
+      cell.createTextChild(ls`CAUTION: request is not finished yet!`);
     }
 
     var footer = tableElement.createChild('tr', 'network-timing-footer');
     var note = footer.createChild('td');
     note.colSpan = 1;
-    note.appendChild(
-        UI.createDocumentationLink('network-performance/reference#timing-explanation', Common.UIString('Explanation')));
+    note.appendChild(UI.createDocumentationLink('network-performance/reference#timing-explanation', ls`Explanation`));
     footer.createChild('td');
     footer.createChild('td').createTextChild(Number.secondsToString(totalDuration, true));
 
@@ -269,9 +268,9 @@ Network.RequestTimingView = class extends UI.VBox {
     breakElement.createChild('hr', 'break');
 
     var serverHeader = tableElement.createChild('tr', 'network-timing-table-header');
-    serverHeader.createChild('td').createTextChild(Common.UIString('Server Timing'));
+    serverHeader.createChild('td').createTextChild(ls`Server Timing`);
     serverHeader.createChild('td');
-    serverHeader.createChild('td').createTextChild(Common.UIString('TIME'));
+    serverHeader.createChild('td').createTextChild(ls`TIME`);
 
     serverTimings.filter(item => item.metric.toLowerCase() !== 'total')
         .forEach(item => addTiming(item, lastTimingRightEdge));
@@ -315,7 +314,7 @@ Network.RequestTimingView = class extends UI.VBox {
       var dataHeader = tableElement.createChild('tr', 'network-timing-table-header');
       dataHeader.createChild('td').createTextChild(title);
       dataHeader.createChild('td').createTextChild('');
-      dataHeader.createChild('td').createTextChild(Common.UIString('TIME'));
+      dataHeader.createChild('td').createTextChild(ls`TIME`);
       return dataHeader;
     }
   }

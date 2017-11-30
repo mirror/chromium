@@ -11,7 +11,7 @@ Sources.AddSourceMapURLDialog = class extends UI.HBox {
   constructor(callback) {
     super(true);
     this.registerRequiredCSS('sources/dialog.css');
-    this.contentElement.createChild('label').textContent = Common.UIString('Source map URL: ');
+    this.contentElement.createChild('label').textContent = ls`Source map URL: `;
 
     this._input = UI.createInput();
     this.contentElement.appendChild(this._input);
@@ -19,7 +19,7 @@ Sources.AddSourceMapURLDialog = class extends UI.HBox {
     this._input.addEventListener('keydown', this._onKeyDown.bind(this), false);
 
     var addButton = this.contentElement.createChild('button');
-    addButton.textContent = Common.UIString('Add');
+    addButton.textContent = ls`Add`;
     addButton.addEventListener('click', this._apply.bind(this), false);
 
     this.setDefaultFocusedElement(this._input);

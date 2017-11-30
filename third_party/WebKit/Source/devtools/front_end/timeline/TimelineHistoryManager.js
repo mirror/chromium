@@ -65,7 +65,7 @@ Timeline.TimelineHistoryManager = class {
     this._recordings = [];
     this._lastActiveModel = null;
     this._updateState();
-    this._button.setText(Common.UIString('(no recordings)'));
+    this._button.setText(ls`(no recordings)`);
     this._nextNumberByDomain.clear();
   }
 
@@ -141,7 +141,7 @@ Timeline.TimelineHistoryManager = class {
   static _coarseAge(time) {
     var seconds = Math.round((Date.now() - time) / 1000);
     if (seconds < 50)
-      return Common.UIString('moments');
+      return ls`moments`;
     var minutes = Math.round(seconds / 60);
     if (minutes < 50)
       return Common.UIString('%s m', minutes);

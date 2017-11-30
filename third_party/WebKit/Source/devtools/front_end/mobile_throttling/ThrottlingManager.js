@@ -58,7 +58,7 @@ MobileThrottling.ThrottlingManager = class extends Common.Object {
           options.push(conditions);
         }
         if (i === groups.length - 1) {
-          groupElement.appendChild(new Option(Common.UIString('Add\u2026'), Common.UIString('Add\u2026')));
+          groupElement.appendChild(new Option(ls`Add\u2026`, ls`Add\u2026`));
           options.push(null);
         }
       }
@@ -85,8 +85,7 @@ MobileThrottling.ThrottlingManager = class extends Common.Object {
    * @return {!UI.ToolbarCheckbox}
    */
   createOfflineToolbarCheckbox() {
-    var checkbox = new UI.ToolbarCheckbox(
-        Common.UIString('Offline'), Common.UIString('Force disconnected from network'), forceOffline.bind(this));
+    var checkbox = new UI.ToolbarCheckbox(ls`Offline`, ls`Force disconnected from network`, forceOffline.bind(this));
     SDK.multitargetNetworkManager.addEventListener(
         SDK.MultitargetNetworkManager.Events.ConditionsChanged, networkConditionsChanged);
     checkbox.setChecked(SDK.multitargetNetworkManager.networkConditions() === SDK.NetworkManager.OfflineConditions);
@@ -114,7 +113,7 @@ MobileThrottling.ThrottlingManager = class extends Common.Object {
    */
   createMobileThrottlingButton() {
     var button = new UI.ToolbarMenuButton(appendItems);
-    button.setTitle(Common.UIString('Throttling'));
+    button.setTitle(ls`Throttling`);
     button.setGlyph('');
     button.turnIntoSelect();
     button.setDarkText();
@@ -185,7 +184,7 @@ MobileThrottling.ThrottlingManager = class extends Common.Object {
     if (this._cpuThrottlingRate !== MobileThrottling.CPUThrottlingRates.NoThrottling) {
       Host.userMetrics.actionTaken(Host.UserMetrics.Action.CpuThrottlingEnabled);
       icon = UI.Icon.create('smallicon-warning');
-      icon.title = Common.UIString('CPU throttling is enabled');
+      icon.title = ls`CPU throttling is enabled`;
     }
     var index = this._cpuThrottlingRates.indexOf(this._cpuThrottlingRate);
     for (var control of this._cpuThrottlingControls)
@@ -221,7 +220,7 @@ MobileThrottling.ThrottlingManager = class extends Common.Object {
 
     for (var i = 0; i < this._cpuThrottlingRates.length; ++i) {
       var rate = this._cpuThrottlingRates[i];
-      var title = rate === 1 ? Common.UIString('No throttling') : Common.UIString('%d\xD7 slowdown', rate);
+      var title = rate === 1 ? ls`No throttling` : Common.UIString('%d\xD7 slowdown', rate);
       var option = control.createOption(title);
       control.addOption(option);
       if (currentRate === rate)

@@ -106,7 +106,7 @@ Components.DOMPresentationUtils.createSpansForNodeTitle = function(container, no
  */
 Components.DOMPresentationUtils.linkifyNodeReference = function(node, idref, tooltipContent) {
   if (!node)
-    return createTextNode(Common.UIString('<node>'));
+    return createTextNode(ls`<node>`);
 
   var root = createElementWithClass('span', 'monospace');
   var shadowRoot = UI.createShadowRootWithCoreStyles(root, 'components/domUtils.css');

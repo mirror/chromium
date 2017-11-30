@@ -53,7 +53,7 @@ Network.RequestHeadersView = class extends UI.VBox {
     root.expandTreeElementsWhenArrowing = true;
     this.element.appendChild(root.element);
 
-    var generalCategory = new Network.RequestHeadersView.Category(root, 'general', Common.UIString('General'));
+    var generalCategory = new Network.RequestHeadersView.Category(root, 'general', ls`General`);
     generalCategory.hidden = false;
     this._urlItem = generalCategory.createLeaf();
     this._requestMethodItem = generalCategory.createLeaf();
@@ -67,8 +67,7 @@ Network.RequestHeadersView = class extends UI.VBox {
     this._requestHeadersCategory = new Network.RequestHeadersView.Category(root, 'requestHeaders', '');
     this._queryStringCategory = new Network.RequestHeadersView.Category(root, 'queryString', '');
     this._formDataCategory = new Network.RequestHeadersView.Category(root, 'formData', '');
-    this._requestPayloadCategory =
-        new Network.RequestHeadersView.Category(root, 'requestPayload', Common.UIString('Request Payload'));
+    this._requestPayloadCategory = new Network.RequestHeadersView.Category(root, 'requestPayload', ls`Request Payload`);
   }
 
   /**
@@ -138,24 +137,22 @@ Network.RequestHeadersView = class extends UI.VBox {
     if (value === '')
       div.classList.add('empty-value');
     if (errorDecoding)
-      div.createChild('span', 'header-decode-error').textContent = Common.UIString('(unable to decode value)');
+      div.createChild('span', 'header-decode-error').textContent = ls`(unable to decode value)`;
     else
       div.textContent = value;
     return div;
   }
 
   _refreshURL() {
-    this._urlItem.title = this._formatHeader(Common.UIString('Request URL'), this._request.url());
+    this._urlItem.title = this._formatHeader(ls`Request URL`, this._request.url());
   }
 
   _refreshQueryString() {
     var queryString = this._request.queryString();
     var queryParameters = this._request.queryParameters;
     this._queryStringCategory.hidden = !queryParameters;
-    if (queryParameters) {
-      this._refreshParams(
-          Common.UIString('Query String Parameters'), queryParameters, queryString, this._queryStringCategory);
-    }
+    if (queryParameters)
+      this._refreshParams(ls`Query String Parameters`, queryParameters, queryString, this._queryStringCategory);
   }
 
   _refreshFormData() {
@@ -169,7 +166,7 @@ Network.RequestHeadersView = class extends UI.VBox {
     var formParameters = this._request.formParameters;
     if (formParameters) {
       this._formDataCategory.hidden = false;
-      this._refreshParams(Common.UIString('Form Data'), formParameters, formData, this._formDataCategory);
+      this._refreshParams(ls`Form Data`, formParameters, formData, this._formDataCategory);
     } else {
       this._requestPayloadCategory.hidden = false;
       try {
@@ -230,8 +227,7 @@ Network.RequestHeadersView = class extends UI.VBox {
       return;
     }
 
-    var toggleTitle =
-        this._decodeRequestParameters ? Common.UIString('view URL encoded') : Common.UIString('view decoded');
+    var toggleTitle = this._decodeRequestParameters ? ls`view URL encoded` : ls`view decoded`;
     var toggleButton = this._createToggleButton(toggleTitle);
     toggleButton.addEventListener('click', this._toggleURLDecoding.bind(this), false);
     paramsTreeElement.listItemElement.appendChild(toggleButton);
@@ -245,7 +241,7 @@ Network.RequestHeadersView = class extends UI.VBox {
         paramNameValue.appendChild(value);
       } else {
         paramNameValue.appendChild(
-            this._formatParameter(Common.UIString('(empty)'), 'empty-request-header', this._decodeRequestParameters));
+            this._formatParameter(ls`(empty)`, 'empty-request-header', this._decodeRequestParameters));
       }
 
       var paramTreeElement = new UI.TreeElement(paramNameValue);
@@ -296,7 +292,7 @@ Network.RequestHeadersView = class extends UI.VBox {
    * @return {!Element}
    */
   _createViewSourceToggle(viewSource, handler) {
-    var viewSourceToggleTitle = viewSource ? Common.UIString('view parsed') : Common.UIString('view source');
+    var viewSourceToggleTitle = viewSource ? ls`view parsed` : ls`view source`;
     var viewSourceToggleButton = this._createToggleButton(viewSourceToggleTitle);
     viewSourceToggleButton.addEventListener('click', handler, false);
     return viewSourceToggleButton;
@@ -321,9 +317,9 @@ Network.RequestHeadersView = class extends UI.VBox {
     var headersText = this._request.requestHeadersText();
 
     if (this._showRequestHeadersText && headersText)
-      this._refreshHeadersText(Common.UIString('Request Headers'), headers.length, headersText, treeElement);
+      this._refreshHeadersText(ls`Request Headers`, headers.length, headersText, treeElement);
     else
-      this._refreshHeaders(Common.UIString('Request Headers'), headers, treeElement, headersText === undefined);
+      this._refreshHeaders(ls`Request Headers`, headers, treeElement, headersText === undefined);
 
     if (headersText) {
       var toggleButton = this._createHeadersToggleButton(this._showRequestHeadersText);
@@ -340,9 +336,9 @@ Network.RequestHeadersView = class extends UI.VBox {
     var headersText = this._request.responseHeadersText;
 
     if (this._showResponseHeadersText)
-      this._refreshHeadersText(Common.UIString('Response Headers'), headers.length, headersText, treeElement);
+      this._refreshHeadersText(ls`Response Headers`, headers.length, headersText, treeElement);
     else
-      this._refreshHeaders(Common.UIString('Response Headers'), headers, treeElement);
+      this._refreshHeaders(ls`Response Headers`, headers, treeElement);
 
     if (headersText) {
       var toggleButton = this._createHeadersToggleButton(this._showResponseHeadersText);
@@ -359,7 +355,8 @@ Network.RequestHeadersView = class extends UI.VBox {
 
     if (this._request.statusCode) {
       var statusCodeFragment = createDocumentFragment();
-      statusCodeFragment.createChild('div', 'header-name').textContent = Common.UIString('Status Code') + ':';
+      statusCodeFragment.createChild('div', 'header-name').textContent = ls`Status Code` +
+          ':';
 
       var statusCodeImage = statusCodeFragment.createChild('label', 'resource-status-image', 'dt-icon-label');
       statusCodeImage.title = this._request.statusCode + ' ' + this._request.statusText;
@@ -371,18 +368,18 @@ Network.RequestHeadersView = class extends UI.VBox {
       else
         statusCodeImage.type = 'smallicon-red-ball';
 
-      requestMethodElement.title = this._formatHeader(Common.UIString('Request Method'), this._request.requestMethod);
+      requestMethodElement.title = this._formatHeader(ls`Request Method`, this._request.requestMethod);
 
       var statusTextElement = statusCodeFragment.createChild('div', 'header-value source-code');
       var statusText = this._request.statusCode + ' ' + this._request.statusText;
       if (this._request.fetchedViaServiceWorker) {
-        statusText += ' ' + Common.UIString('(from ServiceWorker)');
+        statusText += ' ' + ls`(from ServiceWorker)`;
         statusTextElement.classList.add('status-from-cache');
       } else if (this._request.cached()) {
         if (this._request.cachedInMemory())
-          statusText += ' ' + Common.UIString('(from memory cache)');
+          statusText += ' ' + ls`(from memory cache)`;
         else
-          statusText += ' ' + Common.UIString('(from disk cache)');
+          statusText += ' ' + ls`(from disk cache)`;
         statusTextElement.classList.add('status-from-cache');
       }
       statusTextElement.textContent = statusText;
@@ -417,7 +414,7 @@ Network.RequestHeadersView = class extends UI.VBox {
     this._refreshHeadersTitle(title, headersTreeElement, length);
 
     if (provisionalHeaders) {
-      var cautionText = Common.UIString('Provisional headers are shown');
+      var cautionText = ls`Provisional headers are shown`;
       var cautionFragment = createDocumentFragment();
       cautionFragment.createChild('label', '', 'dt-icon-label').type = 'smallicon-warning';
       cautionFragment.createChild('div', 'caution').textContent = cautionText;
@@ -450,7 +447,7 @@ Network.RequestHeadersView = class extends UI.VBox {
     var treeElement = this._remoteAddressItem;
     treeElement.hidden = !remoteAddress;
     if (remoteAddress)
-      treeElement.title = this._formatHeader(Common.UIString('Remote Address'), remoteAddress);
+      treeElement.title = this._formatHeader(ls`Remote Address`, remoteAddress);
   }
 
   _refreshReferrerPolicy() {
@@ -458,7 +455,7 @@ Network.RequestHeadersView = class extends UI.VBox {
     var treeElement = this._referrerPolicyItem;
     treeElement.hidden = !referrerPolicy;
     if (referrerPolicy)
-      treeElement.title = this._formatHeader(Common.UIString('Referrer Policy'), referrerPolicy);
+      treeElement.title = this._formatHeader(ls`Referrer Policy`, referrerPolicy);
   }
 
   /**
@@ -494,7 +491,7 @@ Network.RequestHeadersView = class extends UI.VBox {
    * @return {!Element}
    */
   _createHeadersToggleButton(isHeadersTextShown) {
-    var toggleTitle = isHeadersTextShown ? Common.UIString('view parsed') : Common.UIString('view source');
+    var toggleTitle = isHeadersTextShown ? ls`view parsed` : ls`view source`;
     return this._createToggleButton(toggleTitle);
   }
 };

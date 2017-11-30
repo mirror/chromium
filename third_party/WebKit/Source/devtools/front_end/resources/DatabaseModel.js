@@ -109,7 +109,7 @@ Resources.Database = class {
     if (sqlError.message)
       message = sqlError.message;
     else if (sqlError.code === 2)
-      message = Common.UIString('Database no longer has expected version.');
+      message = ls`Database no longer has expected version.`;
     else
       message = Common.UIString('An unexpected error %s occurred.', sqlError.code);
     onError(message);

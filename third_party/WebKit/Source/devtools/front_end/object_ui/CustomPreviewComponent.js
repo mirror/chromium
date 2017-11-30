@@ -225,10 +225,9 @@ ObjectUI.CustomPreviewComponent = class {
    */
   _contextMenuEventFired(event) {
     var contextMenu = new UI.ContextMenu(event);
-    if (this._customPreviewSection) {
-      contextMenu.revealSection().appendItem(
-          Common.UIString('Show as JavaScript object'), this._disassemble.bind(this));
-    }
+    if (this._customPreviewSection)
+      contextMenu.revealSection().appendItem(ls`Show as JavaScript object`, this._disassemble.bind(this));
+
     contextMenu.appendApplicableItems(this._object);
     contextMenu.show();
   }

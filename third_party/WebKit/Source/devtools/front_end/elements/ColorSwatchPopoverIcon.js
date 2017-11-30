@@ -15,7 +15,7 @@ Elements.BezierPopoverIcon = class {
     this._swatchPopoverHelper = swatchPopoverHelper;
     this._swatch = swatch;
 
-    this._swatch.iconElement().title = Common.UIString('Open cubic bezier editor.');
+    this._swatch.iconElement().title = ls`Open cubic bezier editor.`;
     this._swatch.iconElement().addEventListener('click', this._iconClick.bind(this), false);
 
     this._boundBezierChanged = this._bezierChanged.bind(this);
@@ -99,7 +99,7 @@ Elements.ColorSwatchPopoverIcon = class {
     this._swatchPopoverHelper = swatchPopoverHelper;
     this._swatch = swatch;
 
-    var shiftClickMessage = Common.UIString('Shift + Click to change color format.');
+    var shiftClickMessage = ls`Shift + Click to change color format.`;
     this._swatch.iconElement().title = Common.UIString('Open color picker. %s', shiftClickMessage);
     this._swatch.iconElement().addEventListener('click', this._iconClick.bind(this));
     this._contrastInfo = null;
@@ -223,7 +223,7 @@ Elements.ShadowSwatchPopoverHelper = class {
     this._shadowSwatch = shadowSwatch;
     this._iconElement = shadowSwatch.iconElement();
 
-    this._iconElement.title = Common.UIString('Open shadow editor.');
+    this._iconElement.title = ls`Open shadow editor.`;
     this._iconElement.addEventListener('click', this._iconClick.bind(this), false);
 
     this._boundShadowChanged = this._shadowChanged.bind(this);

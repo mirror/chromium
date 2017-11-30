@@ -32,12 +32,12 @@ LayerViewer.TransformController = class extends Common.Object {
     /** @type {!Object<string, !UI.ToolbarToggle>} */
     this._modeButtons = {};
     if (!disableRotate) {
-      var panModeButton = new UI.ToolbarToggle(Common.UIString('Pan mode (X)'), 'largeicon-pan');
+      var panModeButton = new UI.ToolbarToggle(ls`Pan mode (X)`, 'largeicon-pan');
       panModeButton.addEventListener(
           UI.ToolbarButton.Events.Click, this._setMode.bind(this, LayerViewer.TransformController.Modes.Pan));
       this._modeButtons[LayerViewer.TransformController.Modes.Pan] = panModeButton;
       this._controlPanelToolbar.appendToolbarItem(panModeButton);
-      var rotateModeButton = new UI.ToolbarToggle(Common.UIString('Rotate mode (V)'), 'largeicon-rotate');
+      var rotateModeButton = new UI.ToolbarToggle(ls`Rotate mode (V)`, 'largeicon-rotate');
       rotateModeButton.addEventListener(
           UI.ToolbarButton.Events.Click, this._setMode.bind(this, LayerViewer.TransformController.Modes.Rotate));
       this._modeButtons[LayerViewer.TransformController.Modes.Rotate] = rotateModeButton;
@@ -45,7 +45,7 @@ LayerViewer.TransformController = class extends Common.Object {
     }
     this._setMode(LayerViewer.TransformController.Modes.Pan);
 
-    var resetButton = new UI.ToolbarButton(Common.UIString('Reset transform (0)'), 'largeicon-center');
+    var resetButton = new UI.ToolbarButton(ls`Reset transform (0)`, 'largeicon-center');
     resetButton.addEventListener(UI.ToolbarButton.Events.Click, this.resetAndNotify.bind(this, undefined));
     this._controlPanelToolbar.appendToolbarItem(resetButton);
 

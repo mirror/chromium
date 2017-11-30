@@ -45,7 +45,7 @@ Elements.PlatformFontsWidget = class extends UI.ThrottledWidget {
     this._sectionTitle = createElementWithClass('div', 'title');
     this.contentElement.classList.add('platform-fonts');
     this.contentElement.appendChild(this._sectionTitle);
-    this._sectionTitle.textContent = Common.UIString('Rendered Fonts');
+    this._sectionTitle.textContent = ls`Rendered Fonts`;
     this._fontStatsSection = this.contentElement.createChild('div', 'stats-section');
   }
 
@@ -91,8 +91,7 @@ Elements.PlatformFontsWidget = class extends UI.ThrottledWidget {
       fontDelimeterElement.textContent = '\u2014';
 
       var fontOrigin = fontStatElement.createChild('span');
-      fontOrigin.textContent =
-          platformFonts[i].isCustomFont ? Common.UIString('Network resource') : Common.UIString('Local file');
+      fontOrigin.textContent = platformFonts[i].isCustomFont ? ls`Network resource` : ls`Local file`;
 
       var fontUsageElement = fontStatElement.createChild('span', 'font-usage');
       var usage = platformFonts[i].glyphCount;

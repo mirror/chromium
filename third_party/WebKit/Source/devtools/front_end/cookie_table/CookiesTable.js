@@ -50,7 +50,7 @@ CookieTable.CookiesTable = class extends UI.VBox {
     var columns = /** @type {!Array<!DataGrid.DataGrid.ColumnDescriptor>} */ ([
       {
         id: 'name',
-        title: Common.UIString('Name'),
+        title: ls`Name`,
         sortable: true,
         disclosure: editable,
         sort: DataGrid.DataGrid.Order.Ascending,
@@ -58,31 +58,14 @@ CookieTable.CookiesTable = class extends UI.VBox {
         weight: 24,
         editable: editable
       },
-      {id: 'value', title: Common.UIString('Value'), sortable: true, longText: true, weight: 34, editable: editable},
-      {id: 'domain', title: Common.UIString('Domain'), sortable: true, weight: 7, editable: editable},
-      {id: 'path', title: Common.UIString('Path'), sortable: true, weight: 7, editable: editable},
-      {id: 'expires', title: Common.UIString('Expires / Max-Age'), sortable: true, weight: 7, editable: editable},
-      {id: 'size', title: Common.UIString('Size'), sortable: true, align: DataGrid.DataGrid.Align.Right, weight: 7}, {
-        id: 'httpOnly',
-        title: Common.UIString('HTTP'),
-        sortable: true,
-        align: DataGrid.DataGrid.Align.Center,
-        weight: 7
-      },
-      {
-        id: 'secure',
-        title: Common.UIString('Secure'),
-        sortable: true,
-        align: DataGrid.DataGrid.Align.Center,
-        weight: 7
-      },
-      {
-        id: 'sameSite',
-        title: Common.UIString('SameSite'),
-        sortable: true,
-        align: DataGrid.DataGrid.Align.Center,
-        weight: 7
-      }
+      {id: 'value', title: ls`Value`, sortable: true, longText: true, weight: 34, editable: editable},
+      {id: 'domain', title: ls`Domain`, sortable: true, weight: 7, editable: editable},
+      {id: 'path', title: ls`Path`, sortable: true, weight: 7, editable: editable},
+      {id: 'expires', title: ls`Expires / Max-Age`, sortable: true, weight: 7, editable: editable},
+      {id: 'size', title: ls`Size`, sortable: true, align: DataGrid.DataGrid.Align.Right, weight: 7},
+      {id: 'httpOnly', title: ls`HTTP`, sortable: true, align: DataGrid.DataGrid.Align.Center, weight: 7},
+      {id: 'secure', title: ls`Secure`, sortable: true, align: DataGrid.DataGrid.Align.Center, weight: 7},
+      {id: 'sameSite', title: ls`SameSite`, sortable: true, align: DataGrid.DataGrid.Align.Center, weight: 7}
     ]);
 
     if (editable) {
@@ -343,9 +326,9 @@ CookieTable.CookiesTable = class extends UI.VBox {
     data.name = cookie.name();
     data.value = cookie.value();
     if (cookie.type() === SDK.Cookie.Type.Request) {
-      data.domain = Common.UIString('N/A');
-      data.path = Common.UIString('N/A');
-      data.expires = Common.UIString('N/A');
+      data.domain = ls`N/A`;
+      data.path = ls`N/A`;
+      data.expires = ls`N/A`;
     } else {
       data.domain = cookie.domain() || '';
       data.path = cookie.path() || '';
@@ -486,4 +469,4 @@ CookieTable.CookiesTable = class extends UI.VBox {
 };
 
 /** @const */
-CookieTable.CookiesTable._expiresSessionValue = Common.UIString('Session');
+CookieTable.CookiesTable._expiresSessionValue = ls`Session`;

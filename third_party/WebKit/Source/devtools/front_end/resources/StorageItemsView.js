@@ -12,14 +12,13 @@ Resources.StorageItemsView = class extends UI.VBox {
     /** @type {?RegExp} */
     this._filterRegex = null;
 
-    this._deleteAllButton = this._addButton(Common.UIString('Clear All'), 'largeicon-clear', this.deleteAllItems);
-    this._deleteSelectedButton =
-        this._addButton(Common.UIString('Delete Selected'), 'largeicon-delete', this.deleteSelectedItem);
-    this._refreshButton = this._addButton(Common.UIString('Refresh'), 'largeicon-refresh', this.refreshItems);
+    this._deleteAllButton = this._addButton(ls`Clear All`, 'largeicon-clear', this.deleteAllItems);
+    this._deleteSelectedButton = this._addButton(ls`Delete Selected`, 'largeicon-delete', this.deleteSelectedItem);
+    this._refreshButton = this._addButton(ls`Refresh`, 'largeicon-refresh', this.refreshItems);
 
     this._mainToolbar = new UI.Toolbar('top-resources-toolbar', this.element);
 
-    this._filterItem = new UI.ToolbarInput(Common.UIString('Filter'), 0.4);
+    this._filterItem = new UI.ToolbarInput(ls`Filter`, 0.4);
     this._filterItem.addEventListener(UI.ToolbarInput.Event.TextChanged, this._filterChanged, this);
 
     var toolbarItems = [this._refreshButton, this._deleteAllButton, this._deleteSelectedButton, this._filterItem];
@@ -46,7 +45,7 @@ Resources.StorageItemsView = class extends UI.VBox {
    */
   _showContextMenu(event) {
     var contextMenu = new UI.ContextMenu(event);
-    contextMenu.defaultSection().appendItem(Common.UIString('Refresh'), this.refreshItems.bind(this));
+    contextMenu.defaultSection().appendItem(ls`Refresh`, this.refreshItems.bind(this));
     contextMenu.show();
   }
 

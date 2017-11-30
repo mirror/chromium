@@ -443,7 +443,7 @@ SDK.TextSourceMap = class {
       var url = Common.ParsedURL.completeURL(this._baseURL, href) || href;
       var source = sourceMap.sourcesContent && sourceMap.sourcesContent[i];
       if (url === this._compiledURL && source)
-        url += Common.UIString('? [sm]');
+        url += ls`? [sm]`;
       this._sourceInfos.set(url, new SDK.TextSourceMap.SourceInfo(source, null));
       sourcesList.push(url);
     }

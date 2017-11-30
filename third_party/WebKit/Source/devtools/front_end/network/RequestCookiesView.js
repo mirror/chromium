@@ -52,7 +52,7 @@ Network.RequestCookiesView = class extends UI.VBox {
 
     if (!this._gotCookies) {
       if (!this._emptyWidget) {
-        this._emptyWidget = new UI.EmptyWidget(Common.UIString('This request has no cookies.'));
+        this._emptyWidget = new UI.EmptyWidget(ls`This request has no cookies.`);
         this._emptyWidget.show(this.element);
       }
       return;
@@ -80,8 +80,8 @@ Network.RequestCookiesView = class extends UI.VBox {
 
     this._cookiesTable = new CookieTable.CookiesTable();
     this._cookiesTable.setCookieFolders([
-      {folderName: Common.UIString('Request Cookies'), cookies: this._request.requestCookies},
-      {folderName: Common.UIString('Response Cookies'), cookies: this._request.responseCookies}
+      {folderName: ls`Request Cookies`, cookies: this._request.requestCookies},
+      {folderName: ls`Response Cookies`, cookies: this._request.responseCookies}
     ]);
     this._cookiesTable.show(this.element);
   }

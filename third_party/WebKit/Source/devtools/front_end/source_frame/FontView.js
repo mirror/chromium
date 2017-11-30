@@ -35,7 +35,7 @@ SourceFrame.FontView = class extends UI.SimpleView {
    * @param {!Common.ContentProvider} contentProvider
    */
   constructor(mimeType, contentProvider) {
-    super(Common.UIString('Font'));
+    super(ls`Font`);
     this.registerRequiredCSS('source_frame/fontView.css');
     this.element.classList.add('font-view');
     this._url = contentProvider.contentURL();

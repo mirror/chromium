@@ -153,7 +153,7 @@ Profiler.HeapSnapshotGridNode = class extends DataGrid.DataGridNode {
    */
   _toUIDistance(distance) {
     var baseSystemDistance = HeapSnapshotModel.baseSystemDistance;
-    return distance >= 0 && distance < baseSystemDistance ? Common.UIString('%d', distance) : Common.UIString('\u2212');
+    return distance >= 0 && distance < baseSystemDistance ? Common.UIString('%d', distance) : ls`\u2212`;
   }
 
   /**
@@ -599,7 +599,7 @@ Profiler.HeapSnapshotGenericObjectNode = class extends Profiler.HeapSnapshotGrid
      * @param {?SDK.RemoteObject} object
      */
     function onResult(object) {
-      fulfill(object || runtimeModel.createRemoteObjectFromPrimitiveValue(Common.UIString('Preview is not available')));
+      fulfill(object || runtimeModel.createRemoteObjectFromPrimitiveValue(ls`Preview is not available`));
     }
 
     var runtimeModel = heapProfilerModel.runtimeModel();

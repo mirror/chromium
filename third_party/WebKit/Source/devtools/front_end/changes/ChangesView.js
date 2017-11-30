@@ -11,7 +11,7 @@ Changes.ChangesView = class extends UI.VBox {
     splitWidget.setMainWidget(mainWidget);
     splitWidget.show(this.contentElement);
 
-    this._emptyWidget = new UI.EmptyWidget(Common.UIString('No changes'));
+    this._emptyWidget = new UI.EmptyWidget(ls`No changes`);
     this._emptyWidget.show(mainWidget.element);
 
     this._workspaceDiff = WorkspaceDiff.workspaceDiff();
@@ -40,7 +40,7 @@ Changes.ChangesView = class extends UI.VBox {
     this._editor.element.addEventListener('click', this._click.bind(this), false);
 
     this._toolbar = new UI.Toolbar('changes-toolbar', mainWidget.element);
-    var revertButton = new UI.ToolbarButton(Common.UIString('Revert all changes'), 'largeicon-undo');
+    var revertButton = new UI.ToolbarButton(ls`Revert all changes`, 'largeicon-undo');
     revertButton.addEventListener(UI.ToolbarButton.Events.Click, this._revert.bind(this));
     this._toolbar.appendToolbarItem(revertButton);
     this._diffStats = new UI.ToolbarText('');
@@ -199,8 +199,7 @@ Changes.ChangesView = class extends UI.VBox {
           equalRows.push(createRow(lines[i], Changes.ChangesView.RowType.Equal));
         if (lines.length > paddingLines * 2 + 1 && !atEnd) {
           equalRows.push(createRow(
-              Common.UIString('( \u2026 Skipping ') + (lines.length - paddingLines * 2) +
-                  Common.UIString(' matching lines \u2026 )'),
+              ls`( \u2026 Skipping ` + (lines.length - paddingLines * 2) + ls` matching lines \u2026 )`,
               Changes.ChangesView.RowType.Spacer));
         }
       }

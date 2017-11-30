@@ -43,7 +43,7 @@ Audits.AuditCategories.PagePerformance = class extends Audits.AuditCategoryImpl 
   }
 };
 
-Audits.AuditCategories.PagePerformance.AuditCategoryName = Common.UIString('Web Page Performance');
+Audits.AuditCategories.PagePerformance.AuditCategoryName = ls`Web Page Performance`;
 
 /**
  * @unrestricted
@@ -66,4 +66,4 @@ Audits.AuditCategories.NetworkUtilization = class extends Audits.AuditCategoryIm
   }
 };
 
-Audits.AuditCategories.NetworkUtilization.AuditCategoryName = Common.UIString('Network Utilization');
+Audits.AuditCategories.NetworkUtilization.AuditCategoryName = ls`Network Utilization`;

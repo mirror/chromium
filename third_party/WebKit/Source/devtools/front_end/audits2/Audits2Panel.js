@@ -17,11 +17,11 @@ Audits2.Audits2Panel = class extends UI.Panel {
 
     var toolbar = new UI.Toolbar('', this.element);
 
-    var newButton = new UI.ToolbarButton(Common.UIString('New audit\u2026'), 'largeicon-add');
+    var newButton = new UI.ToolbarButton(ls`New audit\u2026`, 'largeicon-add');
     toolbar.appendToolbarItem(newButton);
     newButton.addEventListener(UI.ToolbarButton.Events.Click, this._showLauncherUI.bind(this));
 
-    var downloadButton = new UI.ToolbarButton(Common.UIString('Download report'), 'largeicon-download');
+    var downloadButton = new UI.ToolbarButton(ls`Download report`, 'largeicon-download');
     toolbar.appendToolbarItem(downloadButton);
     downloadButton.addEventListener(UI.ToolbarButton.Events.Click, this._downloadSelected.bind(this));
 
@@ -30,14 +30,13 @@ Audits2.Audits2Panel = class extends UI.Panel {
     this._reportSelector = new Audits2.ReportSelector();
     toolbar.appendToolbarItem(this._reportSelector.comboBox());
 
-    var clearButton = new UI.ToolbarButton(Common.UIString('Clear all'), 'largeicon-clear');
+    var clearButton = new UI.ToolbarButton(ls`Clear all`, 'largeicon-clear');
     toolbar.appendToolbarItem(clearButton);
     clearButton.addEventListener(UI.ToolbarButton.Events.Click, this._clearAll.bind(this));
 
     this._auditResultsElement = this.contentElement.createChild('div', 'audits2-results-container');
     this._dropTarget = new UI.DropTarget(
-        this.contentElement, [UI.DropTarget.Type.File], Common.UIString('Drop audit file here'),
-        this._handleDrop.bind(this));
+        this.contentElement, [UI.DropTarget.Type.File], ls`Drop audit file here`, this._handleDrop.bind(this));
 
     for (var preset of Audits2.Audits2Panel.Presets)
       preset.setting.addChangeListener(this._updateStartButtonEnabled.bind(this));
@@ -132,7 +131,7 @@ Audits2.Audits2Panel = class extends UI.Panel {
     // However, the tests run in a content shell which is not dockable yet audits just fine,
     // so disable this check when under test.
     if (!Host.isUnderTest() && !Runtime.queryParam('can_dock'))
-      return Common.UIString('Can only audit tabs. Navigate to this page in a separate tab to start an audit.');
+      return ls`Can only audit tabs. Navigate to this page in a separate tab to start an audit.`;
 
     return null;
   }
@@ -150,7 +149,7 @@ Audits2.Audits2Panel = class extends UI.Panel {
     }
 
     if (this._dialogHelpText && !hasAtLeastOneCategory)
-      this._dialogHelpText.textContent = Common.UIString('At least one category must be selected.');
+      this._dialogHelpText.textContent = ls`At least one category must be selected.`;
 
     if (this._dialogHelpText && unauditablePageMessage)
       this._dialogHelpText.textContent = unauditablePageMessage;
@@ -180,17 +179,17 @@ Audits2.Audits2Panel = class extends UI.Panel {
     var landingCenter = landingPage.createChild('div', 'vbox audits2-landing-center');
     landingCenter.createChild('div', 'audits2-logo');
     var text = landingCenter.createChild('div', 'audits2-landing-text');
-    text.createChild('span', 'audits2-landing-bold-text').textContent = Common.UIString('Audits');
+    text.createChild('span', 'audits2-landing-bold-text').textContent = ls`Audits`;
     text.createChild('span').textContent = Common.UIString(
         ' help you identify and fix common problems that affect' +
         ' your site\'s performance, accessibility, and user experience. ');
     var link = text.createChild('span', 'link');
-    link.textContent = Common.UIString('Learn more');
+    link.textContent = ls`Learn more`;
     link.addEventListener(
         'click', () => InspectorFrontendHost.openInNewTab('https://developers.google.com/web/tools/lighthouse/'));
 
-    var newButton = UI.createTextButton(
-        Common.UIString('Perform an audit\u2026'), this._showLauncherUI.bind(this), '', true /* primary */);
+    var newButton =
+        UI.createTextButton(ls`Perform an audit\u2026`, this._showLauncherUI.bind(this), '', true /* primary */);
     landingCenter.appendChild(newButton);
     this.setDefaultFocusedElement(newButton);
   }
@@ -207,7 +206,7 @@ Audits2.Audits2Panel = class extends UI.Panel {
     var uiElement = auditsViewElement.createChild('div');
     var headerElement = uiElement.createChild('header');
     this._headerTitleElement = headerElement.createChild('p');
-    this._headerTitleElement.textContent = Common.UIString('Audits to perform');
+    this._headerTitleElement.textContent = ls`Audits to perform`;
     uiElement.appendChild(headerElement);
 
     this._auditSelectorForm = uiElement.createChild('form', 'audits2-form');
@@ -224,12 +223,11 @@ Audits2.Audits2Panel = class extends UI.Panel {
     this._dialogHelpText = uiElement.createChild('div', 'audits2-dialog-help-text');
 
     var buttonsRow = uiElement.createChild('div', 'audits2-dialog-buttons hbox');
-    this._startButton =
-        UI.createTextButton(Common.UIString('Run audit'), this._start.bind(this), '', true /* primary */);
+    this._startButton = UI.createTextButton(ls`Run audit`, this._start.bind(this), '', true /* primary */);
     this._startButton.autofocus = true;
     this._updateStartButtonEnabled();
     buttonsRow.appendChild(this._startButton);
-    this._cancelButton = UI.createTextButton(Common.UIString('Cancel'), this._cancel.bind(this));
+    this._cancelButton = UI.createTextButton(ls`Cancel`, this._cancel.bind(this));
     buttonsRow.appendChild(this._cancelButton);
 
     this._dialog.setSizeBehavior(UI.GlassPane.SizeBehavior.SetExactWidthMaxHeight);
@@ -247,7 +245,7 @@ Audits2.Audits2Panel = class extends UI.Panel {
     var statusView = launcherUIElement.createChild('div', 'audits2-status vbox hidden');
     this._statusIcon = statusView.createChild('div', 'icon');
     this._statusElement = statusView.createChild('div');
-    this._updateStatus(Common.UIString('Loading...'));
+    this._updateStatus(ls`Loading...`);
     return statusView;
   }
 
@@ -310,7 +308,7 @@ Audits2.Audits2Panel = class extends UI.Panel {
         .then(_ => {
           this._auditRunning = true;
           this._updateButton();
-          this._updateStatus(Common.UIString('Loading\u2026'));
+          this._updateStatus(ls`Loading\u2026`);
         })
         .then(_ => this._protocolService.startLighthouse(this._inspectedURL, categoryIDs))
         .then(lighthouseResult => {
@@ -352,7 +350,7 @@ Audits2.Audits2Panel = class extends UI.Panel {
 
   _cancel() {
     if (this._auditRunning) {
-      this._updateStatus(Common.UIString('Cancelling\u2026'));
+      this._updateStatus(ls`Cancelling\u2026`);
       this._stopAndReattach();
     } else {
       this._hideDialog();
@@ -367,9 +365,9 @@ Audits2.Audits2Panel = class extends UI.Panel {
     this._statusView.classList.toggle('hidden', !this._auditRunning);
     this._auditSelectorForm.classList.toggle('hidden', this._auditRunning);
     if (this._auditRunning)
-      this._headerTitleElement.textContent = Common.UIString('Auditing your web page \u2026');
+      this._headerTitleElement.textContent = ls`Auditing your web page \u2026`;
     else
-      this._headerTitleElement.textContent = Common.UIString('Audits to perform');
+      this._headerTitleElement.textContent = ls`Audits to perform`;
   }
 
   /**
@@ -406,7 +404,7 @@ Audits2.Audits2Panel = class extends UI.Panel {
    */
   _buildReportUI(lighthouseResult) {
     if (lighthouseResult === null) {
-      this._updateStatus(Common.UIString('Auditing failed.'));
+      this._updateStatus(ls`Auditing failed.`);
       return;
     }
     var optionElement =
@@ -422,7 +420,7 @@ Audits2.Audits2Panel = class extends UI.Panel {
     console.error(err);
     this._statusElement.textContent = '';
     this._statusIcon.classList.add('error');
-    this._statusElement.createTextChild(Common.UIString('Ah, sorry! We ran into an error: '));
+    this._statusElement.createTextChild(ls`Ah, sorry! We ran into an error: `);
     this._statusElement.createChild('em').createTextChild(err.message);
     if (Audits2.Audits2Panel.KnownBugPatterns.some(pattern => pattern.test(err.message))) {
       var message = Common.UIString(
@@ -454,7 +452,7 @@ ${err.stack}
     var body = '&body=' + encodeURIComponent(issueBody.trim());
     var reportErrorEl = parentElem.createChild('a', 'audits2-link audits2-report-error');
     reportErrorEl.href = baseURI + title + body;
-    reportErrorEl.textContent = Common.UIString('Report this bug');
+    reportErrorEl.textContent = ls`Report this bug`;
     reportErrorEl.target = '_blank';
   }
 

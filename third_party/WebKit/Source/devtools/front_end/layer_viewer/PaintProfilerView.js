@@ -41,7 +41,7 @@ LayerViewer.PaintProfilerView = class extends UI.HBox {
     this.contentElement.classList.add('paint-profiler-overview');
     this._canvasContainer = this.contentElement.createChild('div', 'paint-profiler-canvas-container');
     this._progressBanner = this.contentElement.createChild('div', 'full-widget-dimmed-banner hidden');
-    this._progressBanner.textContent = Common.UIString('Profiling\u2026');
+    this._progressBanner.textContent = ls`Profiling\u2026`;
     this._pieChart = new PerfUI.PieChart(55, this._formatPieChartTime.bind(this), true);
     this._pieChart.element.classList.add('paint-profiler-pie-chart');
     this.contentElement.appendChild(this._pieChart.element);
@@ -70,10 +70,10 @@ LayerViewer.PaintProfilerView = class extends UI.HBox {
     if (LayerViewer.PaintProfilerView._categories)
       return LayerViewer.PaintProfilerView._categories;
     LayerViewer.PaintProfilerView._categories = {
-      shapes: new LayerViewer.PaintProfilerCategory('shapes', Common.UIString('Shapes'), 'rgb(255, 161, 129)'),
-      bitmap: new LayerViewer.PaintProfilerCategory('bitmap', Common.UIString('Bitmap'), 'rgb(136, 196, 255)'),
-      text: new LayerViewer.PaintProfilerCategory('text', Common.UIString('Text'), 'rgb(180, 255, 137)'),
-      misc: new LayerViewer.PaintProfilerCategory('misc', Common.UIString('Misc'), 'rgb(206, 160, 255)')
+      shapes: new LayerViewer.PaintProfilerCategory('shapes', ls`Shapes`, 'rgb(255, 161, 129)'),
+      bitmap: new LayerViewer.PaintProfilerCategory('bitmap', ls`Bitmap`, 'rgb(136, 196, 255)'),
+      text: new LayerViewer.PaintProfilerCategory('text', ls`Text`, 'rgb(180, 255, 137)'),
+      misc: new LayerViewer.PaintProfilerCategory('misc', ls`Misc`, 'rgb(206, 160, 255)')
     };
     return LayerViewer.PaintProfilerView._categories;
   }

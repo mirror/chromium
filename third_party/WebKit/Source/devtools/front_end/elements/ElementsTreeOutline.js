@@ -48,7 +48,7 @@ Elements.ElementsTreeOutline = class extends UI.TreeOutline {
 
     this._element = this.element;
     this._element.classList.add('elements-tree-outline', 'source-code');
-    UI.ARIAUtils.setAccessibleName(this._element, Common.UIString('Page DOM'));
+    UI.ARIAUtils.setAccessibleName(this._element, ls`Page DOM`);
     this._element.addEventListener('mousedown', this._onmousedown.bind(this), false);
     this._element.addEventListener('mousemove', this._onmousemove.bind(this), false);
     this._element.addEventListener('mouseleave', this._onmouseleave.bind(this), false);
@@ -1610,7 +1610,7 @@ Elements.ElementsTreeOutline.ShortcutTreeElement = class extends UI.TreeElement 
     var link = Components.DOMPresentationUtils.linkifyDeferredNodeReference(nodeShortcut.deferredNode);
     this.listItemElement.createTextChild(' ');
     link.classList.add('elements-tree-shortcut-link');
-    link.textContent = Common.UIString('reveal');
+    link.textContent = ls`reveal`;
     this.listItemElement.appendChild(link);
     this._nodeShortcut = nodeShortcut;
   }

@@ -43,9 +43,9 @@ Sources.WatchExpressionsSidebarPane = class extends UI.ThrottledWidget {
     this._watchExpressions = [];
     this._watchExpressionsSetting = Common.settings.createLocalSetting('watchExpressions', []);
 
-    this._addButton = new UI.ToolbarButton(Common.UIString('Add expression'), 'largeicon-add');
+    this._addButton = new UI.ToolbarButton(ls`Add expression`, 'largeicon-add');
     this._addButton.addEventListener(UI.ToolbarButton.Events.Click, this._addButtonClicked.bind(this));
-    this._refreshButton = new UI.ToolbarButton(Common.UIString('Refresh'), 'largeicon-refresh');
+    this._refreshButton = new UI.ToolbarButton(ls`Refresh`, 'largeicon-refresh');
     this._refreshButton.addEventListener(UI.ToolbarButton.Events.Click, this.update, this);
 
     this.contentElement.classList.add('watch-expressions');
@@ -97,7 +97,7 @@ Sources.WatchExpressionsSidebarPane = class extends UI.ThrottledWidget {
     this.contentElement.removeChildren();
     this._watchExpressions = [];
     this._emptyElement = this.contentElement.createChild('div', 'gray-info-message');
-    this._emptyElement.textContent = Common.UIString('No watch expressions');
+    this._emptyElement.textContent = ls`No watch expressions`;
     var watchExpressionStrings = this._watchExpressionsSetting.get();
     for (var i = 0; i < watchExpressionStrings.length; ++i) {
       var expression = watchExpressionStrings[i];
@@ -156,13 +156,10 @@ Sources.WatchExpressionsSidebarPane = class extends UI.ThrottledWidget {
       isEditing |= watchExpression.isEditing();
 
     if (!isEditing)
-      contextMenu.debugSection().appendItem(Common.UIString('Add watch expression'), this._addButtonClicked.bind(this));
+      contextMenu.debugSection().appendItem(ls`Add watch expression`, this._addButtonClicked.bind(this));
 
-    if (this._watchExpressions.length > 1) {
-      contextMenu.debugSection().appendItem(
-          Common.UIString('Delete all watch expressions'), this._deleteAllButtonClicked.bind(this));
-    }
-
+    if (this._watchExpressions.length > 1)
+      contextMenu.debugSection().appendItem(ls`Delete all watch expressions`, this._deleteAllButtonClicked.bind(this));
 
     var target = event.deepElementFromPoint();
     if (!target)
@@ -340,7 +337,7 @@ Sources.WatchExpression = class extends Common.Object {
 
     var headerElement = createElementWithClass('div', 'watch-expression-header');
     var deleteButton = headerElement.createChild('button', 'watch-expression-delete-button');
-    deleteButton.title = Common.UIString('Delete watch expression');
+    deleteButton.title = ls`Delete watch expression`;
     deleteButton.addEventListener('click', this._deleteWatchExpression.bind(this), false);
 
     var titleElement = headerElement.createChild('div', 'watch-expression-title');
@@ -348,7 +345,7 @@ Sources.WatchExpression = class extends Common.Object {
     if (!!exceptionDetails || !result) {
       this._valueElement = createElementWithClass('span', 'watch-expression-error value');
       titleElement.classList.add('dimmed');
-      this._valueElement.textContent = Common.UIString('<not available>');
+      this._valueElement.textContent = ls`<not available>`;
     } else {
       this._valueElement = ObjectUI.ObjectPropertiesSection.createValueElementWithCustomSupport(
           result, !!exceptionDetails, false /* showPreview */, titleElement, this._linkifier);
@@ -416,14 +413,11 @@ Sources.WatchExpression = class extends Common.Object {
    * @param {!Event} event
    */
   _populateContextMenu(contextMenu, event) {
-    if (!this.isEditing()) {
-      contextMenu.editSection().appendItem(
-          Common.UIString('Delete watch expression'), this._updateExpression.bind(this, null));
-    }
-
+    if (!this.isEditing())
+      contextMenu.editSection().appendItem(ls`Delete watch expression`, this._updateExpression.bind(this, null));
 
     if (!this.isEditing() && this._result && (this._result.type === 'number' || this._result.type === 'string'))
-      contextMenu.clipboardSection().appendItem(Common.UIString('Copy value'), this._copyValueButtonClicked.bind(this));
+      contextMenu.clipboardSection().appendItem(ls`Copy value`, this._copyValueButtonClicked.bind(this));
 
     var target = event.deepElementFromPoint();
     if (target && this._valueElement.isSelfOrAncestor(target))

@@ -11,7 +11,7 @@ Persistence.OverridesSettingsTab = class extends UI.VBox {
     this.registerRequiredCSS('persistence/overridesSettingsTab.css');
 
     var header = this.element.createChild('header');
-    header.createChild('h3').createTextChild(Common.UIString('Overrides'));
+    header.createChild('h3').createTextChild(ls`Overrides`);
 
     this.contentElement.createChild('div', 'overrides-info-message').textContent = Common.UIString(
         'Overrides allow you to modify a resources on a page, automatically ' +
@@ -21,7 +21,7 @@ Persistence.OverridesSettingsTab = class extends UI.VBox {
     this._list.registerRequiredCSS('persistence/overridesSettingsTab.css');
 
     var placeholder = createElementWithClass('div', 'overrides-list-empty');
-    placeholder.textContent = Common.UIString('No overrides setup');
+    placeholder.textContent = ls`No overrides setup`;
     this._list.setEmptyPlaceholder(placeholder);
     this._list.show(this.contentElement);
 
@@ -148,7 +148,7 @@ Persistence.OverridesSettingsTab = class extends UI.VBox {
     titles.createChild('div', 'overrides-filesystem-path').textContent = fileSystemPath;
 
     var fields = content.createChild('div', 'overrides-edit-row');
-    fields.createChild('div', 'overrides-domain-label').textContent = Common.UIString('Domain');
+    fields.createChild('div', 'overrides-domain-label').textContent = ls`Domain`;
     fields.createChild('div', 'overrides-domain')
         .appendChild(editor.createInput('domain', 'text', 'example.com', (item, index, input) => {
           var domain = Persistence.networkPersistenceManager.domainForProject(project);

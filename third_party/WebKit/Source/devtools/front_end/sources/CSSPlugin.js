@@ -194,7 +194,7 @@ Sources.CSSPlugin = class {
       return null;
     var swatch = InlineEditor.ColorSwatch.create();
     swatch.setColor(color);
-    swatch.iconElement().title = Common.UIString('Open color picker.');
+    swatch.iconElement().title = ls`Open color picker.`;
     swatch.iconElement().addEventListener('click', this._swatchIconClicked.bind(this, swatch), false);
     swatch.hideText(true);
     return swatch;
@@ -209,7 +209,7 @@ Sources.CSSPlugin = class {
       return null;
     var swatch = InlineEditor.BezierSwatch.create();
     swatch.setBezierText(text);
-    swatch.iconElement().title = Common.UIString('Open cubic bezier editor.');
+    swatch.iconElement().title = ls`Open cubic bezier editor.`;
     swatch.iconElement().addEventListener('click', this._swatchIconClicked.bind(this, swatch), false);
     swatch.hideText(true);
     return swatch;

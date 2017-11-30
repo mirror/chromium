@@ -88,7 +88,7 @@ Timeline.TimelineLoader = class {
       } else if (chunk[0] === '[') {
         this._state = Timeline.TimelineLoader.State.ReadingEvents;
       } else {
-        this._reportErrorAndCancelLoading(Common.UIString('Malformed timeline data: Unknown JSON format'));
+        this._reportErrorAndCancelLoading(ls`Malformed timeline data: Unknown JSON format`);
         return Promise.resolve();
       }
     }
@@ -115,7 +115,7 @@ Timeline.TimelineLoader = class {
       return Promise.resolve();
     this._state = Timeline.TimelineLoader.State.SkippingTail;
     if (this._firstChunk)
-      this._reportErrorAndCancelLoading(Common.UIString('Malformed timeline input, wrong JSON brackets balance'));
+      this._reportErrorAndCancelLoading(ls`Malformed timeline input, wrong JSON brackets balance`);
     return Promise.resolve();
   }
 
@@ -143,7 +143,7 @@ Timeline.TimelineLoader = class {
     if (this._firstChunk) {
       this._firstChunk = false;
       if (this._looksLikeAppVersion(items[0])) {
-        this._reportErrorAndCancelLoading(Common.UIString('Legacy Timeline format is not supported.'));
+        this._reportErrorAndCancelLoading(ls`Legacy Timeline format is not supported.`);
         return;
       }
     }
@@ -200,7 +200,7 @@ Timeline.TimelineLoader = class {
       var profile = JSON.parse(text);
       traceEvents = TimelineModel.TimelineJSProfileProcessor.buildTraceProfileFromCpuProfile(profile);
     } catch (e) {
-      this._reportErrorAndCancelLoading(Common.UIString('Malformed CPU profile format'));
+      this._reportErrorAndCancelLoading(ls`Malformed CPU profile format`);
       return;
     }
     this._tracingModel.addEvents(traceEvents);

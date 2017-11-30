@@ -44,15 +44,14 @@ Profiler.ProfileLauncherView = class extends UI.VBox {
     this._innerContentElement = this._contentElement.createChild('div');
     var controlDiv = this._contentElement.createChild('div', 'hbox profile-launcher-control');
     var targetDiv = controlDiv.createChild('div', 'hbox profile-launcher-target');
-    targetDiv.createChild('div').textContent = Common.UIString('Target:');
+    targetDiv.createChild('div').textContent = ls`Target:`;
     var targetsSelect = targetDiv.createChild('select', 'chrome-select');
     new Profiler.TargetsComboBoxController(targetsSelect, targetDiv);
     this._controlButton =
         UI.createTextButton('', this._controlButtonClicked.bind(this), 'profile-launcher-button', true /* primary */);
     this._contentElement.appendChild(this._controlButton);
     this._recordButtonEnabled = true;
-    this._loadButton =
-        UI.createTextButton(Common.UIString('Load'), this._loadButtonClicked.bind(this), 'profile-launcher-button');
+    this._loadButton = UI.createTextButton(ls`Load`, this._loadButtonClicked.bind(this), 'profile-launcher-button');
     this._contentElement.appendChild(this._loadButton);
 
     this._selectedProfileTypeSetting = Common.settings.createSetting('selectedProfileType', 'CPU');
@@ -76,15 +75,15 @@ Profiler.ProfileLauncherView = class extends UI.VBox {
     if (this._isInstantProfile) {
       this._controlButton.classList.remove('running');
       this._controlButton.classList.add('primary-button');
-      this._controlButton.textContent = Common.UIString('Take snapshot');
+      this._controlButton.textContent = ls`Take snapshot`;
     } else if (this._isProfiling) {
       this._controlButton.classList.add('running');
       this._controlButton.classList.remove('primary-button');
-      this._controlButton.textContent = Common.UIString('Stop');
+      this._controlButton.textContent = ls`Stop`;
     } else {
       this._controlButton.classList.remove('running');
       this._controlButton.classList.add('primary-button');
-      this._controlButton.textContent = Common.UIString('Start');
+      this._controlButton.textContent = ls`Start`;
     }
     for (var item of this._typeIdToOptionElement.values())
       item.disabled = !!this._isProfiling;
@@ -128,7 +127,7 @@ Profiler.ProfileLauncherView = class extends UI.VBox {
     if (decorationElement)
       labelElement.appendChild(decorationElement);
     if (this._typeIdToOptionElement.size > 1)
-      this._header.textContent = Common.UIString('Select profiling type');
+      this._header.textContent = ls`Select profiling type`;
     else
       this._header.textContent = profileType.name;
   }

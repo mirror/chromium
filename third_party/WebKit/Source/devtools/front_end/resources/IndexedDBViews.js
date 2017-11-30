@@ -40,23 +40,21 @@ Resources.IDBDatabaseView = class extends UI.VBox {
     super();
 
     this._model = model;
-    var databaseName = database ? database.databaseId.name : Common.UIString('Loading\u2026');
+    var databaseName = database ? database.databaseId.name : ls`Loading\u2026`;
 
     this._reportView = new UI.ReportView(databaseName);
     this._reportView.show(this.contentElement);
 
     var bodySection = this._reportView.appendSection('');
-    this._securityOriginElement = bodySection.appendField(Common.UIString('Security origin'));
-    this._versionElement = bodySection.appendField(Common.UIString('Version'));
+    this._securityOriginElement = bodySection.appendField(ls`Security origin`);
+    this._versionElement = bodySection.appendField(ls`Version`);
 
     var footer = this._reportView.appendSection('').appendRow();
-    this._clearButton = UI.createTextButton(
-        Common.UIString('Delete database'), () => this._deleteDatabase(), Common.UIString('Delete database'));
+    this._clearButton = UI.createTextButton(ls`Delete database`, () => this._deleteDatabase(), ls`Delete database`);
     footer.appendChild(this._clearButton);
 
-    this._refreshButton = UI.createTextButton(
-        Common.UIString('Refresh database'), () => this._refreshDatabaseButtonClicked(),
-        Common.UIString('Refresh database'));
+    this._refreshButton =
+        UI.createTextButton(ls`Refresh database`, () => this._refreshDatabaseButtonClicked(), ls`Refresh database`);
     footer.appendChild(this._refreshButton);
 
     if (database)
@@ -105,7 +103,7 @@ Resources.IDBDataView = class extends UI.SimpleView {
    * @param {?Resources.IndexedDBModel.Index} index
    */
   constructor(model, databaseId, objectStore, index) {
-    super(Common.UIString('IDB'));
+    super(ls`IDB`);
     this.registerRequiredCSS('resources/indexedDBViews.css');
 
     this._model = model;
@@ -114,10 +112,10 @@ Resources.IDBDataView = class extends UI.SimpleView {
 
     this.element.classList.add('indexed-db-data-view');
 
-    this._refreshButton = new UI.ToolbarButton(Common.UIString('Refresh'), 'largeicon-refresh');
+    this._refreshButton = new UI.ToolbarButton(ls`Refresh`, 'largeicon-refresh');
     this._refreshButton.addEventListener(UI.ToolbarButton.Events.Click, this._refreshButtonClicked, this);
 
-    this._clearButton = new UI.ToolbarButton(Common.UIString('Clear object store'), 'largeicon-clear');
+    this._clearButton = new UI.ToolbarButton(ls`Clear object store`, 'largeicon-clear');
     this._clearButton.addEventListener(UI.ToolbarButton.Events.Click, this._clearButtonClicked, this);
 
     this._createEditorToolbar();
@@ -136,17 +134,16 @@ Resources.IDBDataView = class extends UI.SimpleView {
     var keyPath = this._isIndex ? this._index.keyPath : this._objectStore.keyPath;
 
     var columns = /** @type {!Array<!DataGrid.DataGrid.ColumnDescriptor>} */ ([]);
-    columns.push({id: 'number', title: Common.UIString('#'), sortable: false, width: '50px'});
-    columns.push(
-        {id: 'key', titleDOMFragment: this._keyColumnHeaderFragment(Common.UIString('Key'), keyPath), sortable: false});
+    columns.push({id: 'number', title: ls`#`, sortable: false, width: '50px'});
+    columns.push({id: 'key', titleDOMFragment: this._keyColumnHeaderFragment(ls`Key`, keyPath), sortable: false});
     if (this._isIndex) {
       columns.push({
         id: 'primaryKey',
-        titleDOMFragment: this._keyColumnHeaderFragment(Common.UIString('Primary key'), this._objectStore.keyPath),
+        titleDOMFragment: this._keyColumnHeaderFragment(ls`Primary key`, this._objectStore.keyPath),
         sortable: false
       });
     }
-    columns.push({id: 'value', title: Common.UIString('Value'), sortable: false});
+    columns.push({id: 'value', title: ls`Value`, sortable: false});
 
     var dataGrid = new DataGrid.DataGrid(columns);
     dataGrid.setStriped(true);
@@ -164,7 +161,7 @@ Resources.IDBDataView = class extends UI.SimpleView {
     if (keyPath === null)
       return keyColumnHeaderFragment;
 
-    keyColumnHeaderFragment.createTextChild(' (' + Common.UIString('Key path: '));
+    keyColumnHeaderFragment.createTextChild(' (' + ls`Key path: `);
     if (Array.isArray(keyPath)) {
       keyColumnHeaderFragment.createTextChild('[');
       for (var i = 0; i < keyPath.length; ++i) {
@@ -202,18 +199,18 @@ Resources.IDBDataView = class extends UI.SimpleView {
 
     editorToolbar.appendToolbarItem(new UI.ToolbarSeparator());
 
-    this._pageBackButton = new UI.ToolbarButton(Common.UIString('Show previous page'), 'largeicon-play-back');
+    this._pageBackButton = new UI.ToolbarButton(ls`Show previous page`, 'largeicon-play-back');
     this._pageBackButton.addEventListener(UI.ToolbarButton.Events.Click, this._pageBackButtonClicked, this);
     editorToolbar.appendToolbarItem(this._pageBackButton);
 
-    this._pageForwardButton = new UI.ToolbarButton(Common.UIString('Show next page'), 'largeicon-play');
+    this._pageForwardButton = new UI.ToolbarButton(ls`Show next page`, 'largeicon-play');
     this._pageForwardButton.setEnabled(false);
     this._pageForwardButton.addEventListener(UI.ToolbarButton.Events.Click, this._pageForwardButtonClicked, this);
     editorToolbar.appendToolbarItem(this._pageForwardButton);
 
     this._keyInputElement = UI.createInput('key-input');
     editorToolbar.element.appendChild(this._keyInputElement);
-    this._keyInputElement.placeholder = Common.UIString('Start from key');
+    this._keyInputElement.placeholder = ls`Start from key`;
     this._keyInputElement.addEventListener('paste', this._keyInputChanged.bind(this), false);
     this._keyInputElement.addEventListener('cut', this._keyInputChanged.bind(this), false);
     this._keyInputElement.addEventListener('keypress', this._keyInputChanged.bind(this), false);

@@ -10,13 +10,13 @@ Devices.DevicesView = class extends UI.VBox {
 
     var hbox = this.contentElement.createChild('div', 'hbox devices-container');
     var sidebar = hbox.createChild('div', 'devices-sidebar');
-    sidebar.createChild('div', 'devices-view-title').createTextChild(Common.UIString('Devices'));
+    sidebar.createChild('div', 'devices-view-title').createTextChild(ls`Devices`);
     this._sidebarList = sidebar.createChild('div', 'devices-sidebar-list');
 
     this._discoveryView = new Devices.DevicesView.DiscoveryView();
     this._sidebarListSpacer = this._sidebarList.createChild('div', 'devices-sidebar-spacer');
     this._discoveryListItem = this._sidebarList.createChild('div', 'devices-sidebar-item');
-    this._discoveryListItem.textContent = Common.UIString('Settings');
+    this._discoveryListItem.textContent = ls`Settings`;
     this._discoveryListItem.addEventListener(
         'click', this._selectSidebarListItem.bind(this, this._discoveryListItem, this._discoveryView));
 
@@ -35,11 +35,11 @@ Devices.DevicesView = class extends UI.VBox {
 
     var discoveryFooter = this.contentElement.createChild('div', 'devices-footer');
     this._deviceCountSpan = discoveryFooter.createChild('span');
-    discoveryFooter.createChild('span').textContent = Common.UIString(' Read ');
+    discoveryFooter.createChild('span').textContent = ls` Read `;
     discoveryFooter.appendChild(UI.createExternalLink(
         'https://developers.google.com/chrome-developer-tools/docs/remote-debugging',
-        Common.UIString('remote debugging documentation')));
-    discoveryFooter.createChild('span').textContent = Common.UIString(' for more information.');
+        ls`remote debugging documentation`));
+    discoveryFooter.createChild('span').textContent = ls` for more information.`;
     this._updateFooter();
     this._selectSidebarListItem(this._discoveryListItem, this._discoveryView);
 
@@ -93,7 +93,7 @@ Devices.DevicesView = class extends UI.VBox {
             .filter(d => d.adbSerial.toUpperCase() !== 'WEBRTC' && d.adbSerial.toUpperCase() !== 'LOCALHOST');
     for (var device of this._devices) {
       if (!device.adbConnected)
-        device.adbModel = Common.UIString('Unknown');
+        device.adbModel = ls`Unknown`;
     }
 
     var ids = new Set();
@@ -125,8 +125,7 @@ Devices.DevicesView = class extends UI.VBox {
       }
 
       listItem._title.textContent = device.adbModel;
-      listItem._status.textContent =
-          device.adbConnected ? Common.UIString('Connected') : Common.UIString('Pending Authorization');
+      listItem._status.textContent = device.adbConnected ? ls`Connected` : ls`Pending Authorization`;
       listItem.classList.toggle('device-connected', device.adbConnected);
       view.update(device);
     }
@@ -176,8 +175,8 @@ Devices.DevicesView = class extends UI.VBox {
 
   _updateFooter() {
     this._deviceCountSpan.textContent = !this._devices.length ?
-        Common.UIString('No devices detected.') :
-        this._devices.length === 1 ? Common.UIString('1 device detected.') :
+        ls`No devices detected.` :
+        this._devices.length === 1 ? ls`1 device detected.` :
                                      Common.UIString('%d devices detected.', this._devices.length);
   }
 
@@ -209,9 +208,9 @@ Devices.DevicesView.DiscoveryView = class extends UI.VBox {
     this.element.classList.add('discovery-view');
 
     this.contentElement.createChild('div', 'hbox device-text-row').createChild('div', 'view-title').textContent =
-        Common.UIString('Settings');
+        ls`Settings`;
 
-    var discoverUsbDevicesCheckbox = UI.CheckboxLabel.create(Common.UIString('Discover USB devices'));
+    var discoverUsbDevicesCheckbox = UI.CheckboxLabel.create(ls`Discover USB devices`);
     discoverUsbDevicesCheckbox.classList.add('usb-checkbox');
     this.element.appendChild(discoverUsbDevicesCheckbox);
     this._discoverUsbDevicesCheckbox = discoverUsbDevicesCheckbox.checkboxElement;
@@ -221,10 +220,10 @@ Devices.DevicesView.DiscoveryView = class extends UI.VBox {
     }, false);
 
     var help = this.element.createChild('div', 'discovery-help');
-    help.createChild('span').textContent = Common.UIString('Need help? Read Chrome ');
+    help.createChild('span').textContent = ls`Need help? Read Chrome `;
     help.appendChild(UI.createExternalLink(
         'https://developers.google.com/chrome-developer-tools/docs/remote-debugging',
-        Common.UIString('remote debugging documentation.')));
+        ls`remote debugging documentation.`));
 
     /** @type {!Adb.Config} */
     this._config;
@@ -270,7 +269,7 @@ Devices.DevicesView.PortForwardingView = class extends UI.VBox {
     this.element.classList.add('port-forwarding-view');
 
     var portForwardingHeader = this.element.createChild('div', 'port-forwarding-header');
-    var portForwardingEnabledCheckbox = UI.CheckboxLabel.create(Common.UIString('Port forwarding'));
+    var portForwardingEnabledCheckbox = UI.CheckboxLabel.create(ls`Port forwarding`);
     portForwardingEnabledCheckbox.classList.add('port-forwarding-checkbox');
     portForwardingHeader.appendChild(portForwardingEnabledCheckbox);
     this._portForwardingEnabledCheckbox = portForwardingEnabledCheckbox.checkboxElement;
@@ -280,21 +279,21 @@ Devices.DevicesView.PortForwardingView = class extends UI.VBox {
     portForwardingFooter.createChild('span').textContent = Common.UIString(
         'Define the listening port on your device that maps to a port accessible from your development machine. ');
     portForwardingFooter.appendChild(UI.createExternalLink(
-        'https://developer.chrome.com/devtools/docs/remote-debugging#port-forwarding', Common.UIString('Learn more')));
+        'https://developer.chrome.com/devtools/docs/remote-debugging#port-forwarding', ls`Learn more`));
 
     /** @type {!UI.ListWidget<!Adb.PortForwardingRule>} */
     this._list = new UI.ListWidget(this);
     this._list.registerRequiredCSS('devices/devicesView.css');
     this._list.element.classList.add('port-forwarding-list');
     var placeholder = createElementWithClass('div', 'port-forwarding-list-empty');
-    placeholder.textContent = Common.UIString('No rules');
+    placeholder.textContent = ls`No rules`;
     this._list.setEmptyPlaceholder(placeholder);
     this._list.show(this.element);
     /** @type {?UI.ListWidget.Editor<!Adb.PortForwardingRule>} */
     this._editor = null;
 
     this.element.appendChild(
-        UI.createTextButton(Common.UIString('Add rule'), this._addRuleButtonClicked.bind(this), 'add-rule-button'));
+        UI.createTextButton(ls`Add rule`, this._addRuleButtonClicked.bind(this), 'add-rule-button'));
 
     /** @type {!Array<!Adb.PortForwardingRule>} */
     this._portForwardingConfig = [];
@@ -332,7 +331,7 @@ Devices.DevicesView.PortForwardingView = class extends UI.VBox {
   renderItem(rule, editable) {
     var element = createElementWithClass('div', 'port-forwarding-list-item');
     var port = element.createChild('div', 'port-forwarding-value port-forwarding-port');
-    port.createChild('span', 'port-localhost').textContent = Common.UIString('localhost:');
+    port.createChild('span', 'port-localhost').textContent = ls`localhost:`;
     port.createTextChild(rule.port);
     element.createChild('div', 'port-forwarding-separator');
     element.createChild('div', 'port-forwarding-value').textContent = rule.address;
@@ -447,7 +446,7 @@ Devices.DevicesView.NetworkDiscoveryView = class extends UI.VBox {
     this.element.classList.add('network-discovery-view');
 
     var networkDiscoveryHeader = this.element.createChild('div', 'network-discovery-header');
-    var networkDiscoveryEnabledCheckbox = UI.CheckboxLabel.create(Common.UIString('Network targets'));
+    var networkDiscoveryEnabledCheckbox = UI.CheckboxLabel.create(ls`Network targets`);
     networkDiscoveryEnabledCheckbox.classList.add('network-discovery-checkbox');
     networkDiscoveryHeader.appendChild(networkDiscoveryEnabledCheckbox);
     this._networkDiscoveryEnabledCheckbox = networkDiscoveryEnabledCheckbox.checkboxElement;
@@ -458,12 +457,12 @@ Devices.DevicesView.NetworkDiscoveryView = class extends UI.VBox {
     var networkDiscoveryFooter = this.element.createChild('div', 'network-discovery-footer');
     if (nodeFrontend) {
       networkDiscoveryFooter.createChild('span').textContent =
-          Common.UIString('Specify network endpoint and DevTools will connect to it automatically. ');
+          ls`Specify network endpoint and DevTools will connect to it automatically. `;
       var link = networkDiscoveryFooter.createChild('span', 'link');
-      link.textContent = Common.UIString('Learn more');
+      link.textContent = ls`Learn more`;
       link.addEventListener('click', () => InspectorFrontendHost.openInNewTab('https://nodejs.org/en/docs/inspector/'));
     } else {
-      networkDiscoveryFooter.createChild('span').textContent = Common.UIString('Define the target connection address');
+      networkDiscoveryFooter.createChild('span').textContent = ls`Define the target connection address`;
     }
 
     /** @type {!UI.ListWidget<!Adb.PortForwardingRule>} */
@@ -471,16 +470,15 @@ Devices.DevicesView.NetworkDiscoveryView = class extends UI.VBox {
     this._list.registerRequiredCSS('devices/devicesView.css');
     this._list.element.classList.add('network-discovery-list');
     var placeholder = createElementWithClass('div', 'network-discovery-list-empty');
-    placeholder.textContent =
-        nodeFrontend ? Common.UIString('No connections specified') : Common.UIString('No addresses defined');
+    placeholder.textContent = nodeFrontend ? ls`No connections specified` : ls`No addresses defined`;
     this._list.setEmptyPlaceholder(placeholder);
     this._list.show(this.element);
     /** @type {?UI.ListWidget.Editor<!Adb.PortForwardingRule>} */
     this._editor = null;
 
     var addButton = UI.createTextButton(
-        nodeFrontend ? Common.UIString('Add connection') : Common.UIString('Add address'),
-        this._addNetworkTargetButtonClicked.bind(this), 'add-network-target-button', true /* primary */);
+        nodeFrontend ? ls`Add connection` : ls`Add address`, this._addNetworkTargetButtonClicked.bind(this),
+        'add-network-target-button', true /* primary */);
     this.element.appendChild(addButton);
 
     /** @type {!Array<{address: string}>} */
@@ -616,11 +614,10 @@ Devices.DevicesView.DeviceView = class extends UI.VBox {
     this._portStatus = this.contentElement.createChild('div', 'device-port-status hidden');
 
     this._deviceOffline = this.contentElement.createChild('div');
-    this._deviceOffline.textContent =
-        Common.UIString('Pending authentication: please accept debugging session on the device.');
+    this._deviceOffline.textContent = ls`Pending authentication: please accept debugging session on the device.`;
 
     this._noBrowsers = this.contentElement.createChild('div');
-    this._noBrowsers.textContent = Common.UIString('No browsers detected.');
+    this._noBrowsers.textContent = ls`No browsers detected.`;
 
     this._browsers = this.contentElement.createChild('div', 'device-browser-list vbox');
 
@@ -680,12 +677,12 @@ Devices.DevicesView.DeviceView = class extends UI.VBox {
     var title = topRow.createChild('div', 'device-browser-title');
 
     var newTabRow = element.createChild('div', 'device-browser-new-tab');
-    newTabRow.createChild('div', '').textContent = Common.UIString('New tab:');
+    newTabRow.createChild('div', '').textContent = ls`New tab:`;
     var newTabInput = UI.createInput('', 'text');
     newTabRow.appendChild(newTabInput);
-    newTabInput.placeholder = Common.UIString('Enter URL');
+    newTabInput.placeholder = ls`Enter URL`;
     newTabInput.addEventListener('keydown', newTabKeyDown, false);
-    var newTabButton = UI.createTextButton(Common.UIString('Open'), openNewTab);
+    var newTabButton = UI.createTextButton(ls`Open`, openNewTab);
     newTabRow.appendChild(newTabButton);
 
     var pages = element.createChild('div', 'device-page-list vbox');
@@ -711,9 +708,8 @@ Devices.DevicesView.DeviceView = class extends UI.VBox {
     }
 
     function updateViewMoreTitle() {
-      viewMore.textContent = pages.classList.contains('device-view-more-toggled') ?
-          Common.UIString('View less tabs\u2026') :
-          Common.UIString('View more tabs\u2026');
+      viewMore.textContent =
+          pages.classList.contains('device-view-more-toggled') ? ls`View less tabs\u2026` : ls`View more tabs\u2026`;
     }
 
     /**
@@ -787,7 +783,7 @@ Devices.DevicesView.DeviceView = class extends UI.VBox {
 
     var titleRow = element.createChild('div', 'device-page-title-row');
     var title = titleRow.createChild('div', 'device-page-title');
-    var inspect = UI.createTextButton(Common.UIString('Inspect'), doAction.bind(null, 'inspect'));
+    var inspect = UI.createTextButton(ls`Inspect`, doAction.bind(null, 'inspect'));
     titleRow.appendChild(inspect);
 
     var toolbar = new UI.Toolbar('');
@@ -802,9 +798,9 @@ Devices.DevicesView.DeviceView = class extends UI.VBox {
      * @param {!UI.ContextMenu} contextMenu
      */
     function appendActions(contextMenu) {
-      contextMenu.defaultSection().appendItem(Common.UIString('Reload'), doAction.bind(null, 'reload'));
-      contextMenu.defaultSection().appendItem(Common.UIString('Focus'), doAction.bind(null, 'activate'));
-      contextMenu.defaultSection().appendItem(Common.UIString('Close'), doAction.bind(null, 'close'));
+      contextMenu.defaultSection().appendItem(ls`Reload`, doAction.bind(null, 'reload'));
+      contextMenu.defaultSection().appendItem(ls`Focus`, doAction.bind(null, 'activate'));
+      contextMenu.defaultSection().appendItem(ls`Close`, doAction.bind(null, 'close'));
     }
 
     /**
@@ -844,7 +840,7 @@ Devices.DevicesView.DeviceView = class extends UI.VBox {
     this._cachedPortStatus = json;
 
     this._portStatus.removeChildren();
-    this._portStatus.createChild('div', 'device-port-status-text').textContent = Common.UIString('Port Forwarding:');
+    this._portStatus.createChild('div', 'device-port-status-text').textContent = ls`Port Forwarding:`;
     var connected = [];
     var transient = [];
     var error = [];

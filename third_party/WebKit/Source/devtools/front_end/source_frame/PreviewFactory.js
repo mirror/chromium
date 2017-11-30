@@ -11,7 +11,7 @@ SourceFrame.PreviewFactory = class {
   static async createPreview(provider, mimeType) {
     var content = await provider.requestContent();
     if (!content)
-      return new UI.EmptyWidget(Common.UIString('Nothing to preview'));
+      return new UI.EmptyWidget(ls`Nothing to preview`);
 
     var parsedXML = SourceFrame.XMLView.parseXML(content, mimeType);
     if (parsedXML)

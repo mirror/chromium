@@ -200,7 +200,7 @@ ObjectUI.RemoteObjectPreviewFormatter = class {
     function appendUndefined(index) {
       var span = parentElement.createChild('span', 'object-value-undefined');
       var count = index - lastNonEmptyArrayIndex - 1;
-      span.textContent = count !== 1 ? Common.UIString('empty × %d', count) : Common.UIString('empty');
+      span.textContent = count !== 1 ? Common.UIString('empty × %d', count) : ls`empty`;
       elementsAdded = true;
     }
   }
@@ -255,7 +255,7 @@ ObjectUI.RemoteObjectPreviewFormatter = class {
 
     if (type === 'accessor') {
       span.textContent = '(...)';
-      span.title = Common.UIString('The property is computed with a getter');
+      span.title = ls`The property is computed with a getter`;
       return span;
     }
 

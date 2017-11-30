@@ -219,10 +219,10 @@ ColorPicker.ContrastOverlay = class {
     this._contrastValueBubble = colorElement.createChild('button', 'spectrum-contrast-info');
     this._contrastValueBubble.classList.add('force-white-icons');
     UI.ARIAUtils.setExpanded(this._contrastValueBubble, false);
-    this._contrastValueBubble.createChild('span', 'low-contrast').textContent = Common.UIString('Low contrast');
+    this._contrastValueBubble.createChild('span', 'low-contrast').textContent = ls`Low contrast`;
     this._contrastValue = this._contrastValueBubble.createChild('span', 'value');
     this._contrastValueBubble.appendChild(UI.Icon.create('smallicon-contrast-ratio'));
-    this._contrastValueBubble.title = Common.UIString('Click to toggle contrast ratio details');
+    this._contrastValueBubble.title = ls`Click to toggle contrast ratio details`;
     this._contrastValueBubble.addEventListener('mousedown', this._toggleContrastDetails.bind(this), true);
     this._contrastValueBubble.addEventListener('click', this._onToggleClick.bind(this), true);
 
@@ -507,10 +507,10 @@ ColorPicker.ContrastDetails = class {
     this._contrastDetails = contentElement.createChild('div', 'spectrum-contrast-details');
     this._contrastDetails.id = 'contrast-ratio-details';
     var contrastValueRow = this._contrastDetails.createChild('div');
-    contrastValueRow.createTextChild(Common.UIString('Contrast Ratio'));
+    contrastValueRow.createTextChild(ls`Contrast Ratio`);
     contrastValueRow.createTextChild(' ');
 
-    var linkName = Common.UIString('Color and contrast on Web Fundamentals');
+    var linkName = ls`Color and contrast on Web Fundamentals`;
 
     var contrastLink = UI.createExternalLink(
         'https://developers.google.com/web/fundamentals/accessibility/accessible-styles#color_and_contrast', linkName,
@@ -537,7 +537,7 @@ ColorPicker.ContrastDetails = class {
     toolbar.appendToolbarItem(closeButton);
 
     this._chooseBgColor = this._contrastDetails.createChild('div', 'contrast-choose-bg-color');
-    this._chooseBgColor.textContent = Common.UIString('Please select background color to compute contrast ratio.');
+    this._chooseBgColor.textContent = ls`Please select background color to compute contrast ratio.`;
 
     this._contrastThresholds = this._contrastDetails.createChild('div', 'contrast-thresholds');
     this._contrastAA = this._contrastThresholds.createChild('div', 'contrast-threshold');
@@ -551,7 +551,7 @@ ColorPicker.ContrastDetails = class {
     this._contrastPassFailAAA = this._contrastAAA.createChild('span', 'contrast-pass-fail');
 
     var bgColorRow = this._contrastDetails.createChild('div');
-    bgColorRow.createTextChild(Common.UIString('Background color:'));
+    bgColorRow.createTextChild(ls`Background color:`);
     this._bgColorSwatch = new ColorPicker.ContrastDetails.Swatch(bgColorRow);
 
     this._bgColorPicker = bgColorRow.createChild('button', 'background-color-picker');
@@ -601,14 +601,14 @@ ColorPicker.ContrastDetails = class {
 
     var passesAA = this._contrastInfo.contrastRatio() >= AA;
     this._contrastPassFailAA.textContent = '';
-    this._contrastPassFailAA.createTextChild(passesAA ? Common.UIString('Passes ') : Common.UIString('Fails '));
+    this._contrastPassFailAA.createTextChild(passesAA ? ls`Passes ` : ls`Fails `);
     this._contrastPassFailAA.createChild('strong').textContent = Common.UIString('AA (%s)', AA.toFixed(1));
     this._contrastAA.classList.toggle('pass', passesAA);
     this._contrastAA.classList.toggle('fail', !passesAA);
 
     var passesAAA = this._contrastInfo.contrastRatio() >= AAA;
     this._contrastPassFailAAA.textContent = '';
-    this._contrastPassFailAAA.createTextChild(passesAAA ? Common.UIString('Passes ') : Common.UIString('Fails '));
+    this._contrastPassFailAAA.createTextChild(passesAAA ? ls`Passes ` : ls`Fails `);
     this._contrastPassFailAAA.createChild('strong').textContent = Common.UIString('AAA (%s)', AAA.toFixed(1));
     this._contrastAAA.classList.toggle('pass', passesAAA);
     this._contrastAAA.classList.toggle('fail', !passesAAA);

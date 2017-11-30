@@ -10,46 +10,46 @@ Resources.AppManifestView = class extends UI.VBox {
     super(true);
     this.registerRequiredCSS('resources/appManifestView.css');
 
-    this._emptyView = new UI.EmptyWidget(Common.UIString('No manifest detected'));
+    this._emptyView = new UI.EmptyWidget(ls`No manifest detected`);
     var p = this._emptyView.appendParagraph();
-    var linkElement = UI.createExternalLink('https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/?utm_source=devtools',
-        Common.UIString('Read more about the web manifest'));
+    var linkElement = UI.createExternalLink(
+        'https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/?utm_source=devtools',
+        ls`Read more about the web manifest`);
     p.appendChild(UI.formatLocalized('A web manifest allows you to control how your app behaves when launched and displayed to the user. %s', [linkElement]));
 
     this._emptyView.show(this.contentElement);
     this._emptyView.hideWidget();
 
-    this._reportView = new UI.ReportView(Common.UIString('App Manifest'));
+    this._reportView = new UI.ReportView(ls`App Manifest`);
     this._reportView.show(this.contentElement);
     this._reportView.hideWidget();
 
-    this._errorsSection = this._reportView.appendSection(Common.UIString('Errors and warnings'));
-    this._identitySection = this._reportView.appendSection(Common.UIString('Identity'));
+    this._errorsSection = this._reportView.appendSection(ls`Errors and warnings`);
+    this._identitySection = this._reportView.appendSection(ls`Identity`);
     var toolbar = this._identitySection.createToolbar();
     toolbar.renderAsLinks();
-    var addToHomeScreen =
-        new UI.ToolbarButton(Common.UIString('Add to homescreen'), undefined, Common.UIString('Add to homescreen'));
+    var addToHomeScreen = new UI.ToolbarButton(ls`Add to homescreen`, undefined, ls`Add to homescreen`);
     addToHomeScreen.addEventListener(UI.ToolbarButton.Events.Click, this._addToHomescreen, this);
     toolbar.appendToolbarItem(addToHomeScreen);
 
-    this._presentationSection = this._reportView.appendSection(Common.UIString('Presentation'));
-    this._iconsSection = this._reportView.appendSection(Common.UIString('Icons'));
+    this._presentationSection = this._reportView.appendSection(ls`Presentation`);
+    this._iconsSection = this._reportView.appendSection(ls`Icons`);
 
-    this._nameField = this._identitySection.appendField(Common.UIString('Name'));
-    this._shortNameField = this._identitySection.appendField(Common.UIString('Short name'));
+    this._nameField = this._identitySection.appendField(ls`Name`);
+    this._shortNameField = this._identitySection.appendField(ls`Short name`);
 
-    this._startURLField = this._presentationSection.appendField(Common.UIString('Start URL'));
+    this._startURLField = this._presentationSection.appendField(ls`Start URL`);
 
-    var themeColorField = this._presentationSection.appendField(Common.UIString('Theme color'));
+    var themeColorField = this._presentationSection.appendField(ls`Theme color`);
     this._themeColorSwatch = InlineEditor.ColorSwatch.create();
     themeColorField.appendChild(this._themeColorSwatch);
 
-    var backgroundColorField = this._presentationSection.appendField(Common.UIString('Background color'));
+    var backgroundColorField = this._presentationSection.appendField(ls`Background color`);
     this._backgroundColorSwatch = InlineEditor.ColorSwatch.create();
     backgroundColorField.appendChild(this._backgroundColorSwatch);
 
-    this._orientationField = this._presentationSection.appendField(Common.UIString('Orientation'));
-    this._displayField = this._presentationSection.appendField(Common.UIString('Display'));
+    this._orientationField = this._presentationSection.appendField(ls`Orientation`);
+    this._displayField = this._presentationSection.appendField(ls`Display`);
 
     SDK.targetManager.observeModels(SDK.ResourceTreeModel, this);
   }

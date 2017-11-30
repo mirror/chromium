@@ -43,7 +43,7 @@ Settings.SettingsScreen = class extends UI.VBox {
     var settingsLabelElement = createElement('div');
     UI.createShadowRootWithCoreStyles(settingsLabelElement, 'settings/settingsScreen.css')
         .createChild('div', 'settings-window-title')
-        .textContent = Common.UIString('Settings');
+        .textContent = ls`Settings`;
 
     this._tabbedLocation =
         UI.viewManager.createTabbedLocation(() => Settings.SettingsScreen._showSettingsScreen(), 'settings-view');
@@ -51,7 +51,7 @@ Settings.SettingsScreen = class extends UI.VBox {
     tabbedPane.leftToolbar().appendToolbarItem(new UI.ToolbarItem(settingsLabelElement));
     tabbedPane.setShrinkableTabs(false);
     tabbedPane.setVerticalTabLayout(true);
-    var shortcutsView = new UI.SimpleView(Common.UIString('Shortcuts'));
+    var shortcutsView = new UI.SimpleView(ls`Shortcuts`);
     UI.shortcutsScreen.createShortcutsTabView().show(shortcutsView.element);
     this._tabbedLocation.appendView(shortcutsView);
     tabbedPane.show(this.contentElement);
@@ -139,7 +139,7 @@ Settings.SettingsTab = class extends UI.VBox {
  */
 Settings.GenericSettingsTab = class extends Settings.SettingsTab {
   constructor() {
-    super(Common.UIString('Preferences'), 'preferences-tab-content');
+    super(ls`Preferences`, 'preferences-tab-content');
 
     /** @const */
     var explicitSectionOrder =
@@ -151,8 +151,7 @@ Settings.GenericSettingsTab = class extends Settings.SettingsTab {
     self.runtime.extensions('setting').forEach(this._addSetting.bind(this));
     self.runtime.extensions(UI.SettingUI).forEach(this._addSettingUI.bind(this));
 
-    this._appendSection().appendChild(
-        UI.createTextButton(Common.UIString('Restore defaults and reload'), restoreAndReload));
+    this._appendSection().appendChild(UI.createTextButton(ls`Restore defaults and reload`, restoreAndReload));
 
     function restoreAndReload() {
       Common.settings.clearAll();
@@ -226,7 +225,7 @@ Settings.GenericSettingsTab = class extends Settings.SettingsTab {
  */
 Settings.ExperimentsSettingsTab = class extends Settings.SettingsTab {
   constructor() {
-    super(Common.UIString('Experiments'), 'experiments-tab-content');
+    super(ls`Experiments`, 'experiments-tab-content');
 
     var experiments = Runtime.experiments.allConfigurableExperiments();
     if (experiments.length) {
@@ -243,10 +242,10 @@ Settings.ExperimentsSettingsTab = class extends Settings.SettingsTab {
   _createExperimentsWarningSubsection() {
     var subsection = createElement('div');
     var warning = subsection.createChild('span', 'settings-experiments-warning-subsection-warning');
-    warning.textContent = Common.UIString('WARNING:');
+    warning.textContent = ls`WARNING:`;
     subsection.createTextChild(' ');
     var message = subsection.createChild('span', 'settings-experiments-warning-subsection-message');
-    message.textContent = Common.UIString('These experiments could be dangerous and may require restart.');
+    message.textContent = ls`These experiments could be dangerous and may require restart.`;
     return subsection;
   }
 
@@ -286,7 +285,7 @@ Settings.SettingsScreen.ActionDelegate = class {
         InspectorFrontendHost.openInNewTab('https://developers.google.com/web/tools/chrome-devtools/');
         return true;
       case 'settings.shortcuts':
-        Settings.SettingsScreen._showSettingsScreen(Common.UIString('Shortcuts'));
+        Settings.SettingsScreen._showSettingsScreen(ls`Shortcuts`);
         return true;
     }
     return false;

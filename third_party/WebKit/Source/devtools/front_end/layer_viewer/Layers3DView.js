@@ -41,7 +41,7 @@ LayerViewer.Layers3DView = class extends UI.VBox {
     this.contentElement.classList.add('layers-3d-view');
     this._failBanner = new UI.VBox();
     this._failBanner.element.classList.add('full-widget-dimmed-banner');
-    this._failBanner.element.createTextChild(Common.UIString('Layer information is not yet available.'));
+    this._failBanner.element.createTextChild(ls`Layer information is not yet available.`);
 
     this._layerViewHost = layerViewHost;
     this._layerViewHost.registerView(this);
@@ -623,7 +623,7 @@ LayerViewer.Layers3DView = class extends UI.VBox {
   _webglDisabledBanner() {
     var fragment = this.contentElement.ownerDocument.createDocumentFragment();
     fragment.createChild('div').textContent = Common.UIString('Can\'t display layers,');
-    fragment.createChild('div').textContent = Common.UIString('WebGL support is disabled in your browser.');
+    fragment.createChild('div').textContent = ls`WebGL support is disabled in your browser.`;
     fragment.appendChild(UI.formatLocalized('Check %s for possible reasons.', [UI.createExternalLink('about:gpu')]));
     return fragment;
   }
@@ -690,11 +690,11 @@ LayerViewer.Layers3DView = class extends UI.VBox {
   _onContextMenu(event) {
     var contextMenu = new UI.ContextMenu(event);
     contextMenu.defaultSection().appendItem(
-        Common.UIString('Reset View'), this._transformController.resetAndNotify.bind(this._transformController), false);
+        ls`Reset View`, this._transformController.resetAndNotify.bind(this._transformController), false);
     var selection = this._selectionFromEventPoint(event);
     if (selection && selection.type() === LayerViewer.LayerView.Selection.Type.Snapshot) {
       contextMenu.defaultSection().appendItem(
-          Common.UIString('Show Paint Profiler'),
+          ls`Show Paint Profiler`,
           this.dispatchEventToListeners.bind(this, LayerViewer.Layers3DView.Events.PaintProfilerRequested, selection),
           false);
     }
@@ -791,9 +791,9 @@ LayerViewer.Layers3DView.ChromeTexture = {
  * @enum {string}
  */
 LayerViewer.Layers3DView.ScrollRectTitles = {
-  RepaintsOnScroll: Common.UIString('repaints on scroll'),
-  TouchEventHandler: Common.UIString('touch event listener'),
-  WheelEventHandler: Common.UIString('mousewheel event listener')
+  RepaintsOnScroll: ls`repaints on scroll`,
+  TouchEventHandler: ls`touch event listener`,
+  WheelEventHandler: ls`mousewheel event listener`
 };
 
 LayerViewer.Layers3DView.FragmentShader = '' +

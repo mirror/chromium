@@ -149,7 +149,7 @@ Console.ConsoleSidebar.FilterTreeElement = class extends UI.TreeElement {
   }
 
   _updateCounter() {
-    var prefix = this._messageCount ? this._messageCount : Common.UIString('No');
+    var prefix = this._messageCount ? this._messageCount : ls`No`;
     var pluralizedName = this._messageCount === 1 ? this._filter.name :
                                                     Console.ConsoleSidebar._groupPluralNameMap.get(this._filter.name);
     this.title = `${prefix} ${pluralizedName}`;
@@ -185,7 +185,7 @@ Console.ConsoleSidebar.FilterTreeElement = class extends UI.TreeElement {
     if (urlValue)
       filter.name = parsedURL ? parsedURL.displayName : urlValue;
     else
-      filter.name = Common.UIString('<other>');
+      filter.name = ls`<other>`;
     filter.parsedFilters.push({key: Console.ConsoleFilter.FilterType.Url, text: urlValue, negative: false});
     var badge = parsedURL ? this._badgePool.badgeForURL(parsedURL) : null;
     child = new Console.ConsoleSidebar.URLGroupTreeElement(filter, badge);
@@ -199,20 +199,20 @@ Console.ConsoleSidebar.FilterTreeElement = class extends UI.TreeElement {
 
 /** @enum {string} */
 Console.ConsoleSidebar._groupSingularName = {
-  ConsoleAPI: Common.UIString('user message'),
-  All: Common.UIString('message'),
-  Error: Common.UIString('error'),
-  Warning: Common.UIString('warning'),
-  Info: Common.UIString('info'),
-  Verbose: Common.UIString('verbose')
+  ConsoleAPI: ls`user message`,
+  All: ls`message`,
+  Error: ls`error`,
+  Warning: ls`warning`,
+  Info: ls`info`,
+  Verbose: ls`verbose`
 };
 
 /** @const {!Map<string, string>} */
 Console.ConsoleSidebar._groupPluralNameMap = new Map([
-  [Console.ConsoleSidebar._groupSingularName.ConsoleAPI, Common.UIString('user messages')],
-  [Console.ConsoleSidebar._groupSingularName.All, Common.UIString('messages')],
-  [Console.ConsoleSidebar._groupSingularName.Error, Common.UIString('errors')],
-  [Console.ConsoleSidebar._groupSingularName.Warning, Common.UIString('warnings')],
-  [Console.ConsoleSidebar._groupSingularName.Info, Common.UIString('info')],
-  [Console.ConsoleSidebar._groupSingularName.Verbose, Common.UIString('verbose')]
+  [Console.ConsoleSidebar._groupSingularName.ConsoleAPI, ls`user messages`],
+  [Console.ConsoleSidebar._groupSingularName.All, ls`messages`],
+  [Console.ConsoleSidebar._groupSingularName.Error, ls`errors`],
+  [Console.ConsoleSidebar._groupSingularName.Warning, ls`warnings`],
+  [Console.ConsoleSidebar._groupSingularName.Info, ls`info`],
+  [Console.ConsoleSidebar._groupSingularName.Verbose, ls`verbose`]
 ]);

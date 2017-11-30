@@ -27,7 +27,7 @@ Terminal.TerminalWidget = class extends UI.VBox {
     if (!backend) {
       if (!this._unavailableLabel) {
         this._unavailableLabel = this.contentElement.createChild('div', 'terminal-error-message fill');
-        this._unavailableLabel.createChild('div').textContent = Common.UIString('Terminal service is not available');
+        this._unavailableLabel.createChild('div').textContent = ls`Terminal service is not available`;
       }
       setTimeout(this._init.bind(this), 2000);
       return;

@@ -52,8 +52,7 @@ Profiler.HeapProfilerPanel = class extends Profiler.ProfilesPanel {
       });
     }
 
-    contextMenu.revealSection().appendItem(
-        Common.UIString('Reveal in Summary view'), revealInView.bind(this, 'Summary'));
+    contextMenu.revealSection().appendItem(ls`Reveal in Summary view`, revealInView.bind(this, 'Summary'));
   }
 
   /**

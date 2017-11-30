@@ -204,7 +204,7 @@ Network.NetworkLogViewColumns = class {
     this._waterfallHeaderElement.addEventListener(
         'contextmenu', event => this._innerHeaderContextMenu(new UI.ContextMenu(event)));
     var innerElement = this._waterfallHeaderElement.createChild('div');
-    innerElement.textContent = Common.UIString('Waterfall');
+    innerElement.textContent = ls`Waterfall`;
     this._waterfallColumnSortIcon = UI.Icon.create('', 'sort-order-icon');
     this._waterfallHeaderElement.createChild('div', 'sort-order-icon-container')
         .appendChild(this._waterfallColumnSortIcon);
@@ -384,7 +384,7 @@ Network.NetworkLogViewColumns = class {
           columnConfig.title, this._toggleColumnVisibility.bind(this, columnConfig), columnConfig.visible);
     }
 
-    var responseSubMenu = contextMenu.footerSection().appendSubMenuItem(Common.UIString('Response Headers'));
+    var responseSubMenu = contextMenu.footerSection().appendSubMenuItem(ls`Response Headers`);
     var responseHeaders = columnConfigs.filter(columnConfig => columnConfig.isResponseHeader);
     for (var columnConfig of responseHeaders) {
       responseSubMenu.defaultSection().appendCheckboxItem(
@@ -392,24 +392,24 @@ Network.NetworkLogViewColumns = class {
     }
 
     responseSubMenu.footerSection().appendItem(
-        Common.UIString('Manage Header Columns\u2026'), this._manageCustomHeaderDialog.bind(this));
+        ls`Manage Header Columns\u2026`, this._manageCustomHeaderDialog.bind(this));
 
     var waterfallSortIds = Network.NetworkLogViewColumns.WaterfallSortIds;
-    var waterfallSubMenu = contextMenu.footerSection().appendSubMenuItem(Common.UIString('Waterfall'));
+    var waterfallSubMenu = contextMenu.footerSection().appendSubMenuItem(ls`Waterfall`);
     waterfallSubMenu.defaultSection().appendCheckboxItem(
-        Common.UIString('Start Time'), setWaterfallMode.bind(this, waterfallSortIds.StartTime),
+        ls`Start Time`, setWaterfallMode.bind(this, waterfallSortIds.StartTime),
         this._activeWaterfallSortId === waterfallSortIds.StartTime);
     waterfallSubMenu.defaultSection().appendCheckboxItem(
-        Common.UIString('Response Time'), setWaterfallMode.bind(this, waterfallSortIds.ResponseTime),
+        ls`Response Time`, setWaterfallMode.bind(this, waterfallSortIds.ResponseTime),
         this._activeWaterfallSortId === waterfallSortIds.ResponseTime);
     waterfallSubMenu.defaultSection().appendCheckboxItem(
-        Common.UIString('End Time'), setWaterfallMode.bind(this, waterfallSortIds.EndTime),
+        ls`End Time`, setWaterfallMode.bind(this, waterfallSortIds.EndTime),
         this._activeWaterfallSortId === waterfallSortIds.EndTime);
     waterfallSubMenu.defaultSection().appendCheckboxItem(
-        Common.UIString('Total Duration'), setWaterfallMode.bind(this, waterfallSortIds.Duration),
+        ls`Total Duration`, setWaterfallMode.bind(this, waterfallSortIds.Duration),
         this._activeWaterfallSortId === waterfallSortIds.Duration);
     waterfallSubMenu.defaultSection().appendCheckboxItem(
-        Common.UIString('Latency'), setWaterfallMode.bind(this, waterfallSortIds.Latency),
+        ls`Latency`, setWaterfallMode.bind(this, waterfallSortIds.Latency),
         this._activeWaterfallSortId === waterfallSortIds.Latency);
 
     contextMenu.show();
@@ -642,8 +642,8 @@ Network.NetworkLogViewColumns._defaultColumnConfig = {
 Network.NetworkLogViewColumns._defaultColumns = [
   {
     id: 'name',
-    title: Common.UIString('Name'),
-    subtitle: Common.UIString('Path'),
+    title: ls`Name`,
+    subtitle: ls`Path`,
     visible: true,
     weight: 20,
     hideable: false,
@@ -653,142 +653,133 @@ Network.NetworkLogViewColumns._defaultColumns = [
   },
   {
     id: 'method',
-    title: Common.UIString('Method'),
+    title: ls`Method`,
     sortingFunction: Network.NetworkRequestNode.RequestPropertyComparator.bind(null, 'requestMethod')
   },
   {
     id: 'status',
-    title: Common.UIString('Status'),
+    title: ls`Status`,
     visible: true,
-    subtitle: Common.UIString('Text'),
+    subtitle: ls`Text`,
     sortingFunction: Network.NetworkRequestNode.RequestPropertyComparator.bind(null, 'statusCode')
   },
   {
     id: 'protocol',
-    title: Common.UIString('Protocol'),
+    title: ls`Protocol`,
     sortingFunction: Network.NetworkRequestNode.RequestPropertyComparator.bind(null, 'protocol')
   },
   {
     id: 'scheme',
-    title: Common.UIString('Scheme'),
+    title: ls`Scheme`,
     sortingFunction: Network.NetworkRequestNode.RequestPropertyComparator.bind(null, 'scheme')
   },
   {
     id: 'domain',
-    title: Common.UIString('Domain'),
+    title: ls`Domain`,
     sortingFunction: Network.NetworkRequestNode.RequestPropertyComparator.bind(null, 'domain')
   },
   {
     id: 'remoteaddress',
-    title: Common.UIString('Remote Address'),
+    title: ls`Remote Address`,
     weight: 10,
     align: DataGrid.DataGrid.Align.Right,
     sortingFunction: Network.NetworkRequestNode.RemoteAddressComparator
   },
-  {
-    id: 'type',
-    title: Common.UIString('Type'),
-    visible: true,
-    sortingFunction: Network.NetworkRequestNode.TypeComparator
-  },
+  {id: 'type', title: ls`Type`, visible: true, sortingFunction: Network.NetworkRequestNode.TypeComparator},
   {
     id: 'initiator',
-    title: Common.UIString('Initiator'),
+    title: ls`Initiator`,
     visible: true,
     weight: 10,
     sortingFunction: Network.NetworkRequestNode.InitiatorComparator
   },
   {
     id: 'cookies',
-    title: Common.UIString('Cookies'),
+    title: ls`Cookies`,
     align: DataGrid.DataGrid.Align.Right,
     sortingFunction: Network.NetworkRequestNode.RequestCookiesCountComparator
   },
   {
     id: 'setcookies',
-    title: Common.UIString('Set Cookies'),
+    title: ls`Set Cookies`,
     align: DataGrid.DataGrid.Align.Right,
     sortingFunction: Network.NetworkRequestNode.ResponseCookiesCountComparator
   },
   {
     id: 'size',
-    title: Common.UIString('Size'),
+    title: ls`Size`,
     visible: true,
-    subtitle: Common.UIString('Content'),
+    subtitle: ls`Content`,
     align: DataGrid.DataGrid.Align.Right,
     sortingFunction: Network.NetworkRequestNode.SizeComparator
   },
   {
     id: 'time',
-    title: Common.UIString('Time'),
+    title: ls`Time`,
     visible: true,
-    subtitle: Common.UIString('Latency'),
+    subtitle: ls`Latency`,
     align: DataGrid.DataGrid.Align.Right,
     sortingFunction: Network.NetworkRequestNode.RequestPropertyComparator.bind(null, 'duration')
   },
-  {
-    id: 'priority',
-    title: Common.UIString('Priority'),
-    sortingFunction: Network.NetworkRequestNode.InitialPriorityComparator
-  },
+  {id: 'priority', title: ls`Priority`, sortingFunction: Network.NetworkRequestNode.InitialPriorityComparator},
   {
     id: 'connectionid',
-    title: Common.UIString('Connection ID'),
+    title: ls`Connection ID`,
     sortingFunction: Network.NetworkRequestNode.RequestPropertyComparator.bind(null, 'connectionId')
   },
   {
     id: 'cache-control',
     isResponseHeader: true,
-    title: Common.UIString('Cache-Control'),
+    title: ls`Cache-Control`,
     sortingFunction: Network.NetworkRequestNode.ResponseHeaderStringComparator.bind(null, 'cache-control')
   },
   {
     id: 'connection',
     isResponseHeader: true,
-    title: Common.UIString('Connection'),
+    title: ls`Connection`,
     sortingFunction: Network.NetworkRequestNode.ResponseHeaderStringComparator.bind(null, 'connection')
   },
   {
     id: 'content-encoding',
     isResponseHeader: true,
-    title: Common.UIString('Content-Encoding'),
+    title: ls`Content-Encoding`,
     sortingFunction: Network.NetworkRequestNode.ResponseHeaderStringComparator.bind(null, 'content-encoding')
   },
   {
     id: 'content-length',
     isResponseHeader: true,
-    title: Common.UIString('Content-Length'),
+    title: ls`Content-Length`,
     align: DataGrid.DataGrid.Align.Right,
     sortingFunction: Network.NetworkRequestNode.ResponseHeaderNumberComparator.bind(null, 'content-length')
   },
   {
     id: 'etag',
     isResponseHeader: true,
-    title: Common.UIString('ETag'),
+    title: ls`ETag`,
     sortingFunction: Network.NetworkRequestNode.ResponseHeaderStringComparator.bind(null, 'etag')
   },
   {
     id: 'keep-alive',
     isResponseHeader: true,
-    title: Common.UIString('Keep-Alive'),
+    title: ls`Keep-Alive`,
     sortingFunction: Network.NetworkRequestNode.ResponseHeaderStringComparator.bind(null, 'keep-alive')
   },
   {
     id: 'last-modified',
     isResponseHeader: true,
-    title: Common.UIString('Last-Modified'),
+    title: ls`Last-Modified`,
     sortingFunction: Network.NetworkRequestNode.ResponseHeaderDateComparator.bind(null, 'last-modified')
   },
   {
     id: 'server',
     isResponseHeader: true,
-    title: Common.UIString('Server'),
+    title: ls`Server`,
     sortingFunction: Network.NetworkRequestNode.ResponseHeaderStringComparator.bind(null, 'server')
   },
   {
     id: 'vary',
     isResponseHeader: true,
-    title: Common.UIString('Vary'),
+    title: ls`Vary`,
     sortingFunction: Network.NetworkRequestNode.ResponseHeaderStringComparator.bind(null, 'vary')
   },
   // This header is a placeholder to let datagrid know that it can be sorted by this column, but never shown.

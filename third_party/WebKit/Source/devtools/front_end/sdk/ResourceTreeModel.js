@@ -728,14 +728,14 @@ SDK.ResourceTreeFrame = class {
    */
   displayName() {
     if (!this._parentFrame && !this._model.target().parentTarget())
-      return Common.UIString('top');
+      return ls`top`;
     var subtitle = new Common.ParsedURL(this._url).displayName;
     if (subtitle) {
       if (!this._name)
         return subtitle;
       return this._name + ' (' + subtitle + ')';
     }
-    return Common.UIString('<iframe>');
+    return ls`<iframe>`;
   }
 };
 

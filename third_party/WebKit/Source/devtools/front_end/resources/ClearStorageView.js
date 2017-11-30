@@ -19,7 +19,7 @@ Resources.ClearStorageView = class extends UI.ThrottledWidget {
       [types.Websql, 'rgb(203, 220, 56)'],           // lime
     ]);
 
-    this._reportView = new UI.ReportView(Common.UIString('Clear storage'));
+    this._reportView = new UI.ReportView(ls`Clear storage`);
     this._reportView.registerRequiredCSS('resources/clearStorageView.css');
     this._reportView.element.classList.add('clear-storage-header');
     this._reportView.show(this.contentElement);
@@ -34,7 +34,7 @@ Resources.ClearStorageView = class extends UI.ThrottledWidget {
               types.Service_workers, types.Websql])
       this._settings.set(type, Common.settings.createSetting('clear-storage-' + type, true));
 
-    var quota = this._reportView.appendSection(Common.UIString('Usage'));
+    var quota = this._reportView.appendSection(ls`Usage`);
     this._quotaRow = quota.appendRow();
     this._quotaUsage = null;
     this._pieChart = new PerfUI.PieChart(110, Number.bytesToString, true);
@@ -44,23 +44,22 @@ Resources.ClearStorageView = class extends UI.ThrottledWidget {
     usageBreakdownRow.appendChild(this._pieChart.element);
     usageBreakdownRow.appendChild(this._pieChartLegend);
 
-    var application = this._reportView.appendSection(Common.UIString('Application'));
-    this._appendItem(application, Common.UIString('Unregister service workers'), 'service_workers');
+    var application = this._reportView.appendSection(ls`Application`);
+    this._appendItem(application, ls`Unregister service workers`, 'service_workers');
 
-    var storage = this._reportView.appendSection(Common.UIString('Storage'));
-    this._appendItem(storage, Common.UIString('Local and session storage'), 'local_storage');
-    this._appendItem(storage, Common.UIString('IndexedDB'), 'indexeddb');
-    this._appendItem(storage, Common.UIString('Web SQL'), 'websql');
-    this._appendItem(storage, Common.UIString('Cookies'), 'cookies');
+    var storage = this._reportView.appendSection(ls`Storage`);
+    this._appendItem(storage, ls`Local and session storage`, 'local_storage');
+    this._appendItem(storage, ls`IndexedDB`, 'indexeddb');
+    this._appendItem(storage, ls`Web SQL`, 'websql');
+    this._appendItem(storage, ls`Cookies`, 'cookies');
 
-    var caches = this._reportView.appendSection(Common.UIString('Cache'));
-    this._appendItem(caches, Common.UIString('Cache storage'), 'cache_storage');
-    this._appendItem(caches, Common.UIString('Application cache'), 'appcache');
+    var caches = this._reportView.appendSection(ls`Cache`);
+    this._appendItem(caches, ls`Cache storage`, 'cache_storage');
+    this._appendItem(caches, ls`Application cache`, 'appcache');
 
     SDK.targetManager.observeTargets(this, SDK.Target.Capability.Browser);
     var footer = this._reportView.appendSection('', 'clear-storage-button').appendRow();
-    this._clearButton = UI.createTextButton(
-        Common.UIString('Clear site data'), this._clear.bind(this), Common.UIString('Clear site data'));
+    this._clearButton = UI.createTextButton(ls`Clear site data`, this._clear.bind(this), ls`Clear site data`);
     footer.appendChild(this._clearButton);
   }
 
@@ -173,7 +172,7 @@ Resources.ClearStorageView = class extends UI.ThrottledWidget {
 
     this._clearButton.disabled = true;
     var label = this._clearButton.textContent;
-    this._clearButton.textContent = Common.UIString('Clearing...');
+    this._clearButton.textContent = ls`Clearing...`;
     setTimeout(() => {
       this._clearButton.disabled = false;
       this._clearButton.textContent = label;
@@ -234,19 +233,19 @@ Resources.ClearStorageView = class extends UI.ThrottledWidget {
   _getStorageTypeName(type) {
     switch (type) {
       case Protocol.Storage.StorageType.File_systems:
-        return Common.UIString('File System');
+        return ls`File System`;
       case Protocol.Storage.StorageType.Websql:
-        return Common.UIString('Web SQL');
+        return ls`Web SQL`;
       case Protocol.Storage.StorageType.Appcache:
-        return Common.UIString('Application Cache');
+        return ls`Application Cache`;
       case Protocol.Storage.StorageType.Indexeddb:
-        return Common.UIString('IndexedDB');
+        return ls`IndexedDB`;
       case Protocol.Storage.StorageType.Cache_storage:
-        return Common.UIString('Cache Storage');
+        return ls`Cache Storage`;
       case Protocol.Storage.StorageType.Service_workers:
-        return Common.UIString('Service Workers');
+        return ls`Service Workers`;
       default:
-        return Common.UIString('Other');
+        return ls`Other`;
     }
   }
 

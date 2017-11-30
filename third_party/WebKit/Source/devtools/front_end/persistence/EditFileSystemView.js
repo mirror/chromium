@@ -58,24 +58,22 @@ Persistence.EditFileSystemView = class extends UI.VBox {
       this._mappingsList.registerRequiredCSS('persistence/editFileSystemView.css');
       var mappingsPlaceholder = createElementWithClass('div', 'file-system-list-empty');
       var mappingsHeader = this.contentElement.createChild('div', 'file-system-header');
-      mappingsHeader.createChild('div', 'file-system-header-text').textContent = Common.UIString('Mappings');
-      mappingsPlaceholder.textContent = Common.UIString('None');
-      mappingsHeader.appendChild(
-          UI.createTextButton(Common.UIString('Add'), this._addMappingButtonClicked.bind(this), 'add-button'));
+      mappingsHeader.createChild('div', 'file-system-header-text').textContent = ls`Mappings`;
+      mappingsPlaceholder.textContent = ls`None`;
+      mappingsHeader.appendChild(UI.createTextButton(ls`Add`, this._addMappingButtonClicked.bind(this), 'add-button'));
       this._mappingsList.setEmptyPlaceholder(mappingsPlaceholder);
       this._mappingsList.show(this.contentElement);
     }
 
     var excludedFoldersHeader = this.contentElement.createChild('div', 'file-system-header');
-    excludedFoldersHeader.createChild('div', 'file-system-header-text').textContent =
-        Common.UIString('Excluded folders');
+    excludedFoldersHeader.createChild('div', 'file-system-header-text').textContent = ls`Excluded folders`;
     excludedFoldersHeader.appendChild(
-        UI.createTextButton(Common.UIString('Add'), this._addExcludedFolderButtonClicked.bind(this), 'add-button'));
+        UI.createTextButton(ls`Add`, this._addExcludedFolderButtonClicked.bind(this), 'add-button'));
     this._excludedFoldersList = new UI.ListWidget(this);
     this._excludedFoldersList.element.classList.add('file-system-list');
     this._excludedFoldersList.registerRequiredCSS('persistence/editFileSystemView.css');
     var excludedFoldersPlaceholder = createElementWithClass('div', 'file-system-list-empty');
-    excludedFoldersPlaceholder.textContent = Common.UIString('None');
+    excludedFoldersPlaceholder.textContent = ls`None`;
     this._excludedFoldersList.setEmptyPlaceholder(excludedFoldersPlaceholder);
     this._excludedFoldersList.show(this.contentElement);
 
@@ -221,9 +219,9 @@ Persistence.EditFileSystemView = class extends UI.VBox {
     var content = editor.contentElement();
 
     var titles = content.createChild('div', 'file-system-edit-row');
-    titles.createChild('div', 'file-system-value').textContent = Common.UIString('URL prefix');
+    titles.createChild('div', 'file-system-value').textContent = ls`URL prefix`;
     titles.createChild('div', 'file-system-separator file-system-separator-invisible');
-    titles.createChild('div', 'file-system-value').textContent = Common.UIString('Folder path');
+    titles.createChild('div', 'file-system-value').textContent = ls`Folder path`;
 
     var fields = content.createChild('div', 'file-system-edit-row');
     fields.createChild('div', 'file-system-value')
@@ -280,7 +278,7 @@ Persistence.EditFileSystemView = class extends UI.VBox {
     var content = editor.contentElement();
 
     var titles = content.createChild('div', 'file-system-edit-row');
-    titles.createChild('div', 'file-system-value').textContent = Common.UIString('Folder path');
+    titles.createChild('div', 'file-system-value').textContent = ls`Folder path`;
 
     var fields = content.createChild('div', 'file-system-edit-row');
     fields.createChild('div', 'file-system-value')

@@ -19,18 +19,18 @@ Network.NetworkManageCustomHeadersView = class extends UI.VBox {
     this.registerRequiredCSS('network/networkManageCustomHeadersView.css');
 
     this.contentElement.classList.add('custom-headers-wrapper');
-    this.contentElement.createChild('div', 'header').textContent = Common.UIString('Manage Header Columns');
+    this.contentElement.createChild('div', 'header').textContent = ls`Manage Header Columns`;
 
     this._list = new UI.ListWidget(this);
     this._list.element.classList.add('custom-headers-list');
     this._list.registerRequiredCSS('network/networkManageCustomHeadersView.css');
 
     var placeholder = createElementWithClass('div', 'custom-headers-list-list-empty');
-    placeholder.textContent = Common.UIString('No custom headers');
+    placeholder.textContent = ls`No custom headers`;
     this._list.setEmptyPlaceholder(placeholder);
     this._list.show(this.contentElement);
-    this.contentElement.appendChild(UI.createTextButton(
-        Common.UIString('Add custom header\u2026'), this._addButtonClicked.bind(this), 'add-button'));
+    this.contentElement.appendChild(
+        UI.createTextButton(ls`Add custom header\u2026`, this._addButtonClicked.bind(this), 'add-button'));
 
     /** @type {!Map.<string, !{title: string, editable: boolean}>} */
     this._columnConfigs = new Map();
@@ -129,7 +129,7 @@ Network.NetworkManageCustomHeadersView = class extends UI.VBox {
     var content = editor.contentElement();
 
     var titles = content.createChild('div', 'custom-headers-edit-row');
-    titles.createChild('div', 'custom-headers-header').textContent = Common.UIString('Header Name');
+    titles.createChild('div', 'custom-headers-header').textContent = ls`Header Name`;
 
     var fields = content.createChild('div', 'custom-headers-edit-row');
     fields.createChild('div', 'custom-headers-header')

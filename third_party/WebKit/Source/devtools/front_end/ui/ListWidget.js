@@ -130,11 +130,11 @@ UI.ListWidget = class extends UI.VBox {
 
     var toolbar = new UI.Toolbar('', buttons);
 
-    var editButton = new UI.ToolbarButton(Common.UIString('Edit'), 'largeicon-edit');
+    var editButton = new UI.ToolbarButton(ls`Edit`, 'largeicon-edit');
     editButton.addEventListener(UI.ToolbarButton.Events.Click, onEditClicked.bind(this));
     toolbar.appendToolbarItem(editButton);
 
-    var removeButton = new UI.ToolbarButton(Common.UIString('Remove'), 'largeicon-trash-bin');
+    var removeButton = new UI.ToolbarButton(ls`Remove`, 'largeicon-trash-bin');
     removeButton.addEventListener(UI.ToolbarButton.Events.Click, onRemoveClicked.bind(this));
     toolbar.appendToolbarItem(removeButton);
 
@@ -200,8 +200,7 @@ UI.ListWidget = class extends UI.VBox {
     this._updatePlaceholder();
     this._list.insertBefore(this._editor.element, insertionPoint);
     this._editor.beginEdit(
-        item, index, element ? Common.UIString('Save') : Common.UIString('Add'), this._commitEditing.bind(this),
-        this._stopEditing.bind(this));
+        item, index, element ? ls`Save` : ls`Add`, this._commitEditing.bind(this), this._stopEditing.bind(this));
   }
 
   _commitEditing() {
@@ -276,7 +275,7 @@ UI.ListWidget.Editor = class {
     var buttonsRow = this.element.createChild('div', 'editor-buttons');
     this._commitButton = UI.createTextButton('', this._commitClicked.bind(this), '', true /* primary */);
     buttonsRow.appendChild(this._commitButton);
-    this._cancelButton = UI.createTextButton(Common.UIString('Cancel'), this._cancelClicked.bind(this));
+    this._cancelButton = UI.createTextButton(ls`Cancel`, this._cancelClicked.bind(this));
     this._cancelButton.addEventListener(
         'keydown', onKeyDown.bind(null, isEnterKey, this._cancelClicked.bind(this)), false);
     buttonsRow.appendChild(this._cancelButton);

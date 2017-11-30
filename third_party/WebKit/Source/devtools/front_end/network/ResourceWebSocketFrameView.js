@@ -33,14 +33,9 @@ Network.ResourceWebSocketFrameView = class extends UI.VBox {
     this._splitWidget.show(this.element);
 
     var columns = /** @type {!Array<!DataGrid.DataGrid.ColumnDescriptor>} */ ([
-      {id: 'data', title: Common.UIString('Data'), sortable: false, weight: 88}, {
-        id: 'length',
-        title: Common.UIString('Length'),
-        sortable: false,
-        align: DataGrid.DataGrid.Align.Right,
-        weight: 5
-      },
-      {id: 'time', title: Common.UIString('Time'), sortable: true, weight: 7}
+      {id: 'data', title: ls`Data`, sortable: false, weight: 88},
+      {id: 'length', title: ls`Length`, sortable: false, align: DataGrid.DataGrid.Align.Right, weight: 5},
+      {id: 'time', title: ls`Time`, sortable: true, weight: 7}
     ]);
 
     this._dataGrid = new DataGrid.SortableDataGrid(columns);
@@ -60,7 +55,7 @@ Network.ResourceWebSocketFrameView = class extends UI.VBox {
 
     this._mainToolbar = new UI.Toolbar('');
 
-    this._clearAllButton = new UI.ToolbarButton(Common.UIString('Clear All'), 'largeicon-clear');
+    this._clearAllButton = new UI.ToolbarButton(ls`Clear All`, 'largeicon-clear');
     this._clearAllButton.addEventListener(UI.ToolbarButton.Events.Click, this._clearFrames, this);
     this._mainToolbar.appendToolbarItem(this._clearAllButton);
 
@@ -83,7 +78,7 @@ Network.ResourceWebSocketFrameView = class extends UI.VBox {
     this._dataGrid.asWidget().show(mainContainer.element);
     this._splitWidget.setMainWidget(mainContainer);
 
-    this._frameEmptyWidget = new UI.EmptyWidget(Common.UIString('Select frame to browse its content.'));
+    this._frameEmptyWidget = new UI.EmptyWidget(ls`Select frame to browse its content.`);
     this._splitWidget.setSidebarWidget(this._frameEmptyWidget);
 
     /** @type {?Network.ResourceWebSocketFrameNode} */
@@ -96,8 +91,8 @@ Network.ResourceWebSocketFrameView = class extends UI.VBox {
      */
     function onRowContextMenu(contextMenu, node) {
       contextMenu.clipboardSection().appendItem(
-          Common.UIString('Copy message'), InspectorFrontendHost.copyText.bind(InspectorFrontendHost, node.data.data));
-      contextMenu.footerSection().appendItem(Common.UIString('Clear all'), this._clearFrames.bind(this));
+          ls`Copy message`, InspectorFrontendHost.copyText.bind(InspectorFrontendHost, node.data.data));
+      contextMenu.footerSection().appendItem(ls`Clear all`, this._clearFrames.bind(this));
     }
   }
 
@@ -227,9 +222,9 @@ Network.ResourceWebSocketFrameView.opCodeDescriptions = (function() {
 
 /** @type {!Array<!UI.NamedBitSetFilterUI.Item>} */
 Network.ResourceWebSocketFrameView._filterTypes = [
-  {name: 'all', label: Common.UIString('All')},
-  {name: 'send', label: Common.UIString('Send')},
-  {name: 'receive', label: Common.UIString('Receive')},
+  {name: 'all', label: ls`All`},
+  {name: 'send', label: ls`Send`},
+  {name: 'receive', label: ls`Receive`},
 ];
 
 /**

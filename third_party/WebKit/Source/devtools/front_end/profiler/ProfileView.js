@@ -7,10 +7,10 @@
  */
 Profiler.ProfileView = class extends UI.SimpleView {
   constructor() {
-    super(Common.UIString('Profile'));
+    super(ls`Profile`);
 
     this._searchableView = new UI.SearchableView(this);
-    this._searchableView.setPlaceholder(Common.UIString('Find by cost (>50ms), name or file'));
+    this._searchableView.setPlaceholder(ls`Find by cost (>50ms), name or file`);
     this._searchableView.show(this.element);
 
     var columns = /** @type {!Array<!DataGrid.DataGrid.ColumnDescriptor>} */ ([]);
@@ -23,7 +23,7 @@ Profiler.ProfileView = class extends UI.SimpleView {
       sort: DataGrid.DataGrid.Order.Descending
     });
     columns.push({id: 'total', title: this.columnHeader('total'), width: '120px', fixedWidth: true, sortable: true});
-    columns.push({id: 'function', title: Common.UIString('Function'), disclosure: true, sortable: true});
+    columns.push({id: 'function', title: ls`Function`, disclosure: true, sortable: true});
 
     this.dataGrid = new DataGrid.DataGrid(columns);
     this.dataGrid.addEventListener(DataGrid.DataGrid.Events.SortingChanged, this._sortProfile, this);
@@ -32,15 +32,15 @@ Profiler.ProfileView = class extends UI.SimpleView {
 
     this.viewSelectComboBox = new UI.ToolbarComboBox(this._changeView.bind(this));
 
-    this.focusButton = new UI.ToolbarButton(Common.UIString('Focus selected function'), 'largeicon-visibility');
+    this.focusButton = new UI.ToolbarButton(ls`Focus selected function`, 'largeicon-visibility');
     this.focusButton.setEnabled(false);
     this.focusButton.addEventListener(UI.ToolbarButton.Events.Click, this._focusClicked, this);
 
-    this.excludeButton = new UI.ToolbarButton(Common.UIString('Exclude selected function'), 'largeicon-delete');
+    this.excludeButton = new UI.ToolbarButton(ls`Exclude selected function`, 'largeicon-delete');
     this.excludeButton.setEnabled(false);
     this.excludeButton.addEventListener(UI.ToolbarButton.Events.Click, this._excludeClicked, this);
 
-    this.resetButton = new UI.ToolbarButton(Common.UIString('Restore all functions'), 'largeicon-refresh');
+    this.resetButton = new UI.ToolbarButton(ls`Restore all functions`, 'largeicon-refresh');
     this.resetButton.setEnabled(false);
     this.resetButton.addEventListener(UI.ToolbarButton.Events.Click, this._resetClicked, this);
 
@@ -75,9 +75,9 @@ Profiler.ProfileView = class extends UI.SimpleView {
     ];
 
     var optionNames = new Map([
-      [Profiler.ProfileView.ViewTypes.Flame, Common.UIString('Chart')],
-      [Profiler.ProfileView.ViewTypes.Heavy, Common.UIString('Heavy (Bottom Up)')],
-      [Profiler.ProfileView.ViewTypes.Tree, Common.UIString('Tree (Top Down)')],
+      [Profiler.ProfileView.ViewTypes.Flame, ls`Chart`],
+      [Profiler.ProfileView.ViewTypes.Heavy, ls`Heavy (Bottom Up)`],
+      [Profiler.ProfileView.ViewTypes.Tree, ls`Tree (Top Down)`],
     ]);
 
     var options =
@@ -472,22 +472,22 @@ Profiler.WritableProfileHeader = class extends Profiler.ProfileHeader {
    * @return {!Promise<?Error>}
    */
   async loadFromFile(file) {
-    this.updateStatus(Common.UIString('Loading\u2026'), true);
+    this.updateStatus(ls`Loading\u2026`, true);
     var fileReader = new Bindings.ChunkedFileReader(file, 10000000, this._onChunkTransferred.bind(this));
     this._jsonifiedProfile = '';
 
     var success = await fileReader.read(this);
     if (!success) {
       this._onError(fileReader);
-      return new Error(Common.UIString('Failed to read file'));
+      return new Error(ls`Failed to read file`);
     }
 
-    this.updateStatus(Common.UIString('Parsing\u2026'), true);
+    this.updateStatus(ls`Parsing\u2026`, true);
     var error = null;
     try {
       this._profile = /** @type {!Protocol.Profiler.Profile} */ (JSON.parse(this._jsonifiedProfile));
       this.setProfile(this._profile);
-      this.updateStatus(Common.UIString('Loaded'), false);
+      this.updateStatus(ls`Loaded`, false);
     } catch (e) {
       error = e;
       this.profileType().removeProfile(this);

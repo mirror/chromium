@@ -133,7 +133,7 @@ Workspace.UISourceCode = class extends Common.Object {
    */
   displayName(skipTrim) {
     if (!this._name)
-      return Common.UIString('(index)');
+      return ls`(index)`;
     var name = this._name;
     try {
       if (this.project().type() === Workspace.projectTypes.FileSystem)
@@ -294,8 +294,7 @@ Workspace.UISourceCode = class extends Common.Object {
         return;
       }
 
-      var shouldUpdate =
-          window.confirm(Common.UIString('This file was changed externally. Would you like to reload it?'));
+      var shouldUpdate = window.confirm(ls`This file was changed externally. Would you like to reload it?`);
       if (shouldUpdate)
         this._contentCommitted(updatedContent, false);
       else

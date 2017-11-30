@@ -63,7 +63,7 @@ ColorPicker.Spectrum = class extends UI.VBox {
 
     var controlsContainer = this.contentElement.createChild('div', 'controls-container');
     var toolbar = new UI.Toolbar('spectrum-eye-dropper', controlsContainer);
-    this._colorPickerButton = new UI.ToolbarToggle(Common.UIString('Toggle color picker'), 'largeicon-eyedropper');
+    this._colorPickerButton = new UI.ToolbarToggle(ls`Toggle color picker`, 'largeicon-eyedropper');
     this._colorPickerButton.setToggled(true);
     this._colorPickerButton.addEventListener(
         UI.ToolbarButton.Events.Click, this._toggleColorPicker.bind(this, undefined));
@@ -138,7 +138,7 @@ ColorPicker.Spectrum = class extends UI.VBox {
     overlay.addEventListener('click', this._togglePalettePanel.bind(this, false));
 
     this._addColorToolbar = new UI.Toolbar('add-color-toolbar');
-    var addColorButton = new UI.ToolbarButton(Common.UIString('Add to palette'), 'largeicon-add');
+    var addColorButton = new UI.ToolbarButton(ls`Add to palette`, 'largeicon-add');
     addColorButton.addEventListener(UI.ToolbarButton.Events.Click, this._addColorToCustomPalette, this);
     this._addColorToolbar.appendToolbarItem(addColorButton);
 
@@ -200,7 +200,7 @@ ColorPicker.Spectrum = class extends UI.VBox {
   _updatePalettePanel() {
     this._palettePanel.removeChildren();
     var title = this._palettePanel.createChild('div', 'palette-title');
-    title.textContent = Common.UIString('Color Palettes');
+    title.textContent = ls`Color Palettes`;
     var toolbar = new UI.Toolbar('', this._palettePanel);
     var closeButton = new UI.ToolbarButton('Return to color picker', 'largeicon-delete');
     closeButton.addEventListener(UI.ToolbarButton.Events.Click, this._togglePalettePanel.bind(this, false));
@@ -536,12 +536,11 @@ ColorPicker.Spectrum = class extends UI.VBox {
     var contextMenu = new UI.ContextMenu(event);
     if (colorIndex !== -1) {
       contextMenu.defaultSection().appendItem(
-          Common.UIString('Remove color'), this._deletePaletteColors.bind(this, colorIndex, false));
+          ls`Remove color`, this._deletePaletteColors.bind(this, colorIndex, false));
       contextMenu.defaultSection().appendItem(
-          Common.UIString('Remove all to the right'), this._deletePaletteColors.bind(this, colorIndex, true));
+          ls`Remove all to the right`, this._deletePaletteColors.bind(this, colorIndex, true));
     }
-    contextMenu.defaultSection().appendItem(
-        Common.UIString('Clear palette'), this._deletePaletteColors.bind(this, -1, true));
+    contextMenu.defaultSection().appendItem(ls`Clear palette`, this._deletePaletteColors.bind(this, -1, true));
     contextMenu.show();
   }
 
@@ -985,7 +984,7 @@ ColorPicker.Spectrum.Swatch = class {
     this._swatchOverlayElement.addEventListener('click', this._onCopyIconClick.bind(this));
     this._swatchOverlayElement.addEventListener('mouseout', this._onCopyIconMouseout.bind(this));
     this._swatchCopyIcon = UI.Icon.create('largeicon-copy', 'copy-color-icon');
-    this._swatchCopyIcon.title = Common.UIString('Copy color to clipboard');
+    this._swatchCopyIcon.title = ls`Copy color to clipboard`;
     this._swatchOverlayElement.appendChild(this._swatchCopyIcon);
   }
 

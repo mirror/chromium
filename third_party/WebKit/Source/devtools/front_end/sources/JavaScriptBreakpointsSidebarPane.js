@@ -31,7 +31,7 @@ Sources.JavaScriptBreakpointsSidebarPane = class extends UI.ThrottledWidget {
       this._listElement = null;
       this.contentElement.removeChildren();
       var emptyElement = this.contentElement.createChild('div', 'gray-info-message');
-      emptyElement.textContent = Common.UIString('No breakpoints');
+      emptyElement.textContent = ls`No breakpoints`;
       this.contentElement.appendChild(emptyElement);
       this._didUpdateForTest();
       return Promise.resolve();
@@ -179,31 +179,29 @@ Sources.JavaScriptBreakpointsSidebarPane = class extends UI.ThrottledWidget {
     var breakpoints = this._breakpointManager.findBreakpoints(uiLocation.uiSourceCode, uiLocation.lineNumber);
 
     var contextMenu = new UI.ContextMenu(event);
-    var removeEntryTitle = breakpoints.length > 1 ? Common.UIString('Remove all breakpoints in line') :
-                                                    Common.UIString('Remove breakpoint');
+    var removeEntryTitle = breakpoints.length > 1 ? ls`Remove all breakpoints in line` : ls`Remove breakpoint`;
     contextMenu.defaultSection().appendItem(removeEntryTitle, () => breakpoints.map(breakpoint => breakpoint.remove()));
 
     var breakpointActive = this._breakpointManager.breakpointsActive();
-    var breakpointActiveTitle =
-        breakpointActive ? Common.UIString('Deactivate breakpoints') : Common.UIString('Activate breakpoints');
+    var breakpointActiveTitle = breakpointActive ? ls`Deactivate breakpoints` : ls`Activate breakpoints`;
     contextMenu.defaultSection().appendItem(
         breakpointActiveTitle,
         this._breakpointManager.setBreakpointsActive.bind(this._breakpointManager, !breakpointActive));
 
     if (breakpoints.some(breakpoint => !breakpoint.enabled())) {
-      var enableTitle = Common.UIString('Enable all breakpoints');
+      var enableTitle = ls`Enable all breakpoints`;
       contextMenu.defaultSection().appendItem(
           enableTitle, this._breakpointManager.toggleAllBreakpoints.bind(this._breakpointManager, true));
     }
     if (breakpoints.some(breakpoint => breakpoint.enabled())) {
-      var disableTitle = Common.UIString('Disable all breakpoints');
+      var disableTitle = ls`Disable all breakpoints`;
       contextMenu.defaultSection().appendItem(
           disableTitle, this._breakpointManager.toggleAllBreakpoints.bind(this._breakpointManager, false));
     }
-    var removeAllTitle = Common.UIString('Remove all breakpoints');
+    var removeAllTitle = ls`Remove all breakpoints`;
     contextMenu.defaultSection().appendItem(
         removeAllTitle, this._breakpointManager.removeAllBreakpoints.bind(this._breakpointManager));
-    var removeOtherTitle = Common.UIString('Remove other breakpoints');
+    var removeOtherTitle = ls`Remove other breakpoints`;
     contextMenu.defaultSection().appendItem(
         removeOtherTitle,
         this._breakpointManager.removeOtherBreakpoints.bind(this._breakpointManager, new Set(breakpoints)));

@@ -46,7 +46,7 @@ Elements.ElementsPanel = class extends UI.Panel {
 
     this._searchableView = new UI.SearchableView(this);
     this._searchableView.setMinimumSize(25, 28);
-    this._searchableView.setPlaceholder(Common.UIString('Find by string, selector, or XPath'));
+    this._searchableView.setPlaceholder(ls`Find by string, selector, or XPath`);
     var stackElement = this._searchableView.element;
 
     this._contentElement = createElement('div');
@@ -178,7 +178,7 @@ Elements.ElementsPanel = class extends UI.Panel {
     if (!header)
       return;
     header.removeChildren();
-    header.createChild('div', 'elements-tree-header-frame').textContent = Common.UIString('Frame');
+    header.createChild('div', 'elements-tree-header-frame').textContent = ls`Frame`;
     header.appendChild(Components.Linkifier.linkifyURL(target.inspectedURL(), {text: target.name()}));
   }
 
@@ -777,9 +777,9 @@ Elements.ElementsPanel = class extends UI.Panel {
      */
     function tabSelected(event) {
       var tabId = /** @type {string} */ (event.data.tabId);
-      if (tabId === Common.UIString('Computed'))
+      if (tabId === ls`Computed`)
         showMetrics.call(this, true);
-      else if (tabId === Common.UIString('Styles'))
+      else if (tabId === ls`Styles`)
         showMetrics.call(this, false);
     }
 
@@ -794,7 +794,7 @@ Elements.ElementsPanel = class extends UI.Panel {
     if (this._splitMode !== Elements.ElementsPanel._splitMode.Vertical)
       this._splitWidget.installResizer(tabbedPane.headerElement());
 
-    var stylesView = new UI.SimpleView(Common.UIString('Styles'));
+    var stylesView = new UI.SimpleView(ls`Styles`);
     this.sidebarPaneView.appendView(stylesView);
     if (splitMode === Elements.ElementsPanel._splitMode.Horizontal) {
       // Styles and computed are merged into a single tab.
@@ -809,7 +809,7 @@ Elements.ElementsPanel = class extends UI.Panel {
       stylesView.element.classList.add('flex-auto');
       matchedStylePanesWrapper.show(stylesView.element);
 
-      var computedView = new UI.SimpleView(Common.UIString('Computed'));
+      var computedView = new UI.SimpleView(ls`Computed`);
       computedView.element.classList.add('composite', 'fill');
       computedStylePanesWrapper.show(computedView.element);
 
@@ -876,7 +876,7 @@ Elements.ElementsPanel.ContextMenuProvider = class {
     if (Elements.ElementsPanel.instance().element.isAncestor(/** @type {!Node} */ (event.target)))
       return;
     var commandCallback = Common.Revealer.reveal.bind(Common.Revealer, object);
-    contextMenu.revealSection().appendItem(Common.UIString('Reveal in Elements panel'), commandCallback);
+    contextMenu.revealSection().appendItem(ls`Reveal in Elements panel`, commandCallback);
   }
 };
 

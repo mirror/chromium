@@ -28,7 +28,7 @@ Timeline.TimelineDetailsView = class extends UI.VBox {
     this._defaultDetailsContentElement =
         this._defaultDetailsWidget.element.createChild('div', 'timeline-details-view-body vbox');
     this._defaultDetailsContentElement.tabIndex = 0;
-    this._appendTab(tabIds.Details, Common.UIString('Summary'), this._defaultDetailsWidget);
+    this._appendTab(tabIds.Details, ls`Summary`, this._defaultDetailsWidget);
     this.setPreferredTab(tabIds.Details);
 
     /** @type Map<string, Timeline.TimelineTreeView> */
@@ -36,15 +36,15 @@ Timeline.TimelineDetailsView = class extends UI.VBox {
 
     if (!Runtime.experiments.isEnabled('timelineMultipleMainViews')) {
       const bottomUpView = new Timeline.BottomUpTimelineTreeView(filters);
-      this._appendTab(tabIds.BottomUp, Common.UIString('Bottom-Up'), bottomUpView);
+      this._appendTab(tabIds.BottomUp, ls`Bottom-Up`, bottomUpView);
       this._rangeDetailViews.set(tabIds.BottomUp, bottomUpView);
 
       const callTreeView = new Timeline.CallTreeTimelineTreeView(filters);
-      this._appendTab(tabIds.CallTree, Common.UIString('Call Tree'), callTreeView);
+      this._appendTab(tabIds.CallTree, ls`Call Tree`, callTreeView);
       this._rangeDetailViews.set(tabIds.CallTree, callTreeView);
 
       const eventsView = new Timeline.EventsTimelineTreeView(filters, delegate);
-      this._appendTab(tabIds.EventLog, Common.UIString('Event Log'), eventsView);
+      this._appendTab(tabIds.EventLog, ls`Event Log`, eventsView);
       this._rangeDetailViews.set(tabIds.EventLog, eventsView);
     }
 
@@ -131,7 +131,7 @@ Timeline.TimelineDetailsView = class extends UI.VBox {
           var layersView = this._layersView();
           layersView.showLayerTree(frame.layerTree);
           if (!this._tabbedPane.hasTab(Timeline.TimelineDetailsView.Tab.LayerViewer))
-            this._appendTab(Timeline.TimelineDetailsView.Tab.LayerViewer, Common.UIString('Layers'), layersView);
+            this._appendTab(Timeline.TimelineDetailsView.Tab.LayerViewer, ls`Layers`, layersView);
         }
         break;
       case Timeline.TimelineSelection.Type.NetworkRequest:
@@ -185,10 +185,9 @@ Timeline.TimelineDetailsView = class extends UI.VBox {
   _showSnapshotInPaintProfiler(snapshot) {
     var paintProfilerView = this._paintProfilerView();
     paintProfilerView.setSnapshot(snapshot);
-    if (!this._tabbedPane.hasTab(Timeline.TimelineDetailsView.Tab.PaintProfiler)) {
-      this._appendTab(
-          Timeline.TimelineDetailsView.Tab.PaintProfiler, Common.UIString('Paint Profiler'), paintProfilerView, true);
-    }
+    if (!this._tabbedPane.hasTab(Timeline.TimelineDetailsView.Tab.PaintProfiler))
+      this._appendTab(Timeline.TimelineDetailsView.Tab.PaintProfiler, ls`Paint Profiler`, paintProfilerView, true);
+
     this._tabbedPane.selectTab(Timeline.TimelineDetailsView.Tab.PaintProfiler, true);
   }
 
@@ -216,8 +215,7 @@ Timeline.TimelineDetailsView = class extends UI.VBox {
       return;
     if (this._tabbedPane.hasTab(Timeline.TimelineDetailsView.Tab.PaintProfiler))
       return;
-    this._appendTab(
-        Timeline.TimelineDetailsView.Tab.PaintProfiler, Common.UIString('Paint Profiler'), paintProfilerView);
+    this._appendTab(Timeline.TimelineDetailsView.Tab.PaintProfiler, ls`Paint Profiler`, paintProfilerView);
   }
 
   /**

@@ -29,15 +29,15 @@ Resources.DOMStorageItemsView = class extends Resources.StorageItemsView {
    * @param {!Resources.DOMStorage} domStorage
    */
   constructor(domStorage) {
-    super(Common.UIString('DOM Storage'), 'domStoragePanel');
+    super(ls`DOM Storage`, 'domStoragePanel');
 
     this._domStorage = domStorage;
 
     this.element.classList.add('storage-view', 'table');
 
     var columns = /** @type {!Array<!DataGrid.DataGrid.ColumnDescriptor>} */ ([
-      {id: 'key', title: Common.UIString('Key'), sortable: false, editable: true, longText: true, weight: 50},
-      {id: 'value', title: Common.UIString('Value'), sortable: false, editable: true, longText: true, weight: 50}
+      {id: 'key', title: ls`Key`, sortable: false, editable: true, longText: true, weight: 50},
+      {id: 'value', title: ls`Value`, sortable: false, editable: true, longText: true, weight: 50}
     ]);
     this._dataGrid = new DataGrid.DataGrid(columns, this._editingCallback.bind(this), this._deleteCallback.bind(this));
     this._dataGrid.addEventListener(
@@ -256,7 +256,7 @@ Resources.DOMStorageItemsView = class extends Resources.StorageItemsView {
     if (this._preview)
       this._preview.detach();
     if (!preview)
-      preview = new UI.EmptyWidget(Common.UIString('Select a value to preview'));
+      preview = new UI.EmptyWidget(ls`Select a value to preview`);
     this._previewValue = value;
     this._preview = preview;
     preview.show(this._previewPanel.contentElement);

@@ -138,7 +138,7 @@ Timeline.TimelineController = class {
    */
   _addCpuProfile(targetId, cpuProfile) {
     if (!cpuProfile) {
-      Common.console.warn(Common.UIString('CPU profile for a target is not available.'));
+      Common.console.warn(ls`CPU profile for a target is not available.`);
       return;
     }
     if (!this._cpuProfiles)

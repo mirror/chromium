@@ -8,7 +8,7 @@ Resources.ServiceWorkerCacheView = class extends UI.SimpleView {
    * @param {!SDK.ServiceWorkerCacheModel.Cache} cache
    */
   constructor(model, cache) {
-    super(Common.UIString('Cache'));
+    super(ls`Cache`);
     this.registerRequiredCSS('resources/serviceWorkerCacheViews.css');
 
     this._model = model;
@@ -38,20 +38,20 @@ Resources.ServiceWorkerCacheView = class extends UI.SimpleView {
     this._lastSkipCount = null;
     this._refreshThrottler = new Common.Throttler(300);
 
-    this._pageBackButton = new UI.ToolbarButton(Common.UIString('Show previous page'), 'largeicon-play-back');
+    this._pageBackButton = new UI.ToolbarButton(ls`Show previous page`, 'largeicon-play-back');
     this._pageBackButton.addEventListener(UI.ToolbarButton.Events.Click, this._pageBackButtonClicked, this);
     editorToolbar.appendToolbarItem(this._pageBackButton);
 
-    this._pageForwardButton = new UI.ToolbarButton(Common.UIString('Show next page'), 'largeicon-play');
+    this._pageForwardButton = new UI.ToolbarButton(ls`Show next page`, 'largeicon-play');
     this._pageForwardButton.setEnabled(false);
     this._pageForwardButton.addEventListener(UI.ToolbarButton.Events.Click, this._pageForwardButtonClicked, this);
     editorToolbar.appendToolbarItem(this._pageForwardButton);
 
-    this._refreshButton = new UI.ToolbarButton(Common.UIString('Refresh'), 'largeicon-refresh');
+    this._refreshButton = new UI.ToolbarButton(ls`Refresh`, 'largeicon-refresh');
     this._refreshButton.addEventListener(UI.ToolbarButton.Events.Click, this._refreshButtonClicked, this);
     editorToolbar.appendToolbarItem(this._refreshButton);
 
-    this._deleteSelectedButton = new UI.ToolbarButton(Common.UIString('Delete Selected'), 'largeicon-delete');
+    this._deleteSelectedButton = new UI.ToolbarButton(ls`Delete Selected`, 'largeicon-delete');
     this._deleteSelectedButton.addEventListener(UI.ToolbarButton.Events.Click, () => this._deleteButtonClicked(null));
     editorToolbar.appendToolbarItem(this._deleteSelectedButton);
 
@@ -87,7 +87,7 @@ Resources.ServiceWorkerCacheView = class extends UI.SimpleView {
     if (this._preview)
       this._preview.detach();
     if (!preview)
-      preview = new UI.EmptyWidget(Common.UIString('Select a cache entry above to preview'));
+      preview = new UI.EmptyWidget(ls`Select a cache entry above to preview`);
     this._preview = preview;
     this._preview.show(this._previewPanel.element);
   }
@@ -97,17 +97,12 @@ Resources.ServiceWorkerCacheView = class extends UI.SimpleView {
    */
   _createDataGrid() {
     var columns = /** @type {!Array<!DataGrid.DataGrid.ColumnDescriptor>} */ ([
-      {id: 'path', title: Common.UIString('Path'), weight: 4, sortable: true},
-      {id: 'contentType', title: Common.UIString('Content-Type'), weight: 1, sortable: true}, {
-        id: 'contentLength',
-        title: Common.UIString('Content-Length'),
-        weight: 1,
-        align: DataGrid.DataGrid.Align.Right,
-        sortable: true
-      },
+      {id: 'path', title: ls`Path`, weight: 4, sortable: true},
+      {id: 'contentType', title: ls`Content-Type`, weight: 1, sortable: true},
+      {id: 'contentLength', title: ls`Content-Length`, weight: 1, align: DataGrid.DataGrid.Align.Right, sortable: true},
       {
         id: 'responseTime',
-        title: Common.UIString('Time Cached'),
+        title: ls`Time Cached`,
         width: '12em',
         weight: 1,
         align: DataGrid.DataGrid.Align.Right,
@@ -378,8 +373,8 @@ Resources.ServiceWorkerCacheView.RequestView = class extends UI.VBox {
     this._tabbedPane.addEventListener(UI.TabbedPane.Events.TabSelected, this._tabSelected, this);
     this._resourceViewTabSetting = Common.settings.createSetting('cacheStorageViewTab', 'preview');
 
-    this._tabbedPane.appendTab('headers', Common.UIString('Headers'), new Network.RequestHeadersView(request));
-    this._tabbedPane.appendTab('preview', Common.UIString('Preview'), new Network.RequestPreviewView(request));
+    this._tabbedPane.appendTab('headers', ls`Headers`, new Network.RequestHeadersView(request));
+    this._tabbedPane.appendTab('preview', ls`Preview`, new Network.RequestPreviewView(request));
     this._tabbedPane.show(this.element);
   }
 

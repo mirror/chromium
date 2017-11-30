@@ -52,14 +52,14 @@ UI.SearchableView = class extends UI.VBox {
     var toolbar = new UI.Toolbar('', this._footerElementContainer);
 
     if (this._searchProvider.supportsCaseSensitiveSearch()) {
-      this._caseSensitiveButton = new UI.ToolbarToggle(Common.UIString('Case sensitive'), '');
+      this._caseSensitiveButton = new UI.ToolbarToggle(ls`Case sensitive`, '');
       this._caseSensitiveButton.setText('Aa');
       this._caseSensitiveButton.addEventListener(UI.ToolbarButton.Events.Click, this._toggleCaseSensitiveSearch, this);
       toolbar.appendToolbarItem(this._caseSensitiveButton);
     }
 
     if (this._searchProvider.supportsRegexSearch()) {
-      this._regexButton = new UI.ToolbarToggle(Common.UIString('Regex'), '');
+      this._regexButton = new UI.ToolbarToggle(ls`Regex`, '');
       this._regexButton.setText('.*');
       this._regexButton.addEventListener(UI.ToolbarButton.Events.Click, this._toggleRegexSearch, this);
       toolbar.appendToolbarItem(this._regexButton);
@@ -74,7 +74,7 @@ UI.SearchableView = class extends UI.VBox {
     this._searchInputElement = UI.HistoryInput.create();
     this._searchInputElement.classList.add('search-replace');
     this._searchInputElement.id = 'search-input-field';
-    this._searchInputElement.placeholder = Common.UIString('Find');
+    this._searchInputElement.placeholder = ls`Find`;
     searchControlElement.appendChild(this._searchInputElement);
 
     this._matchesElement = searchControlElement.createChild('label', 'search-results-matches');
@@ -85,12 +85,12 @@ UI.SearchableView = class extends UI.VBox {
     this._searchNavigationPrevElement =
         searchNavigationElement.createChild('div', 'toolbar-search-navigation toolbar-search-navigation-prev');
     this._searchNavigationPrevElement.addEventListener('click', this._onPrevButtonSearch.bind(this), false);
-    this._searchNavigationPrevElement.title = Common.UIString('Search previous');
+    this._searchNavigationPrevElement.title = ls`Search previous`;
 
     this._searchNavigationNextElement =
         searchNavigationElement.createChild('div', 'toolbar-search-navigation toolbar-search-navigation-next');
     this._searchNavigationNextElement.addEventListener('click', this._onNextButtonSearch.bind(this), false);
-    this._searchNavigationNextElement.title = Common.UIString('Search next');
+    this._searchNavigationNextElement.title = ls`Search next`;
 
     this._searchInputElement.addEventListener('keydown', this._onSearchKeyDown.bind(this), true);
     this._searchInputElement.addEventListener('input', this._onInput.bind(this), false);
@@ -98,42 +98,38 @@ UI.SearchableView = class extends UI.VBox {
     this._replaceInputElement =
         searchInputElements.createChild('input', 'search-replace toolbar-replace-control hidden');
     this._replaceInputElement.addEventListener('keydown', this._onReplaceKeyDown.bind(this), true);
-    this._replaceInputElement.placeholder = Common.UIString('Replace');
+    this._replaceInputElement.placeholder = ls`Replace`;
 
     // Build the buttons (Find, Previous, Replace, Replace All).
     this._buttonsContainer = this._footerElement.createChild('div', 'toolbar-search-buttons hidden');
 
-    var findButtonElement =
-        UI.createTextButton(Common.UIString('Find'), this._onFindClick.bind(this), 'search-action-button');
+    var findButtonElement = UI.createTextButton(ls`Find`, this._onFindClick.bind(this), 'search-action-button');
     findButtonElement.tabIndex = -1;
     this._buttonsContainer.appendChild(findButtonElement);
 
-    var prevButtonElement =
-        UI.createTextButton(Common.UIString('Previous'), this._onPreviousClick.bind(this), 'search-action-button');
+    var prevButtonElement = UI.createTextButton(ls`Previous`, this._onPreviousClick.bind(this), 'search-action-button');
     prevButtonElement.tabIndex = -1;
     this._buttonsContainer.appendChild(prevButtonElement);
 
-    this._replaceButtonElement =
-        UI.createTextButton(Common.UIString('Replace'), this._replace.bind(this), 'search-action-button');
+    this._replaceButtonElement = UI.createTextButton(ls`Replace`, this._replace.bind(this), 'search-action-button');
     this._replaceButtonElement.disabled = true;
     this._replaceButtonElement.tabIndex = -1;
     this._buttonsContainer.appendChild(this._replaceButtonElement);
 
     var replaceAllButtonElement =
-        UI.createTextButton(Common.UIString('Replace all'), this._replaceAll.bind(this), 'search-action-button');
+        UI.createTextButton(ls`Replace all`, this._replaceAll.bind(this), 'search-action-button');
     this._buttonsContainer.appendChild(replaceAllButtonElement);
 
     // Build the replace checkbox and cancel button.
     this._replaceElement = this._footerElement.createChild('div').createChild('span', 'toolbar-replace-checkbox');
 
-    var replaceLabelElement = UI.CheckboxLabel.create(Common.UIString('Replace'));
+    var replaceLabelElement = UI.CheckboxLabel.create(ls`Replace`);
     this._replaceCheckboxElement = replaceLabelElement.checkboxElement;
     this._replaceCheckboxElement.addEventListener('change', this._updateSecondRowVisibility.bind(this), false);
 
     this._replaceElement.appendChild(replaceLabelElement);
 
-    var cancelButtonElement =
-        UI.createTextButton(Common.UIString('Cancel'), this.closeSearch.bind(this), 'search-action-button');
+    var cancelButtonElement = UI.createTextButton(ls`Cancel`, this.closeSearch.bind(this), 'search-action-button');
     cancelButtonElement.tabIndex = -1;
     this._minimalSearchQuerySize = 3;
     this._footerElement.createChild('div').appendChild(cancelButtonElement);
@@ -322,7 +318,7 @@ UI.SearchableView = class extends UI.VBox {
     else if (matches === 0 || currentMatchIndex >= 0)
       this._matchesElement.textContent = Common.UIString('%d of %d', currentMatchIndex + 1, matches);
     else if (matches === 1)
-      this._matchesElement.textContent = Common.UIString('1 match');
+      this._matchesElement.textContent = ls`1 match`;
     else
       this._matchesElement.textContent = Common.UIString('%d matches', matches);
     this._updateSearchNavigationButtonState(matches > 0);

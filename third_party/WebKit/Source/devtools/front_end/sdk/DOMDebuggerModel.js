@@ -575,22 +575,21 @@ SDK.DOMDebuggerManager = class {
     /** @type {!Array<!SDK.DOMDebuggerModel.EventListenerBreakpoint>} */
     this._eventListenerBreakpoints = [];
     this._createInstrumentationBreakpoints(
-        Common.UIString('Animation'),
-        ['requestAnimationFrame', 'cancelAnimationFrame', 'requestAnimationFrame.callback']);
+        ls`Animation`, ['requestAnimationFrame', 'cancelAnimationFrame', 'requestAnimationFrame.callback']);
     this._createInstrumentationBreakpoints(
-        Common.UIString('Canvas'), ['canvasContextCreated', 'webglErrorFired', 'webglWarningFired']);
+        ls`Canvas`, ['canvasContextCreated', 'webglErrorFired', 'webglWarningFired']);
     this._createInstrumentationBreakpoints(
-        Common.UIString('Geolocation'), ['Geolocation.getCurrentPosition', 'Geolocation.watchPosition']);
-    this._createInstrumentationBreakpoints(Common.UIString('Notification'), ['Notification.requestPermission']);
-    this._createInstrumentationBreakpoints(Common.UIString('Parse'), ['Element.setInnerHTML', 'Document.write']);
-    this._createInstrumentationBreakpoints(Common.UIString('Script'), ['scriptFirstStatement', 'scriptBlockedByCSP']);
+        ls`Geolocation`, ['Geolocation.getCurrentPosition', 'Geolocation.watchPosition']);
+    this._createInstrumentationBreakpoints(ls`Notification`, ['Notification.requestPermission']);
+    this._createInstrumentationBreakpoints(ls`Parse`, ['Element.setInnerHTML', 'Document.write']);
+    this._createInstrumentationBreakpoints(ls`Script`, ['scriptFirstStatement', 'scriptBlockedByCSP']);
     this._createInstrumentationBreakpoints(
-        Common.UIString('Timer'),
+        ls`Timer`,
         ['setTimeout', 'clearTimeout', 'setInterval', 'clearInterval', 'setTimeout.callback', 'setInterval.callback']);
-    this._createInstrumentationBreakpoints(Common.UIString('Window'), ['DOMWindow.close']);
+    this._createInstrumentationBreakpoints(ls`Window`, ['DOMWindow.close']);
 
     this._createEventListenerBreakpoints(
-        Common.UIString('Media'),
+        ls`Media`,
         [
           'play',      'pause',          'playing',    'canplay',    'canplaythrough', 'seeking',
           'seeked',    'timeupdate',     'ended',      'ratechange', 'durationchange', 'volumechange',
@@ -599,13 +598,12 @@ SDK.DOMDebuggerManager = class {
         ],
         ['audio', 'video']);
     this._createEventListenerBreakpoints(
-        Common.UIString('Clipboard'), ['copy', 'cut', 'paste', 'beforecopy', 'beforecut', 'beforepaste'], ['*']);
+        ls`Clipboard`, ['copy', 'cut', 'paste', 'beforecopy', 'beforecut', 'beforepaste'], ['*']);
     this._createEventListenerBreakpoints(
-        Common.UIString('Control'),
-        ['resize', 'scroll', 'zoom', 'focus', 'blur', 'select', 'change', 'submit', 'reset'], ['*']);
-    this._createEventListenerBreakpoints(Common.UIString('Device'), ['deviceorientation', 'devicemotion'], ['*']);
+        ls`Control`, ['resize', 'scroll', 'zoom', 'focus', 'blur', 'select', 'change', 'submit', 'reset'], ['*']);
+    this._createEventListenerBreakpoints(ls`Device`, ['deviceorientation', 'devicemotion'], ['*']);
     this._createEventListenerBreakpoints(
-        Common.UIString('DOM Mutation'),
+        ls`DOM Mutation`,
         [
           'DOMActivate', 'DOMFocusIn', 'DOMFocusOut', 'DOMAttrModified', 'DOMCharacterDataModified', 'DOMNodeInserted',
           'DOMNodeInsertedIntoDocument', 'DOMNodeRemoved', 'DOMNodeRemovedFromDocument', 'DOMSubtreeModified',
@@ -613,56 +611,44 @@ SDK.DOMDebuggerManager = class {
         ],
         ['*']);
     this._createEventListenerBreakpoints(
-        Common.UIString('Drag / drop'), ['drag', 'dragstart', 'dragend', 'dragenter', 'dragover', 'dragleave', 'drop'],
-        ['*']);
+        ls`Drag / drop`, ['drag', 'dragstart', 'dragend', 'dragenter', 'dragover', 'dragleave', 'drop'], ['*']);
 
-    this._createEventListenerBreakpoints(Common.UIString('Keyboard'), ['keydown', 'keyup', 'keypress', 'input'], ['*']);
+    this._createEventListenerBreakpoints(ls`Keyboard`, ['keydown', 'keyup', 'keypress', 'input'], ['*']);
     this._createEventListenerBreakpoints(
-        Common.UIString('Load'), ['load', 'beforeunload', 'unload', 'abort', 'error', 'hashchange', 'popstate'], ['*']);
+        ls`Load`, ['load', 'beforeunload', 'unload', 'abort', 'error', 'hashchange', 'popstate'], ['*']);
     this._createEventListenerBreakpoints(
-        Common.UIString('Mouse'),
+        ls`Mouse`,
         [
           'auxclick', 'click', 'dblclick', 'mousedown', 'mouseup', 'mouseover', 'mousemove', 'mouseout', 'mouseenter',
           'mouseleave', 'mousewheel', 'wheel', 'contextmenu'
         ],
         ['*']);
     this._createEventListenerBreakpoints(
-        Common.UIString('Pointer'),
+        ls`Pointer`,
         [
           'pointerover', 'pointerout', 'pointerenter', 'pointerleave', 'pointerdown', 'pointerup', 'pointermove',
           'pointercancel', 'gotpointercapture', 'lostpointercapture'
         ],
         ['*']);
+    this._createEventListenerBreakpoints(ls`Touch`, ['touchstart', 'touchmove', 'touchend', 'touchcancel'], ['*']);
+    this._createEventListenerBreakpoints(ls`Worker`, ['message', 'messageerror'], ['*']);
     this._createEventListenerBreakpoints(
-        Common.UIString('Touch'), ['touchstart', 'touchmove', 'touchend', 'touchcancel'], ['*']);
-    this._createEventListenerBreakpoints(Common.UIString('Worker'), ['message', 'messageerror'], ['*']);
-    this._createEventListenerBreakpoints(
-        Common.UIString('XHR'),
-        ['readystatechange', 'load', 'loadstart', 'loadend', 'abort', 'error', 'progress', 'timeout'],
+        ls`XHR`, ['readystatechange', 'load', 'loadstart', 'loadend', 'abort', 'error', 'progress', 'timeout'],
         ['xmlhttprequest', 'xmlhttprequestupload']);
 
-    this._resolveEventListenerBreakpoint('instrumentation:setTimeout.callback')._title =
-        Common.UIString('setTimeout fired');
-    this._resolveEventListenerBreakpoint('instrumentation:setInterval.callback')._title =
-        Common.UIString('setInterval fired');
-    this._resolveEventListenerBreakpoint('instrumentation:scriptFirstStatement')._title =
-        Common.UIString('Script First Statement');
+    this._resolveEventListenerBreakpoint('instrumentation:setTimeout.callback')._title = ls`setTimeout fired`;
+    this._resolveEventListenerBreakpoint('instrumentation:setInterval.callback')._title = ls`setInterval fired`;
+    this._resolveEventListenerBreakpoint('instrumentation:scriptFirstStatement')._title = ls`Script First Statement`;
     this._resolveEventListenerBreakpoint('instrumentation:scriptBlockedByCSP')._title =
-        Common.UIString('Script Blocked by Content Security Policy');
-    this._resolveEventListenerBreakpoint('instrumentation:requestAnimationFrame')._title =
-        Common.UIString('Request Animation Frame');
-    this._resolveEventListenerBreakpoint('instrumentation:cancelAnimationFrame')._title =
-        Common.UIString('Cancel Animation Frame');
+        ls`Script Blocked by Content Security Policy`;
+    this._resolveEventListenerBreakpoint('instrumentation:requestAnimationFrame')._title = ls`Request Animation Frame`;
+    this._resolveEventListenerBreakpoint('instrumentation:cancelAnimationFrame')._title = ls`Cancel Animation Frame`;
     this._resolveEventListenerBreakpoint('instrumentation:requestAnimationFrame.callback')._title =
-        Common.UIString('Animation Frame Fired');
-    this._resolveEventListenerBreakpoint('instrumentation:webglErrorFired')._title =
-        Common.UIString('WebGL Error Fired');
-    this._resolveEventListenerBreakpoint('instrumentation:webglWarningFired')._title =
-        Common.UIString('WebGL Warning Fired');
-    this._resolveEventListenerBreakpoint('instrumentation:Element.setInnerHTML')._title =
-        Common.UIString('Set innerHTML');
-    this._resolveEventListenerBreakpoint('instrumentation:canvasContextCreated')._title =
-        Common.UIString('Create canvas context');
+        ls`Animation Frame Fired`;
+    this._resolveEventListenerBreakpoint('instrumentation:webglErrorFired')._title = ls`WebGL Error Fired`;
+    this._resolveEventListenerBreakpoint('instrumentation:webglWarningFired')._title = ls`WebGL Warning Fired`;
+    this._resolveEventListenerBreakpoint('instrumentation:Element.setInnerHTML')._title = ls`Set innerHTML`;
+    this._resolveEventListenerBreakpoint('instrumentation:canvasContextCreated')._title = ls`Create canvas context`;
     this._resolveEventListenerBreakpoint('instrumentation:Geolocation.getCurrentPosition')._title =
         'getCurrentPosition';
     this._resolveEventListenerBreakpoint('instrumentation:Geolocation.watchPosition')._title = 'watchPosition';

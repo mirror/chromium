@@ -129,7 +129,7 @@ InlineEditor.ColorSwatch = class extends HTMLSpanElement {
     var root = UI.createShadowRootWithCoreStyles(this, 'inline_editor/colorSwatch.css');
 
     this._iconElement = root.createChild('span', 'color-swatch');
-    this._iconElement.title = Common.UIString('Shift-click to change color format');
+    this._iconElement.title = ls`Shift-click to change color format`;
     this._swatchInner = this._iconElement.createChild('span', 'color-swatch-inner');
     this._swatchInner.addEventListener('dblclick', e => e.consume(), false);
     this._swatchInner.addEventListener('mousedown', e => e.consume(), false);

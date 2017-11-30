@@ -9,7 +9,7 @@ Resources.ServiceWorkersView = class extends UI.VBox {
     super(true);
     this.registerRequiredCSS('resources/serviceWorkersView.css');
 
-    this._currentWorkersView = new UI.ReportView(Common.UIString('Service Workers'));
+    this._currentWorkersView = new UI.ReportView(ls`Service Workers`);
     this._currentWorkersView.setBodyScrollable(false);
     this.contentElement.classList.add('service-worker-list');
     this._currentWorkersView.show(this.contentElement);
@@ -34,7 +34,7 @@ Resources.ServiceWorkersView = class extends UI.VBox {
     this._checkboxElement.type = 'checkbox';
     this._checkboxElement.setAttribute('id', 'expand-all');
     this._textElement = filterElement.createChild('label', 'service-worker-filter-label');
-    this._textElement.textContent = Common.UIString('Service workers from other domains');
+    this._textElement.textContent = ls`Service workers from other domains`;
     this._textElement.setAttribute('for', 'expand-all');
     this._checkboxElement.addEventListener('change', () => this._filterChanged());
 
@@ -52,14 +52,14 @@ Resources.ServiceWorkersView = class extends UI.VBox {
 
     this._toolbar.appendToolbarItem(MobileThrottling.throttlingManager().createOfflineToolbarCheckbox());
     var updateOnReloadSetting = Common.settings.createSetting('serviceWorkerUpdateOnReload', false);
-    updateOnReloadSetting.setTitle(Common.UIString('Update on reload'));
-    var forceUpdate = new UI.ToolbarSettingCheckbox(
-        updateOnReloadSetting, Common.UIString('Force update Service Worker on page reload'));
+    updateOnReloadSetting.setTitle(ls`Update on reload`);
+    var forceUpdate =
+        new UI.ToolbarSettingCheckbox(updateOnReloadSetting, ls`Force update Service Worker on page reload`);
     this._toolbar.appendToolbarItem(forceUpdate);
     var bypassServiceWorkerSetting = Common.settings.createSetting('bypassServiceWorker', false);
-    bypassServiceWorkerSetting.setTitle(Common.UIString('Bypass for network'));
+    bypassServiceWorkerSetting.setTitle(ls`Bypass for network`);
     var fallbackToNetwork = new UI.ToolbarSettingCheckbox(
-        bypassServiceWorkerSetting, Common.UIString('Bypass Service Worker and load resources from the network'));
+        bypassServiceWorkerSetting, ls`Bypass Service Worker and load resources from the network`);
     this._toolbar.appendToolbarItem(fallbackToNetwork);
 
     /** @type {!Map<!SDK.ServiceWorkerManager, !Array<!Common.EventTarget.EventDescriptor>>}*/
@@ -280,23 +280,22 @@ Resources.ServiceWorkersView.Section = class {
     /** @type {?symbol} */
     this._fingerprint = null;
     this._pushNotificationDataSetting =
-        Common.settings.createLocalSetting('pushData', Common.UIString('Test push message from DevTools.'));
+        Common.settings.createLocalSetting('pushData', ls`Test push message from DevTools.`);
     this._syncTagNameSetting = Common.settings.createLocalSetting('syncTagName', 'test-tag-from-devtools');
 
     this._toolbar = section.createToolbar();
     this._toolbar.renderAsLinks();
-    this._updateButton = new UI.ToolbarButton(Common.UIString('Update'), undefined, Common.UIString('Update'));
+    this._updateButton = new UI.ToolbarButton(ls`Update`, undefined, ls`Update`);
     this._updateButton.addEventListener(UI.ToolbarButton.Events.Click, this._updateButtonClicked, this);
     this._toolbar.appendToolbarItem(this._updateButton);
-    this._deleteButton =
-        new UI.ToolbarButton(Common.UIString('Unregister service worker'), undefined, Common.UIString('Unregister'));
+    this._deleteButton = new UI.ToolbarButton(ls`Unregister service worker`, undefined, ls`Unregister`);
     this._deleteButton.addEventListener(UI.ToolbarButton.Events.Click, this._unregisterButtonClicked, this);
     this._toolbar.appendToolbarItem(this._deleteButton);
 
     // Preserve the order.
-    this._sourceField = this._wrapWidget(this._section.appendField(Common.UIString('Source')));
-    this._statusField = this._wrapWidget(this._section.appendField(Common.UIString('Status')));
-    this._clientsField = this._wrapWidget(this._section.appendField(Common.UIString('Clients')));
+    this._sourceField = this._wrapWidget(this._section.appendField(ls`Source`));
+    this._statusField = this._wrapWidget(this._section.appendField(ls`Status`));
+    this._clientsField = this._wrapWidget(this._section.appendField(ls`Clients`));
     this._createPushNotificationField();
     this._createSyncNotificationField();
 
@@ -307,10 +306,10 @@ Resources.ServiceWorkersView.Section = class {
   }
 
   _createPushNotificationField() {
-    var form = this._wrapWidget(this._section.appendField(Common.UIString('Push')))
-                   .createChild('form', 'service-worker-editor-with-button');
+    var form =
+        this._wrapWidget(this._section.appendField(ls`Push`)).createChild('form', 'service-worker-editor-with-button');
     var editorContainer = form.createChild('div', 'service-worker-notification-editor');
-    var button = UI.createTextButton(Common.UIString('Push'));
+    var button = UI.createTextButton(ls`Push`);
     button.type = 'submit';
     form.appendChild(button);
 
@@ -330,15 +329,15 @@ Resources.ServiceWorkersView.Section = class {
   }
 
   _createSyncNotificationField() {
-    var form = this._wrapWidget(this._section.appendField(Common.UIString('Sync')))
-                   .createChild('form', 'service-worker-editor-with-button');
+    var form =
+        this._wrapWidget(this._section.appendField(ls`Sync`)).createChild('form', 'service-worker-editor-with-button');
     var editor = form.createChild('input', 'source-code service-worker-notification-editor');
-    var button = UI.createTextButton(Common.UIString('Sync'));
+    var button = UI.createTextButton(ls`Sync`);
     button.type = 'submit';
     form.appendChild(button);
 
     editor.value = this._syncTagNameSetting.get();
-    editor.placeholder = Common.UIString('Sync tag');
+    editor.placeholder = ls`Sync tag`;
 
     form.addEventListener('submit', e => {
       this._sync(true, editor.value || '');
@@ -383,7 +382,7 @@ Resources.ServiceWorkersView.Section = class {
    */
   _updateClientsField(version) {
     this._clientsField.removeChildren();
-    this._section.setFieldVisible(Common.UIString('Clients'), version.controlledClients.length);
+    this._section.setFieldVisible(ls`Clients`, version.controlledClients.length);
     for (var client of version.controlledClients) {
       var clientLabelText = this._clientsField.createChild('div', 'service-worker-client');
       if (this._clientInfoCache.has(client)) {
@@ -444,11 +443,11 @@ Resources.ServiceWorkersView.Section = class {
           Common.UIString('#%s activated and is %s', active.id, active.runningStatus));
 
       if (active.isRunning() || active.isStarting()) {
-        createLink(activeEntry, Common.UIString('stop'), this._stopButtonClicked.bind(this, active.id));
+        createLink(activeEntry, ls`stop`, this._stopButtonClicked.bind(this, active.id));
         if (!this._targetForVersionId(active.id))
-          createLink(activeEntry, Common.UIString('inspect'), this._inspectButtonClicked.bind(this, active.id));
+          createLink(activeEntry, ls`inspect`, this._inspectButtonClicked.bind(this, active.id));
       } else if (active.isStartable()) {
-        createLink(activeEntry, Common.UIString('start'), this._startButtonClicked.bind(this));
+        createLink(activeEntry, ls`start`, this._startButtonClicked.bind(this));
       }
       this._updateClientsField(active);
     } else if (redundant) {
@@ -461,11 +460,11 @@ Resources.ServiceWorkersView.Section = class {
     if (waiting) {
       var waitingEntry = this._addVersion(
           versionsStack, 'service-worker-waiting-circle', Common.UIString('#%s waiting to activate', waiting.id));
-      createLink(waitingEntry, Common.UIString('skipWaiting'), this._skipButtonClicked.bind(this));
+      createLink(waitingEntry, ls`skipWaiting`, this._skipButtonClicked.bind(this));
       waitingEntry.createChild('div', 'service-worker-subtitle').textContent =
           Common.UIString('Received %s', new Date(waiting.scriptResponseTime * 1000).toLocaleString());
       if (!this._targetForVersionId(waiting.id) && (waiting.isRunning() || waiting.isStarting()))
-        createLink(waitingEntry, Common.UIString('inspect'), this._inspectButtonClicked.bind(this, waiting.id));
+        createLink(waitingEntry, ls`inspect`, this._inspectButtonClicked.bind(this, waiting.id));
     }
     if (installing) {
       var installingEntry = this._addVersion(
@@ -473,7 +472,7 @@ Resources.ServiceWorkersView.Section = class {
       installingEntry.createChild('div', 'service-worker-subtitle').textContent =
           Common.UIString('Received %s', new Date(installing.scriptResponseTime * 1000).toLocaleString());
       if (!this._targetForVersionId(installing.id) && (installing.isRunning() || installing.isStarting()))
-        createLink(installingEntry, Common.UIString('inspect'), this._inspectButtonClicked.bind(this, installing.id));
+        createLink(installingEntry, ls`inspect`, this._inspectButtonClicked.bind(this, installing.id));
     }
 
     /**

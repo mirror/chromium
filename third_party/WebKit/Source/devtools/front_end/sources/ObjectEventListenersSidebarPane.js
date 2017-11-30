@@ -8,7 +8,7 @@
 Sources.ObjectEventListenersSidebarPane = class extends UI.VBox {
   constructor() {
     super();
-    this._refreshButton = new UI.ToolbarButton(Common.UIString('Refresh'), 'largeicon-refresh');
+    this._refreshButton = new UI.ToolbarButton(ls`Refresh`, 'largeicon-refresh');
     this._refreshButton.addEventListener(UI.ToolbarButton.Events.Click, this._refreshClick, this);
     this._refreshButton.setEnabled(false);
 

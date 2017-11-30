@@ -109,10 +109,10 @@ Network.RequestResponseView = class extends UI.VBox {
     var contentData = await this.request.contentData();
     var sourceView = await Network.RequestResponseView.sourceViewForRequest(this.request);
     if ((!contentData.content || !sourceView) && !contentData.error)
-      return new UI.EmptyWidget(Common.UIString('This request has no response data available.'));
+      return new UI.EmptyWidget(ls`This request has no response data available.`);
     if (contentData.content && sourceView)
       return sourceView;
-    return new UI.EmptyWidget(Common.UIString('Failed to load response data'));
+    return new UI.EmptyWidget(ls`Failed to load response data`);
   }
 };
 

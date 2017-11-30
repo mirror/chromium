@@ -630,21 +630,21 @@ UI.formatLocalized = function(format, substitutions) {
  * @return {string}
  */
 UI.openLinkExternallyLabel = function() {
-  return Common.UIString('Open in new tab');
+  return ls`Open in new tab`;
 };
 
 /**
  * @return {string}
  */
 UI.copyLinkAddressLabel = function() {
-  return Common.UIString('Copy link address');
+  return ls`Copy link address`;
 };
 
 /**
  * @return {string}
  */
 UI.anotherProfilerActiveLabel = function() {
-  return Common.UIString('Another profiler is already active');
+  return ls`Another profiler is already active`;
 };
 
 /**
@@ -654,12 +654,12 @@ UI.anotherProfilerActiveLabel = function() {
 UI.asyncStackTraceLabel = function(description) {
   if (description) {
     if (description === 'Promise.resolve')
-      description = Common.UIString('Promise resolved');
+      description = ls`Promise resolved`;
     else if (description === 'Promise.reject')
-      description = Common.UIString('Promise rejected');
-    return description + ' ' + Common.UIString('(async)');
+      description = ls`Promise rejected`;
+    return description + ' ' + ls`(async)`;
   }
-  return Common.UIString('Async Call');
+  return ls`Async Call`;
 };
 
 /**
@@ -1166,7 +1166,7 @@ UI.initializeUIUtils = function(document, themeSetting) {
  * @return {string}
  */
 UI.beautifyFunctionName = function(name) {
-  return name || Common.UIString('(anonymous)');
+  return name || ls`(anonymous)`;
 };
 
 /**
@@ -2065,7 +2065,7 @@ UI.MessageDialog = class {
     var shadowRoot = UI.createShadowRootWithCoreStyles(dialog.contentElement, 'ui/confirmDialog.css');
     var content = shadowRoot.createChild('div', 'widget');
     await new Promise(resolve => {
-      var okButton = UI.createTextButton(Common.UIString('OK'), resolve, '', true);
+      var okButton = UI.createTextButton(ls`OK`, resolve, '', true);
       content.createChild('div', 'message').createChild('span').textContent = message;
       content.createChild('div', 'button').appendChild(okButton);
       dialog.setOutsideClickCallback(event => {
@@ -2094,8 +2094,8 @@ UI.ConfirmDialog = class {
     content.createChild('div', 'message').createChild('span').textContent = message;
     var buttonsBar = content.createChild('div', 'button');
     var result = await new Promise(resolve => {
-      buttonsBar.appendChild(UI.createTextButton(Common.UIString('OK'), () => resolve(true), '', true));
-      buttonsBar.appendChild(UI.createTextButton(Common.UIString('Cancel'), () => resolve(false)));
+      buttonsBar.appendChild(UI.createTextButton(ls`OK`, () => resolve(true), '', true));
+      buttonsBar.appendChild(UI.createTextButton(ls`Cancel`, () => resolve(false)));
       dialog.setOutsideClickCallback(event => {
         event.consume();
         resolve(false);

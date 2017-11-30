@@ -43,7 +43,7 @@ Sources.InplaceFormatterEditorAction = class {
     this._sourcesView.addEventListener(Sources.SourcesView.Events.EditorSelected, this._editorSelected.bind(this));
     this._sourcesView.addEventListener(Sources.SourcesView.Events.EditorClosed, this._editorClosed.bind(this));
 
-    this._button = new UI.ToolbarButton(Common.UIString('Format'), 'largeicon-pretty-print');
+    this._button = new UI.ToolbarButton(ls`Format`, 'largeicon-pretty-print');
     this._button.addEventListener(UI.ToolbarButton.Events.Click, this._formatSourceInPlace, this);
     this._updateButton(sourcesView.currentUISourceCode());
 

@@ -23,13 +23,13 @@ UI.Infobar = class {
 
     this._toggleElement = this._mainRow.createChild('div', 'infobar-toggle hidden');
     this._toggleElement.addEventListener('click', this._onToggleDetails.bind(this), false);
-    this._toggleElement.textContent = Common.UIString('more');
+    this._toggleElement.textContent = ls`more`;
 
     /** @type {?Common.Setting} */
     this._disableSetting = disableSetting || null;
     if (disableSetting) {
       var disableButton = this._mainRow.createChild('div', 'infobar-toggle');
-      disableButton.textContent = Common.UIString('never show');
+      disableButton.textContent = ls`never show`;
       disableButton.addEventListener('click', this._onDisable.bind(this), false);
     }
 

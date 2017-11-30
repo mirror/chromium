@@ -38,7 +38,7 @@ Components.DOMBreakpointsSidebarPane = class extends UI.VBox {
 
     this._listElement = this.contentElement.createChild('div', 'breakpoint-list hidden');
     this._emptyElement = this.contentElement.createChild('div', 'gray-info-message');
-    this._emptyElement.textContent = Common.UIString('No breakpoints');
+    this._emptyElement.textContent = ls`No breakpoints`;
 
     /** @type {!Map<!SDK.DOMDebuggerModel.DOMBreakpoint, !Components.DOMBreakpointsSidebarPane.Item>} */
     this._items = new Map();
@@ -174,10 +174,10 @@ Components.DOMBreakpointsSidebarPane = class extends UI.VBox {
    */
   _contextMenu(breakpoint, event) {
     var contextMenu = new UI.ContextMenu(event);
-    contextMenu.defaultSection().appendItem(Common.UIString('Remove breakpoint'), () => {
+    contextMenu.defaultSection().appendItem(ls`Remove breakpoint`, () => {
       breakpoint.domDebuggerModel.removeDOMBreakpoint(breakpoint.node, breakpoint.type);
     });
-    contextMenu.defaultSection().appendItem(Common.UIString('Remove all DOM breakpoints'), () => {
+    contextMenu.defaultSection().appendItem(ls`Remove all DOM breakpoints`, () => {
       breakpoint.domDebuggerModel.removeAllDOMBreakpoints();
     });
     contextMenu.show();
@@ -234,15 +234,15 @@ Components.DOMBreakpointsSidebarPane = class extends UI.VBox {
 Components.DOMBreakpointsSidebarPane.Item;
 
 Components.DOMBreakpointsSidebarPane.BreakpointTypeLabels = new Map([
-  [SDK.DOMDebuggerModel.DOMBreakpoint.Type.SubtreeModified, Common.UIString('Subtree modified')],
-  [SDK.DOMDebuggerModel.DOMBreakpoint.Type.AttributeModified, Common.UIString('Attribute modified')],
-  [SDK.DOMDebuggerModel.DOMBreakpoint.Type.NodeRemoved, Common.UIString('Node removed')],
+  [SDK.DOMDebuggerModel.DOMBreakpoint.Type.SubtreeModified, ls`Subtree modified`],
+  [SDK.DOMDebuggerModel.DOMBreakpoint.Type.AttributeModified, ls`Attribute modified`],
+  [SDK.DOMDebuggerModel.DOMBreakpoint.Type.NodeRemoved, ls`Node removed`],
 ]);
 
 Components.DOMBreakpointsSidebarPane.BreakpointTypeNouns = new Map([
-  [SDK.DOMDebuggerModel.DOMBreakpoint.Type.SubtreeModified, Common.UIString('subtree modifications')],
-  [SDK.DOMDebuggerModel.DOMBreakpoint.Type.AttributeModified, Common.UIString('attribute modifications')],
-  [SDK.DOMDebuggerModel.DOMBreakpoint.Type.NodeRemoved, Common.UIString('node removal')],
+  [SDK.DOMDebuggerModel.DOMBreakpoint.Type.SubtreeModified, ls`subtree modifications`],
+  [SDK.DOMDebuggerModel.DOMBreakpoint.Type.AttributeModified, ls`attribute modifications`],
+  [SDK.DOMDebuggerModel.DOMBreakpoint.Type.NodeRemoved, ls`node removal`],
 ]);
 
 /**
@@ -273,7 +273,7 @@ Components.DOMBreakpointsSidebarPane.ContextMenuProvider = class {
         domDebuggerModel.setDOMBreakpoint(node, type);
     }
 
-    var breakpointsMenu = contextMenu.debugSection().appendSubMenuItem(Common.UIString('Break on'));
+    var breakpointsMenu = contextMenu.debugSection().appendSubMenuItem(ls`Break on`);
     for (var key in SDK.DOMDebuggerModel.DOMBreakpoint.Type) {
       var type = SDK.DOMDebuggerModel.DOMBreakpoint.Type[key];
       var label = Components.DOMBreakpointsSidebarPane.BreakpointTypeNouns.get(type);

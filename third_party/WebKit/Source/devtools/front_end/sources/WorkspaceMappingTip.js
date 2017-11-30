@@ -113,14 +113,13 @@ Sources.WorkspaceMappingTip = class {
    */
   _showWorkspaceInfobar(uiSourceCode) {
     var infobar = UI.Infobar.create(
-        UI.Infobar.Type.Info, Common.UIString('Serving from the file system? Add your files into the workspace.'),
+        UI.Infobar.Type.Info, ls`Serving from the file system? Add your files into the workspace.`,
         this._workspaceInfobarDisabledSetting);
     if (!infobar)
       return;
     infobar.createDetailsRowMessage(
-        Common.UIString('If you add files into your DevTools workspace, your changes will be persisted to disk.'));
-    infobar.createDetailsRowMessage(
-        Common.UIString('To add a folder into the workspace, drag and drop it into the Sources panel.'));
+        ls`If you add files into your DevTools workspace, your changes will be persisted to disk.`);
+    infobar.createDetailsRowMessage(ls`To add a folder into the workspace, drag and drop it into the Sources panel.`);
     this._appendInfobar(uiSourceCode, infobar);
   }
 
@@ -140,9 +139,9 @@ Sources.WorkspaceMappingTip = class {
       return;
     infobar.createDetailsRowMessage(Common.UIString(
         'You can map files in your workspace to the ones loaded over the network. As a result, changes made in DevTools will be persisted to disk.'));
-    infobar.createDetailsRowMessage(Common.UIString('Use context menu to establish the mapping at any time.'));
+    infobar.createDetailsRowMessage(ls`Use context menu to establish the mapping at any time.`);
     var anchor = createElementWithClass('span', 'link');
-    anchor.textContent = Common.UIString('Establish the mapping now...');
+    anchor.textContent = ls`Establish the mapping now...`;
     anchor.addEventListener('click', this._establishTheMapping.bind(this, uiSourceCode), false);
     infobar.createDetailsRowMessage('').appendChild(anchor);
     this._appendInfobar(uiSourceCode, infobar);
@@ -167,10 +166,8 @@ Sources.WorkspaceMappingTip = class {
   _appendInfobar(uiSourceCode, infobar) {
     var uiSourceCodeFrame = this._sourcesView.viewForFile(uiSourceCode);
 
-    var rowElement =
-        infobar.createDetailsRowMessage(Common.UIString('For more information on workspaces, refer to the '));
-    rowElement.appendChild(
-        UI.createDocumentationLink('../setup/setup-workflow', Common.UIString('workspaces documentation')));
+    var rowElement = infobar.createDetailsRowMessage(ls`For more information on workspaces, refer to the `);
+    rowElement.appendChild(UI.createDocumentationLink('../setup/setup-workflow', ls`workspaces documentation`));
     rowElement.createTextChild('.');
     uiSourceCode[Sources.WorkspaceMappingTip._infobarSymbol] = infobar;
     uiSourceCodeFrame.attachInfobars([infobar]);

@@ -23,7 +23,7 @@ Sources.AdvancedSearchView = class extends UI.VBox {
 
     this._search = UI.HistoryInput.create();
     this._searchPanelElement.appendChild(this._search);
-    this._search.placeholder = Common.UIString('Search all sources (use "file:" to filter by path)\u200e');
+    this._search.placeholder = ls`Search all sources (use "file:" to filter by path)\u200e`;
     this._search.setAttribute('type', 'text');
     this._search.classList.add('search-config-search');
     this._search.setAttribute('results', '0');
@@ -38,13 +38,13 @@ Sources.AdvancedSearchView = class extends UI.VBox {
     var cancelButtonContainer = this._searchPanelElement.createChild('div', 'search-cancel-button-container');
     cancelButtonContainer.appendChild(this._searchInputClearElement);
 
-    this._ignoreCaseLabel = UI.CheckboxLabel.create(Common.UIString('Ignore case'));
+    this._ignoreCaseLabel = UI.CheckboxLabel.create(ls`Ignore case`);
     this._ignoreCaseLabel.classList.add('search-config-label');
     this._searchPanelElement.appendChild(this._ignoreCaseLabel);
     this._ignoreCaseCheckbox = this._ignoreCaseLabel.checkboxElement;
     this._ignoreCaseCheckbox.classList.add('search-config-checkbox');
 
-    this._regexLabel = UI.CheckboxLabel.create(Common.UIString('Regular expression'));
+    this._regexLabel = UI.CheckboxLabel.create(ls`Regular expression`);
     this._regexLabel.classList.add('search-config-label');
     this._searchPanelElement.appendChild(this._regexLabel);
     this._regexCheckbox = this._regexLabel.checkboxElement;
@@ -127,7 +127,7 @@ Sources.AdvancedSearchView = class extends UI.VBox {
     if (this._progressIndicator)
       this._progressIndicator.done();
     this._progressIndicator = new UI.ProgressIndicator();
-    this._searchMessageElement.textContent = Common.UIString('Indexing\u2026');
+    this._searchMessageElement.textContent = ls`Indexing\u2026`;
     this._progressIndicator.show(this._searchProgressPlaceholderElement);
     this._searchScope.performIndexing(
         new Common.ProgressProxy(this._progressIndicator, this._onIndexingFinished.bind(this)));
@@ -222,12 +222,12 @@ Sources.AdvancedSearchView = class extends UI.VBox {
     this._resetResults();
     this._resetCounters();
 
-    this._searchMessageElement.textContent = Common.UIString('Searching\u2026');
+    this._searchMessageElement.textContent = ls`Searching\u2026`;
     progressIndicator.show(this._searchProgressPlaceholderElement);
     this._updateSearchResultsMessage();
 
     if (!this._searchingView)
-      this._searchingView = new UI.EmptyWidget(Common.UIString('Searching\u2026'));
+      this._searchingView = new UI.EmptyWidget(ls`Searching\u2026`);
     this._searchingView.show(this._searchResultsElement);
   }
 
@@ -235,13 +235,13 @@ Sources.AdvancedSearchView = class extends UI.VBox {
    * @param {boolean} finished
    */
   _indexingFinished(finished) {
-    this._searchMessageElement.textContent = finished ? '' : Common.UIString('Indexing interrupted.');
+    this._searchMessageElement.textContent = finished ? '' : ls`Indexing interrupted.`;
   }
 
   _updateSearchResultsMessage() {
     if (this._searchMatchesCount && this._searchResultsCount) {
       if (this._searchMatchesCount === 1 && this._nonEmptySearchResultsCount === 1) {
-        this._searchResultsMessageElement.textContent = Common.UIString('Found 1 matching line in 1 file.');
+        this._searchResultsMessageElement.textContent = ls`Found 1 matching line in 1 file.`;
       } else if (this._searchMatchesCount > 1 && this._nonEmptySearchResultsCount === 1) {
         this._searchResultsMessageElement.textContent =
             Common.UIString('Found %d matching lines in 1 file.', this._searchMatchesCount);
@@ -272,9 +272,9 @@ Sources.AdvancedSearchView = class extends UI.VBox {
     this._resetResults();
 
     if (!this._notFoundView)
-      this._notFoundView = new UI.EmptyWidget(Common.UIString('No matches found.'));
+      this._notFoundView = new UI.EmptyWidget(ls`No matches found.`);
     this._notFoundView.show(this._searchResultsElement);
-    this._searchResultsMessageElement.textContent = Common.UIString('No matches found.');
+    this._searchResultsMessageElement.textContent = ls`No matches found.`;
   }
 
   /**
@@ -292,8 +292,7 @@ Sources.AdvancedSearchView = class extends UI.VBox {
    * @param {boolean} finished
    */
   _searchFinished(finished) {
-    this._searchMessageElement.textContent =
-        finished ? Common.UIString('Search finished.') : Common.UIString('Search interrupted.');
+    this._searchMessageElement.textContent = finished ? ls`Search finished.` : ls`Search interrupted.`;
   }
 
   /**

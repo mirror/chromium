@@ -31,11 +31,11 @@ Help.ReleaseNoteView = class extends UI.VBox {
     }
 
     var actionContainer = container.createChild('div', 'release-note-action-container');
-    actionContainer.appendChild(UI.createTextButton(Common.UIString('Learn more'), event => {
+    actionContainer.appendChild(UI.createTextButton(ls`Learn more`, event => {
       event.consume(true);
       InspectorFrontendHost.openInNewTab(releaseNote.link);
     }));
-    actionContainer.appendChild(UI.createTextButton(Common.UIString('Close'), event => {
+    actionContainer.appendChild(UI.createTextButton(ls`Close`, event => {
       event.consume(true);
       UI.inspectorView.closeDrawerTab(Help.releaseNoteViewId, true);
     }, 'close-release-note'));

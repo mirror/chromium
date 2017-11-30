@@ -19,7 +19,7 @@ Elements.ClassesPaneWidget = class extends UI.Widget {
     this._prompt.renderAsBlock();
 
     var proxyElement = this._prompt.attach(this._input);
-    this._prompt.setPlaceholder(Common.UIString('Add new class'));
+    this._prompt.setPlaceholder(ls`Add new class`);
     this._prompt.addEventListener(UI.TextPrompt.Events.TextChanged, this._onTextChanged, this);
     proxyElement.addEventListener('keydown', this._onKeyDown.bind(this), false);
 
@@ -238,7 +238,7 @@ Elements.ClassesPaneWidget._classesSymbol = Symbol('Elements.ClassesPaneWidget._
  */
 Elements.ClassesPaneWidget.ButtonProvider = class {
   constructor() {
-    this._button = new UI.ToolbarToggle(Common.UIString('Element Classes'), '');
+    this._button = new UI.ToolbarToggle(ls`Element Classes`, '');
     this._button.setText('.cls');
     this._button.element.classList.add('monospace');
     this._button.addEventListener(UI.ToolbarButton.Events.Click, this._clicked, this);

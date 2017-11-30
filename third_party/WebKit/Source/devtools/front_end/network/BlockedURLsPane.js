@@ -15,13 +15,13 @@ Network.BlockedURLsPane = class extends UI.VBox {
 
     this._toolbar = new UI.Toolbar('', this.contentElement);
     this._enabledCheckbox =
-        new UI.ToolbarCheckbox(Common.UIString('Enable request blocking'), undefined, this._toggleEnabled.bind(this));
+        new UI.ToolbarCheckbox(ls`Enable request blocking`, undefined, this._toggleEnabled.bind(this));
     this._toolbar.appendToolbarItem(this._enabledCheckbox);
     this._toolbar.appendSeparator();
-    var addButton = new UI.ToolbarButton(Common.UIString('Add pattern'), 'largeicon-add');
+    var addButton = new UI.ToolbarButton(ls`Add pattern`, 'largeicon-add');
     addButton.addEventListener(UI.ToolbarButton.Events.Click, this._addButtonClicked, this);
     this._toolbar.appendToolbarItem(addButton);
-    var clearButton = new UI.ToolbarButton(Common.UIString('Remove all patterns'), 'largeicon-clear');
+    var clearButton = new UI.ToolbarButton(ls`Remove all patterns`, 'largeicon-clear');
     clearButton.addEventListener(UI.ToolbarButton.Events.Click, this._removeAll, this);
     this._toolbar.appendToolbarItem(clearButton);
 
@@ -50,9 +50,9 @@ Network.BlockedURLsPane = class extends UI.VBox {
    */
   _createEmptyPlaceholder() {
     var element = this.contentElement.createChild('div', 'no-blocked-urls');
-    element.createChild('span').textContent = Common.UIString('Requests are not blocked. ');
+    element.createChild('span').textContent = ls`Requests are not blocked. `;
     var addLink = element.createChild('span', 'link');
-    addLink.textContent = Common.UIString('Add pattern.');
+    addLink.textContent = ls`Add pattern.`;
     addLink.href = '';
     addLink.addEventListener('click', this._addButtonClicked.bind(this), false);
     return element;
@@ -153,8 +153,7 @@ Network.BlockedURLsPane = class extends UI.VBox {
     var editor = new UI.ListWidget.Editor();
     var content = editor.contentElement();
     var titles = content.createChild('div', 'blocked-url-edit-row');
-    titles.createChild('div').textContent =
-        Common.UIString('Text pattern to block matching requests; use * for wildcard');
+    titles.createChild('div').textContent = ls`Text pattern to block matching requests; use * for wildcard`;
     var fields = content.createChild('div', 'blocked-url-edit-row');
     var urlInput = editor.createInput(
         'url', 'text', '',

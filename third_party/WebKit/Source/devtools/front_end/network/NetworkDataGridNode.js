@@ -871,7 +871,7 @@ Network.NetworkRequestNode = class extends Network.NetworkNode {
         'network-dim-cell', !this._isFailed() && (this._request.cached() || !this._request.statusCode));
 
     if (this._request.failed && !this._request.canceled && !this._request.wasBlocked()) {
-      var failText = Common.UIString('(failed)');
+      var failText = ls`(failed)`;
       if (this._request.localizedFailDescription) {
         cell.createTextChild(failText);
         this._appendSubtitle(cell, this._request.localizedFailDescription);
@@ -884,33 +884,33 @@ Network.NetworkRequestNode = class extends Network.NetworkNode {
       this._appendSubtitle(cell, this._request.statusText);
       cell.title = this._request.statusCode + ' ' + this._request.statusText;
     } else if (this._request.parsedURL.isDataURL()) {
-      this._setTextAndTitle(cell, Common.UIString('(data)'));
+      this._setTextAndTitle(cell, ls`(data)`);
     } else if (this._request.canceled) {
-      this._setTextAndTitle(cell, Common.UIString('(canceled)'));
+      this._setTextAndTitle(cell, ls`(canceled)`);
     } else if (this._request.wasBlocked()) {
-      var reason = Common.UIString('other');
+      var reason = ls`other`;
       switch (this._request.blockedReason()) {
         case Protocol.Network.BlockedReason.Csp:
-          reason = Common.UIString('csp');
+          reason = ls`csp`;
           break;
         case Protocol.Network.BlockedReason.MixedContent:
-          reason = Common.UIString('mixed-content');
+          reason = ls`mixed-content`;
           break;
         case Protocol.Network.BlockedReason.Origin:
-          reason = Common.UIString('origin');
+          reason = ls`origin`;
           break;
         case Protocol.Network.BlockedReason.Inspector:
-          reason = Common.UIString('devtools');
+          reason = ls`devtools`;
           break;
         case Protocol.Network.BlockedReason.Other:
-          reason = Common.UIString('other');
+          reason = ls`other`;
           break;
       }
       this._setTextAndTitle(cell, Common.UIString('(blocked:%s)', reason));
     } else if (this._request.finished) {
-      this._setTextAndTitle(cell, Common.UIString('Finished'));
+      this._setTextAndTitle(cell, ls`Finished`);
     } else {
-      this._setTextAndTitle(cell, Common.UIString('(pending)'));
+      this._setTextAndTitle(cell, ls`(pending)`);
     }
   }
 
@@ -924,7 +924,7 @@ Network.NetworkRequestNode = class extends Network.NetworkNode {
 
     var timing = request.timing;
     if (timing && timing.pushStart)
-      cell.appendChild(createTextNode(Common.UIString('Push / ')));
+      cell.appendChild(createTextNode(ls`Push / `));
     switch (initiator.type) {
       case SDK.NetworkRequest.InitiatorType.Parser:
         cell.title = initiator.url + ':' + (initiator.lineNumber + 1);
@@ -934,7 +934,7 @@ Network.NetworkRequestNode = class extends Network.NetworkNode {
           lineNumber: initiator.lineNumber,
           columnNumber: initiator.columnNumber
         }));
-        this._appendSubtitle(cell, Common.UIString('Parser'));
+        this._appendSubtitle(cell, ls`Parser`);
         break;
 
       case SDK.NetworkRequest.InitiatorType.Redirect:
@@ -947,7 +947,7 @@ Network.NetworkRequestNode = class extends Network.NetworkNode {
         } else {
           cell.appendChild(Components.Linkifier.linkifyURL(redirectSource.url()));
         }
-        this._appendSubtitle(cell, Common.UIString('Redirect'));
+        this._appendSubtitle(cell, ls`Redirect`);
         break;
 
       case SDK.NetworkRequest.InitiatorType.Script:
@@ -957,21 +957,21 @@ Network.NetworkRequestNode = class extends Network.NetworkNode {
             initiator.columnNumber);
         this._linkifiedInitiatorAnchor.title = '';
         cell.appendChild(this._linkifiedInitiatorAnchor);
-        this._appendSubtitle(cell, Common.UIString('Script'));
+        this._appendSubtitle(cell, ls`Script`);
         cell.classList.add('network-script-initiated');
         cell.request = request;
         break;
 
       case SDK.NetworkRequest.InitiatorType.Preload:
-        cell.title = Common.UIString('Preload');
+        cell.title = ls`Preload`;
         cell.classList.add('network-dim-cell');
-        cell.appendChild(createTextNode(Common.UIString('Preload')));
+        cell.appendChild(createTextNode(ls`Preload`));
         break;
 
       default:
-        cell.title = Common.UIString('Other');
+        cell.title = ls`Other`;
         cell.classList.add('network-dim-cell');
-        cell.appendChild(createTextNode(Common.UIString('Other')));
+        cell.appendChild(createTextNode(ls`Other`));
     }
   }
 
@@ -980,13 +980,13 @@ Network.NetworkRequestNode = class extends Network.NetworkNode {
    */
   _renderSizeCell(cell) {
     if (this._request.fetchedViaServiceWorker) {
-      this._setTextAndTitle(cell, Common.UIString('(from ServiceWorker)'));
+      this._setTextAndTitle(cell, ls`(from ServiceWorker)`);
       cell.classList.add('network-dim-cell');
     } else if (this._request.cached()) {
       if (this._request.cachedInMemory())
-        this._setTextAndTitle(cell, Common.UIString('(from memory cache)'));
+        this._setTextAndTitle(cell, ls`(from memory cache)`);
       else
-        this._setTextAndTitle(cell, Common.UIString('(from disk cache)'));
+        this._setTextAndTitle(cell, ls`(from disk cache)`);
       cell.classList.add('network-dim-cell');
     } else {
       var resourceSize = Number.bytesToString(this._request.resourceSize);
@@ -1005,7 +1005,7 @@ Network.NetworkRequestNode = class extends Network.NetworkNode {
       this._appendSubtitle(cell, Number.secondsToString(this._request.latency));
     } else {
       cell.classList.add('network-dim-cell');
-      this._setTextAndTitle(cell, Common.UIString('Pending'));
+      this._setTextAndTitle(cell, ls`Pending`);
     }
   }
 

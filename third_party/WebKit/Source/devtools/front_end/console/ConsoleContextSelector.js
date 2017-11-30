@@ -276,7 +276,7 @@ Console.ConsoleContextSelector = class {
       var frame = resourceTreeModel && resourceTreeModel.frameForId(executionContext.frameId);
     }
     if (executionContext.origin.startsWith('chrome-extension://'))
-      return Common.UIString('Extension');
+      return ls`Extension`;
     if (!frame || !frame.parentFrame || frame.parentFrame.securityOrigin !== executionContext.origin) {
       var url = executionContext.origin.asParsedURL();
       if (url)
@@ -287,7 +287,7 @@ Console.ConsoleContextSelector = class {
       var callFrame = frame.findCreationCallFrame(callFrame => !!callFrame.url);
       if (callFrame)
         return new Common.ParsedURL(callFrame.url).domain();
-      return Common.UIString('IFrame');
+      return ls`IFrame`;
     }
     return '';
   }

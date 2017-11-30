@@ -221,7 +221,7 @@ SDK.NetworkManager.Conditions;
 
 /** @type {!SDK.NetworkManager.Conditions} */
 SDK.NetworkManager.NoThrottlingConditions = {
-  title: Common.UIString('Online'),
+  title: ls`Online`,
   download: -1,
   upload: -1,
   latency: 0
@@ -229,7 +229,7 @@ SDK.NetworkManager.NoThrottlingConditions = {
 
 /** @type {!SDK.NetworkManager.Conditions} */
 SDK.NetworkManager.OfflineConditions = {
-  title: Common.UIString('Offline'),
+  title: ls`Offline`,
   download: 0,
   upload: 0,
   latency: 0,
@@ -237,7 +237,7 @@ SDK.NetworkManager.OfflineConditions = {
 
 /** @type {!SDK.NetworkManager.Conditions} */
 SDK.NetworkManager.Slow3GConditions = {
-  title: Common.UIString('Slow 3G'),
+  title: ls`Slow 3G`,
   download: 500 * 1024 / 8 * .8,
   upload: 500 * 1024 / 8 * .8,
   latency: 400 * 5,
@@ -245,7 +245,7 @@ SDK.NetworkManager.Slow3GConditions = {
 
 /** @type {!SDK.NetworkManager.Conditions} */
 SDK.NetworkManager.Fast3GConditions = {
-  title: Common.UIString('Fast 3G'),
+  title: ls`Fast 3G`,
   download: 1.6 * 1024 * 1024 / 8 * .9,
   upload: 750 * 1024 / 8 * .9,
   latency: 150 * 3.75,

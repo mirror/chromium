@@ -43,17 +43,16 @@ Elements.EventListenersWidget = class extends UI.ThrottledWidget {
     this._dispatchFilterBySetting.addChangeListener(this.update.bind(this));
 
     this._showFrameworkListenersSetting = Common.settings.createSetting('showFrameowkrListeners', true);
-    this._showFrameworkListenersSetting.setTitle(Common.UIString('Framework listeners'));
+    this._showFrameworkListenersSetting.setTitle(ls`Framework listeners`);
     this._showFrameworkListenersSetting.addChangeListener(this._showFrameworkListenersChanged.bind(this));
     this._eventListenersView = new EventListeners.EventListenersView(this.update.bind(this));
     this._eventListenersView.show(this.element);
 
-    var refreshButton = new UI.ToolbarButton(Common.UIString('Refresh'), 'largeicon-refresh');
+    var refreshButton = new UI.ToolbarButton(ls`Refresh`, 'largeicon-refresh');
     refreshButton.addEventListener(UI.ToolbarButton.Events.Click, this.update.bind(this));
     this._toolbarItems.push(refreshButton);
     this._toolbarItems.push(new UI.ToolbarSettingCheckbox(
-        this._showForAncestorsSetting, Common.UIString('Show listeners on the ancestors'),
-        Common.UIString('Ancestors')));
+        this._showForAncestorsSetting, ls`Show listeners on the ancestors`, ls`Ancestors`));
     var dispatchFilter = new UI.ToolbarComboBox(this._onDispatchFilterTypeChanged.bind(this));
 
     /**
@@ -66,15 +65,13 @@ Elements.EventListenersWidget = class extends UI.ThrottledWidget {
       if (value === this._dispatchFilterBySetting.get())
         dispatchFilter.select(option);
     }
-    addDispatchFilterOption.call(this, Common.UIString('All'), Elements.EventListenersWidget.DispatchFilterBy.All);
-    addDispatchFilterOption.call(
-        this, Common.UIString('Passive'), Elements.EventListenersWidget.DispatchFilterBy.Passive);
-    addDispatchFilterOption.call(
-        this, Common.UIString('Blocking'), Elements.EventListenersWidget.DispatchFilterBy.Blocking);
+    addDispatchFilterOption.call(this, ls`All`, Elements.EventListenersWidget.DispatchFilterBy.All);
+    addDispatchFilterOption.call(this, ls`Passive`, Elements.EventListenersWidget.DispatchFilterBy.Passive);
+    addDispatchFilterOption.call(this, ls`Blocking`, Elements.EventListenersWidget.DispatchFilterBy.Blocking);
     dispatchFilter.setMaxWidth(200);
     this._toolbarItems.push(dispatchFilter);
     this._toolbarItems.push(new UI.ToolbarSettingCheckbox(
-        this._showFrameworkListenersSetting, Common.UIString('Resolve event listeners bound with framework')));
+        this._showFrameworkListenersSetting, ls`Resolve event listeners bound with framework`));
 
     UI.context.addFlavorChangeListener(SDK.DOMNode, this.update, this);
     this.update();

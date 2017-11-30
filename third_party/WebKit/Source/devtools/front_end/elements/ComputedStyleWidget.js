@@ -48,14 +48,14 @@ Elements.ComputedStyleWidget = class extends UI.ThrottledWidget {
     var hbox = this.contentElement.createChild('div', 'hbox styles-sidebar-pane-toolbar');
     var filterContainerElement = hbox.createChild('div', 'styles-sidebar-pane-filter-box');
     var filterInput = Elements.StylesSidebarPane.createPropertyFilterElement(
-        Common.UIString('Filter'), hbox, filterCallback.bind(this), 'styles-filter-engaged');
-    UI.ARIAUtils.setAccessibleName(filterInput, Common.UIString('Filter Computed Styles'));
+        ls`Filter`, hbox, filterCallback.bind(this), 'styles-filter-engaged');
+    UI.ARIAUtils.setAccessibleName(filterInput, ls`Filter Computed Styles`);
     filterContainerElement.appendChild(filterInput);
     this.setDefaultFocusedElement(filterInput);
 
     var toolbar = new UI.Toolbar('styles-pane-toolbar', hbox);
-    toolbar.appendToolbarItem(new UI.ToolbarSettingCheckbox(
-        this._showInheritedComputedStylePropertiesSetting, undefined, Common.UIString('Show all')));
+    toolbar.appendToolbarItem(
+        new UI.ToolbarSettingCheckbox(this._showInheritedComputedStylePropertiesSetting, undefined, ls`Show all`));
 
     this._propertiesOutline = new UI.TreeOutlineInShadow();
     this._propertiesOutline.hideOverflow();

@@ -30,14 +30,14 @@
  */
 Sources.CallStackSidebarPane = class extends UI.SimpleView {
   constructor() {
-    super(Common.UIString('Call Stack'), true);
+    super(ls`Call Stack`, true);
     this.registerRequiredCSS('sources/callStackSidebarPane.css');
 
     this._blackboxedMessageElement = this._createBlackboxedMessageElement();
     this.contentElement.appendChild(this._blackboxedMessageElement);
 
     this._notPausedMessageElement = this.contentElement.createChild('div', 'gray-info-message');
-    this._notPausedMessageElement.textContent = Common.UIString('Not paused');
+    this._notPausedMessageElement.textContent = ls`Not paused`;
 
     /** @type {!UI.ListModel<!Sources.CallStackSidebarPane.Item>} */
     this._items = new UI.ListModel();
@@ -159,8 +159,7 @@ Sources.CallStackSidebarPane = class extends UI.SimpleView {
       this._blackboxedMessageElement.classList.add('hidden');
     } else {
       if (hiddenCallFramesCount === 1) {
-        this._blackboxedMessageElement.firstChild.textContent =
-            Common.UIString('1 stack frame is hidden (black-boxed).');
+        this._blackboxedMessageElement.firstChild.textContent = ls`1 stack frame is hidden (black-boxed).`;
       } else {
         this._blackboxedMessageElement.firstChild.textContent =
             Common.UIString('%d stack frames are hidden (black-boxed).', hiddenCallFramesCount);
@@ -261,7 +260,7 @@ Sources.CallStackSidebarPane = class extends UI.SimpleView {
     if (item.runtimeCallFrame)
       return UI.beautifyFunctionName(item.runtimeCallFrame.functionName);
     if (item.promiseCreationFrame)
-      return Common.UIString('chained at');
+      return ls`chained at`;
     return item.asyncStackHeader || '';
   }
 
@@ -288,7 +287,7 @@ Sources.CallStackSidebarPane = class extends UI.SimpleView {
     var element = createElementWithClass('div', 'blackboxed-message');
     element.createChild('span');
     var showAllLink = element.createChild('span', 'link');
-    showAllLink.textContent = Common.UIString('Show');
+    showAllLink.textContent = ls`Show`;
     showAllLink.addEventListener('click', () => {
       this._showBlackboxed = true;
       this._update();
@@ -303,7 +302,7 @@ Sources.CallStackSidebarPane = class extends UI.SimpleView {
     var element = createElementWithClass('div', 'show-more-message');
     element.createChild('span');
     var showAllLink = element.createChild('span', 'link');
-    showAllLink.textContent = Common.UIString('Show more');
+    showAllLink.textContent = ls`Show more`;
     showAllLink.addEventListener('click', () => {
       this._maxAsyncStackChainDepth += Sources.CallStackSidebarPane._defaultMaxAsyncStackChainDepth;
       this._update();
@@ -320,8 +319,8 @@ Sources.CallStackSidebarPane = class extends UI.SimpleView {
       return;
     var contextMenu = new UI.ContextMenu(event);
     if (item.debuggerCallFrame)
-      contextMenu.defaultSection().appendItem(Common.UIString('Restart frame'), () => item.debuggerCallFrame.restart());
-    contextMenu.defaultSection().appendItem(Common.UIString('Copy stack trace'), this._copyStackTrace.bind(this));
+      contextMenu.defaultSection().appendItem(ls`Restart frame`, () => item.debuggerCallFrame.restart());
+    contextMenu.defaultSection().appendItem(ls`Copy stack trace`, this._copyStackTrace.bind(this));
     var location = this._itemLocation(item);
     var uiLocation = location ? Bindings.debuggerWorkspaceBinding.rawLocationToUILocation(location) : null;
     if (uiLocation)
@@ -371,19 +370,19 @@ Sources.CallStackSidebarPane = class extends UI.SimpleView {
     if (canBlackbox) {
       if (isBlackboxed) {
         contextMenu.defaultSection().appendItem(
-            Common.UIString('Stop blackboxing'), manager.unblackboxUISourceCode.bind(manager, uiSourceCode));
+            ls`Stop blackboxing`, manager.unblackboxUISourceCode.bind(manager, uiSourceCode));
       } else {
         contextMenu.defaultSection().appendItem(
-            Common.UIString('Blackbox script'), manager.blackboxUISourceCode.bind(manager, uiSourceCode));
+            ls`Blackbox script`, manager.blackboxUISourceCode.bind(manager, uiSourceCode));
       }
     }
     if (isContentScript) {
       if (isBlackboxed) {
         contextMenu.defaultSection().appendItem(
-            Common.UIString('Stop blackboxing all content scripts'), manager.blackboxContentScripts.bind(manager));
+            ls`Stop blackboxing all content scripts`, manager.blackboxContentScripts.bind(manager));
       } else {
         contextMenu.defaultSection().appendItem(
-            Common.UIString('Blackbox all content scripts'), manager.unblackboxContentScripts.bind(manager));
+            ls`Blackbox all content scripts`, manager.unblackboxContentScripts.bind(manager));
       }
     }
   }
