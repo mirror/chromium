@@ -104,6 +104,24 @@
       "revId": "8aa719565098fbc91ea5396a539df5c1f950262b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77900826_ed3734f4",
+        "filename": "ui/views/view_constants_aura.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-30T19:50:05Z",
+      "side": 1,
+      "message": "Please add some good explanatory comments here and in view_properties.h.\nIt\u0027s not naively obvious why declarations are required in these headers.",
+      "parentUuid": "32d01d36_112b1f90",
+      "revId": "8aa719565098fbc91ea5396a539df5c1f950262b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
