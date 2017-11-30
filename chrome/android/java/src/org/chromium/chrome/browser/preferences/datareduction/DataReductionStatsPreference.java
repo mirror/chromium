@@ -64,9 +64,9 @@ public class DataReductionStatsPreference extends Preference {
     private long mLeftPosition;
     private long mRightPosition;
     private Long mCurrentTime;
-    private String mOriginalTotalPhrase;
-    private String mSavingsTotalPhrase;
-    private String mReceivedTotalPhrase;
+    private CharSequence mOriginalTotalPhrase;
+    private CharSequence mSavingsTotalPhrase;
+    private CharSequence mReceivedTotalPhrase;
     private String mPercentReductionPhrase;
     private String mStartDatePhrase;
     private String mEndDatePhrase;
@@ -292,12 +292,19 @@ public class DataReductionStatsPreference extends Preference {
         final Context context = getContext();
 
         final long compressedTotalBytes = mReceivedNetworkStatsHistory.getTotalBytes();
-        mReceivedTotalPhrase = Formatter.formatFileSize(context, compressedTotalBytes);
-
+        String receivedTotal = Formatter.formatFileSize(context, compressedTotalBytes);
+        // For some languages TTS does not speak "B" as "bytes", so the text is wrapped with a span.
+        mReceivedTotalPhrase =
+                DataReductionUtils.setSpanForBytes(compressedTotalBytes, receivedTotal);
         final long originalTotalBytes = mOriginalNetworkStatsHistory.getTotalBytes();
-        mOriginalTotalPhrase = Formatter.formatFileSize(context, originalTotalBytes);
-        mSavingsTotalPhrase =
-                Formatter.formatFileSize(context, originalTotalBytes - compressedTotalBytes);
+        String originalTotal = Formatter.formatFileSize(context, originalTotalBytes);
+        // For some languages TTS does not speak "B" as "bytes", so the text is wrapped with a span.
+        mOriginalTotalPhrase =
+                DataReductionUtils.setSpanForBytes(originalTotalBytes, originalTotal);
+        final long savingsTotalBytes = originalTotalBytes - compressedTotalBytes;
+        String savingsTotal = Formatter.formatFileSize(context, savingsTotalBytes);
+        // For some languages TTS does not speak "B" as "bytes", so the text is wrapped with a span.
+        mSavingsTotalPhrase = DataReductionUtils.setSpanForBytes(savingsTotalBytes, savingsTotal);
 
         float percentage = 0.0f;
         if (originalTotalBytes > 0L && originalTotalBytes > compressedTotalBytes) {
