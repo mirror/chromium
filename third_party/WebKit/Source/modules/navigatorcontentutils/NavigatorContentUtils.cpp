@@ -62,10 +62,16 @@ static bool VerifyCustomHandlerURL(const Document& document,
 
   // It is also a SyntaxError if the custom handler URL, as created by removing
   // the "%s" token and prepending the base url, does not resolve.
-  String new_url = url;
-  new_url.Remove(index, WTF_ARRAY_LENGTH(kToken) - 1);
-
-  KURL kurl = document.CompleteURL(url);
+  KURL kurl;
+  if (url.EndsWith(kToken)) {
+    String new_url = url;
+    new_url.Remove(index, WTF_ARRAY_LENGTH(kToken) - 1);
+    kurl = document.CompleteURL(new_url);
+  } else {
+    // TODO(gyuyoung): If the %s placeholder is in the scheme, host, or port
+    // parts of the URL, this should throw a SecurityError exception forcibly.
+    kurl = document.CompleteURL(url);
+  }
 
   if (kurl.IsEmpty() || !kurl.IsValid()) {
     exception_state.ThrowDOMException(
