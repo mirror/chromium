@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "ab83c7a2_861d101b",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_dictionary.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-11-30T23:06:58Z",
+      "side": 1,
+      "message": "IMHO filters are difficult to understand but I don\u0027t think it\u0027s worth reworking.",
+      "parentUuid": "27a70eef_4d919f2f",
+      "revId": "a2fd32a543c748c59064b1286e70c5638a10d221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be465539_7c5e6e8c",
         "filename": "third_party/WebKit/Source/bindings/scripts/v8_utilities.py",
         "patchSetId": 4
