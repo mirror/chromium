@@ -26,15 +26,22 @@
   <template>
     <style include=
         "iron-flex cr-hidden-style cr-icons action-link paper-button-style">
+      :root {
+        --card-horizontal-padding: 20px;
+        --icon-dimension: 36px;
+        --icon-padding: 6px;
+        --content-margin-start: 24px;
+      }
+
       #icon-wrapper {
         align-self: flex-start;
         display: flex;
-        padding: 6px;
+        padding: var(--icon-padding);
       }
 
       #icon {
-        height: 36px;
-        width: 36px;
+        height: var(--icon-dimension);
+        width: var(--icon-dimension);
       }
 
       #card {
@@ -54,14 +61,22 @@
       #main {
         display: flex;
         flex-grow: 1;
-        padding: 16px 20px 17px;
+        padding: 16px var(--card-horizontal-padding) 17px;
       }
 
       #content {
-        -webkit-margin-start: 24px;
+        -webkit-margin-start: var(--content-margin-start);
         display: flex;
         flex-direction: column;
-        width: 100%;
+        /*
+         * The content area takes the full width of the card, minus the padding
+         * and the icon.
+         */
+        width: calc(var(--extensions-card-width) -
+            (var(--card-horizontal-padding) * 2) -
+            var(--icon-dimension) -
+            (var(--icon-padding) * 2) -
+            var(--content-margin-start));
       }
 
       #name-and-version {
@@ -87,6 +102,31 @@
         /* TODO(dschuyler): use --cr-secondary-text. */
         color: var(--paper-grey-600);
         font-weight: 400;
+      }
+
+      #inspect-views {
+        display: flex;
+        white-space: nowrap;
+      }
+
+      #inspect-views-label {
+        -webkit-margin-end: 4px;
+        flex-shrink: 0;
+      }
+
+      #extra-inspect-views {
+        flex-shrink: 0;
+      }
+
+      #first-inspect-view {
+        /**
+         * These labels can be arbitrarily long. Shrink the first one (and
+         * add ellipses) to ensure that the main label and the "n more" label
+         * are visible, as well as preventing overflow from the card.
+         */
+        flex-shrink: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       #button-strip {
@@ -225,11 +265,13 @@
             <template is="dom-if"
                 if="[[!computeInspectViewsHidden_(data.views)]]">
               <div id="inspect-views">
-                <span>$i18n{itemInspectViews}</span>
-                <a is="action-link" on-tap="onInspectTap_">
+                <span id="inspect-views-label">$i18n{itemInspectViews}</span>
+                <a id="first-inspect-view" is="action-link"
+                    title="[[computeFirstInspectTitle_(data.views)]]"
+                    on-tap="onInspectTap_">
                   [[computeFirstInspectLabel_(data.views)]]
                 </a>
-                <a is="action-link"
+                <a id="extra-inspect-views" is="action-link"
                     hidden$="[[computeExtraViewsHidden_(data.views)]]"
                     on-tap="onExtraInspectTap_">
                   [[computeExtraInspectLabel_(data.views)]]
