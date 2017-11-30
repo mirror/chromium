@@ -22,6 +22,47 @@
       "revId": "880ea7caffc078fe3b3ae9de8f4995874aebb5be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8a54a65_17ce1291",
+        "filename": "components/search_engines/default_search_policy_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-11-30T19:29:01Z",
+      "side": 1,
+      "message": "I\u0027m not sure it\u0027s worth it, but if it is, I\u0027d use a name like \"IsDSPEnablePolicySet\" or some other thing that has \"policy\" in it, to make it clear it\u0027s distinct from asking if the DSP itself is set.",
+      "parentUuid": "a3c7383f_a52eb203",
+      "range": {
+        "startLine": 104,
+        "startChar": 7,
+        "endLine": 104,
+        "endChar": 29
+      },
+      "revId": "880ea7caffc078fe3b3ae9de8f4995874aebb5be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b75e6d8d_44b0d65e",
+        "filename": "components/search_engines/default_search_policy_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-11-30T19:29:01Z",
+      "side": 1,
+      "message": "Nit: Maybe \"Check that when the default search enabled policy is not set, all other default search-related policies are ignored.\"",
+      "revId": "880ea7caffc078fe3b3ae9de8f4995874aebb5be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
