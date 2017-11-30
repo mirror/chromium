@@ -140,6 +140,30 @@
       "revId": "fc0b12c05478c86d2fc3080fbece1f792f4cb26e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64f5f6b2_33df9610",
+        "filename": "ui/file_manager/file_manager/common/js/volume_manager_common.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-11-30T00:30:06Z",
+      "side": 1,
+      "message": "Tomasz\u0027s suggestion looks more natural to me.\n\nBTW, do we really extend existing Event object?\nWe can add |mountPoint| property on a simple Event object.\nIf we want to tell the compiler about the |mountPoint| property and let them check the property, we can specify it in externs file.\n(Example: https://codesearch.chromium.org/chromium/src/ui/file_manager/externs/directory_change_event.js)",
+      "parentUuid": "00cbc5e3_f70bb9ac",
+      "range": {
+        "startLine": 348,
+        "startChar": 0,
+        "endLine": 349,
+        "endChar": 15
+      },
+      "revId": "fc0b12c05478c86d2fc3080fbece1f792f4cb26e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
