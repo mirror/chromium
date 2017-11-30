@@ -139,6 +139,24 @@
     },
     {
       "key": {
+        "uuid": "6256dace_97873513",
+        "filename": "chrome/browser/vr/metrics_helper.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T04:45:02Z",
+      "side": 1,
+      "message": "Ignore. These need to be separate [2]. We could use the functions [2] instead, but it\u0027s probably not worth it.\n\n[1] https://cs.chromium.org/chromium/src/base/metrics/histogram_macros.h?rcl\u003db06cdb885c0f2e80f469036d67ce6f782955240b\u0026l\u003d23\n[2] https://cs.chromium.org/chromium/src/base/metrics/histogram_functions.h?rcl\u003dc5e020391fe3f373d3a5a329f048e6ba05bdf447\u0026l\u003d12",
+      "parentUuid": "4efff418_64dd0ebd",
+      "revId": "d5dc7c7e6de4e31e0cedc7f202550987e0772588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cdb57e2c_c103fe43",
         "filename": "chrome/browser/vr/metrics_helper.cc",
         "patchSetId": 16
