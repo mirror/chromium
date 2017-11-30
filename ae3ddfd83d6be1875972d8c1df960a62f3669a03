@@ -22,6 +22,30 @@
       "revId": "ae3ddfd83d6be1875972d8c1df960a62f3669a03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5535cafa_de8a5452",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-30T19:20:15Z",
+      "side": 1,
+      "message": "Thanks! I had 80 chars in mind. I would do 50 chars in the future.",
+      "parentUuid": "7c859454_36d854ae",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 80
+      },
+      "revId": "ae3ddfd83d6be1875972d8c1df960a62f3669a03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
