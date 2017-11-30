@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a6988a62_3031e9ee",
+        "filename": "chrome/browser/component_updater/mei_preload_component_installer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-30T10:53:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "959f2980_4cbcc01f",
+      "range": {
+        "startLine": 48,
+        "startChar": 22,
+        "endLine": 48,
+        "endChar": 25
+      },
+      "revId": "14ce33564f71124e6d1fb0b03e5267512663493f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1e36056_931e95fb",
         "filename": "chrome/browser/component_updater/mei_preload_component_installer.cc",
         "patchSetId": 14
@@ -39,6 +63,24 @@
       "revId": "14ce33564f71124e6d1fb0b03e5267512663493f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f909ff3_925ea58d",
+        "filename": "chrome/browser/component_updater/mei_preload_component_installer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-30T10:53:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1e36056_931e95fb",
+      "revId": "14ce33564f71124e6d1fb0b03e5267512663493f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "9d382e2d_579e1f33",
+        "filename": "chrome/browser/component_updater/mei_preload_component_installer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-30T10:53:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bc02de1_94bde74e",
+      "revId": "14ce33564f71124e6d1fb0b03e5267512663493f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84cd4c8d_fe15b0fb",
         "filename": "chrome/browser/component_updater/mei_preload_component_installer.cc",
         "patchSetId": 14
@@ -73,6 +133,24 @@
       "revId": "14ce33564f71124e6d1fb0b03e5267512663493f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f76cf10e_4835cdb8",
+        "filename": "chrome/browser/component_updater/mei_preload_component_installer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-30T10:53:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84cd4c8d_fe15b0fb",
+      "revId": "14ce33564f71124e6d1fb0b03e5267512663493f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "c8ec0dec_25e7d140",
+        "filename": "chrome/browser/component_updater/mei_preload_component_installer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-30T10:53:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb871187_d59592c5",
+      "range": {
+        "startLine": 137,
+        "startChar": 27,
+        "endLine": 137,
+        "endChar": 34
+      },
+      "revId": "14ce33564f71124e6d1fb0b03e5267512663493f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43993395_73eed887",
         "filename": "chrome/browser/component_updater/mei_preload_component_installer.h",
         "patchSetId": 14
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "8743c5b6_48b81fa9",
+        "filename": "chrome/browser/component_updater/mei_preload_component_installer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-30T10:53:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43993395_73eed887",
+      "range": {
+        "startLine": 68,
+        "startChar": 51,
+        "endLine": 68,
+        "endChar": 58
+      },
+      "revId": "14ce33564f71124e6d1fb0b03e5267512663493f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1c5aeba_8e9af2a2",
         "filename": "chrome/browser/media/media_engagement_browsertest.cc",
         "patchSetId": 14
@@ -136,6 +262,24 @@
       "revId": "14ce33564f71124e6d1fb0b03e5267512663493f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fc505ce_b8d21db2",
+        "filename": "chrome/browser/media/media_engagement_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-30T10:53:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1c5aeba_8e9af2a2",
+      "revId": "14ce33564f71124e6d1fb0b03e5267512663493f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
