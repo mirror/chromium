@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a5f03b5_538d77ca",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-30T03:59:56Z",
+      "side": 1,
+      "message": "nit: how about adding a +/- operators for cc:Region and offset like what we have for gfx::Rect (https://cs.chromium.org/chromium/src/ui/gfx/geometry/rect.h?l\u003d247) so you can reduce this to \"hit_test_region_.Union(sub_surface-\u003ehit_test_region_ + offset)\" ?",
+      "range": {
+        "startLine": 542,
+        "startChar": 4,
+        "endLine": 544,
+        "endChar": 35
+      },
+      "revId": "4a76c8fbe460f8791bb9025fc591b59e9a3d73c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
