@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "24c2366c_51831f6a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-11-30T00:40:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "99b64cf5_18f0bf97",
+      "revId": "a432ec9e12a519c37b7b599a42b57219567623ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f807524a_0d0814ae",
         "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8a55dda7_52c5393c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-11-30T00:40:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f807524a_0d0814ae",
+      "revId": "a432ec9e12a519c37b7b599a42b57219567623ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0131dc0b_d771277e",
         "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
         "patchSetId": 7
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-29T21:50:35Z",
       "side": 1,
       "message": "This looks like a widget to me, should it inherit from UI.HBox? That would give you a way to resize it dynamically and provide it with this.element.",
+      "revId": "a432ec9e12a519c37b7b599a42b57219567623ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88ceaa37_0085a70f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-11-30T00:40:11Z",
+      "side": 1,
+      "message": "Hm - worth considering, but it doesn\u0027t really need to resize dynamically other than expanding/collapsing, since the content is all fixed position.",
+      "parentUuid": "0131dc0b_d771277e",
       "revId": "a432ec9e12a519c37b7b599a42b57219567623ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "3b0591cb_550ff9aa",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-11-30T00:40:11Z",
+      "side": 1,
+      "message": "Agreed, done.",
+      "parentUuid": "f78f4d73_a5b9ad5d",
+      "revId": "a432ec9e12a519c37b7b599a42b57219567623ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5231b2b_e09f02b9",
         "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
         "patchSetId": 7
@@ -81,6 +153,24 @@
       "writtenOn": "2017-11-29T21:50:35Z",
       "side": 1,
       "message": "Why do we need visible here? I thought the section will be either expanded or collapsed, but it\u0027ll always be there.",
+      "revId": "a432ec9e12a519c37b7b599a42b57219567623ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e380c60f_d29c4562",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-11-30T00:40:11Z",
+      "side": 1,
+      "message": "It actually doesn\u0027t always show up - only if we get ContrastInfo with the necessary information. I added some comments to clarify.",
+      "parentUuid": "b5231b2b_e09f02b9",
       "revId": "a432ec9e12a519c37b7b599a42b57219567623ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "6edc586e_435b10c4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-11-30T00:40:11Z",
+      "side": 1,
+      "message": "I\u0027m honestly not sure how this would happen in practice, but if the contrast info doesn\u0027t have the necessary information then the contrast info panel can\u0027t be shown.",
+      "parentUuid": "30468996_f1e2623a",
+      "revId": "a432ec9e12a519c37b7b599a42b57219567623ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "416f4b9b_6f7a15ba",
         "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
         "patchSetId": 7
@@ -115,6 +223,24 @@
       "writtenOn": "2017-11-29T21:50:35Z",
       "side": 1,
       "message": "You should not need to call update - contrast info will trigger it for you. Also, why can\u0027t the called of this method do it on the contrastInfo right away? We should not have a method on view that only delegates mutation to the model. Call sites should operate on model.",
+      "revId": "a432ec9e12a519c37b7b599a42b57219567623ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "979ddb01_a06e53de",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-11-30T00:40:11Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "416f4b9b_6f7a15ba",
       "revId": "a432ec9e12a519c37b7b599a42b57219567623ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "0fc5490f_d82992e5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-11-30T00:40:11Z",
+      "side": 1,
+      "message": "Made it a local var.\n\nThe style change is because previously the whole pane was absolute positioned, with no real subsections. The changes here preserve the appearance, but make things relatively positioned so that the contrast details can also be relatively positioned and fit in underneath.",
+      "parentUuid": "71d64577_68c143d6",
+      "revId": "a432ec9e12a519c37b7b599a42b57219567623ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "379d77b2_de54d771",
         "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
         "patchSetId": 7
@@ -149,6 +293,24 @@
       "writtenOn": "2017-11-29T21:50:35Z",
       "side": 1,
       "message": "We should implement the expand logic as a part of your section control. We can see it at all times, either in expanded or collapsed state, so it should be able to make itself larger or smaller without calling into the embedder. I.e. This callback should not be necessary.",
+      "revId": "a432ec9e12a519c37b7b599a42b57219567623ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5446fb6_693b6245",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-11-30T00:40:11Z",
+      "side": 1,
+      "message": "The callback is necessary because:\n1) we need to change the overall height of the color picker (this is specified absolutely in spectrum.css and within _resizeForSelectedPalette) when the contrast panel is expanded/collapsed\n2) unless the contrast line overlay is bound to the details panel, we need to hide/show it from here when the panel is expanded/collapsed.",
+      "parentUuid": "379d77b2_de54d771",
       "revId": "a432ec9e12a519c37b7b599a42b57219567623ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "9437b661_82672966",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-11-30T00:40:11Z",
+      "side": 1,
+      "message": "Either it needs to be here, or it needs to be owned by the contrast details panel - which is better?",
+      "parentUuid": "9a870241_4f23a7dd",
+      "revId": "a432ec9e12a519c37b7b599a42b57219567623ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "451e1704_935300fa",
         "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
         "patchSetId": 7
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "8ffcaef1_d19573d8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-11-30T00:40:11Z",
+      "side": 1,
+      "message": "As discussed above, it\u0027s necessary for resizing the panel and showing/hiding the contrast line (not strictly necessary for that, but since it\u0027s necessary for resizing the panel we may as well use it).",
+      "parentUuid": "451e1704_935300fa",
+      "revId": "a432ec9e12a519c37b7b599a42b57219567623ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a85ba99b_b3de8911",
         "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
         "patchSetId": 7
@@ -200,6 +398,24 @@
       "writtenOn": "2017-11-29T21:50:35Z",
       "side": 1,
       "message": "What is the difference between _paletteContainer and _paletteColorsContainer? The palette always referts to colors...",
+      "revId": "a432ec9e12a519c37b7b599a42b57219567623ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf4a4417_37eb530c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-11-30T00:40:11Z",
+      "side": 1,
+      "message": "_paletteContainer also contains the expand/collapse button, which was previously absolute positioned relative to the color picker pop-up as a whole.",
+      "parentUuid": "a85ba99b_b3de8911",
       "revId": "a432ec9e12a519c37b7b599a42b57219567623ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

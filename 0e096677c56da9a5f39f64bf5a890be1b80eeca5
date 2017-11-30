@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7b18adf9_2fc87381",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-11-30T00:40:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38a845f5_2d657d23",
+      "revId": "0e096677c56da9a5f39f64bf5a890be1b80eeca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5362a59e_bb57a9ee",
         "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
         "patchSetId": 5
