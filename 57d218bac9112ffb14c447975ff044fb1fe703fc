@@ -16,6 +16,24 @@
       "revId": "57d218bac9112ffb14c447975ff044fb1fe703fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecf83f8f_99b003d2",
+        "filename": "chrome/browser/ui/tabs/tab_metrics_logger_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-30T06:49:36Z",
+      "side": 1,
+      "message": "mainly I chose these ase they\u0027re the W3C safelisted schemes in HTML5. they might change but haven\u0027t lately.\n\nThe idea is to make sure we\u0027re capturing all of the web schemes that are commonly used in the wild -- that\u0027s almost certainly a subset of these, right? (And if we wanted to include more obscure or specific custom schemes, we\u0027d probably need to go thru UKM privacy approval again for that.)",
+      "parentUuid": "4b7acf37_0bdb9fa4",
+      "revId": "57d218bac9112ffb14c447975ff044fb1fe703fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
