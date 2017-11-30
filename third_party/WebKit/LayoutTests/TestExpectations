@@ -668,6 +668,7 @@ crbug.com/714962 virtual/layout_ng_paint/fast/inline/left-right-center-inline-al
 crbug.com/714962 virtual/layout_ng_paint/fast/inline/out-of-flow-objects-and-whitespace-after-empty-inline.html [ Failure ]
 crbug.com/714962 virtual/layout_ng_paint/fast/inline/outline-continuations.html [ Failure ]
 crbug.com/714962 virtual/layout_ng_paint/fast/inline/styledEmptyInlinesWithBRs.html [ Failure ]
+crbug.com/789390 virtual/layout_ng_paint/fast/inline/vertical-align-text-inherit.html [ Failure ]
 
 # ====== LayoutNG-only failures until here ======
 
