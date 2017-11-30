@@ -8,6 +8,7 @@
 #include <map>
 #include <utility>
 #include <vector>
+#include <iostream>
 
 #include "base/bind.h"
 #include "base/command_line.h"
@@ -578,6 +579,8 @@ Feature::Availability SimpleFeature::GetManifestAvailability(
     Manifest::Type type,
     Manifest::Location location,
     int manifest_version) const {
+  if (name() == "metricsPrivate")
+    std::cerr << "GetManifestAvailability " << name() << " " << hashed_id.value() << std::endl;
   // Check extension type first to avoid granting platform app permissions
   // to component extensions.
   // HACK(kalman): user script -> extension. Solve this in a more generic way
@@ -586,33 +589,46 @@ Feature::Availability SimpleFeature::GetManifestAvailability(
       (type == Manifest::TYPE_USER_SCRIPT) ? Manifest::TYPE_EXTENSION : type;
   if (!extension_types_.empty() &&
       !base::ContainsValue(extension_types_, type_to_check)) {
+    std::cerr << "return 1 " << std::endl;
     return CreateAvailability(INVALID_TYPE, type);
   }
 
-  if (!blacklist_.empty() && IsIdInBlacklist(hashed_id))
+  if (!blacklist_.empty() && IsIdInBlacklist(hashed_id)) {
+    std::cerr << "return 2 " << std::endl;
     return CreateAvailability(FOUND_IN_BLACKLIST);
+  }
 
   // TODO(benwells): don't grant all component extensions.
   // See http://crbug.com/370375 for more details.
   // Component extensions can access any feature.
   // NOTE: Deliberately does not match EXTERNAL_COMPONENT.
-  if (component_extensions_auto_granted_ && location == Manifest::COMPONENT)
+  if (component_extensions_auto_granted_ && location == Manifest::COMPONENT) {
+    std::cerr << "return 3 " << std::endl;
     return CreateAvailability(IS_AVAILABLE);
+  }
 
   if (!whitelist_.empty() && !IsIdInWhitelist(hashed_id) &&
       !IsWhitelistedForTest(hashed_id)) {
+    std::cerr << "return 4 " << std::endl;
     return CreateAvailability(NOT_FOUND_IN_WHITELIST);
   }
 
-  if (location_ && !MatchesManifestLocation(location))
+  if (location_ && !MatchesManifestLocation(location)) {
+    std::cerr << "return 5 " << std::endl;
     return CreateAvailability(INVALID_LOCATION);
+  }
 
-  if (min_manifest_version_ && manifest_version < *min_manifest_version_)
+  if (min_manifest_version_ && manifest_version < *min_manifest_version_) {
+    std::cerr << "return 6 " << std::endl;
     return CreateAvailability(INVALID_MIN_MANIFEST_VERSION);
+  }
 
-  if (max_manifest_version_ && manifest_version > *max_manifest_version_)
+  if (max_manifest_version_ && manifest_version > *max_manifest_version_) {
+    std::cerr << "return 7 " << std::endl;
     return CreateAvailability(INVALID_MAX_MANIFEST_VERSION);
+  }
 
+  std::cerr << "return 8 " << std::endl;
   return CreateAvailability(IS_AVAILABLE);
 }
 

@@ -269,7 +269,10 @@
       "chrome://bookmarks/*",
       "chrome://settings/*"
     ]
-  }],
+  }/*, {
+    "channel": "stable",
+    "contexts": ["blessed_extension"]
+  }*/],
   "metricsPrivate.getIsCrashReportingEnabled": {
     "whitelist": [
       // This function inherits the extension restrictions of metricsPrivate,
