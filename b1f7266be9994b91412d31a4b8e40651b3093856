@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d788eea3_588e93bb",
+        "filename": "content/browser/webauth/attestation_object.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-11-30T00:05:13Z",
+      "side": 1,
+      "message": "This is the only edited portion. Changed map key from string to CBORValue.",
+      "range": {
+        "startLine": 28,
+        "startChar": 5,
+        "endLine": 33,
+        "endChar": 24
+      },
+      "revId": "b1f7266be9994b91412d31a4b8e40651b3093856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
