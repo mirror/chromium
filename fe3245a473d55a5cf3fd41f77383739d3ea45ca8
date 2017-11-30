@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de8849eb_f6e1e6c4",
+        "filename": "components/arc/connection_holder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-30T17:32:16Z",
+      "side": 1,
+      "message": "As we chatted offline, I think we need to ResetInstance()-ish stuff in this CL,\nbecause this is to support two-instance cases. WDYT?",
+      "revId": "fe3245a473d55a5cf3fd41f77383739d3ea45ca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e31d231_13a5b339",
+        "filename": "components/arc/connection_holder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-30T17:32:16Z",
+      "side": 1,
+      "message": "while you\u0027re here, could you remove this TODO?",
+      "revId": "fe3245a473d55a5cf3fd41f77383739d3ea45ca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "320e3b6a_ad22ac75",
+        "filename": "components/arc/connection_holder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-30T17:32:16Z",
+      "side": 1,
+      "message": "The order of args look reversed?",
+      "revId": "fe3245a473d55a5cf3fd41f77383739d3ea45ca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaaf0529_808f814a",
+        "filename": "components/arc/connection_holder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-30T17:32:16Z",
+      "side": 1,
+      "message": "nit: let\u0027s add DCHECK. DCHECK(binding_);",
+      "revId": "fe3245a473d55a5cf3fd41f77383739d3ea45ca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e05e7af7_a1e34640",
+        "filename": "components/arc/connection_holder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-30T17:32:16Z",
+      "side": 1,
+      "message": "nit: let\u0027s add DCHECK. DCHECK(!binding_);",
+      "revId": "fe3245a473d55a5cf3fd41f77383739d3ea45ca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
