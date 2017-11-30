@@ -141,6 +141,14 @@ class AppBannerManager : public content::WebContentsObserver,
   // desktop platforms.
   virtual void OnAppIconFetched(const SkBitmap& bitmap) {}
 
+  // Installable describes whether a site satisifes the installablity
+  // requirements.
+  enum class Installable { YES, NO, UNKNOWN };
+
+  // Returns the installability status of the site to which the
+  // AppBannerManager pertains.
+  Installable IsInstallable() const;
+
  protected:
   explicit AppBannerManager(content::WebContents* web_contents);
   ~AppBannerManager() override;
@@ -322,6 +330,7 @@ class AppBannerManager : public content::WebContentsObserver,
 
  private:
   std::unique_ptr<StatusReporter> status_reporter_;
+  Installable installable_;
 
   // The concrete subclasses of this class are expected to have their lifetimes
   // scoped to the WebContents which they are observing. This allows us to use
