@@ -3851,9 +3851,6 @@ crbug.com/763975 [ Linux Mac Debug ] webaudio/internals/cycle-connection-gc.html
 # Sheriff failures 2017-09-12
 crbug.com/764180 [ Android ] virtual/display_list_2d_canvas/fast/canvas/script-inside-canvas-fallback.html [ Pass Crash ]
 
-# Sheriff failure 2017-09-15
-crbug.com/765685 [ Android ] external/wpt/mediacapture-streams/MediaStream-idl.https.html [ Pass Failure ]
-
 # Sheriff failure 2017-09-18
 crbug.com/766404 [ Mac ] plugins/keyboard-events.html [ Pass Failure ]
 
@@ -3934,12 +3931,6 @@ crbug.com/778745 virtual/mojo-loading/http/tests/inspector-protocol/cachestorage
 
 # Sheriff failures 2017-10-24
 crbug.com/773122 crbug.com/777813 [ Win ] fast/text/font-ascent-mac.html [ Failure Pass ]
-
-# Sheriff failures 2017-11-03
-crbug.com/781171 [ Android ] external/wpt/css/css-timing/cubic-bezier-timing-functions-output.html [ Failure Crash Pass ]
-crbug.com/781171 [ Android ] external/wpt/css/css-timing/frames-timing-functions-output.html [ Skip ]
-crbug.com/781171 [ Android ] external/wpt/css/css-timing/frames-timing-functions-syntax.html [ Skip ]
-crbug.com/781171 [ Android ] external/wpt/css/css-timing/step-timing-functions-output.html [ Skip ]
 
 # Sheriff failures 2017-11-07
 crbug.com/782067 [ Mac10.10 Mac10.11 ] fast/css/no-recalc-on-no-op-inline-style-changes.html [ Pass Failure ]
