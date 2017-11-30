@@ -299,7 +299,8 @@ bool ContentSettingDecoration::OnMousePressed(NSRect frame, NSPoint location) {
     return true;
   }
 
-  if (chrome::ShowAllDialogsWithViewsToolkit()) {
+  if (chrome::ShowAllDialogsWithViewsToolkit() ||
+      model->AsFramebustBlockBubbleModel()) {
     gfx::Point origin = gfx::ScreenPointFromNSPoint(anchor);
     NSWindow* bubble = chrome::ContentSettingBubbleViewsBridge::Show(
         [web_contents->GetTopLevelNativeWindow() contentView], model,
