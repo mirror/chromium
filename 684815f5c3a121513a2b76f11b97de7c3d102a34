@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8c3e3a22_35470d90",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 766,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-30T00:30:50Z",
+      "side": 1,
+      "message": "We shouldn\u0027t be able to set both v1 and v2, as v1 is only set when v2 is not in use @line 722 and line 725.\n\nI agreed that we should make this more clean, we have too many configurations dependent, server_migration seemed to have the same issue. If I remembered this correctly, this seemed to be connected to whether NCN is registered. Since Jana\u0027s close session on ip address change CL just landed, it\u0027d better to clean up the configurations setting separately, make sure we have the dependency set up correctly.",
+      "parentUuid": "47e91e72_d6220daa",
+      "range": {
+        "startLine": 766,
+        "startChar": 50,
+        "endLine": 766,
+        "endChar": 0
+      },
+      "revId": "684815f5c3a121513a2b76f11b97de7c3d102a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97fa7567_f3f3e3d5",
         "filename": "net/quic/chromium/quic_stream_factory_fuzzer.cc",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "684815f5c3a121513a2b76f11b97de7c3d102a34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "623197c4_cd693699",
+        "filename": "net/quic/chromium/quic_stream_factory_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-30T00:30:50Z",
+      "side": 1,
+      "message": "Good point, thanks for the suggestions!",
+      "parentUuid": "97fa7567_f3f3e3d5",
+      "revId": "684815f5c3a121513a2b76f11b97de7c3d102a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
