@@ -25,6 +25,7 @@ class MetricsHelper {
   void OnComponentReady();
   void OnEnter(Mode mode);
   void OnRegisteredComponent();
+  void OnLaunchedBrowser();
 
  private:
   base::Optional<base::Time>& GetEnterTime(Mode mode);
@@ -33,6 +34,8 @@ class MetricsHelper {
   base::Optional<base::Time> enter_vr_time_;
   base::Optional<base::Time> enter_vr_browsing_time_;
   base::Optional<base::Time> enter_web_vr_time_;
+  base::Optional<base::Time> launch_browser_time_;
+  bool logged_ready_latency_on_launch_browser_ = false;
   bool component_ready_ = false;
 
   SEQUENCE_CHECKER(sequence_checker_);
