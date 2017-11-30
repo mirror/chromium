@@ -786,6 +786,7 @@ mojom("mojo_bindings") {
     "platform/modules/keyboard_lock/keyboard_lock.mojom",
     "platform/modules/manifest/manifest.mojom",
     "platform/modules/manifest/manifest_manager.mojom",
+    "platform/modules/mediastream/media_devices.mojom",
     "platform/modules/notifications/notification.mojom",
     "platform/modules/notifications/notification_service.mojom",
     "platform/modules/payments/payment_app.mojom",
@@ -813,6 +814,12 @@ mojom("mojo_bindings") {
     "web/window_features.mojom",
     "web/worker_content_settings_proxy.mojom",
   ]
+
+  deps = [
+    "//media/capture/mojo:capture_types",
+    "//media/mojo/interfaces",
+  ]
+
   public_deps = [
     ":android_mojo_bindings",
     ":web_client_hints_types_mojo_bindings",
