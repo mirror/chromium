@@ -272,7 +272,8 @@ bool AudioDestination::CheckBufferSize() {
   // Check if the requested buffer size is too large.
   bool is_buffer_size_valid =
       callback_buffer_size_ + AudioUtilities::kRenderQuantumFrames <= kFIFOSize;
-  DCHECK(is_buffer_size_valid);
+  DCHECK_LE(callback_buffer_size_ + AudioUtilities::kRenderQuantumFrames,
+            kFIFOSize);
   return is_buffer_size_valid;
 }
 }  // namespace blink
