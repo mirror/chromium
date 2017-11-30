@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5c76d544_19ba3838",
+        "filename": "ipc/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-30T03:11:23Z",
+      "side": 1,
+      "message": "Done, and renamed section from \u0027Deciding Which Registry to Use\u0027 to \u0027Deciding Which Interface Registry to Use\u0027.",
+      "parentUuid": "ab29ba7d_05994e25",
+      "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed151736_5de3818b",
         "filename": "ipc/README.md",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "448f0c3d_10a6ecaf",
+        "filename": "ipc/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-30T03:11:23Z",
+      "side": 1,
+      "message": "Removed the line.",
+      "parentUuid": "ed151736_5de3818b",
+      "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1129e905_e8f26a71",
+        "filename": "ipc/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-30T03:11:23Z",
+      "side": 1,
+      "message": "Haha, thanks, that\u0027s a good explanation. Changed the note to be:\n\n**NOTE:** Previously, classes that ended with `Host` were implemented on the\nbrowser side; the equivalent classes on the renderer side had the same name\nwithout the `Host` suffix. We have since deviated from this convention since\nMojo interfaces are not intended to prescribe where their endpoints live, so\nfuture classes should omit such suffixes and just describe the interface they\nare providing.\n\nAlso changed \u0027LoggerHost\u0027 to \u0027Logger\u0027 everywhere in the file (and logger_host with just logger).",
+      "parentUuid": "b4ec2769_337bff57",
+      "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13c92895_42129fa3",
         "filename": "ipc/README.md",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "98dce3cb_f82720d9",
+        "filename": "ipc/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-30T03:11:23Z",
+      "side": 1,
+      "message": "Haha, did not know that, that came up in one of my patches! :) Thank you.\n\nUpdated docs, and will look at adding a presubmit check for this too.",
+      "parentUuid": "13c92895_42129fa3",
+      "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89e0164f_718fbb3b",
         "filename": "ipc/README.md",
         "patchSetId": 1
@@ -81,6 +153,24 @@
       "writtenOn": "2017-11-27T18:41:57Z",
       "side": 1,
       "message": "nit: preferred usage would be logger_host_ \u003d std::make_unique\u003cLoggerHost\u003e(GetID()), i.e. we try to avoid wrapping \u0027new\u0027 calls in favor of make_unique + assignment.",
+      "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4ff9231_18d3b359",
+        "filename": "ipc/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-30T03:11:23Z",
+      "side": 1,
+      "message": "Thank you, again, did not know this. Should we add this to the style guide?",
+      "parentUuid": "89e0164f_718fbb3b",
       "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "a15657e4_eaa87655",
+        "filename": "ipc/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-30T03:11:23Z",
+      "side": 1,
+      "message": "Added definition of Logger. WDYT?",
+      "parentUuid": "7177a204_cce54b3c",
+      "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "845582f6_c79a4b7c",
         "filename": "ipc/README.md",
         "patchSetId": 1
@@ -115,6 +223,47 @@
       "writtenOn": "2017-11-27T18:41:57Z",
       "side": 1,
       "message": "nit: We call them \"capabilities\" - should be consistent here",
+      "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "825761cc_2e1fd7c6",
+        "filename": "ipc/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-30T03:11:23Z",
+      "side": 1,
+      "message": "Updated title \u0026 all references to \u0027permissions\u0027.",
+      "parentUuid": "845582f6_c79a4b7c",
+      "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b6118663_34fccb7d",
+        "filename": "ipc/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-30T03:11:23Z",
+      "side": 1,
+      "message": "Changed to \u0027resolved\u0027 at runtime",
+      "range": {
+        "startLine": 285,
+        "startChar": 67,
+        "endLine": 285,
+        "endChar": 71
+      },
       "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +287,24 @@
     },
     {
       "key": {
+        "uuid": "08e10213_400124c3",
+        "filename": "ipc/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-30T03:11:23Z",
+      "side": 1,
+      "message": "Changed line to \u0027The service manifest files (which contain the capability spec) are located in\u0027",
+      "parentUuid": "fe3d746c_fbe1f8ca",
+      "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89438b08_3f543bea",
         "filename": "ipc/README.md",
         "patchSetId": 1
@@ -149,6 +316,24 @@
       "writtenOn": "2017-11-27T18:41:57Z",
       "side": 1,
       "message": "Let\u0027s say \"the side which instantiates the implementation\" since there are many ways to bind interfaces and MakeStrongBinding is only one.",
+      "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b45d8367_366454d0",
+        "filename": "ipc/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-30T03:11:23Z",
+      "side": 1,
+      "message": "To avoid confusion, changed to \"(the side which instantiates the implementation, e.g. the side you call `MakeBinding` on)\". WDYT?",
+      "parentUuid": "89438b08_3f543bea",
       "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +357,24 @@
     },
     {
       "key": {
+        "uuid": "804f1d11_c389bc2b",
+        "filename": "ipc/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-30T03:11:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4512e845_2f02e2f2",
+      "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac632597_0085692c",
         "filename": "ipc/README.md",
         "patchSetId": 1
@@ -186,6 +389,24 @@
       "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3ec7a69_39a4c45c",
+        "filename": "ipc/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-30T03:11:23Z",
+      "side": 1,
+      "message": "Yes sorry, meant to do this. Done",
+      "parentUuid": "ac632597_0085692c",
+      "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +427,24 @@
     },
     {
       "key": {
+        "uuid": "335bb120_61505088",
+        "filename": "mojo/public/cpp/bindings/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-30T03:11:23Z",
+      "side": 1,
+      "message": "Thanks; removed this and added section to end of the file that just links to the ipc readme.",
+      "parentUuid": "08a15fae_0d1e4f0d",
+      "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c06e643_10486bfd",
         "filename": "mojo/public/cpp/bindings/README.md",
         "patchSetId": 1
@@ -223,6 +462,24 @@
     },
     {
       "key": {
+        "uuid": "d74a871c_6e7c2737",
+        "filename": "mojo/public/cpp/bindings/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-30T03:11:23Z",
+      "side": 1,
+      "message": "Thanks for the explanation :) I think this is valuable information, so made it a note in the ipc docs:\n\n**NOTE:** `content::ServiceManagerConnection::GetForProcess()` must be called in\nthe browser process on the main thread, and its connector can only be used on\nthe main thread; but you can clone connectors and move the clones around to\nother threads. A `Connector` is only bound to the thread which first calls into\nit.\n\nAlso moved this paragraph (without the last sentence) to \"Deciding Which Interface Registry to Use\" in the IPC docs. WDYT?",
+      "parentUuid": "2c06e643_10486bfd",
+      "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3fd8ed4f_63aaec6c",
         "filename": "mojo/public/cpp/bindings/README.md",
         "patchSetId": 1
@@ -234,6 +491,24 @@
       "writtenOn": "2017-11-27T18:41:57Z",
       "side": 1,
       "message": "What\u0027s this?",
+      "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a179bcb_1a4c6f47",
+        "filename": "mojo/public/cpp/bindings/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-11-30T03:11:23Z",
+      "side": 1,
+      "message": "I thought the subsections below (Enums, Structs, Unions, Sending Interfaces Over Interfaces) belonged under their own \u0027Types\u0027 header. WDYT?",
+      "parentUuid": "3fd8ed4f_63aaec6c",
       "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
