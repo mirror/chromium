@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5e4dede_019da19a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/css3/filters/fedisplacementmap-tainted-expected.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-30T11:54:53Z",
+      "side": 1,
+      "message": "Just using a simple colored \u003cdiv\u003e doesn\u0027t work?",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 9
+      },
+      "revId": "8e33e96cf1dad77a8de0bc1c659b307a669f7336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc32f879_97075dd4",
+        "filename": "third_party/WebKit/LayoutTests/platform/mac-mac10.10/editing/selection/4975120-expected.png",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-30T11:54:53Z",
+      "side": 1,
+      "message": "This change looks unrelated.",
+      "revId": "8e33e96cf1dad77a8de0bc1c659b307a669f7336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b4de2a7_375be457",
+        "filename": "third_party/WebKit/LayoutTests/platform/mac-mac10.11/editing/selection/4975120-expected.png",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-30T11:54:53Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "8e33e96cf1dad77a8de0bc1c659b307a669f7336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc157e5c_c54f1453",
+        "filename": "third_party/WebKit/LayoutTests/platform/win7/fast/reflections/reflection-with-zoom-expected.png",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-30T11:54:53Z",
+      "side": 1,
+      "message": "Another unrelated-looking baseline.",
+      "revId": "8e33e96cf1dad77a8de0bc1c659b307a669f7336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4ba20f4_1702352e",
+        "filename": "third_party/WebKit/Source/modules/canvas/canvas2d/BaseRenderingContext2D.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1319,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-30T11:54:53Z",
+      "side": 1,
+      "message": "I think this needs to done on the entire state stack. I.e consider:\n\nctx.filter \u003d ...;\nctx.drawImage(soImg, 0, 0); // doesn\u0027t taint, resolves filter\nctx.save();                 // refs the resolved filter\nctx.drawImage(coImg, 0, 0); // taints, clears filter in current state\nctx.restore();\nctx.drawImage(coImg, 0, 0); // uses the filter resolved by the first drawImage\n\nIf the (resolved) filter-chain carried tainting data we could handle this in GetFilter, but since it doesn\u0027t...\nI\u0027d also think that we could dream up a similar scenario that affects other potential inputs (fillStyle, strokeStyle), so maybe it\u0027d be best to add that clearing to SetOriginTainted?",
+      "range": {
+        "startLine": 1319,
+        "startChar": 4,
+        "endLine": 1319,
+        "endChar": 43
+      },
+      "revId": "8e33e96cf1dad77a8de0bc1c659b307a669f7336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b647fa3a_73c0ec8e",
+        "filename": "third_party/WebKit/Source/modules/canvas/canvas2d/CanvasRenderingContext2DState.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-30T11:54:53Z",
+      "side": 1,
+      "message": "Also taint here?",
+      "range": {
+        "startLine": 308,
+        "startChar": 4,
+        "endLine": 310,
+        "endChar": 3
+      },
+      "revId": "8e33e96cf1dad77a8de0bc1c659b307a669f7336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

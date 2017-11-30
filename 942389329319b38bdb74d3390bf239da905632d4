@@ -272,6 +272,30 @@
     },
     {
       "key": {
+        "uuid": "36ff0c92_4ea29124",
+        "filename": "third_party/WebKit/Source/core/svg/SVGFEImageElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-30T11:54:53Z",
+      "side": 1,
+      "message": "\u003e \u003e We should probably pass/plumb the SecurityOrigin associated with the canvas context here to be extra strict.\n\u003e \n\u003e Hmm. If it\u0027s possible to embed content from a cross-origin frame into a canvas from \n\u003e different frame, then I think it\u0027s too hard to implement tainting here, because the\n\u003e tainting would have to know the end destination. If not, then the approach here seems\n\u003e sufficient.\n\nWe currently only allow loading SO resource documents for filters, so this should be fine from that PoV.\n\n\u003e If I need to remove tainting here, there will be more tests that need to be rebaselined.\n\u003e \n\u003e I went ahead and reverted changes to this file in the latest patchset, with rebaselines.\n\u003e \n\u003e \u003e Actually, considering that a (local) referenced fragment can contain \u0027currentColor\u0027, and \u003cimage\u003e et.c, !cached_image_ should probably taint...\n\u003e \n\u003e Not sure what you mean here. Do you mean currentColor can come from the SVGFEImageElement\n\u003e before load, or be inherited from an earlier filter in the chain?\n\nSVGFEImageElement can reference either an image _or_ a fragment in the document (by id) - for the latter case cached_image_ will be null. That referenced fragment could use currentColor.",
+      "parentUuid": "4d55512b_4917562e",
+      "range": {
+        "startLine": 168,
+        "startChar": 41,
+        "endLine": 168,
+        "endChar": 74
+      },
+      "revId": "942389329319b38bdb74d3390bf239da905632d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e3701c5_3a13dc7e",
         "filename": "third_party/WebKit/Source/core/svg/SVGFEImageElement.h",
         "patchSetId": 5
