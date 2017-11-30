@@ -16,6 +16,24 @@
       "revId": "542b8689c949d6b0fc32f6f7537854d45b17fd78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f6b3246_a3e2b7cf",
+        "filename": "chrome/browser/resources/local_ntp/most_visited_single.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-30T11:13:35Z",
+      "side": 1,
+      "message": "Sure, done. I don\u0027t have any intuition for best practices with css vars...\nSo now the convention is: Defaults on the html{}, and possible overrides on body{} (so that when removing an override, JS doesn\u0027t have to know the default value). That seems reasonable enough.",
+      "parentUuid": "19bc7706_3c7ceda3",
+      "revId": "542b8689c949d6b0fc32f6f7537854d45b17fd78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
