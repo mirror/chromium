@@ -99,6 +99,24 @@
       "revId": "bc347b26a7d5c301a3afd4b85201812649522123",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6e759d7_d7080077",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-11-30T15:58:14Z",
+      "side": 1,
+      "message": "I thought about it some more and I think you and benwells are right, so I removed the IsRendererInitiated check here.",
+      "parentUuid": "1f331275_8e888d9f",
+      "revId": "bc347b26a7d5c301a3afd4b85201812649522123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
