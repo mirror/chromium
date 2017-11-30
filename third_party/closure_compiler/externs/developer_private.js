@@ -414,7 +414,8 @@ chrome.developerPrivate.ExtensionCommandUpdate;
 
 /**
  * @typedef {{
- *   failQuietly: (boolean|undefined)
+ *   failQuietly: (boolean|undefined),
+ *   populateErrorForUnpacked: (boolean|undefined)
  * }}
  * @see https://developer.chrome.com/extensions/developerPrivate#type-ReloadOptions
  */

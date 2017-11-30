@@ -736,6 +736,95 @@ TEST_F(DeveloperPrivateApiUnitTest, LoadUnpackedRetryId) {
   }
 }
 
+TEST_F(DeveloperPrivateApiUnitTest, ReloadUnpackedRetry) {
+  std::unique_ptr<content::WebContents> web_contents(
+      content::WebContentsTester::CreateTestWebContents(profile(), nullptr));
+
+  constexpr const char kBadManifest[] =
+      R"({
+           "name": "foo",
+           "description": "bar",
+           "version": 1,
+           "manifest_version": 2
+         })";
+  constexpr const char kGoodManifest[] =
+      R"({
+           "name": "foo",
+           "description": "bar",
+           "version": "1",
+           "manifest_version": 2
+         })";
+
+  // Create a good unpacked extension.
+  TestExtensionDir dir;
+  dir.WriteManifest(kGoodManifest);
+  base::FilePath path = dir.UnpackedPath();
+  api::EntryPicker::SkipPickerAndAlwaysSelectPathForTest(&path);
+
+  const Extension* extension = nullptr;
+  {
+    TestExtensionRegistryObserver test_observer(registry());
+    scoped_refptr<UnpackedInstaller> installer =
+        UnpackedInstaller::Create(service());
+    installer->Load(dir.UnpackedPath());
+    extension = test_observer.WaitForExtensionLoaded();
+  }
+  ASSERT_TRUE(extension);
+  const ExtensionId id = extension->id();
+
+  std::string reload_args = base::StringPrintf(
+      R"(["%s", {"failQuietly": true, "populateErrorForUnpacked":true}])",
+      id.c_str());
+
+  {
+    scoped_refptr<UIThreadExtensionFunction> function(
+        new api::DeveloperPrivateReloadFunction());
+    function->SetRenderFrameHost(web_contents->GetMainFrame());
+    api_test_utils::RunFunction(function.get(), reload_args, profile());
+    EXPECT_TRUE(registry()->enabled_extensions().Contains(id));
+  }
+
+  dir.WriteManifest(kBadManifest);
+
+  DeveloperPrivateAPI::UnpackedRetryId retry_guid;
+  {
+    // Trying to load the extension should result in a load error with the
+    // retry id populated.
+    scoped_refptr<UIThreadExtensionFunction> function(
+        new api::DeveloperPrivateReloadFunction());
+    function->SetRenderFrameHost(web_contents->GetMainFrame());
+    std::unique_ptr<base::Value> result =
+        api_test_utils::RunFunctionAndReturnSingleResult(
+            function.get(), reload_args, profile());
+    ASSERT_TRUE(result);
+    std::unique_ptr<api::developer_private::LoadError> error =
+        api::developer_private::LoadError::FromValue(*result);
+    ASSERT_TRUE(error);
+    EXPECT_FALSE(error->retry_guid.empty());
+    retry_guid = error->retry_guid;
+    EXPECT_TRUE(registry()->disabled_extensions().Contains(id));
+  }
+
+  dir.WriteManifest(kGoodManifest);
+  {
+    // Try reloading the extension by supplying the retry id. It should succeed.
+    scoped_refptr<UIThreadExtensionFunction> function(
+        new api::DeveloperPrivateLoadUnpackedFunction());
+    function->SetRenderFrameHost(web_contents->GetMainFrame());
+    TestExtensionRegistryObserver observer(registry());
+    api_test_utils::RunFunction(function.get(),
+                                base::StringPrintf("[{\"failQuietly\": true,"
+                                                   "\"populateError\": true,"
+                                                   "\"retryGuid\": \"%s\"}]",
+                                                   retry_guid.c_str()),
+                                profile());
+    const Extension* extension = observer.WaitForExtensionLoaded();
+    ASSERT_TRUE(extension);
+    EXPECT_EQ(extension->path(), path);
+    EXPECT_TRUE(registry()->enabled_extensions().Contains(id));
+  }
+}
+
 // Test developerPrivate.requestFileSource.
 TEST_F(DeveloperPrivateApiUnitTest, DeveloperPrivateRequestFileSource) {
   // Testing of this function seems light, but that's because it basically just
