@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "347ec1ab_01702268",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 92854,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T02:19:07Z",
+      "side": 1,
+      "message": "Would we ever want the status at other times or should we remove the period here?",
+      "range": {
+        "startLine": 92854,
+        "startChar": 49,
+        "endLine": 92854,
+        "endChar": 63
+      },
+      "revId": "b0d6e4505504f75ff24153d9c76277e77332d7f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "876eb5cb_3956be7e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 92875,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T02:19:07Z",
+      "side": 1,
+      "message": "This could be for any component. We only need to record it once, right?",
+      "range": {
+        "startLine": 92875,
+        "startChar": 45,
+        "endLine": 92875,
+        "endChar": 54
+      },
+      "revId": "b0d6e4505504f75ff24153d9c76277e77332d7f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
