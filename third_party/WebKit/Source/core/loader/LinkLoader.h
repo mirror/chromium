@@ -106,6 +106,7 @@ class CORE_EXPORT LinkLoader final : public SingleModuleClient,
 
  private:
   class FinishObserver;
+  class WebPackagePrefetcher;
   LinkLoader(LinkLoaderClient*, scoped_refptr<WebTaskRunner>);
 
   void NotifyFinished();
@@ -113,6 +114,7 @@ class CORE_EXPORT LinkLoader final : public SingleModuleClient,
   void NotifyModuleLoadFinished(ModuleScript*) override;
 
   Member<FinishObserver> finish_observer_;
+  Member<WebPackagePrefetcher> wpk_prefetcher_;
   Member<LinkLoaderClient> client_;
 
   Member<PrerenderHandle> prerender_;

@@ -326,9 +326,15 @@ void WebPackageRequestHandler::MaybeCreateLoader(
   DCHECK(!webpackage_loader_);
   DCHECK(loader_factory_getter_);
   LOG(ERROR) << "** Creating WebPackgaeLoader";
-  webpackage_loader_ = std::make_unique<WebPackageLoader>(
-      this, std::move(callback), resource_request,
-      loader_factory_getter_.get());
+
+  webpackage_loader_ =
+      loader_factory_getter_->GetWebPackageLoaderManager()->TakeMatchingLoader(
+          resource_request);
+  if (!webpackage_loader_) {
+    webpackage_loader_ = std::make_unique<WebPackageLoader>(
+        resource_request, loader_factory_getter_.get());
+  }
+  webpackage_loader_->AttachToRequestHandler(this, std::move(callback));
 }
 
 base::Optional<SubresourceLoaderParams>
@@ -371,13 +377,9 @@ void WebPackageRequestHandler::CreateMainResourceLoader(
 //----------------------------------------------------------------------------
 
 WebPackageLoader::WebPackageLoader(
-    WebPackageRequestHandler* request_handler,
-    LoaderCallback loader_callback,
     const ResourceRequest& resource_request,
     URLLoaderFactoryGetter* loader_factory_getter)
-    : request_handler_(request_handler),
-      loader_callback_(std::move(loader_callback)),
-      webpackage_request_(resource_request),
+    : webpackage_request_(resource_request),
       network_client_binding_(this),
       weak_factory_(this) {
   // Start the network loading.
@@ -400,17 +402,31 @@ void WebPackageLoader::DetachFromRequestHandler() {
   MaybeDestruct();
 }
 
+void WebPackageLoader::AttachToRequestHandler(
+    WebPackageRequestHandler* request_handler,
+    LoaderCallback loader_callback) {
+  request_handler_ = request_handler;
+  loader_callback_ = std::move(loader_callback);
+  MaybeRunLoaderCallback();
+}
+
 void WebPackageLoader::MaybeDestruct() {
   if (finished_reading_package_ && detached_from_request_handler_)
     base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
 }
 
-void WebPackageLoader::OnFoundManifest(const WebPackageManifest& manifest) {
-  DCHECK(loader_callback_);
-  webpackage_start_url_ = manifest.start_url;
+void WebPackageLoader::MaybeRunLoaderCallback() {
+  if (!loader_callback_ || !webpackage_start_url_.is_valid())
+    return;
   std::move(loader_callback_)
       .Run(base::BindOnce(&WebPackageLoader::StartRedirectResponse,
                           weak_factory_.GetWeakPtr()));
+}
+
+void WebPackageLoader::OnFoundManifest(const WebPackageManifest& manifest) {
+  DCHECK(manifest.start_url.is_valid());
+  webpackage_start_url_ = manifest.start_url;
+  MaybeRunLoaderCallback();
 }
 
 void WebPackageLoader::OnFoundRequest(const ResourceRequest& request) {
