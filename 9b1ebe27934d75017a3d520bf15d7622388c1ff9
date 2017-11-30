@@ -149,6 +149,30 @@
     },
     {
       "key": {
+        "uuid": "f2271830_ae5cadba",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/path/property/d-interpolation-001.svg",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-30T13:11:41Z",
+      "side": 1,
+      "message": "\u003e Done for style and inline script.\n\u003e \n\u003e When I tried making the change for script links, the tests would pass even if I added a false assert.\n\nOk, that sounds like a bug... in one end or the other, need to check which it is...",
+      "parentUuid": "70349430_5d21cbb7",
+      "range": {
+        "startLine": 13,
+        "startChar": 3,
+        "endLine": 13,
+        "endChar": 43
+      },
+      "revId": "9b1ebe27934d75017a3d520bf15d7622388c1ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33bc1080_f38b2239",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/path/property/getComputedStyle.svg",
         "patchSetId": 3
