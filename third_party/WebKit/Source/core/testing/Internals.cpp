@@ -798,6 +798,7 @@ String Internals::shadowRootType(const Node* root,
   }
 
   switch (ToShadowRoot(root)->GetType()) {
+    case ShadowRootType::kUserAgentV0:
     case ShadowRootType::kUserAgent:
       return String("UserAgentShadowRoot");
     case ShadowRootType::V0:

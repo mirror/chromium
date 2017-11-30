@@ -66,7 +66,8 @@ ShadowRoot& ElementShadow::AddShadowRoot(Element& shadow_host,
     for (ShadowRoot* root = &YoungestShadowRoot(); root;
          root = root->OlderShadowRoot())
       root->LazyReattachIfAttached();
-  } else if (type == ShadowRootType::V0 || type == ShadowRootType::kUserAgent) {
+  } else if (type == ShadowRootType::V0 ||
+             type == ShadowRootType::kUserAgentV0) {
     DCHECK(!element_shadow_v0_);
     element_shadow_v0_ = ElementShadowV0::Create(*this);
   }
@@ -126,19 +127,21 @@ void ElementShadow::Detach(const Node::AttachContext& context) {
 }
 
 void ElementShadow::SetNeedsDistributionRecalcWillBeSetNeedsAssignmentRecalc() {
-  if (RuntimeEnabledFeatures::IncrementalShadowDOMEnabled() && IsV1())
+  if (RuntimeEnabledFeatures::IncrementalShadowDOMEnabled() &&
+      (IsV1() || IsUserAgentV1()))
     YoungestShadowRoot().SetNeedsAssignmentRecalc();
   else
     SetNeedsDistributionRecalc();
 }
 
 void ElementShadow::SetNeedsDistributionRecalc() {
-  DCHECK(!(RuntimeEnabledFeatures::IncrementalShadowDOMEnabled() && IsV1()));
+  DCHECK(!(RuntimeEnabledFeatures::IncrementalShadowDOMEnabled() &&
+           (IsV1() || IsUserAgentV1())));
   if (needs_distribution_recalc_)
     return;
   needs_distribution_recalc_ = true;
   Host().MarkAncestorsWithChildNeedsDistributionRecalc();
-  if (!IsV1())
+  if (!IsV1() && !IsUserAgentV1())
     V0().ClearDistribution();
 }
 
@@ -163,7 +166,7 @@ bool ElementShadow::HasSameStyles(const ElementShadow& other) const {
 }
 
 void ElementShadow::Distribute() {
-  if (IsV1())
+  if (IsV1() || IsUserAgentV1())
     YoungestShadowRoot().DistributeV1();
   else
     V0().Distribute();
