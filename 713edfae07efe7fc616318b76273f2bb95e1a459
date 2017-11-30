@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c3f89b0_6ec5fc63",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-30T09:43:46Z",
+      "side": 1,
+      "message": "You are not animating, you are adding animations to the animator. (With \"animates\" it sounds like you are starting the animator in my opinion.)",
+      "range": {
+        "startLine": 47,
+        "startChar": 3,
+        "endLine": 47,
+        "endChar": 11
+      },
+      "revId": "713edfae07efe7fc616318b76273f2bb95e1a459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c53d0bae_c827f2e1",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-30T09:43:46Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we use bottomAnchor?",
+      "range": {
+        "startLine": 541,
+        "startChar": 43,
+        "endLine": 541,
+        "endChar": 52
+      },
+      "revId": "713edfae07efe7fc616318b76273f2bb95e1a459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
