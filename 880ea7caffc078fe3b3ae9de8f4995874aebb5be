@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3c7383f_a52eb203",
+        "filename": "components/search_engines/default_search_policy_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-11-30T15:19:40Z",
+      "side": 1,
+      "message": "nit: Maybe worth having a function for this, such as IsDefaultSearchProviderSet?",
+      "range": {
+        "startLine": 104,
+        "startChar": 7,
+        "endLine": 104,
+        "endChar": 29
+      },
+      "revId": "880ea7caffc078fe3b3ae9de8f4995874aebb5be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
