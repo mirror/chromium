@@ -315,6 +315,8 @@ void LockStateController::StartRealShutdownTimer(bool with_animation_time) {
   Shell::Get()->accessibility_controller()->PlayShutdownSound(base::BindOnce(
       [](base::WeakPtr<LockStateController> self, base::TimeDelta duration,
          base::TimeDelta sound_duration) {
+        if (!self)
+          return;
         sound_duration = std::min(
             sound_duration,
             base::TimeDelta::FromMilliseconds(kMaxShutdownSoundDurationMs));
