@@ -75,6 +75,9 @@ class BASE_EXPORT File {
     FLAG_CAN_DELETE_ON_CLOSE = 1 << 20,  // Requests permission to delete a file
                                          // via DeleteOnClose() (Windows only).
                                          // See DeleteOnClose() for details.
+    FLAG_GUARD = 1 << 21,  // Ensures that the created fd cannot be duped, and
+                           // can only be closed by this instance of base::File.
+                           // (macOS only)
   };
 
   // This enum has been recorded in multiple histograms. If the order of the
@@ -358,6 +361,12 @@ class BASE_EXPORT File {
   Error error_details_;
   bool created_;
   bool async_;
+
+#if defined(OS_MACOSX)
+  // When the fd is guarded, closing the fd requires a token generated during
+  // guarded_open.
+  uint64_t guard_id_ = 0;
+#endif
 
   DISALLOW_COPY_AND_ASSIGN(File);
 };

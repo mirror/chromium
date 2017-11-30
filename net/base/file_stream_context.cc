@@ -13,6 +13,7 @@
 #include "base/task_runner_util.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/values.h"
+#include "build/build_config.h"
 #include "net/base/net_errors.h"
 
 #if defined(OS_ANDROID)
@@ -175,6 +176,11 @@ FileStream::Context::OpenResult FileStream::Context::OpenFileImpl(
 #if defined(OS_POSIX)
   // Always use blocking IO.
   open_flags &= ~base::File::FLAG_ASYNC;
+#endif
+#if defined(OS_MACOSX)
+  // Open the fd with a guard to check for unexpected closes.
+  // See https://crbug.com/786316.
+  open_flags |= base::File::FLAG_GUARD;
 #endif
   base::File file;
 #if defined(OS_ANDROID)

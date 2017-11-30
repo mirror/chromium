@@ -21,6 +21,10 @@
 #include "base/os_compat_android.h"
 #endif
 
+#if defined(OS_MACOSX)
+#include <sys/syscall.h>
+#endif
+
 namespace base {
 
 // Make sure our Whence mappings match the system headers.
@@ -29,6 +33,33 @@ static_assert(File::FROM_BEGIN == SEEK_SET && File::FROM_CURRENT == SEEK_CUR &&
               "whence mapping must match the system headers");
 
 namespace {
+
+#if defined(OS_MACOSX)
+const unsigned int kGuardClose = 1u << 0;
+const unsigned int kGuardDup = 1u << 1;
+#endif
+
+// Similar to |open|, but uses guarded_open if |guard| has been set.
+int OpenWrapper(bool guard,
+                const base::FilePath& path,
+                uint64_t* guard_id,
+                int open_flags,
+                int mode) {
+  if (!guard) {
+    int fd = HANDLE_EINTR(open(path.value().c_str(), open_flags, mode));
+    return fd;
+  }
+
+#if defined(OS_MACOSX)
+  int fd =
+      HANDLE_EINTR(syscall(SYS_guarded_open_np, path.value().c_str(), guard_id,
+                           kGuardClose | kGuardDup, open_flags, mode));
+  return fd;
+#else
+  NOTREACHED();
+  return -1;
+#endif
+}
 
 #if defined(OS_BSD) || defined(OS_MACOSX) || defined(OS_NACL)
 int CallFstat(int fd, stat_wrapper_t *sb) {
@@ -179,7 +210,14 @@ void File::Close() {
 
   SCOPED_FILE_TRACE("Close");
   AssertBlockingAllowed();
-  file_.reset();
+#if defined(OS_MACOSX)
+  if (guard_id_) {
+    int fd = file_.release();
+    syscall(SYS_guarded_close_np, fd, guard_id_);
+  } else {
+    file_.reset();
+  }
+#endif
 }
 
 int64_t File::Seek(Whence whence, int64_t offset) {
@@ -486,7 +524,8 @@ void File::DoInitialize(const FilePath& path, uint32_t flags) {
   mode |= S_IRGRP | S_IROTH;
 #endif
 
-  int descriptor = HANDLE_EINTR(open(path.value().c_str(), open_flags, mode));
+  int descriptor =
+      OpenWrapper(flags & FLAG_GUARD, path, &guard_id_, open_flags, mode);
 
   if (flags & FLAG_OPEN_ALWAYS) {
     if (descriptor < 0) {
@@ -494,7 +533,8 @@ void File::DoInitialize(const FilePath& path, uint32_t flags) {
       if (flags & FLAG_EXCLUSIVE_READ || flags & FLAG_EXCLUSIVE_WRITE)
         open_flags |= O_EXCL;   // together with O_CREAT implies O_NOFOLLOW
 
-      descriptor = HANDLE_EINTR(open(path.value().c_str(), open_flags, mode));
+      descriptor =
+          OpenWrapper(flags & FLAG_GUARD, path, &guard_id_, open_flags, mode);
       if (descriptor >= 0)
         created_ = true;
     }
