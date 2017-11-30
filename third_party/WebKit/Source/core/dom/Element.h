@@ -503,6 +503,7 @@ class CORE_EXPORT Element : public ContainerNode {
 
   ShadowRoot* ShadowRootIfV1() const;
 
+  ShadowRoot& EnsureUserAgentShadowRootV0();
   ShadowRoot& EnsureUserAgentShadowRoot();
 
   bool IsInDescendantTreeOf(const Element* shadow_host) const;

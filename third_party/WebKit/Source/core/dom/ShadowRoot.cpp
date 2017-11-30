@@ -103,7 +103,7 @@ HTMLSlotElement* ShadowRoot::AssignedSlotFor(const Node& node) {
 }
 
 void ShadowRoot::DidAddSlot(HTMLSlotElement& slot) {
-  DCHECK(IsV1());
+  DCHECK(IsV1() || IsUserAgentV1());
   EnsureSlotAssignment().DidAddSlot(slot);
 }
 
@@ -234,7 +234,7 @@ void ShadowRoot::RemovedFrom(ContainerNode* insertion_point) {
 
 void ShadowRoot::SetNeedsAssignmentRecalc() {
   DCHECK(RuntimeEnabledFeatures::IncrementalShadowDOMEnabled());
-  DCHECK(IsV1());
+  DCHECK(IsV1() || IsUserAgentV1());
   if (!slot_assignment_)
     return;
   return slot_assignment_->SetNeedsAssignmentRecalc();
@@ -360,6 +360,9 @@ void ShadowRoot::TraceWrappers(const ScriptWrappableVisitor* visitor) const {
 
 std::ostream& operator<<(std::ostream& ostream, const ShadowRootType& type) {
   switch (type) {
+    case ShadowRootType::kUserAgentV0:
+      ostream << "UserAgentV0";
+      break;
     case ShadowRootType::kUserAgent:
       ostream << "UserAgent";
       break;
