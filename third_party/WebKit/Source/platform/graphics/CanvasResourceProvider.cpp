@@ -94,7 +94,7 @@ class CanvasResourceProvider_Texture : public CanvasResourceProvider {
     return StaticBitmapImage::Create(image, ContextProviderWrapper());
   }
 
-  std::unique_ptr<CanvasResource> DoPrepareTransferableResource(
+  scoped_refptr<CanvasResource> DoPrepareTransferableResource(
       viz::TransferableResource* out_resource) override {
     DCHECK(GetSkSurface());
 
@@ -117,7 +117,7 @@ class CanvasResourceProvider_Texture : public CanvasResourceProvider {
       return nullptr;
     DCHECK(image->isTextureBacked());
 
-    std::unique_ptr<CanvasResource> resource =
+    scoped_refptr<CanvasResource> resource =
         CanvasResource_Skia::Create(image, ContextProviderWrapper());
     if (!resource)
       return nullptr;
@@ -170,19 +170,19 @@ class CanvasResourceProvider_Texture_GpuMemoryBuffer final
  protected:
   bool isOverlayCandidate() override { return true; }
 
-  std::unique_ptr<CanvasResource> CreateResource() final {
+  scoped_refptr<CanvasResource> CreateResource() final {
     return CanvasResource_GpuMemoryBuffer::Create(Size(), ColorParams(),
                                                   ContextProviderWrapper());
   }
 
-  std::unique_ptr<CanvasResource> DoPrepareTransferableResource(
+  scoped_refptr<CanvasResource> DoPrepareTransferableResource(
       viz::TransferableResource* out_resource) final {
     DCHECK(GetSkSurface());
 
     if (IsGpuContextLost())
       return nullptr;
 
-    std::unique_ptr<CanvasResource> output_resource = NewOrRecycledResource();
+    scoped_refptr<CanvasResource> output_resource = NewOrRecycledResource();
     if (!output_resource) {
       // GpuMemoryBuffer creation failed, fallback to Texture resource
       return CanvasResourceProvider_Texture::DoPrepareTransferableResource(
@@ -245,7 +245,7 @@ class CanvasResourceProvider_Bitmap final : public CanvasResourceProvider {
     return StaticBitmapImage::Create(image);
   }
 
-  std::unique_ptr<CanvasResource> DoPrepareTransferableResource(
+  scoped_refptr<CanvasResource> DoPrepareTransferableResource(
       viz::TransferableResource* out_resource) final {
     NOTREACHED();  // Not directly compositable.
     return nullptr;
@@ -419,7 +419,7 @@ void CanvasResourceProvider::FlushSkia() const {
 
 static void ReleaseFrameResources(
     WeakPtr<CanvasResourceProvider> resource_provider,
-    std::unique_ptr<CanvasResource> resource,
+    scoped_refptr<CanvasResource> resource,
     const gpu::SyncToken& sync_token,
     bool lost_resource) {
   resource->SetSyncTokenForRelease(sync_token);
@@ -432,7 +432,8 @@ static void ReleaseFrameResources(
 }
 
 void CanvasResourceProvider::RecycleResource(
-    std::unique_ptr<CanvasResource> resource) {
+    scoped_refptr<CanvasResource> resource) {
+  DCHECK(resource->HasOneRef());
   if (resource_recycling_enabled_)
     recycled_resources_.push_back(std::move(resource));
 }
@@ -443,10 +444,9 @@ void CanvasResourceProvider::SetResourceRecyclingEnabled(bool value) {
     ClearRecycledResources();
 }
 
-std::unique_ptr<CanvasResource>
-CanvasResourceProvider::NewOrRecycledResource() {
+scoped_refptr<CanvasResource> CanvasResourceProvider::NewOrRecycledResource() {
   if (recycled_resources_.size()) {
-    std::unique_ptr<CanvasResource> resource =
+    scoped_refptr<CanvasResource> resource =
         std::move(recycled_resources_.back());
     recycled_resources_.pop_back();
     // Recycling implies releasing the old content
@@ -460,7 +460,7 @@ bool CanvasResourceProvider::PrepareTransferableResource(
     viz::TransferableResource* out_resource,
     std::unique_ptr<viz::SingleReleaseCallback>* out_callback) {
   DCHECK(CanPrepareTransferableResource());
-  std::unique_ptr<CanvasResource> resource =
+  scoped_refptr<CanvasResource> resource =
       DoPrepareTransferableResource(out_resource);
   if (!resource)
     return false;
@@ -505,7 +505,7 @@ uint32_t CanvasResourceProvider::ContentUniqueID() const {
   return GetSkSurface()->generationID();
 }
 
-std::unique_ptr<CanvasResource> CanvasResourceProvider::CreateResource() {
+scoped_refptr<CanvasResource> CanvasResourceProvider::CreateResource() {
   // Needs to be implemented in subclasses that use resource recycling.
   NOTREACHED();
   return nullptr;
