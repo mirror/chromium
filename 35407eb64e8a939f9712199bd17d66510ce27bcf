@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54ab42e8_6fda182f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunFlowSequencer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-30T21:16:09Z",
+      "side": 0,
+      "message": "Just out of curiousity, do you have a sense of why this was here in the first place? I couldn\u0027t get it.",
+      "range": {
+        "startLine": 425,
+        "startChar": 12,
+        "endLine": 425,
+        "endChar": 28
+      },
+      "revId": "35407eb64e8a939f9712199bd17d66510ce27bcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
