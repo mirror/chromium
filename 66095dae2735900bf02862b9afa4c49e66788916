@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcf7df28_be4df1b6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-30T23:12:57Z",
+      "side": 1,
+      "message": "In the pause state only right?",
+      "range": {
+        "startLine": 250,
+        "startChar": 8,
+        "endLine": 250,
+        "endChar": 91
+      },
+      "revId": "66095dae2735900bf02862b9afa4c49e66788916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6a07d2d_b1fbdfa4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-30T23:12:57Z",
+      "side": 1,
+      "message": "Not for cancel right?",
+      "range": {
+        "startLine": 266,
+        "startChar": 16,
+        "endLine": 266,
+        "endChar": 45
+      },
+      "revId": "66095dae2735900bf02862b9afa4c49e66788916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
