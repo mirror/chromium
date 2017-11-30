@@ -78,7 +78,9 @@ policy_templates_translation_json_path =
     "$policy_templates_base_dir/translations/policy_templates_\${lang}.json"
 policy_templates_translation_outputs = []
 foreach(lang, policy_templates_languages) {
-  policy_templates_translation_outputs += [ "$policy_templates_base_dir/translations/policy_templates_${lang}.json" ]
+  policy_templates_translation_outputs += [
+    "$policy_templates_base_dir/translations/policy_templates_${lang}.json",
+  ]
 }
 
 # Android outputs.
@@ -91,7 +93,9 @@ policy_templates_doc_path =
     "$policy_templates_base_dir/common/html/\${lang}/chrome_policy_list.html"
 policy_templates_common_outputs = []
 foreach(lang, policy_templates_languages) {
-  policy_templates_common_outputs += [ "$policy_templates_base_dir/common/html/${lang}/chrome_policy_list.html" ]
+  policy_templates_common_outputs += [
+    "$policy_templates_base_dir/common/html/${lang}/chrome_policy_list.html",
+  ]
 }
 
 # Linux outputs.
@@ -122,7 +126,9 @@ foreach(lang, policy_templates_languages) {
   } else if (lang == "zh-TW") {
     lang = "zh_TW"
   }
-  policy_templates_mac_outputs += [ "$policy_templates_base_dir/mac/strings/${lang}.lproj/Localizable.strings" ]
+  policy_templates_mac_outputs += [
+    "$policy_templates_base_dir/mac/strings/${lang}.lproj/Localizable.strings",
+  ]
 }
 
 # Windows outputs.

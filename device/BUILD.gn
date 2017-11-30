@@ -129,12 +129,8 @@ test("device_unittests") {
 
     # Serial is supported in below platforms. See //device/servial/BUILD.gn
     if (is_win || is_linux || is_mac) {
-      sources += [
-        "serial/serial_io_handler_posix_unittest.cc",
-      ]
-      deps += [
-        "//device/serial",
-      ]
+      sources += [ "serial/serial_io_handler_posix_unittest.cc" ]
+      deps += [ "//device/serial" ]
     }
   }
 
@@ -284,7 +280,9 @@ source_set("usb_test_gadget") {
 }
 
 if (is_android) {
-  bluetooth_java_sources_needing_jni = [ "bluetooth/test/android/java/src/org/chromium/device/bluetooth/Fakes.java" ]
+  bluetooth_java_sources_needing_jni = [
+    "bluetooth/test/android/java/src/org/chromium/device/bluetooth/Fakes.java",
+  ]
 
   generate_jni("bluetooth_test_jni_headers") {
     sources = bluetooth_java_sources_needing_jni
