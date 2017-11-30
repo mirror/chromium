@@ -13,6 +13,16 @@
 Polymer({
   is: 'passwords-export-dialog',
 
+  properties: {
+    /**
+     * The error that occurred while exporting.
+     */
+    exportErrorMessage: {
+      type: String,
+      value: '',
+    },
+  },
+
   /**
    * The interface for callbacks to the browser.
    * Defined in passwords_section.js
@@ -26,11 +36,35 @@ Polymer({
     this.$.dialog.showModal();
 
     this.passwordManager_ = PasswordManagerImpl.getInstance();
+
+    var onPasswordsExportCompletedListener = error => {
+      if (!error) {
+        this.close();
+      } else {
+        this.$.dialog_progress.open = false;
+        this.exportErrorMessage = error;
+        this.$.dialog_error.showModal();
+      }
+    };
+
+    this.onPasswordsExportCompletedListener_ =
+        onPasswordsExportCompletedListener;
+
+    if (!chrome.passwordsPrivate.onPasswordsExportCompleted.hasListener(
+            onPasswordsExportCompletedListener)) {
+      chrome.passwordsPrivate.onPasswordsExportCompleted.addListener(
+          onPasswordsExportCompletedListener);
+    }
   },
 
   /** Closes the dialog. */
   close: function() {
+    chrome.passwordsPrivate.onPasswordsExportCompleted.removeListener(
+        this.onPasswordsExportCompletedListener);
+
     this.$.dialog.close();
+    this.$.dialog_progress.close();
+    this.$.dialog_error.close();
   },
 
   /**
@@ -39,6 +73,9 @@ Polymer({
    */
   onExportTap_: function() {
     this.passwordManager_.exportPasswords();
+    this.$.dialog.open = false;
+    this.$.dialog_error.open = false;
+    this.$.dialog_progress.showModal();
   },
 
   /**
