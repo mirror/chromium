@@ -1154,8 +1154,7 @@ void LocalFrame::ForceSynchronousDocumentInstall(
   loader_.StateMachine()->AdvanceTo(
       FrameLoaderStateMachine::kCommittedFirstRealLoad);
 
-  GetDocument()->OpenForNavigation(kForceSynchronousParsing, mime_type,
-                                   AtomicString("UTF-8"));
+  GetDocument()->OpenForNavigation(mime_type, AtomicString("UTF-8"));
   data->ForEachSegment(
       [this](const char* segment, size_t segment_size, size_t segment_offset) {
         GetDocument()->Parser()->AppendBytes(segment, segment_size);

@@ -680,13 +680,9 @@ void DocumentLoader::CommitNavigation(const AtomicString& mime_type,
   bool should_reuse_default_view = frame_->ShouldReuseDefaultView(Url());
   DCHECK(frame_->GetPage());
 
-  ParserSynchronizationPolicy parsing_policy = kAllowAsynchronousParsing;
-  if (!Document::ThreadedParsingEnabledForTesting())
-    parsing_policy = kForceSynchronousParsing;
-
   InstallNewDocument(Url(), owner_document, should_reuse_default_view,
                      mime_type, encoding, InstallNewDocumentReason::kNavigation,
-                     parsing_policy, overriding_url);
+                     overriding_url);
   parser_->SetDocumentWasLoadedAsPartOfNavigation();
   frame_->GetDocument()->MaybeHandleHttpRefresh(
       response_.HttpHeaderField(HTTPNames::Refresh),
@@ -1054,7 +1050,6 @@ void DocumentLoader::InstallNewDocument(
     const AtomicString& mime_type,
     const AtomicString& encoding,
     InstallNewDocumentReason reason,
-    ParserSynchronizationPolicy parsing_policy,
     const KURL& overriding_url) {
   DCHECK(!frame_->GetDocument() || !frame_->GetDocument()->IsActive());
   DCHECK_EQ(frame_->Tree().ChildCount(), 0u);
@@ -1132,7 +1127,7 @@ void DocumentLoader::InstallNewDocument(
   OriginTrialContext::AddTokensFromHeader(
       document, response_.HttpHeaderField(HTTPNames::Origin_Trial));
 
-  parser_ = document->OpenForNavigation(parsing_policy, mime_type, encoding);
+  parser_ = document->OpenForNavigation(mime_type, encoding);
 
   // FeaturePolicy is reset in the browser process on commit, so this needs to
   // be initialized and replicated to the browser process after commit messages
@@ -1160,8 +1155,7 @@ void DocumentLoader::ReplaceDocumentWhileExecutingJavaScriptURL(
     const String& source) {
   InstallNewDocument(url, owner_document, should_reuse_default_view, MimeType(),
                      response_.TextEncodingName(),
-                     InstallNewDocumentReason::kJavascriptURL,
-                     kForceSynchronousParsing, NullURL());
+                     InstallNewDocumentReason::kJavascriptURL, NullURL());
 
   if (!source.IsNull()) {
     frame_->GetDocument()->SetCompatibilityMode(Document::kNoQuirksMode);

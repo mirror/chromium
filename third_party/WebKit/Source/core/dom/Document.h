@@ -60,7 +60,6 @@
 #include "core/frame/DOMTimerCoordinator.h"
 #include "core/frame/HostsUsingFeatures.h"
 #include "core/html/custom/V0CustomElement.h"
-#include "core/html/parser/ParserSynchronizationPolicy.h"
 #include "core/page/PageVisibilityState.h"
 #include "platform/Length.h"
 #include "platform/Timer.h"
@@ -595,10 +594,9 @@ class CORE_EXPORT Document : public ContainerNode,
   void open(Document* entered_document, ExceptionState&);
   // This is used internally and does not handle exceptions.
   void open();
-  DocumentParser* OpenForNavigation(ParserSynchronizationPolicy,
-                                    const AtomicString& mime_type,
+  DocumentParser* OpenForNavigation(const AtomicString& mime_type,
                                     const AtomicString& encoding);
-  DocumentParser* ImplicitOpen(ParserSynchronizationPolicy);
+  DocumentParser* ImplicitOpen();
 
   // This is the DOM API document.open() implementation.
   // document.open() opens a new window when called with three arguments.
@@ -1432,9 +1430,6 @@ class CORE_EXPORT Document : public ContainerNode,
                                    ContainerNode* new_container_node,
                                    ExceptionState&);
   void LockCompatibilityMode() { compatibility_mode_locked_ = true; }
-  ParserSynchronizationPolicy GetParserSynchronizationPolicy() const {
-    return parser_sync_policy_;
-  }
 
  private:
   friend class IgnoreDestructiveWriteCountIncrementer;
@@ -1761,8 +1756,6 @@ class CORE_EXPORT Document : public ContainerNode,
   DOMTimerCoordinator timers_;
 
   bool has_viewport_units_;
-
-  ParserSynchronizationPolicy parser_sync_policy_;
 
   HostsUsingFeatures::Value hosts_using_features_value_;
 

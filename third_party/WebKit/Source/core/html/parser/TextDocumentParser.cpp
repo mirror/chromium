@@ -25,17 +25,14 @@
 #include "core/html/parser/TextDocumentParser.h"
 
 #include "core/html/parser/HTMLTreeBuilder.h"
-#include "core/html/parser/ParserSynchronizationPolicy.h"
 #include "core/html_names.h"
 
 namespace blink {
 
 using namespace HTMLNames;
 
-TextDocumentParser::TextDocumentParser(HTMLDocument& document,
-                                       ParserSynchronizationPolicy sync_policy)
-    : HTMLDocumentParser(document, sync_policy),
-      have_inserted_fake_pre_element_(false) {}
+TextDocumentParser::TextDocumentParser(HTMLDocument& document)
+    : HTMLDocumentParser(document), have_inserted_fake_pre_element_(false) {}
 
 TextDocumentParser::~TextDocumentParser() {}
 
