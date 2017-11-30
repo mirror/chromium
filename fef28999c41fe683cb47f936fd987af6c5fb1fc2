@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "029f6ec7_7244f15e",
+        "filename": "ash/wm/lock_state_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-30T02:50:59Z",
+      "side": 1,
+      "message": "changing to weak_ptr_factory_.GetWeakPtr() does changing the code a little bit.. Probably it needs a re-check.",
+      "revId": "fef28999c41fe683cb47f936fd987af6c5fb1fc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fd92be79_36b4a443",
+        "filename": "ash/accessibility/accessibility_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-30T02:50:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d79deda9_d21430d0",
+      "revId": "49edb332c581e6effdd012e5946fd183c3ea9306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14dc6d50_f6268423",
         "filename": "ash/accessibility/test_accessibility_controller_client.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "49edb332c581e6effdd012e5946fd183c3ea9306",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9d72194_fbbc44f5",
+        "filename": "ash/accessibility/test_accessibility_controller_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-30T02:50:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14dc6d50_f6268423",
+      "revId": "49edb332c581e6effdd012e5946fd183c3ea9306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "28524fee_5923efcd",
+        "filename": "ash/wm/lock_state_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-30T02:50:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f280123_63647e7f",
+      "revId": "49edb332c581e6effdd012e5946fd183c3ea9306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c604c925_fdf33bd5",
         "filename": "ash/wm/lock_state_controller.cc",
         "patchSetId": 7
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "0845f736_0b9f43b5",
+        "filename": "ash/wm/lock_state_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-30T02:50:59Z",
+      "side": 1,
+      "message": "yep, xiyuan also worried about this when shutting down.. updated",
+      "parentUuid": "c604c925_fdf33bd5",
+      "revId": "49edb332c581e6effdd012e5946fd183c3ea9306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc841f5a_a48f55eb",
         "filename": "chrome/browser/ui/ash/accessibility/accessibility_controller_client.cc",
         "patchSetId": 7
@@ -81,6 +153,24 @@
       "writtenOn": "2017-11-30T02:16:24Z",
       "side": 1,
       "message": "Do you need to move the sound_duration?",
+      "revId": "49edb332c581e6effdd012e5946fd183c3ea9306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29328c2c_1082ae79",
+        "filename": "chrome/browser/ui/ash/accessibility/accessibility_controller_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-30T02:50:59Z",
+      "side": 1,
+      "message": "hmm, probably it is done by copy. Not needed.",
+      "parentUuid": "bc841f5a_a48f55eb",
       "revId": "49edb332c581e6effdd012e5946fd183c3ea9306",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
