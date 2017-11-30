@@ -9,9 +9,11 @@
 #include "ui/accessibility/platform/ax_platform_node.h"
 #include "ui/events/event_utils.h"
 #include "ui/gfx/native_widget_types.h"
+#include "ui/views/bubble/bubble_dialog_delegate.h"
 #include "ui/views/controls/native/native_view_host.h"
 #include "ui/views/view.h"
 #include "ui/views/widget/widget.h"
+#include "ui/views/widget/widget_delegate.h"
 
 namespace views {
 
@@ -168,6 +170,18 @@ gfx::NativeViewAccessible NativeViewAccessibilityBase::GetParent() {
     Widget* top_widget = widget->GetTopLevelWidget();
     if (top_widget && widget != top_widget && top_widget->GetRootView())
       return top_widget->GetRootView()->GetNativeViewAccessible();
+
+    // Bubbles are top widgets themselves but might have an anchor widget that
+    // is acting as their parent.
+    if (WidgetDelegate* delegate = widget->widget_delegate()) {
+      BubbleDialogDelegateView* bubble_view =
+          delegate->AsBubbleDialogDelegate();
+      if (bubble_view) {
+        Widget* anchor_widget = bubble_view->anchor_widget();
+        if (anchor_widget && anchor_widget->GetRootView())
+          return anchor_widget->GetRootView()->GetNativeViewAccessible();
+      }
+    }
   }
 
   return nullptr;
