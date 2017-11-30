@@ -300,6 +300,8 @@ namespace developerPrivate {
     // If false, an alert dialog will show in the event of a reload error.
     // Defaults to false.
     boolean? failQuietly;
+
+    boolean? populateErrorForUnpacked;
   };
 
   dictionary LoadUnpackedOptions {
