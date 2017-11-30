@@ -50,6 +50,9 @@ const base::Feature kUserInitiatedChromeCleanupsFeature{
 const base::Feature kCleanerDownloadFeature{"DownloadCleanupToolByBitness",
                                             base::FEATURE_DISABLED_BY_DEFAULT};
 
+const base::Feature kUserInitiatedChromeCleanupFeature{
+    "UserInitiatedChromeCleanup", base::FEATURE_DISABLED_BY_DEFAULT};
+
 bool IsInSRTPromptFieldTrialGroups() {
   return !base::StartsWith(base::FieldTrialList::FindFullName(kSRTPromptTrial),
                            kSRTPromptOffGroup, base::CompareCase::SENSITIVE);
@@ -128,6 +131,15 @@ void RecordPromptNotShownWithReasonHistogram(
     NoPromptReasonHistogramValue value) {
   UMA_HISTOGRAM_ENUMERATION("SoftwareReporter.NoPromptReason", value,
                             NO_PROMPT_REASON_MAX);
+}
+
+bool UserInitiatedChromeCleanupEnabled() {
+#if defined(OS_WIN)
+  return base::FeatureList::IsEnabled(
+      safe_browsing::kUserInitiatedChromeCleanupFeature);
+#else
+  return false;
+#endif
 }
 
 }  // namespace safe_browsing
