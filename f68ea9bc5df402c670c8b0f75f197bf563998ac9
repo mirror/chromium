@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d6ecfd5_55b97302",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptSourceCode.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-11-30T18:56:47Z",
+      "side": 1,
+      "message": "nit: Does this comment still apply to the other constructor that takes ScriptResource? If so, maybe it should be moved next to that overload?",
+      "revId": "f68ea9bc5df402c670c8b0f75f197bf563998ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
