@@ -279,7 +279,6 @@ TEST_F(SigninHeaderHelperTest, TestDiceMigration) {
 // Tests that a Dice request is returned only when there is an authentication
 // error if the method is kDiceFixAuthErrors.
 TEST_F(SigninHeaderHelperTest, TestDiceFixAuthError) {
-  ScopedAccountConsistencyDiceFixAuthErrors scoped_dice_fix_auth_errors;
   // No Dice request unless all conditions are met.
   CheckDiceHeaderRequest(GURL("https://accounts.google.com"), "0123456789",
                          "mode=0,enable_account_consistency=false", "");
