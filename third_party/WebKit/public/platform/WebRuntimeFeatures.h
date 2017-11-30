@@ -86,6 +86,7 @@ class WebRuntimeFeatures {
   BLINK_PLATFORM_EXPORT static void EnableExperimentalCanvasFeatures(bool);
   BLINK_PLATFORM_EXPORT static void EnableFastMobileScrolling(bool);
   BLINK_PLATFORM_EXPORT static void EnableFeaturePolicy(bool);
+  BLINK_PLATFORM_EXPORT static void EnableFeaturePolicyAutoplayFeature(bool);
   BLINK_PLATFORM_EXPORT static void EnableFileSystem(bool);
   BLINK_PLATFORM_EXPORT static void EnableForceTallerSelectPopup(bool);
   BLINK_PLATFORM_EXPORT static void EnableGamepadExtensions(bool);

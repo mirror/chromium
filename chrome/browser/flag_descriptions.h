@@ -399,6 +399,9 @@ extern const char kFastUnloadDescription[];
 extern const char kFeaturePolicyName[];
 extern const char kFeaturePolicyDescription[];
 
+extern const char kFeaturePolicyAutoplayFeatureName[];
+extern const char kFeaturePolicyAutoplayFeatureDescription[];
+
 extern const char kFetchKeepaliveTimeoutSettingName[];
 extern const char kFetchKeepaliveTimeoutSettingDescription[];
 

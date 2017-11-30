@@ -3628,6 +3628,11 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableTouchpadAndWheelScrollLatchingDescription,
      kOsAll, FEATURE_VALUE_TYPE(features::kTouchpadAndWheelScrollLatching)},
 
+    {"enable-feature-policy-autoplay-feature",
+     flag_descriptions::kFeaturePolicyAutoplayFeatureName,
+     flag_descriptions::kFeaturePolicyAutoplayFeatureDescription, kOsAll,
+     FEATURE_VALUE_TYPE(features::kFeaturePolicyAutoplayFeature)},
+
     // NOTE: Adding a new flag requires adding a corresponding entry to enum
     // "LoginCustomFlags" in tools/metrics/histograms/enums.xml. See "Flag
     // Histograms" in tools/metrics/histograms/README.md (run the

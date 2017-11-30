@@ -95,6 +95,9 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
   WebRuntimeFeatures::EnableFeaturePolicy(
       base::FeatureList::IsEnabled(features::kFeaturePolicy));
 
+  WebRuntimeFeatures::EnableFeaturePolicyAutoplayFeature(
+      base::FeatureList::IsEnabled(features::kFeaturePolicyAutoplayFeature));
+
   if (!base::FeatureList::IsEnabled(features::kWebUsb))
     WebRuntimeFeatures::EnableWebUsb(false);
 

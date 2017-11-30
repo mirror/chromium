@@ -144,6 +144,10 @@ void WebRuntimeFeatures::EnableFeaturePolicy(bool enable) {
   RuntimeEnabledFeatures::SetFeaturePolicyEnabled(enable);
 }
 
+void WebRuntimeFeatures::EnableFeaturePolicyAutoplayFeature(bool enable) {
+  RuntimeEnabledFeatures::SetFeaturePolicyAutoplayFeatureEnabled(enable);
+}
+
 void WebRuntimeFeatures::EnableFileSystem(bool enable) {
   RuntimeEnabledFeatures::SetFileSystemEnabled(enable);
 }

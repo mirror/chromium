@@ -633,6 +633,11 @@ const char kFeaturePolicyDescription[] =
     "Enables granting and removing access to features through the "
     "Feature-Policy HTTP header.";
 
+const char kFeaturePolicyAutoplayFeatureName[] = "Feature Policy for Autoplay";
+const char kFeaturePolicyAutoplayFeatureDescription[] =
+    "Enables granting and removing access to autoplay through the Feature "
+    "Policy API.";
+
 const char kFetchKeepaliveTimeoutSettingName[] =
     "Fetch API keepalive timeout setting";
 const char kFetchKeepaliveTimeoutSettingDescription[] =

@@ -102,6 +102,10 @@ const base::Feature kExpensiveBackgroundTimerThrottling{
 const base::Feature kFeaturePolicy{"FeaturePolicy",
                                    base::FEATURE_ENABLED_BY_DEFAULT};
 
+// Enables the Feature Policy framework to control access to autoplay.
+const base::Feature kFeaturePolicyAutoplayFeature{
+    "FeaturePolicyAutoplayFeature", base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Enables Fetch API keepalive timeout setting.
 const base::Feature kFetchKeepaliveTimeoutSetting{
     "FetchKeepaliveTimeoutSetting", base::FEATURE_ENABLED_BY_DEFAULT};
