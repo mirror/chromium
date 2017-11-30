@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "223ff42f_fbd67ab7",
+        "filename": "chrome/app/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-30T00:36:57Z",
+      "side": 1,
+      "message": "I have a feeling some OWNERS file parser does not like this, as my presubmits are failing: \n\nhttps://logs.chromium.org/v/?s\u003dchromium%2Fbb%2Ftryserver.chromium.linux%2Fchromium_presubmit%2F605180%2F%2B%2Frecipes%2Fsteps%2Fpresubmit%2F0%2Fstdout\n\nowners.SyntaxErrorInOwnersFile: /b/build/slave/linux/build/src/chrome/app/OWNERS:29 syntax error: \"rsesek@chromium.org  # For crash keys migration https://crbug.com/598854.\" is not a \"set noparent\", file include, \"*\", or an email address.",
+      "revId": "af4ee2a16adf1f8b61dfc3f4fad87f8e5c99aaf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
