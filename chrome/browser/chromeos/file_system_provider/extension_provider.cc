@@ -58,14 +58,11 @@ ExtensionProvider::CreateProvidedFileSystem(
   return std::make_unique<ThrottledFileSystem>(
       std::make_unique<ProvidedFileSystem>(profile, file_system_info));
 }
-
 bool ExtensionProvider::GetCapabilities(Profile* profile,
                                         const ProviderId& provider_id,
                                         Capabilities& result) {
   ProvidingExtensionInfo providing_extension_info;
 
-  // TODO(baileyberro): Change this so error is not swallowed once
-  // bug is resolved (crrev.com/c/767629).
   bool success = GetProvidingExtensionInfo(provider_id.GetExtensionId(),
                                            &providing_extension_info, profile);
 
