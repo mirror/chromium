@@ -1447,6 +1447,13 @@ void LayerTreeHostImpl::SetIsLikelyToRequireADraw(
 
 gfx::ColorSpace LayerTreeHostImpl::GetRasterColorSpace() const {
   gfx::ColorSpace result;
+#if defined(OS_CHROMEOS)
+  // Avoid using color space without Gpu rasterization because it's too slow.
+  if (gpu_rasterization_status_ != GpuRasterizationStatus::ON &&
+      gpu_rasterization_status_ != GpuRasterizationStatus::ON_FORCED) {
+    return result;
+  }
+#endif
   // The pending tree will have the most recently updated color space, so
   // prefer that.
   if (pending_tree_)
