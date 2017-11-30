@@ -16,6 +16,24 @@
       "revId": "f91409077ecc33dfc2ee59088585615f9cd3f1cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d14e98f_58dbc5ac",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutFlexibleBox.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-11-30T00:01:38Z",
+      "side": 1,
+      "message": "Element children of a flex box are blockified and there should be no need for an anonymous block in any other case than for text nodes, I think.",
+      "parentUuid": "c54a8f4f_ac16753c",
+      "revId": "f91409077ecc33dfc2ee59088585615f9cd3f1cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
