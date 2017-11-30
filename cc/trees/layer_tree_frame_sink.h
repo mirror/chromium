@@ -10,6 +10,7 @@
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/memory/weak_ptr.h"
 #include "base/threading/thread_checker.h"
 #include "cc/cc_export.h"
 #include "components/viz/common/gpu/context_lost_observer.h"
@@ -135,6 +136,7 @@ class CC_EXPORT LayerTreeFrameSink : public viz::ContextLostObserver {
   void OnContextLost() override;
 
   LayerTreeFrameSinkClient* client_ = nullptr;
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 
   struct LayerTreeFrameSink::Capabilities capabilities_;
   scoped_refptr<viz::ContextProvider> context_provider_;
@@ -144,6 +146,7 @@ class CC_EXPORT LayerTreeFrameSink : public viz::ContextLostObserver {
   viz::SharedBitmapManager* shared_bitmap_manager_;
 
  private:
+  base::WeakPtrFactory<LayerTreeFrameSink> weak_ptr_factory_;
   DISALLOW_COPY_AND_ASSIGN(LayerTreeFrameSink);
 };
 
