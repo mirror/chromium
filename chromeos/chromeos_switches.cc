@@ -532,6 +532,9 @@ const char kDisablePerUserTimezone[] = "disable-per-user-timezone";
 const char kDisableFineGrainedTimeZoneDetection[] =
     "disable-fine-grained-time-zone-detection";
 
+const char kDisableSigninFrameClientCerts[] =
+    "disable-signin-frame-client-certs";
+
 bool WakeOnWifiEnabled() {
   return !base::CommandLine::ForCurrentProcess()->HasSwitch(kDisableWakeOnWifi);
 }
@@ -628,6 +631,11 @@ bool IsZipArchiverUnpackerEnabled() {
   // Disabled by default.
   return base::CommandLine::ForCurrentProcess()->HasSwitch(
       kEnableZipArchiverUnpacker);
+}
+
+bool IsSigninFrameClientCertsEnabled() {
+  return !base::CommandLine::ForCurrentProcess()->HasSwitch(
+      kDisableSigninFrameClientCerts);
 }
 
 }  // namespace switches
