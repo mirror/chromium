@@ -51,6 +51,10 @@ ScopedAccountConsistency::ScopedAccountConsistency(
     case AccountConsistencyMethod::kDicePrepareMigration:
       feature_value = kAccountConsistencyFeatureMethodDicePrepareMigration;
       break;
+    case AccountConsistencyMethod::kDicePrepareMigrationNewEnpoint:
+      feature_value =
+          kAccountConsistencyFeatureMethodDicePrepareMigrationNewEndpoint;
+      break;
     case AccountConsistencyMethod::kDiceMigration:
       feature_value = kAccountConsistencyFeatureMethodDiceMigration;
       break;
