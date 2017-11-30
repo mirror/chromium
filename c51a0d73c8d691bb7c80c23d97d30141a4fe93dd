@@ -22,6 +22,30 @@
       "revId": "c51a0d73c8d691bb7c80c23d97d30141a4fe93dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "024e5875_fc36a355",
+        "filename": "components/cronet/url_request_context_config_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-30T22:01:46Z",
+      "side": 1,
+      "message": "*facepalm* I accidentally add one more comma at the end of line 192, caused the URLRequestContextConfig failed to be initialized.",
+      "parentUuid": "0a037712_f6719b0c",
+      "range": {
+        "startLine": 171,
+        "startChar": 2,
+        "endLine": 171,
+        "endChar": 25
+      },
+      "revId": "c51a0d73c8d691bb7c80c23d97d30141a4fe93dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
