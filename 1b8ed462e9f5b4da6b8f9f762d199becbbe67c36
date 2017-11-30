@@ -16,6 +16,24 @@
       "revId": "1b8ed462e9f5b4da6b8f9f762d199becbbe67c36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ecbe273_809a44b2",
+        "filename": "third_party/WebKit/common/feature_policy/feature_policy_struct_traits.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1250573
+      },
+      "writtenOn": "2017-11-30T23:11:13Z",
+      "side": 1,
+      "message": "Those 2 enums are used in several places, which would make this CL much larger, thus we opted to replicate the enums as a first step.\n\nThey\u0027re used in ~100 files, ~600 lines.\n\nI expanded crbug.com/789818 to cover both enums and added a second TODO for FeaturePolicyFeature enum.\n\nLet me know if you feel strong against this approach.",
+      "parentUuid": "55480880_72bc4551",
+      "revId": "1b8ed462e9f5b4da6b8f9f762d199becbbe67c36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
