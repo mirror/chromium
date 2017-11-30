@@ -547,7 +547,8 @@ NavigationURLLoaderNetworkService::NavigationURLLoaderNetworkService(
     AppCacheNavigationHandle* appcache_handle,
     NavigationURLLoaderDelegate* delegate,
     std::vector<std::unique_ptr<URLLoaderRequestHandler>> initial_handlers)
-    : delegate_(delegate),
+    : navigation_ui_data_(std::move(navigation_ui_data)),
+      delegate_(delegate),
       allow_download_(request_info->common_params.allow_download),
       weak_factory_(this) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -745,6 +746,9 @@ bool NavigationURLLoaderNetworkService::IsDownload() const {
         net::HttpContentDisposition(disposition, std::string())
             .is_attachment()) {
       return true;
+    } else if (response_->head.mime_type == "multipart/related") {
+      return !GetContentClient()->browser()->AllowRenderingMhtmlOverHttp(
+          navigation_ui_data_.get());
     }
     // TODO(qinmin): Check whether this is special-case user script that needs
     // to be downloaded.

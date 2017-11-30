@@ -974,6 +974,11 @@ class CONTENT_EXPORT ContentBrowserClient {
                                         bool is_main_frame,
                                         ui::PageTransition transition);
 #endif
+
+  // Called on the IO thread to determine whether or not to allow load and
+  // render MHTML page from http/https URLs.
+  virtual bool AllowRenderingMhtmlOverHttp(
+      NavigationUIData* navigation_ui_data) const;
 };
 
 }  // namespace content

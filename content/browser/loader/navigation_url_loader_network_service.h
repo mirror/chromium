@@ -64,6 +64,8 @@ class CONTENT_EXPORT NavigationURLLoaderNetworkService
       const GURL& url,
       mojom::URLLoaderFactoryRequest factory);
 
+  std::unique_ptr<NavigationUIData> navigation_ui_data_;
+
   NavigationURLLoaderDelegate* delegate_;
 
   scoped_refptr<ResourceResponse> response_;
