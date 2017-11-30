@@ -22,6 +22,30 @@
       "revId": "35407eb64e8a939f9712199bd17d66510ce27bcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6185b035_a72092cf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunFlowSequencer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-30T23:06:12Z",
+      "side": 0,
+      "message": "This is here because maybeSwitchToTabbedMode() only applies to FirstRunActivity intents and not to LightweightFirstRunActivity intents\n\nI am unclear whether maybeSwitchToTabbedMode() needs to exist at all in M64. It is a no-op when the FRE is launched from LaunchIntentDispatcher. We seem to be launching the FRE from LaunchIntentDispatcher (vs AsyncInitializationActivity) more in M64 than we did in M63 (I haven\u0027t dug into which change caused this)",
+      "parentUuid": "54ab42e8_6fda182f",
+      "range": {
+        "startLine": 425,
+        "startChar": 12,
+        "endLine": 425,
+        "endChar": 28
+      },
+      "revId": "35407eb64e8a939f9712199bd17d66510ce27bcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
