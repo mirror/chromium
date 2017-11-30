@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "f79b8749_02b360f3",
+        "filename": "chrome/android/java/res/layout/list_menu_item.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-30T02:22:09Z",
+      "side": 1,
+      "message": "The test team does QA passes on JellyBean, so they\u0027ll detect if this crashes.. but padding being slightly off is unlikely to be caught. You mentioned in a different patchset that you tested something on an emulator. Can you spin up an emulator with JB? Or find a test device to borrow?",
+      "parentUuid": "a7170111_4737d002",
+      "range": {
+        "startLine": 9,
+        "startChar": 40,
+        "endLine": 9,
+        "endChar": 68
+      },
+      "revId": "f86879e4c9771cdc3bcdd82d9e208d42da39d803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "844f7940_9effd7f4",
         "filename": "chrome/android/java/res/xml/languages_preferences.xml",
         "patchSetId": 11
