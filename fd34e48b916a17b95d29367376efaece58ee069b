@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8062697_17b8dce6",
+        "filename": "ash/system/palette/palette_welcome_bubble_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-30T02:30:10Z",
+      "side": 1,
+      "message": "Instead of doing this, please make another test like PaletteWelcomeBubbleGuestTest that just adds a single user session. While what you\u0027re doing works in the test environment, we don\u0027t actually allow mixing guest and non-guest users in production.\n\nI suspect that PaletteWelcomeBubbleGuestTest will be super-simple. You could probably skip the |welcome_bubble_| member and just have a PaletteWelcomeBubble local in the test itself.",
+      "revId": "fd34e48b916a17b95d29367376efaece58ee069b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
