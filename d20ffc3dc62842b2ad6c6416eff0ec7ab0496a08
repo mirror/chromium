@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6236d4ca_c1f40b6b",
+        "filename": "third_party/WebKit/public/web/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-30T00:31:40Z",
+      "side": 1,
+      "message": "nit: Its\n\n(Alternatively, could say \"Implementations for these APIs are located in:\" for a bit more clarity)",
+      "revId": "d20ffc3dc62842b2ad6c6416eff0ec7ab0496a08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b0bc743_e3de9e1c",
+        "filename": "third_party/WebKit/public/web/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-30T00:31:40Z",
+      "side": 1,
+      "message": "Most basic parts of web spec -\u003e Low-level / Foundational / Essential Web specification parts that the rest of the Web platform builds on?",
+      "revId": "d20ffc3dc62842b2ad6c6416eff0ec7ab0496a08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b441f283_de3b80a7",
+        "filename": "third_party/WebKit/public/web/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-30T00:31:40Z",
+      "side": 1,
+      "message": "\"Higher-level parts of the Web platform. May depend on core/, but the platform parts in core/ may not depend on modules/.\"?",
+      "revId": "d20ffc3dc62842b2ad6c6416eff0ec7ab0496a08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
