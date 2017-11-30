@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bedb011_619f17b6",
+        "filename": "chrome/browser/policy/configuration_policy_handler_list_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-11-30T08:42:02Z",
+      "side": 1,
+      "message": "Is there a reason you only want to set the pref when the policy is in the enabled state? If the policy is set to disabled the custom password option will be locked in the false state and the user will not be allowed to change it but this seems to be fine if the admin wants it.\n\nOtherwise you can simply add it to the list here and let it map to the pref without the need for a special handler.",
+      "revId": "f84c0b5e0116421860d961bbf9f5e6ab86de85cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
