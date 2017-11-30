@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7dab2f0_cd309bcd",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1548,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-11-30T06:20:22Z",
+      "side": 1,
+      "message": "This pattern, element_shadow-\u003eIsV1() || element_shadow-\u003eIsUserAgentV1(), is too long.\nIt would be better to have one function to represent this condition.\n\nWhy don\u0027t you update IsV1() to include it?",
+      "revId": "821a6b3e6c5580a41e322188cae6c6e4acdeab04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b87d7dc7_83977ce3",
+        "filename": "third_party/WebKit/Source/core/dom/ShadowRoot.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-11-30T06:20:22Z",
+      "side": 1,
+      "message": "kUserAgentV0 and kUserAgent sound very similar, and are likely misused.\n\nIt would be better to make these sound more different form each other.\n\ne.g.\nkLegacyUserAgentV0 and kUserAgentV1 until we can have one \"kUserAgent\" in the future.",
+      "revId": "821a6b3e6c5580a41e322188cae6c6e4acdeab04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49176fa4_73fcddb6",
+        "filename": "third_party/WebKit/Source/core/dom/ShadowRoot.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-11-30T06:20:22Z",
+      "side": 1,
+      "message": "The sum of bit fields looks broken. It is 19.\nPlease make it 16.\n\nAlso please add static assert to assert the size of ShadowRoot so that we can catch this kind of mistake in the future.",
+      "revId": "821a6b3e6c5580a41e322188cae6c6e4acdeab04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40802cd5_4ae13c30",
+        "filename": "third_party/WebKit/Source/core/dom/ShadowRoot.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-11-30T06:20:22Z",
+      "side": 1,
+      "message": "It looks there are a lot of pattern in this CL as such:\n\n- A function name mentions only *V1*.\n- However, the actual implementation is using the condition of root-\u003eIsV1() || root-\u003eIsUserAgentV1())\n\nThey sound inconsistent, and things are getting difficult to remember.\n\nI\u0027m afraid that we would have to look at not only the function name, but also the contents of the function to know what condition is actually used, unless there is consistent and easy-to-remember naming rules. We can\u0027t trust the function name anymore.\n\nCould you try to think about consistent naming rules (or policy)?\nThe current naming rule looks inconsistent everywhere.",
+      "revId": "821a6b3e6c5580a41e322188cae6c6e4acdeab04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
