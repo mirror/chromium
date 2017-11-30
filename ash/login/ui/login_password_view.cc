@@ -476,17 +476,14 @@ void LoginPasswordView::SetFocusEnabledForChildViews(bool enable) {
 }
 
 void LoginPasswordView::Clear() {
-  textfield_->SetText(base::string16());
-  // |ContentsChanged| won't be called by |Textfield| if the text is changed
-  // by |Textfield::SetText()|.
-  ContentsChanged(textfield_, textfield_->text());
+  // There is no api to clear all text in |Textfield|, so select everything and
+  // backspace instead, which causes the same effect.
+  textfield_->SelectAll(false /*reversed*/);
+  Backspace();
 }
 
 void LoginPasswordView::AppendNumber(int value) {
-  textfield_->SetText(textfield_->text() + base::IntToString16(value));
-  // |ContentsChanged| won't be called by |Textfield| if the text is changed
-  // by |Textfield::AppendText()|.
-  ContentsChanged(textfield_, textfield_->text());
+  textfield_->InsertOrReplaceText(base::IntToString16(value));
 }
 
 void LoginPasswordView::Backspace() {
