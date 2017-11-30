@@ -58,9 +58,11 @@ void load_callback(const std::string& result) {}
 
 TEST_F(CrOSComponentInstallerTest, BPPPCompatibleCrOSComponent) {
   BrowserProcessPlatformPart bppp;
+  std::string component_path = "/component/path/v0";
   ASSERT_EQ(bppp.IsCompatibleCrOSComponent("a"), false);
-  bppp.AddCompatibleCrOSComponent("a");
+  bppp.AddCompatibleCrOSComponent("a", component_path);
   ASSERT_EQ(bppp.IsCompatibleCrOSComponent("a"), true);
+  ASSERT_EQ(bppp.GetCompatibleCrOSComponentPath("a"), component_path);
 }
 
 TEST_F(CrOSComponentInstallerTest, ComponentReadyCorrectManifest) {
