@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eae0ade9_40582838",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-workers-redundant.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-11-30T00:24:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f80d8df4_ac66d60c",
+      "revId": "34e6934c60fd8905a6fb71a71ce0c61acfe7961a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e63f33c8_81923b6e",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-workers-redundant.js",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "34e6934c60fd8905a6fb71a71ce0c61acfe7961a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2933adda_6ab5055d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-workers-redundant.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-11-30T00:24:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e63f33c8_81923b6e",
+      "revId": "34e6934c60fd8905a6fb71a71ce0c61acfe7961a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
