@@ -16,6 +16,29 @@
       "revId": "08045975d2842f1954f3475d8138c2d3bd7c020e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eb392cf_437a3fca",
+        "filename": "docs/testing/json_test_results_format.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-30T22:39:57Z",
+      "side": 1,
+      "message": "Discussed in 1:1: don\u0027t support absolute paths for now. We can add them when we need them.",
+      "range": {
+        "startLine": 110,
+        "startChar": 671,
+        "endLine": 110,
+        "endChar": 717
+      },
+      "revId": "08045975d2842f1954f3475d8138c2d3bd7c020e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
