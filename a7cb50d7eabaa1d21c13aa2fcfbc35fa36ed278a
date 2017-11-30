@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37dad2ad_443ac107",
+        "filename": "components/previews/content/previews_io_data.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-30T22:56:22Z",
+      "side": 1,
+      "message": "ha. You are passing passed_reasons. nice.",
+      "range": {
+        "startLine": 166,
+        "startChar": 34,
+        "endLine": 166,
+        "endChar": 40
+      },
+      "revId": "a7cb50d7eabaa1d21c13aa2fcfbc35fa36ed278a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ba51c34_54aa65cf",
+        "filename": "components/previews/content/previews_io_data.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-30T22:56:22Z",
+      "side": 1,
+      "message": "Can PassedPreviewsEligibilities be moved instead of putting it in a std::unique_ptr (everywhere)? Vectors should be movable or copyable? If so, can you not typedef the vector, that way it is clear a vector is being moved.",
+      "revId": "a7cb50d7eabaa1d21c13aa2fcfbc35fa36ed278a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8273dacf_9c0eaad2",
+        "filename": "components/previews/content/previews_ui_service.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-30T22:56:22Z",
+      "side": 1,
+      "message": "stale comment.",
+      "revId": "a7cb50d7eabaa1d21c13aa2fcfbc35fa36ed278a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5275dfa2_ff871dcd",
+        "filename": "components/previews/core/previews_logger.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-30T22:56:22Z",
+      "side": 1,
+      "message": "This approach is pretty spammy without the coalesced navigations, so I\u0027d prefer if we wait for M65 for both CLs.",
+      "revId": "a7cb50d7eabaa1d21c13aa2fcfbc35fa36ed278a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
