@@ -605,20 +605,21 @@ PaintResult PaintLayerPainter::PaintLayerContents(
       (paint_flags & kPaintLayerPaintingCompositingMaskPhase) &&
       should_paint_content && paint_layer_.GetLayoutObject().HasMask() &&
       !selection_only;
-  bool should_paint_clipping_mask =
-      (paint_flags & (kPaintLayerPaintingChildClippingMaskPhase |
-                      kPaintLayerPaintingAncestorClippingMaskPhase)) &&
-      should_paint_content && !selection_only;
-
   if (should_paint_mask) {
     PaintMaskForFragments(layer_fragments, context, local_painting_info,
                           paint_flags);
   }
 
-  if (should_paint_clipping_mask) {
+  if (should_paint_content && !selection_only) {
     // Paint the border radius mask for the fragments.
-    PaintChildClippingMaskForFragments(layer_fragments, context,
-                                       local_painting_info, paint_flags);
+    if (paint_flags & kPaintLayerPaintingAncestorClippingMaskPhase) {
+      PaintAncestorClippingMaskForFragments(layer_fragments, context,
+                                            local_painting_info, paint_flags);
+    }
+    if (paint_flags & kPaintLayerPaintingChildClippingMaskPhase) {
+      PaintChildClippingMaskForFragments(layer_fragments, context,
+                                         local_painting_info, paint_flags);
+    }
   }
 
   if (subsequence_recorder)
@@ -962,6 +963,7 @@ void PaintLayerPainter::PaintFragmentWithPhase(
 
   Optional<ScopedPaintChunkProperties> fragment_paint_chunk_properties;
   if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
+    DCHECK(phase != PaintPhase::kClippingMask);
     PaintChunkProperties chunk_properties(
         *fragment.fragment_data->LocalBorderBoxProperties());
     chunk_properties.backface_hidden =
@@ -979,8 +981,7 @@ void PaintLayerPainter::PaintFragmentWithPhase(
   DisplayItemClient* client = &paint_layer_.GetLayoutObject();
   Optional<LayerClipRecorder> clip_recorder;
   if (clip_state != kHasClipped &&
-      (NeedsToClip(painting_info, clip_rect, paint_flags) ||
-       paint_flags & kPaintLayerPaintingAncestorClippingMaskPhase)) {
+      NeedsToClip(painting_info, clip_rect, paint_flags)) {
     DisplayItem::Type clip_type =
         DisplayItem::PaintPhaseToClipLayerFragmentType(phase);
     LayerClipRecorder::BorderRadiusClippingRule clipping_rule;
@@ -1017,6 +1018,7 @@ void PaintLayerPainter::PaintFragmentWithPhase(
   // We know that the mask just needs the area bounded by the clip rects to be
   // filled with black.
   if (clip_recorder && phase == PaintPhase::kClippingMask) {
+    DCHECK(!RuntimeEnabledFeatures::SlimmingPaintV175Enabled());
     FillMaskingFragment(context, clip_rect, *client);
     return;
   }
@@ -1212,6 +1214,42 @@ void PaintLayerPainter::PaintMaskForFragments(
   }
 }
 
+void PaintLayerPainter::PaintAncestorClippingMaskForFragments(
+    const PaintLayerFragments& layer_fragments,
+    GraphicsContext& context,
+    const PaintLayerPaintingInfo& local_painting_info,
+    PaintLayerFlags paint_flags) {
+  Optional<DisplayItemCacheSkipper> cache_skipper;
+  if (layer_fragments.size() > 1)
+    cache_skipper.emplace(context);
+
+  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
+    const DisplayItemClient& client =
+        *paint_layer_.GetCompositedLayerMapping()->AncestorClippingMaskLayer();
+    // This applies the paint properties from the CompositedLayerMapping::
+    // ClipInheritanceAncestor's PreEffectProperties (the GraphicsLayer's state)
+    // to |paint_layer_|'s PreEffectProperties, which contains the clip nodes
+    // for ancestor border radius clip on this layer.
+    ScopedPaintChunkProperties properties(
+        context.GetPaintController(),
+        paint_layer_.GetLayoutObject()
+            .FirstFragment()
+            .GetRarePaintData()
+            ->PreEffectProperties(),
+        client,
+        DisplayItem::PaintPhaseToDrawingType(PaintPhase::kClippingMask));
+    for (auto& fragment : layer_fragments)
+      FillMaskingFragment(context, fragment.foreground_rect, client);
+    return;
+  }
+
+  for (auto& fragment : layer_fragments) {
+    PaintFragmentWithPhase(PaintPhase::kClippingMask, fragment, context,
+                           fragment.foreground_rect, local_painting_info,
+                           paint_flags, kHasNotClipped);
+  }
+}
+
 void PaintLayerPainter::PaintChildClippingMaskForFragments(
     const PaintLayerFragments& layer_fragments,
     GraphicsContext& context,
@@ -1220,6 +1258,24 @@ void PaintLayerPainter::PaintChildClippingMaskForFragments(
   Optional<DisplayItemCacheSkipper> cache_skipper;
   if (layer_fragments.size() > 1)
     cache_skipper.emplace(context);
+
+  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
+    const DisplayItemClient& client =
+        *paint_layer_.GetCompositedLayerMapping()->ChildClippingMaskLayer();
+    for (auto& fragment : layer_fragments) {
+      // This applies the paint properties from |paint_layer_|'s
+      // PreEffectProperties (the GraphicsLayer's state) to the fragment's
+      // ContentsProperties, which contains the clip nodes for border radius
+      // clip that should be applied on children.
+      ScopedPaintChunkProperties fragment_paint_chunk_properties(
+          context.GetPaintController(),
+          fragment.fragment_data->GetRarePaintData()->ContentsProperties(),
+          client,
+          DisplayItem::PaintPhaseToDrawingType(PaintPhase::kClippingMask));
+      FillMaskingFragment(context, fragment.foreground_rect, client);
+    }
+    return;
+  }
 
   for (auto& fragment : layer_fragments) {
     PaintFragmentWithPhase(PaintPhase::kClippingMask, fragment, context,
