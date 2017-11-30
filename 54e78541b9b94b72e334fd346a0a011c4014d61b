@@ -22,6 +22,30 @@
       "revId": "54e78541b9b94b72e334fd346a0a011c4014d61b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f0a82af_cea88515",
+        "filename": "content/browser/notifications/notification_id_generator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-30T14:22:41Z",
+      "side": 1,
+      "message": "The PlatformNotificationService now takes a BrowserContext* as the first argument to each call, and will (hopefully) soon live as BrowserContextKeyedService. That\u0027s rather explicit in it being associated with a profile.\n\nHow does it guarantee it? In our implementation it\u0027s the NotificationPlatformBridge that gets passed the tuple of {notification, profile_id, incognito}, use of all three of which are required in the implementation semantics.",
+      "parentUuid": "f70a1a08_3aec5906",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 70
+      },
+      "revId": "54e78541b9b94b72e334fd346a0a011c4014d61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
