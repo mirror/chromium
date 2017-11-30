@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b7acf37_0bdb9fa4",
+        "filename": "chrome/browser/ui/tabs/tab_metrics_logger_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-11-30T02:59:35Z",
+      "side": 1,
+      "message": "I\u0027m a bit concerned of this drifting from the whitelisted scheme list in Blink:\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/modules/navigatorcontentutils/NavigatorContentUtils.cpp\n\nBut it is probably not a good idea to directly reference that list in WebKit, especially since this has to match the order of the proto enum.\n\nPerhaps just add a comment there and here instructing people to keep the two lists in sync (as well as the proto enum).",
+      "revId": "57d218bac9112ffb14c447975ff044fb1fe703fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
