@@ -42,7 +42,7 @@ namespace {
 const char* kEntryName = TabManager_TabMetrics::kEntryName;
 
 const GURL kTestUrls[] = {
-    GURL("https://example.com/"), GURL("https://google.fake"),
+    GURL("https://example.com"), GURL("https://google.fake"),
     GURL("https://example3.com"),
 };
 

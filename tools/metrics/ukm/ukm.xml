@@ -2050,6 +2050,14 @@ be describing additional metrics about the same event.
       metrics::TabEvent::ContentType.
     </summary>
   </metric>
+  <metric name="DefaultProtocolHandler">
+    <summary>
+      Schemes that a page from this page's origin is the default protocol
+      handler for, meaning the user has chosen to accept (or the handler was
+      preinstalled by Chrome). The metric is repeated, occurring for each such
+      protocol handler, and uses values from metrics::TabMetricsEvent::Scheme.
+    </summary>
+  </metric>
   <metric name="HasFormEntry">
     <summary>
       Boolean value indicating whether the page has any user-input text.
@@ -2068,6 +2076,15 @@ be describing additional metrics about the same event.
   <metric name="MouseEventCount">
     <summary>
       Number of mouse events that were sent to the page.
+    </summary>
+  </metric>
+  <metric name="ProtocolHandler">
+    <summary>
+      Schemes of all protocol handlers that a page from this page's origin has
+      requested to register. Includes schemes the user has accepted, ignored and
+      denied permission; this is information about the site, not the user's
+      behavior. The metric is repeated, occurring for each such protocol
+      handler, and uses values from metrics::TabMetricsEvent::Scheme.
     </summary>
   </metric>
   <metric name="SiteEngagementScore">
