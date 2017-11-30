@@ -71,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "f238b141_4675c3df",
+        "filename": "chrome/test/data/extensions/api_test/webrequest/test_unload5.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-11-30T22:04:39Z",
+      "side": 1,
+      "message": "I\u0027m not worried about RequestorOrigin affecting what gets sent over the network -- it\u0027s already different from document.origin in one important case (namely, when a fetch is initiated by \u003ciframe sandbox src\u003d\"http://example.com\"\u003e, RequestorOrigin (which becomes the \"initiator\" field in the browser process) is \"http://example.com\" instead of \"null\".\n\nSo, the RequestorOrigin is already something that\u0027s intentionally maintained as a different from the Origin/Referer headers.\n\nHaving said that, I\u0027m working on auditing all the uses of RequestorOrigin to make sure this change is safe.",
+      "parentUuid": "3244d28b_385e14c5",
+      "revId": "28dfdc31a52b0a7e022215c8b8b2d554292699df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0903d53_2f051451",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 14
