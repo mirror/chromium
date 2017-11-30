@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3d93434_0a0803f8",
+        "filename": "chrome/browser/tab_contents/tab_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-30T01:00:19Z",
+      "side": 1,
+      "message": "This comment explains the \"return nullptr\" so the new structure here is odd.\n\nPerhaps for lines 60-68:\n\n// If there\u0027s an explicit reason to assign a site for the URL, do so.\nif (SiteInstance::ShouldAssignSiteForURL(url))\n  return SiteInstance::CreateForURL(profile, url);\n\n// We used to share ...\n// .. in a new BrowsingInstance.\nreturn nullptr;\n\nAlso, that comment talks about the old way of doing things, but how long ago was that? Is it still useful to talk about the old way? Usually you talk about the way it\u0027s not done when it\u0027s not obvious why we don\u0027t do it that way.",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 53
+      },
+      "revId": "a9c1bdbcb63084a45f6c7132ac926394e01bc955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
