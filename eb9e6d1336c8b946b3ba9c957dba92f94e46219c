@@ -65,6 +65,30 @@
     },
     {
       "key": {
+        "uuid": "5b473ebf_ac8672b2",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/omnibox/BottomSheetLocationBarTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-30T18:16:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "937f31e5_fc159b1b",
+      "range": {
+        "startLine": 103,
+        "startChar": 8,
+        "endLine": 103,
+        "endChar": 79
+      },
+      "revId": "eb9e6d1336c8b946b3ba9c957dba92f94e46219c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8c5afa6_713062c9",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/toolbar/ToolbarSecurityIconTest.java",
         "patchSetId": 3
@@ -79,6 +103,24 @@
       "revId": "eb9e6d1336c8b946b3ba9c957dba92f94e46219c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcf4d57e_c8cbf172",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/toolbar/ToolbarSecurityIconTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-30T18:16:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8c5afa6_713062c9",
+      "revId": "eb9e6d1336c8b946b3ba9c957dba92f94e46219c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
