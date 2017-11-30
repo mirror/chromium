@@ -8,8 +8,10 @@
 #ifndef UI_GFX_IPC_GFX_PARAM_TRAITS_MACROS_H_
 #define UI_GFX_IPC_GFX_PARAM_TRAITS_MACROS_H_
 
+#include "build/build_config.h"
 #include "ipc/ipc_message_macros.h"
 #include "ui/gfx/buffer_types.h"
+#include "ui/gfx/gpu_fence_handle.h"
 #include "ui/gfx/gpu_memory_buffer.h"
 #include "ui/gfx/ipc/gfx_ipc_export.h"
 #include "ui/gfx/presentation_feedback.h"
@@ -32,7 +34,10 @@ IPC_ENUM_TRAITS_MAX_VALUE(gfx::GpuMemoryBufferType,
 
 IPC_ENUM_TRAITS_MAX_VALUE(gfx::SwapResult, gfx::SwapResult::SWAP_RESULT_LAST)
 
-IPC_ENUM_TRAITS_MAX_VALUE(gfx::SelectionBound::Type, gfx::SelectionBound::LAST);
+IPC_ENUM_TRAITS_MAX_VALUE(gfx::SelectionBound::Type, gfx::SelectionBound::LAST)
+
+IPC_ENUM_TRAITS_MAX_VALUE(gfx::GpuFenceHandleType,
+                          gfx::GpuFenceHandleType::LAST)
 
 IPC_STRUCT_TRAITS_BEGIN(gfx::GpuMemoryBufferHandle)
   IPC_STRUCT_TRAITS_MEMBER(id)
@@ -76,6 +81,13 @@ IPC_STRUCT_TRAITS_BEGIN(gfx::PresentationFeedback)
   IPC_STRUCT_TRAITS_MEMBER(timestamp)
   IPC_STRUCT_TRAITS_MEMBER(interval)
   IPC_STRUCT_TRAITS_MEMBER(flags)
+IPC_STRUCT_TRAITS_END()
+
+IPC_STRUCT_TRAITS_BEGIN(gfx::GpuFenceHandle)
+  IPC_STRUCT_TRAITS_MEMBER(type)
+#if defined(OS_POSIX)
+  IPC_STRUCT_TRAITS_MEMBER(native_fd)
+#endif
 IPC_STRUCT_TRAITS_END()
 
 #undef IPC_MESSAGE_EXPORT
