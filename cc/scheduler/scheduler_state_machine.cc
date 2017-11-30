@@ -631,22 +631,14 @@ bool SchedulerStateMachine::ShouldDeferInvalidatingForMainFrame() const {
   if (begin_main_frame_state_ == BEGIN_MAIN_FRAME_STATE_READY_TO_COMMIT)
     return true;
 
-  // If we are inside the deadline, and haven't performed an invalidation yet,
-  // do it now.
-  // TODO(khushalsagar): We could do better by scheduling a deadline for
-  // invalidating prior to the draw deadline. Since invalidating now implies
-  // this pending tree will miss the draw for this frame. And scheduling this
-  // deadline should only be required if:
-  // a) There is a request for impl-side invalidation.
-  // b) We have to wait on the main thread to respond to a main frame.
-  // In addition, the deadline task can be cancelled if the main thread
-  // responds before it runs.
-  if (begin_impl_frame_state_ == BEGIN_IMPL_FRAME_STATE_INSIDE_DEADLINE)
-    return false;
-
   // If commits are being aborted (which would be the common case for a
   // compositor scroll), don't defer the invalidation.
   if (last_frame_events_.commit_had_no_updates)
+    return false;
+
+  // If we prefer to invalidate over waiting on the main frame, do the
+  // invalidation now.
+  if (!should_defer_invalidation_for_main_frame_)
     return false;
 
   // If there is a request for a main frame, then this could either be a
@@ -792,6 +784,9 @@ void SchedulerStateMachine::WillActivate() {
   active_tree_needs_first_draw_ = pending_tree_needs_first_draw_on_activation_;
   pending_tree_needs_first_draw_on_activation_ = false;
   needs_redraw_ = true;
+  did_block_commit_on_impl_side_tree_ =
+      begin_main_frame_state_ == BEGIN_MAIN_FRAME_STATE_READY_TO_COMMIT &&
+      current_pending_tree_is_impl_side_;
 
   previous_pending_tree_was_impl_side_ = current_pending_tree_is_impl_side_;
   current_pending_tree_is_impl_side_ = false;
