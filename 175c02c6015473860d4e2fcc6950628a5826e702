@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eed82cbb_74b9c1af",
+        "filename": "chrome/common/extensions/api/file_system_provider.idl",
+        "patchSetId": 9
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-11-30T02:27:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c12b62f_8ca3b110",
+      "range": {
+        "startLine": 156,
+        "startChar": 7,
+        "endLine": 156,
+        "endChar": 62
+      },
+      "revId": "175c02c6015473860d4e2fcc6950628a5826e702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8effd37d_3bc580a8",
         "filename": "chrome/common/extensions/api/file_system_provider.idl",
         "patchSetId": 9
@@ -39,6 +63,24 @@
       "revId": "175c02c6015473860d4e2fcc6950628a5826e702",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f744bafd_23022195",
+        "filename": "chrome/common/extensions/api/file_system_provider.idl",
+        "patchSetId": 9
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-11-30T02:27:18Z",
+      "side": 1,
+      "message": "Thanks, that sounds pretty nicer. I\u0027ve changed the new option to temporary instead of persistent.",
+      "parentUuid": "8effd37d_3bc580a8",
+      "revId": "175c02c6015473860d4e2fcc6950628a5826e702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
