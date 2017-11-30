@@ -116,6 +116,30 @@
       "revId": "f277d9da1419eefc14e159625c5afaf2cf270a70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e400d5eb_b9f9d502",
+        "filename": "third_party/WebKit/Source/core/html/media/HTMLVideoElement.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-11-30T11:43:39Z",
+      "side": 1,
+      "message": "OK. I\u0027d suggest then to call GetWebMediaPlayer()-\u003eNaturalSize() in HTMLVideoElement::SizeChanged(), store that as a member and use that for the videoWidth/videoHeight getters, and compare against that in SizeChanged() too.\n\nIn other words, as if the SizeChanged() callback had the size and there\u0027s no other way to get it.",
+      "parentUuid": "6b837257_4f518f13",
+      "range": {
+        "startLine": 191,
+        "startChar": 10,
+        "endLine": 191,
+        "endChar": 33
+      },
+      "revId": "f277d9da1419eefc14e159625c5afaf2cf270a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
