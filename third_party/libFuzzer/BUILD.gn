@@ -6,6 +6,7 @@
 fuzzing_engine_remove_configs = [
   "//build/config/coverage:default_coverage",
   "//build/config/sanitizers:default_sanitizer_flags",
+#  "//build/config/sanitizers:fuzzing_build_mode",
 ]
 
 fuzzing_engine_add_configs =
