@@ -127,6 +127,23 @@ base::string16 SanitizeCreditCardFieldValue(const base::string16& value) {
   return sanitized;
 }
 
+// Returns the phone field |value| trimmed from whitespace and with stop
+// characters removed.
+base::string16 SanitizePhoneFieldValue(const base::string16& value) {
+  base::string16 sanitized;
+  // We remove whitespace as well as some invisible unicode characters.
+  base::TrimWhitespace(value, base::TRIM_ALL, &sanitized);
+  base::TrimString(sanitized,
+                   base::string16({base::i18n::kRightToLeftMark,
+                                   base::i18n::kLeftToRightMark}),
+                   &sanitized);
+  // Some sites have placeholders in their phone number fields, which could be
+  // (___)-___-____ or ___-___-____.
+  base::ReplaceChars(sanitized, base::ASCIIToUTF16("-_()"),
+                     base::ASCIIToUTF16(""), &sanitized);
+  return sanitized;
+}
+
 // Returns whether the |field| is predicted as being any kind of name.
 bool IsNameType(const AutofillField& field) {
   return field.Type().group() == NAME || field.Type().group() == NAME_BILLING ||
@@ -1531,8 +1548,15 @@ std::vector<Suggestion> AutofillManager::GetProfileSuggestions(
     field_types.push_back(form.field(i)->Type().GetStorableType());
   }
 
+  // For phone number fields, sometimes the placeholders can be troublesome,
+  // therefore we sanitize them before getting the suggestions.
+  base::string16 value =
+      (autofill_field.Type().GetStorableType() == PHONE_HOME_NUMBER ||
+       autofill_field.Type().GetStorableType() == PHONE_HOME_CITY_AND_NUMBER)
+          ? SanitizePhoneFieldValue(field.value)
+          : field.value;
   std::vector<Suggestion> suggestions = personal_data_->GetProfileSuggestions(
-      autofill_field.Type(), field.value, field.is_autofilled, field_types);
+      autofill_field.Type(), value, field.is_autofilled, field_types);
 
   // Adjust phone number to display in prefix/suffix case.
   if (autofill_field.Type().GetStorableType() == PHONE_HOME_NUMBER) {

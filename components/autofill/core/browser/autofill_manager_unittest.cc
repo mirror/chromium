@@ -3756,6 +3756,54 @@ TEST_F(AutofillManagerTest, FillFirstPhoneNumber_BestEfforFilling) {
   }
 }
 
+// Verify that we can fill the phone number field, when there is a placeholder.
+TEST_F(AutofillManagerTest, FillForm_PhoneNumberWithPlaceholder) {
+  FormData form;
+  form.name = ASCIIToUTF16("MyForm");
+  form.origin = GURL("https://myform.com/form.html");
+  form.action = GURL("https://myform.com/submit.html");
+
+  FormFieldData field;
+
+  test::CreateTestFormField("First Name", "firstname", "", "text", &field);
+  form.fields.push_back(field);
+
+  test::CreateTestFormField("", "lastname", "", "text", &field);
+  form.fields.push_back(field);
+
+  test::CreateTestFormField("", "email", "", "text", &field);
+  form.fields.push_back(field);
+
+  test::CreateTestFormField("Phone Number", "phonenumber", "(___)-___-____",
+                            "tel", &field);
+  form.fields.push_back(field);
+
+  test::CreateTestFormField("Country", "country", "", "text", &field);
+  form.fields.push_back(field);
+
+  std::vector<FormData> forms(1, form);
+  FormsSeen(forms);
+
+  // Fill the form.
+  const char guid[] = "00000000-0000-0000-0000-000000000001";
+  int response_page_id = 0;
+  FormData response_data;
+  FillAutofillFormDataAndSaveResults(kDefaultPageID, form, form.fields[0],
+                                     MakeFrontendID(std::string(), guid),
+                                     &response_page_id, &response_data);
+
+  ASSERT_EQ(5U, response_data.fields.size());
+  ExpectFilledField("First Name", "firstname", "Elvis", "text",
+                    response_data.fields[0]);
+  ExpectFilledField("", "lastname", "Presley", "text", response_data.fields[1]);
+  ExpectFilledField("", "email", "theking@gmail.com", "text",
+                    response_data.fields[2]);
+  ExpectFilledField("Phone Number", "phonenumber", "12345678901", "tel",
+                    response_data.fields[3]);
+  ExpectFilledField("Country", "country", "United States", "text",
+                    response_data.fields[4]);
+}
+
 // When the focus is on second phone field explicitly, we will fill the
 // entire form, both first phone field and second phone field included.
 TEST_F(AutofillManagerTest, FillFirstPhoneNumber_FocusOnSecondPhoneNumber) {
