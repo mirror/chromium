@@ -986,7 +986,8 @@ void UserSessionManager::CreateUserSession(const UserContext& user_context,
   InitSessionRestoreStrategy();
   StoreUserContextDataBeforeProfileIsCreated();
   session_manager::SessionManager::Get()->CreateSession(
-      user_context_.GetAccountId(), user_context_.GetUserIDHash());
+      user_context_.GetAccountId(), user_context_.GetUserIDHash(),
+      user_context.GetUserType() == user_manager::USER_TYPE_CHILD);
 }
 
 void UserSessionManager::PreStartSession() {

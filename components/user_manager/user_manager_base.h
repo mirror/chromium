@@ -52,7 +52,8 @@ class USER_MANAGER_EXPORT UserManagerBase : public UserManager {
   const AccountId& GetOwnerAccountId() const override;
   void UserLoggedIn(const AccountId& account_id,
                     const std::string& user_id_hash,
-                    bool browser_restart) override;
+                    bool browser_restart,
+                    bool is_child) override;
   void SwitchActiveUser(const AccountId& account_id) override;
   void SwitchToLastActiveUser() override;
   void OnSessionStarted() override;
@@ -111,7 +112,6 @@ class USER_MANAGER_EXPORT UserManagerBase : public UserManager {
       const User& user,
       const gfx::ImageSkia& profile_image) override;
   void NotifyUsersSignInConstraintsChanged() override;
-  void ChangeUserChildStatus(User* user, bool is_child) override;
   void ResetProfileEverInitialized(const AccountId& account_id) override;
   void Initialize() override;
 
@@ -213,11 +213,6 @@ class USER_MANAGER_EXPORT UserManagerBase : public UserManager {
   // Returns true if |account_id| represents demo app.
   virtual bool IsDemoApp(const AccountId& account_id) const = 0;
 
-  // Returns true if |account_id| represents a device local account that has
-  // been marked for deletion.
-  virtual bool IsDeviceLocalAccountMarkedForRemoval(
-      const AccountId& account_id) const = 0;
-
   // These methods are called when corresponding user type has signed in.
 
   // Indicates that the demo account has just logged in.
@@ -236,10 +231,10 @@ class USER_MANAGER_EXPORT UserManagerBase : public UserManager {
   virtual void PublicAccountUserLoggedIn(User* user) = 0;
 
   // Indicates that a regular user just logged in.
-  virtual void RegularUserLoggedIn(const AccountId& account_id);
+  virtual void RegularUserLoggedIn(const AccountId& account_id, const UserType user_type);
 
   // Indicates that a regular user just logged in as ephemeral.
-  virtual void RegularUserLoggedInAsEphemeral(const AccountId& account_id);
+  virtual void RegularUserLoggedInAsEphemeral(const AccountId& account_id, const UserType user_type);
 
   // Indicates that a supervised user just logged in.
   virtual void SupervisedUserLoggedIn(const AccountId& account_id) = 0;
