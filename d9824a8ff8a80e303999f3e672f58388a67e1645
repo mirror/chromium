@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a54cda3_c48e4163",
+        "filename": "third_party/android_platform/development/scripts/llvm_symbolizer_helper.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-11-30T00:30:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21c5bc06_7045e8bd",
+      "revId": "d9824a8ff8a80e303999f3e672f58388a67e1645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e291e1cf_14913c6e",
         "filename": "third_party/android_platform/development/scripts/llvm_symbolizer_helper.py",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "d9824a8ff8a80e303999f3e672f58388a67e1645",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98b3f6b1_b4414580",
+        "filename": "third_party/android_platform/development/scripts/llvm_symbolizer_helper.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-11-30T00:30:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e291e1cf_14913c6e",
+      "revId": "d9824a8ff8a80e303999f3e672f58388a67e1645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "82adf0db_d7181be6",
+        "filename": "third_party/android_platform/development/scripts/llvm_symbolizer_helper.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-11-30T00:30:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0456d9d6_ca338399",
+      "revId": "d9824a8ff8a80e303999f3e672f58388a67e1645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89ede05e_ca99c148",
         "filename": "third_party/android_platform/development/scripts/llvm_symbolizer_helper.py",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "d9824a8ff8a80e303999f3e672f58388a67e1645",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d495b18a_c2df036c",
+        "filename": "third_party/android_platform/development/scripts/llvm_symbolizer_helper.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-11-30T00:30:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89ede05e_ca99c148",
+      "revId": "d9824a8ff8a80e303999f3e672f58388a67e1645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "bce6b169_5357b9cf",
+        "filename": "third_party/android_platform/development/scripts/llvm_symbolizer_helper.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-11-30T00:30:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0da5a05e_1cac537c",
+      "revId": "d9824a8ff8a80e303999f3e672f58388a67e1645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54c01684_afa73779",
         "filename": "third_party/android_platform/development/scripts/llvm_symbolizer_helper.py",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "d9824a8ff8a80e303999f3e672f58388a67e1645",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b89eefe0_df2085af",
+        "filename": "third_party/android_platform/development/scripts/llvm_symbolizer_helper.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-11-30T00:30:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54c01684_afa73779",
+      "revId": "d9824a8ff8a80e303999f3e672f58388a67e1645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "060afe88_f6478776",
+        "filename": "third_party/android_platform/development/scripts/stack_core.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-11-30T00:30:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a213eae_060fe3d5",
+      "revId": "d9824a8ff8a80e303999f3e672f58388a67e1645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aaad94c9_0cc9d83a",
         "filename": "third_party/android_platform/development/scripts/stack_core.py",
         "patchSetId": 4
@@ -135,6 +261,24 @@
       "revId": "d9824a8ff8a80e303999f3e672f58388a67e1645",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8b3ae54_46024aab",
+        "filename": "third_party/android_platform/development/scripts/stack_core.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-11-30T00:30:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aaad94c9_0cc9d83a",
+      "revId": "d9824a8ff8a80e303999f3e672f58388a67e1645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
