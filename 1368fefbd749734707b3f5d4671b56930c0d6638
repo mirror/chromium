@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f06ee1cf_9e9e15e6",
+        "filename": "ash/accelerators/accelerator_controller_delegate_mash.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-30T22:01:16Z",
+      "side": 1,
+      "message": "I would prefer to do this in a follow-up, even though this class is becoming not-useful.",
+      "revId": "1368fefbd749734707b3f5d4671b56930c0d6638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ce911c0_ca66dd70",
+        "filename": "chrome/browser/flag_descriptions.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1779,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-30T22:01:16Z",
+      "side": 1,
+      "message": "There are lots of Chrome OS-only strings that are in the wrong place in this file, possibly left over from Windows ash. I only fixed this one.",
+      "revId": "1368fefbd749734707b3f5d4671b56930c0d6638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43f02ba9_86af917f",
+        "filename": "chrome/browser/prefs/browser_prefs.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-30T22:01:16Z",
+      "side": 1,
+      "message": "These do not seem to be deprecated. I suspect they were just added at the bottom of the function by someone who didn\u0027t see the comment about the migration section. I put the migration ones in a separate function to make it more clear (and closer to the string declarations above).",
+      "revId": "1368fefbd749734707b3f5d4671b56930c0d6638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
