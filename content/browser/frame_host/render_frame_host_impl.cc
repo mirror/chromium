@@ -1539,23 +1539,10 @@ void RenderFrameHostImpl::DidCommitProvisionalLoad(
   // Notify the resource scheduler of the navigation committing.
   NotifyResourceSchedulerOfNavigation(process->GetID(), *validated_params);
 
-  // If we're waiting for a cross-site beforeunload ack from this renderer and
-  // we receive a Navigate message from the main frame, then the renderer was
-  // navigating already and sent it before hearing the FrameMsg_Stop message.
-  // Treat this as an implicit beforeunload ack to allow the pending navigation
-  // to continue.
-  if (is_waiting_for_beforeunload_ack_ && unload_ack_is_for_navigation_ &&
-      !GetParent()) {
-    base::TimeTicks approx_renderer_start_time = send_before_unload_start_time_;
-    OnBeforeUnloadACK(true, approx_renderer_start_time, base::TimeTicks::Now());
-  }
+  if (!DealWithRaceConditions())
+    return;
 
-  // If we're waiting for an unload ack from this renderer and we receive a
-  // Navigate message, then the renderer was navigating before it received the
-  // unload request.  It will either respond to the unload request soon or our
-  // timer will expire.  Either way, we should ignore this message, because we
-  // have already committed to closing this renderer.
-  if (IsWaitingForUnloadACK())
+  if (!ValidateProvisionalCommitParams(validated_params.get()))
     return;
 
   if (validated_params->report_type ==
@@ -1572,54 +1559,6 @@ void RenderFrameHostImpl::DidCommitProvisionalLoad(
         base::TimeTicks::Now() - validated_params->ui_timestamp,
         base::TimeDelta::FromMilliseconds(10), base::TimeDelta::FromMinutes(10),
         100);
-  }
-
-  // Attempts to commit certain off-limits URL should be caught more strictly
-  // than our FilterURL checks below.  If a renderer violates this policy, it
-  // should be killed.
-  if (!CanCommitURL(validated_params->url)) {
-    VLOG(1) << "Blocked URL " << validated_params->url.spec();
-    // Kills the process.
-    bad_message::ReceivedBadMessage(process,
-                                    bad_message::RFH_CAN_COMMIT_URL_BLOCKED);
-    return;
-  }
-
-  // Verify that the origin passed from the renderer process is valid and can
-  // be allowed to commit in this RenderFrameHost.
-  if (!CanCommitOrigin(validated_params->origin, validated_params->url)) {
-    bad_message::ReceivedBadMessage(GetProcess(),
-                                    bad_message::RFH_INVALID_ORIGIN_ON_COMMIT);
-    return;
-  }
-
-  // Without this check, an evil renderer can trick the browser into creating
-  // a navigation entry for a banned URL.  If the user clicks the back button
-  // followed by the forward button (or clicks reload, or round-trips through
-  // session restore, etc), we'll think that the browser commanded the
-  // renderer to load the URL and grant the renderer the privileges to request
-  // the URL.  To prevent this attack, we block the renderer from inserting
-  // banned URLs into the navigation controller in the first place.
-  //
-  // TODO(crbug.com/172694): Currently, when FilterURL detects a bad URL coming
-  // from the renderer, it overwrites that URL to about:blank, which requires
-  // |validated_params| to be mutable. Once we kill the renderer instead, the
-  // signature of RenderFrameHostImpl::DidCommitProvisionalLoad can be modified
-  // to take |validated_params| by const reference.
-  process->FilterURL(false, &validated_params->url);
-  process->FilterURL(true, &validated_params->referrer.url);
-  for (std::vector<GURL>::iterator it(validated_params->redirects.begin());
-       it != validated_params->redirects.end(); ++it) {
-    process->FilterURL(false, &(*it));
-  }
-  process->FilterURL(true, &validated_params->searchable_form_url);
-
-  // Without this check, the renderer can trick the browser into using
-  // filenames it can't access in a future session restore.
-  if (!CanAccessFilesOfPageState(validated_params->page_state)) {
-    bad_message::ReceivedBadMessage(
-        GetProcess(), bad_message::RFH_CAN_ACCESS_FILES_OF_PAGE_STATE);
-    return;
   }
 
   // PlzNavigate
@@ -2990,6 +2929,89 @@ void RenderFrameHostImpl::IssueKeepAliveHandle(
     keep_alive_handle_factory_->SetTimeout(keep_alive_timeout_);
   }
   keep_alive_handle_factory_->Create(std::move(request));
+}
+
+void RenderFrameHostImpl::DidCommitSameDocumentNavigation(
+    std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
+        validated_params) {
+  ScopedCommitStateResetter commit_state_resetter(this);
+  RenderProcessHost* process = GetProcess();
+
+  TRACE_EVENT2("navigation",
+               "RenderFrameHostImpl::DidCommitSameDocumentNavigation",
+               "frame_tree_node", frame_tree_node_->frame_tree_node_id(), "url",
+               validated_params->url.possibly_invalid_spec());
+
+  // Sanity-check the page transition for frame type.
+  DCHECK_EQ(ui::PageTransitionIsMainFrame(validated_params->transition),
+            !GetParent());
+
+  // Notify the resource scheduler of the navigation committing.
+  NotifyResourceSchedulerOfNavigation(process->GetID(), *validated_params);
+
+  if (!DealWithRaceConditions())
+    return;
+
+  if (!ValidateProvisionalCommitParams(validated_params.get()))
+    return;
+
+  if (validated_params->report_type ==
+      FrameMsg_UILoadMetricsReportType::REPORT_LINK) {
+    UMA_HISTOGRAM_CUSTOM_TIMES(
+        "Navigation.UI_OnCommitProvisionalLoad.Link",
+        base::TimeTicks::Now() - validated_params->ui_timestamp,
+        base::TimeDelta::FromMilliseconds(10), base::TimeDelta::FromMinutes(10),
+        100);
+  } else if (validated_params->report_type ==
+             FrameMsg_UILoadMetricsReportType::REPORT_INTENT) {
+    UMA_HISTOGRAM_CUSTOM_TIMES(
+        "Navigation.UI_OnCommitProvisionalLoad.Intent",
+        base::TimeTicks::Now() - validated_params->ui_timestamp,
+        base::TimeDelta::FromMilliseconds(10), base::TimeDelta::FromMinutes(10),
+        100);
+  }
+
+  // PlzNavigate
+  if (IsBrowserSideNavigationEnabled()) {
+    // PlzNavigate: the browser has not been notified about the start of the
+    // load in this renderer yet (e.g., for same-document navigations that start
+    // in the renderer). Do it now.
+    if (!is_loading()) {
+      bool was_loading = frame_tree_node()->frame_tree()->IsLoading();
+      is_loading_ = true;
+      frame_tree_node()->DidStartLoading(true, was_loading);
+    }
+    pending_commit_ = false;
+  }
+
+  // Find the appropriate NavigationHandle for this navigation.
+  std::unique_ptr<NavigationHandleImpl> navigation_handle =
+      TakeNavigationHandleForCommit(*validated_params);
+  DCHECK(navigation_handle);
+
+  // PlzNavigate sends searchable form data in the BeginNavigation message
+  // while non-PlzNavigate sends it in the DidCommitProvisionalLoad message.
+  // Update |navigation_handle| if necessary.
+  if (!IsBrowserSideNavigationEnabled() &&
+      !validated_params->searchable_form_url.is_empty()) {
+    navigation_handle->set_searchable_form_url(
+        validated_params->searchable_form_url);
+    navigation_handle->set_searchable_form_encoding(
+        validated_params->searchable_form_encoding);
+
+    // Reset them so that they are consistent in both the PlzNavigate and
+    // non-PlzNavigate case. Users should use those values from
+    // NavigationHandle.
+    validated_params->searchable_form_url = GURL();
+    validated_params->searchable_form_encoding = std::string();
+  }
+
+  accessibility_reset_count_ = 0;
+  frame_tree_node()->navigator()->DidNavigate(this, *validated_params,
+                                              std::move(navigation_handle));
+
+  // Since we didn't early return, it's safe to keep the commit state.
+  commit_state_resetter.disable();
 }
 
 namespace {
@@ -4563,6 +4585,87 @@ mojom::FrameNavigationControl* RenderFrameHostImpl::GetNavigationControl() {
   if (!navigation_control_)
     GetRemoteAssociatedInterfaces()->GetInterface(&navigation_control_);
   return navigation_control_.get();
+}
+
+// A return value of true means that the commit should proceed.
+// TODO(ahemery): This should be removed once mojo navigation interfaces are
+// in place. See crbug.com/784904 for details.
+bool RenderFrameHostImpl::DealWithRaceConditions() {
+  // If we're waiting for a cross-site beforeunload ack from this renderer and
+  // we receive a Navigate message from the main frame, then the renderer was
+  // navigating already and sent it before hearing the FrameMsg_Stop message.
+  // Treat this as an implicit beforeunload ack to allow the pending navigation
+  // to continue.
+  if (is_waiting_for_beforeunload_ack_ && unload_ack_is_for_navigation_ &&
+      !GetParent()) {
+    base::TimeTicks approx_renderer_start_time = send_before_unload_start_time_;
+    OnBeforeUnloadACK(true, approx_renderer_start_time, base::TimeTicks::Now());
+  }
+  // If we're waiting for an unload ack from this renderer and we receive a
+  // Navigate message, then the renderer was navigating before it received the
+  // unload request.  It will either respond to the unload request soon or our
+  // timer will expire.  Either way, we should ignore this message, because we
+  // have already committed to closing this renderer.
+  if (IsWaitingForUnloadACK())
+    return false;
+
+  return true;
+}
+
+// A return value of true means that the commit should proceed.
+bool RenderFrameHostImpl::ValidateProvisionalCommitParams(
+    FrameHostMsg_DidCommitProvisionalLoad_Params* validated_params) {
+  RenderProcessHost* process = GetProcess();
+
+  // Attempts to commit certain off-limits URL should be caught more strictly
+  // than our FilterURL checks.  If a renderer violates this policy, it
+  // should be killed.
+  if (!CanCommitURL(validated_params->url)) {
+    VLOG(1) << "Blocked URL " << validated_params->url.spec();
+    // Kills the process.
+    bad_message::ReceivedBadMessage(process,
+                                    bad_message::RFH_CAN_COMMIT_URL_BLOCKED);
+    return false;
+  }
+
+  // Verify that the origin passed from the renderer process is valid and can
+  // be allowed to commit in this RenderFrameHost.
+  if (!CanCommitOrigin(validated_params->origin, validated_params->url)) {
+    bad_message::ReceivedBadMessage(process,
+                                    bad_message::RFH_INVALID_ORIGIN_ON_COMMIT);
+    return false;
+  }
+
+  // Without this check, an evil renderer can trick the browser into creating
+  // a navigation entry for a banned URL.  If the user clicks the back button
+  // followed by the forward button (or clicks reload, or round-trips through
+  // session restore, etc), we'll think that the browser commanded the
+  // renderer to load the URL and grant the renderer the privileges to request
+  // the URL.  To prevent this attack, we block the renderer from inserting
+  // banned URLs into the navigation controller in the first place.
+  //
+  // TODO(crbug.com/172694): Currently, when FilterURL detects a bad URL coming
+  // from the renderer, it overwrites that URL to about:blank, which requires
+  // |validated_params| to be mutable. Once we kill the renderer instead, the
+  // signature of RenderFrameHostImpl::DidCommitProvisionalLoad can be modified
+  // to take |validated_params| by const reference.
+  process->FilterURL(false, &validated_params->url);
+  process->FilterURL(true, &validated_params->referrer.url);
+  for (std::vector<GURL>::iterator it(validated_params->redirects.begin());
+       it != validated_params->redirects.end(); ++it) {
+    process->FilterURL(false, &(*it));
+  }
+  process->FilterURL(true, &validated_params->searchable_form_url);
+
+  // Without this check, the renderer can trick the browser into using
+  // filenames it can't access in a future session restore.
+  if (!CanAccessFilesOfPageState(validated_params->page_state)) {
+    bad_message::ReceivedBadMessage(
+        process, bad_message::RFH_CAN_ACCESS_FILES_OF_PAGE_STATE);
+    return false;
+  }
+
+  return true;
 }
 
 }  // namespace content
