@@ -405,6 +405,30 @@
       "revId": "b2275545c639d2143edecc7986054342774008ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f94e2f8c_8f9e07c3",
+        "filename": "components/arc/arc_bridge_host_impl.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-11-30T15:31:24Z",
+      "side": 1,
+      "message": "I added you to android changes. You\u0027ll need to apply them and this CL (without connection_holder.h and arc_bridge_host_impl.cc changes) and change DCHECK to CHECK, since dcheck_always_on is still not booting.\nTo repro I launch Drive app, open random doc, tap \"Print\" in hamburger menu, go back, tap \"Print\" again.",
+      "parentUuid": "473480a3_47e24301",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 31
+      },
+      "revId": "b2275545c639d2143edecc7986054342774008ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
