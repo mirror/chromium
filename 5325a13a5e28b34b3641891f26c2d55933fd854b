@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45619f02_2d5a43f8",
+        "filename": "chrome/app/media_router_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-11-30T21:51:33Z",
+      "side": 1,
+      "message": "Does this force remoting on in all cases (i.e. disables the fallback)?\n\nSeems like \"Remote screen when possible\" or just \"Remote screen\" could be more accurate?",
+      "revId": "5325a13a5e28b34b3641891f26c2d55933fd854b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
