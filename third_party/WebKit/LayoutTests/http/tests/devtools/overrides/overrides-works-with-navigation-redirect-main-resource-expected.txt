@@ -1,0 +1,20 @@
+Ensures when cross-origin navigating it can apply overrides to new main resource.
+
+Enabling project
+Creating project for localhost:8000
+Binding project to localhost:8000
+Navigating to localhost:8000
+Waiting for main resource (empty.html)
+Fetching response for main resource
+
+Content for main resource:
+null
+
+
+Content for main redirect resource:
+<html><head><script src="blocking.js"></script></head><body></body></html>
+
+Content for blocking.js:
+// W00T content!
+
+

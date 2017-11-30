@@ -1191,7 +1191,7 @@ SDK.MultitargetNetworkManager.InterceptedRequest = class {
   }
 };
 
-/** @typedef {!{urlPattern: string, interceptionStage: !Protocol.Network.InterceptionStage}} */
+/** @typedef {!{urlPattern: string, interceptionStage: !Protocol.Network.InterceptionStage, resourceType: (!Protocol.Page.ResourceType|undefined)}} */
 SDK.MultitargetNetworkManager.InterceptionPattern;
 
 /** @typedef {!function(!SDK.MultitargetNetworkManager.InterceptedRequest):!Promise} */
