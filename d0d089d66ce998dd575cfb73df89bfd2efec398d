@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2dc11033_7bb988d1",
+        "filename": "chrome/browser/android/vr_shell/vr_metrics_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T07:00:04Z",
+      "side": 1,
+      "message": "To be extra clear, I think we should add NOTREACHED() here as well as line 80.\n\nWe might also want to add the following for completeness of GVR types.\n  case GVR_UNKNOWN:",
+      "revId": "d0d089d66ce998dd575cfb73df89bfd2efec398d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68688fd4_13a82c72",
+        "filename": "chrome/browser/android/vr_shell/vr_metrics_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T07:00:04Z",
+      "side": 1,
+      "message": "I think this is called whenever GVR is loaded, which includes any querying/use of devices, not just presentation/entering VR. +tiborg to confirm.",
+      "revId": "d0d089d66ce998dd575cfb73df89bfd2efec398d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27d065d2_7dd4d524",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T07:00:04Z",
+      "side": 1,
+      "message": "If I\u0027m right about LogVrViewerType() - see comment above - this is a much more limited case for recording \"ViewerType\".\n\nIf there\u0027s not another good location, this is probably fine for now, but we should add a TODO and crbug.",
+      "range": {
+        "startLine": 181,
+        "startChar": 19,
+        "endLine": 181,
+        "endChar": 41
+      },
+      "revId": "d0d089d66ce998dd575cfb73df89bfd2efec398d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71781c38_3f9133e2",
+        "filename": "device/vr/vr_device.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T07:00:04Z",
+      "side": 1,
+      "message": "// Must match VRViewerType in enums.xml.",
+      "revId": "d0d089d66ce998dd575cfb73df89bfd2efec398d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1c083d7_f052705d",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 43167,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T07:00:04Z",
+      "side": 1,
+      "message": "It\u0027s unfortunate that this is at the end of GVR but \"5\" is at the beginning of its set.\nIf \"0\" was previously only used for GVR, maybe we should rename that? It doesn\u0027t look like UNKNOWN_TYPE is possible today. Maybe reserve \"4\" for that?",
+      "revId": "d0d089d66ce998dd575cfb73df89bfd2efec398d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "146f30e3_71fe2216",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 43168,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T07:00:04Z",
+      "side": 1,
+      "message": "What is this?",
+      "revId": "d0d089d66ce998dd575cfb73df89bfd2efec398d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1035460b_bb7b44df",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 43169,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T07:00:04Z",
+      "side": 1,
+      "message": "We had talked about maybe skipping some values to reserve for future devices. Does that not make sense or is it discouraged?",
+      "revId": "d0d089d66ce998dd575cfb73df89bfd2efec398d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
