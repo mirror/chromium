@@ -33,6 +33,24 @@
       "revId": "ee426087b5d51e92b833839751bcb12509909035",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb227b3d_11ac9fcc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/datareduction/DataReductionUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1241685
+      },
+      "writtenOn": "2017-11-30T18:58:45Z",
+      "side": 1,
+      "message": "I spoke to Niels from the TTS Team. He mentioned we just need to set the unit as \"byte\" and TTS will take care of the translation. Let me know if I am misunderstanding your comment. Also, since KB or MB etc is properly handled by TTS, should we add span for them too? The reason I stopped for numbers less that 1000 was to exclude KB, MB etc. Also 1000 will be translated to 1000 bytes and not 1 KB when the unit is set to \"byte\".",
+      "parentUuid": "466e9aa2_f9569f3a",
+      "revId": "ee426087b5d51e92b833839751bcb12509909035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
