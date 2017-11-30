@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0eb7fa0c_9fc76d2d",
+        "filename": "build/android/llvm_symbolizer.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-11-30T23:36:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a7e988e_4b5f46a4",
+      "revId": "fed89b4b67bb697b2ade4a768ef6b92035a0f81f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad07a7b2_a1aa220c",
         "filename": "build/android/llvm_symbolizer.py",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "85ee9ade_00610036",
+        "filename": "build/android/llvm_symbolizer.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-11-30T23:36:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad07a7b2_a1aa220c",
+      "revId": "fed89b4b67bb697b2ade4a768ef6b92035a0f81f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "911f3af5_28bddb0e",
         "filename": "build/android/llvm_symbolizer.py",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "fed89b4b67bb697b2ade4a768ef6b92035a0f81f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbc1c124_d47e198b",
+        "filename": "build/android/llvm_symbolizer.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-11-30T23:36:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "911f3af5_28bddb0e",
+      "revId": "fed89b4b67bb697b2ade4a768ef6b92035a0f81f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -85,6 +139,24 @@
       "revId": "fed89b4b67bb697b2ade4a768ef6b92035a0f81f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cd47b30_1db4ec83",
+        "filename": "third_party/android_platform/development/scripts/stack_core.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-11-30T23:36:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fef74e60_e15a13cf",
+      "revId": "fed89b4b67bb697b2ade4a768ef6b92035a0f81f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
