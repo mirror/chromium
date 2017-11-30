@@ -90,13 +90,9 @@ class CALayerTreeTest : public testing::Test {
  protected:
   void SetUp() override {
     superlayer_.reset([[CALayer alloc] init]);
-    fullscreen_low_power_layer_.reset(
-        [[AVSampleBufferDisplayLayer109 alloc] init]);
   }
 
   base::scoped_nsobject<CALayer> superlayer_;
-  base::scoped_nsobject<AVSampleBufferDisplayLayer109>
-      fullscreen_low_power_layer_;
 };
 
 // Test updating each layer's properties.
@@ -862,9 +858,6 @@ TEST_F(CALayerTreeTest, FullscreenLowPower) {
     EXPECT_TRUE(result);
     new_ca_layer_tree->CommitScheduledCALayers(
         superlayer_, std::move(ca_layer_tree), properties.scale_factor);
-    bool fullscreen_low_power_valid =
-        new_ca_layer_tree->CommitFullscreenLowPowerLayer(
-            fullscreen_low_power_layer_);
     std::swap(new_ca_layer_tree, ca_layer_tree);
 
     // Validate the tree structure.
@@ -879,9 +872,8 @@ TEST_F(CALayerTreeTest, FullscreenLowPower) {
     CALayer* content_layer = [[transform_layer sublayers] objectAtIndex:0];
 
     // Validate the content layer and fullscreen low power mode.
-    EXPECT_TRUE([content_layer
-        isKindOfClass:NSClassFromString(@"AVSampleBufferDisplayLayer")]);
-    EXPECT_TRUE(fullscreen_low_power_valid);
+    EXPECT_EQ([content_layer backgroundColor],
+              CGColorGetConstantColor(kCGColorBlack));
   }
 
   // Test a configuration with a black background.
@@ -894,9 +886,6 @@ TEST_F(CALayerTreeTest, FullscreenLowPower) {
     EXPECT_TRUE(result);
     new_ca_layer_tree->CommitScheduledCALayers(
         superlayer_, std::move(ca_layer_tree), properties.scale_factor);
-    bool fullscreen_low_power_valid =
-        new_ca_layer_tree->CommitFullscreenLowPowerLayer(
-            fullscreen_low_power_layer_);
     std::swap(new_ca_layer_tree, ca_layer_tree);
 
     // Validate the tree structure.
@@ -911,9 +900,8 @@ TEST_F(CALayerTreeTest, FullscreenLowPower) {
     CALayer* content_layer = [[transform_layer sublayers] objectAtIndex:1];
 
     // Validate the content layer and fullscreen low power mode.
-    EXPECT_TRUE([content_layer
-        isKindOfClass:NSClassFromString(@"AVSampleBufferDisplayLayer")]);
-    EXPECT_TRUE(fullscreen_low_power_valid);
+    EXPECT_EQ([content_layer backgroundColor],
+              CGColorGetConstantColor(kCGColorBlack));
   }
 
   // Test a configuration with a white background. It will fail.
@@ -926,9 +914,6 @@ TEST_F(CALayerTreeTest, FullscreenLowPower) {
     EXPECT_TRUE(result);
     new_ca_layer_tree->CommitScheduledCALayers(
         superlayer_, std::move(ca_layer_tree), properties.scale_factor);
-    bool fullscreen_low_power_valid =
-        new_ca_layer_tree->CommitFullscreenLowPowerLayer(
-            fullscreen_low_power_layer_);
     std::swap(new_ca_layer_tree, ca_layer_tree);
 
     // Validate the tree structure.
@@ -943,9 +928,7 @@ TEST_F(CALayerTreeTest, FullscreenLowPower) {
     CALayer* content_layer = [[transform_layer sublayers] objectAtIndex:1];
 
     // Validate the content layer and fullscreen low power mode.
-    EXPECT_TRUE([content_layer
-        isKindOfClass:NSClassFromString(@"AVSampleBufferDisplayLayer")]);
-    EXPECT_FALSE(fullscreen_low_power_valid);
+    EXPECT_EQ([content_layer backgroundColor], nil);
   }
 
   // Test a configuration with a black foreground. It too will fail.
@@ -958,9 +941,6 @@ TEST_F(CALayerTreeTest, FullscreenLowPower) {
     EXPECT_TRUE(result);
     new_ca_layer_tree->CommitScheduledCALayers(
         superlayer_, std::move(ca_layer_tree), properties.scale_factor);
-    bool fullscreen_low_power_valid =
-        new_ca_layer_tree->CommitFullscreenLowPowerLayer(
-            fullscreen_low_power_layer_);
     std::swap(new_ca_layer_tree, ca_layer_tree);
 
     // Validate the tree structure.
@@ -975,9 +955,7 @@ TEST_F(CALayerTreeTest, FullscreenLowPower) {
     CALayer* content_layer = [[transform_layer sublayers] objectAtIndex:0];
 
     // Validate the content layer and fullscreen low power mode.
-    EXPECT_TRUE([content_layer
-        isKindOfClass:NSClassFromString(@"AVSampleBufferDisplayLayer")]);
-    EXPECT_FALSE(fullscreen_low_power_valid);
+    EXPECT_EQ([content_layer backgroundColor], nil);
   }
 }
 
