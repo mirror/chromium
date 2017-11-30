@@ -2,6 +2,109 @@
   "comments": [
     {
       "key": {
+        "uuid": "88447d97_e94e4e3d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-30T18:38:24Z",
+      "side": 1,
+      "message": "remove this?",
+      "range": {
+        "startLine": 917,
+        "startChar": 16,
+        "endLine": 917,
+        "endChar": 29
+      },
+      "revId": "eb9e6d1336c8b946b3ba9c957dba92f94e46219c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13b9019a_e4246ba8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1338,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-30T18:38:24Z",
+      "side": 1,
+      "message": "it\u0027s sad that we need to pass in securityLevel (even access it in LocationBarLayout at all)...something for another day",
+      "revId": "eb9e6d1336c8b946b3ba9c957dba92f94e46219c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87adcfc6_ba74ee6b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1439,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-30T18:38:24Z",
+      "side": 1,
+      "message": "can we pull out getSecurityLevel() to a local var?",
+      "range": {
+        "startLine": 1439,
+        "startChar": 20,
+        "endLine": 1439,
+        "endChar": 40
+      },
+      "revId": "eb9e6d1336c8b946b3ba9c957dba92f94e46219c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f5970df_381c04d8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/searchwidget/SearchBoxDataProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-30T18:38:24Z",
+      "side": 1,
+      "message": "should this be ConnectionSecurityLevel.NONE or something?",
+      "revId": "eb9e6d1336c8b946b3ba9c957dba92f94e46219c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d33032d_7dde643f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarLayout.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-30T18:38:24Z",
+      "side": 1,
+      "message": "same NONE comment here",
+      "range": {
+        "startLine": 203,
+        "startChar": 23,
+        "endLine": 203,
+        "endChar": 24
+      },
+      "revId": "eb9e6d1336c8b946b3ba9c957dba92f94e46219c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37931b88_e5f1ff01",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarModelImpl.java",
         "patchSetId": 3
@@ -13,6 +116,47 @@
       "writtenOn": "2017-11-30T02:17:15Z",
       "side": 1,
       "message": "I don\u0027t really like this, but isOfflinePage() is also used in LocationBarLayout#updateVerboseStatusVisibility(). Another option is to introduce a new ToolbarDataProvider#shouldShowVerboseStatus(), and add a boolean shouldShowSecurityIcon to #getSecurityIconResource below that can be used to early return 0.",
+      "revId": "eb9e6d1336c8b946b3ba9c957dba92f94e46219c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "588d221b_309974db",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarModelImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-30T18:38:24Z",
+      "side": 1,
+      "message": "I think this change is OK, but I agree that introducing shouldShowVerboseStatus/shouldShowSecurityIcon would be cleaner.",
+      "parentUuid": "37931b88_e5f1ff01",
+      "revId": "eb9e6d1336c8b946b3ba9c957dba92f94e46219c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "819a41f1_8c6c1017",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarModelImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-30T18:38:24Z",
+      "side": 1,
+      "message": "Is there an IntDef for ConnectionSecurityLevel that we could annotate the return value with?  Same with getSecurityLevel in the interface",
+      "range": {
+        "startLine": 212,
+        "startChar": 11,
+        "endLine": 212,
+        "endChar": 14
+      },
       "revId": "eb9e6d1336c8b946b3ba9c957dba92f94e46219c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -86,6 +230,69 @@
       "revId": "eb9e6d1336c8b946b3ba9c957dba92f94e46219c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "53e5fb5c_766dde66",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/omnibox/BottomSheetLocationBarTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-30T18:38:24Z",
+      "side": 1,
+      "message": "should this be on the UI thread?",
+      "revId": "eb9e6d1336c8b946b3ba9c957dba92f94e46219c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f78b35dc_60fdadd7",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/omnibox/BottomSheetLocationBarTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-30T18:38:24Z",
+      "side": 1,
+      "message": "Can we use this to get a better error message:\nhttp://hamcrest.org/JavaHamcrest/javadoc/1.3/org/hamcrest/Matchers.html#isEmptyString()\n\nMaybe use the not(...) of that below:\nhttp://hamcrest.org/JavaHamcrest/javadoc/1.3/org/hamcrest/Matchers.html#not(org.hamcrest.Matcher)",
+      "range": {
+        "startLine": 113,
+        "startChar": 15,
+        "endLine": 113,
+        "endChar": 25
+      },
+      "revId": "eb9e6d1336c8b946b3ba9c957dba92f94e46219c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1175a37a_a5e4e580",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/omnibox/BottomSheetLocationBarTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-30T18:38:24Z",
+      "side": 1,
+      "message": "Do we need getUrlBarTextForTests that you added if you do it this way?",
+      "range": {
+        "startLine": 114,
+        "startChar": 59,
+        "endLine": 114,
+        "endChar": 60
+      },
+      "revId": "eb9e6d1336c8b946b3ba9c957dba92f94e46219c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
