@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ab2a831_0f548fa4",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-30T12:00:29Z",
+      "side": 1,
+      "message": "nit: OnceClosure",
+      "range": {
+        "startLine": 542,
+        "startChar": 53,
+        "endLine": 542,
+        "endChar": 60
+      },
+      "revId": "28f8c9134ec62fbd6917e8032d573b11c4713549",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a656b17e_0ab7fb32",
+        "filename": "chrome/browser/component_updater/mei_preload_component_installer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-30T12:00:29Z",
+      "side": 1,
+      "message": "it looks like this can never be true based on line 79. how about changing this to a DCHECK(!pb_path.empty())?",
+      "revId": "28f8c9134ec62fbd6917e8032d573b11c4713549",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54cb34c6_fe2ab61c",
+        "filename": "chrome/browser/component_updater/mei_preload_component_installer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-30T12:00:29Z",
+      "side": 1,
+      "message": "can this also have base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN so that shutdown is never blocked on this read? i don\u0027t see anything in MediaEngagementPreloadedList::LoadFromFile that would make it unsafe to do so (once base::Singleton is no longer used), but i\u0027m not familiar with this code.",
+      "revId": "28f8c9134ec62fbd6917e8032d573b11c4713549",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64eba46a_ac22dee1",
+        "filename": "chrome/browser/component_updater/mei_preload_component_installer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-30T12:00:29Z",
+      "side": 1,
+      "message": "nit: use Callback\u0027s bool operator to simplify this to: \"if (!on_load_closure_) {\"",
+      "range": {
+        "startLine": 91,
+        "startChar": 6,
+        "endLine": 91,
+        "endChar": 32
+      },
+      "revId": "28f8c9134ec62fbd6917e8032d573b11c4713549",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
