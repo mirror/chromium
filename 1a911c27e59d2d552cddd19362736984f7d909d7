@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f000507e_ebb8ecbc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchBarBannerControl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-11-30T21:19:33Z",
+      "side": 1,
+      "message": "Offline discussion, decided on mPaddedHeightPx.",
+      "parentUuid": "3e4c7832_b3028bcb",
+      "range": {
+        "startLine": 61,
+        "startChar": 18,
+        "endLine": 61,
+        "endChar": 34
+      },
+      "revId": "1a911c27e59d2d552cddd19362736984f7d909d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cfe00ea_13bd5f51",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchBarBannerControl.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "1a911c27e59d2d552cddd19362736984f7d909d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42cdb03b_0df427fe",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchBarBannerControl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-11-30T21:19:33Z",
+      "side": 1,
+      "message": "Same as above.",
+      "parentUuid": "1cfe00ea_13bd5f51",
+      "range": {
+        "startLine": 127,
+        "startChar": 18,
+        "endLine": 127,
+        "endChar": 36
+      },
+      "revId": "1a911c27e59d2d552cddd19362736984f7d909d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
