@@ -2145,9 +2145,8 @@ void WebViewImpl::SetFocus(bool enable) {
     LocalFrame* focused_frame = page_->GetFocusController().FocusedFrame();
     if (focused_frame) {
       Element* element = focused_frame->GetDocument()->FocusedElement();
-      if (element && focused_frame->Selection()
-                         .ComputeVisibleSelectionInDOMTreeDeprecated()
-                         .IsNone()) {
+      if (element &&
+          focused_frame->Selection().GetSelectionInDOMTree().IsNone()) {
         // If the selection was cleared while the WebView was not
         // focused, then the focus element shows with a focus ring but
         // no caret and does respond to keyboard inputs.
