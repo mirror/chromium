@@ -50,6 +50,29 @@
       "revId": "ea606fc5c779df99e8023ef035a102de16b1c7b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e61610da_cf73a729",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 6866,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-11-30T10:10:51Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be base\u003d\"true\".",
+      "range": {
+        "startLine": 6866,
+        "startChar": 11,
+        "endLine": 6866,
+        "endChar": 15
+      },
+      "revId": "ea606fc5c779df99e8023ef035a102de16b1c7b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
