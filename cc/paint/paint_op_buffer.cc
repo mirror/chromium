@@ -1636,8 +1636,8 @@ size_t PaintOp::Serialize(void* memory,
   if (written < 4)
     return 0u;
 
-  size_t aligned_written =
-      MathUtil::UncheckedRoundUp(written, PaintOpBuffer::PaintOpAlign);
+  size_t aligned_written = ((written + PaintOpBuffer::PaintOpAlign - 1) &
+                            ~(PaintOpBuffer::PaintOpAlign - 1));
   if (aligned_written >= kMaxSkip)
     return 0u;
   if (aligned_written > size)

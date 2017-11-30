@@ -23,8 +23,6 @@ PaintOpWriter::~PaintOpWriter() = default;
 template <typename T>
 void PaintOpWriter::WriteSimple(const T& val) {
   static_assert(base::is_trivially_copyable<T>::value, "");
-  if (!AlignMemory(alignof(T)))
-    valid_ = false;
   if (remaining_bytes_ < sizeof(T))
     valid_ = false;
   if (!valid_)
@@ -39,6 +37,12 @@ void PaintOpWriter::WriteSimple(const T& val) {
 void PaintOpWriter::WriteFlattenable(const SkFlattenable* val) {
   DCHECK(SkIsAlign4(reinterpret_cast<uintptr_t>(memory_)))
       << "Flattenable must start writing at 4 byte alignment.";
+
+  if (!val) {
+    Write(static_cast<size_t>(0u));
+    return;
+  }
+
   // TODO(enne): change skia API to make this a const parameter.
   sk_sp<SkData> data(
       SkValidatingSerializeFlattenable(const_cast<SkFlattenable*>(val)));
@@ -97,8 +101,11 @@ void PaintOpWriter::Write(const PaintFlags& flags) {
   // Flattenables must be written starting at a 4 byte boundary, which should be
   // the case here.
   WriteFlattenable(flags.path_effect_.get());
+  AlignMemory(4);
   WriteFlattenable(flags.mask_filter_.get());
+  AlignMemory(4);
   WriteFlattenable(flags.color_filter_.get());
+  AlignMemory(4);
   WriteFlattenable(flags.draw_looper_.get());
 
   Write(flags.shader_.get());
@@ -239,7 +246,7 @@ void PaintOpWriter::WriteArray(size_t count, const SkPoint* input) {
   WriteData(bytes, input);
 }
 
-bool PaintOpWriter::AlignMemory(size_t alignment) {
+void PaintOpWriter::AlignMemory(size_t alignment) {
   // Due to the math below, alignment must be a power of two.
   DCHECK_GT(alignment, 0u);
   DCHECK_EQ(alignment & (alignment - 1), 0u);
@@ -250,12 +257,9 @@ bool PaintOpWriter::AlignMemory(size_t alignment) {
   // because alignment is a power of two. This doesn't use modulo operator
   // however, since it can be slow.
   size_t padding = ((memory + alignment - 1) & ~(alignment - 1)) - memory;
-  if (padding > remaining_bytes_)
-    return false;
 
   memory_ += padding;
   remaining_bytes_ -= padding;
-  return true;
 }
 
 }  // namespace cc
