@@ -46,6 +46,30 @@
       "revId": "50145526af7f86aebd2147fafdee404763666431",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60579612_7f192233",
+        "filename": "chrome/browser/cryptauth/chrome_cryptauth_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-11-30T18:09:18Z",
+      "side": 1,
+      "message": "I\u0027d prefer that you add it since the Tether component already does so (see [1]). Without adding it here as well, our listener won\u0027t do anything since we won\u0027t be able to check for synced devices. Do other projects do this? If a log out is required in general for CrOS policy changes, then I\u0027m okay with that too.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/chromeos/tether/tether_service.cc?l\u003d126",
+      "parentUuid": "d82a3ffa_b9c6999b",
+      "range": {
+        "startLine": 335,
+        "startChar": 29,
+        "endLine": 335,
+        "endChar": 56
+      },
+      "revId": "50145526af7f86aebd2147fafdee404763666431",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
