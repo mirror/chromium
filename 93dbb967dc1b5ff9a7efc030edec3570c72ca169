@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f4509419_aa282a71",
+        "filename": "media/mojo/services/interface_factory_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-11-30T20:30:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "da3fc0a0_82bfd840",
+      "revId": "93dbb967dc1b5ff9a7efc030edec3570c72ca169",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2525d10_b2d846b8",
         "filename": "media/mojo/services/media_service.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-30T00:35:54Z",
       "side": 1,
       "message": "Now the MediaService runs on a sequence instead of its own thread. Do we still need to pass |*ref_factory_| to the |mojo_media_client_|?",
+      "revId": "93dbb967dc1b5ff9a7efc030edec3570c72ca169",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eea8b54e_da4a7636",
+        "filename": "media/mojo/services/media_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-11-30T20:30:19Z",
+      "side": 1,
+      "message": "The short answer is no, but the long answer is that MediaCodecVideoDecoder needs to be refactored to not take such a ref first.",
+      "parentUuid": "e2525d10_b2d846b8",
       "revId": "93dbb967dc1b5ff9a7efc030edec3570c72ca169",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
