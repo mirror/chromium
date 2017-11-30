@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0df36a2_41b3c352",
+        "filename": "components/favicon/ios/web_favicon_driver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-30T10:16:16Z",
+      "side": 1,
+      "message": "What is this used for?",
+      "range": {
+        "startLine": 79,
+        "startChar": 7,
+        "endLine": 79,
+        "endChar": 25
+      },
+      "revId": "0a014f2674cbf24e0e710cfd5c85afebbd60d725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b43126a9_14d2b23a",
+        "filename": "ios/web/web_state/web_state_impl_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-30T10:16:16Z",
+      "side": 1,
+      "message": "Why not using \u003d std::make_unique? It looks like you are using a copy constructor here.",
+      "range": {
+        "startLine": 779,
+        "startChar": 48,
+        "endLine": 779,
+        "endChar": 49
+      },
+      "revId": "0a014f2674cbf24e0e710cfd5c85afebbd60d725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dd23d11_092809d3",
+        "filename": "ios/web/web_state/web_state_impl_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-30T10:16:16Z",
+      "side": 1,
+      "message": "Why not std::make_unique?",
+      "range": {
+        "startLine": 789,
+        "startChar": 13,
+        "endLine": 789,
+        "endChar": 29
+      },
+      "revId": "0a014f2674cbf24e0e710cfd5c85afebbd60d725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d86468b7_57b55092",
+        "filename": "ios/web/web_state/web_state_impl_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-30T10:16:16Z",
+      "side": 1,
+      "message": "Same",
+      "range": {
+        "startLine": 797,
+        "startChar": 13,
+        "endLine": 797,
+        "endChar": 29
+      },
+      "revId": "0a014f2674cbf24e0e710cfd5c85afebbd60d725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e8a9541_7c3c828c",
+        "filename": "ios/web/web_state/web_state_impl_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-30T10:16:16Z",
+      "side": 1,
+      "message": "Why assert here?",
+      "range": {
+        "startLine": 806,
+        "startChar": 2,
+        "endLine": 806,
+        "endChar": 11
+      },
+      "revId": "0a014f2674cbf24e0e710cfd5c85afebbd60d725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
