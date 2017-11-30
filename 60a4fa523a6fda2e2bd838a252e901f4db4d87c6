@@ -42,6 +42,74 @@
     },
     {
       "key": {
+        "uuid": "aaf90b9b_21bf1da6",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1236,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-11-30T21:44:37Z",
+      "side": 1,
+      "message": "LinkDoctorBaseURL is https://www.googleapis.com/rpc, which is an interface to a lot of things besides just link doctor. The link doctorness of this particular request is given by the {\"method\": \"linkdoctor.fixurl.fixurl\", ...} in the JSON of the POST request body.\n\nI would reasonably expect this to be fixed by switching this request to be CORS enabled. googleapis certainly supports CORS.\n\nBecause this is currently the only caller of ResourceFetcherImpl, you could do this hackily, say in content/renderer/fetchers/resource_fetcher_impl.cc!ResourceFetcherImpl::SetMethod --\n\n  request_.fetch_request_mode \u003d network::mojom::FetchRequestMode::kCORS;",
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec0fb01b_af6f9f5b",
+        "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-11-30T21:44:37Z",
+      "side": 1,
+      "message": "Add a comment here explaining why.",
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba86f72e_73ea4a75",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-11-30T21:44:37Z",
+      "side": 1,
+      "message": "+\u003d \"and standard ports\"",
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b815a883_3320df0c",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-11-30T21:44:37Z",
+      "side": 1,
+      "message": "LAMENT_TRUE\nASPIRE_FALSE",
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "298dfdd4_f5783e4b",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 15
@@ -157,6 +225,23 @@
     },
     {
       "key": {
+        "uuid": "0a75585f_20b6c10b",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-11-30T21:44:37Z",
+      "side": 1,
+      "message": "\"document\" here is not really accurate since our protection extends to JSON as well as HTML and XML.\n\nReally we are trying to block response bodies in the case where (a) there exists no mechanism by which this type of resource can be consumed opaquely in the target process, and (b) the request didn\u0027t use CORS.\n\nI\u0027m fine with \"cross site document\" since it\u0027s accurate to first approximation, and the term is well-rooted (at least in the parlance of our team) -- but since this is going to be something that ultimately we\u0027re forcing webdevs to think about, we might want to focus group the name some more.",
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c89f8c6_e95fd486",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 15
@@ -214,6 +299,23 @@
     },
     {
       "key": {
+        "uuid": "e1501b4f_1f9c42db",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-11-30T21:44:37Z",
+      "side": 1,
+      "message": "We should look into whether or not it would be viable to implement this in terms of net::URLRequestInterceptor. I wasn\u0027t aware of that class before looking at this CL, but the response interception scheme seems like it gives us more control over the response. (however, extending it to sniffing would probably require new capabilities for the interceptor).",
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4abee57f_54aee4d8",
         "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
         "patchSetId": 15
@@ -231,6 +333,46 @@
         "endLine": 1595,
         "endChar": 21
       },
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffbc8994_d29ea5fc",
+        "filename": "content/public/browser/content_browser_client.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-11-30T21:44:37Z",
+      "side": 1,
+      "message": "\"initiating origins of |initiator|\" wording is a little clumsy",
+      "range": {
+        "startLine": 250,
+        "startChar": 36,
+        "endLine": 250,
+        "endChar": 43
+      },
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e63e4ad_2cd54a3d",
+        "filename": "content/renderer/fetchers/resource_fetcher_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-11-30T21:44:37Z",
+      "side": 1,
+      "message": "So my understanding here is that ResourceFetcher was basically unbeholden to the same-origin policy, and the browser-side enforcement you\u0027re adding is exposing some of that looseness.\n\nLooking at these tests, I\u0027m thinking that forcing ResourceFetcher to use CORS by default makes a lot of sense.",
       "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
