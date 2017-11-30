@@ -280,6 +280,8 @@ PDFViewer.prototype = {
     this.toolbarManager_.hideToolbarsAfterTimeout(e);
 
     var pageUpHandler = () => {
+      console.log("page up");
+      chrome.metricsPrivate.recordUserAction('PDFViewer_PageUp');
       // Go to the previous page if we are fit-to-page or fit-to-height.
       if (this.viewport_.isPagedMode()) {
         this.viewport_.goToPage(this.viewport_.getMostVisiblePage() - 1);
@@ -427,6 +429,10 @@ PDFViewer.prototype = {
    * Rotate the plugin clockwise.
    */
   rotateClockwise_: function() {
+      console.log("rotateClockwise_");
+      console.log(chrome);
+      console.log(chrome.metricsPrivate);
+      chrome.metricsPrivate.recordUserAction('PDFViewer_RotateClockwise');
     this.plugin_.postMessage({type: 'rotateClockwise'});
   },
 
