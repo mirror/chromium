@@ -101,7 +101,8 @@ bool DefaultSearchPolicyHandler::CheckPolicySettings(const PolicyMap& policies,
   if (!CheckIndividualPolicies(policies, errors))
     return false;
 
-  if (DefaultSearchProviderIsDisabled(policies)) {
+  if (!HasDefaultSearchPolicy(policies, key::kDefaultSearchProviderEnabled) ||
+      DefaultSearchProviderIsDisabled(policies)) {
     // Add an error for all specified default search policies except
     // DefaultSearchProviderEnabled.
 
@@ -127,6 +128,10 @@ bool DefaultSearchPolicyHandler::CheckPolicySettings(const PolicyMap& policies,
 
 void DefaultSearchPolicyHandler::ApplyPolicySettings(const PolicyMap& policies,
                                                      PrefValueMap* prefs) {
+  // If the main switch is not set don't set anything.
+  if (!HasDefaultSearchPolicy(policies, key::kDefaultSearchProviderEnabled))
+    return;
+
   if (DefaultSearchProviderIsDisabled(policies)) {
     std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue);
     dict->SetBoolean(DefaultSearchManager::kDisabledByPolicy, true);
