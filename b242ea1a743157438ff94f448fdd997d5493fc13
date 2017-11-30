@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d532972_be156955",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-30T20:09:00Z",
+      "side": 1,
+      "message": "None of the UIs that use these strings are running on Android, I think. Should these be moved a few lines below within the \u003cif expr\u003d\"not is_android\"\u003e tag?",
+      "range": {
+        "startLine": 332,
+        "startChar": 21,
+        "endLine": 332,
+        "endChar": 39
+      },
+      "revId": "b242ea1a743157438ff94f448fdd997d5493fc13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
