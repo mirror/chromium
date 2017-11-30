@@ -218,6 +218,7 @@ class FakeSchedulerClient : public SchedulerClient,
   size_t CompositedAnimationsCount() const override { return 0; }
   size_t MainThreadAnimationsCount() const override { return 0; }
   size_t MainThreadCompositableAnimationsCount() const override { return 0; }
+  bool CurrentFrameHasRAF() const override { return false; }
 
  protected:
   bool InsideBeginImplFrameCallback(bool state) {
