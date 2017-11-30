@@ -125,12 +125,9 @@ const gfx::Size kSize(640, 480);
 
 const uint32_t kDefaultRelTypes = PrerenderRelTypePrerender;
 
-base::SimpleTestTickClock* OverridePrerenderManagerTimeTicks(
-    PrerenderManager* prerender_manager) {
-  auto tick_clock = base::MakeUnique<base::SimpleTestTickClock>();
-  base::SimpleTestTickClock* tick_clock_ptr = tick_clock.get();
-  prerender_manager->SetTickClockForTesting(std::move(tick_clock));
-  return tick_clock_ptr;
+void OverridePrerenderManagerTimeTicks(base::SimpleTestTickClock* clock,
+                                       PrerenderManager* prerender_manager) {
+  prerender_manager->SetTickClockForTesting(clock);
 }
 
 }  // namespace
@@ -675,8 +672,8 @@ TEST_F(PrerenderTest, DuplicateTest_NoStatePrefetch) {
 
 // Ensure that we expire a prerendered page after the max. permitted time.
 TEST_F(PrerenderTest, ExpireTest) {
-  base::SimpleTestTickClock* tick_clock =
-      OverridePrerenderManagerTimeTicks(prerender_manager());
+  base::SimpleTestTickClock tick_clock;
+  OverridePrerenderManagerTimeTicks(&tick_clock, prerender_manager());
   GURL url("http://www.google.com/");
   DummyPrerenderContents* prerender_contents =
       prerender_manager()->CreateNextPrerenderContents(
@@ -685,8 +682,8 @@ TEST_F(PrerenderTest, ExpireTest) {
   EXPECT_TRUE(AddSimplePrerender(url));
   EXPECT_FALSE(prerender_manager()->next_prerender_contents());
   EXPECT_TRUE(prerender_contents->prerendering_has_started());
-  tick_clock->Advance(prerender_manager()->config().time_to_live +
-                      TimeDelta::FromSeconds(1));
+  tick_clock.Advance(prerender_manager()->config().time_to_live +
+                     TimeDelta::FromSeconds(1));
   ASSERT_FALSE(prerender_manager()->FindEntry(url));
 }
 
@@ -707,8 +704,8 @@ TEST_F(PrerenderTest, BadURLTest) {
 // When the user navigates away from a page, the prerenders it launched should
 // have their time to expiry shortened from the default time to live.
 TEST_F(PrerenderTest, LinkManagerNavigateAwayExpire) {
-  base::SimpleTestTickClock* tick_clock =
-      OverridePrerenderManagerTimeTicks(prerender_manager());
+  base::SimpleTestTickClock tick_clock;
+  OverridePrerenderManagerTimeTicks(&tick_clock, prerender_manager());
   const TimeDelta time_to_live = TimeDelta::FromSeconds(300);
   const TimeDelta abandon_time_to_live = TimeDelta::FromSeconds(20);
   const TimeDelta test_advance = TimeDelta::FromSeconds(22);
@@ -731,7 +728,7 @@ TEST_F(PrerenderTest, LinkManagerNavigateAwayExpire) {
                                                last_prerender_id());
   EXPECT_EQ(prerender_contents, prerender_manager()->FindEntry(url));
   EXPECT_FALSE(prerender_manager()->next_prerender_contents());
-  tick_clock->Advance(test_advance);
+  tick_clock.Advance(test_advance);
 
   EXPECT_FALSE(prerender_manager()->FindEntry(url));
 }
@@ -739,8 +736,8 @@ TEST_F(PrerenderTest, LinkManagerNavigateAwayExpire) {
 // But when we navigate away very close to the original expiry of a prerender,
 // we shouldn't expect it to be extended.
 TEST_F(PrerenderTest, LinkManagerNavigateAwayNearExpiry) {
-  base::SimpleTestTickClock* tick_clock =
-      OverridePrerenderManagerTimeTicks(prerender_manager());
+  base::SimpleTestTickClock tick_clock;
+  OverridePrerenderManagerTimeTicks(&tick_clock, prerender_manager());
   const TimeDelta time_to_live = TimeDelta::FromSeconds(300);
   const TimeDelta abandon_time_to_live = TimeDelta::FromSeconds(20);
 
@@ -767,7 +764,7 @@ TEST_F(PrerenderTest, LinkManagerNavigateAwayNearExpiry) {
   EXPECT_FALSE(prerender_contents->prerendering_has_been_cancelled());
   ASSERT_EQ(prerender_contents, prerender_manager()->FindEntry(url));
 
-  tick_clock->Advance(first_advance);
+  tick_clock.Advance(first_advance);
   EXPECT_EQ(prerender_contents, prerender_manager()->FindEntry(url));
 
   prerender_link_manager()->OnAbandonPrerender(kDefaultChildId,
@@ -776,7 +773,7 @@ TEST_F(PrerenderTest, LinkManagerNavigateAwayNearExpiry) {
 
   EXPECT_FALSE(prerender_manager()->next_prerender_contents());
 
-  tick_clock->Advance(second_advance);
+  tick_clock.Advance(second_advance);
   EXPECT_FALSE(prerender_manager()->FindEntry(url));
 }
 
@@ -784,8 +781,8 @@ TEST_F(PrerenderTest, LinkManagerNavigateAwayNearExpiry) {
 // the new prerender should preempt the abandoned prerender even if the
 // abandoned prerender hasn't expired.
 TEST_F(PrerenderTest, LinkManagerNavigateAwayLaunchAnother) {
-  base::SimpleTestTickClock* tick_clock =
-      OverridePrerenderManagerTimeTicks(prerender_manager());
+  base::SimpleTestTickClock tick_clock;
+  OverridePrerenderManagerTimeTicks(&tick_clock, prerender_manager());
   const TimeDelta time_to_live = TimeDelta::FromSeconds(300);
   const TimeDelta abandon_time_to_live = TimeDelta::FromSeconds(20);
   const TimeDelta test_advance = TimeDelta::FromSeconds(5);
@@ -802,7 +799,7 @@ TEST_F(PrerenderTest, LinkManagerNavigateAwayLaunchAnother) {
   prerender_link_manager()->OnAbandonPrerender(kDefaultChildId,
                                                last_prerender_id());
 
-  tick_clock->Advance(test_advance);
+  tick_clock.Advance(test_advance);
 
   GURL second_url("http://example2.com");
   DummyPrerenderContents* second_prerender_contents =
@@ -823,8 +820,8 @@ TEST_F(PrerenderTest, NoStatePrefetchDuplicate) {
       PrerenderManager::PRERENDER_MODE_NOSTATE_PREFETCH);
   prerender_manager()->SetOmniboxMode(
       PrerenderManager::PRERENDER_MODE_NOSTATE_PREFETCH);
-  base::SimpleTestTickClock* tick_clock =
-      OverridePrerenderManagerTimeTicks(prerender_manager());
+  base::SimpleTestTickClock tick_clock;
+  OverridePrerenderManagerTimeTicks(&tick_clock, prerender_manager());
 
   // Prefetch the url once.
   prerender_manager()->CreateNextPrerenderContents(kUrl, ORIGIN_OMNIBOX,
@@ -838,14 +835,14 @@ TEST_F(PrerenderTest, NoStatePrefetchDuplicate) {
       kUrl, ORIGIN_OMNIBOX, FINAL_STATUS_MANAGER_SHUTDOWN);
 
   // Prefetching again before time_to_live aborts, because it is a duplicate.
-  tick_clock->Advance(base::TimeDelta::FromSeconds(1));
+  tick_clock.Advance(base::TimeDelta::FromSeconds(1));
   EXPECT_FALSE(
       prerender_manager()->AddPrerenderFromOmnibox(kUrl, nullptr, gfx::Size()));
   histogram_tester().ExpectBucketCount("Prerender.FinalStatus",
                                        FINAL_STATUS_DUPLICATE, 1);
 
   // Prefetching after time_to_live succeeds.
-  tick_clock->Advance(
+  tick_clock.Advance(
       base::TimeDelta::FromMinutes(net::HttpCache::kPrefetchReuseMins));
   EXPECT_TRUE(
       prerender_manager()->AddPrerenderFromOmnibox(kUrl, nullptr, gfx::Size()));
@@ -1120,12 +1117,12 @@ TEST_F(PrerenderTest, RecentlyVisited) {
 }
 
 TEST_F(PrerenderTest, NotSoRecentlyVisited) {
-  base::SimpleTestTickClock* tick_clock =
-      OverridePrerenderManagerTimeTicks(prerender_manager());
+  base::SimpleTestTickClock tick_clock;
+  OverridePrerenderManagerTimeTicks(&tick_clock, prerender_manager());
   GURL url("http://www.google.com/");
 
   prerender_manager()->RecordNavigation(url);
-  tick_clock->Advance(TimeDelta::FromMilliseconds(
+  tick_clock.Advance(TimeDelta::FromMilliseconds(
       UnitTestPrerenderManager::kNavigationRecordWindowMs + 500));
 
   DummyPrerenderContents* prerender_contents =
@@ -1513,8 +1510,8 @@ TEST_F(PrerenderTest, LinkManagerAddTwiceAbandonTwiceUseTwice) {
 // or normal expire, and verifying the expected behaviour with groups
 // of links.
 TEST_F(PrerenderTest, LinkManagerExpireThenCancel) {
-  base::SimpleTestTickClock* tick_clock =
-      OverridePrerenderManagerTimeTicks(prerender_manager());
+  base::SimpleTestTickClock tick_clock;
+  OverridePrerenderManagerTimeTicks(&tick_clock, prerender_manager());
   EXPECT_TRUE(IsEmptyPrerenderLinkManager());
   GURL url("http://www.myexample.com");
   DummyPrerenderContents* prerender_contents =
@@ -1526,8 +1523,8 @@ TEST_F(PrerenderTest, LinkManagerExpireThenCancel) {
   EXPECT_TRUE(prerender_contents->prerendering_has_started());
   EXPECT_FALSE(prerender_contents->prerendering_has_been_cancelled());
   ASSERT_EQ(prerender_contents, prerender_manager()->FindEntry(url));
-  tick_clock->Advance(prerender_manager()->config().time_to_live +
-                      TimeDelta::FromSeconds(1));
+  tick_clock.Advance(prerender_manager()->config().time_to_live +
+                     TimeDelta::FromSeconds(1));
 
   EXPECT_FALSE(IsEmptyPrerenderLinkManager());
   ASSERT_FALSE(prerender_manager()->FindEntry(url));
@@ -1539,8 +1536,8 @@ TEST_F(PrerenderTest, LinkManagerExpireThenCancel) {
 }
 
 TEST_F(PrerenderTest, LinkManagerExpireThenAddAgain) {
-  base::SimpleTestTickClock* tick_clock =
-      OverridePrerenderManagerTimeTicks(prerender_manager());
+  base::SimpleTestTickClock tick_clock;
+  OverridePrerenderManagerTimeTicks(&tick_clock, prerender_manager());
   EXPECT_TRUE(IsEmptyPrerenderLinkManager());
   GURL url("http://www.myexample.com");
   DummyPrerenderContents* first_prerender_contents =
@@ -1551,8 +1548,8 @@ TEST_F(PrerenderTest, LinkManagerExpireThenAddAgain) {
   EXPECT_FALSE(first_prerender_contents->prerendering_has_been_cancelled());
   ASSERT_EQ(first_prerender_contents,
             prerender_manager()->FindEntry(url));
-  tick_clock->Advance(prerender_manager()->config().time_to_live +
-                      TimeDelta::FromSeconds(1));
+  tick_clock.Advance(prerender_manager()->config().time_to_live +
+                     TimeDelta::FromSeconds(1));
 
   ASSERT_FALSE(prerender_manager()->FindEntry(url));
   DummyPrerenderContents* second_prerender_contents =
@@ -1591,8 +1588,8 @@ TEST_F(PrerenderTest, LinkManagerCancelThenAddAgain) {
 }
 
 TEST_F(PrerenderTest, LinkManagerChannelClosing) {
-  base::SimpleTestTickClock* tick_clock =
-      OverridePrerenderManagerTimeTicks(prerender_manager());
+  base::SimpleTestTickClock tick_clock;
+  OverridePrerenderManagerTimeTicks(&tick_clock, prerender_manager());
   EXPECT_TRUE(IsEmptyPrerenderLinkManager());
   GURL url("http://www.myexample.com");
   DummyPrerenderContents* prerender_contents =
@@ -1606,8 +1603,8 @@ TEST_F(PrerenderTest, LinkManagerChannelClosing) {
 
   prerender_link_manager()->OnChannelClosing(kDefaultChildId);
 
-  tick_clock->Advance(prerender_manager()->config().abandon_time_to_live +
-                      TimeDelta::FromSeconds(1));
+  tick_clock.Advance(prerender_manager()->config().abandon_time_to_live +
+                     TimeDelta::FromSeconds(1));
 
   EXPECT_FALSE(prerender_manager()->FindEntry(url));
   EXPECT_TRUE(IsEmptyPrerenderLinkManager());
@@ -1617,8 +1614,8 @@ TEST_F(PrerenderTest, LinkManagerChannelClosing) {
 // max_link_concurrency; abandons both of them and waits to make sure both
 // are cleared from the PrerenderLinkManager.
 TEST_F(PrerenderTest, DISABLED_LinkManagerAbandonInactivePrerender) {
-  base::SimpleTestTickClock* tick_clock =
-      OverridePrerenderManagerTimeTicks(prerender_manager());
+  base::SimpleTestTickClock tick_clock;
+  OverridePrerenderManagerTimeTicks(&tick_clock, prerender_manager());
   SetConcurrency(1);
   ASSERT_LT(prerender_manager()->config().abandon_time_to_live,
             prerender_manager()->config().time_to_live);
@@ -1643,8 +1640,8 @@ TEST_F(PrerenderTest, DISABLED_LinkManagerAbandonInactivePrerender) {
   prerender_link_manager()->OnAbandonPrerender(kDefaultChildId,
                                                second_prerender_id);
 
-  tick_clock->Advance(prerender_manager()->config().abandon_time_to_live +
-                      TimeDelta::FromSeconds(1));
+  tick_clock.Advance(prerender_manager()->config().abandon_time_to_live +
+                     TimeDelta::FromSeconds(1));
   EXPECT_FALSE(prerender_manager()->FindEntry(first_url));
   EXPECT_FALSE(prerender_manager()->FindEntry(second_url));
   EXPECT_TRUE(IsEmptyPrerenderLinkManager());
@@ -1654,8 +1651,8 @@ TEST_F(PrerenderTest, DISABLED_LinkManagerAbandonInactivePrerender) {
 // should be blocked by max_concurrency; abandons both of them and waits to make
 // sure both are cleared from the PrerenderLinkManager.
 TEST_F(PrerenderTest, LinkManagerClearOnPendingAbandon) {
-  base::SimpleTestTickClock* tick_clock =
-      OverridePrerenderManagerTimeTicks(prerender_manager());
+  base::SimpleTestTickClock tick_clock;
+  OverridePrerenderManagerTimeTicks(&tick_clock, prerender_manager());
   SetConcurrency(1);
   ASSERT_LT(prerender_manager()->config().abandon_time_to_live,
             prerender_manager()->config().time_to_live);
@@ -1687,8 +1684,8 @@ TEST_F(PrerenderTest, LinkManagerClearOnPendingAbandon) {
   prerender_link_manager()->OnAbandonPrerender(kDefaultChildId,
                                                second_prerender_id);
 
-  tick_clock->Advance(prerender_manager()->config().abandon_time_to_live +
-                      TimeDelta::FromSeconds(1));
+  tick_clock.Advance(prerender_manager()->config().abandon_time_to_live +
+                     TimeDelta::FromSeconds(1));
   EXPECT_FALSE(prerender_manager()->FindEntry(first_url));
   EXPECT_FALSE(prerender_manager()->FindEntry(pending_url));
   EXPECT_TRUE(IsEmptyPrerenderLinkManager());
@@ -1698,8 +1695,8 @@ TEST_F(PrerenderTest, LinkManagerClearOnPendingAbandon) {
 // max_link_concurrency; uses one after the max wait to launch, and
 // ensures the second prerender does not start.
 TEST_F(PrerenderTest, LinkManagerWaitToLaunchNotLaunched) {
-  base::SimpleTestTickClock* tick_clock =
-      OverridePrerenderManagerTimeTicks(prerender_manager());
+  base::SimpleTestTickClock tick_clock;
+  OverridePrerenderManagerTimeTicks(&tick_clock, prerender_manager());
   SetConcurrency(1);
   ASSERT_LT(prerender_manager()->config().max_wait_to_launch,
             prerender_manager()->config().time_to_live);
@@ -1717,8 +1714,8 @@ TEST_F(PrerenderTest, LinkManagerWaitToLaunchNotLaunched) {
   EXPECT_EQ(prerender_contents, prerender_manager()->FindEntry(first_url));
   EXPECT_FALSE(prerender_manager()->FindEntry(second_url));
 
-  tick_clock->Advance(prerender_manager()->config().max_wait_to_launch +
-                      TimeDelta::FromSeconds(1));
+  tick_clock.Advance(prerender_manager()->config().max_wait_to_launch +
+                     TimeDelta::FromSeconds(1));
   EXPECT_EQ(prerender_contents, prerender_manager()->FindEntry(first_url));
   EXPECT_FALSE(prerender_manager()->FindEntry(second_url));
 
@@ -1733,8 +1730,8 @@ TEST_F(PrerenderTest, LinkManagerWaitToLaunchNotLaunched) {
 
 // Creates two prerenders, one of which should start when the first one expires.
 TEST_F(PrerenderTest, LinkManagerExpireRevealingLaunch) {
-  base::SimpleTestTickClock* tick_clock =
-      OverridePrerenderManagerTimeTicks(prerender_manager());
+  base::SimpleTestTickClock tick_clock;
+  OverridePrerenderManagerTimeTicks(&tick_clock, prerender_manager());
   SetConcurrency(1);
   ASSERT_LT(prerender_manager()->config().max_wait_to_launch,
             prerender_manager()->config().time_to_live);
@@ -1763,7 +1760,7 @@ TEST_F(PrerenderTest, LinkManagerExpireRevealingLaunch) {
   ASSERT_GT(prerender_manager()->config().max_wait_to_launch.InSeconds(),
             wait_for_first_prerender_to_expire.InSeconds());
 
-  tick_clock->Advance(wait_to_launch_second_prerender);
+  tick_clock.Advance(wait_to_launch_second_prerender);
   GURL second_url("http://www.willlaunch.com");
   DummyPrerenderContents* second_prerender_contents =
       prerender_manager()->CreateNextPrerenderContents(
@@ -1776,7 +1773,7 @@ TEST_F(PrerenderTest, LinkManagerExpireRevealingLaunch) {
   EXPECT_FALSE(prerender_manager()->FindEntry(second_url));
 
   // The first prerender should have died, giving life to the second one.
-  tick_clock->Advance(wait_for_first_prerender_to_expire);
+  tick_clock.Advance(wait_for_first_prerender_to_expire);
   EXPECT_FALSE(prerender_manager()->FindEntry(first_url));
   std::unique_ptr<PrerenderContents> entry =
       prerender_manager()->FindAndUseEntry(second_url);

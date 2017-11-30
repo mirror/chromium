@@ -47,9 +47,7 @@ class SubresourceFilterContentSettingsManagerTest : public testing::Test {
         SubresourceFilterProfileContextFactory::GetForProfile(&testing_profile_)
             ->settings_manager();
     settings_manager_->set_should_use_smart_ui_for_testing(true);
-    auto test_clock = base::MakeUnique<base::SimpleTestClock>();
-    test_clock_ = test_clock.get();
-    settings_manager_->set_clock_for_testing(std::move(test_clock));
+    settings_manager_->set_clock_for_testing(&test_clock_);
     histogram_tester().ExpectTotalCount(kActionsHistogram, 0);
   }
 
@@ -83,7 +81,7 @@ class SubresourceFilterContentSettingsManagerTest : public testing::Test {
     return CONTENT_SETTING_DEFAULT;
   }
 
-  base::SimpleTestClock* test_clock() { return test_clock_; }
+  base::SimpleTestClock* test_clock() { return &test_clock_; }
 
  private:
   base::ScopedTempDir scoped_dir_;
@@ -97,7 +95,7 @@ class SubresourceFilterContentSettingsManagerTest : public testing::Test {
   SubresourceFilterContentSettingsManager* settings_manager_ = nullptr;
 
   // Owned by the settings_manager_.
-  base::SimpleTestClock* test_clock_ = nullptr;
+  base::SimpleTestClock test_clock_;
 
   DISALLOW_COPY_AND_ASSIGN(SubresourceFilterContentSettingsManagerTest);
 };

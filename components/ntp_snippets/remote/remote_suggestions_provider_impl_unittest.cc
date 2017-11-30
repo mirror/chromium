@@ -337,7 +337,7 @@ class RemoteSuggestionsProviderImplTest : public ::testing::Test {
   RemoteSuggestionsProviderImplTest()
       : category_ranker_(base::MakeUnique<ConstantCategoryRanker>()),
         user_classifier_(/*pref_service=*/nullptr,
-                         base::MakeUnique<base::DefaultClock>()),
+                         base::DefaultClock::GetInstance()),
         mock_suggestions_fetcher_(nullptr),
         image_fetcher_(nullptr),
         scheduler_(base::MakeUnique<NiceMock<MockScheduler>>()),
@@ -429,7 +429,7 @@ class RemoteSuggestionsProviderImplTest : public ::testing::Test {
     database_ = database.get();
 
     auto fetch_timeout_timer =
-        base::MakeUnique<base::OneShotTimer>(tick_clock_.get());
+        base::MakeUnique<base::OneShotTimer>(tick_clock_);
     fetch_timeout_timer->SetTaskRunner(timer_mock_task_runner_);
 
     return base::MakeUnique<RemoteSuggestionsProviderImpl>(
@@ -712,7 +712,7 @@ class RemoteSuggestionsProviderImplTest : public ::testing::Test {
   RemoteSuggestionsDatabase* database_;
 
   Logger debug_logger_;
-  std::unique_ptr<base::TickClock> tick_clock_;
+  base::TickClock* tick_clock_;
 
   scoped_refptr<TestMockTimeTaskRunner> timer_mock_task_runner_;
 
@@ -2346,9 +2346,8 @@ TEST_F(RemoteSuggestionsProviderImplTest,
       /*use_fake_breaking_news_listener=*/false,
       /*use_mock_remote_suggestions_status_service=*/false);
 
-  auto simple_test_clock = base::MakeUnique<base::SimpleTestClock>();
-  base::SimpleTestClock* simple_test_clock_ptr = simple_test_clock.get();
-  provider->SetClockForTesting(std::move(simple_test_clock));
+  base::SimpleTestClock simple_test_clock;
+  provider->SetClockForTesting(&simple_test_clock);
 
   // Test that the preference is correctly initialized with the default value 0.
   EXPECT_EQ(
@@ -2356,12 +2355,12 @@ TEST_F(RemoteSuggestionsProviderImplTest,
 
   WaitForSuggestionsProviderInitialization(provider.get());
   EXPECT_EQ(
-      SerializeTime(simple_test_clock_ptr->Now()),
+      SerializeTime(simple_test_clock.Now()),
       pref_service()->GetInt64(prefs::kLastSuccessfulBackgroundFetchTime));
 
   // Advance the time and check whether the time was updated correctly after the
   // background fetch.
-  simple_test_clock_ptr->Advance(base::TimeDelta::FromHours(1));
+  simple_test_clock.Advance(base::TimeDelta::FromHours(1));
 
   RemoteSuggestionsFetcher::SnippetsAvailableCallback snippets_callback;
   EXPECT_CALL(*mock_suggestions_fetcher(), FetchSnippets(_, _))
@@ -2373,7 +2372,7 @@ TEST_F(RemoteSuggestionsProviderImplTest,
   std::move(snippets_callback).Run(Status::Success(), base::nullopt);
   // TODO(jkrcal): Move together with the pref storage into the scheduler.
   EXPECT_EQ(
-      SerializeTime(simple_test_clock_ptr->Now()),
+      SerializeTime(simple_test_clock.Now()),
       pref_service()->GetInt64(prefs::kLastSuccessfulBackgroundFetchTime));
   // TODO(markusheintz): Add a test that simulates a browser restart once the
   // scheduler refactoring is done (crbug.com/672434).
@@ -3122,12 +3121,11 @@ TEST_F(RemoteSuggestionsProviderImplTest,
   StrictMock<MockPrefetchedPagesTracker>* mock_tracker =
       mock_prefetched_pages_tracker();
 
-  auto wrapped_provider_clock = base::MakeUnique<base::SimpleTestClock>();
-  base::SimpleTestClock* provider_clock = wrapped_provider_clock.get();
-  provider->SetClockForTesting(std::move(wrapped_provider_clock));
+  base::SimpleTestClock provider_clock;
+  provider->SetClockForTesting(&provider_clock);
 
-  provider_clock->SetNow(GetDefaultCreationTime() +
-                         base::TimeDelta::FromHours(10));
+  provider_clock.SetNow(GetDefaultCreationTime() +
+                        base::TimeDelta::FromHours(10));
 
   WaitForSuggestionsProviderInitialization(provider.get());
   std::vector<FetchedCategory> fetched_categories;
@@ -3139,7 +3137,7 @@ TEST_F(RemoteSuggestionsProviderImplTest,
                   .AddId("http://prefetched.com")
                   .SetUrl("http://prefetched.com")
                   .SetAmpUrl("http://amp.prefetched.com")
-                  .SetFetchDate(provider_clock->Now())
+                  .SetFetchDate(provider_clock.Now())
                   .SetPublishDate(GetDefaultCreationTime()))
           .Build());
   EXPECT_CALL(*mock_tracker, IsInitialized()).WillRepeatedly(Return(true));
@@ -3148,8 +3146,8 @@ TEST_F(RemoteSuggestionsProviderImplTest,
   ASSERT_THAT(observer().SuggestionsForCategory(articles_category()),
               SizeIs(1));
 
-  provider_clock->Advance(kMaxAgeForAdditionalPrefetchedSuggestion -
-                          base::TimeDelta::FromSeconds(1));
+  provider_clock.Advance(kMaxAgeForAdditionalPrefetchedSuggestion -
+                         base::TimeDelta::FromSeconds(1));
 
   fetched_categories.clear();
   fetched_categories.push_back(
@@ -3160,7 +3158,7 @@ TEST_F(RemoteSuggestionsProviderImplTest,
                   .AddId("http://other.com")
                   .SetUrl("http://other.com")
                   .SetAmpUrl("http://amp.other.com")
-                  .SetFetchDate(provider_clock->Now())
+                  .SetFetchDate(provider_clock.Now())
                   .SetPublishDate(GetDefaultCreationTime()))
           .Build());
   EXPECT_CALL(*mock_tracker, IsInitialized()).WillRepeatedly(Return(true));
@@ -3173,7 +3171,7 @@ TEST_F(RemoteSuggestionsProviderImplTest,
   ASSERT_THAT(observer().SuggestionsForCategory(articles_category()),
               SizeIs(2));
 
-  provider_clock->Advance(base::TimeDelta::FromSeconds(2));
+  provider_clock.Advance(base::TimeDelta::FromSeconds(2));
 
   fetched_categories.clear();
   fetched_categories.push_back(
@@ -3184,7 +3182,7 @@ TEST_F(RemoteSuggestionsProviderImplTest,
                   .AddId("http://other.com")
                   .SetUrl("http://other.com")
                   .SetAmpUrl("http://amp.other.com")
-                  .SetFetchDate(provider_clock->Now())
+                  .SetFetchDate(provider_clock.Now())
                   .SetPublishDate(GetDefaultCreationTime()))
           .Build());
   EXPECT_CALL(*mock_tracker, IsInitialized()).WillRepeatedly(Return(true));

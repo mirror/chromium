@@ -176,7 +176,7 @@ class RemoteSuggestionsSchedulerImplTest : public ::testing::Test {
                         default_variation_params_,
                         {kArticleSuggestionsFeature.name}),
         user_classifier_(/*pref_service=*/nullptr,
-                         base::MakeUnique<base::DefaultClock>()) {
+                         base::DefaultClock::GetInstance()) {
     RemoteSuggestionsSchedulerImpl::RegisterProfilePrefs(
         utils_.pref_service()->registry());
     RequestThrottler::RegisterProfilePrefs(utils_.pref_service()->registry());
