@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9a5d76da_fd246eeb",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-30T06:09:08Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "3a692a98_e3e850ee",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 18
+      },
+      "revId": "ff982689b7294158274e7cf6d3d51c8f8cf47727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cf62f54_ee527e20",
         "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "ff982689b7294158274e7cf6d3d51c8f8cf47727",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a427970f_9c477ebd",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-30T06:09:08Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "4cf62f54_ee527e20",
+      "range": {
+        "startLine": 56,
+        "startChar": 15,
+        "endLine": 56,
+        "endChar": 24
+      },
+      "revId": "ff982689b7294158274e7cf6d3d51c8f8cf47727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c8781820_c0250c86",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-30T06:09:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1073d8e7_d149e3a9",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 2
+      },
+      "revId": "ff982689b7294158274e7cf6d3d51c8f8cf47727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fca19358_26871a1a",
         "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
         "patchSetId": 7
@@ -85,6 +157,24 @@
       "revId": "ff982689b7294158274e7cf6d3d51c8f8cf47727",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ff014af_37768ff6",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-30T06:09:08Z",
+      "side": 1,
+      "message": "This has changed and is now using the IndependentOTRProfileManager.",
+      "parentUuid": "fca19358_26871a1a",
+      "revId": "ff982689b7294158274e7cf6d3d51c8f8cf47727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "77dcc867_7c631f40",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-30T06:09:08Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "ca8fcd46_a9f6646a",
+      "range": {
+        "startLine": 88,
+        "startChar": 15,
+        "endLine": 88,
+        "endChar": 16
+      },
+      "revId": "ff982689b7294158274e7cf6d3d51c8f8cf47727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b79189b_2ecfdb7d",
         "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
         "patchSetId": 7
@@ -131,6 +245,30 @@
       "revId": "ff982689b7294158274e7cf6d3d51c8f8cf47727",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a71005d_a6687809",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-30T06:09:08Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "1b79189b_2ecfdb7d",
+      "range": {
+        "startLine": 89,
+        "startChar": 16,
+        "endLine": 89,
+        "endChar": 30
+      },
+      "revId": "ff982689b7294158274e7cf6d3d51c8f8cf47727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "d5bfa7be_c32b0450",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-30T06:09:08Z",
+      "side": 1,
+      "message": "The shutdown logic has changed a little, so this does now call Terminate.",
+      "parentUuid": "2066eaa9_426dd31d",
+      "range": {
+        "startLine": 147,
+        "startChar": 2,
+        "endLine": 147,
+        "endChar": 37
+      },
+      "revId": "ff982689b7294158274e7cf6d3d51c8f8cf47727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19618679_35dc440f",
         "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
         "patchSetId": 7
@@ -194,6 +356,24 @@
       "revId": "ff982689b7294158274e7cf6d3d51c8f8cf47727",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18b137df_e480b7bd",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-30T06:09:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19618679_35dc440f",
+      "revId": "ff982689b7294158274e7cf6d3d51c8f8cf47727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -220,6 +400,30 @@
     },
     {
       "key": {
+        "uuid": "6853743f_80f10543",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-30T06:09:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "634b3955_7f16c2b4",
+      "range": {
+        "startLine": 207,
+        "startChar": 6,
+        "endLine": 207,
+        "endChar": 72
+      },
+      "revId": "ff982689b7294158274e7cf6d3d51c8f8cf47727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adcf601d_03631e3e",
         "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
         "patchSetId": 7
@@ -243,6 +447,30 @@
     },
     {
       "key": {
+        "uuid": "2938d963_5f90d3ca",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-30T06:09:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adcf601d_03631e3e",
+      "range": {
+        "startLine": 208,
+        "startChar": 7,
+        "endLine": 212,
+        "endChar": 40
+      },
+      "revId": "ff982689b7294158274e7cf6d3d51c8f8cf47727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ecb97d2_b3d79639",
         "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
         "patchSetId": 7
@@ -263,6 +491,30 @@
       "revId": "ff982689b7294158274e7cf6d3d51c8f8cf47727",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3982a73_a3b21418",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-30T06:09:08Z",
+      "side": 1,
+      "message": "This is now in IndependentOTRProfileManager and calls a callback into this class, which calls Terminate.",
+      "parentUuid": "6ecb97d2_b3d79639",
+      "range": {
+        "startLine": 208,
+        "startChar": 4,
+        "endLine": 214,
+        "endChar": 20
+      },
+      "revId": "ff982689b7294158274e7cf6d3d51c8f8cf47727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -336,6 +588,30 @@
     },
     {
       "key": {
+        "uuid": "9a3daad2_9373551b",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-30T06:09:08Z",
+      "side": 1,
+      "message": "Done.  I used chrome/browser/ui/views/media_router which already existed actually.",
+      "parentUuid": "a826a079_14121ed8",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 33
+      },
+      "revId": "ff982689b7294158274e7cf6d3d51c8f8cf47727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f089f95_4cf7fb40",
         "filename": "chrome/browser/media/router/presentation_receiver_window.h",
         "patchSetId": 7
@@ -356,6 +632,30 @@
       "revId": "ff982689b7294158274e7cf6d3d51c8f8cf47727",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c8e3ab0_ac201b88",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-30T06:09:08Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "0f089f95_4cf7fb40",
+      "range": {
+        "startLine": 103,
+        "startChar": 18,
+        "endLine": 103,
+        "endChar": 36
+      },
+      "revId": "ff982689b7294158274e7cf6d3d51c8f8cf47727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
