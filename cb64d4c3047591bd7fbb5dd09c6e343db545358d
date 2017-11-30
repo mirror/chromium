@@ -16,6 +16,24 @@
       "revId": "cb64d4c3047591bd7fbb5dd09c6e343db545358d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00624b49_101bc7db",
+        "filename": "android_webview/browser/aw_contents.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1339,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-30T19:46:31Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t think we want to bubble up a OnReceivedError for shouldOverrideUrlLoading, which is implemented with a NavigationThrottle. I assume this isn\u0027t the case already (InterceptNavigationThrottle returns CANCEL_AND_IGNORE), but probably should have a test for this case? And update this comment as well.\n\nWe already have a test for this: AwContentsClientShouldOverrideUrlLoadingTest#testDoesNotCauseOnReceivedError\n\nand it\u0027s passing with this. We didn\u0027t end up digging into why it\u0027s passing (CANCEL_AND_IGNORE appears to not cause DidFinishNavigation at all?), but it\u0027s probably fine",
+      "parentUuid": "f2ef284b_093faa3f",
+      "revId": "cb64d4c3047591bd7fbb5dd09c6e343db545358d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
