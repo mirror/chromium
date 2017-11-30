@@ -22,6 +22,30 @@
       "revId": "e0da9328fa25e85213484fed44172f44070efd24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0edd5f5d_261b9349",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-11-30T19:06:53Z",
+      "side": 1,
+      "message": "\u003e This data can currently be changed during a request, which happens on another thread.  This data is a clone of that data, so I\u0027m pretty sure that, as-is, this actually breaks offline pages (Which maybe has no integration tests?).\n\ni see. Currently offline page doesn\u0027t work with network service, and the navigation_ui_data is not even passed anywhere after reaching here.",
+      "parentUuid": "15a0f636_9429bd27",
+      "range": {
+        "startLine": 550,
+        "startChar": 6,
+        "endLine": 550,
+        "endChar": 25
+      },
+      "revId": "e0da9328fa25e85213484fed44172f44070efd24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
