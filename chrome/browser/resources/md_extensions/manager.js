@@ -98,6 +98,12 @@ cr.define('extensions', function() {
       showLoadErrorDialog_: Boolean,
 
       /** @private */
+      showInstallWarningsDialog_: Boolean,
+
+      /** @private {!Array<string>} */
+      installWarnings_: Array,
+
+      /** @private */
       showOptionsDialog_: Boolean,
 
       /** @private */
@@ -498,6 +504,16 @@ cr.define('extensions', function() {
       // because the corresponding extension/app was deleted.
       if (button)
         button.focus();
+    },
+
+    onShowInstallWarnings_: function(e) {
+      this.installWarnings_ = e.detail;
+      this.showInstallWarningsDialog_ = true;
+    },
+
+    onInstallWarningsDialogClose_: function() {
+      this.installWarnings_ = null;
+      this.showInstallWarningsDialog_ = false;
     },
 
     // <if expr="chromeos">
