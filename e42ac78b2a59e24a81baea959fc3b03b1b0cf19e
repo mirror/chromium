@@ -22,6 +22,30 @@
       "revId": "e42ac78b2a59e24a81baea959fc3b03b1b0cf19e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cb41c77_256eef53",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/externalnav/ExternalNavigationDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-30T18:51:39Z",
+      "side": 1,
+      "message": "Just for VrExternalNavigationDelegate at the moment.",
+      "parentUuid": "943ad738_eed462b1",
+      "range": {
+        "startLine": 87,
+        "startChar": 9,
+        "endLine": 87,
+        "endChar": 29
+      },
+      "revId": "e42ac78b2a59e24a81baea959fc3b03b1b0cf19e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
