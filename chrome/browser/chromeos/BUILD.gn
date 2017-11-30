@@ -120,6 +120,7 @@ source_set("chromeos") {
     "//components/toolbar",
     "//components/tracing:startup_tracing",
     "//components/user_manager",
+    "//services/metrics/public/cpp:ukm_builders",
     "//third_party/fontconfig",
     "//third_party/metrics_proto",
 
@@ -1368,6 +1369,8 @@ source_set("chromeos") {
     "power/ml/user_activity_logger_delegate.h",
     "power/ml/user_activity_logger_delegate_ukm.cc",
     "power/ml/user_activity_logger_delegate_ukm.h",
+    "power/ml/user_activity_logging_controller.cc",
+    "power/ml/user_activity_logging_controller.h",
     "power/power_data_collector.cc",
     "power/power_data_collector.h",
     "power/power_metrics_reporter.cc",
