@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a031e8e4_bf756000",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-30T09:51:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0048ddbc_4d283f3e",
+      "range": {
+        "startLine": 275,
+        "startChar": 15,
+        "endLine": 275,
+        "endChar": 38
+      },
+      "revId": "6eb54590ae87dcac25f918e62c4be1b50c84de10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3cb1ab1_966399d7",
         "filename": "chrome/browser/banners/app_banner_manager.h",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "08e8da98_33299247",
+        "filename": "chrome/browser/banners/app_banner_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-30T09:51:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3cb1ab1_966399d7",
+      "range": {
+        "startLine": 334,
+        "startChar": 1,
+        "endLine": 334,
+        "endChar": 8
+      },
+      "revId": "6eb54590ae87dcac25f918e62c4be1b50c84de10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8e929e1_64e333a5",
         "filename": "chrome/browser/ui/toolbar/app_menu_model.cc",
         "patchSetId": 3
@@ -59,6 +107,24 @@
       "writtenOn": "2017-11-30T07:52:34Z",
       "side": 1,
       "message": "is this used?",
+      "revId": "6eb54590ae87dcac25f918e62c4be1b50c84de10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae10ee26_023a285a",
+        "filename": "chrome/browser/ui/toolbar/app_menu_model.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-30T09:51:57Z",
+      "side": 1,
+      "message": "It was; it is no longer. Removed.",
+      "parentUuid": "a8e929e1_64e333a5",
       "revId": "6eb54590ae87dcac25f918e62c4be1b50c84de10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
