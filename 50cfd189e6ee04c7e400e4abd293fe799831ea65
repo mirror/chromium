@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e4bf9db7_bee5f2a0",
+        "filename": "components/omnibox/browser/autocomplete_match.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-11-30T19:31:37Z",
+      "side": 1,
+      "message": "I\u0027m open to your argument that having a new parameter still makes sense. But the other part of my point is that this logic isn\u0027t correct. It should be:\n\nif (has_scheme || preserve_scheme) {\n  format_types \u0026\u003d ~url_formatter::kFormatUrlOmitHTTP;\n} else if (base::FeatureList::IsEnabled([...]) {\n  format_types |\u003d url_formatter::kFormatUrlOmitHTTPS;\n}\n\nSo that has_scheme removes HTTP from the list of things to elide, instead of just not adding HTTPS to the list.",
+      "parentUuid": "22f3e3b0_9d01842b",
+      "revId": "50cfd189e6ee04c7e400e4abd293fe799831ea65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "86bb08e5_0b0112f4",
         "filename": "components/omnibox/browser/history_quick_provider.cc",
         "patchSetId": 4
