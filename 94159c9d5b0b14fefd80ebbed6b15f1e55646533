@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80f79f98_d7121d6f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/devices/DevicesView.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-11-30T20:21:59Z",
+      "side": 1,
+      "message": "var div \u003d /** @type {!GozmanElement} */(UI.cachedHtml`...`);\nvar div \u003d document.createElement(\u0027div\u0027);\n\ndiv.el(\u0027asdf\u0027); // works! Because Gozman!\ndiv.toggle(\u0027selected\u0027); // works! Because gozman",
+      "revId": "94159c9d5b0b14fefd80ebbed6b15f1e55646533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d35ac68_f8cfb965",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/UIUtils.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 1496,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-11-30T20:21:59Z",
+      "side": 1,
+      "message": "can we have x-shadow as well?",
+      "range": {
+        "startLine": 1496,
+        "startChar": 9,
+        "endLine": 1496,
+        "endChar": 20
+      },
+      "revId": "94159c9d5b0b14fefd80ebbed6b15f1e55646533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99975e7e_97774567",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/UIUtils.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 1614,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-11-30T20:21:59Z",
+      "side": 1,
+      "message": "this.isConnected",
+      "range": {
+        "startLine": 1614,
+        "startChar": 9,
+        "endLine": 1614,
+        "endChar": 17
+      },
+      "revId": "94159c9d5b0b14fefd80ebbed6b15f1e55646533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14249c12_fbdd3da0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/UIUtils.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 1646,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-11-30T20:21:59Z",
+      "side": 1,
+      "message": "object?",
+      "range": {
+        "startLine": 1646,
+        "startChar": 74,
+        "endLine": 1646,
+        "endChar": 81
+      },
+      "revId": "94159c9d5b0b14fefd80ebbed6b15f1e55646533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
