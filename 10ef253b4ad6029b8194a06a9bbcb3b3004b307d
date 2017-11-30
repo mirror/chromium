@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af4ecc43_5e5b931c",
+        "filename": "chrome/browser/chromeos/file_system_provider/provider_interface.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-30T09:09:37Z",
+      "side": 1,
+      "message": "Please either remove or assign default values.",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 19
+      },
+      "revId": "10ef253b4ad6029b8194a06a9bbcb3b3004b307d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
