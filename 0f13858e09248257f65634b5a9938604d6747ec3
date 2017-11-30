@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "36f48651_83eb0664",
+        "filename": "components/omnibox/browser/fake_autocomplete_provider_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-30T23:09:43Z",
+      "side": 1,
+      "message": "In PDFium, we found many cases where only the default value was used, and all the callers that explicitly set a non-default value never existed / went away. Meanwhile, the function/ctor implementations have lots of dead code to handle the non-default case. With lots of callers, it can be hard to audit them all. That experience is why I don\u0027t like default arguments.\n\nAn alternative is to have a private ctor that takes a bool with no defaults. Leave the no-param ctor and have it delegate to the private ctor. Then add a static CreateClientWithoutHistoryDB() method to call the private ctor.",
+      "parentUuid": "4970cbf0_e101b240",
+      "range": {
+        "startLine": 31,
+        "startChar": 64,
+        "endLine": 31,
+        "endChar": 71
+      },
+      "revId": "0f13858e09248257f65634b5a9938604d6747ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efeb04b0_b0e42c2c",
         "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
         "patchSetId": 7

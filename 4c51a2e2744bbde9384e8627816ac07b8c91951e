@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a57de599_981e70f6",
+        "filename": "components/omnibox/browser/fake_autocomplete_provider_client.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-30T23:09:43Z",
+      "side": 1,
+      "message": "std::make_unique, and no more need for ptr_util.h if you get rid of all the base::MakeUnique calls.",
+      "range": {
+        "startLine": 22,
+        "startChar": 27,
+        "endLine": 22,
+        "endChar": 43
+      },
+      "revId": "4c51a2e2744bbde9384e8627816ac07b8c91951e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e91c0bd3_1437c5e3",
         "filename": "components/omnibox/browser/fake_autocomplete_provider_client.cc",
         "patchSetId": 11
