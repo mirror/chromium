@@ -3360,6 +3360,16 @@
     ]
   },
 
+  "AbusiveExperienceEnforce": {
+    "os": ["win", "linux", "mac", "chromeos"],
+    "test_policy": {
+      "AbusiveExperienceEnforce": false
+    },
+    "pref_mappings": [
+      { "pref": "abusive_experience_enforce"}
+    ]
+  },
+
   "----- Chrome Frame policies -------------------------------------------": {},
 
   "ChromeFrameRendererSettings": {
