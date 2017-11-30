@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "fef6c063_b3ccd799",
+        "filename": "chrome/browser/vr/service/vr_device_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-30T01:12:35Z",
+      "side": 1,
+      "message": "Can you throw in a TODO under RemoveDevice to connect the fallback device if it\u0027s the only remaining device? (Alternatively, implement that now, even though it won\u0027t actually be hit)",
+      "range": {
+        "startLine": 84,
+        "startChar": 9,
+        "endLine": 84,
+        "endChar": 45
+      },
+      "revId": "91e657ea218d1e3656f3141567bad9543cec8844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b3ba83d_e55e8831",
         "filename": "device/vr/orientation/orientation_device.cc",
         "patchSetId": 10
@@ -48,6 +71,29 @@
     },
     {
       "key": {
+        "uuid": "fdd3ef03_f063cdb4",
+        "filename": "device/vr/orientation/orientation_device.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-30T01:12:35Z",
+      "side": 1,
+      "message": "nit: newline above",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 9
+      },
+      "revId": "91e657ea218d1e3656f3141567bad9543cec8844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a5a15b56_25c22944",
         "filename": "device/vr/orientation/orientation_device_provider.cc",
         "patchSetId": 10
@@ -71,6 +117,29 @@
     },
     {
       "key": {
+        "uuid": "7c97de0a_e28b4d2c",
+        "filename": "device/vr/orientation/orientation_device_provider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-30T01:12:35Z",
+      "side": 1,
+      "message": "Why have a separate call to set the ready callback? Can you move it to the constructor?",
+      "range": {
+        "startLine": 40,
+        "startChar": 13,
+        "endLine": 40,
+        "endChar": 29
+      },
+      "revId": "91e657ea218d1e3656f3141567bad9543cec8844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58167ef6_53e21eae",
         "filename": "device/vr/orientation/orientation_device_provider.h",
         "patchSetId": 10
@@ -87,6 +156,29 @@
         "startChar": 4,
         "endLine": 46,
         "endChar": 0
+      },
+      "revId": "91e657ea218d1e3656f3141567bad9543cec8844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "050f9e9f_265d2431",
+        "filename": "device/vr/vr_device.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-30T01:12:35Z",
+      "side": 1,
+      "message": "You should probably clarify in this comment how it behaves differently :P",
+      "range": {
+        "startLine": 32,
+        "startChar": 6,
+        "endLine": 32,
+        "endChar": 72
       },
       "revId": "91e657ea218d1e3656f3141567bad9543cec8844",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",

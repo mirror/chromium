@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "e8272315_eb4fde6d",
+        "filename": "chrome/browser/vr/service/vr_device_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-30T01:12:35Z",
+      "side": 1,
+      "message": "I think the most important thing here is to be consistent with the surrounding code, but I think most people prefer without the braces.",
+      "parentUuid": "c6c16e24_e7984bc9",
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23f65226_02a8187f",
         "filename": "device/vr/orientation/orientation_device.cc",
         "patchSetId": 8
@@ -131,6 +149,30 @@
       "side": 1,
       "message": "Should that be done as part of this CL, as a pre CL, or as a followup CL?",
       "parentUuid": "7bf29fd0_95ba073d",
+      "range": {
+        "startLine": 58,
+        "startChar": 26,
+        "endLine": 58,
+        "endChar": 46
+      },
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcd12c2e_a48a9fd2",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-30T01:12:35Z",
+      "side": 1,
+      "message": "Either part of this CL, or before this CL. Mild preference for before this CL.",
+      "parentUuid": "d0b72ead_de56f85e",
       "range": {
         "startLine": 58,
         "startChar": 26,
@@ -312,6 +354,24 @@
       "side": 1,
       "message": "It\u0027s in vr/orientation, does that do that trick?",
       "parentUuid": "eba47e9a_3b4aa1e4",
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9feb2f5d_958608ed",
+        "filename": "device/vr/orientation/orientation_device.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-30T01:12:35Z",
+      "side": 1,
+      "message": "OrientationVRDevice?",
+      "parentUuid": "272a3f65_b3e0308a",
       "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
