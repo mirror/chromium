@@ -7,6 +7,8 @@
 
 #include <stdint.h>
 
+#include <memory>
+
 #include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/message_loop/message_loop.h"
@@ -24,6 +26,10 @@
 #include "chromeos/disks/disk_mount_manager.h"
 #include "chromeos/disks/mock_disk_mount_manager.h"
 #endif
+
+namespace service_manager {
+class Connector;
+}
 
 namespace extensions {
 namespace image_writer {
@@ -87,7 +93,8 @@ struct SimulateProgressInfo {
 
 class FakeImageWriterClient : public ImageWriterUtilityClient {
  public:
-  FakeImageWriterClient();
+  explicit FakeImageWriterClient(
+      std::unique_ptr<service_manager::Connector> connector);
 
   void Write(const ProgressCallback& progress_callback,
              const SuccessCallback& success_callback,
