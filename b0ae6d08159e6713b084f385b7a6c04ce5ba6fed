@@ -379,6 +379,30 @@
     },
     {
       "key": {
+        "uuid": "72223df9_ffccd31b",
+        "filename": "components/storage_monitor/storage_monitor_chromeos.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-11-30T21:27:17Z",
+      "side": 1,
+      "message": "Addressed in the child second cl.",
+      "parentUuid": "9e026488_9f7fd69c",
+      "range": {
+        "startLine": 132,
+        "startChar": 57,
+        "endLine": 132,
+        "endChar": 69
+      },
+      "revId": "b0ae6d08159e6713b084f385b7a6c04ce5ba6fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf71b9cd_7dd61d30",
         "filename": "components/storage_monitor/storage_monitor_chromeos.cc",
         "patchSetId": 21
@@ -496,6 +520,30 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "cefd2abb_396f1e30",
+      "range": {
+        "startLine": 178,
+        "startChar": 38,
+        "endLine": 178,
+        "endChar": 50
+      },
+      "revId": "b0ae6d08159e6713b084f385b7a6c04ce5ba6fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e4369d1_b110d35f",
+        "filename": "components/storage_monitor/storage_monitor_chromeos.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-11-30T21:27:17Z",
+      "side": 1,
+      "message": "No need to handling this event. Changed in the child cl.",
+      "parentUuid": "f433e588_29f84d33",
       "range": {
         "startLine": 178,
         "startChar": 38,
