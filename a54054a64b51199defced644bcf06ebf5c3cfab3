@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "66d05818_529eda70",
+        "filename": "chrome/browser/resources/md_extensions/item.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-30T18:28:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef34a1c1_8227a7c4",
+      "revId": "a54054a64b51199defced644bcf06ebf5c3cfab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c407863_3ba825cb",
         "filename": "chrome/browser/resources/md_extensions/manager.js",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-30T17:03:19Z",
       "side": 1,
       "message": "I find this a bit weird, since installWarnings is very specific to a certain extensions.  What about instead just assigning the property on the dialog itself?\n\nonShowInstallWarnings_: function(e) {\n  // Note: assumes adding an id to the dialog.\n  this.$.installWarningsDialog.installWarnings \u003d\n      /** @type{!Array\u003cstring\u003e} */ (e.detail);\n  this.showInstallWarningsDialog_ \u003d true;\n},",
+      "revId": "a54054a64b51199defced644bcf06ebf5c3cfab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69d56b45_64210d02",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-30T18:28:04Z",
+      "side": 1,
+      "message": "this.$.installWarningsDialog does not exist yet here. Only after turning the boolean to true and waiting for one turn of the message loop it gets stamped into the DOM. So basically the alternative would be\n\nthis.showInstallWarningsDialog_ \u003d true;\nthis.async(() \u003d\u003e {\n  this.$$(\u0027#installWarningsDialog\u0027).installWarnings \u003d e.detail;\n});\nwhich in general is not considered that great (similar to calling setTimeout(function() {...},0)).\n\n\u003e What about instead just assigning the property on the dialog itself?\n\nThe current approach assigns it to the dialog itself, but utilizes a data-binding, see the equivalent HTML code,\n\u003cextensions-install-warnings-dialog install-warnings\u003d\"[[installWarnings_]]\"\u003e...\u003c/...\u003e\n\nwhich necessitates the  \"this.installWarnings_ \u003d e.detail;\" line. This is a more Polymer-y approach, which per my experience so far, is preferable.",
+      "parentUuid": "0c407863_3ba825cb",
       "revId": "a54054a64b51199defced644bcf06ebf5c3cfab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
