@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95e845fd_f58157c6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/inheritance/inherited-csp-list-modifications-are-local.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-30T15:42:35Z",
+      "side": 1,
+      "message": "Nit: You don\u0027t need the `+` here. Just for the closing tag.",
+      "revId": "70530e691a53dd59a61a691686e7ed697834d97c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dafb46c7_b92a6c53",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/inheritance/inherited-csp-list-modifications-are-local.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-11-30T15:42:35Z",
+      "side": 1,
+      "message": "I think this ends up racing the frame\u0027s modification of its own policy. Would you mind shifting this block to be triggered by the `imgload` message so that you\u0027re sure it\u0027s happening after the frame has parsed?",
+      "revId": "70530e691a53dd59a61a691686e7ed697834d97c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
