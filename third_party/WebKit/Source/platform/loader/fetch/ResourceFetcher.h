@@ -152,6 +152,7 @@ class PLATFORM_EXPORT ResourceFetcher
 
   void RemovePreload(Resource*);
 
+  void LoosenInitialThrottling() { scheduler_->LoosenInitialThrottling(); }
   void OnNetworkQuiet() { scheduler_->OnNetworkQuiet(); }
 
   // Workaround for https://crbug.com/666214.
