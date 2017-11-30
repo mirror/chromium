@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "3737ceeb_21e1fdfd",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-30T08:45:51Z",
+      "side": 1,
+      "message": "changed to record it per request completion basis.\n\n\u003e Kunihiko\nHum... actually hard to say. We may also be interested in such long polling requests that keep on going even after the network quit in background?",
+      "parentUuid": "6d857664_dad16590",
+      "range": {
+        "startLine": 230,
+        "startChar": 2,
+        "endLine": 230,
+        "endChar": 30
+      },
+      "revId": "fd28d13b8c0f8190a4ec275ca2249546ea64b48e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2733328b_b9eeede1",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
         "patchSetId": 6
@@ -116,6 +140,30 @@
       "revId": "fd28d13b8c0f8190a4ec275ca2249546ea64b48e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99920d71_5f62e4fb",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-30T08:45:51Z",
+      "side": 1,
+      "message": "encoded_*data*_length would be more preferable option to measure bytes sent over network. let me have both.",
+      "parentUuid": "2733328b_b9eeede1",
+      "range": {
+        "startLine": 82,
+        "startChar": 48,
+        "endLine": 82,
+        "endChar": 67
+      },
+      "revId": "fd28d13b8c0f8190a4ec275ca2249546ea64b48e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

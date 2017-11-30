@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "35a3c9b6_e823e434",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-30T08:45:51Z",
+      "side": 1,
+      "message": "that restriction came from the call site reason?\nanyway, now Flush was changed to OnThrottlingStateChanged, and we are not sensitive about this order any more.",
+      "parentUuid": "c6d1bbb5_d5c446ce",
+      "revId": "9c7e648c21fb38bde6da8da618ea401449913a67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61b54d3b_ea93b22a",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "9c7e648c21fb38bde6da8da618ea401449913a67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0450563c_185e9c7f",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-30T08:45:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61b54d3b_ea93b22a",
+      "revId": "9c7e648c21fb38bde6da8da618ea401449913a67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "16ce7ab5_4cac3e27",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-30T08:45:51Z",
+      "side": 1,
+      "message": "ugh... bad mistake. goto fail :/",
+      "parentUuid": "89be2fd8_5678dc11",
+      "revId": "9c7e648c21fb38bde6da8da618ea401449913a67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc829854_dc0dc162",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
         "patchSetId": 5
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "5e5ad5f7_582f84f7",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-30T08:45:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc829854_dc0dc162",
+      "revId": "9c7e648c21fb38bde6da8da618ea401449913a67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ee8379d_8067df34",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
         "patchSetId": 5
@@ -84,6 +156,24 @@
       "revId": "9c7e648c21fb38bde6da8da618ea401449913a67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c9df2f8_9df206fb",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-30T08:45:51Z",
+      "side": 1,
+      "message": "How about new approach that uses a struct?",
+      "parentUuid": "5ee8379d_8067df34",
+      "revId": "9c7e648c21fb38bde6da8da618ea401449913a67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -119,6 +209,24 @@
       "revId": "9c7e648c21fb38bde6da8da618ea401449913a67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c22c88f3_5d6217d5",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-30T08:45:51Z",
+      "side": 1,
+      "message": "OK, I will report both here. So, let me introduce new struct so that we can have multiple arguments and valid/invalid information in a readable way.\n\n\u003e Ilya\n-1 was the value that indicates we should not report this report. So, -1 won\u0027t be used in metrics data.",
+      "parentUuid": "019b9451_f31915a6",
+      "revId": "9c7e648c21fb38bde6da8da618ea401449913a67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
