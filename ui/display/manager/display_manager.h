@@ -321,6 +321,13 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
     return software_mirroring_display_list_;
   }
 
+  // Used in test to prevent previous mirror mode affecting current mode.
+  void set_previous_mirror_mode_on_for_test(bool previous_mirror_mode_on) {
+    previous_mirror_mode_on_ = previous_mirror_mode_on;
+  }
+
+  bool previous_mirror_mode_on() const { return previous_mirror_mode_on_; }
+
   // Remove mirroring source and destination displays, so that they will be
   // updated when UpdateDisplaysWith() is called.
   void ClearMirroringSourceAndDestination();
@@ -573,6 +580,12 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   // |mirroring_source_id_| and treat the rest of mirroring displays as
   // destination and store their ids in this list.
   DisplayIdList hardware_mirroring_display_id_list_;
+
+  // True if the mirror mode was on in previous configuration. This is used to
+  // determine the display mode for current configuration. The expression for
+  // current mirror mode is:
+  // current_mirror_mode := previous_mirror_mode && num_displays > 1
+  bool previous_mirror_mode_on_ = false;
 
   // Cached mirror mode for metrics changed notification.
   bool mirror_mode_for_metrics_ = false;
