@@ -34,6 +34,24 @@
       "revId": "4c41f8611da5b49a1ff9f540b827469cd11b8473",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddd6c3da_5ed90ee2",
+        "filename": "chrome/browser/resources/cryptotoken/signer.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1005666
+      },
+      "writtenOn": "2017-11-30T06:21:42Z",
+      "side": 1,
+      "message": "I think it might be a typo, but by email Batz commented that this line belongs inside the if below. But let\u0027s actually fix that in piper.",
+      "parentUuid": "3affd311_77cbbdcd",
+      "revId": "4c41f8611da5b49a1ff9f540b827469cd11b8473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
