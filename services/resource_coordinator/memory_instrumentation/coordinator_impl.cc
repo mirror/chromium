@@ -56,7 +56,8 @@ CoordinatorImpl::CoordinatorImpl(service_manager::Connector* connector)
       mojom::kServiceTracingProcessId);
 
   tracing_observer_ = std::make_unique<TracingObserver>(
-      base::trace_event::TraceLog::GetInstance(), nullptr);
+      base::trace_event::TraceLog::GetInstance(),
+      base::trace_event::MemoryDumpManager::GetInstance());
 }
 
 CoordinatorImpl::~CoordinatorImpl() {

@@ -14,7 +14,6 @@
 #include "services/resource_coordinator/public/cpp/memory_instrumentation/coordinator.h"
 #include "services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation.h"
 #include "services/resource_coordinator/public/cpp/memory_instrumentation/os_metrics.h"
-#include "services/resource_coordinator/public/cpp/memory_instrumentation/tracing_observer.h"
 #include "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom.h"
 #include "services/service_manager/public/cpp/bind_source_info.h"
 #include "services/service_manager/public/cpp/connector.h"
@@ -63,10 +62,6 @@ ClientProcessImpl::ClientProcessImpl(const Config& config)
           &ClientProcessImpl::RequestGlobalMemoryDump_NoCallback,
           base::Unretained(this)),
       is_coordinator_process);
-
-  tracing_observer_ = std::make_unique<TracingObserver>(
-      base::trace_event::TraceLog::GetInstance(),
-      base::trace_event::MemoryDumpManager::GetInstance());
 }
 
 ClientProcessImpl::~ClientProcessImpl() {}

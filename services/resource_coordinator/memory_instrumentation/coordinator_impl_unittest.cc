@@ -106,6 +106,9 @@ class CoordinatorImplTest : public testing::Test {
  public:
   CoordinatorImplTest() {}
   void SetUp() override {
+    mdm_ = MemoryDumpManager::CreateInstanceForTesting();
+    mdm_->Initialize(base::Bind([](const GlobalMemoryDumpRequestArgs& args) {}),
+                     true);
     coordinator_.reset(new NiceMock<FakeCoordinatorImpl>);
   }
 
@@ -143,6 +146,7 @@ class CoordinatorImplTest : public testing::Test {
   }
 
  private:
+  std::unique_ptr<MemoryDumpManager> mdm_;
   std::unique_ptr<NiceMock<FakeCoordinatorImpl>> coordinator_;
   base::MessageLoop message_loop_;
 };
