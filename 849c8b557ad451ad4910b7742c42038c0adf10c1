@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5bbe57d5_743f8c30",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-11-30T13:46:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "306a7a06_41da4977",
+      "range": {
+        "startLine": 205,
+        "startChar": 0,
+        "endLine": 205,
+        "endChar": 34
+      },
+      "revId": "849c8b557ad451ad4910b7742c42038c0adf10c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edd3effb_cdf19c59",
         "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "849c8b557ad451ad4910b7742c42038c0adf10c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d806708_0288056c",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-11-30T13:46:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edd3effb_cdf19c59",
+      "range": {
+        "startLine": 252,
+        "startChar": 6,
+        "endLine": 252,
+        "endChar": 42
+      },
+      "revId": "849c8b557ad451ad4910b7742c42038c0adf10c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "622e30e9_24617b35",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-11-30T13:46:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a882f11_a4f57a07",
+      "range": {
+        "startLine": 268,
+        "startChar": 10,
+        "endLine": 268,
+        "endChar": 57
+      },
+      "revId": "849c8b557ad451ad4910b7742c42038c0adf10c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "396d6694_871356bb",
         "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
         "patchSetId": 9
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "56b92f82_8d4326a9",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-11-30T13:46:55Z",
+      "side": 1,
+      "message": "added StringView(line, kRegionIdentifierLength).IsAllSpecialCharacters\u003cIsASpace\u003e() to check for extra charecters",
+      "parentUuid": "396d6694_871356bb",
+      "range": {
+        "startLine": 277,
+        "startChar": 12,
+        "endLine": 278,
+        "endChar": 52
+      },
+      "revId": "849c8b557ad451ad4910b7742c42038c0adf10c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f231bf43_312aaaa0",
         "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
         "patchSetId": 9
@@ -105,6 +201,30 @@
       "writtenOn": "2017-11-29T16:27:25Z",
       "side": 1,
       "message": "I think we should consider not implementing the spec \"to the letter\" here. I.e I think it would work to just track the previous line and have new states for \"possibly region\" (when a \"REGION\" line is seen), and then from that state either recover a cue (if a \"--\u003e\" line is seen) or create region and move to a new state as appropriate. I guess this essentially boils down to encoding |line_count_| as |state_| values.",
+      "range": {
+        "startLine": 288,
+        "startChar": 2,
+        "endLine": 291,
+        "endChar": 23
+      },
+      "revId": "849c8b557ad451ad4910b7742c42038c0adf10c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11e3071b_a4198ff2",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-11-30T13:46:55Z",
+      "side": 1,
+      "message": "made the required changes. Only storing the previous line of cue data and processing.\nif possibly_region is true region settings list will be handled else cue will be handled. removed line_count",
+      "parentUuid": "f231bf43_312aaaa0",
       "range": {
         "startLine": 288,
         "startChar": 2,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "48ec0dcb_63c2458e",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-11-30T13:46:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5252b001_e55fd42b",
+      "range": {
+        "startLine": 297,
+        "startChar": 2,
+        "endLine": 298,
+        "endChar": 31
+      },
+      "revId": "849c8b557ad451ad4910b7742c42038c0adf10c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98b0167c_6e6f8309",
         "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.h",
         "patchSetId": 9
@@ -160,6 +304,30 @@
       "revId": "849c8b557ad451ad4910b7742c42038c0adf10c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52157681_6a28f778",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-11-30T13:46:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98b0167c_6e6f8309",
+      "range": {
+        "startLine": 137,
+        "startChar": 26,
+        "endLine": 137,
+        "endChar": 33
+      },
+      "revId": "849c8b557ad451ad4910b7742c42038c0adf10c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "b2b74e91_e4c61090",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-11-30T13:46:55Z",
+      "side": 1,
+      "message": "renamed as possibly_region_",
+      "parentUuid": "3ca5d1c5_ef1187d5",
+      "range": {
+        "startLine": 151,
+        "startChar": 7,
+        "endLine": 151,
+        "endChar": 17
+      },
+      "revId": "849c8b557ad451ad4910b7742c42038c0adf10c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92427bae_cc298a15",
         "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTRegion.cpp",
         "patchSetId": 9
@@ -197,6 +389,30 @@
       "writtenOn": "2017-11-29T16:27:25Z",
       "side": 1,
       "message": "Looks like the spec references this [1] set of whitespace - which matches IsASpace (although in practice you can\u0027t see CR.)\n\n[1] https://infra.spec.whatwg.org/#ascii-whitespace\n\n(In case you wonder, IsValidSettingDelimiter is also wrong.)",
+      "range": {
+        "startLine": 167,
+        "startChar": 20,
+        "endLine": 167,
+        "endChar": 59
+      },
+      "revId": "849c8b557ad451ad4910b7742c42038c0adf10c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c081eb76_db0168a6",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTRegion.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-11-30T13:46:55Z",
+      "side": 1,
+      "message": "used IsASpace instead.\nremoved IsValidSettingRegionDelimter API.",
+      "parentUuid": "92427bae_cc298a15",
       "range": {
         "startLine": 167,
         "startChar": 20,
