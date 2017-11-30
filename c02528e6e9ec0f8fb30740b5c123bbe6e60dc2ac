@@ -16,6 +16,24 @@
       "revId": "c02528e6e9ec0f8fb30740b5c123bbe6e60dc2ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e98fdee_0133f449",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-11-30T22:07:41Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "58b32ae9_5e1ac5ce",
+      "revId": "c02528e6e9ec0f8fb30740b5c123bbe6e60dc2ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
