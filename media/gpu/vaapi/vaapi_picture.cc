@@ -8,6 +8,10 @@
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_implementation.h"
 
+#if defined(USE_X11)
+#include "media/gpu/vaapi/vaapi_tfp_picture.h"
+#endif
+
 namespace media {
 
 VaapiPicture::VaapiPicture(
