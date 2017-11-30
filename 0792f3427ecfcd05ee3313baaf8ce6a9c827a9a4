@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e21e3149_53615a2d",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-30T07:43:49Z",
+      "side": 1,
+      "message": "Would this change how background throttling work if we start to enable the flag?",
+      "revId": "0792f3427ecfcd05ee3313baaf8ce6a9c827a9a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6e8e562_5951d03f",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-30T07:43:49Z",
+      "side": 1,
+      "message": "nit: This directly returns ThrottleOption doesn\u0027t feel that weird? (Maybe we need to update the enum comment)\n\nPlease document that this always returns true if the flag is not enabled (e.g. all requests are throttlable).",
+      "revId": "0792f3427ecfcd05ee3313baaf8ce6a9c827a9a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
