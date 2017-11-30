@@ -68,6 +68,8 @@ class PlatformKeysTest : public ExtensionApiTest {
     command_line->AppendSwitchASCII(
         chromeos::switches::kLoginUser,
         user_manager::StubAccountId().GetUserEmail());
+    command_line->AppendSwitchASCII(
+        chromeos::switches::kWaitForInitialPolicyFetchForTest, "true");
   }
 
   void SetUpInProcessBrowserTestFixture() override {
