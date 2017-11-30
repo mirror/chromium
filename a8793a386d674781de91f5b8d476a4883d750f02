@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1c2314d_e3526a91",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-30T19:20:11Z",
+      "side": 1,
+      "message": "nit: will may -\u003e will ?",
+      "range": {
+        "startLine": 10,
+        "startChar": 61,
+        "endLine": 10,
+        "endChar": 69
+      },
+      "revId": "a8793a386d674781de91f5b8d476a4883d750f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aab55eb6_a484805f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-30T19:20:11Z",
+      "side": 1,
+      "message": "nit: started -\u003e is started",
+      "range": {
+        "startLine": 12,
+        "startChar": 36,
+        "endLine": 12,
+        "endChar": 43
+      },
+      "revId": "a8793a386d674781de91f5b8d476a4883d750f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efcd8710_1da04613",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-30T19:20:11Z",
+      "side": 1,
+      "message": "nit: then -\u003e hence",
+      "range": {
+        "startLine": 12,
+        "startChar": 48,
+        "endLine": 12,
+        "endChar": 52
+      },
+      "revId": "a8793a386d674781de91f5b8d476a4883d750f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5187341_0bcfc8d5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-30T19:20:11Z",
+      "side": 1,
+      "message": "nit: set -\u003e setting",
+      "range": {
+        "startLine": 12,
+        "startChar": 53,
+        "endLine": 12,
+        "endChar": 56
+      },
+      "revId": "a8793a386d674781de91f5b8d476a4883d750f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "702fb44f_c18f51af",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-30T19:20:11Z",
+      "side": 1,
+      "message": "nit: will not take effect -\u003e does not have effect",
+      "range": {
+        "startLine": 13,
+        "startChar": 20,
+        "endLine": 13,
+        "endChar": 40
+      },
+      "revId": "a8793a386d674781de91f5b8d476a4883d750f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
