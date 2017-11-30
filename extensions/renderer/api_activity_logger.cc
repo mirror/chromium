@@ -69,6 +69,21 @@ void APIActivityLogger::LogAPICall(
               std::move(value_args), std::string());
 }
 
+void APIActivityLogger::LogEvent(ScriptContext* script_context,
+                                 const std::string& event_name,
+                                 std::unique_ptr<base::ListValue> arguments) {
+  const Dispatcher* dispatcher =
+      ExtensionsRendererClient::Get()->GetDispatcher();
+  if ((!dispatcher ||  // dispatcher can be null in unittests.
+       !dispatcher->activity_logging_enabled()) &&
+      !g_log_for_testing) {
+    return;
+  }
+
+  LogInternal(EVENT, script_context->GetExtensionID(), event_name,
+              std::move(arguments), std::string());
+}
+
 void APIActivityLogger::set_log_for_testing(bool log) {
   g_log_for_testing = log;
 }

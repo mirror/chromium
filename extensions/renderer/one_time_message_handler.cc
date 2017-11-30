@@ -18,6 +18,7 @@
 #include "extensions/renderer/bindings/api_request_handler.h"
 #include "extensions/renderer/gc_callback.h"
 #include "extensions/renderer/ipc_message_sender.h"
+#include "extensions/renderer/message_target.h"
 #include "extensions/renderer/messaging_util.h"
 #include "extensions/renderer/native_extension_bindings_system.h"
 #include "extensions/renderer/script_context.h"
@@ -197,7 +198,7 @@ void OneTimeMessageHandler::SendMessage(
                                      method_name, include_tls_channel_id);
   ipc_sender->SendPostMessageToPort(routing_id, new_port_id, message);
 
-  if (!wants_response) {
+  if (!wants_response && target.type != MessageTarget::NATIVE_APP) {
     bool close_channel = true;
     ipc_sender->SendCloseMessagePort(routing_id, new_port_id, close_channel);
   }
@@ -299,6 +300,7 @@ bool OneTimeMessageHandler::DeliverMessageToReceiver(
       base::Closure());
 
   v8::HandleScope handle_scope(isolate);
+  v8::Context::Scope context_scope(context);
   v8::Local<v8::Value> v8_message =
       messaging_util::MessageToV8(context, message);
   v8::Local<v8::Object> v8_sender = port.sender.Get(isolate);
@@ -395,7 +397,8 @@ bool OneTimeMessageHandler::DisconnectOpener(ScriptContext* script_context,
   DCHECK_NE(-1, port.request_id);
 
   bindings_system_->api_system()->request_handler()->CompleteRequest(
-      port.request_id, std::vector<v8::Local<v8::Value>>(), error_message);
+      port.request_id, std::vector<v8::Local<v8::Value>>(),
+      error_message.empty() ? "The message port closed before a response was received." : error_message);
 
   data->openers.erase(iter);
   return handled;
@@ -423,12 +426,11 @@ void OneTimeMessageHandler::OnOneTimeMessageResponse(
   int routing_id = iter->second.routing_id;
   data->receivers.erase(iter);
 
-  if (arguments->Length() < 1) {
-    arguments->ThrowTypeError("Required argument 'message' is missing");
-    return;
-  }
   v8::Local<v8::Value> value;
-  CHECK(arguments->GetNext(&value));
+  if (arguments->Length() > 0)
+    CHECK(arguments->GetNext(&value));
+  else
+    value = v8::Undefined(isolate);
 
   std::string error;
   std::unique_ptr<Message> message =

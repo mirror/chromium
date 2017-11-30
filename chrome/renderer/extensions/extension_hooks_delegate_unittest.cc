@@ -99,6 +99,7 @@ TEST_F(ExtensionHooksDelegateTest, MessagingSanityChecks) {
   tester.TestSendMessage("{data: 'hello'}, function() {}", kStandardMessage,
                          self_target, false, SendMessageTester::OPEN);
 
+  LOG(WARNING) << "Testing send request!";
   tester.TestSendRequest("{data: 'hello'}", kStandardMessage, self_target,
                          SendMessageTester::CLOSED);
   tester.TestSendRequest("{data: 'hello'}, function() {}", kStandardMessage,

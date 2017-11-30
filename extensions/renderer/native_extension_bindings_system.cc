@@ -30,6 +30,7 @@
 #include "extensions/renderer/extension_js_runner.h"
 #include "extensions/renderer/ipc_message_sender.h"
 #include "extensions/renderer/module_system.h"
+#include "extensions/renderer/runtime_hooks_delegate.h"
 #include "extensions/renderer/script_context.h"
 #include "extensions/renderer/script_context_set.h"
 #include "extensions/renderer/storage_area.h"
@@ -376,6 +377,8 @@ NativeExtensionBindingsSystem::NativeExtensionBindingsSystem(
       ->SetDelegate(std::make_unique<WebRequestHooks>());
   api_system_.GetHooksForAPI("declarativeContent")
       ->SetDelegate(std::make_unique<DeclarativeContentHooksDelegate>());
+  api_system_.GetHooksForAPI("runtime")->SetDelegate(
+      std::make_unique<RuntimeHooksDelegate>(&messaging_service_));
 }
 
 NativeExtensionBindingsSystem::~NativeExtensionBindingsSystem() {}
