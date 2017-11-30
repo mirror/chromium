@@ -118,6 +118,53 @@
       "revId": "e0da9328fa25e85213484fed44172f44070efd24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b01d8c2_eb79c935",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-30T20:52:08Z",
+      "side": 1,
+      "message": "Oh...I completely missed that the new method is also called in mime_sniffing_resource_handler.cc.\n\nSorry about that.",
+      "parentUuid": "1b2f1456_9c18847f",
+      "range": {
+        "startLine": 550,
+        "startChar": 6,
+        "endLine": 550,
+        "endChar": 25
+      },
+      "revId": "e0da9328fa25e85213484fed44172f44070efd24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dfdd039d_2766604a",
+        "filename": "content/public/browser/content_browser_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 978,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-30T20:52:08Z",
+      "side": 1,
+      "message": "Per class-level docs, need to specify this can be called on the UI or IO threads.",
+      "range": {
+        "startLine": 978,
+        "startChar": 16,
+        "endLine": 978,
+        "endChar": 20
+      },
+      "revId": "e0da9328fa25e85213484fed44172f44070efd24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
