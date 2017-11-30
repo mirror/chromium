@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "7b3ba83d_e55e8831",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-30T00:59:22Z",
+      "side": 1,
+      "message": "|default_config_| can be a local variable.",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 17
+      },
+      "revId": "91e657ea218d1e3656f3141567bad9543cec8844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a9ca897_70b675ad",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-30T00:59:22Z",
+      "side": 1,
+      "message": "latest_reading",
+      "range": {
+        "startLine": 153,
+        "startChar": 16,
+        "endLine": 153,
+        "endChar": 31
+      },
+      "revId": "91e657ea218d1e3656f3141567bad9543cec8844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5a15b56_25c22944",
+        "filename": "device/vr/orientation/orientation_device_provider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-30T00:59:22Z",
+      "side": 1,
+      "message": "This connection error handler isn\u0027t necessary. Removing it guarantees that |sensor_provider_| is always valid. Otherwise you need to check in Initialize().",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 59
+      },
+      "revId": "91e657ea218d1e3656f3141567bad9543cec8844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58167ef6_53e21eae",
         "filename": "device/vr/orientation/orientation_device_provider.h",
         "patchSetId": 10
