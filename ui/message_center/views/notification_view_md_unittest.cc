@@ -81,6 +81,11 @@ class NotificationViewMDTest : public views::ViewsTestBase,
   void ScrollBy(int dx);
   views::View* GetCloseButton();
 
+  bool can_click_buttons_ = false;
+  bool can_submit_reply_ = false;
+  int clicked_button_index_ = -1;
+  base::string16 submitted_reply_string_;
+
  private:
   std::set<std::string> removed_ids_;
 
@@ -123,6 +128,13 @@ void NotificationViewMDTest::SetUp() {
   widget_->SetContentsView(notification_view_.get());
   widget_->SetSize(notification_view_->GetPreferredSize());
   widget_->Show();
+  widget_->widget_delegate()->set_can_activate(true);
+  widget_->Activate();
+
+  can_click_buttons_ = false;
+  can_submit_reply_ = false;
+  clicked_button_index_ = -1;
+  submitted_reply_string_.clear();
 }
 
 void NotificationViewMDTest::TearDown() {
@@ -146,16 +158,25 @@ void NotificationViewMDTest::RemoveNotification(
 void NotificationViewMDTest::ClickOnNotificationButton(
     const std::string& notification_id,
     int button_index) {
-  // For this test, this method should not be invoked.
-  NOTREACHED();
+  if (!can_click_buttons_) {
+    // For this test, this method should not be invoked.
+    ADD_FAILURE()
+        << "ClickOnNotificationButtonWithReply should not be invoked.";
+  }
+  clicked_button_index_ = button_index;
 }
 
 void NotificationViewMDTest::ClickOnNotificationButtonWithReply(
     const std::string& notification_id,
     int button_index,
     const base::string16& reply) {
-  // For this test, this method should not be invoked.
-  NOTREACHED();
+  if (!can_submit_reply_) {
+    // For this test, this method should not be invoked.
+    ADD_FAILURE()
+        << "ClickOnNotificationButtonWithReply should not be invoked.";
+  }
+  clicked_button_index_ = button_index;
+  submitted_reply_string_ = reply;
 }
 
 void NotificationViewMDTest::ClickOnSettingsButton(
@@ -418,6 +439,83 @@ TEST_F(NotificationViewMDTest, UpdateButtonCountTest) {
 
   EXPECT_EQ(views::Button::STATE_NORMAL,
             notification_view()->action_buttons_[0]->state());
+}
+
+TEST_F(NotificationViewMDTest, TestActionButtonClick) {
+  can_click_buttons_ = true;
+
+  notification()->set_buttons(CreateButtons(2));
+  notification_view()->UpdateWithNotification(*notification());
+  widget()->Show();
+
+  ui::test::EventGenerator generator(widget()->GetNativeWindow());
+
+  // Action buttons are hidden by collapsed state.
+  if (!notification_view()->expanded_)
+    notification_view()->ToggleExpanded();
+  EXPECT_TRUE(notification_view()->actions_row_->visible());
+
+  // Now construct a mouse click event 1 pixel inside the boundary of the action
+  // button.
+  gfx::Point cursor_location(1, 1);
+  views::View::ConvertPointToScreen(notification_view()->action_buttons_[1],
+                                    &cursor_location);
+  generator.MoveMouseTo(cursor_location);
+  generator.ClickLeftButton();
+
+  EXPECT_EQ(1, clicked_button_index_);
+}
+
+TEST_F(NotificationViewMDTest, TestInlineReply) {
+  can_submit_reply_ = true;
+
+  std::vector<ButtonInfo> buttons = CreateButtons(2);
+  buttons[1].type = ButtonType::TEXT;
+  notification()->set_buttons(buttons);
+  notification_view()->UpdateWithNotification(*notification());
+  widget()->Show();
+
+  ui::test::EventGenerator generator(widget()->GetNativeWindow());
+
+  // Action buttons are hidden by collapsed state.
+  if (!notification_view()->expanded_)
+    notification_view()->ToggleExpanded();
+  EXPECT_TRUE(notification_view()->actions_row_->visible());
+
+  // Now construct a mouse click event 1 pixel inside the boundary of the action
+  // button.
+  gfx::Point cursor_location(1, 1);
+  views::View::ConvertPointToScreen(notification_view()->action_buttons_[1],
+                                    &cursor_location);
+  generator.MoveMouseTo(cursor_location);
+  generator.ClickLeftButton();
+
+  // Nothing should be submitted at this point.
+  EXPECT_EQ(-1, clicked_button_index_);
+
+  // Toggling should hide the inline textfield.
+  EXPECT_TRUE(notification_view()->inline_reply_->visible());
+  notification_view()->ToggleExpanded();
+  notification_view()->ToggleExpanded();
+  EXPECT_FALSE(notification_view()->inline_reply_->visible());
+
+  // Click the button again and focus on the inline textfield.
+  generator.ClickLeftButton();
+  generator.ClickLeftButton();
+  EXPECT_TRUE(notification_view()->inline_reply_->visible());
+  EXPECT_TRUE(notification_view()->inline_reply_->HasFocus());
+
+  // Type the text and submit.
+  ui::KeyboardCode keycodes[] = {ui::VKEY_T, ui::VKEY_E, ui::VKEY_S, ui::VKEY_T,
+                                 ui::VKEY_RETURN};
+
+  for (size_t i = 0; i < sizeof(keycodes) / sizeof(keycodes[0]); ++i) {
+    generator.PressKey(keycodes[i], ui::EF_NONE);
+    generator.ReleaseKey(keycodes[i], ui::EF_NONE);
+  }
+
+  EXPECT_EQ(1, clicked_button_index_);
+  EXPECT_EQ(base::ASCIIToUTF16("test"), submitted_reply_string_);
 }
 
 TEST_F(NotificationViewMDTest, SlideOut) {
