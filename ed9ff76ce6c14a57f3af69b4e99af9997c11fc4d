@@ -16,6 +16,24 @@
       "revId": "ed9ff76ce6c14a57f3af69b4e99af9997c11fc4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5523c6fc_10efbe7f",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1790,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-30T16:45:49Z",
+      "side": 1,
+      "message": "I have never seen either in the wild or on the //media/test/data\nnor on the webm/libvpx test vectors :-)\nSo, it\u0027s safe to DCHECK() for it -- maybe some developer of the\nfuture will find them, hit it, and understand that this would\nbe uncharted waters :-)",
+      "parentUuid": "7e986fda_21ffe41d",
+      "revId": "ed9ff76ce6c14a57f3af69b4e99af9997c11fc4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
