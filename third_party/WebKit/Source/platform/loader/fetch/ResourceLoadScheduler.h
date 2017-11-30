@@ -66,6 +66,13 @@ class PLATFORM_EXPORT ResourceLoadScheduler final
   ~ResourceLoadScheduler() {}
   void Trace(blink::Visitor*);
 
+  // ResourceLoadScheduler may start with the "restricted mode" which has
+  // tighter throttling policy than usual. Calling this function loosen the
+  // policy. This function can be called multiple times, and do nothing when
+  // the scheduler is already working with the usual policy. This function may
+  // initiate a new resource loading.
+  void LoosenInitialThrottling();
+
   // Stops all operations including observing throttling signals.
   // ResourceLoadSchedulerClient::Run() will not be called once this method is
   // called. This method can be called multiple times safely.
@@ -92,6 +99,8 @@ class PLATFORM_EXPORT ResourceLoadScheduler final
 
   // Sets outstanding limit for testing.
   void SetOutstandingLimitForTesting(size_t limit);
+  void SetOutstandingLimitForTesting(size_t limit_for_initial_mode,
+                                     size_t limit_for_usual_mode);
 
   void OnNetworkQuiet();
 
@@ -161,10 +170,13 @@ class PLATFORM_EXPORT ResourceLoadScheduler final
   // Can be modified by field trial flags or for testing.
   bool is_enabled_ = false;
 
-  // Outstanding limit. 0u means unlimited.
+  bool is_in_initial_mode_ = false;
+
   // TODO(crbug.com/735410): If this throttling is enabled always, it makes some
   // tests fail.
   size_t outstanding_limit_ = kOutstandingUnlimited;
+
+  size_t outstanding_limit_for_initial_mode_ = kOutstandingUnlimited;
 
   // Outstanding limit for throttled frames. Managed via the field trial.
   const size_t outstanding_throttled_limit_;
