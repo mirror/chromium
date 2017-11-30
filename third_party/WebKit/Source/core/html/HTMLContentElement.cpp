@@ -76,7 +76,7 @@ void HTMLContentElement::ParseAttribute(
     const AttributeModificationParams& params) {
   if (params.name == selectAttr) {
     if (ShadowRoot* root = ContainingShadowRoot()) {
-      if (!root->IsV1() && root->Owner())
+      if (!root->IsV1() && !root->IsUserAgentV1() && root->Owner())
         root->Owner()->V0().WillAffectSelector();
     }
     should_parse_select_ = true;

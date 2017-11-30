@@ -177,7 +177,7 @@ void ElementShadowV0::Distribute() {
         if (ElementShadow* shadow =
                 ShadowWhereNodeCanBeDistributedForV0(*point)) {
           if (!(RuntimeEnabledFeatures::IncrementalShadowDOMEnabled() &&
-                shadow->IsV1()))
+                (shadow->IsV1() || shadow->IsUserAgentV1())))
             shadow->SetNeedsDistributionRecalc();
         }
       }
@@ -232,7 +232,7 @@ void ElementShadowV0::CollectSelectFeatureSetFrom(const ShadowRoot& root) {
 
   for (Element& element : ElementTraversal::DescendantsOf(root)) {
     if (ElementShadow* shadow = element.Shadow()) {
-      if (!shadow->IsV1())
+      if (!shadow->IsV1() && !shadow->IsUserAgentV1())
         select_features_.Add(shadow->V0().EnsureSelectFeatureSet());
     }
     if (auto* content = ToHTMLContentElementOrNull(element))
@@ -243,7 +243,8 @@ void ElementShadowV0::CollectSelectFeatureSetFrom(const ShadowRoot& root) {
 void ElementShadowV0::WillAffectSelector() {
   for (ElementShadow* shadow = element_shadow_; shadow;
        shadow = shadow->ContainingShadow()) {
-    if (shadow->IsV1() || shadow->V0().NeedsSelectFeatureSet())
+    if (shadow->IsV1() || shadow->IsUserAgentV1() ||
+        shadow->V0().NeedsSelectFeatureSet())
       break;
     shadow->V0().SetNeedsSelectFeatureSet();
   }

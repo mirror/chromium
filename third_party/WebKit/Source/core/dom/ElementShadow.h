@@ -73,6 +73,7 @@ class CORE_EXPORT ElementShadow final : public GarbageCollected<ElementShadow>,
 
   bool IsV1() const { return YoungestShadowRoot().IsV1(); }
   bool IsOpenOrV0() const { return YoungestShadowRoot().IsOpenOrV0(); }
+  bool IsUserAgentV1() const { return YoungestShadowRoot().IsUserAgentV1(); }
 
   ElementShadowV0& V0() const {
     DCHECK(element_shadow_v0_);

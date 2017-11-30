@@ -37,7 +37,7 @@ using namespace HTMLNames;
 
 HTMLSummaryElement* HTMLSummaryElement::Create(Document& document) {
   HTMLSummaryElement* summary = new HTMLSummaryElement(document);
-  summary->EnsureUserAgentShadowRoot();
+  summary->EnsureUserAgentShadowRootV0();
   return summary;
 }
 
@@ -70,7 +70,7 @@ HTMLDetailsElement* HTMLSummaryElement::DetailsElement() const {
 }
 
 Element* HTMLSummaryElement::MarkerControl() {
-  return EnsureUserAgentShadowRoot().getElementById(
+  return EnsureUserAgentShadowRootV0().getElementById(
       ShadowElementNames::DetailsMarker());
 }
 
