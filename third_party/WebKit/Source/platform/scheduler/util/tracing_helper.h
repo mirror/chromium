@@ -145,6 +145,17 @@ class TraceableCounter {
     return *this;
   }
 
+  TraceableCounter& operator +=(const T& value) {
+    value_ += value;
+    Trace();
+    return *this;
+  }
+  TraceableCounter& operator -=(const T& value) {
+    value_ -= value;
+    Trace();
+    return *this;
+  }
+
   const T& get() const {
     return value_;
   }
@@ -152,7 +163,7 @@ class TraceableCounter {
     return value_;
   }
 
-  void Trace() {
+  void Trace() const {
     TRACE_COUNTER_ID1(category, name_, object_, converter_(value_));
   }
 
