@@ -59,6 +59,9 @@ extern const base::Feature kRebootPromptDialogFeature;
 // When enabled, users can initiate cleanups from the Settings page.
 extern const base::Feature kUserInitiatedChromeCleanupsFeature;
 
+// When enabled, allows user-initiated cleanups from the Setting page.
+extern const base::Feature kUserInitiatedChromeCleanupFeature;
+
 extern const char kSRTPromptTrial[];
 
 // Returns true if this Chrome is in a field trial group which shows the SRT
@@ -100,6 +103,8 @@ void RecordPromptShownWithTypeHistogram(PromptTypeHistogramValue value);
 // to |value|.
 void RecordPromptNotShownWithReasonHistogram(
     NoPromptReasonHistogramValue value);
+
+bool UserInitiatedChromeCleanupEnabled();
 
 }  // namespace safe_browsing
 
