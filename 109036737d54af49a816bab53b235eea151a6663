@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "a508ee2c_e854c315",
+        "filename": "components/cronet/ios/cronet_metrics.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-30T18:43:04Z",
+      "side": 1,
+      "message": "It is possible to add \"const\" to an Objective C object declaration; however, it is going to be ignored at compile and runtime.",
+      "parentUuid": "835d62dd_e326eca9",
+      "range": {
+        "startLine": 67,
+        "startChar": 54,
+        "endLine": 67,
+        "endChar": 70
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b6bb6958_d19ce771",
         "filename": "components/cronet/ios/cronet_metrics.h",
         "patchSetId": 22
