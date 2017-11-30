@@ -165,6 +165,8 @@ class DisplayTest : public testing::Test {
     run_loop.RunUntilIdle();
   }
 
+  void LatencyInfoCapTest(bool over_capacity);
+
   FrameSinkManagerImpl manager_;
   std::unique_ptr<CompositorFrameSinkSupport> support_;
   LocalSurfaceIdAllocator id_allocator_;
@@ -240,8 +242,9 @@ TEST_F(DisplayTest, DisplayDamaged) {
   EXPECT_EQ(gfx::Size(100, 100),
             software_output_device_->viewport_pixel_size());
   EXPECT_EQ(gfx::Rect(0, 0, 100, 100), software_output_device_->damage_rect());
+
+  // Only damaged portion should be swapped.
   {
-    // Only damaged portion should be swapped.
     pass = RenderPass::Create();
     pass->output_rect = gfx::Rect(0, 0, 100, 100);
     pass->damage_rect = gfx::Rect(10, 10, 1, 1);
@@ -264,10 +267,13 @@ TEST_F(DisplayTest, DisplayDamaged) {
     EXPECT_EQ(gfx::Size(100, 100),
               software_output_device_->viewport_pixel_size());
     EXPECT_EQ(gfx::Rect(10, 10, 1, 1), software_output_device_->damage_rect());
+
+    // Display should inject its own LatencyInfo.
+    EXPECT_EQ(1u, output_surface_->last_sent_frame()->latency_info.size());
   }
 
+  // Pass has no damage so shouldn't be swapped.
   {
-    // Pass has no damage so shouldn't be swapped.
     pass = RenderPass::Create();
     pass->output_rect = gfx::Rect(0, 0, 100, 100);
     pass->damage_rect = gfx::Rect(10, 10, 0, 0);
@@ -286,8 +292,9 @@ TEST_F(DisplayTest, DisplayDamaged) {
     EXPECT_EQ(2u, output_surface_->num_sent_frames());
   }
 
+  // Pass is wrong size so shouldn't be swapped. However, damage should
+  // result in latency info being stored for the next swap.
   {
-    // Pass is wrong size so shouldn't be swapped.
     pass = RenderPass::Create();
     pass->output_rect = gfx::Rect(0, 0, 99, 99);
     pass->damage_rect = gfx::Rect(10, 10, 10, 10);
@@ -298,7 +305,12 @@ TEST_F(DisplayTest, DisplayDamaged) {
 
     pass_list.push_back(std::move(pass));
     scheduler_->ResetDamageForTest();
-    SubmitCompositorFrame(&pass_list, local_surface_id);
+
+    CompositorFrame frame = test::MakeCompositorFrame();
+    pass_list.swap(frame.render_pass_list);
+    frame.metadata.latency_info.push_back(ui::LatencyInfo());
+
+    support_->SubmitCompositorFrame(local_surface_id, std::move(frame));
     EXPECT_TRUE(scheduler_->damaged);
     EXPECT_FALSE(scheduler_->display_resized_);
     EXPECT_FALSE(scheduler_->has_new_root_surface);
@@ -309,8 +321,8 @@ TEST_F(DisplayTest, DisplayDamaged) {
     EXPECT_EQ(2u, output_surface_->num_sent_frames());
   }
 
+  // Previous frame wasn't swapped, so next swap should have full damage.
   {
-    // Previous frame wasn't swapped, so next swap should have full damage.
     pass = RenderPass::Create();
     pass->output_rect = gfx::Rect(0, 0, 100, 100);
     pass->damage_rect = gfx::Rect(10, 10, 0, 0);
@@ -332,10 +344,14 @@ TEST_F(DisplayTest, DisplayDamaged) {
     EXPECT_EQ(3u, output_surface_->num_sent_frames());
     EXPECT_EQ(gfx::Rect(0, 0, 100, 100),
               software_output_device_->damage_rect());
+
+    // Latency info from previous frame should be sent now, along with the
+    // Display's info.
+    EXPECT_EQ(2u, output_surface_->last_sent_frame()->latency_info.size());
   }
 
+  // Pass has copy output request so should be swapped.
   {
-    // Pass has copy output request so should be swapped.
     pass = RenderPass::Create();
     pass->output_rect = gfx::Rect(0, 0, 100, 100);
     pass->damage_rect = gfx::Rect(10, 10, 0, 0);
@@ -359,8 +375,8 @@ TEST_F(DisplayTest, DisplayDamaged) {
     EXPECT_TRUE(copy_called);
   }
 
-  // Pass has no damage, so shouldn't be swapped, but latency info should be
-  // saved for next swap.
+  // Pass has no damage, so shouldn't be swapped and latency info should be
+  // discarded.
   {
     pass = RenderPass::Create();
     pass->output_rect = gfx::Rect(0, 0, 100, 100);
@@ -379,6 +395,7 @@ TEST_F(DisplayTest, DisplayDamaged) {
     EXPECT_FALSE(scheduler_->display_resized_);
     EXPECT_FALSE(scheduler_->has_new_root_surface);
 
+    frame.metadata.latency_info.push_back(ui::LatencyInfo());
     scheduler_->swapped = false;
     display_->DrawAndSwap();
     EXPECT_TRUE(scheduler_->swapped);
@@ -415,14 +432,15 @@ TEST_F(DisplayTest, DisplayDamaged) {
     EXPECT_TRUE(scheduler_->swapped);
     EXPECT_EQ(5u, output_surface_->num_sent_frames());
 
-    // Latency info from previous frame should be sent now.
+    // Latency info from previous frame should have been discarded since
+    // there was no damage. So we only get the Display's LatencyInfo.
     EXPECT_EQ(1u, output_surface_->last_sent_frame()->latency_info.size());
   }
 
+  // Surface that's damaged completely should be resized and swapped.
   {
     local_surface_id = id_allocator_.GenerateId();
     display_->SetLocalSurfaceId(local_surface_id, 1.0f);
-    // Surface that's damaged completely should be resized and swapped.
     pass = RenderPass::Create();
     pass->output_rect = gfx::Rect(0, 0, 99, 99);
     pass->damage_rect = gfx::Rect(0, 0, 99, 99);
@@ -443,13 +461,15 @@ TEST_F(DisplayTest, DisplayDamaged) {
               software_output_device_->viewport_pixel_size());
     EXPECT_EQ(gfx::Rect(0, 0, 100, 100),
               software_output_device_->damage_rect());
-    EXPECT_EQ(0u, output_surface_->last_sent_frame()->latency_info.size());
+
+    // Only expect the Display's LatencyInfo.
+    EXPECT_EQ(1u, output_surface_->last_sent_frame()->latency_info.size());
   }
   TearDownDisplay();
 }
 
-// Check LatencyInfo storage is cleaned up if it exceeds the limit.
-TEST_F(DisplayTest, MaxLatencyInfoCap) {
+// Verifies latency info is stored only up to a limit if a swap fails.
+void DisplayTest::LatencyInfoCapTest(bool over_capacity) {
   RendererSettings settings;
   settings.partial_swap_enabled = true;
   settings.finish_rendering_on_resize = true;
@@ -478,33 +498,60 @@ TEST_F(DisplayTest, MaxLatencyInfoCap) {
   SubmitCompositorFrame(&pass_list, local_surface_id);
 
   display_->DrawAndSwap();
+  EXPECT_EQ(1u, output_surface_->num_sent_frames());
+
+  // Resize so the swap fails even though there's damage, which triggers
+  // the case where we store latency info to append to a future swap.
+  scheduler_->ResetDamageForTest();
+  display_->Resize(gfx::Size(200, 200));
+
+  pass = RenderPass::Create();
+  pass->output_rect = gfx::Rect(0, 0, 100, 100);
+  pass->damage_rect = gfx::Rect(10, 10, 1, 1);
+  pass->id = 1u;
+
+  pass_list.push_back(std::move(pass));
+  scheduler_->ResetDamageForTest();
 
   // This is the same as LatencyInfo::kMaxLatencyInfoNumber.
   const size_t max_latency_info_count = 100;
-  for (size_t i = 0; i <= max_latency_info_count; ++i) {
-    pass = RenderPass::Create();
-    pass->output_rect = gfx::Rect(0, 0, 100, 100);
-    pass->damage_rect = gfx::Rect(10, 10, 0, 0);
-    pass->id = 1u;
+  size_t latency_count = max_latency_info_count;
+  if (over_capacity)
+    latency_count++;
 
-    pass_list.push_back(std::move(pass));
-    scheduler_->ResetDamageForTest();
+  CompositorFrame frame = test::MakeCompositorFrame();
+  pass_list.swap(frame.render_pass_list);
+  frame.metadata.latency_info =
+      std::vector<ui::LatencyInfo>(latency_count, ui::LatencyInfo());
 
-    CompositorFrame frame = test::MakeCompositorFrame();
-    pass_list.swap(frame.render_pass_list);
-    frame.metadata.latency_info.push_back(ui::LatencyInfo());
+  support_->SubmitCompositorFrame(local_surface_id, std::move(frame));
 
-    support_->SubmitCompositorFrame(local_surface_id, std::move(frame));
+  EXPECT_TRUE(display_->DrawAndSwap());
+  EXPECT_EQ(1u, output_surface_->num_sent_frames());
+  EXPECT_EQ(1u, output_surface_->last_sent_frame()->latency_info.size());
 
-    display_->DrawAndSwap();
+  size_t expected_size = 1;  // The Display adds its own latency info.
+  if (!over_capacity)
+    expected_size += max_latency_info_count;
 
-    if (i < max_latency_info_count)
-      EXPECT_EQ(i + 1, display_->stored_latency_info_size_for_testing());
-    else
-      EXPECT_EQ(0u, display_->stored_latency_info_size_for_testing());
-  }
+  // Run a successful swap and verify whether or not LatencyInfo was discarded.
+  scheduler_->ResetDamageForTest();
+  display_->Resize(gfx::Size(100, 100));
+  SubmitCompositorFrame(&pass_list, local_surface_id);
+
+  EXPECT_EQ(2u, output_surface_->num_sent_frames());
+  EXPECT_EQ(expected_size,
+            output_surface_->last_sent_frame()->latency_info.size());
 
   TearDownDisplay();
+}
+
+TEST_F(DisplayTest, UnderLatencyInfoCap) {
+  LatencyInfoCapTest(false);
+}
+
+TEST_F(DisplayTest, OverLatencyInfoCap) {
+  LatencyInfoCapTest(true);
 }
 
 class MockedContext : public cc::TestWebGraphicsContext3D {
