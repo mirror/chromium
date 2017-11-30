@@ -200,6 +200,8 @@ class FakeAppInstance : public mojom::AppInstance {
   // Keeps information for running tasks.
   TaskIdToInfo task_id_to_info_;
 
+  mojom::AppHostPtr host_;
+
   bool GetFakeIcon(mojom::ScaleFactor scale_factor,
                    std::string* png_data_as_string);
 

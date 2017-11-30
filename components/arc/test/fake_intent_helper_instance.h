@@ -119,6 +119,8 @@ class FakeIntentHelperInstance : public mojom::IntentHelperInstance {
   std::map<std::string, std::vector<mojom::IntentHandlerInfoPtr>>
       intent_handlers_;
 
+  mojom::IntentHelperHostPtr host_;
+
   DISALLOW_COPY_AND_ASSIGN(FakeIntentHelperInstance);
 };
 
