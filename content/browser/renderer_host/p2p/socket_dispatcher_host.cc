@@ -161,8 +161,6 @@ bool P2PSocketDispatcherHost::OnMessageReceived(const IPC::Message& message) {
 
 void P2PSocketDispatcherHost::OnNetworkChanged(
     net::NetworkChangeNotifier::ConnectionType type) {
-  if (type == net::NetworkChangeNotifier::CONNECTION_NONE)
-    return;
   // Notify the renderer about changes to list of network interfaces.
   network_list_task_runner_->PostTask(
       FROM_HERE,
