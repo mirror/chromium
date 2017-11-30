@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a6a5268d_768e8a61",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-11-30T14:46:39Z",
+      "side": 1,
+      "message": "I do expect more than one PrintJob alive at a time and I don\u0027t see a need to explicitly prevent a second PrinterDiscoverySession from existing.",
+      "parentUuid": "083c2af3_df220cd0",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 41
+      },
+      "revId": "b2275545c639d2143edecc7986054342774008ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d4f22c4_45b16b4a",
         "filename": "components/arc/arc_bridge_host_impl.cc",
         "patchSetId": 28
@@ -324,6 +348,30 @@
       "side": 1,
       "message": "Ah thanks! That\u0027s something we should fix globally instead of just in this one case. Can you try cherry-picking https://chromium-review.googlesource.com/#/c/chromium/src/+/797970 and see if it fixes your error?",
       "parentUuid": "647932ee_72f71b19",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 31
+      },
+      "revId": "b2275545c639d2143edecc7986054342774008ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6213c98d_de5e089a",
+        "filename": "components/arc/arc_bridge_host_impl.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-11-30T14:46:39Z",
+      "side": 1,
+      "message": "Technically this works (because DCHECK is just removed). I would expect the corresponding MojoChannelImpl to be destroyed on disconnect, however.",
+      "parentUuid": "475b6e01_545034a5",
       "range": {
         "startLine": 39,
         "startChar": 0,
