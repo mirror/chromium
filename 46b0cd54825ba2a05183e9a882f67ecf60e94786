@@ -234,6 +234,24 @@
     },
     {
       "key": {
+        "uuid": "09054ef9_4b9cd56a",
+        "filename": "third_party/zlib/deflate.c",
+        "patchSetId": 18
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-11-30T05:34:31Z",
+      "side": 1,
+      "message": "Chris\n\nWhat I think Noel pointed is that if (for whatever reason) the adler32 optimization was disabled, that would make the original Intel patches to be also disabled because it relies on x86_check_features() initializing some state variables.\n\nSo unless I\u0027m mistaken, the code as it is now is ok (i.e. won\u0027t disable anything) *but* it is a change on the dependencies chain.\n\nSo to preserve the original behavior the suggested change.",
+      "parentUuid": "65ce7f7f_6a424826",
+      "revId": "46b0cd54825ba2a05183e9a882f67ecf60e94786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1821df04_f7f23fe3",
         "filename": "third_party/zlib/inflate.c",
         "patchSetId": 18
