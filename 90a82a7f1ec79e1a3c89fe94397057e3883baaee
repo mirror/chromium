@@ -34,6 +34,24 @@
       "revId": "90a82a7f1ec79e1a3c89fe94397057e3883baaee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1cf354b_db860446",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_runner_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-11-30T22:13:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "433312cf_c2d0590a",
+      "revId": "90a82a7f1ec79e1a3c89fe94397057e3883baaee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
