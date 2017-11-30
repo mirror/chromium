@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7e4e627c_b02fada7",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_consumer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-30T11:12:57Z",
+      "side": 1,
+      "message": "Done.\nI think it should match \"a\" property setter. And you should not name property \"is...\".",
+      "parentUuid": "e514ad9f_e67e4e21",
+      "range": {
+        "startLine": 17,
+        "startChar": 18,
+        "endLine": 17,
+        "endChar": 19
+      },
+      "revId": "6f899c2b4923f28587686de0e58c5bcb4987cdba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85064510_62adb324",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "6f899c2b4923f28587686de0e58c5bcb4987cdba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4fd3a45_74adb974",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-30T11:12:57Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to repeat the type. I think it is fine like like that.",
+      "parentUuid": "85064510_62adb324",
+      "range": {
+        "startLine": 50,
+        "startChar": 28,
+        "endLine": 50,
+        "endChar": 29
+      },
+      "revId": "6f899c2b4923f28587686de0e58c5bcb4987cdba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "046a3272_4f14e326",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-30T11:12:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa293244_63ddcb8d",
+      "range": {
+        "startLine": 450,
+        "startChar": 33,
+        "endLine": 450,
+        "endChar": 40
+      },
+      "revId": "6f899c2b4923f28587686de0e58c5bcb4987cdba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12f331f7_bdcb9598",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
         "patchSetId": 4
@@ -85,6 +157,24 @@
       "revId": "6f899c2b4923f28587686de0e58c5bcb4987cdba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56e2a388_7e755331",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-30T11:12:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12f331f7_bdcb9598",
+      "revId": "6f899c2b4923f28587686de0e58c5bcb4987cdba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "853e9990_5a54c440",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-30T11:12:57Z",
+      "side": 1,
+      "message": "I think it is fine. https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CodingGuidelines/Articles/NamingIvarsAndTypes.html",
+      "parentUuid": "31787af6_4b816e08",
+      "revId": "6f899c2b4923f28587686de0e58c5bcb4987cdba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a1bd12f_31ef304a",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_adapter.mm",
         "patchSetId": 4
@@ -119,6 +227,24 @@
       "revId": "6f899c2b4923f28587686de0e58c5bcb4987cdba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31e9f668_ef8530f7",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_adapter.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-30T11:12:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a1bd12f_31ef304a",
+      "revId": "6f899c2b4923f28587686de0e58c5bcb4987cdba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
