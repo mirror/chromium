@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "d1563fe3_b1f487b0",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-30T23:36:59Z",
+      "side": 1,
+      "message": "CastSocketService runs on IO thread as a convenience so CMSSImpl and CastChannelAPI do not have to do thread hops, but AFAICT the CastSocketService socket opening logic can just as easily run on a blocking task runner. Not requiring callers to post task to a fixed thread makes it easier to do this transition if it needs to happen.",
+      "parentUuid": "991e3030_0754fe7a",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 3
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "73b77027_7d0e832f",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
         "patchSetId": 17
@@ -999,6 +1023,30 @@
       "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d5e92ae_f610c383",
+        "filename": "chrome/common/media_router/discovery/media_sink_service_base.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-30T23:36:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19720d04_b03545cf",
+      "range": {
+        "startLine": 20,
+        "startChar": 9,
+        "endLine": 21,
+        "endChar": 47
+      },
+      "revId": "efbceeb0b4c45d13330b8c68636d3bdceb7367af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

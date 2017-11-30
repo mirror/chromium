@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "efa6cbfe_b2a66e80",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-11-30T23:36:59Z",
+      "side": 1,
+      "message": "Ack. I will keep that in mind in future changes.",
+      "parentUuid": "377e80b1_167583f6",
+      "revId": "08f70b2a4d62c7effd9392d095fab4164eb7e288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7d3cc73_52aaffae",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
         "patchSetId": 8
