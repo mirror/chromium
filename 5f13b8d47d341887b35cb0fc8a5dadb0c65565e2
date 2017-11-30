@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93483fcd_23006089",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingRequirementsUpdater.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-30T20:30:27Z",
+      "side": 1,
+      "message": "Since this patch adds paint invalidation do we still need this exception here? We shouldn\u0027t be promoting sticky position elements if we don\u0027t promote fixed position elements to preserve lcd text.",
+      "revId": "5f13b8d47d341887b35cb0fc8a5dadb0c65565e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
