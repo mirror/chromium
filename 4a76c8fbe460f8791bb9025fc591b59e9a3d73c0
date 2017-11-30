@@ -22,6 +22,30 @@
       "revId": "4a76c8fbe460f8791bb9025fc591b59e9a3d73c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2d8508e_93e311fe",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2017-11-30T06:19:30Z",
+      "side": 1,
+      "message": "Done. Style could be improved, but I kept it consistent.",
+      "parentUuid": "8a5f03b5_538d77ca",
+      "range": {
+        "startLine": 542,
+        "startChar": 4,
+        "endLine": 544,
+        "endChar": 35
+      },
+      "revId": "4a76c8fbe460f8791bb9025fc591b59e9a3d73c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
