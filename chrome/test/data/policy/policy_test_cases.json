@@ -553,6 +553,18 @@
     ]
   },
 
+  "SyncCustomPassphraseRequired": {
+    "os": ["win", "linux", "mac", "chromeos"],
+    "test_policy": { "SyncCustomPassphraseRequired": true },
+    "pref_mappings": [
+      { "pref": "sync.require_custom_passphrase",
+        "indicator_tests": [
+          { "policy": { "SyncCustomPassphraseRequired": true }}
+        ] 
+      }
+    ]
+  },
+
   "SigninAllowed": {
     "os": ["win", "linux", "mac"],
     "test_policy": { "SigninAllowed": true },
