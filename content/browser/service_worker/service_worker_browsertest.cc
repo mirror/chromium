@@ -40,6 +40,7 @@
 #include "content/browser/service_worker/service_worker_context_core_observer.h"
 #include "content/browser/service_worker/service_worker_context_wrapper.h"
 #include "content/browser/service_worker/service_worker_fetch_dispatcher.h"
+#include "content/browser/service_worker/service_worker_fetch_event_result.h"
 #include "content/browser/service_worker/service_worker_registration.h"
 #include "content/browser/service_worker/service_worker_test_utils.h"
 #include "content/browser/service_worker/service_worker_type_converters.h"
@@ -1249,7 +1250,9 @@ IN_PROC_BROWSER_TEST_F(ServiceWorkerVersionBrowserTest, FetchEvent_Response) {
   ActivateTestHelper("/service_worker/fetch_event.js", SERVICE_WORKER_OK);
 
   FetchOnRegisteredWorker(&result, &response, &blob_data_handle);
-  ASSERT_EQ(SERVICE_WORKER_FETCH_EVENT_RESULT_RESPONSE, result);
+  ASSERT_EQ(
+      ServiceWorkerFetchEventResult::SERVICE_WORKER_FETCH_EVENT_RESULT_RESPONSE,
+      result);
   EXPECT_EQ(301, response.status_code);
   EXPECT_EQ("Moved Permanently", response.status_text);
   ServiceWorkerHeaderMap expected_headers;
@@ -1278,7 +1281,9 @@ IN_PROC_BROWSER_TEST_F(ServiceWorkerVersionBrowserTest,
                      SERVICE_WORKER_OK);
 
   FetchOnRegisteredWorker(&result, &response1, &blob_data_handle);
-  ASSERT_EQ(SERVICE_WORKER_FETCH_EVENT_RESULT_RESPONSE, result);
+  ASSERT_EQ(
+      ServiceWorkerFetchEventResult::SERVICE_WORKER_FETCH_EVENT_RESULT_RESPONSE,
+      result);
   EXPECT_EQ(200, response1.status_code);
   EXPECT_EQ("OK", response1.status_text);
   EXPECT_TRUE(response1.response_time >= start_time);
@@ -1286,7 +1291,9 @@ IN_PROC_BROWSER_TEST_F(ServiceWorkerVersionBrowserTest,
   EXPECT_EQ(std::string(), response2.cache_storage_cache_name);
 
   FetchOnRegisteredWorker(&result, &response2, &blob_data_handle);
-  ASSERT_EQ(SERVICE_WORKER_FETCH_EVENT_RESULT_RESPONSE, result);
+  ASSERT_EQ(
+      ServiceWorkerFetchEventResult::SERVICE_WORKER_FETCH_EVENT_RESULT_RESPONSE,
+      result);
   EXPECT_EQ(200, response2.status_code);
   EXPECT_EQ("OK", response2.status_text);
   EXPECT_EQ(response1.response_time, response2.response_time);
@@ -1323,7 +1330,9 @@ IN_PROC_BROWSER_TEST_F(ServiceWorkerVersionBrowserTest,
                            base::Unretained(version_->embedded_worker()),
                            &console_listener));
 
-  ASSERT_EQ(SERVICE_WORKER_FETCH_EVENT_RESULT_RESPONSE, result);
+  ASSERT_EQ(
+      ServiceWorkerFetchEventResult::SERVICE_WORKER_FETCH_EVENT_RESULT_RESPONSE,
+      result);
   EXPECT_EQ(0, response.status_code);
 
   ASSERT_FALSE(blob_data_handle);
