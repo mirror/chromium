@@ -48,8 +48,12 @@ bool DefaultSearchProviderIsGoogle(
 // to an NTP, but aren't an NTP themselves (such as the NTP's service worker).
 bool IsNTPURL(const GURL& url, Profile* profile);
 
-// Returns true if the visible entry of |contents| is a New Tab page rendered
+// Returns true if the *visible* entry of |contents| is a New Tab page rendered
 // in an Instant process.
+// TODO(treib): This seems broken, the visible entry doesn't necessarily
+// correspond to the page that's actually loaded. Should this use the last
+// committed entry instead? There's at least a few sites that explicitly call
+// NavEntryIsInstantNTP on the committed entry. See also crbug.com/624410.
 bool IsInstantNTP(const content::WebContents* contents);
 
 // Same as IsInstantNTP but uses |nav_entry| to determine the URL for the page

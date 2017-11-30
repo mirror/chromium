@@ -6,7 +6,17 @@
 
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/search/search.h"
+#include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/web_contents.h"
+
+namespace {
+
+bool IsNTP(const content::WebContents* web_contents) {
+  return search::NavEntryIsInstantNTP(
+      web_contents, web_contents->GetController().GetLastCommittedEntry());
+}
+
+}  // namespace
 
 SearchIPCRouterPolicyImpl::SearchIPCRouterPolicyImpl(
     const content::WebContents* web_contents)
@@ -23,36 +33,36 @@ SearchIPCRouterPolicyImpl::SearchIPCRouterPolicyImpl(
 SearchIPCRouterPolicyImpl::~SearchIPCRouterPolicyImpl() {}
 
 bool SearchIPCRouterPolicyImpl::ShouldProcessFocusOmnibox(bool is_active_tab) {
-  return is_active_tab && !is_incognito_ && search::IsInstantNTP(web_contents_);
+  return is_active_tab && !is_incognito_ && IsNTP(web_contents_);
 }
 
 bool SearchIPCRouterPolicyImpl::ShouldProcessDeleteMostVisitedItem() {
-  return !is_incognito_ && search::IsInstantNTP(web_contents_);
+  return !is_incognito_ && IsNTP(web_contents_);
 }
 
 bool SearchIPCRouterPolicyImpl::ShouldProcessUndoMostVisitedDeletion() {
-  return !is_incognito_ && search::IsInstantNTP(web_contents_);
+  return !is_incognito_ && IsNTP(web_contents_);
 }
 
 bool SearchIPCRouterPolicyImpl::ShouldProcessUndoAllMostVisitedDeletions() {
-  return !is_incognito_ && search::IsInstantNTP(web_contents_);
+  return !is_incognito_ && IsNTP(web_contents_);
 }
 
 bool SearchIPCRouterPolicyImpl::ShouldProcessLogEvent() {
-  return !is_incognito_ && search::IsInstantNTP(web_contents_);
+  return !is_incognito_ && IsNTP(web_contents_);
 }
 
 bool SearchIPCRouterPolicyImpl::ShouldProcessPasteIntoOmnibox(
     bool is_active_tab) {
-  return is_active_tab && !is_incognito_ && search::IsInstantNTP(web_contents_);
+  return is_active_tab && !is_incognito_ && IsNTP(web_contents_);
 }
 
 bool SearchIPCRouterPolicyImpl::ShouldProcessChromeIdentityCheck() {
-  return !is_incognito_ && search::IsInstantNTP(web_contents_);
+  return !is_incognito_ && IsNTP(web_contents_);
 }
 
 bool SearchIPCRouterPolicyImpl::ShouldProcessHistorySyncCheck() {
-  return !is_incognito_ && search::IsInstantNTP(web_contents_);
+  return !is_incognito_ && IsNTP(web_contents_);
 }
 
 bool SearchIPCRouterPolicyImpl::ShouldSendSetInputInProgress(
@@ -65,9 +75,9 @@ bool SearchIPCRouterPolicyImpl::ShouldSendOmniboxFocusChanged() {
 }
 
 bool SearchIPCRouterPolicyImpl::ShouldSendMostVisitedItems() {
-  return !is_incognito_ && search::IsInstantNTP(web_contents_);
+  return !is_incognito_ && IsNTP(web_contents_);
 }
 
 bool SearchIPCRouterPolicyImpl::ShouldSendThemeBackgroundInfo() {
-  return !is_incognito_ && search::IsInstantNTP(web_contents_);
+  return !is_incognito_ && IsNTP(web_contents_);
 }
