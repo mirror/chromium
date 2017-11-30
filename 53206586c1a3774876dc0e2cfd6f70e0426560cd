@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "9cf7eff7_04a19348",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-30T21:22:57Z",
+      "side": 1,
+      "message": "(To be clear, I think omitting \"stars\" from the a11y text is probably fine.  I don\u0027t think it adds any additional value.)",
+      "parentUuid": "935758dc_9cbbd445",
+      "revId": "53206586c1a3774876dc0e2cfd6f70e0426560cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a954a7de_69fc04c3",
         "filename": "chrome/app/generated_resources.grd",
         "patchSetId": 5
