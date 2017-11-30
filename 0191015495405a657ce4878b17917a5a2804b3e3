@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e8dce55b_59f578fd",
+        "filename": "chrome/browser/media/media_engagement_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-30T12:09:56Z",
+      "side": 1,
+      "message": "Done. I was failing one or two of your unit test. I\u0027ve added some too.",
+      "parentUuid": "fc77b531_4486e075",
+      "range": {
+        "startLine": 126,
+        "startChar": 4,
+        "endLine": 126,
+        "endChar": 65
+      },
+      "revId": "0191015495405a657ce4878b17917a5a2804b3e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38d8ca81_a2abf960",
         "filename": "chrome/browser/media/media_engagement_session.cc",
         "patchSetId": 2
@@ -63,6 +87,24 @@
       "revId": "0191015495405a657ce4878b17917a5a2804b3e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a628a02_b38eb0d0",
+        "filename": "chrome/browser/media/media_engagement_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-30T12:09:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38d8ca81_a2abf960",
+      "revId": "0191015495405a657ce4878b17917a5a2804b3e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
