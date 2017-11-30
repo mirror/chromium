@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c434c5d9_17e75e61",
+        "filename": "chrome/browser/process_singleton_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1243462
+      },
+      "writtenOn": "2017-11-30T13:57:18Z",
+      "side": 0,
+      "message": "Changed histogram name to proper one as here:\n\nhttps://cs.chromium.org/chromium/src/tools/metrics/histograms/histograms.xml?q\u003dhistograms.xml\u0026sq\u003dpackage:chromium\u0026maxsize\u003d8121570\u0026l\u003d9037",
+      "revId": "b1622826665b8e03c6732bb8ecdb16ed736cc358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
