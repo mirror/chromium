@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2ef284b_093faa3f",
+        "filename": "android_webview/browser/aw_contents.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1339,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-30T17:37:50Z",
+      "side": 1,
+      "message": "I don\u0027t think we want to bubble up a OnReceivedError for shouldOverrideUrlLoading, which is implemented with a NavigationThrottle. I assume this isn\u0027t the case already (InterceptNavigationThrottle returns CANCEL_AND_IGNORE), but probably should have a test for this case? And update this comment as well.",
+      "revId": "cb64d4c3047591bd7fbb5dd09c6e343db545358d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
