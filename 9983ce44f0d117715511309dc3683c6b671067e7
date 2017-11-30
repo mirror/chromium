@@ -22,6 +22,30 @@
       "revId": "9983ce44f0d117715511309dc3683c6b671067e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6440d112_a3209f2c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 92863,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-30T17:49:50Z",
+      "side": 1,
+      "message": "Okay. How about VRComponentStatus?",
+      "parentUuid": "5ca61f43_4a28fc7c",
+      "range": {
+        "startLine": 92863,
+        "startChar": 10,
+        "endLine": 92863,
+        "endChar": 25
+      },
+      "revId": "9983ce44f0d117715511309dc3683c6b671067e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
