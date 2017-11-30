@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2f9628eb_fdba1643",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1548,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-11-30T08:02:37Z",
+      "side": 1,
+      "message": "Because IsV1() is checking if V1 open or V1 closed, that implied it is author shadow root.\nSo I tried to clearly separate IsAuthorV1() and IsUserAgentV1().\nBut as a result it does not make sense to have separate checks.\nI\u0027ll merge into IsV1(), and if necessary for author V1 check I\u0027ll change\n|IsV1() \u0026\u0026 !IsUserAgent()|.",
+      "parentUuid": "f7dab2f0_cd309bcd",
+      "revId": "821a6b3e6c5580a41e322188cae6c6e4acdeab04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b87d7dc7_83977ce3",
         "filename": "third_party/WebKit/Source/core/dom/ShadowRoot.h",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-30T06:20:22Z",
       "side": 1,
       "message": "kUserAgentV0 and kUserAgent sound very similar, and are likely misused.\n\nIt would be better to make these sound more different form each other.\n\ne.g.\nkLegacyUserAgentV0 and kUserAgentV1 until we can have one \"kUserAgent\" in the future.",
+      "revId": "821a6b3e6c5580a41e322188cae6c6e4acdeab04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f9bf805_fae2622d",
+        "filename": "third_party/WebKit/Source/core/dom/ShadowRoot.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-11-30T08:02:37Z",
+      "side": 1,
+      "message": "Initially I used kUserAgentV0 and kUserAgentV1, but was confusing and I removed V1.\nBut I like \"kLegacyUserAgentV0\" name, I\u0027ll rewrite as you suggested.",
+      "parentUuid": "b87d7dc7_83977ce3",
       "revId": "821a6b3e6c5580a41e322188cae6c6e4acdeab04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e2440ff5_45efffda",
+        "filename": "third_party/WebKit/Source/core/dom/ShadowRoot.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-11-30T08:02:37Z",
+      "side": 1,
+      "message": "We already have a static_assert for this, but compares to the size of |unsigned|.\n\nLooks like we used to have |m_numberOfStyles:14| but removed at\nhttps://codereview.chromium.org/2472613004\nand at that point the static assert was not changed.\n\nSo we still have room to increase the size by 13bits, but may make sense to\nreduce this to 16bits in total (child_shadow_root_count_ won\u0027t become 1024\nor 2048? in real situation?).\n\nIf you agree we shrink this to 16bits, I\u0027ll make a separate CL.",
+      "parentUuid": "49176fa4_73fcddb6",
+      "revId": "821a6b3e6c5580a41e322188cae6c6e4acdeab04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40802cd5_4ae13c30",
         "filename": "third_party/WebKit/Source/core/dom/ShadowRoot.h",
         "patchSetId": 9
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-30T06:20:22Z",
       "side": 1,
       "message": "It looks there are a lot of pattern in this CL as such:\n\n- A function name mentions only *V1*.\n- However, the actual implementation is using the condition of root-\u003eIsV1() || root-\u003eIsUserAgentV1())\n\nThey sound inconsistent, and things are getting difficult to remember.\n\nI\u0027m afraid that we would have to look at not only the function name, but also the contents of the function to know what condition is actually used, unless there is consistent and easy-to-remember naming rules. We can\u0027t trust the function name anymore.\n\nCould you try to think about consistent naming rules (or policy)?\nThe current naming rule looks inconsistent everywhere.",
+      "revId": "821a6b3e6c5580a41e322188cae6c6e4acdeab04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d036aaf2_ea7141b7",
+        "filename": "third_party/WebKit/Source/core/dom/ShadowRoot.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-11-30T08:02:37Z",
+      "side": 1,
+      "message": "Merging IsUserAgentV1() into IsV1() did part of this, and I renamed\nEnsureUserAgentShadowRoot() to\nEnsureLegacyUserAgentShadowRootV0() and EnsureUserAgentShadowRootV1().\n\nBasic rules would be\n- add \"V0\" (optionally \"Legacy\") to stand out for deprecation/removal\n- add \"V1\" to clearly separate API/constant/etc. are intended for V1 only\n- once all V0 stuff is gone, we can remove \"V1\"",
+      "parentUuid": "40802cd5_4ae13c30",
       "revId": "821a6b3e6c5580a41e322188cae6c6e4acdeab04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
