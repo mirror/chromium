@@ -431,8 +431,7 @@ chrome.automation.AutomationNode.prototype.location;
 chrome.automation.AutomationNode.prototype.boundsForRange = function(startIndex, endIndex) {};
 
 /**
- * The location (as a bounding box) of this node in global screen coordinates.
- * This is the same as location but not clipped by ancestors.
+ * The location (as a bounding box) of this node in global screen coordinates without applying any clipping from ancestors.
  * @type {(!chrome.automation.Rect|undefined)}
  * @see https://developer.chrome.com/extensions/automation#type-unclippedLocation
  */
@@ -865,6 +864,13 @@ chrome.automation.AutomationNode.prototype.liveAtomic;
  * @see https://developer.chrome.com/extensions/automation#type-busy
  */
 chrome.automation.AutomationNode.prototype.busy;
+
+/**
+ * The name of the programmatic backing object.
+ * @type {(string|undefined)}
+ * @see https://developer.chrome.com/extensions/automation#type-className
+ */
+chrome.automation.AutomationNode.prototype.className;
 
 /**
  * The type of live region if this node is inside a live region.

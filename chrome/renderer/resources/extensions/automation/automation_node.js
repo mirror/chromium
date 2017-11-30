@@ -819,6 +819,7 @@ AutomationNodeImpl.prototype = {
 var stringAttributes = [
     'accessKey',
     'ariaInvalidValue',
+    'className',
     'containerLiveRelevant',
     'containerLiveStatus',
     'description',
