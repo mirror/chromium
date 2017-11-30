@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "943ad738_eed462b1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/externalnav/ExternalNavigationDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-30T18:44:04Z",
+      "side": 1,
+      "message": "any reason we need this one anymore (to be exposed in the interface)?  it would be good to just have the one below to make it easier for clients to integrate",
+      "range": {
+        "startLine": 87,
+        "startChar": 9,
+        "endLine": 87,
+        "endChar": 29
+      },
+      "revId": "e42ac78b2a59e24a81baea959fc3b03b1b0cf19e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
