@@ -402,6 +402,30 @@
     },
     {
       "key": {
+        "uuid": "7cc3cf21_4cb31529",
+        "filename": "media/capture/video/win/photo_callback_factory_mf_win.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-11-30T14:26:44Z",
+      "side": 1,
+      "message": "I am sorry, but I still don\u0027t get it.\n\nEach time, the TakePhoto(TakePhotoCallback callback) operation is called, a new IMFCaptureEngineOnSampleCallback is created and consumed by MediaFoundation.\n\nMy unit test checks the refcounting on IMFCaptureEngineOnSampleCallback indeed (not on the factory).\nTherefore, in my unit test, I need to make MediaFoundation uses MockMFPhotoCallback. I can achieve this through set_photo_callback_factory_for_testing() because I can replace the default PhotoCallbackFactoryMFWin of VideoCaptureDeviceMFWin with MockPhotoCallbackFactoryMFWin because MockPhotoCallbackFactoryMFWin builds MockMFPhotoCallback.\n\nIf I replace the factory object with a static factory method inside VideoCaptureDeviceMFWin, how can I tell VideoCaptureDeviceMFWin to build and pass MockMFPhotoCallback to MediaFoundation instead of MFPhotoCallback in the context of my unit test ?",
+      "parentUuid": "38f45d9a_951899f8",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 25
+      },
+      "revId": "72e892f8d9f9818e6dbd5f685814bb9739c66fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80baf449_0e924787",
         "filename": "media/capture/video/win/photo_callback_factory_mf_win.cc",
         "patchSetId": 31
