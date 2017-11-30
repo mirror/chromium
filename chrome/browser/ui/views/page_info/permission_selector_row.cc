@@ -283,8 +283,7 @@ PermissionSelectorRow::PermissionSelectorRow(
 
   // Create the permission icon.
   icon_ = new NonAccessibleImageView();
-  const gfx::Image& image = PageInfoUI::GetPermissionIcon(permission);
-  icon_->SetImage(image.ToImageSkia());
+  icon_->SetImage(PageInfoUI::GetPermissionIcon(permission));
   layout->AddView(icon_);
   // Create the label that displays the permission type.
   label_ =
@@ -395,8 +394,7 @@ void PermissionSelectorRow::InitializeComboboxView(
 void PermissionSelectorRow::PermissionChanged(
     const PageInfoUI::PermissionInfo& permission) {
   // Change the permission icon to reflect the selected setting.
-  const gfx::Image& image = PageInfoUI::GetPermissionIcon(permission);
-  icon_->SetImage(image.ToImageSkia());
+  icon_->SetImage(PageInfoUI::GetPermissionIcon(permission));
 
   // Update the menu button text to reflect the new setting.
   if (menu_button_) {
