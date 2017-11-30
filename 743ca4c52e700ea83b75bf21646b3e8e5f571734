@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "0897dc13_984b4b4b",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-11-30T17:20:30Z",
+      "side": 1,
+      "message": "Thank you for your comments.\n\nEvery point makes sense.\n\nLet use ShouldArcAlwaysStart to start ARC (as it is currently implemented) and IsPlayStoreAvailable to decide either ToS needs to be shown or not.\n\nI agree that ShouldArcAlwaysStart sounds not clear for ToS. In fact, ShouldArcAlwaysStart is equivalent to !IsPlayStoreAvailable due pARC was deprecated. I think in session manager, here and wizard controller we may use !IsPlayStoreAvailable for clean logic. ShouldArcAlwaysStart need to be refactored and pARC also needs to be cleaned out but this is big task and out of scope of this CL.\n\nWDYT about just using !IsPlayStoreAvailable to solve ambiguity?",
+      "parentUuid": "7b1387d4_06f4ddf9",
+      "revId": "743ca4c52e700ea83b75bf21646b3e8e5f571734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c22776b2_060473d0",
         "filename": "chrome/browser/chromeos/login/wizard_controller.cc",
         "patchSetId": 2
@@ -174,6 +192,24 @@
       "side": 1,
       "message": "Thank you for explanation.\nI understand your concept, but I still worried about keeping ShouldArcAlwaysStart() here.\nCould you refer my another comments for more details?",
       "parentUuid": "94c17f76_7fb67170",
+      "revId": "743ca4c52e700ea83b75bf21646b3e8e5f571734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64eadd33_f846410f",
+        "filename": "chrome/browser/chromeos/login/wizard_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1630,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-11-30T17:20:30Z",
+      "side": 1,
+      "message": "Answered there.",
+      "parentUuid": "db0dc0fd_da8e83ba",
       "revId": "743ca4c52e700ea83b75bf21646b3e8e5f571734",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
