@@ -12,6 +12,7 @@
 #include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/text_utils.h"
+#include "ui/views/bubble/bubble_dialog_delegate.h"
 #include "ui/views/controls/label.h"
 #include "ui/views/event_monitor.h"
 #include "ui/views/layout/box_layout.h"
@@ -57,8 +58,18 @@ FeaturePromoBubbleView::FeaturePromoBubbleView(
     ActivationAction activation_action)
     : BubbleDialogDelegateView(anchor_view, arrow) {
   UseCompactMargins();
-  if (!anchor_view)
+  if (!anchor_view) {
     SetAnchorRect(anchor_rect);
+  } else {
+    // Move the rect of the anchor_view to the left by 5 if the promo is
+    // inactive.
+    const gfx::Rect& anchor_view_rect = anchor_view->GetBoundsInScreen();
+    gfx::Rect bounds(anchor_view_rect.x(), anchor_view_rect.y());
+    if (activation_action == ActivationAction::DO_NOT_ACTIVATE) {
+      bounds.Offset(0, 5);
+      SetAnchorRect(bounds);
+    }
+  }
 
   auto box_layout = base::MakeUnique<views::BoxLayout>(
       views::BoxLayout::kVertical, gfx::Insets(), 0);
@@ -69,13 +80,16 @@ FeaturePromoBubbleView::FeaturePromoBubbleView(
   SetLayoutManager(box_layout.release());
 
   AddChildView(new views::Label(l10n_util::GetStringUTF16(string_specifier)));
-
-  if (activation_action == ActivationAction::DO_NOT_ACTIVATE)
+  if (activation_action == ActivationAction::DO_NOT_ACTIVATE) {
     set_can_activate(activation_action == ActivationAction::ACTIVATE);
+    set_anchor_view_insets(gfx::Insets(0, -5));
+    set_shadow(views::BubbleBorder::NO_ASSETS);
+  }
   views::Widget* widget = views::BubbleDialogDelegateView::CreateBubble(this);
   if (activation_action == ActivationAction::DO_NOT_ACTIVATE)
     SetArrowPaintType(views::BubbleBorder::PAINT_TRANSPARENT);
-  UseCompactMargins();
+
+  set_shadow(views::BubbleBorder::NO_SHADOW);
   widget->Show();
   if (activation_action == ActivationAction::ACTIVATE)
     StartAutoCloseTimer(kDelayDefault);
@@ -103,6 +117,19 @@ void FeaturePromoBubbleView::OnMouseEntered(const ui::MouseEvent& event) {
 void FeaturePromoBubbleView::OnMouseExited(const ui::MouseEvent& event) {
   StartAutoCloseTimer(kDelayShort);
 }
+
+// gfx::Rect FeaturePromoBubbleView::GetBubbleBounds() {
+//   const gfx::Rect& anchor_rect = anchor_view_->GetBoundsInScreen();
+//   gfx::Rect bounds(anchor_rect.x(), anchor_rect.y());
+//   bounds.Inset(gfx::Insets());
+//   if (activation_action_ == ActivationAction::DO_NOT_ACTIVATE) {
+//     LOG(ERROR) << "anchor_rect: " << anchor_rect.x();
+
+//    bounds.Offset(0, 5);
+//     SetAnchorRect(bounds);
+//  }
+//     return BubbleDialogDelegateView::GetBubbleBounds();
+// }
 
 void FeaturePromoBubbleView::StartAutoCloseTimer(
     base::TimeDelta auto_close_duration) {
