@@ -297,32 +297,19 @@ void HeadlessPrintManager::OnDidGetPrintedPagesCount(int cookie,
 
 void HeadlessPrintManager::OnDidPrintPage(
     const PrintHostMsg_DidPrintPage_Params& params) {
-  const bool metafile_must_be_valid = expecting_first_page_;
-  expecting_first_page_ = false;
-
-  if (metafile_must_be_valid) {
-    if (!base::SharedMemory::IsHandleValid(params.metafile_data_handle)) {
-      ReleaseJob(INVALID_MEMORY_HANDLE);
-      return;
-    }
-    auto shared_buf =
-        base::MakeUnique<base::SharedMemory>(params.metafile_data_handle, true);
-    if (!shared_buf->Map(params.data_size)) {
-      ReleaseJob(METAFILE_MAP_ERROR);
-      return;
-    }
-    data_ = std::string(static_cast<const char*>(shared_buf->memory()),
-                        params.data_size);
-  } else {
-    if (base::SharedMemory::IsHandleValid(params.metafile_data_handle)) {
-      base::SharedMemory::CloseHandle(params.metafile_data_handle);
-      ReleaseJob(UNEXPECTED_VALID_MEMORY_HANDLE);
-      return;
-    }
+  if (!base::SharedMemory::IsHandleValid(params.metafile_data_handle)) {
+    ReleaseJob(INVALID_MEMORY_HANDLE);
+    return;
   }
-
-  if (--number_pages_ == 0)
-    ReleaseJob(PRINT_SUCCESS);
+  auto shared_buf =
+      base::MakeUnique<base::SharedMemory>(params.metafile_data_handle, true);
+  if (!shared_buf->Map(params.data_size)) {
+    ReleaseJob(METAFILE_MAP_ERROR);
+    return;
+  }
+  data_ = std::string(static_cast<const char*>(shared_buf->memory()),
+                      params.data_size);
+  ReleaseJob(PRINT_SUCCESS);
 }
 
 void HeadlessPrintManager::Reset() {
@@ -332,7 +319,6 @@ void HeadlessPrintManager::Reset() {
   page_ranges_text_.clear();
   ignore_invalid_page_ranges_ = false;
   data_.clear();
-  expecting_first_page_ = true;
   number_pages_ = 0;
 }
 

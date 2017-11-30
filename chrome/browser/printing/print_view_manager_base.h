@@ -95,7 +95,6 @@ class PrintViewManagerBase : public content::NotificationObserver,
 
   // Handle extra tasks once a page or doc is printed.
   void UpdateForPrintedPage(const PrintHostMsg_DidPrintPage_Params& params,
-                            bool has_valid_page_data,
                             std::unique_ptr<base::SharedMemory> shared_buf);
 
   // IPC message handlers for service.
@@ -169,9 +168,6 @@ class PrintViewManagerBase : public content::NotificationObserver,
   // we are _blocking_ until all the necessary pages have been rendered or the
   // print settings are being loaded.
   bool inside_inner_message_loop_;
-
-  // Set to true when OnDidPrintPage() should be expecting the first page.
-  bool expecting_first_page_;
 
   // Whether printing is enabled.
   BooleanPrefMember printing_enabled_;
