@@ -402,6 +402,30 @@
     },
     {
       "key": {
+        "uuid": "77ae5b7a_8d371fe9",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-30T20:13:46Z",
+      "side": 1,
+      "message": "One possibility is to just not have this special init code - unfortunately that makes the class very fragile to changes in properties (and even in the order of existing properties), has the potential to introduce a lot of subtle bugs.\n\nSwizzling with NSURLSessionTaskTransactionMetrics would let us make all of the properties globally writable, but the behavior we want is for them to be internally-writable but globally-readonly (which is why this class isn\u0027t exported).  (Also, swizzling is arguably just as much of a hack is this - it\u0027s certainly not less boilerplate).",
+      "parentUuid": "4496b632_06d27bc1",
+      "range": {
+        "startLine": 38,
+        "startChar": 5,
+        "endLine": 38,
+        "endChar": 39
+      },
+      "revId": "3a90579f0fec177947e5005a6d66b53f0771e2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef7b1334_1a8bbf0f",
         "filename": "components/cronet/ios/cronet_metrics.mm",
         "patchSetId": 18
@@ -446,6 +470,30 @@
       "revId": "3a90579f0fec177947e5005a6d66b53f0771e2a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72eda35d_f8c26741",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-30T20:13:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f61b5c0_86b12d33",
+      "range": {
+        "startLine": 39,
+        "startChar": 17,
+        "endLine": 39,
+        "endChar": 19
+      },
+      "revId": "3a90579f0fec177947e5005a6d66b53f0771e2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -586,6 +634,30 @@
       "revId": "3a90579f0fec177947e5005a6d66b53f0771e2a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6abca3e_823f6cc9",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-30T20:13:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd3715c2_640c39ba",
+      "range": {
+        "startLine": 126,
+        "startChar": 25,
+        "endLine": 126,
+        "endChar": 48
+      },
+      "revId": "3a90579f0fec177947e5005a6d66b53f0771e2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

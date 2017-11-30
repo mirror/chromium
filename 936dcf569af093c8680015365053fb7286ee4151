@@ -401,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "72c9102f_a0564ea0",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-30T20:13:46Z",
+      "side": 1,
+      "message": "I\u0027m not sure.  It wouldn\u0027t be true for the first connection made using those protocols, would it?",
+      "parentUuid": "5c52c47b_33402cdd",
+      "range": {
+        "startLine": 138,
+        "startChar": 25,
+        "endLine": 138,
+        "endChar": 44
+      },
+      "revId": "936dcf569af093c8680015365053fb7286ee4151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4c038b9_f8933fb6",
         "filename": "components/cronet/ios/cronet_metrics.mm",
         "patchSetId": 20
@@ -421,6 +445,30 @@
       "revId": "936dcf569af093c8680015365053fb7286ee4151",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de6b3b1c_8ef539e6",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-30T20:13:46Z",
+      "side": 1,
+      "message": "Partially done.",
+      "parentUuid": "b4c038b9_f8933fb6",
+      "range": {
+        "startLine": 139,
+        "startChar": 25,
+        "endLine": 139,
+        "endChar": 45
+      },
+      "revId": "936dcf569af093c8680015365053fb7286ee4151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -468,6 +516,30 @@
       "revId": "936dcf569af093c8680015365053fb7286ee4151",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2193191_efa53ae2",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-30T20:13:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1cc78821_c01f0a5d",
+      "range": {
+        "startLine": 149,
+        "startChar": 13,
+        "endLine": 149,
+        "endChar": 50
+      },
+      "revId": "936dcf569af093c8680015365053fb7286ee4151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

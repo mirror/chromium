@@ -357,6 +357,30 @@
     },
     {
       "key": {
+        "uuid": "8f2db448_27745107",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-30T20:13:46Z",
+      "side": 1,
+      "message": "Judging by the diagram in the NSURLSessionTaskTransactionMetrics documentation, it looks like fetchStartDate is the beginning of the task, before DNS resolution is actually performed.  Does net expose that timing at all?",
+      "parentUuid": "ea322c99_5370d5ae",
+      "range": {
+        "startLine": 92,
+        "startChar": 49,
+        "endLine": 92,
+        "endChar": 50
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "286027fd_53db42d3",
         "filename": "components/cronet/ios/cronet_metrics.mm",
         "patchSetId": 22
@@ -463,6 +487,30 @@
       "side": 1,
       "message": "FWIW LoadTimingInfo has push_start and push_end timestamps:\n\nhttps://cs.chromium.org/chromium/src/net/base/load_timing_info.h?rcl\u003d2dc65f0d49b20c16af3d00eb1585d0ebf8b14d96\u0026l\u003d149\n\nI\u0027d suspect that they are not empty in case of push.",
       "parentUuid": "3fdb270e_930c6a24",
+      "range": {
+        "startLine": 122,
+        "startChar": 25,
+        "endLine": 122,
+        "endChar": 49
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbbfd0f4_26c74b9c",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-30T20:13:46Z",
+      "side": 1,
+      "message": "Good suggestion.  I\u0027m going to have the case default to ServerLoad if push_start is null and was_cached is false, but do you know if there\u0027s a way we would be able to rule out ServerLoad (and therefore justify setting the fetch type to \"Unknown\"?)",
+      "parentUuid": "cffd6b7a_dd9a29a8",
       "range": {
         "startLine": 122,
         "startChar": 25,
@@ -640,6 +688,30 @@
     },
     {
       "key": {
+        "uuid": "73014fdb_de0b5f43",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-30T20:13:46Z",
+      "side": 1,
+      "message": "Done, though lmk if you find somewhere talking about it.",
+      "parentUuid": "267bfcd9_dd99e7b5",
+      "range": {
+        "startLine": 197,
+        "startChar": 15,
+        "endLine": 197,
+        "endChar": 16
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0d4b27a_80fa92ec",
         "filename": "components/cronet/ios/cronet_metrics.mm",
         "patchSetId": 22
@@ -754,6 +826,30 @@
       "revId": "109036737d54af49a816bab53b235eea151a6663",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4695d005_f134f79b",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-30T20:13:46Z",
+      "side": 1,
+      "message": "Fixed per discussion: Use connection_info enum directly.  (There isn\u0027t any need to check was_alpn_negotiated, because the alpn_negotiated_protocol string is populated directly from connection_info).",
+      "parentUuid": "d894b587_0ae04c32",
+      "range": {
+        "startLine": 167,
+        "startChar": 7,
+        "endLine": 167,
+        "endChar": 10
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
