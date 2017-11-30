@@ -86,7 +86,7 @@ void AudioOutputDelegateImpl::ControllerEventHandler::OnLog(
 std::unique_ptr<media::AudioOutputDelegate> AudioOutputDelegateImpl::Create(
     EventHandler* handler,
     media::AudioManager* audio_manager,
-    std::unique_ptr<media::AudioLog> audio_log,
+    media::AudioLog* audio_log,
     AudioMirroringManager* mirroring_manager,
     MediaObserver* media_observer,
     int stream_id,
@@ -100,9 +100,9 @@ std::unique_ptr<media::AudioOutputDelegate> AudioOutputDelegateImpl::Create(
     return nullptr;
 
   return std::make_unique<AudioOutputDelegateImpl>(
-      std::move(reader), std::move(socket), handler, audio_manager,
-      std::move(audio_log), mirroring_manager, media_observer, stream_id,
-      render_frame_id, render_process_id, params, output_device_id);
+      std::move(reader), std::move(socket), handler, audio_manager, audio_log,
+      mirroring_manager, media_observer, stream_id, render_frame_id,
+      render_process_id, params, output_device_id);
 }
 
 AudioOutputDelegateImpl::AudioOutputDelegateImpl(
@@ -110,7 +110,7 @@ AudioOutputDelegateImpl::AudioOutputDelegateImpl(
     std::unique_ptr<base::CancelableSyncSocket> foreign_socket,
     EventHandler* handler,
     media::AudioManager* audio_manager,
-    std::unique_ptr<media::AudioLog> audio_log,
+    media::AudioLog* audio_log,
     AudioMirroringManager* mirroring_manager,
     MediaObserver* media_observer,
     int stream_id,
@@ -119,7 +119,7 @@ AudioOutputDelegateImpl::AudioOutputDelegateImpl(
     const media::AudioParameters& params,
     const std::string& output_device_id)
     : subscriber_(handler),
-      audio_log_(std::move(audio_log)),
+      audio_log_(audio_log),
       reader_(std::move(reader)),
       foreign_socket_(std::move(foreign_socket)),
       mirroring_manager_(mirroring_manager),
