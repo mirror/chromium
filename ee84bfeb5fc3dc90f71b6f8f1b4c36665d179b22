@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "52f9d2a2_751c3997",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1189096
+      },
+      "writtenOn": "2017-11-30T06:09:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83493fc0_ace1900f",
+      "range": {
+        "startLine": 89,
+        "startChar": 7,
+        "endLine": 89,
+        "endChar": 31
+      },
+      "revId": "ee84bfeb5fc3dc90f71b6f8f1b4c36665d179b22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "235c5d6c_04efb297",
         "filename": "extensions/common/api/media_perception_private.idl",
         "patchSetId": 5
@@ -39,6 +63,24 @@
       "revId": "ee84bfeb5fc3dc90f71b6f8f1b4c36665d179b22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "387ca7f8_38bbeebd",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1189096
+      },
+      "writtenOn": "2017-11-30T06:09:44Z",
+      "side": 1,
+      "message": "We only have one video source but each pipeline would make a copy of the raw image frame and scale to different resolution/frame rate specified by the parameters here.",
+      "parentUuid": "235c5d6c_04efb297",
+      "revId": "ee84bfeb5fc3dc90f71b6f8f1b4c36665d179b22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
