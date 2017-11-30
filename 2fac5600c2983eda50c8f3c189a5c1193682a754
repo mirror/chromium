@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbce49cc_bfbc46b1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-30T00:11:32Z",
+      "side": 1,
+      "message": "The subject should fit on the first line. See https://www.chromium.org/developers/contributing-code#TOC-Writing-commit-descriptions.",
+      "revId": "2fac5600c2983eda50c8f3c189a5c1193682a754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
