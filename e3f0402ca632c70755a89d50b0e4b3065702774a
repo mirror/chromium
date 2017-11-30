@@ -635,6 +635,24 @@
     },
     {
       "key": {
+        "uuid": "3160e2ac_cf58c3a0",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-30T20:37:00Z",
+      "side": 1,
+      "message": "ping: reserve(count) will ensure that push_back never causes a reallocation.",
+      "parentUuid": "9cd3bb88_bb1661a8",
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c09f45c8_3be550f9",
         "filename": "services/shape_detection/face_detection_impl_win.h",
         "patchSetId": 5
@@ -1529,6 +1547,30 @@
       "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbdc04a4_361455e4",
+        "filename": "services/shape_detection/face_detection_provider_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-30T20:37:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c9a896b8_784ef5c1",
+      "range": {
+        "startLine": 125,
+        "startChar": 27,
+        "endLine": 125,
+        "endChar": 37
+      },
+      "revId": "e3f0402ca632c70755a89d50b0e4b3065702774a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

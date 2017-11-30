@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cc17b70_33668ccb",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-30T20:37:00Z",
+      "side": 1,
+      "message": "nit: do away with the middleman:\n    result-\u003ebounding_box \u003d gfx::RectF(bounds.X, bounds.Y, bounds.Width, bounds.Height);",
+      "revId": "31c8b9da70ffa34b1454bf244bd514bee3515526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acda7e03_ddba00e2",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-30T20:37:00Z",
+      "side": 1,
+      "message": "these two can be moved into the protected block below",
+      "revId": "31c8b9da70ffa34b1454bf244bd514bee3515526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3df52b36_3f2936ac",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-30T20:37:00Z",
+      "side": 1,
+      "message": "same comment as before: this can be static since it doesn\u0027t need to touch any instance members.",
+      "revId": "31c8b9da70ffa34b1454bf244bd514bee3515526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
