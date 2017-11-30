@@ -786,6 +786,7 @@ mojom("mojo_bindings") {
     "platform/modules/keyboard_lock/keyboard_lock.mojom",
     "platform/modules/manifest/manifest.mojom",
     "platform/modules/manifest/manifest_manager.mojom",
+    "platform/modules/mediastream/media_devices.mojom",
     "platform/modules/notifications/notification.mojom",
     "platform/modules/notifications/notification_service.mojom",
     "platform/modules/payments/payment_app.mojom",
@@ -820,6 +821,8 @@ mojom("mojo_bindings") {
     "//device/bluetooth/public/interfaces",
     "//device/geolocation/public/interfaces",
     "//device/screen_orientation/public/interfaces",
+    "//media/capture/mojo:capture_types",
+    "//media/mojo/interfaces",
     "//mojo/common:common_custom_types",
     "//services/network/public/interfaces:interfaces",
     "//services/service_manager/public/interfaces",
@@ -846,6 +849,10 @@ mojom("mojo_bindings") {
   export_class_attribute_blink = "BLINK_PLATFORM_EXPORT"
   export_define_blink = "BLINK_PLATFORM_IMPLEMENTATION=1"
   export_header_blink = "third_party/WebKit/public/platform/WebCommon.h"
+
+  export_class_attribute_blink = "PLATFORM_EXPORT"
+  export_define_blink = "BLINK_PLATFORM_IMPLEMENTATION=1"
+  export_header_blink = "third_party/WebKit/Source/platform/PlatformExport.h"
 }
 
 mojom("android_mojo_bindings") {
