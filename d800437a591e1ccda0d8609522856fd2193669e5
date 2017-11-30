@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cf5e56b_0ebde5ff",
+        "filename": "mojo/edk/embedder/scoped_platform_handle.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-30T21:09:06Z",
+      "side": 1,
+      "message": "Yikes, you\u0027re right. Can you also please remove the condition here since this will never \u003d\u003d \u0026other?  See https://groups.google.com/a/chromium.org/forum/#!topic/chromium-dev/ZzfGfgruHxc",
+      "revId": "d800437a591e1ccda0d8609522856fd2193669e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
