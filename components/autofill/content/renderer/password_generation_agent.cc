@@ -379,6 +379,7 @@ PasswordGenerationAgent::CreatePasswordFormToPresave() {
     password_form = password_agent_->GetPasswordFormFromUnownedInputElements();
   }
   if (password_form) {
+    LOG(ERROR) << "username value " << password_form->username_value;
     password_form->type = PasswordForm::TYPE_GENERATED;
     // TODO(kolos): when we are good in username detection, save username
     // as well.

@@ -305,9 +305,8 @@ void TabHelper::DidFinishNavigation(
       if (extension && AppLaunchInfo::GetFullLaunchURL(extension).is_valid())
         SetExtensionApp(extension);
     } else {
-      UpdateExtensionAppIcon(
-          enabled_extensions.GetExtensionOrAppByURL(
-              navigation_handle->GetURL()));
+      UpdateExtensionAppIcon(enabled_extensions.GetExtensionOrAppByURL(
+          navigation_handle->GetURL()));
     }
   } else {
     UpdateExtensionAppIcon(

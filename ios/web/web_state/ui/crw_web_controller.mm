@@ -1991,7 +1991,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
   [self optOutScrollsToTopForSubviews];
 
   DCHECK((currentURL == _lastRegisteredRequestURL) ||  // latest navigation
-         // previous navigation
+                                                       // previous navigation
          ![[_navigationStates lastAddedNavigation] isEqual:navigation] ||
          // invalid URL load
          (!_lastRegisteredRequestURL.is_valid() &&
@@ -5007,11 +5007,11 @@ registerLoadRequestForURL:(const GURL&)requestURL
            // TODO(crbug.com/788465): simplify history state handling to avoid
            // this hack.
            WKNavigation* last_added_navigation =
-              [_navigationStates lastAddedNavigation];
+               [_navigationStates lastAddedNavigation];
            BOOL differentDocumentNavigationStarted =
-             navigation != last_added_navigation &&
-             [_navigationStates stateForNavigation:last_added_navigation] >=
-             web::WKNavigationState::STARTED;
+               navigation != last_added_navigation &&
+               [_navigationStates stateForNavigation:last_added_navigation] >=
+                   web::WKNavigationState::STARTED;
            if (windowLocationMatchesNewURL &&
                newURLOriginMatchesDocumentURLOrigin &&
                webViewURLMatchesNewURL && URLDidChangeFromDocumentURL &&
