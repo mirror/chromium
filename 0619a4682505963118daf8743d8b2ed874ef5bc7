@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a09b7cb_407183bb",
+        "filename": "chrome/browser/resources/md_extensions/item.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-30T23:17:40Z",
+      "side": 1,
+      "message": "Does this need to be :root? I believe it can simply be :host {} and reduce the scope of those variables only within this Shadow DOM subtree. For example see https://cs.chromium.org/chromium/src/ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html?l\u003d13",
+      "range": {
+        "startLine": 29,
+        "startChar": 7,
+        "endLine": 29,
+        "endChar": 11
+      },
+      "revId": "0619a4682505963118daf8743d8b2ed874ef5bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
