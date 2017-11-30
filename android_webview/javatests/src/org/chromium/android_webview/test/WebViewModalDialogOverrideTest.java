@@ -170,7 +170,7 @@ public class WebViewModalDialogOverrideTest {
         Assert.assertEquals("false", result);
     }
 
-    private static class TapGestureStateListener extends GestureStateListener {
+    private static class TapGestureStateListener implements GestureStateListener {
         private CallbackHelper mCallbackHelper = new CallbackHelper();
 
         public int getCallCount() {
@@ -193,7 +193,7 @@ public class WebViewModalDialogOverrideTest {
     private void tapViewAndWait(AwTestContainerView view) throws Throwable {
         final TapGestureStateListener tapGestureStateListener = new TapGestureStateListener();
         int callCount = tapGestureStateListener.getCallCount();
-        view.getContentViewCore().addGestureStateListener(tapGestureStateListener);
+        view.getWebContents().getGestureListenerManager().addListener(tapGestureStateListener);
 
         AwTestTouchUtils.simulateTouchCenterOfView(view);
         tapGestureStateListener.waitForTap(callCount);
