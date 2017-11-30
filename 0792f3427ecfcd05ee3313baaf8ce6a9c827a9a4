@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8f76a838_049317e0",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-30T09:00:47Z",
+      "side": 1,
+      "message": "My feeling is that we probably always want IsThrottablePriority to return true if the associated frame scheduler\u0027s current throttling state is kThrottled and if throttle-if-background flag is true... while currently we don\u0027t have either the current throttling state or the exact flag?",
+      "parentUuid": "331bbcab_8c68f3b6",
+      "revId": "0792f3427ecfcd05ee3313baaf8ce6a9c827a9a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6e8e562_5951d03f",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
         "patchSetId": 2
