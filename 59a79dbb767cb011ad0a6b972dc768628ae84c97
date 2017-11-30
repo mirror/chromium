@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "c3e8c10b_8d257175",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 4417,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-30T00:28:27Z",
+      "side": 1,
+      "message": "I see.\nI was concerned about the cycle at https://cs.chromium.org/chromium/src/ios/chrome/browser/ui/browser_view_controller.mm?type\u003dcs\u0026q\u003df:browser_view_controller.mm\u0026sq\u003dpackage:chromium\u0026l\u003d2416\nIf we think it\u0027s not an issue, I remove the weak then.\nThanks for the context!\n\nEDIT: to address gambard@ comment below, I move the focusing to foregroundTabWasAddedCompletionBlock. There it\u0027s more obvious we should use weakSelf, as the cycle is apparent. WDYT?",
+      "parentUuid": "0e231fd0_f8bb736b",
+      "range": {
+        "startLine": 4417,
+        "startChar": 32,
+        "endLine": 4417,
+        "endChar": 40
+      },
+      "revId": "59a79dbb767cb011ad0a6b972dc768628ae84c97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ed5b586_ba040b30",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 3
@@ -259,6 +283,30 @@
       "revId": "59a79dbb767cb011ad0a6b972dc768628ae84c97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f104c374_7f179486",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 4424,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-11-30T00:28:27Z",
+      "side": 1,
+      "message": "Ok. Both options seem awful anyway :)\n\nSo I move it in the completion, but there it\u0027s way clearer that we should use weakSelf.",
+      "parentUuid": "0cf4ef7c_3dabe690",
+      "range": {
+        "startLine": 4421,
+        "startChar": 30,
+        "endLine": 4424,
+        "endChar": 14
+      },
+      "revId": "59a79dbb767cb011ad0a6b972dc768628ae84c97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
