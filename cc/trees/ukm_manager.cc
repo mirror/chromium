@@ -19,6 +19,7 @@ UkmManager::~UkmManager() = default;
 void UkmManager::SetSourceURL(const GURL& url) {
   // If we accumulating any metrics, record them before reseting the source.
   RecordCheckerboardUkm();
+  RecordRenderingUkm();
 
   source_id_ = recorder_->GetNewSourceID();
   recorder_->UpdateSourceURL(source_id_, url);
@@ -46,6 +47,10 @@ void UkmManager::AddCheckerboardStatsForFrame(int64_t checkerboard_area,
   num_of_frames_++;
 }
 
+void UkmManager::AddCheckerboardedImages(int num_of_checkerboarded_images) {
+  num_of_checkerboarded_images_ += num_of_checkerboarded_images;
+}
+
 void UkmManager::RecordCheckerboardUkm() {
   // Only make a recording if there was any visible area from PictureLayers,
   // which can be checkerboarded.
@@ -64,6 +69,16 @@ void UkmManager::RecordCheckerboardUkm() {
   num_missing_tiles_ = 0;
   num_of_frames_ = 0;
   total_visible_area_ = 0;
+}
+
+void UkmManager::RecordRenderingUkm() {
+  if (source_id_ == ukm::kInvalidSourceId)
+    return;
+
+  ukm::builders::Compositor_Rendering(source_id_)
+      .SetCheckerboardedImagesCount(num_of_checkerboarded_images_)
+      .Record(recorder_.get());
+  num_of_checkerboarded_images_ = 0;
 }
 
 }  // namespace cc
