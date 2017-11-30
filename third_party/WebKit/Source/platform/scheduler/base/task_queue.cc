@@ -11,6 +11,52 @@
 namespace blink {
 namespace scheduler {
 
+namespace {
+
+class SingleThreadTaskRunnerWithLocation : public base::SingleThreadTaskRunner {
+ public:
+  SingleThreadTaskRunnerWithLocation(scoped_refptr<TaskQueue> task_queue,
+                                     const base::Location& location)
+      : task_queue_(task_queue), location_(location) {}
+
+  bool PostNonNestableDelayedTask(const base::Location& from_here,
+                                  base::OnceClosure task,
+                                  base::TimeDelta delay) override {
+    printf("post\n");
+    return task_queue_->PostTaskWithMetadata(TaskQueue::PostedTask(
+        std::move(task), from_here, delay, base::Nestable::kNonNestable,
+        base::nullopt, location_));
+  }
+
+  bool PostDelayedTask(const base::Location& from_here,
+                       base::OnceClosure task,
+                       base::TimeDelta delay) override {
+    printf("post2\n");
+    return task_queue_->PostTaskWithMetadata(TaskQueue::PostedTask(
+        std::move(task), from_here, delay, base::Nestable::kNestable,
+        base::nullopt, location_));
+  }
+
+  bool RunsTasksInCurrentSequence() const override {
+    return task_queue_->RunsTasksInCurrentSequence();
+  }
+
+  scoped_refptr<base::SingleThreadTaskRunner> Clone(
+      const base::Location& location) override {
+    return new SingleThreadTaskRunnerWithLocation(task_queue_, location);
+  }
+
+ private:
+  ~SingleThreadTaskRunnerWithLocation() override {}
+
+  scoped_refptr<TaskQueue> task_queue_;
+  base::Location location_;
+
+  DISALLOW_COPY_AND_ASSIGN(SingleThreadTaskRunnerWithLocation);
+};
+
+}  // namespace
+
 TaskQueue::TaskQueue(std::unique_ptr<internal::TaskQueueImpl> impl,
                      const TaskQueue::Spec& spec)
     : impl_(std::move(impl)),
@@ -36,18 +82,21 @@ TaskQueue::Task::Task(TaskQueue::PostedTask task,
                   std::move(task.callback),
                   desired_run_time,
                   task.nestable),
-      task_type_(task.task_type) {}
+      task_type_(task.task_type),
+      location_(task.location) {}
 
 TaskQueue::PostedTask::PostedTask(base::OnceClosure callback,
                                   base::Location posted_from,
                                   base::TimeDelta delay,
                                   base::Nestable nestable,
-                                  base::Optional<TaskType> task_type)
+                                  base::Optional<TaskType> task_type,
+                                  base::Optional<base::Location> location)
     : callback(std::move(callback)),
       posted_from(posted_from),
       delay(delay),
       nestable(nestable),
-      task_type(task_type) {}
+      task_type(task_type),
+      location(location) {}
 
 void TaskQueue::ShutdownTaskQueue() {
   DCHECK_CALLED_ON_VALID_THREAD(main_thread_checker_);
@@ -84,6 +133,11 @@ bool TaskQueue::PostNonNestableDelayedTask(const base::Location& from_here,
     return false;
   return impl_->PostDelayedTask(PostedTask(std::move(task), from_here, delay,
                                            base::Nestable::kNonNestable));
+}
+
+scoped_refptr<base::SingleThreadTaskRunner> TaskQueue::Clone(
+    const base::Location& from_here) {
+  return new SingleThreadTaskRunnerWithLocation(this, from_here);
 }
 
 bool TaskQueue::PostTaskWithMetadata(PostedTask task) {
