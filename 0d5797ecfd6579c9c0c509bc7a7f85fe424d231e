@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0031fb5a_9a3435d9",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-30T06:13:26Z",
+      "side": 1,
+      "message": "Added this return here so that it\u0027s obvious that we are only recording it once. Before, this would fall through to the next if statement which would have returned anyway.",
+      "revId": "0d5797ecfd6579c9c0c509bc7a7f85fe424d231e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
