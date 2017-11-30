@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3209e2bc_d4ade05e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-30T13:09:29Z",
+      "side": 1,
+      "message": "Done, thanks for the reference!",
+      "parentUuid": "4bf2fdc5_dfcbbf1b",
+      "revId": "19df2a50b00fd85094c6880520cc928c9285bd72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4e5b8b8_355bb9a0",
         "filename": "components/signin/core/browser/account_tracker_service.cc",
         "patchSetId": 5
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "ae925705_370a4cd3",
+        "filename": "components/signin/core/browser/account_tracker_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-30T13:09:29Z",
+      "side": 1,
+      "message": "There\u0027s a test that checks exactly this situation. This did not happen before because AccountFetcherService did not call SetIsChildAccount if the child whose information was fetched did not match the one received in the parameter:\nhttps://cs.chromium.org/chromium/src/components/signin/core/browser/account_fetcher_service.cc?q\u003daccount_fetcher_se\u0026dr\u003dC\u0026l\u003d292\n\nI\u0027ve removed the part of the test that checks this invalid scenario:\nhttps://cs.chromium.org/chromium/src/components/signin/core/browser/account_tracker_service_unittest.cc?dr\u003dC\u0026l\u003d1079\n\nLet me know if I should do something different.",
+      "parentUuid": "a4e5b8b8_355bb9a0",
+      "range": {
+        "startLine": 248,
+        "startChar": 25,
+        "endLine": 248,
+        "endChar": 34
+      },
+      "revId": "19df2a50b00fd85094c6880520cc928c9285bd72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ffff9da_da43a041",
         "filename": "components/signin/core/browser/account_tracker_service_unittest.cc",
         "patchSetId": 5
@@ -56,6 +98,24 @@
       "revId": "19df2a50b00fd85094c6880520cc928c9285bd72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d1a55ea_602e3c3f",
+        "filename": "components/signin/core/browser/account_tracker_service_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-30T13:09:29Z",
+      "side": 1,
+      "message": "That\u0027s weird. I\u0027ve issued \"git cl format\".",
+      "parentUuid": "6ffff9da_da43a041",
+      "revId": "19df2a50b00fd85094c6880520cc928c9285bd72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "be418599_520b97f5",
+        "filename": "components/signin/core/browser/child_account_info_fetcher_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-30T13:09:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39ddddb0_1e83a290",
+      "range": {
+        "startLine": 19,
+        "startChar": 16,
+        "endLine": 19,
+        "endChar": 17
+      },
+      "revId": "19df2a50b00fd85094c6880520cc928c9285bd72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5cf19f0_c539e815",
         "filename": "components/signin/core/browser/child_account_info_fetcher_impl.h",
         "patchSetId": 5
@@ -102,6 +186,30 @@
       "revId": "19df2a50b00fd85094c6880520cc928c9285bd72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2b8bc3f_f5f19dd3",
+        "filename": "components/signin/core/browser/child_account_info_fetcher_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-30T13:09:29Z",
+      "side": 1,
+      "message": "Probably I should remove this file. However, we may decide to reuse the invalidation service for graduation (which we can\u0027t currently, as described in the DD). But, if this is the case, this previous version could serve as reference anyway.",
+      "parentUuid": "d5cf19f0_c539e815",
+      "range": {
+        "startLine": 19,
+        "startChar": 17,
+        "endLine": 19,
+        "endChar": 22
+      },
+      "revId": "19df2a50b00fd85094c6880520cc928c9285bd72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

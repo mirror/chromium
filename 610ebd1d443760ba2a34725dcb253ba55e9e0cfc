@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64f47d3b_18e6b18a",
+        "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1118,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-30T13:09:29Z",
+      "side": 1,
+      "message": "I had to do this hack to allow supervision triggering to work in different sessions. \"user_context\" is the one holding information right after refresh token fetch, but \"user\" loads the user type from the disk on session restore. I\u0027m not sure why the user type is kept in different places, but I\u0027m going to study a better way to keep them in sync in the follow-up.",
+      "range": {
+        "startLine": 1117,
+        "startChar": 4,
+        "endLine": 1118,
+        "endChar": 80
+      },
+      "revId": "610ebd1d443760ba2a34725dcb253ba55e9e0cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
