@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "9751a650_60bff548",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-30T12:44:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20d79c69_29857641",
+      "range": {
+        "startLine": 37,
+        "startChar": 18,
+        "endLine": 37,
+        "endChar": 31
+      },
+      "revId": "fd28d13b8c0f8190a4ec275ca2249546ea64b48e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc9f76aa_8766486d",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
         "patchSetId": 6
@@ -165,6 +189,53 @@
       "revId": "fd28d13b8c0f8190a4ec275ca2249546ea64b48e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ac4fb36_87080d34",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-30T12:44:43Z",
+      "side": 1,
+      "message": "OK, let me change to do in OnNetworkQuiet. Also, I may create a followup CL to investigate how often we fail to report on shutdown.",
+      "parentUuid": "6668dd67_dd0c0aa2",
+      "range": {
+        "startLine": 230,
+        "startChar": 2,
+        "endLine": 230,
+        "endChar": 30
+      },
+      "revId": "fd28d13b8c0f8190a4ec275ca2249546ea64b48e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "01008ead_529dbd05",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-30T12:44:43Z",
+      "side": 1,
+      "message": "oops, I need pointer check here too",
+      "range": {
+        "startLine": 389,
+        "startChar": 2,
+        "endLine": 389,
+        "endChar": 18
+      },
+      "revId": "fd28d13b8c0f8190a4ec275ca2249546ea64b48e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
