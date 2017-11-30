@@ -16,6 +16,24 @@
       "revId": "eeabaeb5d3cd1e943da8f71bbe790915f0f995be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cead1ba4_07e5fca5",
+        "filename": "ios/chrome/browser/ui/first_run/welcome_to_chrome_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-30T17:43:22Z",
+      "side": 1,
+      "message": "I\u0027d like to leave it as-is because it is possible that the presenter may conform to more than a single presenter protocol.",
+      "parentUuid": "1fab5462_1d11462b",
+      "revId": "eeabaeb5d3cd1e943da8f71bbe790915f0f995be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
