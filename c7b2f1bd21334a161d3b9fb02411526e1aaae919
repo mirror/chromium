@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "6643b2cb_daf3e1df",
+        "filename": "ipc/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-30T20:16:12Z",
+      "side": 1,
+      "message": "Probably! Maybe ping dcheng@ on that",
+      "parentUuid": "a4ff9231_18d3b359",
+      "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7177a204_cce54b3c",
         "filename": "ipc/README.md",
         "patchSetId": 1
@@ -209,6 +227,24 @@
       "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48c2d938_1fb9df84",
+        "filename": "ipc/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-30T20:16:12Z",
+      "side": 1,
+      "message": "LGTM",
+      "parentUuid": "a15657e4_eaa87655",
+      "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -267,6 +303,30 @@
       "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2005b513_12634deb",
+        "filename": "ipc/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-30T20:16:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b6118663_34fccb7d",
+      "range": {
+        "startLine": 285,
+        "startChar": 67,
+        "endLine": 285,
+        "endChar": 71
+      },
+      "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -334,6 +394,24 @@
       "side": 1,
       "message": "To avoid confusion, changed to \"(the side which instantiates the implementation, e.g. the side you call `MakeBinding` on)\". WDYT?",
       "parentUuid": "89438b08_3f543bea",
+      "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17f874c2_b4282df4",
+        "filename": "ipc/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-30T20:16:12Z",
+      "side": 1,
+      "message": "Part of the problem is that `MakeBinding` is not a thing that exists anywhere, and I wouldn\u0027t want to say \"MakeStrongBinding\", because that\u0027s too specific and may imply more than it should. Is there some way you can say what you want without referring to a specific symbol?",
+      "parentUuid": "b45d8367_366454d0",
       "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -480,6 +558,24 @@
     },
     {
       "key": {
+        "uuid": "1238ff6e_61db3fdd",
+        "filename": "mojo/public/cpp/bindings/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-30T20:16:12Z",
+      "side": 1,
+      "message": "LGTM",
+      "parentUuid": "d74a871c_6e7c2737",
+      "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fd8ed4f_63aaec6c",
         "filename": "mojo/public/cpp/bindings/README.md",
         "patchSetId": 1
@@ -512,6 +608,24 @@
       "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af679cfe_8aff04ac",
+        "filename": "mojo/public/cpp/bindings/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-30T20:16:12Z",
+      "side": 1,
+      "message": "Oh! Yeah, sorry I totally missed that it was ## not ###. Nice.",
+      "parentUuid": "7a179bcb_1a4c6f47",
+      "revId": "c7b2f1bd21334a161d3b9fb02411526e1aaae919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

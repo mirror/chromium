@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b982c8e7_8fe73673",
+        "filename": "ipc/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-30T20:16:12Z",
+      "side": 1,
+      "message": "nit: ```cpp\n\nIf you want to point out that it\u0027s a header just use a // comment inside\n\nAlternatively you could just inline the definition of BindRequest and have a single block, since it\u0027s just documentation and is probably clear enough that way.",
+      "revId": "1c1e7dccefb518a4c0ad139f5797a658f4db55cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
