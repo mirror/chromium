@@ -127,8 +127,24 @@ void U2fBleDevice::OnControlPointLengthRead(base::Optional<uint16_t> length) {
   TrySend();
 }
 
+char HexToChar(uint8_t hex) {
+  return hex < 10 ? '0' + hex : 'A' + (hex - 10);
+}
+
+template <typename Data>
+std::string Format(const Data& data) {
+  std::string result;
+  for (uint8_t byte : data) {
+    result.push_back(HexToChar((byte >> 4) & 0xF));
+    result.push_back(HexToChar(byte & 0xF));
+    result.push_back(' ');
+  }
+  return result;
+}
+
 void U2fBleDevice::OnMessage(std::vector<uint8_t> data) {
   VLOG(2) << "Status value updated: size=" << data.size();
+  VLOG(2) << "data=" << Format(data);
 
   DCHECK(transaction_);
   if (!transaction_->frame_assembler()) {
