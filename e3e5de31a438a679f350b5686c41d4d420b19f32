@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3c24a9c6_df99cb0e",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-30T02:25:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e2cb401_e686d92c",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 36
+      },
+      "revId": "e3e5de31a438a679f350b5686c41d4d420b19f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fe1efed_317d45f0",
         "filename": "content/browser/webauth/authenticator_impl.h",
         "patchSetId": 10
@@ -39,6 +63,24 @@
       "revId": "e3e5de31a438a679f350b5686c41d4d420b19f32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a619d8c9_bbe9b60c",
+        "filename": "content/browser/webauth/authenticator_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-30T02:25:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fe1efed_317d45f0",
+      "revId": "e3e5de31a438a679f350b5686c41d4d420b19f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "e3e5de31a438a679f350b5686c41d4d420b19f32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3d15450_5dbc251d",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-30T02:25:57Z",
+      "side": 1,
+      "message": "Done. Noting here that Reilly and I agreed offline that the way SuggestionsServiceImpl does it is not workable with RenderViewHostTestHarness.",
+      "parentUuid": "c90d4723_de091476",
+      "range": {
+        "startLine": 702,
+        "startChar": 6,
+        "endLine": 702,
+        "endChar": 37
+      },
+      "revId": "e3e5de31a438a679f350b5686c41d4d420b19f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
