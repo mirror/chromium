@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d79deda9_d21430d0",
+        "filename": "ash/accessibility/accessibility_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-30T02:16:24Z",
+      "side": 1,
+      "message": "nit: document callback parameter, especially what the TimeDelta means.",
+      "revId": "49edb332c581e6effdd012e5946fd183c3ea9306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14dc6d50_f6268423",
+        "filename": "ash/accessibility/test_accessibility_controller_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-30T02:16:24Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think you need the std::move() on kShutdownSoundDuration",
+      "revId": "49edb332c581e6effdd012e5946fd183c3ea9306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f280123_63647e7f",
+        "filename": "ash/wm/lock_state_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-30T02:16:24Z",
+      "side": 1,
+      "message": "nit: This could use a comment somewhere explaining what it is doing with durations.",
+      "revId": "49edb332c581e6effdd012e5946fd183c3ea9306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c604c925_fdf33bd5",
+        "filename": "ash/wm/lock_state_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-30T02:16:24Z",
+      "side": 1,
+      "message": "The Unretained makes me a little nervous here. Would it work to use weak_ptr_factory_.GetWeakPtr() here?",
+      "revId": "49edb332c581e6effdd012e5946fd183c3ea9306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc841f5a_a48f55eb",
+        "filename": "chrome/browser/ui/ash/accessibility/accessibility_controller_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-30T02:16:24Z",
+      "side": 1,
+      "message": "Do you need to move the sound_duration?",
+      "revId": "49edb332c581e6effdd012e5946fd183c3ea9306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d775515c_677dd023",
+        "filename": "chrome/browser/ui/ash/accessibility/accessibility_controller_client_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-30T02:16:24Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "49edb332c581e6effdd012e5946fd183c3ea9306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
