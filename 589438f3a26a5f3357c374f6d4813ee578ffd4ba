@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "11f547b2_ec65ef15",
+        "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-30T04:22:24Z",
+      "side": 1,
+      "message": "The copy constructor is still needed by this pattern:\n\nInlineBoxPosition box_position \u003d ComputeInlineBoxPosition(...)\n\nThe const members naturally disallow assign.",
+      "parentUuid": "1bc43ef7_494fcaec",
+      "revId": "589438f3a26a5f3357c374f6d4813ee578ffd4ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a8b7f73_43aaf070",
         "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.h",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "cca9c62b_f8cb2ef2",
+        "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-30T04:22:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a8b7f73_43aaf070",
+      "revId": "589438f3a26a5f3357c374f6d4813ee578ffd4ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2978ef6_7df1326e",
         "filename": "third_party/WebKit/Source/core/editing/RenderedPosition.h",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-30T01:44:35Z",
       "side": 1,
       "message": "I hope following patch will change |const LayoutObject*| and\n|const InlineBox*| to const references.",
+      "revId": "589438f3a26a5f3357c374f6d4813ee578ffd4ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69cadeaa_0b4d13e7",
+        "filename": "third_party/WebKit/Source/core/editing/RenderedPosition.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-30T04:22:24Z",
+      "side": 1,
+      "message": "InlineBox* can be nullptr. Not sure about LayoutObject*.",
+      "parentUuid": "a2978ef6_7df1326e",
       "revId": "589438f3a26a5f3357c374f6d4813ee578ffd4ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
