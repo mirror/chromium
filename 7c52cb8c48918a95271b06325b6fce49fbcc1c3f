@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "93a96e79_833c3200",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-30T00:28:07Z",
+      "side": 1,
+      "message": "Changed to VR.SessionTime.DLA.",
+      "parentUuid": "bfc6b796_fcd35607",
+      "range": {
+        "startLine": 67,
+        "startChar": 43,
+        "endLine": 67,
+        "endChar": 55
+      },
+      "revId": "7c52cb8c48918a95271b06325b6fce49fbcc1c3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4af7d75b_74c8eb97",
         "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
         "patchSetId": 3
@@ -117,6 +141,30 @@
       "revId": "7c52cb8c48918a95271b06325b6fce49fbcc1c3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cba9298_39016f7f",
+        "filename": "chrome/browser/android/vr_shell/vr_usage_monitor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-30T00:28:07Z",
+      "side": 1,
+      "message": "Absolutely, thanks for bringing this up. Bug filed here: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d789758",
+      "parentUuid": "c8d66fe1_7b7f4143",
+      "range": {
+        "startLine": 142,
+        "startChar": 75,
+        "endLine": 142,
+        "endChar": 0
+      },
+      "revId": "7c52cb8c48918a95271b06325b6fce49fbcc1c3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
