@@ -162,8 +162,8 @@ TestMockTimeTaskRunner::TestOrderedPendingTask::TestOrderedPendingTask(
                             nestability),
       ordinal(ordinal) {}
 
-TestMockTimeTaskRunner::TestOrderedPendingTask::~TestOrderedPendingTask() =
-    default;
+TestMockTimeTaskRunner::TestOrderedPendingTask::~TestOrderedPendingTask() {
+}
 
 TestMockTimeTaskRunner::TestOrderedPendingTask&
 TestMockTimeTaskRunner::TestOrderedPendingTask::operator=(
@@ -203,7 +203,8 @@ TestMockTimeTaskRunner::TestMockTimeTaskRunner(Time start_time,
   }
 }
 
-TestMockTimeTaskRunner::~TestMockTimeTaskRunner() = default;
+TestMockTimeTaskRunner::~TestMockTimeTaskRunner() {
+}
 
 void TestMockTimeTaskRunner::FastForwardBy(TimeDelta delta) {
   DCHECK(thread_checker_.CalledOnValidThread());

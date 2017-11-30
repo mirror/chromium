@@ -237,9 +237,7 @@ void UiSceneCreator::Create2dBrowsingSubtreeRoots() {
           [](UiElement* e, const ModalPromptType& t) {
             if (t == kModalPromptTypeExitVRForSiteInfo) {
               e->SetVisibleImmediately(false);
-            } else if (
-                t ==
-                kModalPromptTypeExitVRForVoiceSearchRecordAudioOsPermission) {
+            } else if (t == kModalPromptTypeExitVRForAudioPermission) {
               e->SetOpacity(kModalPromptFadeOpacity);
             } else {
               e->SetVisible(true);
@@ -446,7 +444,8 @@ void UiSceneCreator::CreateSplashScreenForDirectWebVrLaunch() {
   transient_parent->SetTransitionedProperties({OPACITY});
   transient_parent->AddBinding(VR_BIND_FUNC(
       bool, Model, model_,
-      web_vr_show_splash_screen && model->web_vr_has_produced_frames(),
+      web_vr_show_splash_screen &&
+          model->web_vr_timeout_state == kWebVrNoTimeoutPending,
       ShowUntilSignalTransientElement, transient_parent.get(), Signal));
   scene_->AddUiElement(kSplashScreenViewportAwareRoot,
                        std::move(transient_parent));
@@ -741,14 +740,12 @@ void UiSceneCreator::CreateVoiceSearchUiGroup() {
             }
           },
           speech_result_parent)));
-  auto speech_result =
-      base::MakeUnique<Text>(256, kVoiceSearchRecognitionResultTextHeight,
-                             kVoiceSearchRecognitionResultTextWidth);
+  auto speech_result = base::MakeUnique<Text>(512, kSuggestionContentTextHeight,
+                                              kSuggestionTextFieldWidth);
   speech_result->set_name(kSpeechRecognitionResultText);
   speech_result->set_draw_phase(kPhaseForeground);
   speech_result->SetTranslate(0.f, kSpeechRecognitionResultTextYOffset, 0.f);
   speech_result->set_hit_testable(false);
-  speech_result->SetSize(kVoiceSearchRecognitionResultTextWidth, 0);
   speech_result->SetTextAlignment(UiTexture::kTextAlignmentCenter);
   BindColor(model_, speech_result.get(), &ColorScheme::prompt_foreground,
             &Text::SetColor);
@@ -1074,11 +1071,10 @@ void UiSceneCreator::CreateWebVrUrlToast() {
   auto* parent =
       AddTransientParent(kWebVrUrlToastTransientParent, kWebVrViewportAwareRoot,
                          kWebVrUrlToastTimeoutSeconds, true, scene_);
-  parent->AddBinding(VR_BIND_FUNC(bool, Model, model_,
-                                  web_vr_started_for_autopresentation &&
-                                      !model->web_vr_show_splash_screen &&
-                                      model->web_vr_has_produced_frames(),
-                                  UiElement, parent, SetVisible));
+  parent->AddBinding(VR_BIND_FUNC(
+      bool, Model, model_,
+      web_vr_started_for_autopresentation && !model->web_vr_show_splash_screen,
+      UiElement, parent, SetVisible));
 
   auto element = base::MakeUnique<WebVrUrlToast>(
       512, base::Bind(&UiBrowserInterface::OnUnsupportedMode,
@@ -1233,8 +1229,7 @@ void UiSceneCreator::CreateAudioPermissionPrompt() {
   backplane->SetTransitionedProperties({OPACITY});
   backplane->AddBinding(VR_BIND_FUNC(
       bool, Model, model_,
-      active_modal_prompt_type ==
-          kModalPromptTypeExitVRForVoiceSearchRecordAudioOsPermission,
+      active_modal_prompt_type == kModalPromptTypeExitVRForAudioPermission,
       UiElement, backplane.get(), SetVisible));
 
   std::unique_ptr<Shadow> shadow = base::MakeUnique<Shadow>();
@@ -1245,14 +1240,14 @@ void UiSceneCreator::CreateAudioPermissionPrompt() {
   std::unique_ptr<AudioPermissionPrompt> prompt =
       base::MakeUnique<AudioPermissionPrompt>(
           1024,
-          base::Bind(
-              &UiBrowserInterface::OnExitVrPromptResult,
-              base::Unretained(browser_), ExitVrPromptChoice::CHOICE_EXIT,
-              UiUnsupportedMode::kVoiceSearchNeedsRecordAudioOsPermission),
-          base::Bind(
-              &UiBrowserInterface::OnExitVrPromptResult,
-              base::Unretained(browser_), ExitVrPromptChoice::CHOICE_STAY,
-              UiUnsupportedMode::kVoiceSearchNeedsRecordAudioOsPermission));
+          base::Bind(&UiBrowserInterface::OnExitVrPromptResult,
+                     base::Unretained(browser_),
+                     ExitVrPromptChoice::CHOICE_EXIT,
+                     UiUnsupportedMode::kAndroidPermissionNeeded),
+          base::Bind(&UiBrowserInterface::OnExitVrPromptResult,
+                     base::Unretained(browser_),
+                     ExitVrPromptChoice::CHOICE_STAY,
+                     UiUnsupportedMode::kAndroidPermissionNeeded));
   prompt->set_name(kAudioPermissionPrompt);
   prompt->set_draw_phase(kPhaseForeground);
   prompt->SetSize(kAudioPermissionPromptWidth, kAudioPermissionPromptHeight);
@@ -1318,7 +1313,8 @@ void UiSceneCreator::CreateToasts() {
   // kick the visibility of this element.
   parent->AddBinding(
       VR_BIND_FUNC(bool, Model, model_,
-                   web_vr_has_produced_frames() && model->web_vr_show_toast,
+                   web_vr_timeout_state == kWebVrNoTimeoutPending &&
+                       model->web_vr_mode && model->web_vr_show_toast,
                    UiElement, parent, SetVisible));
 
   element = base::MakeUnique<ExclusiveScreenToast>(512);

@@ -19,8 +19,8 @@ typedef void (*CallbackFunc)();
 template <size_t alignment>
 class AlignedData {
  public:
-  AlignedData() = default;
-  ~AlignedData() = default;
+  AlignedData() {}
+  ~AlignedData() {}
   alignas(alignment) char data_[alignment];
 };
 
@@ -123,8 +123,8 @@ struct CallbackSingletonWithStaticTrait::Trait
 template <class Type>
 class AlignedTestSingleton {
  public:
-  AlignedTestSingleton() = default;
-  ~AlignedTestSingleton() = default;
+  AlignedTestSingleton() {}
+  ~AlignedTestSingleton() {}
   static AlignedTestSingleton* GetInstance() {
     return Singleton<AlignedTestSingleton,
                      StaticMemorySingletonTraits<AlignedTestSingleton>>::get();
@@ -162,7 +162,7 @@ CallbackFunc* GetStaticSingleton() {
 
 class SingletonTest : public testing::Test {
  public:
-  SingletonTest() = default;
+  SingletonTest() {}
 
   void SetUp() override {
     non_leak_called_ = false;

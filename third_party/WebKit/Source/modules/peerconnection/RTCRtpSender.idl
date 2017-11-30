@@ -3,7 +3,9 @@
 // found in the LICENSE file.
 
 // https://w3c.github.io/webrtc-pc/#rtcrtpsender-interface
-interface RTCRtpSender {
+[
+    RuntimeEnabled=RTCRtpSender
+] interface RTCRtpSender {
     readonly attribute MediaStreamTrack? track;
     // TODO(hbos): Implement the rest of RTCRtpSender, https://crbug.com/700916.
 };

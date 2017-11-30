@@ -29,7 +29,7 @@ static_assert(sizeof(blink::PlatformThreadId) >= sizeof(pid_t),
 
 scoped_refptr<base::SingleThreadTaskRunner>
 WebThread::GetSingleThreadTaskRunner() {
-  return GetWebTaskRunner();
+  return GetWebTaskRunner()->ToSingleThreadTaskRunner();
 }
 
 }  // namespace blink

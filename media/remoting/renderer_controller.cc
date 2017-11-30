@@ -29,6 +29,10 @@ namespace {
 // are held stable before switching to media remoting.
 constexpr base::TimeDelta kDelayedStart = base::TimeDelta::FromSeconds(5);
 
+// The maximum fraction of the transmission capacity that can safely be used by
+// Media Remoting to deliver the media contents.
+constexpr double kMaxMediaBitrateCapacityFraction = 0.9;
+
 constexpr int kPixelPerSec4K = 3840 * 2160 * 30;  // 4k 30fps.
 constexpr int kPixelPerSec2K = 1920 * 1080 * 30;  // 1080p 30fps.
 
@@ -105,10 +109,6 @@ void RendererController::OnBecameDominantVisibleContent(bool is_dominant) {
   if (is_dominant_content_ == is_dominant)
     return;
   is_dominant_content_ = is_dominant;
-  // Reset the errors when the media element stops being the dominant visible
-  // content in the tab.
-  if (!is_dominant_content_)
-    encountered_renderer_fatal_error_ = false;
   UpdateAndMaybeSwitch(BECAME_DOMINANT_CONTENT, BECAME_AUXILIARY_CONTENT);
 }
 
@@ -324,7 +324,7 @@ bool RendererController::CanBeRemoting() const {
            state == SharedSession::SESSION_PERMANENTLY_STOPPED;
   }
 
-  if (permanently_disable_remoting_)
+  if (encountered_renderer_fatal_error_)
     return false;
 
   switch (state) {
@@ -373,8 +373,7 @@ void RendererController::UpdateAndMaybeSwitch(StartTrigger start_trigger,
   // remote rendering. However, current technical limitations require encrypted
   // content be remoted without waiting for a user signal.
   if (!is_encrypted_)
-    should_be_remoting &=
-        (is_dominant_content_ && !encountered_renderer_fatal_error_);
+    should_be_remoting &= is_dominant_content_;
 
   if ((remote_rendering_started_ ||
        delayed_start_stability_timer_.IsRunning()) == should_be_remoting)
@@ -423,17 +422,25 @@ void RendererController::WaitForStabilityBeforeStart(
   DCHECK(!is_encrypted_);
   delayed_start_stability_timer_.Start(
       FROM_HERE, kDelayedStart,
-      base::Bind(&RendererController::OnDelayedStartTimerFired,
-                 base::Unretained(this), start_trigger,
-                 client_->DecodedFrameCount(), clock_->NowTicks()));
+      base::Bind(
+          &RendererController::OnDelayedStartTimerFired, base::Unretained(this),
+          start_trigger,
+          client_->AudioDecodedByteCount() + client_->VideoDecodedByteCount(),
+          client_->DecodedFrameCount(), clock_->NowTicks()));
+
+  session_->EstimateTransmissionCapacity(
+      base::BindOnce(&RendererController::OnReceivedTransmissionCapacity,
+                     weak_factory_.GetWeakPtr()));
 }
 
 void RendererController::CancelDelayedStart() {
   delayed_start_stability_timer_.Stop();
+  transmission_capacity_ = 0;
 }
 
 void RendererController::OnDelayedStartTimerFired(
     StartTrigger start_trigger,
+    size_t decoded_bytes_before_delay,
     unsigned decoded_frame_count_before_delay,
     base::TimeTicks delayed_start_time) {
   DCHECK(is_dominant_content_);
@@ -442,6 +449,14 @@ void RendererController::OnDelayedStartTimerFired(
 
   base::TimeDelta elapsed = clock_->NowTicks() - delayed_start_time;
   DCHECK(!elapsed.is_zero());
+  double kilobits_per_second =
+      (client_->AudioDecodedByteCount() + client_->VideoDecodedByteCount() -
+       decoded_bytes_before_delay) *
+      8.0 / elapsed.InSecondsF() / 1000.0;
+  DCHECK_GE(kilobits_per_second, 0);
+  const double capacity_kbps = transmission_capacity_ * 8.0 / 1000.0;
+  metrics_recorder_.RecordMediaBitrateVersusCapacity(kilobits_per_second,
+                                                     capacity_kbps);
   if (has_video()) {
     const double frame_rate =
         (client_->DecodedFrameCount() - decoded_frame_count_before_delay) /
@@ -454,12 +469,19 @@ void RendererController::OnDelayedStartTimerFired(
              mojom::RemotingSinkVideoCapability::SUPPORT_4K))) {
       VLOG(1) << "Media remoting is not supported: frame_rate = " << frame_rate
               << " resolution = " << pipeline_metadata_.natural_size.ToString();
-      permanently_disable_remoting_ = true;
+      encountered_renderer_fatal_error_ = true;
       return;
     }
   }
 
-  StartRemoting(start_trigger);
+  if (kilobits_per_second <= kMaxMediaBitrateCapacityFraction * capacity_kbps) {
+    StartRemoting(start_trigger);
+  } else {
+    VLOG(1) << "Media remoting is not supported: bitrate(kbps)="
+            << kilobits_per_second
+            << " transmission_capacity(kbps)=" << capacity_kbps;
+    encountered_renderer_fatal_error_ = true;
+  }
 }
 
 void RendererController::StartRemoting(StartTrigger start_trigger) {
@@ -474,6 +496,11 @@ void RendererController::StartRemoting(StartTrigger start_trigger) {
   // |MediaObserverClient::SwitchToRemoteRenderer()| will be called after
   // remoting is started successfully.
   session_->StartRemoting(this);
+}
+
+void RendererController::OnReceivedTransmissionCapacity(double rate) {
+  DCHECK_GE(rate, 0);
+  transmission_capacity_ = rate;
 }
 
 void RendererController::OnRendererFatalError(StopTrigger stop_trigger) {

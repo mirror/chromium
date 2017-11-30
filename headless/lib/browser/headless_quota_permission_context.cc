@@ -8,7 +8,7 @@
 
 namespace headless {
 
-HeadlessQuotaPermissionContext::HeadlessQuotaPermissionContext() = default;
+HeadlessQuotaPermissionContext::HeadlessQuotaPermissionContext() {}
 
 void HeadlessQuotaPermissionContext::RequestQuotaPermission(
     const content::StorageQuotaParams& params,
@@ -24,6 +24,6 @@ void HeadlessQuotaPermissionContext::RequestQuotaPermission(
   callback.Run(QUOTA_PERMISSION_RESPONSE_ALLOW);
 }
 
-HeadlessQuotaPermissionContext::~HeadlessQuotaPermissionContext() = default;
+HeadlessQuotaPermissionContext::~HeadlessQuotaPermissionContext() {}
 
 }  // namespace headless

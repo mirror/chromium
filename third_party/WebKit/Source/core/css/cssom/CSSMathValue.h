@@ -20,6 +20,10 @@ class CORE_EXPORT CSSMathValue : public CSSNumericValue {
   virtual String getOperator() const = 0;
 
   // From CSSNumericValue.
+  CSSUnitValue* to(CSSPrimitiveValue::UnitType) const final {
+    // TODO(776173): Implement
+    return nullptr;
+  }
   bool IsUnitValue() const final { return false; }
 
   // From CSSStyleValue.

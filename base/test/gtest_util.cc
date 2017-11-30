@@ -16,7 +16,8 @@
 
 namespace base {
 
-TestIdentifier::TestIdentifier() = default;
+TestIdentifier::TestIdentifier() {
+}
 
 TestIdentifier::TestIdentifier(const TestIdentifier& other) = default;
 

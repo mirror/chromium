@@ -98,22 +98,23 @@ TEST_F(SiteSettingsCounterTest, Count) {
 
 // Test that the counter counts correctly when using a time period.
 TEST_F(SiteSettingsCounterTest, CountWithTimePeriod) {
-  base::SimpleTestClock test_clock;
-  map()->SetClockForTesting(&test_clock);
+  auto test_clock = base::MakeUnique<base::SimpleTestClock>();
+  base::SimpleTestClock* clock = test_clock.get();
+  map()->SetClockForTesting(std::move(test_clock));
 
   // Create a setting at Now()-90min.
-  test_clock.SetNow(base::Time::Now() - base::TimeDelta::FromMinutes(90));
+  clock->SetNow(base::Time::Now() - base::TimeDelta::FromMinutes(90));
   map()->SetContentSettingDefaultScope(
       GURL("http://www.google.com"), GURL("http://www.google.com"),
       CONTENT_SETTINGS_TYPE_POPUPS, std::string(), CONTENT_SETTING_ALLOW);
 
   // Create a setting at Now()-30min.
-  test_clock.SetNow(base::Time::Now() - base::TimeDelta::FromMinutes(30));
+  clock->SetNow(base::Time::Now() - base::TimeDelta::FromMinutes(30));
   map()->SetContentSettingDefaultScope(
       GURL("http://maps.google.com"), GURL("http://maps.google.com"),
       CONTENT_SETTINGS_TYPE_GEOLOCATION, std::string(), CONTENT_SETTING_ALLOW);
 
-  test_clock.SetNow(base::Time::Now());
+  clock->SetNow(base::Time::Now());
   browsing_data::SiteSettingsCounter counter(map(), zoom_map());
   counter.Init(
       profile()->GetPrefs(), browsing_data::ClearBrowsingDataTab::ADVANCED,

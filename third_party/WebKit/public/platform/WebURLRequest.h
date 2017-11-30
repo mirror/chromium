@@ -54,15 +54,13 @@ class WebURL;
 
 class WebURLRequest {
  public:
-  enum class Priority {
-    kUnresolved = -1,
-    kVeryLow,
-    kLow,
-    kMedium,
-    kHigh,
-    kVeryHigh,
-    kLowest = kVeryLow,
-    kHighest = kVeryHigh,
+  enum Priority {
+    kPriorityUnresolved = -1,
+    kPriorityVeryLow,
+    kPriorityLow,
+    kPriorityMedium,
+    kPriorityHigh,
+    kPriorityVeryHigh,
   };
 
   // Corresponds to Fetch's "context":
@@ -155,11 +153,16 @@ class WebURLRequest {
     kPreviewsStateLast = kPreviewsOff
   };
 
-  // Indicates whether service workers will receive fetch events for this
-  // request. Same as ServiceWorkerMode in
-  // content/public/common/service_worker_modes.h.
+  // Indicates which service workers will receive fetch events for this request.
   enum class ServiceWorkerMode : uint8_t {
+    // Relevant local and foreign service workers will get a fetch or
+    // foreignfetch event for this request.
     kAll,
+    // Only relevant foreign service workers will get a foreignfetch event for
+    // this request.
+    kForeign,
+    // Neither local nor foreign service workers will get events for this
+    // request.
     kNone
   };
 
@@ -253,12 +256,10 @@ class WebURLRequest {
   BLINK_PLATFORM_EXPORT int RequestorID() const;
   BLINK_PLATFORM_EXPORT void SetRequestorID(int);
 
-  // The unique child id (not PID) of the process from which this request
-  // originated. In the case of out-of-process plugins, this allows to link back
-  // the request to the plugin process (as it is processed through a render view
-  // process).
-  BLINK_PLATFORM_EXPORT int GetPluginChildID() const;
-  BLINK_PLATFORM_EXPORT void SetPluginChildID(int);
+  // A consumer controlled value intended to be used to identify the
+  // process of the requestor.
+  BLINK_PLATFORM_EXPORT int RequestorProcessID() const;
+  BLINK_PLATFORM_EXPORT void SetRequestorProcessID(int);
 
   // Allows the request to be matched up with its app cache host.
   BLINK_PLATFORM_EXPORT int AppCacheHostID() const;

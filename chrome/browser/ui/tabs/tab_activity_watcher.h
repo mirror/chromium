@@ -10,7 +10,6 @@
 #include "base/macros.h"
 #include "base/time/time.h"
 #include "chrome/browser/ui/browser_tab_strip_tracker.h"
-#include "chrome/browser/ui/browser_tab_strip_tracker_delegate.h"
 #include "chrome/browser/ui/tabs/tab_strip_model_observer.h"
 
 class TabMetricsLogger;
@@ -18,8 +17,7 @@ class TabMetricsLogger;
 // Observes background tab activity in order to log UKMs for tabs. Metrics will
 // be compared against tab reactivation/close events to determine the end state
 // of each background tab.
-class TabActivityWatcher : public TabStripModelObserver,
-                           public BrowserTabStripTrackerDelegate {
+class TabActivityWatcher : public TabStripModelObserver {
  public:
   // Helper class to observe WebContents.
   class WebContentsData;
@@ -31,9 +29,6 @@ class TabActivityWatcher : public TabStripModelObserver,
 
   // Forces logging even when a timeout would have prevented it.
   void DisableLogTimeoutForTest();
-
-  void SetTabMetricsLoggerForTest(
-      std::unique_ptr<TabMetricsLogger> tab_metrics_logger);
 
   // Returns the single instance, creating it if necessary.
   static TabActivityWatcher* GetInstance();
@@ -47,8 +42,6 @@ class TabActivityWatcher : public TabStripModelObserver,
   void TabPinnedStateChanged(TabStripModel* tab_strip_model,
                              content::WebContents* contents,
                              int index) override;
-  // BrowserTabStripTrackerDelegate:
-  bool ShouldTrackBrowser(Browser* browser) override;
 
   // Called from WebContentsData.
   void OnWasHidden(content::WebContents* web_contents);

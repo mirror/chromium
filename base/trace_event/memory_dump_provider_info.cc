@@ -27,7 +27,7 @@ MemoryDumpProviderInfo::MemoryDumpProviderInfo(
       consecutive_failures(0),
       disabled(false) {}
 
-MemoryDumpProviderInfo::~MemoryDumpProviderInfo() = default;
+MemoryDumpProviderInfo::~MemoryDumpProviderInfo() {}
 
 bool MemoryDumpProviderInfo::Comparator::operator()(
     const scoped_refptr<MemoryDumpProviderInfo>& a,

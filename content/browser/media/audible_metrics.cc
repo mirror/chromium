@@ -13,7 +13,8 @@ namespace content {
 
 AudibleMetrics::AudibleMetrics()
     : max_concurrent_audible_web_contents_in_session_(0),
-      clock_(base::DefaultTickClock::GetInstance()) {}
+      clock_(new base::DefaultTickClock()) {
+}
 
 AudibleMetrics::~AudibleMetrics() {
 }
@@ -31,8 +32,9 @@ void AudibleMetrics::UpdateAudibleWebContentsState(
     RemoveAudibleWebContents(web_contents);
 }
 
-void AudibleMetrics::SetClockForTest(base::TickClock* test_clock) {
-  clock_ = test_clock;
+void AudibleMetrics::SetClockForTest(
+    std::unique_ptr<base::TickClock> test_clock) {
+  clock_ = std::move(test_clock);
 }
 
 void AudibleMetrics::AddAudibleWebContents(const WebContents* web_contents) {

@@ -13,7 +13,13 @@
       }
 
       paper-tooltip {
-        --paper-tooltip: var(--cr-tooltip);
+        --paper-tooltip: {
+          font-size: 92.31%;  /* Effectively 12px if the host default is 13px. */
+          font-weight: 500;
+          max-width: 330px;
+          min-width: 200px;
+          padding: 10px 8px;
+        };
       }
 
       iron-icon {

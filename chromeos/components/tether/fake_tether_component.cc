@@ -11,7 +11,7 @@ namespace tether {
 FakeTetherComponent::FakeTetherComponent(bool has_asynchronous_shutdown)
     : has_asynchronous_shutdown_(has_asynchronous_shutdown) {}
 
-FakeTetherComponent::~FakeTetherComponent() = default;
+FakeTetherComponent::~FakeTetherComponent() {}
 
 void FakeTetherComponent::FinishAsynchronousShutdown() {
   DCHECK(status() == TetherComponent::Status::SHUTTING_DOWN);

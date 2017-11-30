@@ -646,7 +646,6 @@
     page,
     step,
     location,
-    unclipped_location,
     date,
     time
   };

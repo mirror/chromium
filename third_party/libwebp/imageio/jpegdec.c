@@ -304,18 +304,18 @@ int ReadJPEG(const uint8_t* const data, size_t data_size,
 
   if (stride != (int)stride ||
       !ImgIoUtilCheckSizeArgumentsOverflow(stride, height)) {
-    goto Error;
+    goto End;
   }
 
   rgb = (uint8_t*)malloc((size_t)stride * height);
   if (rgb == NULL) {
-    goto Error;
+    goto End;
   }
   buffer[0] = (JSAMPLE*)rgb;
 
   while (dinfo.output_scanline < dinfo.output_height) {
     if (jpeg_read_scanlines((j_decompress_ptr)&dinfo, buffer, 1) != 1) {
-      goto Error;
+      goto End;
     }
     buffer[0] += stride;
   }

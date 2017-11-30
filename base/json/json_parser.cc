@@ -70,7 +70,8 @@ JSONParser::JSONParser(int options)
       error_column_(0) {
 }
 
-JSONParser::~JSONParser() = default;
+JSONParser::~JSONParser() {
+}
 
 std::unique_ptr<Value> JSONParser::Parse(StringPiece input) {
   start_pos_ = input.data();
@@ -134,7 +135,8 @@ JSONParser::StringBuilder::StringBuilder() : StringBuilder(nullptr) {}
 JSONParser::StringBuilder::StringBuilder(const char* pos)
     : pos_(pos), length_(0) {}
 
-JSONParser::StringBuilder::~StringBuilder() = default;
+JSONParser::StringBuilder::~StringBuilder() {
+}
 
 JSONParser::StringBuilder& JSONParser::StringBuilder::operator=(
     StringBuilder&& other) = default;

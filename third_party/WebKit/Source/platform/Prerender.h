@@ -32,7 +32,6 @@
 #ifndef Prerender_h
 #define Prerender_h
 
-#include "base/macros.h"
 #include "base/memory/scoped_refptr.h"
 #include "platform/PlatformExport.h"
 #include "platform/heap/Handle.h"
@@ -47,7 +46,7 @@ class PrerenderClient;
 
 class PLATFORM_EXPORT Prerender final
     : public GarbageCollectedFinalized<Prerender> {
-  DISALLOW_COPY_AND_ASSIGN(Prerender);
+  WTF_MAKE_NONCOPYABLE(Prerender);
 
  public:
   class ExtraData : public RefCounted<ExtraData> {

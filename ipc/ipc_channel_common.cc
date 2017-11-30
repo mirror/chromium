@@ -59,7 +59,8 @@ std::unique_ptr<Channel> Channel::CreateServer(
 #endif
 }
 
-Channel::~Channel() = default;
+Channel::~Channel() {
+}
 
 Channel::AssociatedInterfaceSupport* Channel::GetAssociatedInterfaceSupport() {
   return nullptr;

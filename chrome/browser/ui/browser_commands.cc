@@ -740,7 +740,7 @@ void PinTab(Browser* browser) {
       TabStripModel::ContextMenuCommand::CommandTogglePinned);
 }
 
-void MuteSite(Browser* browser) {
+void MuteTab(Browser* browser) {
   TabStripModel::ContextMenuCommand command_id =
       base::FeatureList::IsEnabled(features::kSoundContentSetting)
           ? TabStripModel::ContextMenuCommand::CommandToggleSiteMuted

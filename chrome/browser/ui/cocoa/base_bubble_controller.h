@@ -10,7 +10,6 @@
 #include <memory>
 
 #include "components/bubble/bubble_reference.h"
-#include "ui/base/cocoa/bubble_closer.h"
 
 @class InfoBubbleView;
 class TabStripModelObserverBridge;
@@ -39,12 +38,11 @@ class TabStripModelObserverBridge;
   // Bridge for tab change notifications.
   std::unique_ptr<TabStripModelObserverBridge> tabStripObserverBridge_;
 
+  // Non-nil only on 10.7+. Both weak, owned by AppKit.
   // A local event tap that will dismiss the bubble when a click is delivered
   // outside the window. This is needed because the window shares first
   // responder with its parent.
-  std::unique_ptr<ui::BubbleCloser> bubbleCloser_;
-
-  // Weak, owned by AppKit.
+  id eventTap_;
   // A notification observer that gets triggered when any window resigns key.
   id resignationObserver_;
   // The controlled window should be the key window when it's opened. True by

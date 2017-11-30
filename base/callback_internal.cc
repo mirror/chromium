@@ -71,7 +71,7 @@ CallbackBase::CallbackBase(BindStateBase* bind_state)
   DCHECK(!bind_state_.get() || bind_state_->HasOneRef());
 }
 
-CallbackBase::~CallbackBase() = default;
+CallbackBase::~CallbackBase() {}
 
 CallbackBaseCopyable::CallbackBaseCopyable(const CallbackBaseCopyable& c)
     : CallbackBase(nullptr) {

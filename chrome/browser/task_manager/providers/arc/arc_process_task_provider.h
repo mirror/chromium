@@ -34,7 +34,9 @@ class ArcProcessTaskProvider : public TaskProvider {
   ~ArcProcessTaskProvider() override;
 
   // task_manager::TaskProvider:
-  Task* GetTaskOfUrlRequest(int child_id, int route_id) override;
+  Task* GetTaskOfUrlRequest(int origin_pid,
+                            int child_id,
+                            int route_id) override;
 
  private:
   using ArcTaskMap =

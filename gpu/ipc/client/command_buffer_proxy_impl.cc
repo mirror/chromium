@@ -27,8 +27,6 @@
 #include "gpu/ipc/client/gpu_channel_host.h"
 #include "gpu/ipc/common/gpu_messages.h"
 #include "gpu/ipc/common/gpu_param_traits.h"
-#include "mojo/public/cpp/system/buffer.h"
-#include "mojo/public/cpp/system/platform_handle.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/gl/gl_bindings.h"
 
@@ -95,10 +93,17 @@ ContextResult CommandBufferProxyImpl::Initialize(
   init_params.active_url = active_url;
 
   TRACE_EVENT0("gpu", "CommandBufferProxyImpl::Initialize");
-  shared_state_shm_ = AllocateAndMapSharedMemory(sizeof(*shared_state()));
+  shared_state_shm_ =
+      channel->factory()->AllocateSharedMemory(sizeof(*shared_state()));
   if (!shared_state_shm_) {
     LOG(ERROR) << "ContextResult::kFatalFailure: "
-                  "AllocateAndMapSharedMemory failed";
+                  "AllocateSharedMemory failed";
+    return ContextResult::kFatalFailure;
+  }
+
+  if (!shared_state_shm_->Map(sizeof(*shared_state()))) {
+    LOG(ERROR) << "ContextResult::kFatalFailure: "
+                  "Map shared memory failed";
     return ContextResult::kFatalFailure;
   }
 
@@ -392,12 +397,19 @@ scoped_refptr<gpu::Buffer> CommandBufferProxyImpl::CreateTransferBuffer(
 
   int32_t new_id = channel_->ReserveTransferBufferId();
 
-  std::unique_ptr<base::SharedMemory> shared_memory =
-      AllocateAndMapSharedMemory(size);
+  std::unique_ptr<base::SharedMemory> shared_memory(
+      channel_->factory()->AllocateSharedMemory(size));
   if (!shared_memory) {
     if (last_state_.error == gpu::error::kNoError)
       OnClientError(gpu::error::kOutOfBounds);
-    return nullptr;
+    return NULL;
+  }
+
+  DCHECK(!shared_memory->memory());
+  if (!shared_memory->Map(size)) {
+    if (last_state_.error == gpu::error::kNoError)
+      OnClientError(gpu::error::kOutOfBounds);
+    return NULL;
   }
 
   if (last_state_.error == gpu::error::kNoError) {
@@ -409,7 +421,7 @@ scoped_refptr<gpu::Buffer> CommandBufferProxyImpl::CreateTransferBuffer(
     if (!base::SharedMemory::IsHandleValid(handle)) {
       if (last_state_.error == gpu::error::kNoError)
         OnClientError(gpu::error::kLostContext);
-      return nullptr;
+      return NULL;
     }
     Send(new GpuCommandBufferMsg_RegisterTransferBuffer(route_id_, new_id,
                                                         handle, size));
@@ -702,35 +714,6 @@ bool CommandBufferProxyImpl::Send(IPC::Message* msg) {
   }
 
   return true;
-}
-
-std::unique_ptr<base::SharedMemory>
-CommandBufferProxyImpl::AllocateAndMapSharedMemory(size_t size) {
-  mojo::ScopedSharedBufferHandle handle =
-      mojo::SharedBufferHandle::Create(size);
-  if (!handle.is_valid()) {
-    DLOG(ERROR) << "AllocateAndMapSharedMemory: Create failed";
-    return nullptr;
-  }
-
-  base::SharedMemoryHandle platform_handle;
-  size_t shared_memory_size;
-  bool readonly;
-  MojoResult result = mojo::UnwrapSharedMemoryHandle(
-      std::move(handle), &platform_handle, &shared_memory_size, &readonly);
-  if (result != MOJO_RESULT_OK) {
-    DLOG(ERROR) << "AllocateAndMapSharedMemory: Unwrap failed";
-    return nullptr;
-  }
-  DCHECK_EQ(shared_memory_size, size);
-
-  auto shm = std::make_unique<base::SharedMemory>(platform_handle, readonly);
-  if (!shm->Map(size)) {
-    DLOG(ERROR) << "AllocateAndMapSharedMemory: Map failed";
-    return nullptr;
-  }
-
-  return shm;
 }
 
 void CommandBufferProxyImpl::SetStateFromMessageReply(

@@ -514,16 +514,22 @@ unsigned TextControlElement::ComputeSelectionStart() const {
   LocalFrame* frame = GetDocument().GetFrame();
   if (!frame)
     return 0;
-
-  // To avoid regression on speedometer benchmark[1] test, we should not
-  // update layout tree in this code block.
-  // [1] http://browserbench.org/Speedometer/
-  DocumentLifecycle::DisallowTransitionScope disallow_transition(
-      GetDocument().Lifecycle());
-  const SelectionInDOMTree& selection =
-      frame->Selection().GetSelectionInDOMTree();
-  return IndexForPosition(InnerEditorElement(),
-                          selection.ComputeStartPosition());
+  {
+    // To avoid regression on speedometer benchmark[1] test, we should not
+    // update layout tree in this code block.
+    // [1] http://browserbench.org/Speedometer/
+    DocumentLifecycle::DisallowTransitionScope disallow_transition(
+        GetDocument().Lifecycle());
+    const SelectionInDOMTree& selection =
+        frame->Selection().GetSelectionInDOMTree();
+    if (frame->Selection().Granularity() == TextGranularity::kCharacter) {
+      return IndexForPosition(InnerEditorElement(),
+                              selection.ComputeStartPosition());
+    }
+  }
+  const VisibleSelection& visible_selection =
+      frame->Selection().ComputeVisibleSelectionInDOMTreeDeprecated();
+  return IndexForPosition(InnerEditorElement(), visible_selection.Start());
 }
 
 unsigned TextControlElement::selectionEnd() const {
@@ -539,15 +545,22 @@ unsigned TextControlElement::ComputeSelectionEnd() const {
   LocalFrame* frame = GetDocument().GetFrame();
   if (!frame)
     return 0;
-
-  // To avoid regression on speedometer benchmark[1] test, we should not
-  // update layout tree in this code block.
-  // [1] http://browserbench.org/Speedometer/
-  DocumentLifecycle::DisallowTransitionScope disallow_transition(
-      GetDocument().Lifecycle());
-  const SelectionInDOMTree& selection =
-      frame->Selection().GetSelectionInDOMTree();
-  return IndexForPosition(InnerEditorElement(), selection.ComputeEndPosition());
+  {
+    // To avoid regression on speedometer benchmark[1] test, we should not
+    // update layout tree in this code block.
+    // [1] http://browserbench.org/Speedometer/
+    DocumentLifecycle::DisallowTransitionScope disallow_transition(
+        GetDocument().Lifecycle());
+    const SelectionInDOMTree& selection =
+        frame->Selection().GetSelectionInDOMTree();
+    if (frame->Selection().Granularity() == TextGranularity::kCharacter) {
+      return IndexForPosition(InnerEditorElement(),
+                              selection.ComputeEndPosition());
+    }
+  }
+  const VisibleSelection& visible_selection =
+      frame->Selection().ComputeVisibleSelectionInDOMTreeDeprecated();
+  return IndexForPosition(InnerEditorElement(), visible_selection.End());
 }
 
 static const AtomicString& DirectionString(

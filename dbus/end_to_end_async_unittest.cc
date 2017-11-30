@@ -589,7 +589,8 @@ TEST_F(EndToEndAsyncTest, TestHugeSignal) {
 
 class SignalMultipleHandlerTest : public EndToEndAsyncTest {
  public:
-  SignalMultipleHandlerTest() = default;
+  SignalMultipleHandlerTest() {
+  }
 
   void SetUp() override {
     // Set up base class.

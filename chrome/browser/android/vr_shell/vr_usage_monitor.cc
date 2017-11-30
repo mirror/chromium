@@ -84,9 +84,9 @@ const char* HistogramNameFromSessionType(SessionEventName name) {
   }
 }
 
-void SendRapporEnteredMode(const GURL& origin, vr::Mode mode) {
+void SendRapporEnteredMode(const GURL& origin, VRMode mode) {
   switch (mode) {
-    case vr::Mode::kVrBrowsingFullscreen:
+    case VRMode::VR_FULLSCREEN:
       rappor::SampleDomainAndRegistryFromGURL(rappor::GetDefaultService(),
                                               "VR.FullScreenMode", origin);
     default:
@@ -94,15 +94,15 @@ void SendRapporEnteredMode(const GURL& origin, vr::Mode mode) {
   }
 }
 
-void SendRapporEnteredVideoMode(const GURL& origin, vr::Mode mode) {
+void SendRapporEnteredVideoMode(const GURL& origin, VRMode mode) {
   switch (mode) {
-    case vr::Mode::kVrBrowsingRegular:
+    case VRMode::VR_BROWSER:
       rappor::SampleDomainAndRegistryFromGURL(rappor::GetDefaultService(),
                                               "VR.Video.Browser", origin);
-    case vr::Mode::kWebVr:
+    case VRMode::WEBVR:
       rappor::SampleDomainAndRegistryFromGURL(rappor::GetDefaultService(),
                                               "VR.Video.WebVR", origin);
-    case vr::Mode::kVrBrowsingFullscreen:
+    case VRMode::VR_FULLSCREEN:
       rappor::SampleDomainAndRegistryFromGURL(
           rappor::GetDefaultService(), "VR.Video.FullScreenMode", origin);
     default:
@@ -172,14 +172,13 @@ void SessionTimer::StopSession(bool continuable, base::Time stop_time) {
 void VrMetricsHelper::UpdateMode() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
-  vr::Mode mode;
+  VRMode mode;
   if (!is_vr_enabled_) {
-    mode = vr::Mode::kNoVr;
+    mode = VRMode::NO_VR;
   } else if (is_webvr_) {
-    mode = vr::Mode::kWebVr;
+    mode = VRMode::WEBVR;
   } else {
-    mode = is_fullscreen_ ? vr::Mode::kVrBrowsingFullscreen
-                          : vr::Mode::kVrBrowsingRegular;
+    mode = is_fullscreen_ ? VRMode::VR_FULLSCREEN : VRMode::VR_BROWSER;
   }
 
   if (mode != mode_)
@@ -204,14 +203,14 @@ void VrMetricsHelper::RecordVoiceSearchStarted() {
   num_voice_search_started_++;
 }
 
-void VrMetricsHelper::SetVrMode(vr::Mode mode) {
+void VrMetricsHelper::SetVrMode(VRMode mode) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   DCHECK_NE(mode, mode_);
 
   base::Time switch_time = base::Time::Now();
 
   // stop the previous modes
-  if (mode_ != vr::Mode::kNoVr) {
+  if (mode_ != VRMode::NO_VR) {
     if (num_videos_playing_ > 0)
       mode_video_timer_->StopSession(false, switch_time);
 
@@ -219,23 +218,23 @@ void VrMetricsHelper::SetVrMode(vr::Mode mode) {
   }
 
   // start the new modes
-  if (mode != vr::Mode::kNoVr) {
+  if (mode != VRMode::NO_VR) {
     switch (mode) {
-      case vr::Mode::kWebVr:
+      case VRMode::WEBVR:
         mode_timer_ = base::MakeUnique<SessionTimerImpl<MODE_WEBVR>>(
             kMaximumHeadsetSessionGap, kMinimumHeadsetSessionDuration);
         mode_video_timer_ =
             base::MakeUnique<SessionTimerImpl<MODE_WEBVR_WITH_VIDEO>>(
                 kMaximumHeadsetSessionGap, kMinimumHeadsetSessionDuration);
         break;
-      case vr::Mode::kVrBrowsingRegular:
+      case VRMode::VR_BROWSER:
         mode_timer_ = base::MakeUnique<SessionTimerImpl<MODE_BROWSER>>(
             kMaximumHeadsetSessionGap, kMinimumHeadsetSessionDuration);
         mode_video_timer_ =
             base::MakeUnique<SessionTimerImpl<MODE_BROWSER_WITH_VIDEO>>(
                 kMaximumHeadsetSessionGap, kMinimumHeadsetSessionDuration);
         break;
-      case vr::Mode::kVrBrowsingFullscreen:
+      case VRMode::VR_FULLSCREEN:
         mode_timer_ = base::MakeUnique<SessionTimerImpl<MODE_FULLSCREEN>>(
             kMaximumHeadsetSessionGap, kMinimumHeadsetSessionDuration);
         mode_video_timer_ =
@@ -256,7 +255,7 @@ void VrMetricsHelper::SetVrMode(vr::Mode mode) {
   }
 
   // stop the old session
-  if (mode_ != vr::Mode::kNoVr && mode == vr::Mode::kNoVr) {
+  if (mode_ != VRMode::NO_VR && mode == VRMode::NO_VR) {
     if (num_videos_playing_ > 0)
       session_video_timer_->StopSession(false, switch_time);
 
@@ -271,7 +270,7 @@ void VrMetricsHelper::SetVrMode(vr::Mode mode) {
   }
 
   // start the new session
-  if (mode_ == vr::Mode::kNoVr && mode != vr::Mode::kNoVr) {
+  if (mode_ == VRMode::NO_VR && mode != VRMode::NO_VR) {
     // we are entering a vr mode from non-vr mode - start the vr session
     session_timer_->StartSession(switch_time);
     num_session_video_playback_ = 0;
@@ -288,9 +287,9 @@ void VrMetricsHelper::SetVrMode(vr::Mode mode) {
 }
 
 VrMetricsHelper::VrMetricsHelper(content::WebContents* contents,
-                                 vr::Mode initial_mode)
-    : is_webvr_(initial_mode == vr::Mode::kWebVr),
-      is_vr_enabled_(initial_mode != vr::Mode::kNoVr) {
+                                 VRMode initial_mode)
+    : is_webvr_(initial_mode == VRMode::WEBVR),
+      is_vr_enabled_(initial_mode != VRMode::NO_VR) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   num_videos_playing_ = contents->GetCurrentlyPlayingVideoCount();
@@ -320,7 +319,7 @@ void VrMetricsHelper::MediaStartedPlaying(const MediaPlayerInfo& media_info,
     // started playing video - start sessions
     base::Time start_time = base::Time::Now();
 
-    if (mode_ != vr::Mode::kNoVr) {
+    if (mode_ != VRMode::NO_VR) {
       session_video_timer_->StartSession(start_time);
       mode_video_timer_->StartSession(start_time);
       SendRapporEnteredVideoMode(origin_, mode_);
@@ -346,7 +345,7 @@ void VrMetricsHelper::MediaStoppedPlaying(
     // stopped playing video - update existing video sessions
     base::Time stop_time = base::Time::Now();
 
-    if (mode_ != vr::Mode::kNoVr) {
+    if (mode_ != VRMode::NO_VR) {
       session_video_timer_->StopSession(true, stop_time);
       mode_video_timer_->StopSession(true, stop_time);
     }

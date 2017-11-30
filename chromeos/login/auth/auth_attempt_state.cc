@@ -25,7 +25,8 @@ AuthAttemptState::AuthAttemptState(const UserContext& user_context,
       username_hash_valid_(true) {
 }
 
-AuthAttemptState::~AuthAttemptState() = default;
+AuthAttemptState::~AuthAttemptState() {
+}
 
 void AuthAttemptState::RecordOnlineLoginStatus(const AuthFailure& outcome) {
   online_complete_ = true;

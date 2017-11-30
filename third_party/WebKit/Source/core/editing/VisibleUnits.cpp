@@ -695,7 +695,8 @@ LocalCaretRect LocalCaretRectOfPositionTemplate(
   if (!layout_object)
     return LocalCaretRect();
 
-  const InlineBoxPosition& box_position = ComputeInlineBoxPosition(position);
+  const InlineBoxPosition& box_position =
+      ComputeInlineBoxPosition(position.GetPosition(), position.Affinity());
 
   if (box_position.inline_box) {
     return ComputeLocalCaretRect(
@@ -721,7 +722,8 @@ LocalCaretRect LocalSelectionRectOfPositionTemplate(
   if (!node->GetLayoutObject())
     return LocalCaretRect();
 
-  const InlineBoxPosition& box_position = ComputeInlineBoxPosition(position);
+  const InlineBoxPosition& box_position =
+      ComputeInlineBoxPosition(position.GetPosition(), position.Affinity());
 
   if (!box_position.inline_box)
     return LocalCaretRect();

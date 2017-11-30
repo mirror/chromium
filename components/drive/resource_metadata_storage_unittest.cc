@@ -8,13 +8,11 @@
 #include <stdint.h>
 
 #include <algorithm>
-#include <utility>
 
 #include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/macros.h"
 #include "base/single_thread_task_runner.h"
-#include "base/stl_util.h"
 #include "base/strings/string_split.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/drive/chromeos/drive_test_util.h"
@@ -29,9 +27,6 @@ namespace internal {
 
 class ResourceMetadataStorageTest : public testing::Test {
  protected:
-  ResourceMetadataStorageTest() {}
-  ~ResourceMetadataStorageTest() override {}
-
   void SetUp() override {
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
 
@@ -72,16 +67,10 @@ class ResourceMetadataStorageTest : public testing::Test {
         ResourceMetadataStorage::GetChildEntryKey(parent_id, child_base_name));
   }
 
-  bool UpgradeOldDB() {
-    return ResourceMetadataStorage::UpgradeOldDB(temp_dir_.GetPath());
-  }
-
   content::TestBrowserThreadBundle thread_bundle_;
   base::ScopedTempDir temp_dir_;
   std::unique_ptr<ResourceMetadataStorage, test_util::DestroyHelperForTests>
       storage_;
-
-  DISALLOW_COPY_AND_ASSIGN(ResourceMetadataStorageTest);
 };
 
 TEST_F(ResourceMetadataStorageTest, LargestChangestamp) {
@@ -167,9 +156,9 @@ TEST_F(ResourceMetadataStorageTest, Iterator) {
   keys.push_back("entry3");
   keys.push_back("entry4");
 
-  for (const std::string& key : keys) {
+  for (size_t i = 0; i < keys.size(); ++i) {
     ResourceEntry entry;
-    entry.set_local_id(key);
+    entry.set_local_id(keys[i]);
     EXPECT_EQ(FILE_ERROR_OK, storage_->PutEntry(entry));
   }
 
@@ -185,8 +174,8 @@ TEST_F(ResourceMetadataStorageTest, Iterator) {
   EXPECT_FALSE(it->HasError());
 
   EXPECT_EQ(keys.size(), found_entries.size());
-  for (const std::string& key : keys)
-    EXPECT_TRUE(base::ContainsKey(found_entries, key));
+  for (size_t i = 0; i < keys.size(); ++i)
+    EXPECT_EQ(1U, found_entries.count(keys[i]));
 }
 
 TEST_F(ResourceMetadataStorageTest, GetIdByResourceId) {
@@ -234,19 +223,19 @@ TEST_F(ResourceMetadataStorageTest, GetChildren) {
   children_name_id[4].push_back(std::make_pair("iapetus", "saturn_vii"));
 
   // Put parents.
-  for (const std::string& id : parents_id) {
+  for (size_t i = 0; i < arraysize(parents_id); ++i) {
     ResourceEntry entry;
-    entry.set_local_id(id);
+    entry.set_local_id(parents_id[i]);
     EXPECT_EQ(FILE_ERROR_OK, storage_->PutEntry(entry));
   }
 
   // Put children.
   for (size_t i = 0; i < children_name_id.size(); ++i) {
-    for (const auto& id : children_name_id[i]) {
+    for (size_t j = 0; j < children_name_id[i].size(); ++j) {
       ResourceEntry entry;
-      entry.set_local_id(id.second);
+      entry.set_local_id(children_name_id[i][j].second);
       entry.set_parent_local_id(parents_id[i]);
-      entry.set_base_name(id.first);
+      entry.set_base_name(children_name_id[i][j].first);
       EXPECT_EQ(FILE_ERROR_OK, storage_->PutEntry(entry));
     }
   }
@@ -256,8 +245,10 @@ TEST_F(ResourceMetadataStorageTest, GetChildren) {
     std::vector<std::string> children;
     storage_->GetChildren(parents_id[i], &children);
     EXPECT_EQ(children_name_id[i].size(), children.size());
-    for (const auto& id : children_name_id[i]) {
-      EXPECT_EQ(1, std::count(children.begin(), children.end(), id.second));
+    for (size_t j = 0; j < children_name_id[i].size(); ++j) {
+      EXPECT_EQ(1, std::count(children.begin(),
+                              children.end(),
+                              children_name_id[i][j].second));
     }
   }
 }
@@ -324,7 +315,7 @@ TEST_F(ResourceMetadataStorageTest, IncompatibleDB_M29) {
 
   // Upgrade and reopen.
   storage_.reset();
-  EXPECT_TRUE(UpgradeOldDB());
+  EXPECT_TRUE(ResourceMetadataStorage::UpgradeOldDB(temp_dir_.GetPath()));
   storage_.reset(new ResourceMetadataStorage(
       temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get().get()));
   ASSERT_TRUE(storage_->Initialize());
@@ -376,7 +367,7 @@ TEST_F(ResourceMetadataStorageTest, IncompatibleDB_M32) {
 
   // Upgrade and reopen.
   storage_.reset();
-  EXPECT_TRUE(UpgradeOldDB());
+  EXPECT_TRUE(ResourceMetadataStorage::UpgradeOldDB(temp_dir_.GetPath()));
   storage_.reset(new ResourceMetadataStorage(
       temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get().get()));
   ASSERT_TRUE(storage_->Initialize());
@@ -437,7 +428,7 @@ TEST_F(ResourceMetadataStorageTest, IncompatibleDB_M33) {
 
   // Upgrade and reopen.
   storage_.reset();
-  EXPECT_TRUE(UpgradeOldDB());
+  EXPECT_TRUE(ResourceMetadataStorage::UpgradeOldDB(temp_dir_.GetPath()));
   storage_.reset(new ResourceMetadataStorage(
       temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get().get()));
   ASSERT_TRUE(storage_->Initialize());
@@ -476,7 +467,7 @@ TEST_F(ResourceMetadataStorageTest, IncompatibleDB_Unknown) {
   // Set newer version, upgrade and reopen DB.
   SetDBVersion(ResourceMetadataStorage::kDBVersion + 1);
   storage_.reset();
-  EXPECT_FALSE(UpgradeOldDB());
+  EXPECT_FALSE(ResourceMetadataStorage::UpgradeOldDB(temp_dir_.GetPath()));
   storage_.reset(new ResourceMetadataStorage(
       temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get().get()));
   ASSERT_TRUE(storage_->Initialize());
@@ -516,7 +507,7 @@ TEST_F(ResourceMetadataStorageTest, IncompatibleDB_M37) {
 
   // Upgrade and reopen.
   storage_.reset();
-  EXPECT_TRUE(UpgradeOldDB());
+  EXPECT_TRUE(ResourceMetadataStorage::UpgradeOldDB(temp_dir_.GetPath()));
   storage_.reset(new ResourceMetadataStorage(
       temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get().get()));
   ASSERT_TRUE(storage_->Initialize());

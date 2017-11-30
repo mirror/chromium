@@ -15,9 +15,9 @@ bool RefCountedMemory::Equals(
          (memcmp(front(), other->front(), size()) == 0);
 }
 
-RefCountedMemory::RefCountedMemory() = default;
+RefCountedMemory::RefCountedMemory() {}
 
-RefCountedMemory::~RefCountedMemory() = default;
+RefCountedMemory::~RefCountedMemory() {}
 
 const unsigned char* RefCountedStaticMemory::front() const {
   return data_;
@@ -27,9 +27,9 @@ size_t RefCountedStaticMemory::size() const {
   return length_;
 }
 
-RefCountedStaticMemory::~RefCountedStaticMemory() = default;
+RefCountedStaticMemory::~RefCountedStaticMemory() {}
 
-RefCountedBytes::RefCountedBytes() = default;
+RefCountedBytes::RefCountedBytes() {}
 
 RefCountedBytes::RefCountedBytes(const std::vector<unsigned char>& initializer)
     : data_(initializer) {
@@ -55,11 +55,11 @@ size_t RefCountedBytes::size() const {
   return data_.size();
 }
 
-RefCountedBytes::~RefCountedBytes() = default;
+RefCountedBytes::~RefCountedBytes() {}
 
-RefCountedString::RefCountedString() = default;
+RefCountedString::RefCountedString() {}
 
-RefCountedString::~RefCountedString() = default;
+RefCountedString::~RefCountedString() {}
 
 // static
 scoped_refptr<RefCountedString> RefCountedString::TakeString(

@@ -7,8 +7,8 @@
 namespace base {
 namespace trace_event {
 
-TraceEventFilter::TraceEventFilter() = default;
-TraceEventFilter::~TraceEventFilter() = default;
+TraceEventFilter::TraceEventFilter() {}
+TraceEventFilter::~TraceEventFilter() {}
 
 void TraceEventFilter::EndEvent(const char* category_name,
                                 const char* event_name) const {}

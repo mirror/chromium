@@ -48,18 +48,18 @@ TrayNetworkStateObserver::~TrayNetworkStateObserver() {
 
 void TrayNetworkStateObserver::NetworkListChanged() {
   purge_icons_ = true;
-  SignalUpdate(false /* notify_a11y */);
+  SignalUpdate();
 }
 
 void TrayNetworkStateObserver::DeviceListChanged() {
-  SignalUpdate(false /* notify_a11y */);
+  SignalUpdate();
 }
 
 // Any change to the Default (primary connected) network, including Strength
 // changes, should trigger a NetworkStateChanged update.
 void TrayNetworkStateObserver::DefaultNetworkChanged(
     const chromeos::NetworkState* network) {
-  SignalUpdate(true /* notify_a11y */);
+  SignalUpdate();
 }
 
 // Any change to the Connection State should trigger a NetworkStateChanged
@@ -67,7 +67,7 @@ void TrayNetworkStateObserver::DefaultNetworkChanged(
 // connected.
 void TrayNetworkStateObserver::NetworkConnectionStateChanged(
     const chromeos::NetworkState* network) {
-  SignalUpdate(true /* notify_a11y */);
+  SignalUpdate();
 }
 
 // This tracks Strength and other property changes for all networks. It will
@@ -75,19 +75,18 @@ void TrayNetworkStateObserver::NetworkConnectionStateChanged(
 // changes.
 void TrayNetworkStateObserver::NetworkPropertiesUpdated(
     const chromeos::NetworkState* network) {
-  SignalUpdate(false /* notify_a11y */);
+  SignalUpdate();
 }
 
-void TrayNetworkStateObserver::SignalUpdate(bool notify_a11y) {
+void TrayNetworkStateObserver::SignalUpdate() {
   if (timer_.IsRunning())
     return;
   timer_.Start(FROM_HERE, base::TimeDelta::FromMilliseconds(update_frequency_),
-               base::Bind(&TrayNetworkStateObserver::SendNetworkStateChanged,
-                          base::Unretained(this), notify_a11y));
+               this, &TrayNetworkStateObserver::SendNetworkStateChanged);
 }
 
-void TrayNetworkStateObserver::SendNetworkStateChanged(bool notify_a11y) {
-  delegate_->NetworkStateChanged(notify_a11y);
+void TrayNetworkStateObserver::SendNetworkStateChanged() {
+  delegate_->NetworkStateChanged();
   if (purge_icons_) {
     network_icon::PurgeNetworkIconCache();
     purge_icons_ = false;

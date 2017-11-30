@@ -21,7 +21,7 @@ HeadlessScreen* HeadlessScreen::Create(const gfx::Size& size) {
   return new HeadlessScreen(gfx::Rect(size));
 }
 
-HeadlessScreen::~HeadlessScreen() = default;
+HeadlessScreen::~HeadlessScreen() {}
 
 gfx::Point HeadlessScreen::GetCursorScreenPoint() {
   return aura::Env::GetInstance()->last_mouse_location();

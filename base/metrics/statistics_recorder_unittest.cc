@@ -14,7 +14,6 @@
 #include "base/json/json_reader.h"
 #include "base/logging.h"
 #include "base/memory/weak_ptr.h"
-#include "base/metrics/histogram_base.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/persistent_histogram_allocator.h"
 #include "base/metrics/record_histogram_checker.h"
@@ -43,7 +42,7 @@ class LogStateSaver {
 // Test implementation of RecordHistogramChecker interface.
 class OddRecordHistogramChecker : public base::RecordHistogramChecker {
  public:
-  ~OddRecordHistogramChecker() override = default;
+  ~OddRecordHistogramChecker() override {}
 
   // base::RecordHistogramChecker:
   bool ShouldRecord(uint64_t histogram_hash) const override {
@@ -372,7 +371,7 @@ TEST_P(StatisticsRecorderTest, ToJSON) {
   Histogram::FactoryGet("TestHistogram2", 1, 1000, 50, HistogramBase::kNoFlags)
       ->Add(40);
 
-  std::string json(StatisticsRecorder::ToJSON(JSON_VERBOSITY_LEVEL_FULL));
+  std::string json(StatisticsRecorder::ToJSON(std::string()));
 
   // Check for valid JSON.
   std::unique_ptr<Value> root = JSONReader::Read(json);
@@ -396,27 +395,33 @@ TEST_P(StatisticsRecorderTest, ToJSON) {
   ASSERT_TRUE(histogram_dict->GetInteger("count", &sample_count));
   EXPECT_EQ(2, sample_count);
 
-  ListValue* buckets_list = nullptr;
-  ASSERT_TRUE(histogram_dict->GetList("buckets", &buckets_list));
-  EXPECT_EQ(2u, buckets_list->GetList().size());
+  // Test the query filter.
+  std::string query("TestHistogram2");
+  json = StatisticsRecorder::ToJSON(query);
 
-  // Check the serialized JSON with a different verbosity level.
-  json = StatisticsRecorder::ToJSON(JSON_VERBOSITY_LEVEL_OMIT_BUCKETS);
   root = JSONReader::Read(json);
   ASSERT_TRUE(root.get());
-  root_dict = nullptr;
   ASSERT_TRUE(root->GetAsDictionary(&root_dict));
-  histogram_list = nullptr;
+
+  std::string query_value;
+  ASSERT_TRUE(root_dict->GetString("query", &query_value));
+  EXPECT_EQ(query, query_value);
+
   ASSERT_TRUE(root_dict->GetList("histograms", &histogram_list));
-  ASSERT_EQ(2u, histogram_list->GetSize());
-  histogram_dict = nullptr;
+  ASSERT_EQ(1u, histogram_list->GetSize());
+
   ASSERT_TRUE(histogram_list->GetDictionary(0, &histogram_dict));
-  sample_count = 0;
-  ASSERT_TRUE(histogram_dict->GetInteger("count", &sample_count));
-  EXPECT_EQ(2, sample_count);
-  buckets_list = nullptr;
-  // Bucket information should be omitted.
-  ASSERT_FALSE(histogram_dict->GetList("buckets", &buckets_list));
+
+  std::string histogram_name;
+  ASSERT_TRUE(histogram_dict->GetString("name", &histogram_name));
+  EXPECT_EQ("TestHistogram2", histogram_name);
+
+  json.clear();
+  UninitializeStatisticsRecorder();
+
+  // No data should be returned.
+  json = StatisticsRecorder::ToJSON(query);
+  EXPECT_TRUE(json.empty());
 }
 
 TEST_P(StatisticsRecorderTest, IterationTest) {

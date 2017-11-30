@@ -308,8 +308,7 @@ typedef unsigned (*BoundarySearchFunction)(const UChar*,
                                            BoundarySearchContextAvailability,
                                            bool& need_more_context);
 
-CORE_EXPORT Position NextBoundary(const VisiblePosition&,
-                                  BoundarySearchFunction);
+Position NextBoundary(const VisiblePosition&, BoundarySearchFunction);
 PositionInFlatTree NextBoundary(const VisiblePositionInFlatTree&,
                                 BoundarySearchFunction);
 Position PreviousBoundary(const VisiblePosition&, BoundarySearchFunction);

@@ -35,7 +35,9 @@ class WebContentsTaskProvider : public TaskProvider {
   void OnWebContentsTagRemoved(const WebContentsTag* tag);
 
   // task_manager::TaskProvider:
-  Task* GetTaskOfUrlRequest(int child_id, int route_id) override;
+  Task* GetTaskOfUrlRequest(int origin_pid,
+                            int child_id,
+                            int route_id) override;
 
   // Checks if the given |web_contents| is tracked by the provider.
   bool HasWebContents(content::WebContents* web_contents) const;

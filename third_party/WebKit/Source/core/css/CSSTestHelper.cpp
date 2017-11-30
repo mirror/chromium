@@ -29,7 +29,6 @@
 
 #include "core/css/CSSTestHelper.h"
 
-#include "bindings/core/v8/ExceptionState.h"
 #include "core/css/CSSRuleList.h"
 #include "core/css/CSSStyleSheet.h"
 #include "core/css/RuleSet.h"
@@ -50,10 +49,7 @@ CSSTestHelper::CSSTestHelper() {
 }
 
 CSSRuleList* CSSTestHelper::CssRules() {
-  DummyExceptionStateForTesting exception_state;
-  CSSRuleList* result = style_sheet_->cssRules(exception_state);
-  EXPECT_FALSE(exception_state.HadException());
-  return result;
+  return style_sheet_->cssRules();
 }
 
 RuleSet& CSSTestHelper::GetRuleSet() {
@@ -67,7 +63,7 @@ void CSSTestHelper::AddCSSRules(const char* css_text) {
   TextPosition position;
   unsigned sheet_length = style_sheet_->length();
   style_sheet_->Contents()->ParseStringAtPosition(css_text, position);
-  ASSERT_GT(style_sheet_->length(), sheet_length);
+  ASSERT_TRUE(style_sheet_->length() > sheet_length);
 }
 
 }  // namespace blink

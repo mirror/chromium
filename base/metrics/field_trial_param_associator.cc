@@ -8,8 +8,8 @@
 
 namespace base {
 
-FieldTrialParamAssociator::FieldTrialParamAssociator() = default;
-FieldTrialParamAssociator::~FieldTrialParamAssociator() = default;
+FieldTrialParamAssociator::FieldTrialParamAssociator() {}
+FieldTrialParamAssociator::~FieldTrialParamAssociator() {}
 
 // static
 FieldTrialParamAssociator* FieldTrialParamAssociator::GetInstance() {

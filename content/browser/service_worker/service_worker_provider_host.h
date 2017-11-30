@@ -332,6 +332,7 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
   void NotifyControllerLost();
 
  private:
+  friend class ForeignFetchRequestHandlerTest;
   friend class LinkHeaderServiceWorkerTest;
   friend class ServiceWorkerProviderHostTest;
   friend class ServiceWorkerWriteToCacheJobTest;

@@ -45,9 +45,6 @@ const char kAppBannersDescription[] =
     "Enable the display of Progressive Web App banners, which prompt a user to "
     "add a web app to their shelf, or other platform-specific equivalent.";
 
-const char kAshSidebarName[] = "Sidebar";
-const char kAshSidebarDescription[] = "Enable the experimental sidebar.";
-
 const char kAsyncImageDecodingName[] = "AsyncImageDecoding";
 const char kAsyncImageDecodingDescription[] =
     "Enables asynchronous decoding of images from raster for web content";
@@ -83,6 +80,10 @@ const char kBlockTabUndersName[] = "Block tab-unders";
 const char kBlockTabUndersDescription[] =
     "Blocks tab-unders in Chrome with some native UI to allow the user to "
     "proceed.";
+
+const char kBrowserSideNavigationName[] = "Enable browser side navigation";
+const char kBrowserSideNavigationDescription[] =
+    "Enable browser side navigation (aka PlzNavigate).";
 
 const char kNavigationMojoResponseName[] = "Navigation response using Mojo";
 const char kNavigationMojoResponseDescription[] =
@@ -512,12 +513,6 @@ const char kEnablePixelCanvasRecordingDescription[] =
 const char kEnableTokenBindingName[] = "Token Binding.";
 const char kEnableTokenBindingDescription[] = "Enable Token Binding support.";
 
-extern const char kEnableTouchpadAndWheelScrollLatchingName[] =
-    "Wheel Scroll Latching.";
-extern const char kEnableTouchpadAndWheelScrollLatchingDescription[] =
-    "Wheel scroll latching enforces latching to a single element for the "
-    "duration of a scroll sequence.";
-
 const char kEnableUsernameCorrectionName[] = "Enable username correction";
 const char kEnableUsernameCorrectionDescription[] =
     "While on the pending password state, add an edit button to the bubble so "
@@ -871,11 +866,6 @@ const char kNewRemotePlaybackPipelineName[] =
 const char kNewRemotePlaybackPipelineDescription[] =
     "Enable the new pipeline for playing media element remotely via "
     "RemotePlayback API or native controls.";
-const char kUseSurfaceLayerForVideoName[] =
-    "Enable the use of SurfaceLayer objects for videos.";
-const char kUseSurfaceLayerForVideoDescription[] =
-    "Enable compositing onto a Surface instead of a VideoLayer "
-    "for videos.";
 
 const char kNewUsbBackendName[] = "Enable new USB backend";
 const char kNewUsbBackendDescription[] =

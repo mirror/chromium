@@ -14,7 +14,7 @@ namespace {
 
 class SelfAssign : public base::RefCounted<SelfAssign> {
  protected:
-  virtual ~SelfAssign() = default;
+  virtual ~SelfAssign() {}
 
  private:
   friend class base::RefCounted<SelfAssign>;
@@ -22,7 +22,7 @@ class SelfAssign : public base::RefCounted<SelfAssign> {
 
 class Derived : public SelfAssign {
  protected:
-  ~Derived() override = default;
+  ~Derived() override {}
 
  private:
   friend class base::RefCounted<Derived>;
@@ -112,7 +112,7 @@ class Other : public base::RefCounted<Other> {
  private:
   friend class base::RefCounted<Other>;
 
-  ~Other() = default;
+  ~Other() {}
 };
 
 class HasPrivateDestructorWithDeleter;
@@ -124,11 +124,11 @@ struct Deleter {
 class HasPrivateDestructorWithDeleter
     : public base::RefCounted<HasPrivateDestructorWithDeleter, Deleter> {
  public:
-  HasPrivateDestructorWithDeleter() = default;
+  HasPrivateDestructorWithDeleter() {}
 
  private:
   friend struct Deleter;
-  ~HasPrivateDestructorWithDeleter() = default;
+  ~HasPrivateDestructorWithDeleter() {}
 };
 
 void Deleter::Destruct(const HasPrivateDestructorWithDeleter* x) {
@@ -147,11 +147,11 @@ class InitialRefCountIsOne : public base::RefCounted<InitialRefCountIsOne> {
  public:
   REQUIRE_ADOPTION_FOR_REFCOUNTED_TYPE();
 
-  InitialRefCountIsOne() = default;
+  InitialRefCountIsOne() {}
 
  private:
   friend class base::RefCounted<InitialRefCountIsOne>;
-  ~InitialRefCountIsOne() = default;
+  ~InitialRefCountIsOne() {}
 };
 
 }  // end namespace

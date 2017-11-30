@@ -23,8 +23,8 @@ namespace headless {
 
 class ThrottledDispatcherTest : public ::testing::Test {
  protected:
-  ThrottledDispatcherTest() = default;
-  ~ThrottledDispatcherTest() override = default;
+  ThrottledDispatcherTest() {}
+  ~ThrottledDispatcherTest() override {}
 
   void SetUp() override {
     throttled_dispatcher_.reset(new ThrottledDispatcher(loop_.task_runner()));

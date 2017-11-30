@@ -81,7 +81,7 @@ namespace chromeos {
 NetworkState::NetworkState(const std::string& path)
     : ManagedState(MANAGED_TYPE_NETWORK, path) {}
 
-NetworkState::~NetworkState() = default;
+NetworkState::~NetworkState() {}
 
 bool NetworkState::PropertyChanged(const std::string& key,
                                    const base::Value& value) {

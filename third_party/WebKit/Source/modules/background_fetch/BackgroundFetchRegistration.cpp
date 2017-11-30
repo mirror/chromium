@@ -20,13 +20,15 @@ BackgroundFetchRegistration::BackgroundFetchRegistration(
     unsigned long long upload_total,
     unsigned long long uploaded,
     unsigned long long download_total,
-    unsigned long long downloaded)
+    unsigned long long downloaded,
+    const String& title)
     : developer_id_(developer_id),
       unique_id_(unique_id),
       upload_total_(upload_total),
       uploaded_(uploaded),
       download_total_(download_total),
       downloaded_(downloaded),
+      title_(title),
       observer_binding_(this) {}
 
 BackgroundFetchRegistration::~BackgroundFetchRegistration() = default;
@@ -80,6 +82,10 @@ unsigned long long BackgroundFetchRegistration::downloadTotal() const {
 
 unsigned long long BackgroundFetchRegistration::downloaded() const {
   return downloaded_;
+}
+
+String BackgroundFetchRegistration::title() const {
+  return title_;
 }
 
 const AtomicString& BackgroundFetchRegistration::InterfaceName() const {

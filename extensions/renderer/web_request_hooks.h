@@ -9,6 +9,7 @@
 
 #include "base/macros.h"
 #include "extensions/renderer/bindings/api_binding_hooks_delegate.h"
+#include "extensions/renderer/bindings/api_binding_types.h"
 #include "v8/include/v8.h"
 
 namespace extensions {
@@ -26,6 +27,7 @@ class WebRequestHooks : public APIBindingHooksDelegate {
   // It's not impossible, but it's a bit involved. However, as we move more
   // towards native bindings, it's definitely something we'll want to do.
   bool CreateCustomEvent(v8::Local<v8::Context> context,
+                         const binding::RunJSFunctionSync& run_js_sync,
                          const std::string& event_name,
                          v8::Local<v8::Value>* event_out) override;
 

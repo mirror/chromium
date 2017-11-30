@@ -4,7 +4,6 @@
 
 #include "chrome/browser/ui/tabs/tab_activity_watcher.h"
 
-#include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/tabs/tab_metrics_logger_impl.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
@@ -86,7 +85,7 @@ class TabActivityWatcher::WebContentsData
 
 TabActivityWatcher::TabActivityWatcher()
     : tab_metrics_logger_(std::make_unique<TabMetricsLoggerImpl>()),
-      browser_tab_strip_tracker_(this, this, nullptr),
+      browser_tab_strip_tracker_(this, nullptr, nullptr),
       per_source_log_timeout_(kPerSourceLogTimeout) {
   browser_tab_strip_tracker_.Init();
 }
@@ -97,14 +96,6 @@ void TabActivityWatcher::DisableLogTimeoutForTest() {
   per_source_log_timeout_ = base::TimeDelta();
 }
 
-void TabActivityWatcher::SetTabMetricsLoggerForTest(
-    std::unique_ptr<TabMetricsLogger> tab_metrics_logger) {
-  if (tab_metrics_logger)
-    tab_metrics_logger_ = std::move(tab_metrics_logger);
-  else
-    tab_metrics_logger_ = std::make_unique<TabMetricsLoggerImpl>();
-}
-
 void TabActivityWatcher::TabPinnedStateChanged(TabStripModel* tab_strip_model,
                                                content::WebContents* contents,
                                                int index) {
@@ -113,11 +104,6 @@ void TabActivityWatcher::TabPinnedStateChanged(TabStripModel* tab_strip_model,
     return;
 
   MaybeLogTab(contents);
-}
-
-bool TabActivityWatcher::ShouldTrackBrowser(Browser* browser) {
-  // Don't track incognito browsers. This is also enforced by UKM.
-  return !browser->profile()->IsOffTheRecord();
 }
 
 void TabActivityWatcher::OnWasHidden(content::WebContents* web_contents) {
@@ -131,7 +117,9 @@ void TabActivityWatcher::MaybeLogTab(content::WebContents* web_contents) {
   if (web_contents->IsBeingDestroyed())
     return;
 
-  DCHECK(!web_contents->GetBrowserContext()->IsOffTheRecord());
+  // In incognito, the UKM service won't log anything.
+  if (web_contents->GetBrowserContext()->IsOffTheRecord())
+    return;
 
   TabActivityWatcher::WebContentsData* web_contents_data =
       TabActivityWatcher::WebContentsData::FromWebContents(web_contents);
@@ -156,7 +144,5 @@ TabActivityWatcher* TabActivityWatcher::GetInstance() {
 
 // static
 void TabActivityWatcher::WatchWebContents(content::WebContents* web_contents) {
-  // In incognito, the UKM service won't log anything.
-  if (!web_contents->GetBrowserContext()->IsOffTheRecord())
-    TabActivityWatcher::WebContentsData::CreateForWebContents(web_contents);
+  TabActivityWatcher::WebContentsData::CreateForWebContents(web_contents);
 }

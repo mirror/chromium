@@ -119,7 +119,7 @@ HeadlessContentBrowserClient::HeadlessContentBrowserClient(
       append_command_line_flags_callback_(
           browser_->options()->append_command_line_flags_callback) {}
 
-HeadlessContentBrowserClient::~HeadlessContentBrowserClient() = default;
+HeadlessContentBrowserClient::~HeadlessContentBrowserClient() {}
 
 content::BrowserMainParts* HeadlessContentBrowserClient::CreateBrowserMainParts(
     const content::MainFunctionParams&) {

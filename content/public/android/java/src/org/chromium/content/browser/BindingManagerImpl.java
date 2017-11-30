@@ -96,9 +96,8 @@ class BindingManagerImpl implements BindingManager {
         }
 
         void addConnection(ManagedConnection managedConnection) {
-            if (!mConnections.contains(managedConnection)) {
-                managedConnection.addModerateBinding();
-            }
+            assert !mConnections.contains(managedConnection);
+            managedConnection.addModerateBinding();
             addConnectionImpl(managedConnection);
         }
 
@@ -245,8 +244,6 @@ class BindingManagerImpl implements BindingManager {
                 removeStrongBinding(true);
             }
             if (mBoostPriorityForPendingViews && !boostForPendingViews) {
-                // Decrease the likelihood of a recently created background tab getting evicted by
-                // immediately adding moderate binding.
                 addConnectionToModerateBindingPool(mConnection);
                 mConnection.removeInitialBinding();
             }

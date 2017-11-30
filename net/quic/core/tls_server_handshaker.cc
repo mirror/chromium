@@ -40,7 +40,10 @@ void TlsServerHandshaker::SignatureCallback::Cancel() {
 }
 
 const SSL_PRIVATE_KEY_METHOD TlsServerHandshaker::kPrivateKeyMethod{
+    nullptr,  // type
+    nullptr,  // max_signature_len
     &TlsServerHandshaker::PrivateKeySign,
+    nullptr,  // sign_digest
     nullptr,  // decrypt
     &TlsServerHandshaker::PrivateKeyComplete,
 };

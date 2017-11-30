@@ -48,17 +48,7 @@ class UiTexture {
 
   // This function sets |font_list| to a list of available fonts for |text|. If
   // no font supports |text|, it returns false and leave |font_list| untouched.
-  static bool GetDefaultFontList(int font_size,
-                                 base::string16 text,
-                                 gfx::FontList* font_list);
-
-  // This function sets |font_list| to a list of available fonts for |text|. If
-  // the font with |preferred_font_name| is available and supports |text|,
-  // |font_list| will be configured to use the preferred font instead of default
-  // font. If no font supports |text|, it returns false and leave |font_list|
-  // untouched.
-  static bool GetFontList(const std::string& preferred_font_name,
-                          int font_size,
+  static bool GetFontList(int size,
                           base::string16 text,
                           gfx::FontList* font_list);
 
@@ -107,6 +97,7 @@ class UiTexture {
       TextAlignment text_alignment);
 
   static bool IsRTL();
+  static gfx::FontList GetDefaultFontList(int size);
   static void SetForceFontFallbackFailureForTesting(bool force);
 
   void set_dirty() { dirty_ = true; }

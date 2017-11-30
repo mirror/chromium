@@ -21,7 +21,7 @@ InMemoryRequestJob::InMemoryRequestJob(
       data_offset_(0),
       weak_factory_(this) {}
 
-InMemoryRequestJob::~InMemoryRequestJob() = default;
+InMemoryRequestJob::~InMemoryRequestJob() {}
 
 void InMemoryRequestJob::Start() {
   // Start reading asynchronously so that all error reporting and data

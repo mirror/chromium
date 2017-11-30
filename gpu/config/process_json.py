@@ -26,15 +26,6 @@ _DO_NOT_EDIT_WARNING = """// This file is auto-generated from
 
 """
 
-_OS_TYPE_MAP = {
-    'win': 'kOsWin',
-    'macosx': 'kOsMacosx',
-    'android': 'kOsAndroid',
-    'linux': 'kOsLinux',
-    'chromeos': 'kOsChromeOS',
-    '': 'kOsAny',
-  }
-
 
 def load_software_rendering_list_features(feature_type_filename):
   header_file = open(feature_type_filename, 'rb')
@@ -295,8 +286,16 @@ def write_machine_model_info(entry_id, is_exception, exception_id,
 
 
 def write_os_type(os_type, data_file):
-  assert _OS_TYPE_MAP.has_key(os_type)
-  data_file.write('GpuControlList::%s,  // os_type\n' % _OS_TYPE_MAP[os_type])
+  map = {
+    'win': 'kOsWin',
+    'macosx': 'kOsMacosx',
+    'android': 'kOsAndroid',
+    'linux': 'kOsLinux',
+    'chromeos': 'kOsChromeOS',
+    '': 'kOsAny',
+  }
+  assert map.has_key(os_type)
+  data_file.write('GpuControlList::%s,  // os_type\n' % map[os_type])
 
 
 def write_multi_gpu_category(multi_gpu_category, data_file):
@@ -619,14 +618,8 @@ def process_json_file(json_filepath, list_tag,
     entry_id = entry['id']
     assert entry_id not in ids
     ids.append(entry_id)
-    if 'os' in entry:
-      os_type = entry['os']['type']
-      # Check for typos in the .json data
-      if not _OS_TYPE_MAP.has_key(os_type):
-        raise Exception('Unknown OS type "%s" for entry %d' %
-                        (os_type, entry_id))
-      if os_filter != None and os_type != os_filter:
-        continue
+    if os_filter != None and 'os' in entry and entry['os']['type'] != os_filter:
+      continue
     entry_count += 1
     write_entry(entry, total_features, feature_tag,
                 data_file, data_helper_file, data_exception_file)

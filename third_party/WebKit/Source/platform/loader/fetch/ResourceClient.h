@@ -40,6 +40,7 @@ class PLATFORM_EXPORT ResourceClient : public GarbageCollectedMixin {
     kBaseResourceType,
     kFontType,
     kStyleSheetType,
+    kDocumentType,
     kRawResourceType,
     kScriptType
   };

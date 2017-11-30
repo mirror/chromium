@@ -58,7 +58,6 @@ class CONTENT_EXPORT WebRtcMediaStreamAdapterMap
     const WebRtcMediaStreamAdapter& adapter() const {
       return *adapter_entry_->adapter;
     }
-    WebRtcMediaStreamAdapter& adapter() { return *adapter_entry_->adapter; }
 
    private:
     friend class WebRtcMediaStreamAdapterMap;

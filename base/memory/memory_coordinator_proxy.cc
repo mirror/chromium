@@ -12,9 +12,11 @@ MemoryCoordinator* g_memory_coordinator = nullptr;
 
 }  // namespace
 
-MemoryCoordinatorProxy::MemoryCoordinatorProxy() = default;
+MemoryCoordinatorProxy::MemoryCoordinatorProxy() {
+}
 
-MemoryCoordinatorProxy::~MemoryCoordinatorProxy() = default;
+MemoryCoordinatorProxy::~MemoryCoordinatorProxy() {
+}
 
 // static
 MemoryCoordinatorProxy* MemoryCoordinatorProxy::GetInstance() {

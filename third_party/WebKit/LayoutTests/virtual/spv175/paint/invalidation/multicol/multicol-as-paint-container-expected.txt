@@ -13,12 +13,12 @@
       "backfaceVisibility": "hidden",
       "paintInvalidations": [
         {
-          "object": "LayoutMultiColumnFlowThread (anonymous)",
+          "object": "InlineTextBox 'Lorem ipsum'",
           "rect": [0, 0, 315, 180],
           "reason": "chunk uncacheable"
         },
         {
-          "object": "LayoutMultiColumnFlowThread (anonymous)",
+          "object": "InlineTextBox 'Lorem ipsum'",
           "rect": [0, 0, 315, 180],
           "reason": "chunk uncacheable"
         },

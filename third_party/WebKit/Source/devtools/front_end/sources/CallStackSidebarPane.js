@@ -66,7 +66,6 @@ Sources.CallStackSidebarPane = class extends UI.SimpleView {
    */
   flavorChanged(object) {
     this._showBlackboxed = false;
-    this._maxAsyncStackChainDepth = Sources.CallStackSidebarPane._defaultMaxAsyncStackChainDepth;
     this._update();
   }
 
@@ -86,6 +85,7 @@ Sources.CallStackSidebarPane = class extends UI.SimpleView {
       this._blackboxedMessageElement.classList.add('hidden');
       this._showMoreMessageElement.classList.add('hidden');
       this._items.replaceAll([]);
+      this._maxAsyncStackChainDepth = Sources.CallStackSidebarPane._defaultMaxAsyncStackChainDepth;
       UI.context.setFlavor(SDK.DebuggerModel.CallFrame, null);
       return;
     }

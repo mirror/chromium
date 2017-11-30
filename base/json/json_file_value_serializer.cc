@@ -21,7 +21,8 @@ JSONFileValueSerializer::JSONFileValueSerializer(
     : json_file_path_(json_file_path) {
 }
 
-JSONFileValueSerializer::~JSONFileValueSerializer() = default;
+JSONFileValueSerializer::~JSONFileValueSerializer() {
+}
 
 bool JSONFileValueSerializer::Serialize(const base::Value& root) {
   return SerializeInternal(root, false);
@@ -56,7 +57,8 @@ JSONFileValueDeserializer::JSONFileValueDeserializer(
     int options)
     : json_file_path_(json_file_path), options_(options), last_read_size_(0U) {}
 
-JSONFileValueDeserializer::~JSONFileValueDeserializer() = default;
+JSONFileValueDeserializer::~JSONFileValueDeserializer() {
+}
 
 int JSONFileValueDeserializer::ReadFileToString(std::string* json_string) {
   DCHECK(json_string);

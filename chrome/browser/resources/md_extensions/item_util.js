@@ -9,7 +9,6 @@ const SourceType = {
   POLICY: 'policy',
   SIDELOADED: 'sideloaded',
   UNPACKED: 'unpacked',
-  UNKNOWN: 'unknown',
 };
 
 cr.define('extensions', function() {
@@ -75,19 +74,11 @@ cr.define('extensions', function() {
             chrome.developerPrivate.ControllerType.POLICY) {
       return SourceType.POLICY;
     }
-
-    switch (item.location) {
-      case chrome.developerPrivate.Location.THIRD_PARTY:
-        return SourceType.SIDELOADED;
-      case chrome.developerPrivate.Location.UNPACKED:
-        return SourceType.UNPACKED;
-      case chrome.developerPrivate.Location.UNKNOWN:
-        return SourceType.UNKNOWN;
-      case chrome.developerPrivate.Location.FROM_STORE:
-        return SourceType.WEBSTORE;
-    }
-
-    assertNotReached(item.location);
+    if (item.location == chrome.developerPrivate.Location.THIRD_PARTY)
+      return SourceType.SIDELOADED;
+    if (item.location == chrome.developerPrivate.Location.UNPACKED)
+      return SourceType.UNPACKED;
+    return SourceType.WEBSTORE;
   }
 
   /**
@@ -104,10 +95,6 @@ cr.define('extensions', function() {
         return loadTimeData.getString('itemSourceUnpacked');
       case SourceType.WEBSTORE:
         return loadTimeData.getString('itemSourceWebstore');
-      case SourceType.UNKNOWN:
-        // Nothing to return. Calling code should use
-        // chrome.developerPrivate.ExtensionInfo's |locationText| instead.
-        return '';
     }
     assertNotReached();
   }

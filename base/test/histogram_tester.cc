@@ -29,7 +29,8 @@ HistogramTester::HistogramTester() {
   }
 }
 
-HistogramTester::~HistogramTester() = default;
+HistogramTester::~HistogramTester() {
+}
 
 void HistogramTester::ExpectUniqueSample(
     const std::string& name,

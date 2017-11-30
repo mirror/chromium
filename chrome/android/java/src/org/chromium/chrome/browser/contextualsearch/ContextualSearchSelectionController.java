@@ -7,7 +7,6 @@ package org.chromium.chrome.browser.contextualsearch;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeFeatureList;
@@ -37,7 +36,6 @@ public class ContextualSearchSelectionController {
         LONG_PRESS
     }
 
-    private static final String TAG = "ContextualSearch";
     private static final String CONTAINS_WORD_PATTERN = "(\\w|\\p{L}|\\p{N})+";
     // A URL is:
     //   1:    scheme://
@@ -78,9 +76,6 @@ public class ContextualSearchSelectionController {
     // When the last tap gesture happened.
     private long mTapTimeNanoseconds;
 
-    // Whether the selection was empty before the most recent tap gesture.
-    private boolean mWasSelectionEmptyBeforeTap;
-
     // The duration of the last tap gesture in milliseconds, or 0 if not set.
     private int mTapDurationMs = INVALID_DURATION;
 
@@ -105,7 +100,6 @@ public class ContextualSearchSelectionController {
         @Override
         public void onTouchDown() {
             mTapTimeNanoseconds = System.nanoTime();
-            mWasSelectionEmptyBeforeTap = TextUtils.isEmpty(mSelectedText);
         }
     }
 
@@ -121,9 +115,6 @@ public class ContextualSearchSelectionController {
         mHandler = handler;
         mPxToDp = 1.f / mActivity.getResources().getDisplayMetrics().density;
         mContainsWordPattern = Pattern.compile(CONTAINS_WORD_PATTERN);
-        // TODO(donnd): remove when behind-the-flag bug fixed (crbug.com/786589).
-        Log.i(TAG, "Tap suppression enabled: %s",
-                ContextualSearchFieldTrial.isContextualSearchMlTapSuppressionEnabled());
     }
 
     /**
@@ -370,9 +361,8 @@ public class ContextualSearchSelectionController {
         int adjustedTapsSinceOpen = prefs.getContextualSearchTapCount()
                 - prefs.getContextualSearchTapQuickAnswerCount();
         assert mTapDurationMs != INVALID_DURATION : "mTapDurationMs not set!";
-        TapSuppressionHeuristics tapHeuristics =
-                new TapSuppressionHeuristics(this, mLastTapState, x, y, adjustedTapsSinceOpen,
-                        contextualSearchContext, mTapDurationMs, mWasSelectionEmptyBeforeTap);
+        TapSuppressionHeuristics tapHeuristics = new TapSuppressionHeuristics(this, mLastTapState,
+                x, y, adjustedTapsSinceOpen, contextualSearchContext, mTapDurationMs);
         // TODO(donnd): Move to be called when the panel closes to work with states that change.
         tapHeuristics.logConditionState();
 
@@ -407,8 +397,6 @@ public class ContextualSearchSelectionController {
         boolean shouldSuppressTapBasedOnRanker = (tapPrediction == AssistRankerPrediction.SUPPRESS)
                 && ContextualSearchFieldTrial.isContextualSearchMlTapSuppressionEnabled();
         if (shouldSuppressTapBasedOnHeuristics || shouldSuppressTapBasedOnRanker) {
-            Log.i(TAG, "Tap suppressed due to Ranker: %s, heuristics: %s",
-                    shouldSuppressTapBasedOnRanker, shouldSuppressTapBasedOnHeuristics);
             mHandler.handleSuppressedTap();
         } else {
             mHandler.handleNonSuppressedTap(mTapTimeNanoseconds);

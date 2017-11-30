@@ -28,14 +28,17 @@ bool WeakReference::Flag::IsValid() const {
   return is_valid_;
 }
 
-WeakReference::Flag::~Flag() = default;
+WeakReference::Flag::~Flag() {
+}
 
-WeakReference::WeakReference() = default;
+WeakReference::WeakReference() {
+}
 
 WeakReference::WeakReference(const Flag* flag) : flag_(flag) {
 }
 
-WeakReference::~WeakReference() = default;
+WeakReference::~WeakReference() {
+}
 
 WeakReference::WeakReference(WeakReference&& other) = default;
 
@@ -43,7 +46,8 @@ WeakReference::WeakReference(const WeakReference& other) = default;
 
 bool WeakReference::is_valid() const { return flag_.get() && flag_->IsValid(); }
 
-WeakReferenceOwner::WeakReferenceOwner() = default;
+WeakReferenceOwner::WeakReferenceOwner() {
+}
 
 WeakReferenceOwner::~WeakReferenceOwner() {
   Invalidate();
@@ -66,7 +70,7 @@ void WeakReferenceOwner::Invalidate() {
 
 WeakPtrBase::WeakPtrBase() : ptr_(0) {}
 
-WeakPtrBase::~WeakPtrBase() = default;
+WeakPtrBase::~WeakPtrBase() {}
 
 WeakPtrBase::WeakPtrBase(const WeakReference& ref, uintptr_t ptr)
     : ref_(ref), ptr_(ptr) {}

@@ -101,10 +101,8 @@ class CORE_EXPORT TransitionKeyframe : public Keyframe {
   }
 
   scoped_refptr<Keyframe::PropertySpecificKeyframe>
-  CreatePropertySpecificKeyframe(
-      const PropertyHandle&,
-      EffectModel::CompositeOperation effect_composite,
-      double offset) const final;
+  CreatePropertySpecificKeyframe(const PropertyHandle&,
+                                 double offset) const final;
 
   PropertyHandle property_;
   std::unique_ptr<TypedInterpolationValue> value_;

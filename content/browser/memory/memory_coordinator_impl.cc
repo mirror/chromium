@@ -133,7 +133,7 @@ MemoryCoordinatorImpl::MemoryCoordinatorImpl(
       memory_monitor_(std::move(memory_monitor)),
       condition_observer_(
           std::make_unique<MemoryConditionObserver>(this, task_runner)),
-      tick_clock_(base::DefaultTickClock::GetInstance()),
+      tick_clock_(std::make_unique<base::DefaultTickClock>()),
       minimum_state_transition_period_(base::TimeDelta::FromSeconds(
           kDefaultMinimumTransitionPeriodSeconds)) {
   DCHECK(memory_monitor_.get());
@@ -363,8 +363,8 @@ void MemoryCoordinatorImpl::AddChildForTesting(
 }
 
 void MemoryCoordinatorImpl::SetTickClockForTesting(
-    base::TickClock* tick_clock) {
-  tick_clock_ = tick_clock;
+    std::unique_ptr<base::TickClock> tick_clock) {
+  tick_clock_ = std::move(tick_clock);
 }
 
 void MemoryCoordinatorImpl::OnConnectionError(int render_process_id) {

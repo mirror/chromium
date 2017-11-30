@@ -23,7 +23,6 @@
 #include "url/origin.h"
 
 namespace blink {
-class AssociatedInterfaceProvider;
 enum class FeaturePolicyFeature;
 }
 
@@ -46,6 +45,7 @@ struct AXActionData;
 
 namespace content {
 
+class AssociatedInterfaceProvider;
 class RenderProcessHost;
 class RenderViewHost;
 class RenderWidgetHostView;
@@ -217,8 +217,7 @@ class CONTENT_EXPORT RenderFrameHost : public IPC::Listener,
 
   // Returns the AssociatedInterfaceProvider that this process can use to access
   // remote frame-specific Channel-associated interfaces for this frame.
-  virtual blink::AssociatedInterfaceProvider*
-  GetRemoteAssociatedInterfaces() = 0;
+  virtual AssociatedInterfaceProvider* GetRemoteAssociatedInterfaces() = 0;
 
   // Returns the visibility state of the frame. The different visibility states
   // of a frame are defined in Blink.

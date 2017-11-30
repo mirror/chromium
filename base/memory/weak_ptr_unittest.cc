@@ -51,7 +51,7 @@ struct Derived : public Base {};
 
 struct TargetBase {};
 struct Target : public TargetBase, public SupportsWeakPtr<Target> {
-  virtual ~Target() = default;
+  virtual ~Target() {}
 };
 
 struct DerivedTarget : public Target {};
@@ -64,7 +64,7 @@ struct DerivedTargetWithNestedBase : public Target {
 
 // A struct with a virtual destructor.
 struct VirtualDestructor {
-  virtual ~VirtualDestructor() = default;
+  virtual ~VirtualDestructor() {}
 };
 
 // A class inheriting from Target where Target is not the first base, and where

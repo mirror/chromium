@@ -92,7 +92,7 @@ PrefProvider::PrefProvider(PrefService* prefs,
     : prefs_(prefs),
       is_incognito_(incognito),
       store_last_modified_(store_last_modified),
-      clock_(base::DefaultClock::GetInstance()) {
+      clock_(new base::DefaultClock) {
   DCHECK(prefs_);
   // Verify preferences version.
   if (!prefs_->HasPrefPath(prefs::kContentSettingsVersion)) {
@@ -261,8 +261,8 @@ void PrefProvider::DiscardObsoletePreferences() {
 #endif  // !defined(OS_IOS)
 }
 
-void PrefProvider::SetClockForTesting(base::Clock* clock) {
-  clock_ = clock;
+void PrefProvider::SetClockForTesting(std::unique_ptr<base::Clock> clock) {
+  clock_ = std::move(clock);
 }
 
 }  // namespace content_settings

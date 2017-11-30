@@ -13,8 +13,8 @@
 #include "base/memory/weak_ptr.h"
 #include "base/numerics/safe_conversions.h"
 #include "base/trace_event/trace_event.h"
+#include "content/common/quota_messages.h"
 #include "content/public/browser/quota_permission_context.h"
-#include "mojo/public/cpp/bindings/strong_binding.h"
 #include "net/base/url_util.h"
 #include "storage/browser/quota/quota_manager.h"
 #include "url/gurl.h"
@@ -29,14 +29,15 @@ namespace content {
 // Created one per request to carry the request's request_id around.
 // Dispatches requests from renderer/worker to the QuotaManager and
 // sends back the response to the renderer/worker.
-// TODO(sashab): Remove, since request_id is no longer needed.
 class QuotaDispatcherHost::RequestDispatcher {
  public:
-  RequestDispatcher(base::WeakPtr<QuotaDispatcherHost> dispatcher_host)
+  RequestDispatcher(base::WeakPtr<QuotaDispatcherHost> dispatcher_host,
+                    int request_id)
       : dispatcher_host_(dispatcher_host),
-        render_process_id_(dispatcher_host->process_id_) {
-    request_id_ =
-        dispatcher_host_->outstanding_requests_.Add(base::WrapUnique(this));
+        render_process_id_(dispatcher_host->process_id_),
+        request_id_(request_id) {
+    dispatcher_host_->outstanding_requests_.AddWithID(base::WrapUnique(this),
+                                                      request_id_);
   }
   virtual ~RequestDispatcher() {}
 
@@ -58,6 +59,7 @@ class QuotaDispatcherHost::RequestDispatcher {
                             : nullptr;
   }
   int render_process_id() const { return render_process_id_; }
+  int request_id() const { return request_id_; }
 
  private:
   base::WeakPtr<QuotaDispatcherHost> dispatcher_host_;
@@ -70,9 +72,8 @@ class QuotaDispatcherHost::QueryUsageAndQuotaDispatcher
  public:
   QueryUsageAndQuotaDispatcher(
       base::WeakPtr<QuotaDispatcherHost> dispatcher_host,
-      QueryStorageUsageAndQuotaCallback callback)
-      : RequestDispatcher(dispatcher_host),
-        callback_(std::move(callback)),
+      int request_id)
+      : RequestDispatcher(dispatcher_host, request_id),
         weak_factory_(this) {}
   ~QueryUsageAndQuotaDispatcher() override {}
 
@@ -97,11 +98,16 @@ class QuotaDispatcherHost::QueryUsageAndQuotaDispatcher
     // crbug.com/349708
     TRACE_EVENT0("io", "QuotaDispatcherHost::RequestQuotaDispatcher"
                  "::DidQueryStorageUsageAndQuota");
-    std::move(callback_).Run(status, usage, quota);
+
+    if (status != storage::kQuotaStatusOk) {
+      dispatcher_host()->Send(new QuotaMsg_DidFail(request_id(), status));
+    } else {
+      dispatcher_host()->Send(new QuotaMsg_DidQueryStorageUsageAndQuota(
+          request_id(), usage, quota));
+    }
     Completed();
   }
 
-  QueryStorageUsageAndQuotaCallback callback_;
   base::WeakPtrFactory<QueryUsageAndQuotaDispatcher> weak_factory_;
 };
 
@@ -110,27 +116,19 @@ class QuotaDispatcherHost::RequestQuotaDispatcher
  public:
   typedef RequestQuotaDispatcher self_type;
 
-  RequestQuotaDispatcher(
-      base::WeakPtr<QuotaDispatcherHost> dispatcher_host,
-      int64_t render_frame_id,
-      const GURL& origin_url,
-      storage::StorageType storage_type,
-      uint64_t requested_size,
-      mojom::QuotaDispatcherHost::RequestStorageQuotaCallback callback)
-      : RequestDispatcher(dispatcher_host),
-        render_frame_id_(render_frame_id),
-        origin_url_(origin_url),
-        storage_type_(storage_type),
-        requested_size_(requested_size),
-        callback_(std::move(callback)),
+  RequestQuotaDispatcher(base::WeakPtr<QuotaDispatcherHost> dispatcher_host,
+                         const StorageQuotaParams& params)
+      : RequestDispatcher(dispatcher_host, params.request_id),
+        params_(params),
         current_usage_(0),
         current_quota_(0),
         requested_quota_(0),
         weak_factory_(this) {
     // Convert the requested size from uint64_t to int64_t since the quota
-    // backend requires int64_t values.
+    // backend
+    // requires int64_t values.
     // TODO(nhiroki): The backend should accept uint64_t values.
-    requested_quota_ = base::saturated_cast<int64_t>(requested_size);
+    requested_quota_ = base::saturated_cast<int64_t>(params_.requested_size);
   }
   ~RequestQuotaDispatcher() override {}
 
@@ -139,16 +137,16 @@ class QuotaDispatcherHost::RequestQuotaDispatcher
     // crbug.com/349708
     TRACE_EVENT0("io", "QuotaDispatcherHost::RequestQuotaDispatcher::Start");
 
-    DCHECK(storage_type_ == storage::kStorageTypeTemporary ||
-           storage_type_ == storage::kStorageTypePersistent);
-    if (storage_type_ == storage::kStorageTypePersistent) {
+    DCHECK(params_.storage_type == storage::kStorageTypeTemporary ||
+           params_.storage_type == storage::kStorageTypePersistent);
+    if (params_.storage_type == storage::kStorageTypePersistent) {
       quota_manager()->GetUsageAndQuotaForWebApps(
-          origin_url_, storage_type_,
+          params_.origin_url, params_.storage_type,
           base::Bind(&self_type::DidGetPersistentUsageAndQuota,
                      weak_factory_.GetWeakPtr()));
     } else {
       quota_manager()->GetUsageAndQuotaForWebApps(
-          origin_url_, storage_type_,
+          params_.origin_url, params_.storage_type,
           base::Bind(&self_type::DidGetTemporaryUsageAndQuota,
                      weak_factory_.GetWeakPtr()));
     }
@@ -165,10 +163,11 @@ class QuotaDispatcherHost::RequestQuotaDispatcher
       return;
     }
 
-    if (quota_manager()->IsStorageUnlimited(origin_url_, storage_type_) ||
+    if (quota_manager()->IsStorageUnlimited(params_.origin_url,
+                                            params_.storage_type) ||
         requested_quota_ <= quota) {
       // Seems like we can just let it go.
-      DidFinish(storage::kQuotaStatusOk, usage, requested_size_);
+      DidFinish(storage::kQuotaStatusOk, usage, params_.requested_size);
       return;
     }
     current_usage_ = usage;
@@ -177,15 +176,7 @@ class QuotaDispatcherHost::RequestQuotaDispatcher
     // Otherwise we need to consult with the permission context and
     // possibly show a prompt.
     DCHECK(permission_context());
-
-    StorageQuotaParams params;
-    params.render_frame_id = render_frame_id_;
-    params.origin_url = origin_url_;
-    params.storage_type = storage_type_;
-    params.requested_size = requested_size_;
-
-    permission_context()->RequestQuotaPermission(
-        params, render_process_id(),
+    permission_context()->RequestQuotaPermission(params_, render_process_id(),
         base::Bind(&self_type::DidGetPermissionResponse,
                    weak_factory_.GetWeakPtr()));
   }
@@ -207,7 +198,7 @@ class QuotaDispatcherHost::RequestQuotaDispatcher
     }
     // Now we're allowed to set the new quota.
     quota_manager()->SetPersistentHostQuota(
-        net::GetHostOrSpecFromURL(origin_url_), requested_size_,
+        net::GetHostOrSpecFromURL(params_.origin_url), params_.requested_size,
         base::Bind(&self_type::DidSetHostQuota, weak_factory_.GetWeakPtr()));
   }
 
@@ -219,71 +210,70 @@ class QuotaDispatcherHost::RequestQuotaDispatcher
     if (!dispatcher_host())
       return;
     DCHECK(dispatcher_host());
-    std::move(callback_).Run(status, usage, granted_quota);
+    if (status != storage::kQuotaStatusOk) {
+      dispatcher_host()->Send(new QuotaMsg_DidFail(request_id(), status));
+    } else {
+      dispatcher_host()->Send(new QuotaMsg_DidGrantStorageQuota(
+          request_id(), usage, granted_quota));
+    }
     Completed();
   }
 
-  const int64_t render_frame_id_;
-  const GURL origin_url_;
-  const storage::StorageType storage_type_;
-  const uint64_t requested_size_;
-  mojom::QuotaDispatcherHost::RequestStorageQuotaCallback callback_;
-
+  StorageQuotaParams params_;
   int64_t current_usage_;
   int64_t current_quota_;
   int64_t requested_quota_;
   base::WeakPtrFactory<self_type> weak_factory_;
 };
 
-// static
-void QuotaDispatcherHost::Create(
-    int process_id,
-    QuotaManager* quota_manager,
-    scoped_refptr<QuotaPermissionContext> permission_context,
-    mojom::QuotaDispatcherHostRequest request) {
-  mojo::MakeStrongBinding(
-      base::MakeUnique<QuotaDispatcherHost>(process_id, quota_manager,
-                                            std::move(permission_context)),
-      std::move(request));
-}
-
 QuotaDispatcherHost::QuotaDispatcherHost(
     int process_id,
     QuotaManager* quota_manager,
-    scoped_refptr<QuotaPermissionContext> permission_context)
-    : process_id_(process_id),
+    QuotaPermissionContext* permission_context)
+    : BrowserMessageFilter(QuotaMsgStart),
+      process_id_(process_id),
       quota_manager_(quota_manager),
       permission_context_(permission_context),
-      weak_factory_(this) {}
-
-void QuotaDispatcherHost::QueryStorageUsageAndQuota(
-    const GURL& origin_url,
-    storage::StorageType storage_type,
-    QueryStorageUsageAndQuotaCallback callback) {
-  QueryUsageAndQuotaDispatcher* dispatcher = new QueryUsageAndQuotaDispatcher(
-      weak_factory_.GetWeakPtr(), std::move(callback));
-  dispatcher->QueryStorageUsageAndQuota(origin_url, storage_type);
+      weak_factory_(this) {
 }
 
-void QuotaDispatcherHost::RequestStorageQuota(
-    int64_t render_frame_id,
-    const GURL& origin_url,
-    storage::StorageType storage_type,
-    uint64_t requested_size,
-    mojom::QuotaDispatcherHost::RequestStorageQuotaCallback callback) {
-  if (storage_type != storage::kStorageTypeTemporary &&
-      storage_type != storage::kStorageTypePersistent) {
+bool QuotaDispatcherHost::OnMessageReceived(const IPC::Message& message) {
+  bool handled = true;
+  IPC_BEGIN_MESSAGE_MAP(QuotaDispatcherHost, message)
+    IPC_MESSAGE_HANDLER(QuotaHostMsg_QueryStorageUsageAndQuota,
+                        OnQueryStorageUsageAndQuota)
+    IPC_MESSAGE_HANDLER(QuotaHostMsg_RequestStorageQuota,
+                        OnRequestStorageQuota)
+    IPC_MESSAGE_UNHANDLED(handled = false)
+  IPC_END_MESSAGE_MAP()
+  return handled;
+}
+
+QuotaDispatcherHost::~QuotaDispatcherHost() {}
+
+void QuotaDispatcherHost::OnQueryStorageUsageAndQuota(
+    int request_id,
+    const GURL& origin,
+    StorageType type) {
+  QueryUsageAndQuotaDispatcher* dispatcher = new QueryUsageAndQuotaDispatcher(
+      weak_factory_.GetWeakPtr(), request_id);
+  dispatcher->QueryStorageUsageAndQuota(origin, type);
+}
+
+void QuotaDispatcherHost::OnRequestStorageQuota(
+    const StorageQuotaParams& params) {
+  if (params.storage_type != storage::kStorageTypeTemporary &&
+      params.storage_type != storage::kStorageTypePersistent) {
     // Unsupported storage types.
-    std::move(callback).Run(storage::kQuotaErrorNotSupported, 0, 0);
+    Send(new QuotaMsg_DidFail(params.request_id,
+                              storage::kQuotaErrorNotSupported));
     return;
   }
 
-  RequestQuotaDispatcher* dispatcher = new RequestQuotaDispatcher(
-      weak_factory_.GetWeakPtr(), render_frame_id, origin_url, storage_type,
-      requested_size, std::move(callback));
+  RequestQuotaDispatcher* dispatcher =
+      new RequestQuotaDispatcher(weak_factory_.GetWeakPtr(),
+                                 params);
   dispatcher->Start();
 }
-
-QuotaDispatcherHost::~QuotaDispatcherHost() = default;
 
 }  // namespace content

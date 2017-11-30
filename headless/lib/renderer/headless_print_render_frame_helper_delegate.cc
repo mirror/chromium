@@ -9,10 +9,10 @@
 namespace headless {
 
 HeadlessPrintRenderFrameHelperDelegate::
-    HeadlessPrintRenderFrameHelperDelegate() = default;
+    HeadlessPrintRenderFrameHelperDelegate() {}
 
 HeadlessPrintRenderFrameHelperDelegate::
-    ~HeadlessPrintRenderFrameHelperDelegate() = default;
+    ~HeadlessPrintRenderFrameHelperDelegate() {}
 
 bool HeadlessPrintRenderFrameHelperDelegate::CancelPrerender(
     content::RenderFrame* render_frame) {

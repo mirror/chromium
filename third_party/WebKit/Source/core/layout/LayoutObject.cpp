@@ -661,7 +661,7 @@ bool LayoutObject::ScrollRectToVisible(const LayoutRect& rect,
                                        ScrollType scroll_type,
                                        bool make_visible_in_visual_viewport,
                                        ScrollBehavior scroll_behavior) {
-  LayoutBox* enclosing_box = EnclosingBox();
+  LayoutBox* enclosing_box = this->EnclosingBox();
   if (!enclosing_box)
     return false;
 
@@ -1116,25 +1116,13 @@ const LayoutBoxModelObject& LayoutObject::ContainerForPaintInvalidation()
   return *layout_view;
 }
 
-bool LayoutObject::RecalcOverflowAfterStyleChange() {
-  if (!ChildNeedsOverflowRecalcAfterStyleChange())
-    return false;
-  bool children_overflow_changed = false;
-  for (LayoutObject* current = SlowFirstChild(); current;
-       current = current->NextSibling()) {
-    if (current->RecalcOverflowAfterStyleChange())
-      children_overflow_changed = true;
-  }
-  return children_overflow_changed;
-}
-
 const LayoutBoxModelObject* LayoutObject::EnclosingCompositedContainer() const {
   LayoutBoxModelObject* container = nullptr;
   // FIXME: CompositingState is not necessarily up to date for many callers of
   // this function.
   DisableCompositingQueryAsserts disabler;
 
-  if (PaintLayer* painting_layer = PaintingLayer()) {
+  if (PaintLayer* painting_layer = this->PaintingLayer()) {
     if (PaintLayer* compositing_layer =
             painting_layer
                 ->EnclosingLayerForPaintInvalidationCrossingFrameBoundaries())
@@ -1145,7 +1133,7 @@ const LayoutBoxModelObject* LayoutObject::EnclosingCompositedContainer() const {
 
 String LayoutObject::DecoratedName() const {
   StringBuilder name;
-  name.Append(GetName());
+  name.Append(this->GetName());
 
   if (IsAnonymous())
     name.Append(" (anonymous)");
@@ -1169,7 +1157,7 @@ String LayoutObject::DebugName() const {
   StringBuilder name;
   name.Append(DecoratedName());
 
-  if (const Node* node = GetNode()) {
+  if (const Node* node = this->GetNode()) {
     name.Append(' ');
     name.Append(node->DebugName());
   }
@@ -1314,7 +1302,7 @@ bool LayoutObject::MapToVisualRectInAncestorSpaceInternal(
   if (ancestor == this)
     return true;
 
-  if (LayoutObject* parent = Parent()) {
+  if (LayoutObject* parent = this->Parent()) {
     if (parent->IsBox()) {
       LayoutBox* parent_box = ToLayoutBox(parent);
 
@@ -1599,7 +1587,7 @@ void LayoutObject::MarkAncestorsForOverflowRecalcIfNeeded() {
     // This enables us to only recompute overflow the modified sections / rows.
     object = object->IsTableCell() || object->IsTableRow()
                  ? object->Parent()
-                 : object->Container();
+                 : object->ContainingBlock();
     if (object)
       object->SetChildNeedsOverflowRecalcAfterStyleChange();
   } while (object);
@@ -1900,7 +1888,7 @@ void LayoutObject::StyleDidChange(StyleDifference diff,
   // paints (in setStyle()).
 
   if (old_style && !AreCursorsEqual(old_style, Style())) {
-    if (LocalFrame* frame = GetFrame()) {
+    if (LocalFrame* frame = this->GetFrame()) {
       // Cursor update scheduling is done by the local root, which is the main
       // frame if there are no RemoteFrame ancestors in the frame tree. Use of
       // localFrameRoot() is discouraged but will change when cursor update
@@ -2112,7 +2100,7 @@ void LayoutObject::MapLocalToAncestor(const LayoutBoxModelObject* ancestor,
     return;
 
   AncestorSkipInfo skip_info(ancestor);
-  const LayoutObject* container = Container(&skip_info);
+  const LayoutObject* container = this->Container(&skip_info);
   if (!container)
     return;
 
@@ -2202,7 +2190,7 @@ void LayoutObject::MapAncestorToLocal(const LayoutBoxModelObject* ancestor,
     return;
 
   AncestorSkipInfo skip_info(ancestor);
-  LayoutObject* container = Container(&skip_info);
+  LayoutObject* container = this->Container(&skip_info);
   if (!container)
     return;
 
@@ -2436,7 +2424,7 @@ void LayoutObject::ComputeLayerHitTestRects(
   const PaintLayer* current_layer = nullptr;
 
   if (!HasLayer()) {
-    LayoutObject* container = Container();
+    LayoutObject* container = this->Container();
     if (container) {
       current_layer = container->EnclosingLayer();
       if (current_layer->GetLayoutObject() != container) {
@@ -2453,9 +2441,9 @@ void LayoutObject::ComputeLayerHitTestRects(
     }
   }
 
-  AddLayerHitTestRects(layer_rects, current_layer, layer_offset,
-                       supported_fast_actions, LayoutRect(),
-                       TouchAction::kTouchActionAuto);
+  this->AddLayerHitTestRects(layer_rects, current_layer, layer_offset,
+                             supported_fast_actions, LayoutRect(),
+                             TouchAction::kTouchActionAuto);
 }
 
 void LayoutObject::AddLayerHitTestRects(
@@ -2466,7 +2454,7 @@ void LayoutObject::AddLayerHitTestRects(
     const LayoutRect& container_rect,
     TouchAction container_whitelisted_touch_action) const {
   DCHECK(current_layer);
-  DCHECK_EQ(current_layer, EnclosingLayer());
+  DCHECK_EQ(current_layer, this->EnclosingLayer());
 
   // Compute the rects for this layoutObject only and add them to the results.
   // Note that we could avoid passing the offset and instead adjust each result,
@@ -2635,7 +2623,7 @@ void LayoutObject::WillBeDestroyed() {
   if (children)
     children->DestroyLeftoverChildren();
 
-  if (LocalFrame* frame = GetFrame()) {
+  if (LocalFrame* frame = this->GetFrame()) {
     // If this layoutObject is being autoscrolled, stop the autoscrolling.
     if (frame->GetPage())
       frame->GetPage()->GetAutoscrollController().StopAutoscrollIfNeeded(this);
@@ -2645,7 +2633,7 @@ void LayoutObject::WillBeDestroyed() {
   // its child set.
   // We do it now, before remove(), while the parent pointer is still available.
   if (AXObjectCache* cache = GetDocument().ExistingAXObjectCache())
-    cache->ChildrenChanged(Parent());
+    cache->ChildrenChanged(this->Parent());
 
   Remove();
 
@@ -2990,7 +2978,7 @@ bool LayoutObject::HitTest(HitTestResult& result,
 }
 
 Node* LayoutObject::NodeForHitTest() const {
-  Node* node = GetNode();
+  Node* node = this->GetNode();
 
   // If we hit the anonymous layoutObjects inside generated content we should
   // actually hit the generated content so walk up to the PseudoElement.
@@ -3348,7 +3336,7 @@ bool LayoutObject::CanUpdateSelectionOnRootLineBoxes() const {
   if (NeedsLayout())
     return false;
 
-  const LayoutBlock* containing_block = ContainingBlock();
+  const LayoutBlock* containing_block = this->ContainingBlock();
   return containing_block ? !containing_block->NeedsLayout() : false;
 }
 
@@ -3410,7 +3398,7 @@ static PaintInvalidationReason DocumentLifecycleBasedPaintInvalidationReason(
 }
 
 inline void LayoutObject::MarkAncestorsForPaintInvalidation() {
-  for (LayoutObject* parent = ParentCrossingFrames();
+  for (LayoutObject* parent = this->ParentCrossingFrames();
        parent && !parent->ShouldCheckForPaintInvalidation();
        parent = parent->ParentCrossingFrames())
     parent->bitfields_.SetMayNeedPaintInvalidation(true);

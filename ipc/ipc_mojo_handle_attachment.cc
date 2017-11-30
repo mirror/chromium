@@ -14,7 +14,8 @@ namespace internal {
 MojoHandleAttachment::MojoHandleAttachment(mojo::ScopedHandle handle)
     : handle_(std::move(handle)) {}
 
-MojoHandleAttachment::~MojoHandleAttachment() = default;
+MojoHandleAttachment::~MojoHandleAttachment() {
+}
 
 MessageAttachment::Type MojoHandleAttachment::GetType() const {
   return Type::MOJO_HANDLE;

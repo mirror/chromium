@@ -21,8 +21,6 @@ v8::ExtensionConfiguration* APIBindingTest::GetV8ExtensionConfiguration() {
 }
 
 void APIBindingTest::SetUp() {
-  test_js_runner_ = CreateTestJSRunner();
-
   // Much of this initialization is stolen from the somewhat-similar
   // gin::V8Test.
 #ifdef V8_USE_EXTERNAL_STARTUP_DATA
@@ -57,8 +55,6 @@ void APIBindingTest::TearDown() {
 
   isolate()->Exit();
   isolate_holder_.reset();
-
-  test_js_runner_.reset();
 }
 
 void APIBindingTest::DisposeAllContexts() {
@@ -134,11 +130,6 @@ void APIBindingTest::RunGarbageCollection() {
     isolate()->RequestGarbageCollectionForTesting(
         v8::Isolate::kFullGarbageCollection);
   }
-}
-
-std::unique_ptr<TestJSRunner::Scope> APIBindingTest::CreateTestJSRunner() {
-  return std::make_unique<TestJSRunner::Scope>(
-      std::make_unique<TestJSRunner>());
 }
 
 v8::Isolate* APIBindingTest::isolate() {

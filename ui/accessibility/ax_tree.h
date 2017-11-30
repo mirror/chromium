@@ -185,21 +185,16 @@ class AX_EXPORT AXTree {
   // relative to its rootWebArea. Callers should initialize |offscreen|
   // to false: this method may get called multiple times in a row and
   // |offscreen| will be propagated.
-  // If |clip_bounds| is true, result bounds will be clipped.
   gfx::RectF RelativeToTreeBounds(const AXNode* node,
                                   gfx::RectF node_bounds,
-                                  bool* offscreen = nullptr,
-                                  bool clip_bounds = true) const;
+                                  bool* offscreen = nullptr) const;
 
   // Get the bounds of a node in the coordinate space of the tree.
   // If set, updates |offscreen| boolean to be true if the node is offscreen
   // relative to its rootWebArea. Callers should initialize |offscreen|
   // to false: this method may get called multiple times in a row and
   // |offscreen| will be propagated.
-  // If |clip_bounds| is true, result bounds will be clipped.
-  gfx::RectF GetTreeBounds(const AXNode* node,
-                           bool* offscreen = nullptr,
-                           bool clip_bounds = true) const;
+  gfx::RectF GetTreeBounds(const AXNode* node, bool* offscreen = nullptr) const;
 
   // Given a node ID attribute (one where IsNodeIdIntAttribute is true),
   // and a destination node ID, return a set of all source node IDs that

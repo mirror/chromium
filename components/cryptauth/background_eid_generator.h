@@ -40,7 +40,7 @@ class BackgroundEidGenerator {
  private:
   friend class CryptAuthBackgroundEidGeneratorTest;
   BackgroundEidGenerator(std::unique_ptr<RawEidGenerator> raw_eid_generator,
-                         base::Clock* clock);
+                         std::unique_ptr<base::Clock> clock);
 
   // Helper function to generate the EID for any |timestamp_ms|, properly
   // calculating the start of the period. Returns nullptr if |timestamp_ms| is
@@ -50,7 +50,7 @@ class BackgroundEidGenerator {
       const std::vector<BeaconSeed>& beacon_seeds) const;
 
   std::unique_ptr<RawEidGenerator> raw_eid_generator_;
-  base::Clock* clock_;
+  std::unique_ptr<base::Clock> clock_;
 
   DISALLOW_COPY_AND_ASSIGN(BackgroundEidGenerator);
 };

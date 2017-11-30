@@ -75,7 +75,7 @@ class NotificationCollector
 
  private:
   friend class base::RefCountedThreadSafe<NotificationCollector>;
-  ~NotificationCollector() = default;
+  ~NotificationCollector() {}
 
   void RecordChange(TestDelegate* delegate) {
     // Warning: |delegate| is Unretained. Do not dereference.
@@ -100,8 +100,8 @@ class NotificationCollector
 
 class TestDelegateBase : public SupportsWeakPtr<TestDelegateBase> {
  public:
-  TestDelegateBase() = default;
-  virtual ~TestDelegateBase() = default;
+  TestDelegateBase() {}
+  virtual ~TestDelegateBase() {}
 
   virtual void OnFileChanged(const FilePath& path, bool error) = 0;
 
@@ -120,7 +120,7 @@ class TestDelegate : public TestDelegateBase {
       : collector_(collector) {
     collector_->Register(this);
   }
-  ~TestDelegate() override = default;
+  ~TestDelegate() override {}
 
   void OnFileChanged(const FilePath& path, bool error) override {
     if (error)
@@ -144,7 +144,7 @@ class FilePathWatcherTest : public testing::Test {
   {
   }
 
-  ~FilePathWatcherTest() override = default;
+  ~FilePathWatcherTest() override {}
 
  protected:
   void SetUp() override {
@@ -275,7 +275,7 @@ class Deleter : public TestDelegateBase {
       : watcher_(watcher),
         loop_(loop) {
   }
-  ~Deleter() override = default;
+  ~Deleter() override {}
 
   void OnFileChanged(const FilePath&, bool) override {
     watcher_.reset();

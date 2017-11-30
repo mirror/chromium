@@ -12,11 +12,11 @@
 // Author(s):  Prashant Patil   (prashant.patil@imgtec.com)
 
 
-#include "src/dsp/dsp.h"
+#include "./dsp.h"
 
 #if defined(WEBP_USE_MSA)
 
-#include "src/dsp/msa_macro.h"
+#include "./msa_macro.h"
 
 //------------------------------------------------------------------------------
 // Transforms
@@ -222,7 +222,6 @@ static void TransformAC3(const int16_t* in, uint8_t* dst) {
   const v16i8 cnst4b = __msa_ldi_b(4);                        \
   const v16i8 cnst3b = __msa_ldi_b(3);                        \
   const v8i16 cnst9h = __msa_ldi_h(9);                        \
-  const v8i16 cnst63h = __msa_ldi_h(63);                      \
                                                               \
   FLIP_SIGN4(p1, p0, q0, q1, p1_m, p0_m, q0_m, q1_m);         \
   filt = __msa_subs_s_b(p1_m, q1_m);                          \
@@ -242,9 +241,9 @@ static void TransformAC3(const int16_t* in, uint8_t* dst) {
   ILVRL_B2_SH(filt_sign, filt, filt_r, filt_l);               \
   /* update q2/p2 */                                          \
   temp0 = filt_r * cnst9h;                                    \
-  temp1 = temp0 + cnst63h;                                    \
+  temp1 = ADDVI_H(temp0, 63);                                 \
   temp2 = filt_l * cnst9h;                                    \
-  temp3 = temp2 + cnst63h;                                    \
+  temp3 = ADDVI_H(temp2, 63);                                 \
   FILT2(q2_m, p2_m, q2, p2);                                  \
   /* update q1/p1 */                                          \
   temp1 = temp1 + temp0;                                      \
@@ -709,7 +708,7 @@ static void VE4(uint8_t* dst) {    // vertical
   const uint32_t val0 = LW(ptop + 0);
   const uint32_t val1 = LW(ptop + 4);
   uint32_t out;
-  v16u8 A = { 0 }, B, C, AC, B2, R;
+  v16u8 A, B, C, AC, B2, R;
 
   INSERT_W2_UB(val0, val1, A);
   B = SLDI_UB(A, A, 1);
@@ -726,7 +725,7 @@ static void RD4(uint8_t* dst) {   // Down-right
   uint32_t val0 = LW(ptop + 0);
   uint32_t val1 = LW(ptop + 4);
   uint32_t val2, val3;
-  v16u8 A, B, C, AC, B2, R, A1 = { 0 };
+  v16u8 A, B, C, AC, B2, R, A1;
 
   INSERT_W2_UB(val0, val1, A1);
   A = SLDI_UB(A1, A1, 12);
@@ -754,7 +753,7 @@ static void LD4(uint8_t* dst) {   // Down-Left
   uint32_t val0 = LW(ptop + 0);
   uint32_t val1 = LW(ptop + 4);
   uint32_t val2, val3;
-  v16u8 A = { 0 }, B, C, AC, B2, R;
+  v16u8 A, B, C, AC, B2, R;
 
   INSERT_W2_UB(val0, val1, A);
   B = SLDI_UB(A, A, 1);

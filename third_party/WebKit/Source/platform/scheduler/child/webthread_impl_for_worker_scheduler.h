@@ -6,7 +6,6 @@
 #define THIRD_PARTY_WEBKIT_SOURCE_PLATFORM_SCHEDULER_CHILD_WEBTHREAD_IMPL_FOR_WORKER_SCHEDULER_H_
 
 #include "base/message_loop/message_loop.h"
-#include "base/synchronization/atomic_flag.h"
 #include "base/threading/thread.h"
 #include "public/platform/WebPrivatePtr.h"
 #include "public/platform/scheduler/child/webthread_base.h"
@@ -74,8 +73,6 @@ class PLATFORM_EXPORT WebThreadImplForWorkerScheduler
   scoped_refptr<TaskQueue> task_queue_;
   scoped_refptr<scheduler::SingleThreadIdleTaskRunner> idle_task_runner_;
   WebPrivatePtr<WebTaskRunnerImpl> web_task_runner_;
-
-  base::AtomicFlag was_shutdown_on_thread_;
 };
 
 }  // namespace scheduler

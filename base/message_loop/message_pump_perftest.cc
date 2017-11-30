@@ -240,8 +240,8 @@ TEST_F(ScheduleWorkTest, ThreadTimeToJavaFromFourThreads) {
 
 class FakeMessagePump : public MessagePump {
  public:
-  FakeMessagePump() = default;
-  ~FakeMessagePump() override = default;
+  FakeMessagePump() {}
+  ~FakeMessagePump() override {}
 
   void Run(Delegate* delegate) override {}
 

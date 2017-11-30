@@ -116,7 +116,7 @@ HttpURLFetcher::Delegate::Delegate(
   request_->Start();
 }
 
-HttpURLFetcher::Delegate::~Delegate() = default;
+HttpURLFetcher::Delegate::~Delegate() {}
 
 void HttpURLFetcher::Delegate::OnAuthRequired(
     net::URLRequest* request,
@@ -228,7 +228,7 @@ HttpURLFetcher::HttpURLFetcher(
     const net::URLRequestContext* url_request_context)
     : url_request_context_(url_request_context) {}
 
-HttpURLFetcher::~HttpURLFetcher() = default;
+HttpURLFetcher::~HttpURLFetcher() {}
 
 void HttpURLFetcher::StartFetch(const Request* request,
                                 ResultListener* result_listener) {

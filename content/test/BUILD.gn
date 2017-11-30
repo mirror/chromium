@@ -272,7 +272,6 @@ static_library("test_support") {
   configs += [
     "//build/config:precompiled_headers",
     "//v8:external_startup_data",
-    "//tools/v8_context_snapshot:use_v8_context_snapshot",
   ]
 
   public_deps = [
@@ -285,7 +284,6 @@ static_library("test_support") {
     "//media/mojo/interfaces",
     "//third_party/WebKit/public:blink",
     "//third_party/WebKit/public:test_support",
-    "//tools/v8_context_snapshot",
   ]
   deps = [
     ":content_test_mojo_bindings",
@@ -1397,6 +1395,8 @@ test("content_unittests") {
     "../browser/resolve_proxy_msg_helper_unittest.cc",
     "../browser/screen_orientation/screen_orientation_provider_unittest.cc",
     "../browser/service_worker/embedded_worker_instance_unittest.cc",
+    "../browser/service_worker/foreign_fetch_request_handler_unittest.cc",
+    "../browser/service_worker/link_header_support_unittest.cc",
     "../browser/service_worker/service_worker_cache_writer_unittest.cc",
     "../browser/service_worker/service_worker_context_core_unittest.cc",
     "../browser/service_worker/service_worker_context_request_handler_unittest.cc",
@@ -1491,7 +1491,6 @@ test("content_unittests") {
     "../common/service_manager/service_manager_connection_impl_unittest.cc",
     "../common/service_worker/service_worker_types_unittest.cc",
     "../common/service_worker/service_worker_utils_unittest.cc",
-    "../common/site_isolation_policy_unittest.cc",
     "../common/throttling_url_loader_unittest.cc",
     "../common/unique_name_helper_unittest.cc",
     "../common/webplugininfo_unittest.cc",

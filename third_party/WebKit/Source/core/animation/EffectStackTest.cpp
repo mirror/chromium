@@ -14,18 +14,19 @@
 #include "core/animation/PendingAnimations.h"
 #include "core/animation/StringKeyframe.h"
 #include "core/animation/animatable/AnimatableDouble.h"
-#include "core/testing/PageTestBase.h"
+#include "core/testing/DummyPageHolder.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
 
-class AnimationEffectStackTest : public PageTestBase {
+class AnimationEffectStackTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    PageTestBase::SetUp(IntSize());
-    GetDocument().GetAnimationClock().ResetTimeForTesting();
-    timeline = DocumentTimeline::Create(&GetDocument());
-    element = GetDocument().createElement("foo");
+    page_holder = DummyPageHolder::Create();
+    document = &page_holder->GetDocument();
+    document->GetAnimationClock().ResetTimeForTesting();
+    timeline = DocumentTimeline::Create(document.Get());
+    element = document->createElement("foo");
   }
 
   Animation* Play(KeyframeEffect* effect, double start_time) {
@@ -36,8 +37,8 @@ class AnimationEffectStackTest : public PageTestBase {
   }
 
   void UpdateTimeline(double time) {
-    GetDocument().GetAnimationClock().UpdateTime(
-        GetDocument().Timeline().ZeroTime() + time);
+    document->GetAnimationClock().UpdateTime(document->Timeline().ZeroTime() +
+                                             time);
     timeline->ServiceAnimations(kTimingUpdateForAnimationFrame);
   }
 
@@ -47,8 +48,7 @@ class AnimationEffectStackTest : public PageTestBase {
         .sampled_effects_.size();
   }
 
-  KeyframeEffectModelBase* MakeEffectModel(CSSPropertyID id,
-                                           const String& value) {
+  EffectModel* MakeEffectModel(CSSPropertyID id, const String& value) {
     StringKeyframeVector keyframes(2);
     keyframes[0] = StringKeyframe::Create();
     keyframes[0]->SetOffset(0.0);
@@ -61,13 +61,13 @@ class AnimationEffectStackTest : public PageTestBase {
     return StringKeyframeEffectModel::Create(keyframes);
   }
 
-  InertEffect* MakeInertEffect(KeyframeEffectModelBase* effect) {
+  InertEffect* MakeInertEffect(EffectModel* effect) {
     Timing timing;
     timing.fill_mode = Timing::FillMode::BOTH;
     return InertEffect::Create(effect, timing, false, 0);
   }
 
-  KeyframeEffect* MakeKeyframeEffect(KeyframeEffectModelBase* effect,
+  KeyframeEffect* MakeKeyframeEffect(EffectModel* effect,
                                      double duration = 10) {
     Timing timing;
     timing.fill_mode = Timing::FillMode::BOTH;
@@ -79,7 +79,7 @@ class AnimationEffectStackTest : public PageTestBase {
       const ActiveInterpolationsMap& active_interpolations) {
     const ActiveInterpolations& interpolations =
         active_interpolations.at(PropertyHandle(GetCSSPropertyFontSize()));
-    EnsureInterpolatedValueCached(interpolations, GetDocument(), element);
+    EnsureInterpolatedValueCached(interpolations, *document, element);
 
     const TypedInterpolationValue* typed_value =
         ToInvalidatableInterpolation(*interpolations.at(0))
@@ -94,7 +94,7 @@ class AnimationEffectStackTest : public PageTestBase {
   double GetZIndexValue(const ActiveInterpolationsMap& active_interpolations) {
     const ActiveInterpolations& interpolations =
         active_interpolations.at(PropertyHandle(GetCSSPropertyZIndex()));
-    EnsureInterpolatedValueCached(interpolations, GetDocument(), element);
+    EnsureInterpolatedValueCached(interpolations, *document, element);
 
     const TypedInterpolationValue* typed_value =
         ToInvalidatableInterpolation(*interpolations.at(0))
@@ -104,6 +104,8 @@ class AnimationEffectStackTest : public PageTestBase {
     return ToInterpolableNumber(&typed_value->GetInterpolableValue())->Value();
   }
 
+  std::unique_ptr<DummyPageHolder> page_holder;
+  Persistent<Document> document;
   Persistent<DocumentTimeline> timeline;
   Persistent<Element> element;
 };
@@ -170,8 +172,7 @@ TEST_F(AnimationEffectStackTest, ForwardsFillDiscarding) {
   Play(MakeKeyframeEffect(MakeEffectModel(CSSPropertyFontSize, "1px")), 2);
   Play(MakeKeyframeEffect(MakeEffectModel(CSSPropertyFontSize, "2px")), 6);
   Play(MakeKeyframeEffect(MakeEffectModel(CSSPropertyFontSize, "3px")), 4);
-  GetDocument().GetPendingAnimations().Update(
-      Optional<CompositorElementIdSet>());
+  document->GetPendingAnimations().Update(Optional<CompositorElementIdSet>());
   ActiveInterpolationsMap interpolations;
 
   UpdateTimeline(11);

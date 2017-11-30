@@ -69,7 +69,7 @@ const HistogramBase::Sample HistogramBase::kSampleType_MAX = INT_MAX;
 HistogramBase::HistogramBase(const char* name)
     : histogram_name_(name), flags_(kNoFlags) {}
 
-HistogramBase::~HistogramBase() = default;
+HistogramBase::~HistogramBase() {}
 
 void HistogramBase::CheckName(const StringPiece& name) const {
   DCHECK_EQ(StringPiece(histogram_name()), name);
@@ -108,8 +108,7 @@ bool HistogramBase::ValidateHistogramContents(bool crash_if_invalid,
   return true;
 }
 
-void HistogramBase::WriteJSON(std::string* output,
-                              JSONVerbosityLevel verbosity_level) const {
+void HistogramBase::WriteJSON(std::string* output) const {
   Count count;
   int64_t sum;
   std::unique_ptr<ListValue> buckets(new ListValue());
@@ -124,8 +123,7 @@ void HistogramBase::WriteJSON(std::string* output,
   root.SetDouble("sum", static_cast<double>(sum));
   root.SetInteger("flags", flags());
   root.Set("params", std::move(parameters));
-  if (verbosity_level != JSON_VERBOSITY_LEVEL_OMIT_BUCKETS)
-    root.Set("buckets", std::move(buckets));
+  root.Set("buckets", std::move(buckets));
   root.SetInteger("pid", GetUniqueIdForProcess());
   serializer.Serialize(root);
 }

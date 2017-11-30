@@ -1564,9 +1564,10 @@ TEST_F(HostContentSettingsMapTest, ClearSettingsWithTimePredicate) {
   TestingProfile profile;
   auto* map = HostContentSettingsMapFactory::GetForProfile(&profile);
 
-  base::SimpleTestClock test_clock;
-  test_clock.SetNow(base::Time::Now());
-  map->SetClockForTesting(&test_clock);
+  auto test_clock = base::MakeUnique<base::SimpleTestClock>();
+  test_clock->SetNow(base::Time::Now());
+  base::SimpleTestClock* clock = test_clock.get();
+  map->SetClockForTesting(std::move(test_clock));
 
   ContentSettingsForOneType host_settings;
 
@@ -1578,8 +1579,8 @@ TEST_F(HostContentSettingsMapTest, ClearSettingsWithTimePredicate) {
                                      std::string(), CONTENT_SETTING_BLOCK);
 
   // Make sure that the timestamp for url1 is different from |t|.
-  test_clock.Advance(base::TimeDelta::FromSeconds(1));
-  base::Time t = test_clock.Now();
+  clock->Advance(base::TimeDelta::FromSeconds(1));
+  base::Time t = clock->Now();
 
   // Add setting for url2.
   map->SetContentSettingDefaultScope(url2, GURL(), CONTENT_SETTINGS_TYPE_POPUPS,
@@ -1622,9 +1623,10 @@ TEST_F(HostContentSettingsMapTest, GetSettingLastModified) {
   TestingProfile profile;
   auto* map = HostContentSettingsMapFactory::GetForProfile(&profile);
 
-  base::SimpleTestClock test_clock;
-  test_clock.SetNow(base::Time::Now());
-  map->SetClockForTesting(&test_clock);
+  auto test_clock = base::MakeUnique<base::SimpleTestClock>();
+  test_clock->SetNow(base::Time::Now());
+  base::SimpleTestClock* clock = test_clock.get();
+  map->SetClockForTesting(std::move(test_clock));
 
   ContentSettingsForOneType host_settings;
 
@@ -1644,9 +1646,9 @@ TEST_F(HostContentSettingsMapTest, GetSettingLastModified) {
   t = map->GetSettingLastModifiedDate(pattern,
                                       ContentSettingsPattern::Wildcard(),
                                       CONTENT_SETTINGS_TYPE_POPUPS);
-  EXPECT_EQ(t, test_clock.Now());
+  EXPECT_EQ(t, clock->Now());
 
-  test_clock.Advance(base::TimeDelta::FromSeconds(1));
+  clock->Advance(base::TimeDelta::FromSeconds(1));
   // Modify setting.
   map->SetContentSettingDefaultScope(url, GURL(), CONTENT_SETTINGS_TYPE_POPUPS,
                                      std::string(), CONTENT_SETTING_ALLOW);
@@ -1654,7 +1656,7 @@ TEST_F(HostContentSettingsMapTest, GetSettingLastModified) {
   t = map->GetSettingLastModifiedDate(pattern,
                                       ContentSettingsPattern::Wildcard(),
                                       CONTENT_SETTINGS_TYPE_POPUPS);
-  EXPECT_EQ(t, test_clock.Now());
+  EXPECT_EQ(t, clock->Now());
 }
 
 TEST_F(HostContentSettingsMapTest, LastModifiedMultipleModifiableProviders) {

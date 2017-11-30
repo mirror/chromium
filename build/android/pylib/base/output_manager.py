@@ -153,5 +153,4 @@ class ArchivedFile(object):
 
   def Delete(self):
     """Deletes the backing file."""
-    self._f.close()
     os.remove(self.name)

@@ -8,9 +8,9 @@ namespace chromeos {
 
 namespace tether {
 
-DisconnectTetheringRequestSender::DisconnectTetheringRequestSender() = default;
+DisconnectTetheringRequestSender::DisconnectTetheringRequestSender() {}
 
-DisconnectTetheringRequestSender::~DisconnectTetheringRequestSender() = default;
+DisconnectTetheringRequestSender::~DisconnectTetheringRequestSender() {}
 
 void DisconnectTetheringRequestSender::AddObserver(Observer* observer) {
   observer_list_.AddObserver(observer);

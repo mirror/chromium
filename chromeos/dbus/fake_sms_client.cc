@@ -20,7 +20,7 @@ namespace chromeos {
 
 FakeSMSClient::FakeSMSClient() : weak_ptr_factory_(this) {}
 
-FakeSMSClient::~FakeSMSClient() = default;
+FakeSMSClient::~FakeSMSClient() {}
 
 void FakeSMSClient::Init(dbus::Bus* bus) {}
 

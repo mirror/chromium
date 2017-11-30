@@ -8,9 +8,9 @@
 
 namespace IPC {
 
-MessageRouter::MessageRouter() = default;
+MessageRouter::MessageRouter() {}
 
-MessageRouter::~MessageRouter() = default;
+MessageRouter::~MessageRouter() {}
 
 bool MessageRouter::OnControlMessageReceived(const IPC::Message& msg) {
   NOTREACHED()

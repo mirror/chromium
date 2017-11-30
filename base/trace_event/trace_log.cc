@@ -327,7 +327,7 @@ void TraceLog::ThreadLocalEventBuffer::FlushWhileLocked() {
 struct TraceLog::RegisteredAsyncObserver {
   explicit RegisteredAsyncObserver(WeakPtr<AsyncEnabledStateObserver> observer)
       : observer(observer), task_runner(ThreadTaskRunnerHandle::Get()) {}
-  ~RegisteredAsyncObserver() = default;
+  ~RegisteredAsyncObserver() {}
 
   WeakPtr<AsyncEnabledStateObserver> observer;
   scoped_refptr<SequencedTaskRunner> task_runner;
@@ -335,7 +335,7 @@ struct TraceLog::RegisteredAsyncObserver {
 
 TraceLogStatus::TraceLogStatus() : event_capacity(0), event_count(0) {}
 
-TraceLogStatus::~TraceLogStatus() = default;
+TraceLogStatus::~TraceLogStatus() {}
 
 // static
 TraceLog* TraceLog::GetInstance() {
@@ -369,7 +369,7 @@ TraceLog::TraceLog()
                                                          nullptr);
 }
 
-TraceLog::~TraceLog() = default;
+TraceLog::~TraceLog() {}
 
 void TraceLog::InitializeThreadLocalEventBufferIfSupported() {
   // A ThreadLocalEventBuffer needs the message loop

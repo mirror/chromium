@@ -6,8 +6,10 @@
 
 namespace base {
 
-DiscardableMemory::DiscardableMemory() = default;
+DiscardableMemory::DiscardableMemory() {
+}
 
-DiscardableMemory::~DiscardableMemory() = default;
+DiscardableMemory::~DiscardableMemory() {
+}
 
 }  // namespace base

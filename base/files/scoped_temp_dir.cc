@@ -16,7 +16,8 @@ constexpr FilePath::CharType kScopedDirPrefix[] =
 
 }  // namespace
 
-ScopedTempDir::ScopedTempDir() = default;
+ScopedTempDir::ScopedTempDir() {
+}
 
 ScopedTempDir::~ScopedTempDir() {
   if (!path_.empty() && !Delete())

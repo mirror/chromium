@@ -76,6 +76,8 @@ class CONTENT_EXPORT ServiceWorkerDatabase {
     bool is_active;
     bool has_fetch_handler;
     base::Time last_update_check;
+    std::vector<GURL> foreign_fetch_scopes;
+    std::vector<url::Origin> foreign_fetch_origins;
     base::Optional<blink::TrialTokenValidator::FeatureToTokensMap>
         origin_trial_tokens;
     blink::mojom::NavigationPreloadState navigation_preload_state;
@@ -112,6 +114,11 @@ class CONTENT_EXPORT ServiceWorkerDatabase {
   // database. Returns OK if they are successfully read or not found.
   // Otherwise, returns an error.
   Status GetOriginsWithRegistrations(std::set<GURL>* origins);
+
+  // Reads origins that have one or more than one registration with at least one
+  // foreign fetch scope registered. Returns OK if they are successfully read or
+  // not found. Otherwise returns an error.
+  Status GetOriginsWithForeignFetchRegistrations(std::set<GURL>* origins);
 
   // Reads registrations for |origin| from the database. Returns OK if they are
   // successfully read or not found. Otherwise, returns an error.

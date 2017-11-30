@@ -6,8 +6,10 @@
 
 namespace chromeos {
 
-MockAuthAttemptStateResolver::MockAuthAttemptStateResolver() = default;
+MockAuthAttemptStateResolver::MockAuthAttemptStateResolver() {
+}
 
-MockAuthAttemptStateResolver::~MockAuthAttemptStateResolver() = default;
+MockAuthAttemptStateResolver::~MockAuthAttemptStateResolver() {
+}
 
 }  // namespace chromeos

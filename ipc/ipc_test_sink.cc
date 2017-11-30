@@ -13,9 +13,11 @@
 
 namespace IPC {
 
-TestSink::TestSink() = default;
+TestSink::TestSink() {
+}
 
-TestSink::~TestSink() = default;
+TestSink::~TestSink() {
+}
 
 bool TestSink::Send(Message* message) {
   OnMessageReceived(*message);

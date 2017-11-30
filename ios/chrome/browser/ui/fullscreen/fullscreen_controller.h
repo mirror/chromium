@@ -11,7 +11,6 @@
 
 class FullscreenControllerObserver;
 class FullscreenModel;
-class FullscreenWebStateListObserver;
 
 // An object that observes scrolling events in the main content area and
 // calculates how much of the toolbar should be visible as a result.  When the
@@ -41,8 +40,6 @@ class FullscreenController {
  private:
   // The model used to calculate fullscreen state.
   std::unique_ptr<FullscreenModel> model_;
-  // A WebStateListObserver that updates |model_| for WebStateList changes.
-  std::unique_ptr<FullscreenWebStateListObserver> web_state_list_observer_;
 
   DISALLOW_COPY_AND_ASSIGN(FullscreenController);
 };

@@ -4,7 +4,6 @@
 
 #include "core/layout/GridTrackSizingAlgorithm.h"
 
-#include "core/frame/UseCounter.h"
 #include "core/layout/Grid.h"
 #include "core/layout/GridLayoutUtils.h"
 #include "core/layout/LayoutGrid.h"
@@ -740,14 +739,6 @@ void GridTrackSizingAlgorithm::InitializeTrackSizes() {
       flexible_sized_tracks_index_.push_back(i);
     if (track_size.HasAutoMaxTrackBreadth() && !track_size.IsFitContent())
       auto_sized_tracks_for_stretch_index_.push_back(i);
-
-    if (direction_ == kForRows &&
-        !layout_grid_->CachedHasDefiniteLogicalHeight() &&
-        (track_size.MinTrackBreadth().HasPercentage() ||
-         track_size.MaxTrackBreadth().HasPercentage())) {
-      UseCounter::Count(layout_grid_->GetDocument(),
-                        WebFeature::kGridRowTrackPercentIndefiniteHeight);
-    }
   }
 }
 

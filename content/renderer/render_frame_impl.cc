@@ -65,6 +65,7 @@
 #include "content/common/swapped_out_messages.h"
 #include "content/common/view_messages.h"
 #include "content/public/common/appcache_info.h"
+#include "content/public/common/associated_interface_provider.h"
 #include "content/public/common/bind_interface_helpers.h"
 #include "content/public/common/bindings_policy.h"
 #include "content/public/common/browser_side_navigation_policy.h"
@@ -174,7 +175,6 @@
 #include "services/service_manager/public/interfaces/interface_provider.mojom.h"
 #include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
 #include "storage/common/data_element.h"
-#include "third_party/WebKit/common/associated_interfaces/associated_interface_provider.h"
 #include "third_party/WebKit/common/frame_policy.h"
 #include "third_party/WebKit/common/page/page_visibility_state.mojom.h"
 #include "third_party/WebKit/public/platform/FilePathConversion.h"
@@ -1193,6 +1193,11 @@ void RenderFrameImpl::CreateFrame(
     render_frame->render_widget_ = RenderWidget::CreateForFrame(
         widget_params.routing_id, widget_params.hidden,
         render_frame->render_view_->screen_info(), compositor_deps, web_frame);
+    // TODO(avi): The main frame re-uses the RenderViewImpl as its widget, so
+    // avoid double-registering the frame as an observer.
+    // https://crbug.com/545684
+    if (web_frame->Parent())
+      render_frame->render_widget_->RegisterRenderFrame(render_frame);
   }
 
   render_frame->Initialize();
@@ -1343,6 +1348,8 @@ RenderFrameImpl::RenderFrameImpl(CreateParams params)
 
   RenderThread::Get()->AddRoute(routing_id_, this);
 
+  render_view_->RegisterRenderFrame(this);
+
   // Everything below subclasses RenderFrameObserver and is automatically
   // deleted when the RenderFrame gets deleted.
 #if defined(OS_ANDROID)
@@ -1400,14 +1407,13 @@ RenderFrameImpl::~RenderFrameImpl() {
     render_view_->main_render_frame_ = nullptr;
   }
 
+  render_view_->UnregisterRenderFrame(this);
   g_routing_id_frame_map.Get().erase(routing_id_);
   RenderThread::Get()->RemoveRoute(routing_id_);
 }
 
 void RenderFrameImpl::Initialize() {
   is_main_frame_ = !frame_->Parent();
-
-  GetRenderWidget()->RegisterRenderFrame(this);
 
   RenderFrameImpl* parent_frame =
       RenderFrameImpl::FromWebFrame(frame_->Parent());
@@ -2895,12 +2901,12 @@ service_manager::InterfaceProvider* RenderFrameImpl::GetRemoteInterfaces() {
   return &remote_interfaces_;
 }
 
-blink::AssociatedInterfaceRegistry*
+AssociatedInterfaceRegistry*
 RenderFrameImpl::GetAssociatedInterfaceRegistry() {
   return &associated_interfaces_;
 }
 
-blink::AssociatedInterfaceProvider*
+AssociatedInterfaceProvider*
 RenderFrameImpl::GetRemoteAssociatedInterfaces() {
   if (!remote_associated_interfaces_) {
     ChildThreadImpl* thread = ChildThreadImpl::current();
@@ -3375,11 +3381,6 @@ service_manager::InterfaceProvider* RenderFrameImpl::GetInterfaceProvider() {
   return &remote_interfaces_;
 }
 
-blink::AssociatedInterfaceProvider*
-RenderFrameImpl::GetRemoteNavigationAssociatedInterfaces() {
-  return GetRemoteAssociatedInterfaces();
-}
-
 void RenderFrameImpl::DidAccessInitialDocument() {
   DCHECK(!frame_->Parent());
   // NOTE: Do not call back into JavaScript here, since this call is made from a
@@ -3512,9 +3513,10 @@ void RenderFrameImpl::FrameDetached(DetachType type) {
     Send(new FrameHostMsg_Detach(routing_id_));
 
   // Clean up the associated RenderWidget for the frame, if there is one.
-  GetRenderWidget()->UnregisterRenderFrame(this);
-  if (render_widget_)
+  if (render_widget_) {
+    render_widget_->UnregisterRenderFrame(this);
     render_widget_->CloseForFrame();
+  }
 
   // We need to clean up subframes by removing them from the map and deleting
   // the RenderFrameImpl.  In contrast, the main frame is owned by its

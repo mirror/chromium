@@ -623,7 +623,8 @@ TEST_F(ShellSurfaceTest, ModalWindowDefaultActive) {
   std::unique_ptr<Buffer> desktop_buffer(
       new Buffer(exo_test_helper()->CreateGpuMemoryBuffer(desktop_size)));
   surface->Attach(desktop_buffer.get());
-  surface->SetInputRegion(gfx::Rect(10, 10, 100, 100));
+  surface->SetInputRegion(
+      SkRegion(gfx::RectToSkIRect(gfx::Rect(10, 10, 100, 100))));
   ASSERT_FALSE(shell_surface->GetWidget());
   shell_surface->SetSystemModal(true);
   surface->Commit();
@@ -641,7 +642,7 @@ TEST_F(ShellSurfaceTest, UpdateModalWindow) {
   std::unique_ptr<Buffer> desktop_buffer(
       new Buffer(exo_test_helper()->CreateGpuMemoryBuffer(desktop_size)));
   surface->Attach(desktop_buffer.get());
-  surface->SetInputRegion(cc::Region());
+  surface->SetInputRegion(SkRegion());
   surface->Commit();
 
   EXPECT_FALSE(ash::ShellPort::Get()->IsSystemModalWindowOpen());
@@ -670,7 +671,8 @@ TEST_F(ShellSurfaceTest, UpdateModalWindow) {
   EXPECT_FALSE(shell_surface->GetWidget()->IsActive());
 
   // Setting input regions won't make it modal either.
-  surface->SetInputRegion(gfx::Rect(10, 10, 100, 100));
+  surface->SetInputRegion(
+      SkRegion(gfx::RectToSkIRect(gfx::Rect(10, 10, 100, 100))));
   surface->Commit();
   EXPECT_FALSE(ash::ShellPort::Get()->IsSystemModalWindowOpen());
   EXPECT_FALSE(shell_surface->GetWidget()->IsActive());
@@ -708,7 +710,7 @@ TEST_F(ShellSurfaceTest, ModalWindowSetSystemModalBeforeCommit) {
   std::unique_ptr<Buffer> desktop_buffer(
       new Buffer(exo_test_helper()->CreateGpuMemoryBuffer(desktop_size)));
   surface->Attach(desktop_buffer.get());
-  surface->SetInputRegion(cc::Region());
+  surface->SetInputRegion(SkRegion());
 
   // Set SetSystemModal before any commit happens. Widget is not created at
   // this time.

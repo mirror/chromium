@@ -5,7 +5,6 @@
 #ifndef ScrollableAreaPainter_h
 #define ScrollableAreaPainter_h
 
-#include "base/macros.h"
 #include "platform/heap/Handle.h"
 
 namespace blink {
@@ -19,6 +18,7 @@ class PaintLayerScrollableArea;
 
 class ScrollableAreaPainter {
   STACK_ALLOCATED();
+  WTF_MAKE_NONCOPYABLE(ScrollableAreaPainter);
 
  public:
   explicit ScrollableAreaPainter(
@@ -44,8 +44,6 @@ class ScrollableAreaPainter {
   const DisplayItemClient& DisplayItemClientForCorner() const;
 
   Member<PaintLayerScrollableArea> scrollable_area_;
-
-  DISALLOW_COPY_AND_ASSIGN(ScrollableAreaPainter);
 };
 
 }  // namespace blink

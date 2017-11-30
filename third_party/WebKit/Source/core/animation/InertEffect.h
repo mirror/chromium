@@ -34,7 +34,7 @@
 #include "base/memory/scoped_refptr.h"
 #include "core/CoreExport.h"
 #include "core/animation/AnimationEffectReadOnly.h"
-#include "core/animation/KeyframeEffectModel.h"
+#include "core/animation/EffectModel.h"
 
 namespace blink {
 
@@ -43,12 +43,12 @@ namespace blink {
 // Interpolation sampling.
 class CORE_EXPORT InertEffect final : public AnimationEffectReadOnly {
  public:
-  static InertEffect* Create(KeyframeEffectModelBase*,
+  static InertEffect* Create(EffectModel*,
                              const Timing&,
                              bool paused,
                              double inherited_time);
   void Sample(Vector<scoped_refptr<Interpolation>>&) const;
-  KeyframeEffectModelBase* Model() const { return model_.Get(); }
+  EffectModel* Model() const { return model_.Get(); }
   bool Paused() const { return paused_; }
 
   bool IsInertEffect() const final { return true; }
@@ -63,11 +63,8 @@ class CORE_EXPORT InertEffect final : public AnimationEffectReadOnly {
       double time_to_next_iteration) const override;
 
  private:
-  InertEffect(KeyframeEffectModelBase*,
-              const Timing&,
-              bool paused,
-              double inherited_time);
-  Member<KeyframeEffectModelBase> model_;
+  InertEffect(EffectModel*, const Timing&, bool paused, double inherited_time);
+  Member<EffectModel> model_;
   bool paused_;
   double inherited_time_;
 };

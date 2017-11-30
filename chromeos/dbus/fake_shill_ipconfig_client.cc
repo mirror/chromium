@@ -26,7 +26,8 @@ namespace chromeos {
 FakeShillIPConfigClient::FakeShillIPConfigClient() : weak_ptr_factory_(this) {
 }
 
-FakeShillIPConfigClient::~FakeShillIPConfigClient() = default;
+FakeShillIPConfigClient::~FakeShillIPConfigClient() {
+}
 
 void FakeShillIPConfigClient::Init(dbus::Bus* bus) {
 }

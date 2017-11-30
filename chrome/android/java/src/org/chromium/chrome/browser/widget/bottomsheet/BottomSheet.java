@@ -533,7 +533,8 @@ public class BottomSheet
             return true;
         }
 
-        return currentEvent.getRawX() > startX && currentEvent.getRawX() < endX;
+        return currentEvent.getRawX() > startX && currentEvent.getRawX() < endX
+                || getSheetState() != SHEET_STATE_PEEK;
     }
 
     /**
@@ -1296,6 +1297,8 @@ public class BottomSheet
 
         mBottomSheetContentContainer.setVisibility(View.VISIBLE);
 
+        mIsSheetOpen = true;
+
         // Browser controls should stay visible until the sheet is closed.
         mPersistentControlsToken =
                 mFullscreenManager.getBrowserVisibilityDelegate().showControlsPersistent();
@@ -1313,8 +1316,6 @@ public class BottomSheet
             tracker.notifyEvent(EventConstants.BOTTOM_SHEET_EXPANDED_FROM_SWIPE);
         } else if (reason == StateChangeReason.EXPAND_BUTTON) {
             tracker.notifyEvent(EventConstants.BOTTOM_SHEET_EXPANDED_FROM_BUTTON);
-        } else if (reason == StateChangeReason.OMNIBOX_FOCUS) {
-            tracker.notifyEvent(EventConstants.BOTTOM_SHEET_EXPANDED_FROM_OMNIBOX_FOCUS);
         }
     }
 

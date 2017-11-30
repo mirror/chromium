@@ -9,8 +9,8 @@
 
 namespace headless {
 
-TabSocketTest::TabSocketTest() = default;
-TabSocketTest::~TabSocketTest() = default;
+TabSocketTest::TabSocketTest() {}
+TabSocketTest::~TabSocketTest() {}
 
 void TabSocketTest::SetUp() {
   options()->mojo_service_names.insert("headless::TabSocket");

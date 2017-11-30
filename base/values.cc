@@ -1113,7 +1113,7 @@ DictionaryValue::Iterator::Iterator(const DictionaryValue& target)
 
 DictionaryValue::Iterator::Iterator(const Iterator& other) = default;
 
-DictionaryValue::Iterator::~Iterator() = default;
+DictionaryValue::Iterator::~Iterator() {}
 
 DictionaryValue* DictionaryValue::DeepCopy() const {
   return new DictionaryValue(dict_);
@@ -1355,9 +1355,11 @@ std::unique_ptr<ListValue> ListValue::CreateDeepCopy() const {
   return std::make_unique<ListValue>(list_);
 }
 
-ValueSerializer::~ValueSerializer() = default;
+ValueSerializer::~ValueSerializer() {
+}
 
-ValueDeserializer::~ValueDeserializer() = default;
+ValueDeserializer::~ValueDeserializer() {
+}
 
 std::ostream& operator<<(std::ostream& out, const Value& value) {
   std::string json;

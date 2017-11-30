@@ -107,7 +107,7 @@ BucketRanges::BucketRanges(size_t num_ranges)
     : ranges_(num_ranges, 0),
       checksum_(0) {}
 
-BucketRanges::~BucketRanges() = default;
+BucketRanges::~BucketRanges() {}
 
 uint32_t BucketRanges::CalculateChecksum() const {
   // Seed checksum.

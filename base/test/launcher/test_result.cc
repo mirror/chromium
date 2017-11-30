@@ -49,7 +49,8 @@ std::string TestResultPart::TypeAsString() const {
 TestResult::TestResult() : status(TEST_UNKNOWN) {
 }
 
-TestResult::~TestResult() = default;
+TestResult::~TestResult() {
+}
 
 TestResult::TestResult(const TestResult& other) = default;
 TestResult::TestResult(TestResult&& other) = default;

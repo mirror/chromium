@@ -111,8 +111,7 @@ public class InstalledAppProviderTest {
         // test its functionality instead of stubbing it out here. Instead we can create a wrapper
         // around the GMSCore functionality we need and override that here instead.
         @Override
-        public boolean isInstantAppAvailable(
-                String url, boolean checkHoldback, boolean includeUserPrefersBrowser) {
+        public boolean isInstantAppAvailable(String url, boolean checkHoldback) {
             for (Pair<String, Boolean> pair : mRelatedApplicationList) {
                 if (url.startsWith(pair.first) && checkHoldback == pair.second) {
                     return true;

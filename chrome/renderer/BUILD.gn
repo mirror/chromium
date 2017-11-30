@@ -106,7 +106,6 @@ static_library("renderer") {
     "//chrome:strings",
     "//chrome/common",
     "//chrome/common:mojo_bindings",
-    "//chrome/common:search_mojom",
     "//chrome/common/net",
     "//components/autofill/content/renderer",
     "//components/cdm/renderer",
@@ -398,6 +397,7 @@ static_library("renderer") {
   }
 
   if (!is_android) {
+    deps += [ "//chrome/common:search_mojom" ]
     sources += [
       "searchbox/search_bouncer.cc",
       "searchbox/search_bouncer.h",
@@ -430,6 +430,10 @@ static_library("test_support") {
     "//testing/gmock",
     "//testing/gtest",
   ]
+
+  if (enable_print_preview) {
+    deps += [ "//chrome/service" ]
+  }
 
   if (enable_webrtc) {
     sources += [

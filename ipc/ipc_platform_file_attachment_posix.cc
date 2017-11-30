@@ -16,7 +16,8 @@ PlatformFileAttachment::PlatformFileAttachment(base::PlatformFile file)
 PlatformFileAttachment::PlatformFileAttachment(base::ScopedFD file)
     : file_(file.get()), owning_(std::move(file)) {}
 
-PlatformFileAttachment::~PlatformFileAttachment() = default;
+PlatformFileAttachment::~PlatformFileAttachment() {
+}
 
 MessageAttachment::Type PlatformFileAttachment::GetType() const {
   return Type::PLATFORM_FILE;

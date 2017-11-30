@@ -5,7 +5,6 @@
 #ifndef ScheduledNavigation_h
 #define ScheduledNavigation_h
 
-#include "base/macros.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
 
@@ -18,6 +17,8 @@ class UserGestureToken;
 
 class ScheduledNavigation
     : public GarbageCollectedFinalized<ScheduledNavigation> {
+  WTF_MAKE_NONCOPYABLE(ScheduledNavigation);
+
  public:
   enum class Reason {
     kFormSubmissionGet,
@@ -63,8 +64,6 @@ class ScheduledNavigation
   bool replaces_current_item_;
   bool is_location_change_;
   scoped_refptr<UserGestureToken> user_gesture_token_;
-
-  DISALLOW_COPY_AND_ASSIGN(ScheduledNavigation);
 };
 
 }  // namespace blink

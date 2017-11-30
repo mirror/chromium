@@ -111,13 +111,10 @@ class SiteDataCountingHelperTest : public testing::Test {
       GURL url(url_string);
       // Cookies need a unique creation time.
       base::Time time = creation_time + base::TimeDelta::FromMilliseconds(i++);
-
-      cookie_store->SetCanonicalCookieAsync(
-          net::CanonicalCookie::CreateSanitizedCookie(
-              url, "name", "A=1", url.host(), url.path(), time, base::Time(),
-              time, true, false, net::CookieSameSite::DEFAULT_MODE,
-              net::COOKIE_PRIORITY_DEFAULT),
-          url.SchemeIsCryptographic(), true /*modify_http_only*/,
+      cookie_store->SetCookieWithDetailsAsync(
+          url, "name", "A=1", url.host(), url.path(), time, base::Time(), time,
+          true, false, net::CookieSameSite::DEFAULT_MODE,
+          net::COOKIE_PRIORITY_DEFAULT,
           base::BindOnce(&SiteDataCountingHelperTest::DoneOnIOThread,
                          base::Unretained(this)));
     }

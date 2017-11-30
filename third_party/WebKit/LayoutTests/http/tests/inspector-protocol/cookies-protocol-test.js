@@ -18,8 +18,6 @@
         suffix += `, session`;
       if (cookie.sameSite)
         suffix += `, ${cookie.sameSite}`;
-      if (cookie.expires !== -1)
-        suffix += `, expires`;
       testRunner.log(`name: ${cookie.name}, value: ${cookie.value}, domain: ${cookie.domain}, path: ${cookie.path}${suffix}`);
     }
   }

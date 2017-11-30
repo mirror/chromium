@@ -147,6 +147,10 @@ void AppBannerManager::RequestAppBanner(const GURL& validated_url,
   if (validated_url_.is_empty())
     validated_url_ = validated_url;
 
+  // Any existing binding is invalid when we request a new banner.
+  if (binding_.is_bound())
+    binding_.Close();
+
   UpdateState(State::FETCHING_MANIFEST);
   manager_->GetData(
       ParamsToGetManifest(),
@@ -173,8 +177,10 @@ void AppBannerManager::SendBannerDismissed() {
   if (event_.is_bound())
     event_->BannerDismissed();
 
-  if (IsExperimentalAppBannersEnabled())
-    SendBannerPromptRequest();
+  if (IsExperimentalAppBannersEnabled()) {
+    ResetBindings();
+    SendBannerPromptRequest();  // Reprompt.
+  }
 }
 
 base::WeakPtr<AppBannerManager> AppBannerManager::GetWeakPtr() {
@@ -375,9 +381,6 @@ void AppBannerManager::SendBannerPromptRequest() {
   UpdateState(State::SENDING_EVENT);
   TrackBeforeInstallEvent(BEFORE_INSTALL_EVENT_CREATED);
 
-  // Any existing binding is invalid when we send a new beforeinstallprompt.
-  ResetBindings();
-
   web_contents()->GetMainFrame()->GetRemoteInterfaces()->GetInterface(
       mojo::MakeRequest(&controller_));
 
@@ -535,7 +538,7 @@ InstallableStatusCode AppBannerManager::ShouldShowBannerCode() {
   // requires a user gesture. In contrast, showing of traditional app banners
   // is automatic, so we throttle it if the user has recently ignored or
   // blocked the banner.
-  if (!IsExperimentalAppBannersEnabled()) {
+  if (!base::FeatureList::IsEnabled(features::kExperimentalAppBanners)) {
     base::Time now = GetCurrentTime();
     if (AppBannerSettingsHelper::WasBannerRecentlyBlocked(
             contents, validated_url_, GetAppIdentifier(), now)) {

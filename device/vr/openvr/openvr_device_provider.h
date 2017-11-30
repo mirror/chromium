@@ -12,6 +12,10 @@
 #include "device/vr/vr_device_provider.h"
 #include "device/vr/vr_export.h"
 
+namespace vr {
+class IVRSystem;
+}  // namespace vr
+
 namespace device {
 
 class OpenVRDevice;
@@ -21,17 +25,13 @@ class DEVICE_VR_EXPORT OpenVRDeviceProvider : public VRDeviceProvider {
   OpenVRDeviceProvider();
   ~OpenVRDeviceProvider() override;
 
-  void Initialize(base::Callback<void(VRDevice*)> add_device_callback,
-                  base::Callback<void(VRDevice*)> remove_device_callback,
-                  base::OnceClosure initialization_complete) override;
-
-  bool Initialized() override;
+  void GetDevices(std::vector<VRDevice*>* devices) override;
+  void Initialize() override;
 
  private:
-  void CreateDevice();
-
+  bool initialized_;
+  vr::IVRSystem* vr_system_;
   std::unique_ptr<OpenVRDevice> device_;
-  bool initialized_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(OpenVRDeviceProvider);
 };

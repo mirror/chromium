@@ -1876,6 +1876,17 @@ void LocalFrameView::ScrollContentsSlowPath() {
     DCHECK(!GetLayoutViewItem().IsNull());
     GetLayoutViewItem().InvalidatePaintRectangle(LayoutRect(update_rect));
   }
+  LayoutEmbeddedContentItem frame_layout_item = frame_->OwnerLayoutItem();
+  if (!frame_layout_item.IsNull()) {
+    if (IsEnclosedInCompositingLayer()) {
+      LayoutRect rect(
+          frame_layout_item.BorderLeft() + frame_layout_item.PaddingLeft(),
+          frame_layout_item.BorderTop() + frame_layout_item.PaddingTop(),
+          LayoutUnit(VisibleWidth()), LayoutUnit(VisibleHeight()));
+      frame_layout_item.InvalidatePaintRectangle(rect);
+      return;
+    }
+  }
 }
 
 void LocalFrameView::RestoreScrollbar() {
@@ -3701,20 +3712,6 @@ IntPoint LocalFrameView::ConvertSelfToChild(const EmbeddedContentView& child,
   new_point = FrameToContents(point);
   new_point.MoveBy(-child.FrameRect().Location());
   return new_point;
-}
-
-IntRect LocalFrameView::AbsoluteToRootFrame(
-    const IntRect& absolute_rect) const {
-  IntRect rect_in_frame(absolute_rect);
-  // With RLS turned on, this will be a no-op.
-  rect_in_frame.Move(-ScrollOffsetInt());
-  return ConvertToRootFrame(rect_in_frame);
-}
-
-IntRect LocalFrameView::RootFrameToDocument(const IntRect& rect_in_root_frame) {
-  IntRect local_rect = ConvertFromRootFrame(rect_in_root_frame);
-  local_rect.Move(LayoutViewportScrollableArea()->ScrollOffsetInt());
-  return local_rect;
 }
 
 IntRect LocalFrameView::ConvertToContainingEmbeddedContentView(

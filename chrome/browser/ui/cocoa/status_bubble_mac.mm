@@ -473,7 +473,10 @@ void StatusBubbleMac::Create() {
 void StatusBubbleMac::Attach() {
   if (is_attached())
     return;
+
+  [window_ orderFront:nil];
   [parent_ addChildWindow:window_ ordered:NSWindowAbove];
+
   [[window_ contentView] setThemeProvider:parent_];
 }
 

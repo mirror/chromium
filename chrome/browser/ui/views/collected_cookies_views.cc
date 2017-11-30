@@ -84,65 +84,39 @@ void StartNewButtonColumnSet(views::GridLayout* layout,
   layout->StartRow(0, column_layout_id);
 }
 
-base::string16 GetAnnotationTextForSetting(ContentSetting setting) {
-  switch (setting) {
-    case CONTENT_SETTING_BLOCK:
-      return l10n_util::GetStringUTF16(IDS_COLLECTED_COOKIES_BLOCKED_AUX_TEXT);
-    case CONTENT_SETTING_ALLOW:
-      return l10n_util::GetStringUTF16(IDS_COLLECTED_COOKIES_ALLOWED_AUX_TEXT);
-    case CONTENT_SETTING_SESSION_ONLY:
-      return l10n_util::GetStringUTF16(
-          IDS_COLLECTED_COOKIES_CLEAR_ON_EXIT_AUX_TEXT);
-    default:
-      NOTREACHED() << "Unknown ContentSetting value: " << setting;
-      return base::string16();
-  }
-}
-
 }  // namespace
 
-// This DrawingProvider allows TreeModelNodes to be annotated with auxiliary
-// text. Annotated nodes will be drawn in a lighter color than normal to
-// indicate that their state has changed, and will have their auxiliary text
-// drawn on the trailing end of their row.
+// This DrawingProvider keeps track of a set of ui::TreeModelNode*s which are
+// considered "invalidated", and marks them as such by lightening their text
+// color and adding auxiliary text to them.
 class CookiesTreeViewDrawingProvider : public views::TreeViewDrawingProvider {
  public:
   CookiesTreeViewDrawingProvider() {}
   ~CookiesTreeViewDrawingProvider() override {}
 
-  void AnnotateNode(ui::TreeModelNode* node, const base::string16& text);
+  void MarkNodeAsInvalidated(ui::TreeModelNode* node);
 
   SkColor GetTextColorForNode(views::TreeView* tree_view,
                               ui::TreeModelNode* node) override;
-  base::string16 GetAuxiliaryTextForNode(views::TreeView* tree_view,
-                                         ui::TreeModelNode* node) override;
   bool ShouldDrawIconForNode(views::TreeView* tree_view,
                              ui::TreeModelNode* node) override;
 
  private:
-  std::map<ui::TreeModelNode*, base::string16> annotations_;
+  std::set<ui::TreeModelNode*> invalidated_nodes_;
 };
 
-void CookiesTreeViewDrawingProvider::AnnotateNode(ui::TreeModelNode* node,
-                                                  const base::string16& text) {
-  annotations_[node] = text;
+void CookiesTreeViewDrawingProvider::MarkNodeAsInvalidated(
+    ui::TreeModelNode* node) {
+  invalidated_nodes_.insert(node);
 }
 
 SkColor CookiesTreeViewDrawingProvider::GetTextColorForNode(
     views::TreeView* tree_view,
     ui::TreeModelNode* node) {
   SkColor color = TreeViewDrawingProvider::GetTextColorForNode(tree_view, node);
-  if (annotations_.find(node) != annotations_.end())
+  if (invalidated_nodes_.find(node) != invalidated_nodes_.end())
     color = SkColorSetA(color, 0x80);
   return color;
-}
-
-base::string16 CookiesTreeViewDrawingProvider::GetAuxiliaryTextForNode(
-    views::TreeView* tree_view,
-    ui::TreeModelNode* node) {
-  if (annotations_.find(node) != annotations_.end())
-    return annotations_[node];
-  return TreeViewDrawingProvider::GetAuxiliaryTextForNode(tree_view, node);
 }
 
 bool CookiesTreeViewDrawingProvider::ShouldDrawIconForNode(
@@ -676,8 +650,7 @@ void CollectedCookiesViews::AddContentException(views::TreeView* tree_view,
   CookiesTreeViewDrawingProvider* provider =
       (tree_view == allowed_cookies_tree_) ? allowed_cookies_drawing_provider_
                                            : blocked_cookies_drawing_provider_;
-  provider->AnnotateNode(tree_view->GetSelectedNode(),
-                         GetAnnotationTextForSetting(setting));
+  provider->MarkNodeAsInvalidated(tree_view->GetSelectedNode());
   tree_view->SchedulePaint();
 }
 

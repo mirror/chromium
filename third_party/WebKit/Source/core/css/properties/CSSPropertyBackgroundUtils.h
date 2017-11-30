@@ -15,7 +15,7 @@ class CSSParserTokenRange;
 class CSSValue;
 
 enum class ParsingStyle { kLegacy, kNotLegacy };
-enum class AllowTextValue { kAllow, kForbid };
+enum class AllowTextValue { kAllowed, kNotAllowed };
 
 class CSSPropertyBackgroundUtils {
   STATIC_ONLY(CSSPropertyBackgroundUtils);

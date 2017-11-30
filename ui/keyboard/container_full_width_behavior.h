@@ -47,7 +47,6 @@ class KEYBOARD_EXPORT ContainerFullWidthBehavior : public ContainerBehavior {
   bool TextBlurHidesKeyboard() const override;
   bool BoundsObscureUsableRegion() const override;
   bool BoundsAffectWorkspaceLayout() const override;
-  bool SetDraggableArea(const gfx::Rect& rect) override;
 
  private:
   KeyboardController* controller_;

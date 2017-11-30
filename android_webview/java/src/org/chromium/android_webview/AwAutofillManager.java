@@ -43,12 +43,13 @@ public class AwAutofillManager {
     private boolean mIsAutofillInputUIShowing;
     private AutofillInputUIMonitor mMonitor;
     private boolean mDestroyed;
-    private boolean mDisabled;
 
     public AwAutofillManager(Context context) {
         if (DEBUG) Log.i(TAG, "constructor");
         if (AwContents.activityFromContext(context) == null) {
-            mDisabled = true;
+            Log.w(TAG,
+                    "WebView autofill is disabled because WebView isn't created with "
+                            + "activity context.");
             return;
         }
         mAutofillManager = context.getSystemService(AutofillManager.class);
@@ -57,63 +58,56 @@ public class AwAutofillManager {
     }
 
     public void notifyVirtualValueChanged(View parent, int childId, AutofillValue value) {
-        if (mDisabled || checkAndWarnIfDestroyed()) return;
+        if (isDestroyed() || mAutofillManager == null) return;
         if (DEBUG) Log.i(TAG, "notifyVirtualValueChanged");
         mAutofillManager.notifyValueChanged(parent, childId, value);
     }
 
     public void commit() {
-        if (mDisabled || checkAndWarnIfDestroyed()) return;
+        if (isDestroyed() || mAutofillManager == null) return;
         if (DEBUG) Log.i(TAG, "commit");
         mAutofillManager.commit();
     }
 
     public void cancel() {
-        if (mDisabled || checkAndWarnIfDestroyed()) return;
+        if (isDestroyed() || mAutofillManager == null) return;
         if (DEBUG) Log.i(TAG, "cancel");
         mAutofillManager.cancel();
     }
 
     public void notifyVirtualViewEntered(View parent, int childId, Rect absBounds) {
-        // Log warning only when the autofill is triggered.
-        if (mDisabled) {
-            Log.w(TAG,
-                    "WebView autofill is disabled because WebView isn't created with "
-                            + "activity context.");
-            return;
-        }
-        if (checkAndWarnIfDestroyed()) return;
+        if (isDestroyed() || mAutofillManager == null) return;
         if (DEBUG) Log.i(TAG, "notifyVirtualViewEntered");
         mAutofillManager.notifyViewEntered(parent, childId, absBounds);
     }
 
     public void notifyVirtualViewExited(View parent, int childId) {
-        if (mDisabled || checkAndWarnIfDestroyed()) return;
+        if (isDestroyed() || mAutofillManager == null) return;
         if (DEBUG) Log.i(TAG, "notifyVirtualViewExited");
         mAutofillManager.notifyViewExited(parent, childId);
     }
 
     public void requestAutofill(View parent, int virtualId, Rect absBounds) {
-        if (mDisabled || checkAndWarnIfDestroyed()) return;
+        if (isDestroyed() || mAutofillManager == null) return;
         if (DEBUG) Log.i(TAG, "requestAutofill");
         mAutofillManager.requestAutofill(parent, virtualId, absBounds);
     }
 
     public boolean isAutofillInputUIShowing() {
-        if (mDisabled || checkAndWarnIfDestroyed()) return false;
+        if (isDestroyed() || mAutofillManager == null) return false;
         if (DEBUG) Log.i(TAG, "isAutofillInputUIShowing: " + mIsAutofillInputUIShowing);
         return mIsAutofillInputUIShowing;
     }
 
     public void destroy() {
-        if (mDisabled || checkAndWarnIfDestroyed()) return;
+        if (isDestroyed() || mAutofillManager == null) return;
         if (DEBUG) Log.i(TAG, "destroy");
         mAutofillManager.unregisterCallback(mMonitor);
         mAutofillManager = null;
         mDestroyed = true;
     }
 
-    private boolean checkAndWarnIfDestroyed() {
+    private boolean isDestroyed() {
         if (mDestroyed) {
             Log.w(TAG, "Application attempted to call on a destroyed AwAutofillManager",
                     new Throwable());

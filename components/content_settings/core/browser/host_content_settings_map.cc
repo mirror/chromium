@@ -849,6 +849,7 @@ HostContentSettingsMap::GetContentSettingValueAndPatterns(
   return std::unique_ptr<base::Value>();
 }
 
-void HostContentSettingsMap::SetClockForTesting(base::Clock* clock) {
-  pref_provider_->SetClockForTesting(clock);
+void HostContentSettingsMap::SetClockForTesting(
+    std::unique_ptr<base::Clock> clock) {
+  pref_provider_->SetClockForTesting(std::move(clock));
 }

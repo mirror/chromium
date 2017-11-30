@@ -111,7 +111,8 @@ cr.define('chrome.SnippetsInternals', function() {
 
   function onClearCachedButtonClicked(event) {
     event.preventDefault();
-    chrome.send('clearCachedSuggestions');
+    var id = parseInt(event.currentTarget.getAttribute('category-id'), 10);
+    chrome.send('clearCachedSuggestions', [id]);
   }
 
   function onClearDismissedButtonClicked(event) {

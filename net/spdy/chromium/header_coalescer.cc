@@ -126,7 +126,22 @@ bool HeaderCoalescer::AddHeader(SpdyStringPiece key, SpdyStringPiece value) {
     }
   }
 
-  headers_.AppendValueOrAddHeader(key, value);
+  auto iter = headers_.find(key);
+  if (iter == headers_.end()) {
+    headers_[key] = value;
+  } else {
+    // This header had multiple values, so it must be reconstructed.
+    SpdyStringPiece v = iter->second;
+    SpdyString s(v.data(), v.length());
+    if (key == "cookie") {
+      // Obeys section 8.1.2.5 in RFC 7540 for cookie reconstruction.
+      s.append("; ");
+    } else {
+      SpdyStringPiece("\0", 1).AppendToString(&s);
+    }
+    value.AppendToString(&s);
+    headers_[key] = s;
+  }
   return true;
 }
 

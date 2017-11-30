@@ -66,8 +66,8 @@ class MockHeadlessBrowserContextObserver
   MOCK_METHOD2(OnChildContentsCreated,
                void(HeadlessWebContents*, HeadlessWebContents*));
 
-  MockHeadlessBrowserContextObserver() = default;
-  virtual ~MockHeadlessBrowserContextObserver() = default;
+  MockHeadlessBrowserContextObserver() {}
+  virtual ~MockHeadlessBrowserContextObserver() {}
 
   HeadlessWebContents* last_parent;
   HeadlessWebContents* last_child;
@@ -261,7 +261,7 @@ IN_PROC_BROWSER_TEST_F(HeadlessWindowOpenTabSocketTest,
 class HeadlessNoDevToolsTabSocketTest : public HeadlessBrowserTest,
                                         public HeadlessTabSocket::Listener {
  public:
-  HeadlessNoDevToolsTabSocketTest() = default;
+  HeadlessNoDevToolsTabSocketTest() {}
 
   void SetUp() override {
     options()->mojo_service_names.insert("headless::TabSocket");
@@ -1220,7 +1220,7 @@ class HeadlessWebContentsBeginFrameControlTest
 class HeadlessWebContentsBeginFrameControlBasicTest
     : public HeadlessWebContentsBeginFrameControlTest {
  public:
-  HeadlessWebContentsBeginFrameControlBasicTest() = default;
+  HeadlessWebContentsBeginFrameControlBasicTest() {}
 
  protected:
   std::string GetTestHtmlFile() override {
@@ -1266,7 +1266,7 @@ HEADLESS_ASYNC_DEVTOOLED_TEST_F(HeadlessWebContentsBeginFrameControlBasicTest);
 class HeadlessWebContentsBeginFrameControlViewportTest
     : public HeadlessWebContentsBeginFrameControlTest {
  public:
-  HeadlessWebContentsBeginFrameControlViewportTest() = default;
+  HeadlessWebContentsBeginFrameControlViewportTest() {}
 
  protected:
   std::string GetTestHtmlFile() override {

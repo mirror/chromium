@@ -145,30 +145,29 @@ bool SharedMemory::Create(const SharedMemoryCreateOptions& options) {
   // https://code.google.com/p/chromium/issues/detail?id=466437
   base::ThreadRestrictions::ScopedAllowIO allow_io;
 
-  ScopedFD fd;
+  ScopedFILE fp;
   ScopedFD readonly_fd;
 
   FilePath path;
-  bool result = CreateAnonymousSharedMemory(options, &fd, &readonly_fd, &path);
+  bool result = CreateAnonymousSharedMemory(options, &fp, &readonly_fd, &path);
   if (!result)
     return false;
-  // Should be guaranteed by CreateAnonymousSharedMemory().
-  DCHECK(fd.is_valid());
+  DCHECK(fp);  // Should be guaranteed by CreateAnonymousSharedMemory().
 
   // Get current size.
   struct stat stat;
-  if (fstat(fd.get(), &stat) != 0)
+  if (fstat(fileno(fp.get()), &stat) != 0)
     return false;
   const size_t current_size = stat.st_size;
   if (current_size != options.size) {
-    if (HANDLE_EINTR(ftruncate(fd.get(), options.size)) != 0)
+    if (HANDLE_EINTR(ftruncate(fileno(fp.get()), options.size)) != 0)
       return false;
   }
   requested_size_ = options.size;
 
   int mapped_file = -1;
   int readonly_mapped_file = -1;
-  result = PrepareMapFile(std::move(fd), std::move(readonly_fd), &mapped_file,
+  result = PrepareMapFile(std::move(fp), std::move(readonly_fd), &mapped_file,
                           &readonly_mapped_file);
   shm_ = SharedMemoryHandle(FileDescriptor(mapped_file, false), options.size,
                             UnguessableToken::Create());

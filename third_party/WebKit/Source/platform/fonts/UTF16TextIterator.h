@@ -21,7 +21,6 @@
 #ifndef UTF16TextIterator_h
 #define UTF16TextIterator_h
 
-#include "base/macros.h"
 #include "platform/PlatformExport.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/text/CharacterNames.h"
@@ -31,6 +30,7 @@ namespace blink {
 
 class PLATFORM_EXPORT UTF16TextIterator {
   USING_FAST_MALLOC(UTF16TextIterator);
+  WTF_MAKE_NONCOPYABLE(UTF16TextIterator);
 
  public:
   // The passed in UChar pointer starts at 'offset'. The iterator operates on
@@ -70,8 +70,6 @@ class PLATFORM_EXPORT UTF16TextIterator {
   int offset_;
   int length_;
   unsigned current_glyph_length_;
-
-  DISALLOW_COPY_AND_ASSIGN(UTF16TextIterator);
 };
 
 }  // namespace blink

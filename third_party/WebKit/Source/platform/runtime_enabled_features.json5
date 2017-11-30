@@ -425,6 +425,10 @@
       name: "ForceTallerSelectPopup",
     },
     {
+      name: "ForeignFetch",
+      origin_trial_feature_name: "ForeignFetch",
+    },
+    {
       name: "FractionalMouseEvent",
     },
     {
@@ -437,7 +441,7 @@
     {
       name: "FramebustingNeedsSameOriginOrUserGesture",
       settable_from_internals: true,
-      status: "stable",
+      status: "experimental",
     },
     {
       name: "FramesTimingFunction",
@@ -535,6 +539,10 @@
     {
       name: "LazyParseCSS",
       status: "experimental",
+    },
+    {
+      name: "LinkServiceWorker",
+      origin_trial_feature_name: "ForeignFetch",
     },
     {
       name: "LoadingWithMojo",
@@ -869,6 +877,10 @@
     // crbug.com/417782 tracks enabling this by default.
     {
       name: "RootLayerScrolling",
+    },
+    {
+      name: "RTCRtpSender",
+      status: "experimental",
     },
     {
       name: "ScriptedSpeech",

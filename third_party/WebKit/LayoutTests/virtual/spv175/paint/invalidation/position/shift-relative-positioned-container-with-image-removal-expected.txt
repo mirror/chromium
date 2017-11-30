@@ -12,14 +12,14 @@
           "reason": "disappeared"
         },
         {
-          "object": "LayoutImage IMG",
-          "rect": [58, 142, 489, 537],
-          "reason": "geometry"
+          "object": "LayoutBlockFlow (relative positioned) DIV class='relative paddingTop'",
+          "rect": [58, 241, 489, 537],
+          "reason": "disappeared"
         },
         {
           "object": "LayoutImage IMG",
-          "rect": [58, 241, 489, 501],
-          "reason": "geometry"
+          "rect": [58, 142, 489, 537],
+          "reason": "appeared"
         }
       ]
     }

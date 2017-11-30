@@ -46,7 +46,7 @@ class Flag : public RefCountedThreadSafe<Flag> {
 
  private:
   friend class RefCountedThreadSafe<Flag>;
-  ~Flag() = default;
+  ~Flag() {}
 
   mutable Lock lock_;
   bool flag_;

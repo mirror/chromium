@@ -266,19 +266,13 @@ bool CSSStyleSheet::CanAccessRules() const {
   return false;
 }
 
-CSSRuleList* CSSStyleSheet::rules(ExceptionState& exception_state) {
-  return cssRules(exception_state);
+CSSRuleList* CSSStyleSheet::rules() {
+  return cssRules();
 }
 
 unsigned CSSStyleSheet::insertRule(const String& rule_string,
                                    unsigned index,
                                    ExceptionState& exception_state) {
-  if (!CanAccessRules()) {
-    exception_state.ThrowSecurityError(
-        "Cannot access StyleSheet to insertRule");
-    return 0;
-  }
-
   DCHECK(child_rule_cssom_wrappers_.IsEmpty() ||
          child_rule_cssom_wrappers_.size() == contents_->RuleCount());
 
@@ -319,12 +313,6 @@ unsigned CSSStyleSheet::insertRule(const String& rule_string,
 
 void CSSStyleSheet::deleteRule(unsigned index,
                                ExceptionState& exception_state) {
-  if (!CanAccessRules()) {
-    exception_state.ThrowSecurityError(
-        "Cannot access StyleSheet to deleteRule");
-    return;
-  }
-
   DCHECK(child_rule_cssom_wrappers_.IsEmpty() ||
          child_rule_cssom_wrappers_.size() == contents_->RuleCount());
 
@@ -374,11 +362,9 @@ int CSSStyleSheet::addRule(const String& selector,
   return addRule(selector, style, length(), exception_state);
 }
 
-CSSRuleList* CSSStyleSheet::cssRules(ExceptionState& exception_state) {
-  if (!CanAccessRules()) {
-    exception_state.ThrowSecurityError("Cannot access rules");
+CSSRuleList* CSSStyleSheet::cssRules() {
+  if (!CanAccessRules())
     return nullptr;
-  }
   if (!rule_list_cssom_wrapper_)
     rule_list_cssom_wrapper_ = StyleSheetCSSRuleList::Create(this);
   return rule_list_cssom_wrapper_.Get();

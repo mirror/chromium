@@ -23,9 +23,6 @@ cr.define('extensions', function() {
 
       /** @type {chrome.developerPrivate.LoadError} */
       loadError: Object,
-
-      /** @private */
-      retrying_: Boolean,
     },
 
     observers: [
@@ -42,18 +39,13 @@ cr.define('extensions', function() {
 
     /** @private */
     onRetryTap_: function() {
-      this.retrying_ = true;
+      this.close();
       this.delegate.retryLoadUnpacked(this.loadError.retryGuid)
-          .then(
-              () => {
-                this.close();
-              },
-              loadError => {
-                this.loadError =
-                    /** @type {chrome.developerPrivate.LoadError} */ (
-                        loadError);
-                this.retrying_ = false;
-              });
+          .catch(loadError => {
+            // TODO(dpapad): Consider handling this error directly in this
+            // existing dialog, instead of closing it and re-opening it.
+            this.fire('load-error', loadError);
+          });
     },
 
     /** @private */

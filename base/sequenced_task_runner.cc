@@ -28,7 +28,8 @@ OnTaskRunnerDeleter::OnTaskRunnerDeleter(
     : task_runner_(std::move(task_runner)) {
 }
 
-OnTaskRunnerDeleter::~OnTaskRunnerDeleter() = default;
+OnTaskRunnerDeleter::~OnTaskRunnerDeleter() {
+}
 
 OnTaskRunnerDeleter::OnTaskRunnerDeleter(OnTaskRunnerDeleter&&) = default;
 

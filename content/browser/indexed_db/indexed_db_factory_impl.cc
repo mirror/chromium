@@ -93,9 +93,9 @@ constexpr const base::TimeDelta
     IndexedDBFactoryImpl::kMaxEarliestOriginSweepFromNow;
 
 IndexedDBFactoryImpl::IndexedDBFactoryImpl(IndexedDBContextImpl* context,
-                                           base::Clock* clock)
+                                           std::unique_ptr<base::Clock> clock)
     : context_(context),
-      clock_(clock),
+      clock_(std::move(clock)),
       earliest_sweep_(GenerateNextGlobalSweepTime(clock_->Now())) {}
 
 IndexedDBFactoryImpl::~IndexedDBFactoryImpl() {

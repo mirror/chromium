@@ -46,7 +46,7 @@ cr.define('settings', function() {
     setDevicesForTest: function(devices) {
       for (var d of this.devices)
         this.onDeviceRemoved.callListeners(d);
-      this.devices = devices.slice();
+      this.devices = devices;
       for (var d of this.devices)
         this.onDeviceAdded.callListeners(d);
     },
@@ -86,7 +86,7 @@ cr.define('settings', function() {
 
     /** @override */
     getDevices: function(callback) {
-      callback(this.devices.slice());
+      callback(this.devices);
     },
 
     /** @override */

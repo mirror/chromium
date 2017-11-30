@@ -24,7 +24,6 @@
 
 namespace net {
 class IOBuffer;
-class UploadElementReader;
 }  // namespace net
 
 namespace content {
@@ -172,9 +171,6 @@ class HEADLESS_EXPORT GenericURLRequestJob
   void OnCookiesAvailable(const GURL& rewritten_url,
                           const std::string& method,
                           const net::CookieList& cookie_list);
-
-  const std::vector<std::unique_ptr<net::UploadElementReader>>*
-  GetInitializedReaders() const;
 
   std::unique_ptr<URLFetcher> url_fetcher_;
   net::HttpRequestHeaders extra_request_headers_;

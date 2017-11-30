@@ -13,6 +13,6 @@ MockShillProfileClient::MockShillProfileClient() {
   EXPECT_CALL(*this, Init(_)).Times(AnyNumber());
 }
 
-MockShillProfileClient::~MockShillProfileClient() = default;
+MockShillProfileClient::~MockShillProfileClient() {}
 
 }  // namespace chromeos

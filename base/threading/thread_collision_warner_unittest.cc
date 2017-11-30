@@ -46,7 +46,7 @@ class AssertReporter : public base::AsserterBase {
 
   void warn() override { failed_ = true; }
 
-  ~AssertReporter() override = default;
+  ~AssertReporter() override {}
 
   bool fail_state() const { return failed_; }
   void reset() { failed_ = false; }

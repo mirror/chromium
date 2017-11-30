@@ -17,7 +17,8 @@ PowerMonitorTestSource::PowerMonitorTestSource()
       << "PowerMonitorTestSource requires a MessageLoop.";
 }
 
-PowerMonitorTestSource::~PowerMonitorTestSource() = default;
+PowerMonitorTestSource::~PowerMonitorTestSource() {
+}
 
 void PowerMonitorTestSource::GeneratePowerStateEvent(bool on_battery_power) {
   test_on_battery_power_ = on_battery_power;
@@ -46,7 +47,8 @@ PowerMonitorTestObserver::PowerMonitorTestObserver()
       resumes_(0) {
 }
 
-PowerMonitorTestObserver::~PowerMonitorTestObserver() = default;
+PowerMonitorTestObserver::~PowerMonitorTestObserver() {
+}
 
 // PowerObserver callbacks.
 void PowerMonitorTestObserver::OnPowerStateChange(bool on_battery_power) {

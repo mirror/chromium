@@ -73,12 +73,12 @@ class CORE_EXPORT CSSStyleSheet final : public StyleSheet {
   bool disabled() const override { return is_disabled_; }
   void setDisabled(bool) override;
 
-  CSSRuleList* cssRules(ExceptionState&);
+  CSSRuleList* cssRules();
   unsigned insertRule(const String& rule, unsigned index, ExceptionState&);
   void deleteRule(unsigned index, ExceptionState&);
 
   // IE Extensions
-  CSSRuleList* rules(ExceptionState&);
+  CSSRuleList* rules();
   int addRule(const String& selector,
               const String& style,
               int index,

@@ -832,7 +832,8 @@ enum CellType {
       [configurator configureSigninPromoView:signinPromoView];
       subview = signinPromoView;
       [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-      [_signinPromoViewMediator signinPromoViewVisible];
+      base::RecordAction(
+          base::UserMetricsAction("Signin_Impression_FromRecentTabs"));
       break;
     }
     case CELL_OTHER_DEVICES_SYNC_IN_PROGRESS:

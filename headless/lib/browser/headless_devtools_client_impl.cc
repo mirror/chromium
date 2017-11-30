@@ -72,7 +72,7 @@ HeadlessDevToolsClientImpl::HeadlessDevToolsClientImpl()
           content::BrowserThread::UI)),
       weak_ptr_factory_(this) {}
 
-HeadlessDevToolsClientImpl::~HeadlessDevToolsClientImpl() = default;
+HeadlessDevToolsClientImpl::~HeadlessDevToolsClientImpl() {}
 
 bool HeadlessDevToolsClientImpl::AttachToHost(
     content::DevToolsAgentHost* agent_host) {
@@ -416,7 +416,7 @@ void HeadlessDevToolsClientImpl::RegisterEventHandler(
   event_handlers_[method] = callback;
 }
 
-HeadlessDevToolsClientImpl::Callback::Callback() = default;
+HeadlessDevToolsClientImpl::Callback::Callback() {}
 
 HeadlessDevToolsClientImpl::Callback::Callback(Callback&& other) = default;
 
@@ -427,7 +427,7 @@ HeadlessDevToolsClientImpl::Callback::Callback(
     base::Callback<void(const base::Value&)> callback)
     : callback_with_result(callback) {}
 
-HeadlessDevToolsClientImpl::Callback::~Callback() = default;
+HeadlessDevToolsClientImpl::Callback::~Callback() {}
 
 HeadlessDevToolsClientImpl::Callback& HeadlessDevToolsClientImpl::Callback::
 operator=(Callback&& other) = default;

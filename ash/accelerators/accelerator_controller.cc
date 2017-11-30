@@ -443,7 +443,7 @@ void HandleToggleMessageCenterBubble() {
       status_area_widget->web_notification_tray();
   if (!notification_tray->visible())
     return;
-  if (notification_tray->IsMessageCenterVisible())
+  if (notification_tray->IsMessageCenterBubbleVisible())
     notification_tray->CloseBubble();
   else
     notification_tray->ShowBubble(false /* show_by_click */);

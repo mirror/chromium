@@ -11,6 +11,7 @@ namespace dbus {
 MockBus::MockBus(const Bus::Options& options) : Bus(options) {
 }
 
-MockBus::~MockBus() = default;
+MockBus::~MockBus() {
+}
 
 }  // namespace dbus

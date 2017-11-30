@@ -1071,8 +1071,7 @@ std::string TemplateURLRef::HandleReplacements(
       case GOOGLE_IMAGE_THUMBNAIL:
         HandleReplacement(
             std::string(), search_terms_args.image_thumbnail_content, *i, &url);
-        if (i->is_post_param)
-          post_params_[i->index].content_type = "image/jpeg";
+        post_params_[i->index].content_type = "image/jpeg";
         break;
 
       case GOOGLE_IMAGE_URL:

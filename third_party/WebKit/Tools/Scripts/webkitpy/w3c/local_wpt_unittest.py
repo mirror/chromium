@@ -24,7 +24,7 @@ class LocalWPTTest(unittest.TestCase):
 
         self.assertEqual(host.executive.calls, [
             ['git', 'fetch', 'origin'],
-            ['git', 'reset', '--hard', 'origin/master'],
+            ['git', 'checkout', 'origin/master'],
         ])
 
     def test_fetch_when_wpt_dir_does_not_exist(self):

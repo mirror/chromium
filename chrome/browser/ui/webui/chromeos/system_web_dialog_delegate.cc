@@ -9,6 +9,14 @@
 #include "components/session_manager/core/session_manager.h"
 #include "content/public/browser/browser_context.h"
 
+namespace {
+
+// Width is consistent with the Settings UI.
+const int kSystemWebDialogWidth = 640;
+const int kSystemWebDialogHeight = 480;
+
+}  // namespace
+
 namespace chromeos {
 
 SystemWebDialogDelegate::SystemWebDialogDelegate(const GURL& gurl,
@@ -18,7 +26,7 @@ SystemWebDialogDelegate::SystemWebDialogDelegate(const GURL& gurl,
 SystemWebDialogDelegate::~SystemWebDialogDelegate() {}
 
 ui::ModalType SystemWebDialogDelegate::GetDialogModalType() const {
-  return ui::MODAL_TYPE_NONE;
+  return ui::MODAL_TYPE_SYSTEM;
 }
 
 base::string16 SystemWebDialogDelegate::GetDialogTitle() const {
@@ -33,13 +41,7 @@ void SystemWebDialogDelegate::GetWebUIMessageHandlers(
     std::vector<content::WebUIMessageHandler*>* handlers) const {}
 
 void SystemWebDialogDelegate::GetDialogSize(gfx::Size* size) const {
-  size->SetSize(kDialogWidth, kDialogHeight);
-}
-
-void SystemWebDialogDelegate::OnDialogShown(
-    content::WebUI* webui,
-    content::RenderViewHost* render_view_host) {
-  webui_ = webui;
+  size->SetSize(kSystemWebDialogWidth, kSystemWebDialogHeight);
 }
 
 void SystemWebDialogDelegate::OnDialogClosed(const std::string& json_retval) {
@@ -60,7 +62,7 @@ void SystemWebDialogDelegate::ShowSystemDialog() {
       ProfileManager::GetActiveUserProfile();
   int container_id = session_manager::SessionManager::Get()->session_state() ==
                              session_manager::SessionState::ACTIVE
-                         ? ash::kShellWindowId_AlwaysOnTopContainer
+                         ? ash::kShellWindowId_SystemModalContainer
                          : ash::kShellWindowId_LockSystemModalContainer;
   chrome::ShowWebDialogInContainer(container_id, browser_context, this);
 }

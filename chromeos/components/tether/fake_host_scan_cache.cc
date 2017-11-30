@@ -10,7 +10,7 @@ namespace tether {
 
 FakeHostScanCache::FakeHostScanCache() : HostScanCache() {}
 
-FakeHostScanCache::~FakeHostScanCache() = default;
+FakeHostScanCache::~FakeHostScanCache() {}
 
 const HostScanCacheEntry* FakeHostScanCache::GetCacheEntry(
     const std::string& tether_network_guid) {

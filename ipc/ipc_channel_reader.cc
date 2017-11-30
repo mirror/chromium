@@ -50,7 +50,8 @@ ChannelReader::ChannelReader(Listener* listener)
   memset(input_buf_, 0, sizeof(input_buf_));
 }
 
-ChannelReader::~ChannelReader() = default;
+ChannelReader::~ChannelReader() {
+}
 
 ChannelReader::DispatchState ChannelReader::ProcessIncomingMessages() {
   while (true) {

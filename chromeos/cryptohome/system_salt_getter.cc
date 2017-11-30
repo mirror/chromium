@@ -27,7 +27,8 @@ SystemSaltGetter* g_system_salt_getter = NULL;
 SystemSaltGetter::SystemSaltGetter() : weak_ptr_factory_(this) {
 }
 
-SystemSaltGetter::~SystemSaltGetter() = default;
+SystemSaltGetter::~SystemSaltGetter() {
+}
 
 void SystemSaltGetter::GetSystemSalt(
     const GetSystemSaltCallback& callback) {

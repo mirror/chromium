@@ -150,7 +150,7 @@ void HeadlessBrowserTest::SetUpWithoutGPU() {
   BrowserTestBase::SetUp();
 }
 
-HeadlessBrowserTest::~HeadlessBrowserTest() = default;
+HeadlessBrowserTest::~HeadlessBrowserTest() {}
 
 void HeadlessBrowserTest::PreRunTestOnMainThread() {
   DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
@@ -215,8 +215,7 @@ HeadlessAsyncDevTooledBrowserTest::HeadlessAsyncDevTooledBrowserTest()
       browser_devtools_client_(HeadlessDevToolsClient::Create()),
       render_process_exited_(false) {}
 
-HeadlessAsyncDevTooledBrowserTest::~HeadlessAsyncDevTooledBrowserTest() =
-    default;
+HeadlessAsyncDevTooledBrowserTest::~HeadlessAsyncDevTooledBrowserTest() {}
 
 void HeadlessAsyncDevTooledBrowserTest::DevToolsTargetReady() {
   EXPECT_TRUE(web_contents_->GetDevToolsTarget());

@@ -13,7 +13,7 @@ namespace base {
 TestLauncherTracer::TestLauncherTracer()
     : trace_start_time_(TimeTicks::Now()) {}
 
-TestLauncherTracer::~TestLauncherTracer() = default;
+TestLauncherTracer::~TestLauncherTracer() {}
 
 void TestLauncherTracer::RecordProcessExecution(TimeTicks start_time,
                                                 TimeDelta duration) {

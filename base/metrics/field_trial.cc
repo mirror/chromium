@@ -243,13 +243,14 @@ int FieldTrialList::kNoExpirationYear = 0;
 //------------------------------------------------------------------------------
 // FieldTrial methods and members.
 
-FieldTrial::EntropyProvider::~EntropyProvider() = default;
+FieldTrial::EntropyProvider::~EntropyProvider() {
+}
 
-FieldTrial::State::State() = default;
+FieldTrial::State::State() {}
 
 FieldTrial::State::State(const State& other) = default;
 
-FieldTrial::State::~State() = default;
+FieldTrial::State::~State() {}
 
 bool FieldTrial::FieldTrialEntry::GetTrialAndGroupName(
     StringPiece* trial_name,
@@ -412,7 +413,7 @@ FieldTrial::FieldTrial(const std::string& trial_name,
       << "Trial " << trial_name << " is missing a default group name.";
 }
 
-FieldTrial::~FieldTrial() = default;
+FieldTrial::~FieldTrial() {}
 
 void FieldTrial::SetTrialRegistered() {
   DCHECK_EQ(kNotFinalized, group_);
@@ -485,7 +486,8 @@ FieldTrialList* FieldTrialList::global_ = nullptr;
 // static
 bool FieldTrialList::used_without_global_ = false;
 
-FieldTrialList::Observer::~Observer() = default;
+FieldTrialList::Observer::~Observer() {
+}
 
 FieldTrialList::FieldTrialList(
     std::unique_ptr<const FieldTrial::EntropyProvider> entropy_provider)

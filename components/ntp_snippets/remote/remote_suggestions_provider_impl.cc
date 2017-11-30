@@ -385,7 +385,6 @@ RemoteSuggestionsProviderImpl::RemoteSuggestionsProviderImpl(
       image_fetcher_(std::move(image_fetcher), pref_service, database_.get()),
       status_service_(std::move(status_service)),
       clear_history_dependent_state_when_initialized_(false),
-      clear_cached_suggestions_when_initialized_(false),
       clock_(base::MakeUnique<base::DefaultClock>()),
       prefetched_pages_tracker_(std::move(prefetched_pages_tracker)),
       breaking_news_raw_data_provider_(
@@ -725,6 +724,32 @@ void RemoteSuggestionsProviderImpl::ClearHistory(
   // because it is not known which history entries were used for the suggestions
   // personalization.
   ClearHistoryDependentState();
+}
+
+void RemoteSuggestionsProviderImpl::ClearCachedSuggestions(Category category) {
+  if (!initialized()) {
+    categories_clear_when_initialized_.insert(category);
+    return;
+  }
+
+  auto content_it = category_contents_.find(category);
+  if (content_it == category_contents_.end()) {
+    return;
+  }
+  CategoryContent* content = &content_it->second;
+  // TODO(tschumann): We do the unnecessary checks for .empty() in many places
+  // before calling database methods. Change the RemoteSuggestionsDatabase to
+  // return early for those and remove the many if statements in this file.
+  if (!content->suggestions.empty()) {
+    database_->DeleteSnippets(GetSuggestionIDVector(content->suggestions));
+    database_->DeleteImages(GetSuggestionIDVector(content->suggestions));
+    content->suggestions.clear();
+  }
+  if (!content->archived.empty()) {
+    database_->DeleteSnippets(GetSuggestionIDVector(content->archived));
+    database_->DeleteImages(GetSuggestionIDVector(content->archived));
+    content->archived.clear();
+  }
 }
 
 void RemoteSuggestionsProviderImpl::OnSignInStateChanged() {
@@ -1336,41 +1361,24 @@ void RemoteSuggestionsProviderImpl::ClearHistoryDependentState() {
   remote_suggestions_scheduler_->OnHistoryCleared();
 }
 
-void RemoteSuggestionsProviderImpl::ClearCachedSuggestions() {
-  if (!initialized()) {
-    clear_cached_suggestions_when_initialized_ = true;
-    return;
-  }
+void RemoteSuggestionsProviderImpl::ClearSuggestions() {
+  DCHECK(initialized());
 
   NukeAllSuggestions();
   remote_suggestions_scheduler_->OnSuggestionsCleared();
 }
 
 void RemoteSuggestionsProviderImpl::NukeAllSuggestions() {
-  DCHECK(initialized());
   // TODO(tschumann): Should Nuke also cancel outstanding requests? Or should we
   // only block the results of such outstanding requests?
-  for (auto& item : category_contents_) {
+  for (const auto& item : category_contents_) {
     Category category = item.first;
-    CategoryContent* content = &item.second;
+    const CategoryContent& content = item.second;
 
-    // TODO(tschumann): We do the unnecessary checks for .empty() in many places
-    // before calling database methods. Change the RemoteSuggestionsDatabase to
-    // return early for those and remove the many if statements in this file.
-    if (!content->suggestions.empty()) {
-      database_->DeleteSnippets(GetSuggestionIDVector(content->suggestions));
-      database_->DeleteImages(GetSuggestionIDVector(content->suggestions));
-      content->suggestions.clear();
-    }
-    if (!content->archived.empty()) {
-      database_->DeleteSnippets(GetSuggestionIDVector(content->archived));
-      database_->DeleteImages(GetSuggestionIDVector(content->archived));
-      content->archived.clear();
-    }
-
+    ClearCachedSuggestions(category);
     // Update listeners about the new (empty) state.
-    if (IsCategoryStatusAvailable(content->status)) {
-      NotifyNewSuggestions(category, content->suggestions);
+    if (IsCategoryStatusAvailable(content.status)) {
+      NotifyNewSuggestions(category, content.suggestions);
     }
     // TODO(tschumann): We should not call debug code from production code.
     ClearDismissedSuggestionsForDebugging(category);
@@ -1468,7 +1476,7 @@ void RemoteSuggestionsProviderImpl::OnStatusChanged(
         DCHECK(state_ == State::READY);
         // Clear nonpersonalized suggestions (and notify the scheduler there are
         // no suggestions).
-        ClearCachedSuggestions();
+        ClearSuggestions();
       } else {
         EnterState(State::READY);
       }
@@ -1479,7 +1487,7 @@ void RemoteSuggestionsProviderImpl::OnStatusChanged(
         DCHECK(state_ == State::READY);
         // Clear personalized suggestions (and notify the scheduler there are
         // no suggestions).
-        ClearCachedSuggestions();
+        ClearSuggestions();
       } else {
         EnterState(State::READY);
       }
@@ -1519,9 +1527,11 @@ void RemoteSuggestionsProviderImpl::EnterState(State state) {
 
       UpdateAllCategoryStatus(CategoryStatus::AVAILABLE);
 
-      if (clear_cached_suggestions_when_initialized_) {
-        ClearCachedSuggestions();
-        clear_cached_suggestions_when_initialized_ = false;
+      if (!categories_clear_when_initialized_.empty()) {
+        for (auto category : categories_clear_when_initialized_) {
+          ClearCachedSuggestions(category);
+        }
+        categories_clear_when_initialized_.clear();
       }
       if (clear_history_dependent_state_when_initialized_) {
         clear_history_dependent_state_when_initialized_ = false;
@@ -1542,13 +1552,17 @@ void RemoteSuggestionsProviderImpl::EnterState(State state) {
       // suggestions below tells the scheduler to fetch them again if the
       // scheduler is not disabled. It is disabled; thus the calls are ignored.
       NotifyStateChanged();
+      if (!categories_clear_when_initialized_.empty()) {
+        for (auto category : categories_clear_when_initialized_) {
+          ClearCachedSuggestions(category);
+        }
+        categories_clear_when_initialized_.clear();
+      }
       if (clear_history_dependent_state_when_initialized_) {
         clear_history_dependent_state_when_initialized_ = false;
         ClearHistoryDependentState();
       }
-      ClearCachedSuggestions();
-      clear_cached_suggestions_when_initialized_ = false;
-
+      ClearSuggestions();
       if (breaking_news_raw_data_provider_ &&
           breaking_news_raw_data_provider_->IsListening()) {
         breaking_news_raw_data_provider_->StopListening();

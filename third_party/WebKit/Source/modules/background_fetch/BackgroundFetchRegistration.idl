@@ -21,4 +21,5 @@
 
     // TODO(crbug.com/769770): Remove the following deprecated attributes.
     [ImplementedAs=downloadTotal] readonly attribute long totalDownloadSize;
+    readonly attribute DOMString title;
 };

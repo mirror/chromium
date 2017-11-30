@@ -14,9 +14,11 @@
 namespace base {
 namespace debug {
 
-TaskAnnotator::TaskAnnotator() = default;
+TaskAnnotator::TaskAnnotator() {
+}
 
-TaskAnnotator::~TaskAnnotator() = default;
+TaskAnnotator::~TaskAnnotator() {
+}
 
 void TaskAnnotator::DidQueueTask(const char* queue_function,
                                  const PendingTask& pending_task) {

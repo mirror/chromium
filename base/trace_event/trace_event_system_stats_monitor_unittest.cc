@@ -22,8 +22,8 @@ namespace trace_event {
 // Exists as a class so it can be a friend of TraceEventSystemStatsMonitor.
 class TraceSystemStatsMonitorTest : public testing::Test {
  public:
-  TraceSystemStatsMonitorTest() = default;
-  ~TraceSystemStatsMonitorTest() override = default;
+  TraceSystemStatsMonitorTest() {}
+  ~TraceSystemStatsMonitorTest() override {}
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TraceSystemStatsMonitorTest);

@@ -39,7 +39,8 @@ JSONReader::JSONReader(int options)
     : parser_(new internal::JSONParser(options)) {
 }
 
-JSONReader::~JSONReader() = default;
+JSONReader::~JSONReader() {
+}
 
 // static
 std::unique_ptr<Value> JSONReader::Read(StringPiece json) {

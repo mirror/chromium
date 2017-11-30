@@ -26,8 +26,8 @@ std::unique_ptr<TraceEventFilter> TestEventFilter::Factory(
   return res;
 }
 
-TestEventFilter::TestEventFilter() = default;
-TestEventFilter::~TestEventFilter() = default;
+TestEventFilter::TestEventFilter() {}
+TestEventFilter::~TestEventFilter() {}
 
 bool TestEventFilter::FilterTraceEvent(const TraceEvent& trace_event) const {
   if (g_hits_counter)

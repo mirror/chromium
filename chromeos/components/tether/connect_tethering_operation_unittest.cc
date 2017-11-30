@@ -37,8 +37,8 @@ constexpr base::TimeDelta kConnectTetheringResponseTime =
 
 class TestObserver final : public ConnectTetheringOperation::Observer {
  public:
-  TestObserver() = default;
-  ~TestObserver() = default;
+  TestObserver() {}
+  ~TestObserver() {}
 
   const cryptauth::RemoteDevice& remote_device() { return remote_device_; }
   const std::string& ssid() { return ssid_; }

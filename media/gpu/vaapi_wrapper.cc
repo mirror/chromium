@@ -33,7 +33,6 @@
 #include "ui/gl/gl_implementation.h"
 
 #if defined(USE_X11)
-#include <va/va_x11.h>
 #include "ui/gfx/x/x11_types.h"  // nogncheck
 #endif
 
@@ -78,8 +77,6 @@ uint32_t BufferFormatToVAFourCC(gfx::BufferFormat fmt) {
       return VA_FOURCC_BGRX;
     case gfx::BufferFormat::BGRA_8888:
       return VA_FOURCC_BGRA;
-    case gfx::BufferFormat::RGBX_8888:
-      return VA_FOURCC_RGBX;
     case gfx::BufferFormat::UYVY_422:
       return VA_FOURCC_UYVY;
     case gfx::BufferFormat::YVU_420:
@@ -96,7 +93,6 @@ uint32_t BufferFormatToVARTFormat(gfx::BufferFormat fmt) {
       return VA_RT_FORMAT_YUV422;
     case gfx::BufferFormat::BGRX_8888:
     case gfx::BufferFormat::BGRA_8888:
-    case gfx::BufferFormat::RGBX_8888:
       return VA_RT_FORMAT_RGB32;
     case gfx::BufferFormat::YVU_420:
       return VA_RT_FORMAT_YUV420;

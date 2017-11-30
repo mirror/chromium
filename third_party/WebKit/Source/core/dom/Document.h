@@ -293,7 +293,6 @@ class CORE_EXPORT Document : public ContainerNode,
   void MediaQueryAffectingValueChanged();
 
   using SecurityContext::GetSecurityOrigin;
-  using SecurityContext::GetMutableSecurityOrigin;
   using SecurityContext::GetContentSecurityPolicy;
   using TreeScope::getElementById;
 

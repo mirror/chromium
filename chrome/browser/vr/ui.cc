@@ -134,9 +134,9 @@ void Ui::SetExitVrPromptEnabled(bool enabled, UiUnsupportedMode reason) {
     case UiUnsupportedMode::kUnhandledPageInfo:
       model_->active_modal_prompt_type = kModalPromptTypeExitVRForSiteInfo;
       return;
-    case UiUnsupportedMode::kVoiceSearchNeedsRecordAudioOsPermission:
+    case UiUnsupportedMode::kAndroidPermissionNeeded:
       model_->active_modal_prompt_type =
-          kModalPromptTypeExitVRForVoiceSearchRecordAudioOsPermission;
+          kModalPromptTypeExitVRForAudioPermission;
       return;
     case UiUnsupportedMode::kCount:
       NOTREACHED();  // Should never be used as a mode (when |enabled| is true).
@@ -222,8 +222,6 @@ void Ui::OnWebVrFrameAvailable() {
 
 void Ui::OnWebVrTimeoutImminent() {
   model_->web_vr_timeout_state = kWebVrTimeoutImminent;
-  // We do not want to simultaneously show the splash screen and the timeout UI.
-  model_->web_vr_show_splash_screen = false;
 }
 
 void Ui::OnWebVrTimedOut() {

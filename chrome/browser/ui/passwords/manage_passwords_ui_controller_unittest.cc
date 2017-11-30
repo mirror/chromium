@@ -427,12 +427,9 @@ TEST_F(ManagePasswordsUIControllerTest, PasswordSaved) {
   EXPECT_CALL(*controller(), OnUpdateBubbleAndIconVisibility());
   controller()->OnPasswordSubmitted(std::move(test_form_manager));
 
-  base::HistogramTester histogram_tester;
   controller()->SavePassword(test_local_form().username_value,
                              test_local_form().password_value);
   ExpectIconStateIs(password_manager::ui::MANAGE_STATE);
-  histogram_tester.ExpectUniqueSample(
-      "PasswordManager.PasswordSavedWithManualFallback", false, 1);
 }
 
 TEST_F(ManagePasswordsUIControllerTest, PasswordSavedUKMRecording) {
@@ -490,30 +487,28 @@ TEST_F(ManagePasswordsUIControllerTest, PasswordSavedUKMRecording) {
     }
 
     // Verify metrics.
-    const auto& entries =
-        test_ukm_recorder.GetEntriesByName(UkmEntry::kEntryName);
-    EXPECT_EQ(1u, entries.size());
-    for (const auto* entry : entries) {
-      test_ukm_recorder.ExpectEntrySourceHasUrl(
-          entry, GURL("http://www.example.com/"));
+    const ukm::UkmSource* source =
+        test_ukm_recorder.GetSourceForUrl("http://www.example.com/");
+    ASSERT_TRUE(source);
 
-      if (test.edit_username) {
-        test_ukm_recorder.ExpectEntryMetric(
-            entry, UkmEntry::kUser_Action_EditedUsernameInBubbleName, 1u);
-      } else {
-        EXPECT_FALSE(test_ukm_recorder.EntryHasMetric(
-            entry, UkmEntry::kUser_Action_EditedUsernameInBubbleName));
-      }
+    if (test.edit_username) {
+      test_ukm_recorder.ExpectMetric(
+          *source, UkmEntry::kEntryName,
+          UkmEntry::kUser_Action_EditedUsernameInBubbleName, 1u);
+    } else {
+      EXPECT_FALSE(test_ukm_recorder.HasMetric(
+          *source, UkmEntry::kEntryName,
+          UkmEntry::kUser_Action_EditedUsernameInBubbleName));
+    }
 
-      if (test.change_password) {
-        test_ukm_recorder.ExpectEntryMetric(
-            entry, UkmEntry::kUser_Action_SelectedDifferentPasswordInBubbleName,
-            1u);
-      } else {
-        EXPECT_FALSE(test_ukm_recorder.EntryHasMetric(
-            entry,
-            UkmEntry::kUser_Action_SelectedDifferentPasswordInBubbleName));
-      }
+    if (test.change_password) {
+      test_ukm_recorder.ExpectMetric(
+          *source, UkmEntry::kEntryName,
+          UkmEntry::kUser_Action_SelectedDifferentPasswordInBubbleName, 1u);
+    } else {
+      EXPECT_FALSE(test_ukm_recorder.HasMetric(
+          *source, UkmEntry::kEntryName,
+          UkmEntry::kUser_Action_SelectedDifferentPasswordInBubbleName));
     }
 
     histogram_tester.ExpectUniqueSample("PasswordManager.EditsInSaveBubble",
@@ -882,11 +877,8 @@ TEST_F(ManagePasswordsUIControllerTest, PasswordUpdated) {
 
   ExpectIconStateIs(password_manager::ui::PENDING_PASSWORD_UPDATE_STATE);
   EXPECT_CALL(*controller(), OnUpdateBubbleAndIconVisibility());
-  base::HistogramTester histogram_tester;
   controller()->UpdatePassword(autofill::PasswordForm());
   ExpectIconStateIs(password_manager::ui::MANAGE_STATE);
-  histogram_tester.ExpectUniqueSample(
-      "PasswordManager.PasswordUpdatedWithManualFallback", false, 1);
 }
 
 TEST_F(ManagePasswordsUIControllerTest, SavePendingStatePasswordAutofilled) {
@@ -943,17 +935,12 @@ TEST_F(ManagePasswordsUIControllerTest, ManualFallbackForSaving_UseFallback) {
     EXPECT_FALSE(controller()->opened_bubble());
 
     // A user clicks on omnibox icon, opens the bubble and press Save/Update.
-    base::HistogramTester histogram_tester;
     if (is_update) {
       EXPECT_CALL(*controller(), OnUpdateBubbleAndIconVisibility());
       controller()->UpdatePassword(autofill::PasswordForm());
-      histogram_tester.ExpectUniqueSample(
-          "PasswordManager.PasswordUpdatedWithManualFallback", true, 1);
     } else {
       controller()->SavePassword(test_local_form().username_value,
                                  test_local_form().password_value);
-      histogram_tester.ExpectUniqueSample(
-          "PasswordManager.PasswordSavedWithManualFallback", true, 1);
     }
     ExpectIconAndControllerStateIs(password_manager::ui::MANAGE_STATE);
     testing::Mock::VerifyAndClearExpectations(controller());

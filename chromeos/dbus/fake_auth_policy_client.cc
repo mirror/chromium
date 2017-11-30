@@ -19,11 +19,9 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "chromeos/chromeos_paths.h"
 #include "chromeos/cryptohome/cryptohome_parameters.h"
-#include "chromeos/cryptohome/cryptohome_util.h"
 #include "chromeos/dbus/cryptohome_client.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/session_manager_client.h"
-#include "chromeos/login/auth/authpolicy_login_helper.h"
 #include "components/policy/proto/chrome_device_policy.pb.h"
 #include "components/policy/proto/cloud_policy.pb.h"
 #include "components/policy/proto/device_management_backend.pb.h"
@@ -35,14 +33,12 @@ namespace em = enterprise_management;
 
 namespace {
 
-constexpr size_t kMaxMachineNameLength = 15;
-constexpr char kInvalidMachineNameCharacters[] = "\\/:*?\"<>|";
+const size_t kMaxMachineNameLength = 15;
+const char kInvalidMachineNameCharacters[] = "\\/:*?\"<>|";
 
 void OnStorePolicy(chromeos::AuthPolicyClient::RefreshPolicyCallback callback,
                    bool success) {
-  const authpolicy::ErrorType error =
-      success ? authpolicy::ERROR_NONE : authpolicy::ERROR_STORE_POLICY_FAILED;
-  std::move(callback).Run(error);
+  std::move(callback).Run(success);
 }
 
 // Posts |closure| on the ThreadTaskRunner with |delay|.
@@ -78,16 +74,16 @@ void StoreDevicePolicy(
       chromeos::DBusThreadManager::Get()->GetSessionManagerClient();
   session_manager_client->StoreDevicePolicy(
       response.SerializeAsString(),
-      base::BindOnce(&OnStorePolicy, std::move(callback)));
+      base::Bind(&OnStorePolicy, base::Passed(std::move(callback))));
 }
 
 }  // namespace
 
 namespace chromeos {
 
-FakeAuthPolicyClient::FakeAuthPolicyClient() = default;
+FakeAuthPolicyClient::FakeAuthPolicyClient() {}
 
-FakeAuthPolicyClient::~FakeAuthPolicyClient() = default;
+FakeAuthPolicyClient::~FakeAuthPolicyClient() {}
 
 void FakeAuthPolicyClient::Init(dbus::Bus* bus) {}
 
@@ -178,14 +174,7 @@ void FakeAuthPolicyClient::GetUserKerberosFiles(
 void FakeAuthPolicyClient::RefreshDevicePolicy(RefreshPolicyCallback callback) {
   if (!started_) {
     LOG(ERROR) << "authpolicyd not started";
-    std::move(callback).Run(authpolicy::ERROR_DBUS_FAILURE);
-    return;
-  }
-
-  if (!AuthPolicyLoginHelper::IsAdLocked()) {
-    // Pretend that policy was fetched and cached inside authpolicyd.
-    std::move(callback).Run(
-        authpolicy::ERROR_DEVICE_POLICY_CACHED_BUT_NOT_SENT);
+    std::move(callback).Run(false);
     return;
   }
 
@@ -206,13 +195,11 @@ void FakeAuthPolicyClient::RefreshDevicePolicy(RefreshPolicyCallback callback) {
 
 void FakeAuthPolicyClient::RefreshUserPolicy(const AccountId& account_id,
                                              RefreshPolicyCallback callback) {
-  DCHECK(AuthPolicyLoginHelper::IsAdLocked());
   if (!started_) {
     LOG(ERROR) << "authpolicyd not started";
-    std::move(callback).Run(authpolicy::ERROR_DBUS_FAILURE);
+    std::move(callback).Run(false);
     return;
   }
-
   SessionManagerClient* session_manager_client =
       DBusThreadManager::Get()->GetSessionManagerClient();
 
@@ -230,7 +217,7 @@ void FakeAuthPolicyClient::RefreshUserPolicy(const AccountId& account_id,
   response.set_policy_data(policy_data.SerializeAsString());
   session_manager_client->StorePolicyForUser(
       cryptohome::Identification(account_id), response.SerializeAsString(),
-      base::BindOnce(&OnStorePolicy, std::move(callback)));
+      base::Bind(&OnStorePolicy, base::Passed(std::move(callback))));
 }
 
 void FakeAuthPolicyClient::ConnectToSignal(
@@ -251,7 +238,7 @@ void FakeAuthPolicyClient::OnDevicePolicyRetrieved(
     const std::string& protobuf) {
   if (response_type !=
       SessionManagerClient::RetrievePolicyResponseType::SUCCESS) {
-    std::move(callback).Run(authpolicy::ERROR_DBUS_FAILURE);
+    std::move(callback).Run(false);
     return;
   }
   em::PolicyFetchResponse response;

@@ -27,6 +27,6 @@ Polymer({
    */
   onPasswordMenuTap_: function() {
     this.fire(
-        'password-menu-tap', {target: this.$.passwordMenu, listItem: this});
+        'password-menu-tap', {target: this.$.passwordMenu, item: this.item});
   },
 });

@@ -7,6 +7,11 @@
       "backgroundColor": "#C0C0C0",
       "paintInvalidations": [
         {
+          "object": "LayoutIFrame (positioned) IFRAME",
+          "rect": [2, 65, 236, 235],
+          "reason": "invalidate paint rectangle"
+        },
+        {
           "object": "LayoutBlockFlow BODY",
           "rect": [3, 65, 235, 235],
           "reason": "subtree"
@@ -40,6 +45,10 @@
     }
   ],
   "objectPaintInvalidations": [
+    {
+      "object": "LayoutIFrame (positioned) IFRAME",
+      "reason": "invalidate paint rectangle"
+    },
     {
       "object": "HorizontalScrollbar",
       "reason": "scroll control"

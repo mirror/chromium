@@ -76,15 +76,12 @@ RenderedPosition::RenderedPosition(const VisiblePosition& position)
 RenderedPosition::RenderedPosition(const VisiblePositionInFlatTree& position)
     : RenderedPosition(position.DeepEquivalent(), position.Affinity()) {}
 
-// TODO(editing-dev): Stop duplicating code in the two constructors
-
 RenderedPosition::RenderedPosition(const Position& position,
                                    TextAffinity affinity)
     : layout_object_(nullptr), inline_box_(nullptr), offset_(0) {
   if (position.IsNull())
     return;
-  InlineBoxPosition box_position =
-      ComputeInlineBoxPosition(PositionWithAffinity(position, affinity));
+  InlineBoxPosition box_position = ComputeInlineBoxPosition(position, affinity);
   inline_box_ = box_position.inline_box;
   offset_ = box_position.offset_in_box;
   if (inline_box_)
@@ -99,8 +96,7 @@ RenderedPosition::RenderedPosition(const PositionInFlatTree& position,
     : layout_object_(nullptr), inline_box_(nullptr), offset_(0) {
   if (position.IsNull())
     return;
-  InlineBoxPosition box_position = ComputeInlineBoxPosition(
-      PositionInFlatTreeWithAffinity(position, affinity));
+  InlineBoxPosition box_position = ComputeInlineBoxPosition(position, affinity);
   inline_box_ = box_position.inline_box;
   offset_ = box_position.offset_in_box;
   if (inline_box_)

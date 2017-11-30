@@ -91,7 +91,8 @@ WorkerFetchContext::WorkerFetchContext(
       loading_task_runner_(
           global_scope_->GetTaskRunner(TaskType::kUnspecedLoading)),
       save_data_enabled_(GetNetworkStateNotifier().SaveDataEnabled()) {
-  web_context_->InitializeOnWorkerThread(loading_task_runner_);
+  web_context_->InitializeOnWorkerThread(
+      loading_task_runner_->ToSingleThreadTaskRunner());
   std::unique_ptr<blink::WebDocumentSubresourceFilter> web_filter =
       web_context_->TakeSubresourceFilter();
   if (web_filter) {
@@ -226,7 +227,8 @@ std::unique_ptr<WebURLLoader> WorkerFetchContext::CreateURLLoader(
   if (!url_loader_factory_)
     url_loader_factory_ = web_context_->CreateURLLoaderFactory();
   WrappedResourceRequest wrapped(request);
-  return url_loader_factory_->CreateURLLoader(wrapped, task_runner);
+  return url_loader_factory_->CreateURLLoader(
+      wrapped, task_runner->ToSingleThreadTaskRunner());
 }
 
 bool WorkerFetchContext::IsControlledByServiceWorker() const {

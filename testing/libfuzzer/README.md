@@ -1,25 +1,25 @@
-# libFuzzer in Chromium
+# libFuzzer in Chrome
 
-[go/libfuzzer-chromium](https://goto.google.com/libfuzzer-chromium) (Googler only)
+[go/libfuzzer-chrome](https://goto.google.com/libfuzzer-chrome)
 
 *** aside
 [Getting Started](getting_started.md)
-| [Buildbot](https://build.chromium.org/p/chromium.fyi/buildslaves/slave43-c1)
-| [ClusterFuzz Status](https://clusterfuzz.com/v2/fuzzer-stats)
+| [Buildbot](https://goto.google.com/libfuzzer-clusterfuzz-buildbot)
+| [ClusterFuzz Status](https://goto.google.com/libfuzzer-clusterfuzz-status)
 | [Cover Bug]
 ***
 
-This directory contains integration between [libFuzzer] and Chromium.
+This directory contains integration between [libFuzzer] and Chrome.
 libFuzzer is an in-process coverage-driven evolutionary fuzzer. It helps
 engineers to uncover potential security & stability problems earlier.
 
 *** note
-**Requirements:** libFuzzer in Chromium is supported with Linux and Mac only.
+**Requirements:** libFuzzer in Chrome is supported with GN on Mac and Linux only.
 ***
 
 ## Integration Status
 
-Fuzzer tests are well-integrated with Chromium build system and distributed
+Fuzzer tests are well-integrated with Chrome build system & distributed
 ClusterFuzz fuzzing system. Cover bug: [crbug.com/539572].
 
 ## Documentation

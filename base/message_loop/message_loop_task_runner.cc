@@ -46,7 +46,8 @@ bool MessageLoopTaskRunner::RunsTasksInCurrentSequence() const {
   return valid_thread_id_ == PlatformThread::CurrentId();
 }
 
-MessageLoopTaskRunner::~MessageLoopTaskRunner() = default;
+MessageLoopTaskRunner::~MessageLoopTaskRunner() {
+}
 
 }  // namespace internal
 

@@ -9,7 +9,8 @@
 namespace version_info {
 
 Channel ChannelFromPackageName(const char* package_name) {
-  if (!strcmp(package_name, "com.android.chrome"))
+  if (!strcmp(package_name, "com.android.chrome") ||
+      !strcmp(package_name, "com.chrome.work"))
     return Channel::STABLE;
   if (!strcmp(package_name, "com.chrome.beta"))
     return Channel::BETA;

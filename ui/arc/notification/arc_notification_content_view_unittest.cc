@@ -105,7 +105,6 @@ class MockArcNotificationItem : public ArcNotificationItem {
   mojom::ArcNotificationShownContents GetShownContents() const override {
     return mojom::ArcNotificationShownContents::CONTENTS_SHOWN;
   }
-  gfx::Rect GetSwipeInputRect() const override { return gfx::Rect(); }
   const base::string16& GetAccessibleName() const override {
     return base::EmptyString16();
   };
@@ -135,6 +134,13 @@ class TestMessageViewDelegate : public message_center::MessageViewDelegate {
   void RemoveNotification(const std::string& notification_id,
                           bool by_user) override {
     removed_ids_.insert(notification_id);
+  }
+
+  std::unique_ptr<ui::MenuModel> CreateMenuModel(
+      const message_center::Notification& notification) override {
+    // For this test, this method should not be invoked.
+    NOTREACHED();
+    return nullptr;
   }
 
   void ClickOnNotificationButton(const std::string& notification_id,

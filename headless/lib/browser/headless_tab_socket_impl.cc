@@ -19,7 +19,7 @@ HeadlessTabSocketImpl::HeadlessTabSocketImpl(content::WebContents* web_contents)
       listener_(nullptr),
       weak_ptr_factory_(this) {}
 
-HeadlessTabSocketImpl::~HeadlessTabSocketImpl() = default;
+HeadlessTabSocketImpl::~HeadlessTabSocketImpl() {}
 
 // Wrangles the async responses to
 // HeadlessRenderFrameControllerImpl::InstallTabSocket for which at most one
@@ -68,7 +68,7 @@ class TabSocketInstallationController
   bool success_;
 
   friend class base::RefCounted<TabSocketInstallationController>;
-  ~TabSocketInstallationController() = default;
+  ~TabSocketInstallationController() {}
 };
 
 void HeadlessTabSocketImpl::InstallHeadlessTabSocketBindings(

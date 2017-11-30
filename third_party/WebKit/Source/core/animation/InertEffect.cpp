@@ -34,14 +34,14 @@
 
 namespace blink {
 
-InertEffect* InertEffect::Create(KeyframeEffectModelBase* effect,
+InertEffect* InertEffect::Create(EffectModel* effect,
                                  const Timing& timing,
                                  bool paused,
                                  double inherited_time) {
   return new InertEffect(effect, timing, paused, inherited_time);
 }
 
-InertEffect::InertEffect(KeyframeEffectModelBase* model,
+InertEffect::InertEffect(EffectModel* model,
                          const Timing& timing,
                          bool paused,
                          double inherited_time)

@@ -511,6 +511,8 @@ static bool CanUseResponse(const ResourceResponse& response,
   if (response.IsNull())
     return false;
 
+  // FIXME: Why isn't must-revalidate considered a reason we can't use the
+  // response?
   if (response.CacheControlContainsNoCache() ||
       response.CacheControlContainsNoStore())
     return false;

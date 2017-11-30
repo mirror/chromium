@@ -15,9 +15,9 @@
 
 namespace headless {
 
-HeadlessContentRendererClient::HeadlessContentRendererClient() = default;
+HeadlessContentRendererClient::HeadlessContentRendererClient() {}
 
-HeadlessContentRendererClient::~HeadlessContentRendererClient() = default;
+HeadlessContentRendererClient::~HeadlessContentRendererClient() {}
 
 void HeadlessContentRendererClient::RenderFrameCreated(
     content::RenderFrame* render_frame) {

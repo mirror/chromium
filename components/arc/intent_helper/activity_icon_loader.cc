@@ -181,7 +181,7 @@ void ActivityIconLoader::InvalidateIcons(const std::string& package_name) {
 
 ActivityIconLoader::GetResult ActivityIconLoader::GetActivityIcons(
     const std::vector<ActivityName>& activities,
-    OnIconsReadyCallback cb) {
+    const OnIconsReadyCallback& cb) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   std::unique_ptr<ActivityToIconsMap> result(new ActivityToIconsMap);
   std::vector<mojom::ActivityNamePtr> activities_to_fetch;
@@ -200,7 +200,7 @@ ActivityIconLoader::GetResult ActivityIconLoader::GetActivityIcons(
 
   if (activities_to_fetch.empty()) {
     // If there's nothing to fetch, run the callback now.
-    std::move(cb).Run(std::move(result));
+    cb.Run(std::move(result));
     return GetResult::SUCCEEDED_SYNC;
   }
 
@@ -209,24 +209,22 @@ ActivityIconLoader::GetResult ActivityIconLoader::GetActivityIcons(
   if (!instance) {
     // The mojo channel is not yet ready (or not supported at all). Run the
     // callback with |result| that could be empty.
-    std::move(cb).Run(std::move(result));
+    cb.Run(std::move(result));
     return error_code;
   }
 
   // Fetch icons from ARC.
   instance->RequestActivityIcons(
       std::move(activities_to_fetch), mojom::ScaleFactor(scale_factor_),
-      base::BindOnce(&ActivityIconLoader::OnIconsReady,
-                     weak_ptr_factory_.GetWeakPtr(), std::move(result),
-                     std::move(cb)));
+      base::Bind(&ActivityIconLoader::OnIconsReady,
+                 weak_ptr_factory_.GetWeakPtr(), base::Passed(&result), cb));
   return GetResult::SUCCEEDED_ASYNC;
 }
 
 void ActivityIconLoader::OnIconsResizedForTesting(
-    OnIconsReadyCallback cb,
+    const OnIconsReadyCallback& cb,
     std::unique_ptr<ActivityToIconsMap> result) {
-  OnIconsResized(std::make_unique<ActivityToIconsMap>(), std::move(cb),
-                 std::move(result));
+  OnIconsResized(std::make_unique<ActivityToIconsMap>(), cb, std::move(result));
 }
 
 void ActivityIconLoader::AddCacheEntryForTesting(const ActivityName& activity) {
@@ -249,20 +247,20 @@ bool ActivityIconLoader::HasIconsReadyCallbackRun(GetResult result) {
 
 void ActivityIconLoader::OnIconsReady(
     std::unique_ptr<ActivityToIconsMap> cached_result,
-    OnIconsReadyCallback cb,
+    const OnIconsReadyCallback& cb,
     std::vector<mojom::ActivityIconPtr> icons) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   base::PostTaskAndReplyWithResult(
       FROM_HERE,
-      base::BindOnce(&ResizeAndEncodeIcons, std::move(icons), scale_factor_),
-      base::BindOnce(&ActivityIconLoader::OnIconsResized,
-                     weak_ptr_factory_.GetWeakPtr(), std::move(cached_result),
-                     std::move(cb)));
+      base::Bind(&ResizeAndEncodeIcons, base::Passed(&icons), scale_factor_),
+      base::Bind(&ActivityIconLoader::OnIconsResized,
+                 weak_ptr_factory_.GetWeakPtr(), base::Passed(&cached_result),
+                 cb));
 }
 
 void ActivityIconLoader::OnIconsResized(
     std::unique_ptr<ActivityToIconsMap> cached_result,
-    OnIconsReadyCallback cb,
+    const OnIconsReadyCallback& cb,
     std::unique_ptr<ActivityToIconsMap> result) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   // Update |cached_icons_|.
@@ -273,7 +271,7 @@ void ActivityIconLoader::OnIconsResized(
 
   // Merge the results that were obtained from cache before doing IPC.
   result->insert(cached_result->begin(), cached_result->end());
-  std::move(cb).Run(std::move(result));
+  cb.Run(std::move(result));
 }
 
 }  // namespace internal

@@ -10,7 +10,7 @@
 #include "core/html/HTMLDivElement.h"
 #include "core/html/HTMLDocument.h"
 #include "core/loader/EmptyClients.h"
-#include "core/testing/PageTestBase.h"
+#include "core/testing/DummyPageHolder.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
@@ -37,20 +37,26 @@ class DOMStubLocalFrameClient final : public EmptyLocalFrameClient {
   WeakMember<Frame> parent_ = nullptr;
 };
 
-class ElementVisibilityObserverTest : public PageTestBase {
+class ElementVisibilityObserverTest : public ::testing::Test {
  protected:
   void SetUp() override {
     local_frame_client_ = new DOMStubLocalFrameClient();
-    SetupPageWithClients(nullptr, local_frame_client_, nullptr);
+    dummy_page_holder_ = DummyPageHolder::Create(IntSize(), nullptr,
+                                                 local_frame_client_, nullptr);
   }
 
-  void TearDown() override { GetFrame().Detach(FrameDetachType::kRemove); }
+  void TearDown() override {
+    dummy_page_holder_->GetFrame().Detach(FrameDetachType::kRemove);
+  }
 
+  Document& GetDocument() { return dummy_page_holder_->GetDocument(); }
+  Page& GetPage() { return dummy_page_holder_->GetPage(); }
   DOMStubLocalFrameClient* LocalFrameClient() const {
     return local_frame_client_;
   }
 
  private:
+  std::unique_ptr<DummyPageHolder> dummy_page_holder_;
   Persistent<DOMStubLocalFrameClient> local_frame_client_;
 };
 

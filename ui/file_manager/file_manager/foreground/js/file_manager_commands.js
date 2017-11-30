@@ -442,15 +442,9 @@ CommandHandler.COMMANDS_['unmount'] = /** @type {Command} */ ({
    * @param {!CommandHandlerDeps} fileManager The file manager instance.
    */
   execute: function(event, fileManager) {
-    /** @param {VolumeManagerCommon.VolumeType=} opt_volumeType */
-    var errorCallback = function(opt_volumeType) {
-      if (opt_volumeType === VolumeManagerCommon.VolumeType.REMOVABLE) {
-        fileManager.ui.alertDialog.showHtml(
-            '', str('UNMOUNT_FAILED'), null, null, null);
-      } else {
-        fileManager.ui.alertDialog.showHtml(
-            '', str('UNMOUNT_PROVIDED_FAILED'), null, null, null);
-      }
+    var errorCallback = function() {
+      fileManager.ui.alertDialog.showHtml(
+          '', str('UNMOUNT_FAILED'), null, null, null);
     };
 
     var volumeInfo =
@@ -461,8 +455,7 @@ CommandHandler.COMMANDS_['unmount'] = /** @type {Command} */ ({
       return;
     }
 
-    fileManager.volumeManager.unmount(volumeInfo, function() {
-    }, errorCallback.bind(null, volumeInfo.volumeType));
+    fileManager.volumeManager.unmount(volumeInfo, function() {}, errorCallback);
   },
   /**
    * @param {!Event} event Command event.
@@ -1700,7 +1693,7 @@ CommandHandler.COMMANDS_['set-wallpaper'] = /** @type {Command} */ ({
           reject(fileReader.error);
         };
         fileReader.readAsArrayBuffer(blob);
-      });
+      })
     }).then(function(/** @type {!ArrayBuffer} */ arrayBuffer) {
       return new Promise(function(resolve, reject) {
         chrome.wallpaper.setWallpaper({

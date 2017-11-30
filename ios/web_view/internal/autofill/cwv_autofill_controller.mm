@@ -169,18 +169,6 @@
                     }];
 }
 
-- (void)removeSuggestion:(CWVAutofillSuggestion*)suggestion {
-  // Identifier is greater than 0 when it is an autofill profile.
-  if (suggestion.formSuggestion.identifier > 0) {
-    _autofillManager->RemoveAutofillProfileOrCreditCard(
-        suggestion.formSuggestion.identifier);
-  } else {
-    _autofillManager->RemoveAutocompleteEntry(
-        base::SysNSStringToUTF16(suggestion.fieldName),
-        base::SysNSStringToUTF16(suggestion.value));
-  }
-}
-
 #pragma mark - AutofillClientIOSBridge | AutofillDriverIOSBridge
 
 - (void)showAutofillPopup:(const std::vector<autofill::Suggestion>&)suggestions
@@ -274,17 +262,6 @@
                            formName:nsFormName
                               value:nsValue];
     }
-  }
-}
-
-- (void)webState:(web::WebState*)webState
-    didSubmitDocumentWithFormNamed:(const std::string&)formName
-                     userInitiated:(BOOL)userInitiated {
-  if ([_delegate respondsToSelector:@selector
-                 (autofillController:didSubmitFormWithName:userInitiated:)]) {
-    [_delegate autofillController:self
-            didSubmitFormWithName:base::SysUTF8ToNSString(formName)
-                    userInitiated:userInitiated];
   }
 }
 

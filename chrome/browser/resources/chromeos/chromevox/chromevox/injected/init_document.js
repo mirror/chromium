@@ -110,7 +110,7 @@ cvox.ChromeVox.initDocument = function() {
   if (cvox.ChromeVox.isClassicEnabled_ === undefined) {
     reinitReason = 'ChromeVox waiting for background page';
   }
-  if (reinitReason && cvox.ChromeVox.recallInit_) {
+  if (reinitReason) {
     cvox.ChromeVox.recallInit_(
         reinitReason + ': ' + document.location.href + '.');
     return;

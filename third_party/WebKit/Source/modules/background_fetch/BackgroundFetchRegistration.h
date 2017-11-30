@@ -34,7 +34,8 @@ class BackgroundFetchRegistration final
                               unsigned long long upload_total,
                               unsigned long long uploaded,
                               unsigned long long download_total,
-                              unsigned long long downloaded);
+                              unsigned long long downloaded,
+                              const String& title);
   ~BackgroundFetchRegistration() override;
 
   // Initializes the BackgroundFetchRegistration to be associated with the given
@@ -60,6 +61,9 @@ class BackgroundFetchRegistration final
   DEFINE_ATTRIBUTE_EVENT_LISTENER(progress);
 
   ScriptPromise abort(ScriptState*);
+
+  // TODO(crbug.com/769770): Remove the following deprecated attributes.
+  String title() const;
 
   // EventTargetWithInlineData implementation.
   const AtomicString& InterfaceName() const override;
@@ -87,6 +91,7 @@ class BackgroundFetchRegistration final
   unsigned long long uploaded_;
   unsigned long long download_total_;
   unsigned long long downloaded_;
+  String title_;
 
   mojo::Binding<blink::mojom::blink::BackgroundFetchRegistrationObserver>
       observer_binding_;

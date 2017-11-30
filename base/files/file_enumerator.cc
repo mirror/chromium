@@ -8,7 +8,8 @@
 
 namespace base {
 
-FileEnumerator::FileInfo::~FileInfo() = default;
+FileEnumerator::FileInfo::~FileInfo() {
+}
 
 bool FileEnumerator::ShouldSkip(const FilePath& path) {
   FilePath::StringType basename = path.BaseName().value();

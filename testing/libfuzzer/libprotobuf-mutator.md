@@ -1,4 +1,4 @@
-# Getting Started with libprotobuf-mutator in Chromium
+# Getting Started with libprotobuf-mutator in Chrome
 
 *** note
 **Note:** libprotobuf-mutator (LPM) is new to Chromium and does not (yet) have a

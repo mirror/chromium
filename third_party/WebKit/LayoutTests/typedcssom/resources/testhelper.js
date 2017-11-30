@@ -5,22 +5,17 @@ function assert_style_value_equals(a, b) {
   const className = a.constructor.name;
   switch (className) {
     case 'CSSKeywordValue':
-      assert_equals(a.value, b.value);
-      break;
+      return assert_equals(a.value, b.value);
     case 'CSSUnitValue':
-      assert_approx_equals(a.value, b.value, 1e-6);
-      assert_equals(a.unit, b.unit);
-      break;
+      return assert_equals(a.value, b.value) && assert_equals(a.unit, b.unit);
     case 'CSSMathSum':
     case 'CSSMathProduct':
     case 'CSSMathMin':
     case 'CSSMathMax':
-      assert_style_value_array_equals(a.values, b.values);
-      break;
+      return assert_style_value_array_equals(a.values, b.values);
     case 'CSSMathInvert':
     case 'CSSMathNegate':
-      assert_style_value_equals(a.value, b.value);
-      break;
+      return assert_style_value_equals(a.value, b.value);
   }
 }
 

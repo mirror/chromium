@@ -4,7 +4,6 @@
 
 #include "components/arc/storage_manager/arc_storage_manager.h"
 
-#include <utility>
 #include <vector>
 
 #include "base/bind.h"
@@ -59,12 +58,12 @@ bool ArcStorageManager::OpenPrivateVolumeSettings() {
 }
 
 bool ArcStorageManager::GetApplicationsSize(
-    GetApplicationsSizeCallback callback) {
+    const GetApplicationsSizeCallback& callback) {
   auto* storage_manager_instance = ARC_GET_INSTANCE_FOR_METHOD(
       arc_bridge_service_->storage_manager(), GetApplicationsSize);
   if (!storage_manager_instance)
     return false;
-  storage_manager_instance->GetApplicationsSize(std::move(callback));
+  storage_manager_instance->GetApplicationsSize(callback);
   return true;
 }
 

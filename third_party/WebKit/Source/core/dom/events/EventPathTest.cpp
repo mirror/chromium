@@ -9,12 +9,24 @@
 #include "core/dom/PseudoElement.h"
 #include "core/html_names.h"
 #include "core/style/ComputedStyleConstants.h"
-#include "core/testing/PageTestBase.h"
+#include "core/testing/DummyPageHolder.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
 
-class EventPathTest : public PageTestBase {};
+class EventPathTest : public ::testing::Test {
+ protected:
+  Document& GetDocument() const { return dummy_page_holder_->GetDocument(); }
+
+ private:
+  void SetUp() override;
+
+  std::unique_ptr<DummyPageHolder> dummy_page_holder_;
+};
+
+void EventPathTest::SetUp() {
+  dummy_page_holder_ = DummyPageHolder::Create(IntSize(800, 600));
+}
 
 TEST_F(EventPathTest, ShouldBeEmptyForPseudoElementWithoutParentElement) {
   Element* div =

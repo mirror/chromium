@@ -89,14 +89,10 @@ def get_current_xcode_info():
       'version': The Xcode version.
       'build': The Xcode build version.
   """
-  try:
-    version, build_version = get_xcode_version('xcodebuild')
-    path = subprocess.check_output(['xcode-select', '--print-path']).rstrip()
-  except subprocess.CalledProcessError:
-    version = build_version = path = None
+  version, build_version = get_xcode_version('xcodebuild')
 
   return {
-    'path': path,
+    'path': subprocess.check_output(['xcode-select', '--print-path']).rstrip(),
     'version': version,
     'build': build_version,
   }

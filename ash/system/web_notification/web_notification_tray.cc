@@ -8,7 +8,6 @@
 
 #include "ash/accessibility/accessibility_controller.h"
 #include "ash/message_center/message_center_bubble.h"
-#include "ash/public/cpp/ash_switches.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/root_window_controller.h"
 #include "ash/session/session_controller.h"
@@ -334,40 +333,29 @@ bool WebNotificationTray::ShowMessageCenterInternal(bool show_settings,
   if (!ShouldShowMessageCenter())
     return false;
 
-  if (IsMessageCenterVisible())
-    return true;
+  MessageCenterBubble* message_center_bubble = new MessageCenterBubble(
+      message_center(), message_center_ui_controller_.get());
 
-  if (switches::IsSidebarEnabled()) {
-    SidebarInitMode mode =
-        (!show_settings ? SidebarInitMode::NORMAL
-                        : SidebarInitMode::MESSAGE_CENTER_SETTINGS);
-    // TODO(yoshiki): Support non-primary desktop on multi-display environment.
-    Shell::Get()->GetPrimaryRootWindowController()->sidebar()->Show(mode);
-  } else {
-    MessageCenterBubble* message_center_bubble = new MessageCenterBubble(
-        message_center(), message_center_ui_controller_.get());
+  // In the horizontal case, message center starts from the top of the shelf.
+  // In the vertical case, it starts from the bottom of WebNotificationTray.
+  const int max_height =
+      (shelf()->IsHorizontalAlignment() ? shelf()->GetIdealBounds().y()
+                                        : GetBoundsInScreen().bottom());
+  // Sets the maximum height, considering the padding from the top edge of
+  // screen. This padding should be applied in all types of shelf alignment.
+  message_center_bubble->SetMaxHeight(max_height - kPaddingFromScreenTop);
 
-    // In the horizontal case, message center starts from the top of the shelf.
-    // In the vertical case, it starts from the bottom of WebNotificationTray.
-    const int max_height =
-        (shelf()->IsHorizontalAlignment() ? shelf()->GetIdealBounds().y()
-                                          : GetBoundsInScreen().bottom());
-    // Sets the maximum height, considering the padding from the top edge of
-    // screen. This padding should be applied in all types of shelf alignment.
-    message_center_bubble->SetMaxHeight(max_height - kPaddingFromScreenTop);
+  if (show_settings)
+    message_center_bubble->SetSettingsVisible();
 
-    if (show_settings)
-      message_center_bubble->SetSettingsVisible();
+  // For vertical shelf alignments, anchor to the WebNotificationTray, but for
+  // horizontal (i.e. bottom) shelves, anchor to the system tray.
+  TrayBackgroundView* anchor_tray = this;
+  if (shelf()->IsHorizontalAlignment())
+    anchor_tray = system_tray_;
 
-    // For vertical shelf alignments, anchor to the WebNotificationTray, but for
-    // horizontal (i.e. bottom) shelves, anchor to the system tray.
-    TrayBackgroundView* anchor_tray = this;
-    if (shelf()->IsHorizontalAlignment())
-      anchor_tray = system_tray_;
-
-    message_center_bubble_.reset(new WebNotificationBubbleWrapper(
-        this, anchor_tray, message_center_bubble, show_by_click));
-  }
+  message_center_bubble_.reset(new WebNotificationBubbleWrapper(
+      this, anchor_tray, message_center_bubble, show_by_click));
 
   shelf()->UpdateAutoHideState();
   SetIsActive(true);
@@ -379,19 +367,10 @@ bool WebNotificationTray::ShowMessageCenter(bool show_by_click) {
 }
 
 void WebNotificationTray::HideMessageCenter() {
-  if (!IsMessageCenterVisible())
+  if (!message_center_bubble())
     return;
-
   SetIsActive(false);
-  if (switches::IsSidebarEnabled()) {
-    Sidebar* sidebar =
-        RootWindowController::ForWindow(GetWidget()->GetNativeView())
-            ->sidebar();
-    if (sidebar)
-      sidebar->Hide();
-  } else {
-    message_center_bubble_.reset();
-  }
+  message_center_bubble_.reset();
   show_message_center_on_unlock_ = false;
   shelf()->UpdateAutoHideState();
 }
@@ -405,7 +384,7 @@ int WebNotificationTray::tray_bubble_height_for_test() const {
 }
 
 bool WebNotificationTray::ShowPopups() {
-  if (IsMessageCenterVisible())
+  if (message_center_bubble())
     return false;
 
   popup_collection_->DoUpdateIfPossible();
@@ -424,16 +403,9 @@ bool WebNotificationTray::ShouldShowMessageCenter() const {
   return Shell::Get()->session_controller()->ShouldShowNotificationTray();
 }
 
-bool WebNotificationTray::IsMessageCenterVisible() const {
-  if (switches::IsSidebarEnabled()) {
-    Sidebar* sidebar =
-        RootWindowController::ForWindow(GetWidget()->GetNativeView())
-            ->sidebar();
-    return sidebar && sidebar->IsVisible();
-  } else {
-    return message_center_bubble() &&
-           message_center_bubble()->bubble()->IsVisible();
-  }
+bool WebNotificationTray::IsMessageCenterBubbleVisible() const {
+  return (message_center_bubble() &&
+          message_center_bubble()->bubble()->IsVisible());
 }
 
 void WebNotificationTray::UpdateAfterShelfAlignmentChange() {
@@ -497,17 +469,9 @@ void WebNotificationTray::HideBubble(const views::TrayBubbleView* bubble_view) {
 }
 
 bool WebNotificationTray::ShowNotifierSettings() {
-  if (IsMessageCenterVisible()) {
-    if (switches::IsSidebarEnabled()) {
-      Sidebar* sidebar =
-          RootWindowController::ForWindow(GetWidget()->GetNativeView())
-              ->sidebar();
-      if (sidebar)
-        sidebar->Show(SidebarInitMode::MESSAGE_CENTER_SETTINGS);
-    } else {
-      static_cast<MessageCenterBubble*>(message_center_bubble()->bubble())
-          ->SetSettingsVisible();
-    }
+  if (message_center_bubble()) {
+    static_cast<MessageCenterBubble*>(message_center_bubble()->bubble())
+        ->SetSettingsVisible();
     return true;
   }
   return ShowMessageCenterInternal(true /* show_settings */,
@@ -617,7 +581,7 @@ void WebNotificationTray::UpdateTrayContent() {
 
 void WebNotificationTray::ClickedOutsideBubble() {
   // Only hide the message center
-  if (!IsMessageCenterVisible())
+  if (!message_center_bubble())
     return;
 
   message_center_ui_controller_->HideMessageCenterBubble();
@@ -626,7 +590,7 @@ void WebNotificationTray::ClickedOutsideBubble() {
 bool WebNotificationTray::PerformAction(const ui::Event& event) {
   UserMetricsRecorder::RecordUserClick(
       LoginMetricsRecorder::LockScreenUserClickTarget::kNotificationTray);
-  if (IsMessageCenterVisible())
+  if (message_center_bubble())
     CloseBubble();
   else
     ShowBubble(event.IsMouseEvent() || event.IsGestureEvent());
@@ -638,7 +602,7 @@ void WebNotificationTray::CloseBubble() {
 }
 
 void WebNotificationTray::ShowBubble(bool show_by_click) {
-  if (!IsMessageCenterVisible())
+  if (!IsMessageCenterBubbleVisible())
     message_center_ui_controller_->ShowMessageCenterBubble(show_by_click);
 }
 

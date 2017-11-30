@@ -22,10 +22,6 @@ namespace net {
 class URLRequestContextGetter;
 }
 
-namespace service_manager {
-class Connector;
-}
-
 namespace media_router {
 
 class DialMediaSinkServiceImpl;
@@ -69,13 +65,6 @@ class DialMediaSinkServiceProxy
   void SetDialMediaSinkServiceForTest(
       std::unique_ptr<DialMediaSinkServiceImpl> dial_media_sink_service);
 
- protected:
-  // Returns a new ServiceManager connector not bound to any thread.
-  // Overriden in unit-tests.
-  virtual std::unique_ptr<service_manager::Connector> CreateConnector();
-
-  ~DialMediaSinkServiceProxy() override;
-
  private:
   friend class DialMediaSinkServiceProxyTest;
   friend class base::DeleteHelper<DialMediaSinkServiceProxy>;
@@ -83,8 +72,10 @@ class DialMediaSinkServiceProxy
       content::BrowserThread::IO>;
   friend class base::RefCountedThreadSafe<DialMediaSinkServiceProxy>;
 
+  ~DialMediaSinkServiceProxy() override;
+
   // Starts DIAL discovery.
-  void StartOnIOThread(std::unique_ptr<service_manager::Connector> connector);
+  void StartOnIOThread();
 
   // Stops DIAL discovery.
   void StopOnIOThread();

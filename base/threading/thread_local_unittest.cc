@@ -20,7 +20,7 @@ class ThreadLocalTesterBase : public base::DelegateSimpleThreadPool::Delegate {
       : tlp_(tlp),
         done_(done) {
   }
-  ~ThreadLocalTesterBase() override = default;
+  ~ThreadLocalTesterBase() override {}
 
  protected:
   TLPType* tlp_;
@@ -31,7 +31,7 @@ class SetThreadLocal : public ThreadLocalTesterBase {
  public:
   SetThreadLocal(TLPType* tlp, base::WaitableEvent* done)
       : ThreadLocalTesterBase(tlp, done), val_(nullptr) {}
-  ~SetThreadLocal() override = default;
+  ~SetThreadLocal() override {}
 
   void set_value(char* val) { val_ = val; }
 
@@ -49,7 +49,7 @@ class GetThreadLocal : public ThreadLocalTesterBase {
  public:
   GetThreadLocal(TLPType* tlp, base::WaitableEvent* done)
       : ThreadLocalTesterBase(tlp, done), ptr_(nullptr) {}
-  ~GetThreadLocal() override = default;
+  ~GetThreadLocal() override {}
 
   void set_ptr(char** ptr) { ptr_ = ptr; }
 

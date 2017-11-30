@@ -43,8 +43,6 @@ DiceAction GetDiceActionFromHeader(const std::string& value) {
     return DiceAction::SIGNIN;
   else if (value == "SIGNOUT")
     return DiceAction::SIGNOUT;
-  else if (value == "ENABLE_SYNC")
-    return DiceAction::ENABLE_SYNC;
   else
     return DiceAction::NONE;
 }
@@ -59,66 +57,42 @@ DiceResponseParams DiceHeaderHelper::BuildDiceSigninResponseParams(
     const std::string& header_value) {
   DCHECK(!header_value.empty());
   DiceResponseParams params;
+  DiceResponseParams::SigninInfo& info = params.signin_info;
   ResponseHeaderDictionary header_dictionary =
       ParseAccountConsistencyResponseHeader(header_value);
-  if (header_dictionary.count(kSigninActionAttrName) != 1u)
-    return params;
-
-  DiceResponseParams::AccountInfo* info = nullptr;
-  switch (GetDiceActionFromHeader(
-      header_dictionary.find(kSigninActionAttrName)->second)) {
-    case DiceAction::NONE:
-    case DiceAction::SIGNOUT:
-      DLOG(WARNING) << "Only SIGNIN and ENABLE_SYNC are supported through "
-                    << "X-Chrome-ID-Consistency-Response :" << header_value;
-      return params;
-    case DiceAction::SIGNIN:
-      params.user_intention = DiceAction::SIGNIN;
-      params.signin_info = std::make_unique<DiceResponseParams::SigninInfo>();
-      info = &params.signin_info->account_info;
-      break;
-    case DiceAction::ENABLE_SYNC:
-      params.user_intention = DiceAction::ENABLE_SYNC;
-      params.enable_sync_info =
-          std::make_unique<DiceResponseParams::EnableSyncInfo>();
-      info = &params.enable_sync_info->account_info;
-      break;
-  }
-
   ResponseHeaderDictionary::const_iterator it = header_dictionary.begin();
   for (; it != header_dictionary.end(); ++it) {
     const std::string key_name(it->first);
     const std::string value(it->second);
     if (key_name == kSigninActionAttrName) {
-      // Do nothing, this was already parsed.
+      params.user_intention = GetDiceActionFromHeader(value);
     } else if (key_name == kSigninIdAttrName) {
-      info->gaia_id = value;
+      info.gaia_id = value;
     } else if (key_name == kSigninEmailAttrName) {
-      info->email = value;
+      info.email = value;
     } else if (key_name == kSigninAuthUserAttrName) {
-      bool parse_success = base::StringToInt(value, &info->session_index);
+      bool parse_success = base::StringToInt(value, &info.session_index);
       if (!parse_success)
-        info->session_index = -1;
+        info.session_index = -1;
     } else if (key_name == kSigninAuthorizationCodeAttrName) {
-      if (params.signin_info)
-        params.signin_info->authorization_code = value;
-      else
-        DLOG(WARNING) << "Authorization code expected only with SIGNIN action";
+      info.authorization_code = value;
     } else {
       DLOG(WARNING) << "Unexpected Gaia header attribute '" << key_name << "'.";
     }
   }
 
-  if (info->gaia_id.empty() || info->email.empty() ||
-      info->session_index == -1) {
-    DLOG(WARNING) << "Missing account info in Dice header: " << header_value;
-    return DiceResponseParams();
+  if (params.user_intention != DiceAction::SIGNIN) {
+    DLOG(WARNING)
+        << "Only SIGNIN is supported through X-Chrome-ID-Consistency-Response :"
+        << header_value;
+    params.user_intention = DiceAction::NONE;
   }
 
-  if (params.signin_info && params.signin_info->authorization_code.empty()) {
-    DLOG(WARNING) << "Missing authorization code in Dice SIGNIN header: "
+  if (info.gaia_id.empty() || info.email.empty() || info.session_index == -1 ||
+      info.authorization_code.empty()) {
+    DLOG(WARNING) << "Missing header parameters for Dice SIGNIN: "
                   << header_value;
-    return DiceResponseParams();
+    params.user_intention = DiceAction::NONE;
   }
 
   return params;
@@ -132,9 +106,7 @@ DiceResponseParams DiceHeaderHelper::BuildDiceSignoutResponseParams(
   DCHECK(!header_value.empty());
   DiceResponseParams params;
   params.user_intention = DiceAction::SIGNOUT;
-  std::vector<std::string> gaia_ids;
-  std::vector<std::string> emails;
-  std::vector<int> session_indices;
+  DiceResponseParams::SignoutInfo& info = params.signout_info;
   ResponseHeaderDictionary header_dictionary =
       ParseAccountConsistencyResponseHeader(header_value);
   ResponseHeaderDictionary::const_iterator it = header_dictionary.begin();
@@ -142,39 +114,28 @@ DiceResponseParams DiceHeaderHelper::BuildDiceSignoutResponseParams(
     const std::string key_name(it->first);
     const std::string value(it->second);
     if (key_name == kSignoutObfuscatedIDAttrName) {
-      gaia_ids.push_back(value);
+      info.gaia_id.push_back(value);
       // The Gaia ID is wrapped in quotes.
-      base::TrimString(value, "\"", &gaia_ids.back());
+      base::TrimString(value, "\"", &info.gaia_id.back());
     } else if (key_name == kSignoutEmailAttrName) {
       // The email is wrapped in quotes.
-      emails.push_back(value);
-      base::TrimString(value, "\"", &emails.back());
+      info.email.push_back(value);
+      base::TrimString(value, "\"", &info.email.back());
     } else if (key_name == kSignoutSessionIndexAttrName) {
       int session_index = -1;
       bool parse_success = base::StringToInt(value, &session_index);
       if (parse_success)
-        session_indices.push_back(session_index);
+        info.session_index.push_back(session_index);
     } else {
       DLOG(WARNING) << "Unexpected Gaia header attribute '" << key_name << "'.";
     }
   }
 
-  if ((gaia_ids.size() != emails.size()) ||
-      (gaia_ids.size() != session_indices.size())) {
+  if ((info.gaia_id.size() != info.email.size()) ||
+      (info.gaia_id.size() != info.session_index.size())) {
     DLOG(WARNING) << "Invalid parameter count for Dice SIGNOUT header: "
                   << header_value;
-    return DiceResponseParams();
-  }
-
-  if (gaia_ids.empty()) {
-    DLOG(WARNING) << "No account specified in Dice SIGNOUT header";
-    return DiceResponseParams();
-  }
-
-  params.signout_info = std::make_unique<DiceResponseParams::SignoutInfo>();
-  for (size_t i = 0; i < gaia_ids.size(); ++i) {
-    params.signout_info->account_infos.emplace_back(gaia_ids[i], emails[i],
-                                                    session_indices[i]);
+    params.user_intention = DiceAction::NONE;
   }
 
   return params;

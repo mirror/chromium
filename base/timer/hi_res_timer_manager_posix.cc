@@ -12,7 +12,8 @@ HighResolutionTimerManager::HighResolutionTimerManager()
     : hi_res_clock_available_(false) {
 }
 
-HighResolutionTimerManager::~HighResolutionTimerManager() = default;
+HighResolutionTimerManager::~HighResolutionTimerManager() {
+}
 
 void HighResolutionTimerManager::OnPowerStateChange(bool on_battery_power) {
 }

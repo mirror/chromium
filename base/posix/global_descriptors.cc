@@ -94,8 +94,8 @@ void GlobalDescriptors::Reset(const Mapping& mapping) {
   descriptors_ = mapping;
 }
 
-GlobalDescriptors::GlobalDescriptors() = default;
+GlobalDescriptors::GlobalDescriptors() {}
 
-GlobalDescriptors::~GlobalDescriptors() = default;
+GlobalDescriptors::~GlobalDescriptors() {}
 
 }  // namespace base

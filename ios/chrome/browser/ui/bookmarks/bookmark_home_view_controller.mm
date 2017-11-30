@@ -309,19 +309,6 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
   }
 }
 
-- (void)configureSigninPromoWithConfigurator:
-            (SigninPromoViewConfigurator*)configurator
-                             identityChanged:(BOOL)identityChanged {
-  if (base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
-    [self.bookmarksTableView
-        configureSigninPromoWithConfigurator:configurator
-                             identityChanged:identityChanged];
-  } else {
-    [self.folderView configureSigninPromoWithConfigurator:configurator
-                                          identityChanged:identityChanged];
-  }
-}
-
 #pragma mark Action sheet callbacks
 
 // Enters into edit mode by selecting the given node corresponding to the
@@ -462,7 +449,11 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
 }
 
 - (BOOL)bookmarkTableViewShouldShowPromoCell:(BookmarkTableView*)tableView {
-  return self.bookmarkPromoController.shouldShowSigninPromo;
+  return self.bookmarkPromoController.promoState;
+}
+
+- (void)bookmarkTableViewDismissPromo:(BookmarkTableView*)view {
+  [self.bookmarkPromoController hidePromoCell];
 }
 
 - (void)bookmarkTableView:(BookmarkTableView*)view
@@ -734,12 +725,12 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
   _editing = editing;
 
   if (editing) {
-    self.bookmarkPromoController.shouldShowSigninPromo = NO;
+    self.bookmarkPromoController.promoState = NO;
   } else {
     // Only reset the editing state when leaving edit mode. This allows
     // subclasses to add nodes for editing before entering edit mode.
     [self resetEditNodes];
-    [self.bookmarkPromoController updateShouldShowSigninPromo];
+    [self.bookmarkPromoController updatePromoState];
   }
 
   [self updateEditingStateAnimated:animated];
@@ -815,7 +806,15 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
 
 - (BOOL)bookmarkCollectionViewShouldShowPromoCell:
     (BookmarkCollectionView*)collectionView {
-  return self.bookmarkPromoController.shouldShowSigninPromo;
+  return self.bookmarkPromoController.promoState;
+}
+
+- (void)bookmarkCollectionViewShowSignIn:(BookmarkCollectionView*)view {
+  [self.bookmarkPromoController showSignInFromViewController:self];
+}
+
+- (void)bookmarkCollectionViewDismissPromo:(BookmarkCollectionView*)view {
+  [self.bookmarkPromoController hidePromoCell];
 }
 
 - (void)bookmarkCollectionView:(BookmarkCollectionView*)view
@@ -896,10 +895,6 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
                  style:UIAlertActionStyleCancel];
 
   [self.actionSheetCoordinator start];
-}
-
-- (SigninPromoViewMediator*)signinPromoViewMediator {
-  return self.bookmarkPromoController.signinPromoViewMediator;
 }
 
 #pragma mark - BookmarkModelBridgeObserver

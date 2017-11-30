@@ -32,8 +32,8 @@ inline AllocationContextTracker* GetThreadLocalTracker() {
 // static
 const char HeapProfilerEventFilter::kName[] = "heap_profiler_predicate";
 
-HeapProfilerEventFilter::HeapProfilerEventFilter() = default;
-HeapProfilerEventFilter::~HeapProfilerEventFilter() = default;
+HeapProfilerEventFilter::HeapProfilerEventFilter() {}
+HeapProfilerEventFilter::~HeapProfilerEventFilter() {}
 
 bool HeapProfilerEventFilter::FilterTraceEvent(
     const TraceEvent& trace_event) const {

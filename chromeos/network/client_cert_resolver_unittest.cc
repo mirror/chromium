@@ -53,8 +53,8 @@ const char* kUserHash = "user_hash";
 class ClientCertResolverTest : public testing::Test,
                                public ClientCertResolver::Observer {
  public:
-  ClientCertResolverTest() = default;
-  ~ClientCertResolverTest() override = default;
+  ClientCertResolverTest() {}
+  ~ClientCertResolverTest() override {}
 
   void SetUp() override {
     ASSERT_TRUE(test_nssdb_.is_open());

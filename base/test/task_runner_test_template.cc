@@ -10,7 +10,7 @@ namespace test {
 
 TaskTracker::TaskTracker() : task_runs_(0), task_runs_cv_(&lock_) {}
 
-TaskTracker::~TaskTracker() = default;
+TaskTracker::~TaskTracker() {}
 
 Closure TaskTracker::WrapTask(const Closure& task, int i) {
   return Bind(&TaskTracker::RunTask, this, task, i);

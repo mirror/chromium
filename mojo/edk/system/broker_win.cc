@@ -65,6 +65,7 @@ Channel::MessagePtr WaitForBrokerMessage(PlatformHandle platform_handle,
 
     base::debug::Alias(&buffer[0]);
     base::debug::Alias(&bytes_read);
+    base::debug::Alias(message.get());
     CHECK(false);
     return nullptr;
   }
@@ -76,6 +77,7 @@ Channel::MessagePtr WaitForBrokerMessage(PlatformHandle platform_handle,
 
     base::debug::Alias(&buffer[0]);
     base::debug::Alias(&bytes_read);
+    base::debug::Alias(message.get());
     CHECK(false);
     return nullptr;
   }

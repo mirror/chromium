@@ -100,7 +100,7 @@ class PLATFORM_EXPORT ResourceLoadScheduler final
           intra_priority(intra_priority) {}
     explicit ClientIdWithPriority(ClientId client_id)
         : ClientIdWithPriority(client_id,
-                               WebURLRequest::Priority::kUnresolved,
+                               WebURLRequest::kPriorityUnresolved,
                                0) {}
 
     bool operator<(const ClientIdWithPriority& other) const {

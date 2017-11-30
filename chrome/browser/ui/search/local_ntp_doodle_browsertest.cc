@@ -27,7 +27,6 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/browser_test_utils.h"
 #include "testing/gmock/include/gmock/gmock.h"
-#include "url/gurl.h"
 
 using search_provider_logos::EncodedLogo;
 using search_provider_logos::EncodedLogoCallback;

@@ -84,9 +84,6 @@ void ContextualSearchRankerLoggerImpl::SetupLoggingAndRanker(
     SetupRankerPredictor(web_contents);
     // Start building example data based on features to be gathered and logged.
     ranker_example_.reset(new assist_ranker::RankerExample());
-  } else {
-    // TODO(donnd): remove when behind-the-flag bug fixed (crbug.com/786589).
-    VLOG(1) << "SetupLoggingAndRanker got IsRankerQueryEnabled false.";
   }
 }
 
@@ -118,15 +115,9 @@ void ContextualSearchRankerLoggerImpl::SetupRankerPredictor(
     assist_ranker::AssistRankerService* assist_ranker_service =
         assist_ranker::AssistRankerServiceFactory::GetForBrowserContext(
             browser_context);
-    DCHECK(assist_ranker_service);
-    std::string model_string(kModelUrl.Get());
-    DCHECK(model_string.size());
-    // TODO(donnd): remove when behind-the-flag bug fixed (crbug.com/786589).
-    VLOG(0) << "Model URL: " << model_string;
     predictor_ = assist_ranker_service->FetchBinaryClassifierPredictor(
-        GURL(model_string), kContextualSearchModelFilename,
+        GURL((kModelUrl.Get())), kContextualSearchModelFilename,
         kContextualSearchUmaPrefix);
-    DCHECK(predictor_);
   }
 }
 
@@ -178,8 +169,6 @@ AssistRankerPrediction ContextualSearchRankerLoggerImpl::RunInference(
   } else {
     prediction_enum = ASSIST_RANKER_PREDICTION_UNAVAILABLE;
   }
-  // TODO(donnd): remove when behind-the-flag bug fixed (crbug.com/786589).
-  VLOG(0) << "prediction: " << prediction_enum;
   return prediction_enum;
 }
 

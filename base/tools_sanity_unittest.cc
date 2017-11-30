@@ -254,7 +254,7 @@ namespace {
 class TOOLS_SANITY_TEST_CONCURRENT_THREAD : public PlatformThread::Delegate {
  public:
   explicit TOOLS_SANITY_TEST_CONCURRENT_THREAD(bool *value) : value_(value) {}
-  ~TOOLS_SANITY_TEST_CONCURRENT_THREAD() override = default;
+  ~TOOLS_SANITY_TEST_CONCURRENT_THREAD() override {}
   void ThreadMain() override {
     *value_ = true;
 
@@ -270,7 +270,7 @@ class TOOLS_SANITY_TEST_CONCURRENT_THREAD : public PlatformThread::Delegate {
 class ReleaseStoreThread : public PlatformThread::Delegate {
  public:
   explicit ReleaseStoreThread(base::subtle::Atomic32 *value) : value_(value) {}
-  ~ReleaseStoreThread() override = default;
+  ~ReleaseStoreThread() override {}
   void ThreadMain() override {
     base::subtle::Release_Store(value_, kMagicValue);
 
@@ -286,7 +286,7 @@ class ReleaseStoreThread : public PlatformThread::Delegate {
 class AcquireLoadThread : public PlatformThread::Delegate {
  public:
   explicit AcquireLoadThread(base::subtle::Atomic32 *value) : value_(value) {}
-  ~AcquireLoadThread() override = default;
+  ~AcquireLoadThread() override {}
   void ThreadMain() override {
     // Wait for the other thread to make Release_Store
     PlatformThread::Sleep(TimeDelta::FromMilliseconds(100));

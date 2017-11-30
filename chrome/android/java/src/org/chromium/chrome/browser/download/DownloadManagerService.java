@@ -367,7 +367,7 @@ public class DownloadManagerService
         DownloadNotificationService.clearResumptionAttemptLeft();
 
         DownloadManagerService.getDownloadManagerService().checkForExternallyRemovedDownloads(
-                /*isOffTheRecord=*/false);
+                /*isOffRecord=*/false);
     }
 
     /**

@@ -12,11 +12,12 @@
 namespace content {
 
 ServiceWorkerLifetimeTracker::ServiceWorkerLifetimeTracker()
-    : ServiceWorkerLifetimeTracker(base::DefaultTickClock::GetInstance()) {}
+    : ServiceWorkerLifetimeTracker(std::make_unique<base::DefaultTickClock>()) {
+}
 
 ServiceWorkerLifetimeTracker::ServiceWorkerLifetimeTracker(
-    base::TickClock* tick_clock)
-    : tick_clock_(tick_clock) {}
+    std::unique_ptr<base::TickClock> tick_clock)
+    : tick_clock_(std::move(tick_clock)) {}
 
 ServiceWorkerLifetimeTracker::~ServiceWorkerLifetimeTracker() = default;
 

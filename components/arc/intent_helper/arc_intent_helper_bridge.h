@@ -83,7 +83,7 @@ class ArcIntentHelperBridge
       internal::ActivityIconLoader::OnIconsReadyCallback;
   using GetResult = internal::ActivityIconLoader::GetResult;
   GetResult GetActivityIcons(const std::vector<ActivityName>& activities,
-                             OnIconsReadyCallback callback);
+                             const OnIconsReadyCallback& callback);
 
   // Returns true when |url| can only be handled by Chrome. Otherwise, which is
   // when there might be one or more ARC apps that can handle |url|, returns

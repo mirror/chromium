@@ -342,9 +342,15 @@ void SnippetsInternalsMessageHandler::HandleDownload(
 
 void SnippetsInternalsMessageHandler::HandleClearCachedSuggestions(
     const base::ListValue* args) {
-  DCHECK_EQ(0u, args->GetSize());
+  DCHECK_EQ(1u, args->GetSize());
 
-  content_suggestions_service_->ClearAllCachedSuggestions();
+  int category_id;
+  if (!args->GetInteger(0, &category_id)) {
+    return;
+  }
+
+  content_suggestions_service_->ClearCachedSuggestions(
+      Category::FromIDValue(category_id));
   SendContentSuggestions();
 }
 

@@ -39,14 +39,14 @@ StackFrameDeduplicator::FrameNode::FrameNode(StackFrame frame,
                                              int parent_frame_index)
     : frame(frame), parent_frame_index(parent_frame_index) {}
 StackFrameDeduplicator::FrameNode::FrameNode(const FrameNode& other) = default;
-StackFrameDeduplicator::FrameNode::~FrameNode() = default;
+StackFrameDeduplicator::FrameNode::~FrameNode() {}
 
 size_t StackFrameDeduplicator::FrameNode::EstimateMemoryUsage() const {
   return base::trace_event::EstimateMemoryUsage(children);
 }
 
-StackFrameDeduplicator::StackFrameDeduplicator() = default;
-StackFrameDeduplicator::~StackFrameDeduplicator() = default;
+StackFrameDeduplicator::StackFrameDeduplicator() {}
+StackFrameDeduplicator::~StackFrameDeduplicator() {}
 
 bool StackFrameDeduplicator::Match(int frame_index,
                                    const StackFrame* begin_frame,

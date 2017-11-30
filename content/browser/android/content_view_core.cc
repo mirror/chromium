@@ -375,8 +375,10 @@ void ContentViewCore::UpdateFrameInfo(const gfx::Vector2dF& scroll_offset,
   Java_ContentViewCoreImpl_updateFrameInfo(
       env, obj, scroll_offset.x(), scroll_offset.y(), page_scale_factor,
       min_page_scale, max_page_scale, content_width, content_height,
-      viewport_size.width(), viewport_size.height(), top_shown_pix, top_changed,
-      is_mobile_optimized_hint);
+      top_shown_pix, top_changed, is_mobile_optimized_hint);
+  web_contents_->GetWebContentsAndroid()->UpdateFrameInfo(
+      scroll_offset, content_width, content_height, viewport_size,
+      page_scale_factor, min_page_scale, max_page_scale, top_shown_pix);
 }
 
 void ContentViewCore::ShowSelectPopupMenu(RenderFrameHost* frame,

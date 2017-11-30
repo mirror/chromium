@@ -25,7 +25,7 @@ namespace {
 
 class MessageLoopForIoPosixTest : public testing::Test {
  public:
-  MessageLoopForIoPosixTest() = default;
+  MessageLoopForIoPosixTest() {}
 
   // testing::Test interface.
   void SetUp() override {

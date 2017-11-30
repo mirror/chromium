@@ -6,8 +6,8 @@
 
 namespace headless {
 
-MockDevToolsAgentHost::MockDevToolsAgentHost() = default;
+MockDevToolsAgentHost::MockDevToolsAgentHost() {}
 
-MockDevToolsAgentHost::~MockDevToolsAgentHost() = default;
+MockDevToolsAgentHost::~MockDevToolsAgentHost() {}
 
 }  // namespace headless
