@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65050a3e_f0a59c30",
+        "filename": "third_party/WebKit/Source/modules/navigatorcontentutils/NavigatorContentUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1233284
+      },
+      "writtenOn": "2017-11-30T03:13:21Z",
+      "side": 1,
+      "message": "Besides, I found that it hasn\u0027t handled correctly when %s is located in the scheme, host, or port in the URL. According to the spec, it should throw a security error exception. Let me fix it in the following CL.",
+      "revId": "1241fcf0bd5f5da21b075b2abcff8e1de44b1f76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
