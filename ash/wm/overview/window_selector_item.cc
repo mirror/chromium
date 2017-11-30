@@ -146,7 +146,7 @@ class ShieldButton : public views::Button {
 
   // views::Button:
   bool OnMousePressed(const ui::MouseEvent& event) override {
-    if (listener() && SplitViewController::ShouldAllowSplitView()) {
+    if (listener() && listener()->CanBeDragged()) {
       gfx::Point location(event.location());
       views::View::ConvertPointToScreen(this, &location);
       listener()->HandlePressEvent(location);
@@ -156,7 +156,7 @@ class ShieldButton : public views::Button {
   }
 
   void OnMouseReleased(const ui::MouseEvent& event) override {
-    if (listener() && SplitViewController::ShouldAllowSplitView()) {
+    if (listener() && listener()->CanBeDragged()) {
       gfx::Point location(event.location());
       views::View::ConvertPointToScreen(this, &location);
       listener()->HandleReleaseEvent(location);
@@ -166,7 +166,7 @@ class ShieldButton : public views::Button {
   }
 
   bool OnMouseDragged(const ui::MouseEvent& event) override {
-    if (listener() && SplitViewController::ShouldAllowSplitView()) {
+    if (listener() && listener()->CanBeDragged()) {
       gfx::Point location(event.location());
       views::View::ConvertPointToScreen(this, &location);
       listener()->HandleDragEvent(location);
@@ -176,7 +176,7 @@ class ShieldButton : public views::Button {
   }
 
   void OnGestureEvent(ui::GestureEvent* event) override {
-    if (listener() && SplitViewController::ShouldAllowSplitView()) {
+    if (listener() && listener()->CanBeDragged()) {
       gfx::Point location(event->location());
       views::View::ConvertPointToScreen(this, &location);
       switch (event->type()) {
@@ -644,7 +644,7 @@ void WindowSelectorItem::ButtonPressed(views::Button* sender,
   CHECK(sender == caption_container_view_->listener_button());
 
   // For other cases, the event is handled in OverviewWindowDragController.
-  if (!SplitViewController::ShouldAllowSplitView())
+  if (!CanBeDragged())
     window_selector_->SelectWindow(this);
 }
 
@@ -692,6 +692,22 @@ void WindowSelectorItem::ActivateDraggedWindow() {
 void WindowSelectorItem::ResetDraggedWindowGesture() {
   DCHECK_EQ(this, window_selector_->window_drag_controller()->item());
   window_selector_->ResetDraggedWindowGesture();
+}
+
+bool WindowSelectorItem::CanBeDragged() {
+  if (!SplitViewController::ShouldAllowSplitView())
+    return false;
+
+  // If there is no snapped window when overview mode is active, do not allow
+  // dragging the window item around if there is only one window item in the
+  // overview grid.
+  SplitViewController::State snapped_state =
+      Shell::Get()->split_view_controller()->state();
+  if (snapped_state == SplitViewController::NO_SNAP &&
+      window_grid_->size() <= 1) {
+    return false;
+  }
+  return true;
 }
 
 gfx::Rect WindowSelectorItem::GetTargetBoundsInScreen() const {

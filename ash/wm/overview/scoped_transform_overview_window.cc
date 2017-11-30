@@ -471,7 +471,7 @@ void ScopedTransformOverviewWindow::EnsureVisible() {
 }
 
 void ScopedTransformOverviewWindow::OnGestureEvent(ui::GestureEvent* event) {
-  if (minimized_widget_ && SplitViewController::ShouldAllowSplitView()) {
+  if (minimized_widget_ && selector_item_->CanBeDragged()) {
     gfx::Point location(event->location());
     ::wm::ConvertPointToScreen(minimized_widget_->GetNativeWindow(), &location);
     switch (event->type()) {
@@ -503,7 +503,7 @@ void ScopedTransformOverviewWindow::OnGestureEvent(ui::GestureEvent* event) {
 }
 
 void ScopedTransformOverviewWindow::OnMouseEvent(ui::MouseEvent* event) {
-  if (minimized_widget_ && SplitViewController::ShouldAllowSplitView()) {
+  if (minimized_widget_ && selector_item_->CanBeDragged()) {
     gfx::Point location(event->location());
     ::wm::ConvertPointToScreen(minimized_widget_->GetNativeWindow(), &location);
     switch (event->type()) {

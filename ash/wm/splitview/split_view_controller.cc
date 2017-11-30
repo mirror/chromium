@@ -458,6 +458,12 @@ void SplitViewController::OnOverviewModeEnded() {
       }
     }
   }
+
+  // Arriving here, we should have two snapped window. If not, it means we did
+  // not find a window to snap from the MRU list. In this case, end the split
+  // view mode.
+  if (state_ != BOTH_SNAPPED)
+    EndSplitView();
 }
 
 void SplitViewController::OnDisplayMetricsChanged(
@@ -779,6 +785,12 @@ void SplitViewController::OnSnappedWindowMinimizedOrDestroyed(
     default_snap_position_ = left_window_ ? LEFT : RIGHT;
     NotifySplitViewStateChanged(previous_state, state_);
     StartOverview();
+
+    // Arriving here the overview mode should have started. If not, which means
+    // there is no window can be put in overview mode, in this case we end split
+    // view mode too.
+    if (!Shell::Get()->window_selector_controller()->IsSelecting())
+      EndSplitView();
   }
 }
 

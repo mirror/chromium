@@ -187,14 +187,11 @@ TEST_F(SplitViewControllerTest, WindowCloseTest) {
   EXPECT_EQ(split_view_controller()->default_snap_position(),
             SplitViewController::LEFT);
 
-  // Closing one of the two snapped windows will not end split view mode.
+  // Closing one of the two snapped windows will end split view mode since there
+  // is no more window to snap to the other side of the screen.
   window1.reset();
-  EXPECT_EQ(split_view_controller()->IsSplitViewModeActive(), true);
-  EXPECT_EQ(split_view_controller()->state(),
-            SplitViewController::RIGHT_SNAPPED);
-  // Since left window was closed, its default snap position changed to RIGHT.
-  EXPECT_EQ(split_view_controller()->default_snap_position(),
-            SplitViewController::RIGHT);
+  EXPECT_EQ(split_view_controller()->IsSplitViewModeActive(), false);
+  EXPECT_EQ(split_view_controller()->state(), SplitViewController::NO_SNAP);
   // It can't open overview window grid since there is no window to be shown
   // in the overview window grid.
   EXPECT_FALSE(Shell::Get()->window_selector_controller()->IsSelecting());

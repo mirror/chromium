@@ -134,6 +134,10 @@ class ASH_EXPORT WindowSelectorItem : public views::ButtonListener,
   void ActivateDraggedWindow();
   void ResetDraggedWindowGesture();
 
+  // Returns true if the window selector item can be dragged around in overview
+  // mode.
+  bool CanBeDragged();
+
  private:
   class CaptionContainerView;
   class RoundedContainerView;

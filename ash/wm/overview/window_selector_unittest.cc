@@ -2891,4 +2891,80 @@ TEST_F(SplitViewWindowSelectorTest, SnappedWindowBoundsTest) {
   EXPECT_EQ(window2->bounds().width(), kMinimumBoundSize);
 }
 
+// Tests that when split view mode and overview mode are both active at the same
+// time: 1) Closing the snapped window will end the split view mode. Overview
+// window grid bounds will be adjusted to occupy the entire screen. 2) Closing
+// all window items in overview grid will end both split view mode and overview
+// mode.
+TEST_F(SplitViewWindowSelectorTest, CloseWindowTest) {
+  const gfx::Rect bounds(0, 0, 400, 400);
+  std::unique_ptr<aura::Window> window1(CreateWindow(bounds));
+  std::unique_ptr<aura::Window> window2(CreateWindow(bounds));
+
+  ToggleOverview();
+  const int grid_index = 0;
+  WindowSelectorItem* selector_item1 =
+      GetWindowItemForWindow(grid_index, window1.get());
+  DragWindowTo(selector_item1, gfx::Point(0, 0));
+  EXPECT_EQ(split_view_controller()->IsSplitViewModeActive(), true);
+  EXPECT_EQ(split_view_controller()->state(),
+            SplitViewController::LEFT_SNAPPED);
+  EXPECT_EQ(split_view_controller()->left_window(), window1.get());
+  EXPECT_TRUE(Shell::Get()->window_selector_controller()->IsSelecting());
+
+  // Test that closing the snapped window will end the split view mode. Overview
+  // window grid bounds will be adjusted to occupy the entire screen.
+  window1.reset();
+  EXPECT_EQ(split_view_controller()->IsSplitViewModeActive(), false);
+  EXPECT_TRUE(Shell::Get()->window_selector_controller()->IsSelecting());
+  EXPECT_EQ(
+      GetGridBounds(),
+      split_view_controller()->GetDisplayWorkAreaBoundsInScreen(window2.get()));
+  ToggleOverview();
+
+  std::unique_ptr<aura::Window> window3(CreateWindow(bounds));
+  ToggleOverview();
+  WindowSelectorItem* selector_item2 =
+      GetWindowItemForWindow(grid_index, window2.get());
+  DragWindowTo(selector_item2, gfx::Point(0, 0));
+  EXPECT_EQ(split_view_controller()->IsSplitViewModeActive(), true);
+  EXPECT_EQ(split_view_controller()->state(),
+            SplitViewController::LEFT_SNAPPED);
+  EXPECT_EQ(split_view_controller()->left_window(), window2.get());
+  EXPECT_TRUE(Shell::Get()->window_selector_controller()->IsSelecting());
+
+  // Test that closing all window items in the overview grid will end both
+  // split view mode and overview mode.
+  window3.reset();
+  EXPECT_EQ(split_view_controller()->IsSplitViewModeActive(), false);
+  EXPECT_FALSE(Shell::Get()->window_selector_controller()->IsSelecting());
+}
+
+// Test that when entering overview mode, if there is no snapped window at the
+// moment, the window item can only be dragged if there is more than one items
+// in the overview window grid.
+TEST_F(SplitViewWindowSelectorTest, WindowItemDraggableTest) {
+  const gfx::Rect bounds(0, 0, 400, 400);
+  std::unique_ptr<aura::Window> window1(CreateWindow(bounds));
+
+  ToggleOverview();
+  const int grid_index = 0;
+  WindowSelectorItem* selector_item1 =
+      GetWindowItemForWindow(grid_index, window1.get());
+  EXPECT_FALSE(selector_item1->CanBeDragged());
+  ToggleOverview();
+
+  std::unique_ptr<aura::Window> window2(CreateWindow(bounds));
+  ToggleOverview();
+  selector_item1 = GetWindowItemForWindow(grid_index, window1.get());
+  EXPECT_TRUE(selector_item1->CanBeDragged());
+
+  DragWindowTo(selector_item1, gfx::Point(0, 0));
+  EXPECT_EQ(split_view_controller()->IsSplitViewModeActive(), true);
+
+  WindowSelectorItem* selector_item2 =
+      GetWindowItemForWindow(grid_index, window2.get());
+  EXPECT_TRUE(selector_item2->CanBeDragged());
+}
+
 }  // namespace ash
