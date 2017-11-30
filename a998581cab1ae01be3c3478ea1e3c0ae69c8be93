@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecb6a6f0_84dc4b89",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-30T23:34:33Z",
+      "side": 1,
+      "message": "nit: disable",
+      "range": {
+        "startLine": 201,
+        "startChar": 21,
+        "endLine": 201,
+        "endChar": 27
+      },
+      "revId": "a998581cab1ae01be3c3478ea1e3c0ae69c8be93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edf19931_7ad2076c",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-30T23:34:33Z",
+      "side": 1,
+      "message": "nit: CustomWindowStateDelegate for consistent naming",
+      "range": {
+        "startLine": 204,
+        "startChar": 6,
+        "endLine": 204,
+        "endChar": 28
+      },
+      "revId": "a998581cab1ae01be3c3478ea1e3c0ae69c8be93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47607766_b9b01bb0",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 995,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-30T23:34:33Z",
+      "side": 1,
+      "message": "Can we remove this and pass frame_enabled_ to the ctor of CustomFrameView below? And have ShellSurface::Frame enable/disable CustomFrameView?",
+      "range": {
+        "startLine": 994,
+        "startChar": 2,
+        "endLine": 995,
+        "endChar": 47
+      },
+      "revId": "a998581cab1ae01be3c3478ea1e3c0ae69c8be93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
