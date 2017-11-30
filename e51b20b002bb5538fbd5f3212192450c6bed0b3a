@@ -188,6 +188,30 @@
       "revId": "e51b20b002bb5538fbd5f3212192450c6bed0b3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2e38ee4_3d5acc79",
+        "filename": "chrome/browser/browsing_data/sync_aware_counter_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-30T09:33:35Z",
+      "side": 1,
+      "message": "I can\u0027t really follow. WaitForCounting() does wait until callback has returned and resets finished_ to false. That is the same behavior as WaitForCountingOrConfirmFinished() had before. Then we do some changes and check CountingFinishedSinceLastAsked() which would return true, if a synchronous callback has been received since WaitForCounting()?\nIf you are saying that CountingFinishedSinceLastAsked() can\u0027t be true because we don\u0027t wait for asynchronous callbacks, I agree but that was already the case before?\nOr am I confused somewhere? In my opinion the code should behave exactly the same?",
+      "parentUuid": "b803e0a8_827e9422",
+      "range": {
+        "startLine": 142,
+        "startChar": 2,
+        "endLine": 142,
+        "endChar": 49
+      },
+      "revId": "e51b20b002bb5538fbd5f3212192450c6bed0b3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
