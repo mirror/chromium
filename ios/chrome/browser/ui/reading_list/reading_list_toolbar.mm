@@ -19,46 +19,224 @@
 #endif
 
 namespace {
-// Height of the toolbar in normal state.
-const int kToolbarNormalHeight = 48;
-// Height of the expanded toolbar (buttons on multiple lines).
-const int kToolbarExpandedHeight = 58;
-
+const CGFloat kToolbarNormalHeight = 48.0f;
+// Height of the toolbar when button labels has word-wrap up to 2 lines.
+const CGFloat kToolbarTwoLinesHeight = 58.0f;
+// Height of the toolbar when button labels has word-wrap up to 3 lines.
+const CGFloat kToolbarThreeLinesHeight = 68.0f;
 // Shadow opacity.
-const CGFloat kShadowOpacity = 0.2f;
+const CGFloat kShadowOpacity = 0.12f;
+// Shadow radius.
+const CGFloat kShadowRadius = 12.0f;
 // Horizontal margin for the stack view content.
-const CGFloat kHorizontalMargin = 8.0f;
-// Horizontal spacing between the elements of the stack view.
+const CGFloat kHorizontalMargin = 16.0f;
+// Vertical margin for the stack view content.
+const CGFloat kVerticalMargin = 8.0f;
+// Horizontal spacing between the buttons of the stack view.  This is used for
+// calculating the maximum width of buttons but NOT used directly to set
+// stackView.spacing.
 const CGFloat kHorizontalSpacing = 8.0f;
 
 typedef NS_ENUM(NSInteger, ButtonPositioning) { Leading, Centered, Trailing };
 
 }  // namespace
 
+// A button class for the buttons in stackview.  Handles the layout alignment of
+// the button and its titleLabel.
+@interface ReadingListToolbarButton : UIView
+
+// The actual UIButton object inside ReadingListToolbarButton.
+@property(nonatomic, strong) UIButton* button;
+
+// Width constraint for the ReadingListToolbarButton.
+@property(nonatomic, strong) NSLayoutConstraint* widthConstraint;
+
+// Initializer.
+- (instancetype)initWithText:(NSString*)labelText
+                 destructive:(BOOL)isDestructive
+                    position:(ButtonPositioning)position;
+
+// Creates a UIButton with a |title| and a style according to |destructive|.
+- (UIButton*)buttonWithText:(NSString*)title
+                destructive:(BOOL)isDestructive
+                   position:(ButtonPositioning)position;
+
+// Associates a target object and action method with the UIButton.
+- (void)addTarget:(id)target
+              action:(SEL)action
+    forControlEvents:(UIControlEvents)controlEvents;
+
+// Sets the title text of the UIButton.
+- (void)setTitle:(NSString*)title;
+
+// Enables or disables the UIButton.
+- (void)setEnabled:(BOOL)enabled;
+
+// Gets the titleLabel of the UIButton.
+- (UILabel*)titleLabel;
+
+// Sets the maximum width contraint of ReadingListToolbarButton.
+- (void)setMaxWidth:(CGFloat)maxWidth;
+
+@end
+
+@implementation ReadingListToolbarButton
+
+@synthesize button = _button;
+@synthesize widthConstraint = _widthConstraint;
+
+- (instancetype)initWithText:(NSString*)labelText
+                 destructive:(BOOL)isDestructive
+                    position:(ButtonPositioning)position {
+  self = [super init];
+  if (!self) {
+    return self;
+  }
+
+  _button = [self buttonWithText:labelText
+                     destructive:isDestructive
+                        position:position];
+  _button.translatesAutoresizingMaskIntoConstraints = NO;
+  [self addSubview:_button];
+
+  NSDictionary* views = @{@"button" : _button};
+  NSArray* constraints = nil;
+
+  switch (position) {
+    case Leading: {
+      constraints = @[ @"V:|[button]|", @"H:|[button]" ];
+      ApplyVisualConstraints(constraints, views);
+      [_button.trailingAnchor
+          constraintLessThanOrEqualToAnchor:self.trailingAnchor]
+          .active = YES;
+      break;
+    }
+    case Centered: {
+      constraints = @[ @"V:|[button]|" ];
+      ApplyVisualConstraints(constraints, views);
+      [_button.centerXAnchor constraintEqualToAnchor:self.centerXAnchor]
+          .active = YES;
+      [_button.trailingAnchor
+          constraintLessThanOrEqualToAnchor:self.trailingAnchor]
+          .active = YES;
+      [_button.leadingAnchor
+          constraintGreaterThanOrEqualToAnchor:self.leadingAnchor]
+          .active = YES;
+      break;
+    }
+    case Trailing: {
+      constraints = @[ @"V:|[button]|", @"H:[button]|" ];
+      ApplyVisualConstraints(constraints, views);
+      [_button.leadingAnchor
+          constraintGreaterThanOrEqualToAnchor:self.leadingAnchor]
+          .active = YES;
+      break;
+    }
+    default: { NOTREACHED(); }
+  }
+  return self;
+}
+
+- (UIButton*)buttonWithText:(NSString*)title
+                destructive:(BOOL)isDestructive
+                   position:(ButtonPositioning)position {
+  UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
+  [button setTitle:title forState:UIControlStateNormal];
+  button.titleLabel.numberOfLines = 3;
+  button.titleLabel.adjustsFontSizeToFitWidth = YES;
+
+  button.backgroundColor = [UIColor whiteColor];
+  UIColor* textColor = isDestructive ? [[MDCPalette cr_redPalette] tint500]
+                                     : [[MDCPalette cr_bluePalette] tint500];
+  [button setTitleColor:textColor forState:UIControlStateNormal];
+  [button setTitleColor:[UIColor lightGrayColor]
+               forState:UIControlStateDisabled];
+  [button setTitleColor:[textColor colorWithAlphaComponent:0.3]
+               forState:UIControlStateHighlighted];
+  [[button titleLabel] setFont:[MDCTypography subheadFont]];
+
+  switch (position) {
+    case Leading: {
+      button.titleLabel.textAlignment = NSTextAlignmentNatural;
+      if (UseRTLLayout()) {
+        button.contentHorizontalAlignment =
+            UIControlContentHorizontalAlignmentRight;
+      } else {
+        button.contentHorizontalAlignment =
+            UIControlContentHorizontalAlignmentLeft;
+      }
+      break;
+    }
+    case Centered: {
+      button.titleLabel.textAlignment = NSTextAlignmentCenter;
+      button.contentHorizontalAlignment =
+          UIControlContentHorizontalAlignmentCenter;
+      break;
+    }
+    case Trailing: {
+      if (UseRTLLayout()) {
+        button.titleLabel.textAlignment = NSTextAlignmentLeft;
+        button.contentHorizontalAlignment =
+            UIControlContentHorizontalAlignmentLeft;
+      } else {
+        button.titleLabel.textAlignment = NSTextAlignmentRight;
+        button.contentHorizontalAlignment =
+            UIControlContentHorizontalAlignmentRight;
+      }
+      break;
+    }
+    default: { NOTREACHED(); }
+  }
+
+  return button;
+}
+
+- (void)addTarget:(id)target
+              action:(SEL)action
+    forControlEvents:(UIControlEvents)controlEvents {
+  [self.button addTarget:target action:action forControlEvents:controlEvents];
+}
+
+- (void)setTitle:(NSString*)title {
+  [self.button setTitle:title forState:UIControlStateNormal];
+}
+
+- (void)setEnabled:(BOOL)enabled {
+  self.button.enabled = enabled;
+}
+
+- (UILabel*)titleLabel {
+  return self.button.titleLabel;
+}
+
+- (void)setMaxWidth:(CGFloat)maxWidth {
+  if (!self.widthConstraint) {
+    self.widthConstraint =
+        [self.button.widthAnchor constraintLessThanOrEqualToConstant:maxWidth];
+    self.widthConstraint.active = YES;
+  }
+  self.widthConstraint.constant = maxWidth;
+}
+
+@end
+
 @interface ReadingListToolbar ()
 
-// Container for the edit button, preventing it to have the same width as the
-// stack view.
-@property(nonatomic, strong) UIView* editButtonContainer;
+// Button that displays "Edit".
+@property(nonatomic, strong) ReadingListToolbarButton* editButton;
 // Button that displays "Delete".
-@property(nonatomic, strong) UIButton* deleteButton;
-@property(nonatomic, strong) UIView* deleteButtonContainer;
+@property(nonatomic, strong) ReadingListToolbarButton* deleteButton;
 // Button that displays "Delete All Read".
-@property(nonatomic, strong) UIButton* deleteAllButton;
-@property(nonatomic, strong) UIView* deleteAllButtonContainer;
+@property(nonatomic, strong) ReadingListToolbarButton* deleteAllButton;
 // Button that displays "Cancel".
-@property(nonatomic, strong) UIButton* cancelButton;
-@property(nonatomic, strong) UIView* cancelButtonContainer;
+@property(nonatomic, strong) ReadingListToolbarButton* cancelButton;
 // Button that displays the mark options.
-@property(nonatomic, strong) UIButton* markButton;
-@property(nonatomic, strong) UIView* markButtonContainer;
+@property(nonatomic, strong) ReadingListToolbarButton* markButton;
 // Stack view for arranging the buttons.
 @property(nonatomic, strong) UIStackView* stackView;
 // Height constraint for the stack view containing the buttons.
 @property(nonatomic, strong) NSLayoutConstraint* heightConstraint;
 
-// Creates a button with a |title| and a style according to |destructive|.
-- (UIButton*)buttonWithText:(NSString*)title destructive:(BOOL)isDestructive;
 // Set the mark button label to |text|.
 - (void)setMarkButtonText:(NSString*)text;
 // Updates the button labels to match an empty selection.
@@ -75,99 +253,48 @@ typedef NS_ENUM(NSInteger, ButtonPositioning) { Leading, Centered, Trailing };
 
 @implementation ReadingListToolbar
 
-@synthesize editButtonContainer = _editButtonContainer;
+@synthesize editButton = _editButton;
 @synthesize deleteButton = _deleteButton;
-@synthesize deleteButtonContainer = _deleteButtonContainer;
 @synthesize deleteAllButton = _deleteAllButton;
-@synthesize deleteAllButtonContainer = _deleteAllButtonContainer;
 @synthesize cancelButton = _cancelButton;
-@synthesize cancelButtonContainer = _cancelButtonContainer;
-@synthesize stackView = _stackView;
 @synthesize markButton = _markButton;
-@synthesize markButtonContainer = _markButtonContainer;
+@synthesize stackView = _stackView;
 @synthesize state = _state;
 @synthesize heightConstraint = _heightConstraint;
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    NSDictionary* views = nil;
-    NSArray* constraints = nil;
+    _deleteButton = [[ReadingListToolbarButton alloc]
+        initWithText:l10n_util::GetNSString(IDS_IOS_READING_LIST_DELETE_BUTTON)
+         destructive:YES
+            position:Leading];
 
-    _deleteButton = [self buttonWithText:l10n_util::GetNSString(
-                                             IDS_IOS_READING_LIST_DELETE_BUTTON)
-                             destructive:YES];
-    _deleteButton.translatesAutoresizingMaskIntoConstraints = NO;
-    _deleteButtonContainer = [[UIView alloc] init];
-    [_deleteButtonContainer addSubview:_deleteButton];
-    views = @{ @"button" : _deleteButton };
-    constraints = @[ @"V:|[button]|", @"H:|[button]" ];
-    ApplyVisualConstraints(constraints, views);
-    [_deleteButton.trailingAnchor
-        constraintLessThanOrEqualToAnchor:_deleteButtonContainer.trailingAnchor]
-        .active = YES;
+    _deleteAllButton = [[ReadingListToolbarButton alloc]
+        initWithText:l10n_util::GetNSString(
+                         IDS_IOS_READING_LIST_DELETE_ALL_READ_BUTTON)
+         destructive:YES
+            position:Leading];
 
-    _deleteAllButton =
-        [self buttonWithText:l10n_util::GetNSString(
-                                 IDS_IOS_READING_LIST_DELETE_ALL_READ_BUTTON)
-                 destructive:YES];
-    _deleteAllButton.translatesAutoresizingMaskIntoConstraints = NO;
-    _deleteAllButtonContainer = [[UIView alloc] init];
-    [_deleteAllButtonContainer addSubview:_deleteAllButton];
-    views = @{ @"button" : _deleteAllButton };
-    constraints = @[ @"V:|[button]|", @"H:|[button]" ];
-    ApplyVisualConstraints(constraints, views);
-    [_deleteAllButton.trailingAnchor
-        constraintLessThanOrEqualToAnchor:_deleteAllButtonContainer
-                                              .trailingAnchor]
-        .active = YES;
+    _markButton = [[ReadingListToolbarButton alloc]
+        initWithText:l10n_util::GetNSString(
+                         IDS_IOS_READING_LIST_MARK_ALL_BUTTON)
+         destructive:NO
+            position:Centered];
 
-    _markButton = [self buttonWithText:l10n_util::GetNSString(
-                                           IDS_IOS_READING_LIST_MARK_ALL_BUTTON)
-                           destructive:NO];
-    _markButton.translatesAutoresizingMaskIntoConstraints = NO;
-    _markButtonContainer = [[UIView alloc] init];
-    [_markButtonContainer addSubview:_markButton];
-    views = @{ @"button" : _markButton };
-    constraints = @[ @"V:|[button]|" ];
-    ApplyVisualConstraints(constraints, views);
-    [_markButton.centerXAnchor
-        constraintEqualToAnchor:_markButtonContainer.centerXAnchor]
-        .active = YES;
-    [_markButton.trailingAnchor
-        constraintLessThanOrEqualToAnchor:_markButtonContainer.trailingAnchor]
-        .active = YES;
-    [_markButton.leadingAnchor
-        constraintGreaterThanOrEqualToAnchor:_markButtonContainer.leadingAnchor]
-        .active = YES;
+    _cancelButton = [[ReadingListToolbarButton alloc]
+        initWithText:l10n_util::GetNSString(IDS_IOS_READING_LIST_CANCEL_BUTTON)
+         destructive:NO
+            position:Trailing];
 
-    _cancelButton = [self buttonWithText:l10n_util::GetNSString(
-                                             IDS_IOS_READING_LIST_CANCEL_BUTTON)
-                             destructive:NO];
-    _cancelButton.translatesAutoresizingMaskIntoConstraints = NO;
-    _cancelButtonContainer = [[UIView alloc] init];
-    [_cancelButtonContainer addSubview:_cancelButton];
-    views = @{ @"button" : _cancelButton };
-    constraints = @[ @"V:|[button]|", @"H:[button]|" ];
-    ApplyVisualConstraints(constraints, views);
-    [_cancelButton.leadingAnchor
-        constraintGreaterThanOrEqualToAnchor:_cancelButtonContainer
-                                                 .leadingAnchor]
-        .active = YES;
+    _editButton = [[ReadingListToolbarButton alloc]
+        initWithText:l10n_util::GetNSString(IDS_IOS_READING_LIST_EDIT_BUTTON)
+         destructive:NO
+            position:Trailing];
 
-    UIButton* editButton = [self
-        buttonWithText:l10n_util::GetNSString(IDS_IOS_READING_LIST_EDIT_BUTTON)
-           destructive:NO];
-    editButton.translatesAutoresizingMaskIntoConstraints = NO;
-    _editButtonContainer = [[UIView alloc] initWithFrame:CGRectZero];
-    [_editButtonContainer addSubview:editButton];
-    views = @{ @"button" : editButton };
-    constraints = @[ @"V:|[button]|", @"H:[button]|" ];
-    ApplyVisualConstraints(constraints, views);
-
-    [editButton addTarget:nil
-                   action:@selector(enterEditingModePressed)
-         forControlEvents:UIControlEventTouchUpInside];
+    [_editButton addTarget:nil
+                    action:@selector(enterEditingModePressed)
+          forControlEvents:UIControlEventTouchUpInside];
 
     [_deleteButton addTarget:nil
                       action:@selector(deletePressed)
@@ -186,13 +313,11 @@ typedef NS_ENUM(NSInteger, ButtonPositioning) { Leading, Centered, Trailing };
             forControlEvents:UIControlEventTouchUpInside];
 
     _stackView = [[UIStackView alloc] initWithArrangedSubviews:@[
-      _editButtonContainer, _deleteButtonContainer, _deleteAllButtonContainer,
-      _markButtonContainer, _cancelButtonContainer
+      _editButton, _deleteButton, _deleteAllButton, _markButton, _cancelButton
     ]];
     _stackView.axis = UILayoutConstraintAxisHorizontal;
     _stackView.alignment = UIStackViewAlignmentFill;
     _stackView.distribution = UIStackViewDistributionFillEqually;
-    _stackView.spacing = kHorizontalSpacing;
 
     [self addSubview:_stackView];
     _stackView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -202,12 +327,13 @@ typedef NS_ENUM(NSInteger, ButtonPositioning) { Leading, Centered, Trailing };
         constraintEqualToConstant:kToolbarNormalHeight];
     _heightConstraint.active = YES;
 
-    _stackView.layoutMargins =
-        UIEdgeInsetsMake(0, kHorizontalMargin, 0, kHorizontalMargin);
+    _stackView.layoutMargins = UIEdgeInsetsMake(
+        kVerticalMargin, kHorizontalMargin, kVerticalMargin, kHorizontalMargin);
     _stackView.layoutMarginsRelativeArrangement = YES;
 
     self.backgroundColor = [UIColor whiteColor];
     [[self layer] setShadowOpacity:kShadowOpacity];
+    [[self layer] setShadowRadius:kShadowRadius];
     [self setEditing:NO];
   }
   return self;
@@ -216,11 +342,11 @@ typedef NS_ENUM(NSInteger, ButtonPositioning) { Leading, Centered, Trailing };
 #pragma mark Public Methods
 
 - (void)setEditing:(BOOL)editing {
-  self.editButtonContainer.hidden = editing;
-  self.deleteButtonContainer.hidden = YES;
-  self.deleteAllButtonContainer.hidden = !editing;
-  self.cancelButtonContainer.hidden = !editing;
-  self.markButtonContainer.hidden = !editing;
+  self.editButton.hidden = editing;
+  self.deleteButton.hidden = YES;
+  self.deleteAllButton.hidden = !editing;
+  self.cancelButton.hidden = !editing;
+  self.markButton.hidden = !editing;
 
   [self updateHeight];
 }
@@ -246,7 +372,7 @@ typedef NS_ENUM(NSInteger, ButtonPositioning) { Leading, Centered, Trailing };
 }
 
 - (void)setHasReadItem:(BOOL)hasRead {
-  self.deleteAllButton.enabled = hasRead;
+  [self.deleteAllButton setEnabled:hasRead];
 }
 
 - (ActionSheetCoordinator*)actionSheetForMarkWithBaseViewController:
@@ -262,78 +388,84 @@ typedef NS_ENUM(NSInteger, ButtonPositioning) { Leading, Centered, Trailing };
 #pragma mark Private Methods
 
 - (void)updateButtonsForEmptySelection {
-  self.deleteAllButtonContainer.hidden = NO;
-  self.deleteButtonContainer.hidden = YES;
+  self.deleteAllButton.hidden = NO;
+  self.deleteButton.hidden = YES;
   [self setMarkButtonText:l10n_util::GetNSStringWithFixup(
                               IDS_IOS_READING_LIST_MARK_ALL_BUTTON)];
 }
 
 - (void)updateButtonsForOnlyReadSelection {
-  self.deleteAllButtonContainer.hidden = YES;
-  self.deleteButtonContainer.hidden = NO;
+  self.deleteAllButton.hidden = YES;
+  self.deleteButton.hidden = NO;
   [self setMarkButtonText:l10n_util::GetNSStringWithFixup(
                               IDS_IOS_READING_LIST_MARK_UNREAD_BUTTON)];
 }
 
 - (void)updateButtonsForOnlyUnreadSelection {
-  self.deleteAllButtonContainer.hidden = YES;
-  self.deleteButtonContainer.hidden = NO;
+  self.deleteAllButton.hidden = YES;
+  self.deleteButton.hidden = NO;
   [self setMarkButtonText:l10n_util::GetNSStringWithFixup(
                               IDS_IOS_READING_LIST_MARK_READ_BUTTON)];
 }
 
 - (void)updateButtonsForOnlyMixedSelection {
-  self.deleteAllButtonContainer.hidden = YES;
-  self.deleteButtonContainer.hidden = NO;
+  self.deleteAllButton.hidden = YES;
+  self.deleteButton.hidden = NO;
   [self setMarkButtonText:l10n_util::GetNSStringWithFixup(
                               IDS_IOS_READING_LIST_MARK_BUTTON)];
 }
 
-- (UIButton*)buttonWithText:(NSString*)title destructive:(BOOL)isDestructive {
-  UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
-  button.contentEdgeInsets = UIEdgeInsetsMake(0, 8, 0, 8);
-  [button setTitle:title forState:UIControlStateNormal];
-  button.titleLabel.numberOfLines = 3;
-  button.titleLabel.adjustsFontSizeToFitWidth = YES;
-
-  button.backgroundColor = [UIColor whiteColor];
-  UIColor* textColor = isDestructive ? [[MDCPalette cr_redPalette] tint500]
-                                     : [[MDCPalette cr_bluePalette] tint500];
-  [button setTitleColor:textColor forState:UIControlStateNormal];
-  [button setTitleColor:[UIColor lightGrayColor]
-               forState:UIControlStateDisabled];
-  [button setTitleColor:[textColor colorWithAlphaComponent:0.3]
-               forState:UIControlStateHighlighted];
-  [[button titleLabel]
-      setFont:[[MDCTypography fontLoader] regularFontOfSize:14]];
-
-  button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-  button.titleLabel.textAlignment = NSTextAlignmentCenter;
-
-  return button;
-}
 
 - (void)setMarkButtonText:(NSString*)text {
-  [self.markButton setTitle:text forState:UIControlStateNormal];
+  [self.markButton setTitle:text];
 }
 
 - (void)updateHeight {
-  for (UIButton* button in
-       @[ _deleteButton, _deleteAllButton, _markButton, _cancelButton ]) {
-    if (!button.superview.hidden) {
-      CGFloat rect = [button.titleLabel.text
-                         cr_pixelAlignedSizeWithFont:button.titleLabel.font]
-                         .width;
-      if (rect > (self.frame.size.width - 2 * kHorizontalMargin -
-                  2 * kHorizontalSpacing) /
-                         3 -
-                     16) {
-        self.heightConstraint.constant = kToolbarExpandedHeight;
-        return;
+  NSArray* buttons = @[
+    _editButton, _deleteButton, _deleteAllButton, _markButton, _cancelButton
+  ];
+
+  CGFloat availableWidth = self.frame.size.width - kHorizontalMargin * 2;
+  NSUInteger visibleCount = 0;
+
+  // Count the number of visible buttons and deduct the button spacings from
+  // availableWidth.
+  for (ReadingListToolbarButton* button in buttons) {
+    if (!button.hidden) {
+      visibleCount++;
+      if (visibleCount > 1) {
+        availableWidth -= kHorizontalSpacing;
       }
     }
   }
-  self.heightConstraint.constant = kToolbarNormalHeight;
+
+  // Set the button width manually here instead of relying on UIStackView's auto
+  // width distribution which is unpredictable when rounding happens.
+  CGFloat maxButtonWidth = ceil(availableWidth / visibleCount);
+  for (ReadingListToolbarButton* button in buttons) {
+    if (!button.hidden) {
+      [button setMaxWidth:maxButtonWidth];
+    }
+  }
+
+  CGFloat toolbarHeight = kToolbarNormalHeight;
+  CGFloat lineHeight = ceil([MDCTypography subheadFont].lineHeight);
+  CGSize labelBounds = CGSizeMake(maxButtonWidth, CGFLOAT_MAX);
+  // Expand toolbar height in case word wrapping happens.
+  for (ReadingListToolbarButton* button in buttons) {
+    if (!button.hidden) {
+      CGFloat labelHeight =
+          [[button titleLabel] sizeThatFits:labelBounds].height;
+      if (labelHeight > lineHeight * 2) {
+        toolbarHeight = kToolbarThreeLinesHeight;
+        break;
+      }
+      if (labelHeight > lineHeight) {
+        toolbarHeight = kToolbarTwoLinesHeight;
+      }
+    }
+  }
+  self.heightConstraint.constant = toolbarHeight;
 }
 
 @end
