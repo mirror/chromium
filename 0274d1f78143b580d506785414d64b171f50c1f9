@@ -2,6 +2,259 @@
   "comments": [
     {
       "key": {
+        "uuid": "1fa8ad59_5cbe37fe",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_collection_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-30T09:20:58Z",
+      "side": 1,
+      "message": "If you only want it when the screen is rotated, I think the correct place to put this code is in viewWillTransitionToSize:withTransitionCoordinator:",
+      "range": {
+        "startLine": 210,
+        "startChar": 0,
+        "endLine": 210,
+        "endChar": 55
+      },
+      "revId": "0274d1f78143b580d506785414d64b171f50c1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94a667ac_45e6f43f",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-30T09:20:58Z",
+      "side": 1,
+      "message": "Please move this class to a separate source file.",
+      "range": {
+        "startLine": 46,
+        "startChar": 11,
+        "endLine": 46,
+        "endChar": 33
+      },
+      "revId": "0274d1f78143b580d506785414d64b171f50c1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7fdf416_af54151c",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-30T09:20:58Z",
+      "side": 1,
+      "message": "You don\u0027t use \"get\" in objective-C most of the time.",
+      "range": {
+        "startLine": 76,
+        "startChar": 12,
+        "endLine": 76,
+        "endChar": 25
+      },
+      "revId": "0274d1f78143b580d506785414d64b171f50c1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4183f9a_eb8a97c3",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-30T09:20:58Z",
+      "side": 1,
+      "message": "I think we should find a better name for this class. When I read it I thought about the general toolbar, not the one in Reading List specifically.\nWhat about ReadingListToolbarButton?",
+      "range": {
+        "startLine": 83,
+        "startChar": 16,
+        "endLine": 83,
+        "endChar": 38
+      },
+      "revId": "0274d1f78143b580d506785414d64b171f50c1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "059f2991_01483da4",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-30T09:20:58Z",
+      "side": 1,
+      "message": "UIControlContentHorizontalAlignmentLeading?",
+      "range": {
+        "startLine": 159,
+        "startChar": 9,
+        "endLine": 159,
+        "endChar": 16
+      },
+      "revId": "0274d1f78143b580d506785414d64b171f50c1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beac00a2_b20326fc",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-30T09:20:58Z",
+      "side": 1,
+      "message": "This is probably NSTextAlignmentNatural?",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 161,
+        "endChar": 63
+      },
+      "revId": "0274d1f78143b580d506785414d64b171f50c1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e032fc70_0a8a6698",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-30T09:20:58Z",
+      "side": 1,
+      "message": "UIControlContentHorizontalAlignmentTrailing?",
+      "range": {
+        "startLine": 177,
+        "startChar": 9,
+        "endLine": 177,
+        "endChar": 17
+      },
+      "revId": "0274d1f78143b580d506785414d64b171f50c1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47f88420_183f49c0",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-30T09:20:58Z",
+      "side": 1,
+      "message": "You should be able to remove this line.\nSo if you add a new position it will break a compilation time.",
+      "range": {
+        "startLine": 189,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 30
+      },
+      "revId": "0274d1f78143b580d506785414d64b171f50c1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6372ede6_a3ad92e1",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-30T09:20:58Z",
+      "side": 1,
+      "message": "If you are using property, use self.button outside of |init|.",
+      "range": {
+        "startLine": 198,
+        "startChar": 3,
+        "endLine": 198,
+        "endChar": 10
+      },
+      "revId": "0274d1f78143b580d506785414d64b171f50c1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de946d4c_8390ec35",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-30T09:20:58Z",
+      "side": 1,
+      "message": "Can you make it the other way around? It makes more sense in my opinion.\nif(!self.widthConstraint) {\n  _widthConstraint \u003d\n      [_button.widthAnchor constraintLessThanOrEqualToConstant:maxWidth];\n  _widthConstraint.active \u003d YES;\n}\n_widthConstraint.constant \u003d maxWidth;",
+      "range": {
+        "startLine": 213,
+        "startChar": 8,
+        "endLine": 213,
+        "endChar": 19
+      },
+      "revId": "0274d1f78143b580d506785414d64b171f50c1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b8d9e6d_f0ebdbe5",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-30T09:20:58Z",
+      "side": 1,
+      "message": "Same, use self.widthConstraint outside of init.",
+      "range": {
+        "startLine": 214,
+        "startChar": 6,
+        "endLine": 214,
+        "endChar": 22
+      },
+      "revId": "0274d1f78143b580d506785414d64b171f50c1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "566959de_95910c06",
         "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm",
         "patchSetId": 2
@@ -22,6 +275,52 @@
       "revId": "0274d1f78143b580d506785414d64b171f50c1f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1fc85175_e43e66a9",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-30T09:20:58Z",
+      "side": 1,
+      "message": "You should find a way to share the font used by the button. So if we change the font of the button, this one would change too.",
+      "range": {
+        "startLine": 454,
+        "startChar": 28,
+        "endLine": 454,
+        "endChar": 55
+      },
+      "revId": "0274d1f78143b580d506785414d64b171f50c1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbd8bd3f_536ec68c",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-30T09:20:58Z",
+      "side": 1,
+      "message": "What about changing it to:\ntoolbarHeight \u003d kToolbarThreeLinesHeight;\nbreak;\n?",
+      "range": {
+        "startLine": 462,
+        "startChar": 8,
+        "endLine": 463,
+        "endChar": 15
+      },
+      "revId": "0274d1f78143b580d506785414d64b171f50c1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
