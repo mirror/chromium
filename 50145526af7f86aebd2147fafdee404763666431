@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "783d109a_ffbfaafa",
+        "filename": "chrome/browser/cryptauth/chrome_cryptauth_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-11-30T00:02:54Z",
+      "side": 1,
+      "message": "Actually, this isn\u0027t good enough. If the policy switches from off to on or vice versa, we should update the enrollment/sync status accordingly. You\u0027ll have to add a listener for these preferences.",
+      "range": {
+        "startLine": 335,
+        "startChar": 29,
+        "endLine": 335,
+        "endChar": 56
+      },
+      "revId": "50145526af7f86aebd2147fafdee404763666431",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
