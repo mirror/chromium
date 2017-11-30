@@ -408,6 +408,10 @@ void StaleHostResolver::SetDnsClientEnabled(bool enabled) {
   inner_resolver_->SetDnsClientEnabled(enabled);
 }
 
+void StaleHostResolver::SetDnsRefresherEnabled(bool enabled) {
+  inner_resolver_->SetDnsRefresherEnabled(enabled);
+}
+
 net::HostCache* StaleHostResolver::GetHostCache() {
   return inner_resolver_->GetHostCache();
 }

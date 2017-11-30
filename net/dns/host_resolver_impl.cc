@@ -603,9 +603,11 @@ class HostResolverImpl::RequestImpl : public HostResolver::Request {
         job_(job),
         callback_(callback),
         addresses_(addresses),
-        request_time_(base::TimeTicks::Now()) {}
+        request_time_(clock()->NowTicks()) {}
 
   ~RequestImpl() override;
+
+  base::TickClock* clock();
 
   void ChangeRequestPriority(RequestPriority priority) override;
 
@@ -686,7 +688,8 @@ class HostResolverImpl::ProcTask
            const ProcTaskParams& params,
            const Callback& callback,
            scoped_refptr<base::TaskRunner> proc_task_runner,
-           const NetLogWithSource& job_net_log)
+           const NetLogWithSource& job_net_log,
+           base::TickClock* clock)
       : key_(key),
         params_(params),
         callback_(callback),
@@ -695,7 +698,8 @@ class HostResolverImpl::ProcTask
         attempt_number_(0),
         completed_attempt_number_(0),
         completed_attempt_error_(ERR_UNEXPECTED),
-        net_log_(job_net_log) {
+        net_log_(job_net_log),
+        clock_(clock) {
     if (!params_.resolver_proc.get())
       params_.resolver_proc = HostResolverProc::GetDefault();
     // If default is unset, use the system proc.
@@ -738,7 +742,7 @@ class HostResolverImpl::ProcTask
 
   void StartLookupAttempt() {
     DCHECK(network_task_runner_->BelongsToCurrentThread());
-    base::TimeTicks start_time = base::TimeTicks::Now();
+    base::TimeTicks start_time = clock()->NowTicks();
     ++attempt_number_;
     // Dispatch the lookup attempt to a worker thread.
     proc_task_runner_->PostTask(
@@ -843,7 +847,7 @@ class HostResolverImpl::ProcTask
     if (was_retry_attempt) {
       // If retry attempt finishes before 1st attempt, then get stats on how
       // much time is saved by having spawned an extra attempt.
-      retry_attempt_finished_time_ = base::TimeTicks::Now();
+      retry_attempt_finished_time_ = clock()->NowTicks();
     }
 
     if (error != OK) {
@@ -862,7 +866,7 @@ class HostResolverImpl::ProcTask
                             const int error,
                             const int os_error) const {
     DCHECK(network_task_runner_->BelongsToCurrentThread());
-    base::TimeDelta duration = base::TimeTicks::Now() - start_time;
+    base::TimeDelta duration = clock()->NowTicks() - start_time;
     if (error == OK)
       UMA_HISTOGRAM_LONG_TIMES_100("Net.DNS.ProcTask.SuccessTime", duration);
     else
@@ -904,7 +908,7 @@ class HostResolverImpl::ProcTask
     if (!first_attempt_to_complete && is_first_attempt && !was_canceled()) {
       UMA_HISTOGRAM_LONG_TIMES_100(
           "DNS.AttemptTimeSavedByRetry",
-          base::TimeTicks::Now() - retry_attempt_finished_time_);
+          clock()->NowTicks() - retry_attempt_finished_time_);
     }
 
     if (was_canceled() || !first_attempt_to_complete) {
@@ -918,12 +922,14 @@ class HostResolverImpl::ProcTask
         UMA_HISTOGRAM_ENUMERATION("DNS.AttemptCancelled", attempt_number, 100);
     }
 
-    base::TimeDelta duration = base::TimeTicks::Now() - start_time;
+    base::TimeDelta duration = clock()->NowTicks() - start_time;
     if (error == OK)
       UMA_HISTOGRAM_LONG_TIMES_100("DNS.AttemptSuccessDuration", duration);
     else
       UMA_HISTOGRAM_LONG_TIMES_100("DNS.AttemptFailDuration", duration);
   }
+
+  base::TickClock* clock() const { return clock_; }
 
   // Set on the task runner thread, read on the worker thread.
   Key key_;
@@ -961,6 +967,8 @@ class HostResolverImpl::ProcTask
 
   NetLogWithSource net_log_;
 
+  base::TickClock* clock_;
+
   DISALLOW_COPY_AND_ASSIGN(ProcTask);
 };
 
@@ -990,13 +998,15 @@ class HostResolverImpl::DnsTask : public base::SupportsWeakPtr<DnsTask> {
   DnsTask(DnsClient* client,
           const Key& key,
           Delegate* delegate,
-          const NetLogWithSource& job_net_log)
+          const NetLogWithSource& job_net_log,
+          base::TickClock* clock)
       : client_(client),
         key_(key),
         delegate_(delegate),
         net_log_(job_net_log),
         num_completed_transactions_(0),
-        task_start_time_(base::TimeTicks::Now()) {
+        clock_(clock),
+        task_start_time_(clock->NowTicks()) {
     DCHECK(client);
     DCHECK(delegate_);
   }
@@ -1043,10 +1053,10 @@ class HostResolverImpl::DnsTask : public base::SupportsWeakPtr<DnsTask> {
     DCHECK_NE(ADDRESS_FAMILY_UNSPECIFIED, family);
     return client_->GetTransactionFactory()->CreateTransaction(
         key_.hostname,
-        family == ADDRESS_FAMILY_IPV6 ? dns_protocol::kTypeAAAA :
-                                        dns_protocol::kTypeA,
+        family == ADDRESS_FAMILY_IPV6 ? dns_protocol::kTypeAAAA
+                                      : dns_protocol::kTypeA,
         base::Bind(&DnsTask::OnTransactionComplete, base::Unretained(this),
-                   base::TimeTicks::Now()),
+                   clock()->NowTicks()),
         net_log_);
   }
 
@@ -1055,7 +1065,7 @@ class HostResolverImpl::DnsTask : public base::SupportsWeakPtr<DnsTask> {
                              int net_error,
                              const DnsResponse* response) {
     DCHECK(transaction);
-    base::TimeDelta duration = base::TimeTicks::Now() - start_time;
+    base::TimeDelta duration = clock()->NowTicks() - start_time;
     if (net_error != OK) {
       UMA_HISTOGRAM_LONG_TIMES_100("AsyncDNS.TransactionFailure", duration);
       OnFailure(net_error, DnsResponse::DNS_PARSE_OK);
@@ -1122,10 +1132,8 @@ class HostResolverImpl::DnsTask : public base::SupportsWeakPtr<DnsTask> {
         addr_list_[0].GetFamily() == ADDRESS_FAMILY_IPV6) {
       // Sort addresses if needed.  Sort could complete synchronously.
       client_->GetAddressSorter()->Sort(
-          addr_list_,
-          base::Bind(&DnsTask::OnSortComplete,
-                     AsWeakPtr(),
-                     base::TimeTicks::Now()));
+          addr_list_, base::Bind(&DnsTask::OnSortComplete, AsWeakPtr(),
+                                 clock()->NowTicks()));
     } else {
       OnSuccess(addr_list_);
     }
@@ -1136,13 +1144,13 @@ class HostResolverImpl::DnsTask : public base::SupportsWeakPtr<DnsTask> {
                       const AddressList& addr_list) {
     if (!success) {
       UMA_HISTOGRAM_LONG_TIMES_100("AsyncDNS.SortFailure",
-                                   base::TimeTicks::Now() - start_time);
+                                   clock()->NowTicks() - start_time);
       OnFailure(ERR_DNS_SORT_ERROR, DnsResponse::DNS_PARSE_OK);
       return;
     }
 
     UMA_HISTOGRAM_LONG_TIMES_100("AsyncDNS.SortSuccess",
-                                 base::TimeTicks::Now() - start_time);
+                                 clock()->NowTicks() - start_time);
 
     // AddressSorter prunes unusable destinations.
     if (addr_list.empty()) {
@@ -1169,6 +1177,8 @@ class HostResolverImpl::DnsTask : public base::SupportsWeakPtr<DnsTask> {
     delegate_->OnDnsTaskComplete(task_start_time_, OK, addr_list, ttl_);
   }
 
+  base::TickClock* clock() { return clock_; }
+
   DnsClient* client_;
   Key key_;
 
@@ -1185,6 +1195,8 @@ class HostResolverImpl::DnsTask : public base::SupportsWeakPtr<DnsTask> {
   base::TimeDelta ttl_;
   // IPv6 addresses must appear first in the list.
   AddressList addr_list_;
+
+  base::TickClock* clock_;
 
   base::TimeTicks task_start_time_;
 
@@ -1212,7 +1224,7 @@ class HostResolverImpl::Job : public PrioritizedDispatcher::Job,
         had_dns_config_(false),
         num_occupied_job_slots_(0),
         dns_task_error_(OK),
-        creation_time_(base::TimeTicks::Now()),
+        creation_time_(clock()->NowTicks()),
         priority_change_time_(creation_time_),
         net_log_(
             NetLogWithSource::Make(source_net_log.net_log(),
@@ -1253,6 +1265,8 @@ class HostResolverImpl::Job : public PrioritizedDispatcher::Job,
       requests_.clear();
     }
   }
+
+  base::TickClock* clock() { return resolver_->clock(); }
 
   // Add this job to the dispatcher.  If "at_head" is true, adds at the front
   // of the queue.
@@ -1447,7 +1461,7 @@ class HostResolverImpl::Job : public PrioritizedDispatcher::Job,
   void UpdatePriority() {
     if (is_queued()) {
       if (priority() != static_cast<RequestPriority>(handle_.priority()))
-        priority_change_time_ = base::TimeTicks::Now();
+        priority_change_time_ = clock()->NowTicks();
       handle_ = resolver_->dispatcher_->ChangePriority(handle_, priority());
     }
   }
@@ -1470,7 +1484,7 @@ class HostResolverImpl::Job : public PrioritizedDispatcher::Job,
 
     had_dns_config_ = resolver_->HaveDnsConfig();
 
-    start_time_ = base::TimeTicks::Now();
+    start_time_ = clock()->NowTicks();
     base::TimeDelta queue_time = start_time_ - creation_time_;
     base::TimeDelta queue_time_after_change =
         start_time_ - priority_change_time_;
@@ -1500,8 +1514,8 @@ class HostResolverImpl::Job : public PrioritizedDispatcher::Job,
     proc_task_ =
         new ProcTask(key_, resolver_->proc_params_,
                      base::Bind(&Job::OnProcTaskComplete,
-                                base::Unretained(this), base::TimeTicks::Now()),
-                     proc_task_runner_, net_log_);
+                                base::Unretained(this), clock()->NowTicks()),
+                     proc_task_runner_, net_log_, clock());
 
     // Start() could be called from within Resolve(), hence it must NOT directly
     // call OnProcTaskComplete, for example, on synchronous failure.
@@ -1515,7 +1529,7 @@ class HostResolverImpl::Job : public PrioritizedDispatcher::Job,
     DCHECK(is_proc_running());
 
     if (dns_task_error_ != OK) {
-      base::TimeDelta duration = base::TimeTicks::Now() - start_time;
+      base::TimeDelta duration = clock()->NowTicks() - start_time;
       if (net_error == OK) {
         UMA_HISTOGRAM_LONG_TIMES_100("AsyncDNS.FallbackSuccess", duration);
         if ((dns_task_error_ == ERR_NAME_NOT_RESOLVED) &&
@@ -1552,7 +1566,7 @@ class HostResolverImpl::Job : public PrioritizedDispatcher::Job,
   void StartDnsTask() {
     DCHECK(resolver_->HaveDnsConfig());
     dns_task_.reset(new DnsTask(resolver_->dns_client_.get(), key_, this,
-                                net_log_));
+                                net_log_, clock()));
 
     dns_task_->StartFirstTransaction();
     // Schedule a second transaction, if needed.
@@ -1601,7 +1615,7 @@ class HostResolverImpl::Job : public PrioritizedDispatcher::Job,
                          base::TimeDelta ttl) override {
     DCHECK(is_dns_running());
 
-    base::TimeDelta duration = base::TimeTicks::Now() - start_time;
+    base::TimeDelta duration = clock()->NowTicks() - start_time;
     if (net_error != OK) {
       OnDnsTaskFailure(dns_task_->AsWeakPtr(), duration, net_error);
       return;
@@ -1653,7 +1667,7 @@ class HostResolverImpl::Job : public PrioritizedDispatcher::Job,
     };
     Category category = RESOLVE_MAX;  // Illegal value for later DCHECK only.
 
-    base::TimeDelta duration = base::TimeTicks::Now() - start_time_;
+    base::TimeDelta duration = clock()->NowTicks() - start_time_;
     if (error == OK) {
       if (had_non_speculative_request_) {
         category = RESOLVE_SUCCESS;
@@ -1777,7 +1791,7 @@ class HostResolverImpl::Job : public PrioritizedDispatcher::Job,
       if (did_complete) {
         // Record effective total time from creation to completion.
         RecordTotalTime(req->info().is_speculative(), false,
-                        base::TimeTicks::Now() - req->request_time());
+                        clock()->NowTicks() - req->request_time());
       }
       req->OnJobCompleted(this, entry.error(), entry.addresses());
 
@@ -1847,6 +1861,10 @@ class HostResolverImpl::Job : public PrioritizedDispatcher::Job,
   // A handle used in |HostResolverImpl::dispatcher_|.
   PrioritizedDispatcher::Handle handle_;
 };
+
+base::TickClock* HostResolverImpl::RequestImpl::clock() {
+  return job_->clock();
+}
 
 //-----------------------------------------------------------------------------
 
@@ -1956,7 +1974,9 @@ HostResolverImpl::HostResolverImpl(const Options& options, NetLog* net_log)
       last_ipv6_probe_result_(true),
       additional_resolver_flags_(0),
       fallback_to_proctask_(true),
+      async_dns_refresher_enabled_(false),
       persist_initialized_(false),
+      clock_(&default_tick_clock_),
       weak_ptr_factory_(this),
       probe_weak_ptr_factory_(this) {
   if (options.enable_caching)
@@ -2100,6 +2120,10 @@ void HostResolverImpl::SetDnsClientEnabled(bool enabled) {
 #endif
 }
 
+void HostResolverImpl::SetDnsRefresherEnabled(bool enabled) {
+  async_dns_refresher_enabled_ = enabled;
+}
+
 HostCache* HostResolverImpl::GetHostCache() {
   return cache_.get();
 }
@@ -2182,6 +2206,32 @@ bool HostResolverImpl::ResolveAsIP(const Key& key,
   return true;
 }
 
+class DnsRefresher : public base::RefCountedThreadSafe<DnsRefresher> {
+  friend class base::RefCountedThreadSafe<DnsRefresher>;
+
+ public:
+  DnsRefresher(const HostResolver::RequestInfo& info) : info_(info) {
+    info_.set_allow_cached_response(false);
+  }
+
+  static void Refresh(const HostResolver::RequestInfo& info,
+                      HostResolver* resolver) {
+    scoped_refptr<DnsRefresher> dr(new DnsRefresher(info));
+    HostCache::Key key(info.hostname(), ADDRESS_FAMILY_UNSPECIFIED, 0);
+    resolver->Resolve(dr->info_, IDLE, &dr->addresses_,
+                      base::Bind(&DnsRefresher::OnRefreshComplete, dr),
+                      &dr->request_, NetLogWithSource());
+  }
+
+  void OnRefreshComplete(int status) {}
+
+ private:
+  virtual ~DnsRefresher() {}
+  HostResolver::RequestInfo info_;
+  AddressList addresses_;
+  std::unique_ptr<HostResolver::Request> request_;
+};
+
 bool HostResolverImpl::ServeFromCache(const Key& key,
                                       const RequestInfo& info,
                                       int* net_error,
@@ -2196,17 +2246,30 @@ bool HostResolverImpl::ServeFromCache(const Key& key,
 
   const HostCache::Entry* cache_entry;
   if (allow_stale)
-    cache_entry = cache_->LookupStale(key, base::TimeTicks::Now(), stale_info);
+    cache_entry = cache_->LookupStale(key, clock()->NowTicks(), stale_info);
   else
-    cache_entry = cache_->Lookup(key, base::TimeTicks::Now());
+    cache_entry = cache_->Lookup(key, clock()->NowTicks());
   if (!cache_entry)
+    return false;
+  if (cache_entry->addresses().empty())
     return false;
 
   *net_error = cache_entry->error();
   if (*net_error == OK) {
+    *addresses = EnsurePortOnAddressList(cache_entry->addresses(), info.port());
+    base::TimeDelta ttl(cache_entry->has_ttl()
+                            ? cache_entry->ttl()
+                            : base::TimeDelta::FromMinutes(1));
+    if (async_dns_refresher_enabled_ && !cache_entry->refreshing() &&
+        ttl / 2 > cache_entry->expires() - clock()->NowTicks()) {
+      HostCache::Entry new_entry(*cache_entry, true);
+      base::TimeTicks old_now = cache_entry->expires() - cache_entry->ttl();
+      cache_->Set(key, new_entry, old_now, cache_entry->ttl());
+      cache_->Set(key, new_entry, old_now, cache_entry->ttl());
+      DnsRefresher::Refresh(info, this);
+    }
     if (cache_entry->has_ttl())
       RecordTTL(cache_entry->ttl());
-    *addresses = EnsurePortOnAddressList(cache_entry->addresses(), info.port());
   }
   return true;
 }
@@ -2293,7 +2356,7 @@ void HostResolverImpl::CacheResult(const Key& key,
                                    base::TimeDelta ttl) {
   // Don't cache an error unless it has a positive TTL.
   if (cache_.get() && (entry.error() == OK || ttl > base::TimeDelta()))
-    cache_->Set(key, entry, base::TimeTicks::Now(), ttl);
+    cache_->Set(key, entry, clock()->NowTicks(), ttl);
 }
 
 void HostResolverImpl::RemoveJob(Job* job) {
@@ -2340,11 +2403,11 @@ bool HostResolverImpl::IsIPv6Reachable(const NetLogWithSource& net_log) {
   // Cache the result for kIPv6ProbePeriodMs (measured from after
   // IsGloballyReachable() completes).
   bool cached = true;
-  if ((base::TimeTicks::Now() - last_ipv6_probe_time_).InMilliseconds() >
+  if ((clock()->NowTicks() - last_ipv6_probe_time_).InMilliseconds() >
       kIPv6ProbePeriodMs) {
     last_ipv6_probe_result_ =
         IsGloballyReachable(IPAddress(kIPv6ProbeAddress), net_log);
-    last_ipv6_probe_time_ = base::TimeTicks::Now();
+    last_ipv6_probe_time_ = clock()->NowTicks();
     cached = false;
   }
   net_log.AddEvent(NetLogEventType::HOST_RESOLVER_IMPL_IPV6_REACHABILITY_CHECK,

@@ -48,6 +48,10 @@ void MappedHostResolver::SetDnsClientEnabled(bool enabled) {
   impl_->SetDnsClientEnabled(enabled);
 }
 
+void MappedHostResolver::SetDnsRefresherEnabled(bool enabled) {
+  impl_->SetDnsRefresherEnabled(enabled);
+}
+
 HostCache* MappedHostResolver::GetHostCache() {
   return impl_->GetHostCache();
 }
