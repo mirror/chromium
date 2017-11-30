@@ -427,7 +427,8 @@ public:
   Exception(std::string const& msg);
   ~Exception();
   char const* what() const;
-protected:
+
+ protected:
   std::string msg_;
 };
 
