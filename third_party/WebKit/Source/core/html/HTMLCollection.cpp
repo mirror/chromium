@@ -455,7 +455,7 @@ void HTMLCollection::SupportedPropertyNames(Vector<String>& names) {
   //      name attribute value to result.
   // 3. Return result.
   HashSet<AtomicString> existing_names;
-  unsigned length = this->length();
+  unsigned length = length();
   for (unsigned i = 0; i < length; ++i) {
     Element* element = item(i);
     const AtomicString& id_attribute = element->GetIdAttribute();
@@ -489,7 +489,7 @@ void HTMLCollection::UpdateIdNameCache() const {
     return;
 
   NamedItemCache* cache = NamedItemCache::Create();
-  unsigned length = this->length();
+  unsigned length = length();
   for (unsigned i = 0; i < length; ++i) {
     Element* element = item(i);
     const AtomicString& id_attr_val = element->GetIdAttribute();

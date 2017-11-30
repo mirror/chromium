@@ -90,7 +90,7 @@ LabelableElement* HTMLLabelElement::control() const {
 }
 
 HTMLFormElement* HTMLLabelElement::form() const {
-  if (LabelableElement* control = this->control()) {
+  if (LabelableElement* control = control()) {
     return control->IsFormControlElement()
                ? ToHTMLFormControlElement(control)->Form()
                : nullptr;

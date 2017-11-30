@@ -169,7 +169,7 @@ void HTMLTextAreaElement::ParseAttribute(
       cols = kDefaultCols;
     if (cols_ != cols) {
       cols_ = cols;
-      if (LayoutObject* layout_object = this->GetLayoutObject()) {
+      if (LayoutObject* layout_object = GetLayoutObject()) {
         layout_object
             ->SetNeedsLayoutAndPrefWidthsRecalcAndFullPaintInvalidation(
                 LayoutInvalidationReason::kAttributeChanged);
@@ -190,7 +190,7 @@ void HTMLTextAreaElement::ParseAttribute(
       wrap = kSoftWrap;
     if (wrap != wrap_) {
       wrap_ = wrap;
-      if (LayoutObject* layout_object = this->GetLayoutObject()) {
+      if (LayoutObject* layout_object = GetLayoutObject()) {
         layout_object
             ->SetNeedsLayoutAndPrefWidthsRecalcAndFullPaintInvalidation(
                 LayoutInvalidationReason::kAttributeChanged);
@@ -514,7 +514,7 @@ bool HTMLTextAreaElement::ValueMissing() const {
 
 bool HTMLTextAreaElement::ValueMissing(const String* value) const {
   return IsRequiredFormControl() && !IsDisabledOrReadOnly() &&
-         (value ? *value : this->value()).IsEmpty();
+         (value ? *value : value()).IsEmpty();
 }
 
 bool HTMLTextAreaElement::TooLong() const {
@@ -537,8 +537,7 @@ bool HTMLTextAreaElement::TooLong(const String* value,
   int max = maxLength();
   if (max < 0)
     return false;
-  unsigned len =
-      value ? ComputeLengthForAPIValue(*value) : this->value().length();
+  unsigned len = value ? ComputeLengthForAPIValue(*value) : value().length();
   return len > static_cast<unsigned>(max);
 }
 
@@ -553,8 +552,7 @@ bool HTMLTextAreaElement::TooShort(const String* value,
   if (min <= 0)
     return false;
   // An empty string is excluded from minlength check.
-  unsigned len =
-      value ? ComputeLengthForAPIValue(*value) : this->value().length();
+  unsigned len = value ? ComputeLengthForAPIValue(*value) : value().length();
   return len > 0 && len < static_cast<unsigned>(min);
 }
 

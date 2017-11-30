@@ -160,9 +160,9 @@ HTMLMeterElement::GaugeRegion HTMLMeterElement::GetGaugeRegion() const {
 }
 
 double HTMLMeterElement::ValueRatio() const {
-  double min = this->min();
-  double max = this->max();
-  double value = this->value();
+  double min = min();
+  double max = max();
+  double value = value();
 
   if (max <= min)
     return 0;

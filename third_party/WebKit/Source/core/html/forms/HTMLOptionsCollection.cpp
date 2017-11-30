@@ -47,7 +47,7 @@ void HTMLOptionsCollection::SupportedPropertyNames(Vector<String>& names) {
   // its name if it contributes both, they differ from each other, and neither
   // is the duplicate of an earlier entry.
   HashSet<AtomicString> existing_names;
-  unsigned length = this->length();
+  unsigned length = length();
   for (unsigned i = 0; i < length; ++i) {
     Element* element = item(i);
     DCHECK(element);
@@ -100,7 +100,7 @@ void HTMLOptionsCollection::setLength(unsigned length,
 void HTMLOptionsCollection::namedGetter(const AtomicString& name,
                                         NodeListOrElement& return_value) {
   HeapVector<Member<Element>> named_items;
-  this->NamedItems(name, named_items);
+  NamedItems(name, named_items);
 
   if (!named_items.size())
     return;
