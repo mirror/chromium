@@ -46,6 +46,30 @@
       "revId": "a9084e7b0b06310f7ad984fc5f2704b34c573530",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "504a87aa_c8c3c984",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 4367,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-11-30T19:45:40Z",
+      "side": 1,
+      "message": "Done (on the build cl)",
+      "parentUuid": "b5b0989f_9a186d61",
+      "range": {
+        "startLine": 4367,
+        "startChar": 5,
+        "endLine": 4367,
+        "endChar": 16
+      },
+      "revId": "a9084e7b0b06310f7ad984fc5f2704b34c573530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
