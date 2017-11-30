@@ -29,7 +29,6 @@
 #include "components/omnibox/browser/history_quick_provider.h"
 #include "components/omnibox/browser/mock_autocomplete_provider_client.h"
 #include "components/omnibox/browser/test_scheme_classifier.h"
-#include "components/prefs/pref_service.h"
 #include "components/search_engines/default_search_manager.h"
 #include "components/search_engines/search_terms_data.h"
 #include "components/search_engines/template_url.h"
@@ -186,12 +185,12 @@ class AnonFakeAutocompleteProviderClient
     return scheme_classifier_;
   }
 
-  const SearchTermsData& GetSearchTermsData() const override {
-    return search_terms_data_;
-  }
-
   history::HistoryService* GetHistoryService() override {
     return history_service_.get();
+  }
+
+  const SearchTermsData& GetSearchTermsData() const override {
+    return search_terms_data_;
   }
 
  private:
@@ -366,7 +365,7 @@ void HistoryURLProviderTest::RunTest(
     std::sort(matches_.begin(), matches_.end(),
               &AutocompleteMatch::MoreRelevant);
   }
-  SCOPED_TRACE(base::ASCIIToUTF16("input = ") + text);
+  SCOPED_TRACE(ASCIIToUTF16("input = ") + text);
   ASSERT_EQ(num_results, matches_.size()) << "Input text: " << text
                                           << "\nTLD: \"" << desired_tld << "\"";
   for (size_t i = 0; i < num_results; ++i) {
@@ -386,7 +385,7 @@ void HistoryURLProviderTest::ExpectFormattedFullMatch(
   ASSERT_FALSE(expected_match_contents_string.empty());
 
   SCOPED_TRACE("input = " + input_text);
-  SCOPED_TRACE(base::ASCIIToUTF16("expected_match_contents = ") +
+  SCOPED_TRACE(ASCIIToUTF16("expected_match_contents = ") +
                expected_match_contents_string);
 
   AutocompleteInput input(ASCIIToUTF16(input_text),
@@ -586,7 +585,7 @@ TEST_F(HistoryURLProviderTest, CullRedirects) {
   redirects_to_a.push_back(GURL(test_cases[2].url));
   redirects_to_a.push_back(GURL(test_cases[0].url));
   client_->GetHistoryService()->AddPage(
-      GURL(test_cases[0].url), base::Time::Now(), nullptr, 0, GURL(),
+      GURL(test_cases[0].url), Time::Now(), nullptr, 0, GURL(),
       redirects_to_a, ui::PAGE_TRANSITION_TYPED, history::SOURCE_BROWSED, true);
 
   // Because all the results are part of a redirect chain with other results,
