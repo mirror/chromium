@@ -261,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "11c62c5d_d85698ef",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2581,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2017-11-30T02:44:28Z",
+      "side": 1,
+      "message": "Since it\u0027s just a convenience helper function I don\u0027t see any problem with exposing this from public/ - certainly seems better than duplicating the logic.  Why is it OK to use this only in local frame cases?  Are there outstanding OOPIF issues here with editing?  If so, perhaps the comment for the public API should make it clear usage is discouraged and link to a bug tracking making editing work correctly in all OOPIF cases.",
+      "parentUuid": "9e5764f7_48dbd951",
+      "range": {
+        "startLine": 2578,
+        "startChar": 0,
+        "endLine": 2581,
+        "endChar": 76
+      },
+      "revId": "6a71a4cfc08a41d5ae8d600eef8a6d5089b109fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82b7221d_cc8dd5c0",
         "filename": "content/renderer/render_widget.h",
         "patchSetId": 3
