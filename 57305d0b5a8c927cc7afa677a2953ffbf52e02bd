@@ -238,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "43865698_b35b0e56",
+        "filename": "extensions/browser/api/web_request/web_request_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-30T01:35:11Z",
+      "side": 1,
+      "message": "Ack. Can we have a DCHECK(!url.SchemeIsWSOrWSS()) here to make this more explicit?",
+      "parentUuid": "4783640c_6a0d39c9",
+      "range": {
+        "startLine": 128,
+        "startChar": 8,
+        "endLine": 128,
+        "endChar": 24
+      },
+      "revId": "57305d0b5a8c927cc7afa677a2953ffbf52e02bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd0302b1_ed175c64",
         "filename": "extensions/browser/api/web_request/web_request_info.cc",
         "patchSetId": 8
