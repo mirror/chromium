@@ -508,7 +508,7 @@ struct cmap
      * unsorted subtable list. */
     int result = encodingRecord./*bsearch*/lsearch (key);
     if (result == -1 || !encodingRecord[result].subtable)
-      return nullptr;
+      return NULL;
 
     return &(this+encodingRecord[result].subtable);
   }
