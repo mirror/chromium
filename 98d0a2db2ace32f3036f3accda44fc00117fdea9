@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d17b5eac_337cba4e",
+        "filename": "chrome/browser/ui/views/translate/translate_language_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-30T07:15:09Z",
+      "side": 1,
+      "message": "Add a TODO to refactor the code and investigate into this?",
+      "revId": "98d0a2db2ace32f3036f3accda44fc00117fdea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
