@@ -61,8 +61,9 @@ struct CC_EXPORT ClipNode {
   mutable base::StackVector<ClipRectData, 3> cached_clip_rects;
 
   // This rect accumulates all clips from this node to the root in screen space.
-  // It is used in the computation of layer's visible rect.
-  gfx::RectF cached_accumulated_rect_in_screen_space;
+  // It is used in the computation of layer's visible rect. If the node
+  // to root transform is not invertible, the clip does not apply.
+  ConditionalClip cached_accumulated_rect_in_screen_space;
 
   // For nodes that expand, this represents the amount of expansion.
   base::Optional<ClipExpander> clip_expander;
