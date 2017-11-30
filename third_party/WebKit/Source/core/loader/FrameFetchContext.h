@@ -157,6 +157,11 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
       const ResourceRequest&,
       scoped_refptr<WebTaskRunner>) override;
 
+  ResourceLoadScheduler::ThrottlingPolicy InitialLoadThrottlingPolicy()
+      const override {
+    return ResourceLoadScheduler::ThrottlingPolicy::kTight;
+  }
+
   bool IsDetached() const override { return frozen_state_; }
 
   FetchContext* Detach() override;
