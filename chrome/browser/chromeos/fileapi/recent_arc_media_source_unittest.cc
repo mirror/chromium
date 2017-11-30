@@ -19,6 +19,7 @@
 #include "components/arc/arc_bridge_service.h"
 #include "components/arc/arc_service_manager.h"
 #include "components/arc/common/file_system.mojom.h"
+#include "components/arc/test/connection_holder_util.h"
 #include "components/arc/test/fake_file_system_instance.h"
 #include "components/keyed_service/content/browser_context_keyed_service_factory.h"
 #include "content/public/test/test_browser_thread_bundle.h"
@@ -78,6 +79,12 @@ class RecentArcMediaSourceTest : public testing::Test {
     source_ = base::MakeUnique<RecentArcMediaSource>(profile_.get());
   }
 
+  void TearDown() override {
+    arc_service_manager_->arc_bridge_service()->file_system()->SetInstance(
+        nullptr);
+    arc_service_manager_.reset();
+  }
+
  protected:
   void AddDocumentsToFakeFileSystemInstance() {
     auto root_doc =
@@ -104,6 +111,8 @@ class RecentArcMediaSourceTest : public testing::Test {
   void EnableFakeFileSystemInstance() {
     arc_service_manager_->arc_bridge_service()->file_system()->SetInstance(
         &fake_file_system_);
+    arc::WaitForInstanceReady(
+        arc_service_manager_->arc_bridge_service()->file_system());
   }
 
   std::vector<RecentFile> GetRecentFiles() {

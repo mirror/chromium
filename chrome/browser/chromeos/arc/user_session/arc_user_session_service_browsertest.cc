@@ -9,6 +9,7 @@
 #include "components/arc/arc_bridge_service.h"
 #include "components/arc/arc_service_manager.h"
 #include "components/arc/arc_util.h"
+#include "components/arc/test/connection_holder_util.h"
 #include "components/arc/test/fake_intent_helper_instance.h"
 #include "components/session_manager/core/session_manager.h"
 
@@ -49,17 +50,16 @@ class ArcUserSessionServiceTest : public InProcessBrowserTest {
     arc::SetArcAvailableCommandLineForTesting(command_line);
   }
 
-  void SetUpInProcessBrowserTestFixture() override {
-    fake_intent_helper_instance_.reset(new FakeIntentHelperInstance());
-  }
-
   void SetUpOnMainThread() override {
     RunUntilIdle();
 
+    fake_intent_helper_instance_.reset(new FakeIntentHelperInstance());
     ArcServiceManager::Get()
         ->arc_bridge_service()
         ->intent_helper()
         ->SetInstance(fake_intent_helper_instance_.get());
+    WaitForInstanceReady(
+        ArcServiceManager::Get()->arc_bridge_service()->intent_helper());
   }
 
   void TearDownOnMainThread() override {
@@ -67,6 +67,7 @@ class ArcUserSessionServiceTest : public InProcessBrowserTest {
         ->arc_bridge_service()
         ->intent_helper()
         ->SetInstance(nullptr);
+    fake_intent_helper_instance_.reset(nullptr);
   }
 
  protected:
