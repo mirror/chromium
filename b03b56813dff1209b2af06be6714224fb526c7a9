@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "960c26ae_6a957ba8",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-11-30T23:36:52Z",
+      "side": 1,
+      "message": "Thanks for the link. Very interesting read. I went ahead and combined the two functions into one. I choose to keep the function name as setUpHealthThermometerForDiscovery since the peripheral will be in a state for the page to discover its services and connect with it.",
+      "parentUuid": "6e2ee7ab_5b8cb0f1",
+      "revId": "b03b56813dff1209b2af06be6714224fb526c7a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fade1c9c_18fe4513",
         "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ab4254cf_42bf0cc4",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 834,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-11-30T23:36:52Z",
+      "side": 1,
+      "message": "Sounds good!",
+      "parentUuid": "fade1c9c_18fe4513",
+      "revId": "b03b56813dff1209b2af06be6714224fb526c7a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54e3d06b_107fde54",
         "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
         "patchSetId": 8
@@ -50,6 +86,24 @@
       "revId": "b03b56813dff1209b2af06be6714224fb526c7a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b7fb993_f0f4968b",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-11-30T23:36:52Z",
+      "side": 1,
+      "message": "To be honest, Iframe bothered me, but I wasn\u0027t sure on which style to use. Thanks for letting me know. I\u0027ll use IFrame for the CL that will contain this change.",
+      "parentUuid": "54e3d06b_107fde54",
+      "revId": "b03b56813dff1209b2af06be6714224fb526c7a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
