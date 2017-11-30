@@ -381,6 +381,30 @@
       "revId": "b2275545c639d2143edecc7986054342774008ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "473480a3_47e24301",
+        "filename": "components/arc/arc_bridge_host_impl.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-30T15:19:13Z",
+      "side": 1,
+      "message": "(off topic): Could you share how to repro in details?\nBackground: I\u0027m tackling against crbug.com/782895, and it looks like a same situation.\nIf there is a procedure to reproduce, it helps me a lot. TBH, I\u0027m starting to think this may be more serious issue.\nThank you for help in advance!",
+      "parentUuid": "6213c98d_de5e089a",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 31
+      },
+      "revId": "b2275545c639d2143edecc7986054342774008ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
