@@ -130,10 +130,12 @@ class MODULES_EXPORT IDBValueWrapper {
  private:
   // Used to serialize the wrapped value.
   static void WriteVarint(unsigned value, Vector<char>& output);
+  static void WriteBytes(const Vector<uint8_t>& bytes, Vector<char>& output);
 
   scoped_refptr<SerializedScriptValue> serialized_value_;
   scoped_refptr<BlobDataHandle> wrapper_handle_;
   Vector<WebBlobInfo> blob_info_;
+  SerializedScriptValue::BundleArray bundles_;
   Vector<char> wire_bytes_;
   size_t original_data_length_ = 0;
 #if DCHECK_IS_ON()
@@ -189,7 +191,8 @@ class MODULES_EXPORT IDBValueUnwrapper {
 
  private:
   // Used to deserialize the wrapped value.
-  bool ReadVarint(unsigned& value);
+  bool ReadVarint(unsigned&);
+  bool ReadBytes(Vector<uint8_t>&);
 
   // Resets the parsing state.
   bool Reset();

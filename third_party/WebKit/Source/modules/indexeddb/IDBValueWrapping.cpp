@@ -63,6 +63,7 @@ IDBValueWrapper::IDBValueWrapper(
     ExceptionState& exception_state) {
   SerializedScriptValue::SerializeOptions options;
   options.blob_info = &blob_info_;
+  options.bundles = &bundles_;
   options.for_storage = SerializedScriptValue::kForStorage;
   options.wasm_policy = wasm_policy;
 
@@ -105,6 +106,12 @@ void IDBValueWrapper::WriteVarint(unsigned value, Vector<char>& output) {
     value >>= 7;
   } while (value);
   output.back() &= 0x7F;
+}
+
+void IDBValueWrapper::WriteBytes(const Vector<uint8_t>& bytes,
+                                 Vector<char>& output) {
+  IDBValueWrapper::WriteVarint(bytes.size(), output);
+  output.Append(bytes.data(), bytes.size());
 }
 
 bool IDBValueWrapper::WrapIfBiggerThan(unsigned max_bytes) {
@@ -262,6 +269,22 @@ bool IDBValueUnwrapper::ReadVarint(unsigned& value) {
 
     has_another_byte = byte & 0x80;
   } while (has_another_byte);
+  return true;
+}
+
+bool IDBValueUnwrapper::ReadBytes(Vector<uint8_t>& value) {
+  unsigned length;
+  if (!ReadVarint(length))
+    return false;
+
+  DCHECK_LE(current_, end_);
+  if (end_ - current_ < static_cast<ptrdiff_t>(length))
+    return false;
+  Vector<uint8_t> result;
+  result.ReserveInitialCapacity(length);
+  result.Append(current_, length);
+  value.swap(result);
+  current_ += length;
   return true;
 }
 

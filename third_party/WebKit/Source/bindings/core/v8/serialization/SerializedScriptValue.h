@@ -96,6 +96,35 @@ class CORE_EXPORT SerializedScriptValue
   // has been the cause of at least one bug in the past.
   static constexpr uint32_t kWireFormatVersion = 18;
 
+  // Packages pieces of data that are conditionally fetched for deserialization.
+  //
+  // Currently used to serialize WebAssembly Modules to IndexedDB.
+  struct Bundle {
+    // Data whose deserialization does not need a continuous linear address
+    // space.
+    struct Item {
+      // Unique among items in the same bundle.
+      size_t id;
+      // Points to the Blob that contains the item's data.
+      size_t blob_index;
+      // Determines if the item is available for deserialization.
+      v8::ValueSerializer::VersionPredicate predicate;
+      // Guaranteed to be populated if the predicate is true.
+      Vector<uint8_t> data;
+    };
+
+    // Used to evaluate the predicate of each item in the bundle.
+    uint32_t type;
+    Vector<uint8_t> version;
+
+    Vector<Item> items;
+
+    static bool PredicateIsTrue(v8::ValueSerializer::VersionPredicate,
+                                uint32_t bundle_type,
+                                const Vector<uint8_t>& bundle_version);
+  };
+  using BundleArray = Vector<Bundle, 1>;
+
   // This enumeration specifies whether we're serializing a value for storage;
   // e.g. when writing to IndexedDB. This corresponds to the forStorage flag of
   // the HTML spec:
@@ -125,6 +154,7 @@ class CORE_EXPORT SerializedScriptValue
     WebBlobInfoArray* blob_info = nullptr;
     WasmSerializationPolicy wasm_policy = kTransfer;
     StoragePolicy for_storage = kNotForStorage;
+    BundleArray* bundles = nullptr;
   };
   static scoped_refptr<SerializedScriptValue> Serialize(v8::Isolate*,
                                                         v8::Local<v8::Value>,
