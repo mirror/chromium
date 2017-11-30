@@ -56,6 +56,8 @@ ChildProcessLauncherHelper::LaunchProcessOnLauncherThread(
     bool* is_synchronous_launch,
     int* launch_result) {
   DCHECK_CURRENTLY_ON(BrowserThread::PROCESS_LAUNCHER);
+  LOG(ERROR)
+      << "** JAY ** ChildProcessLauncherHelper::LaunchProcessOnLauncherThread";
   *is_synchronous_launch = true;
   if (delegate_->ShouldLaunchElevated()) {
     // When establishing a Mojo connection, the pipe path has already been added

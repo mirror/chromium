@@ -312,6 +312,7 @@ struct MainFunction {
 // Returns the exit code of the subprocess.
 int RunZygote(const MainFunctionParams& main_function_params,
               ContentMainDelegate* delegate) {
+  LOG(ERROR) << "** JAY ** RunZygote";
   static const MainFunction kMainFunctions[] = {
     { switches::kRendererProcess,    RendererMain },
 #if BUILDFLAG(ENABLE_PLUGINS)

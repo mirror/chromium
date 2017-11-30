@@ -160,10 +160,12 @@ UtilityProcessHostImpl::UtilityProcessHostImpl(
       weak_ptr_factory_(this) {
   process_.reset(new BrowserChildProcessHostImpl(
       PROCESS_TYPE_UTILITY, this, mojom::kUtilityServiceName));
+  LOG(ERROR) << "UtilityProcessHostImpl::UtilityProcessHostImpl";
 }
 
 UtilityProcessHostImpl::~UtilityProcessHostImpl() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  LOG(ERROR) << "UtilityProcessHostImpl::~UtilityProcessHostImpl";
 }
 
 base::WeakPtr<UtilityProcessHost> UtilityProcessHostImpl::AsWeakPtr() {

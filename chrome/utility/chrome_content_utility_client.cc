@@ -70,6 +70,7 @@
 
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW) || \
     (BUILDFLAG(ENABLE_BASIC_PRINTING) && defined(OS_WIN))
+#include "chrome/utility/printing/pdf_to_emf_converter_factory_impl.h"
 #include "chrome/utility/printing_handler.h"
 #endif
 
@@ -135,6 +136,8 @@ ChromeContentUtilityClient::ChromeContentUtilityClient()
 ChromeContentUtilityClient::~ChromeContentUtilityClient() = default;
 
 void ChromeContentUtilityClient::UtilityThreadStarted() {
+  LOG(ERROR) << "** JAY ** UTILITY UtilityThreadStarted";
+
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   extensions::utility_handler::UtilityThreadStarted();
 #endif

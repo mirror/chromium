@@ -9,6 +9,8 @@
           "content::mojom::ChildControl",
           "content::mojom::ChildHistogramFetcher",
           "content::mojom::ChildHistogramFetcherFactory",
+          "printing::mojom::PDFToPWGRasterConverter",
+          "printing::mojom::PdfToEmfConverterFactory",
           "IPC::mojom::ChannelBootstrap",
           "printing::mojom::PDFToPWGRasterConverter",
           "service_manager::mojom::ServiceFactory"
