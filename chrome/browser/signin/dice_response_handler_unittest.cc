@@ -636,7 +636,6 @@ TEST_F(DiceResponseHandlerTest, SigninSignoutSecondaryAccount) {
 
 // Checks that no auth error fix happens if the user is signed out.
 TEST_F(DiceResponseHandlerTest, FixAuthErrorSignedOut) {
-  signin::ScopedAccountConsistencyDiceFixAuthErrors scoped_dice_fix_auth_errors;
   DiceResponseParams dice_params = MakeDiceParams(DiceAction::SIGNIN);
   const auto& account_info = dice_params.signin_info->account_info;
   ASSERT_FALSE(token_service_.RefreshTokenIsAvailable(
@@ -651,7 +650,6 @@ TEST_F(DiceResponseHandlerTest, FixAuthErrorSignedOut) {
 // Checks that the token is not stored if the user signs out during the token
 // request.
 TEST_F(DiceResponseHandlerTest, FixAuthErrorSignOutDuringRequest) {
-  signin::ScopedAccountConsistencyDiceFixAuthErrors scoped_dice_fix_auth_errors;
   // User is signed in to Chrome.
   DiceResponseParams dice_params = MakeDiceParams(DiceAction::SIGNIN);
   const auto& account_info = dice_params.signin_info->account_info;
@@ -678,7 +676,6 @@ TEST_F(DiceResponseHandlerTest, FixAuthErrorSignOutDuringRequest) {
 
 // Checks that the token is fixed if the Chrome account matches the web account.
 TEST_F(DiceResponseHandlerTest, FixAuthError) {
-  signin::ScopedAccountConsistencyDiceFixAuthErrors scoped_dice_fix_auth_errors;
   // User is signed in to Chrome.
   DiceResponseParams dice_params = MakeDiceParams(DiceAction::SIGNIN);
   const auto& account_info = dice_params.signin_info->account_info;
@@ -716,7 +713,6 @@ TEST_F(DiceResponseHandlerTest, FixAuthError) {
 // Tests that the Dice Signout response is ignored when kDiceFixAuthErrors is
 // used.
 TEST_F(DiceResponseHandlerTest, FixAuthErroDoesNotSignout) {
-  signin::ScopedAccountConsistencyDiceFixAuthErrors scoped_dice_fix_auth_errors;
   DiceResponseParams dice_params = MakeDiceParams(DiceAction::SIGNOUT);
   const auto& account_info = dice_params.signout_info->account_infos[0];
   std::string account_id = account_tracker_service_.PickAccountIdForAccount(

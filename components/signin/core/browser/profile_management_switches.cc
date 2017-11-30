@@ -69,8 +69,6 @@ const base::Feature kAccountConsistencyFeature{
     "AccountConsistency", base::FEATURE_DISABLED_BY_DEFAULT};
 const char kAccountConsistencyFeatureMethodParameter[] = "method";
 const char kAccountConsistencyFeatureMethodMirror[] = "mirror";
-const char kAccountConsistencyFeatureMethodDiceFixAuthErrors[] =
-    "dice_fix_auth_errors";
 const char kAccountConsistencyFeatureMethodDicePrepareMigration[] =
     "dice_prepare_migration";
 const char
@@ -94,48 +92,52 @@ AccountConsistencyMethod GetAccountConsistencyMethod() {
 #if BUILDFLAG(ENABLE_MIRROR)
   // Mirror is always enabled on Android and iOS.
   return AccountConsistencyMethod::kMirror;
-#else
-
-#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+#elif BUILDFLAG(ENABLE_DICE_SUPPORT)
   DCHECK(!GetIsGaiaIsolatedCallback()->is_null());
   if (!GetIsGaiaIsolatedCallback()->Run()) {
-    // Because of limitations in base::Feature, always return kDisabled when
-    // Gaia is not isolated, even though it's not technically a requirement for
-    // all account consistency methods (i.e. kDiceFixAuthErrors could be
-    // allowed).
-    return AccountConsistencyMethod::kDisabled;
+    return AccountConsistencyMethod::kDiceFixAuthErrors;
   }
-#endif  // BUILDFLAG(ENABLE_DICE_SUPPORT)
 
   if (!base::FeatureList::IsEnabled(kAccountConsistencyFeature))
-    return AccountConsistencyMethod::kDisabled;
+    return AccountConsistencyMethod::kDiceFixAuthErrors;
 
   std::string method_value = base::GetFieldTrialParamValueByFeature(
       kAccountConsistencyFeature, kAccountConsistencyFeatureMethodParameter);
 
-  if (method_value == kAccountConsistencyFeatureMethodMirror)
-    return AccountConsistencyMethod::kMirror;
-#if BUILDFLAG(ENABLE_DICE_SUPPORT)
-  else if (method_value == kAccountConsistencyFeatureMethodDiceFixAuthErrors)
-    return AccountConsistencyMethod::kDiceFixAuthErrors;
-  else if (method_value == kAccountConsistencyFeatureMethodDicePrepareMigration)
+  if (method_value == kAccountConsistencyFeatureMethodDicePrepareMigration) {
     return AccountConsistencyMethod::kDicePrepareMigration;
-  else if (
+  } else if (
       method_value ==
       kAccountConsistencyFeatureMethodDicePrepareMigrationChromeSyncEndpoint) {
     return AccountConsistencyMethod::kDicePrepareMigrationChromeSyncEndpoint;
-  } else if (method_value == kAccountConsistencyFeatureMethodDiceMigration)
+  } else if (method_value == kAccountConsistencyFeatureMethodDiceMigration) {
     return AccountConsistencyMethod::kDiceMigration;
-  else if (method_value == kAccountConsistencyFeatureMethodDice)
+  } else if (method_value == kAccountConsistencyFeatureMethodDice) {
     return AccountConsistencyMethod::kDice;
-#endif  // BUILDFLAG(ENABLE_DICE_SUPPORT)
+  }
+
+  return AccountConsistencyMethod::kDiceFixAuthErrors;
+#else
+  if (!base::FeatureList::IsEnabled(kAccountConsistencyFeature))
+    return AccountConsistencyMethod::kDisabled;
+
+  if (base::GetFieldTrialParamValueByFeature(
+          kAccountConsistencyFeature,
+          kAccountConsistencyFeatureMethodParameter) ==
+      kAccountConsistencyFeatureMethodMirror) {
+    return AccountConsistencyMethod::kMirror;
+  }
 
   return AccountConsistencyMethod::kDisabled;
-#endif  // BUILDFLAG(ENABLE_MIRROR)
+#endif
 }
 
 bool IsAccountConsistencyMirrorEnabled() {
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+  return false;
+#else
   return GetAccountConsistencyMethod() == AccountConsistencyMethod::kMirror;
+#endif
 }
 
 bool IsDicePrepareMigrationEnabled() {
@@ -195,9 +197,11 @@ void MigrateProfileToDice(PrefService* user_prefs) {
 }
 
 bool IsDiceFixAuthErrorsEnabled() {
-  return AccountConsistencyMethodGreaterOrEqual(
-      GetAccountConsistencyMethod(),
-      AccountConsistencyMethod::kDiceFixAuthErrors);
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+  return true;
+#else
+  return false;
+#endif
 }
 
 bool IsExtensionsMultiAccount() {

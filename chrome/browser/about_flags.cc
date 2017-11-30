@@ -340,10 +340,6 @@ const FeatureEntry::Choice kDefaultTileHeightChoices[] = {
 
 #if !BUILDFLAG(ENABLE_MIRROR)
 
-const FeatureEntry::FeatureParam kAccountConsistencyMirror[] = {
-    {signin::kAccountConsistencyFeatureMethodParameter,
-     signin::kAccountConsistencyFeatureMethodMirror}};
-
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
 const FeatureEntry::FeatureParam kAccountConsistencyDice[] = {
     {signin::kAccountConsistencyFeatureMethodParameter,
@@ -362,17 +358,14 @@ const FeatureEntry::FeatureParam
 const FeatureEntry::FeatureParam kAccountConsistencyDiceMigration[] = {
     {signin::kAccountConsistencyFeatureMethodParameter,
      signin::kAccountConsistencyFeatureMethodDiceMigration}};
-
-const FeatureEntry::FeatureParam kAccountConsistencyDiceFixAuthErrors[] = {
+#else
+const FeatureEntry::FeatureParam kAccountConsistencyMirror[] = {
     {signin::kAccountConsistencyFeatureMethodParameter,
-     signin::kAccountConsistencyFeatureMethodDiceFixAuthErrors}};
+     signin::kAccountConsistencyFeatureMethodMirror}};
 #endif  // BUILDFLAG(ENABLE_DICE_SUPPORT)
 
 const FeatureEntry::FeatureVariation kAccountConsistencyFeatureVariations[] = {
-    {"Mirror", kAccountConsistencyMirror, arraysize(kAccountConsistencyMirror),
-     nullptr /* variation_id */}
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
-    ,
     {"Dice", kAccountConsistencyDice, arraysize(kAccountConsistencyDice),
      nullptr /* variation_id */},
     {"Dice (migration)", kAccountConsistencyDiceMigration,
@@ -383,9 +376,9 @@ const FeatureEntry::FeatureVariation kAccountConsistencyFeatureVariations[] = {
     {"Dice (prepare migration, Chrome sync endpoint)",
      kAccountConsistencyDicePrepareMigrationChromeSyncEndpoint,
      arraysize(kAccountConsistencyDicePrepareMigrationChromeSyncEndpoint),
-     nullptr /* variation_id */},
-    {"Dice (fix auth errors)", kAccountConsistencyDiceFixAuthErrors,
-     arraysize(kAccountConsistencyDiceFixAuthErrors),
+     nullptr /* variation_id */}
+#else
+    {"Mirror", kAccountConsistencyMirror, arraysize(kAccountConsistencyMirror),
      nullptr /* variation_id */}
 #endif  // BUILDFLAG(ENABLE_DICE_SUPPORT)
 };
