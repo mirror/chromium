@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79ce670e_94ea04c4",
+        "filename": "media/capture/video/video_capture_device_unittest.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-30T22:49:40Z",
+      "side": 1,
+      "message": "nit: . at the end of the sentences. I think it could fit in two lines?",
+      "revId": "ae8e19d17a97c9edc05e5e5e280160129444e422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ea0c30e_9680cf99",
+        "filename": "media/capture/video/video_capture_device_unittest.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-30T22:49:40Z",
+      "side": 1,
+      "message": "Just curious: can we mock directly these methods,\nor is GMock confused by the STDMETHOD() macro ?",
+      "range": {
+        "startLine": 142,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 80
+      },
+      "revId": "ae8e19d17a97c9edc05e5e5e280160129444e422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "816f6302_33e9c0cd",
+        "filename": "media/capture/video/video_capture_device_unittest.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-30T22:49:40Z",
+      "side": 1,
+      "message": "#elif defined(OS_WIN)",
+      "range": {
+        "startLine": 340,
+        "startChar": 0,
+        "endLine": 341,
+        "endChar": 19
+      },
+      "revId": "ae8e19d17a97c9edc05e5e5e280160129444e422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "634c00ea_7cde825f",
+        "filename": "media/capture/video/video_capture_device_unittest.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-30T22:49:40Z",
+      "side": 1,
+      "message": "With this name I\u0027d expect to see a comparison of the Win version\nor so. What about calling this method UseWinMediaFoundation() ?",
+      "range": {
+        "startLine": 353,
+        "startChar": 7,
+        "endLine": 353,
+        "endChar": 27
+      },
+      "revId": "ae8e19d17a97c9edc05e5e5e280160129444e422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27269bec_ffa8099e",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-30T22:49:40Z",
+      "side": 1,
+      "message": "nit: We could do this together with the while() condition.",
+      "range": {
+        "startLine": 224,
+        "startChar": 4,
+        "endLine": 224,
+        "endChar": 18
+      },
+      "revId": "ae8e19d17a97c9edc05e5e5e280160129444e422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "324824db_76978e1f",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-30T22:49:40Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused because you\u0027re hijacking this list\nand the associated function to do the photo specific\nformat translation, but IIUC video format translation\nin l.245 should never see this GUID_ format and photo format \ntranslation in l.564 should never see the MFVideo...\nformats, right? \nInstead, remove this and compare explicitly in l.564\nphoto_media_type.Get() with GUID_ContainerFormatJpeg.",
+      "range": {
+        "startLine": 346,
+        "startChar": 0,
+        "endLine": 346,
+        "endChar": 53
+      },
+      "revId": "ae8e19d17a97c9edc05e5e5e280160129444e422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac6a5807_ec2aa770",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-30T22:49:40Z",
+      "side": 1,
+      "message": "if (FAILED(hr) {\n  LogError(FROM_HERE, hr);\n  return;\n}\nhere and transform the previous \nif (SUCCEEDED(hr)) {\n  do_something();\n  from_here \u003d FROM_HERE;\n}\n\ninto\nhr \u003d do_something();\nif (FAILED(hr)) {\n  LogError();\n  bail\n}\nplease",
+      "range": {
+        "startLine": 638,
+        "startChar": 0,
+        "endLine": 638,
+        "endChar": 22
+      },
+      "revId": "ae8e19d17a97c9edc05e5e5e280160129444e422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e147985d_d9c3a6a5",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-30T22:49:40Z",
+      "side": 1,
+      "message": "Define HRESULT hr \u003d ...\nhere instead of in l.758.",
+      "range": {
+        "startLine": 760,
+        "startChar": 2,
+        "endLine": 760,
+        "endChar": 4
+      },
+      "revId": "ae8e19d17a97c9edc05e5e5e280160129444e422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c69412c4_36289289",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-30T22:49:40Z",
+      "side": 1,
+      "message": "if (SUCCEEDED(hr) \u0026\u0026 event_type \u003d\u003d MF_CAPTURE_ENGINE_ERROR) {\n    media_event-\u003eGetStatus(\u0026hr);\n  }\n?",
+      "range": {
+        "startLine": 762,
+        "startChar": 2,
+        "endLine": 765,
+        "endChar": 3
+      },
+      "revId": "ae8e19d17a97c9edc05e5e5e280160129444e422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20bfabdc_5b3326d6",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-30T22:49:40Z",
+      "side": 1,
+      "message": "Don\u0027t modify the LHS, multi-line bodies need {} per\nstyle guide.",
+      "range": {
+        "startLine": 772,
+        "startChar": 20,
+        "endLine": 776,
+        "endChar": 74
+      },
+      "revId": "ae8e19d17a97c9edc05e5e5e280160129444e422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
