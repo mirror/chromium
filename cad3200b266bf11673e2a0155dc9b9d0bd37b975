@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c0a04b94_56cdd335",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/server/disconnect/detach-gc.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-11-30T01:13:33Z",
+      "side": 1,
+      "message": "I created a set of functions that set up the fake peripheral for the health thermometer, but do not request it. In addition to this, I create two functions to create and message iframes.",
+      "parentUuid": "75a7b851_e7a48ecd",
+      "revId": "cad3200b266bf11673e2a0155dc9b9d0bd37b975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5342548_5b5d1011",
         "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/health-thermometer-iframe.html",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "cad3200b266bf11673e2a0155dc9b9d0bd37b975",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d380baf_3e709407",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/health-thermometer-iframe.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-11-30T01:13:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5342548_5b5d1011",
+      "revId": "cad3200b266bf11673e2a0155dc9b9d0bd37b975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
