@@ -1912,6 +1912,13 @@ void LayoutObject::StyleDidChange(StyleDifference diff,
     // Change of transform-style may affect descendant transform property nodes.
     SetSubtreeNeedsPaintPropertyUpdate();
   }
+
+  if (old_style && !NeedsPaintPropertyUpdate() &&
+      CompositingReasonFinder::RequiresCompositingForAnimation(*old_style) !=
+          CompositingReasonFinder::RequiresCompositingForAnimation(new_style)) {
+    // Need to update direct compositing reasons in paint property nodes.
+    SetNeedsPaintPropertyUpdate();
+  }
 }
 
 void LayoutObject::ApplyPseudoStyleChanges(const ComputedStyle& old_style) {
