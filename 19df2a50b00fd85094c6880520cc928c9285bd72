@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "a4e5b8b8_355bb9a0",
+        "filename": "components/signin/core/browser/account_tracker_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-30T09:09:20Z",
+      "side": 1,
+      "message": "I think this should be a DCHECK (account must always be tracked before calling SetIsChildAccount).",
+      "range": {
+        "startLine": 248,
+        "startChar": 25,
+        "endLine": 248,
+        "endChar": 34
+      },
+      "revId": "19df2a50b00fd85094c6880520cc928c9285bd72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ffff9da_da43a041",
         "filename": "components/signin/core/browser/account_tracker_service_unittest.cc",
         "patchSetId": 5
@@ -30,6 +53,52 @@
       "writtenOn": "2017-11-29T18:01:01Z",
       "side": 1,
       "message": "nit: wrong indent",
+      "revId": "19df2a50b00fd85094c6880520cc928c9285bd72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39ddddb0_1e83a290",
+        "filename": "components/signin/core/browser/child_account_info_fetcher_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-30T09:09:20Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 19,
+        "startChar": 16,
+        "endLine": 19,
+        "endChar": 17
+      },
+      "revId": "19df2a50b00fd85094c6880520cc928c9285bd72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5cf19f0_c539e815",
+        "filename": "components/signin/core/browser/child_account_info_fetcher_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-30T09:09:20Z",
+      "side": 1,
+      "message": "I think this comment is too generic. Maybe explain what you mean by clean-up (should this be \"Remove this file\"?)",
+      "range": {
+        "startLine": 19,
+        "startChar": 17,
+        "endLine": 19,
+        "endChar": 22
+      },
       "revId": "19df2a50b00fd85094c6880520cc928c9285bd72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
