@@ -254,7 +254,7 @@ GpuProcessTransportFactory::CreateSoftwareOutputDevice(
   return std::make_unique<viz::SoftwareOutputDeviceWin>(software_backing_.get(),
                                                         widget);
 #elif defined(USE_OZONE)
-  return viz::SoftwareOutputDeviceOzone::Create(widget);
+  return std::make_unique<viz::SoftwareOutputDeviceOzone>(widget);
 #elif defined(USE_X11)
   return std::make_unique<viz::SoftwareOutputDeviceX11>(widget);
 #elif defined(OS_MACOSX)
