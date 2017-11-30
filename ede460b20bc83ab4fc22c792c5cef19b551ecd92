@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "5b2b854f_cc863e56",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-30T21:33:02Z",
+      "side": 1,
+      "message": "I don\u0027t quite get it... What\u0027s the problem with using DCHECK to check a value is not equal to -1?",
+      "parentUuid": "dfe8cf0b_7f8edfc9",
+      "revId": "ede460b20bc83ab4fc22c792c5cef19b551ecd92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "269e5fb8_f588c5ae",
         "filename": "ash/wallpaper/wallpaper_controller.h",
         "patchSetId": 8
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "The problem is within WallpaperManager constructor, the WallpaperController instance in //ash isn\u0027t created yet. But InitializeWallpaper() signals that WallpaperController is ready.",
       "parentUuid": "dcdcc42a_480cd79d",
+      "revId": "ede460b20bc83ab4fc22c792c5cef19b551ecd92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5839b3a5_5f8d346e",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-30T21:33:02Z",
+      "side": 1,
+      "message": "Not sure if it\u0027s feasible: maybe we can just move this SetPathIds() function entirely to WallpaperController and call it in WallpaperController constructor and move chrome::DIR_USER_DATA, chrome::DIR_CHROMEOS_WALLPAPERS, chrome::DIR_CHROMEOS_CUSTOM_WALLPAPERS to chromeos_paths.h?",
+      "parentUuid": "42eb9320_a83a5e90",
       "revId": "ede460b20bc83ab4fc22c792c5cef19b551ecd92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

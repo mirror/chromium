@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c25db2de_c1c4b627",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-30T21:33:02Z",
+      "side": 1,
+      "message": "indent is off",
+      "revId": "9f91f992b7f362841b0ac0e5f3eec9a358027b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b072a8a2_f40888ab",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-30T21:33:02Z",
+      "side": 1,
+      "message": "put the account_id valid check at the beginning of the function?",
+      "revId": "9f91f992b7f362841b0ac0e5f3eec9a358027b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
