@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a82eaee8_b496c61b",
+        "filename": "chrome/browser/resources/chromeos/arc_support/arc_optin_focus_manager.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-30T17:23:58Z",
+      "side": 1,
+      "message": "nit: Remnant of debugging code?",
+      "range": {
+        "startLine": 12,
+        "startChar": 2,
+        "endLine": 12,
+        "endChar": 36
+      },
+      "revId": "2d4bdc69b54991b67e1074857f72bc89b349ea9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f591a78_072b2cf9",
+        "filename": "chrome/browser/resources/chromeos/arc_support/arc_optin_focus_manager.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-30T17:23:58Z",
+      "side": 1,
+      "message": "nit: insert an empty line before",
+      "revId": "2d4bdc69b54991b67e1074857f72bc89b349ea9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
