@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a40fb467_a7c189e6",
+        "filename": "chrome/browser/ui/tabs/tab_activity_watcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-30T02:55:33Z",
+      "side": 1,
+      "message": "use constexpr and for times use TimeDelta, e.g.\nconstexpr base::TimeDelta kDefaultPerSourceLogTimeout \u003d base::TimeDelta::FromSeconds(10);",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 6
+      },
+      "revId": "8fa525707d6c37b1c1fe9689703727c86b048a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
