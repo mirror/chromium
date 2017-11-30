@@ -19,7 +19,9 @@ if (is_component_build) {
 buildflag_header("base_win_features") {
   header = "base_features.h"
   header_dir = "base/win"
-  flags = [ "SINGLE_MODULE_MODE_HANDLE_VERIFIER=$single_module_mode_handle_verifier" ]
+  flags = [
+    "SINGLE_MODULE_MODE_HANDLE_VERIFIER=$single_module_mode_handle_verifier",
+  ]
 }
 
 static_library("pe_image") {

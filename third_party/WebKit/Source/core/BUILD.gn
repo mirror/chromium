@@ -466,7 +466,9 @@ action("generated_testing_idls_internal_runtime_flags") {
 css_properties("make_core_generated_computed_style_initial_values") {
   script = "../build/scripts/core/style/make_computed_style_initial_values.py"
   in_files = [ "css/ComputedStyleExtraFields.json5" ]
-  other_inputs = [ "../build/scripts/core/style/templates/ComputedStyleInitialValues.h.tmpl" ]
+  other_inputs = [
+    "../build/scripts/core/style/templates/ComputedStyleInitialValues.h.tmpl",
+  ]
   outputs = [
     "$blink_core_output_dir/style/ComputedStyleInitialValues.h",
   ]
@@ -530,7 +532,9 @@ css_properties("make_core_generated_css_property_baseclass") {
 css_properties("make_core_generated_css_longhand_property_classes") {
   script = "../build/scripts/core/css/properties/make_css_property_headers.py"
   in_files = [ "css/properties/CSSPropertyMethods.json5" ]
-  other_inputs = [ "../build/scripts/core/css/properties/templates/CSSPropertySubclass.h.tmpl" ]
+  other_inputs = [
+    "../build/scripts/core/css/properties/templates/CSSPropertySubclass.h.tmpl",
+  ]
   outputs = [
     "$blink_core_output_dir/css/properties/longhands/AlignItems.h",
     "$blink_core_output_dir/css/properties/longhands/AlignOrJustifyContent.h",
@@ -754,7 +758,9 @@ css_properties("make_core_generated_css_longhand_property_classes") {
 css_properties("make_core_generated_css_shorthand_property_classes") {
   script = "../build/scripts/core/css/properties/make_css_property_headers.py"
   in_files = [ "css/properties/CSSPropertyMethods.json5" ]
-  other_inputs = [ "../build/scripts/core/css/properties/templates/CSSPropertySubclass.h.tmpl" ]
+  other_inputs = [
+    "../build/scripts/core/css/properties/templates/CSSPropertySubclass.h.tmpl",
+  ]
   outputs = [
     "$blink_core_output_dir/css/properties/shorthands/Animation.h",
     "$blink_core_output_dir/css/properties/shorthands/Background.h",
