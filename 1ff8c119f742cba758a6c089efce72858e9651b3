@@ -16,6 +16,24 @@
       "revId": "1ff8c119f742cba758a6c089efce72858e9651b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ffadee2_bdd25b16",
+        "filename": "printing/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-11-30T23:24:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b068c908_5a5883e0",
+      "revId": "1ff8c119f742cba758a6c089efce72858e9651b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
