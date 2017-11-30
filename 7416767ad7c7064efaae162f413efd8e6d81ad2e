@@ -16,6 +16,24 @@
       "revId": "7416767ad7c7064efaae162f413efd8e6d81ad2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "896043c8_6e2991e3",
+        "filename": "ash/wm/workspace/multi_window_resize_controller_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-30T20:57:11Z",
+      "side": 1,
+      "message": "yep, if we want to test snapped_width_ratio(), that would be in that CL.",
+      "parentUuid": "881e4759_1252f20e",
+      "revId": "7416767ad7c7064efaae162f413efd8e6d81ad2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
