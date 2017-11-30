@@ -5,6 +5,7 @@
 #include "components/omnibox/browser/omnibox_log.h"
 
 OmniboxLog::OmniboxLog(
+    const GURL& url,
     const base::string16& text,
     bool just_deleted_text,
     metrics::OmniboxInputType input_type,
@@ -17,7 +18,8 @@ OmniboxLog::OmniboxLog(
     size_t completed_length,
     base::TimeDelta elapsed_time_since_last_change_to_default_match,
     const AutocompleteResult& result)
-    : text(text),
+    : url(url),
+      text(text),
       just_deleted_text(just_deleted_text),
       input_type(input_type),
       is_popup_open(is_popup_open),
