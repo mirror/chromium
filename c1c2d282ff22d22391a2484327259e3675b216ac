@@ -22,6 +22,201 @@
       "revId": "c1c2d282ff22d22391a2484327259e3675b216ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37792859_42043ee4",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-30T08:27:34Z",
+      "side": 1,
+      "message": "I think we shouldn\u0027t need the anonymous namespace to be in chromeos::arc?",
+      "revId": "c1c2d282ff22d22391a2484327259e3675b216ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13451dad_6fcdacdc",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-30T08:27:34Z",
+      "side": 1,
+      "message": "I think we have to define both move constructor and operator\u003d for movable types.\nhttps://cs.chromium.org/chromium/src/mojo/edk/embedder/scoped_platform_handle.h may be a good example.",
+      "revId": "c1c2d282ff22d22391a2484327259e3675b216ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84d680ef_d5869694",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-30T08:27:34Z",
+      "side": 1,
+      "message": "BitstreamBuffer does not have a move constructor, so perhaps copy?",
+      "range": {
+        "startLine": 92,
+        "startChar": 55,
+        "endLine": 92,
+        "endChar": 57
+      },
+      "revId": "c1c2d282ff22d22391a2484327259e3675b216ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdd6072c_b265921d",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-30T08:27:34Z",
+      "side": 1,
+      "message": "Perhaps WARN_UNUSED_RESULT?",
+      "range": {
+        "startLine": 96,
+        "startChar": 35,
+        "endLine": 96,
+        "endChar": 36
+      },
+      "revId": "c1c2d282ff22d22391a2484327259e3675b216ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17cc3bc3_0ab0482b",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-30T08:27:34Z",
+      "side": 1,
+      "message": "Please add a comment explaining why this is a no-op.",
+      "range": {
+        "startLine": 187,
+        "startChar": 2,
+        "endLine": 187,
+        "endChar": 12
+      },
+      "revId": "c1c2d282ff22d22391a2484327259e3675b216ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "474ac78f_54ecac65",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-30T08:27:34Z",
+      "side": 1,
+      "message": "Perhaps consider removing, as SharedMemoryHandle does not have a move constructor?",
+      "range": {
+        "startLine": 516,
+        "startChar": 47,
+        "endLine": 516,
+        "endChar": 57
+      },
+      "revId": "c1c2d282ff22d22391a2484327259e3675b216ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69391d30_f59eb3a1",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-30T08:27:34Z",
+      "side": 1,
+      "message": "Could we iterate on int32_t to avoid casting from uint to int?",
+      "range": {
+        "startLine": 538,
+        "startChar": 29,
+        "endLine": 538,
+        "endChar": 49
+      },
+      "revId": "c1c2d282ff22d22391a2484327259e3675b216ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e00dfa2_eb522adb",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-30T08:27:34Z",
+      "side": 1,
+      "message": "I think OS_LINUX may be sufficient in this case?",
+      "range": {
+        "startLine": 552,
+        "startChar": 4,
+        "endLine": 552,
+        "endChar": 23
+      },
+      "revId": "c1c2d282ff22d22391a2484327259e3675b216ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f215e30c_89342c13",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-30T08:27:34Z",
+      "side": 1,
+      "message": "Could we use protected_output_handles_.size() ? Or, alternatively, we could not clear and resize it in AssignPictureBuffers in non-secure mode.",
+      "range": {
+        "startLine": 561,
+        "startChar": 48,
+        "endLine": 561,
+        "endChar": 68
+      },
+      "revId": "c1c2d282ff22d22391a2484327259e3675b216ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
