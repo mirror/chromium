@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 //
-// Next MinVersion: 27
+// Next MinVersion: 28
 
 module arc.mojom;
 
@@ -131,6 +131,9 @@ enum AppDiscoveryRequestState {
   PHONESKY_INTERNAL_ERROR = 15,
   //   At least one result returned with invalid app data.
   PHONESKY_RESULT_INVALID_DATA = 16,
+  //   An invalid result arrives at Chrome, which may be caused by mojo
+  //   versions mismatch between Android And Chrome.
+  [MinVersion=27] CHROME_GOT_INVALID_RESULT = 17,
 };
 
 // Next method ID: 18
