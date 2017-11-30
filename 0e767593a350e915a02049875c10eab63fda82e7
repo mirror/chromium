@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "3e833e6f_a854819b",
+        "filename": "ios/chrome/browser/context_menu/context_menu_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-30T12:23:34Z",
+      "side": 1,
+      "message": "Ideally the EGTests don\u0027t know or care about view controllers, but I\u0027d rather at least use a function whose implementation we can change than just grabbing -rootViewController.",
+      "parentUuid": "e369872c_07ffe843",
+      "range": {
+        "startLine": 212,
+        "startChar": 34,
+        "endLine": 212,
+        "endChar": 52
+      },
+      "revId": "0e767593a350e915a02049875c10eab63fda82e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "897f5004_65edbbeb",
         "filename": "ios/chrome/browser/context_menu/context_menu_egtest.mm",
         "patchSetId": 3
@@ -163,6 +187,24 @@
       "revId": "0e767593a350e915a02049875c10eab63fda82e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5896841_4b2e0403",
+        "filename": "ios/chrome/browser/context_menu/context_menu_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-30T12:23:34Z",
+      "side": 1,
+      "message": "Missed that. All good.",
+      "parentUuid": "030bce73_5e3de879",
+      "revId": "0e767593a350e915a02049875c10eab63fda82e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
