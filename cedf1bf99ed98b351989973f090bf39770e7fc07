@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c44c3fb9_6e871dd8",
+        "filename": "ui/events/blink/blink_event_util_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-30T22:10:28Z",
+      "side": 1,
+      "message": "We could do a simpler round-trip test for the two functions by just mapping ~0 to event-flags, and then back to modifier-flags and back again, thereby verifying that they support the same set of flags.\n\nAn explicit modifier list means we can actually tell if they\u0027re missing important modifiers, but it seems unfortunate that we don\u0027t have a single consistent notion of \"important modifiers\" that we could use here instead - or perhaps there is one, and I missed it?",
+      "range": {
+        "startLine": 226,
+        "startChar": 0,
+        "endLine": 239,
+        "endChar": 76
+      },
+      "revId": "cedf1bf99ed98b351989973f090bf39770e7fc07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
