@@ -146,7 +146,7 @@
 #   persistent IDs for all fields (but not for groups!) are needed. These are
 #   specified by the 'id' keys of each policy. NEVER CHANGE EXISTING IDs,
 #   because doing so would break the deployed wire format!
-#   For your editing convenience: highest ID currently used: 401
+#   For your editing convenience: highest ID currently used: 402
 #   And don't forget to also update the EnterprisePolicies enum of
 #   histograms.xml (run 'python tools/metrics/histograms/update_policies.py').
 #
@@ -10738,7 +10738,22 @@
       If you do not set this policy, <ph name="PRODUCT_NAME">$1<ex>Google Chrome</ex></ph> will use its usual default directory (platform-specific).
 
       See https://www.chromium.org/administrators/policy-list-3/user-data-directory-variables for a list of variables that can be used.''',
-    }
+    },
+    {
+      'name': 'ThirdPartyBlockingEnabled',
+      'type': 'main',
+      'schema': { 'type': 'boolean' },
+      'supported_on': ['chrome.win:64-'],
+      'features': {
+        'dynamic_refresh': False,
+        'per_profile': False,
+      },
+      'example_value': False,
+      'id': 402,
+      'caption': '''Enables third party software injection blocking''',
+      'tags': [],
+      'desc': '''If the policy is set to false then third party software will be allowed to inject into Chrome's processes. If the policy is set to true then third party software will be prevented from injecting into Chrome's processes.''',
+    },
   ],
   'messages': {
     # Messages that are not associated to any policies.

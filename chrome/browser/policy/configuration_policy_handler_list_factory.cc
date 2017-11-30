@@ -722,6 +722,12 @@ const PolicyToPreferenceMapEntry kSimplePolicyMap[] = {
   { key::kSitePerProcess,
     prefs::kSitePerProcess,
     base::Value::Type::BOOLEAN },
+
+#if defined(OS_WIN)
+  { key::kThirdPartyBlockingEnabled,
+    prefs::kThirdPartyBlockingEnabled,
+    base::Value::Type::BOOLEAN },
+#endif
 };
 // clang-format on
 
