@@ -128,14 +128,15 @@ bool HardwareDisplayPlaneManagerAtomic::SetPlaneData(
     HardwareDisplayPlaneList* plane_list,
     HardwareDisplayPlane* hw_plane,
     const OverlayPlane& overlay,
+    bool opaque,
     uint32_t crtc_id,
     const gfx::Rect& src_rect,
     CrtcController* crtc) {
   HardwareDisplayPlaneAtomic* atomic_plane =
       static_cast<HardwareDisplayPlaneAtomic*>(hw_plane);
-  uint32_t framebuffer_id = overlay.z_order
-                                ? overlay.buffer->GetFramebufferId()
-                                : overlay.buffer->GetOpaqueFramebufferId();
+  uint32_t framebuffer_id = opaque
+                                ? overlay.buffer->GetOpaqueFramebufferId()
+                                : overlay.buffer->GetFramebufferId();
   if (!atomic_plane->SetPlaneData(
           plane_list->atomic_property_set.get(), crtc_id, framebuffer_id,
           overlay.display_bounds, src_rect, overlay.plane_transform)) {

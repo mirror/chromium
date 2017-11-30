@@ -292,8 +292,9 @@ bool HardwareDisplayPlaneManager::AssignOverlayPlanes(
                                    to_fixed_point(crop_rect.height()));
     }
 
-    if (!SetPlaneData(plane_list, hw_plane, plane, crtc_id, fixed_point_rect,
-                      crtc)) {
+    bool opaque = &plane == &overlay_list.front();
+    if (!SetPlaneData(plane_list, hw_plane, plane, opaque,
+		      crtc_id, fixed_point_rect, crtc)) {
       ResetCurrentPlaneList(plane_list);
       return false;
     }
@@ -319,6 +320,8 @@ bool HardwareDisplayPlaneManager::IsFormatSupported(uint32_t fourcc_format,
     LOG(ERROR) << "Cannot find crtc " << crtc_id;
     return format_supported;
   }
+
+  return true;
 
   // We dont have a way to query z_order of a plane. This is a temporary
   // solution till driver exposes z_order property.

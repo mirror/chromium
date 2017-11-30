@@ -95,6 +95,7 @@ std::vector<OverlayCheckReturn_Params> DrmOverlayValidator::TestPageFlip(
     if (buffer && controller->TestPageFlip(test_list)) {
       returns[i].status = OVERLAY_STATUS_ABLE;
     } else {
+      LOG(ERROR) << "fail here";
       // If test failed here, platform cannot support this configuration
       // with current combination of layers. This is usually the case when this
       // plane has requested post processing capability which needs additional

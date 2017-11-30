@@ -117,6 +117,7 @@ class HardwareDisplayPlaneManager {
   virtual bool SetPlaneData(HardwareDisplayPlaneList* plane_list,
                             HardwareDisplayPlane* hw_plane,
                             const OverlayPlane& overlay,
+			    bool opaque,
                             uint32_t crtc_id,
                             const gfx::Rect& src_rect,
                             CrtcController* crtc) = 0;
