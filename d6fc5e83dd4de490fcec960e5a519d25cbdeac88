@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3bc2f90_73263a47",
+        "filename": "content/test/data/cross_site_document_request.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-30T17:30:54Z",
+      "side": 0,
+      "message": "Not sure why this was needed.  Maybe it more closely simulates an exploited renderer lying about the origin, but it\u0027s not needed for our tests.",
+      "revId": "d6fc5e83dd4de490fcec960e5a519d25cbdeac88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

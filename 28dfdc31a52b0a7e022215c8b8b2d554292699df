@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1de0b3bd_eff4eaef",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1237,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-30T17:30:54Z",
+      "side": 1,
+      "message": "I haven\u0027t been able to get the link doctor to show up in practice yet (even in official builds), so I haven\u0027t confirmed whether an equality check or a prefix check is needed.  It does look like we\u0027ll need to whitelist this case, since the renderer requests it with no initiator and it doesn\u0027t have CORS headers.",
+      "revId": "28dfdc31a52b0a7e022215c8b8b2d554292699df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3833742_01ac76ea",
+        "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-30T17:30:54Z",
+      "side": 1,
+      "message": "This is for both extension processes and content scripts.  I\u0027ll add a comment.",
+      "revId": "28dfdc31a52b0a7e022215c8b8b2d554292699df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62954601_a5837461",
+        "filename": "chrome/test/data/extensions/api_test/webrequest/test_unload5.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-30T17:30:54Z",
+      "side": 1,
+      "message": "Nick/Devlin: This is a side effect of Nick\u0027s proposed change to ResourceFetcher.cpp, where we set the initiator differently.  Is this an ok change, or is it a problem that it\u0027s visible to extensions?",
+      "revId": "28dfdc31a52b0a7e022215c8b8b2d554292699df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0903d53_2f051451",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-30T17:30:54Z",
+      "side": 1,
+      "message": "Nick suggested just doing an origin comparison here, since we\u0027re trusting the renderer.  I could give that a try.",
+      "revId": "28dfdc31a52b0a7e022215c8b8b2d554292699df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "071cee6b_41c33f61",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-30T17:30:54Z",
+      "side": 1,
+      "message": "The tricky thing with plugins is that (surprisingly) I haven\u0027t found a way to get to the Origin request header here.",
+      "revId": "28dfdc31a52b0a7e022215c8b8b2d554292699df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1da34d72_e1cebf7a",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-30T17:30:54Z",
+      "side": 1,
+      "message": "I think this will be required, given how many responses are blocked on real sites (e.g., JSONP labeled as JSON, HTML, or plain text).\n\nDebating whether to make that change in this CL or a followup.",
+      "revId": "28dfdc31a52b0a7e022215c8b8b2d554292699df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7391405_ae8ce0b7",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-30T17:30:54Z",
+      "side": 1,
+      "message": "I have a draft of a console message to add instead, but it affects a lot of layout test expectations.  I\u0027m thinking about landing that in a separate CL.",
+      "revId": "28dfdc31a52b0a7e022215c8b8b2d554292699df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86cf7503_99546db9",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/cross-origin-script-window-onerror.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-30T17:30:54Z",
+      "side": 1,
+      "message": "With XSDB, we don\u0027t get an error from the script tag, since the response is empty instead of an invalid script.  That\u0027s even better in terms of the intention of the test.\n\nThe old expectations are still valid without XSDB, since onerror happens before onload.  I\u0027ve added a flag-specific expectations file for the --site-per-process case when XSDB is enabled.",
+      "revId": "28dfdc31a52b0a7e022215c8b8b2d554292699df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a8fc156_ee6f43be",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/resources/fetch-access-control.php",
+        "patchSetId": 14
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-30T17:30:54Z",
+      "side": 1,
+      "message": "This was just wrong before, as Nick pointed out.  Line 119 is JSONP, not JSON.  This affected a bunch of no-cors ServiceWorker layout tests.",
+      "revId": "28dfdc31a52b0a7e022215c8b8b2d554292699df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8559067_83c71f55",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-30T17:30:54Z",
+      "side": 1,
+      "message": "Devlin/Daniel: This is Nick\u0027s proposed change for updating the initiator Origin for content scripts, isolated worlds, and (as it turns out) HTML imports.  Seems to work, other than making a slightly visible change to the web request API behavior (see test_unload5.js).",
+      "revId": "28dfdc31a52b0a7e022215c8b8b2d554292699df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
