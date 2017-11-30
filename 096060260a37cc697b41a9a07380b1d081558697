@@ -602,6 +602,30 @@
     },
     {
       "key": {
+        "uuid": "64a6a1a8_c1cc8e46",
+        "filename": "chrome/browser/ui/cocoa/profiles/signin_view_controller_delegate_mac.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-30T09:21:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "44e8ad46_f153e9ba",
+      "range": {
+        "startLine": 54,
+        "startChar": 26,
+        "endLine": 54,
+        "endChar": 39
+      },
+      "revId": "096060260a37cc697b41a9a07380b1d081558697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85be1208_ccd8cbe1",
         "filename": "chrome/browser/ui/views/profiles/signin_view_controller_delegate_views.cc",
         "patchSetId": 11
@@ -646,6 +670,30 @@
       "revId": "096060260a37cc697b41a9a07380b1d081558697",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e92d3406_55455b7b",
+        "filename": "chrome/browser/ui/views/profiles/signin_view_controller_delegate_views.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-30T09:21:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "23f3efa9_2d1e75db",
+      "range": {
+        "startLine": 43,
+        "startChar": 26,
+        "endLine": 43,
+        "endChar": 39
+      },
+      "revId": "096060260a37cc697b41a9a07380b1d081558697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
