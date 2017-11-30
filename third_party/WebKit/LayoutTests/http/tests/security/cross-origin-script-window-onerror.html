@@ -18,6 +18,10 @@ window.onerror = function(message, url, line) {
     testRunner.notifyDone();
   return true;
 }
+window.onload = function() {
+  if (window.testRunner)
+    testRunner.notifyDone();
+}
 </script>
 <script src="http://localhost:8000/security/resources/cross-origin-script.txt">
 </script>
