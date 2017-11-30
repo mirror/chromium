@@ -25,14 +25,14 @@
 #endif
 
 namespace sandbox {
-
 namespace syscall_broker {
 
 // Make a remote system call over IPC for syscalls that take a path and flags
 // as arguments, currently open() and access().
 // Will return -errno like a real system call.
 // This function needs to be async signal safe.
-int BrokerClient::PathAndFlagsSyscall(IPCCommand syscall_type,
+int BrokerClient::PathAndFlagsSyscall(int ipc_channel,
+                                      IPCCommand syscall_type,
                                       const char* pathname,
                                       int flags) const {
   int recvmsg_flags = 0;
@@ -81,8 +81,8 @@ int BrokerClient::PathAndFlagsSyscall(IPCCommand syscall_type,
   // Then read the reply on this new socketpair in reply_buf and put an
   // eventual attached file descriptor in |returned_fd|.
   ssize_t msg_len = base::UnixDomainSocket::SendRecvMsgWithFlags(
-      ipc_channel_.get(), reply_buf, sizeof(reply_buf), recvmsg_flags,
-      &returned_fd, write_pickle);
+      ipc_channel, reply_buf, sizeof(reply_buf), recvmsg_flags, &returned_fd,
+      write_pickle);
   if (msg_len <= 0) {
     if (!quiet_failures_for_tests_)
       RAW_LOG(ERROR, "Could not make request to broker process");
@@ -121,34 +121,41 @@ int BrokerClient::PathAndFlagsSyscall(IPCCommand syscall_type,
 }
 
 BrokerClient::BrokerClient(const BrokerPolicy& broker_policy,
-                           BrokerChannel::EndPoint ipc_channel,
                            bool fast_check_in_client,
                            bool quiet_failures_for_tests)
     : broker_policy_(broker_policy),
-      ipc_channel_(std::move(ipc_channel)),
       fast_check_in_client_(fast_check_in_client),
       quiet_failures_for_tests_(quiet_failures_for_tests) {}
 
 BrokerClient::~BrokerClient() {
 }
 
-int BrokerClient::Access(const char* pathname, int mode) const {
-  return PathAndFlagsSyscall(COMMAND_ACCESS, pathname, mode);
+int BrokerClient::Access(int ipc_channel,
+                         const char* pathname,
+                         int mode) const {
+  return PathAndFlagsSyscall(ipc_channel, COMMAND_ACCESS, pathname, mode);
 }
 
-int BrokerClient::Open(const char* pathname, int flags) const {
-  return PathAndFlagsSyscall(COMMAND_OPEN, pathname, flags);
+int BrokerClient::Open(int ipc_channel, const char* pathname, int flags) const {
+  return PathAndFlagsSyscall(ipc_channel, COMMAND_OPEN, pathname, flags);
 }
 
-int BrokerClient::Stat(const char* pathname, struct stat* sb) {
-  return StatFamilySyscall(COMMAND_STAT, pathname, sb, sizeof(*sb));
+int BrokerClient::Stat(int ipc_channel,
+                       const char* pathname,
+                       struct stat* sb) const {
+  return StatFamilySyscall(ipc_channel, COMMAND_STAT, pathname, sb,
+                           sizeof(*sb));
 }
 
-int BrokerClient::Stat64(const char* pathname, struct stat64* sb) {
-  return StatFamilySyscall(COMMAND_STAT64, pathname, sb, sizeof(*sb));
+int BrokerClient::Stat64(int ipc_channel,
+                         const char* pathname,
+                         struct stat64* sb) const {
+  return StatFamilySyscall(ipc_channel, COMMAND_STAT64, pathname, sb,
+                           sizeof(*sb));
 }
 
-int BrokerClient::StatFamilySyscall(IPCCommand syscall_type,
+int BrokerClient::StatFamilySyscall(int ipc_channel,
+                                    IPCCommand syscall_type,
                                     const char* pathname,
                                     void* result_ptr,
                                     size_t expected_result_size) const {
@@ -165,8 +172,7 @@ int BrokerClient::StatFamilySyscall(IPCCommand syscall_type,
   int returned_fd = -1;
   uint8_t reply_buf[kMaxMessageLength];
   ssize_t msg_len = base::UnixDomainSocket::SendRecvMsg(
-      ipc_channel_.get(), reply_buf, sizeof(reply_buf), &returned_fd,
-      write_pickle);
+      ipc_channel, reply_buf, sizeof(reply_buf), &returned_fd, write_pickle);
 
   if (msg_len <= 0) {
     if (!quiet_failures_for_tests_)
@@ -191,7 +197,9 @@ int BrokerClient::StatFamilySyscall(IPCCommand syscall_type,
   return return_value;
 }
 
-int BrokerClient::Rename(const char* oldpath, const char* newpath) {
+int BrokerClient::Rename(int ipc_channel,
+                         const char* oldpath,
+                         const char* newpath) const {
   if (fast_check_in_client_) {
     bool ignore;
     if (!broker_policy_.GetFileNameIfAllowedToOpen(oldpath, O_RDWR, nullptr,
@@ -211,8 +219,7 @@ int BrokerClient::Rename(const char* oldpath, const char* newpath) {
   int returned_fd = -1;
   uint8_t reply_buf[kMaxMessageLength];
   ssize_t msg_len = base::UnixDomainSocket::SendRecvMsg(
-      ipc_channel_.get(), reply_buf, sizeof(reply_buf), &returned_fd,
-      write_pickle);
+      ipc_channel, reply_buf, sizeof(reply_buf), &returned_fd, write_pickle);
 
   if (msg_len <= 0) {
     if (!quiet_failures_for_tests_)
@@ -229,7 +236,10 @@ int BrokerClient::Rename(const char* oldpath, const char* newpath) {
   return return_value;
 }
 
-int BrokerClient::Readlink(const char* path, char* buf, size_t bufsize) {
+int BrokerClient::Readlink(int ipc_channel,
+                           const char* path,
+                           char* buf,
+                           size_t bufsize) const {
   if (fast_check_in_client_) {
     bool ignore;
     if (!broker_policy_.GetFileNameIfAllowedToOpen(path, O_RDONLY, nullptr,
@@ -246,8 +256,7 @@ int BrokerClient::Readlink(const char* path, char* buf, size_t bufsize) {
   int returned_fd = -1;
   uint8_t reply_buf[kMaxMessageLength];
   ssize_t msg_len = base::UnixDomainSocket::SendRecvMsg(
-      ipc_channel_.get(), reply_buf, sizeof(reply_buf), &returned_fd,
-      write_pickle);
+      ipc_channel, reply_buf, sizeof(reply_buf), &returned_fd, write_pickle);
 
   if (msg_len <= 0) {
     if (!quiet_failures_for_tests_)

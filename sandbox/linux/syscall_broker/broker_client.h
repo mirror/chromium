@@ -10,11 +10,9 @@
 #include <unistd.h>
 
 #include "base/macros.h"
-#include "sandbox/linux/syscall_broker/broker_channel.h"
 #include "sandbox/linux/syscall_broker/broker_common.h"
 
 namespace sandbox {
-
 namespace syscall_broker {
 
 class BrokerPolicy;
@@ -31,58 +29,55 @@ class BrokerClient {
   // |policy| needs to match the policy used by BrokerHost. This
   // allows to predict some of the requests which will be denied
   // and save an IPC round trip.
-  // |ipc_channel| needs to be a suitable SOCK_SEQPACKET unix socket.
   // |fast_check_in_client| should be set to true and
   // |quiet_failures_for_tests| to false unless you are writing tests.
   BrokerClient(const BrokerPolicy& policy,
-               BrokerChannel::EndPoint ipc_channel,
                bool fast_check_in_client,
                bool quiet_failures_for_tests);
   ~BrokerClient();
 
+  // The following methods can be used in place of the syscall of the
+  // same name. They all take an |ipc_channel| which needs to be a suitable
+  // SOCK_SEQPACKET unix socket, onto which a request to the proxy will be
+  // written. These all must be async signal safe. They return -errno
+  // on errors.
+
   // Can be used in place of access().
   // X_OK will always return an error in practice since the broker process
   // doesn't support execute permissions.
-  // It's similar to the access() system call and will return -errno on errors.
-  // This is async signal safe.
-  int Access(const char* pathname, int mode) const;
+  int Access(int ipc_channel, const char* pathname, int mode) const;
 
   // Can be used in place of open().
   // The implementation only supports certain white listed flags and will
   // return -EPERM on other flags.
-  // It's similar to the open() system call and will return -errno on errors.
-  // This is async signal safe.
-  int Open(const char* pathname, int flags) const;
+  int Open(int ipc_channel, const char* pathname, int flags) const;
 
   // Can be used in place of stat()/stat64().
-  // It's similar to the stat() system call and will return -errno on errors.
-  // This is async signal safe.
-  int Stat(const char* pathname, struct stat* sb);
-  int Stat64(const char* pathname, struct stat64* sb);
+  int Stat(int ipc_channel, const char* pathname, struct stat* sb) const;
+  int Stat64(int ipc_channel, const char* pathname, struct stat64* sb) const;
 
   // Can be used in place of rename().
-  // It's similar to the rename() system call and will return -errno on errors.
-  // This is async signal safe.
-  int Rename(const char* oldpath, const char* newpath);
+  int Rename(int ipc_channel, const char* oldpath, const char* newpath) const;
 
   // Can be used in place of Readlink().
-  int Readlink(const char* path, char* buf, size_t bufsize);
-
-  // Get the file descriptor used for IPC. This is used for tests.
-  int GetIPCDescriptor() const { return ipc_channel_.get(); }
+  int Readlink(int ipc_channel,
+               const char* path,
+               char* buf,
+               size_t bufsiz) const;
 
  private:
-  int PathAndFlagsSyscall(IPCCommand syscall_type,
+  int PathAndFlagsSyscall(int ipc_channel,
+                          IPCCommand syscall_type,
                           const char* pathname,
                           int flags) const;
 
-  int StatFamilySyscall(IPCCommand syscall_type,
+  int StatFamilySyscall(int ipc_channel,
+                        IPCCommand syscall_type,
                         const char* pathname,
                         void* result_ptr,
                         size_t expected_result_size) const;
 
   const BrokerPolicy& broker_policy_;
-  const BrokerChannel::EndPoint ipc_channel_;
   const bool fast_check_in_client_;  // Whether to forward a request that we
                                      // know will be denied to the broker. (Used
                                      // for tests).
@@ -93,7 +88,6 @@ class BrokerClient {
 };
 
 }  // namespace syscall_broker
-
 }  // namespace sandbox
 
 #endif  //  SANDBOX_LINUX_SYSCALL_BROKER_BROKER_CLIENT_H_

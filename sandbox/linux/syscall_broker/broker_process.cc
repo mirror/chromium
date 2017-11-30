@@ -27,7 +27,6 @@
 #include "sandbox/linux/syscall_broker/broker_host.h"
 
 namespace sandbox {
-
 namespace syscall_broker {
 
 BrokerProcess::BrokerProcess(
@@ -59,13 +58,12 @@ BrokerProcess::~BrokerProcess() {
 bool BrokerProcess::Init(
     const base::Callback<bool(void)>& broker_process_init_callback) {
   CHECK(!initialized_);
-  BrokerChannel::EndPoint ipc_reader;
-  BrokerChannel::EndPoint ipc_writer;
-  BrokerChannel::CreatePair(&ipc_reader, &ipc_writer);
-
 #if !defined(THREAD_SANITIZER)
   DCHECK_EQ(1, base::GetNumberOfThreads(base::GetCurrentProcessHandle()));
 #endif
+  BrokerChannel::EndPoint ipc_reader;
+  BrokerChannel::CreatePair(&ipc_reader, &ipc_writer_);
+
   int child_pid = fork();
   if (child_pid == -1)
     return false;
@@ -74,16 +72,15 @@ bool BrokerProcess::Init(
     // We are the parent and we have just forked our broker process.
     ipc_reader.reset();
     broker_pid_ = child_pid;
-    broker_client_.reset(new BrokerClient(broker_policy_, std::move(ipc_writer),
-                                          fast_check_in_client_,
-                                          quiet_failures_for_tests_));
+    broker_client_ = std::make_unique<BrokerClient>(
+        broker_policy_, fast_check_in_client_, quiet_failures_for_tests_);
     initialized_ = true;
     return true;
   }
 
   // We are the broker process. Make sure to close the writer's end so that
   // we get notified if the client disappears.
-  ipc_writer.reset();
+  ipc_writer_.reset();
   CHECK(broker_process_init_callback.Run());
   BrokerHost broker_host(broker_policy_, std::move(ipc_reader));
   for (;;) {
@@ -102,36 +99,37 @@ bool BrokerProcess::Init(
 
 void BrokerProcess::CloseChannel() {
   broker_client_.reset();
+  ipc_writer_.reset();
 }
 
 int BrokerProcess::Access(const char* pathname, int mode) const {
   RAW_CHECK(initialized_);
-  return broker_client_->Access(pathname, mode);
+  return broker_client_->Access(ipc_writer_.get(), pathname, mode);
 }
 
 int BrokerProcess::Open(const char* pathname, int flags) const {
   RAW_CHECK(initialized_);
-  return broker_client_->Open(pathname, flags);
+  return broker_client_->Open(ipc_writer_.get(), pathname, flags);
 }
 
 int BrokerProcess::Stat(const char* pathname, struct stat* sb) const {
   RAW_CHECK(initialized_);
-  return broker_client_->Stat(pathname, sb);
+  return broker_client_->Stat(ipc_writer_.get(), pathname, sb);
 }
 
 int BrokerProcess::Stat64(const char* pathname, struct stat64* sb) const {
   RAW_CHECK(initialized_);
-  return broker_client_->Stat64(pathname, sb);
+  return broker_client_->Stat64(ipc_writer_.get(), pathname, sb);
 }
 
 int BrokerProcess::Rename(const char* oldpath, const char* newpath) const {
   RAW_CHECK(initialized_);
-  return broker_client_->Rename(oldpath, newpath);
+  return broker_client_->Rename(ipc_writer_.get(), oldpath, newpath);
 }
 
 int BrokerProcess::Readlink(const char* path, char* buf, size_t bufsize) const {
   RAW_CHECK(initialized_);
-  return broker_client_->Readlink(path, buf, bufsize);
+  return broker_client_->Readlink(ipc_writer_.get(), path, buf, bufsize);
 }
 
 #if defined(MEMORY_SANITIZER)
