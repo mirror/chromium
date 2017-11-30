@@ -16,6 +16,7 @@
 #include "url/gurl.h"
 
 namespace content {
+class NavigationHandle;
 class WebContents;
 }
 
@@ -184,7 +185,9 @@ class PageInfo : public TabSpecificContentSettings::SiteDataObserver,
   void OnSiteDataAccessed() override;
 
  private:
-  FRIEND_TEST_ALL_PREFIXES(PageInfoTest, NonFactoryDefaultPermissionsShown);
+  FRIEND_TEST_ALL_PREFIXES(
+      PageInfoTest,
+      NonFactoryDefaultAndRecentlyChangedToDefaultPermissionsShown);
 
   // Initializes the |PageInfo|.
   void Init(const GURL& url, const security_state::SecurityInfo& security_info);
@@ -198,6 +201,10 @@ class PageInfo : public TabSpecificContentSettings::SiteDataObserver,
   // Sets (presents) the information about the site's identity and connection
   // in the |ui_|.
   void PresentSiteIdentity();
+
+  // content::WebContentsObserver override.
+  void DidStartNavigation(
+      content::NavigationHandle* navigation_handle) override;
 
   // The page info UI displays information and controls for site-
   // specific data (local stored objects like cookies), site-specific
