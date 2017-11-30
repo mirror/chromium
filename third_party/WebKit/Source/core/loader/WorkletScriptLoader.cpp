@@ -66,7 +66,7 @@ bool WorkletScriptLoader::WasScriptLoadSuccessful() const {
 void WorkletScriptLoader::Trace(blink::Visitor* visitor) {
   visitor->Trace(fetcher_);
   visitor->Trace(client_);
-  ResourceOwner<ScriptResource>::Trace(visitor);
+  ResourceClient::Trace(visitor);
 }
 
 }  // namespace blink
