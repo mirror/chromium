@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30b3e964_92da3e34",
+        "filename": "net/http/http_response_info.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-11-30T18:27:36Z",
+      "side": 0,
+      "message": "nice!",
+      "revId": "492cdd2711dbcb0f6685b2b0ecc5af7124666614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
