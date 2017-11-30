@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a46be2c9_c2418cd1",
+        "filename": "third_party/WebKit/Source/core/css/StyleRuleImport.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-30T07:59:15Z",
+      "side": 1,
+      "message": "Isn\u0027t it OK to simply make SetResource public?",
+      "range": {
+        "startLine": 84,
+        "startChar": 9,
+        "endLine": 84,
+        "endChar": 21
+      },
+      "revId": "67c5196d8bd7b16fa7aad80e23e61271941069db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19d56f59_621bc745",
+        "filename": "third_party/WebKit/Source/core/html/parser/CSSPreloadScanner.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-30T07:59:15Z",
+      "side": 1,
+      "message": "I think renaming this function would be good.",
+      "range": {
+        "startLine": 128,
+        "startChar": 7,
+        "endLine": 128,
+        "endChar": 20
+      },
+      "revId": "67c5196d8bd7b16fa7aad80e23e61271941069db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
