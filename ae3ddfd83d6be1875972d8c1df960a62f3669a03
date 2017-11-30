@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c859454_36d854ae",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-30T19:12:30Z",
+      "side": 1,
+      "message": "nit: I\u0027ll pick on the commit message again. The subject is kind of long. Could we make it shorter?\ne.g.\ncros: early return in PlayShutdownSound callback\n\nSee \"Writing commit descriptions\"\nhttps://www.chromium.org/developers/contributing-code\nAnd link to good commit message mentioned there:\nhttps://chris.beams.io/posts/git-commit/\n\nPreferred subject line length should be limited to 50 chars.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 80
+      },
+      "revId": "ae3ddfd83d6be1875972d8c1df960a62f3669a03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
