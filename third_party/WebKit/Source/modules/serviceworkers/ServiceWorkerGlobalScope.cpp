@@ -69,6 +69,7 @@
 #include "platform/wtf/Time.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebURL.h"
+#include "v8/include/v8.h"
 
 namespace blink {
 
@@ -340,6 +341,10 @@ void ServiceWorkerGlobalScope::SetIsInstalling(bool is_installing) {
   is_installing_ = is_installing;
   if (is_installing)
     return;
+
+  // Trigers GC by calling LowMemoryNotification to mitigate the succeeding GC
+  // costs after the service worker will be activated.
+  v8::Isolate::GetCurrent()->LowMemoryNotification();
 
   // Installing phase is finished; record the stats for the scripts that are
   // stored in Cache storage during installation.
