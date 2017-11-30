@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7f825552_76222636",
+        "filename": "content/common/loader_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-30T16:11:49Z",
+      "side": 1,
+      "message": "If we can set them in blink, that\u0027s better. The only thing we have to watch out for is whether this codepath is used  for plznavigate code path, in which case we either have to duplicate it or share the code somehow.\n\nI assume this is brainstorming, since it seems out of scope for this cl to do this?",
+      "parentUuid": "bd8abda5_13ba2f26",
+      "range": {
+        "startLine": 153,
+        "startChar": 3,
+        "endLine": 153,
+        "endChar": 0
+      },
+      "revId": "b2e43957f4c505be1f94ca61211ce8a17b52aef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "501db482_74b87bb4",
         "filename": "content/network/url_loader_unittest.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "eccfa16d_308c5182",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-30T16:11:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "501db482_74b87bb4",
+      "range": {
+        "startLine": 187,
+        "startChar": 27,
+        "endLine": 187,
+        "endChar": 44
+      },
+      "revId": "b2e43957f4c505be1f94ca61211ce8a17b52aef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56fb2b2e_b74466f4",
         "filename": "content/network/url_loader_unittest.cc",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-30T16:01:16Z",
       "side": 1,
       "message": "Should call net::URLRequestFilter::GetInstance()-\u003eClearHandlers() on teardown.",
+      "range": {
+        "startLine": 343,
+        "startChar": 42,
+        "endLine": 343,
+        "endChar": 59
+      },
+      "revId": "b2e43957f4c505be1f94ca61211ce8a17b52aef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "933fb0c9_27edbf77",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-30T16:11:49Z",
+      "side": 1,
+      "message": "The destructor of URLLoaderTest does this",
+      "parentUuid": "56fb2b2e_b74466f4",
       "range": {
         "startLine": 343,
         "startChar": 42,
