@@ -2326,6 +2326,9 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
   // The size of fiixed attrib buffer.
   GLsizei fixed_attrib_buffer_size_;
 
+  // Whether the decoder is for an offscreen surface.
+  bool offscreen_;
+
   // The offscreen frame buffer that the client renders to. With EGL, the
   // depth and stencil buffers are separate. With regular GL there is a single
   // packed depth stencil buffer in offscreen_target_depth_render_buffer_.
@@ -3140,6 +3143,7 @@ GLES2DecoderImpl::GLES2DecoderImpl(
       attrib_0_size_(0),
       fixed_attrib_buffer_id_(0),
       fixed_attrib_buffer_size_(0),
+      offscreen_(false),
       offscreen_target_color_format_(0),
       offscreen_target_depth_format_(0),
       offscreen_target_stencil_format_(0),
@@ -3213,6 +3217,7 @@ gpu::ContextResult GLES2DecoderImpl::Initialize(
   DCHECK(!context_.get());
   state_.set_api(gl::g_current_gl_context);
 
+  offscreen_ = offscreen;
   surfaceless_ = surface->IsSurfaceless() && !offscreen;
 
   set_initialized();
@@ -5050,6 +5055,13 @@ void GLES2DecoderImpl::Destroy(bool have_context) {
   if (group_.get()) {
     group_->Destroy(this, have_context);
     group_ = NULL;
+  }
+
+  // If this is not an offscreen surface, it shouldn't be shared, and we should
+  // have the only remaining ref. Logging to debug crbug.com/787086
+  if (!offscreen_ && surface_ && !surface_->HasOneRef()) {
+    LOG(ERROR) << "crbug.com/787086: Decoder is not the sole owner of "
+                  "|surface_| at destruction time";
   }
 
   // Destroy the surface before the context, some surface destructors make GL
