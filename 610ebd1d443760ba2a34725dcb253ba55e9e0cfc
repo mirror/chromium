@@ -39,6 +39,24 @@
       "revId": "610ebd1d443760ba2a34725dcb253ba55e9e0cfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4eba750_72028361",
+        "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1119,
+      "author": {
+        "id": 1246429
+      },
+      "writtenOn": "2017-11-30T14:15:32Z",
+      "side": 1,
+      "message": "Yes, I tried to update user_context\u0027s user type here, but user_context is const at this point.\n\nThis is what\u0027s happening:\n(1) On first sign-in:\n-\u003e Refresh token is fetched with ID token\n-\u003e OAuth2TokenInitializer sets user type of UserContext\n-\u003e AccountTrackerService is seeded with account info from UserContext\n-\u003e User type of User is updated and stored \n(2) On subsequent sign-ins:\n-\u003e UserManager loads user type from disk and sets user type of User\n-\u003e AccountTrackerService is seeded with account info from User\n\nIn (1) everything ends up working as expected, but in (2) there\u0027s an inconsistency between User\u0027s user type and UserContext\u0027s user type. User object is the one containing loaded type from disk, but I don\u0027t know the best place to propagate this information to user context. Thanks for working on it.\n\nThis hack of relying in one of the two sources works meanwhile.",
+      "parentUuid": "6a0c85c9_750e6d13",
+      "revId": "610ebd1d443760ba2a34725dcb253ba55e9e0cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
