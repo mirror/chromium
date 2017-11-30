@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a60cf47_ee00ac9d",
+        "filename": "third_party/WebKit/Source/modules/mediastream/UserMediaRequest.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-11-30T16:06:23Z",
+      "side": 1,
+      "message": "Nit: Beyond stating \"origin trial\", I think it might be clearer to explain that this flag is based on the origin trial being enabled (i.e. not a web-exposed flag like a constraint/property).",
+      "range": {
+        "startLine": 87,
+        "startChar": 18,
+        "endLine": 87,
+        "endChar": 21
+      },
+      "revId": "2920190c3c53285538e875d365d5beb05f076774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f907ebf7_16b0aff6",
+        "filename": "third_party/WebKit/public/platform/web_feature.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 1773,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-11-30T16:06:23Z",
+      "side": 1,
+      "message": "Nit: Suggest adding \"user media\" or more context to the counter name. I realize this intended as a temporary flag, but I wouldn\u0027t expect it to be named \"In\u003cxxx\u003eTrial\".",
+      "range": {
+        "startLine": 1773,
+        "startChar": 2,
+        "endLine": 1773,
+        "endChar": 35
+      },
+      "revId": "2920190c3c53285538e875d365d5beb05f076774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f81c7cd_3358ba8a",
+        "filename": "third_party/WebKit/public/web/WebUserMediaRequest.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-11-30T16:06:23Z",
+      "side": 1,
+      "message": "Nit: Suggest \"...end of origin trial\". Just using \"trial\" is ambiguous (i.e. Finch/field trial vs origin trial?).",
+      "range": {
+        "startLine": 82,
+        "startChar": 44,
+        "endLine": 82,
+        "endChar": 46
+      },
+      "revId": "2920190c3c53285538e875d365d5beb05f076774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
