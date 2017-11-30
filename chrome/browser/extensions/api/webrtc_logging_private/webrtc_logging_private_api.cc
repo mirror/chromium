@@ -528,6 +528,7 @@ bool WebrtcLoggingPrivateStopAudioDebugRecordingsFunction::RunAsync() {
   return true;
 }
 
+#if 0  // TODO: !!!
 bool WebrtcLoggingPrivateStartWebRtcEventLoggingFunction::RunAsync() {
   if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kEnableWebRtcEventLoggingFromExtension)) {
@@ -585,6 +586,9 @@ bool WebrtcLoggingPrivateStopWebRtcEventLoggingFunction::RunAsync() {
   return true;
 }
 
+#endif
+
+#if 0  // TODO: !!!
 bool WebrtcLoggingPrivateGetLogsDirectoryFunction::RunAsync() {
 #if defined(OS_LINUX) || defined(OS_CHROMEOS)
   // Unlike other WebrtcLoggingPrivate functions that take a RequestInfo object,
@@ -616,6 +620,7 @@ bool WebrtcLoggingPrivateGetLogsDirectoryFunction::RunAsync() {
   return false;
 #endif  // defined(OS_LINUX) || defined(OS_CHROMEOS)
 }
+#endif
 
 void WebrtcLoggingPrivateGetLogsDirectoryFunction::FireCallback(
     const std::string& filesystem_id,

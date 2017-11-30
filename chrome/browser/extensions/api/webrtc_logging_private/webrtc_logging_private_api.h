@@ -256,7 +256,7 @@ class WebrtcLoggingPrivateStopAudioDebugRecordingsFunction
   // ExtensionFunction overrides.
   bool RunAsync() override;
 };
-
+#if 0  // TODO: !!!
 class WebrtcLoggingPrivateStartWebRtcEventLoggingFunction
     : public WebrtcLoggingPrivateFunctionWithRecordingDoneCallback {
  public:
@@ -305,7 +305,7 @@ class WebrtcLoggingPrivateGetLogsDirectoryFunction
                     const std::string& base_name);
 #endif
 };
-
+#endif
 }  // namespace extensions
 
 #endif  // CHROME_BROWSER_EXTENSIONS_API_WEBRTC_LOGGING_PRIVATE_WEBRTC_LOGGING_PRIVATE_API_H_

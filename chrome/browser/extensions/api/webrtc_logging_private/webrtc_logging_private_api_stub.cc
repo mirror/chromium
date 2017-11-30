@@ -86,6 +86,7 @@ bool WebrtcLoggingPrivateStopAudioDebugRecordingsFunction::RunAsync() {
   return false;
 }
 
+#if 0  // TODO: !!!
 bool WebrtcLoggingPrivateStartWebRtcEventLoggingFunction::RunAsync() {
   SetError(kErrorNotSupported);
   SendResponse(false);
@@ -97,6 +98,7 @@ bool WebrtcLoggingPrivateStopWebRtcEventLoggingFunction::RunAsync() {
   SendResponse(false);
   return false;
 }
+#endif
 
 bool WebrtcLoggingPrivateGetLogsDirectoryFunction::RunAsync() {
   SetError(kErrorNotSupported);
