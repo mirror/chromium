@@ -70,6 +70,24 @@
       "revId": "e1a89833f47921ca8ca39aaecb6c40f392af233c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "761c4ea4_54fc8897",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.cc",
+        "patchSetId": 59
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-30T00:47:36Z",
+      "side": 1,
+      "message": "\u003e You\u0027re right, I\u0027ve removed the callback support in GpuFenceManager entirely and simplified the usage in GpuCommandBufferStub and InProcessCommandBuffer to retrieve a handle from the assumed-existing entry directly, and it looks a good bit simpler now.\n\u003e \n\u003e I think my earlier resistance to this was based on a misunderstanding - somehow I was assuming that a ShallowFlushCHROMIUM just transferred commands to the service, but it actually also ensures that they are processed before returning, so the GetGpuFence is sequenced correctly.\n\nJust to make sure we\u0027re fully clear, ShallowFlushCHROMIUM sends an IPC to the service (or queues a task for InProcessCommandBuffer) to kick off command processing, but returns before they are processed. However IPCs (or tasks) are handled in-order, so further IPCs (tasks) will be sequenced after.\nIOW ShallowFlushCHROMIUM can be used to ensure ordering between commands and other IPCs (tasks) - generally methods on GpuControl.",
+      "parentUuid": "2575c76b_1aa960ed",
+      "revId": "e1a89833f47921ca8ca39aaecb6c40f392af233c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
