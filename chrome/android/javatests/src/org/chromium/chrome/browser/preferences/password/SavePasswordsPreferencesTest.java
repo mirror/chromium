@@ -4,10 +4,15 @@
 
 package org.chromium.chrome.browser.preferences.password;
 
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
+
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
-import android.support.test.espresso.action.ViewActions;
-import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.filters.SmallTest;
 
 import org.junit.Assert;
@@ -20,12 +25,14 @@ import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ChromeTabbedActivity;
 import org.chromium.chrome.browser.preferences.ChromeBaseCheckBoxPreference;
 import org.chromium.chrome.browser.preferences.ChromeSwitchPreference;
 import org.chromium.chrome.browser.preferences.PrefServiceBridge;
 import org.chromium.chrome.browser.preferences.Preferences;
 import org.chromium.chrome.browser.preferences.PreferencesTest;
 import org.chromium.chrome.browser.test.ChromeBrowserTestRule;
+import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.util.browser.Features;
 import org.chromium.chrome.test.util.browser.Features.EnableFeatures;
 
@@ -34,6 +41,10 @@ import org.chromium.chrome.test.util.browser.Features.EnableFeatures;
  */
 @RunWith(BaseJUnit4ClassRunner.class)
 public class SavePasswordsPreferencesTest {
+    @Rule
+    public ChromeActivityTestRule<ChromeTabbedActivity> mActivityTestRule =
+            new ChromeActivityTestRule<>(ChromeTabbedActivity.class);
+
     @Rule
     public final ChromeBrowserTestRule mBrowserTestRule = new ChromeBrowserTestRule();
 
@@ -162,14 +173,42 @@ public class SavePasswordsPreferencesTest {
     @Feature({"Preferences"})
     @EnableFeatures("password-export")
     public void testExportMenuItem() throws Exception {
+        PasswordReauthenticationFragment.preventLockingForTesting();
+        ReauthenticationManager.setScreenLockSetUpOverride(
+                ReauthenticationManager.ScreenLockSetUpOverride.SET_UP);
+
         final Preferences preferences =
                 PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
                         SavePasswordsPreferences.class.getName());
 
         Espresso.openActionBarOverflowOrOptionsMenu(
                 InstrumentationRegistry.getInstrumentation().getTargetContext());
-        Espresso.onView(ViewMatchers.withText(
-                                R.string.save_password_preferences_export_action_title))
-                .perform(ViewActions.click());
+        Espresso.onView(withText(R.string.save_password_preferences_export_action_title))
+                .perform(click());
+    }
+
+    /**
+     * Check whether the user is asked to set up a screen lock if attempting to export passwords.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @EnableFeatures("password-export")
+    public void testExportMenuItemNoLock() throws Exception {
+        PasswordReauthenticationFragment.preventLockingForTesting();
+        ReauthenticationManager.setScreenLockSetUpOverride(
+                ReauthenticationManager.ScreenLockSetUpOverride.NOT_SET_UP);
+
+        final Preferences preferences =
+                PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
+                        SavePasswordsPreferences.class.getName());
+
+        Espresso.openActionBarOverflowOrOptionsMenu(
+                InstrumentationRegistry.getInstrumentation().getTargetContext());
+        Espresso.onView(withText(R.string.save_password_preferences_export_action_title))
+                .perform(click());
+        Espresso.onView(withText(R.string.password_export_set_lock_screen))
+                .inRoot(withDecorView(isEnabled()))
+                .check(matches(isDisplayed()));
     }
 }
