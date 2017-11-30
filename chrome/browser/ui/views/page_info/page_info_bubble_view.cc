@@ -40,6 +40,7 @@
 #include "components/strings/grit/components_chromium_strings.h"
 #include "components/strings/grit/components_strings.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/navigation_handle.h"
 #include "extensions/common/constants.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/material_design/material_design_controller.h"
@@ -675,7 +676,8 @@ void PageInfoBubbleView::WasHidden() {
 }
 
 void PageInfoBubbleView::DidStartNavigation(content::NavigationHandle* handle) {
-  GetWidget()->Close();
+  if (handle->IsInMainFrame())
+    GetWidget()->Close();
 }
 
 void PageInfoBubbleView::OnPermissionChanged(
