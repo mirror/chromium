@@ -62,12 +62,15 @@ Surface* Seat::GetFocusedSurface() {
 }
 
 void Seat::SetSelection(DataSource* source) {
-  DCHECK(source);
-
   if (selection_source_) {
     if (selection_source_->get() == source)
       return;
     selection_source_->get()->Cancelled();
+  }
+
+  if (!source) {
+    ui::Clipboard::GetForCurrentThread()->Clear(ui::CLIPBOARD_TYPE_COPY_PASTE);
+    return;
   }
 
   selection_source_ = std::make_unique<ScopedDataSource>(source, this);

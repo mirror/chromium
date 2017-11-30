@@ -227,5 +227,22 @@ TEST_F(SeatTest, SetSelection_SourceDestroyedAfterSetSelection) {
   EXPECT_FALSE(delegate1.cancelled());
 }
 
+TEST_F(SeatTest, SetSelection_NullSource) {
+  Seat seat;
+
+  {
+    ui::ScopedClipboardWriter writer(ui::CLIPBOARD_TYPE_COPY_PASTE);
+    writer.WriteText(base::UTF8ToUTF16("New data"));
+  }
+
+  // Should clear the clipboard.
+  seat.SetSelection(nullptr);
+
+  std::string clipboard;
+  ui::Clipboard::GetForCurrentThread()->ReadAsciiText(
+      ui::CLIPBOARD_TYPE_COPY_PASTE, &clipboard);
+  EXPECT_EQ(clipboard, "");
+}
+
 }  // namespace
 }  // namespace exo
