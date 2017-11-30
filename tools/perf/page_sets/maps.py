@@ -11,32 +11,38 @@ from page_sets import webgl_supported_shared_state
 class MapsPage(page_module.Page):
   """Google Maps benchmarks and pixel tests.
 
-  The Maps team gave us a build of their test. The only modification
-  to the test was to config.js, where the width and height query args
-  were set to 800 by 600. The WPR was recorded with:
+  The Maps team gave us a build of their performance test
+  (chrome_smoothness_performancetest). The files were served up on
+  localhost on port 8000.
+
+  Below, "http://map-test" was replaced with "http://localhost:8000". The
+  WPR was then recorded with:
 
   tools/perf/record_wpr smoothness_maps --browser=system
 
-  This produced maps_???.wpr, maps_???.wpr.sha1 and maps.json.
+  This produced maps_???.wprgo, maps_???.wprgo.sha1 and maps.json.
 
-  It's worth noting that telemetry no longer allows replaying a URL that
-  refers to localhost. If the recording was created for the locahost URL, one
-  can update the host name by running:
+  Telemetry no longer allows replaying a URL that refers to localhost. The
+  archive then needs to be updated via:
 
-    web-page-replay/httparchive.py remap-host maps_004.wpr \
-    localhost:8000 map-test
+  TODO(kbr): need https://github.com/catapult-project/catapult/issues/3787
+  fixed and a command line to invoke web_page_replay_go's httparchive to
+  remap localhost:8000 to map-test in the recorded archive
 
-  (web-page-replay/ can be found in third_party/catapult/telemetry/third_party/)
+  Then update the maps.json file to delete all references to the old
+  archives. There should be only one reference to a maps_???.wprgo archive
+  in that file.
 
   After updating the host name in the WPR archive, or recording a
   newly-numbered WPR archive, please remember to update
   content/test/gpu/gpu_tests/maps_integration_test.py (and potentially
   its pixel expectations) as well.
 
-  To upload the maps_???.wpr to cloud storage, one would run:
+  To upload the maps_???.wprgo to cloud storage, one would run:
 
     depot_tools/upload_to_google_storage.py --bucket=chromium-telemetry \
-    maps_???.wpr
+    maps_???.wprgo
+
   """
 
   def __init__(self, page_set):
@@ -55,9 +61,12 @@ class MapsPage(page_module.Page):
 
   def RunNavigateSteps(self, action_runner):
     super(MapsPage, self).RunNavigateSteps(action_runner)
-    action_runner.Wait(3)
+    action_runner.WaitForJavaScriptCondition('window.startTest != undefined')
 
   def RunPageInteractions(self, action_runner):
+    # Kick off the map's animation.
+    action_runner.EvaluateJavaScript('window.startTest()')
+
     with action_runner.CreateInteraction('MapAnimation'):
       action_runner.WaitForJavaScriptCondition(
         'window.testMetrics != undefined', timeout=120)
