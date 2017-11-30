@@ -46,6 +46,30 @@
       "revId": "d6e38b49817e932d3020ebda23493d6cb021a025",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e2f9403_6dd90d56",
+        "filename": "content/public/app/mojo/content_browser_manifest.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-11-30T11:29:53Z",
+      "side": 1,
+      "message": "That new CL looks good to me + the bots seems willing :)\n\nAside: for the benefit of reviewers, patches that remove Origin from mojo worker/frame -\u003e browser mojo API requests in order to make the browser the canonical source of truth about the Origin of said worker/frame, _and_ are [Sync] requests (such this patch) are LGTM to move into RendererInterfaceBinders.\n\nHowever, please note that non-sync requests are not fine to move into RendererInterfaceBinders at this time, due to the potential for such requests to race with navigation [1].  Once that bug is fixed, non-sync will be allowed into RendererInterfaceBinders.\n\n[1] https://bugs.chromium.org/p/chromium/issues/detail?id\u003d729021\n\nPS\u003e @peter, hope you found RendererInterfaceBinders easy to use. If not, please mail me or sammc@ with your feedback.",
+      "parentUuid": "110aa267_ab6dda9f",
+      "range": {
+        "startLine": 27,
+        "startChar": 8,
+        "endLine": 27,
+        "endChar": 46
+      },
+      "revId": "d6e38b49817e932d3020ebda23493d6cb021a025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
