@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0e49058d_f89ab9b0",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-30T19:19:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b93932a7_d9ea4e2a",
+      "range": {
+        "startLine": 15,
+        "startChar": 32,
+        "endLine": 16,
+        "endChar": 53
+      },
+      "revId": "595abc024e93312cf4e134696becb992fdd8d8ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "424b7d2b_af2ef22c",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-30T01:52:41Z",
       "side": 1,
       "message": "This function is probably a good place to add a check to ensure that BUILD_DIR \u003d\u003d dirname of each command",
+      "range": {
+        "startLine": 160,
+        "startChar": 4,
+        "endLine": 160,
+        "endChar": 40
+      },
+      "revId": "595abc024e93312cf4e134696becb992fdd8d8ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78079e7f_4ba524e7",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-30T19:19:25Z",
+      "side": 1,
+      "message": "Actually, I think it should be closer to where we validate args.gn file has use_clang_coverage\u003dtrue.",
+      "parentUuid": "424b7d2b_af2ef22c",
       "range": {
         "startLine": 160,
         "startChar": 4,
@@ -68,6 +116,30 @@
       "revId": "595abc024e93312cf4e134696becb992fdd8d8ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb26eb27_731d7d51",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-11-30T19:19:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ce1ecbf_5fee7f2a",
+      "range": {
+        "startLine": 275,
+        "startChar": 2,
+        "endLine": 275,
+        "endChar": 42
+      },
+      "revId": "595abc024e93312cf4e134696becb992fdd8d8ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
