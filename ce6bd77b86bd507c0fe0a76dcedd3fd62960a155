@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edc3265f_31f99aeb",
+        "filename": "ios/chrome/browser/ssl/captive_portal_metrics_tab_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-30T15:57:30Z",
+      "side": 1,
+      "message": "nit: s/beacuse/because",
+      "range": {
+        "startLine": 22,
+        "startChar": 3,
+        "endLine": 22,
+        "endChar": 10
+      },
+      "revId": "ce6bd77b86bd507c0fe0a76dcedd3fd62960a155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95cba749_74da19e1",
+        "filename": "ios/chrome/browser/ssl/captive_portal_metrics_tab_helper.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-30T15:57:30Z",
+      "side": 1,
+      "message": "nit: s/include/import",
+      "range": {
+        "startLine": 10,
+        "startChar": 1,
+        "endLine": 10,
+        "endChar": 8
+      },
+      "revId": "ce6bd77b86bd507c0fe0a76dcedd3fd62960a155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
