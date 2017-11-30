@@ -66,9 +66,8 @@ class CC_PAINT_EXPORT PaintOpWriter {
 
   static void TypefaceCataloger(SkTypeface* typeface, void* ctx);
 
-  // Attempts to align the memory to the given alignment. Returns false if there
-  // is unsufficient bytes remaining to do this padding.
-  bool AlignMemory(size_t alignment);
+  // Aligns the memory to the given alignment.
+  void AlignMemory(size_t alignment);
 
   char* memory_ = nullptr;
   size_t size_ = 0u;
