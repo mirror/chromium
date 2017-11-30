@@ -22,7 +22,8 @@ LazyInstance<ThreadLocalPointer<SequencedTaskRunnerHandle>>::Leaky
 }  // namespace
 
 // static
-scoped_refptr<SequencedTaskRunner> SequencedTaskRunnerHandle::Get() {
+scoped_refptr<SequencedTaskRunner> SequencedTaskRunnerHandle::Get(
+    Optional<Location> from_here) {
   // Return the registered SequencedTaskRunner, if any.
   const SequencedTaskRunnerHandle* handle =
       sequenced_task_runner_tls.Pointer()->Get();
@@ -52,7 +53,10 @@ scoped_refptr<SequencedTaskRunner> SequencedTaskRunnerHandle::Get() {
   CHECK(ThreadTaskRunnerHandle::IsSet())
       << "Error: This caller requires a sequenced context (i.e. the "
          "current task needs to run from a SequencedTaskRunner).";
-  return ThreadTaskRunnerHandle::Get();
+  if (from_here)
+    return ThreadTaskRunnerHandle::Get(from_here.value());
+  else
+    return ThreadTaskRunnerHandle::Get();
 }
 
 // static
