@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8e4d1d2_08dc3a15",
+        "filename": "skia/tools/fuzzers/BUILD.gn",
+        "patchSetId": 15
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-11-30T14:49:04Z",
+      "side": 1,
+      "message": "Doesn\u0027t this #define apply only to your two .cc files above?",
+      "revId": "1ffadd2886d2a9f09791fdef9f0d52ac82a60a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
