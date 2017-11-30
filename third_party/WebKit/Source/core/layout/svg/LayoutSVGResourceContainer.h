@@ -31,6 +31,7 @@ enum LayoutSVGResourceType {
   kMarkerResourceType,
   kPatternResourceType,
   kLinearGradientResourceType,
+  kMeshGradientResourceType,
   kRadialGradientResourceType,
   kFilterResourceType,
   kClipperResourceType
@@ -58,6 +59,7 @@ class LayoutSVGResourceContainer : public LayoutSVGHiddenContainer {
     LayoutSVGResourceType resource_type = this->ResourceType();
     return resource_type == kPatternResourceType ||
            resource_type == kLinearGradientResourceType ||
+           resource_type == kMeshGradientResourceType ||
            resource_type == kRadialGradientResourceType;
   }
 

@@ -44,6 +44,8 @@ blink_core_sources("svg_layout") {
     "LayoutSVGResourceMarker.h",
     "LayoutSVGResourceMasker.cpp",
     "LayoutSVGResourceMasker.h",
+    "LayoutSVGResourceMeshGradient.cpp",
+    "LayoutSVGResourceMeshGradient.h",
     "LayoutSVGResourcePaintServer.cpp",
     "LayoutSVGResourcePaintServer.h",
     "LayoutSVGResourcePattern.cpp",

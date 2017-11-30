@@ -75,6 +75,21 @@
     "linearGradient",
     "marker",
     "mask",
+    {
+      name: "meshgradient",
+      interfaceName: "SVGMeshGradientElement",
+      runtimeEnabled: "SVGMeshGradient",
+    },
+    {
+      name: "meshpatch",
+      interfaceName: "SVGMeshpatchElement",
+      runtimeEnabled: "SVGMeshGradient",
+    },
+    {
+      name: "meshrow",
+      interfaceName: "SVGMeshrowElement",
+      runtimeEnabled: "SVGMeshGradient",
+    },
     "metadata",
     {
       name: "mpath",

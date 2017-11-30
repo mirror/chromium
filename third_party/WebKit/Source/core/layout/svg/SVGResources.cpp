@@ -393,6 +393,7 @@ void SVGResources::ResourceDestroyed(LayoutSVGResourceContainer* resource) {
       break;
     case kPatternResourceType:
     case kLinearGradientResourceType:
+    case kMeshGradientResourceType:
     case kRadialGradientResourceType:
       if (!fill_stroke_data_)
         break;
@@ -447,6 +448,7 @@ void SVGResources::ClearReferencesTo(LayoutSVGResourceContainer* resource) {
       break;
     case kPatternResourceType:
     case kLinearGradientResourceType:
+    case kMeshGradientResourceType:
     case kRadialGradientResourceType:
       DCHECK(fill_stroke_data_);
       DCHECK(resource == Fill() || resource == Stroke());

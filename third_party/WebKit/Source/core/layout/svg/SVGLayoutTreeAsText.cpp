@@ -38,6 +38,7 @@
 #include "core/layout/svg/LayoutSVGResourceLinearGradient.h"
 #include "core/layout/svg/LayoutSVGResourceMarker.h"
 #include "core/layout/svg/LayoutSVGResourceMasker.h"
+#include "core/layout/svg/LayoutSVGResourceMeshGradient.h"
 #include "core/layout/svg/LayoutSVGResourcePattern.h"
 #include "core/layout/svg/LayoutSVGResourceRadialGradient.h"
 #include "core/layout/svg/LayoutSVGRoot.h"
@@ -57,6 +58,7 @@
 #include "core/svg/SVGFilterElement.h"
 #include "core/svg/SVGLineElement.h"
 #include "core/svg/SVGLinearGradientElement.h"
+#include "core/svg/SVGMeshGradientElement.h"
 #include "core/svg/SVGPathElement.h"
 #include "core/svg/SVGPathUtilities.h"
 #include "core/svg/SVGPatternElement.h"
@@ -261,6 +263,9 @@ static void WriteSVGPaintingResource(
   else if (paint_server_container->ResourceType() ==
            kLinearGradientResourceType)
     ts << "[type=LINEAR-GRADIENT]";
+  else if (paint_server_container->ResourceType() ==
+           kMeshGradientResourceType)
+    ts << "[type=MESH-GRADIENT]";
   else if (paint_server_container->ResourceType() ==
            kRadialGradientResourceType)
     ts << "[type=RADIAL-GRADIENT]";
@@ -627,6 +632,20 @@ void WriteSVGResourceContainer(TextStream& ts,
 
     ts << " [start=" << gradient->StartPoint(attributes)
        << "] [end=" << gradient->EndPoint(attributes) << "]\n";
+  } else if (resource->ResourceType() == kMeshGradientResourceType) {
+    LayoutSVGResourceMeshGradient* gradient =
+        static_cast<LayoutSVGResourceMeshGradient*>(resource);
+
+    // Dump final results that are used for layout. No use in asking
+    // SVGGradientElement for its gradientUnits(), as it may link to other
+    // gradients using xlink:href, we need to build the full inheritance chain,
+    // aka. collectGradientProperties()
+    MeshGradientAttributes attributes;
+    ToSVGMeshGradientElement(gradient->GetElement())
+        ->CollectGradientAttributes(attributes);
+    WriteCommonGradientProperties(ts, attributes);
+
+    ts << " [start=" << gradient->StartPoint(attributes) << "]\n";
   } else if (resource->ResourceType() == kRadialGradientResourceType) {
     LayoutSVGResourceRadialGradient* gradient =
         ToLayoutSVGResourceRadialGradient(resource);
