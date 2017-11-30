@@ -34,6 +34,24 @@
       "revId": "ed9ff76ce6c14a57f3af69b4e99af9997c11fc4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "421abd0c_ab3b4948",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1790,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-11-30T17:13:24Z",
+      "side": 1,
+      "message": "ok, since they are just color space and subsampling difference. Assume they won\u0027t make serious problems (like DoS or security issue) if anything go wrong.",
+      "parentUuid": "5523c6fc_10efbe7f",
+      "revId": "ed9ff76ce6c14a57f3af69b4e99af9997c11fc4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
