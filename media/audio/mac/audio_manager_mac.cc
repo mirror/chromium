@@ -1108,17 +1108,48 @@ base::TimeDelta AudioManagerMac::GetHardwareLatency(
   OSSTATUS_DLOG_IF(WARNING, result != noErr, result)
       << "Could not get audio device latency.";
 
-  property_address.mSelector = kAudioStreamPropertyLatency;
-  UInt32 stream_latency_frames = 0;
-  size = sizeof(stream_latency_frames);
-  result = AudioObjectGetPropertyData(device_id, &property_address, 0, nullptr,
-                                      &size, &stream_latency_frames);
-  OSSTATUS_DLOG_IF(WARNING, result != noErr, result)
-      << "Could not get stream latency.";
+  // Iterate over streams and collect stream latency.
+  // TODO(dalecurtis): Refactor all these "get data size" + "get data" calls
+  // into a common utility function that just returns a std::unique_ptr.
+  UInt32 total_stream_latency_frames = 0;
+  property_address.mSelector = kAudioDevicePropertyStreams;
+  result = AudioObjectGetPropertyDataSize(device_id, &property_address, 0,
+                                          nullptr, &size);
+  if (result == noErr && size) {
+    std::unique_ptr<uint8_t[]> stream_id_storage(new uint8_t[size]);
+    AudioStreamID* stream_ids =
+        reinterpret_cast<AudioStreamID*>(stream_id_storage.get());
+    result = AudioObjectGetPropertyData(device_id, &property_address, 0,
+                                        nullptr, &size, stream_ids);
+    if (result == noErr) {
+      const int stream_count = size / sizeof(AudioDeviceID);
+      property_address.mSelector = kAudioStreamPropertyLatency;
+      size = sizeof(total_stream_latency_frames);
+      for (int i = 0; i < stream_count; ++i) {
+        UInt32 stream_latency_frames = 0;
+        result =
+            AudioObjectGetPropertyData(stream_ids[i], &property_address, 0,
+                                       nullptr, &size, &stream_latency_frames);
+        if (result != noErr) {
+          OSSTATUS_DLOG_IF(WARNING, result)
+              << "Could not get stream latency for stream #" << i;
+          continue;
+        }
+
+        total_stream_latency_frames += stream_latency_frames;
+      }
+    } else {
+      OSSTATUS_DLOG(WARNING, result)
+          << "Could not get audio device stream ids.";
+    }
+  } else {
+    OSSTATUS_DLOG_IF(WARNING, result != noErr, result)
+        << "Could not get audio device stream ids size.";
+  }
 
   return base::TimeDelta::FromSecondsD(audio_unit_latency_sec) +
          AudioTimestampHelper::FramesToTime(
-             device_latency_frames + stream_latency_frames, sample_rate);
+             device_latency_frames + total_stream_latency_frames, sample_rate);
 }
 
 bool AudioManagerMac::DeviceSupportsAmbientNoiseReduction(
