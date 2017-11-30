@@ -218,6 +218,7 @@ PreviewsState DeterminePreviewsState(PreviewsState previews_to_allow,
                                      net::URLRequest* request,
                                      ResourceContext* resource_context,
                                      bool is_main_frame) {
+  LOG(WARNING) << "XXXXX DeterminePreviewsState";
   // If previews have already been turned off, or we are inheriting values on a
   // sub-frame, don't check any further.
   if (previews_to_allow & PREVIEWS_OFF ||
@@ -1137,6 +1138,7 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
     BlobHandles blob_handles,
     const net::NetworkTrafficAnnotationTag& traffic_annotation,
     HeaderInterceptorResult interceptor_result) {
+  LOG(WARNING) << "XXXXX  ResourceDispatcherHostImpl::ContinuePendingBeginRequest  " ;
   DCHECK(requester_info->IsRenderer() || requester_info->IsNavigationPreload());
   DCHECK(!sync_result_handler || is_sync_load);
   if (interceptor_result != HeaderInterceptorResult::CONTINUE) {
@@ -1975,6 +1977,7 @@ void ResourceDispatcherHostImpl::BeginNavigationRequest(
     NavigationURLLoaderImplCore* loader,
     ServiceWorkerNavigationHandleCore* service_worker_handle_core,
     AppCacheNavigationHandleCore* appcache_handle_core) {
+  LOG(WARNING) << "XXXXX  ResourceDispatcherHostImpl::BeginNavigationRequest  " ;
   // PlzNavigate: BeginNavigationRequest currently should only be used for the
   // browser-side navigations project.
   CHECK(IsBrowserSideNavigationEnabled());
@@ -2063,6 +2066,7 @@ void ResourceDispatcherHostImpl::BeginNavigationRequest(
   PreviewsState previews_state = DeterminePreviewsState(
       info.common_params.previews_state, delegate_, new_request.get(),
       resource_context, info.is_main_frame);
+  LOG(WARNING) << "XXXXX  ResourceDispatcherHostImpl::BeginNavigationRequest  from DeterminePreviewsState: " << previews_state;
 
   // Make extra info and read footer (contains request ID).
   //

@@ -807,12 +807,14 @@ void ChromeResourceDispatcherHostDelegate::OnResponseStarted(
   if (info->GetResourceType() == content::RESOURCE_TYPE_MAIN_FRAME &&
       request->url().SchemeIsHTTPOrHTTPS()) {
     content::PreviewsState previews_state = response->head.previews_state;
+  LOG(WARNING) << "XXXXX ChromeResourceDispatcherHostDelegate::OnResponseStarted  request PS: " << previews_state;
     if (previews_state != 0) {
       if (!request->url().SchemeIs(url::kHttpsScheme)) {
         // Clear https-only previews types.
         previews_state &= ~(content::NOSCRIPT_ON);
       }
       if (previews_state != response->head.previews_state) {
+  LOG(WARNING) << "XXXXX ChromeResourceDispatcherHostDelegate::OnResponseStarted  updated resaponse PS: " << previews_state;
         // Update previews state in response to renderer.
         response->head.previews_state = previews_state;
         // Update previews state in nav data to UI.
@@ -954,6 +956,7 @@ ChromeResourceDispatcherHostDelegate::DeterminePreviewsState(
     if (previews_state == 0)
       previews_state = content::PREVIEWS_OFF;
   }
+  LOG(WARNING) << "XXXXX ChromeResourceDispatcherHostDelegate::DeterminePreviewsState  result: " << previews_state;
   return previews_state;
 }
 
