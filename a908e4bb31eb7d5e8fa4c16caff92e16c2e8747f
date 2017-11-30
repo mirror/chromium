@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "aa21cd17_2f8d521f",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-11-30T13:25:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "913e94be_01281d3e",
+      "range": {
+        "startLine": 104,
+        "startChar": 10,
+        "endLine": 104,
+        "endChar": 26
+      },
+      "revId": "a908e4bb31eb7d5e8fa4c16caff92e16c2e8747f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e260fe9_d81d367b",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 2
@@ -65,6 +89,30 @@
     },
     {
       "key": {
+        "uuid": "05b93021_d8b1608d",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-11-30T13:25:49Z",
+      "side": 1,
+      "message": "Actually this is the only part that has to be treated differently for DICE. For the signed-in case we can change the code inplace (see crrev.com/c/778020). \n\nBut it could be more clear, I agree. I\u0027ll refactor this method in another CL once this and crrev.com/c/778020 have landed.",
+      "parentUuid": "6e260fe9_d81d367b",
+      "range": {
+        "startLine": 836,
+        "startChar": 20,
+        "endLine": 836,
+        "endChar": 0
+      },
+      "revId": "a908e4bb31eb7d5e8fa4c16caff92e16c2e8747f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c6fc11f_15d51efa",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 2
@@ -85,6 +133,30 @@
       "revId": "a908e4bb31eb7d5e8fa4c16caff92e16c2e8747f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3cbba5d_716753ad",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-11-30T13:25:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c6fc11f_15d51efa",
+      "range": {
+        "startLine": 839,
+        "startChar": 11,
+        "endLine": 839,
+        "endChar": 35
+      },
+      "revId": "a908e4bb31eb7d5e8fa4c16caff92e16c2e8747f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
