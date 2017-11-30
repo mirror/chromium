@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d3567a93_86320d93",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-11-30T00:36:08Z",
+      "side": 1,
+      "message": "SetComposition() leaves the newly-inserted text selected so we know what we should include in the composition range after the replacement. Currently (without this CL), we set the correct selection in SetEditableSelectionOffsets(). However, that\u0027s what we\u0027re trying to avoid here (the offsets we calculated may be incorrect since JavaScript may have changed the text), so if we want to avoid using the offsets, we have to collapse the selection to the end of the newly-inserted text.",
+      "parentUuid": "0072c32c_03977e2f",
+      "range": {
+        "startLine": 781,
+        "startChar": 0,
+        "endLine": 785,
+        "endChar": 76
+      },
+      "revId": "6995928c9a88aed5f4de3838384a16e4e5dfb2d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d3006df1_45d87127",
         "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodControllerTest.cpp",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-28T23:53:11Z",
       "side": 1,
       "message": "5?",
+      "range": {
+        "startLine": 2519,
+        "startChar": 72,
+        "endLine": 2519,
+        "endChar": 74
+      },
+      "revId": "6995928c9a88aed5f4de3838384a16e4e5dfb2d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ccdd2ad_e7fecad0",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodControllerTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2519,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-11-30T00:36:08Z",
+      "side": 1,
+      "message": "Good catch!",
+      "parentUuid": "d3006df1_45d87127",
       "range": {
         "startLine": 2519,
         "startChar": 72,
