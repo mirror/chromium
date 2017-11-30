@@ -39,6 +39,24 @@
       "revId": "e6b499815db9d30fce1d22542ecc903a4522f6f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb0c55f0_9065011d",
+        "filename": "jingle/notifier/communicator/login.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-30T12:50:28Z",
+      "side": 1,
+      "message": "Use the existing bug but create a new change.",
+      "parentUuid": "7453579d_d5c4db76",
+      "revId": "e6b499815db9d30fce1d22542ecc903a4522f6f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
