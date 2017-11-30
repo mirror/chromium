@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b60bce66_8748d9fc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/datareduction/DataReductionDataUseItem.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1241685
+      },
+      "writtenOn": "2017-11-30T21:36:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eba23089_d26e73db",
+      "revId": "ee426087b5d51e92b833839751bcb12509909035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "466e9aa2_f9569f3a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/datareduction/DataReductionUtils.java",
         "patchSetId": 4
