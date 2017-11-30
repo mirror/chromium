@@ -74,9 +74,16 @@ const EffectPaintPropertyNode* RarePaintData::GetPreEffect() const {
   return local_border_box_properties_->Effect();
 }
 
-PropertyTreeState RarePaintData::PreEffectProperties() const {
+PropertyTreeState RarePaintData::PreLocalProperties() const {
   DCHECK(local_border_box_properties_);
   return PropertyTreeState(GetPreTransform(), GetPreCssClip(), GetPreEffect());
+}
+
+PropertyTreeState RarePaintData::PreEffectProperties() const {
+  DCHECK(local_border_box_properties_);
+  return PropertyTreeState(local_border_box_properties_->Transform(),
+                           local_border_box_properties_->Clip(),
+                           GetPreEffect());
 }
 
 PropertyTreeState RarePaintData::ContentsProperties() const {
