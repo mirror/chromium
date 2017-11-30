@@ -3458,6 +3458,8 @@ void Document::DispatchUnloadEvents() {
       if (!frame_)
         return;
 
+      frame_->Loader().SaveScrollAnchor();
+
       DocumentLoader* document_loader =
           frame_->Loader().GetProvisionalDocumentLoader();
       load_event_progress_ = kUnloadEventInProgress;
