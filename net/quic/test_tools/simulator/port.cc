@@ -12,7 +12,7 @@ namespace simulator {
 Packet::Packet()
     : source(), destination(), tx_timestamp(QuicTime::Zero()), size(0) {}
 
-Packet::~Packet() {}
+Packet::~Packet() = default;
 
 Packet::Packet(const Packet& packet) = default;
 

@@ -11,7 +11,7 @@ TestIOBuffer::~TestIOBuffer() {
   data_ = nullptr;
 }
 
-QuicTestMemSliceVectorImpl::~QuicTestMemSliceVectorImpl() {}
+QuicTestMemSliceVectorImpl::~QuicTestMemSliceVectorImpl() = default;
 
 QuicTestMemSliceVectorImpl::QuicTestMemSliceVectorImpl(
     std::vector<std::pair<char*, int>> buffers) {

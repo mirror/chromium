@@ -13,9 +13,9 @@ using std::string;
 
 namespace net {
 
-Curve25519KeyExchange::Curve25519KeyExchange() {}
+Curve25519KeyExchange::Curve25519KeyExchange() = default;
 
-Curve25519KeyExchange::~Curve25519KeyExchange() {}
+Curve25519KeyExchange::~Curve25519KeyExchange() = default;
 
 // static
 Curve25519KeyExchange* Curve25519KeyExchange::New(QuicStringPiece private_key) {

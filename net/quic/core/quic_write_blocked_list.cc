@@ -14,6 +14,6 @@ QuicWriteBlockedList::QuicWriteBlockedList()
   memset(bytes_left_for_batch_write_, 0, sizeof(bytes_left_for_batch_write_));
 }
 
-QuicWriteBlockedList::~QuicWriteBlockedList() {}
+QuicWriteBlockedList::~QuicWriteBlockedList() = default;
 
 }  // namespace net

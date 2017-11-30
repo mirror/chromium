@@ -20,7 +20,7 @@ ChannelIDKeyChromium::ChannelIDKeyChromium(
     std::unique_ptr<crypto::ECPrivateKey> ec_private_key)
     : ec_private_key_(std::move(ec_private_key)) {}
 
-ChannelIDKeyChromium::~ChannelIDKeyChromium() {}
+ChannelIDKeyChromium::~ChannelIDKeyChromium() = default;
 
 bool ChannelIDKeyChromium::Sign(QuicStringPiece signed_data,
                                 std::string* out_signature) const {
@@ -198,8 +198,7 @@ ChannelIDSourceChromium::ChannelIDSourceChromium(
     ChannelIDService* channel_id_service)
     : channel_id_service_(channel_id_service) {}
 
-ChannelIDSourceChromium::~ChannelIDSourceChromium() {
-}
+ChannelIDSourceChromium::~ChannelIDSourceChromium() = default;
 
 QuicAsyncStatus ChannelIDSourceChromium::GetChannelIDKey(
     const std::string& hostname,

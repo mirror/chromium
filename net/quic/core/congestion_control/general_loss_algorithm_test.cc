@@ -30,7 +30,7 @@ class GeneralLossAlgorithmTest : public QuicTest {
     EXPECT_LT(0, rtt_stats_.smoothed_rtt().ToMicroseconds());
   }
 
-  ~GeneralLossAlgorithmTest() override {}
+  ~GeneralLossAlgorithmTest() override = default;
 
   void SendDataPacket(QuicPacketNumber packet_number) {
     QuicStreamFrame* frame = new QuicStreamFrame();

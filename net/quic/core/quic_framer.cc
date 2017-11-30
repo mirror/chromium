@@ -180,7 +180,7 @@ QuicFramer::QuicFramer(const QuicTransportVersionVector& supported_versions,
   encrypter_[ENCRYPTION_NONE] = QuicMakeUnique<NullEncrypter>(perspective);
 }
 
-QuicFramer::~QuicFramer() {}
+QuicFramer::~QuicFramer() = default;
 
 // static
 size_t QuicFramer::GetMinStreamFrameSize(QuicTransportVersion version,
@@ -354,7 +354,7 @@ QuicFramer::AckFrameInfo::AckFrameInfo()
 
 QuicFramer::AckFrameInfo::AckFrameInfo(const AckFrameInfo& other) = default;
 
-QuicFramer::AckFrameInfo::~AckFrameInfo() {}
+QuicFramer::AckFrameInfo::~AckFrameInfo() = default;
 
 size_t QuicFramer::BuildDataPacket(const QuicPacketHeader& header,
                                    const QuicFrames& frames,

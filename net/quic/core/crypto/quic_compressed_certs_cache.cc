@@ -31,9 +31,9 @@ QuicCompressedCertsCache::UncompressedCerts::UncompressedCerts(
       client_common_set_hashes(client_common_set_hashes),
       client_cached_cert_hashes(client_cached_cert_hashes) {}
 
-QuicCompressedCertsCache::UncompressedCerts::~UncompressedCerts() {}
+QuicCompressedCertsCache::UncompressedCerts::~UncompressedCerts() = default;
 
-QuicCompressedCertsCache::CachedCerts::CachedCerts() {}
+QuicCompressedCertsCache::CachedCerts::CachedCerts() = default;
 
 QuicCompressedCertsCache::CachedCerts::CachedCerts(
     const UncompressedCerts& uncompressed_certs,
@@ -46,7 +46,7 @@ QuicCompressedCertsCache::CachedCerts::CachedCerts(
 QuicCompressedCertsCache::CachedCerts::CachedCerts(const CachedCerts& other) =
     default;
 
-QuicCompressedCertsCache::CachedCerts::~CachedCerts() {}
+QuicCompressedCertsCache::CachedCerts::~CachedCerts() = default;
 
 bool QuicCompressedCertsCache::CachedCerts::MatchesUncompressedCerts(
     const UncompressedCerts& uncompressed_certs) const {

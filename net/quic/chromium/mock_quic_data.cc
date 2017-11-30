@@ -9,7 +9,7 @@ namespace test {
 
 MockQuicData::MockQuicData() : sequence_number_(0) {}
 
-MockQuicData::~MockQuicData() {}
+MockQuicData::~MockQuicData() = default;
 
 void MockQuicData::AddConnect(IoMode mode, int rv) {
   connect_.reset(new MockConnect(mode, rv));

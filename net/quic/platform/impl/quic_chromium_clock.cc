@@ -12,9 +12,9 @@ namespace net {
 QuicChromiumClock* QuicChromiumClock::GetInstance() {
   return base::Singleton<QuicChromiumClock>::get();
 }
-QuicChromiumClock::QuicChromiumClock() {}
+QuicChromiumClock::QuicChromiumClock() = default;
 
-QuicChromiumClock::~QuicChromiumClock() {}
+QuicChromiumClock::~QuicChromiumClock() = default;
 
 QuicTime QuicChromiumClock::ApproximateNow() const {
   // At the moment, Chrome does not have a distinct notion of ApproximateNow().

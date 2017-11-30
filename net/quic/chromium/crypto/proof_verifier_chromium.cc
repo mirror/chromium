@@ -34,7 +34,7 @@ namespace net {
 ProofVerifyDetailsChromium::ProofVerifyDetailsChromium()
     : pkp_bypassed(false) {}
 
-ProofVerifyDetailsChromium::~ProofVerifyDetailsChromium() {}
+ProofVerifyDetailsChromium::~ProofVerifyDetailsChromium() = default;
 
 ProofVerifyDetailsChromium::ProofVerifyDetailsChromium(
     const ProofVerifyDetailsChromium&) = default;
@@ -581,8 +581,7 @@ ProofVerifierChromium::ProofVerifierChromium(
   DCHECK(cert_transparency_verifier_);
 }
 
-ProofVerifierChromium::~ProofVerifierChromium() {
-}
+ProofVerifierChromium::~ProofVerifierChromium() = default;
 
 QuicAsyncStatus ProofVerifierChromium::VerifyProof(
     const std::string& hostname,

@@ -105,7 +105,7 @@ QuicEndpoint::QuicEndpoint(Simulator* simulator,
   connection_.SetFromConfig(config);
 }
 
-QuicEndpoint::~QuicEndpoint() {}
+QuicEndpoint::~QuicEndpoint() = default;
 
 QuicByteCount QuicEndpoint::bytes_received() const {
   QuicByteCount total = 0;
@@ -185,7 +185,7 @@ bool QuicEndpoint::AllowSelfAddressChange() const {
 QuicEndpoint::Writer::Writer(QuicEndpoint* endpoint)
     : endpoint_(endpoint), is_blocked_(false) {}
 
-QuicEndpoint::Writer::~Writer() {}
+QuicEndpoint::Writer::~Writer() = default;
 
 WriteResult QuicEndpoint::Writer::WritePacket(
     const char* buffer,
@@ -271,7 +271,7 @@ QuicEndpointMultiplexer::QuicEndpointMultiplexer(
   }
 }
 
-QuicEndpointMultiplexer::~QuicEndpointMultiplexer() {}
+QuicEndpointMultiplexer::~QuicEndpointMultiplexer() = default;
 
 void QuicEndpointMultiplexer::AcceptPacket(std::unique_ptr<Packet> packet) {
   auto key_value_pair_it = mapping_.find(packet->destination);

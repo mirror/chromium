@@ -28,8 +28,8 @@ const size_t kInputKeyingMaterialLength = 32;
 // TODO(zhihuang): Remove when secure P2P QUIC handshake is possible.
 class DummyProofSource : public ProofSource {
  public:
-  DummyProofSource() {}
-  ~DummyProofSource() override {}
+  DummyProofSource() = default;
+  ~DummyProofSource() override = default;
 
   // ProofSource override.
   void GetProof(const QuicSocketAddress& server_addr,
@@ -69,8 +69,8 @@ class DummyProofSource : public ProofSource {
 // TODO(zhihuang): Remove when secure P2P QUIC handshake is possible.
 class InsecureProofVerifier : public ProofVerifier {
  public:
-  InsecureProofVerifier() {}
-  ~InsecureProofVerifier() override {}
+  InsecureProofVerifier() = default;
+  ~InsecureProofVerifier() override = default;
 
   // ProofVerifier override.
   QuicAsyncStatus VerifyProof(
@@ -151,7 +151,7 @@ QuartcSession::QuartcSession(std::unique_ptr<QuicConnection> connection,
   }
 }
 
-QuartcSession::~QuartcSession() {}
+QuartcSession::~QuartcSession() = default;
 
 const QuicCryptoStream* QuartcSession::GetCryptoStream() const {
   return crypto_stream_.get();

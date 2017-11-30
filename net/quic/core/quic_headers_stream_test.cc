@@ -126,7 +126,7 @@ class ForceHolAckListener : public QuicAckListenerInterface {
   size_t total_acked_bytes() { return total_acked_bytes_; }
 
  private:
-  ~ForceHolAckListener() override {}
+  ~ForceHolAckListener() override = default;
 
   size_t total_acked_bytes_;
 

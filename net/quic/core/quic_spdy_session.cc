@@ -278,9 +278,9 @@ class QuicSpdySession::SpdyFramerVisitor
   DISALLOW_COPY_AND_ASSIGN(SpdyFramerVisitor);
 };
 
-QuicHpackDebugVisitor::QuicHpackDebugVisitor() {}
+QuicHpackDebugVisitor::QuicHpackDebugVisitor() = default;
 
-QuicHpackDebugVisitor::~QuicHpackDebugVisitor() {}
+QuicHpackDebugVisitor::~QuicHpackDebugVisitor() = default;
 
 QuicSpdySession::QuicSpdySession(QuicConnection* connection,
                                  QuicSession::Visitor* visitor,
