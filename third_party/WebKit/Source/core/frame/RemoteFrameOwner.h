@@ -38,6 +38,7 @@ class CORE_EXPORT RemoteFrameOwner final
   SandboxFlags GetSandboxFlags() const override { return sandbox_flags_; }
   void SetSandboxFlags(SandboxFlags flags) { sandbox_flags_ = flags; }
   void DispatchLoad() override;
+  void AddResourceTiming(const ResourceTimingInfo&) override;
   // TODO(dcheng): Implement.
   bool CanRenderFallbackContent() const override { return false; }
   void RenderFallbackContent() override {}

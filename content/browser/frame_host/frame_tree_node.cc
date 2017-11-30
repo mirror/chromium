@@ -314,8 +314,16 @@ void FrameTreeNode::SetOriginalOpener(FrameTreeNode* opener) {
 }
 
 void FrameTreeNode::SetCurrentURL(const GURL& url) {
-  if (!has_committed_real_load_ && url != url::kAboutBlankURL)
+  if (!has_committed_real_load_ && url != url::kAboutBlankURL) {
     has_committed_real_load_ = true;
+    // If the current frame host has a remote parent, allow it to forward the
+    // next resource timing info. This is to ensure that only the first load in
+    // the child frame reports timing info.
+    if (parent() && current_frame_host()->GetSiteInstance() !=
+                        parent()->current_frame_host()->GetSiteInstance()) {
+      current_frame_host()->AllowNextResourceTimingInfo();
+    }
+  }
   current_frame_host()->SetLastCommittedUrl(url);
   blame_context_.TakeSnapshot();
 }
