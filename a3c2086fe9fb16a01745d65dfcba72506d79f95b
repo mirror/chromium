@@ -192,6 +192,30 @@
     },
     {
       "key": {
+        "uuid": "fba446e9_2516dad3",
+        "filename": "ios/chrome/browser/tabs/tab_model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-30T16:11:51Z",
+      "side": 1,
+      "message": "I think Option #1 is better for TabModel design, but AFAIK TabModel is deprecated class, so keeping TabModel pretty may not be important. \n\nDanyao, which option do you prefer?\nRohit, what do you think? Do you care about TabModel \"prettiness\"?",
+      "parentUuid": "ea20c66a_aff5ce8d",
+      "range": {
+        "startLine": 136,
+        "startChar": 22,
+        "endLine": 136,
+        "endChar": 37
+      },
+      "revId": "a3c2086fe9fb16a01745d65dfcba72506d79f95b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d11b2bbe_41f9057f",
         "filename": "ios/chrome/browser/tabs/tab_model_unittest.mm",
         "patchSetId": 3
@@ -306,6 +330,30 @@
       "revId": "a3c2086fe9fb16a01745d65dfcba72506d79f95b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fd4b1731_18048290",
+        "filename": "ios/web/public/test/fakes/test_session_certificate_policy_cache.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-30T16:11:51Z",
+      "side": 1,
+      "message": "Would it be better to create .cc file for this header then? Putting constructor and destructor here sounds like a workaround for \"Chrome style check\" warning.",
+      "parentUuid": "a124a297_c34144c4",
+      "range": {
+        "startLine": 35,
+        "startChar": 35,
+        "endLine": 35,
+        "endChar": 68
+      },
+      "revId": "a3c2086fe9fb16a01745d65dfcba72506d79f95b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
