@@ -101,7 +101,7 @@ var testParams = [
     -1.2246467991473532e-16, -1, 0, 0, 0, 0, 1])
   }
 ];
-
+/*
 test(() => {
   // Wrong number of arguments.
   assert_throws(new TypeError(), () => { new CSSRotation(); });
@@ -110,7 +110,7 @@ test(() => {
     new CSSRotation(1, 2, new CSSUnitValue(10, 'deg'));
   });
 }, "Invalid arguments to constructor should throw");
-
+*/
 for (let params of testParams) {
   test(() => {
     assert_equals(params.input.toString(), params.cssText);
@@ -124,7 +124,7 @@ test(() => {
   assert_true(rotation.is2D);
   assert_equals(rotation.toString(), 'rotate(10deg)');
 }, "x, y, and z components are not included in toString when is2D is true");
-
+/*
 for (let params of testParams) {
   let input = params.input;
   test(() => {
@@ -157,5 +157,5 @@ test(() => {
   assert_matrix_approx_equals(
       transformValue.toMatrix(), expected2DMatrix, EPSILON);
 }, "x, y, and z attributes have no effect on toMatrix if is2D is set to true");
-
+*/
 </script>
