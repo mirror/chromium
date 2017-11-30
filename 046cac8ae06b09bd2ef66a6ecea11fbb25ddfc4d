@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "796d9078_9adb895d",
+        "filename": "chrome/browser/ui/tabs/tab_activity_watcher_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-30T02:58:20Z",
+      "side": 1,
+      "message": "I think your tests would be clearer and less fragile if you clear the entries after each block. That also makes it easier to insert new assertions without having to adjust a bunch of numbers.",
+      "range": {
+        "startLine": 356,
+        "startChar": 14,
+        "endLine": 356,
+        "endChar": 16
+      },
+      "revId": "046cac8ae06b09bd2ef66a6ecea11fbb25ddfc4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
