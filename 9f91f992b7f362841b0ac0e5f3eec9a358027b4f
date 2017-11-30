@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d18cceb3_5f34a293",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-30T22:04:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c25db2de_c1c4b627",
+      "revId": "9f91f992b7f362841b0ac0e5f3eec9a358027b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b072a8a2_f40888ab",
         "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "9f91f992b7f362841b0ac0e5f3eec9a358027b4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "204d0191_67625809",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-30T22:04:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b072a8a2_f40888ab",
+      "revId": "9f91f992b7f362841b0ac0e5f3eec9a358027b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

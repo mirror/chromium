@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "40b37a63_03a9c406",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-30T22:04:47Z",
+      "side": 1,
+      "message": "Done. Changed back.",
+      "parentUuid": "5b2b854f_cc863e56",
+      "revId": "ede460b20bc83ab4fc22c792c5cef19b551ecd92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "269e5fb8_f588c5ae",
         "filename": "ash/wallpaper/wallpaper_controller.h",
         "patchSetId": 8
@@ -172,6 +190,24 @@
       "side": 1,
       "message": "Not sure if it\u0027s feasible: maybe we can just move this SetPathIds() function entirely to WallpaperController and call it in WallpaperController constructor and move chrome::DIR_USER_DATA, chrome::DIR_CHROMEOS_WALLPAPERS, chrome::DIR_CHROMEOS_CUSTOM_WALLPAPERS to chromeos_paths.h?",
       "parentUuid": "42eb9320_a83a5e90",
+      "revId": "ede460b20bc83ab4fc22c792c5cef19b551ecd92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70258b64_daf5eb92",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-30T22:04:47Z",
+      "side": 1,
+      "message": "+jamescook Could you suggest if this is OK? i.e., adding the SetPathIds() call vs. move the file path to chromeos_paths.h. Thanks!",
+      "parentUuid": "5839b3a5_5f8d346e",
       "revId": "ede460b20bc83ab4fc22c792c5cef19b551ecd92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
