@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdde045b_8beee4ea",
+        "filename": "third_party/WebKit/Source/core/paint/InlineFlowBoxPainter.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-30T05:20:35Z",
+      "side": 1,
+      "message": "What was the root of the problem the code here fixes? That the visual overflow did\nnot intersect the cull rect because it\u0027s empty?\n\nIf so, why is it that the visual overflow of these lines don\u0027t get a chance to include\nthe new line in the way others do, via computation of visual overflow rects?",
+      "revId": "d54c3649e0128729ce1fe36283c5164f597d9d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
