@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ce02b7a_ea0f8103",
+        "filename": "gpu/command_buffer/common/swap_buffers_complete_params.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-30T21:49:20Z",
+      "side": 1,
+      "message": "nit: add move/copy operator\u003d (rule-of-5)",
+      "revId": "6957eb88ae3bc5369604bd8de5262aa720911734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97e15939_4f3ae207",
+        "filename": "ui/gfx/ca_layer_params.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-30T21:49:20Z",
+      "side": 1,
+      "message": "nit: add copy operator\u003d (rule-of-3)",
+      "revId": "6957eb88ae3bc5369604bd8de5262aa720911734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17725e22_50299650",
+        "filename": "ui/gfx/ca_layer_params.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-30T21:49:20Z",
+      "side": 1,
+      "message": "WTB \u0027if constexpr\u0027, but that will do for now I guess.",
+      "revId": "6957eb88ae3bc5369604bd8de5262aa720911734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11baad70_d20f9fef",
+        "filename": "ui/gfx/ipc/gfx_param_traits_macros.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-30T21:49:20Z",
+      "side": 1,
+      "message": "nit: would it make sense to *not* send this one over, so that we\u0027re guaranteed to get the per-platform default value, and we don\u0027t risk privilege escalation if the GPU process is compromized and tries to fake this value? I suspect it can\u0027t do much now, but just in case for future refactoring....",
+      "revId": "6957eb88ae3bc5369604bd8de5262aa720911734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
