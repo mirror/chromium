@@ -38,10 +38,9 @@ namespace syscall_broker {
 class BrokerProcessTestHelper {
  public:
   static void CloseChannel(BrokerProcess* broker) { broker->CloseChannel(); }
-  // Get the client's IPC descriptor to send IPC requests directly.
   // TODO(jln): refator tests to get rid of this.
   static int GetIPCDescriptor(const BrokerProcess* broker) {
-    return broker->broker_client_->GetIPCDescriptor();
+    return broker->GetIPCDescriptorForTesting();
   }
 };
 

@@ -14,11 +14,11 @@
 #include "base/pickle.h"
 #include "base/process/process.h"
 #include "sandbox/linux/bpf_dsl/trap_registry.h"
+#include "sandbox/linux/syscall_broker/broker_channel.h"
 #include "sandbox/linux/syscall_broker/broker_policy.h"
 #include "sandbox/sandbox_export.h"
 
 namespace sandbox {
-
 namespace syscall_broker {
 
 class BrokerClient;
@@ -98,8 +98,13 @@ class SANDBOX_EXPORT BrokerProcess {
   friend class BrokerProcessTestHelper;
 
   // Close the IPC channel with the other party. This should only be used
-  // by tests an none of the class methods should be used afterwards.
+  // by tests and none of the class methods should be used afterwards, since
+  // the destructor normally takes care of this.
   void CloseChannel();
+
+  // Get the client's IPC descriptor to send IPC requests directly. This should
+  // only be used by tests.
+  int GetIPCDescriptorForTesting() const { return ipc_writer_.get(); }
 
   bool initialized_;  // Whether we've been through Init() yet.
   const bool fast_check_in_client_;
@@ -107,12 +112,12 @@ class SANDBOX_EXPORT BrokerProcess {
   pid_t broker_pid_;  // The PID of the broker (child).
   syscall_broker::BrokerPolicy broker_policy_;  // Access policy to enforce.
   std::unique_ptr<syscall_broker::BrokerClient> broker_client_;
+  BrokerChannel::EndPoint ipc_writer_;
 
   DISALLOW_COPY_AND_ASSIGN(BrokerProcess);
 };
 
 }  // namespace syscall_broker
-
 }  // namespace sandbox
 
 #endif  // SANDBOX_LINUX_SERVICES_BROKER_PROCESS_H_
