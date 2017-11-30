@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "211460fa_ed06ed67",
+        "filename": "gpu/command_buffer/common/presentation_feedback.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-11-30T18:48:24Z",
+      "side": 1,
+      "message": "Resolving in followups sgtm.",
+      "parentUuid": "ed812572_ff520d62",
+      "revId": "b8c7303767c6bdd681d8950f4cd22df9468c5515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f160687_dfa95ec6",
         "filename": "gpu/ipc/service/direct_composition_surface_win_unittest.cc",
         "patchSetId": 40
@@ -119,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "a9e5ca9c_ff028ba7",
+        "filename": "gpu/ipc/service/direct_composition_surface_win_unittest.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-11-30T18:48:24Z",
+      "side": 1,
+      "message": "Nvm, it\u0027s already in an anonymous namespace.",
+      "parentUuid": "271af54a_c52ccf46",
+      "revId": "b8c7303767c6bdd681d8950f4cd22df9468c5515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d783c6af_bcf0b5e2",
         "filename": "gpu/ipc/service/pass_through_image_transport_surface.cc",
         "patchSetId": 40
@@ -148,6 +184,24 @@
       "side": 1,
       "message": "It is useful for avoiding an extra IPC per frame. When we implement presentation feedback for all GLSurface implementations, we can begin dedicate the VSyncUpdate and remove this flag.",
       "parentUuid": "d783c6af_bcf0b5e2",
+      "revId": "b8c7303767c6bdd681d8950f4cd22df9468c5515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac24a0d1_0f68cc83",
+        "filename": "gpu/ipc/service/pass_through_image_transport_surface.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-11-30T18:48:24Z",
+      "side": 1,
+      "message": "Ok, let\u0027s plan to remove VSyncUpdate once everything supports the presentation feedback.",
+      "parentUuid": "d1abbf89_45955301",
       "revId": "b8c7303767c6bdd681d8950f4cd22df9468c5515",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
