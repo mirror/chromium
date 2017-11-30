@@ -11,6 +11,7 @@
 #include <utility>
 #include <vector>
 
+#include "base/base64.h"
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/command_line.h"
@@ -39,6 +40,8 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/test/browser_test_utils.h"
+#include "crypto/sha2.h"
+#include "net/cert/asn1_util.h"
 #include "net/dns/mock_host_resolver.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -69,13 +72,40 @@ void SelectComboboxRowForValue(views::Combobox* combobox,
   combobox->SetSelectedRow(i);
 }
 
+// Returns the Sha256 hash of the SPKI of |cert|.
+net::HashValue GetSPKIHash(net::X509Certificate* cert) {
+  std::string der_data;
+  EXPECT_TRUE(
+      net::X509Certificate::GetDEREncoded(cert->os_cert_handle(), &der_data));
+  base::StringPiece der_bytes(der_data);
+  base::StringPiece spki_bytes;
+  EXPECT_TRUE(net::asn1::ExtractSPKIFromDERCert(der_bytes, &spki_bytes));
+  net::HashValue sha256(net::HASH_VALUE_SHA256);
+  crypto::SHA256HashString(spki_bytes, sha256.data(), crypto::kSHA256Length);
+  return sha256;
+}
+
+static std::string MakeCertSPKIFingerprint(net::X509Certificate* cert) {
+  net::HashValue hash = GetSPKIHash(cert);
+  std::string hash_base64;
+  base::Base64Encode(
+      base::StringPiece(reinterpret_cast<const char*>(hash.data()),
+                        hash.size()),
+      &hash_base64);
+  return hash_base64;
+}
+
 }  // namespace
 
 PersonalDataLoadedObserverMock::PersonalDataLoadedObserverMock() {}
 PersonalDataLoadedObserverMock::~PersonalDataLoadedObserverMock() {}
 
 PaymentRequestBrowserTestBase::PaymentRequestBrowserTestBase()
-    : delegate_(nullptr),
+    :  // Initialize the HTTPS server here so that its certificate hash can be
+       // retrieved in SetUpCommandLine.
+      https_server_(base::MakeUnique<net::EmbeddedTestServer>(
+          net::EmbeddedTestServer::TYPE_HTTPS)),
+      delegate_(nullptr),
       is_incognito_(false),
       is_valid_ssl_(true),
       is_browser_window_active_(true) {}
@@ -86,13 +116,14 @@ void PaymentRequestBrowserTestBase::SetUpCommandLine(
     base::CommandLine* command_line) {
   // HTTPS server only serves a valid cert for localhost, so this is needed to
   // load pages from "a.com" without an interstitial.
-  command_line->AppendSwitch(switches::kIgnoreCertificateErrors);
+  std::string whitelist_flag =
+      MakeCertSPKIFingerprint(https_server_->GetCertificate().get());
+  command_line->AppendSwitchASCII(switches::kIgnoreCertificateErrorsSPKIList,
+                                  whitelist_flag);
 }
 
 void PaymentRequestBrowserTestBase::SetUpOnMainThread() {
   // Setup the https server.
-  https_server_ = base::MakeUnique<net::EmbeddedTestServer>(
-      net::EmbeddedTestServer::TYPE_HTTPS);
   host_resolver()->AddRule("a.com", "127.0.0.1");
   host_resolver()->AddRule("b.com", "127.0.0.1");
   ASSERT_TRUE(https_server_->InitializeAndListen());
