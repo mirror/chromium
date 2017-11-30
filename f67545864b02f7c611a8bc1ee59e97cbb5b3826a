@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0819e2e2_4fd8c76e",
+        "filename": "chrome/browser/ui/tabs/tab_activity_watcher.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-30T01:15:04Z",
+      "side": 1,
+      "message": "A better way to ignore incognito windows is at the Browser level. That can be accomplished by making this a BrowserTabStripTrackerDelegate and returning false for incognito browsers.",
+      "range": {
+        "startLine": 129,
+        "startChar": 2,
+        "endLine": 130,
+        "endChar": 11
+      },
+      "revId": "f67545864b02f7c611a8bc1ee59e97cbb5b3826a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
