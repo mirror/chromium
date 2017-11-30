@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "c2f1bee4_42e4989b",
+        "filename": "ash/accelerators/accelerator_commands_classic.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-30T23:53:54Z",
+      "side": 1,
+      "message": "aside: This comment and function should convey that the function is about window pinning... not that I know what that is :)",
+      "revId": "1368fefbd749734707b3f5d4671b56930c0d6638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0034832e_7b7497de",
+        "filename": "ash/accelerators/accelerator_controller_delegate_mash.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-30T23:53:54Z",
+      "side": 1,
+      "message": "optional nit: just return false without a switch and optionally remove this comment.\n(seems reasonable to do in this CL, but okay to punt to removal of this class)",
+      "revId": "1368fefbd749734707b3f5d4671b56930c0d6638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f06ee1cf_9e9e15e6",
         "filename": "ash/accelerators/accelerator_controller_delegate_mash.h",
         "patchSetId": 2
@@ -13,6 +47,57 @@
       "writtenOn": "2017-11-30T22:01:16Z",
       "side": 1,
       "message": "I would prefer to do this in a follow-up, even though this class is becoming not-useful.",
+      "revId": "1368fefbd749734707b3f5d4671b56930c0d6638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c79e477e_0b3639fa",
+        "filename": "ash/shell.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1138,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-30T23:53:54Z",
+      "side": 1,
+      "message": "q: Should TouchDevicesController encapsulate this (maybe in its ctor)?",
+      "revId": "1368fefbd749734707b3f5d4671b56930c0d6638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7faebf0e_d5dad082",
+        "filename": "ash/touch/touch_observer_hud_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-30T23:53:54Z",
+      "side": 1,
+      "message": "q: Is that tested elsewhere?",
+      "revId": "1368fefbd749734707b3f5d4671b56930c0d6638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "687ccf56_cf7e3b0e",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2614,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-30T23:53:54Z",
+      "side": 1,
+      "message": "q: Would it still be useful to describe the top-left HUD listing touch points?",
       "revId": "1368fefbd749734707b3f5d4671b56930c0d6638",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
