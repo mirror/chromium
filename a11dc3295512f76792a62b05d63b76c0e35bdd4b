@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdc39e4d_c8509239",
+        "filename": "android_webview/browser/aw_browser_context.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-30T23:43:28Z",
+      "side": 1,
+      "message": "not needed?",
+      "revId": "a11dc3295512f76792a62b05d63b76c0e35bdd4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3751d24c_bdb69fcc",
+        "filename": "android_webview/browser/aw_content_browser_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-30T23:43:28Z",
+      "side": 1,
+      "message": "sanity check, did the old code check policy blacklist before or after throttles?",
+      "revId": "a11dc3295512f76792a62b05d63b76c0e35bdd4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
