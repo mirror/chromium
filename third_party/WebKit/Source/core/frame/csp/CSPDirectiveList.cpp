@@ -1514,14 +1514,17 @@ WebContentSecurityPolicy CSPDirectiveList::ExposeForNavigationalChecks() const {
   }
   policy.directives = directives;
 
-  // TODO(andypaicu): for now the content csp will not know about report-to
-  // endpoints, make it work.
   std::vector<WebString> report_endpoints;
-  if (!use_reporting_api_) {
-    for (const auto& report_endpoint : ReportEndpoints()) {
-      report_endpoints.push_back(report_endpoint);
-    }
+  for (const auto& report_endpoint : ReportEndpoints()) {
+    report_endpoints.push_back(report_endpoint);
   }
+
+  policy.use_reporting_api = use_reporting_api_;
+
+  policy_->LogToConsole(ConsoleMessage::Create(
+      kSecurityMessageSource, MessageLevel::kErrorMessageLevel,
+      use_reporting_api_ ? "AAAA: blink uses reporting api"
+                         : "AAAA: blink doesn't use reporting api"));
 
   policy.report_endpoints = report_endpoints;
 
