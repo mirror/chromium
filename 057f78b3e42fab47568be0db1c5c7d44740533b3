@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5f9428b_ea4864d4",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1810,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-30T19:57:54Z",
+      "side": 1,
+      "message": "while you are updating this code how about converting to std::make_unique?",
+      "range": {
+        "startLine": 1810,
+        "startChar": 24,
+        "endLine": 1810,
+        "endChar": 52
+      },
+      "revId": "057f78b3e42fab47568be0db1c5c7d44740533b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
