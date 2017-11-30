@@ -770,6 +770,10 @@ bool OmniboxViewViews::HandleAccessibleAction(
 
 void OmniboxViewViews::OnFocus() {
   views::Textfield::OnFocus();
+  // TODO(gcomanici): Consider using the return value for the function
+  // SetPermanentText.
+  model()->SetPermanentText(
+      controller()->GetToolbarModel()->GetFormattedURL(nullptr));
   // TODO(oshima): Get control key state.
   model()->OnSetFocus(false);
   // Don't call controller()->OnSetFocus, this view has already acquired focus.
