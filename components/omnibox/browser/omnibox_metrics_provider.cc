@@ -4,10 +4,13 @@
 
 #include "components/omnibox/browser/omnibox_metrics_provider.h"
 
+#include <algorithm>
+#include <numeric>
 #include <vector>
 
 #include "base/bind.h"
 #include "base/logging.h"
+#include "base/rand_util.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
@@ -16,6 +19,7 @@
 #include "components/omnibox/browser/autocomplete_provider.h"
 #include "components/omnibox/browser/autocomplete_result.h"
 #include "components/omnibox/browser/omnibox_log.h"
+#include "services/metrics/public/cpp/ukm_builders.h"
 #include "third_party/metrics_proto/omnibox_event.pb.h"
 #include "third_party/metrics_proto/omnibox_input_type.pb.h"
 
@@ -111,8 +115,36 @@ void OmniboxMetricsProvider::ProvideCurrentSessionData(
 void OmniboxMetricsProvider::OnURLOpenedFromOmnibox(OmniboxLog* log) {
   // Do not log events to UMA if the embedder reports that the user is in an
   // off-the-record context.
-  if (!is_off_the_record_callback_.Run())
-    RecordOmniboxOpenedURL(*log);
+  if (is_off_the_record_callback_.Run())
+    return;
+
+  RecordOmniboxOpenedURL(*log);
+
+  // Record UKMs.
+  ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get();
+  ukm::SourceId source_id = ukm::UkmRecorder::GetNewSourceID();
+  if (!ukm_recorder)
+    return;
+
+  ukm_recorder->UpdateSourceURL(source_id, log->url);
+
+  // Log the type of suggestions in randomized order.
+  std::vector<size_t> result_indeces(log->result.size());
+  std::iota(result_indeces.begin(), result_indeces.end(), 0);
+  std::random_shuffle(result_indeces.begin(), result_indeces.end(),
+                      base::RandGenerator);
+  for (const auto& index_to_log : result_indeces) {
+    const AutocompleteMatch& match = log->result.match_at(index_to_log);
+    const auto& subtype_identifier = match.subtype_identifier;
+    if (subtype_identifier <= 0)
+      continue;
+
+    ukm::builders::Omnibox_Suggestion(source_id)
+        .SetProviderType(match.provider->AsOmniboxEventProviderType())
+        .SetSelected(index_to_log == log->selected_index ? 1 : 0)
+        .SetSubtypeIdentifier(subtype_identifier)
+        .Record(ukm_recorder);
+  }
 }
 
 void OmniboxMetricsProvider::RecordOmniboxOpenedURL(const OmniboxLog& log) {
