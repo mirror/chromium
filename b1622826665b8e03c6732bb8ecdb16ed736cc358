@@ -34,6 +34,24 @@
       "revId": "b1622826665b8e03c6732bb8ecdb16ed736cc358",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3e80822_2a03e0e1",
+        "filename": "chrome/browser/process_singleton_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1243462
+      },
+      "writtenOn": "2017-12-01T04:25:16Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "fe09fc3c_56af6abb",
+      "revId": "b1622826665b8e03c6732bb8ecdb16ed736cc358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
