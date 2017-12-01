@@ -45,6 +45,11 @@ class ContentSettingImageView : public IconLabelBubbleView {
     virtual ContentSettingBubbleModelDelegate*
     GetContentSettingBubbleModelDelegate() = 0;
 
+    // Records the content setting value of a bubble when it is shown.
+    virtual void RecordContentSettingImageBubbleShown(
+        int content_setting_histogram_value,
+        int num_values) const = 0;
+
    protected:
     virtual ~Delegate() {}
   };
@@ -98,6 +103,9 @@ class ContentSettingImageView : public IconLabelBubbleView {
   // cannot handle host resizes, the highlight needs to be disabled when the
   // animation is running.
   void AnimateIn();
+
+  // Logs UMA for when the bubble is shown.
+  void RecordBubbleShown();
 
   Delegate* delegate_;  // Weak.
   std::unique_ptr<ContentSettingImageModel> content_setting_image_model_;

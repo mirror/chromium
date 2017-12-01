@@ -10910,6 +10910,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="ContentSettings.PageActionPressed" enum="ContentType">
+  <owner>calamity@chromium.org</owner>
+  <summary>
+    Counts which content setting page actions in the omnibox are pressed by the
+    user.
+  </summary>
+</histogram>
+
 <histogram name="ContentSettings.PermissionActions" enum="PermissionAction">
   <obsolete>
     Removed 11/2015 in favor of Permissions.Action.*
@@ -28240,6 +28248,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     older than in History page. Last bucket is any entry of that value or
     higher. Confirmed removal is not guaranteed, just an initiation of 'Remove
     selected items'.
+  </summary>
+</histogram>
+
+<histogram name="HostedAppFrame.ContentSettings.PageActionPressed"
+    enum="ContentType">
+  <owner>calamity@chromium.org</owner>
+  <summary>
+    Counts which content setting page actions in the hosted app frame are
+    pressed by the user.
   </summary>
 </histogram>
 

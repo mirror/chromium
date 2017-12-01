@@ -69,8 +69,10 @@ class ContentSettingImageModel {
   int explanatory_string_id() const { return explanatory_string_id_; }
   const base::string16& get_tooltip() const { return tooltip_; }
 
+  ContentSettingsType content_type() { return content_type_; }
+
  protected:
-  ContentSettingImageModel();
+  explicit ContentSettingImageModel(ContentSettingsType content_type);
 
   void set_icon(const gfx::VectorIcon& icon, const gfx::VectorIcon& badge) {
     icon_ = &icon;
@@ -90,6 +92,7 @@ class ContentSettingImageModel {
   const gfx::VectorIcon* icon_badge_;
   int explanatory_string_id_;
   base::string16 tooltip_;
+  ContentSettingsType content_type_;
 
   DISALLOW_COPY_AND_ASSIGN(ContentSettingImageModel);
 };
@@ -111,12 +114,7 @@ class ContentSettingSimpleImageModel : public ContentSettingImageModel {
   static std::unique_ptr<ContentSettingImageModel>
   CreateForContentTypeForTesting(ContentSettingsType content_type);
 
- protected:
-  ContentSettingsType content_type() { return content_type_; }
-
  private:
-  ContentSettingsType content_type_;
-
   DISALLOW_COPY_AND_ASSIGN(ContentSettingSimpleImageModel);
 };
 

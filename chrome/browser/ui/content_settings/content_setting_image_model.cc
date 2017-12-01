@@ -170,9 +170,7 @@ const ContentSettingsImageDetails* GetImageDetails(ContentSettingsType type) {
 
 ContentSettingSimpleImageModel::ContentSettingSimpleImageModel(
     ContentSettingsType content_type)
-    : ContentSettingImageModel(),
-      content_type_(content_type) {
-}
+    : ContentSettingImageModel(content_type) {}
 
 ContentSettingBubbleModel* ContentSettingSimpleImageModel::CreateBubbleModel(
     ContentSettingBubbleModel::Delegate* delegate,
@@ -335,8 +333,7 @@ void ContentSettingGeolocationImageModel::UpdateFromWebContents(
 // Media -----------------------------------------------------------------------
 
 ContentSettingMediaImageModel::ContentSettingMediaImageModel()
-    : ContentSettingImageModel() {
-}
+    : ContentSettingImageModel(CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA) {}
 
 void ContentSettingMediaImageModel::UpdateFromWebContents(
     WebContents* web_contents) {
@@ -418,7 +415,7 @@ void ContentSettingMediaImageModel::SetAnimationHasRun(
 
 ContentSettingSubresourceFilterImageModel::
     ContentSettingSubresourceFilterImageModel()
-    : ContentSettingImageModel() {}
+    : ContentSettingImageModel(CONTENT_SETTINGS_TYPE_ADS) {}
 
 void ContentSettingSubresourceFilterImageModel::UpdateFromWebContents(
     WebContents* web_contents) {
@@ -573,11 +570,13 @@ gfx::Image ContentSettingImageModel::GetIcon(SkColor icon_color) const {
       gfx::CreateVectorIconWithBadge(*icon_, 16, icon_color, *icon_badge_));
 }
 
-ContentSettingImageModel::ContentSettingImageModel()
+ContentSettingImageModel::ContentSettingImageModel(
+    ContentSettingsType content_type)
     : is_visible_(false),
       icon_(&gfx::kNoneIcon),
       icon_badge_(&gfx::kNoneIcon),
-      explanatory_string_id_(0) {}
+      explanatory_string_id_(0),
+      content_type_(content_type) {}
 
 // static
 std::vector<std::unique_ptr<ContentSettingImageModel>>
