@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edce2950_0d89dbb7",
+        "filename": "tools/grit/grit/node/misc.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-12-01T18:21:47Z",
+      "side": 1,
+      "message": "nit: As far as I can tell this should be \"\"\": https://www.python.org/dev/peps/pep-0008/#documentation-strings",
+      "revId": "e6bdaac39c761743c56623bab207bb92b11cdd1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
