@@ -225,6 +225,30 @@
     },
     {
       "key": {
+        "uuid": "841101cc_c23845cb",
+        "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-01T15:15:03Z",
+      "side": 1,
+      "message": "Ah IC, was quick sketch.  Wanted to load one i32 and splat it.  If vdupq_n_s32() does that, then yes, that\u0027d be the one to use.",
+      "parentUuid": "81624100_1f78c6b6",
+      "range": {
+        "startLine": 195,
+        "startChar": 31,
+        "endLine": 195,
+        "endChar": 52
+      },
+      "revId": "1df1c40f96f147387a098f670ac79c515626ac1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "183d509e_ea7d1738",
         "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
         "patchSetId": 13
