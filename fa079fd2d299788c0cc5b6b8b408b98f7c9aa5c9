@@ -16,6 +16,24 @@
       "revId": "fa079fd2d299788c0cc5b6b8b408b98f7c9aa5c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26389003_bae5b725",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8PerIsolateData.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-12-01T02:02:27Z",
+      "side": 0,
+      "message": "As far as snapshot_blob.bin is available, it works with the fallback.\nIf it does not exist, i.e. if we unship snapshot_blob.bin, the process crashes in constructing Isolate.\nhttps://cs.chromium.org/chromium/src/v8/src/setup-isolate-deserialize.cc?l\u003d34",
+      "parentUuid": "7382a0e4_5c94eab6",
+      "revId": "fa079fd2d299788c0cc5b6b8b408b98f7c9aa5c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
