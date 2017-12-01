@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "39e49b13_c13c48c7",
+        "filename": "content/test/data/service_worker/cross_site_xfer.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-01T00:58:02Z",
+      "side": 1,
+      "message": "Ah this was copied from another test:\nhttps://codereview.chromium.org/702843004/diff/160001/content/test/data/service_worker/cross_site_xfer.html?context\u003d10\u0026column_width\u003d80\u0026tab_spaces\u003d8\n\nI think we can remove lines 4-6 and skip doing the double unregister/register.",
+      "parentUuid": "c2cc96ba_08330485",
+      "revId": "d54fc545c1cb85400858ff985ead50db910d93d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a95edfc7_b3d1a6b4",
         "filename": "content/test/data/service_worker/cross_site_xfer.html",
         "patchSetId": 1
