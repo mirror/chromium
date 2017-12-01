@@ -408,6 +408,9 @@ const IDNTestCase idn_cases[] = {
      L"123.com",
      false},
 
+    // The skeleton of 'w' has changed from 'vv' to 'w'.
+    {"xn--wrdpress-v3a.com", L"w\x00f3rdpress.com", false},
+
     // Mixed digits: the first two will also fail mixed script test
     // Latin + ASCII digit + Deva digit
     {"xn--asc1deva-j0q.co.in", L"asc1deva\x0967.co.in", false},
