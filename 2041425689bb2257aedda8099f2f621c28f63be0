@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "45902c8c_0d40a729",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-12-01T20:34:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ff60b25_2c9e4e67",
+      "range": {
+        "startLine": 382,
+        "startChar": 6,
+        "endLine": 382,
+        "endChar": 21
+      },
+      "revId": "2041425689bb2257aedda8099f2f621c28f63be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fef00db8_d0cc2a18",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
         "patchSetId": 7
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "1a867752_225b7ef4",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-12-01T20:34:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fef00db8_d0cc2a18",
+      "revId": "2041425689bb2257aedda8099f2f621c28f63be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "787498bf_202c08f3",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
         "patchSetId": 7
@@ -53,6 +95,30 @@
       "writtenOn": "2017-12-01T18:07:22Z",
       "side": 1,
       "message": "Why, is there a good reason?",
+      "range": {
+        "startLine": 417,
+        "startChar": 2,
+        "endLine": 417,
+        "endChar": 77
+      },
+      "revId": "2041425689bb2257aedda8099f2f621c28f63be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa5d59cd_cbb9bcb0",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-12-01T20:34:26Z",
+      "side": 1,
+      "message": "I thought there might be a better delay, but I guess I would do a renaming since it\u0027s not only used by clear storage then. I\u0027ve renamed to \u0027kInitTaskStartingDelay\u0027, open for better names!",
+      "parentUuid": "787498bf_202c08f3",
       "range": {
         "startLine": 417,
         "startChar": 2,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "04d38fd1_9a207e50",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-12-01T20:34:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "833a4747_2aa7cd5c",
+      "range": {
+        "startLine": 419,
+        "startChar": 4,
+        "endLine": 419,
+        "endChar": 9
+      },
+      "revId": "2041425689bb2257aedda8099f2f621c28f63be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1802d54_3d6ce005",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
         "patchSetId": 7
@@ -108,6 +198,30 @@
       "revId": "2041425689bb2257aedda8099f2f621c28f63be0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a28c593_fe4d46ce",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-12-01T20:34:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1802d54_3d6ce005",
+      "range": {
+        "startLine": 426,
+        "startChar": 2,
+        "endLine": 426,
+        "endChar": 3
+      },
+      "revId": "2041425689bb2257aedda8099f2f621c28f63be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "1ede9e3f_43e5c4d3",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-12-01T20:34:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97dc7b10_1aeb52a0",
+      "range": {
+        "startLine": 464,
+        "startChar": 9,
+        "endLine": 464,
+        "endChar": 15
+      },
+      "revId": "2041425689bb2257aedda8099f2f621c28f63be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74155937_310fcadd",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
         "patchSetId": 7
@@ -154,6 +292,30 @@
       "revId": "2041425689bb2257aedda8099f2f621c28f63be0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1349c37f_49d1ccf5",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-12-01T20:34:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74155937_310fcadd",
+      "range": {
+        "startLine": 118,
+        "startChar": 15,
+        "endLine": 118,
+        "endChar": 44
+      },
+      "revId": "2041425689bb2257aedda8099f2f621c28f63be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "9f1b6d8d_5753657d",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1020,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-12-01T20:34:26Z",
+      "side": 1,
+      "message": "Done for the first part.\n\nWe definitely can, but I wouldn\u0027t put clock initialization into BuildModel since for non-time-related tests, we should probably keep the default clock instead of a testing clock which will not advance time by its own. On the other hand, setting clock in the test at the start can explicitly tell whoever going to change this test that it\u0027s using clock. WDYT?",
+      "parentUuid": "2b9317dc_f80056f6",
+      "range": {
+        "startLine": 1020,
+        "startChar": 2,
+        "endLine": 1020,
+        "endChar": 11
+      },
+      "revId": "2041425689bb2257aedda8099f2f621c28f63be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4ea4fdc_41042f70",
         "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task_unittest.cc",
         "patchSetId": 7
@@ -191,6 +377,24 @@
       "writtenOn": "2017-12-01T18:07:22Z",
       "side": 1,
       "message": "Hey, I appreciate this split. It makes things more readable I think.",
+      "revId": "2041425689bb2257aedda8099f2f621c28f63be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "90124ec1_5d3dc42e",
+        "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-12-01T20:34:26Z",
+      "side": 1,
+      "message": "It was suggested by Pete in another CL, should give credit to him.",
+      "parentUuid": "b4ea4fdc_41042f70",
       "revId": "2041425689bb2257aedda8099f2f621c28f63be0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
