@@ -59,6 +59,48 @@
     },
     {
       "key": {
+        "uuid": "201e7620_a1845730",
+        "filename": "ipc/ipc_listener.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1254135
+      },
+      "writtenOn": "2017-12-01T03:12:03Z",
+      "side": 1,
+      "message": "It is because the Message is in invalid state, but OnBadMessageReceived uses message.type() for logging. And, as I wrote earlier, method type() causes ACCESS_VIOLATION (message.header_ is nullptr)",
+      "parentUuid": "d79bcf91_f1d4b213",
+      "revId": "4fe5b4e6d825f25989f312a48a3fe9c10d546b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8bee8174_ef423a49",
+        "filename": "ipc/ipc_listener.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1254135
+      },
+      "writtenOn": "2017-12-01T03:12:03Z",
+      "side": 1,
+      "message": "\u003ecomment describing what this does?\n\nOk, I will add.\n\n\u003eAlso +1 to John\u0027s comment. Is it because we don\u0027t even have a Message\u0026 to pass in this particular case?\n\nSee my reply to John\u0027s comment.",
+      "parentUuid": "51c3131c_6f5338bc",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 38
+      },
+      "revId": "4fe5b4e6d825f25989f312a48a3fe9c10d546b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec1203ef_e23690fa",
         "filename": "ipc/ipc_message_pipe_reader.cc",
         "patchSetId": 2
@@ -70,6 +112,30 @@
       "writtenOn": "2017-11-30T17:29:34Z",
       "side": 1,
       "message": "Is there a way we can even avoid making a message if data.size() is no good, rather than using the ?-operator in the constructor?",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 97,
+        "endChar": 0
+      },
+      "revId": "4fe5b4e6d825f25989f312a48a3fe9c10d546b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70f3e2ca_b011b7b7",
+        "filename": "ipc/ipc_message_pipe_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1254135
+      },
+      "writtenOn": "2017-12-01T03:12:03Z",
+      "side": 1,
+      "message": "I could change it like this\n\n  if (data.empty()) {\n    delegate_-\u003eOnBrokenDataReceived();\n    return;\n  }\n  Message message(reinterpret_cast\u003cconst char*\u003e(data.data()),\n                  static_cast\u003cuint32_t\u003e(data.size()));\n  if (!message.IsValid()) {\n    delegate_-\u003eOnBrokenDataReceived();\n    return;\n  }\n\nDo you prefer this way?",
+      "parentUuid": "ec1203ef_e23690fa",
       "range": {
         "startLine": 90,
         "startChar": 2,
