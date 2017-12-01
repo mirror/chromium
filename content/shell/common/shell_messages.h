@@ -68,6 +68,8 @@ IPC_MESSAGE_ROUTED1(ShellViewHostMsg_PrintMessage,
 IPC_MESSAGE_ROUTED1(ShellViewHostMsg_PrintMessageToStderr,
                     std::string /* message */)
 IPC_MESSAGE_ROUTED0(ShellViewHostMsg_ClearDevToolsLocalStorage)
+IPC_MESSAGE_ROUTED1(ShellViewHostMsg_NavigateSecondaryWindow,
+                    std::string /* url */)
 IPC_MESSAGE_ROUTED2(ShellViewHostMsg_ShowDevTools,
                     std::string /* settings */,
                     std::string /* frontend_url */)

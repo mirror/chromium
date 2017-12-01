@@ -45,8 +45,8 @@ class LayoutTestDevToolsBindings::SecondaryObserver
 
   // WebContentsObserver implementation.
   void DocumentAvailableInMainFrame() override {
-    if (bindings_)
-      bindings_->NavigateDevToolsFrontend();
+    // if (bindings_)
+      // bindings_->NavigateDevToolsFrontend();
     bindings_ = nullptr;
   }
 
@@ -154,9 +154,9 @@ LayoutTestDevToolsBindings::LayoutTestDevToolsBindings(
     params.transition_type = ui::PageTransitionFromInt(
         ui::PAGE_TRANSITION_TYPED | ui::PAGE_TRANSITION_FROM_ADDRESS_BAR);
     inspected_contents->GetController().LoadURLWithParams(params);
-  } else {
-    NavigateDevToolsFrontend();
-  }
+  } // else {
+    // NavigateDevToolsFrontend();
+  // }
 }
 
 LayoutTestDevToolsBindings::~LayoutTestDevToolsBindings() {}

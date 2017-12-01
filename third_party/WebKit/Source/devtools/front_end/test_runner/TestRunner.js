@@ -17,6 +17,7 @@ TestRunner._executeTestScript = function() {
   fetch(testScriptURL)
       .then(data => data.text())
       .then(testScript => {
+        console.log('going ot exec test script');
         if (TestRunner._isDebugTest()) {
           TestRunner.addResult = console.log;
           TestRunner.completeTest = () => console.log('Test completed');
@@ -1320,9 +1321,8 @@ TestRunner._TestObserver = class {
     if (TestRunner._startedTest)
       return;
     TestRunner._startedTest = true;
-    TestRunner._printDevToolsConsole();
     TestRunner._setupTestHelpers(target);
-    TestRunner._runTest();
+    TestRunner._setBaseTag();
   }
 
   /**
@@ -1333,7 +1333,7 @@ TestRunner._TestObserver = class {
   }
 };
 
-TestRunner._runTest = async function() {
+TestRunner._setBaseTag = async function() {
   var testPath = TestRunner.url();
   await TestRunner.loadHTML(`
     <head>
@@ -1342,7 +1342,6 @@ TestRunner._runTest = async function() {
     <body>
     </body>
   `);
-  TestRunner._executeTestScript();
 };
 
 /**
@@ -1370,4 +1369,7 @@ function completeTestOnError(message, source, lineno, colno, error) {
 }
 
 self['onerror'] = completeTestOnError;
+TestRunner._printDevToolsConsole();
+TestRunner._executeTestScript();
+
 })();

@@ -538,9 +538,9 @@ InspectorFrontendHost.events;
  * @return {boolean}
  */
 Host.isUnderTest = function(prefs) {
-  if (InspectorFrontendHost.isUnderTest())
+  console.log('InspectorFrontendHost.isUnderTest(): ' + InspectorFrontendHost.isUnderTest());
+  if (Runtime.queryParam('test') || InspectorFrontendHost.isUnderTest())
     return true;
-
   if (prefs)
     return prefs['isUnderTest'] === 'true';
   return Common.settings.createSetting('isUnderTest', false).get();

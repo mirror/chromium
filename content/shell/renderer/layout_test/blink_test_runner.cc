@@ -411,6 +411,10 @@ void BlinkTestRunner::ClearDevToolsLocalStorage() {
   Send(new ShellViewHostMsg_ClearDevToolsLocalStorage(routing_id()));
 }
 
+void BlinkTestRunner::NavigateSecondaryWindow(const std::string& url) {
+  Send(new ShellViewHostMsg_NavigateSecondaryWindow(routing_id(), url));
+}
+
 void BlinkTestRunner::ShowDevTools(const std::string& settings,
                                    const std::string& frontend_url) {
   Send(new ShellViewHostMsg_ShowDevTools(
