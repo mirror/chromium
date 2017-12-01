@@ -71,8 +71,7 @@ class WasRecentlyAudibleWatcher {
 class MediaEngagementBrowserTest : public InProcessBrowserTest {
  public:
   MediaEngagementBrowserTest()
-      : test_clock_(new base::SimpleTestClock()),
-        task_runner_(new base::TestMockTimeTaskRunner()) {
+      : task_runner_(new base::TestMockTimeTaskRunner()) {
     http_server_.ServeFilesFromSourceDirectory(kMediaEngagementTestDataPath);
     http_server_origin2_.ServeFilesFromSourceDirectory(
         kMediaEngagementTestDataPath);
@@ -116,8 +115,7 @@ class MediaEngagementBrowserTest : public InProcessBrowserTest {
   void Advance(base::TimeDelta time) {
     DCHECK(injected_clock_);
     task_runner_->FastForwardBy(time);
-    static_cast<base::SimpleTestClock*>(GetService()->clock_.get())
-        ->Advance(time);
+    test_clock_.Advance(time);
     base::RunLoop().RunUntilIdle();
   }
 
@@ -207,7 +205,7 @@ class MediaEngagementBrowserTest : public InProcessBrowserTest {
 
   void InjectTimerTaskRunner() {
     if (!injected_clock_) {
-      GetService()->clock_ = std::move(test_clock_);
+      GetService()->clock_ = &test_clock_;
       injected_clock_ = true;
     }
 
@@ -226,7 +224,7 @@ class MediaEngagementBrowserTest : public InProcessBrowserTest {
 
   bool injected_clock_ = false;
 
-  std::unique_ptr<base::SimpleTestClock> test_clock_;
+  base::SimpleTestClock test_clock_;
 
   net::EmbeddedTestServer http_server_;
   net::EmbeddedTestServer http_server_origin2_;

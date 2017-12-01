@@ -102,7 +102,7 @@ class MediaEngagementService : public KeyedService,
   friend class MediaEngagementContentsObserverTest;
   friend MediaEngagementContentsObserver;
 
-  MediaEngagementService(Profile* profile, std::unique_ptr<base::Clock> clock);
+  MediaEngagementService(Profile* profile, base::Clock* clock);
 
   // Returns true if we should record engagement for this url. Currently,
   // engagement is only earned for HTTP and HTTPS.
@@ -116,7 +116,7 @@ class MediaEngagementService : public KeyedService,
   void Clear(const GURL& url);
 
   // An internal clock for testing.
-  std::unique_ptr<base::Clock> clock_;
+  base::Clock* clock_;
 
   // Records all the stored scores to a histogram.
   void RecordStoredScoresToHistogram();
