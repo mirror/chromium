@@ -25,7 +25,9 @@ class JobEventDetails;
 class MetafilePlayer;
 class PrintJobWorker;
 class PrintedDocument;
+#if defined(OS_WIN)
 class PrintedPage;
+#endif
 class PrinterQuery;
 
 // Manages the print work for a specific document. Talks to the printer through
@@ -186,9 +188,6 @@ class JobEventDetails : public base::RefCountedThreadSafe<JobEventDetails> {
     // A new document started printing.
     NEW_DOC,
 
-    // A page is done printing.
-    PAGE_DONE,
-
     // A document is done printing. The worker thread is still alive. Warning:
     // not a good moment to release the handle to PrintJob.
     DOC_DONE,
@@ -202,16 +201,26 @@ class JobEventDetails : public base::RefCountedThreadSafe<JobEventDetails> {
 
     // An error occured. Printing is canceled.
     FAILED,
+
+#if defined(OS_WIN)
+    // A page is done printing. Windows only.
+    PAGE_DONE,
+#endif
   };
 
+#if defined(OS_WIN)
   JobEventDetails(Type type,
                   int job_id,
                   PrintedDocument* document,
                   PrintedPage* page);
+#endif
+  JobEventDetails(Type type, int job_id, PrintedDocument* document);
 
   // Getters.
   PrintedDocument* document() const;
+#if defined(OS_WIN)
   PrintedPage* page() const;
+#endif
   Type type() const {
     return type_;
   }
@@ -223,7 +232,9 @@ class JobEventDetails : public base::RefCountedThreadSafe<JobEventDetails> {
   ~JobEventDetails();
 
   scoped_refptr<PrintedDocument> document_;
+#if defined(OS_WIN)
   scoped_refptr<PrintedPage> page_;
+#endif
   const Type type_;
   int job_id_;
 

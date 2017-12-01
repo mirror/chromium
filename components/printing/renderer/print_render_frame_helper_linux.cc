@@ -92,7 +92,6 @@ bool PrintRenderFrameHelper::PrintPagesNative(blink::WebLocalFrame* frame,
   for (size_t i = 0; i < printed_pages.size(); ++i) {
     page_params.page_number = printed_pages[i];
     Send(new PrintHostMsg_DidPrintPage(routing_id(), page_params));
-    // Send the rest of the pages with an invalid metafile handle.
     if (page_params.metafile_data_handle.IsValid()) {
       page_params.metafile_data_handle = base::SharedMemoryHandle();
       page_params.data_size = 0;
