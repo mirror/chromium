@@ -177,6 +177,29 @@
       "revId": "a21d65ce8d85b33f9000f49db5ba33b451c55867",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5d5cf07_91ad6312",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-01T09:02:23Z",
+      "side": 1,
+      "message": "Is this a temporary thing? I don\u0027t understand why it\u0027s okay to have references to legacy layout objects here. I realize that the lifespan of the various objects involved have been discussed, but still...\n\nI hope it\u0027s a temporary thing, and that you can document it as such. :)",
+      "range": {
+        "startLine": 183,
+        "startChar": 8,
+        "endLine": 183,
+        "endChar": 23
+      },
+      "revId": "a21d65ce8d85b33f9000f49db5ba33b451c55867",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
