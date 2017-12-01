@@ -443,9 +443,15 @@ void HTMLFormElement::ScheduleFormSubmission(FormSubmission* submission) {
     return;
   }
 
-  if (!GetDocument().GetContentSecurityPolicy()->AllowFormAction(
-          submission->Action())) {
-    return;
+  // PlzNavigate: Form action CSP is handled by the browser process.
+  // Exceptions: Javascript actions in forms still need to be checked here as
+  // they don't create a navigation.
+  if (!GetDocument().GetSettings()->GetBrowserSideNavigationEnabled() ||
+      submission->Action().ProtocolIsJavaScript()) {
+    if (!GetDocument().GetContentSecurityPolicy()->AllowFormAction(
+            submission->Action())) {
+      return;
+    }
   }
 
   if (submission->Action().ProtocolIsJavaScript()) {

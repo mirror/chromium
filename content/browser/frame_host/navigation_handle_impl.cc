@@ -15,7 +15,6 @@
 #include "content/browser/frame_host/ancestor_throttle.h"
 #include "content/browser/frame_host/data_url_navigation_throttle.h"
 #include "content/browser/frame_host/debug_urls.h"
-#include "content/browser/frame_host/form_submission_throttle.h"
 #include "content/browser/frame_host/frame_tree_node.h"
 #include "content/browser/frame_host/mixed_content_navigation_throttle.h"
 #include "content/browser/frame_host/navigation_controller_impl.h"
@@ -1324,12 +1323,11 @@ void NavigationHandleImpl::RegisterNavigationThrottles() {
   AddThrottle(DataUrlNavigationThrottle::CreateThrottleForNavigation(this));
 
   AddThrottle(AncestorThrottle::MaybeCreateThrottleFor(this));
-  AddThrottle(FormSubmissionThrottle::MaybeCreateThrottleFor(this));
 
-  // Check for mixed content. This is done after the AncestorThrottle and the
-  // FormSubmissionThrottle so that when folks block mixed content with a CSP
-  // policy, they don't get a warning. They'll still get a warning in the
-  // console about CSP blocking the load.
+  // Check for mixed content. This throttle's logic will run after the main CSP
+  // checking in the NavigationRequest, so that when folks block mixed content
+  // with a CSP policy, they don't get a warning. They'll still get a warning
+  // in the console about CSP blocking the load.
   AddThrottle(
       MixedContentNavigationThrottle::CreateThrottleForNavigation(this));
 

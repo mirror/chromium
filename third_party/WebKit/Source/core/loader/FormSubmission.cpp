@@ -198,13 +198,16 @@ FormSubmission* FormSubmission::Create(HTMLFormElement* form,
                                              ? document.Url().GetString()
                                              : copied_attributes.Action());
 
-  if (document.GetInsecureRequestPolicy() & kUpgradeInsecureRequests &&
-      action_url.ProtocolIs("http")) {
-    UseCounter::Count(document,
-                      WebFeature::kUpgradeInsecureRequestsUpgradedRequest);
-    action_url.SetProtocol("https");
-    if (action_url.Port() == 80)
-      action_url.SetPort(443);
+  // PlzNavigate: Form action CSP upgrading is handled by the browser process.
+  if (!document.GetSettings()->GetBrowserSideNavigationEnabled()) {
+    if (document.GetInsecureRequestPolicy() & kUpgradeInsecureRequests &&
+        action_url.ProtocolIs("http")) {
+      UseCounter::Count(document,
+                        WebFeature::kUpgradeInsecureRequestsUpgradedRequest);
+      action_url.SetProtocol("https");
+      if (action_url.Port() == 80)
+        action_url.SetPort(443);
+    }
   }
 
   bool is_mailto_form = action_url.ProtocolIs("mailto");

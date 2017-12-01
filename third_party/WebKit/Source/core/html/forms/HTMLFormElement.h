@@ -26,6 +26,7 @@
 #define HTMLFormElement_h
 
 #include "core/CoreExport.h"
+#include "core/frame/Settings.h"
 #include "core/html/HTMLElement.h"
 #include "core/html/forms/HTMLFormControlElement.h"
 #include "core/html/forms/RadioButtonGroupScope.h"
@@ -39,6 +40,7 @@ class HTMLFormControlElement;
 class HTMLFormControlsCollection;
 class HTMLImageElement;
 class RadioNodeListOrElement;
+class Settings;
 
 class CORE_EXPORT HTMLFormElement final : public HTMLElement {
   DEFINE_WRAPPERTYPEINFO();
