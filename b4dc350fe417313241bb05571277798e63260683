@@ -34,6 +34,24 @@
       "revId": "b4dc350fe417313241bb05571277798e63260683",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aaa6b25_9c4df141",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/ifAvailable.html",
+        "patchSetId": 32
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-12-01T02:45:40Z",
+      "side": 1,
+      "message": "It took me a few seconds to mentally check that \"throws asynchronously\" maps to what I expected (rejected promise). I then wondered if that\u0027s how the cool kids call rejected promises these days.\n\nA quick Google search for \"javascript asynchronous throw\" gives very clear results, so I\u0027m OK with using this term if you prefer it to rejected promises.",
+      "parentUuid": "aa0bacbb_f1635b70",
+      "revId": "b4dc350fe417313241bb05571277798e63260683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
