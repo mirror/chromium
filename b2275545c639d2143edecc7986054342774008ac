@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "d44e8244_2ba89c24",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-12-01T21:48:17Z",
+      "side": 1,
+      "message": "removed.",
+      "parentUuid": "ef325bce_47c08b9a",
+      "revId": "b2275545c639d2143edecc7986054342774008ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b33a5644_2edc8729",
         "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
         "patchSetId": 28
@@ -110,6 +128,30 @@
       "revId": "b2275545c639d2143edecc7986054342774008ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd36aac3_807934b8",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-12-01T21:48:17Z",
+      "side": 1,
+      "message": "I\u0027ll consider the fact that ArcPrintService should outlive discovery sessions and print jobs an implementation detail on Android side.",
+      "parentUuid": "b33a5644_2edc8729",
+      "range": {
+        "startLine": 491,
+        "startChar": 7,
+        "endLine": 491,
+        "endChar": 14
+      },
+      "revId": "b2275545c639d2143edecc7986054342774008ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

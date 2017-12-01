@@ -519,6 +519,24 @@
     },
     {
       "key": {
+        "uuid": "aec98397_3e22d9b9",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-12-01T21:48:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d8852a6_5925ff5d",
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a6efafc_08287927",
         "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
         "patchSetId": 13
@@ -1506,6 +1524,30 @@
     },
     {
       "key": {
+        "uuid": "e20578f4_93702774",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-12-01T21:48:17Z",
+      "side": 1,
+      "message": "In the end StrongBinding results in the same amount of code but being less clear.",
+      "parentUuid": "dc38c4a0_54c2ef0a",
+      "range": {
+        "startLine": 477,
+        "startChar": 6,
+        "endLine": 477,
+        "endChar": 22
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2315a6d_dd61c73d",
         "filename": "chrome/browser/chromeos/arc/print/arc_print_service.h",
         "patchSetId": 13
@@ -1597,6 +1639,30 @@
       "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77f0231a_70e16daf",
+        "filename": "chrome/browser/printing/print_job_worker.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-12-01T21:48:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a9b0cc0_73d6c1d2",
+      "range": {
+        "startLine": 60,
+        "startChar": 18,
+        "endLine": 60,
+        "endChar": 19
+      },
+      "revId": "0b321e4cbab4bbbfdad125f5f57c90b4d7f5917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
