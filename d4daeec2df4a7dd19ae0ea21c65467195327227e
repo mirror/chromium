@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d1b626e_38377b7f",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_ui_updater_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-01T10:15:55Z",
+      "side": 1,
+      "message": "If this is the intended way for this animator subclass to be initialized, that should be encapsulated in an -init method; -initWithStartProgress: can always be used in other cases.",
+      "range": {
+        "startLine": 84,
+        "startChar": 43,
+        "endLine": 84,
+        "endChar": 64
+      },
+      "revId": "d4daeec2df4a7dd19ae0ea21c65467195327227e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
