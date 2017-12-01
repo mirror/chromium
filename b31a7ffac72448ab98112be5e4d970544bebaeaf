@@ -83,6 +83,24 @@
     },
     {
       "key": {
+        "uuid": "50168819_0553906f",
+        "filename": "chrome/browser/process_singleton.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-01T19:08:41Z",
+      "side": 1,
+      "message": "Not sure if this would work, but how about a unittest that:\n\n1) Installs an AE listener for the open url event\n2) Puts the open url event in the AE queue\n3) Calls this method\n4) Spins the runloop to see that (1) gets invoked with the right params",
+      "parentUuid": "5fac76c2_31714cc8",
+      "revId": "b31a7ffac72448ab98112be5e4d970544bebaeaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7837ed70_a61417ee",
         "filename": "chrome/browser/process_singleton_mac.mm",
         "patchSetId": 2
