@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "927e8a0a_68fb18c2",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResource.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-12-01T18:27:08Z",
+      "side": 1,
+      "message": "I assume this bug is happening in the cache hit case? If so, how should this new logic behave when a non-UACSS image is requested and reused by a UACSS stylesheet (or vice versa)? That Resource will now be flagged as UACSS in all cases, even after the last UACSS usage is unregistered.",
+      "revId": "2f55c6948a6391303cc206c15d64ee368eddeb4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
