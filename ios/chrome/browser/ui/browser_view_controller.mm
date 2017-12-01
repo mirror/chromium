@@ -2038,11 +2038,12 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 
   // Attach the typing shield to the content area but have it hidden.
   [_typingShield setFrame:[_contentArea frame]];
-  if (initialLayout)
+  if (initialLayout) {
     [[self view] insertSubview:_typingShield aboveSubview:_contentArea];
-  [_typingShield setHidden:YES];
-  _typingShield.accessibilityIdentifier = @"Typing Shield";
-  _typingShield.accessibilityLabel = l10n_util::GetNSString(IDS_CANCEL);
+    [_typingShield setHidden:YES];
+    _typingShield.accessibilityIdentifier = @"Typing Shield";
+    _typingShield.accessibilityLabel = l10n_util::GetNSString(IDS_CANCEL);
+  }
 }
 
 - (void)displayTab:(Tab*)tab isNewSelection:(BOOL)newSelection {
