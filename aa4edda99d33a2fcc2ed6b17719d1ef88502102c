@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd78c73a_5853a4f8",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-01T02:35:01Z",
+      "side": 1,
+      "message": "nit: move this blank line after the first EXPECT_EQ? its current placement seems pretty arbitrary",
+      "revId": "aa4edda99d33a2fcc2ed6b17719d1ef88502102c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
