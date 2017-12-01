@@ -16,6 +16,24 @@
       "revId": "43ce9df4257d130e121df9bf54e2a0f7b5797b39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c25d2d47_29931929",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 6416,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-12-01T15:17:31Z",
+      "side": 1,
+      "message": "Done. This is the new histogram; I shouldn\u0027t put obsolete under it. \nI keep a partial summary for the old histogram as that\u0027s the basic explanation. The rest of paragraphs (e.g., \"the metric is useful for ...\") are deleted because they are now wrong, and that\u0027s why I\u0027m deprecating this histogram.",
+      "parentUuid": "feb00b20_8e26793a",
+      "revId": "43ce9df4257d130e121df9bf54e2a0f7b5797b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
