@@ -127,6 +127,12 @@ void StatFileForIPC(const BrokerPolicy& policy,
     write_pickle->WriteInt(0);
     write_pickle->WriteData(reinterpret_cast<char*>(&sb), sizeof(sb));
   } else {
+#if defined(__ANDROID_API__) && __ANDROID_API__ < 21
+    // stat64 is not defined for older Android API versions in newer NDK
+    // versions.
+    write_pickle->WriteInt(-1);
+    return;
+#else
     struct stat64 sb;
     if (stat64(file_to_access, &sb) < 0) {
       write_pickle->WriteInt(-errno);
@@ -134,6 +140,7 @@ void StatFileForIPC(const BrokerPolicy& policy,
     }
     write_pickle->WriteInt(0);
     write_pickle->WriteData(reinterpret_cast<char*>(&sb), sizeof(sb));
+#endif  // defined(__ANDROID_API__) && __ANDROID_API__ < 21
   }
 }
 
