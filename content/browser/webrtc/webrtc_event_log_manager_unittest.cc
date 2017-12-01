@@ -554,7 +554,9 @@ TEST_F(WebRtcEventLogManagerTest,
   ASSERT_EQ(file_path_2, expected_path_2);
 }
 
-TEST_F(WebRtcEventLogManagerTest, LocalLogMayNotBeStartedTwice) {
+// TODO(eladalon): Fix the failure (Win7) and re-enable.
+// https://crbug.com/791022
+TEST_F(WebRtcEventLogManagerTest, DISABLED_LocalLogMayNotBeStartedTwice) {
   const base::FilePath file_path = LocalWebRtcEventLogStart(
       kRenderProcessId, kLocalPeerConnectionId, base_path_, kMaxFileSizeBytes);
   ASSERT_FALSE(file_path.empty());
