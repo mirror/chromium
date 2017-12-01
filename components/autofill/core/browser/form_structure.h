@@ -245,6 +245,9 @@ class FormStructure {
   bool operator==(const FormData& form) const;
   bool operator!=(const FormData& form) const;
 
+  bool should_refill() { return test_should_fill_; }
+  void set_should_refill(bool should) { test_should_fill_ = should; }
+
  private:
   friend class AutofillMergeTest;
   friend class FormStructureTest;
@@ -362,6 +365,8 @@ class FormStructure {
 
   // If phone number rationalization has been performed for a given section.
   std::map<std::string, bool> phone_rationalized_;
+
+  bool test_should_fill_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(FormStructure);
 };

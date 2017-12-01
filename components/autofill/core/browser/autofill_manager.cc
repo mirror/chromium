@@ -1446,22 +1446,28 @@ bool AutofillManager::GetCachedFormAndField(const FormData& form,
                                             const FormFieldData& field,
                                             FormStructure** form_structure,
                                             AutofillField** autofill_field) {
+  LOG(ERROR) << "GetCachedFormAndField";
   // Find the FormStructure that corresponds to |form|.
   // If we do not have this form in our cache but it is parseable, we'll add it
   // in the call to |UpdateCachedForm()|.
   if (!FindCachedForm(form, form_structure) &&
       !FormStructure(form).ShouldBeParsed()) {
+    LOG(ERROR) << "1";
     return false;
   }
 
   // Update the cached form to reflect any dynamic changes to the form data, if
   // necessary.
-  if (!UpdateCachedForm(form, *form_structure, form_structure))
+  if (!UpdateCachedForm(form, *form_structure, form_structure)) {
+    LOG(ERROR) << "2";
     return false;
+  }
 
   // No data to return if there are no auto-fillable fields.
-  if (!(*form_structure)->autofill_count())
+  if (!(*form_structure)->autofill_count()) {
+    LOG(ERROR) << "3";
     return false;
+  }
 
   // Find the AutofillField that corresponds to |field|.
   *autofill_field = nullptr;
@@ -1502,8 +1508,10 @@ bool AutofillManager::UpdateCachedForm(const FormData& live_form,
   for (size_t i = 0; !needs_update && i < cached_form->field_count(); ++i)
     needs_update = !cached_form->field(i)->SameFieldAs(live_form.fields[i]);
 
-  if (!needs_update)
+  if (!needs_update) {
+    LOG(ERROR);
     return true;
+  }
 
   // Note: We _must not_ remove the original version of the cached form from
   // the list of |form_structures_|. Otherwise, we break parsing of the

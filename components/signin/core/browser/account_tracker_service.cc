@@ -217,6 +217,7 @@ void AccountTrackerService::SetAccountStateFromUserInfo(
   std::string email;
   if (user_info->GetString("id", &gaia_id) &&
       user_info->GetString("email", &email)) {
+    LOG(ERROR) << email;
     state.info.gaia = gaia_id;
     state.info.email = email;
 

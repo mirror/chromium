@@ -342,11 +342,14 @@ FormStructure::FormStructure(const FormData& form)
   }
 
   form_signature_ = autofill::CalculateFormSignature(form);
+  LOG(ERROR) << "Creating a form structure " << form_signature_;
   // Do further processing on the fields, as needed.
   ProcessExtractedFields();
 }
 
-FormStructure::~FormStructure() {}
+FormStructure::~FormStructure() {
+  LOG(ERROR) << "Destroyed";
+}
 
 void FormStructure::DetermineHeuristicTypes(ukm::UkmRecorder* ukm_recorder) {
   const auto determine_heuristic_types_start_time = base::TimeTicks::Now();
@@ -679,6 +682,7 @@ bool FormStructure::ShouldBeUploaded() const {
 
 void FormStructure::UpdateFromCache(const FormStructure& cached_form,
                                     const bool apply_is_autofilled) {
+  LOG(ERROR) << "UPDATEGIDFSGDF GTROM GFSDAGDFXC";
   // Map from field signatures to cached fields.
   std::map<base::string16, const AutofillField*> cached_fields;
   for (size_t i = 0; i < cached_form.field_count(); ++i) {
