@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4a29cb2c_5b4ead60",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_collection_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-12-01T06:04:16Z",
+      "side": 1,
+      "message": "updateHeight is needed at the start as well.\nAnd it seems viewWillAppear is too early, viewDidAppear is too late.\nIt ends up viewDidLayoutSubviews is the best place to do that.\n\nI will remove the comment to prevent confusion.",
+      "parentUuid": "1fa8ad59_5cbe37fe",
+      "range": {
+        "startLine": 210,
+        "startChar": 0,
+        "endLine": 210,
+        "endChar": 55
+      },
+      "revId": "0274d1f78143b580d506785414d64b171f50c1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94a667ac_45e6f43f",
         "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "0274d1f78143b580d506785414d64b171f50c1f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9f47131_56410e38",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-12-01T06:04:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94a667ac_45e6f43f",
+      "range": {
+        "startLine": 46,
+        "startChar": 11,
+        "endLine": 46,
+        "endChar": 33
+      },
+      "revId": "0274d1f78143b580d506785414d64b171f50c1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5a414df9_cbd69766",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-12-01T06:04:16Z",
+      "side": 1,
+      "message": "renamed to (UILabel*)titleLabel",
+      "parentUuid": "a7fdf416_af54151c",
+      "range": {
+        "startLine": 76,
+        "startChar": 12,
+        "endLine": 76,
+        "endChar": 25
+      },
+      "revId": "0274d1f78143b580d506785414d64b171f50c1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4183f9a_eb8a97c3",
         "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "0274d1f78143b580d506785414d64b171f50c1f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41b2c295_e4d1c81a",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-12-01T06:04:16Z",
+      "side": 1,
+      "message": "I will use ReadingListToolbarButton and put it under reading_list/ by now.\nWhen we have chance to refactor and create a super class for all bottom toolbars in future, it might call BottomToolbarButton and moved to ui/toolbar/.",
+      "parentUuid": "a4183f9a_eb8a97c3",
+      "range": {
+        "startLine": 83,
+        "startChar": 16,
+        "endLine": 83,
+        "endChar": 38
+      },
+      "revId": "0274d1f78143b580d506785414d64b171f50c1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "37261175_b59638a8",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-12-01T06:04:16Z",
+      "side": 1,
+      "message": "I cannot use that because\nUIControlContentHorizontalAlignmentLeading is only available on iOS 11+.\n(Although it seems Apple developer document said it\u0027s iOS 2+)",
+      "parentUuid": "059f2991_01483da4",
+      "range": {
+        "startLine": 159,
+        "startChar": 9,
+        "endLine": 159,
+        "endChar": 16
+      },
+      "revId": "0274d1f78143b580d506785414d64b171f50c1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "beac00a2_b20326fc",
         "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "0274d1f78143b580d506785414d64b171f50c1f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19c7520f_72d2efc5",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-12-01T06:04:16Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "beac00a2_b20326fc",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 161,
+        "endChar": 63
+      },
+      "revId": "0274d1f78143b580d506785414d64b171f50c1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "91d73d2c_89ee932e",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-12-01T06:04:16Z",
+      "side": 1,
+      "message": "Same. available on iOS 11+ only.",
+      "parentUuid": "e032fc70_0a8a6698",
+      "range": {
+        "startLine": 177,
+        "startChar": 9,
+        "endLine": 177,
+        "endChar": 17
+      },
+      "revId": "0274d1f78143b580d506785414d64b171f50c1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47f88420_183f49c0",
         "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm",
         "patchSetId": 2
@@ -183,6 +351,30 @@
       "revId": "0274d1f78143b580d506785414d64b171f50c1f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef3cb05f_bb92dd75",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-12-01T06:04:16Z",
+      "side": 1,
+      "message": "I am not sure if I should remove this.\nThe runtime break could remind us to insert something here in case new position is added.",
+      "parentUuid": "47f88420_183f49c0",
+      "range": {
+        "startLine": 189,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 30
+      },
+      "revId": "0274d1f78143b580d506785414d64b171f50c1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "2f3e34db_376d9008",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-12-01T06:04:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6372ede6_a3ad92e1",
+      "range": {
+        "startLine": 198,
+        "startChar": 3,
+        "endLine": 198,
+        "endChar": 10
+      },
+      "revId": "0274d1f78143b580d506785414d64b171f50c1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de946d4c_8390ec35",
         "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm",
         "patchSetId": 2
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "a4cb576f_a8ad6929",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-12-01T06:04:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de946d4c_8390ec35",
+      "range": {
+        "startLine": 213,
+        "startChar": 8,
+        "endLine": 213,
+        "endChar": 19
+      },
+      "revId": "0274d1f78143b580d506785414d64b171f50c1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b8d9e6d_f0ebdbe5",
         "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm",
         "patchSetId": 2
@@ -252,6 +492,30 @@
       "revId": "0274d1f78143b580d506785414d64b171f50c1f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44437855_975ad3df",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-12-01T06:04:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b8d9e6d_f0ebdbe5",
+      "range": {
+        "startLine": 214,
+        "startChar": 6,
+        "endLine": 214,
+        "endChar": 22
+      },
+      "revId": "0274d1f78143b580d506785414d64b171f50c1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +565,30 @@
     },
     {
       "key": {
+        "uuid": "f83e5c7d_59e56c51",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-12-01T06:04:16Z",
+      "side": 1,
+      "message": "I will keep this as is by now.\nI just filed bug crbug.com/789945 to create a super class for all bottom toolbars.\nThen all the spacing/font/dimensions will be moved to one place.",
+      "parentUuid": "1fc85175_e43e66a9",
+      "range": {
+        "startLine": 454,
+        "startChar": 28,
+        "endLine": 454,
+        "endChar": 55
+      },
+      "revId": "0274d1f78143b580d506785414d64b171f50c1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbd8bd3f_536ec68c",
         "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm",
         "patchSetId": 2
@@ -321,6 +609,30 @@
       "revId": "0274d1f78143b580d506785414d64b171f50c1f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4c82379_1628cdba",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-12-01T06:04:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbd8bd3f_536ec68c",
+      "range": {
+        "startLine": 462,
+        "startChar": 8,
+        "endLine": 463,
+        "endChar": 15
+      },
+      "revId": "0274d1f78143b580d506785414d64b171f50c1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
