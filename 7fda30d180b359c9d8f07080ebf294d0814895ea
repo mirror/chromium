@@ -70,6 +70,30 @@
       "revId": "7fda30d180b359c9d8f07080ebf294d0814895ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19b3da3d_33a10994",
+        "filename": "base/bind.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-12-01T08:05:49Z",
+      "side": 1,
+      "message": "Just in case, could you take another look for the new file?",
+      "parentUuid": "1bb5049b_e8a90de0",
+      "range": {
+        "startLine": 266,
+        "startChar": 0,
+        "endLine": 266,
+        "endChar": 4
+      },
+      "revId": "7fda30d180b359c9d8f07080ebf294d0814895ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
