@@ -859,10 +859,16 @@ void NotificationViewMD::CreateOrUpdateIconView(
 
 void NotificationViewMD::CreateOrUpdateSmallIconView(
     const Notification& notification) {
-  if (notification.small_image().IsEmpty())
+  if (notification.small_image().IsEmpty()) {
     header_row_->ClearAppIcon();
-  else
-    header_row_->SetAppIcon(notification.small_image().AsImageSkia());
+  } else {
+    gfx::Image masked_small_icon = notification.GenerateMaskedSmallIcon(
+        kSmallImageSizeMD, notification.accent_color() == SK_ColorTRANSPARENT
+                               ? message_center::kNotificationDefaultAccentColor
+                               : notification.accent_color());
+
+    header_row_->SetAppIcon(masked_small_icon.AsImageSkia());
+  }
 }
 
 void NotificationViewMD::CreateOrUpdateImageView(
