@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b74ff6e_b0cc812f",
+        "filename": "media/gpu/d3d11_mocks.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-12-01T01:50:14Z",
+      "side": 1,
+      "message": "~MockCOMInterface is already defined in the header, does it make much difference if all of these \u003d default lines are moved there too?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 18
+      },
+      "revId": "13371822436a30b1072ca1fe3a7665e552975639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15db21ad_c282ac1f",
+        "filename": "media/gpu/intel_csme_cdm_proxy_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-12-01T01:50:14Z",
+      "side": 1,
+      "message": "This looks brittle. Can some of these expectations be replaced with fake impls (that is, simple non-mock methods), or at lease with EXPECT_CALL().WillRepeatedly() so that each place doesn\u0027t need to configure them?",
+      "range": {
+        "startLine": 99,
+        "startChar": 4,
+        "endLine": 99,
+        "endChar": 15
+      },
+      "revId": "13371822436a30b1072ca1fe3a7665e552975639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
