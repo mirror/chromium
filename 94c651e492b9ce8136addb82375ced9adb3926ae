@@ -492,6 +492,24 @@
     },
     {
       "key": {
+        "uuid": "3008c941_d016f990",
+        "filename": "components/viz/service/display/renderer_pixeltest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 943,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-01T20:58:09Z",
+      "side": 1,
+      "message": "A (non-root) RenderPass is an intermediate texture. A RenderpassDrawQuad references that texture to draw it into another RenderPass. So if you have\n\nRenderPassB : Green Quad   -\u003e Draws green into some texture\nRenderPassA : Yellow Quad, RenderPassDrawQuad(B)  -\u003e Draws yellow, then draws the texture from B which has green in it.",
+      "parentUuid": "2ba81f67_be09e13f",
+      "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be5d5254_97a5cdb3",
         "filename": "components/viz/service/display/renderer_pixeltest.cc",
         "patchSetId": 3
