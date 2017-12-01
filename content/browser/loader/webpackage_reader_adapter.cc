@@ -194,26 +194,25 @@ void WebPackageResponseHandler::OnPipeWritable(MojoResult mojo_result) {
   DCHECK_EQ(MOJO_RESULT_OK, result);
 
   size_t dest_offset = 0;
-  size_t dest_size = base::checked_cast<size_t>(available);
-  while (!read_buffers_.empty() && dest_size > 0) {
+  size_t dest_buffer_size = base::checked_cast<size_t>(available);
+  while (!read_buffers_.empty() && dest_buffer_size - dest_offset > 0) {
     auto& src = read_buffers_.front();
     size_t src_size = base::checked_cast<size_t>(src->BytesRemaining());
+    size_t dest_size = dest_buffer_size - dest_offset;
     int ret = WriteToPipe(pending_write.get(), dest_offset, &dest_size,
                           src->data(), &src_size);
     if (ret != net::OK) {
       LOG(ERROR) << "WriteToPipe error " << ret << "  " << request_url_;
-      OnNotifyFinished(ret);
       return;
     }
     src->DidConsume(src_size);
-
     dest_offset += dest_size;
-    dest_size = base::checked_cast<size_t>(available) - dest_size;
     if (src->BytesRemaining() > 0)
       break;
     read_buffers_.pop_front();
   }
 
+  size_t dest_size = dest_buffer_size - dest_offset;
   if (read_buffers_.empty() && dest_size > 0 && source_stream_may_have_data_) {
     size_t src_size = 0;
     int ret = WriteToPipe(pending_write.get(), dest_offset, &dest_size, nullptr,
@@ -228,7 +227,6 @@ void WebPackageResponseHandler::OnPipeWritable(MojoResult mojo_result) {
     }
 
     dest_offset += dest_size;
-    dest_size = base::checked_cast<size_t>(available) - dest_size;
   }
 
   producer_handle_ = pending_write->Complete(dest_offset);
@@ -280,7 +278,7 @@ int WebPackageResponseHandler::WriteToPipe(
   while (dest_size > written &&
          (src_size > read || (source_stream_may_have_data_ && src_size == 0))) {
     current_read_pointer_ = static_cast<const char*>(src) + read;
-    current_read_size_ = *src_size_inout;
+    current_read_size_ = src_size - read;
     consumed_read_size_ = 0;
     auto dest = base::MakeRefCounted<network::NetToMojoIOBuffer>(
         dest_buffer, base::checked_cast<int>(dest_offset));
@@ -288,9 +286,12 @@ int WebPackageResponseHandler::WriteToPipe(
                                   base::checked_cast<int>(dest_size - written),
                                   net::CompletionCallback());
     current_read_pointer_ = nullptr;
-    DCHECK(rv >= 0) << rv;
-    if (rv < 0)
+    if (rv < 0) {
+      data_write_finished_ = true;
+      writable_handle_watcher_->Cancel();
+      producer_handle_.reset();
       return rv;
+    }
     if (rv == net::OK) {
       source_stream_may_have_data_ = false;
       break;
@@ -518,7 +519,7 @@ void WebPackageReaderAdapter::OnResourceResponse(
       "HTTP/1.1 %s OK\r\n",
       MapGetAsStringPiece(response_headers, ":status").data()));
   for (const auto& item : response_headers) {
-    LOG(ERROR) << item.first << ": " << item.second;
+    // LOG(ERROR) << item.first << ": " << item.second;
     if (item.first.find(":") == 0)
       continue;
     buf.append(item.first);
