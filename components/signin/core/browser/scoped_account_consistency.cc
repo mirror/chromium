@@ -18,19 +18,23 @@ namespace signin {
 
 ScopedAccountConsistency::ScopedAccountConsistency(
     AccountConsistencyMethod method) {
-#if !BUILDFLAG(ENABLE_DICE_SUPPORT)
-  DCHECK_NE(AccountConsistencyMethod::kDice, method);
-  DCHECK_NE(AccountConsistencyMethod::kDiceFixAuthErrors, method);
-#endif
-
 #if BUILDFLAG(ENABLE_MIRROR)
   DCHECK_EQ(AccountConsistencyMethod::kMirror, method);
   return;
 #endif
 
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+  DCHECK_NE(AccountConsistencyMethod::kDisabled, method);
+  DCHECK_NE(AccountConsistencyMethod::kMirror, method);
+#else
+  DCHECK((method == AccountConsistencyMethod::kDisabled) ||
+         (method == AccountConsistencyMethod::kMirror));
+#endif
+
   signin::SetGaiaOriginIsolatedCallback(base::Bind([] { return true; }));
 
-  if (method == AccountConsistencyMethod::kDisabled) {
+  if (method == AccountConsistencyMethod::kDisabled ||
+      method == AccountConsistencyMethod::kDiceFixAuthErrors) {
     scoped_feature_list_.InitAndDisableFeature(kAccountConsistencyFeature);
     DCHECK_EQ(method, GetAccountConsistencyMethod());
     return;
@@ -46,7 +50,7 @@ ScopedAccountConsistency::ScopedAccountConsistency(
       feature_value = kAccountConsistencyFeatureMethodMirror;
       break;
     case AccountConsistencyMethod::kDiceFixAuthErrors:
-      feature_value = kAccountConsistencyFeatureMethodDiceFixAuthErrors;
+      NOTREACHED();
       break;
     case AccountConsistencyMethod::kDicePrepareMigration:
       feature_value = kAccountConsistencyFeatureMethodDicePrepareMigration;

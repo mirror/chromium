@@ -32,7 +32,6 @@ extern const char kAccountConsistencyFeatureMethodParameter[];
 
 // Account consistency method feature values.
 extern const char kAccountConsistencyFeatureMethodMirror[];
-extern const char kAccountConsistencyFeatureMethodDiceFixAuthErrors[];
 extern const char kAccountConsistencyFeatureMethodDicePrepareMigration[];
 extern const char
     kAccountConsistencyFeatureMethodDicePrepareMigrationChromeSyncEndpoint[];
@@ -43,13 +42,16 @@ extern const char kAccountConsistencyFeatureMethodDice[];
 // functions once Dice is fully rolled out, and/or Mirror code is removed on
 // desktop.
 enum class AccountConsistencyMethod : int {
-  // No account consistency.
+  // No account consistency. Not available on platforms supporting Dice, and not
+  // available on platforms with Mirror enabled.
   kDisabled,
 
-  // Account management UI in the avatar bubble.
+  // Account management UI in the avatar bubble. Not available on platforms
+  // supporting Dice.
   kMirror,
 
-  // No account consistency, but Dice fixes authentication errors.
+  // No account consistency, but Dice fixes authentication errors. This is the
+  // default for platforms supporting Dice.
   kDiceFixAuthErrors,
 
   // Chrome uses the Dice signin flow and silently collects tokens associated

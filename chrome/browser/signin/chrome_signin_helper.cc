@@ -243,7 +243,6 @@ void ProcessDiceHeaderUIThread(
     const content::ResourceRequestInfo::WebContentsGetter&
         web_contents_getter) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  DCHECK(IsDiceFixAuthErrorsEnabled());
 
   content::WebContents* web_contents = web_contents_getter.Run();
   if (!web_contents)
@@ -323,10 +322,6 @@ void ProcessDiceResponseHeaderIfExists(net::URLRequest* request,
 
   if (!gaia::IsGaiaSignonRealm(request->url().GetOrigin()))
     return;
-
-  if (!IsDiceFixAuthErrorsEnabled()) {
-    return;
-  }
 
   net::HttpResponseHeaders* response_headers = request->response_headers();
   if (!response_headers)

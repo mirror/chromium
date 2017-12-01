@@ -332,6 +332,7 @@ IN_PROC_BROWSER_TEST_F(ChromeResourceDispatcherHostDelegateBrowserTest,
   }
 }
 
+#if !BUILDFLAG(ENABLE_DICE_SUPPORT)
 namespace {
 
 // A URLRequestMockHTTPJob to that reports HTTP request headers of outgoing
@@ -591,6 +592,7 @@ IN_PROC_BROWSER_TEST_F(ChromeResourceDispatcherHostDelegateBrowserTest,
     }
   }
 }
+#endif  // !BUILDFLAG(ENABLE_DICE_SUPPORT)
 
 // Check that exactly one set of throttles is added to smaller downloads, which
 // have their mime type determined only after the response is completely

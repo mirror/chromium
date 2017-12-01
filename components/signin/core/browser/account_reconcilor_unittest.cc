@@ -94,9 +94,18 @@ class DummyAccountReconcilorWithDelegate : public AccountReconcilor {
       signin::AccountConsistencyMethod account_consistency) {
     switch (account_consistency) {
       case signin::AccountConsistencyMethod::kMirror:
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+        NOTREACHED();
+        return nullptr;
+#else
         return std::make_unique<signin::MirrorAccountReconcilorDelegate>(
             signin_manager);
+#endif
       case signin::AccountConsistencyMethod::kDisabled:
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+        NOTREACHED();
+#endif
+      // Fall through.
       case signin::AccountConsistencyMethod::kDiceFixAuthErrors:
         return std::make_unique<signin::AccountReconcilorDelegate>();
       case signin::AccountConsistencyMethod::kDicePrepareMigration:
@@ -307,6 +316,8 @@ void AccountReconcilorTest::SetAccountConsistency(
       base::MakeUnique<signin::ScopedAccountConsistency>(method);
 }
 
+#if !BUILDFLAG(ENABLE_DICE_SUPPORT)
+
 TEST_F(AccountReconcilorTest, Basic) {
   AccountReconcilor* reconcilor = GetMockReconcilor();
   ASSERT_TRUE(reconcilor);
@@ -363,6 +374,8 @@ TEST_F(AccountReconcilorTest, ProfileAlreadyConnected) {
   ASSERT_TRUE(reconcilor);
   ASSERT_TRUE(reconcilor->IsRegisteredWithTokenService());
 }
+
+#endif  // !BUILDFLAG(ENABLE_DICE_SUPPORT)
 
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
 
@@ -1056,6 +1069,8 @@ TEST_F(AccountReconcilorTest, MigrationClearAllTokens) {
 
 #endif  // BUILDFLAG(ENABLE_DICE_SUPPORT)
 
+#if !BUILDFLAG(ENABLE_DICE_SUPPORT)
+
 // Tests that reconcile cannot start before the tokens are loaded, and is
 // automatically started when tokens are loaded.
 TEST_F(AccountReconcilorTest, TokensNotLoaded) {
@@ -1736,3 +1751,5 @@ TEST_F(AccountReconcilorTest, WontMergeAccountsWithError) {
   ASSERT_FALSE(reconcilor->is_reconcile_started_);
   ASSERT_FALSE(reconcilor->error_during_last_reconcile_);
 }
+
+#endif  // !BUILDFLAG(ENABLE_DICE_SUPPORT)

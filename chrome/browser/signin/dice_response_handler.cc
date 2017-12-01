@@ -227,7 +227,6 @@ DiceResponseHandler::~DiceResponseHandler() {}
 void DiceResponseHandler::ProcessDiceHeader(
     const signin::DiceResponseParams& dice_params,
     std::unique_ptr<ProcessDiceHeaderDelegate> delegate) {
-  DCHECK(signin::IsDiceFixAuthErrorsEnabled());
   DCHECK(delegate);
   switch (dice_params.user_intention) {
     case signin::DiceAction::SIGNIN: {
