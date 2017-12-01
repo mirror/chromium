@@ -37,12 +37,21 @@
 namespace blink {
 
 class AssignedNodesOptions;
+class HTMLSlotElement;
+
+// This class is used only for User-Agent shadows to select specific nodes.
+class AssignmentFilter : public GarbageCollectedFinalized<AssignmentFilter> {
+ public:
+  virtual ~AssignmentFilter() {}
+  virtual bool CanAssign(const Node&) const = 0;
+  virtual void Trace(blink::Visitor* visitor) {}
+};
 
 class CORE_EXPORT HTMLSlotElement final : public HTMLElement {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  DECLARE_NODE_FACTORY(HTMLSlotElement);
+  static HTMLSlotElement* Create(Document&, AssignmentFilter* = nullptr);
 
   const HeapVector<Member<Node>>& AssignedNodes() const;
   const HeapVector<Member<Node>>& GetDistributedNodes();
@@ -74,6 +83,7 @@ class CORE_EXPORT HTMLSlotElement final : public HTMLElement {
   Node* DistributedNodePreviousTo(const Node&) const;
 
   void AppendAssignedNode(Node&);
+  bool FilteredAppendAssignedNode(Node&);
 
   void ResolveDistributedNodes();
   void AppendDistributedNode(Node&);
@@ -120,7 +130,7 @@ class CORE_EXPORT HTMLSlotElement final : public HTMLElement {
   virtual void Trace(blink::Visitor*);
 
  private:
-  HTMLSlotElement(Document&);
+  HTMLSlotElement(Document&, AssignmentFilter*);
 
   InsertionNotificationRequest InsertedInto(ContainerNode*) final;
   void RemovedFrom(ContainerNode*) final;
@@ -140,10 +150,13 @@ class CORE_EXPORT HTMLSlotElement final : public HTMLElement {
 
   void SetNeedsDistributionRecalcWillBeSetNeedsAssignmentRecalc();
 
+  bool HasFilter() const { return filter_; }
+
   HeapVector<Member<Node>> assigned_nodes_;
   HeapVector<Member<Node>> distributed_nodes_;
   HeapVector<Member<Node>> old_distributed_nodes_;
   HeapHashMap<Member<const Node>, size_t> distributed_indices_;
+  Member<AssignmentFilter> filter_;
   bool slotchange_event_enqueued_ = false;
 
   // TODO(hayato): Move this to more appropriate directory (e.g. platform/wtf)
