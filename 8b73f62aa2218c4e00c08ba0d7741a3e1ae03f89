@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "48e749de_2e05540e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-01T23:37:57Z",
+      "side": 1,
+      "message": "Our team usually does that when making UI changes. I can link them on the bug as well once we agree this is in reasonable shape. I also added a RTL screenshot.",
+      "parentUuid": "dcd0f02f_1f8a6251",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "8b73f62aa2218c4e00c08ba0d7741a3e1ae03f89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9593a471_b3ec9482",
         "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.js",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4a967b02_11c0074e",
+        "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-01T23:37:57Z",
+      "side": 1,
+      "message": "The extra data is set by the browser. We should only send it for tab mirroring session that includes video.\n\nThe interim solution is to show it always regardless of remoting status, because currently it isn\u0027t clear how the \"remoting is possible\" signal should be plumbed to the extension. This should be revisited in more detail with xjz@/miu@ when considering the next iteration.",
+      "parentUuid": "9593a471_b3ec9482",
+      "range": {
+        "startLine": 379,
+        "startChar": 8,
+        "endLine": 379,
+        "endChar": 41
+      },
+      "revId": "8b73f62aa2218c4e00c08ba0d7741a3e1ae03f89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d9c2a92_630008ad",
         "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.js",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-01T21:44:34Z",
       "side": 1,
       "message": "If we are trying to get the smallest thing possible in with the hopes of merging this into 64 then this looks fine for now, but otherwise is there any other reason to not go ahead and create a proper template now?",
+      "range": {
+        "startLine": 382,
+        "startChar": 0,
+        "endLine": 383,
+        "endChar": 77
+      },
+      "revId": "8b73f62aa2218c4e00c08ba0d7741a3e1ae03f89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "172fd573_85ee169e",
+        "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-01T23:37:57Z",
+      "side": 1,
+      "message": "Getting this into M64 is the hope :) Given that this is a one-off I think it\u0027s fine for now. I would also like to understand whether using paper-dropdown-menu is a possibility before creating a separate template.",
+      "parentUuid": "9d9c2a92_630008ad",
       "range": {
         "startLine": 382,
         "startChar": 0,
