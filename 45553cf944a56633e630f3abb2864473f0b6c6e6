@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea978104_b59f78b4",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/signin/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-01T17:40:17Z",
+      "side": 1,
+      "message": "can you actually make this a file ref to the production code (i\u0027d update the javatest one while we\u0027re at it)?\n\nfile://chrome/android/java/src/org/chromium/chrome/browser/signin/OWNERS",
+      "range": {
+        "startLine": 1,
+        "startChar": 8,
+        "endLine": 1,
+        "endChar": 9
+      },
+      "revId": "45553cf944a56633e630f3abb2864473f0b6c6e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
