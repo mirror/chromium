@@ -562,6 +562,24 @@
     },
     {
       "key": {
+        "uuid": "38038727_49802f0e",
+        "filename": "chrome/browser/chromeos/policy/login_profile_policy_provider.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-01T18:41:21Z",
+      "side": 1,
+      "message": "I\u0027ve decided to leave this as it is for now, and change make the ConfigurationPolicyHandler profile-dependent when we solve the PolicyHandlerParameters issue (soon).\nPlease object if you think we should do something right away.",
+      "parentUuid": "bc3d30fa_3824146e",
+      "revId": "2e3526edda18b35b5b46b43812ebb81baf84d7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fc06cab_d8d1504c",
         "filename": "chrome/browser/profiles/profile_io_data.cc",
         "patchSetId": 16
