@@ -23,8 +23,21 @@ class MockCanvasAsyncBlobCreator : public CanvasAsyncBlobCreator {
                              MimeType mime_type,
                              Document* document)
       : CanvasAsyncBlobCreator(data,
+                               nullptr,
                                mime_type,
                                size,
+                               nullptr,
+                               0,
+                               document,
+                               nullptr) {}
+
+  MockCanvasAsyncBlobCreator(scoped_refptr<StaticBitmapImage> image,
+                             MimeType mime_type,
+                             Document* document)
+      : CanvasAsyncBlobCreator(nullptr,
+                               image,
+                               mime_type,
+                               IntSize(0, 0),
                                nullptr,
                                0,
                                document,
@@ -149,6 +162,21 @@ class MockCanvasAsyncBlobCreatorWithoutCompleteJpeg
 
 //==============================================================================
 
+//==============================================================================
+//===============================StaticBitmapImage==============================
+//==============================================================================
+
+class MockCanvasAsyncBlobCreatorWithoutStartStaticBitmapImage
+    : public MockCanvasAsyncBlobCreator {
+ public:
+  MockCanvasAsyncBlobCreatorWithoutStartStaticBitmapImage(
+      scoped_refptr<StaticBitmapImage> image,
+      Document* document)
+      : MockCanvasAsyncBlobCreator(image, kMimeTypeJpeg, document) {}
+};
+
+//==============================================================================
+
 class CanvasAsyncBlobCreatorTest : public ::testing::Test {
  public:
   // Png unit tests
@@ -160,6 +188,9 @@ class CanvasAsyncBlobCreatorTest : public ::testing::Test {
   void PrepareMockCanvasAsyncBlobCreatorWithoutStartJpeg();
   void PrepareMockCanvasAsyncBlobCreatorWithoutCompleteJpeg();
   void PrepareMockCanvasAsyncBlobCreatorFailJpeg();
+
+  // StaticBitmapImage unit test
+  void PrepareMockCanvasAsyncBlobCreatorWithoutStartStaticBitmapImage();
 
  protected:
   CanvasAsyncBlobCreatorTest();
@@ -235,6 +266,16 @@ void CanvasAsyncBlobCreatorTest::PrepareMockCanvasAsyncBlobCreatorFailJpeg() {
   // completion.
   async_blob_creator_ = new MockCanvasAsyncBlobCreatorWithoutCompleteJpeg(
       image_data->data(), test_size, &GetDocument());
+}
+
+void CanvasAsyncBlobCreatorTest::
+    PrepareMockCanvasAsyncBlobCreatorWithoutStartStaticBitmapImage() {
+  int width = 1000;
+  int height = 1000;
+  sk_sp<SkData> data = SkData::MakeUninitialized(width * height);
+  sk_sp<SkImage> image = SkImage::MakeFromEncoded(data, nullptr);
+  if (!image)
+    LOG(ERROR) << "HURRRRRRRRRRRRRRRRRRRRRRAYYYYY";
 }
 
 void CanvasAsyncBlobCreatorTest::TearDown() {
@@ -332,5 +373,9 @@ TEST_F(CanvasAsyncBlobCreatorTest,
 
   EXPECT_EQ(IdleTaskStatus::kIdleTaskFailed,
             this->AsyncBlobCreator()->GetIdleTaskStatus());
+}
+
+TEST_F(CanvasAsyncBlobCreatorTest, StaticBitmapImageTest) {
+  this->PrepareMockCanvasAsyncBlobCreatorWithoutStartStaticBitmapImage();
 }
 }
