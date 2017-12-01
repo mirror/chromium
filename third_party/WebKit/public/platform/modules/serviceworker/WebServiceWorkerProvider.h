@@ -34,6 +34,7 @@
 #include "public/platform/WebCallbacks.h"
 #include "public/platform/WebVector.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerRegistration.h"
+#include "public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 
 #include <memory>
 
@@ -103,8 +104,8 @@ class WebServiceWorkerProvider {
   // For ServiceWorkerContainer#register(). Requests the embedder to register a
   // service worker.
   virtual void RegisterServiceWorker(
-      const WebURL& pattern,
       const WebURL& script_url,
+      const blink::mojom::ServiceWorkerRegistrationOptions& options,
       std::unique_ptr<WebServiceWorkerRegistrationCallbacks>) {}
   // For ServiceWorkerContainer#getRegistration(). Requests the embedder to
   // return a registration.

@@ -73,14 +73,13 @@ void WebServiceWorkerProviderImpl::SetClient(
 }
 
 void WebServiceWorkerProviderImpl::RegisterServiceWorker(
-    const WebURL& web_pattern,
     const WebURL& web_script_url,
+    const blink::mojom::ServiceWorkerRegistrationOptions& options,
     std::unique_ptr<WebServiceWorkerRegistrationCallbacks> callbacks) {
   DCHECK(callbacks);
 
-  GURL pattern(web_pattern);
   GURL script_url(web_script_url);
-  if (pattern.possibly_invalid_spec().size() > url::kMaxURLChars ||
+  if (options.scope.possibly_invalid_spec().size() > url::kMaxURLChars ||
       script_url.possibly_invalid_spec().size() > url::kMaxURLChars) {
     std::string error_message(kServiceWorkerRegisterErrorPrefix);
     error_message += "The provided scriptURL or scope is too long.";
@@ -101,10 +100,9 @@ void WebServiceWorkerProviderImpl::RegisterServiceWorker(
 
   TRACE_EVENT_ASYNC_BEGIN2(
       "ServiceWorker", "WebServiceWorkerProviderImpl::RegisterServiceWorker",
-      this, "Scope", pattern.spec(), "Script URL", script_url.spec());
-  auto options = blink::mojom::ServiceWorkerRegistrationOptions::New(pattern);
+      this, "Scope", options.scope.spec(), "Script URL", script_url.spec());
   context_->container_host()->Register(
-      script_url, std::move(options),
+      script_url, blink::mojom::ServiceWorkerRegistrationOptions::New(options),
       base::BindOnce(&WebServiceWorkerProviderImpl::OnRegistered,
                      weak_factory_.GetWeakPtr(), std::move(callbacks)));
 }

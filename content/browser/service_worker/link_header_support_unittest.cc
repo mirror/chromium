@@ -107,11 +107,10 @@ class LinkHeaderServiceWorkerTest : public ::testing::Test {
   }
 
   void CreateServiceWorkerProviderHost() {
+    blink::mojom::ServiceWorkerRegistrationOptions options;
+    options.scope = GURL("https://host/scope");
     scoped_refptr<ServiceWorkerRegistration> registration =
-        new ServiceWorkerRegistration(
-            blink::mojom::ServiceWorkerRegistrationOptions(
-                GURL("https://host/scope")),
-            1L, context()->AsWeakPtr());
+        new ServiceWorkerRegistration(options, 1L, context()->AsWeakPtr());
     scoped_refptr<ServiceWorkerVersion> version = new ServiceWorkerVersion(
         registration.get(), GURL("https://host/script.js"), 1L,
         context()->AsWeakPtr());

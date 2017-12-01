@@ -276,7 +276,9 @@ void ServiceWorkerContainer::RegisterServiceWorkerImpl(
     }
   }
 
-  provider_->RegisterServiceWorker(pattern_url, script_url,
+  provider_->RegisterServiceWorker(script_url,
+                                   mojom::ServiceWorkerRegistrationOptions(
+                                       GURL(pattern_url), update_via_cache),
                                    std::move(callbacks));
 }
 

@@ -42,8 +42,8 @@ class CONTENT_EXPORT WebServiceWorkerProviderImpl
 
   // blink::WebServiceWorkerProvider implementation.
   void RegisterServiceWorker(
-      const blink::WebURL& web_pattern,
       const blink::WebURL& web_script_url,
+      const blink::mojom::ServiceWorkerRegistrationOptions& options,
       std::unique_ptr<WebServiceWorkerRegistrationCallbacks>) override;
   void GetRegistration(
       const blink::WebURL& web_document_url,
