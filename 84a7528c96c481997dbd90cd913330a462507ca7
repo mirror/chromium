@@ -159,6 +159,24 @@
       "revId": "84a7528c96c481997dbd90cd913330a462507ca7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81ebf19a_49a0bb43",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-12-01T16:02:02Z",
+      "side": 1,
+      "message": "My concern is that kUnthrottled already is in top-5 task types at the moment with 30+ usages. I\u0027m afraid that we\u0027ll end up with something like default queue - a collection of random things with us having no idea what\u0027s going on there. I think that having specific internal task types which should be unthrottled (e.g. media) will help with both our understanding and the slow creep of kUnthrottled to the places where is shouldn\u0027t be used.\n\nHowever, I believe that this discussion is out-of-scope for this patch - let\u0027s use kUnthrottled here and discuss further plans in platform-arch-dev thread.",
+      "parentUuid": "5c0e7768_8487c9fa",
+      "revId": "84a7528c96c481997dbd90cd913330a462507ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
