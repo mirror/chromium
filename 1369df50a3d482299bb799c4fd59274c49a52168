@@ -2,6 +2,159 @@
   "comments": [
     {
       "key": {
+        "uuid": "40afff2e_215cf71c",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_views_mac_browsertest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-01T06:19:18Z",
+      "side": 1,
+      "message": "nit: const char* const url\n\n(otherwise you can assign another const char* to it :)",
+      "revId": "1369df50a3d482299bb799c4fd59274c49a52168",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a7975b6_a6babcb8",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_views_mac_browsertest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-01T06:19:18Z",
+      "side": 1,
+      "message": "nit: constexpr",
+      "revId": "1369df50a3d482299bb799c4fd59274c49a52168",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22e49b7a_ab2111ef",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_views_mac_browsertest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-01T06:19:18Z",
+      "side": 1,
+      "message": "should this use GetParam as well?",
+      "revId": "1369df50a3d482299bb799c4fd59274c49a52168",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1e8852b_f9af646f",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_views_mac_browsertest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-01T06:19:18Z",
+      "side": 1,
+      "message": "there\u0027s also AddTabAtIndex() on InProcessBrowserTest. that might give a more authentic WebContents. |contents| is missing a URL",
+      "revId": "1369df50a3d482299bb799c4fd59274c49a52168",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee2b425e_335185b8",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_views_mac_browsertest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-01T06:19:18Z",
+      "side": 1,
+      "message": "I think EXPECT_EQ is fine for these two checks. (ASSERT is just when a crash is imminent)",
+      "revId": "1369df50a3d482299bb799c4fd59274c49a52168",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d9b4b43_d13521f0",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_views_mac_browsertest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-01T06:19:18Z",
+      "side": 1,
+      "message": "Internal -\u003e internal or external",
+      "revId": "1369df50a3d482299bb799c4fd59274c49a52168",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4898b803_743a2a00",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_views_mac_browsertest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-01T06:19:18Z",
+      "side": 1,
+      "message": "I think this is equivalent to doing chrome::SelectNextTab(browser()); If it really needs a keyboard shortcut, it should probably be dispatched differently.",
+      "revId": "1369df50a3d482299bb799c4fd59274c49a52168",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0888a8d8_a9c4db97",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_views_mac_browsertest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-01T06:19:18Z",
+      "side": 1,
+      "message": "perhaps\n\nbase::RunLoop().RunUntilIdle();\nEXPECT_FALSE(PageInfoBubbleView::GetPageInfoBubble());",
+      "revId": "1369df50a3d482299bb799c4fd59274c49a52168",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6601b48_02c24c8f",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-01T06:19:18Z",
+      "side": 1,
+      "message": ".. should there be a PageInfoBubbleViewBase that InternalPageInfoBubbleView and PageInfoBubbleView inherit from?\n\nThere is probably more stuff in the overrides below that can be shared too... as well as some anchoring and management of `g_page_info_bubble`",
+      "revId": "1369df50a3d482299bb799c4fd59274c49a52168",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d21fe82_8b02966a",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
         "patchSetId": 2
@@ -13,6 +166,24 @@
       "writtenOn": "2017-12-01T00:38:15Z",
       "side": 1,
       "message": "r475019 also overrode OnDidStartNavigation(), but I\u0027m skipping that here because I don\u0027t think internal chrome:// pages would ever navigate not from a user gesture. So I think leaving it off is OK? Happy to add it if you disagree though.",
+      "revId": "1369df50a3d482299bb799c4fd59274c49a52168",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "776f0ee3_7df32223",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-01T06:19:18Z",
+      "side": 1,
+      "message": "yeah I think you need OnDidStartNavigation -- e..g you can go to google.com, then type in chrome://settings, show the bubble, press Cmd+[ to navigate back -- the bubble should dismiss in this case.",
+      "parentUuid": "2d21fe82_8b02966a",
       "revId": "1369df50a3d482299bb799c4fd59274c49a52168",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
