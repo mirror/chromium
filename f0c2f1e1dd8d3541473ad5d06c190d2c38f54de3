@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "106d8d43_cc9d91c4",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-01T16:00:54Z",
+      "side": 1,
+      "message": "Could you add a comment explaining what you\u0027re doing here? It looks like this should essentially be a no-op, other than to copy the event (given that point seems to always be set to the event\u0027s existing location/point).",
+      "range": {
+        "startLine": 480,
+        "startChar": 6,
+        "endLine": 480,
+        "endChar": 51
+      },
+      "revId": "f0c2f1e1dd8d3541473ad5d06c190d2c38f54de3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
