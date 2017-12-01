@@ -1,0 +1,255 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f252098b_a95f6098",
+        "filename": "ash/app_list/model/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-01T18:44:37Z",
+      "side": 1,
+      "message": "You might need to update deps to fix \"gn check\"",
+      "revId": "cb1bfcfb70efff104072d508e9ee8428899cc483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9578cd21_de09e320",
+        "filename": "ash/app_list/model/app_list_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-01T18:44:37Z",
+      "side": 1,
+      "message": "Change to \n  top_level_item_list_(std::make_unique\u003cAppListItemList\u003e()),",
+      "range": {
+        "startLine": 17,
+        "startChar": 27,
+        "endLine": 17,
+        "endChar": 46
+      },
+      "revId": "cb1bfcfb70efff104072d508e9ee8428899cc483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29602ba7_c04f2479",
+        "filename": "ash/app_list/model/app_list_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-01T18:44:37Z",
+      "side": 1,
+      "message": "nit: Move the intializers to header since you are here.",
+      "revId": "cb1bfcfb70efff104072d508e9ee8428899cc483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7354d0fd_eac01ddb",
+        "filename": "ash/app_list/model/search/search_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-01T18:44:37Z",
+      "side": 1,
+      "message": "std::make_unqiue\u003c\u003e for both",
+      "revId": "cb1bfcfb70efff104072d508e9ee8428899cc483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3352e63_6b87d496",
+        "filename": "ash/app_list/model/search/search_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-01T18:44:37Z",
+      "side": 1,
+      "message": "nit: move to header.",
+      "revId": "cb1bfcfb70efff104072d508e9ee8428899cc483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd88f362_8138b204",
+        "filename": "ash/app_list/model/search/search_model.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-01T18:44:37Z",
+      "side": 1,
+      "message": "nit: change to \"using\" since you are here.",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 9
+      },
+      "revId": "cb1bfcfb70efff104072d508e9ee8428899cc483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26f23f05_2d49a6b2",
+        "filename": "ash/app_list/model/search/search_model.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-01T18:44:37Z",
+      "side": 1,
+      "message": "nit: #include \u003cvector\u003e",
+      "range": {
+        "startLine": 37,
+        "startChar": 9,
+        "endLine": 37,
+        "endChar": 20
+      },
+      "revId": "cb1bfcfb70efff104072d508e9ee8428899cc483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b312edcc_7ee94269",
+        "filename": "ash/app_list/model/search/search_model.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-01T18:44:37Z",
+      "side": 1,
+      "message": "nit: #include \u003cmemory\u003e",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 17
+      },
+      "revId": "cb1bfcfb70efff104072d508e9ee8428899cc483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb225c9d_d55f4e75",
+        "filename": "chrome/browser/ui/app_list/app_list_view_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-01T18:44:37Z",
+      "side": 1,
+      "message": "nit: NULL -\u003e nullptr",
+      "range": {
+        "startLine": 150,
+        "startChar": 20,
+        "endLine": 150,
+        "endChar": 24
+      },
+      "revId": "cb1bfcfb70efff104072d508e9ee8428899cc483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8deb3e37_4a7147b6",
+        "filename": "ui/app_list/test/app_list_test_view_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-01T18:44:37Z",
+      "side": 1,
+      "message": "nit: std::make_unique\u003c\u003e and move initializers to header",
+      "revId": "cb1bfcfb70efff104072d508e9ee8428899cc483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eb228a0_ee3e69a0",
+        "filename": "ui/app_list/test/app_list_test_view_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-01T18:44:37Z",
+      "side": 1,
+      "message": "nit: use std::make_unique\u003c\u003e here and in L94",
+      "revId": "cb1bfcfb70efff104072d508e9ee8428899cc483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95a1b8f2_aa446993",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-01T18:44:37Z",
+      "side": 1,
+      "message": "nit: wrap with {} since the body is 2 lines now",
+      "revId": "cb1bfcfb70efff104072d508e9ee8428899cc483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "840ee3f7_ec3a0b86",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-01T18:44:37Z",
+      "side": 1,
+      "message": "nit: wrap with {}",
+      "revId": "cb1bfcfb70efff104072d508e9ee8428899cc483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
