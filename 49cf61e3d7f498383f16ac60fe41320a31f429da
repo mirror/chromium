@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59bbd596_fa6dfc7b",
+        "filename": "net/spdy/chromium/http2_push_promise_index.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-01T15:25:51Z",
+      "side": 1,
+      "message": "Can we add a TODO mentioning that this Delegate interface is temporary and that we are planning to move SpdySession::UnclaimedPushedStreamContainer to Http2PushPromiseIndex?",
+      "revId": "49cf61e3d7f498383f16ac60fe41320a31f429da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2abd14f_eed26fd5",
+        "filename": "net/spdy/chromium/http2_push_promise_index.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-01T15:25:51Z",
+      "side": 1,
+      "message": "Can we document that |delegate| must outlive |this| before |delegate| calls UnregisterUnclaimedPushedStream()? and that UnregisterX() needs to be called with the exact same |delegate| that was passed into RegisterX()?",
+      "revId": "49cf61e3d7f498383f16ac60fe41320a31f429da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72df2420_fd779a69",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1365,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-01T15:25:51Z",
+      "side": 1,
+      "message": "nit: consider adding a crbug to track this.",
+      "revId": "49cf61e3d7f498383f16ac60fe41320a31f429da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
