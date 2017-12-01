@@ -304,7 +304,7 @@ IN_PROC_BROWSER_TEST_F(EnterpriseEnrollmentTest,
 // received by the enrollment helper.
 // Crashes on ChromeOS: http://crbug.com/746723.
 IN_PROC_BROWSER_TEST_F(EnterpriseEnrollmentTest,
-                       DISABLED_TestAttributePromptPageGetsLoaded) {
+                       TestAttributePromptPageGetsLoaded) {
   ShowEnrollmentScreen();
   ExpectAttributePromptUpdate();
   SubmitEnrollmentCredentials();
@@ -357,7 +357,7 @@ IN_PROC_BROWSER_TEST_F(EnterpriseEnrollmentTest,
 // correct error is displayed.
 // Crashes on ChromeOS: http://crbug.com/746723.
 IN_PROC_BROWSER_TEST_F(EnterpriseEnrollmentTest,
-                       DISABLED_TestActiveDirectoryEnrollment_UIErrors) {
+                       TestActiveDirectoryEnrollment_UIErrors) {
   ShowEnrollmentScreen();
   SetupActiveDirectoryJoin();
   SubmitEnrollmentCredentials();
