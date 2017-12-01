@@ -49,6 +49,70 @@
     },
     {
       "key": {
+        "uuid": "23746e6d_82afb069",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-01T18:14:12Z",
+      "side": 1,
+      "message": "Okay, then you can use the vector approach for storing the weak references.\n\nThat should allow us to prevent leaks in case a connection to the PrintInstance is closed but their associated PrintJob and PrinterDiscoverySession linger for whatever reason.",
+      "parentUuid": "a6a5268d_768e8a61",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 41
+      },
+      "revId": "b2275545c639d2143edecc7986054342774008ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef325bce_47c08b9a",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-01T18:14:12Z",
+      "side": 1,
+      "message": "nit: |print_job|",
+      "revId": "b2275545c639d2143edecc7986054342774008ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b33a5644_2edc8729",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-01T18:14:12Z",
+      "side": 1,
+      "message": "Turns out you don\u0027t need to store the binding in your object, since the Binding owns your object, so you end up with a weird circular dependency. Probably better to do this:\n\n  // This class uses the type erasure idiom to be able to store objects that\n  // are of type mojo::StrongBindingPtr\u003cT\u003e\n  class StrongBindingPtrWrapper {\n   public:\n    template \u003ctypename T\u003e\n    StrongBindingPtrWrapper(StrongBindingPtr\u003cT\u003e\u0026\u0026 weak_ptr)\n      : wrapped_weak_ptr_(std::make_unique\u003cWrapper\u003cStrongBindingPtr\u003cT\u003e\u003e) {}\n\n    void Close() { wrapped_weak_ptr_-\u003eClose(); }\n    explicit bool operator() const { return static_cast\u003cbool\u003e(*wrapped_weak_ptr_); }\n\n   private:\n    struct WrapperBase {\n      virtual void Close() \u003d 0;\n      virtual explicit bool operator() const \u003d 0;\n    };\n\n    template \u003ctypename T\u003e\n    struct Wrapper : WrapperBase {\n      Wrapper(T\u0026\u0026 wrapped) : wrapped_(std::move(wrapped)) {}\n      void Close() override { wrapped_-\u003eClose(); }\n      explicit bool operator() const override { return static_cast\u003cbool\u003e(wrapped_); }\n\n      T wrapped_;\n    };\n\n    std::unique_ptr\u003cWrapperBase\u003e wrapped_weak_ptr_;\n  };\n\n  ...\n\n  std::vector\u003cStrongBindingPtrWrapper\u003e associated_bindings_;\n\n  ...\n  \n  void ArcPrintService::CreateDiscoverySession(\n      mojom::PrinterDiscoverySessionInstancePtr instance,\n      CreateDiscoverySessionCallback callback) {\n    mojom::PrinterDiscoverySessionHostPtr host_proxy;\n    // Expire stale bindings, probably better to have a function that does both this and\n    // the line below.\n    associated_bindings_.erase(\n      associated_bindings_.begin(), associated_bindings_.end(),\n      [](const CloseableWeakPtrWrapper\u0026 wrapper) { return !static_cast\u003cbool\u003e(wrapper); });\n    associated_bindings_.emplace_back(\n      mojo::MakeStrongBinding(\n          std::make_unique\u003cPrinterDiscoverySessionHostImpl\u003e(\n             std::move(instance), profile_),\n          mojo::MakeRequest(\u0026host_proxy))));\n    std::move(callback).Run(std::move(host_proxy));\n  }\n\n  void ArcPrintService::OnConnectionClose() {\n    for (const auto\u0026 binding : associated_bindings_) {\n      if (binding)\n        binding.Close();\n    }\n    associated_bindings_.clear();\n  }\n\nwith this neither PrinterDiscoverySessionHostImpl or PrintJobHostImpl need to implement the Closeable concept (since the wrapper is there for it)",
+      "range": {
+        "startLine": 491,
+        "startChar": 7,
+        "endLine": 491,
+        "endChar": 14
+      },
+      "revId": "b2275545c639d2143edecc7986054342774008ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d4f22c4_45b16b4a",
         "filename": "components/arc/arc_bridge_host_impl.cc",
         "patchSetId": 28
@@ -444,6 +508,30 @@
       "side": 1,
       "message": "Thank you! I\u0027ll give it a try.",
       "parentUuid": "f94e2f8c_8f9e07c3",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 31
+      },
+      "revId": "b2275545c639d2143edecc7986054342774008ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "02c073d4_5bf06e63",
+        "filename": "components/arc/arc_bridge_host_impl.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-01T18:14:12Z",
+      "side": 1,
+      "message": "The real fix should land soon. You don\u0027t need any of this anymore :D",
+      "parentUuid": "ab858c39_c0701fe7",
       "range": {
         "startLine": 39,
         "startChar": 0,
