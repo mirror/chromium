@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebafdb03_2afcd77b",
+        "filename": "content/renderer/renderer_webcolorchooser_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-12-01T02:35:39Z",
+      "side": 1,
+      "message": "Does this have problems if Open is called twice for the same WebColorChooser?",
+      "range": {
+        "startLine": 41,
+        "startChar": 70,
+        "endLine": 41,
+        "endChar": 0
+      },
+      "revId": "792c2a4482998d01a8909a864cbf25ad9468c259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
