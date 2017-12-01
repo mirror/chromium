@@ -309,7 +309,8 @@ ChooserContextBase* GetUsbChooserContext(Profile* profile) {
 // email security-dev@chromium.org.
 const PageInfo::ChooserUIInfo kChooserUIInfo[] = {
     {CONTENT_SETTINGS_TYPE_USB_CHOOSER_DATA, &GetUsbChooserContext,
-     IDR_BLOCKED_USB, IDR_ALLOWED_USB, IDS_PAGE_INFO_USB_DEVICE_LABEL,
+     IDR_BLOCKED_USB, IDR_ALLOWED_USB, IDS_PAGE_INFO_USB_DEVICE_ICON_TOOLTIP,
+     IDS_PAGE_INFO_USB_DEVICE_LABEL, IDS_PAGE_INFO_USB_DEVICE_LABEL_TOOLTIP,
      IDS_PAGE_INFO_DELETE_USB_DEVICE, "name"},
 };
 
