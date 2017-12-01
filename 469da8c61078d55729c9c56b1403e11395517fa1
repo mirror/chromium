@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a8b7e378_f19e2145",
+        "filename": "ios/chrome/browser/browser_state/browser_state_keyed_service_factories.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-12-01T22:25:18Z",
+      "side": 1,
+      "message": "Yes, it must have gotten lost during a rebase.",
+      "parentUuid": "5ec3ad62_6acabcd5",
+      "revId": "469da8c61078d55729c9c56b1403e11395517fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58d425db_47859043",
         "filename": "ios/chrome/browser/overlays/BUILD.gn",
         "patchSetId": 4
@@ -39,6 +57,30 @@
       "revId": "469da8c61078d55729c9c56b1403e11395517fa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "342e2b28_b970c44f",
+        "filename": "ios/chrome/browser/overlays/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-12-01T22:25:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58d425db_47859043",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "469da8c61078d55729c9c56b1403e11395517fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "28e1ed15_bfc470cb",
+        "filename": "ios/chrome/browser/overlays/overlay_scheduler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-12-01T22:25:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ae257d1_1dd75e7a",
+      "range": {
+        "startLine": 67,
+        "startChar": 8,
+        "endLine": 67,
+        "endChar": 34
+      },
+      "revId": "469da8c61078d55729c9c56b1403e11395517fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4503cecf_ebac7f2e",
         "filename": "ios/chrome/browser/overlays/overlay_scheduler.h",
         "patchSetId": 4
@@ -85,6 +151,30 @@
       "revId": "469da8c61078d55729c9c56b1403e11395517fa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36fef4ea_7018d562",
+        "filename": "ios/chrome/browser/overlays/overlay_scheduler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-12-01T22:25:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4503cecf_ebac7f2e",
+      "range": {
+        "startLine": 117,
+        "startChar": 9,
+        "endLine": 117,
+        "endChar": 24
+      },
+      "revId": "469da8c61078d55729c9c56b1403e11395517fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "8f115376_f6108938",
+        "filename": "ios/chrome/browser/overlays/overlay_scheduler.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-12-01T22:25:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39e2bda1_c0679798",
+      "range": {
+        "startLine": 215,
+        "startChar": 6,
+        "endLine": 215,
+        "endChar": 27
+      },
+      "revId": "469da8c61078d55729c9c56b1403e11395517fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71ddba34_917bac16",
         "filename": "ios/chrome/browser/overlays/overlay_service_factory.mm",
         "patchSetId": 4
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "b19fbf50_c5900d9e",
+        "filename": "ios/chrome/browser/overlays/overlay_service_factory.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-12-01T22:25:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71ddba34_917bac16",
+      "range": {
+        "startLine": 33,
+        "startChar": 23,
+        "endLine": 33,
+        "endChar": 59
+      },
+      "revId": "469da8c61078d55729c9c56b1403e11395517fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e550b53c_157b4b07",
         "filename": "ios/chrome/browser/overlays/overlay_service_observer_bridge.h",
         "patchSetId": 4
@@ -148,6 +286,24 @@
       "revId": "469da8c61078d55729c9c56b1403e11395517fa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcad6c62_dfaec048",
+        "filename": "ios/chrome/browser/overlays/overlay_service_observer_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-12-01T22:25:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e550b53c_157b4b07",
+      "revId": "469da8c61078d55729c9c56b1403e11395517fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -171,6 +327,30 @@
       "revId": "469da8c61078d55729c9c56b1403e11395517fa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bde53066_7c4e9f83",
+        "filename": "ios/chrome/browser/overlays/test/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-12-01T22:25:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e7f642c_e55ddce5",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "469da8c61078d55729c9c56b1403e11395517fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
