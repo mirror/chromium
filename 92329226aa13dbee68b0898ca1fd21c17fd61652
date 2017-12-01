@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79487f15_6150f7bc",
+        "filename": "content/test/gpu/gpu_tests/webgl2_conformance_expectations.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-01T23:57:28Z",
+      "side": 1,
+      "message": "It looks like this new test fails on https://ci.chromium.org/buildbot/chromium.gpu.fyi/Win10%20Release%20%28Intel%20HD%20630%29/1147\n\nI\u0027m not sure why it\u0027s not covered by this expectation?",
+      "revId": "92329226aa13dbee68b0898ca1fd21c17fd61652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
