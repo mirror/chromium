@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9186d890_7239dc28",
+        "filename": "chrome/browser/chrome_native_notification_install_helper_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-01T14:08:46Z",
+      "side": 1,
+      "message": "This would normally be done by the installer, but since we\u0027re behind a flag we\u0027re doing this manually here to enables us to get activation working and not be blocked on that CL landing (not sure what the status of that is). Once done, this whole file can be deleted.",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 23
+      },
+      "revId": "cb50e6e07b4e5796d4b2fd56a7ce3768497532c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1948d2d2_16684d34",
+        "filename": "chrome/browser/chrome_native_notification_install_helper_win.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-01T14:08:46Z",
+      "side": 1,
+      "message": "This isn\u0027t really blocking while the feature is behind a flag, but if you have ideas on how to fix this, I\u0027m open to suggestions...",
+      "revId": "cb50e6e07b4e5796d4b2fd56a7ce3768497532c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6dc517e_77a014c6",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-01T14:08:46Z",
+      "side": 1,
+      "message": "I suppose this block can be removed with a future version of module.h that supports clang (hopefully)? :)",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 25
+      },
+      "revId": "cb50e6e07b4e5796d4b2fd56a7ce3768497532c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24f8fa45_eedb1b1f",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-01T14:08:46Z",
+      "side": 1,
+      "message": "I\u0027m a bit uncomfortable with this whole static stuff. Undecided on whether we should leak the registration, but I\u0027m sure you have good ideas on how to approach this...?",
+      "range": {
+        "startLine": 554,
+        "startChar": 11,
+        "endLine": 554,
+        "endChar": 30
+      },
+      "revId": "cb50e6e07b4e5796d4b2fd56a7ce3768497532c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
