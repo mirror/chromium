@@ -23,7 +23,8 @@
 namespace whitelist {
 namespace {
 
-constexpr wchar_t kFileName[] = L"dbfile";
+constexpr wchar_t kTestWlFileName[] = L"wlfile";
+constexpr wchar_t kTestBlFileName[] = L"blfile";
 constexpr DWORD kPageSize = 4096;
 
 struct TestModule {
@@ -87,7 +88,7 @@ bool GetTestModules(std::vector<TestModule>* test_modules,
 }
 
 //------------------------------------------------------------------------------
-// WhitelistComponentTest class
+// WhitelistFileTest class
 //------------------------------------------------------------------------------
 
 class WhitelistFileTest : public testing::Test {
@@ -95,74 +96,157 @@ class WhitelistFileTest : public testing::Test {
   WhitelistFileTest() = default;
 
   void SetUp() override {
-    std::vector<PackedWhitelistModule> test_file_array;
-    ASSERT_TRUE(GetTestModules(&test_array_, &test_file_array));
+    ASSERT_TRUE(GetTestModules(&test_array_, &test_packed_array_));
 
-    // Setup test component file.
+    // Setup temp test dir.
     ASSERT_TRUE(scoped_temp_dir_.CreateUniqueTempDir());
-    base::FilePath path = scoped_temp_dir_.GetPath();
 
-    // Create the component file.  It will be cleaned up with
-    // |scoped_temp_dir_|.
-    path = path.Append(kFileName);
-    base::File file(path, base::File::FLAG_CREATE_ALWAYS |
+    // Store full paths to test files (without creating them yet).
+    base::FilePath path = scoped_temp_dir_.GetPath();
+    path = path.Append(kTestWlFileName);
+    wl_test_file_path_ = std::move(path.value());
+
+    path = scoped_temp_dir_.GetPath();
+    path = path.Append(kTestBlFileName);
+    bl_test_file_path_ = std::move(path.value());
+
+    // Override the file paths in the live code for testing.
+    OverrideFilePathsForTesting(wl_test_file_path_, bl_test_file_path_);
+  }
+
+  void CreateTestFile(bool whitelist) {
+    base::FilePath temp(whitelist ? wl_test_file_path_ : bl_test_file_path_);
+    base::File file(temp, base::File::FLAG_CREATE_ALWAYS |
                               base::File::FLAG_WRITE |
                               base::File::FLAG_SHARE_DELETE |
                               base::File::FLAG_DELETE_ON_CLOSE);
     ASSERT_TRUE(file.IsValid());
 
-    // Store the path for tests to use.
-    test_file_path_ = std::move(path.value());
-
     // Write content {metadata}{array_of_modules}.
     PackedWhitelistMetadata meta = {
-        kInitialVersion, static_cast<uint32_t>(test_file_array.size())};
+        kInitialVersion, static_cast<uint32_t>(test_packed_array_.size())};
     ASSERT_TRUE(file.Write(0, reinterpret_cast<const char*>(&meta),
                            sizeof(meta)) == sizeof(meta));
-    int size = static_cast<int>(test_file_array.size() *
+    int size = static_cast<int>(test_packed_array_.size() *
                                 sizeof(PackedWhitelistModule));
     ASSERT_TRUE(
         file.Write(sizeof(PackedWhitelistMetadata),
-                   reinterpret_cast<const char*>(test_file_array.data()),
+                   reinterpret_cast<const char*>(test_packed_array_.data()),
                    size) == size);
 
     // Leave file handle open for DELETE_ON_CLOSE.
-    file_ = std::move(file);
+    (whitelist ? wl_file_ : bl_file_) = std::move(file);
   }
 
-  const base::string16& GetTestFilePath() { return test_file_path_; }
+  const base::string16& GetWlTestFilePath() { return wl_test_file_path_; }
+  const base::string16& GetBlTestFilePath() { return bl_test_file_path_; }
+
+  base::File* GetWlFile() { return &wl_file_; }
+  base::File* GetBlFile() { return &bl_file_; }
 
   const std::vector<TestModule>& GetTestArray() { return test_array_; }
 
  private:
   base::ScopedTempDir scoped_temp_dir_;
-  base::File file_;
-  base::string16 test_file_path_;
+  base::File wl_file_;
+  base::File bl_file_;
+  base::string16 wl_test_file_path_;
+  base::string16 bl_test_file_path_;
   std::vector<TestModule> test_array_;
+  std::vector<PackedWhitelistModule> test_packed_array_;
 
   DISALLOW_COPY_AND_ASSIGN(WhitelistFileTest);
 };
 
 //------------------------------------------------------------------------------
-// Whitelist component tests
+// Whitelist file tests
 //------------------------------------------------------------------------------
 
-// Test initialization of the whitelist from file.
-TEST_F(WhitelistFileTest, Init) {
-  // Override the component file path for testing.
-  OverrideFilePathForTesting(GetTestFilePath());
+// Test successful initialization and module lookup.
+TEST_F(WhitelistFileTest, Success) {
+  // Create whitelist and blacklist data files.
+  CreateTestFile(true);
+  CreateTestFile(false);
 
-  // Init component whitelist!
+  // Init.
   ASSERT_EQ(InitFromFile(), FileStatus::kSuccess);
 
   // Test matching.
   for (const auto& test_module : GetTestArray()) {
-    ASSERT_TRUE(IsModuleWhitelisted(test_module.basename, test_module.imagesize,
-                                    test_module.timedatestamp));
+    EXPECT_TRUE(IsModuleListed(true, test_module.basename,
+                               test_module.imagesize,
+                               test_module.timedatestamp));
+    EXPECT_TRUE(IsModuleListed(false, test_module.basename,
+                               test_module.imagesize,
+                               test_module.timedatestamp));
   }
 
   // Test a failure to match.
-  ASSERT_FALSE(IsModuleWhitelisted("booya.dll", 1337, 0x12345678));
+  EXPECT_FALSE(IsModuleListed(true, "booya.dll", 1337, 0x12345678));
+}
+
+// Test successful initialization with no packed files.
+TEST_F(WhitelistFileTest, NoFiles) {
+  ASSERT_EQ(InitFromFile(), FileStatus::kSuccess);
+  EXPECT_FALSE(IsModuleListed(true, "booya.dll", 1337, 0x12345678));
+}
+
+TEST_F(WhitelistFileTest, OnlyWl) {
+  CreateTestFile(true);
+
+  ASSERT_EQ(InitFromFile(), FileStatus::kSuccess);
+
+  // Expect matches in whitelist, no matches in blacklist.
+  for (const auto& test_module : GetTestArray()) {
+    EXPECT_TRUE(IsModuleListed(true, test_module.basename,
+                               test_module.imagesize,
+                               test_module.timedatestamp));
+    EXPECT_FALSE(IsModuleListed(false, test_module.basename,
+                                test_module.imagesize,
+                                test_module.timedatestamp));
+  }
+}
+
+TEST_F(WhitelistFileTest, OnlyBl) {
+  CreateTestFile(false);
+
+  ASSERT_EQ(InitFromFile(), FileStatus::kSuccess);
+
+  // Expect NO matches in whitelist.
+  for (const auto& test_module : GetTestArray()) {
+    EXPECT_FALSE(IsModuleListed(true, test_module.basename,
+                                test_module.imagesize,
+                                test_module.timedatestamp));
+    EXPECT_TRUE(IsModuleListed(false, test_module.basename,
+                               test_module.imagesize,
+                               test_module.timedatestamp));
+  }
+}
+
+TEST_F(WhitelistFileTest, CorruptFile) {
+  CreateTestFile(true);
+
+  base::File* file = GetWlFile();
+  ASSERT_TRUE(file->IsValid());
+
+  // 1) Not enough data for array size
+  PackedWhitelistMetadata meta = {kCurrent, static_cast<uint32_t>(50)};
+  ASSERT_TRUE(file->Write(0, reinterpret_cast<const char*>(&meta),
+                          sizeof(meta)) == sizeof(meta));
+  EXPECT_EQ(InitFromFile(), FileStatus::kArrayReadFail);
+
+  // 2) Corrupt data or just unsupported metadata version.
+  meta = {kUnsupported, static_cast<uint32_t>(50)};
+  ASSERT_TRUE(file->Write(0, reinterpret_cast<const char*>(&meta),
+                          sizeof(meta)) == sizeof(meta));
+  EXPECT_EQ(InitFromFile(), FileStatus::kInvalidFormatVersion);
+
+  // 3) Not enough data for metadata.
+  meta = {kCurrent, static_cast<uint32_t>(10)};
+  ASSERT_TRUE(file->Write(0, reinterpret_cast<const char*>(&meta),
+                          sizeof(meta) / 2) == sizeof(meta) / 2);
+  ASSERT_TRUE(file->SetLength(sizeof(meta) / 2));
+  EXPECT_EQ(InitFromFile(), FileStatus::kMetadataReadFail);
 }
 
 }  // namespace
