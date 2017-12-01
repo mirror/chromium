@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fb1ed35_3c5ab887",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_button_factory.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-01T12:52:10Z",
+      "side": 1,
+      "message": "Are you sure about that?",
+      "range": {
+        "startLine": 238,
+        "startChar": 29,
+        "endLine": 238,
+        "endChar": 58
+      },
+      "revId": "7d2145887298dbc30681cb3f15e23d48aca41743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "023f79ab_51daca63",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-01T12:52:10Z",
+      "side": 1,
+      "message": "Why did you removed the check if the location bar view was nil or not? And you need to change the constraints set on the location bar if it is added after the view is loaded (in setLocationBarView).\nExtract it to a function?",
+      "range": {
+        "startLine": 263,
+        "startChar": 5,
+        "endLine": 263,
+        "endChar": 20
+      },
+      "revId": "7d2145887298dbc30681cb3f15e23d48aca41743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "039144cd_e140bc99",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-01T12:52:10Z",
+      "side": 1,
+      "message": "Is setting the alpha to 0 the same as hiding the button? In particular, are we sure the tap on the button go through? (i.e. if you tap where the contractButton with an alpha of 0 is, is the omnibox focused?)",
+      "range": {
+        "startLine": 429,
+        "startChar": 0,
+        "endLine": 429,
+        "endChar": 32
+      },
+      "revId": "7d2145887298dbc30681cb3f15e23d48aca41743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
