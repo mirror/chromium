@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a58011d_eaf2e7e5",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-12-01T18:19:04Z",
+      "side": 1,
+      "message": "It\u0027s really unclear from the code structure whether this is correct. What about putting the exit_code -\u003e result conversion inline around line 727 so there\u0027s more context.",
+      "revId": "e65844baeb2dca12314f6108d4cbc11b2c34305b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e193f47_15f11ba8",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1033,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-12-01T18:19:04Z",
+      "side": 1,
+      "message": "Nit: \"it\u0027s\"",
+      "range": {
+        "startLine": 1033,
+        "startChar": 49,
+        "endLine": 1033,
+        "endChar": 52
+      },
+      "revId": "e65844baeb2dca12314f6108d4cbc11b2c34305b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
