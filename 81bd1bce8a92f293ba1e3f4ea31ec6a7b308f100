@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f8ef915_7d6c9252",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-12-01T02:07:32Z",
+      "side": 1,
+      "message": "nit: dcheck logger_delegate_ is not a nullptr.",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 22
+      },
+      "revId": "81bd1bce8a92f293ba1e3f4ea31ec6a7b308f100",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
