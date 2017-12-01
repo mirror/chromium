@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "a7bc5eb1_793d2ce2",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-01T17:56:16Z",
+      "side": 1,
+      "message": "TL;DR: If we assigned `src` to X after adding the iframe to the DOM, then the child frame would load the initial empty document first, then navigate to `about:blank` as the first real load, and navigate to X as the second real load.\n\nIn more detail, my understanding is that when an iframe element is added to the DOM, that will trigger:\n 1) initializing the content frame,\n 2) kicking off the first load in the content frame.\n\nDuring (1), regardless of everything, the child frame\u0027s state machine will always cycle through loading the initial empty document first. [1], [2].\n\nDuring (2), if there is no `src` attribute, the frame will default to committing `about:blank` as the first real load. [3]\n\nIn fact, I think that if we don\u0027t specify `src`, the new child frame will commit `about:blank` as its first real load while the document.append() call in the main frame is still on the stack. \n\n[1]: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/html/HTMLFrameElementBase.cpp?rcl\u003d29de08401a3679af8a5156396e5237c24792ee3b\u0026l\u003d208\n\n[2]: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/loader/FrameLoader.cpp?rcl\u003dd0f4900f397ba6238ae8c41438ac6452bd722062\u0026l\u003d274\n\n[3]: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/html/HTMLFrameElementBase.cpp?rcl\u003dd0f4900f397ba6238ae8c41438ac6452bd722062\u0026l\u003d83",
+      "parentUuid": "34bb6de3_b46fd7cc",
+      "revId": "da6448a411ae1b84d64e2b8fcbbc77bdc4b53eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5722d93_031144bf",
         "filename": "content/public/test/render_view_test.cc",
         "patchSetId": 35
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "793eb6a0_da1fd40d",
+        "filename": "content/public/test/render_view_test.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-01T17:56:16Z",
+      "side": 1,
+      "message": "I needed to spruce up RenderViewTest, MockRenderThread, and friends to allow tests to create additional RenderViews, such as in response to window.open(), in RenderViewTests -- and this required being able to generate routing IDs.\n\nActually, I realized I can extract these changes into another CL to make this smaller.",
+      "parentUuid": "f5722d93_031144bf",
+      "revId": "da6448a411ae1b84d64e2b8fcbbc77bdc4b53eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10a1f663_e462b2f3",
         "filename": "content/test/test_render_frame.cc",
         "patchSetId": 35
@@ -64,6 +100,24 @@
       "writtenOn": "2017-12-01T01:03:26Z",
       "side": 1,
       "message": "Why do we need this?",
+      "revId": "da6448a411ae1b84d64e2b8fcbbc77bdc4b53eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "195d9367_231a96af",
+        "filename": "content/test/test_render_frame.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-01T17:56:16Z",
+      "side": 1,
+      "message": "This forces the navigation to be carried out by the renderer, instead of just triggering FrameHostMsg_BeginNavigation. Hence allows using URL override IsURLHandledByNetworkStack\u003dtrue URLs.\n\nI think we can replace this check with just checking if next_request_url_override_.has_value(), however.",
+      "parentUuid": "10a1f663_e462b2f3",
       "revId": "da6448a411ae1b84d64e2b8fcbbc77bdc4b53eb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
