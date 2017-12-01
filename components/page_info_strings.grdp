@@ -296,8 +296,14 @@
     </message>
 
     <!-- UI for device access granted to the site using the device chooser (e.g. USB, Bluetooth) -->
+    <message name="IDS_PAGE_INFO_USB_DEVICE_ICON_TOOLTIP" desc="The tooltip for the icon used for in IDS_PAGE_INFO_USB_DEVICE_LABEL.">
+      USB Device
+    </message>
     <message name="IDS_PAGE_INFO_USB_DEVICE_LABEL" desc="The label used to describe a USB device that the user has granted the site permission to access.">
       <ph name="DEVICE_NAME">$1<ex>Android Phone</ex></ph>
+    </message>
+    <message name="IDS_PAGE_INFO_USB_DEVICE_LABEL_TOOLTIP" desc="The tooltip for the label in IDS_PAGE_INFO_USB_DEVICE_LABEL giving the user more information about what the device name actually is.">
+      USB Device: <ph name="DEVICE_NAME">$1<ex>Android Phone</ex></ph>
     </message>
     <message name="IDS_PAGE_INFO_DELETE_USB_DEVICE" desc="The tooltip displayed when hovering over the button that will remove permission to access a USB device that the user previously granted to the site.">
       Revoke access

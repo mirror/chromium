@@ -7,6 +7,7 @@
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "chrome/browser/ui/views/harmony/chrome_typography.h"
 #include "chrome/browser/ui/views/page_info/chosen_object_row_observer.h"
+#include "chrome/browser/ui/views/page_info/non_accessible_image_view.h"
 #include "chrome/browser/ui/views/page_info/page_info_bubble_view.h"
 #include "components/vector_icons/vector_icons.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -51,12 +52,18 @@ ChosenObjectRow::ChosenObjectRow(
   icon_ = new views::ImageView();
   const gfx::Image& image = PageInfoUI::GetChosenObjectIcon(*info_, false);
   icon_->SetImage(image.ToImageSkia());
+  icon_->SetTooltipText(
+      l10n_util::GetStringUTF16(info_->ui_info.icon_tooltip_string_id));
   layout->AddView(icon_);
   // Create the label that displays the chosen object name.
-  views::Label* label = new views::Label(
-      l10n_util::GetStringFUTF16(info_->ui_info.label_string_id,
-                                 PageInfoUI::ChosenObjectToUIString(*info_)),
-      CONTEXT_BODY_TEXT_LARGE);
+  const base::string16 chosen_obj_name =
+      PageInfoUI::ChosenObjectToUIString(*info_);
+  views::Label* label =
+      new views::Label(l10n_util::GetStringFUTF16(
+                           info_->ui_info.label_string_id, chosen_obj_name),
+                       CONTEXT_BODY_TEXT_LARGE);
+  label->SetTooltipText(l10n_util::GetStringFUTF16(
+      info_->ui_info.label_tooltip_string_id, chosen_obj_name));
   layout->AddView(label);
   // Create the delete button.
   if (ui::MaterialDesignController::IsSecondaryUiMaterial()) {
