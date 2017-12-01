@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "1fb1c3a1_24e1cf11",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-01T19:34:27Z",
+      "side": 1,
+      "message": "Ah, I was thinking of AppendText.\n\nThe documented behavior did not seem to be correct, so I\u0027ve adjusted the function.",
+      "parentUuid": "0ec6ead9_309a9e64",
+      "revId": "a57369949bda0e072375a1954eee940716102984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c4f11a35_b7319eb7",
         "filename": "ash/login/ui/login_password_view.cc",
         "patchSetId": 4
@@ -123,6 +141,30 @@
       "revId": "a57369949bda0e072375a1954eee940716102984",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c32db69_f066e803",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-01T19:34:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1cd2fb9_1dfca6dc",
+      "range": {
+        "startLine": 486,
+        "startChar": 14,
+        "endLine": 486,
+        "endChar": 33
+      },
+      "revId": "a57369949bda0e072375a1954eee940716102984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
