@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6dec1508_c3c696b1",
+        "filename": "chrome/android/webapk/libs/runtime_library/src/org/chromium/webapk/lib/runtime_library/WebApkServiceImpl.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-12-01T18:01:17Z",
+      "side": 1,
+      "message": "Hmmm I\u0027m starting to think this is jumping through a lot of hoops just to avoid Chrome special-casing the channel ID for web apks.\n\nTo summarize the CL as I understand it (please correct me if wrong):\n\n1. NotificationPlatformBridge now only sets the channel ID to \u0027null\u0027 for web apks targeting \u003c26, and uses the same channel id as non-web-apk notifications otherwise (either \u0027sites\u0027 or an origin-based ID, depending on whether the site channels flag is enabled).\n\n2. WebApkServiceClient now passes the channel name \"General\" along with the notification.\n\n3. WebApkServiceImplWrapper no longer intercepts the notifications (?) (whereas previously it intercepted via notifyNotification and created a channel with id \u0027default_channel_id\u0027 named \"General\", and set it on the notification via reflection). \n\n4. WebApkServiceImpl now checks if a channel was set, and if so deletes the channel with \u0027default_channel_id\u0027 (so we don\u0027t end up with two channels named \"General\"). \n\n-----------\n\nIt strikes me that while we now avoid special-casing the channel ID from chrome code for web apks (which is good), we are still special casing *the circumstances under which to set a channel* for web apks (ie does it target 26), so we don\u0027t gain much - Chrome still needs to know about web apks.\n\nHow about instead we make Chrome simply set the notification id to default_channel_id for all web apk notifications? This would simplify things a lot:\n\n1. NotificationPlatformBridge could even continue setting the channel ID to \u0027null\u0027 for all web apk notifications.\n\n2. Then in WebApkServiceClient we could set the channel ID to \u0027default_channel_id\u0027 *if* the web apk targets 26 on O+, and continue passing \"General\". (This way the \u0027webApkTargetsO\u0027 check is confined to web-apk-related code rather than polluting the NotificationPlatformBridge).\n\n3. WebApkServiceImpl now just needs to ensure a channel is created for the channel id of the notification that is passed, which should now be \u0027default_channel_id\u0027, so no need to delete a legacy channel any more.\n\nWhat do you think? Does this make sense to you?",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 99
+      },
+      "revId": "c3aaa57e3d96ddf47bc4f19525ee3883600cb536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
