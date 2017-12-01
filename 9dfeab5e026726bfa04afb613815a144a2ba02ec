@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "40cbf7ed_74e88af2",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "Thanks for bringing this up! gvr_keyboard_ is only null when the dynamic loading fails. In that case, calling the shim results in a crash. I\u0027ve wrapped the creation of a GvrKeyboardDelegate in a Create function that only returns an instance if we were successfully able to dynamic load.",
+      "parentUuid": "a6f94f14_f1d50d74",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0d81e0a_2768b701",
         "filename": "chrome/browser/android/vr_shell/gvr_keyboard_delegate.cc",
         "patchSetId": 6
@@ -30,6 +48,30 @@
       "writtenOn": "2017-11-24T15:26:49Z",
       "side": 1,
       "message": "All it does is set_text and set_selection, perhaps rename it to SetInputField?",
+      "range": {
+        "startLine": 115,
+        "startChar": 26,
+        "endLine": 115,
+        "endChar": 35
+      },
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "726ec248_8aad9e9e",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "Agreed that EditInput is not the best. I\u0027ve been following the convention of \nOnInputEdited and OnInputCommitted that we get from the keyboard. EditInput was the \"ack\" back to the Keyboard. I\u0027ve renamed it to UpdateInput to be more clear.",
+      "parentUuid": "d0d81e0a_2768b701",
       "range": {
         "startLine": 115,
         "startChar": 26,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "84d078f8_37e58083",
+        "filename": "chrome/browser/android/vr_shell/gvr_text_input_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "I originally had it here because I thought of this as \"Android implementation of the delegate\", but you\u0027re right that the implementation is not platform specific (it was before I replaced it with callbacks). I\u0027ve moved this to chrome/browser/vr for now, and we can move it back in later if we see that the callback approach doesn\u0027t scale well as we support more platforms.",
+      "parentUuid": "26a990dd_9a87ccaa",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a8c9d4e_ec658f75",
         "filename": "chrome/browser/android/vr_shell/gvr_util.h",
         "patchSetId": 6
@@ -70,6 +130,24 @@
       "writtenOn": "2017-11-24T13:33:07Z",
       "side": 1,
       "message": "Thank you for moving these here. Could gvr_delegate.cc be updated to make use of this?",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a8ac283_8b1f5390",
+        "filename": "chrome/browser/android/vr_shell/gvr_util.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "That would be great, but gvr_delegate.cc is in device/vr/android/gvr/, which doesn\u0027t depend on chrome/browser/android/vr_shell. In fact, its the other way around, chrome/browser/android/vr_shell depends on device/vr/android/gvr/. Maybe if we\u0027re duplicating too much code we can move that this to a gvr_util in device/vr/android/gvr and use it from there?",
+      "parentUuid": "2a8c9d4e_ec658f75",
       "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "302e2ece_89463d79",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "Spoke to you offline about this. I\u0027m creating the delegates in VrGlThread where the Ui is created and pass it to the Ui, which then passes it to the UiSceneCreator, which sets it on the required elements.",
+      "parentUuid": "92858a37_d716e081",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df3ec16c_6b4d59c2",
         "filename": "chrome/browser/vr/elements/keyboard.cc",
         "patchSetId": 6
@@ -107,6 +203,24 @@
       "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "599f8538_4a5e9aac",
+        "filename": "chrome/browser/vr/elements/keyboard.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df3ec16c_6b4d59c2",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "deb67697_af912366",
+        "filename": "chrome/browser/vr/elements/keyboard.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "37c87267_c2e9730a",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec5fb0db_cce8d171",
         "filename": "chrome/browser/vr/elements/keyboard.cc",
         "patchSetId": 6
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "a43ef1ba_a6dadf5f",
+        "filename": "chrome/browser/vr/elements/keyboard.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec5fb0db_cce8d171",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3955051d_95882cd8",
         "filename": "chrome/browser/vr/elements/keyboard.cc",
         "patchSetId": 6
@@ -158,6 +308,24 @@
       "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3d330df_aa6b9ba0",
+        "filename": "chrome/browser/vr/elements/keyboard.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "That\u0027s right. Added comment.",
+      "parentUuid": "3955051d_95882cd8",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -195,6 +363,24 @@
     },
     {
       "key": {
+        "uuid": "7d999fd0_b0a7320c",
+        "filename": "chrome/browser/vr/elements/keyboard.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "The fading of the keyboard is done by the gvr. We don\u0027t have to do any of it here.",
+      "parentUuid": "6d59915a_d01e6df2",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfbdfcf3_4d7c1bb3",
         "filename": "chrome/browser/vr/elements/keyboard.cc",
         "patchSetId": 6
@@ -209,6 +395,24 @@
       "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02ee8674_9482d0cb",
+        "filename": "chrome/browser/vr/elements/keyboard.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "Made all one-liners without braces for consistency, I find that cleaner :).",
+      "parentUuid": "dfbdfcf3_4d7c1bb3",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -229,6 +433,24 @@
     },
     {
       "key": {
+        "uuid": "1fa0516d_d0482ee1",
+        "filename": "chrome/browser/vr/elements/keyboard.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "Discussed this offline, added comment for clarification.",
+      "parentUuid": "6bdbc701_1db3edd7",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "991e3649_eb77f398",
         "filename": "chrome/browser/vr/elements/keyboard.h",
         "patchSetId": 6
@@ -243,6 +465,24 @@
       "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f19bece6_35682e2b",
+        "filename": "chrome/browser/vr/elements/keyboard.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "991e3649_eb77f398",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -263,6 +503,24 @@
     },
     {
       "key": {
+        "uuid": "5cee2914_a4ba129b",
+        "filename": "chrome/browser/vr/elements/text_input.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2747eb5_02efa390",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80aa71da_51d6f186",
         "filename": "chrome/browser/vr/elements/text_input.cc",
         "patchSetId": 6
@@ -280,6 +538,24 @@
     },
     {
       "key": {
+        "uuid": "32438b29_9d2129b2",
+        "filename": "chrome/browser/vr/elements/text_input.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "We had a discussion around this. The main reason for this is that 1) we want to keep the input_manager oblivious to what actually happens when you click an element, i.e. it gets focus. For e.g, an element may decide that it doesn\u0027t want \"focus\". 2) This call shouldn\u0027t be synchronous for the Web input field case. Web contents get dispatched \"you were clicked\" and some arbitrary time later it requests input if it was was input field.",
+      "parentUuid": "80aa71da_51d6f186",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "abeec56a_7db165c2",
         "filename": "chrome/browser/vr/elements/text_input.cc",
         "patchSetId": 6
@@ -291,6 +567,24 @@
       "writtenOn": "2017-11-24T16:29:28Z",
       "side": 1,
       "message": "What if an element calls on its delegate_ without focus? Should the delegate_ DCHECK?",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5d3dc99_c3c40895",
+        "filename": "chrome/browser/vr/elements/text_input.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "delegate_ doesn\u0027t have any notion of DCHECK. This should be covered by unittests where, this call should do nothing if the element is not focused. Updated unit test.",
+      "parentUuid": "abeec56a_7db165c2",
       "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -348,6 +642,24 @@
     },
     {
       "key": {
+        "uuid": "737f51c4_5c0952d3",
+        "filename": "chrome/browser/vr/elements/text_input.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2431cf63_7f11754b",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b769c813_d62f0763",
         "filename": "chrome/browser/vr/elements/textured_element.h",
         "patchSetId": 6
@@ -362,6 +674,24 @@
       "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77462683_6e418dc5",
+        "filename": "chrome/browser/vr/elements/textured_element.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "N/A in latest PS.",
+      "parentUuid": "b769c813_d62f0763",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -382,6 +712,24 @@
     },
     {
       "key": {
+        "uuid": "41528446_c7a57f21",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eae3fa42_e116064f",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20dfb5c8_f891f022",
         "filename": "chrome/browser/vr/elements/ui_element.cc",
         "patchSetId": 6
@@ -396,6 +744,24 @@
       "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3981dfa9_902136ba",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20dfb5c8_f891f022",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -416,6 +782,24 @@
     },
     {
       "key": {
+        "uuid": "3103f3b1_9773e6a9",
+        "filename": "chrome/browser/vr/elements/ui_element.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bbb87f2_c6371127",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bdae526_de1b068d",
         "filename": "chrome/browser/vr/keyboard_ui_interface.h",
         "patchSetId": 6
@@ -433,6 +817,24 @@
     },
     {
       "key": {
+        "uuid": "a9cc36ec_f7ac5e92",
+        "filename": "chrome/browser/vr/keyboard_ui_interface.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bdae526_de1b068d",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7c929e1_5c84fb9a",
         "filename": "chrome/browser/vr/model/text_input_info.h",
         "patchSetId": 6
@@ -447,6 +849,24 @@
       "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40a15287_17492bfd",
+        "filename": "chrome/browser/vr/model/text_input_info.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "Yeup, that\u0027s a stale comment :)",
+      "parentUuid": "f7c929e1_5c84fb9a",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -484,6 +904,24 @@
     },
     {
       "key": {
+        "uuid": "c44c41d2_cb73900a",
+        "filename": "chrome/browser/vr/model/text_input_info.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "This is great except that the size of base::string16 seems to vary between platforms (24 bytes on linux vs 20 bytes on Android). I\u0027ve added the assert to text_input_unittests.cc behind a build guard to make sure we get the check. Thoughts?",
+      "parentUuid": "8d692d78_15667020",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "03c758a4_6086a0a1",
         "filename": "chrome/browser/vr/ui_input_manager.cc",
         "patchSetId": 6
@@ -507,6 +945,30 @@
     },
     {
       "key": {
+        "uuid": "71c7e29c_eebabdbc",
+        "filename": "chrome/browser/vr/ui_input_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03c758a4_6086a0a1",
+      "range": {
+        "startLine": 326,
+        "startChar": 60,
+        "endLine": 326,
+        "endChar": 65
+      },
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f8c1d7d_e9933dbe",
         "filename": "chrome/browser/vr/ui_input_manager.cc",
         "patchSetId": 6
@@ -521,6 +983,24 @@
       "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4f6643f_dc950537",
+        "filename": "chrome/browser/vr/ui_input_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f8c1d7d_e9933dbe",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -559,6 +1039,24 @@
     },
     {
       "key": {
+        "uuid": "1ff6146b_613a7910",
+        "filename": "chrome/browser/vr/ui_input_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c154c1e1_e3d71f02",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f80ed10_6fc4be85",
         "filename": "chrome/browser/vr/ui_input_manager.cc",
         "patchSetId": 6
@@ -573,6 +1071,24 @@
       "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b097cdd9_ffe3bdea",
+        "filename": "chrome/browser/vr/ui_input_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f80ed10_6fc4be85",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -593,6 +1109,24 @@
     },
     {
       "key": {
+        "uuid": "fd133471_bc5b4b83",
+        "filename": "chrome/browser/vr/ui_input_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fff1534_19f4ab32",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a929960_74c4daa0",
         "filename": "chrome/browser/vr/ui_input_manager.h",
         "patchSetId": 6
@@ -610,6 +1144,24 @@
     },
     {
       "key": {
+        "uuid": "d4573629_466b4389",
+        "filename": "chrome/browser/vr/ui_input_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a929960_74c4daa0",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "198cdc19_9bec8d88",
         "filename": "chrome/browser/vr/ui_input_manager_unittest.cc",
         "patchSetId": 6
@@ -624,6 +1176,24 @@
       "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71f5a9cc_25b98672",
+        "filename": "chrome/browser/vr/ui_input_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "Yes unfortunately.",
+      "parentUuid": "198cdc19_9bec8d88",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -678,6 +1248,24 @@
     },
     {
       "key": {
+        "uuid": "184af99e_6a71adc0",
+        "filename": "chrome/browser/vr/ui_scene.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "The keyboard is not a part of the 2dBrowsing subtree, similar to the controller. The rationale here is that we may need it for things like the timeout UI in WebVR mode.",
+      "parentUuid": "d544d45b_a20cb472",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "377770b2_8ecf22fe",
         "filename": "chrome/browser/vr/ui_scene.cc",
         "patchSetId": 6
@@ -695,6 +1283,24 @@
     },
     {
       "key": {
+        "uuid": "6cf2a5e9_d65a060d",
+        "filename": "chrome/browser/vr/ui_scene.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "N/A in latest patch.",
+      "parentUuid": "377770b2_8ecf22fe",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be4dd6ff_56c66a5c",
         "filename": "chrome/browser/vr/ui_scene.cc",
         "patchSetId": 6
@@ -709,6 +1315,24 @@
       "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62c6d75d_b57643e0",
+        "filename": "chrome/browser/vr/ui_scene.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "We had an in-depth discussion about this offline.\nRemoved this. Initialized through UiSceneCreator.",
+      "parentUuid": "be4dd6ff_56c66a5c",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -752,6 +1376,48 @@
     },
     {
       "key": {
+        "uuid": "b2b6bede_ddb606f8",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "Needed in latest PS.",
+      "parentUuid": "8845e0bc_cc8428ee",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97d46811_f838b689",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "Needed in latest PS.",
+      "parentUuid": "a26d810f_f48bf5cf",
+      "range": {
+        "startLine": 41,
+        "startChar": 28,
+        "endLine": 41,
+        "endChar": 45
+      },
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61f7e981_50791bb6",
         "filename": "chrome/browser/vr/ui_scene_creator.cc",
         "patchSetId": 6
@@ -766,6 +1432,24 @@
       "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e682948b_621e5d93",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "Yeah this is much cleaner! Now text input fields can be created by calling this and we avoid bugs from code duplication.",
+      "parentUuid": "61f7e981_50791bb6",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -786,6 +1470,24 @@
     },
     {
       "key": {
+        "uuid": "65f15517_61565c14",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 941,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "Other elements seem to be doing it this way, so its probably good to leave this here for consistency.",
+      "parentUuid": "c1bfec14_c10b3388",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8d1cdd8_50d5dbea",
         "filename": "chrome/browser/vr/ui_scene_creator.cc",
         "patchSetId": 6
@@ -800,6 +1502,24 @@
       "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58f18a92_eea8df81",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T19:51:47Z",
+      "side": 1,
+      "message": "Absolutely. Thanks!",
+      "parentUuid": "d8d1cdd8_50d5dbea",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
