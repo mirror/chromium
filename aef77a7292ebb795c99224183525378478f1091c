@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98fcdd40_9f5c0c5b",
+        "filename": "mojo/public/cpp/system/file_data_pipe_producer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-01T23:24:53Z",
+      "side": 1,
+      "message": "group this with other unknowns? or delete if adding a default clause",
+      "revId": "aef77a7292ebb795c99224183525378478f1091c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0fff80d_95ffc987",
+        "filename": "mojo/public/cpp/system/file_data_pipe_producer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-01T23:24:53Z",
+      "side": 1,
+      "message": "This can never happen here since we\u0027re only reading files",
+      "revId": "aef77a7292ebb795c99224183525378478f1091c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a65327cd_76fd0a5d",
+        "filename": "mojo/public/cpp/system/file_data_pipe_producer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-01T23:24:53Z",
+      "side": 1,
+      "message": "Also can\u0027t happen when reading files",
+      "revId": "aef77a7292ebb795c99224183525378478f1091c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69052faf_1a831864",
+        "filename": "mojo/public/cpp/system/file_data_pipe_producer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-01T23:24:53Z",
+      "side": 1,
+      "message": "maybe just have a default: clause for all the miscellaneous unhandled values? also MAX doesn\u0027t need to be mentioned ever since it\u0027s only there for IPC help",
+      "revId": "aef77a7292ebb795c99224183525378478f1091c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
