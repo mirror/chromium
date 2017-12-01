@@ -25,17 +25,6 @@ public class BaseChromiumApplication extends Application {
         }
     }
 
-    /** Initializes the {@link CommandLine}. */
-    public void initCommandLine() {}
-
-    /**
-     * This must only be called for contexts whose application is a subclass of
-     * {@link BaseChromiumApplication}.
-     */
-    @VisibleForTesting
-    public static void initCommandLine(Context context) {
-        ((BaseChromiumApplication) context.getApplicationContext()).initCommandLine();
-    }
 
     /** Ensure this application object is not out-of-date. */
     private void checkAppBeingReplaced() {
