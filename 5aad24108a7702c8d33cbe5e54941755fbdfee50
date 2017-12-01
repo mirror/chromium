@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd8a51c1_68fd6490",
+        "filename": "cc/resources/resource_provider_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 918,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-01T18:45:53Z",
+      "side": 1,
+      "message": "I think iwbn to explain why this is important for future code archaeologists who want to make changes to these tests",
+      "revId": "5aad24108a7702c8d33cbe5e54941755fbdfee50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebf49625_5cc38c83",
+        "filename": "cc/resources/resource_provider_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 949,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-01T18:45:53Z",
+      "side": 1,
+      "message": "Is this redundant now?",
+      "revId": "5aad24108a7702c8d33cbe5e54941755fbdfee50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
