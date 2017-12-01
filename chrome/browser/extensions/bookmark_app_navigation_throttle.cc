@@ -8,6 +8,7 @@
 
 #include "base/bind.h"
 #include "base/logging.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/extensions/launch_util.h"
 #include "chrome/browser/prerender/prerender_contents.h"
@@ -38,6 +39,87 @@ using content::BrowserThread;
 namespace extensions {
 
 namespace {
+
+enum class ProcessNavigationResult {
+  kProceedStartedFromContextMenu,
+  kProceedTransitionTyped,
+  kProceedTransitionAutoBookmark,
+  kProceedTransitionAutoSubframe,
+  kProceedTransitionManualSubframe,
+  kProceedTransitionGenerated,
+  kProceedTransitionAutoToplevel,
+  kProceedTransitionReload,
+  kProceedTransitionKeyword,
+  kProceedTransitionKeywordGenerated,
+  kProceedTransitionForwardBack,
+  kProceedTransitionFromAddressBar,
+  kOpenInChromeProceedOutOfScopeLaunch,
+  kProceedInAppSameScope,
+  kProceedInBrowserFormSubmission,
+  kProceedInBrowserSameScope,
+  kCancelPrerenderContents,
+  kDeferOpenAppCloseEmptyWebContents,
+  kCancelOpenApp,
+  kDeferOpenNewTabInAppOutOfScope,
+  // Add ProcessNavigation results immediately above this line. Also
+  // update the enum list in tools/metrics/enums.xml accordingly.
+  kCount,
+};
+
+void RecordProcessNavigationResult(ProcessNavigationResult result) {
+  UMA_HISTOGRAM_ENUMERATION("Extensions.BookmarkApp.NavigationResult", result,
+                            ProcessNavigationResult::kCount);
+}
+
+void RecordProceedWithTransitionType(ui::PageTransition transition_type) {
+  if (PageTransitionCoreTypeIs(transition_type, ui::PAGE_TRANSITION_LINK)) {
+    // Link navigations are a special case and shouldn't use this code path.
+    NOTREACHED();
+  } else if (PageTransitionCoreTypeIs(transition_type,
+                                      ui::PAGE_TRANSITION_TYPED)) {
+    RecordProcessNavigationResult(
+        ProcessNavigationResult::kProceedTransitionTyped);
+  } else if (PageTransitionCoreTypeIs(transition_type,
+                                      ui::PAGE_TRANSITION_AUTO_BOOKMARK)) {
+    RecordProcessNavigationResult(
+        ProcessNavigationResult::kProceedTransitionAutoBookmark);
+  } else if (PageTransitionCoreTypeIs(transition_type,
+                                      ui::PAGE_TRANSITION_AUTO_SUBFRAME)) {
+    RecordProcessNavigationResult(
+        ProcessNavigationResult::kProceedTransitionAutoSubframe);
+  } else if (PageTransitionCoreTypeIs(transition_type,
+                                      ui::PAGE_TRANSITION_MANUAL_SUBFRAME)) {
+    RecordProcessNavigationResult(
+        ProcessNavigationResult::kProceedTransitionManualSubframe);
+  } else if (PageTransitionCoreTypeIs(transition_type,
+                                      ui::PAGE_TRANSITION_GENERATED)) {
+    RecordProcessNavigationResult(
+        ProcessNavigationResult::kProceedTransitionGenerated);
+  } else if (PageTransitionCoreTypeIs(transition_type,
+                                      ui::PAGE_TRANSITION_AUTO_TOPLEVEL)) {
+    RecordProcessNavigationResult(
+        ProcessNavigationResult::kProceedTransitionAutoToplevel);
+  } else if (PageTransitionCoreTypeIs(transition_type,
+                                      ui::PAGE_TRANSITION_FORM_SUBMIT)) {
+    // Form navigations are a special case and shouldn't use this code path.
+    // TODO(crbug.com/772803): Add NOTREACHED() once form navigations are
+    // handled.
+  } else if (PageTransitionCoreTypeIs(transition_type,
+                                      ui::PAGE_TRANSITION_RELOAD)) {
+    RecordProcessNavigationResult(
+        ProcessNavigationResult::kProceedTransitionReload);
+  } else if (PageTransitionCoreTypeIs(transition_type,
+                                      ui::PAGE_TRANSITION_KEYWORD)) {
+    RecordProcessNavigationResult(
+        ProcessNavigationResult::kProceedTransitionKeyword);
+  } else if (PageTransitionCoreTypeIs(transition_type,
+                                      ui::PAGE_TRANSITION_KEYWORD_GENERATED)) {
+    RecordProcessNavigationResult(
+        ProcessNavigationResult::kProceedTransitionKeywordGenerated);
+  } else {
+    NOTREACHED();
+  }
+}
 
 bool IsWindowedBookmarkApp(const Extension* app,
                            content::BrowserContext* context) {
@@ -124,6 +206,8 @@ content::NavigationThrottle::ThrottleCheckResult
 BookmarkAppNavigationThrottle::ProcessNavigation(bool is_redirect) {
   if (navigation_handle()->WasStartedFromContextMenu()) {
     DVLOG(1) << "Don't intercept: Navigation started from the context menu.";
+    RecordProcessNavigationResult(
+        ProcessNavigationResult::kProceedStartedFromContextMenu);
     return content::NavigationThrottle::PROCEED;
   }
 
@@ -144,10 +228,13 @@ BookmarkAppNavigationThrottle::ProcessNavigation(bool is_redirect) {
                                ui::PAGE_TRANSITION_AUTO_BOOKMARK) &&
       GetAppForWindow() != GetTargetApp()) {
     DVLOG(1) << "Out-of-scope navigation during launch. Opening in Chrome.";
+    RecordProcessNavigationResult(
+        ProcessNavigationResult::kOpenInChromeProceedOutOfScopeLaunch);
     Browser* browser = chrome::FindBrowserWithWebContents(
         navigation_handle()->GetWebContents());
     DCHECK(browser);
     chrome::OpenInChrome(browser);
+    return content::NavigationThrottle::PROCEED;
   }
 
   if (!PageTransitionCoreTypeIs(transition_type, ui::PAGE_TRANSITION_LINK) &&
@@ -155,24 +242,47 @@ BookmarkAppNavigationThrottle::ProcessNavigation(bool is_redirect) {
                                 ui::PAGE_TRANSITION_FORM_SUBMIT)) {
     DVLOG(1) << "Don't intercept: Transition type is "
              << PageTransitionGetCoreTransitionString(transition_type);
+    // We are in one of three possible states:
+    //   1. In-browser no-target-app navigations,
+    //   2. In-browser same-scope navigations, or
+    //   3. In-app same-scope navigations
+    // Ignore (1) since that's the majority of navigations and offer no insight.
+    if (GetTargetApp())
+      RecordProceedWithTransitionType(transition_type);
+
     return content::NavigationThrottle::PROCEED;
   }
 
   int32_t transition_qualifier = PageTransitionGetQualifier(transition_type);
   if (transition_qualifier & ui::PAGE_TRANSITION_FORWARD_BACK) {
     DVLOG(1) << "Don't intercept: Forward or back navigation.";
+    RecordProcessNavigationResult(
+        ProcessNavigationResult::kProceedTransitionForwardBack);
     return content::NavigationThrottle::PROCEED;
   }
 
   if (transition_qualifier & ui::PAGE_TRANSITION_FROM_ADDRESS_BAR) {
     DVLOG(1) << "Don't intercept: Address bar navigation.";
+    RecordProcessNavigationResult(
+        ProcessNavigationResult::kProceedTransitionFromAddressBar);
     return content::NavigationThrottle::PROCEED;
   }
 
-  scoped_refptr<const Extension> app_for_window = GetAppForWindow();
   scoped_refptr<const Extension> target_app = GetTargetApp();
+  scoped_refptr<const Extension> app_for_window = GetAppForWindow();
 
   if (app_for_window == target_app) {
+    if (app_for_window) {
+      DVLOG(1) << "Don't intercept: The target URL is in the same scope as the "
+               << "current app.";
+      RecordProcessNavigationResult(
+          ProcessNavigationResult::kProceedInAppSameScope);
+    } else {
+      DVLOG(1) << "No matching Bookmark App for URL: "
+               << navigation_handle()->GetURL();
+      // This is a regular in-browser navigation. No need to record it since
+      // that's the majority of navigations and offers no insight.
+    }
     DVLOG(1) << "Don't intercept: The target URL is in the same scope as the "
              << "current app.";
     return content::NavigationThrottle::PROCEED;
@@ -184,6 +294,8 @@ BookmarkAppNavigationThrottle::ProcessNavigation(bool is_redirect) {
       PageTransitionCoreTypeIs(transition_type,
                                ui::PAGE_TRANSITION_FORM_SUBMIT)) {
     DVLOG(1) << "Keep form submissions in the browser.";
+    RecordProcessNavigationResult(
+        ProcessNavigationResult::kProceedInBrowserFormSubmission);
     return content::NavigationThrottle::PROCEED;
   }
 
@@ -196,6 +308,8 @@ BookmarkAppNavigationThrottle::ProcessNavigation(bool is_redirect) {
   // app window if only the Maps app is installed.
   if (!app_for_window && target_app == GetAppForCurrentURL()) {
     DVLOG(1) << "Don't intercept: Keep same-app navigations in the browser.";
+    RecordProcessNavigationResult(
+        ProcessNavigationResult::kProceedInBrowserSameScope);
     return content::NavigationThrottle::PROCEED;
   }
 
@@ -206,10 +320,29 @@ BookmarkAppNavigationThrottle::ProcessNavigation(bool is_redirect) {
       // If prerendering, don't launch the app but abort the navigation.
       prerender_contents->Destroy(
           prerender::FINAL_STATUS_NAVIGATION_INTERCEPTED);
+      RecordProcessNavigationResult(
+          ProcessNavigationResult::kCancelPrerenderContents);
       return content::NavigationThrottle::CANCEL_AND_IGNORE;
     }
 
-    return OpenInAppWindowAndCloseTabIfNecessary(target_app);
+    content::NavigationThrottle::ThrottleCheckResult result =
+        OpenInAppWindowAndCloseTabIfNecessary(target_app);
+
+    ProcessNavigationResult open_in_app_result;
+    switch (result.action()) {
+      case content::NavigationThrottle::DEFER:
+        open_in_app_result = ProcessNavigationResult::kDeferTargetAppOpened;
+        break;
+      case content::NavigationThrottle::CANCEL_AND_IGNORE:
+        open_in_app_result = ProcessNavigationResult::kCancelTargetAppOpened;
+        break;
+      default:
+        NOTREACHED();
+        open_in_app_result = ProcessNavigationResult::kDeferTargetAppOpened;
+    }
+
+    RecordProcessNavigationResult(open_in_app_result);
+    return result;
   }
 
   if (app_for_window) {
@@ -221,6 +354,8 @@ BookmarkAppNavigationThrottle::ProcessNavigation(bool is_redirect) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE, base::Bind(&BookmarkAppNavigationThrottle::OpenInNewTab,
                               weak_ptr_factory_.GetWeakPtr()));
+    RecordProcessNavigationResult(
+        ProcessNavigationResult::kOpenNewTabInAppOutOfScope);
     return content::NavigationThrottle::DEFER;
   }
 
