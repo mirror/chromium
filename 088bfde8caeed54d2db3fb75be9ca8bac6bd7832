@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "decc50ed_0ab346ad",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_controller_observer_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-01T10:40:24Z",
+      "side": 1,
+      "message": "Ah! So that sounds like a mediator (https://en.wikipedia.org/wiki/Mediator_pattern) -- \"an object that encapsulates how a set of objects interact\". While we use mediators for the common case of encapsulating model/view controller interactions, there\u0027s no reason not to use them for other interactions. So this is a FullscreenMediator, mediating the communications between the FullscreenController (a model class) and the observers.\n\n(One of my concerns is that the responsibilities of classes with catchall names like \"manager\" and \"controller\" is hard to fathom. It might be worth considering, for example, if FullscreenController makes sense as a FullscreenCoordinator -- that is, is its job primarily plugging other objects into each other and turning them off and on?)",
+      "parentUuid": "28cd214e_a2f95291",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 41
+      },
+      "revId": "088bfde8caeed54d2db3fb75be9ca8bac6bd7832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9eea388_41e4eeea",
         "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_controller_observer_manager.mm",
         "patchSetId": 2
