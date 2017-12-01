@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f78f433d_d9715f1f",
+        "filename": "base/bind_internal.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-01T06:50:20Z",
+      "side": 1,
+      "message": "Does git cl format intentionally leave this space?",
+      "range": {
+        "startLine": 53,
+        "startChar": 45,
+        "endLine": 53,
+        "endChar": 46
+      },
+      "revId": "8ad5283dbdb025db6905f3ea1b7bb0d0fe1ca3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
