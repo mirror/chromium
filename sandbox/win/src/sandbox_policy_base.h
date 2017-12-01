@@ -19,6 +19,7 @@
 #include "base/process/launch.h"
 #include "base/strings/string16.h"
 #include "base/win/scoped_handle.h"
+#include "sandbox/win/src/app_container_profile.h"
 #include "sandbox/win/src/crosscall_server.h"
 #include "sandbox/win/src/handle_closer.h"
 #include "sandbox/win/src/ipc_tags.h"
@@ -100,6 +101,9 @@ class PolicyBase final : public TargetPolicy {
   HANDLE GetStdoutHandle();
   HANDLE GetStderrHandle();
 
+  void SetAppContainerProfile(AppContainerProfile* profile);
+  scoped_refptr<AppContainerProfile> GetAppContainerProfile();
+
   // Returns the list of handles being shared with the target process.
   const base::HandlesToInheritVector& GetHandlesBeingShared();
 
@@ -169,6 +173,8 @@ class PolicyBase final : public TargetPolicy {
   // shared with the target at times.
   base::HandlesToInheritVector handles_to_share_;
   bool enable_opm_redirection_;
+
+  scoped_refptr<AppContainerProfile> _app_container_profile;
 
   DISALLOW_COPY_AND_ASSIGN(PolicyBase);
 };
