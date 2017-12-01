@@ -16,6 +16,24 @@
       "revId": "415212d7045bc6c2ed5c58ec46740251c32ea7ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87bcf846_68527f36",
+        "filename": "media/audio/android/opensles_output.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-12-01T02:08:56Z",
+      "side": 0,
+      "message": "Yep, it does. I\u0027ve removed the defines from opensles_output.cc and everything still compiles fine.",
+      "parentUuid": "543beb38_ded564a4",
+      "revId": "415212d7045bc6c2ed5c58ec46740251c32ea7ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
