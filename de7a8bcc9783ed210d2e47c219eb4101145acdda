@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97cad38c_476cd23f",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-12-01T22:25:41Z",
+      "side": 1,
+      "message": "Under what circumstances can space_left be *less* than zero?",
+      "revId": "de7a8bcc9783ed210d2e47c219eb4101145acdda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
