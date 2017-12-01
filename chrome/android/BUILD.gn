@@ -242,6 +242,7 @@ android_library("chrome_java") {
     "//third_party/WebKit/public:android_mojo_bindings_java",
     "//third_party/WebKit/public:blink_headers_java",
     "//third_party/android_data_chart:android_data_chart_java",
+    "//third_party/android_deps:dagger_java",
     "//third_party/android_media:android_media_java",
     "//third_party/android_protobuf:protobuf_nano_javalib",
     "//third_party/android_swipe_refresh:android_swipe_refresh_java",
@@ -267,6 +268,13 @@ android_library("chrome_java") {
     "//ui/gfx/geometry/mojo:mojo_java",
     "//url/mojo:url_mojom_gurl_java",
   ]
+
+  classpath_deps = [ "//third_party/android_deps:dagger_compiler_java" ]
+
+  # javac_args = [
+  #   "--processorpath",
+  #   "lib.java/third_party/android_deps/dagger_compiler_java.jar"
+  # ]
 
   srcjar_deps = [
     ":chrome_android_java_enums_srcjar",
@@ -744,7 +752,9 @@ template("chrome_shared_library") {
     if (enable_vr) {
       # Ensure libgvr static library appears before gcc library in linking order.
       # See https://crbug.com/704305 for details.
-      libs = [ "//third_party/gvr-android-sdk/libgvr_shim_static_${current_cpu}.a" ]
+      libs = [
+        "//third_party/gvr-android-sdk/libgvr_shim_static_${current_cpu}.a",
+      ]
     }
 
     if (use_order_profiling) {
@@ -960,7 +970,9 @@ if (!android_64bit_target_cpu ||
     if (enable_vr) {
       # Ensure libgvr static library appears before gcc library in linking order.
       # See https://crbug.com/704305 for details.
-      libs = [ "//third_party/gvr-android-sdk/libgvr_shim_static_${current_cpu}.a" ]
+      libs = [
+        "//third_party/gvr-android-sdk/libgvr_shim_static_${current_cpu}.a",
+      ]
     }
 
     configs -= [ "//build/config/android:hide_all_but_jni_onload" ]
