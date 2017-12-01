@@ -400,6 +400,7 @@ bool CVRPathRegistry_Public::GetPaths( std::string *psRuntimePath, std::string *
 
 	if ( nCountEnvironmentVariables == 3 )
 	{
+		VRLog("Used all three environment variables, returning true");
 		// all three environment variables where set, so we don't need the physical file
 		return true;
 	}
