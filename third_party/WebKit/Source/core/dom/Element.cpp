@@ -2373,7 +2373,7 @@ ShadowRoot* Element::createShadowRoot(const ScriptState* script_state,
       script_state, GetDocument(),
       HostsUsingFeatures::Feature::kElementCreateShadowRoot);
   if (ShadowRoot* root = GetShadowRoot()) {
-    if (root->GetType() == ShadowRootType::kUserAgent) {
+    if (root->IsUserAgent()) {
       exception_state.ThrowDOMException(
           kInvalidStateError,
           "Shadow root cannot be created on a host which already hosts a "
@@ -2461,14 +2461,15 @@ ShadowRoot& Element::CreateShadowRootInternal() {
   DCHECK(!ClosedShadowRoot());
   DCHECK(AreAuthorShadowsAllowed());
   if (AlwaysCreateUserAgentShadowRoot())
-    EnsureUserAgentShadowRoot();
+    EnsureLegacyUserAgentShadowRootV0();
   GetDocument().SetShadowCascadeOrder(ShadowCascadeOrder::kShadowCascadeV0);
   return EnsureShadow().AddShadowRoot(*this, ShadowRootType::V0);
 }
 
 ShadowRoot& Element::CreateUserAgentShadowRoot() {
   DCHECK(!GetShadowRoot());
-  return EnsureShadow().AddShadowRoot(*this, ShadowRootType::kUserAgent);
+  return EnsureShadow().AddShadowRoot(*this,
+                                      ShadowRootType::kLegacyUserAgentV0);
 }
 
 ShadowRoot& Element::AttachShadowRootInternal(ShadowRootType type,
@@ -2513,24 +2514,37 @@ ShadowRoot* Element::AuthorShadowRoot() const {
   ShadowRoot* root = GetShadowRoot();
   if (!root)
     return nullptr;
-  return root->GetType() != ShadowRootType::kUserAgent ? root : nullptr;
+  return !root->IsUserAgent() ? root : nullptr;
 }
 
 ShadowRoot* Element::UserAgentShadowRoot() const {
   if (ElementShadow* element_shadow = Shadow()) {
     ShadowRoot& root = element_shadow->OldestShadowRoot();
-    DCHECK(root.GetType() == ShadowRootType::kUserAgent);
+    DCHECK(root.IsUserAgent());
     return &root;
   }
 
   return nullptr;
 }
 
-ShadowRoot& Element::EnsureUserAgentShadowRoot() {
-  if (ShadowRoot* shadow_root = UserAgentShadowRoot())
+ShadowRoot& Element::EnsureLegacyUserAgentShadowRootV0() {
+  if (ShadowRoot* shadow_root = UserAgentShadowRoot()) {
+    DCHECK(shadow_root->GetType() == ShadowRootType::kLegacyUserAgentV0);
     return *shadow_root;
+  }
   ShadowRoot& shadow_root =
-      EnsureShadow().AddShadowRoot(*this, ShadowRootType::kUserAgent);
+      EnsureShadow().AddShadowRoot(*this, ShadowRootType::kLegacyUserAgentV0);
+  DidAddUserAgentShadowRoot(shadow_root);
+  return shadow_root;
+}
+
+ShadowRoot& Element::EnsureUserAgentShadowRootV1() {
+  if (ShadowRoot* shadow_root = UserAgentShadowRoot()) {
+    DCHECK(shadow_root->GetType() == ShadowRootType::kUserAgentV1);
+    return *shadow_root;
+  }
+  ShadowRoot& shadow_root =
+      EnsureShadow().AddShadowRoot(*this, ShadowRootType::kUserAgentV1);
   DidAddUserAgentShadowRoot(shadow_root);
   return shadow_root;
 }
@@ -3409,7 +3423,7 @@ String Element::TextFromChildren() {
 
 const AtomicString& Element::ShadowPseudoId() const {
   if (ShadowRoot* root = ContainingShadowRoot()) {
-    if (root->GetType() == ShadowRootType::kUserAgent)
+    if (root->IsUserAgent())
       return FastGetAttribute(pseudoAttr);
   }
   return g_null_atom;
@@ -4418,8 +4432,8 @@ void Element::StyleAttributeChanged(
     EnsureUniqueElementData().inline_style_.Clear();
   } else if (modification_reason == AttributeModificationReason::kByCloning ||
              ContentSecurityPolicy::ShouldBypassMainWorld(&GetDocument()) ||
-             (ContainingShadowRoot() && ContainingShadowRoot()->GetType() ==
-                                            ShadowRootType::kUserAgent) ||
+             (ContainingShadowRoot() &&
+              ContainingShadowRoot()->IsUserAgent()) ||
              GetDocument().GetContentSecurityPolicy()->AllowInlineStyle(
                  this, GetDocument().Url(), String(), start_line_number,
                  new_style_string, ContentSecurityPolicy::InlineType::kBlock)) {
