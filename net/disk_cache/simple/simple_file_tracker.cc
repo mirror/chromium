@@ -4,6 +4,7 @@
 
 #include "net/disk_cache/simple/simple_file_tracker.h"
 
+#include <algorithm>
 #include <memory>
 #include <utility>
 
@@ -122,6 +123,36 @@ void SimpleFileTracker::Close(const SimpleSynchronousEntry* owner,
   // The destructor of file_to_close will close it if needed. Thing to watch
   // for impl with stealing: race between bookkeeping above and actual
   // close --- the FD is still alive for it.
+}
+
+void SimpleFileTracker::Doom(const SimpleSynchronousEntry* owner,
+                             EntryFileKey* key) {
+  base::AutoLock hold_lock(lock_);
+  auto iter = tracked_files_.find(key->entry_hash);
+  DCHECK(iter != tracked_files_.end());
+
+  uint64_t max_doom_gen = 0;
+  for (const TrackedFiles& cand : iter->second) {
+    max_doom_gen = std::max(max_doom_gen, cand.key.doom_generation);
+  }
+
+  // A bit of math:
+  // 2^64 = 2^(10*6.4) = (2^10)^6.4 > (10^3)^6.4 = 10^(3*6.4) = 10^19.2
+  // Now assume we can cycle these at about 10^9/sec (generous since this is
+  // I/O speed, not CPU speed). That means wrap around occurs in 10^10.2
+  // seconds, which is about 502 years. Still, if it does wrap around,
+  // there is a security risk since we could confuse different keys.
+  CHECK_NE(max_doom_gen, std::numeric_limits<uint64_t>::max());
+  uint64_t new_doom_gen = max_doom_gen + 1;
+
+  // Update external key.
+  key->doom_generation = new_doom_gen;
+
+  // Update our own.
+  for (TrackedFiles& cand : iter->second) {
+    if (cand.owner == owner)
+      cand.key.doom_generation = new_doom_gen;
+  }
 }
 
 bool SimpleFileTracker::IsEmptyForTesting() {

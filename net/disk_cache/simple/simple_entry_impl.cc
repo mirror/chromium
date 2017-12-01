@@ -1194,14 +1194,24 @@ void SimpleEntryImpl::GetAvailableRangeInternal(
 }
 
 void SimpleEntryImpl::DoomEntryInternal(const CompletionCallback& callback) {
+  // Key property here: if we are running DoomEntryInternal, we are in
+  // backend_->entries_pending_doom_, and that ensures that the normal files for
+  // entry_hash_ (rather than the todelete_ ones) will not be used until we
+  // call backend_->OnDoomComplete() from DoomOperationComplete.
+  if (backend_) {
+    DCHECK(backend_->IsPendingDoomForChecking(entry_hash_));
+  }
+
   if (!backend_) {
     // If there's no backend, we want to truncate the files rather than delete
-    // them. Removing files will update the entry directory's mtime, which will
-    // likely force a full index rebuild on the next startup; this is clearly an
-    // undesirable cost. Instead, the lesser evil is to set the entry files to
-    // length zero, leaving the invalid entry in the index. On the next attempt
-    // to open the entry, it will fail asynchronously (since the magic numbers
-    // will not be found), and the files will actually be removed.
+    // or rename them. Either op will update the entry directory's mtime, which
+    // will likely force a full index rebuild on the next startup; this is
+    // clearly an undesirable cost. Instead, the lesser evil is to set the entry
+    // files to length zero, leaving the invalid entry in the index. On the next
+    // attempt to open the entry, it will fail asynchronously (since the magic
+    // numbers will not be found), and the files will actually be removed.
+    // Since there is no backend, new entries to conflict with us also can't be
+    // created.
     PostTaskAndReplyWithResult(
         worker_pool_.get(), FROM_HERE,
         base::Bind(&SimpleSynchronousEntry::TruncateEntryFiles, path_,
@@ -1213,12 +1223,28 @@ void SimpleEntryImpl::DoomEntryInternal(const CompletionCallback& callback) {
     state_ = STATE_IO_PENDING;
     return;
   }
-  PostTaskAndReplyWithResult(
-      worker_pool_.get(),
-      FROM_HERE,
-      base::Bind(&SimpleSynchronousEntry::DoomEntry, path_, entry_hash_),
-      base::Bind(
-          &SimpleEntryImpl::DoomOperationComplete, this, callback, state_));
+
+  if (synchronous_entry_) {
+    // If there is a backing object, we have to go through its instance methods,
+    // so that it can rename itself and keep track of the altenative name.
+    PostTaskAndReplyWithResult(
+        worker_pool_.get(), FROM_HERE,
+        base::Bind(&SimpleSynchronousEntry::Doom,
+                   base::Unretained(synchronous_entry_)),
+        base::Bind(&SimpleEntryImpl::DoomOperationComplete, this, callback,
+                   state_));
+  } else {
+    // If nothing is open, we can just delete the files. This is OK even if we
+    // used to have been renamed, since the renamed files would have been
+    // cleaned up by Close, and as the comment at beginning of method shows,
+    // no one would own the base names in this case.
+    PostTaskAndReplyWithResult(
+        worker_pool_.get(), FROM_HERE,
+        base::Bind(&SimpleSynchronousEntry::DeleteEntryFiles, path_,
+                   entry_hash_),
+        base::Bind(&SimpleEntryImpl::DoomOperationComplete, this, callback,
+                   state_));
+  }
   state_ = STATE_IO_PENDING;
 }
 
