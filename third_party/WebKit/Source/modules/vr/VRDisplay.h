@@ -19,6 +19,10 @@
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebGraphicsContext3DProvider.h"
 
+namespace gfx {
+class GpuFence;
+}
+
 namespace gpu {
 namespace gles2 {
 class GLES2Interface;
@@ -145,6 +149,7 @@ class VRDisplay final : public EventTargetWithInlineData,
   // VRSubmitFrameClient
   void OnSubmitFrameTransferred(bool success) override;
   void OnSubmitFrameRendered() override;
+  void OnSubmitFramePostRenderFence(const gfx::GpuFenceHandle&) override;
 
   // VRDisplayClient
   void OnChanged(device::mojom::blink::VRDisplayInfoPtr) override;
@@ -219,6 +224,8 @@ class VRDisplay final : public EventTargetWithInlineData,
 
   // Backwards compatible default wait strategy.
   WaitPrevStrategy wait_for_previous_render_ = WaitPrevStrategy::AFTER_BITMAP;
+
+  std::unique_ptr<gfx::GpuFence> prev_frame_fence_;
 
   TraceWrapperMember<ScriptedAnimationController>
       scripted_animation_controller_;

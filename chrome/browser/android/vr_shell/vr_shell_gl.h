@@ -169,6 +169,7 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
 
   void ForceExitVr();
 
+  bool ShouldSkipVSync();
   void SendVSync(base::TimeTicks time, GetVSyncCallback callback);
 
   void ClosePresentationBindings();
@@ -180,6 +181,7 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
 
   // Set from feature flag.
   bool webvr_vsync_align_;
+  bool webvr_experimental_rendering_;
 
   scoped_refptr<gl::GLSurface> surface_;
   scoped_refptr<gl::GLContext> context_;
@@ -205,6 +207,18 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
   // The default size for the render buffers.
   gfx::Size render_size_default_;
   gfx::Size render_size_webvr_ui_;
+
+  // WebVR currently supports multiple render path choices, with runtime
+  // selection based on underlying support being available and feature flags.
+  // The WebVrUse* helpers choose among the implementations. Please don't check
+  // webvr_experimental_rendering_ or other flags in individual code paths
+  // directly, that can easily lead to inconsistent logic.
+  bool webvr_use_pre_submit_client_wait_ = true;
+  bool WebVrUsePreSubmitClientWait() {
+    return webvr_use_pre_submit_client_wait_;
+  }
+
+  int webvr_unstuff_ratelimit_frames_ = 0;
 
   bool cardboard_ = false;
   gfx::Quaternion controller_quat_;
