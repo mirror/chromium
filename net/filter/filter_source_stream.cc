@@ -120,6 +120,7 @@ int FilterSourceStream::DoLoop(int result) {
 }
 
 int FilterSourceStream::DoReadData() {
+  LOG(ERROR) << "** DoReadData: ";
   // Read more data means subclasses have consumed all input or this is the
   // first read in which case the |drainable_input_buffer_| is not initialized.
   DCHECK(drainable_input_buffer_ == nullptr ||
@@ -156,6 +157,8 @@ int FilterSourceStream::DoFilterData() {
                                 drainable_input_buffer_.get(),
                                 drainable_input_buffer_->BytesRemaining(),
                                 &consumed_bytes, upstream_end_reached_);
+  LOG(ERROR) << "** FilterData --> output: " << bytes_output;
+  LOG(ERROR) << "** FilterData --> consumed_bytes: " << consumed_bytes << " / remaining:" << drainable_input_buffer_->BytesRemaining();
   DCHECK_LE(consumed_bytes, drainable_input_buffer_->BytesRemaining());
   DCHECK(bytes_output != 0 ||
          consumed_bytes == drainable_input_buffer_->BytesRemaining());
