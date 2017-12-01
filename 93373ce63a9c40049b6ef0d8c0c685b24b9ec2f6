@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7cbb58c_b47ae2cd",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-01T05:35:32Z",
+      "side": 1,
+      "message": "Optional nit: \u003d nullptr for extra safety?\n\nAlso we\u0027re inside the banners namespace here so the banners:: should be redundant. May as well use |manager| for the variable name too since it\u0027s clear from the type it\u0027s an AppBannerManager.",
+      "range": {
+        "startLine": 281,
+        "startChar": 29,
+        "endLine": 281,
+        "endChar": 47
+      },
+      "revId": "93373ce63a9c40049b6ef0d8c0c685b24b9ec2f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
