@@ -80,6 +80,7 @@ Checkbox::Checkbox(const base::string16& label, bool force_md)
   SetHorizontalAlignment(gfx::ALIGN_LEFT);
   SetFocusForPlatform();
   SetFocusPainter(nullptr);
+  SetMultiLine(true);
 
   if (UseMd()) {
     set_request_focus_on_press(false);
@@ -145,6 +146,10 @@ Checkbox::~Checkbox() {
 void Checkbox::SetChecked(bool checked) {
   checked_ = checked;
   UpdateImage();
+}
+
+void Checkbox::SetMultiLine(bool multi_line) {
+  label()->SetMultiLine(multi_line);
 }
 
 // TODO(tetsui): Remove this method and |use_md_| when MD for secondary UI
