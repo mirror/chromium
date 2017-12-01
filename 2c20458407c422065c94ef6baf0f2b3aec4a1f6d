@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "105bb03d_8b8d08b1",
+        "filename": "chrome/browser/vr/elements/text.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-01T22:54:01Z",
+      "side": 1,
+      "message": "Yep, gfx/skia coordinates are X/Y axis style.  I can document that.",
+      "parentUuid": "b21c3b4c_52867b58",
+      "range": {
+        "startLine": 36,
+        "startChar": 5,
+        "endLine": 36,
+        "endChar": 11
+      },
+      "revId": "2c20458407c422065c94ef6baf0f2b3aec4a1f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c773cf31_b788118c",
         "filename": "chrome/browser/vr/elements/text_input.cc",
         "patchSetId": 6
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "0ff48466_4ccb7b06",
+        "filename": "chrome/browser/vr/elements/text_input.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-01T22:54:01Z",
+      "side": 1,
+      "message": "The cursor position is always computed at layout time relative to where text rendering put it.  Setting size here would mean nothing.",
+      "parentUuid": "20fbd20f_7be6d0d4",
+      "range": {
+        "startLine": 101,
+        "startChar": 15,
+        "endLine": 101,
+        "endChar": 16
+      },
+      "revId": "2c20458407c422065c94ef6baf0f2b3aec4a1f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d66c07eb_11a54c12",
         "filename": "chrome/browser/vr/elements/text_input.cc",
         "patchSetId": 6
@@ -82,6 +130,30 @@
       "writtenOn": "2017-12-01T22:10:58Z",
       "side": 1,
       "message": "I\u0027m assuming we have these because some tests fail otherwise?",
+      "range": {
+        "startLine": 104,
+        "startChar": 16,
+        "endLine": 104,
+        "endChar": 25
+      },
+      "revId": "2c20458407c422065c94ef6baf0f2b3aec4a1f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a35e8ffe_2c5f9540",
+        "filename": "chrome/browser/vr/elements/text_input.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-01T22:54:01Z",
+      "side": 1,
+      "message": "Well, the new convention is to set owners on type-only elements so they can be made unique.  It\u0027s good for the tree visualization, and allows testing.  And currently, yes, it would also fail tests, because they expect these IDs.",
+      "parentUuid": "d66c07eb_11a54c12",
       "range": {
         "startLine": 104,
         "startChar": 16,
