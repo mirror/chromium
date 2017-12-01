@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "550dcf38_c1c8d487",
+        "filename": "ios/chrome/test/app/ios_chrome_scoped_testing_block_popups_pref.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-12-01T19:17:01Z",
+      "side": 1,
+      "message": "Renamed to ScopedBlockPopupsPref. Nothing else in this directory was wrapped in a namespace.",
+      "parentUuid": "0a4fb0b5_b2f5f9f2",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 43
+      },
+      "revId": "f142d5c0965d03f0200c98440b3de9d1a15e1ba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78242558_a4ff794d",
         "filename": "ios/chrome/test/app/ios_chrome_scoped_testing_block_popups_pref.mm",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-27T19:41:06Z",
       "side": 1,
       "message": "Consider using initialization list",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 19
+      },
+      "revId": "f142d5c0965d03f0200c98440b3de9d1a15e1ba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0277f33_704ca509",
+        "filename": "ios/chrome/test/app/ios_chrome_scoped_testing_block_popups_pref.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-12-01T19:17:01Z",
+      "side": 1,
+      "message": "I did for browser_state_, but not this since the current implementation of GetPrefValue() is dependent upon browser_state_ being initialized.",
+      "parentUuid": "78242558_a4ff794d",
       "range": {
         "startLine": 17,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8c82d635_8cb38c00",
+        "filename": "ios/chrome/test/app/ios_chrome_scoped_testing_block_popups_pref.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-12-01T19:17:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "956ed6fc_f3ecd39d",
+      "range": {
+        "startLine": 28,
+        "startChar": 17,
+        "endLine": 28,
+        "endChar": 29
+      },
+      "revId": "f142d5c0965d03f0200c98440b3de9d1a15e1ba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7194dfee_c60d4b89",
         "filename": "ios/chrome/test/app/ios_chrome_scoped_testing_block_popups_pref.mm",
         "patchSetId": 3
@@ -103,6 +175,24 @@
       "revId": "f142d5c0965d03f0200c98440b3de9d1a15e1ba7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d10c2d6_c0f94a20",
+        "filename": "ios/chrome/test/app/ios_chrome_scoped_testing_block_popups_pref.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-12-01T19:17:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "263ef8c2_ab4ec15a",
+      "revId": "f142d5c0965d03f0200c98440b3de9d1a15e1ba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
