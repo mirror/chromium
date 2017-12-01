@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1ec04b6_2a039c82",
+        "filename": "chrome/browser/chromeos/file_system_provider/mount_path_util_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-12-01T00:58:40Z",
+      "side": 1,
+      "message": "Is this the same as in other files? We should rather put them in a common file. However, the refactoring CL I have almost ready makes it unnecessary to create fake extensions.\n\nCould you hold on with this CL for one day?",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 57
+      },
+      "revId": "029a5b916d74f86b520d87d7066159f071a5fb09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ecda2b39_5565314a",
+        "filename": "chrome/browser/chromeos/file_system_provider/mount_path_util_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-12-01T00:58:40Z",
+      "side": 1,
+      "message": "Haha, tell me. Did you add this because you added fileSystemProvider, then you got crashes because ext was null due to missing capabilities? :P\n\nBecause exactly that happened to me yesterday. However, in the end I removed the entire CreateFakeExtension method. See my CL.",
+      "range": {
+        "startLine": 88,
+        "startChar": 2,
+        "endLine": 88,
+        "endChar": 22
+      },
+      "revId": "029a5b916d74f86b520d87d7066159f071a5fb09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
