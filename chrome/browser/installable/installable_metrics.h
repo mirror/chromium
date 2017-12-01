@@ -31,6 +31,15 @@ enum class AddToHomescreenTimeoutStatus {
   COUNT,
 };
 
+// This ways that an app install can be triggered.
+// This enum backs a UMA histogram and must be treated as append-only.
+enum class WebAppInstallSource {
+  AUTOMATIC_PROMPT,  // Automatic prompt e.g. install banner.
+  MENU,              // Chrome menu
+  API,               // BeforeInstallPrompt.prompt().
+  COUNT,
+};
+
 class InstallableMetrics {
  public:
   class Recorder {
@@ -79,6 +88,8 @@ class InstallableMetrics {
   // Called to indicate that the InstallableManager has started working on the
   // current page.
   void Start();
+
+  static void TrackInstallSource(WebAppInstallSource source);
 
  private:
   std::unique_ptr<Recorder> recorder_;
