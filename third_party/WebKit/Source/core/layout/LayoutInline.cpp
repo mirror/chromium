@@ -40,6 +40,7 @@
 #include "core/paint/InlinePainter.h"
 #include "core/paint/ObjectPainter.h"
 #include "core/paint/PaintLayer.h"
+#include "core/paint/ng/ng_box_fragment_painter.h"
 #include "platform/geometry/FloatQuad.h"
 #include "platform/geometry/Region.h"
 #include "platform/geometry/TransformState.h"
@@ -636,6 +637,7 @@ void LayoutInline::AddChildToContinuation(LayoutObject* new_child,
 
 void LayoutInline::Paint(const PaintInfo& paint_info,
                          const LayoutPoint& paint_offset) const {
+  DCHECK(HasSelfPaintingLayer());
   InlinePainter(*this).Paint(paint_info, paint_offset);
 }
 
@@ -1113,6 +1115,18 @@ LayoutRect LayoutInline::CulledInlineVisualOverflowBoundingBox() const {
 }
 
 LayoutRect LayoutInline::LinesVisualOverflowBoundingBox() const {
+  if (const NGPhysicalBoxFragment* box_fragment =
+    EnclosingBlockFlowFragmentOf(*this)) {
+    NGPhysicalOffsetRect result;
+    NGInlineFragmentIterator children(*box_fragment, this);
+    for (const auto& child : children) {
+      NGPhysicalOffsetRect child_rect = child.fragment->VisualRectWithContents();
+      child_rect.offset += child.offset_to_container_box;
+      result.Unite(child_rect);
+    }
+    return result.ToLayoutRect();
+  }
+
   if (!AlwaysCreateLineBoxes())
     return CulledInlineVisualOverflowBoundingBox();
 
