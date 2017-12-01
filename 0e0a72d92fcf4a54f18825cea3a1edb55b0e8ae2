@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "86658cb8_7c64a130",
+        "filename": "ash/display/display_move_window_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-12-01T19:07:59Z",
+      "side": 1,
+      "message": "I will address it separately for crbug.com/789249",
+      "parentUuid": "5288358e_1c80f5e7",
+      "revId": "0e0a72d92fcf4a54f18825cea3a1edb55b0e8ae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92d9804a_17cb2adb",
         "filename": "ash/wm/mru_window_tracker.h",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "0e0a72d92fcf4a54f18825cea3a1edb55b0e8ae2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d52436dc_846b4d88",
+        "filename": "ash/wm/mru_window_tracker.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-12-01T19:07:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92d9804a_17cb2adb",
+      "revId": "0e0a72d92fcf4a54f18825cea3a1edb55b0e8ae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
