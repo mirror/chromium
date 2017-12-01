@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "98ad6cf2_cb914f7c",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-12-01T13:29:26Z",
+      "side": 1,
+      "message": "In the near future, we would be able to say:\n\nconstexpr base::char16 kDelimiters[] \u003d u\"...\";\n\nBut so far, the \"u\" prefix is still a to-be-discussed feature of C++11 in Chromium https://chromium-cpp.appspot.com/#blacklist_review.\n\n(Btw. I think you can use constexpr here.)",
+      "parentUuid": "fa64533a_016cb53d",
+      "range": {
+        "startLine": 29,
+        "startChar": 7,
+        "endLine": 29,
+        "endChar": 24
+      },
+      "revId": "15d2a5d9468ba6c9962083694c87b713217d0584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c309bf6_9c22b265",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 14
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-01T12:46:19Z",
       "side": 1,
       "message": "I changed this from vector to set for faster search.",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 10
+      },
+      "revId": "15d2a5d9468ba6c9962083694c87b713217d0584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dd8236d_55ace971",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-12-01T13:29:26Z",
+      "side": 1,
+      "message": "Sounds reasonable. Did you consult https://chromium.googlesource.com/chromium/src/+/master/base/containers/README.md for the best choice of set?",
+      "parentUuid": "0c309bf6_9c22b265",
       "range": {
         "startLine": 46,
         "startChar": 2,
@@ -68,6 +116,30 @@
       "revId": "15d2a5d9468ba6c9962083694c87b713217d0584",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d289047_1eef1d4e",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-12-01T13:29:26Z",
+      "side": 1,
+      "message": "Looks reasonable.",
+      "parentUuid": "9edf4773_ead2f07c",
+      "range": {
+        "startLine": 82,
+        "startChar": 2,
+        "endLine": 82,
+        "endChar": 17
+      },
+      "revId": "15d2a5d9468ba6c9962083694c87b713217d0584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
