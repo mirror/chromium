@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccd65448_11c509a2",
+        "filename": "net/cert/crl_set_storage.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-01T19:21:11Z",
+      "side": 1,
+      "message": "nit: const auto\u0026 i (or ignore if this was required due to dict_iterator_proxy)",
+      "range": {
+        "startLine": 234,
+        "startChar": 18,
+        "endLine": 234,
+        "endChar": 20
+      },
+      "revId": "e1b0054318aeb81312d7935b136f4ffb1b24917f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c96ba4a_712ef2e2",
+        "filename": "net/cert/crl_set_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-01T19:21:11Z",
+      "side": 1,
+      "message": "Happy to take this on as follow-up if you\u0027re time-constrained, but we do have //net/data/ssl/scripts/crlsetutil.py to generate test CRLSets (called at the end of generate-test-certs)\n\nYou wouldn\u0027t need to run the whole script (as that\u0027d cause a few other issues), but if you wanted to nuke a single cert, that\u0027d also work and avoid the checkin.",
+      "revId": "e1b0054318aeb81312d7935b136f4ffb1b24917f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
