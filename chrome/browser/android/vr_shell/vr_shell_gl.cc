@@ -231,6 +231,12 @@ VrShellGl::VrShellGl(GlBrowserInterface* browser_interface,
       webvr_js_time_(new vr::SlidingTimeDeltaAverage(kWebVRSlidingAverageSize)),
       webvr_render_time_(
           new vr::SlidingTimeDeltaAverage(kWebVRSlidingAverageSize)),
+      webvr_js_wait_time_(
+          new vr::SlidingTimeDeltaAverage(kWebVRSlidingAverageSize)),
+      webvr_acquire_time_(
+          new vr::SlidingTimeDeltaAverage(kWebVRSlidingAverageSize)),
+      webvr_submit_time_(
+          new vr::SlidingTimeDeltaAverage(kWebVRSlidingAverageSize)),
       weak_ptr_factory_(this) {
   GvrInit(gvr_api);
 }
@@ -368,7 +374,8 @@ void VrShellGl::CreateOrResizeWebVRSurface(const gfx::Size& size) {
 }
 
 void VrShellGl::SubmitFrame(int16_t frame_index,
-                            const gpu::MailboxHolder& mailbox) {
+                            const gpu::MailboxHolder& mailbox,
+                            float wait_time_seconds) {
   TRACE_EVENT0("gpu", "VrShellGl::SubmitWebVRFrame");
 
   // submit_client_ could be null when we exit presentation, if there were
@@ -387,6 +394,12 @@ void VrShellGl::SubmitFrame(int16_t frame_index,
 
   webvr_time_js_submit_[frame_index % kPoseRingBufferSize] =
       base::TimeTicks::Now();
+
+  base::TimeDelta js_wait_time =
+      base::TimeDelta::FromSecondsD(wait_time_seconds);
+  webvr_js_wait_time_->AddSample(js_wait_time);
+  TRACE_COUNTER1("gpu", "WebVR JS wait (ms)",
+                 webvr_js_wait_time_->GetAverage().InMilliseconds());
 
   // Swapping twice on a Surface without calling updateTexImage in
   // between can lose frames, so don't draw+swap if we already have
@@ -915,7 +928,9 @@ void VrShellGl::DrawFrame(int16_t frame_index, base::TimeTicks current_time) {
     return;
 
   TRACE_EVENT_BEGIN0("gpu", "VrShellGl::AcquireFrame");
+  base::TimeTicks acquire_start = base::TimeTicks::Now();
   acquired_frame_ = swap_chain_->AcquireFrame();
+  webvr_acquire_time_->AddSample(base::TimeTicks::Now() - acquire_start);
   TRACE_EVENT_END0("gpu", "VrShellGl::AcquireFrame");
   if (!acquired_frame_)
     return;
@@ -1138,8 +1153,13 @@ void VrShellGl::DrawFrameSubmitNow(int16_t frame_index,
 
   gvr::Mat4f mat;
   TransformToGvrMat(head_pose, &mat);
-  acquired_frame_.Submit(*buffer_viewport_list_, mat);
-  CHECK(!acquired_frame_);
+  {
+    TRACE_EVENT0("gpu", "VrShellGl::SubmitToGvr");
+    base::TimeTicks submit_start = base::TimeTicks::Now();
+    acquired_frame_.Submit(*buffer_viewport_list_, mat);
+    webvr_submit_time_->AddSample(base::TimeTicks::Now() - submit_start);
+    CHECK(!acquired_frame_);
+  }
 
   // No need to swap buffers for surfaceless rendering.
   if (!surfaceless_rendering_) {
@@ -1375,6 +1395,9 @@ base::TimeDelta VrShellGl::GetPredictedFrameTime() {
   TRACE_COUNTER2("gpu", "WebVR frame time (ms)", "javascript",
                  js_time.InMilliseconds(), "rendering",
                  render_time.InMilliseconds());
+  TRACE_COUNTER2("gpu", "GVR frame time (ms)", "acquire",
+                 webvr_acquire_time_->GetAverage().InMilliseconds(), "submit",
+                 webvr_submit_time_->GetAverage().InMilliseconds());
   TRACE_COUNTER1("gpu", "WebVR pose prediction (ms)",
                  expected_frame_time.InMilliseconds());
   return expected_frame_time;
