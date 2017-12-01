@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81157808_1bb3f5a5",
+        "filename": "chrome/browser/resources/md_extensions/service.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-01T22:48:05Z",
+      "side": 1,
+      "message": "Can non-unpacked extensions be reloaded? Would this cause an issue where a non-unpacked extension\u0027s reload fails quietly, and populateErrorForUnpacked is not applicable? Where as before it would throw an error?",
+      "range": {
+        "startLine": 181,
+        "startChar": 17,
+        "endLine": 181,
+        "endChar": 66
+      },
+      "revId": "883ffd35da4eef5de207e2d425fcb57e823c1854",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c61f7857_b846e3bf",
+        "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-01T22:48:05Z",
+      "side": 1,
+      "message": "You could simplify by using the existing TestService which is based on TestBrowserProxy, and already used by most tests, see [1], and specific example at [2]. TestBrowserProxy has a cleaner syntax for dealing with async testing I think.\n\n[1] https://cs.chromium.org/search/?q\u003dTestService+file:%5Esrc/chrome/test/data/webui/extensions/+package:%5Echromium$\u0026type\u003dcs\n[2] https://cs.chromium.org/chromium/src/chrome/test/data/webui/extensions/extension_toolbar_test.js?l\u003d51-68",
+      "range": {
+        "startLine": 180,
+        "startChar": 9,
+        "endLine": 180,
+        "endChar": 42
+      },
+      "revId": "883ffd35da4eef5de207e2d425fcb57e823c1854",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5562ad97_a7e76298",
+        "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-01T22:48:05Z",
+      "side": 1,
+      "message": "Equivalent to Promise.resolve() ?",
+      "revId": "883ffd35da4eef5de207e2d425fcb57e823c1854",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62c65bbe_06821144",
+        "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-01T22:48:05Z",
+      "side": 1,
+      "message": "Equivalent to Promise.reject()",
+      "range": {
+        "startLine": 195,
+        "startChar": 12,
+        "endLine": 195,
+        "endChar": 62
+      },
+      "revId": "883ffd35da4eef5de207e2d425fcb57e823c1854",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9682e44_c3c1a82f",
+        "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-01T22:48:05Z",
+      "side": 1,
+      "message": "There is a helper eventToPromise() method that converts a single event occurrence to a Promise, see definition at [1] and example usage in Extensions at [2].\n\nUp to you on whether you\u0027d like to leverage that to avoid manually keeping track of the firedLoadError boolean, calling setTimeout, and wrapping it in a promise manually.\n\n[1] https://cs.chromium.org/chromium/src/chrome/test/data/webui/settings/test_util.js?$\u0026l\u003d40\n[2] https://cs.chromium.org/chromium/src/chrome/test/data/webui/extensions/toggle_row_test.js?l\u003d23",
+      "revId": "883ffd35da4eef5de207e2d425fcb57e823c1854",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
