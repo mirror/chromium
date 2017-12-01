@@ -22,6 +22,30 @@
       "revId": "d4daeec2df4a7dd19ae0ea21c65467195327227e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b132dce_1e3d651d",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_ui_updater_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-12-01T17:51:12Z",
+      "side": 1,
+      "message": "I\u0027m not sure what you mean by this comment.  All other designated initializers (including |-init|) are NS_UNAVAILABLE.  It doesn\u0027t ever make sense for the animator to be created without a start progress in practice.  This is just created with a start progress of 0 as an arbitrary value, as the actual animator isn\u0027t used in this test except for through an equality test below.  I\u0027ve added a comment stating that this is a dummy value.",
+      "parentUuid": "0d1b626e_38377b7f",
+      "range": {
+        "startLine": 84,
+        "startChar": 43,
+        "endLine": 84,
+        "endChar": 64
+      },
+      "revId": "d4daeec2df4a7dd19ae0ea21c65467195327227e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
