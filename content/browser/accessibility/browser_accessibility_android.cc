@@ -12,6 +12,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "content/app/strings/grit/content_strings.h"
+#include "content/browser/accessibility/accessibility_tree_formatter_blink.h"
 #include "content/browser/accessibility/browser_accessibility_manager_android.h"
 #include "content/common/accessibility_messages.h"
 #include "content/public/common/content_client.h"
@@ -174,9 +175,15 @@ bool BrowserAccessibilityAndroid::IsChecked() const {
 }
 
 bool BrowserAccessibilityAndroid::IsClickable() const {
-  // If it has a custom default action verb, it's definitely clickable.
-  if (HasIntAttribute(ui::AX_ATTR_DEFAULT_ACTION_VERB))
+  // If it has a custom default action verb except for
+  // AX_DEFAULT_ACTION_VERB_CLICK_ANCESTOR, it's definitely clickable.
+  // AX_DEFAULT_ACTION_VERB_CLICK_ANCESTOR is used when an element with a click
+  // listener is present in its ancestry chain.
+  if (HasIntAttribute(ui::AX_ATTR_DEFAULT_ACTION_VERB) &&
+      (GetIntAttribute(ui::AX_ATTR_DEFAULT_ACTION_VERB) !=
+       ui::AX_DEFAULT_ACTION_VERB_CLICK_ANCESTOR)) {
     return true;
+  }
 
   // Otherwise return true if it's focusable, but skip web areas and iframes.
   if (IsIframe() || (GetRole() == ui::AX_ROLE_ROOT_WEB_AREA))
