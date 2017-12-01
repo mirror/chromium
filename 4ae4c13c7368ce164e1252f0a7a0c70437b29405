@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9084906b_66842371",
+        "filename": "chrome/browser/vr/model/color_scheme.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-12-01T20:14:17Z",
+      "side": 1,
+      "message": "It would only be beneficial once you move elements to Suggestion so you can just bind one color struct to suggestion element. Currently, it doesn\u0027t worth it. So no problem with land it as it is.",
+      "parentUuid": "a94f058c_1656a543",
+      "revId": "4ae4c13c7368ce164e1252f0a7a0c70437b29405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26ca1687_c20df569",
         "filename": "chrome/browser/vr/ui_scene_constants.h",
         "patchSetId": 2
