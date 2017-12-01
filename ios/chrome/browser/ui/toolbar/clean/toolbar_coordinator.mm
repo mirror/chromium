@@ -525,13 +525,14 @@
   // There's no Toolbar expanding on iPad.
   if (IsIPadIdiom())
     return;
-  NSTimeInterval duration = animated ? ios::material::kDuration1 : 0;
-
-  UIViewPropertyAnimator* animator = [[UIViewPropertyAnimator alloc]
-      initWithDuration:duration
-                 curve:UIViewAnimationCurveEaseInOut
-            animations:^{
-            }];
+  UIViewPropertyAnimator* animator = nil;
+  if (animated) {
+    animator = [[UIViewPropertyAnimator alloc]
+        initWithDuration:ios::material::kDuration1
+                   curve:UIViewAnimationCurveEaseInOut
+              animations:^{
+              }];
+  }
 
   [self.locationBarView addExpandOmniboxAnimations:animator];
   [self.toolbarViewController addToolbarExpansionAnimations:animator];
