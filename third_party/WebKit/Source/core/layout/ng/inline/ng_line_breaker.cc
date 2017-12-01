@@ -559,9 +559,12 @@ void NGLineBreaker::HandleOpenTag(const NGInlineItem& item,
 
   DCHECK(item.Style());
   const ComputedStyle& style = *item.Style();
-  item_result->needs_box_when_empty = false;
-  if (style.HasBorder() || style.HasPadding() ||
-      (style.HasMargin() && item.HasStartEdge())) {
+  item_result->needs_box_when_empty =
+      style.CanContainAbsolutePositionObjects() ||
+      style.CanContainFixedPositionObjects();
+  if (!item_result->needs_box_when_empty &&
+      (style.HasBorder() || style.HasPadding() ||
+       (style.HasMargin() && item.HasStartEdge()))) {
     NGBoxStrut borders = ComputeBorders(constraint_space_, style);
     NGBoxStrut paddings = ComputePadding(constraint_space_, style);
     item_result->borders_paddings_block_start =
