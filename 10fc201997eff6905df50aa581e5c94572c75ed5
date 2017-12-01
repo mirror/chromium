@@ -22,6 +22,30 @@
       "revId": "10fc201997eff6905df50aa581e5c94572c75ed5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e5c1eee_a49579b6",
+        "filename": "components/os_crypt/libsecret_task_runner_linux.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-12-01T17:33:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a338850_83cff051",
+      "range": {
+        "startLine": 17,
+        "startChar": 20,
+        "endLine": 17,
+        "endChar": 42
+      },
+      "revId": "10fc201997eff6905df50aa581e5c94572c75ed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
