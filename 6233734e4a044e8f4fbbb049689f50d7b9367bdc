@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a64ea98_d4c8910c",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-12-01T00:23:53Z",
+      "side": 1,
+      "message": "With the behavioral change in TypingCommand::InsertText(), we no longer care where the newly-inserted text begins; we only care about where it ends.",
+      "revId": "6233734e4a044e8f4fbbb049689f50d7b9367bdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

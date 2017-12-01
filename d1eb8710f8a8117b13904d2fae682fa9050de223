@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "969c0e62_dfc4a88d",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-12-01T00:23:53Z",
+      "side": 0,
+      "message": "If we go ahead with this approach, I think we can probably get rid of the select_inserted_text flag here and also the TypingCommand::kSelectInsertedText option. Would that be easier to review in a separate CL?",
+      "revId": "d1eb8710f8a8117b13904d2fae682fa9050de223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
