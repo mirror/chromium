@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "95241449_73bf0983",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-01T20:26:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0469b530_0eaf5539",
+      "revId": "8a33147dca6f92264d5af9208003adc2180db049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "311e74a8_44482caf",
         "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
         "patchSetId": 18
@@ -33,6 +51,24 @@
       "revId": "8a33147dca6f92264d5af9208003adc2180db049",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf75f595_e77ed123",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-01T20:26:39Z",
+      "side": 1,
+      "message": "\u003e Update comment since sniffing is now implemented.\n\nOops, fixed!",
+      "parentUuid": "311e74a8_44482caf",
+      "revId": "8a33147dca6f92264d5af9208003adc2180db049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7eba55ee_788de9cb",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-01T20:26:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7eca2e23_6ea8f7cd",
+      "revId": "8a33147dca6f92264d5af9208003adc2180db049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fccb9fc_a7611bd2",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 18
@@ -67,6 +121,24 @@
       "revId": "8a33147dca6f92264d5af9208003adc2180db049",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5f8fadf_e99d3858",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-01T20:26:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fccb9fc_a7611bd2",
+      "revId": "8a33147dca6f92264d5af9208003adc2180db049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "b705d2e8_4b1bd52e",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-01T20:26:39Z",
+      "side": 1,
+      "message": "\u003e The justification for empty response vs failing better suites the class description IMO.\n\nGood call-- done.",
+      "parentUuid": "29357d91_1da5e1b0",
+      "range": {
+        "startLine": 70,
+        "startChar": 38,
+        "endLine": 70,
+        "endChar": 77
+      },
+      "revId": "8a33147dca6f92264d5af9208003adc2180db049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb1a8abd_cccfdcd8",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 18
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "308023a7_f134ce27",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-01T20:26:39Z",
+      "side": 1,
+      "message": "\u003e Can you TODO(creis) or a crbug?\n\nOops, that TODO is done.  (I had been reading into next_handler_buffer_, but I added local_buffer_ instead.  Removed the TODO.",
+      "parentUuid": "cb1a8abd_cccfdcd8",
+      "revId": "8a33147dca6f92264d5af9208003adc2180db049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38fba533_07ba30dc",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 18
@@ -124,6 +238,24 @@
       "revId": "8a33147dca6f92264d5af9208003adc2180db049",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73ba0699_6797bd39",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-01T20:26:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38fba533_07ba30dc",
+      "revId": "8a33147dca6f92264d5af9208003adc2180db049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -150,6 +282,30 @@
     },
     {
       "key": {
+        "uuid": "e1fc8854_5e0aa60a",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-01T20:26:39Z",
+      "side": 1,
+      "message": "\u003e Seems like this could yield some inefficiencies. How often will this data copying occur in practice?\n\nIt should only happen for incorrectly labeled responses, like JavaScript or JSONP being returned as HTML/XML/JSON/text.  That does happen on real sites (e.g., I saw 11 cases from ads on cnn.com), but Mike West has some ongoing cross-browser discussions to try to make those cases fewer over time.",
+      "parentUuid": "6df15769_bcd1d2f8",
+      "range": {
+        "startLine": 87,
+        "startChar": 37,
+        "endLine": 87,
+        "endChar": 79
+      },
+      "revId": "8a33147dca6f92264d5af9208003adc2180db049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d736efbc_be208ece",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 18
@@ -164,6 +320,24 @@
       "revId": "8a33147dca6f92264d5af9208003adc2180db049",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34a8fb37_a8ae5186",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-01T20:26:39Z",
+      "side": 1,
+      "message": "Done.\n\nAlso, I meant to use a constant here.  Matt mentioned the buffer will be at least net::kMaxBytesToSniff * 2 due to the downstream MIME sniffer handler, so I\u0027ll check that it\u0027s at least half that (which is plenty for the simpler sniffing we\u0027re doing here).",
+      "parentUuid": "d736efbc_be208ece",
+      "revId": "8a33147dca6f92264d5af9208003adc2180db049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -184,6 +358,24 @@
     },
     {
       "key": {
+        "uuid": "ecf1ac93_4c70003e",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-01T20:26:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da3d2cc1_4509de22",
+      "revId": "8a33147dca6f92264d5af9208003adc2180db049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6a84feb_bb01e1c4",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 18
@@ -198,6 +390,24 @@
       "revId": "8a33147dca6f92264d5af9208003adc2180db049",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "622df36c_085e7224",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-01T20:26:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6a84feb_bb01e1c4",
+      "revId": "8a33147dca6f92264d5af9208003adc2180db049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -218,6 +428,24 @@
     },
     {
       "key": {
+        "uuid": "c0c432dd_9119ab02",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-01T20:26:39Z",
+      "side": 1,
+      "message": "\u003e Ouch, this method seems expensive. Origin creation, scheme scanning, IsSameSite, GURL parsing in IsValidCorsHeaderSet, etc. Ideally we could make the first couple checks the fastest / most likely to be hit.\n\u003e \n\u003e My top two picks would be CrossSiteDocumentClassifier::IsSameSite(initiator, url) or the mime checking, since the other checks seem like they would rarely fail or are more expensive.\n\nGood call.  I\u0027ve reordered it and left a comment.",
+      "parentUuid": "d6d0c2cc_686c0ae8",
+      "revId": "8a33147dca6f92264d5af9208003adc2180db049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f55d310_06b24c5e",
         "filename": "content/browser/loader/cross_site_document_resource_handler.h",
         "patchSetId": 18
@@ -232,6 +460,24 @@
       "revId": "8a33147dca6f92264d5af9208003adc2180db049",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "badf0ad7_031e2a4e",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-01T20:26:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f55d310_06b24c5e",
+      "revId": "8a33147dca6f92264d5af9208003adc2180db049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -252,6 +498,24 @@
     },
     {
       "key": {
+        "uuid": "5e82e66b_30536ec6",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-01T20:26:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bbb54c0_c9d707be",
+      "revId": "8a33147dca6f92264d5af9208003adc2180db049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8cd15eb_61d43b67",
         "filename": "content/browser/loader/cross_site_document_resource_handler.h",
         "patchSetId": 18
@@ -266,6 +530,24 @@
       "revId": "8a33147dca6f92264d5af9208003adc2180db049",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79453f78_54731373",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-01T20:26:39Z",
+      "side": 1,
+      "message": "\u003e Can it be const? That would be nice.\n\nNo, we set several members like canonical_mime_type_ and no_sniff_ here, so we can use them while sniffing later.",
+      "parentUuid": "c8cd15eb_61d43b67",
+      "revId": "8a33147dca6f92264d5af9208003adc2180db049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -286,6 +568,24 @@
     },
     {
       "key": {
+        "uuid": "90baa59f_eb2f92e8",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-01T20:26:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63b412e6_65fb42fd",
+      "revId": "8a33147dca6f92264d5af9208003adc2180db049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc28adc6_f6e9bda5",
         "filename": "content/browser/loader/cross_site_document_resource_handler.h",
         "patchSetId": 18
@@ -297,6 +597,41 @@
       "writtenOn": "2017-12-01T14:39:09Z",
       "side": 1,
       "message": "Set in OnResponseStarted and should only be read afterwards.",
+      "revId": "8a33147dca6f92264d5af9208003adc2180db049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4c95d70_c29670f2",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-01T20:26:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc28adc6_f6e9bda5",
+      "revId": "8a33147dca6f92264d5af9208003adc2180db049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "004ef6fc_4f4a6a03",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/cross-origin-script-window-onerror.html",
+        "patchSetId": 18
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-01T20:26:39Z",
+      "side": 1,
+      "message": "Turns out we don\u0027t need this or the flag-specific expectations anymore, since the text file below is no longer blocked after I added content sniffing.  (It doesn\u0027t look like HTML, XML, or JSON.)",
       "revId": "8a33147dca6f92264d5af9208003adc2180db049",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -317,6 +652,24 @@
       "revId": "8a33147dca6f92264d5af9208003adc2180db049",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16d0a524_2ffa30aa",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-01T20:26:39Z",
+      "side": 1,
+      "message": "\u003e Could you please write comments about in what situation we need to set RequestorOrigin here and why.\n\nDone!  (Thanks to Nick for helping to write it.)",
+      "parentUuid": "735e8f20_47feda9b",
+      "revId": "8a33147dca6f92264d5af9208003adc2180db049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
