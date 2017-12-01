@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "641d8115_2b84ef60",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_delegate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-01T22:24:23Z",
+      "side": 1,
+      "message": "Doesn\u0027t this leak the delegate on failure?  It seems like delegate should be in a unique pointer from the start, no?",
+      "revId": "fa33c245537e86a23d205c35578f0456501c9b60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3174f8bd_015780a6",
+        "filename": "chrome/browser/vr/ui_renderer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-01T22:24:23Z",
+      "side": 1,
+      "message": "Can this check state of face culling and restore it?  The random enabling/disabling strewn around isn\u0027t your fault, but it\u0027s scary.",
+      "revId": "fa33c245537e86a23d205c35578f0456501c9b60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
