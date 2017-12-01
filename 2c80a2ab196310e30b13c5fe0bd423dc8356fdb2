@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "2ef6845b_65f2d89d",
+        "filename": "components/storage_monitor/storage_monitor_chromeos.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-01T16:07:08Z",
+      "side": 1,
+      "message": "I wonder if the AddFixedStorageDisk() call in CheckExistingMountPoints() is redundant. I suppose we should keep remove for parity, even if it does not end up doing too much useful work.",
+      "parentUuid": "f6c1ed84_9a1542a8",
+      "revId": "2c80a2ab196310e30b13c5fe0bd423dc8356fdb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94b09654_a9f17d30",
         "filename": "components/storage_monitor/storage_monitor_chromeos.cc",
         "patchSetId": 8
