@@ -87,6 +87,24 @@
       "revId": "0694618bafd0c4832a1155be5d5b343d339d9a39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1bd069d_e5527437",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-01T11:57:50Z",
+      "side": 1,
+      "message": "Sorry, did you mean that we include the IsGridItem() check above, or do we save it for a later CL?",
+      "parentUuid": "f07f7447_302cb536",
+      "revId": "0694618bafd0c4832a1155be5d5b343d339d9a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
