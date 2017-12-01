@@ -54,4 +54,20 @@ void URLLoaderFactoryGetter::InitializeOnIOThread(
   blob_factory_.Bind(std::move(blob_factory));
 }
 
+void URLLoaderFactoryGetter::SetTestNetworkFactoryOnIOThread(
+    mojom::URLLoaderFactory* test_factory) {
+  DCHECK(!test_factory_ || !test_factory);
+  test_factory_ = test_factory;
+}
+
+WebPackageLoaderManager* URLLoaderFactoryGetter::GetWebPackageLoaderManager() {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  LOG(ERROR) << "URLLoaderFactoryGetter::GetWebPackageLoaderManager";
+  if (!webpackage_loader_manager_) {
+    webpackage_loader_manager_ =
+        base::MakeUnique<WebPackageLoaderManager>(this);
+  }
+  return webpackage_loader_manager_.get();
+}
+
 }  // namespace content

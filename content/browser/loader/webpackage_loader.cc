@@ -16,6 +16,7 @@
 #include "net/url_request/redirect_info.h"
 #include "net/url_request/url_request_job.h"
 #include "services/network/public/cpp/url_loader_completion_status.h"
+#include "url/gurl.h"
 
 namespace content {
 
@@ -73,6 +74,7 @@ class MainResourceLoader : public mojom::URLLoader {
       : loader_client_(std::move(client)),
         reader_(std::move(reader)),
         weak_factory_(this) {
+    // LOG(ERROR) << "MainResourceLoader " << this << " " << url;
     if (url.path() == "/") {
       // No particular path is specified; try to render the first resource.
       reader_->GetFirstResource(
@@ -96,6 +98,8 @@ class MainResourceLoader : public mojom::URLLoader {
   void OnFoundResource(int error_code,
                        const ResourceResponseHead& response_head,
                        mojo::ScopedDataPipeConsumerHandle body) {
+    // LOG(ERROR) << "MainResourceLoader::OnFoundResource " << this
+    //            << " error_code: " << error_code;
     if (error_code != net::OK) {
       loader_client_->OnComplete(
           network::URLLoaderCompletionStatus(error_code));
@@ -106,6 +110,8 @@ class MainResourceLoader : public mojom::URLLoader {
     loader_client_->OnStartLoadingResponseBody(std::move(body));
   }
   void OnComplete(const network::URLLoaderCompletionStatus& status) {
+    // LOG(ERROR) << "MainResourceLoader::OnComplete " << this
+    //           << " error_code: " << status.error_code;
     loader_client_->OnComplete(status);
   }
 
@@ -143,6 +149,8 @@ class SubresourceLoader : public mojom::URLLoader {
         reader_(std::move(reader)),
         loader_factory_getter_(std::move(loader_factory_getter)),
         weak_factory_(this) {
+    // LOG(ERROR) << "SubresourceeLoader " << this << " " <<
+    // resource_request.url;
     binding_.set_connection_error_handler(base::Bind(
         &SubresourceLoader::OnConnectionError, base::Unretained(this)));
     reader_->GetResource(resource_request,
@@ -166,6 +174,8 @@ class SubresourceLoader : public mojom::URLLoader {
       const ResourceResponseHead& response_head,
       mojo::ScopedDataPipeConsumerHandle body) {
     if (error_code == net::ERR_FILE_NOT_FOUND) {
+      // LOG(ERROR) << "SubresourceLoader NotFound allow_fallback: "
+      //           << allow_fallback << " url: " << resource_request.url;
       if (allow_fallback) {
         // Let the NetworkFactory handle it.
         loader_factory_getter_->GetNetworkFactory()->CreateLoaderAndStart(
@@ -186,15 +196,21 @@ class SubresourceLoader : public mojom::URLLoader {
       return;
     }
     if (error_code != net::OK) {
+      // LOG(ERROR) << "SubresourceLoader OnFoundResource  error_code: "
+      //            << error_code << " url: " << resource_request.url;
       loader_client_->OnComplete(
           network::URLLoaderCompletionStatus(error_code));
       return;
     }
+    // LOG(ERROR) << "SubresourceLoader OnFoundResource " << this
+    //            << " url: " << resource_request.url;
     loader_client_->OnReceiveResponse(response_head, base::nullopt,
                                       nullptr /* download_file */);
     loader_client_->OnStartLoadingResponseBody(std::move(body));
   }
   void OnComplete(const network::URLLoaderCompletionStatus& status) {
+    // LOG(ERROR) << "SubresourceLoader OnComplete " << this << " "
+    //            << status.error_code;
     loader_client_->OnComplete(status);
   }
   void OnConnectionError() {
@@ -319,6 +335,7 @@ void WebPackageRequestHandler::MaybeCreateLoader(
   base::FilePath::StringType extension =
       base::FilePath(resource_request.url.PathForRequest()).Extension();
   if (extension != FILE_PATH_LITERAL(".wpk")) {
+    LOG(ERROR) << "--- Not WPK " << resource_request.url;
     // Shouldn't be a web package, let it go.
     std::move(callback).Run(StartLoaderCallback());
     return;
@@ -326,9 +343,15 @@ void WebPackageRequestHandler::MaybeCreateLoader(
   DCHECK(!webpackage_loader_);
   DCHECK(loader_factory_getter_);
   LOG(ERROR) << "** Creating WebPackgaeLoader";
-  webpackage_loader_ = std::make_unique<WebPackageLoader>(
-      this, std::move(callback), resource_request,
-      loader_factory_getter_.get());
+
+  webpackage_loader_ =
+      loader_factory_getter_->GetWebPackageLoaderManager()->TakeMatchingLoader(
+          resource_request);
+  if (!webpackage_loader_) {
+    webpackage_loader_ = std::make_unique<WebPackageLoader>(
+        resource_request, loader_factory_getter_.get());
+  }
+  webpackage_loader_->AttachToRequestHandler(this, std::move(callback));
 }
 
 base::Optional<SubresourceLoaderParams>
@@ -362,22 +385,21 @@ void WebPackageRequestHandler::CreateMainResourceLoader(
     mojom::URLLoaderClientPtr loader_client) {
   DCHECK(webpackage_reader_);
   LOG(ERROR) << "** Creating WebPackgaeLoader's MainResourceLoader";
+  url::Replacements<char> remove_query;
+  remove_query.ClearQuery();
   mojo::MakeStrongBinding(
       std::make_unique<MainResourceLoader>(
-          webpackage_start_url_, webpackage_reader_, std::move(loader_client)),
+          webpackage_start_url_.ReplaceComponents(remove_query),
+          webpackage_reader_, std::move(loader_client)),
       std::move(loader_request));
 }
 
 //----------------------------------------------------------------------------
 
 WebPackageLoader::WebPackageLoader(
-    WebPackageRequestHandler* request_handler,
-    LoaderCallback loader_callback,
     const ResourceRequest& resource_request,
     URLLoaderFactoryGetter* loader_factory_getter)
-    : request_handler_(request_handler),
-      loader_callback_(std::move(loader_callback)),
-      webpackage_request_(resource_request),
+    : webpackage_request_(resource_request),
       network_client_binding_(this),
       weak_factory_(this) {
   // Start the network loading.
@@ -400,17 +422,31 @@ void WebPackageLoader::DetachFromRequestHandler() {
   MaybeDestruct();
 }
 
+void WebPackageLoader::AttachToRequestHandler(
+    WebPackageRequestHandler* request_handler,
+    LoaderCallback loader_callback) {
+  request_handler_ = request_handler;
+  loader_callback_ = std::move(loader_callback);
+  MaybeRunLoaderCallback();
+}
+
 void WebPackageLoader::MaybeDestruct() {
   if (finished_reading_package_ && detached_from_request_handler_)
     base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
 }
 
-void WebPackageLoader::OnFoundManifest(const WebPackageManifest& manifest) {
-  DCHECK(loader_callback_);
-  webpackage_start_url_ = manifest.start_url;
+void WebPackageLoader::MaybeRunLoaderCallback() {
+  if (!loader_callback_ || !webpackage_start_url_.is_valid())
+    return;
   std::move(loader_callback_)
       .Run(base::BindOnce(&WebPackageLoader::StartRedirectResponse,
                           weak_factory_.GetWeakPtr()));
+}
+
+void WebPackageLoader::OnFoundManifest(const WebPackageManifest& manifest) {
+  DCHECK(manifest.start_url.is_valid());
+  webpackage_start_url_ = manifest.start_url;
+  MaybeRunLoaderCallback();
 }
 
 void WebPackageLoader::OnFoundRequest(const ResourceRequest& request) {
