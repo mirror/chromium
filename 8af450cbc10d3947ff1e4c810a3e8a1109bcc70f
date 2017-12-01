@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f7df63f_0c29fa60",
+        "filename": "base/files/file.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-01T16:17:35Z",
+      "side": 1,
+      "message": "nit: There is no style guide guidance on this, but I tend to use |foo| for variables and not class names. e.g. one wouldn\u0027t write |content::NotificationObserver| in comments. OTOH, \"File\" and \"Error\" can be confusing. How about using base::File::Error and base::File here?",
+      "range": {
+        "startLine": 338,
+        "startChar": 13,
+        "endLine": 338,
+        "endChar": 20
+      },
+      "revId": "8af450cbc10d3947ff1e4c810a3e8a1109bcc70f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
