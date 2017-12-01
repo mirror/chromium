@@ -200,9 +200,9 @@ SyncerError ModelTypeWorker::ProcessGetUpdatesResponse(
 }
 
 void ModelTypeWorker::ApplyUpdates(StatusController* status) {
-  DCHECK(thread_checker_.CalledOnValidThread());
+  CHECK(thread_checker_.CalledOnValidThread());
   // This should only ever be called after one PassiveApplyUpdates.
-  DCHECK(model_type_state_.initial_sync_done());
+  CHECK(model_type_state_.initial_sync_done());
   // Download cycle is done, pass all updates to the processor.
   ApplyPendingUpdates();
 }
