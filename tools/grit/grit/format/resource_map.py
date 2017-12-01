@@ -108,24 +108,19 @@ const size_t %(map_name)sSize = arraysize(%(map_name)s);
 
 
 def _FormatSource(get_key, root, lang, output_dir):
-  from grit.format import rc_header
   from grit.node import include, structure, message
+  id_map = root.GetIdMap()
   yield _FormatSourceHeader(root, output_dir)
-  tids = rc_header.GetIds(root)
   seen = set()
-  active_descendants = [item for item in root.ActiveDescendants()]
-  output_all_resource_defines = root.ShouldOutputAllResourceDefines()
-  for item in root:
+  for item in root.ActiveDescendants():
     if not item.IsResourceMapSource():
       continue
     key = get_key(item)
     tid = item.attrs['name']
-    if tid not in tids or key in seen:
+    if tid not in id_map or key in seen:
       continue
-    if item.GeneratesResourceMapEntry(output_all_resource_defines,
-                                      item in active_descendants):
-      seen.add(key)
-      yield '  {"%s", %s},\n' % (key, tid)
+    seen.add(key)
+    yield '  {"%s", %s},\n' % (key, tid)
   yield _FormatSourceFooter(root)
 
 
