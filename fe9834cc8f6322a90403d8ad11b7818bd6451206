@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a93a709_010786b5",
+        "filename": "styleguide/c++/c++-dos-and-donts.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-01T16:28:27Z",
+      "side": 1,
+      "message": "Would some of these stand out better formatted using *** promo or similar? (see https://gerrit.googlesource.com/gitiles/+/HEAD/Documentation/markdown.md#notification_aside_promotion-blocks)",
+      "revId": "fe9834cc8f6322a90403d8ad11b7818bd6451206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b812a629_c174befc",
+        "filename": "styleguide/c++/c++-dos-and-donts.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-01T16:28:27Z",
+      "side": 1,
+      "message": "This ends up on one line in the formatted output. Consider using a multi-line code block instead?",
+      "revId": "fe9834cc8f6322a90403d8ad11b7818bd6451206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf57c873_bbb4b54f",
+        "filename": "styleguide/c++/c++-dos-and-donts.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-01T16:28:27Z",
+      "side": 1,
+      "message": "also formatted weirdly in gitiles, as a consequence of indentation (fix here and elsewhere)",
+      "revId": "fe9834cc8f6322a90403d8ad11b7818bd6451206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a406821_1ee873da",
+        "filename": "styleguide/c++/c++-dos-and-donts.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-01T16:28:27Z",
+      "side": 1,
+      "message": "This ends up formatted weirdly, please fix:\nhttps://chromium.googlesource.com/chromium/src/+/fe9834cc8f6322a90403d8ad11b7818bd6451206/styleguide/c++/c++-dos-and-donts.md",
+      "revId": "fe9834cc8f6322a90403d8ad11b7818bd6451206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b38405e_d5600a5e",
+        "filename": "styleguide/c++/c++-dos-and-donts.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-01T16:28:27Z",
+      "side": 1,
+      "message": "Why the **?",
+      "revId": "fe9834cc8f6322a90403d8ad11b7818bd6451206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0de877a_364c3511",
+        "filename": "styleguide/c++/c++-dos-and-donts.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-01T16:28:27Z",
+      "side": 1,
+      "message": "extra backtick after \u003d causes `default` not to be correctly formatted",
+      "revId": "fe9834cc8f6322a90403d8ad11b7818bd6451206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
