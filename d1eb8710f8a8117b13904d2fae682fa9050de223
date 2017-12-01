@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "0440f35c_be3e3c0f",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-12-01T20:04:21Z",
+      "side": 0,
+      "message": "Xiaocheng: I think my explanation was missing a step. The bug only occurs on incremental insertion. That\u0027s why the test case needs the step of setting the composition to \"Hello\" before we set it to \"Hello\\n\". Without that first step, the test case will pass even without this CL.\n\nUpon doing an incremental insertion of \"Hello\\n\", we go through this loop and call InsertTextRunWithoutNewlines() passing the string \"Hello\" and telling it *not* to select the newly-inserted text. When we call AdjustSelectionAfterIncrementalInsertion() (which, based on yosin@\u0027s comments, sounds like we should probably refactor) a few lines down from here, it does a check \"CompositionType() \u003d\u003d kTextCompositionUpdate\" and then selects the newly-inserted text. Then later, when we call InsertParagraphSeparator(), we overwrite \"Hello\" (since it\u0027s selected) with a pair of \\n characters.\n\nMy fix is basically to change AdjustSelectionAfterIncrementalInsertion() so that it never selects the text (I think it\u0027s still necessary though; I\u0027m changing it to set a collapsed selection instead), which allows us to insert multiple runs of text without clobbering the selected text, and also select it all at the end.",
+      "revId": "d1eb8710f8a8117b13904d2fae682fa9050de223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "969c0e62_dfc4a88d",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 1
