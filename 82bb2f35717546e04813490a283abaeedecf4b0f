@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "e9ad7846_11633ae1",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 956,
+      "author": {
+        "id": 1228924
+      },
+      "writtenOn": "2017-12-01T15:28:40Z",
+      "side": 1,
+      "message": "This is the config that I\u0027m testing against in the unit tests",
+      "parentUuid": "4c6d161a_2a9376f3",
+      "revId": "82bb2f35717546e04813490a283abaeedecf4b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37bf8d34_b6234540",
         "filename": "net/dns/host_resolver_impl.cc",
         "patchSetId": 6
