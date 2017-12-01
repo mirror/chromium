@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a46170fd_3bcd5a13",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-01T20:08:40Z",
+      "side": 1,
+      "message": "optional: would be nice if you used a different name for the exp_observers to make it more obvious, especially when two lines above this you have the same variable name with a different type, which isn\u0027t helped by auto.",
+      "range": {
+        "startLine": 527,
+        "startChar": 13,
+        "endLine": 527,
+        "endChar": 21
+      },
+      "revId": "647a29be4f9d6f926d9f51846ddf6312dfc2e00a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
