@@ -22,5 +22,11 @@ def AugmentOptionsForLoadingMetrics(tbm_options):
   # necessary to compute time-to-interactive.
   cat_filter.AddIncludedCategory('toplevel')
 
+  # "network" is necessary to capture network events for TTCI.
+  cat_filter.AddDisabledByDefault('disabled-by-default-network')
+
+  # Needed by TTI
+  cat_filter.AddIncludedCategory('loader')
+
   tbm_options.AddTimelineBasedMetric('loadingMetric')
   return tbm_options
