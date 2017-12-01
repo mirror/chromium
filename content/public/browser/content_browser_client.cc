@@ -594,4 +594,8 @@ bool ContentBrowserClient::ShouldOverrideUrlLoading(
 }
 #endif
 
+void ContentBrowserClient::PictureInPicture(RenderFrameHost* frame_host) {
+  LOG(ERROR) << "ContentBrowserClient::PictureInPicture";
+}
+
 }  // namespace content

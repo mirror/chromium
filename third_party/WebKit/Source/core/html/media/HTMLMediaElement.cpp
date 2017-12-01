@@ -2524,6 +2524,14 @@ double HTMLMediaElement::EffectiveMediaVolume() const {
   return volume_;
 }
 
+void HTMLMediaElement::pictureInPicture() {
+  LOG(ERROR) << "HTMLMediaElement::pictureInPicture";
+
+  // DOES NOT EXIST BEFORE PLAYER LOAD. PLS PRESS PLAY.
+  if (GetWebMediaPlayer())
+    GetWebMediaPlayer()->PictureInPicture();
+}
+
 // The spec says to fire periodic timeupdate events (those sent while playing)
 // every "15 to 250ms", we choose the slowest frequency
 static const double kMaxTimeupdateEventFrequency = 0.25;

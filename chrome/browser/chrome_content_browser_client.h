@@ -385,6 +385,8 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
       const GURL& frame_url,
       NonNetworkURLLoaderFactoryMap* factories) override;
 
+  void PictureInPicture(content::RenderFrameHost* frame_host) override;
+
  protected:
   static bool HandleWebUI(GURL* url, content::BrowserContext* browser_context);
   static bool HandleWebUIReverse(GURL* url,

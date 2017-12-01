@@ -974,6 +974,8 @@ class CONTENT_EXPORT ContentBrowserClient {
                                         bool is_main_frame,
                                         ui::PageTransition transition);
 #endif
+
+  virtual void PictureInPicture(RenderFrameHost* frame_host);
 };
 
 }  // namespace content

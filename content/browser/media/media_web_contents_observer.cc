@@ -11,6 +11,7 @@
 #include "content/browser/media/audio_stream_monitor.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/common/media/media_player_delegate_messages.h"
+#include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
 #include "ipc/ipc_message_macros.h"
@@ -110,6 +111,8 @@ bool MediaWebContentsObserver::OnMessageReceived(
                         OnMediaPlaying)
     IPC_MESSAGE_HANDLER(MediaPlayerDelegateHostMsg_OnMutedStatusChanged,
                         OnMediaMutedStatusChanged)
+    IPC_MESSAGE_HANDLER(MediaPlayerDelegateHostMsg_OnPictureInPicture,
+                        OnPictureInPicture)
     IPC_MESSAGE_HANDLER(
         MediaPlayerDelegateHostMsg_OnMediaEffectivelyFullscreenChanged,
         OnMediaEffectivelyFullscreenChanged)
@@ -334,6 +337,19 @@ void MediaWebContentsObserver::OnMediaMutedStatusChanged(
     bool muted) {
   const MediaPlayerId id(render_frame_host, delegate_id);
   web_contents_impl()->MediaMutedStatusChanged(id, muted);
+}
+
+void MediaWebContentsObserver::OnPictureInPicture(
+    RenderFrameHost* render_frame_host) {
+  LOG(ERROR) << "MediaWebContentsObserver::OnPictureInPicture";
+
+  ContentBrowserClient* browser_client = GetContentClient()->browser();
+  if (browser_client)
+    LOG(ERROR) << "browser client";
+  else
+    LOG(ERROR) << "no browser client";
+
+  browser_client->PictureInPicture(render_frame_host);
 }
 
 void MediaWebContentsObserver::AddMediaPlayerEntry(

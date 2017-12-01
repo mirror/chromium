@@ -63,6 +63,7 @@
 #include "chrome/browser/page_load_metrics/page_load_metrics_util.h"
 #include "chrome/browser/password_manager/chrome_password_manager_client.h"
 #include "chrome/browser/permissions/permission_context_base.h"
+#include "chrome/browser/picture_in_picture/picture_in_picture_window_controller.h"
 #include "chrome/browser/platform_util.h"
 #include "chrome/browser/plugins/pdf_iframe_navigation_throttle.h"
 #include "chrome/browser/prerender/prerender_final_status.h"
@@ -836,6 +837,7 @@ GetSystemRequestContextOnUIThread() {
 
 ChromeContentBrowserClient::ChromeContentBrowserClient()
     : weak_factory_(this) {
+  LOG(ERROR) << "ChromeContentBrowserClient::ChromeContentBrowserClient";
 #if BUILDFLAG(ENABLE_PLUGINS)
   for (size_t i = 0; i < arraysize(kPredefinedAllowedDevChannelOrigins); ++i)
     allowed_dev_channel_origins_.insert(kPredefinedAllowedDevChannelOrigins[i]);
@@ -862,6 +864,7 @@ ChromeContentBrowserClient::ChromeContentBrowserClient()
 }
 
 ChromeContentBrowserClient::~ChromeContentBrowserClient() {
+  LOG(ERROR) << "ChromeContentBrowserClient::~ChromeContentBrowserClient";
   for (int i = static_cast<int>(extra_parts_.size()) - 1; i >= 0; --i)
     delete extra_parts_[i];
   extra_parts_.clear();
@@ -3773,4 +3776,21 @@ ChromeContentBrowserClient::GetSafeBrowsingUrlCheckerDelegate() {
   }
 
   return safe_browsing_url_checker_delegate_.get();
+}
+
+void ChromeContentBrowserClient::PictureInPicture(
+    content::RenderFrameHost* frame_host) {
+  LOG(ERROR) << "ChromeContentBrowserClient::PictureInPicture";
+
+  WebContents* web_contents = WebContents::FromRenderFrameHost(frame_host);
+
+  if (!web_contents) {
+    LOG(ERROR) << "no web contents";
+    NOTREACHED();
+    return;
+  }
+
+  PictureInPictureWindowController* window_controller =
+      PictureInPictureWindowController::GetOrCreateForWebContents(web_contents);
+  window_controller->Show();
 }
