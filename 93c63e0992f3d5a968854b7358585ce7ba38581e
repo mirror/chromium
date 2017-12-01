@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a381fe61_6697f1e4",
+        "filename": "chrome/browser/ui/find_bar/find_bar_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-01T13:49:56Z",
+      "side": 1,
+      "message": "nit: Keep consistency? (nullptr vs NULL)",
+      "range": {
+        "startLine": 98,
+        "startChar": 63,
+        "endLine": 98,
+        "endChar": 67
+      },
+      "revId": "93c63e0992f3d5a968854b7358585ce7ba38581e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bb1a71c_45710476",
+        "filename": "chrome/test/base/ui_test_utils.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-01T13:49:56Z",
+      "side": 1,
+      "message": "I seem to recall problems in the past with using DCHECKs in test code... Am I misremembering?",
+      "range": {
+        "startLine": 578,
+        "startChar": 2,
+        "endLine": 578,
+        "endChar": 8
+      },
+      "revId": "93c63e0992f3d5a968854b7358585ce7ba38581e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
