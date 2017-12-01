@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2f211d2_44ecd5f5",
+        "filename": "ui/keyboard/notification_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-12-01T06:32:15Z",
+      "side": 1,
+      "message": "nit: Please add the braces if the body has \u003e1 lines.",
+      "range": {
+        "startLine": 62,
+        "startChar": 40,
+        "endLine": 62,
+        "endChar": 43
+      },
+      "revId": "2780b6e2c4d9de8332c50d7c4c92f3ee11ad9db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6b8d8db_5a95e8dd",
+        "filename": "ui/keyboard/notification_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-12-01T06:32:15Z",
+      "side": 1,
+      "message": "nit: You can use rect.IsEmpty() here.",
+      "range": {
+        "startLine": 97,
+        "startChar": 6,
+        "endLine": 97,
+        "endChar": 45
+      },
+      "revId": "2780b6e2c4d9de8332c50d7c4c92f3ee11ad9db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ce5b815_e0c6f56f",
+        "filename": "ui/keyboard/notification_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-12-01T06:32:15Z",
+      "side": 1,
+      "message": "nit: Can you add a comment about what kind of notifications are sent by this method?",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 25
+      },
+      "revId": "2780b6e2c4d9de8332c50d7c4c92f3ee11ad9db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
