@@ -46,6 +46,9 @@ class PartnerBookmarksReader {
   void PartnerBookmarksCreationComplete(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj);
+  void FaviconServerFetchingComplete(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& obj);
 
  private:
   // These values are persisted to logs. Entries should not be renumbered and
@@ -64,6 +67,11 @@ class PartnerBookmarksReader {
     // Request sent out and a connection error occurred (no valid HTTP response
     // received).
     FAILURE_CONNECTION_ERROR = 4,
+    // Success fetching the favicon from the cache without reaching out to the
+    // server.
+    SUCCESS_FROM_CACHE = 5,
+    // Success fetching the favicon from server.
+    SUCCESS_FROM_SERVER = 6,
     // Boundary value for UMA.
     UMA_BOUNDARY,
   };
@@ -81,11 +89,13 @@ class PartnerBookmarksReader {
                       FaviconFetchedCallback callback);
   void GetFaviconFromCacheOrServer(const GURL& page_url,
                                    bool fallback_to_server,
+                                   bool from_server,
                                    FaviconFetchedCallback callback);
   void OnGetFaviconFromCacheFinished(
       const GURL& page_url,
       FaviconFetchedCallback callback,
       bool fallback_to_server,
+      bool from_server,
       const favicon_base::LargeIconResult& result);
   void OnGetFaviconFromServerFinished(
       const GURL& page_url,
