@@ -262,6 +262,24 @@
       "revId": "6233734e4a044e8f4fbbb049689f50d7b9367bdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a5ecfed_f5b93a05",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-12-01T21:26:14Z",
+      "side": 1,
+      "message": "This actually breaks a ton of tests if I don\u0027t do it, so I don\u0027t think I can remove it. Maybe we have some other stuff here that\u0027s not implemented correctly/as you expect?",
+      "parentUuid": "8597e0c8_2c1e80de",
+      "revId": "6233734e4a044e8f4fbbb049689f50d7b9367bdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
