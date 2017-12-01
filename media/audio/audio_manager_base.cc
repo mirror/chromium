@@ -124,24 +124,57 @@ AudioManagerBase::~AudioManagerBase() {
 void AudioManagerBase::GetAudioInputDeviceDescriptions(
     AudioDeviceDescriptions* device_descriptions) {
   CHECK(GetTaskRunner()->BelongsToCurrentThread());
-  AudioDeviceNames device_names;
-  GetAudioInputDeviceNames(&device_names);
-
-  for (const media::AudioDeviceName& name : device_names) {
-    device_descriptions->emplace_back(name.device_name, name.unique_id,
-                                      GetGroupIDInput(name.unique_id));
-  }
+  GetAudioDeviceDescriptions(device_descriptions,
+                             &AudioManagerBase::GetAudioInputDeviceNames,
+                             &AudioManagerBase::GetDefaultInputDeviceID,
+                             &AudioManagerBase::GetCommunicationsInputDeviceID,
+                             &AudioManagerBase::GetGroupIDInput);
 }
 
 void AudioManagerBase::GetAudioOutputDeviceDescriptions(
     AudioDeviceDescriptions* device_descriptions) {
   CHECK(GetTaskRunner()->BelongsToCurrentThread());
-  AudioDeviceNames device_names;
-  GetAudioOutputDeviceNames(&device_names);
+  GetAudioDeviceDescriptions(device_descriptions,
+                             &AudioManagerBase::GetAudioOutputDeviceNames,
+                             &AudioManagerBase::GetDefaultOutputDeviceID,
+                             &AudioManagerBase::GetCommunicationsOutputDeviceID,
+                             &AudioManagerBase::GetGroupIDOutput);
+}
 
-  for (const media::AudioDeviceName& name : device_names) {
-    device_descriptions->emplace_back(name.device_name, name.unique_id,
-                                      GetGroupIDOutput(name.unique_id));
+void AudioManagerBase::GetAudioDeviceDescriptions(
+    AudioDeviceDescriptions* device_descriptions,
+    void (AudioManagerBase::*get_device_names)(AudioDeviceNames*),
+    std::string (AudioManagerBase::*get_default_device_id)(),
+    std::string (AudioManagerBase::*get_communications_device_id)(),
+    std::string (AudioManagerBase::*get_group_id)(const std::string&)) {
+  CHECK(GetTaskRunner()->BelongsToCurrentThread());
+  AudioDeviceNames device_names;
+  (this->*get_device_names)(&device_names);
+  std::string real_default_device_id = (this->*get_default_device_id)();
+  std::string real_communications_device_id =
+      (this->*get_communications_device_id)();
+  std::string real_default_name;
+  std::string real_communications_name;
+
+  for (const auto& name : device_names) {
+    if (name.unique_id == real_default_device_id)
+      real_default_name = name.device_name;
+    else if (name.unique_id == real_communications_device_id)
+      real_communications_name = name.device_name;
+  }
+
+  for (const auto& name : device_names) {
+    std::string device_name = std::move(name.device_name);
+    if (AudioDeviceDescription::IsDefaultDevice(name.unique_id) &&
+        !real_default_name.empty()) {
+      device_name += " - " + real_default_name;
+    } else if (name.unique_id ==
+                   AudioDeviceDescription::kCommunicationsDeviceId &&
+               !real_communications_name.empty()) {
+      device_name += " - " + real_communications_name;
+    }
+    device_descriptions->emplace_back(device_name, name.unique_id,
+                                      (this->*get_group_id)(name.unique_id));
   }
 }
 
@@ -456,7 +489,7 @@ AudioParameters AudioManagerBase::GetInputStreamParameters(
 
 std::string AudioManagerBase::GetAssociatedOutputDeviceID(
     const std::string& input_device_id) {
-  return "";
+  return std::string();
 }
 
 std::string AudioManagerBase::GetGroupIDOutput(
@@ -481,8 +514,20 @@ std::string AudioManagerBase::GetGroupIDInput(
   return GetGroupIDOutput(output_device_id);
 }
 
+std::string AudioManagerBase::GetDefaultInputDeviceID() {
+  return std::string();
+}
+
 std::string AudioManagerBase::GetDefaultOutputDeviceID() {
-  return "";
+  return std::string();
+}
+
+std::string AudioManagerBase::GetCommunicationsInputDeviceID() {
+  return std::string();
+}
+
+std::string AudioManagerBase::GetCommunicationsOutputDeviceID() {
+  return std::string();
 }
 
 // static
