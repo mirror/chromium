@@ -5,6 +5,7 @@
 module content.mojom;
 
 import "content/common/url_loader_factory_bundle.mojom";
+import "content/common/webpackage_subresource_manager.mojom";
 import "content/public/common/url_loader.mojom";
 import "content/public/common/window_container_type.mojom";
 import "mojo/common/unguessable_token.mojom";
@@ -53,13 +54,15 @@ interface FrameNavigationControl {
   // cases, and thus shouldn't be trusted.
   // TODO(crbug.com/783506): Replace devtools navigation token with the generic
   // navigation token that can be passed from renderer to the browser.
-  CommitNavigation(URLResponseHead head,
-                   url.mojom.Url body_url,
-                   CommonNavigationParams common_params,
-                   RequestNavigationParams request_params,
-                   handle<data_pipe_consumer>? body_data,
-                   URLLoaderFactoryBundle? subresource_loader_factories,
-                   mojo.common.mojom.UnguessableToken devtools_navigation_token);
+  CommitNavigation(
+      URLResponseHead head,
+      url.mojom.Url body_url,
+      CommonNavigationParams common_params,
+      RequestNavigationParams request_params,
+      handle<data_pipe_consumer>? body_data,
+      URLLoaderFactoryBundle? subresource_loader_factories,
+      mojo.common.mojom.UnguessableToken devtools_navigation_token,
+      WebPackageSubresourceManager&? webpackage_subresource_manager);
 };
 
 // Implemented by the frame (e.g. renderer processes).

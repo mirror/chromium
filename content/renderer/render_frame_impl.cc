@@ -116,6 +116,8 @@
 #include "content/renderer/loader/request_extra_data.h"
 #include "content/renderer/loader/web_url_loader_impl.h"
 #include "content/renderer/loader/web_url_request_util.h"
+#include "content/renderer/loader/webpackage_subresource_loader.h"
+#include "content/renderer/loader/webpackage_subresource_manager_impl.h"
 #include "content/renderer/loader/weburlresponse_extradata_impl.h"
 #include "content/renderer/manifest/manifest_manager.h"
 #include "content/renderer/media/audio_device_factory.h"
@@ -784,6 +786,10 @@ class RenderFrameImpl::FrameURLLoaderFactory
   std::unique_ptr<blink::WebURLLoader> CreateURLLoader(
       const WebURLRequest& request,
       scoped_refptr<base::SingleThreadTaskRunner> task_runner) override {
+    /*
+    LOG(INFO) << "*** Creating URLLoader: "
+              << request.Url().GetString().Utf8();
+              */
     // This should not be called if the frame is detached.
     DCHECK(frame_);
     frame_->UpdatePeakMemoryStats();
@@ -1854,6 +1860,7 @@ void RenderFrameImpl::OnNavigate(
   NavigateInternal(common_params, start_params, request_params,
                    std::unique_ptr<StreamOverrideParameters>(),
                    /*subresource_loader_factories=*/base::nullopt,
+                   /*webpackage_subresource_manager_request*/nullptr,
                    /* non-plznavigate navigations are not traced */
                    base::UnguessableToken::Create());
 }
@@ -3116,7 +3123,9 @@ void RenderFrameImpl::CommitNavigation(
     const RequestNavigationParams& request_params,
     mojo::ScopedDataPipeConsumerHandle body_data,
     base::Optional<URLLoaderFactoryBundle> subresource_loader_factories,
-    const base::UnguessableToken& devtools_navigation_token) {
+    const base::UnguessableToken& devtools_navigation_token,
+    mojom::WebPackageSubresourceManagerRequest
+        webpackage_subresource_manager_request) {
   CHECK(IsBrowserSideNavigationEnabled());
   // If this was a renderer-initiated navigation (nav_entry_id == 0) from this
   // frame, but it was aborted, then ignore it.
@@ -3163,6 +3172,7 @@ void RenderFrameImpl::CommitNavigation(
   NavigateInternal(common_params, StartNavigationParams(), request_params,
                    std::move(stream_override),
                    std::move(subresource_loader_factories),
+                   std::move(webpackage_subresource_manager_request),
                    devtools_navigation_token);
 
   // Don't add code after this since NavigateInternal may have destroyed this
@@ -6269,6 +6279,8 @@ void RenderFrameImpl::NavigateInternal(
     const RequestNavigationParams& request_params,
     std::unique_ptr<StreamOverrideParameters> stream_params,
     base::Optional<URLLoaderFactoryBundle> subresource_loader_factories,
+    mojom::WebPackageSubresourceManagerRequest
+        webpackage_subresource_manager_request,
     const base::UnguessableToken& devtools_navigation_token) {
   bool browser_side_navigation = IsBrowserSideNavigationEnabled();
 
@@ -6352,8 +6364,20 @@ void RenderFrameImpl::NavigateInternal(
          !base::FeatureList::IsEnabled(features::kNetworkService) ||
          subresource_loader_factories.has_value());
 
-  if (subresource_loader_factories)
+  if (subresource_loader_factories) {
     subresource_loader_factories_ = std::move(subresource_loader_factories);
+
+    if (webpackage_subresource_manager_request.is_pending()) {
+      mojom::URLLoaderFactoryPtr factory_ptr;
+      // This is self-destruct.
+      auto* factory = new WebPackageSubresourceLoaderFactory(
+          base::MakeRefCounted<WebPackageSubresourceManagerImpl>(
+              std::move(webpackage_subresource_manager_request)),
+          GetDefaultURLLoaderFactoryGetter());
+      factory->Clone(mojo::MakeRequest(&factory_ptr));
+      subresource_loader_factories_->SetDefaultFactory(std::move(factory_ptr));
+    }
+  }
 
   // If the Network Service is enabled, by this point the frame should always
   // have subresource loader factories, even if they're from a previous (but
