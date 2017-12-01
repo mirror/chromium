@@ -544,6 +544,24 @@
     },
     {
       "key": {
+        "uuid": "bc3d30fa_3824146e",
+        "filename": "chrome/browser/chromeos/policy/login_profile_policy_provider.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-01T09:29:53Z",
+      "side": 1,
+      "message": "Hm!\nThe other option would be to wire a ProfileType enum or a bool to the LoginProfilePolicyProvider, or split into SpecialProfilePolicyProvider base and LockScreenProfilePolicyProvider + LoginProfilePolicyProvider.\n\nI don\u0027t think it\u0027s an issue though if the policy/pref is sitting around there.\nDo you think adding a comment here would be good enough?\n\nE.g.\n// Note: This policy will also be present in the lock screen app profile, but is not used there.",
+      "parentUuid": "4b8ae5bd_2f53af82",
+      "revId": "2e3526edda18b35b5b46b43812ebb81baf84d7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2fc06cab_d8d1504c",
         "filename": "chrome/browser/profiles/profile_io_data.cc",
         "patchSetId": 16
