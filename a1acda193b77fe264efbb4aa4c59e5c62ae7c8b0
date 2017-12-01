@@ -16,6 +16,24 @@
       "revId": "a1acda193b77fe264efbb4aa4c59e5c62ae7c8b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4f57002_f3668590",
+        "filename": "ui/base/test/ui_controls_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-01T17:45:48Z",
+      "side": 1,
+      "message": "I\u0027m not familiar enough with the mac side to know what the right thing is. What do we do in other similar cases?",
+      "parentUuid": "0ab1f8ef_8fe10ea1",
+      "revId": "a1acda193b77fe264efbb4aa4c59e5c62ae7c8b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
