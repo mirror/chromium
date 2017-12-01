@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4e4b157d_a40e6885",
+        "filename": "content/browser/service_worker/service_worker_fetch_event_result.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-01T01:57:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52687eab_5b4c51f0",
+      "revId": "fae7604d5d31a3944319c00fcc311c8ea550b78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82d745db_f9191f73",
         "filename": "content/browser/service_worker/service_worker_fetch_event_result.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "fae7604d5d31a3944319c00fcc311c8ea550b78e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b79f84ac_c01760e4",
+        "filename": "content/browser/service_worker/service_worker_fetch_event_result.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-01T01:57:46Z",
+      "side": 1,
+      "message": "Done. You\u0027re right, this could just be a nested type inside SWFetchDispatcher, thanks!",
+      "parentUuid": "82d745db_f9191f73",
+      "revId": "fae7604d5d31a3944319c00fcc311c8ea550b78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
