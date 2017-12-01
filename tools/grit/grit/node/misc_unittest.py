@@ -118,16 +118,21 @@ class GritNodeUnittest(unittest.TestCase):
     self.assertEquals(expected, actual)
 
   def testNonDefaultEntry(self):
-    grd = util.ParseGrdForUnittest('''
-      <messages>
-        <message name="IDS_A" desc="foo">bar</message>
-        <if expr="lang == 'fr'">
-          <message name="IDS_B" desc="foo">bar</message>
-        </if>
-      </messages>''')
-    grd.SetOutputLanguage('fr')
-    output = ''.join(rc_header.Format(grd, 'fr', '.'))
-    self.assertIn('#define IDS_A 2378\n#define IDS_B 2379', output)
+    # IDs are assigned using lang="en", so adding a message behind lang="fr"
+    # causes an exception.
+    try:
+      grd = util.ParseGrdForUnittest('''
+        <messages>
+          <message name="IDS_A" desc="foo">bar</message>
+          <if expr="lang == 'fr'">
+            <message name="IDS_B" desc="foo">bar</message>
+          </if>
+        </messages>''')
+      grd.SetOutputLanguage('fr')
+      output = ''.join(rc_header.Format(grd, 'fr', '.'))
+      self.fail('Expected exception, instead got:\n' + output)
+    except KeyError, e:
+      self.assertIn('missing an assignment', e.message)
 
   def testExplicitFirstIdOverlaps(self):
     # second first_id will overlap preexisting range
