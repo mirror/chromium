@@ -16,6 +16,24 @@
       "revId": "945645dfd52ea1eb01406f9263ff82866f3d3930",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "529e2ef5_8aba421c",
+        "filename": "components/exo/wayland/protocol/aura-shell.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-01T20:02:05Z",
+      "side": 1,
+      "message": "As we discussed offline, we could just change this to an enum and map it to https://cs.chromium.org/chromium/src/ui/base/resource/scale_factor.h?l\u003d17\u0026gs\u003dkythe%253A%252F%252Fchromium%253Flang%253Dc%25252B%25252B%253Fpath%253Dsrc%252Fui%252Fbase%252Fresource%252Fscale_factor.h%2523ScaleFactor%25253Aui%252523n%252523ct1Em6jIw2g\u0026gsn\u003dScaleFactor\u0026ct\u003dxref_usages",
+      "parentUuid": "b0457ad7_7e81a911",
+      "revId": "945645dfd52ea1eb01406f9263ff82866f3d3930",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
