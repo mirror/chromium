@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "015d5b73_7837c07c",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-01T22:42:06Z",
+      "side": 1,
+      "message": "Err, sorry for churn... I actually meant kMax. Sorry for the fail on my part \u003d(",
+      "parentUuid": "b6f90de9_8ff4a849",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 14
+      },
+      "revId": "ae7d8922ea03e610005c11e305514e5dfb839bed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad9a6a5b_bf97f442",
         "filename": "media/mojo/interfaces/cdm_proxy.mojom",
         "patchSetId": 15
@@ -119,6 +143,30 @@
       "side": 1,
       "message": "I am still working on the unit tests but this is an implementation of the proxy.\nhttps://chromium-review.googlesource.com/c/chromium/src/+/792590\nThis is also WIP plumbing by xhwang:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/786444\nmedia_options.gni has \"mojo_media_host \u003d \"gpu\"\"\n\nI\u0027ve added another bug number to the BUG line. Please see the design doc in the description as well.",
       "parentUuid": "f1b4585c_bf863e23",
+      "range": {
+        "startLine": 31,
+        "startChar": 1,
+        "endLine": 61,
+        "endChar": 47
+      },
+      "revId": "ae7d8922ea03e610005c11e305514e5dfb839bed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd96bca5_3854fd44",
+        "filename": "media/mojo/interfaces/cdm_proxy.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-01T22:42:06Z",
+      "side": 1,
+      "message": "xhwang, would it be very disruptive to just add these methods in the followup CL as needed? I think it\u0027s OK to have the structs and such for now, but once we\u0027re passing them across Mojo in a CL, it\u0027ll make it easier to do the security review.",
+      "parentUuid": "0daeea53_36a1d365",
       "range": {
         "startLine": 31,
         "startChar": 1,
