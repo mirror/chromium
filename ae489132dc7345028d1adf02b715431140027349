@@ -1,0 +1,255 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "724e4c4b_8679046c",
+        "filename": "components/arc/common/metrics.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-01T06:10:25Z",
+      "side": 1,
+      "message": "4",
+      "range": {
+        "startLine": 4,
+        "startChar": 20,
+        "endLine": 4,
+        "endChar": 21
+      },
+      "revId": "ae489132dc7345028d1adf02b715431140027349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6b9bf61_210bb724",
+        "filename": "components/arc/common/metrics.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-01T06:10:25Z",
+      "side": 1,
+      "message": "Please remove the blank line:\nhttps://google.github.io/styleguide/cppguide.html#Vertical_Whitespace",
+      "revId": "ae489132dc7345028d1adf02b715431140027349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8deff2ff_090f074f",
+        "filename": "components/arc/common/metrics.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-01T06:10:25Z",
+      "side": 1,
+      "message": "same",
+      "revId": "ae489132dc7345028d1adf02b715431140027349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07f484f5_87a3d7f7",
+        "filename": "components/arc/common/metrics.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-01T06:10:25Z",
+      "side": 1,
+      "message": "not your fault, but can you change this to \u0027Reports\u0027 too?",
+      "range": {
+        "startLine": 53,
+        "startChar": 5,
+        "endLine": 53,
+        "endChar": 11
+      },
+      "revId": "ae489132dc7345028d1adf02b715431140027349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fa2a6ca_9f8afd0f",
+        "filename": "components/arc/common/metrics.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-01T06:10:25Z",
+      "side": 1,
+      "message": "Reports",
+      "range": {
+        "startLine": 57,
+        "startChar": 5,
+        "endLine": 57,
+        "endChar": 12
+      },
+      "revId": "ae489132dc7345028d1adf02b715431140027349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7493f314_1ae76935",
+        "filename": "components/arc/common/metrics.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-01T06:10:25Z",
+      "side": 1,
+      "message": "3",
+      "range": {
+        "startLine": 58,
+        "startChar": 14,
+        "endLine": 58,
+        "endChar": 15
+      },
+      "revId": "ae489132dc7345028d1adf02b715431140027349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a115332f_f06511af",
+        "filename": "components/arc/metrics/arc_metrics_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-01T06:10:25Z",
+      "side": 1,
+      "message": "Can this be in .cc? Maybe move to .h?",
+      "revId": "ae489132dc7345028d1adf02b715431140027349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b09b4e59_a737c737",
+        "filename": "components/arc/metrics/arc_metrics_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-01T06:10:25Z",
+      "side": 1,
+      "message": "This looks like an unused function. In Chromium, we almost never submit code that is unused. Can you do either (or both) of the following?\n\n1) include your ArcSessionManager change to this CL\n\nand/or\n\n2) call the converter function from ReportNativeBridge().",
+      "revId": "ae489132dc7345028d1adf02b715431140027349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a48b0b0_99c9e45f",
+        "filename": "components/arc/metrics/arc_metrics_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-01T06:10:25Z",
+      "side": 1,
+      "message": "FYI, you could do this type of conversion with mojom\u0027s type converter, but doing so for one enum is probably overkill. For now, I\u0027m okay with this.",
+      "revId": "ae489132dc7345028d1adf02b715431140027349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f1cc53e_cd739d3b",
+        "filename": "components/arc/metrics/arc_metrics_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-01T06:10:25Z",
+      "side": 1,
+      "message": "NOTREACHED() \u003c\u003c ...;\n\nseems better in this case.",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 12
+      },
+      "revId": "ae489132dc7345028d1adf02b715431140027349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6693bb10_ad2a1bcc",
+        "filename": "components/arc/metrics/arc_metrics_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-01T06:10:25Z",
+      "side": 1,
+      "message": "Not sure if it\u0027s a good idea to initialize this with NONE. How about using base::Optional instead? That way, you can distinguish \u0027no native bridge\u0027 and \u0027the container hasn\u0027t reported native bridge type\u0027.",
+      "revId": "ae489132dc7345028d1adf02b715431140027349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64a29807_324a754f",
+        "filename": "components/arc/metrics/arc_metrics_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-01T06:10:25Z",
+      "side": 1,
+      "message": "nit: Can you add a TEST_F to arc_metrics_service_unittest.cc for this method?\n\nTo make the function testable, please also add a getter function to the class (which would probably return base::Optional\u003cMetricsNativeBridgeType\u003e).",
+      "revId": "ae489132dc7345028d1adf02b715431140027349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5772d40f_fb2cc5f4",
+        "filename": "components/arc/metrics/arc_metrics_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-01T06:10:25Z",
+      "side": 1,
+      "message": "DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);\n\nplease.",
+      "revId": "ae489132dc7345028d1adf02b715431140027349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
