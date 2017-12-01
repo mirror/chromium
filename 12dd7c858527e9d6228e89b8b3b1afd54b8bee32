@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0d8f4b16_82d5236d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-01T02:34:24Z",
+      "side": 1,
+      "message": "Rephrased.",
+      "parentUuid": "1fd0b4d0_b2d800c6",
+      "range": {
+        "startLine": 12,
+        "startChar": 57,
+        "endLine": 12,
+        "endChar": 68
+      },
+      "revId": "12dd7c858527e9d6228e89b8b3b1afd54b8bee32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a4fc7970_3db9f469",
         "filename": "third_party/WebKit/LayoutTests/fast/workers/shared-worker-dynamic-import.html",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-30T20:45:45Z",
       "side": 1,
       "message": "Worklet -\u003e Worker (same with other files)",
+      "revId": "12dd7c858527e9d6228e89b8b3b1afd54b8bee32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9509ce1d_96e04c75",
+        "filename": "third_party/WebKit/LayoutTests/fast/workers/shared-worker-dynamic-import.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-01T02:34:24Z",
+      "side": 1,
+      "message": "ahh... good catch! Done.",
+      "parentUuid": "a4fc7970_3db9f469",
       "revId": "12dd7c858527e9d6228e89b8b3b1afd54b8bee32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "e843a736_6cc59785",
+        "filename": "third_party/WebKit/LayoutTests/fast/workers/shared-worker-dynamic-import.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-01T02:34:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd5a7c05_66c7c35f",
+      "revId": "12dd7c858527e9d6228e89b8b3b1afd54b8bee32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f26bab2_485e94f5",
         "filename": "third_party/WebKit/Source/core/dom/WorkerModulatorImpl.cpp",
         "patchSetId": 2
@@ -70,6 +130,24 @@
       "writtenOn": "2017-11-30T18:04:30Z",
       "side": 1,
       "message": "Is my understanding below correct?\n- Currently there isn\u0027t any code path that can trigger this in workers, because prepare-a-script can\u0027t be triggered in workers (so returning nullptr is OK, even though the caller of Modulator::CreateModuleScriptFetcher() assumes that non-nullptr is always returned).\n- Once dynamic import support for workers is implemented, this method can be triggered via dynamic import and thus we\u0027ll need to implement this method.",
+      "revId": "12dd7c858527e9d6228e89b8b3b1afd54b8bee32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7deaf0c4_84e65b63",
+        "filename": "third_party/WebKit/Source/core/dom/WorkerModulatorImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-01T02:34:24Z",
+      "side": 1,
+      "message": "\u003e Is my understanding below correct?\n\nYes, you\u0027re right.\n\n\u003e - Currently there isn\u0027t any code path that can trigger this in workers, because prepare-a-script can\u0027t be triggered in workers (so returning nullptr is OK, even though the caller of Modulator::CreateModuleScriptFetcher() assumes that non-nullptr is always returned).\n\nYes.\n\nThere are 2 entry points of modules scripts for Workers: (1) constructing a worker with \"type\" option (i.e., new Worker(\u0027module-worker.js\u0027, {type: \u0027module\u0027})), and (2) dynamic import().\n\nFor (1), it\u0027s not implemented yet (https://crbug.com/680046). For (2), we explicitly abort it by this CL. Therefore, there is no path to trigger this function.\n\n\u003e - Once dynamic import support for workers is implemented, this method can be triggered via dynamic import and thus we\u0027ll need to implement this method.\n\nYes.",
+      "parentUuid": "2f26bab2_485e94f5",
       "revId": "12dd7c858527e9d6228e89b8b3b1afd54b8bee32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -90,6 +168,24 @@
       "revId": "12dd7c858527e9d6228e89b8b3b1afd54b8bee32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fee7831e_fe4a0433",
+        "filename": "third_party/WebKit/Source/core/dom/WorkerModulatorImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-01T02:34:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "076114bc_72ece48f",
+      "revId": "12dd7c858527e9d6228e89b8b3b1afd54b8bee32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
