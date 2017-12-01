@@ -46,6 +46,30 @@
       "revId": "09db46b369342139c1889e6dcf9eac9bb0bf87d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b42f9cc5_a145c4be",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-12-01T18:12:39Z",
+      "side": 1,
+      "message": "If we are keeping this can this first impl be this.getClass().isAssignableFrom(FirstRunActivityBase.class) and CustomTabActivity impl can override it to say true also? That way we avoid the isFirstRunActivity bit exposed in all ChromeActivity classes. (I did something similar for isCustomTab and I still kind of regret it...)",
+      "parentUuid": "a30f4327_fa1c7d92",
+      "range": {
+        "startLine": 360,
+        "startChar": 22,
+        "endLine": 360,
+        "endChar": 51
+      },
+      "revId": "09db46b369342139c1889e6dcf9eac9bb0bf87d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
