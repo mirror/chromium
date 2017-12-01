@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bc37a52_261296e6",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-truncate-long-messages.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-01T19:33:37Z",
+      "side": 1,
+      "message": "Let\u0027s add more test cases:\n\nlog(\u0027%s\u0027, longString)\nlog(longString1, longString2)\nlog(\u0027http://chromium.org %s %o text\u0027, longString, {a:1})\nlog(\u0027%o\u0027, longString)\nlog({a:1}, longString, {b:1})",
+      "revId": "a6ca0058d4214fd20704038d80e45eb144cfb228",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "304447df_dce35ad1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 1304,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-01T19:33:37Z",
+      "side": 1,
+      "message": "If it\u0027s longer than 10k, show first 5k and more button.",
+      "revId": "a6ca0058d4214fd20704038d80e45eb144cfb228",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec1dc2f5_2e5274f0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 1338,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-01T19:33:37Z",
+      "side": 1,
+      "message": "Let\u0027s have \u0027Show xxx more\u0027 and \u0027Copy\u0027 buttons.",
+      "revId": "a6ca0058d4214fd20704038d80e45eb144cfb228",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
