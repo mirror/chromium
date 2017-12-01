@@ -334,6 +334,8 @@ void RenderWidgetInputHandler::HandleInputEvent(
           gesture_event,
           event_overscroll ? event_overscroll->latest_overscroll_delta
                            : gfx::Vector2dF(),
+          event_overscroll ? event_overscroll->overscroll_behavior
+                           : cc::OverscrollBehavior(),
           processed != WebInputEventResult::kNotHandled);
     }
   }
