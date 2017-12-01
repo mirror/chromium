@@ -383,9 +383,9 @@ class ShellCloser : public RenderProcessHostObserver {
 class ObserverLogger : public RenderProcessHostObserver {
  public:
   explicit ObserverLogger(std::string* logging_string)
-      : logging_string_(logging_string), host_destroyed_(false) {}
+      : logging_string_(logging_string) {}
 
-  bool host_destroyed() { return host_destroyed_; }
+  void WaitForHostDestroyed() { run_loop_.Run(); }
 
  protected:
   // RenderProcessHostObserver:
@@ -397,11 +397,11 @@ class ObserverLogger : public RenderProcessHostObserver {
 
   void RenderProcessHostDestroyed(RenderProcessHost* host) override {
     logging_string_->append("ObserverLogger::RenderProcessHostDestroyed ");
-    host_destroyed_ = true;
+    run_loop_.Quit();
   }
 
   std::string* logging_string_;
-  bool host_destroyed_;
+  base::RunLoop run_loop_;
 };
 
 // Flaky on Android. http://crbug.com/759514.
@@ -431,10 +431,10 @@ IN_PROC_BROWSER_TEST_F(RenderProcessHostTest,
   rph->AddObserver(&observer_logger);
 
   // This will crash the render process, and start all the callbacks.
-  // We can't use NavigateToURL here since it accesses the shell() after
-  // navigating, which the shell_closer deletes.
-  NavigateToURLBlockUntilNavigationsComplete(
-      shell(), GURL(kChromeUICrashURL), 1);
+  // We can't use NavigateToURL here since the page might stop loading before
+  // the renderer crashes.
+  shell()->LoadURL(GURL(kChromeUICrashURL));
+  observer_logger.WaitForHostDestroyed();
 
   // The key here is that all the RenderProcessExited callbacks precede all the
   // RenderProcessHostDestroyed callbacks.
@@ -442,13 +442,6 @@ IN_PROC_BROWSER_TEST_F(RenderProcessHostTest,
             "ObserverLogger::RenderProcessExited "
             "ShellCloser::RenderProcessHostDestroyed "
             "ObserverLogger::RenderProcessHostDestroyed ", logging_string);
-
-  // If the test fails, and somehow the RPH is still alive somehow, at least
-  // deregister the observers so that the test fails and doesn't also crash.
-  if (!observer_logger.host_destroyed()) {
-    rph->RemoveObserver(&shell_closer);
-    rph->RemoveObserver(&observer_logger);
-  }
 }
 
 IN_PROC_BROWSER_TEST_F(RenderProcessHostTest, KillProcessOnBadMojoMessage) {

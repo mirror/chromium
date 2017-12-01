@@ -164,7 +164,7 @@ TEST_F(NavigatorTestWithBrowserSideNavigation,
   contents()->NavigateAndCommit(kUrl1);
   EXPECT_TRUE(main_test_rfh()->IsRenderFrameLive());
   main_test_rfh()->OnMessageReceived(
-      FrameHostMsg_DidStopLoading(main_test_rfh()->GetRoutingID()));
+      FrameHostMsg_DidStopLoading(main_test_rfh()->GetRoutingID(), false));
 
   // Start a renderer-initiated non-user-initiated navigation.
   process()->set_did_frame_commit_navigation(false);
@@ -213,7 +213,7 @@ TEST_F(NavigatorTestWithBrowserSideNavigation,
 
   contents()->NavigateAndCommit(kUrl1);
   main_test_rfh()->OnMessageReceived(
-      FrameHostMsg_DidStopLoading(main_test_rfh()->GetRoutingID()));
+      FrameHostMsg_DidStopLoading(main_test_rfh()->GetRoutingID(), false));
   EXPECT_TRUE(main_test_rfh()->IsRenderFrameLive());
   int32_t site_instance_id_1 = main_test_rfh()->GetSiteInstance()->GetId();
 

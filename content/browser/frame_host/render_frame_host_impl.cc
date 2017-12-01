@@ -1501,6 +1501,7 @@ void RenderFrameHostImpl::OnDidFailProvisionalLoadWithError(
         static_cast<net::Error>(params.error_code));
   }
 
+  pending_commit_ = false;
   frame_tree_node_->navigator()->DidFailProvisionalLoadWithError(this, params);
 }
 
@@ -1632,13 +1633,18 @@ void RenderFrameHostImpl::DidCommitProvisionalLoad(
       is_loading_ = true;
       frame_tree_node()->DidStartLoading(true, was_loading);
     }
-    pending_commit_ = false;
   }
 
   // Find the appropriate NavigationHandle for this navigation.
   std::unique_ptr<NavigationHandleImpl> navigation_handle =
       TakeNavigationHandleForCommit(*validated_params);
   DCHECK(navigation_handle);
+
+  // |navigation_handle_| can be still not null, but we can't be sure that the
+  // renderer is going to commit a matching navigation soon. The navigation that
+  // committed earlier (and resulted in the current DidCommitProvisionalLoad
+  // message) can cause the subsequent one(s) to be ignored.
+  pending_commit_ = false;
 
   // Update the site url if the navigation was successful and the page is not an
   // interstitial.
@@ -2715,7 +2721,7 @@ bool RenderFrameHostImpl::GetSuddenTerminationDisablerState(
   return (sudden_termination_disabler_types_enabled_ & disabler_type) != 0;
 }
 
-void RenderFrameHostImpl::OnDidStopLoading() {
+void RenderFrameHostImpl::OnDidStopLoading(bool reset_pending_commit) {
   TRACE_EVENT1("navigation", "RenderFrameHostImpl::OnDidStopLoading",
                "frame_tree_node", frame_tree_node_->frame_tree_node_id());
 
@@ -2726,6 +2732,13 @@ void RenderFrameHostImpl::OnDidStopLoading() {
   // refactored in Blink. See crbug.com/466089
   if (!is_loading_) {
     LOG(WARNING) << "OnDidStopLoading was called twice.";
+    return;
+  }
+
+  if (reset_pending_commit) {
+    pending_commit_ = false;
+  } else if (pending_commit_) {
+    DCHECK(navigation_handle_);
     return;
   }
 
@@ -3620,8 +3633,9 @@ void RenderFrameHostImpl::FailedNavigation(
 
   // An error page is expected to commit, hence why is_loading_ is set to true.
   is_loading_ = true;
-  if (navigation_handle_)
-    DCHECK_NE(net::OK, navigation_handle_->GetNetErrorCode());
+  pending_commit_ = true;
+  DCHECK(navigation_handle_);
+  DCHECK_NE(net::OK, navigation_handle_->GetNetErrorCode());
   frame_tree_node_->ResetNavigationRequest(true, true);
 }
 
@@ -3810,7 +3824,7 @@ void RenderFrameHostImpl::ResetLoadingState() {
     if (!is_active())
       is_loading_ = false;
     else
-      OnDidStopLoading();
+      OnDidStopLoading(true);
   }
 }
 
