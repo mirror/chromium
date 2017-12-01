@@ -13,6 +13,7 @@
 #include "base/base_export.h"
 #include "base/lazy_instance.h"
 #include "base/logging.h"
+#include "base/numerics/safe_math.h"
 #include "build/build_config.h"
 
 #if defined(OS_MACOSX)
@@ -31,6 +32,21 @@
 #ifndef MAP_ANONYMOUS
 #define MAP_ANONYMOUS MAP_ANON
 #endif
+
+using SafeSizeT = base::CheckedNumeric<size_t>;
+
+namespace {
+
+using SafeUintPtrT = base::CheckedNumeric<uintptr_t>;
+
+void* SaferPointerAdd(void* address, uintptr_t increment) {
+  SafeUintPtrT a = reinterpret_cast<uintptr_t>(address);
+  a += increment;
+  // TODO(crbug.com/680657): This is ugly. See if there is a better way.
+  return reinterpret_cast<void*>(static_cast<uintptr_t>(a.ValueOrDie()));
+}
+
+}  // namespace
 
 namespace base {
 
@@ -55,6 +71,9 @@ int GetAccessFlags(PageAccessibilityConfiguration page_accessibility) {
       return PROT_NONE;
   }
 }
+
+// TODO(crbug.com/680657): Break out this #ifdef stuff into _{mac,win,linux}.cc
+// files. Throughout PA, not just here.
 
 #elif defined(OS_WIN)
 
@@ -157,29 +176,33 @@ static void* TrimMapping(void* base,
                          uintptr_t align,
                          PageAccessibilityConfiguration page_accessibility,
                          bool commit) {
-  size_t pre_slack = reinterpret_cast<uintptr_t>(base) & (align - 1);
-  if (pre_slack)
-    pre_slack = align - pre_slack;
-  size_t post_slack = base_length - pre_slack - trim_length;
-  DCHECK(base_length >= trim_length || pre_slack || post_slack);
-  DCHECK(pre_slack < base_length);
-  DCHECK(post_slack < base_length);
+  SafeSizeT pre_slack = reinterpret_cast<uintptr_t>(base) & (align - 1);
+  if (pre_slack.ValueOrDie() != 0) {
+    pre_slack = align;
+    pre_slack -= pre_slack;
+  }
+  SafeSizeT post_slack = base_length;
+  post_slack -= pre_slack;
+  post_slack -= trim_length;
+  DCHECK(base_length >= trim_length || pre_slack.ValueOrDie() != 0 ||
+         post_slack.ValueOrDie() != 0);
+  // TODO(crbug.com/680657): Should these be CHECKs?
+  DCHECK(pre_slack.ValueOrDie() < base_length);
+  DCHECK(post_slack.ValueOrDie() < base_length);
   void* ret = base;
 
 #if defined(OS_POSIX)  // On POSIX we can resize the allocation run.
   (void)page_accessibility;
-  if (pre_slack) {
-    int res = munmap(base, pre_slack);
-    CHECK(!res);
-    ret = reinterpret_cast<char*>(base) + pre_slack;
+  if (pre_slack.ValueOrDie() != 0) {
+    CHECK(!munmap(base, pre_slack.ValueOrDie()));
+    ret = SaferPointerAdd(base, pre_slack.ValueOrDie());
   }
-  if (post_slack) {
-    int res = munmap(reinterpret_cast<char*>(ret) + trim_length, post_slack);
-    CHECK(!res);
+  if (post_slack.ValueOrDie() != 0) {
+    CHECK(!munmap(SaferPointerAdd(ret, trim_length), post_slack.ValueOrDie()));
   }
 #else  // On Windows we can't resize the allocation run.
-  if (pre_slack || post_slack) {
-    ret = reinterpret_cast<char*>(base) + pre_slack;
+  if (pre_slack.ValueOrDie() || post_slack.ValueOrDie()) {
+    ret = SaferPointerAdd(base, pre_slack.ValueOrDie());
     FreePages(base, base_length);
     ret = SystemAllocPages(ret, trim_length, page_accessibility, commit);
   }
@@ -206,7 +229,7 @@ void* AllocPages(void* address,
   uintptr_t align_base_mask = ~align_offset_mask;
   DCHECK(!(reinterpret_cast<uintptr_t>(address) & align_offset_mask));
 
-  // If the client passed null as the address, choose a good one.
+  // If the client passed nullptr as the address, choose a good one.
   if (!address) {
     address = GetRandomPageBase();
     address = reinterpret_cast<void*>(reinterpret_cast<uintptr_t>(address) &
@@ -223,14 +246,15 @@ void* AllocPages(void* address,
       FreePages(ret, length);
 #if defined(ARCH_CPU_32_BITS)
       address = reinterpret_cast<void*>(
-          (reinterpret_cast<uintptr_t>(ret) + align) & align_base_mask);
+          reinterpret_cast<uintptr_t>(SaferPointerAdd(ret, align)) &
+          align_base_mask);
 #endif
-    } else if (!address) {  // We know we're OOM when an unhinted allocation
-                            // fails.
+    } else if (!address) {
+      // We know we're OOM when an unhinted allocation fails.
       return nullptr;
     } else {
 #if defined(ARCH_CPU_32_BITS)
-      address = reinterpret_cast<char*>(address) + align;
+      address = SaferPointerAdd(address, align);
 #endif
     }
 
@@ -244,18 +268,20 @@ void* AllocPages(void* address,
 
   // Map a larger allocation so we can force alignment, but continue randomizing
   // only on 64-bit POSIX.
-  size_t try_length = length + (align - kPageAllocationGranularity);
-  CHECK(try_length >= length);
+  SafeSizeT try_length = length;
+  try_length += (align - kPageAllocationGranularity);
   void* ret;
 
   do {
     // Don't continue to burn cycles on mandatory hints (Windows).
     address = kHintIsAdvisory ? GetRandomPageBase() : nullptr;
-    ret = SystemAllocPages(address, try_length, page_accessibility, commit);
+    ret = SystemAllocPages(address, try_length.ValueOrDie(), page_accessibility,
+                           commit);
     // The retries are for Windows, where a race can steal our mapping on
     // resize.
-  } while (ret && (ret = TrimMapping(ret, try_length, length, align,
-                                     page_accessibility, commit)) == nullptr);
+  } while (ret &&
+           (ret = TrimMapping(ret, try_length.ValueOrDie(), length, align,
+                              page_accessibility, commit)) == nullptr);
 
   return ret;
 }
