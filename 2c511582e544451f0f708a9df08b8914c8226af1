@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "906d4059_e3ebaa46",
+        "filename": "ui/ozone/platform/x11/x11_window_ozone_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-12-01T16:48:27Z",
+      "side": 1,
+      "message": "I will have to initialize the libevent on my own then.",
+      "parentUuid": "cf56b1e4_578f0208",
+      "revId": "2c511582e544451f0f708a9df08b8914c8226af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1a23b8e_e782b460",
         "filename": "ui/ozone/platform/x11/x11_window_ozone_unittest.cc",
         "patchSetId": 11
@@ -245,6 +263,24 @@
       "revId": "2c511582e544451f0f708a9df08b8914c8226af1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "838272b3_254172e7",
+        "filename": "ui/ozone/platform/x11/x11_window_ozone_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-12-01T16:48:27Z",
+      "side": 1,
+      "message": "Do you want me to do it differently?",
+      "parentUuid": "7afcd028_9c8497a2",
+      "revId": "2c511582e544451f0f708a9df08b8914c8226af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
