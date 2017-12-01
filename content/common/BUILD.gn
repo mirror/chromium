@@ -634,7 +634,6 @@ mojom("mojo_bindings") {
     "//skia/public/interfaces",
     "//storage/common:mojo_bindings",
     "//third_party/WebKit/public:mojo_bindings",
-    "//ui/base/clipboard/mojom:mojo_bindings",
     "//ui/base/mojo:mojo_bindings",
     "//ui/gfx/geometry/mojo",
     "//ui/gfx/mojo",
