@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "157d7673_ac90d22b",
+        "filename": "chrome/browser/vr/model/color_scheme.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-12-01T16:21:36Z",
+      "side": 1,
+      "message": "would it make sense to create a struct for omnibox related color? Similar to ButtonColors above.",
+      "revId": "4ae4c13c7368ce164e1252f0a7a0c70437b29405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26ca1687_c20df569",
+        "filename": "chrome/browser/vr/ui_scene_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-12-01T16:21:36Z",
+      "side": 1,
+      "message": "does 0.104f means kSuggestionIconFieldWidth and 0.024 means  kSuggestionRightMargin? If so, perhaps use these const instead of number directly.",
+      "revId": "4ae4c13c7368ce164e1252f0a7a0c70437b29405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5ebb40f_b1e0360b",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-12-01T16:21:36Z",
+      "side": 1,
+      "message": "Is it possible to encapsulate the above scene creation in suggestion element? This can be in a separate CL if you agree.",
+      "revId": "4ae4c13c7368ce164e1252f0a7a0c70437b29405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfc7eec8_63cb14b0",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-12-01T16:21:36Z",
+      "side": 1,
+      "message": "Would it possible to add DMM suffix to all size consts in this sub tree (e.g. kOmniboxContainerWidth -\u003e kOmniboxContainerWidthDMM)? Given that we still have physical size and DMM size. And we probably want to move physical size to DMM as much as possible. So it is easier to track the process if we add DMM suffix.",
+      "revId": "4ae4c13c7368ce164e1252f0a7a0c70437b29405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
