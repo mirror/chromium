@@ -25,9 +25,7 @@ namespace autofill {
 namespace {
 
 const char* const kFieldTypes[] = {
-  "text",
-  "tel",
-  "number",
+    "text", "tel", "number",
 };
 
 }  // namespace
@@ -257,7 +255,7 @@ TEST_F(PhoneFieldTest, CountryAndCityAndPhoneNumber) {
 
     field.label = ASCIIToUTF16("Phone Number");
     field.name = ASCIIToUTF16("PhoneNumber");
-    field.max_length = 10;
+    field.max_length = 14;
     list_.push_back(
         std::make_unique<AutofillField>(field, ASCIIToUTF16("phone")));
 
