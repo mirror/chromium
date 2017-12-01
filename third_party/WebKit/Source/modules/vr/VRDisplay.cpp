@@ -512,6 +512,7 @@ void VRDisplay::BeginPresent() {
     // Presenting with external displays has to make a copy of the image
     // since the canvas may still be visible at the same time.
     present_image_needs_copy_ = true;
+    wait_for_previous_render_ = WaitPrevStrategy::NEVER;
   } else {
     if (layer_.source().IsHTMLCanvasElement()) {
       // TODO(klausw,crbug.com/698923): suppress compositor updates
@@ -660,26 +661,12 @@ void VRDisplay::submitFrame() {
     UpdateLayerBounds();
   }
 
-  // There's two types of synchronization needed for submitting frames:
-  //
-  // - Before submitting, need to wait for the previous frame to be
-  //   pulled off the transfer surface to avoid lost frames. This
-  //   is currently a compile-time option, normally we always want
-  //   to defer this wait to increase parallelism.
-  //
-  // - After submitting, need to wait for the mailbox to be consumed,
-  //   and the image object must remain alive during this time.
-  //   We keep a reference to the image so that we can defer this
-  //   wait. Here, we wait for the previous transfer to complete.
-  {
-    TRACE_EVENT0("gpu", "VRDisplay::waitForPreviousTransferToFinish");
-    while (pending_submit_frame_) {
-      if (!submit_frame_client_binding_.WaitForIncomingMethodCall()) {
-        DLOG(ERROR) << "Failed to receive SubmitFrame response";
-        break;
-      }
-    }
-  }
+  WTF::TimeDelta wait_time;
+  // Conditionally wait for the previous render to finish, to avoid losing
+  // frames in the Android Surface / GLConsumer pair. An early wait here is
+  // appropriate when using a GpuFence to separate drawing, the new frame isn't
+  // complete yet at this stage.
+  wait_time += WaitForPreviousRenderPhase(WaitPrevStrategy::BEFORE_BITMAP);
 
   TRACE_EVENT_BEGIN0("gpu", "VRDisplay::GetStaticBitmapImage");
   scoped_refptr<Image> image_ref = rendering_context_->GetStaticBitmapImage();
@@ -736,27 +723,19 @@ void VRDisplay::submitFrame() {
     static_image->EnsureMailbox(kVerifiedSyncToken);
     TRACE_EVENT_END0("gpu", "VRDisplay::EnsureMailbox");
 
+    // Conditionally wait for the previous render to finish. A late wait here
+    // attempts to overlap work in parallel with the previous frame's
+    // rendering. This is used if submitting fully rendered frames to GVR, but
+    // is susceptible to bad GPU scheduling if the new frame competes with the
+    // previous frame's incomplete rendering.
+    wait_time += WaitForPreviousRenderPhase(WaitPrevStrategy::AFTER_BITMAP);
+
     // Save a reference to the image to keep it alive until next frame,
-    // where we'll wait for the transfer to finish before overwriting
-    // it.
+    // but first wait for the transfer to finish before overwriting it.
+    // Usually this check is satisfied without waiting.
+    WaitForPreviousTransfer();
     previous_image_ = std::move(image_ref);
 
-    // Wait for the previous render to finish, to avoid losing frames in the
-    // Android Surface / GLConsumer pair. TODO(klausw): make this tunable?
-    // Other devices may have different preferences. Do this step as late
-    // as possible before SubmitFrame to ensure we can do as much work as
-    // possible in parallel with the previous frame's rendering.
-    {
-      TRACE_EVENT0("gpu", "waitForPreviousRenderToFinish");
-      while (pending_previous_frame_render_) {
-        if (!submit_frame_client_binding_.WaitForIncomingMethodCall()) {
-          DLOG(ERROR) << "Failed to receive SubmitFrame response";
-          break;
-        }
-      }
-    }
-
-    pending_previous_frame_render_ = true;
     pending_submit_frame_ = true;
 
     // Create mailbox and sync token for transfer.
@@ -767,10 +746,12 @@ void VRDisplay::submitFrame() {
 
     TRACE_EVENT_BEGIN0("gpu", "VRDisplay::SubmitFrame");
     vr_presentation_provider_->SubmitFrame(
-        vr_frame_id_, gpu::MailboxHolder(mailbox, sync_token, GL_TEXTURE_2D));
+        vr_frame_id_, gpu::MailboxHolder(mailbox, sync_token, GL_TEXTURE_2D),
+        wait_time.InSecondsF());
     TRACE_EVENT_END0("gpu", "VRDisplay::SubmitFrame");
   }
 
+  pending_previous_frame_render_ = true;
   did_submit_this_frame_ = true;
   // Reset our frame id, since anything we'd want to do (resizing/etc) can
   // no-longer happen to this frame.
@@ -793,6 +774,32 @@ void VRDisplay::OnSubmitFrameTransferred(bool success) {
 void VRDisplay::OnSubmitFrameRendered() {
   DVLOG(3) << __FUNCTION__;
   pending_previous_frame_render_ = false;
+}
+
+void VRDisplay::WaitForPreviousTransfer() {
+  TRACE_EVENT0("gpu", "VRDisplay::waitForPreviousTransferToFinish");
+  while (pending_submit_frame_) {
+    if (!submit_frame_client_binding_.WaitForIncomingMethodCall()) {
+      DLOG(ERROR) << "Failed to receive SubmitFrame response";
+      break;
+    }
+  }
+}
+
+WTF::TimeDelta VRDisplay::WaitForPreviousRenderPhase(WaitPrevStrategy context) {
+  WTF::TimeDelta elapsed;
+  if (wait_for_previous_render_ == context) {
+    TRACE_EVENT0("gpu", "waitForPreviousRenderToFinish");
+    WTF::TimeTicks start = WTF::TimeTicks::Now();
+    while (pending_previous_frame_render_) {
+      if (!submit_frame_client_binding_.WaitForIncomingMethodCall()) {
+        DLOG(ERROR) << "Failed to receive SubmitFrame response";
+        break;
+      }
+    }
+    elapsed = WTF::TimeTicks::Now() - start;
+  }
+  return elapsed;
 }
 
 Document* VRDisplay::GetDocument() {
