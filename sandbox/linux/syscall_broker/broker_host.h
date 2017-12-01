@@ -22,6 +22,7 @@ class BrokerHost {
   enum class RequestStatus { LOST_CLIENT = 0, SUCCESS, FAILURE };
 
   BrokerHost(const BrokerPolicy& broker_policy,
+             uint32_t allowed_command_mask,
              BrokerChannel::EndPoint ipc_channel);
   ~BrokerHost();
 
@@ -29,6 +30,7 @@ class BrokerHost {
 
  private:
   const BrokerPolicy& broker_policy_;
+  const uint32_t allowed_command_mask_;
   const BrokerChannel::EndPoint ipc_channel_;
 
   DISALLOW_COPY_AND_ASSIGN(BrokerHost);
