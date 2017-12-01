@@ -101,7 +101,8 @@ TEST_F('EditingTest', 'TextButNoSelectionChange', function() {
   this.runWithLoadedTree(
     function() {/*!
       <h1>Test doc</h1>
-      <input type='text' id='input' value='text1'>
+      <input role="combobox" type='text' id='input' value='text1'
+          aria-autocomplete="inline">
       <!-- We don't seem to get an event in js when the automation
            setSelection function is called, so poll for the actual change. -->
 
@@ -119,13 +120,13 @@ TEST_F('EditingTest', 'TextButNoSelectionChange', function() {
       </script>
     */},
     function(root) {
-      var input = root.find({role: RoleType.TEXT_FIELD});
+      var input = root.find({role: RoleType.TEXT_FIELD_WITH_COMBO_BOX});
       input.focus();
       mockFeedback
-          .expectSpeech('text1', 'Edit text')
-          .expectBraille('text1 ed', {startIndex: 0, endIndex: 0})
+          .expectSpeech('text1', 'Combo box')
+          .expectBraille('text1 cbo', {startIndex: 0, endIndex: 0})
           .call(input.setSelection.bind(input, 5, 5))
-          .expectBraille('text2 ed', {startIndex: 5, endIndex: 5})
+          .expectBraille('text2 cbo', {startIndex: 5, endIndex: 5})
           .expectSpeech('text2');
 
       mockFeedback.replay();
