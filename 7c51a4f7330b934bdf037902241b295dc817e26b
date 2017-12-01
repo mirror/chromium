@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a3db3a1_0b89518b",
+        "filename": "chrome/browser/chromeos/file_system_provider/extension_provider.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-12-01T01:26:52Z",
+      "side": 1,
+      "message": "Sorry missed it.\n\nNon-const reference arguments are banned by our style guide. Use pointer. I\u0027ll fix this in my CL.",
+      "range": {
+        "startLine": 64,
+        "startChar": 40,
+        "endLine": 64,
+        "endChar": 60
+      },
+      "revId": "7c51a4f7330b934bdf037902241b295dc817e26b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
