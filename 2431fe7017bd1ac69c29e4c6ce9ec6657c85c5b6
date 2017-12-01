@@ -16,6 +16,24 @@
       "revId": "2431fe7017bd1ac69c29e4c6ce9ec6657c85c5b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cac6515_42d8f40d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-12-01T18:03:49Z",
+      "side": 1,
+      "message": "I think host doesn\u0027t contain the port number (authority does), but using the Builder does look more elegant than what I am doing here. Uploaded a new patch with that.",
+      "parentUuid": "0d6ba6f3_ae0b36f6",
+      "revId": "2431fe7017bd1ac69c29e4c6ce9ec6657c85c5b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
