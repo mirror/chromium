@@ -109,6 +109,10 @@ class Service : public KeyedService,
   // items are copied.
   std::vector<ProvidedFileSystemInfo> GetProvidedFileSystemInfoList();
 
+  // Returns an immutable map of all registered providers.
+  const std::map<ProviderId, std::unique_ptr<ProviderInterface>>& GetProviders()
+      const;
+
   // Returns a provided file system with |file_system_id|, handled by
   // the extension with |provider_id|. If not found, then returns NULL.
   ProvidedFileSystemInterface* GetProvidedFileSystem(
@@ -119,16 +123,6 @@ class Service : public KeyedService,
   // |mount_point_name|. If not found, then returns NULL.
   ProvidedFileSystemInterface* GetProvidedFileSystem(
       const std::string& mount_point_name);
-
-  // Returns a list of information of all currently installed providing
-  // extensions.
-  std::vector<ProvidingExtensionInfo> GetProvidingExtensionInfoList() const;
-
-  // Fills information of the specified providing extension and returns true.
-  // If the extension is not a provider, or it doesn't exist, then false is
-  // returned.
-  bool GetProvidingExtensionInfo(const std::string& extension_id,
-                                 ProvidingExtensionInfo* result) const;
 
   // Adds and removes observers.
   void AddObserver(Observer* observer);
