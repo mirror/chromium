@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "92cf8159_4fab1fd2",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-12-01T05:16:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aad3fa0e_cb67a761",
+      "revId": "fe73282132ddfa31a58a06ecb2f0b9c4670ca6b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b98f07aa_40217e83",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
         "patchSetId": 16
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "d1ea739d_f88f5148",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-12-01T05:16:46Z",
+      "side": 1,
+      "message": "Yes, all the formatting changes in this cl are due to clang-format. There are more than appear to be caused by this cl because of older PS touching blocks that are not touched anymore, or me forgetting to revert changes for local tests before running it - let me revert those that were not touched.",
+      "parentUuid": "da338b59_c4ea043b",
+      "revId": "fe73282132ddfa31a58a06ecb2f0b9c4670ca6b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4edad809_eab8351a",
         "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
         "patchSetId": 16
@@ -68,6 +104,24 @@
       "revId": "fe73282132ddfa31a58a06ecb2f0b9c4670ca6b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5fa045b_e6352742",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-12-01T05:16:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4edad809_eab8351a",
+      "revId": "fe73282132ddfa31a58a06ecb2f0b9c4670ca6b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "f1f827f1_90fb0b8c",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler_unittest.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-12-01T05:16:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f23467f5_ea82831a",
+      "revId": "fe73282132ddfa31a58a06ecb2f0b9c4670ca6b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7250d6a4_e5c576d6",
         "filename": "ui/file_manager/file_manager/background/js/media_scanner.js",
         "patchSetId": 16
@@ -105,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "a9c39e78_57f5a959",
+        "filename": "ui/file_manager/file_manager/background/js/media_scanner.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-12-01T05:16:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7250d6a4_e5c576d6",
+      "revId": "fe73282132ddfa31a58a06ecb2f0b9c4670ca6b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75c13e93_7240ca4d",
         "filename": "ui/file_manager/file_manager/background/js/mock_drive_sync_handler.js",
         "patchSetId": 16
@@ -119,6 +209,24 @@
       "revId": "fe73282132ddfa31a58a06ecb2f0b9c4670ca6b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e56bc2c0_02e413e3",
+        "filename": "ui/file_manager/file_manager/background/js/mock_drive_sync_handler.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-12-01T05:16:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75c13e93_7240ca4d",
+      "revId": "fe73282132ddfa31a58a06ecb2f0b9c4670ca6b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
