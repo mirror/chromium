@@ -20985,6 +20985,22 @@ Called by update_gpu_driver_bug_workaround_entries.py.-->
   <int value="15" label="Negotiate Secure Server"/>
 </enum>
 
+<enum name="HttpCacheParallelWritingPattern">
+  <int value="0" label="Undefined"/>
+  <int value="1"
+      label="Create Writers. Only logged for those transactions that do not
+             have other reasons"/>
+  <int value="2" label="Joined Parallel Writing"/>
+  <int value="3" label="Could not join parallel writing due to Range Request"/>
+  <int value="4" label="Could not join parallel writing due to method not GET"/>
+  <int value="5"
+      label="Could not join parallel writing due to read-only request"/>
+  <int value="6"
+      label="Could not join parallel writing due to cache write failure"/>
+  <int value="7"
+      label="Could not join parallel writing due to caching stopped"/>
+</enum>
+
 <enum name="HttpCachePattern">
   <int value="0" label="Undefined"/>
   <int value="1" label="Not Covered"/>
