@@ -60,7 +60,8 @@ std::unique_ptr<base::DictionaryValue> PaymentResponseToDictionaryValue(
                                            : std::make_unique<base::Value>());
   result->Set(kPaymentResponseShippingAddress,
               response.shipping_address
-                  ? response.shipping_address->ToDictionaryValue()
+                  ? payments::PaymentAddressToDictionaryValue(
+                        *response.shipping_address)
                   : std::make_unique<base::Value>());
   result->SetString(kPaymentResponseShippingOption, response.shipping_option);
   result->SetString(kPaymentResponsePayerName, response.payer_name);
