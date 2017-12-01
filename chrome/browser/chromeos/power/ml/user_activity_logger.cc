@@ -118,7 +118,6 @@ void UserActivityLogger::OnIdleEventObserved(
     const IdleEventNotifier::ActivityData& activity_data) {
   idle_event_observed_ = true;
   ExtractFeatures(activity_data);
-  // TODO(renjieliu): call get open tab url function here.
 }
 
 void UserActivityLogger::OnSessionStateChanged() {
@@ -196,6 +195,7 @@ void UserActivityLogger::ExtractFeatures(
     features_.set_on_battery(
         *external_power_ == power_manager::PowerSupplyProperties::DISCONNECTED);
   }
+  logger_delegate_->UpdateOpenTabsURLs();
 }
 
 void UserActivityLogger::MaybeLogEvent(
