@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7503375_566a9133",
+        "filename": "components/previews/content/previews_io_data.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-01T19:08:43Z",
+      "side": 1,
+      "message": "See similar comment. I think you don\u0027t the \u0026\u0026 here as copy will be prevented if you call std::move on paramter you pass in from the caller.",
+      "range": {
+        "startLine": 161,
+        "startChar": 4,
+        "endLine": 161,
+        "endChar": 44
+      },
+      "revId": "2daabe90ad7d53fa719bd2c1d777485702fcec44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae8a1c22_e39ba3b3",
+        "filename": "components/previews/content/previews_io_data.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-01T19:08:43Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think you need \"\u003d {}\", and it will initialize to empty with just passed_reasons;",
+      "range": {
+        "startLine": 211,
+        "startChar": 41,
+        "endLine": 211,
+        "endChar": 55
+      },
+      "revId": "2daabe90ad7d53fa719bd2c1d777485702fcec44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
