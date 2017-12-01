@@ -52,6 +52,18 @@ std::unique_ptr<std::vector<MITMSoftwareType>> LoadMITMSoftwareList(
   return mitm_software_list;
 }
 
+std::vector<std::unique_ptr<UrgentInterstitial>> LoadUrgentInterstitialList(
+    const chrome_browser_ssl::SSLErrorAssistantConfig& proto) {
+  std::vector<std::unique_ptr<UrgentInterstitial>> urgent_interstitial_list;
+  for (const chrome_browser_ssl::UrgentInterstitial& entry :
+       proto.urgent_interstitial()) {
+    urgent_interstitial_list.push_back(
+        base::MakeUnique<UrgentInterstitial>(entry));
+  }
+
+  return urgent_interstitial_list;
+}
+
 // Reads the SSL error assistant configuration from the resource bundle.
 std::unique_ptr<chrome_browser_ssl::SSLErrorAssistantConfig>
 ReadErrorAssistantProtoFromResourceBundle() {
@@ -76,6 +88,21 @@ bool RegexMatchesAny(const std::vector<std::string>& organization_names,
   return false;
 }
 
+// Returns true if a hash in ssl_info is found in |spki_hashes|, a list of
+// hashes.
+bool MatchSSLInfoWithHashes(const net::SSLInfo& ssl_info,
+                            std::unordered_set<std::string> spki_hashes) {
+  for (const net::HashValue& hash_value : ssl_info.public_key_hashes) {
+    if (hash_value.tag != net::HASH_VALUE_SHA256)
+      continue;
+
+    if (spki_hashes.find(hash_value.ToString()) != spki_hashes.end())
+      return true;
+  }
+
+  return false;
+}
+
 }  // namespace
 
 MITMSoftwareType::MITMSoftwareType(const std::string& name,
@@ -84,6 +111,30 @@ MITMSoftwareType::MITMSoftwareType(const std::string& name,
     : name(name),
       issuer_common_name_regex(issuer_common_name_regex),
       issuer_organization_regex(issuer_organization_regex) {}
+
+UrgentInterstitial::UrgentInterstitial(
+    const chrome_browser_ssl::UrgentInterstitial& entry)
+    : spki_hashes_(std::unordered_set<std::string>()),
+      cert_error_(entry.cert_error()),
+      interstitial_type_((UrgentInterstitialPageType)entry.interstitial_type()),
+      support_url_(GURL(entry.support_url())) {
+  for (const std::string hash : entry.sha256_hash())
+    spki_hashes_.insert(hash);
+}
+
+UrgentInterstitial::~UrgentInterstitial() {}
+
+bool UrgentInterstitial::MatchCertificate(const net::SSLInfo& ssl_info) {
+  for (const net::HashValue& hash_value : ssl_info.public_key_hashes) {
+    if (hash_value.tag != net::HASH_VALUE_SHA256)
+      continue;
+
+    if (spki_hashes_.find(hash_value.ToString()) != spki_hashes_.end())
+      return true;
+  }
+
+  return false;
+}
 
 SSLErrorAssistant::SSLErrorAssistant() {}
 
@@ -99,16 +150,29 @@ bool SSLErrorAssistant::IsKnownCaptivePortalCertificate(
         LoadCaptivePortalCertHashes(*error_assistant_proto_);
   }
 
-  for (const net::HashValue& hash_value : ssl_info.public_key_hashes) {
-    if (hash_value.tag != net::HASH_VALUE_SHA256) {
-      continue;
-    }
-    if (captive_portal_spki_hashes_->find(hash_value.ToString()) !=
-        captive_portal_spki_hashes_->end()) {
-      return true;
-    }
+  return MatchSSLInfoWithHashes(ssl_info, *(captive_portal_spki_hashes_.get()));
+}
+
+UrgentInterstitial* SSLErrorAssistant::MatchUrgentInterstitial(
+    const net::SSLInfo& ssl_info) {
+  // Load the urgent interstitial data from SSL error assistant proto if it's
+  // not already loaded.
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  if (urgent_interstitial_list_.empty()) {
+    if (!error_assistant_proto_)
+      error_assistant_proto_ = ReadErrorAssistantProtoFromResourceBundle();
+
+    DCHECK(error_assistant_proto_);
+    urgent_interstitial_list_ =
+        LoadUrgentInterstitialList(*error_assistant_proto_);
   }
-  return false;
+
+  for (std::unique_ptr<UrgentInterstitial>& data : urgent_interstitial_list_) {
+    if (MatchSSLInfoWithHashes(ssl_info, data->spki_hashes()))
+      return data.get();
+  }
+
+  return nullptr;
 }
 
 const std::string SSLErrorAssistant::MatchKnownMITMSoftware(
@@ -201,12 +265,16 @@ void SSLErrorAssistant::SetErrorAssistantProto(
 
   captive_portal_spki_hashes_ =
       LoadCaptivePortalCertHashes(*error_assistant_proto_);
+
+  urgent_interstitial_list_ =
+      LoadUrgentInterstitialList(*error_assistant_proto_);
 }
 
 void SSLErrorAssistant::ResetForTesting() {
   error_assistant_proto_.reset();
   mitm_software_list_.reset();
   captive_portal_spki_hashes_.reset();
+  urgent_interstitial_list_.clear();
 }
 
 int SSLErrorAssistant::GetErrorAssistantProtoVersionIdForTesting() const {
