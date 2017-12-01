@@ -26,13 +26,15 @@ LayerTreeFrameSink::LayerTreeFrameSink(
     : context_provider_(std::move(context_provider)),
       worker_context_provider_(std::move(worker_context_provider)),
       gpu_memory_buffer_manager_(gpu_memory_buffer_manager),
-      shared_bitmap_manager_(shared_bitmap_manager) {}
+      shared_bitmap_manager_(shared_bitmap_manager),
+      weak_ptr_factory_(this) {}
 
 LayerTreeFrameSink::LayerTreeFrameSink(
     scoped_refptr<viz::VulkanContextProvider> vulkan_context_provider)
     : vulkan_context_provider_(vulkan_context_provider),
       gpu_memory_buffer_manager_(nullptr),
-      shared_bitmap_manager_(nullptr) {}
+      shared_bitmap_manager_(nullptr),
+      weak_ptr_factory_(this) {}
 
 LayerTreeFrameSink::~LayerTreeFrameSink() {
   if (client_)
@@ -42,40 +44,66 @@ LayerTreeFrameSink::~LayerTreeFrameSink() {
 bool LayerTreeFrameSink::BindToClient(LayerTreeFrameSinkClient* client) {
   DCHECK(client);
   DCHECK(!client_);
+
   client_ = client;
-  bool success = true;
+  task_runner_ = base::ThreadTaskRunnerHandle::Get();
 
-  if (context_provider_.get()) {
+  if (context_provider_) {
     auto result = context_provider_->BindToCurrentThread();
-    success = result == gpu::ContextResult::kSuccess;
-    if (success) {
-      context_provider_->AddObserver(this);
+    if (result != gpu::ContextResult::kSuccess) {
+      DetachFromClient();
+      return false;
     }
+    context_provider_->AddObserver(this);
   }
 
-  if (!success) {
-    // Destroy the viz::ContextProvider on the thread attempted to be bound.
-    context_provider_ = nullptr;
-    client_ = nullptr;
+  if (worker_context_provider_) {
+    viz::ContextProvider::ScopedContextLock lock(
+        worker_context_provider_.get());
+    if (worker_context_provider_->ContextGL()->GetGraphicsResetStatusKHR() !=
+        GL_NO_ERROR) {
+      DetachFromClient();
+      return false;
+    }
+    worker_context_provider_->AddObserver(this);
   }
 
-  return success;
+  return true;
 }
 
 void LayerTreeFrameSink::DetachFromClient() {
   DCHECK(client_);
 
-  if (context_provider_.get())
+  weak_ptr_factory_.InvalidateWeakPtrs();
+
+  if (worker_context_provider_) {
+    viz::ContextProvider::ScopedContextLock lock(
+        worker_context_provider_.get());
+    worker_context_provider_->RemoveObserver(this);
+  }
+
+  if (context_provider_)
     context_provider_->RemoveObserver(this);
 
-  // Destroy the viz::ContextProvider on the bound thread.
-  context_provider_ = nullptr;
+  // Do not release worker context provider here as this is called on the
+  // compositor thread and it must be released on the main thread. However,
+  // compositor context provider must be released here.
   client_ = nullptr;
+  task_runner_ = nullptr;
+  context_provider_ = nullptr;
 }
 
 void LayerTreeFrameSink::OnContextLost() {
   TRACE_EVENT0("cc", "LayerTreeFrameSink::OnContextLost");
-  client_->DidLoseLayerTreeFrameSink();
+  // Worker context loss notification arrives on main thread, so post it to
+  // compositor thread.
+  if (task_runner_->BelongsToCurrentThread()) {
+    client_->DidLoseLayerTreeFrameSink();
+  } else {
+    task_runner_->PostTask(FROM_HERE,
+                           base::Bind(&LayerTreeFrameSink::OnContextLost,
+                                      weak_ptr_factory_.GetWeakPtr()));
+  }
 }
 
 }  // namespace cc
