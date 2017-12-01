@@ -22,6 +22,74 @@
       "revId": "aabd893ed87cb9965a2ef5623fb385cbc0850906",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "538ae2ba_679b37fd",
+        "filename": "device/geolocation/geolocation_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-12-01T18:16:19Z",
+      "side": 1,
+      "message": "This class mentions UserDidOptIntoLocationServices() however it has been deleted here (and moved to the geolocation_provider_impl.h class). Should it remain here though?",
+      "revId": "aabd893ed87cb9965a2ef5623fb385cbc0850906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef465200_3006f869",
+        "filename": "device/geolocation/geolocation_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-12-01T18:16:19Z",
+      "side": 1,
+      "message": "nit: try -\u003e tried?",
+      "revId": "aabd893ed87cb9965a2ef5623fb385cbc0850906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a4f3651_51ea2012",
+        "filename": "device/geolocation/geolocation_provider_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-12-01T18:16:19Z",
+      "side": 1,
+      "message": "implemenation -\u003e implementation",
+      "revId": "aabd893ed87cb9965a2ef5623fb385cbc0850906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68dbe6b2_e09dab20",
+        "filename": "device/geolocation/public/interfaces/geolocation_control.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-12-01T18:16:19Z",
+      "side": 1,
+      "message": "\"global\" because there is only once provider instance for the whole browser?",
+      "revId": "aabd893ed87cb9965a2ef5623fb385cbc0850906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
