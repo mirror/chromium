@@ -243,8 +243,11 @@ bool IsInstantNTP(const content::WebContents* contents) {
   if (!contents)
     return false;
 
-  return NavEntryIsInstantNTP(contents,
-                              contents->GetController().GetVisibleEntry());
+  const content::NavigationEntry* entry =
+      contents->GetController().GetLastCommittedEntry();
+  if (!entry)
+    entry = contents->GetController().GetVisibleEntry();
+  return NavEntryIsInstantNTP(contents, entry);
 }
 
 bool NavEntryIsInstantNTP(const content::WebContents* contents,
