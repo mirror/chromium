@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4aee179a_3e7a8fde",
+        "filename": "ash/login/lock_screen_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-01T21:48:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92162086_da86c0f2",
+      "revId": "83967c14210364a6d659c375b8a0b7925f8da6a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c599d8f0_4a081be1",
         "filename": "ash/login/lock_screen_controller.h",
         "patchSetId": 3
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "65b1a705_f4bf6df4",
+        "filename": "ash/login/lock_screen_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-01T21:48:15Z",
+      "side": 1,
+      "message": "Changed to OnceCallback",
+      "parentUuid": "c599d8f0_4a081be1",
+      "range": {
+        "startLine": 77,
+        "startChar": 12,
+        "endLine": 77,
+        "endChar": 21
+      },
+      "revId": "83967c14210364a6d659c375b8a0b7925f8da6a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43176e36_4e2f9c69",
         "filename": "ash/login/lock_screen_controller.h",
         "patchSetId": 3
@@ -53,6 +95,24 @@
       "writtenOn": "2017-10-04T15:49:51Z",
       "side": 1,
       "message": "How about using pending_user_auth_.is_null() as the concurrent auth flag?",
+      "revId": "83967c14210364a6d659c375b8a0b7925f8da6a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4f0308c_a415cbe2",
+        "filename": "ash/login/lock_screen_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-01T21:48:15Z",
+      "side": 1,
+      "message": "Ah, I forgot to erase the |pending_user_auth_| member, it is deleted. Instead of capturing the lambda inside of the class it is stored in the closure passed to SystemSaltGetter::GetSystemSalt which is the |then| parameter in |OnGetSystemSalt|",
+      "parentUuid": "43176e36_4e2f9c69",
       "revId": "83967c14210364a6d659c375b8a0b7925f8da6a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
