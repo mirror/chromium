@@ -125,6 +125,7 @@ void BoxLayout::SetDefaultFlex(int default_flex) {
 }
 
 void BoxLayout::Layout(View* host) {
+  TRACE_EVENT1("views", "Box::Layout", "class", host->GetClassName());
   DCHECK_EQ(host_, host);
   gfx::Rect child_area(host->GetContentsBounds());
 
@@ -282,6 +283,7 @@ void BoxLayout::Layout(View* host) {
 }
 
 gfx::Size BoxLayout::GetPreferredSize(const View* host) const {
+  TRACE_EVENT1("views", "Box::GetPreferredSize", "class", host->GetClassName());
   DCHECK_EQ(host_, host);
   // Calculate the child views' preferred width.
   int width = 0;
@@ -517,6 +519,7 @@ void BoxLayout::InsetCrossAxis(gfx::Rect* rect,
 
 gfx::Size BoxLayout::GetPreferredSizeForChildWidth(const View* host,
                                                    int child_area_width) const {
+  TRACE_EVENT1("views", "BoxLayout::GetPreferredSizeForChildWidth", "class", host->GetClassName());
   DCHECK_EQ(host, host_);
   gfx::Rect child_area_bounds;
 
@@ -531,6 +534,7 @@ gfx::Size BoxLayout::GetPreferredSizeForChildWidth(const View* host,
       if (!child.visible())
         continue;
 
+      TRACE_EVENT1("views", "BoxLayout::GetPreferredSizeForChildWidth/HorizontalChild", "child", child.view()->GetClassName());
       gfx::Size size(child.view()->GetPreferredSize());
       if (size.IsEmpty())
         continue;
@@ -576,6 +580,7 @@ gfx::Size BoxLayout::GetPreferredSizeForChildWidth(const View* host,
       if (!child.visible())
         continue;
 
+      TRACE_EVENT1("views", "BoxLayout::GetPreferredSizeForChildWidth/VerticalChild", "child", child.view()->GetClassName());
       const ViewWrapper next(this, NextVisibleView(i));
       // Use the child area width for getting the height if the child is
       // supposed to stretch. Use its preferred size otherwise.

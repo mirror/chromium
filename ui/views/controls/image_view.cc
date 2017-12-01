@@ -42,9 +42,9 @@ void ImageView::SetImage(const gfx::ImageSkia& img) {
     return;
 
   last_painted_bitmap_pixels_ = NULL;
-  gfx::Size pref_size(GetPreferredSize());
+  const gfx::Size prior_size = GetImageSize();
   image_ = img;
-  if (pref_size != GetPreferredSize())
+  if (prior_size != GetImageSize())
     PreferredSizeChanged();
   SchedulePaint();
 }

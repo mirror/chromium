@@ -184,6 +184,7 @@ gfx::Size LabelButton::CalculatePreferredSize() const {
   if (cached_preferred_size_valid_)
     return cached_preferred_size_;
 
+  TRACE_EVENT0("views", "LabelButton::CalculatePreferredSize/Uncached");
   // Use a temporary label copy for sizing to avoid calculation side-effects.
   Label label(GetText(), {label_->font_list()});
   label.SetLineHeight(label_->line_height());
@@ -500,7 +501,6 @@ void LabelButton::SetTextInternal(const base::string16& text) {
 void LabelButton::ChildPreferredSizeChanged(View* child) {
   ResetCachedPreferredSize();
   PreferredSizeChanged();
-  Layout();
 }
 
 ui::NativeTheme::Part LabelButton::GetThemePart() const {

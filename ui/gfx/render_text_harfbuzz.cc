@@ -1249,9 +1249,11 @@ void RenderTextHarfBuzz::OnDisplayTextAttributeChanged() {
 }
 
 void RenderTextHarfBuzz::EnsureLayout() {
+  TRACE_EVENT1("ui", "RenderTextHarfBuzz:EnsureLayout", "update_layout_run_list_", update_layout_run_list_);
   EnsureLayoutRunList();
 
   if (update_display_run_list_) {
+    TRACE_EVENT0("ui", "RenderTextHarfBuzz:EnsureLayout0");
     DCHECK(text_elided());
     const base::string16& display_text = GetDisplayText();
     display_run_list_.reset(new internal::TextRunList);
@@ -1267,6 +1269,7 @@ void RenderTextHarfBuzz::EnsureLayout() {
   }
 
   if (lines().empty()) {
+    TRACE_EVENT1("ui", "RenderTextHarfBuzz:EnsureLayout2", "length", GetDisplayText().size());
     internal::TextRunList* run_list = GetRunList();
     const int height = std::max(font_list().GetHeight(), min_line_height());
     HarfBuzzLineBreaker line_breaker(
@@ -1281,6 +1284,7 @@ void RenderTextHarfBuzz::EnsureLayout() {
       line_breaker.ConstructSingleLine();
     std::vector<internal::Line> lines;
     line_breaker.FinalizeLines(&lines, &total_size_);
+    TRACE_EVENT1("ui", "RenderTextHarfBuzz:EnsureLayout3", "lines", lines.size());
     set_lines(&lines);
   }
 }

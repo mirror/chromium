@@ -503,6 +503,7 @@ void RenderText::SetElideBehavior(ElideBehavior elide_behavior) {
 
 void RenderText::SetDisplayRect(const Rect& r) {
   if (r != display_rect_) {
+    TRACE_EVENT2("ui", " RenderText::SetDisplayRect", "width", r.width(), "height", r.height());
     display_rect_ = r;
     baseline_ = kInvalidBaseline;
     cached_bounds_and_offset_valid_ = false;

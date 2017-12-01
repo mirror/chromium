@@ -321,6 +321,7 @@ void View::SetBounds(int x, int y, int width, int height) {
 }
 
 void View::SetBoundsRect(const gfx::Rect& bounds) {
+  TRACE_EVENT1("views", "View::SetBoundsRect", "class", GetClassName());
   if (bounds == bounds_) {
     if (needs_layout_) {
       needs_layout_ = false;
@@ -417,6 +418,7 @@ gfx::Rect View::GetBoundsInScreen() const {
 }
 
 gfx::Size View::GetPreferredSize() const {
+  TRACE_EVENT1("views", "View::GetPreferredSize", "class", GetClassName());
   if (preferred_size_)
     return *preferred_size_;
   return CalculatePreferredSize();
@@ -597,8 +599,6 @@ int View::GetMirroredXWithWidthInView(int x, int w) const {
 // Layout ----------------------------------------------------------------------
 
 void View::Layout() {
-  needs_layout_ = false;
-
   // If we have a layout manager, let it handle the layout for us.
   if (layout_manager_.get())
     layout_manager_->Layout(this);
@@ -613,15 +613,20 @@ void View::Layout() {
   for (auto* child : children_) {
     if (child->needs_layout_ || !layout_manager_.get()) {
       TRACE_EVENT1("views", "View::Layout", "class", child->GetClassName());
-      child->needs_layout_ = false;
       child->Layout();
+      child->needs_layout_ = false;
     }
   }
+  needs_layout_ = false;
 }
 
 void View::InvalidateLayout() {
   // Always invalidate up. This is needed to handle the case of us already being
   // valid, but not our parent.
+  if (!needs_layout_) {
+    if (GetClassName() == std::string("BubbleDialogDelegateView"))
+      DLOG(INFO) << GetClassName() << " needs layout in invalidate";
+  }
   needs_layout_ = true;
   if (parent_)
     parent_->InvalidateLayout();
@@ -871,7 +876,8 @@ void View::Paint(const PaintInfo& parent_paint_info) {
         context.IsRectInvalid(gfx::Rect(paint_info.paint_recording_size()));
   }
 
-  TRACE_EVENT1("views", "View::Paint", "class", GetClassName());
+  TRACE_EVENT2("views", "View::Paint", "class", GetClassName(), "area",
+               width() * height());
 
   // If the view is backed by a layer, it should paint with itself as the origin
   // rather than relative to its parent.
@@ -2190,6 +2196,8 @@ void View::ViewHierarchyChangedImpl(
   }
 
   ViewHierarchyChanged(details);
+  if (!details.parent->needs_layout_)
+    DLOG(INFO) << GetClassName() << " needs layout due to hei";
   details.parent->needs_layout_ = true;
 }
 
@@ -2278,8 +2286,9 @@ void View::BoundsChanged(const gfx::Rect& previous_bounds) {
   OnBoundsChanged(previous_bounds);
 
   if (needs_layout_ || previous_bounds.size() != size()) {
-    needs_layout_ = false;
+    TRACE_EVENT1("views", "View::BoundsChanged(Layout)", "class", GetClassName());
     Layout();
+    needs_layout_ = false;
   }
 
   if (GetNeedsNotificationWhenVisibleBoundsChange())

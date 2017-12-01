@@ -367,6 +367,7 @@ gfx::Size Label::GetMinimumSize() const {
 }
 
 int Label::GetHeightForWidth(int w) const {
+  TRACE_EVENT1("views", "Label::GetHeightForWidth", "width", w);
   if (!visible() && collapse_when_hidden_)
     return 0;
 
@@ -382,8 +383,16 @@ int Label::GetHeightForWidth(int w) const {
     // It would be beneficial not to cancel here, considering that some layout
     // managers invoke GetHeightForWidth() for the same width multiple times
     // and |render_text_| can cache the height.
-    render_text_->SetDisplayRect(gfx::Rect(0, 0, w, 0));
-    int string_height = render_text_->GetStringSize().height();
+    int string_height;
+    {
+      TRACE_EVENT0("views", "Label::GetHeightForWidth/SetDisplayRect");
+      render_text_->SetDisplayRect(gfx::Rect(0, 0, w, 0));
+    }
+    {
+      TRACE_EVENT0("views", "Label::GetHeightForWidth/GetStringSize");
+      string_height = render_text_->GetStringSize().height();
+    }
+
     // Cap the number of lines to |max_lines()| if multi-line and non-zero
     // |max_lines()|.
     height = multi_line() && max_lines() > 0
