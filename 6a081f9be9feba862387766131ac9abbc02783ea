@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e9a661b2_b6575c48",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-01T23:23:41Z",
+      "side": 1,
+      "message": "I was working on it for this patch. added.",
+      "parentUuid": "88a8de66_a4450251",
+      "range": {
+        "startLine": 671,
+        "startChar": 27,
+        "endLine": 671,
+        "endChar": 30
+      },
+      "revId": "6a081f9be9feba862387766131ac9abbc02783ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9321ca26_e888db6d",
         "filename": "components/offline_pages/core/offline_page_metadata_store_sql.h",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b4b1350c_eaea36ca",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-01T23:23:41Z",
+      "side": 1,
+      "message": "not sure how to actually make it work. Tests wouldn\u0027t link for me when I switched to constexpr.\nI didn\u0027t want to spend a lot of time on it in all fairness.",
+      "parentUuid": "9321ca26_e888db6d",
+      "range": {
+        "startLine": 76,
+        "startChar": 9,
+        "endLine": 76,
+        "endChar": 14
+      },
+      "revId": "6a081f9be9feba862387766131ac9abbc02783ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc347e44_8ec94199",
         "filename": "components/offline_pages/core/offline_page_metadata_store_unittest.cc",
         "patchSetId": 7
@@ -62,6 +110,24 @@
       "revId": "6a081f9be9feba862387766131ac9abbc02783ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee719972_b52b8bb9",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1157,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-01T23:23:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc347e44_8ec94199",
+      "revId": "6a081f9be9feba862387766131ac9abbc02783ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
