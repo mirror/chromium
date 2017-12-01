@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "674302e6_3751009f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-01T17:45:15Z",
+      "side": 1,
+      "message": "This still wraps badly, lines should be limited to 72 chars.",
+      "revId": "42095441d4d184a771ad49a3799299311def2856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
