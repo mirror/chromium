@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c031f4d8_37af8335",
+        "filename": "chrome/browser/resources/print_preview/new/app.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-01T02:30:32Z",
+      "side": 1,
+      "message": "Given that all dependencies are within this.settings, could we move this within \u003cprint-preview-model\u003e and expose it as a computed this.settings.otherOptionsAvaliable, or this.settings.otherOptions.available ?",
+      "revId": "2a15f067cd55f7754e65f6913ff34daa6f29ff0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
