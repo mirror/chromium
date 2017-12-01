@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e569883e_280fd36f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/RemoteObject.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-01T20:58:50Z",
+      "side": 1,
+      "message": "This is hard to understand, please extract a named variable.",
+      "revId": "e8de56cf0eee1a95fe388719cc1ff9bdaa2e11e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
