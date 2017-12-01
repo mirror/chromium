@@ -1,0 +1,19 @@
+Name: Android SDK
+URL: http://developer.android.com/sdk/index.html
+Version: 26
+  Android SDK Build-tools 26.0.0
+  Android SDK Emulator 26.0.3
+  Android SDK Extras 41.0.0
+  Android SDK Platform-tools 26.0.0
+  Android SDK Platform API 26
+  Android SDK Tools 26.0.2
+  Android SDK Sources 25
+Security Critical: no
+License: Apache Version 2.0
+
+Description:
+The Android SDK provide API libraries and developer tools necessary to
+build, test and debug for Android.
+
+Local Modifications:
+None
