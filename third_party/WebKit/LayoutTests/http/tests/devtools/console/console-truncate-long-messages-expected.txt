@@ -1,0 +1,25 @@
+Tests that console logging large messages will be truncated.
+
+Setting max length to: 20
+Setting long string visible length to: 10
+Message: 0, length: 14, "a".repeat(40)
+Message: 1, length: 12, "aaaaaaaaaa"
+Message: 2, length: 10, aaaaaaaaaa
+Message: 3, length: 21, aaaaaaaaaa bbbbbbbbbb
+Message: 4, length: 10, aaaaaaaaaa
+Message: 5, length: 12, "aaaaaaaaaa"
+Message: 6, length: 10, aaaaaaaaaa
+Message: 7, length: 28, foo aaaaaaaaaa $o bar {a: 1}
+Message: 8, length: 26, {a: 1} "aaaaaaaaaa" {b: 1}
+
+Expanding hidden texts
+Message: 0, length: 14, "a".repeat(40)
+Message: 1, length: 42, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+Message: 2, length: 40, aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+Message: 3, length: 81, aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+Message: 4, length: 40, aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+Message: 5, length: 42, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+Message: 6, length: 40, aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+Message: 7, length: 58, foo aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa $o bar {a: 1}
+Message: 8, length: 56, {a: 1} "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" {b: 1}
+
