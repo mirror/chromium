@@ -22,6 +22,30 @@
       "revId": "795c9fa98d1106ef75ce547caba18cb8feed95f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "722d129e_0137760d",
+        "filename": "gpu/config/gpu_test_config.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1247538
+      },
+      "writtenOn": "2017-12-01T05:31:25Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "8b048993_14d7954b",
+      "range": {
+        "startLine": 264,
+        "startChar": 6,
+        "endLine": 264,
+        "endChar": 30
+      },
+      "revId": "795c9fa98d1106ef75ce547caba18cb8feed95f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
