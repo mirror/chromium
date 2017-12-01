@@ -11,6 +11,7 @@
 #include "ios/chrome/browser/passwords/ios_chrome_password_manager_infobar_delegate.h"
 
 @protocol ApplicationCommands;
+@class UIViewController;
 
 namespace password_manager {
 class PasswordFormManager;
@@ -31,6 +32,7 @@ class IOSChromeUpdatePasswordInfoBarDelegate
       bool is_smart_lock_branding_enabled,
       infobars::InfoBarManager* infobar_manager,
       std::unique_ptr<password_manager::PasswordFormManager> form_to_save,
+      UIViewController* baseViewController,
       id<ApplicationCommands> dispatcher);
 
   ~IOSChromeUpdatePasswordInfoBarDelegate() override;
