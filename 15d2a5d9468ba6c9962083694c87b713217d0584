@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa64533a_016cb53d",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-01T12:46:19Z",
+      "side": 1,
+      "message": "Vaclav: I failed to declare char16 constant and remove conversion in line 76. Do you have any idea?",
+      "range": {
+        "startLine": 29,
+        "startChar": 7,
+        "endLine": 29,
+        "endChar": 24
+      },
+      "revId": "15d2a5d9468ba6c9962083694c87b713217d0584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c309bf6_9c22b265",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-01T12:46:19Z",
+      "side": 1,
+      "message": "I changed this from vector to set for faster search.",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 10
+      },
+      "revId": "15d2a5d9468ba6c9962083694c87b713217d0584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9edf4773_ead2f07c",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-01T12:46:19Z",
+      "side": 1,
+      "message": "Notice that I also changed this code.",
+      "range": {
+        "startLine": 82,
+        "startChar": 2,
+        "endLine": 82,
+        "endChar": 17
+      },
+      "revId": "15d2a5d9468ba6c9962083694c87b713217d0584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

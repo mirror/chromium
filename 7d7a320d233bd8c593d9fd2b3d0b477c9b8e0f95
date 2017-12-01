@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6fc718c7_3e2d108a",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-01T12:46:19Z",
+      "side": 1,
+      "message": "\u003e nit: It\u0027s unclear to me what is a \"regular\" string search.\n\nChanged.",
+      "parentUuid": "1b26c932_57410b37",
+      "range": {
+        "startLine": 26,
+        "startChar": 29,
+        "endLine": 26,
+        "endChar": 36
+      },
+      "revId": "7d7a320d233bd8c593d9fd2b3d0b477c9b8e0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b0b1cf2_2aae4442",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "7d7a320d233bd8c593d9fd2b3d0b477c9b8e0f95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb0ecef5_b73ed090",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-01T12:46:19Z",
+      "side": 1,
+      "message": "\u003e nit: This sentence is also a little confusing: The previous one suggests that short words are not considered, while this one does the opposite. It is also not completely clear which delimiters the comment talks about and where should the words be placed.\n\nShort words are considered, but they have special treatment. \nIf the word\u0027s length is equal or greater than kMinimumWordLength, the word is considered non-short.",
+      "parentUuid": "9b0b1cf2_2aae4442",
+      "range": {
+        "startLine": 27,
+        "startChar": 27,
+        "endLine": 28,
+        "endChar": 39
+      },
+      "revId": "7d7a320d233bd8c593d9fd2b3d0b477c9b8e0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6b8052e4_1a6b296d",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-01T12:46:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16451b6b_85d5250a",
+      "range": {
+        "startLine": 31,
+        "startChar": 38,
+        "endLine": 31,
+        "endChar": 46
+      },
+      "revId": "7d7a320d233bd8c593d9fd2b3d0b477c9b8e0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63a918a4_568c2cf9",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 10
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "101e9e75_d495f6e0",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-01T12:46:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63a918a4_568c2cf9",
+      "range": {
+        "startLine": 47,
+        "startChar": 26,
+        "endLine": 47,
+        "endChar": 31
+      },
+      "revId": "7d7a320d233bd8c593d9fd2b3d0b477c9b8e0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64da2c08_ee9599f2",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 10
@@ -114,6 +210,30 @@
       "revId": "7d7a320d233bd8c593d9fd2b3d0b477c9b8e0f95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d09b4185_ea5ef76d",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-01T12:46:19Z",
+      "side": 1,
+      "message": "\u003e While this is not a new code, I just spotted that it is a static object with a non-trivial destructor. We should make it just a const char array and construct a base::StringPiece based on that during each call.\n\nMoved the declaration out of the method.",
+      "parentUuid": "64da2c08_ee9599f2",
+      "range": {
+        "startLine": 70,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 38
+      },
+      "revId": "7d7a320d233bd8c593d9fd2b3d0b477c9b8e0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +283,54 @@
     },
     {
       "key": {
+        "uuid": "02282edd_230619f0",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-01T12:46:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "876f9adc_3fd3f7d1",
+      "range": {
+        "startLine": 86,
+        "startChar": 5,
+        "endLine": 86,
+        "endChar": 11
+      },
+      "revId": "7d7a320d233bd8c593d9fd2b3d0b477c9b8e0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a9f549e_58b5b89c",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-01T12:46:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43e76be0_64cf4002",
+      "range": {
+        "startLine": 86,
+        "startChar": 5,
+        "endLine": 86,
+        "endChar": 68
+      },
+      "revId": "7d7a320d233bd8c593d9fd2b3d0b477c9b8e0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e27a1ed_29de639a",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 10
@@ -183,6 +351,30 @@
       "revId": "7d7a320d233bd8c593d9fd2b3d0b477c9b8e0f95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da9936e4_32dd6762",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-01T12:46:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e27a1ed_29de639a",
+      "range": {
+        "startLine": 125,
+        "startChar": 9,
+        "endLine": 125,
+        "endChar": 22
+      },
+      "revId": "7d7a320d233bd8c593d9fd2b3d0b477c9b8e0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "fa9c9502_6e6d5360",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-01T12:46:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb05833a_bd91bda4",
+      "range": {
+        "startLine": 134,
+        "startChar": 28,
+        "endLine": 134,
+        "endChar": 68
+      },
+      "revId": "7d7a320d233bd8c593d9fd2b3d0b477c9b8e0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43855877_73e6bf0e",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 10
@@ -229,6 +445,30 @@
       "revId": "7d7a320d233bd8c593d9fd2b3d0b477c9b8e0f95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c031b48e_1f034556",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-01T12:46:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43855877_73e6bf0e",
+      "range": {
+        "startLine": 153,
+        "startChar": 29,
+        "endLine": 153,
+        "endChar": 50
+      },
+      "revId": "7d7a320d233bd8c593d9fd2b3d0b477c9b8e0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "9cc29a0b_788d5050",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-01T12:46:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bb284af_658236cd",
+      "range": {
+        "startLine": 189,
+        "startChar": 48,
+        "endLine": 189,
+        "endChar": 49
+      },
+      "revId": "7d7a320d233bd8c593d9fd2b3d0b477c9b8e0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec4f458d_0f5b0790",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 10
@@ -275,6 +539,30 @@
       "revId": "7d7a320d233bd8c593d9fd2b3d0b477c9b8e0f95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7baafec1_574e3d8e",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-01T12:46:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec4f458d_0f5b0790",
+      "range": {
+        "startLine": 259,
+        "startChar": 5,
+        "endLine": 260,
+        "endChar": 55
+      },
+      "revId": "7d7a320d233bd8c593d9fd2b3d0b477c9b8e0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "3d66c4f4_ab0e64b6",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-01T12:46:19Z",
+      "side": 1,
+      "message": "\u003e If the code assumes that the Form() is the same for all members of all_possible_usernames, then we should say so in a comment.\n\nTrue. I\u0027ve added a DCHECK.",
+      "parentUuid": "e40419bb_7519727b",
+      "range": {
+        "startLine": 282,
+        "startChar": 37,
+        "endLine": 282,
+        "endChar": 69
+      },
+      "revId": "7d7a320d233bd8c593d9fd2b3d0b477c9b8e0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9727bc9e_1ba231c8",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 10
@@ -324,6 +636,30 @@
     },
     {
       "key": {
+        "uuid": "4ff464fa_1cb5d56a",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-01T12:46:19Z",
+      "side": 1,
+      "message": "\u003e Currently there are three look-ups: find() and twice the operator[]().\n\u003e The code could be structured so that there is just a single std::map::insert() call, resulting in more efficient use of the map:\n\u003e \n\u003e #include \u003ctuple\u003e\n\u003e \n\u003e ...\n\u003e \n\u003e // True if the cache has no entry for |form|.\n\u003e bool cache_miss \u003d true;\n\u003e // Iterator pointing to the entry for |form| if |cache_miss| is false.\n\u003e UsernameDetectorCache::iterator form_position;\n\u003e \n\u003e if (username_detector_cache)\n\u003e   std::tie(form_position, cache_miss) \u003d username_detector_cache-\u003einsert(blink::WebInputElement());\n\u003e \n\u003e if (!username_detector_cache || cache_miss) {\n\u003e     bool username_found \u003d ...;\n\u003e     if (username_detector_cache \u0026\u0026 username_found)\n\u003e       *form_position \u003d *username_element;\n\u003e     return username_found;\n\u003e } else {\n\u003e   *username_element \u003d *form_position;\n\u003e   return !username_element-\u003eIsNull();\n\u003e }\n\nThanks Vaclav, Interesting point. Done.",
+      "parentUuid": "9727bc9e_1ba231c8",
+      "range": {
+        "startLine": 284,
+        "startChar": 6,
+        "endLine": 284,
+        "endChar": 41
+      },
+      "revId": "7d7a320d233bd8c593d9fd2b3d0b477c9b8e0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b398b3e6_196cdc1d",
         "filename": "components/autofill/content/renderer/html_based_username_detector_vocabulary.h",
         "patchSetId": 10
@@ -344,6 +680,30 @@
       "revId": "7d7a320d233bd8c593d9fd2b3d0b477c9b8e0f95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2157997_1167dea5",
+        "filename": "components/autofill/content/renderer/html_based_username_detector_vocabulary.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-01T12:46:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b398b3e6_196cdc1d",
+      "range": {
+        "startLine": 5,
+        "startChar": 10,
+        "endLine": 5,
+        "endChar": 23
+      },
+      "revId": "7d7a320d233bd8c593d9fd2b3d0b477c9b8e0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
