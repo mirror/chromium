@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d93674d4_633ab9a9",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/ifAvailable.html",
+        "patchSetId": 32
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-12-01T01:03:13Z",
+      "side": 1,
+      "message": "Is \"throws asynchronously\" clearer than \"returns a rejected promise\"? (Honest question. I don\u0027t know the answer.)",
+      "revId": "b4dc350fe417313241bb05571277798e63260683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
