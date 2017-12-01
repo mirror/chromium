@@ -598,6 +598,7 @@ chrome_java_sources = [
   "java/src/org/chromium/chrome/browser/media/router/cast/CastSession.java",
   "java/src/org/chromium/chrome/browser/media/router/cast/CastSessionImpl.java",
   "java/src/org/chromium/chrome/browser/media/router/cast/CastSessionInfo.java",
+  "java/src/org/chromium/chrome/browser/media/router/cast/ChromeCastSessionManager.java",
   "java/src/org/chromium/chrome/browser/media/router/cast/ClientRecord.java",
   "java/src/org/chromium/chrome/browser/media/router/cast/CreateRouteRequest.java",
   "java/src/org/chromium/chrome/browser/media/router/cast/DiscoveryCallback.java",
