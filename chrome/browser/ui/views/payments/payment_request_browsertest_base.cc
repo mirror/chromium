@@ -21,6 +21,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
+#include "chrome/browser/ui/views/autofill/dialog_event_observer.cc"
 #include "chrome/browser/ui/views/payments/editor_view_controller.h"
 #include "chrome/browser/ui/views/payments/payment_request_dialog_view_ids.h"
 #include "chrome/browser/ui/views/payments/validating_combobox.h"
@@ -733,40 +734,17 @@ const base::string16& PaymentRequestBrowserTestBase::GetErrorLabelForType(
   return static_cast<views::Label*>(view)->text();
 }
 
-PaymentRequestBrowserTestBase::DialogEventObserver::DialogEventObserver(
-    std::list<PaymentRequestBrowserTestBase::DialogEvent> event_sequence)
-    : events_(std::move(event_sequence)) {}
-PaymentRequestBrowserTestBase::DialogEventObserver::~DialogEventObserver() {}
-
-void PaymentRequestBrowserTestBase::DialogEventObserver::Wait() {
-  if (events_.empty())
-    return;
-
-  DCHECK(!run_loop_.running());
-  run_loop_.Run();
-}
-
-void PaymentRequestBrowserTestBase::DialogEventObserver::Observe(
-    PaymentRequestBrowserTestBase::DialogEvent event) {
-  if (events_.empty())
-    return;
-
-  DCHECK_EQ(events_.front(), event);
-  events_.pop_front();
-  // Only quit the loop if no other events are expected.
-  if (events_.empty() && run_loop_.running())
-    run_loop_.Quit();
-}
-
 void PaymentRequestBrowserTestBase::ResetEventObserver(DialogEvent event) {
   event_observer_ =
-      base::MakeUnique<DialogEventObserver>(std::list<DialogEvent>{event});
+      base::MakeUnique<autofill::DialogEventObserver<DialogEvent>>(
+          std::list<DialogEvent>{event});
 }
 
 void PaymentRequestBrowserTestBase::ResetEventObserverForSequence(
     std::list<DialogEvent> event_sequence) {
   event_observer_ =
-      base::MakeUnique<DialogEventObserver>(std::move(event_sequence));
+      base::MakeUnique<autofill::DialogEventObserver<DialogEvent>>(
+          std::move(event_sequence));
 }
 
 void PaymentRequestBrowserTestBase::WaitForObservedEvent() {

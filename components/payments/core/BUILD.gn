@@ -166,6 +166,8 @@ if (is_ios) {
       "//components/test/data/payments/can_make_payment_query_cc.js",
       "//components/test/data/payments/contact_details.js",
       "//components/test/data/payments/contact_details_and_free_shipping.js",
+      "//components/test/data/payments/credit_card_upload_done.html",
+      "//components/test/data/payments/credit_card_upload_form_address_and_cc.html",
       "//components/test/data/payments/debit.js",
       "//components/test/data/payments/dynamic_shipping.js",
       "//components/test/data/payments/email.js",
