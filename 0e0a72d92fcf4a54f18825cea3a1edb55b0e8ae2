@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5288358e_1c80f5e7",
+        "filename": "ash/display/display_move_window_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-01T16:59:36Z",
+      "side": 1,
+      "message": "you need to move the transient parent if any. TODO if you want to do it in a separate CL.",
+      "revId": "0e0a72d92fcf4a54f18825cea3a1edb55b0e8ae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92d9804a_17cb2adb",
+        "filename": "ash/wm/mru_window_tracker.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-01T16:59:36Z",
+      "side": 1,
+      "message": "nit: BuildWindowForCycleList would be better",
+      "revId": "0e0a72d92fcf4a54f18825cea3a1edb55b0e8ae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
