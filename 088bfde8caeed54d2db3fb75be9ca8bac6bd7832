@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "6487348a_e434642a",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_controller_observer_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-12-01T18:40:04Z",
+      "side": 1,
+      "message": "Sounds good, I\u0027ll rename this to FullscreenMediator.  While FullscreenController does indeed simply set up the objects that support the fullscreen feature, I don\u0027t know if we want to rename it to FullscreenCoordinator.  The coordinator pattern is something that\u0027s still relatively new to Chrome, so I think it might be good to keep that name specific to coordinating UI components for now.",
+      "parentUuid": "decc50ed_0ab346ad",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 41
+      },
+      "revId": "088bfde8caeed54d2db3fb75be9ca8bac6bd7832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9eea388_41e4eeea",
         "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_controller_observer_manager.mm",
         "patchSetId": 2
