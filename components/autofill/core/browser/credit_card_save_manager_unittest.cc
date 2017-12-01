@@ -36,6 +36,7 @@
 #include "components/autofill/core/browser/test_autofill_client.h"
 #include "components/autofill/core/browser/test_autofill_clock.h"
 #include "components/autofill/core/browser/test_autofill_driver.h"
+#include "components/autofill/core/browser/test_personal_data_manager.h"
 #include "components/autofill/core/browser/validation.h"
 #include "components/autofill/core/browser/webdata/autofill_webdata_service.h"
 #include "components/autofill/core/common/autofill_clock.h"
@@ -126,205 +127,6 @@ class TestPaymentsClient : public payments::PaymentsClient {
   payments::PaymentsClientSaveDelegate* save_delegate_;
 
   DISALLOW_COPY_AND_ASSIGN(TestPaymentsClient);
-};
-
-class TestPersonalDataManager : public PersonalDataManager {
- public:
-  TestPersonalDataManager()
-      : PersonalDataManager("en-US"),
-        num_times_save_imported_profile_called_(0) {
-    CreateTestAutofillProfiles(&web_profiles_);
-    CreateTestCreditCards(&local_credit_cards_);
-  }
-
-  using PersonalDataManager::set_database;
-  using PersonalDataManager::SetPrefService;
-
-  int num_times_save_imported_profile_called() {
-    return num_times_save_imported_profile_called_;
-  }
-
-  std::string SaveImportedProfile(const AutofillProfile& profile) override {
-    num_times_save_imported_profile_called_++;
-    AddProfile(profile);
-    return profile.guid();
-  }
-
-  AutofillProfile* GetProfileWithGUID(const char* guid) {
-    for (AutofillProfile* profile : GetProfiles()) {
-      if (!profile->guid().compare(guid))
-        return profile;
-    }
-    return nullptr;
-  }
-
-  CreditCard* GetCreditCardWithGUID(const char* guid) {
-    for (CreditCard* card : GetCreditCards()) {
-      if (!card->guid().compare(guid))
-        return card;
-    }
-    return nullptr;
-  }
-
-  void AddProfile(const AutofillProfile& profile) override {
-    std::unique_ptr<AutofillProfile> profile_ptr =
-        std::make_unique<AutofillProfile>(profile);
-    profile_ptr->set_modification_date(AutofillClock::Now());
-    web_profiles_.push_back(std::move(profile_ptr));
-  }
-
-  void AddCreditCard(const CreditCard& credit_card) override {
-    std::unique_ptr<CreditCard> local_credit_card =
-        std::make_unique<CreditCard>(credit_card);
-    local_credit_card->set_modification_date(AutofillClock::Now());
-    local_credit_cards_.push_back(std::move(local_credit_card));
-  }
-
-  void AddFullServerCreditCard(const CreditCard& credit_card) override {
-    AddServerCreditCard(credit_card);
-  }
-
-  void RecordUseOf(const AutofillDataModel& data_model) override {
-    CreditCard* credit_card = GetCreditCardWithGUID(data_model.guid().c_str());
-    if (credit_card)
-      credit_card->RecordAndLogUse();
-
-    AutofillProfile* profile = GetProfileWithGUID(data_model.guid().c_str());
-    if (profile)
-      profile->RecordAndLogUse();
-  }
-
-  void RemoveByGUID(const std::string& guid) override {
-    CreditCard* credit_card = GetCreditCardWithGUID(guid.c_str());
-    if (credit_card) {
-      local_credit_cards_.erase(
-          std::find_if(local_credit_cards_.begin(), local_credit_cards_.end(),
-                       [credit_card](const std::unique_ptr<CreditCard>& ptr) {
-                         return ptr.get() == credit_card;
-                       }));
-    }
-
-    AutofillProfile* profile = GetProfileWithGUID(guid.c_str());
-    if (profile) {
-      web_profiles_.erase(
-          std::find_if(web_profiles_.begin(), web_profiles_.end(),
-                       [profile](const std::unique_ptr<AutofillProfile>& ptr) {
-                         return ptr.get() == profile;
-                       }));
-    }
-  }
-
-  void ClearAutofillProfiles() { web_profiles_.clear(); }
-
-  void ClearCreditCards() {
-    local_credit_cards_.clear();
-    server_credit_cards_.clear();
-  }
-
-  void AddServerCreditCard(const CreditCard& credit_card) {
-    std::unique_ptr<CreditCard> server_credit_card =
-        std::make_unique<CreditCard>(credit_card);
-    server_credit_card->set_modification_date(AutofillClock::Now());
-    server_credit_cards_.push_back(std::move(server_credit_card));
-  }
-
-  // Create Elvis card with whitespace in the credit card number.
-  void CreateTestCreditCardWithWhitespace() {
-    ClearCreditCards();
-    std::unique_ptr<CreditCard> credit_card = std::make_unique<CreditCard>();
-    test::SetCreditCardInfo(credit_card.get(), "Elvis Presley",
-                            "4234 5678 9012 3456",  // Visa
-                            "04", "2999", "1");
-    credit_card->set_guid("00000000-0000-0000-0000-000000000008");
-    local_credit_cards_.push_back(std::move(credit_card));
-  }
-
-  // Create Elvis card with separator characters in the credit card number.
-  void CreateTestCreditCardWithSeparators() {
-    ClearCreditCards();
-    std::unique_ptr<CreditCard> credit_card = std::make_unique<CreditCard>();
-    test::SetCreditCardInfo(credit_card.get(), "Elvis Presley",
-                            "4234-5678-9012-3456",  // Visa
-                            "04", "2999", "1");
-    credit_card->set_guid("00000000-0000-0000-0000-000000000009");
-    local_credit_cards_.push_back(std::move(credit_card));
-  }
-
-  void CreateTestCreditCardsYearAndMonth(const char* year, const char* month) {
-    ClearCreditCards();
-    std::unique_ptr<CreditCard> credit_card = std::make_unique<CreditCard>();
-    test::SetCreditCardInfo(credit_card.get(), "Miku Hatsune",
-                            "4234567890654321",  // Visa
-                            month, year, "1");
-    credit_card->set_guid("00000000-0000-0000-0000-000000000007");
-    local_credit_cards_.push_back(std::move(credit_card));
-  }
-
-  void CreateTestExpiredCreditCard() {
-    ClearCreditCards();
-    std::unique_ptr<CreditCard> credit_card = std::make_unique<CreditCard>();
-    test::SetCreditCardInfo(credit_card.get(), "Homer Simpson",
-                            "4234567890654321",  // Visa
-                            "05", "2000", "1");
-    credit_card->set_guid("00000000-0000-0000-0000-000000000009");
-    local_credit_cards_.push_back(std::move(credit_card));
-  }
-
- private:
-  void CreateTestAutofillProfiles(
-      std::vector<std::unique_ptr<AutofillProfile>>* profiles) {
-    std::unique_ptr<AutofillProfile> profile =
-        std::make_unique<AutofillProfile>();
-    test::SetProfileInfo(profile.get(), "Elvis", "Aaron", "Presley",
-                         "theking@gmail.com", "RCA", "3734 Elvis Presley Blvd.",
-                         "Apt. 10", "Memphis", "Tennessee", "38116", "US",
-                         "12345678901");
-    profile->set_guid("00000000-0000-0000-0000-000000000001");
-    profiles->push_back(std::move(profile));
-    profile = std::make_unique<AutofillProfile>();
-    test::SetProfileInfo(profile.get(), "Charles", "Hardin", "Holley",
-                         "buddy@gmail.com", "Decca", "123 Apple St.", "unit 6",
-                         "Lubbock", "Texas", "79401", "US", "23456789012");
-    profile->set_guid("00000000-0000-0000-0000-000000000002");
-    profiles->push_back(std::move(profile));
-    profile = std::make_unique<AutofillProfile>();
-    test::SetProfileInfo(profile.get(), "", "", "", "", "", "", "", "", "", "",
-                         "", "");
-    profile->set_guid("00000000-0000-0000-0000-000000000003");
-    profiles->push_back(std::move(profile));
-  }
-
-  void CreateTestCreditCards(
-      std::vector<std::unique_ptr<CreditCard>>* credit_cards) {
-    std::unique_ptr<CreditCard> credit_card = std::make_unique<CreditCard>();
-    test::SetCreditCardInfo(credit_card.get(), "Elvis Presley",
-                            "4234567890123456",  // Visa
-                            "04", "2999", "1");
-    credit_card->set_guid("00000000-0000-0000-0000-000000000004");
-    credit_card->set_use_count(10);
-    credit_card->set_use_date(AutofillClock::Now() -
-                              base::TimeDelta::FromDays(5));
-    credit_cards->push_back(std::move(credit_card));
-
-    credit_card = std::make_unique<CreditCard>();
-    test::SetCreditCardInfo(credit_card.get(), "Buddy Holly",
-                            "5187654321098765",  // Mastercard
-                            "10", "2998", "1");
-    credit_card->set_guid("00000000-0000-0000-0000-000000000005");
-    credit_card->set_use_count(5);
-    credit_card->set_use_date(AutofillClock::Now() -
-                              base::TimeDelta::FromDays(4));
-    credit_cards->push_back(std::move(credit_card));
-
-    credit_card = std::make_unique<CreditCard>();
-    test::SetCreditCardInfo(credit_card.get(), "", "", "", "", "");
-    credit_card->set_guid("00000000-0000-0000-0000-000000000006");
-    credit_cards->push_back(std::move(credit_card));
-  }
-
-  size_t num_times_save_imported_profile_called_;
-
-  DISALLOW_COPY_AND_ASSIGN(TestPersonalDataManager);
 };
 
 class TestFormDataImporter : public FormDataImporter {
@@ -860,7 +662,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest, InvalidCreditCardNumberIsNotSaved) {
 }
 
 TEST_F(DISABLED_CreditCardSaveManagerTest, CreditCardDisabledDoesNotSave) {
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
   autofill_manager_->set_credit_card_enabled(false);
 
   // Create, fill and submit an address form in order to establish a recent
@@ -896,7 +698,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest, CreditCardDisabledDoesNotSave) {
 
 TEST_F(DISABLED_CreditCardSaveManagerTest, UploadCreditCard) {
   personal_data_.ClearCreditCards();
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
   credit_card_save_manager_->set_credit_card_upload_enabled(true);
 
   // Create, fill and submit an address form in order to establish a recent
@@ -950,7 +752,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest,
   EnableAutofillUpstreamRequestCvcIfMissingExperiment();
 
   personal_data_.ClearCreditCards();
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
   credit_card_save_manager_->set_credit_card_upload_enabled(true);
 
   // Create, fill and submit an address form in order to establish a recent
@@ -983,7 +785,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest,
 
 TEST_F(DISABLED_CreditCardSaveManagerTest, UploadCreditCardAndSaveCopy) {
   personal_data_.ClearCreditCards();
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
   credit_card_save_manager_->set_credit_card_upload_enabled(true);
 
   const char* const server_id = "InstrumentData:1234";
@@ -1033,7 +835,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest, UploadCreditCardAndSaveCopy) {
 }
 
 TEST_F(DISABLED_CreditCardSaveManagerTest, UploadCreditCard_FeatureNotEnabled) {
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
   credit_card_save_manager_->set_credit_card_upload_enabled(false);
 
   // Create, fill and submit an address form in order to establish a recent
@@ -1068,7 +870,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest, UploadCreditCard_FeatureNotEnabled) {
 }
 
 TEST_F(DISABLED_CreditCardSaveManagerTest, UploadCreditCard_CvcUnavailable) {
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
   credit_card_save_manager_->set_credit_card_upload_enabled(true);
 
   // Create, fill and submit an address form in order to establish a recent
@@ -1109,7 +911,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest, UploadCreditCard_CvcUnavailable) {
 }
 
 TEST_F(DISABLED_CreditCardSaveManagerTest, UploadCreditCard_CvcInvalidLength) {
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
   credit_card_save_manager_->set_credit_card_upload_enabled(true);
 
   // Create, fill and submit an address form in order to establish a recent
@@ -1152,7 +954,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest, UploadCreditCard_MultipleCvcFields) {
   // Remove the profiles that were created in the TestPersonalDataManager
   // constructor because they would result in conflicting names that would
   // prevent the upload.
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
 
   // Create, fill and submit an address form in order to establish a recent
   // profile which can be selected for the upload request.
@@ -1214,7 +1016,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest, UploadCreditCard_NoCvcFieldOnForm) {
   // Remove the profiles that were created in the TestPersonalDataManager
   // constructor because they would result in conflicting names that would
   // prevent the upload.
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
 
   // Create, fill and submit an address form in order to establish a recent
   // profile which can be selected for the upload request.
@@ -1271,7 +1073,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest,
   // Remove the profiles that were created in the TestPersonalDataManager
   // constructor because they would result in conflicting names that would
   // prevent the upload.
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
 
   // Create, fill and submit an address form in order to establish a recent
   // profile which can be selected for the upload request.
@@ -1331,7 +1133,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest,
   // Remove the profiles that were created in the TestPersonalDataManager
   // constructor because they would result in conflicting names that would
   // prevent the upload.
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
 
   // Create, fill and submit an address form in order to establish a recent
   // profile which can be selected for the upload request.
@@ -1393,7 +1195,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest,
   // Remove the profiles that were created in the TestPersonalDataManager
   // constructor because they would result in conflicting names that would
   // prevent the upload.
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
 
   // Create, fill and submit an address form in order to establish a recent
   // profile which can be selected for the upload request.
@@ -1462,7 +1264,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest,
   // Remove the profiles that were created in the TestPersonalDataManager
   // constructor because they would result in conflicting names that would
   // prevent the upload.
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
 
   // Create, fill and submit an address form in order to establish a recent
   // profile which can be selected for the upload request.
@@ -1526,7 +1328,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest,
   // Remove the profiles that were created in the TestPersonalDataManager
   // constructor because they would result in conflicting names that would
   // prevent the upload.
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
 
   // Create, fill and submit an address form in order to establish a recent
   // profile which can be selected for the upload request.
@@ -1582,7 +1384,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest,
 TEST_F(DISABLED_CreditCardSaveManagerTest,
        UploadCreditCard_AddNewUiFlagStateToRequestIfExperimentOn) {
   EnableAutofillUpstreamShowNewUiExperiment();
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
   credit_card_save_manager_->set_credit_card_upload_enabled(true);
 
   // Create, fill and submit an address form in order to establish a recent
@@ -1615,7 +1417,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest,
 
 TEST_F(DISABLED_CreditCardSaveManagerTest,
        UploadCreditCard_DoNotAddNewUiFlagStateToRequestIfExperimentOff) {
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
   credit_card_save_manager_->set_credit_card_upload_enabled(true);
 
   // Create, fill and submit an address form in order to establish a recent
@@ -1648,7 +1450,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest,
 TEST_F(DISABLED_CreditCardSaveManagerTest,
        UploadCreditCard_AddShowGoogleLogoFlagStateToRequestIfExperimentOn) {
   EnableAutofillUpstreamShowGoogleLogoExperiment();
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
   credit_card_save_manager_->set_credit_card_upload_enabled(true);
 
   // Create, fill and submit an address form in order to establish a recent
@@ -1682,7 +1484,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest,
 
 TEST_F(DISABLED_CreditCardSaveManagerTest,
        UploadCreditCard_DoNotAddShowGoogleLogoFlagStateToRequestIfExpOff) {
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
   credit_card_save_manager_->set_credit_card_upload_enabled(true);
 
   // Create, fill and submit an address form in order to establish a recent
@@ -1715,7 +1517,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest,
 #endif
 
 TEST_F(DISABLED_CreditCardSaveManagerTest, UploadCreditCard_NoProfileAvailable) {
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
   credit_card_save_manager_->set_credit_card_upload_enabled(true);
 
   // Don't fill or submit an address form.
@@ -1752,7 +1554,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest, UploadCreditCard_NoRecentlyUsedProfil
   TestAutofillClock test_clock;
   test_clock.SetNow(kArbitraryTime);
 
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
   credit_card_save_manager_->set_credit_card_upload_enabled(true);
 
   // Create, fill and submit an address form in order to establish a profile.
@@ -1799,7 +1601,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest, UploadCreditCard_NoRecentlyUsedProfil
 
 TEST_F(DISABLED_CreditCardSaveManagerTest,
        UploadCreditCard_CvcUnavailableAndNoProfileAvailable) {
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
   credit_card_save_manager_->set_credit_card_upload_enabled(true);
 
   // Don't fill or submit an address form.
@@ -1839,7 +1641,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest,
 }
 
 TEST_F(DISABLED_CreditCardSaveManagerTest, UploadCreditCard_NoNameAvailable) {
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
   credit_card_save_manager_->set_credit_card_upload_enabled(true);
 
   // Create, fill and submit an address form in order to establish a recent
@@ -1877,7 +1679,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest, UploadCreditCard_NoNameAvailable) {
 }
 
 TEST_F(DISABLED_CreditCardSaveManagerTest, UploadCreditCard_ZipCodesConflict) {
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
   credit_card_save_manager_->set_credit_card_upload_enabled(true);
 
   // Create, fill and submit two address forms with different zip codes.
@@ -1926,7 +1728,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest, UploadCreditCard_ZipCodesConflict) {
 }
 
 TEST_F(DISABLED_CreditCardSaveManagerTest, UploadCreditCard_ZipCodesDiscardWhitespace) {
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
   credit_card_save_manager_->set_credit_card_upload_enabled(true);
 
   // Create, fill and submit two address forms with different zip codes.
@@ -1970,7 +1772,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest, UploadCreditCard_ZipCodesDiscardWhite
 TEST_F(DISABLED_CreditCardSaveManagerTest,
        UploadCreditCard_ZipCodesDiscardWhitespace_ComparatorEnabled) {
   EnableAutofillUpstreamUseAutofillProfileComparator();
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
   credit_card_save_manager_->set_credit_card_upload_enabled(true);
 
   // Create, fill and submit two address forms with different zip codes.
@@ -2014,7 +1816,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest,
 }
 
 TEST_F(DISABLED_CreditCardSaveManagerTest, UploadCreditCard_ZipCodesHavePrefixMatch) {
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
   credit_card_save_manager_->set_credit_card_upload_enabled(true);
 
   // Create, fill and submit two address forms with different zip codes.
@@ -2060,7 +1862,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest, UploadCreditCard_ZipCodesHavePrefixMa
 }
 
 TEST_F(DISABLED_CreditCardSaveManagerTest, UploadCreditCard_NoZipCodeAvailable) {
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
   credit_card_save_manager_->set_credit_card_upload_enabled(true);
 
   // Create, fill and submit an address form in order to establish a recent
@@ -2105,7 +1907,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest, UploadCreditCard_NoZipCodeAvailable) 
 }
 
 TEST_F(DISABLED_CreditCardSaveManagerTest, UploadCreditCard_CCFormHasMiddleInitial) {
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
   credit_card_save_manager_->set_credit_card_upload_enabled(true);
 
   // Create, fill and submit two address forms with different names.
@@ -2153,7 +1955,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest, UploadCreditCard_CCFormHasMiddleIniti
 TEST_F(DISABLED_CreditCardSaveManagerTest,
        UploadCreditCard_CCFormHasMiddleInitial_ComparatorEnabled) {
   EnableAutofillUpstreamUseAutofillProfileComparator();
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
   credit_card_save_manager_->set_credit_card_upload_enabled(true);
 
   // Create, fill and submit two address forms with different names.
@@ -2201,7 +2003,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest,
 }
 
 TEST_F(DISABLED_CreditCardSaveManagerTest, UploadCreditCard_NoMiddleInitialInCCForm) {
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
   credit_card_save_manager_->set_credit_card_upload_enabled(true);
 
   // Create, fill and submit two address forms with different names.
@@ -2245,7 +2047,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest, UploadCreditCard_NoMiddleInitialInCCF
 TEST_F(DISABLED_CreditCardSaveManagerTest,
        UploadCreditCard_NoMiddleInitialInCCForm_ComparatorEnabled) {
   EnableAutofillUpstreamUseAutofillProfileComparator();
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
   credit_card_save_manager_->set_credit_card_upload_enabled(true);
 
   // Create, fill and submit two address forms with different names.
@@ -2287,7 +2089,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest,
 }
 
 TEST_F(DISABLED_CreditCardSaveManagerTest, UploadCreditCard_CCFormHasMiddleName) {
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
   credit_card_save_manager_->set_credit_card_upload_enabled(true);
 
   // Create, fill and submit address form without middle name.
@@ -2326,7 +2128,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest, UploadCreditCard_CCFormHasMiddleName)
 TEST_F(DISABLED_CreditCardSaveManagerTest,
        UploadCreditCard_CCFormHasMiddleName_ComparatorEnabled) {
   EnableAutofillUpstreamUseAutofillProfileComparator();
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
   credit_card_save_manager_->set_credit_card_upload_enabled(true);
 
   // Create, fill and submit address form without middle name.
@@ -2366,7 +2168,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest,
 }
 
 TEST_F(DISABLED_CreditCardSaveManagerTest, UploadCreditCard_CCFormRemovesMiddleName) {
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
   credit_card_save_manager_->set_credit_card_upload_enabled(true);
 
   // Create, fill and submit address form with middle name.
@@ -2407,7 +2209,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest, UploadCreditCard_CCFormRemovesMiddleN
 TEST_F(DISABLED_CreditCardSaveManagerTest,
        UploadCreditCard_CCFormRemovesMiddleName_ComparatorEnabled) {
   EnableAutofillUpstreamUseAutofillProfileComparator();
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
   credit_card_save_manager_->set_credit_card_upload_enabled(true);
 
   // Create, fill and submit address form with middle name.
@@ -2447,7 +2249,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest,
 }
 
 TEST_F(DISABLED_CreditCardSaveManagerTest, UploadCreditCard_NamesHaveToMatch) {
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
   credit_card_save_manager_->set_credit_card_upload_enabled(true);
 
   // Create, fill and submit two address forms with different names.
@@ -2499,7 +2301,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest, UploadCreditCard_IgnoreOldProfiles) {
   TestAutofillClock test_clock;
   test_clock.SetNow(kArbitraryTime);
 
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
   credit_card_save_manager_->set_credit_card_upload_enabled(true);
 
   // Create, fill and submit two address forms with different names.
@@ -2547,7 +2349,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest, UploadCreditCard_LogPreviousUseDate) 
   TestAutofillClock test_clock;
   test_clock.SetNow(kArbitraryTime);
 
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
   credit_card_save_manager_->set_credit_card_upload_enabled(true);
 
   // Create, fill and submit an address form in order to establish a recent
@@ -2591,7 +2393,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest, UploadCreditCard_LogPreviousUseDate) 
 }
 
 TEST_F(DISABLED_CreditCardSaveManagerTest, UploadCreditCard_UploadDetailsFails) {
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
   credit_card_save_manager_->set_credit_card_upload_enabled(true);
 
   // Anything other than "en-US" will cause GetUploadDetails to return a failure
@@ -2637,7 +2439,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest, UploadCreditCard_UploadDetailsFails) 
 TEST_F(DISABLED_CreditCardSaveManagerTest, DuplicateMaskedCreditCard) {
   EnableAutofillOfferLocalSaveIfServerCardManuallyEnteredExperiment();
 
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
   credit_card_save_manager_->set_credit_card_upload_enabled(true);
   credit_card_save_manager_->SetAppLocale("en-US");
 
@@ -2676,7 +2478,7 @@ TEST_F(DISABLED_CreditCardSaveManagerTest, DuplicateMaskedCreditCard) {
 }
 
 TEST_F(DISABLED_CreditCardSaveManagerTest, DuplicateMaskedCreditCard_ExperimentOff) {
-  personal_data_.ClearAutofillProfiles();
+  personal_data_.ClearProfiles();
   credit_card_save_manager_->set_credit_card_upload_enabled(true);
   credit_card_save_manager_->SetAppLocale("en-US");
 
