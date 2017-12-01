@@ -2461,7 +2461,7 @@ ShadowRoot& Element::CreateShadowRootInternal() {
   DCHECK(!ClosedShadowRoot());
   DCHECK(AreAuthorShadowsAllowed());
   if (AlwaysCreateUserAgentShadowRoot())
-    EnsureLegacyUserAgentShadowRootV0();
+    EnsureUserAgentShadowRootV1();
   GetDocument().SetShadowCascadeOrder(ShadowCascadeOrder::kShadowCascadeV0);
   return EnsureShadow().AddShadowRoot(*this, ShadowRootType::V0);
 }
