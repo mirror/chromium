@@ -44,7 +44,8 @@ bool AppBannerInfoBarDelegateAndroid::Create(
     std::unique_ptr<ShortcutInfo> shortcut_info,
     const SkBitmap& primary_icon,
     const SkBitmap& badge_icon,
-    bool is_webapk) {
+    bool is_webapk,
+    WebAppInstallSource install_source) {
   DCHECK(shortcut_info);
   const GURL url = shortcut_info->url;
   if (url.is_empty())
@@ -53,7 +54,7 @@ bool AppBannerInfoBarDelegateAndroid::Create(
   auto infobar_delegate =
       base::WrapUnique(new banners::AppBannerInfoBarDelegateAndroid(
           weak_manager, std::move(shortcut_info), primary_icon, badge_icon,
-          is_webapk));
+          is_webapk, install_source));
   auto infobar = base::MakeUnique<AppBannerInfoBarAndroid>(
       std::move(infobar_delegate), url);
   if (!InfoBarService::FromWebContents(web_contents)
@@ -180,14 +181,16 @@ AppBannerInfoBarDelegateAndroid::AppBannerInfoBarDelegateAndroid(
     std::unique_ptr<ShortcutInfo> shortcut_info,
     const SkBitmap& primary_icon,
     const SkBitmap& badge_icon,
-    bool is_webapk)
+    bool is_webapk,
+    WebAppInstallSource install_source)
     : weak_manager_(weak_manager),
       app_title_(shortcut_info->name),
       shortcut_info_(std::move(shortcut_info)),
       primary_icon_(primary_icon),
       badge_icon_(badge_icon),
       has_user_interaction_(false),
-      is_webapk_(is_webapk) {
+      is_webapk_(is_webapk),
+      install_source_(install_source) {
   CreateJavaDelegate();
 }
 
@@ -258,7 +261,7 @@ bool AppBannerInfoBarDelegateAndroid::AcceptWebApk(
 
   WebApkInstallService::Get(web_contents->GetBrowserContext())
       ->InstallAsync(web_contents, *shortcut_info_, primary_icon_, badge_icon_,
-                     webapk::INSTALL_SOURCE_BANNER);
+                     install_source_);
   SendBannerAccepted();
   return true;
 }
