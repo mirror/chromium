@@ -46,6 +46,23 @@
       "revId": "0619a4682505963118daf8743d8b2ed874ef5bc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "79f86852_54e78523",
+        "filename": "chrome/browser/resources/md_extensions/item.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-01T19:06:53Z",
+      "side": 1,
+      "message": "This is equivalent to\n\n#inspect-views a {\n  flex-shrink: 0;\n}\n\n#inspect-views a:first-of-type {\n flex-shrink: 1;\n overflow: hidden;\n text-overflow: ellipsis;\n}\n\nSuch that the #first-inspect-view and #extra-inspect-views IDs are not necessary.",
+      "revId": "0619a4682505963118daf8743d8b2ed874ef5bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
