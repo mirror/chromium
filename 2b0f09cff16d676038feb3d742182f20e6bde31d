@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "891c8d68_c8bd070b",
+        "filename": "components/arc/test/connection_holder_util.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-01T17:55:33Z",
+      "side": 1,
+      "message": "nit: local class seems a bit difficult to follow though it\u0027s (probably) not banned. Can\u0027t we move this outside the function and instead do internal::ReadinessObserver\u003cInstanceType, HostType\u003e readiness_observer(...); ?\n\nOr, can you at least move this up to L19 to avoid splitting the function body into two?",
+      "revId": "2b0f09cff16d676038feb3d742182f20e6bde31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6559ea6f_b3b9a37a",
+        "filename": "components/arc/test/connection_holder_util.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-01T17:55:33Z",
+      "side": 1,
+      "message": "nit: DISALLOW_COPY_AND_ASSIGN? The class is already implicitly not copyable already though.",
+      "revId": "2b0f09cff16d676038feb3d742182f20e6bde31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a461e5e_39f2a340",
+        "filename": "components/arc/test/connection_holder_util.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-01T17:55:33Z",
+      "side": 1,
+      "message": "nit: How about doing this and L43 in RedinessObserver?\n\n holder_-\u003eAddObserver(this);\n\nObserver classes in Chromium tend to be implemented that way, I think.",
+      "revId": "2b0f09cff16d676038feb3d742182f20e6bde31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
