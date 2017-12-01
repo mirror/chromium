@@ -7,6 +7,7 @@
 
 #include "core/CoreExport.h"
 #include "core/editing/Forward.h"
+#include "core/layout/ng/geometry/ng_physical_offset.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/HashMap.h"
@@ -184,6 +185,18 @@ class CORE_EXPORT NGOffsetMapping {
 
   DISALLOW_COPY_AND_ASSIGN(NGOffsetMapping);
 };
+
+// TODO(xiaochengh): Move below stuff to its own file.
+
+class NGPhysicalFragment;
+
+struct NGInlineFragmentPosition {
+  const NGPhysicalFragment* fragment = nullptr;
+  NGPhysicalOffset offset_to_container_box;
+  unsigned text_offset_in_fragment = 0;
+};
+
+NGInlineFragmentPosition ComputeNGInlineFragmentPosition(const PositionWithAffinity& position);
 
 }  // namespace blink
 
