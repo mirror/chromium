@@ -300,6 +300,23 @@
       "revId": "8a33147dca6f92264d5af9208003adc2180db049",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "735e8f20_47feda9b",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-12-01T15:45:50Z",
+      "side": 1,
+      "message": "Could you please write comments about in what situation we need to set RequestorOrigin here and why.",
+      "revId": "8a33147dca6f92264d5af9208003adc2180db049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
