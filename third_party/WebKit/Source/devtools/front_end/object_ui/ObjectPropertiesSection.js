@@ -895,8 +895,19 @@ ObjectUI.ObjectPropertyTreeElement = class extends UI.TreeElement {
   async _applyExpression(expression) {
     var property = SDK.RemoteObject.toCallArgument(this.property.symbol || this.property.name);
     expression = SDK.RuntimeModel.wrapObjectLiteralExpressionIfNeeded(expression.trim());
-    var errorPromise = expression ? this.property.parentObject.setPropertyValue(property, expression) :
-                                    this.property.parentObject.deleteProperty(property);
+    var errorPromise;
+    if (this.property.synthetic) {
+      if (!expression) {
+        errorPromise = Promise.resolve('It is not possible to remove synthetic property');
+      } else {
+        errorPromise = this.property.synthetic ?
+            this.property.setSyntheticValue(expression).then(x => x ? undefined : 'error') :
+            Promise.resolve('This property is not writable');
+      }
+    } else {
+      errorPromise = expression ? this.property.parentObject.setPropertyValue(property, expression) :
+                                  this.property.parentObject.deleteProperty(property);
+    }
     var error = await errorPromise;
     if (error) {
       this.update();

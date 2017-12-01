@@ -1188,6 +1188,8 @@ SDK.DebuggerModel.CallFrame = class {
     }
     if (payload.functionLocation)
       this._functionLocation = SDK.DebuggerModel.Location.fromPayload(debuggerModel, payload.functionLocation);
+    this._returnValue =
+        payload.returnValue ? this.debuggerModel._runtimeModel.createRemoteObject(payload.returnValue) : null;
   }
 
   /**
@@ -1245,8 +1247,26 @@ SDK.DebuggerModel.CallFrame = class {
    * @return {?SDK.RemoteObject}
    */
   returnValue() {
-    return this._payload.returnValue ? this.debuggerModel._runtimeModel.createRemoteObject(this._payload.returnValue) :
-                                       null;
+    return this._returnValue;
+  }
+
+  /**
+   * @param {string} expression
+   * @return {!Promise<?SDK.RemoteObject>}
+   */
+  async setReturnValue(expression) {
+    if (!this._returnValue)
+      return null;
+    var response = await this.debuggerModel._agent.invoke_evaluateOnCallFrame(
+        {callFrameId: this.id, expression: expression, silent: true, objectGroup: 'backtrace'});
+    if (response[Protocol.Error] || response.exceptionDetails)
+      return null;
+    var response2 = await this.debuggerModel._agent.invoke_setReturnValue({newValue: response.result});
+    if (!response2[Protocol.Error]) {
+      this._returnValue = this.debuggerModel._runtimeModel.createRemoteObject(response.result);
+      return this._returnValue;
+    }
+    return null;
   }
 
   /**
