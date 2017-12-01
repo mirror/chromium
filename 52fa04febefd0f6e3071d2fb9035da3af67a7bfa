@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5db67fe_e1ccc8fa",
+        "filename": "chrome/browser/page_load_metrics/observers/previews_ukm_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-01T19:17:25Z",
+      "side": 1,
+      "message": "Just to verify, maybe dougarnett knows, will NOSCRIPT be removed for cases like LITE_PAGE from the PreviewsState? I think it will be eventually, but I\u0027m not totally sure of the interactions here.",
+      "revId": "52fa04febefd0f6e3071d2fb9035da3af67a7bfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ce74ff2_3806a25b",
+        "filename": "chrome/browser/page_load_metrics/observers/previews_ukm_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-01T19:17:25Z",
+      "side": 1,
+      "message": "There is a fun new proto-like syntax that gets generated from ukm.xml now. See https://cs.chromium.org/chromium/src/chrome/browser/page_load_metrics/observers/ukm_page_load_metrics_observer.cc?type\u003dcs\u0026q\u003d:UkmEntryBuil+ukm_page\u0026sq\u003dpackage:chromium\u0026l\u003d153\n\nI think it would be best to switch to it, I believe it would look like:\n\nukm::builders::Previews builder(info.source_id);\nbuilder.SetClientLoFi(client_lofi_seen ? 1 : 0);\n...\nbuilder.SetNoscript(...)\n\nAll the constant strings should be able to be removed.",
+      "revId": "52fa04febefd0f6e3071d2fb9035da3af67a7bfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
