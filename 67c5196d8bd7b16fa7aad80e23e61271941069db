@@ -155,6 +155,30 @@
     },
     {
       "key": {
+        "uuid": "ac7a2513_e9c2d695",
+        "filename": "third_party/WebKit/Source/core/css/StyleRuleImport.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-01T02:15:40Z",
+      "side": 1,
+      "message": "In case I was not clear, I meant to make SetResource public only here (having \"using ResourceClient::SetResource;\" in the public section), which shouldn\u0027t have a global impact.",
+      "parentUuid": "69cf3c33_7d834123",
+      "range": {
+        "startLine": 84,
+        "startChar": 9,
+        "endLine": 84,
+        "endChar": 21
+      },
+      "revId": "67c5196d8bd7b16fa7aad80e23e61271941069db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19d56f59_621bc745",
         "filename": "third_party/WebKit/Source/core/html/parser/CSSPreloadScanner.h",
         "patchSetId": 5
