@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a886f32c_be15e7c1",
+        "filename": "media/capture/video/video_capture_device_unittest.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-12-01T09:46:26Z",
+      "side": 1,
+      "message": "clang format turns it into 3 lines.\nI added the dots.",
+      "parentUuid": "79ce670e_94ea04c4",
+      "revId": "ae8e19d17a97c9edc05e5e5e280160129444e422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ea0c30e_9680cf99",
         "filename": "media/capture/video/video_capture_device_unittest.cc",
         "patchSetId": 34
@@ -39,6 +57,30 @@
       "revId": "ae8e19d17a97c9edc05e5e5e280160129444e422",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e06214cc_55b70394",
+        "filename": "media/capture/video/video_capture_device_unittest.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-12-01T09:46:26Z",
+      "side": 1,
+      "message": "By turning the first mock into: \nMOCK_METHOD2(STDMETHOD(QueryInterface), HRESULT(REFIID, void**));\nI have an error on MOCK_METHOD2 saying that \"\u0027virtual\u0027 is not authorized\".",
+      "parentUuid": "6ea0c30e_9680cf99",
+      "range": {
+        "startLine": 142,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 80
+      },
+      "revId": "ae8e19d17a97c9edc05e5e5e280160129444e422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "7635c0b8_e133588f",
+        "filename": "media/capture/video/video_capture_device_unittest.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-12-01T09:46:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "816f6302_33e9c0cd",
+      "range": {
+        "startLine": 340,
+        "startChar": 0,
+        "endLine": 341,
+        "endChar": 19
+      },
+      "revId": "ae8e19d17a97c9edc05e5e5e280160129444e422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "634c00ea_7cde825f",
         "filename": "media/capture/video/video_capture_device_unittest.cc",
         "patchSetId": 34
@@ -85,6 +151,30 @@
       "revId": "ae8e19d17a97c9edc05e5e5e280160129444e422",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab655e20_ff19e923",
+        "filename": "media/capture/video/video_capture_device_unittest.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-12-01T09:46:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "634c00ea_7cde825f",
+      "range": {
+        "startLine": 353,
+        "startChar": 7,
+        "endLine": 353,
+        "endChar": 27
+      },
+      "revId": "ae8e19d17a97c9edc05e5e5e280160129444e422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "05aba276_5b8ce8cd",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-12-01T09:46:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27269bec_ffa8099e",
+      "range": {
+        "startLine": 224,
+        "startChar": 4,
+        "endLine": 224,
+        "endChar": 18
+      },
+      "revId": "ae8e19d17a97c9edc05e5e5e280160129444e422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "324824db_76978e1f",
         "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
         "patchSetId": 34
@@ -131,6 +245,30 @@
       "revId": "ae8e19d17a97c9edc05e5e5e280160129444e422",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b8ace82_a8002b6e",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-12-01T09:46:26Z",
+      "side": 1,
+      "message": "In the photo context, GetFormatFromMediaType() is used to retrieve |pixel_format| AND the |frame_size|. If I remove this \"hijack\" from FormatFromGuid(), it would return false, therefore I can\u0027t use GetFormatFromMediaType() anymore in photo context and have to duplicate code to build a photo VideoCaptureFormat.\nIs that what you expect?",
+      "parentUuid": "324824db_76978e1f",
+      "range": {
+        "startLine": 346,
+        "startChar": 0,
+        "endLine": 346,
+        "endChar": 53
+      },
+      "revId": "ae8e19d17a97c9edc05e5e5e280160129444e422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "79ab5fff_8a64a550",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-12-01T09:46:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac6a5807_ec2aa770",
+      "range": {
+        "startLine": 638,
+        "startChar": 0,
+        "endLine": 638,
+        "endChar": 22
+      },
+      "revId": "ae8e19d17a97c9edc05e5e5e280160129444e422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e147985d_d9c3a6a5",
         "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
         "patchSetId": 34
@@ -177,6 +339,30 @@
       "revId": "ae8e19d17a97c9edc05e5e5e280160129444e422",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e894899e_60843d29",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-12-01T09:46:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e147985d_d9c3a6a5",
+      "range": {
+        "startLine": 760,
+        "startChar": 2,
+        "endLine": 760,
+        "endChar": 4
+      },
+      "revId": "ae8e19d17a97c9edc05e5e5e280160129444e422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "23d9a892_f978cc26",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-12-01T09:46:26Z",
+      "side": 1,
+      "message": "I did that to let the scope open for other event_type specific processing. But ok.",
+      "parentUuid": "c69412c4_36289289",
+      "range": {
+        "startLine": 762,
+        "startChar": 2,
+        "endLine": 765,
+        "endChar": 3
+      },
+      "revId": "ae8e19d17a97c9edc05e5e5e280160129444e422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20bfabdc_5b3326d6",
         "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
         "patchSetId": 34
@@ -223,6 +433,30 @@
       "revId": "ae8e19d17a97c9edc05e5e5e280160129444e422",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caddb1bb_dcef184c",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-12-01T09:46:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20bfabdc_5b3326d6",
+      "range": {
+        "startLine": 772,
+        "startChar": 20,
+        "endLine": 776,
+        "endChar": 74
+      },
+      "revId": "ae8e19d17a97c9edc05e5e5e280160129444e422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
