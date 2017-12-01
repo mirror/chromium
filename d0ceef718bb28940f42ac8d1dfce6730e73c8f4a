@@ -16,6 +16,24 @@
       "revId": "d0ceef718bb28940f42ac8d1dfce6730e73c8f4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90e9fa91_3d01aa34",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-01T18:29:30Z",
+      "side": 1,
+      "message": "Done, and moved DCHECK(advanced_done_button_) below",
+      "parentUuid": "bc4afbe2_fa3c81c8",
+      "revId": "d0ceef718bb28940f42ac8d1dfce6730e73c8f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
