@@ -1105,9 +1105,19 @@ IntSize LayoutBox::CalculateAutoscrollDirection(
   if (!frame_view)
     return IntSize();
 
-  IntRect box(AbsoluteBoundingBoxRect());
-  box.Move(View()->GetFrameView()->ScrollOffsetInt());
-  IntRect window_box = View()->GetFrameView()->ContentsToRootFrame(box);
+  IntRect absolute_scrolling_box;
+
+  // The AbsoluteBoundingBoxRect for the LayoutView, pre-RLS, is not the
+  // scrolling box, it's the entire document rect. When RLS is turned on
+  // AbsoluteBoundingBox works the same way for the LayoutView as for other
+  // LayoutBoxes.
+  if (!RuntimeEnabledFeatures::RootLayerScrollingEnabled() && IsLayoutView())
+    absolute_scrolling_box = frame_view->VisibleContentRect(kExcludeScrollbars);
+  else
+    absolute_scrolling_box = AbsoluteBoundingBoxRect();
+
+  IntRect window_box =
+      View()->GetFrameView()->AbsoluteToRootFrame(absolute_scrolling_box);
 
   IntPoint window_autoscroll_point = point_in_root_frame;
 
