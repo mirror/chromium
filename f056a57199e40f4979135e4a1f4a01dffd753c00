@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3313a14e_f8600648",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 899,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-01T01:35:07Z",
+      "side": 1,
+      "message": "Is is better to put this function in WallpaperControllerClient::Init()?",
+      "revId": "f056a57199e40f4979135e4a1f4a01dffd753c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
