@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70c306d2_0f6f48e7",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-12-01T23:35:04Z",
+      "side": 1,
+      "message": "There\u0027s a quote missing.",
+      "range": {
+        "startLine": 503,
+        "startChar": 10,
+        "endLine": 503,
+        "endChar": 11
+      },
+      "revId": "222653730662f9ef79af3a246fc7ea6778e26c70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4897f92_81534020",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-12-01T23:35:04Z",
+      "side": 1,
+      "message": "Update comment.",
+      "revId": "222653730662f9ef79af3a246fc7ea6778e26c70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdf5d893_1ef3e048",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-12-01T23:35:04Z",
+      "side": 1,
+      "message": "optional: setUpConnectableHealthThermometer() is shorter but up to you.",
+      "revId": "222653730662f9ef79af3a246fc7ea6778e26c70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b11e4ba2_09ae1364",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-12-01T23:35:04Z",
+      "side": 1,
+      "message": "q: why do we populate the fake here?",
+      "revId": "222653730662f9ef79af3a246fc7ea6778e26c70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bbf8a14_336238dc",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/health-thermometer-iframe.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-12-01T23:35:04Z",
+      "side": 1,
+      "message": "requestDeviceWithOptionsAndConnect()",
+      "revId": "222653730662f9ef79af3a246fc7ea6778e26c70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59ba6fc5_d3a58713",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/health-thermometer-iframe.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-12-01T23:35:04Z",
+      "side": 1,
+      "message": "nit: move this below RequestAndConnect. Conceptually discovering services comes after connecting to the device.",
+      "revId": "222653730662f9ef79af3a246fc7ea6778e26c70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
