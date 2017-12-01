@@ -8,10 +8,10 @@
 #include "core/CoreExport.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Vector.h"
-#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
+class LayoutBlockFlow;
 class LayoutObject;
 class NGOffsetMapping;
 
@@ -66,8 +66,8 @@ class CORE_EXPORT NGOffsetMappingBuilder {
   // Composite the offset mapping held by another builder to this builder.
   void Composite(const NGOffsetMappingBuilder&);
 
-  // Set the destination string of the offset mapping.
-  void SetDestinationString(String);
+  // Set the inline formatting context of the offset mapping.
+  void SetContext(const LayoutBlockFlow&);
 
   // Called when entering a non-atomic inline node (e.g., SPAN), before
   // collecting any of its inline descendants.
@@ -95,8 +95,8 @@ class CORE_EXPORT NGOffsetMappingBuilder {
   // the plain way. It will be replaced by a real implementation for efficiency.
   Vector<const LayoutObject*> annotation_;
 
-  // The destination string of the offset mapping.
-  String destination_string_;
+  // The inline formatting context of the offset mapping.
+  const LayoutBlockFlow* context_ = nullptr;
 
   struct InlineBoundary {
     const LayoutObject* node;

@@ -517,7 +517,7 @@ const NGOffsetMapping* NGInlineNode::ComputeOffsetMappingIfNeeded() {
     // TODO(xiaochengh): This doesn't compute offset mapping correctly when
     // text-transform CSS property changes text length.
     NGOffsetMappingBuilder& mapping_builder = builder.GetOffsetMappingBuilder();
-    mapping_builder.SetDestinationString(Text());
+    mapping_builder.SetContext(*GetLayoutBlockFlow());
     MutableData()->offset_mapping_ =
         std::make_unique<NGOffsetMapping>(mapping_builder.Build());
   }
