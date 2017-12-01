@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b90f9ca_eb3ee81f",
+        "filename": "ash/wm/overview/window_selector_item.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-01T19:48:54Z",
+      "side": 0,
+      "message": "What happens if the overview window item bounds are very small if remove this line?",
+      "revId": "08c69bc2987bb5ca4236da2b31516428c6b335a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

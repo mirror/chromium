@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d9404a9_f6c0678d",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-01T19:48:54Z",
+      "side": 1,
+      "message": "nit: it -\u003e if it",
+      "revId": "7096a7b0b5a456af4c8f861c1ab3bff117f284e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "428381b3_5776c682",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-01T19:48:54Z",
+      "side": 1,
+      "message": "If you don\u0027t need the icon any more, also cleanup ash/resources/vector_icons/splitview_nosnap_warning.icon and ash/resources/vector_icons/BUILD.gn file?",
+      "revId": "7096a7b0b5a456af4c8f861c1ab3bff117f284e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b3d9d96_b02102a9",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-01T19:48:54Z",
+      "side": 1,
+      "message": "Remove this function as you removed all the call places of this function",
+      "revId": "7096a7b0b5a456af4c8f861c1ab3bff117f284e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a011662a_6560314a",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-01T19:48:54Z",
+      "side": 1,
+      "message": "It seems a bit weird to make it a static function of SplitViewOverviewOverlay and use it for cannot_snap_container_ in window_selector_item.cc. Might be better to put this function in a common place that both classes can access it? However I don\u0027t know where should this common place be... Oshima, what do you think?",
+      "revId": "7096a7b0b5a456af4c8f861c1ab3bff117f284e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
