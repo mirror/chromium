@@ -41,6 +41,8 @@ const char kMapKeyOutOfOrder[] =
     "order.";
 const char kNonMinimalEncoding[] =
     "Unsigned integers must be encoded with minimum number of bytes.";
+const char kOutOfRangeIntegerValue[] =
+    "Absolute value for integers must be between 0 and UINT64_MAX.";
 
 }  // namespace
 
@@ -79,13 +81,15 @@ base::Optional<CBORValue> CBORReader::DecodeCBOR(int max_nesting_level) {
   const auto major_type = GetMajorType(initial_byte);
   const uint8_t additional_info = GetAdditionalInfo(initial_byte);
 
-  uint64_t length;
-  if (!ReadUnsignedInt(additional_info, &length))
+  int64_t length;
+  if (!ReadUnsignedInt(major_type, additional_info, &length))
     return base::nullopt;
 
   switch (major_type) {
     case CBORValue::Type::UNSIGNED:
       return CBORValue(length);
+    case CBORValue::Type::NEGATIVE:
+      return CBORValue(-1 * (length + 1));
     case CBORValue::Type::BYTE_STRING:
       return ReadBytes(length);
     case CBORValue::Type::STRING:
@@ -102,7 +106,9 @@ base::Optional<CBORValue> CBORReader::DecodeCBOR(int max_nesting_level) {
   return base::nullopt;
 }
 
-bool CBORReader::ReadUnsignedInt(int additional_info, uint64_t* length) {
+bool CBORReader::ReadUnsignedInt(CBORValue::Type major_type,
+                                 uint8_t additional_info,
+                                 int64_t* length) {
   uint8_t additional_bytes = 0;
   if (additional_info < 24) {
     *length = additional_info;
@@ -127,8 +133,12 @@ bool CBORReader::ReadUnsignedInt(int additional_info, uint64_t* length) {
     int_data <<= 8;
     int_data |= *it_++;
   }
-  *length = int_data;
-  return CheckUintEncodedByteLength(additional_bytes, int_data);
+
+  if (CheckIntegerValueError(major_type, additional_bytes, int_data)) {
+    *length = base::checked_cast<int64_t>(int_data);
+    return CheckUintEncodedByteLength(additional_bytes, int_data);
+  }
+  return false;
 }
 
 base::Optional<CBORValue> CBORReader::ReadString(uint64_t num_bytes) {
@@ -204,6 +214,16 @@ bool CBORReader::CheckUintEncodedByteLength(uint8_t additional_bytes,
   return true;
 }
 
+bool CBORReader::CheckIntegerValueError(CBORValue::Type major_type,
+                                        uint8_t additional_bytes,
+                                        uint64_t uint_data) {
+  if (uint_data > 0x7FFFFFFFFFFFFFFF) {
+    error_code_ = OUT_OF_RANGE_INTEGER_VALUE_ERROR;
+    return false;
+  }
+  return true;
+}
+
 void CBORReader::CheckExtraneousData() {
   if (it_ != end_)
     error_code_ = EXTRANEOUS_DATA_ERROR;
@@ -259,6 +279,8 @@ const char* CBORReader::ErrorCodeToString(CBORDecoderError error) {
       return kMapKeyOutOfOrder;
     case NON_MINIMAL_ENCODING_ERROR:
       return kNonMinimalEncoding;
+    case OUT_OF_RANGE_INTEGER_VALUE_ERROR:
+      return kOutOfRangeIntegerValue;
     default:
       NOTREACHED();
       return "Unknown error code.";
