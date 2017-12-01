@@ -132,7 +132,7 @@ class SigninManagerTest : public testing::Test {
     DCHECK(!manager_);
     manager_ = std::make_unique<SigninManager>(
         &test_signin_client_, &token_service_, &account_tracker_,
-        &cookie_manager_service_);
+        &cookie_manager_service_, signin::AccountConsistencyMethod::kDisabled);
     manager_->Initialize(&local_state_);
     manager_->AddObserver(&test_observer_);
   }
