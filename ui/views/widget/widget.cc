@@ -1096,10 +1096,12 @@ void Widget::OnNativeWidgetDestroyed() {
 }
 
 gfx::Size Widget::GetMinimumSize() const {
+  TRACE_EVENT0("views", "Widget::GetMinimumSize()");
   return non_client_view_ ? non_client_view_->GetMinimumSize() : gfx::Size();
 }
 
 gfx::Size Widget::GetMaximumSize() const {
+  TRACE_EVENT0("views", "Widget::GetMaximumSize()");
   return non_client_view_ ? non_client_view_->GetMaximumSize() : gfx::Size();
 }
 
@@ -1481,6 +1483,7 @@ void Widget::SetInitialBounds(const gfx::Rect& bounds) {
   if (!non_client_view_)
     return;
 
+  TRACE_EVENT0("views", "Widget::SetInitialBounds");
   gfx::Rect saved_bounds;
   if (GetSavedWindowPlacement(&saved_bounds, &saved_show_state_)) {
     if (saved_show_state_ == ui::SHOW_STATE_MAXIMIZED) {

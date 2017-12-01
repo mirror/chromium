@@ -888,6 +888,7 @@ void GridLayout::ViewRemoved(View* host, View* view) {
 }
 
 void GridLayout::Layout(View* host) {
+  TRACE_EVENT1("views", "GridLayout::Layout", "class", host->GetClassName());
   DCHECK(host_ == host);
   // SizeRowsAndColumns sets the size and location of each row/column, but
   // not of the views.

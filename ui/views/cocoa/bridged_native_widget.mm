@@ -15,6 +15,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "base/trace_event/trace_event.h"
 #include "ui/accelerated_widget_mac/window_resize_helper_mac.h"
 #import "ui/base/cocoa/constrained_window/constrained_window_animation.h"
 #include "ui/base/hit_test.h"
@@ -567,6 +568,8 @@ void BridgedNativeWidget::SetBounds(const gfx::Rect& new_bounds) {
   DCHECK(!clamped_content_size.IsEmpty())
       << "Zero-sized windows not supported on Mac";
 
+  TRACE_EVENT2("views", "BridgedNativeWidget::SetBounds", "width",
+               new_bounds.width(), "height", new_bounds.height());
   if (!window_visible_ && native_widget_mac_->IsWindowModalSheet()) {
     // Window-Modal dialogs (i.e. sheets) are positioned by Cocoa when shown for
     // the first time. They also have no frame, so just update the content size.
@@ -662,11 +665,13 @@ void BridgedNativeWidget::SetVisibilityState(WindowVisibilityState new_state) {
   if (layer() && [window_ isOpaque] && !window_visible_ &&
       !native_widget_mac_->GetWidget()->IsModal() &&
       ui::WindowResizeHelperMac::Get()->task_runner()) {
+    DLOG(INFO) << "SUPPRESSING";
     initial_visibility_suppressed_ = true;
     [window_ setAlphaValue:0.0];
     [window_ setIgnoresMouseEvents:YES];
   }
 
+  TRACE_EVENT0("views", "BridgedNativeWidget::SetVisibilityState");
   if (new_state == SHOW_AND_ACTIVATE_WINDOW) {
     [window_ makeKeyAndOrderFront:nil];
     [NSApp activateIgnoringOtherApps:YES];
@@ -880,8 +885,14 @@ void BridgedNativeWidget::ToggleDesiredFullscreenState() {
 }
 
 void BridgedNativeWidget::OnSizeChanged() {
+  TRACE_EVENT0("views", "BridgedNativeWidget::OnSizeChanged");
   gfx::Size new_size = GetClientAreaSize();
+  DLOG(INFO) << "OnSizeChanged! -> " << new_size.ToString()
+             << " visible=" << window_visible_;
   native_widget_mac_->GetWidget()->OnNativeWidgetSizeChanged(new_size);
+  if (!window_visible_)
+    return;
+
   if (layer()) {
     UpdateLayerProperties();
     if ([window_ inLiveResize])
@@ -906,6 +917,7 @@ void BridgedNativeWidget::OnVisibilityChanged() {
   if (window_visible_ == window_visible)
     return;
 
+  TRACE_EVENT0("views", "BridgedNativeWidget::OnVisibilityChanged");
   window_visible_ = window_visible;
 
   // If arriving via SetVisible(), |wants_to_be_visible_| should already be set.
@@ -937,6 +949,8 @@ void BridgedNativeWidget::OnVisibilityChanged() {
   // RenderWidgetResizeHelper, blocks the UI thread in -[NSView setFrameSize:]
   // and RenderWidgetHostView::Show() until a frame is ready.
   if (layer()) {
+    if (window_visible_)
+      UpdateLayerProperties();
     layer()->SetVisible(window_visible_);
     layer()->SchedulePaint(gfx::Rect(GetClientAreaSize()));
 
@@ -1259,9 +1273,13 @@ void BridgedNativeWidget::AcceleratedWidgetGetVSyncParameters(
 }
 
 void BridgedNativeWidget::AcceleratedWidgetSwapCompleted() {
+  const gfx::Size client_area_size = GetClientAreaSize();
+  TRACE_EVENT2("views", "BridgedNativeWidget::AcceleratedWidgetSwapCompleted()",
+               "width", client_area_size.width(), "height",
+               client_area_size.height());
   // Ignore frames arriving "late" for an old size. A frame at the new size
   // should arrive soon.
-  if (!compositor_widget_->HasFrameOfSize(GetClientAreaSize()))
+  if (!compositor_widget_->HasFrameOfSize(client_area_size))
     return;
 
   if (initial_visibility_suppressed_) {
@@ -1500,9 +1518,12 @@ void BridgedNativeWidget::UpdateLayerProperties() {
 }
 
 void BridgedNativeWidget::MaybeWaitForFrame(const gfx::Size& size_in_dip) {
+  TRACE_EVENT0("views", "BridgedNativeWidget::MaybeWaitForFrame");
+  DLOG(INFO) << "MaybeWaitForFrame: " << size_in_dip.ToString();
   if (!layer()->IsDrawn() || compositor_widget_->HasFrameOfSize(size_in_dip))
     return;
 
+  DLOG(INFO) << "Waiting..";
   const int kPaintMsgTimeoutMS = 50;
   const base::TimeTicks start_time = base::TimeTicks::Now();
   const base::TimeTicks timeout_time =
@@ -1511,8 +1532,10 @@ void BridgedNativeWidget::MaybeWaitForFrame(const gfx::Size& size_in_dip) {
   ui::WindowResizeHelperMac* resize_helper = ui::WindowResizeHelperMac::Get();
   for (base::TimeTicks now = start_time; now < timeout_time;
        now = base::TimeTicks::Now()) {
-    if (!resize_helper->WaitForSingleTaskToRun(timeout_time - now))
+    if (!resize_helper->WaitForSingleTaskToRun(timeout_time - now)) {
+      DLOG(INFO) << "timeout :(";
       return;  // Timeout.
+    }
 
     // Since the UI thread is blocked, the size shouldn't change.
     DCHECK(size_in_dip == GetClientAreaSize());

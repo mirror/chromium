@@ -125,6 +125,7 @@ void BoxLayout::SetDefaultFlex(int default_flex) {
 }
 
 void BoxLayout::Layout(View* host) {
+  TRACE_EVENT1("views", "Box::Layout", "class", host->GetClassName());
   DCHECK_EQ(host_, host);
   gfx::Rect child_area(host->GetContentsBounds());
 

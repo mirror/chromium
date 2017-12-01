@@ -164,6 +164,7 @@ void AcceleratedWidgetMac::GotCALayerFrame(
   }
   ScopedCAActionDisabler disabler;
   last_swap_size_dip_ = gfx::ConvertSizeToDIP(scale_factor, pixel_size);
+  DLOG(INFO) << "got CA frame: " << last_swap_size_dip_.ToString();
   if (fullscreen_low_power_layer_valid)
     [fslp_flipped_layer_ setFrame:gfx::Rect(last_swap_size_dip_).ToCGRect()];
 
@@ -205,6 +206,7 @@ void AcceleratedWidgetMac::GotIOSurfaceFrame(
   }
   ScopedCAActionDisabler disabler;
   last_swap_size_dip_ = gfx::ConvertSizeToDIP(scale_factor, pixel_size);
+  DLOG(INFO) << "got IO frame: " << last_swap_size_dip_.ToString();
 
   // Create (if needed) and update the IOSurface layer with new content.
   if (!io_surface_layer_) {
