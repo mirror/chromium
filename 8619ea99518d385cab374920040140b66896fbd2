@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "559b35f7_04786296",
+        "filename": "chromeos/dbus/easy_unlock_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-01T16:46:19Z",
+      "side": 1,
+      "message": "Note/off-topic: almost all callers check this condition.\nThough, one which does not is found.\nhttps://cs.chromium.org/chromium/src/components/cryptauth/cryptauth_enroller_impl.cc?l\u003d94",
+      "revId": "8619ea99518d385cab374920040140b66896fbd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
