@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b826f594_2ba4406a",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-01T01:17:30Z",
+      "side": 1,
+      "message": "toyoshim@  / horo@: Nick suggested this change to have content scripts and isolated world origins put into the requestor origin, so that we can see it in the browser process.  He\u0027s looked closely, but thought it\u0027d be good for you to take a look as well.",
+      "revId": "92a5c289eff166fa15d53c439f28ef209d47d87e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

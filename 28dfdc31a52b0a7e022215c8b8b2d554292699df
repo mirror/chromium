@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bdff7785_5284a8f2",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1237,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-01T01:17:30Z",
+      "side": 1,
+      "message": "\u003e I haven\u0027t been able to get the link doctor to show up in practice yet (even in official builds), so I haven\u0027t confirmed whether an equality check or a prefix check is needed.  It does look like we\u0027ll need to whitelist this case, since the renderer requests it with no initiator and it doesn\u0027t have CORS headers.\n\nFixed via Nick\u0027s suggestion.",
+      "parentUuid": "1de0b3bd_eff4eaef",
+      "revId": "28dfdc31a52b0a7e022215c8b8b2d554292699df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d3833742_01ac76ea",
         "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "28dfdc31a52b0a7e022215c8b8b2d554292699df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2facf901_d75f1b88",
+        "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-01T01:17:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3833742_01ac76ea",
+      "revId": "28dfdc31a52b0a7e022215c8b8b2d554292699df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

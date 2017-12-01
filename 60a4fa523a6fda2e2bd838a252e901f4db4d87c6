@@ -59,6 +59,24 @@
     },
     {
       "key": {
+        "uuid": "94cf47de_83557936",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1236,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-01T01:17:30Z",
+      "side": 1,
+      "message": "\u003e LinkDoctorBaseURL is https://www.googleapis.com/rpc, which is an interface to a lot of things besides just link doctor. The link doctorness of this particular request is given by the {\"method\": \"linkdoctor.fixurl.fixurl\", ...} in the JSON of the POST request body.\n\u003e \n\u003e I would reasonably expect this to be fixed by switching this request to be CORS enabled. googleapis certainly supports CORS.\n\u003e \n\u003e Because this is currently the only caller of ResourceFetcherImpl, you could do this hackily, say in content/renderer/fetchers/resource_fetcher_impl.cc!ResourceFetcherImpl::SetMethod --\n\u003e \n\u003e   request_.fetch_request_mode \u003d network::mojom::FetchRequestMode::kCORS;\n\nThanks for the suggestion!  Fixed.  (I updated mock-link-doctor.json.mock-http-headers as well to have it return CORS.)",
+      "parentUuid": "aaf90b9b_21bf1da6",
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec0fb01b_af6f9f5b",
         "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
         "patchSetId": 15
@@ -73,6 +91,24 @@
       "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff26e40a_defdd44e",
+        "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-01T01:17:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec0fb01b_af6f9f5b",
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +129,24 @@
     },
     {
       "key": {
+        "uuid": "88561d7d_e4561c6b",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-01T01:17:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba86f72e_73ea4a75",
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b815a883_3320df0c",
         "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
         "patchSetId": 15
@@ -110,6 +164,24 @@
     },
     {
       "key": {
+        "uuid": "d78a7e33_fdc194da",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-01T01:17:30Z",
+      "side": 1,
+      "message": "\u003e LAMENT_TRUE\n\u003e ASPIRE_FALSE\n\n:)",
+      "parentUuid": "b815a883_3320df0c",
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbac3b54_f7b705a2",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 15
@@ -121,6 +193,30 @@
       "writtenOn": "2017-11-30T21:52:26Z",
       "side": 1,
       "message": "You can also unittest this class with a MockResourceLoader above and a TestResourceLoader as the next ResourceHandler.  Tests are a little complicated, but as simple as I could manage.  I recommend setting up unit tests, even for temporary code, because it gives us a lot more flexibility it testing corner cases.",
+      "range": {
+        "startLine": 31,
+        "startChar": 39,
+        "endLine": 31,
+        "endChar": 56
+      },
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b470b9eb_02497761",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-01T01:17:30Z",
+      "side": 1,
+      "message": "\u003e You can also unittest this class with a MockResourceLoader above and a TestResourceLoader as the next ResourceHandler.  Tests are a little complicated, but as simple as I could manage.  I recommend setting up unit tests, even for temporary code, because it gives us a lot more flexibility it testing corner cases.\n\nGood idea.  I\u0027ll add that in a new patchset.",
+      "parentUuid": "dbac3b54_f7b705a2",
       "range": {
         "startLine": 31,
         "startChar": 39,
@@ -192,6 +288,30 @@
       "side": 1,
       "message": "If devtools is enabled, we may send bonus headers.  So for any testing of what we send, should have devtools open.\n\nNote:  I\u0027m not at all familiar with what we feed to the renderer when, so this could just be fine (Or we may not care, if devtools is open), but I\u0027m not sure that\u0027s the case.",
       "parentUuid": "5e84e125_cca41f96",
+      "range": {
+        "startLine": 35,
+        "startChar": 17,
+        "endLine": 35,
+        "endChar": 34
+      },
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deb62231_31fb48fa",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-01T01:17:30Z",
+      "side": 1,
+      "message": "\u003e If devtools is enabled, we may send bonus headers.  So for any testing of what we send, should have devtools open.\n\u003e \n\u003e Note:  I\u0027m not at all familiar with what we feed to the renderer when, so this could just be fine (Or we may not care, if devtools is open), but I\u0027m not sure that\u0027s the case.\n\nI think we\u0027re ok with that (and are investigating separately).  But it\u0027s good to know, and we\u0027ll see what the implications are.",
+      "parentUuid": "0a9fab13_ed3a90a7",
       "range": {
         "startLine": 35,
         "startChar": 17,
@@ -473,6 +593,24 @@
     },
     {
       "key": {
+        "uuid": "d209c0ab_fc906fd6",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-01T01:17:30Z",
+      "side": 1,
+      "message": "\u003e I would suggest adding a TRACE_EVENT macro here to capture this in chrome://tracing, which will make troubleshooting this in release builds much easier.\n\nDone, based on your suggestion.  (Thanks!)  Since we can only have 2 bits of data, I think the initiator origin and document URL are the most useful.  (Would have been nice to include the mime_type and resource_type_ as well, but that\u0027s ok.)",
+      "parentUuid": "5c89f8c6_e95fd486",
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "987e5395_f95775cb",
         "filename": "content/browser/loader/cross_site_document_resource_handler.h",
         "patchSetId": 15
@@ -487,6 +625,24 @@
       "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2079f318_9c7388b4",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-01T01:17:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "987e5395_f95775cb",
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -513,6 +669,30 @@
     },
     {
       "key": {
+        "uuid": "bc6add4e_90da16a8",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-01T01:17:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4afc9790_6584d9a3",
+      "range": {
+        "startLine": 19,
+        "startChar": 5,
+        "endLine": 19,
+        "endChar": 21
+      },
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1501b4f_1f9c42db",
         "filename": "content/browser/loader/cross_site_document_resource_handler.h",
         "patchSetId": 15
@@ -524,6 +704,24 @@
       "writtenOn": "2017-11-30T21:44:37Z",
       "side": 1,
       "message": "We should look into whether or not it would be viable to implement this in terms of net::URLRequestInterceptor. I wasn\u0027t aware of that class before looking at this CL, but the response interception scheme seems like it gives us more control over the response. (however, extending it to sniffing would probably require new capabilities for the interceptor).",
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3247b10d_ec04d352",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-01T01:17:30Z",
+      "side": 1,
+      "message": "\u003e We should look into whether or not it would be viable to implement this in terms of net::URLRequestInterceptor. I wasn\u0027t aware of that class before looking at this CL, but the response interception scheme seems like it gives us more control over the response. (however, extending it to sniffing would probably require new capabilities for the interceptor).\n\nThanks, that\u0027s a good thing to consider.  I think (given that sniffing is proving necessary when testing on real sites), I\u0027ll probably stick with a ResourceHandler for now, but maybe that\u0027s still an option for how to improve this.",
+      "parentUuid": "e1501b4f_1f9c42db",
       "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -553,6 +751,30 @@
     },
     {
       "key": {
+        "uuid": "36d1a840_7942f773",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1595,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-01T01:17:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4abee57f_54aee4d8",
+      "range": {
+        "startLine": 1595,
+        "startChar": 13,
+        "endLine": 1595,
+        "endChar": 21
+      },
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffbc8994_d29ea5fc",
         "filename": "content/public/browser/content_browser_client.h",
         "patchSetId": 15
@@ -576,6 +798,30 @@
     },
     {
       "key": {
+        "uuid": "ad11a131_627aacaf",
+        "filename": "content/public/browser/content_browser_client.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-01T01:17:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffbc8994_d29ea5fc",
+      "range": {
+        "startLine": 250,
+        "startChar": 36,
+        "endLine": 250,
+        "endChar": 43
+      },
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e63e4ad_2cd54a3d",
         "filename": "content/renderer/fetchers/resource_fetcher_browsertest.cc",
         "patchSetId": 15
@@ -590,6 +836,24 @@
       "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a350cc0b_5fe03a67",
+        "filename": "content/renderer/fetchers/resource_fetcher_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-01T01:17:30Z",
+      "side": 1,
+      "message": "\u003e So my understanding here is that ResourceFetcher was basically unbeholden to the same-origin policy, and the browser-side enforcement you\u0027re adding is exposing some of that looseness.\n\u003e \n\u003e Looking at these tests, I\u0027m thinking that forcing ResourceFetcher to use CORS by default makes a lot of sense.\n\nAck.",
+      "parentUuid": "0e63e4ad_2cd54a3d",
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
