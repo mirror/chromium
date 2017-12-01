@@ -16,6 +16,24 @@
       "revId": "322c1fcc60b52dd7807a306a5d93b4730dd2a63b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cbeb69b_ebf17d56",
+        "filename": "ui/views/controls/button/button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-01T22:49:10Z",
+      "side": 1,
+      "message": "Probably ui::AX_EVENT_TEXT_CHANGED is slightly better semantically,\nbut both will work exactly the same in the current codebase so it\ndoesn\u0027t matter too much.\n\nI can\u0027t see an easy way to do this in views::View, because\nmost Views classes don\u0027t store accessibility properties, they\njust retrieve them on demand.\n\nI am working on a large-scale design change so that event firing\nwill be almost completely implicit. This line could be replaced\nwith something more like MarkAccessibilityDirty().\n\nThe master bug for that is: http://crbug.com/699438, I\u0027m focusing\non Blink first since that\u0027s the bigger change, but doing the same\nfor Views will be an easy side effort to that.",
+      "parentUuid": "0ae114ac_b1a1c650",
+      "revId": "322c1fcc60b52dd7807a306a5d93b4730dd2a63b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
