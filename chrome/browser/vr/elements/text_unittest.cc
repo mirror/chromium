@@ -23,7 +23,7 @@ TEST(Text, MultiLine) {
   // Make sure we get multiple lines of rendered text from the string.
   auto layout = text->LayOutTextForTest(texture_size);
   size_t initial_num_lines = layout.size();
-  auto initial_size = text->GetTextureSizeForTest();
+  auto initial_size = text->GetTextureSize();
   EXPECT_GT(initial_num_lines, 1u);
   EXPECT_GT(initial_size.height(), 0.f);
 
@@ -32,13 +32,13 @@ TEST(Text, MultiLine) {
   text->SetSize(kInitialSize / 2, 0);
   layout = text->LayOutTextForTest(texture_size);
   EXPECT_GT(layout.size(), initial_num_lines);
-  EXPECT_GT(text->GetTextureSizeForTest().height(), initial_size.height());
+  EXPECT_GT(text->GetTextureSize().height(), initial_size.height());
 
   // Enforce single-line rendering.
   text->SetMultiLine(false);
   layout = text->LayOutTextForTest(texture_size);
   EXPECT_EQ(layout.size(), 1u);
-  EXPECT_LT(text->GetTextureSizeForTest().height(), initial_size.height());
+  EXPECT_LT(text->GetTextureSize().height(), initial_size.height());
 }
 
 }  // namespace vr

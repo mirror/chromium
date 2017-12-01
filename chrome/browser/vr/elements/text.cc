@@ -30,6 +30,16 @@ class TextTexture : public UiTexture {
 
   void SetMultiLine(bool multiline) { SetAndDirty(&multiline_, multiline); }
 
+  void SetCursorEnabled(bool enabled) {
+    SetAndDirty(&cursor_enabled_, enabled);
+  }
+
+  void SetCursorPosition(int position) {
+    SetAndDirty(&cursor_position_, position);
+  }
+
+  gfx::Rect get_cursor_bounds() { return cursor_bounds_; }
+
   void SetTextWidth(float width) { SetAndDirty(&text_width_, width); }
 
   gfx::SizeF GetDrawnSize() const override { return size_; }
@@ -52,6 +62,9 @@ class TextTexture : public UiTexture {
   TextAlignment alignment_ = kTextAlignmentCenter;
   bool multiline_ = true;
   SkColor color_ = SK_ColorBLACK;
+  bool cursor_enabled_ = false;
+  int cursor_position_ = 0;
+  gfx::Rect cursor_bounds_;
 
   DISALLOW_COPY_AND_ASSIGN(TextTexture);
 };
@@ -77,6 +90,18 @@ void Text::SetMultiLine(bool multiline) {
   texture_->SetMultiLine(multiline);
 }
 
+void Text::SetCursorEnabled(bool enabled) {
+  texture_->SetCursorEnabled(enabled);
+}
+
+void Text::SetCursorPosition(int position) {
+  texture_->SetCursorPosition(position);
+}
+
+gfx::Rect Text::GetCursorBounds() {
+  return texture_->get_cursor_bounds();
+}
+
 void Text::OnSetSize(gfx::SizeF size) {
   texture_->SetTextWidth(size.width());
 }
@@ -86,7 +111,7 @@ std::vector<std::unique_ptr<gfx::RenderText>> Text::LayOutTextForTest(
   return texture_->LayOutText(texture_size);
 }
 
-gfx::SizeF Text::GetTextureSizeForTest() const {
+gfx::SizeF Text::GetTextureSize() const {
   return texture_->GetDrawnSize();
 }
 
@@ -112,6 +137,13 @@ std::vector<std::unique_ptr<gfx::RenderText>> TextTexture::LayOutText(
       PrepareDrawStringRect(
           text_, fonts, color_, &text_bounds, alignment_,
           multiline_ ? kWrappingBehaviorWrap : kWrappingBehaviorNoWrap);
+
+  if (cursor_enabled_) {
+    DCHECK(!multiline_);
+    lines.front()->SetCursorEnabled(true);
+    lines.front()->SetCursorPosition(cursor_position_);
+    cursor_bounds_ = lines.front()->GetUpdatedCursorBounds();
+  }
 
   // Note, there is no padding here whatsoever.
   size_ = gfx::SizeF(text_bounds.size());
