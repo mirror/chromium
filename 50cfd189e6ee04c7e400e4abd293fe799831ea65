@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "422d88ea_7fb28971",
+        "filename": "components/omnibox/browser/autocomplete_match.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-12-01T18:28:46Z",
+      "side": 1,
+      "message": "I had this originally, but so many unit tests failed, that I assumed it was the wrong approach. Anyways, unit tests are fixed.",
+      "parentUuid": "e4bf9db7_bee5f2a0",
+      "revId": "50cfd189e6ee04c7e400e4abd293fe799831ea65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86bb08e5_0b0112f4",
         "filename": "components/omnibox/browser/history_quick_provider.cc",
         "patchSetId": 4
