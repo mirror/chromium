@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e4df1adb_54e30043",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-01T02:03:39Z",
+      "side": 1,
+      "message": "I would expect that taking any action on within the chrome://extensions page other than clicking on a link element, does not take the user outside of chrome://extensions. Even clicking on a link opens a new tab, instead of replacing/discarding the contents of the existing tab.\n\nAlways forwarding the user to the main page is the simplest and safest solution IMO. I am glad to hear others opinions on this.\n\n\u003e Should it close the tab;\n\nPreferably no. What if the tab is the last tab? It would surprisingly close the entire browser session.",
+      "parentUuid": "3e49d92d_f25b082d",
+      "revId": "528614ce2c947c4996e5ac44a0150c62385440c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "83bf8a2c_bbe39634",
         "filename": "chrome/browser/resources/md_extensions/navigation_helper.js",
         "patchSetId": 2
