@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "11ac2356_89e689d1",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-01T04:27:30Z",
+      "side": 1,
+      "message": "We got rid of the default: so the compiler will check that all values of CBORValue::Type are covered. I agree that adding a NOTREACHED() after the switch makes sense. However, that does mean that Jun should add the major types 1, 6, and 7 to the enum, and explicitly map them to UNSUPPORTED_MAJOR_TYPE_ERROR. I *think* it\u0027s a bug for Type::NONE to ever be found here, so the break; there that leads to NOTREACHED() is still correct.",
+      "parentUuid": "bce5f39e_aaf21b7f",
+      "revId": "3f85e3ad5bcdc257bfbfb4dc09e7063135d3c291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4856b662_eb58ac36",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 22
@@ -311,6 +329,24 @@
       "side": 1,
       "message": "The reasoning behind choosing size_t for exposed static CBORReader::Read() function and int for private CBORReader::Decode() was to prevent callers from the API from passing in any negative values. \n\nHowever, I believe if the caller does pass in negative value as |max_nesting_level| current implementation will always return TOO_MUCH_NESTING_ERROR, which is also correct.\n\nChanged type of |max_nesting_level| to int.",
       "parentUuid": "9a355157_dd71856f",
+      "revId": "3f85e3ad5bcdc257bfbfb4dc09e7063135d3c291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f8912136_2875e1bc",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-01T04:27:30Z",
+      "side": 1,
+      "message": "https://google.github.io/styleguide/cppguide.html#Integer_Types says \"In particular, do not use unsigned types to say a number will never be negative. Instead, use assertions for this.\"\n\nMy thought when I didn\u0027t complain about the mix of types, was that a size_t parameter doesn\u0027t cause any implicit conversions in the call, no matter what the argument type is. (I guess I\u0027m assuming we have 64-bit builds everywhere...) Then the checked_cast\u003cint\u003e catches if the argument is something like 2^32+5.\n\nIt doesn\u0027t matter much, since this particular argument is likely to be constant everywhere. And I don\u0027t think there\u0027s any way to ensure implicit casts are avoided everywhere.",
+      "parentUuid": "97fd1c35_f9fdac5d",
       "revId": "3f85e3ad5bcdc257bfbfb4dc09e7063135d3c291",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
