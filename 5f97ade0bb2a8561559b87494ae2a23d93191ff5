@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82210f0e_695d5a2e",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 3154,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-12-01T21:08:09Z",
+      "side": 1,
+      "message": "Not sure if this is better. The alternative is to change the offset to be a Size everywhere, starting with fragment_data in the painting code.",
+      "range": {
+        "startLine": 3153,
+        "startChar": 2,
+        "endLine": 3154,
+        "endChar": 75
+      },
+      "revId": "5f97ade0bb2a8561559b87494ae2a23d93191ff5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
