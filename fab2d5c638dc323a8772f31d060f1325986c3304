@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54fb0fb1_7bab8aa7",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-01T20:42:23Z",
+      "side": 1,
+      "message": "We can\u0027t use BGRA if the context doesn\u0027t support it, this is in the context capabilities.\n\nAlso should this be CHROMEOS specific?",
+      "revId": "fab2d5c638dc323a8772f31d060f1325986c3304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
