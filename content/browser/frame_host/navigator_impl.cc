@@ -152,7 +152,7 @@ void NavigatorImpl::CheckWebUIRendererDoesNotDisplayNormalURL(
       !is_allowed_in_web_ui_renderer) {
     // Log the URL to help us diagnose any future failures of this CHECK.
     GetContentClient()->SetActiveURL(url);
-    CHECK(0);
+    // CHECK(0);
   }
 }
 

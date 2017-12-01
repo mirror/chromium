@@ -140,6 +140,10 @@
 #include "chrome/browser/printing/printing_init.h"
 #endif
 
+#if defined(OS_CHROMEOS)
+#include "chrome/browser/system_web_apps/system_app_helper.h"
+#endif
+
 using content::WebContents;
 
 namespace {
@@ -305,6 +309,10 @@ void TabHelpers::AttachTabHelpers(WebContents* web_contents) {
 #if defined(OS_WIN) || defined(OS_MACOSX) || \
     (defined(OS_LINUX) && !defined(OS_CHROMEOS))
   metrics::DesktopSessionDurationObserver::CreateForWebContents(web_contents);
+#endif
+
+#if defined(OS_CHROMEOS)
+  SystemWebAppHelper::CreateForWebContents(web_contents);
 #endif
 
 // --- Feature tab helpers behind flags ---

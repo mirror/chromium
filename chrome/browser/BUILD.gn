@@ -2781,6 +2781,8 @@ split_static_library("browser") {
       "sync/sync_error_notifier_ash.h",
       "sync/sync_error_notifier_factory_ash.cc",
       "sync/sync_error_notifier_factory_ash.h",
+      "system_web_apps/system_app_helper.cc",
+      "system_web_apps/system_app_helper.h",
       "task_manager/providers/arc/arc_process_task.cc",
       "task_manager/providers/arc/arc_process_task.h",
       "task_manager/providers/arc/arc_process_task_provider.cc",

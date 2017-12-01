@@ -2130,16 +2130,20 @@ void RenderFrameHostImpl::AllowBindings(int bindings_flags) {
       GetProcess()->HasConnection() &&
       !ChildProcessSecurityPolicyImpl::GetInstance()->HasWebUIBindings(
           GetProcess()->GetID())) {
+    LOG(ERROR) << "BDG: AllowBindings 1";
     // This process has no bindings yet. Make sure it does not have more
     // than this single active view.
     // --single-process only has one renderer.
     if (GetProcess()->GetActiveViewCount() > 1 &&
         !base::CommandLine::ForCurrentProcess()->HasSwitch(
-            switches::kSingleProcess))
+            switches::kSingleProcess)) {
+      LOG(ERROR) << "BDG: AllowBindings 2";
       return;
+    }
   }
 
   if (bindings_flags & BINDINGS_POLICY_WEB_UI) {
+    LOG(ERROR) << "BDG: AllowBindings 3";
     ChildProcessSecurityPolicyImpl::GetInstance()->GrantWebUIBindings(
         GetProcess()->GetID());
   }
@@ -2149,8 +2153,12 @@ void RenderFrameHostImpl::AllowBindings(int bindings_flags) {
     DCHECK_EQ(GetParent()->GetEnabledBindings(), GetEnabledBindings());
 
   if (render_frame_created_) {
-    if (!frame_bindings_control_)
+    LOG(ERROR) << "BDG: AllowBindings 4";
+    if (!frame_bindings_control_) {
+      LOG(ERROR) << "BDG: AllowBindings 5";
       GetRemoteAssociatedInterfaces()->GetInterface(&frame_bindings_control_);
+    }
+
     frame_bindings_control_->AllowBindings(enabled_bindings_);
   }
 }
@@ -4283,8 +4291,10 @@ void RenderFrameHostImpl::BindAuthenticatorRequest(
 void RenderFrameHostImpl::GetInterface(
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
+  LOG(ERROR) << "BDG: GETTING INTERFACE " << interface_name;
   if (!registry_ ||
       !registry_->TryBindInterface(interface_name, &interface_pipe)) {
+    LOG(ERROR) << "BDG: still here";
     delegate_->OnInterfaceRequest(this, interface_name, &interface_pipe);
     if (interface_pipe->is_valid() &&
         !TryBindFrameInterface(interface_name, &interface_pipe, this)) {

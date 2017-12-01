@@ -1199,6 +1199,7 @@ void RenderFrameImpl::CreateFrame(
       render_frame->render_widget_->RegisterRenderFrame(render_frame);
   }
 
+  //render_frame->AllowBindings(BINDINGS_POLICY_WEB_UI);
   render_frame->Initialize();
 }
 
@@ -1364,6 +1365,8 @@ RenderFrameImpl::RenderFrameImpl(CreateParams params)
   manifest_manager_ = new ManifestManager(this);
   memset(&peak_memory_metrics_, 0,
          sizeof(RenderThreadImpl::RendererMemoryMetrics));
+  LOG(ERROR) << "HASDSADSADSADSADSADDASADSADSAD";
+  AllowBindings(BINDINGS_POLICY_WEB_UI);
 }
 
 mojom::FrameHost* RenderFrameImpl::GetFrameHost() {
@@ -3100,6 +3103,7 @@ void RenderFrameImpl::GetCanonicalUrlForSharing(
 }
 
 void RenderFrameImpl::AllowBindings(int32_t enabled_bindings_flags) {
+  LOG(ERROR) << "BDG: RF AllowBindings " << enabled_bindings_flags;
   if (IsMainFrame() && (enabled_bindings_flags & BINDINGS_POLICY_WEB_UI) &&
       !(enabled_bindings_ & BINDINGS_POLICY_WEB_UI)) {
     // TODO(sammc): Move WebUIExtensionData to be a RenderFrameObserver.
