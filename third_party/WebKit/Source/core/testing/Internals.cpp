@@ -3430,7 +3430,7 @@ Vector<String> Internals::getCSSPropertyLonghands() const {
   for (int id = firstCSSProperty; id <= lastCSSProperty; ++id) {
     CSSPropertyID property = static_cast<CSSPropertyID>(id);
     if (CSSProperty::Get(property).IsLonghand()) {
-      result.push_back(getPropertyNameString(property));
+      result.push_back(CSSProperty::Get(property).GetPropertyNameString());
     }
   }
   return result;
@@ -3441,7 +3441,7 @@ Vector<String> Internals::getCSSPropertyShorthands() const {
   for (int id = firstCSSProperty; id <= lastCSSProperty; ++id) {
     CSSPropertyID property = static_cast<CSSPropertyID>(id);
     if (CSSProperty::Get(property).IsShorthand()) {
-      result.push_back(getPropertyNameString(property));
+      result.push_back(CSSProperty::Get(property).GetPropertyNameString());
     }
   }
   return result;
@@ -3451,7 +3451,7 @@ Vector<String> Internals::getCSSPropertyAliases() const {
   Vector<String> result;
   for (CSSPropertyID alias : kCSSPropertyAliasList) {
     DCHECK(isPropertyAlias(alias));
-    result.push_back(getPropertyNameString(alias));
+    result.push_back(CSSProperty::Get(alias).GetPropertyNameString());
   }
   return result;
 }
