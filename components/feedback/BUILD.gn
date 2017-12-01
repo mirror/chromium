@@ -4,6 +4,8 @@
 
 static_library("feedback") {
   sources = [
+    "anonymizer.cc",
+    "anonymizer.h",
     "anonymizer_tool.cc",
     "anonymizer_tool.h",
     "feedback_common.cc",

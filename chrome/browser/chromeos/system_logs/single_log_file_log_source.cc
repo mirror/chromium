@@ -98,22 +98,23 @@ void SingleLogFileLogSource::Fetch(const SysLogsSourceCallback& callback) {
   DCHECK(!callback.is_null());
 
   auto response = std::make_unique<SystemLogsResponse>();
-  auto* response_ptr = response.get();
-  base::PostTaskWithTraitsAndReply(
+  base::PostTaskWithTraits(
       FROM_HERE,
       base::TaskTraits(base::MayBlock(), base::TaskPriority::BACKGROUND),
       base::BindOnce(&SingleLogFileLogSource::ReadFile,
                      weak_ptr_factory_.GetWeakPtr(),
-                     kMaxNumAllowedLogRotationsDuringFileRead, response_ptr),
-      base::BindOnce(callback, std::move(response)));
+                     kMaxNumAllowedLogRotationsDuringFileRead,
+                     std::move(response), callback));
 }
 
 base::FilePath SingleLogFileLogSource::GetLogFilePath() const {
   return log_file_dir_path_.Append(source_name());
 }
 
-void SingleLogFileLogSource::ReadFile(size_t num_rotations_allowed,
-                                      SystemLogsResponse* result) {
+void SingleLogFileLogSource::ReadFile(
+    size_t num_rotations_allowed,
+    std::unique_ptr<SystemLogsResponse> result,
+    const SysLogsSourceCallback& callback) {
   // Attempt to open the file if it was not previously opened.
   if (!file_.IsValid()) {
     file_.Initialize(GetLogFilePath(),
@@ -153,7 +154,10 @@ void SingleLogFileLogSource::ReadFile(size_t num_rotations_allowed,
     size_t last_newline_pos = result_string.find_last_of('\n');
     if (last_newline_pos == std::string::npos) {
       file_.Seek(base::File::FROM_CURRENT, -size_read);
-      AppendToSystemLogsResponse(result, source_name(), "");
+      AppendToSystemLogsResponse(result.get(), source_name(), "");
+      if (!should_handle_file_rotation) {
+        anonymizer_.Anonymize(std::move(result), callback);
+      }
       return;
     }
     // The part of the string that will be returned includes the newline itself.
@@ -169,8 +173,7 @@ void SingleLogFileLogSource::ReadFile(size_t num_rotations_allowed,
   num_bytes_read_ += size_read;
 
   // Pass it back to the callback.
-  AppendToSystemLogsResponse(result, source_name(),
-                             anonymizer_.Anonymize(result_string));
+  AppendToSystemLogsResponse(result.get(), source_name(), result_string);
 
   // If the file was rotated, close the file handle and call this function
   // again, to read from the new file.
@@ -178,7 +181,9 @@ void SingleLogFileLogSource::ReadFile(size_t num_rotations_allowed,
     file_.Close();
     num_bytes_read_ = 0;
     file_inode_ = 0;
-    ReadFile(num_rotations_allowed - 1, result);
+    ReadFile(num_rotations_allowed - 1, std::move(result), callback);
+  } else {
+    anonymizer_.Anonymize(std::move(result), callback);
   }
 }
 

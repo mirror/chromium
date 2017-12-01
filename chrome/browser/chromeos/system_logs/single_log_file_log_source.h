@@ -11,7 +11,7 @@
 #include "base/files/file.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "components/feedback/anonymizer_tool.h"
+#include "components/feedback/anonymizer.h"
 #include "components/feedback/system_logs/system_logs_source.h"
 
 namespace base {
@@ -79,7 +79,9 @@ class SingleLogFileLogSource : public SystemLogsSource {
   // during a call, ReadFile() stops checking for log file rotation for the
   // remainder of its execution. Any further rotation could result in missed log
   // data.
-  void ReadFile(size_t num_rotations_allowed, SystemLogsResponse* result);
+  void ReadFile(size_t num_rotations_allowed,
+                std::unique_ptr<SystemLogsResponse> result,
+                const SysLogsSourceCallback& callback);
 
   // The source type.
   const SupportedSource source_type_;
@@ -98,7 +100,7 @@ class SingleLogFileLogSource : public SystemLogsSource {
   ino_t file_inode_;
 
   // For removing PII from log results.
-  feedback::AnonymizerTool anonymizer_;
+  feedback::Anonymizer anonymizer_;
 
   base::WeakPtrFactory<SingleLogFileLogSource> weak_ptr_factory_;
 
