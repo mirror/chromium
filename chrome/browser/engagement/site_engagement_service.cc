@@ -19,6 +19,7 @@
 #include "base/values.h"
 #include "chrome/browser/banners/app_banner_settings_helper.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
+#include "chrome/browser/engagement/app_engagement_recorder.h"
 #include "chrome/browser/engagement/site_engagement_helper.h"
 #include "chrome/browser/engagement/site_engagement_metrics.h"
 #include "chrome/browser/engagement/site_engagement_observer.h"
@@ -330,6 +331,7 @@ void SiteEngagementService::AddPoints(const GURL& url, double points) {
 }
 
 void SiteEngagementService::AfterStartupTask() {
+  app_engagement_recorder_.reset(new AppEngagementRecorder(this));
   // Check if we need to reset last engagement times on startup - we want to
   // avoid doing this in AddPoints() if possible. It is still necessary to check
   // in AddPoints for people who never restart Chrome, but leave it open and
