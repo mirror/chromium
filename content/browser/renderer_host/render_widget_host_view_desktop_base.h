@@ -18,10 +18,33 @@ class CONTENT_EXPORT RenderWidgetHostViewDesktopBase
  public:
   ~RenderWidgetHostViewDesktopBase() override;
 
+  // Implementations must call this when the visibility of the view changes.
+  // Calls WasShown()/WasHidden() depending on the visibility and capture state
+  // of the view.
+  void VisibilityChanged();
+
  protected:
   RenderWidgetHostViewDesktopBase();
 
  private:
+  // Invoked when the view becomes visible and/or captured. Should enable
+  // rendering and adjust the priority of the process hosting this view.
+  virtual void WasShown() = 0;
+
+  // Invoked when the view becomes non-visible and non-captured. Should disable
+  // rendering and adjust the priority of the process hosting this view.
+  virtual void WasHidden() = 0;
+
+  // RenderWidgetHostViewBase:
+  void CaptureStateChanged() final;
+
+  // Calls WasShown()/WasHidden() depending on the visibility and capture state
+  // of the view.
+  void VisibilityOrCaptureStateChanged();
+
+  // Whether the view was shown at least once.
+  bool was_shown_once_ = false;
+
   DISALLOW_COPY_AND_ASSIGN(RenderWidgetHostViewDesktopBase);
 };
 

@@ -751,40 +751,41 @@ void RenderWidgetHostViewMac::Show() {
   ScopedCAActionDisabler disabler;
   [cocoa_view_ setHidden:NO];
 
+  if (GetVisibility() == Visibility::VISIBLE) {
+    DCHECK(!render_widget_host_->is_hidden());
+
+    // If there is not a frame being currently drawn, kick one, so that the
+    // below pause will have a frame to wait on.
+    render_widget_host_->ScheduleComposite();
+    PauseForPendingResizeOrRepaintsAndDraw();
+  }
+}
+
+void RenderWidgetHostViewMac::Hide() {
+  ScopedCAActionDisabler disabler;
+  [cocoa_view_ setHidden:YES];
+}
+
+void RenderWidgetHostViewMac::WasShown() {
   browser_compositor_->SetRenderWidgetHostIsHidden(false);
 
   ui::LatencyInfo renderer_latency_info;
   renderer_latency_info.AddLatencyNumber(
       ui::TAB_SHOW_COMPONENT, render_widget_host_->GetLatencyComponentId(), 0);
   render_widget_host_->WasShown(renderer_latency_info);
-
-  // If there is not a frame being currently drawn, kick one, so that the below
-  // pause will have a frame to wait on.
-  render_widget_host_->ScheduleComposite();
-  PauseForPendingResizeOrRepaintsAndDraw();
 }
 
-void RenderWidgetHostViewMac::Hide() {
-  ScopedCAActionDisabler disabler;
-  [cocoa_view_ setHidden:YES];
-
-  render_widget_host_->WasHidden();
-  browser_compositor_->SetRenderWidgetHostIsHidden(true);
-}
-
-void RenderWidgetHostViewMac::WasUnOccluded() {
-  browser_compositor_->SetRenderWidgetHostIsHidden(false);
-  render_widget_host_->WasShown(ui::LatencyInfo());
-}
-
-void RenderWidgetHostViewMac::WasOccluded() {
-  // Ignore occlusion when in fullscreen low power mode, because the occlusion
-  // is likely coming from the fullscreen low power window.
-  ui::AcceleratedWidgetMac* accelerated_widget_mac =
-      browser_compositor_->GetAcceleratedWidgetMac();
-  if (accelerated_widget_mac &&
-      accelerated_widget_mac->MightBeInFullscreenLowPowerMode()) {
-    return;
+void RenderWidgetHostViewMac::WasHidden() {
+  if (GetVisibility() == Visibility::OCCLUDED) {
+    // Ignore occlusion when in fullscreen low power mode, because the occlusion
+    // is likely coming from the fullscreen low power window.
+    ui::AcceleratedWidgetMac* accelerated_widget_mac =
+        browser_compositor_->GetAcceleratedWidgetMac();
+    if (accelerated_widget_mac &&
+        accelerated_widget_mac->MightBeInFullscreenLowPowerMode()) {
+      WasShown();
+      return;
+    }
   }
 
   render_widget_host_->WasHidden();
@@ -873,8 +874,14 @@ bool RenderWidgetHostViewMac::IsSurfaceAvailableForCopy() const {
       ->CanCopyFromCompositingSurface();
 }
 
-bool RenderWidgetHostViewMac::IsShowing() {
-  return ![cocoa_view_ isHidden];
+Visibility RenderWidgetHostViewMac::GetVisibility() const {
+  if ([cocoa_view_ isHiddenOrHasHiddenAncestor])
+    return Visibility::HIDDEN;
+  if ([cocoa_view_ window] && !([[cocoa_view_ window] occlusionState] &
+                                NSWindowOcclusionStateVisible)) {
+    return Visibility::OCCLUDED;
+  }
+  return Visibility::VISIBLE;
 }
 
 gfx::Rect RenderWidgetHostViewMac::GetViewBounds() const {
@@ -2831,6 +2838,10 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
         removeObserver:self
                   name:NSWindowDidResignKeyNotification
                 object:oldWindow];
+    [notificationCenter
+        removeObserver:self
+                  name:NSWindowDidChangeOcclusionStateNotification
+                object:oldWindow];
   }
   if (newWindow) {
     [notificationCenter
@@ -2855,6 +2866,10 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
     [notificationCenter addObserver:self
                            selector:@selector(windowDidResignKey:)
                                name:NSWindowDidResignKeyNotification
+                             object:newWindow];
+    [notificationCenter addObserver:self
+                           selector:@selector(windowChangedOcclusionState:)
+                               name:NSWindowDidChangeOcclusionStateNotification
                              object:newWindow];
   }
 }
@@ -2941,6 +2956,24 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
 
   if ([[self window] firstResponder] == self)
     renderWidgetHostView_->SetActive(false);
+}
+
+- (void)viewWillMoveToSuperview:(NSView*)newSuperview {
+  // Moving to a new superview can effectively hide the view without triggering
+  // viewDidHide.
+  renderWidgetHostView_->VisibilityChanged();
+}
+
+- (void)windowChangedOcclusionState:(NSNotification*)notification {
+  renderWidgetHostView_->VisibilityChanged();
+}
+
+- (void)viewDidHide {
+  renderWidgetHostView_->VisibilityChanged();
+}
+
+- (void)viewDidUnhide {
+  renderWidgetHostView_->VisibilityChanged();
 }
 
 - (BOOL)becomeFirstResponder {
