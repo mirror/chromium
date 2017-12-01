@@ -53,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "b21ad469_cc3ba159",
+        "filename": "ui/ozone/platform/x11/x11_window_ozone_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-01T02:27:07Z",
+      "side": 1,
+      "message": "Why is the test for x11_window_ozone.cc in a different location?",
+      "revId": "2c511582e544451f0f708a9df08b8914c8226af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1a23b8e_e782b460",
         "filename": "ui/ozone/platform/x11/x11_window_ozone_unittest.cc",
         "patchSetId": 11
@@ -64,6 +81,23 @@
       "writtenOn": "2017-11-30T23:29:07Z",
       "side": 1,
       "message": "some parts of Chrome refuse to use gmock. Do we think that ui/ozone/ can? I say sure.",
+      "revId": "2c511582e544451f0f708a9df08b8914c8226af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d247470_686df791",
+        "filename": "ui/ozone/platform/x11/x11_window_ozone_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-01T02:27:07Z",
+      "side": 1,
+      "message": "(_, _)\n\nWhat\u0027s with the sad emoji in the test.",
       "revId": "2c511582e544451f0f708a9df08b8914c8226af1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
