@@ -33,7 +33,7 @@ H264Decoder::H264Decoder(H264Accelerator* accelerator)
 
 H264Decoder::~H264Decoder() {}
 
-void H264Decoder::Reset() {
+bool H264Decoder::Reset() {
   curr_pic_ = nullptr;
   curr_nalu_ = nullptr;
   curr_slice_hdr_ = nullptr;
@@ -56,12 +56,16 @@ void H264Decoder::Reset() {
   ref_pic_list_b1_.clear();
   dpb_.Clear();
   parser_.Reset();
-  accelerator_->Reset();
+  bool success = accelerator_->Reset();
   last_output_poc_ = std::numeric_limits<int>::min();
 
   // If we are in kDecoding, we can resume without processing an SPS.
-  if (state_ == kDecoding)
+  if (!success)
+    state_ = kError;
+  else if (state_ == kDecoding)
     state_ = kAfterReset;
+
+  return success;
 }
 
 void H264Decoder::PrepareRefPicLists(const H264SliceHeader* slice_hdr) {
@@ -644,8 +648,8 @@ bool H264Decoder::ModifyReferencePicList(const H264SliceHeader* slice_hdr,
       default:
         // May be recoverable.
         DVLOG(1) << "Invalid modification_of_pic_nums_idc="
-                 << list_mod->modification_of_pic_nums_idc
-                 << " in position " << i;
+                 << list_mod->modification_of_pic_nums_idc << " in position "
+                 << i;
         break;
     }
 
@@ -670,8 +674,8 @@ void H264Decoder::OutputPic(scoped_refptr<H264Picture> pic) {
   }
 
   DVLOG_IF(1, pic->pic_order_cnt < last_output_poc_)
-      << "Outputting out of order, likely a broken stream: "
-      << last_output_poc_ << " -> " << pic->pic_order_cnt;
+      << "Outputting out of order, likely a broken stream: " << last_output_poc_
+      << " -> " << pic->pic_order_cnt;
   last_output_poc_ = pic->pic_order_cnt;
 
   DVLOG(4) << "Posting output task for POC: " << pic->pic_order_cnt;
@@ -709,7 +713,8 @@ bool H264Decoder::Flush() {
   return true;
 }
 
-bool H264Decoder::StartNewFrame(const H264SliceHeader* slice_hdr) {
+H264Decoder::Result H264Decoder::StartNewFrame(
+    const H264SliceHeader* slice_hdr) {
   // TODO posciak: add handling of max_num_ref_frames per spec.
   CHECK(curr_pic_.get());
   DCHECK(slice_hdr);
@@ -717,12 +722,12 @@ bool H264Decoder::StartNewFrame(const H264SliceHeader* slice_hdr) {
   curr_pps_id_ = slice_hdr->pic_parameter_set_id;
   const H264PPS* pps = parser_.GetPPS(curr_pps_id_);
   if (!pps)
-    return false;
+    return Result::kFailed;
 
   curr_sps_id_ = pps->seq_parameter_set_id;
   const H264SPS* sps = parser_.GetSPS(curr_sps_id_);
   if (!sps)
-    return false;
+    return Result::kFailed;
 
   max_frame_num_ = 1 << (sps->log2_max_frame_num_minus4 + 4);
   int frame_num = slice_hdr->frame_num;
@@ -733,21 +738,20 @@ bool H264Decoder::StartNewFrame(const H264SliceHeader* slice_hdr) {
   if (frame_num != prev_ref_frame_num_ &&
       frame_num != (prev_ref_frame_num_ + 1) % max_frame_num_) {
     if (!HandleFrameNumGap(frame_num))
-      return false;
+      return Result::kFailed;
   }
 
   if (!InitCurrPicture(slice_hdr))
-    return false;
+    return Result::kFailed;
 
   UpdatePicNums(frame_num);
   PrepareRefPicLists(slice_hdr);
 
-  if (!accelerator_->SubmitFrameMetadata(sps, pps, dpb_, ref_pic_list_p0_,
-                                         ref_pic_list_b0_, ref_pic_list_b1_,
-                                         curr_pic_.get()))
-    return false;
-
-  return true;
+  // TODO(liberato): if this needs to retry, then post.  not sure how to
+  // notify our caller though.
+  return accelerator_->SubmitFrameMetadata(sps, pps, dpb_, ref_pic_list_p0_,
+                                           ref_pic_list_b0_, ref_pic_list_b1_,
+                                           curr_pic_.get());
 }
 
 bool H264Decoder::HandleMemoryManagementOps(scoped_refptr<H264Picture> pic) {
@@ -1359,8 +1363,18 @@ H264Decoder::DecodeResult H264Decoder::Decode() {
           if (!curr_pic_)
             return kRanOutOfSurfaces;
 
-          if (!StartNewFrame(curr_slice_hdr_.get()))
-            SET_ERROR_AND_RETURN();
+          switch (StartNewFrame(curr_slice_hdr_.get())) {
+            case Result::kOk:
+              break;
+            case Result::kTryAgain:
+              // Accelerator can't proceed right now.  Try again later.  To
+              // simplify the state machine, we just release the picture and
+              // get a new one the next time.
+              curr_pic_ = nullptr;
+              return kTryAgain;
+            case Result::kFailed:
+              SET_ERROR_AND_RETURN();
+          }
         }
 
         if (!ProcessCurrentSlice())
