@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10220b70_08845440",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-12-01T04:38:32Z",
+      "side": 1,
+      "message": "Does it make sense to pass the observer list to notification_consolidator and move below logic to that class?",
+      "range": {
+        "startLine": 262,
+        "startChar": 74,
+        "endLine": 262,
+        "endChar": 0
+      },
+      "revId": "c06da5227afe38df833398a7ca5462e7cb437083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
