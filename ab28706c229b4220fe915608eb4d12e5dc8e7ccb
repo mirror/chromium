@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8770dd92_d253908f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-12-01T22:25:15Z",
+      "side": 1,
+      "message": "This has a few too many dependencies on the bottom sheet, I\u0027ll try cleaning this up later as a follow-up.",
+      "parentUuid": "4901e651_c3224dd9",
+      "revId": "ab28706c229b4220fe915608eb4d12e5dc8e7ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f9a8fba7_8b080775",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetSwipeDetector.java",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "ab28706c229b4220fe915608eb4d12e5dc8e7ccb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b345b7a_457dfa02",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetSwipeDetector.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-12-01T22:25:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9a8fba7_8b080775",
+      "range": {
+        "startLine": 16,
+        "startChar": 15,
+        "endLine": 16,
+        "endChar": 16
+      },
+      "revId": "ab28706c229b4220fe915608eb4d12e5dc8e7ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
