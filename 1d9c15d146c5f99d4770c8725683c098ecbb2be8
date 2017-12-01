@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "826b19fc_dc70117e",
+        "filename": "components/os_crypt/key_storage_kwallet_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-01T16:21:02Z",
+      "side": 1,
+      "message": "base::MakeRefCounted",
+      "range": {
+        "startLine": 100,
+        "startChar": 21,
+        "endLine": 100,
+        "endChar": 24
+      },
+      "revId": "1d9c15d146c5f99d4770c8725683c098ecbb2be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30432e87_9a8cce91",
+        "filename": "components/os_crypt/key_storage_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-01T16:21:02Z",
+      "side": 1,
+      "message": "foo_unique_ptr.reset(new Foo(...)) -\u003e foo_unique_ptr \u003d std::make_unique\u003cFoo\u003e(...)",
+      "revId": "1d9c15d146c5f99d4770c8725683c098ecbb2be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
