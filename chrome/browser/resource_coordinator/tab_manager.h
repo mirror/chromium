@@ -482,6 +482,10 @@ class TabManager : public TabStripModelObserver,
 
   TabManagerStatsCollector* stats_collector() { return stats_collector_.get(); }
 
+  ResourceCoordinatorSignalObserver* resource_coordinator_signal_observer() {
+    return resource_coordinator_signal_observer_.get();
+  }
+
   // Timer to periodically update the stats of the renderers.
   base::RepeatingTimer update_timer_;
 

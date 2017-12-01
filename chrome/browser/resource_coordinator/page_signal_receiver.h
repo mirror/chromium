@@ -21,6 +21,8 @@ namespace resource_coordinator {
 class PageSignalObserver {
  public:
   virtual ~PageSignalObserver() = default;
+  // PageSignalReceiver will deliver signals with a |web_contents| even it's not
+  // managed by the client.
   virtual void OnPageAlmostIdle(content::WebContents* web_contents) {}
   virtual void OnExpectedTaskQueueingDurationSet(
       content::WebContents* web_contents,
