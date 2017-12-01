@@ -436,8 +436,8 @@ PaintResult PaintLayerPainter::PaintLayerContents(
       // all of them in the mask.
       //
       // The paint rect is in this layer's space, so convert it to the clipper's
-      // layer's space. The rootLayer is also changed to the clipper's layer to
-      // simplify coordinate system adjustments. The change to rootLayer must
+      // layer's space. The root_layer is also changed to the clipper's layer to
+      // simplify coordinate system adjustments. The change to root_layer must
       // persist to correctly record the clips.
       paint_layer_for_fragments =
           paint_layer_.EnclosingLayerWithCompositedLayerMapping(kExcludeSelf);
@@ -629,10 +629,18 @@ PaintResult PaintLayerPainter::PaintLayerContents(
 bool PaintLayerPainter::NeedsToClip(
     const PaintLayerPaintingInfo& local_painting_info,
     const ClipRect& clip_rect,
-    const PaintLayerFlags& paint_flags) {
+    const PaintLayerFlags& paint_flags,
+    const LayoutBoxModelObject& layout_object) {
   // Clipping will be applied by property nodes directly for SPv2.
   if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
     return false;
+  // Embedded objects have a clip rect when border radius is present
+  // because we need it for the border radius mask with composited
+  // chidren. However, we do not want to apply the clip when painting
+  // the embedded content itself, because we will clip out the border in
+  // such cases.
+  if (layout_object.IsLayoutEmbeddedContent())
+    return paint_flags & kPaintLayerPaintingChildClippingMaskPhase;
   return clip_rect.Rect() != local_painting_info.paint_dirty_rect ||
          (paint_flags & kPaintLayerPaintingAncestorClippingMaskPhase) ||
          clip_rect.HasRadius();
@@ -760,7 +768,8 @@ PaintResult PaintLayerPainter::PaintLayerWithTransform(
   for (const auto& fragment : layer_fragments) {
     Optional<LayerClipRecorder> clip_recorder;
     if (parent_layer && !RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
-      if (NeedsToClip(painting_info, fragment.background_rect, paint_flags)) {
+      if (NeedsToClip(painting_info, fragment.background_rect, paint_flags,
+                      parent_layer->GetLayoutObject())) {
         clip_recorder.emplace(
             context, *parent_layer, DisplayItem::kClipLayerParent,
             fragment.background_rect, painting_info.root_layer,
@@ -923,8 +932,8 @@ void PaintLayerPainter::PaintOverflowControlsForFragments(
     LayoutRect cull_rect = fragment.background_rect.Rect();
 
     Optional<LayerClipRecorder> clip_recorder;
-    if (NeedsToClip(local_painting_info, fragment.background_rect,
-                    paint_flags)) {
+    if (NeedsToClip(local_painting_info, fragment.background_rect, paint_flags,
+                    paint_layer_.GetLayoutObject())) {
       clip_recorder.emplace(
           context, paint_layer_, DisplayItem::kClipLayerOverflowControls,
           fragment.background_rect, local_painting_info.root_layer,
@@ -979,8 +988,8 @@ void PaintLayerPainter::PaintFragmentWithPhase(
   DisplayItemClient* client = &paint_layer_.GetLayoutObject();
   Optional<LayerClipRecorder> clip_recorder;
   if (clip_state != kHasClipped &&
-      (NeedsToClip(painting_info, clip_rect, paint_flags) ||
-       paint_flags & kPaintLayerPaintingAncestorClippingMaskPhase)) {
+      NeedsToClip(painting_info, clip_rect, paint_flags,
+                  paint_layer_.GetLayoutObject())) {
     DisplayItem::Type clip_type =
         DisplayItem::PaintPhaseToClipLayerFragmentType(phase);
     LayerClipRecorder::BorderRadiusClippingRule clipping_rule;
@@ -1006,7 +1015,6 @@ void PaintLayerPainter::PaintFragmentWithPhase(
         clipping_rule = LayerClipRecorder::kIncludeSelfForBorderRadius;
         break;
     }
-
     clip_recorder.emplace(context, paint_layer_, clip_type, clip_rect,
                           painting_info.root_layer, fragment.pagination_offset,
                           paint_flags, *client, clipping_rule);
@@ -1090,7 +1098,7 @@ void PaintLayerPainter::PaintForegroundForFragments(
   Optional<LayerClipRecorder> clip_recorder;
   if (should_clip &&
       NeedsToClip(local_painting_info, layer_fragments[0].foreground_rect,
-                  paint_flags)) {
+                  paint_flags, paint_layer_.GetLayoutObject())) {
     clip_recorder.emplace(
         context, paint_layer_, DisplayItem::kClipLayerForeground,
         layer_fragments[0].foreground_rect, local_painting_info.root_layer,
