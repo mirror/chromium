@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c2350a2b_3e05f58a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchBarBannerControl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-12-01T20:22:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "730e13bc_f67b8cdb",
+      "range": {
+        "startLine": 131,
+        "startChar": 15,
+        "endLine": 131,
+        "endChar": 25
+      },
+      "revId": "a7eb8f247fd7c45ce55d008e76e24888a69b3e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec2d64ae_dfd7a7bc",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchBarBannerControl.java",
         "patchSetId": 4
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "dad17fb5_eef04f30",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchBarBannerControl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-12-01T20:22:27Z",
+      "side": 1,
+      "message": "I\u0027ll add Theresa. I found a class that implements this interface, so by using that I don\u0027t have to override the methods I\u0027m not using.",
+      "parentUuid": "ec2d64ae_dfd7a7bc",
+      "revId": "a7eb8f247fd7c45ce55d008e76e24888a69b3e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee7adf6f_b7563c7d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchIPH.java",
         "patchSetId": 4
@@ -53,6 +95,30 @@
       "writtenOn": "2017-12-01T19:39:18Z",
       "side": 1,
       "message": "Nit: git cl format",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 26
+      },
+      "revId": "a7eb8f247fd7c45ce55d008e76e24888a69b3e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "732043bd_5d1d926f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchIPH.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-12-01T20:22:27Z",
+      "side": 1,
+      "message": "Actually git cl format did this. Should I manually fix it and ignore git cl format?",
+      "parentUuid": "ee7adf6f_b7563c7d",
       "range": {
         "startLine": 58,
         "startChar": 0,
@@ -85,6 +151,30 @@
       "revId": "a7eb8f247fd7c45ce55d008e76e24888a69b3e16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "776bd1fb_79d69722",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchIPH.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-12-01T20:22:27Z",
+      "side": 1,
+      "message": "Not when mIsShowing \u003d\u003d true, which is checked before.",
+      "parentUuid": "fc0e94f7_81df9679",
+      "range": {
+        "startLine": 59,
+        "startChar": 23,
+        "endLine": 59,
+        "endChar": 35
+      },
+      "revId": "a7eb8f247fd7c45ce55d008e76e24888a69b3e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
