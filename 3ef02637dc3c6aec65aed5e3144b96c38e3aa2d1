@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d277ac4e_a87d17bc",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/CacheStorage.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-12-01T02:16:48Z",
+      "side": 0,
+      "message": "In https://codereview.chromium.org/1177983007 you added \"RaisesException\" where it wasn\u0027t there before. Looking at other IDL\u0027s I don\u0027t see a single one with SecureContext that also has RaisesException (for that call). Is RaisesException implied with SecureContext?",
+      "revId": "3ef02637dc3c6aec65aed5e3144b96c38e3aa2d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

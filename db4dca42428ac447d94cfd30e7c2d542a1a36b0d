@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa010840_437c85ae",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/CacheStorage.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-12-01T02:16:48Z",
+      "side": 1,
+      "message": "exception_state is no longer needed in this function (and a few others too).",
+      "revId": "db4dca42428ac447d94cfd30e7c2d542a1a36b0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
