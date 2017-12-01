@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "55577207_8066be71",
+        "filename": "remoting/ios/app/settings/remoting_settings_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-12-01T02:52:10Z",
+      "side": 1,
+      "message": "This is good to know, but it does seem to be an overkill for me -- you need to implement custom layout object and shift around the cells to adjust for the separator.\n\nAdded some more comments.",
+      "parentUuid": "0d9c5837_6e335867",
+      "range": {
+        "startLine": 77,
+        "startChar": 50,
+        "endLine": 77,
+        "endChar": 0
+      },
+      "revId": "0f76602622f2a366036e75bf210db39dd3c76d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "881594aa_28010db2",
         "filename": "remoting/ios/app/settings/remoting_settings_view_controller.mm",
         "patchSetId": 2
@@ -119,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "06b8c1bd_d98d88a4",
+        "filename": "remoting/ios/app/settings/remoting_settings_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-12-01T02:52:10Z",
+      "side": 1,
+      "message": "It might work but I don\u0027t see any reason to do so... The general pattern is to implement and bind a data source to UICollectionViewController to provide the data, which already has the hierarchical structure of sections and items. I don\u0027t even know if it\u0027s possible to put a UICollectionViewController inside UICollectionViewCell...",
+      "parentUuid": "881594aa_28010db2",
+      "range": {
+        "startLine": 90,
+        "startChar": 41,
+        "endLine": 90,
+        "endChar": 0
+      },
+      "revId": "0f76602622f2a366036e75bf210db39dd3c76d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "873bce29_be4733b3",
         "filename": "remoting/ios/app/settings/remoting_settings_view_controller.mm",
         "patchSetId": 2
@@ -139,6 +187,30 @@
       "revId": "0f76602622f2a366036e75bf210db39dd3c76d07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a559e489_21bba04c",
+        "filename": "remoting/ios/app/settings/remoting_settings_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-12-01T02:52:10Z",
+      "side": 1,
+      "message": "This is expected by the style guide (although it looks bad...):\nhttps://github.com/google/styleguide/blob/gh-pages/objcguide.md#method-declarations-and-definitions",
+      "parentUuid": "873bce29_be4733b3",
+      "range": {
+        "startLine": 239,
+        "startChar": 36,
+        "endLine": 239,
+        "endChar": 0
+      },
+      "revId": "0f76602622f2a366036e75bf210db39dd3c76d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
