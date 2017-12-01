@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5852671b_0369c8a6",
+        "filename": "chrome/browser/ui/views/feature_promos/feature_promo_bubble_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-12-01T23:25:25Z",
+      "side": 1,
+      "message": "Does this need to be changed for RTL builds? (e.g. you\u0027ll need to shift left instead of right?)",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 113,
+        "endChar": 24
+      },
+      "revId": "c2b0a7ce97854515c42ce80ef7051edb02e7a9f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
