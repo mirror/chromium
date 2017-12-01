@@ -15,6 +15,10 @@
 
 namespace vr {
 
+namespace {
+constexpr float kCursorWidthRatio = 0.07f;
+}
+
 Text::Text(int maximum_width_pixels, float font_height_meters)
     : TexturedElement(maximum_width_pixels),
       texture_(base::MakeUnique<TextTexture>(font_height_meters)) {}
@@ -34,6 +38,25 @@ void Text::SetTextAlignment(UiTexture::TextAlignment alignment) {
 
 void Text::SetMultiLine(bool multiline) {
   texture_->SetMultiLine(multiline);
+}
+
+void Text::SetCursorEnabled(bool enabled) {
+  texture_->SetCursorEnabled(enabled);
+}
+
+void Text::SetCursorPosition(int position) {
+  texture_->SetCursorPosition(position);
+}
+
+gfx::RectF Text::GetCursorBounds() {
+  // Note that gfx:: cursor bounds always indicate a one-pixel width, so we
+  // override the width here to be a percentage of height for the sake of
+  // arbitrary texture sizes.
+  gfx::Rect bounds = texture_->get_cursor_bounds();
+  float scale = size().width() / texture_->GetDrawnSize().width();
+  return gfx::RectF(
+      bounds.CenterPoint().x() * scale, bounds.CenterPoint().y() * scale,
+      bounds.height() * scale * kCursorWidthRatio, bounds.height() * scale);
 }
 
 void Text::OnSetSize(gfx::SizeF size) {

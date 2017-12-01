@@ -42,6 +42,14 @@ gfx::SizeF TextTexture::GetDrawnSize() const {
   return size_;
 }
 
+void TextTexture::SetCursorEnabled(bool enabled) {
+  SetAndDirty(&cursor_enabled_, enabled);
+}
+
+void TextTexture::SetCursorPosition(int position) {
+  SetAndDirty(&cursor_position_, position);
+}
+
 std::vector<std::unique_ptr<gfx::RenderText>> TextTexture::LayOutText(
     const gfx::Size& texture_size) {
   gfx::FontList fonts;
@@ -56,6 +64,13 @@ std::vector<std::unique_ptr<gfx::RenderText>> TextTexture::LayOutText(
       PrepareDrawStringRect(
           text_, fonts, color_, &text_bounds, alignment_,
           multiline_ ? kWrappingBehaviorWrap : kWrappingBehaviorNoWrap);
+
+  if (cursor_enabled_) {
+    DCHECK(!multiline_);
+    lines.front()->SetCursorEnabled(true);
+    lines.front()->SetCursorPosition(cursor_position_);
+    cursor_bounds_ = lines.front()->GetUpdatedCursorBounds();
+  }
 
   // Note, there is no padding here whatsoever.
   size_ = gfx::SizeF(text_bounds.size());
