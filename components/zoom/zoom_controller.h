@@ -12,6 +12,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/observer_list.h"
 #include "components/prefs/pref_member.h"
+#include "components/zoom/metrics/zoom_metrics_recorder.h"
 #include "content/public/browser/host_zoom_map.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
@@ -136,6 +137,9 @@ class ZoomController : public content::WebContentsObserver,
   // Returns true on success.
   bool SetZoomLevel(double zoom_level);
 
+  // Same as SetZoomLevel, but for user initiated zoom changes.
+  bool SetZoomLevelByUser(double zoom_level);
+
   // Sets the zoom level via HostZoomMap (or stores it locally if in manual zoom
   // mode), and attributes the zoom to |client|. Returns true on success.
   bool SetZoomLevelByClient(
@@ -148,6 +152,9 @@ class ZoomController : public content::WebContentsObserver,
   // Set and query whether or not the page scale factor is one.
   void SetPageScaleFactorIsOneForTesting(bool is_one);
   bool PageScaleFactorIsOne() const;
+
+  void SkipMetricsDelaysForTesting();
+  void CollectionDoneNotificationForTesting(base::OnceClosure done);
 
   // content::WebContentsObserver overrides:
   void DidFinishNavigation(
@@ -196,6 +203,8 @@ class ZoomController : public content::WebContentsObserver,
   content::HostZoomMap* host_zoom_map_;
 
   std::unique_ptr<content::HostZoomMap::Subscription> zoom_subscription_;
+
+  metrics::ZoomMetricsRecorder metrics_recorder_;
 
   DISALLOW_COPY_AND_ASSIGN(ZoomController);
 };
