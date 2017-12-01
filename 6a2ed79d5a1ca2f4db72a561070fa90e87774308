@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "867e832c_91b6688e",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1154,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-01T21:23:54Z",
+      "side": 1,
+      "message": "Sorry I meant to say this when talking about the -ve scales. I think (1,1,0) is another example of a case to test here, Maybe (1,0,1) and (0, 1, 1) also? In (1,1,0) it can still map to a non-empty thing, but is not invertible?",
+      "revId": "6a2ed79d5a1ca2f4db72a561070fa90e87774308",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1f7ae0b_ff09405f",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1295,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-01T21:23:54Z",
+      "side": 1,
+      "message": "\"occlusion\"",
+      "revId": "6a2ed79d5a1ca2f4db72a561070fa90e87774308",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89207a44_ab7ba031",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1329,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-01T21:23:54Z",
+      "side": 1,
+      "message": "\"occlusion\"",
+      "revId": "6a2ed79d5a1ca2f4db72a561070fa90e87774308",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5ef9f20_e11df557",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1362,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-01T21:23:54Z",
+      "side": 1,
+      "message": "\"occlusion\"",
+      "revId": "6a2ed79d5a1ca2f4db72a561070fa90e87774308",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
