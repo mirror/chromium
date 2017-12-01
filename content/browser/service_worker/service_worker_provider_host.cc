@@ -126,14 +126,16 @@ void RemoveProviderHost(base::WeakPtr<ServiceWorkerContextCore> context,
 void GetInterfaceImpl(const std::string& interface_name,
                       mojo::ScopedMessagePipeHandle interface_pipe,
                       const url::Origin& origin,
-                      int process_id) {
+                      int process_id,
+                      mojo::ReportBadMessageCallback bad_message_callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   auto* process = RenderProcessHost::FromID(process_id);
   if (!process)
     return;
 
   BindWorkerInterface(interface_name, std::move(interface_pipe), process,
-                      origin);
+                      origin, WebContextType::kServiceWorker,
+                      std::move(bad_message_callback));
 }
 
 }  // anonymous namespace
@@ -1201,9 +1203,10 @@ void ServiceWorkerProviderHost::GetInterface(
   DCHECK(IsHostToRunningServiceWorker());
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
-      base::BindOnce(
-          &GetInterfaceImpl, interface_name, std::move(interface_pipe),
-          running_hosted_version_->script_origin(), render_process_id_));
+      base::BindOnce(&GetInterfaceImpl, interface_name,
+                     std::move(interface_pipe),
+                     running_hosted_version_->script_origin(),
+                     render_process_id_, mojo::GetBadMessageCallback()));
 }
 
 blink::mojom::ServiceWorkerRegistrationObjectInfoPtr

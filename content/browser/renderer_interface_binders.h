@@ -7,6 +7,8 @@
 
 #include <string>
 
+#include "content/public/browser/interfaces/interface_filter.h"
+#include "mojo/public/cpp/bindings/message.h"
 #include "mojo/public/cpp/system/message_pipe.h"
 
 namespace url {
@@ -22,7 +24,9 @@ class RenderProcessHost;
 void BindWorkerInterface(const std::string& interface_name,
                          mojo::ScopedMessagePipeHandle interface_pipe,
                          RenderProcessHost* host,
-                         const url::Origin& origin);
+                         const url::Origin& origin,
+                         WebContextType,
+                         mojo::ReportBadMessageCallback);
 
 // Try binding an interface request |interface_pipe| for |interface_name|
 // received from |frame|.
