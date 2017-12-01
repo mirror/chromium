@@ -11,10 +11,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.os.Build;
+import android.os.Process;
 import android.preference.PreferenceManager;
 
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.base.annotations.MainDex;
+
+import java.lang.reflect.Method;
 
 /**
  * This class provides Android application context related utility methods.
@@ -148,5 +151,17 @@ public class ContextUtils {
             context = ((ContextWrapper) context).getBaseContext();
         }
         return context.getAssets();
+    }
+
+    /**
+     * @return Whether the process is isolated.
+     */
+    public static boolean isIsolatedProcess() {
+        try {
+            Method isIsolatedMethod = Process.class.getMethod("isIsolated");
+            return (Boolean) isIsolatedMethod.invoke(null);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
