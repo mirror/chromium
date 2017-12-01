@@ -355,8 +355,7 @@
 #pragma mark - OmniboxFocuser
 
 - (void)focusOmnibox {
-  if (!self.viewController.view.hidden)
-    [_locationBarView.textField becomeFirstResponder];
+  [_locationBarView.textField becomeFirstResponder];
 }
 
 - (void)cancelOmniboxEdit {
