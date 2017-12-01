@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fa1b3ba_d2b44eab",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-12-01T19:02:18Z",
+      "side": 1,
+      "message": "All of these members should go in the private: section, no?",
+      "revId": "773159ebca6f7ed5e12326a25b8659a06caa1a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d54c6d5f_7c8e8db7",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1435,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-12-01T19:02:18Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we also be looking at the parent, if it isn\u0027t same SiteInstance with the top-level frame? It will help when we have a.com, hosted_app.com, a.com nesting and some of the other cases we discussed offline.",
+      "revId": "773159ebca6f7ed5e12326a25b8659a06caa1a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43c8e218_089d87b2",
+        "filename": "content/browser/frame_host/render_frame_host_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3256,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-12-01T19:02:18Z",
+      "side": 1,
+      "message": "This part is not checked. Is it something that should be checked or is it irrelevant to the test case?",
+      "range": {
+        "startLine": 3255,
+        "startChar": 60,
+        "endLine": 3256,
+        "endChar": 52
+      },
+      "revId": "773159ebca6f7ed5e12326a25b8659a06caa1a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d61df46_a98e0837",
+        "filename": "content/browser/site_instance_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-12-01T19:02:18Z",
+      "side": 1,
+      "message": "nit: |site_| here and the rest of the file.",
+      "range": {
+        "startLine": 108,
+        "startChar": 47,
+        "endLine": 108,
+        "endChar": 51
+      },
+      "revId": "773159ebca6f7ed5e12326a25b8659a06caa1a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
