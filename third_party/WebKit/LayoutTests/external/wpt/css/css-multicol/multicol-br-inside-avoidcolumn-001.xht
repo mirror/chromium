@@ -8,44 +8,25 @@
 <link rel="match" href="multicol-br-inside-avoidcolumn-ref.xht"/>
 <meta name="flags" content=""/>
 <style type="text/css"><![CDATA[
-html {
-	width: 800px;
-	background: white;
-}
-body {
-	background: black;
+.multicol {
 	column-count: 3;
 	column-gap: 0;
 	column-fill: auto;
+        width: 300px;
 	height: 300px;
 }
-h1 {
-	column-span: all;
-	color: white;
-}
-div { background: red;
-	height: 150px;
+.multicol > div {
+	height: 200px;
 	break-inside: avoid-column;
-}
-span {
-	float: left;
+        background: blue;
 }
 ]]></style>
 </head>
 <body>
-<h1>You should not see the word FAIL</h1>
-
-<div>
-	<span>FAIL</span>
+<p>You should see a blue square below</p>
+<div class="multicol">
+  <div></div>
+  <div></div>
 </div>
-
-<div>
-	<span>FAIL</span>
-</div>
-
-<div>
-	<span>FAIL</span>
-</div>
-
 </body>
 </html>
