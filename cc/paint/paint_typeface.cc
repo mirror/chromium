@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 #include "cc/paint/paint_typeface.h"
-#include "build/build_config.h"
 #include "third_party/skia/include/ports/SkFontConfigInterface.h"
 #include "third_party/skia/include/ports/SkFontMgr.h"
 
@@ -69,6 +68,7 @@ PaintTypeface::PaintTypeface(const PaintTypeface& other) {
 }
 PaintTypeface::PaintTypeface(PaintTypeface&& other) = default;
 PaintTypeface::~PaintTypeface() {
+#if !defined(OS_MACOSX)
   // TODO(crbug.com/785682): Debugging possible ref counting issue.
   if (sk_typeface_) {
     // We should be a strong owner of this reference. However, to debug a
@@ -86,18 +86,21 @@ PaintTypeface::~PaintTypeface() {
   // Explicitly delete the typeface so that any crashes resulting from this
   // would point to this line.
   sk_typeface_ = nullptr;
+#endif  // !defined(OS_MACOSX)
 }
 
 PaintTypeface& PaintTypeface::operator=(const PaintTypeface& other) {
   sk_id_ = other.sk_id_;
   sk_typeface_ = other.sk_typeface_;
 
+#if !defined(OS_MACOSX)
   // TODO(crbug.com/785682): Debugging possible ref counting issue.
   if (sk_typeface_) {
     // Since we're copying this object which will do a weak unref in the dtor,
     // ensure to bump the weak ref one more time.
     sk_typeface_->weak_ref();
   }
+#endif  // !defined(OS_MACOSX)
 
   type_ = other.type_;
   font_config_interface_id_ = other.font_config_interface_id_;
@@ -110,9 +113,9 @@ PaintTypeface& PaintTypeface::operator=(const PaintTypeface& other) {
 
 PaintTypeface& PaintTypeface::operator=(PaintTypeface&& other) = default;
 
-void PaintTypeface::CreateSkTypeface() {
-// MacOS doesn't support this type of creation and relies on NSFonts instead.
 #if !defined(OS_MACOSX)
+// static
+void PaintTypeface::CreateSkTypeface() {
   switch (type_) {
     case Type::kTestTypeface:
       // Nothing to do here.
@@ -145,13 +148,17 @@ void PaintTypeface::CreateSkTypeface() {
       sk_typeface_ = fm->legacyMakeTypeface(family_name_.c_str(), font_style_);
       break;
     }
+    case Type::MAC:
+      // This should be handled in cc/paint/paint_typeface_mac.cc
+      NOTREACHED();
+      break;
   }
-#endif  // !defined(OS_MACOSX)
   sk_id_ = sk_typeface_ ? sk_typeface_->uniqueID() : 0;
 
   // TODO(crbug.com/785682): Debugging possible ref counting issue.
   if (sk_typeface_)
     sk_typeface_->weak_ref();
 }
+#endif  // !defined(OS_MACOSX)
 
 }  // namespace cc
