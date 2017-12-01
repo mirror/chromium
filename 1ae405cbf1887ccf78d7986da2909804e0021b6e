@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17565385_16a6daa8",
+        "filename": "docs/accessibility/offscreen.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-01T23:19:58Z",
+      "side": 1,
+      "message": "I think \"bounding box\" would be the most clear rather than location or size.\n(\"Bounding box\" consists of a location and a size. I\u0027d like to rename places\nin our code where we have \"location\" now.)",
+      "revId": "1ae405cbf1887ccf78d7986da2909804e0021b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c9513ef_babbfdd8",
+        "filename": "docs/accessibility/offscreen.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-01T23:19:58Z",
+      "side": 1,
+      "message": "\u003e and clicking in its bounding box does not result in that object.\n\nI know what you mean here. How about something like\n\"and clicking in its bounding box would never target that object\",\nor \"a hit test within the bounding box of that object would never\nresult in this object being hit\", or something like that.\n\nAt a higher level, I think this definition might be sufficient:\n\n\u003e Any object is offscreen if it is fully clipped or scrolled out of view by any\nof its ancestors so that it is not rendered on the screen\n\nEverything else, like the hit test, or the overflow:hidden, are\n*examples* and *illustrations*, but they don\u0027t actually modify that\nfirst definition, just clarify it.\n\nHow about actual inline HTML snippets here as examples? Rather than\ntrying to describe it, just write:\n\n    \u003cdiv style\u003d\"width:0; height; 0; overflow: hidden\"\u003e\n      This text should be marked \"offscreen\"\n    \u003c/div\u003e",
+      "revId": "1ae405cbf1887ccf78d7986da2909804e0021b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fbae04c_1ec3a2df",
+        "filename": "docs/accessibility/offscreen.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-01T23:19:58Z",
+      "side": 1,
+      "message": "The main difference is clipping.",
+      "revId": "1ae405cbf1887ccf78d7986da2909804e0021b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a8f80f5_4d8732ef",
+        "filename": "docs/accessibility/offscreen.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-01T23:19:58Z",
+      "side": 1,
+      "message": "space after \"in\"?",
+      "revId": "1ae405cbf1887ccf78d7986da2909804e0021b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "206eb6e0_d0bb91f1",
+        "filename": "docs/accessibility/offscreen.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-01T23:19:58Z",
+      "side": 1,
+      "message": "This seems redundant. Like before, how about a simple definition,\nand then some examples.\n\nEven better would be examples of things that *ARE* programmatically\nhidden and some things that are NOT. In particular, things that are\nscrolled offscreen, clipped, or size zero are explicitly NOT invisible,\nI believe.\n\nI think opacity zero is a weird corner case. Right now we treat that as\ninvisible, but it\u0027s not quite obvious.",
+      "revId": "1ae405cbf1887ccf78d7986da2909804e0021b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dad8448c_d285ba53",
+        "filename": "docs/accessibility/offscreen.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-01T23:19:58Z",
+      "side": 1,
+      "message": "Size -\u003e Bounding box",
+      "revId": "1ae405cbf1887ccf78d7986da2909804e0021b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d3ebca3_126e7e99",
+        "filename": "docs/accessibility/offscreen.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-01T23:19:58Z",
+      "side": 1,
+      "message": "How about some examples of when both are useful:\n\nThe unclipped bounding box is helpful if you want to know the current\ncoordinates of an element that\u0027s scrolled out of view, so you know how\nmuch to scroll to bring it in view.\n\nThe clipped bounding box is helpful if you want to draw a visible bounding\nbox around the element on the screen. Clipping the bounding box helps\nsighted users understand what container the element is in, even if it\u0027s\nnot currently visible. Without clipping you end up with elements floating\noutside of windows.",
+      "revId": "1ae405cbf1887ccf78d7986da2909804e0021b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "337ea688_3c2aaf8c",
+        "filename": "docs/accessibility/offscreen.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-01T23:19:58Z",
+      "side": 1,
+      "message": "It might be helpful to give some examples of this.\n\nI can only think of a contrived example:\n\n\u003cdiv style\u003d\"visibility:hidden\" aria-hidden\u003dfalse\u003e\n  \u003cdiv style\u003d\"visibility:visible\"\u003e\n    Visible text\n  \u003c/div\u003e\n\u003c/div\u003e\n\nThe outer div here has no size, so we use its child for its bounding box.\n\nI think there are some real examples, maybe \u003ctbody\u003e or \u003ctr\u003e, where the layout engine doesn\u0027t give us a bounding box at all.",
+      "revId": "1ae405cbf1887ccf78d7986da2909804e0021b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46a30c64_7169992a",
+        "filename": "docs/accessibility/offscreen.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-01T23:19:58Z",
+      "side": 1,
+      "message": "A great example of this would be something which is visible only to screen reader users.",
+      "revId": "1ae405cbf1887ccf78d7986da2909804e0021b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d4c8961_97d1913c",
+        "filename": "docs/accessibility/offscreen.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-01T23:19:58Z",
+      "side": 1,
+      "message": "Width 1 or height 1, right? Might be helpful to give a more clear\nexample, and also some reasoning behind the width/height of 1.\nBasically it\u0027s to distinguish between \"unknown, or actually empty\" and\n\"definitely known, just small and possible clipped\".",
+      "revId": "1ae405cbf1887ccf78d7986da2909804e0021b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
