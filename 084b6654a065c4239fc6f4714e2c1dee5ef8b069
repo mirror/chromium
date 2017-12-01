@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3abc428e_561e5619",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 37
+      },
+      "lineNbr": 3907,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-12-01T01:34:23Z",
+      "side": 1,
+      "message": "I\u0027m not sure if it would be better to store the mutator directly before we are committed to CreateClient succeeding.",
+      "revId": "084b6654a065c4239fc6f4714e2c1dee5ef8b069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a38f9e7_701c4a0b",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorClient.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-12-01T01:34:23Z",
+      "side": 1,
+      "message": "I don\u0027t think we use this - remove it please.",
+      "revId": "084b6654a065c4239fc6f4714e2c1dee5ef8b069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

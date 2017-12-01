@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0e02248d_d6340865",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 36
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-12-01T01:34:23Z",
+      "side": 1,
+      "message": "It was meant to sound the same, since it did the same for this class - make sure the access is on a safe thread.  Changed all the references to go through the Platform CompositorThread.",
+      "parentUuid": "fff99f02_97dddbe8",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 51
+      },
+      "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74de8514_87466721",
         "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
         "patchSetId": 36
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "80e9ab12_2c38bb8a",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 36
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-12-01T01:34:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74de8514_87466721",
+      "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2270cb8_608f75eb",
         "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
         "patchSetId": 36
@@ -56,6 +98,24 @@
       "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "591274b9_246f8152",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 36
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-12-01T01:34:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2270cb8_608f75eb",
+      "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -130,6 +190,24 @@
     },
     {
       "key": {
+        "uuid": "ba3f6a5b_ad217aa0",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 36
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-12-01T01:34:23Z",
+      "side": 1,
+      "message": "Ack, WeakPtr doesn\u0027t.  std::weak_ptr would, I was off base::\n\nChanging to accumulate outputs makes this easier to handle.",
+      "parentUuid": "ab831fb2_06c4d876",
+      "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cad9a6e6_057716cd",
         "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.h",
         "patchSetId": 36
@@ -200,6 +278,30 @@
     },
     {
       "key": {
+        "uuid": "4cabfc81_d9f1a459",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-12-01T01:34:23Z",
+      "side": 1,
+      "message": "Reworded.",
+      "parentUuid": "9e6ad326_66d49c0c",
+      "range": {
+        "startLine": 27,
+        "startChar": 3,
+        "endLine": 27,
+        "endChar": 51
+      },
+      "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81fdd1a3_85ddee54",
         "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.h",
         "patchSetId": 36
@@ -235,6 +337,24 @@
     },
     {
       "key": {
+        "uuid": "a724d389_e9ec94bd",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-12-01T01:34:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23a4ae31_91a67853",
+      "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45b24d7c_e963c85f",
         "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.h",
         "patchSetId": 36
@@ -252,6 +372,24 @@
     },
     {
       "key": {
+        "uuid": "c9faadb8_1f2ee124",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-12-01T01:34:23Z",
+      "side": 1,
+      "message": "CompositorMutatorImpl was owned/kept alive by CompositorMutatorClient. We ask for the impl from mutator_client-\u003eMutator() and then store the mutator client in layer_tree_view_-\u003eSetMutatorClient.\nSimplified - we own the Impl, we give the Client to the layer)tre_view to own.",
+      "parentUuid": "45b24d7c_e963c85f",
+      "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3d00cb9_1fc7c0fd",
         "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
         "patchSetId": 36
@@ -266,6 +404,24 @@
       "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dd84b59_6e1952d3",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 36
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-12-01T01:34:23Z",
+      "side": 1,
+      "message": "It\u0027s a matter of which PostTask we are getting.  We have a base::TaskRuner, for whom PostTask takes a OnceClosure (base::OnceCallback\u003cvoid ()\u003e \u0026[\u0026], etc)\n\nI\u0027ve found a place to cache a better task runner so we don\u0027t need a base:: callback.",
+      "parentUuid": "a3d00cb9_1fc7c0fd",
+      "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -292,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "971b6c09_420f0ce3",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-12-01T01:34:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af072ec7_02d43f5a",
+      "range": {
+        "startLine": 52,
+        "startChar": 35,
+        "endLine": 52,
+        "endChar": 43
+      },
+      "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34062acb_b5863ec3",
         "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.h",
         "patchSetId": 36
@@ -306,6 +486,24 @@
       "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22aa888b_b504dd76",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-12-01T01:34:23Z",
+      "side": 1,
+      "message": "Ack - there was a leak introduced.  There is a single holder in an owning class to manage the lifecycle now.",
+      "parentUuid": "34062acb_b5863ec3",
+      "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -326,6 +524,24 @@
     },
     {
       "key": {
+        "uuid": "e1d36fce_ecc2a522",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-12-01T01:34:23Z",
+      "side": 1,
+      "message": "I believe the point here was to keep us from holding up the cleanup.\nHiroki requested :\"Can you also nullify |global_scope_| so that it\u0027s able to be GC\u0027ed as soon as possible? Without this, a posted task (MutateWithEvent) may extend the lifetime.\"  This allows the worklet thread to spin harmlessly to death after the Main thread declares cleanup time.",
+      "parentUuid": "6e8007d2_c2bebc92",
+      "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36b4af49_ad9f5df8",
         "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.h",
         "patchSetId": 36
@@ -340,6 +556,24 @@
       "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f044d68a_8842d4cd",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-12-01T01:34:23Z",
+      "side": 1,
+      "message": "active_ gets tested on the compositor thread. I didn\u0027t think it was allowed to test global_scope_ concurrently with other threads accessing or clearing it.  Removed.",
+      "parentUuid": "36b4af49_ad9f5df8",
+      "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -360,6 +594,24 @@
     },
     {
       "key": {
+        "uuid": "762d7adc_3f1b5515",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletThreadTest.cpp",
+        "patchSetId": 36
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-12-01T01:34:23Z",
+      "side": 1,
+      "message": "We don\u0027t any more.",
+      "parentUuid": "b8e33d81_ec5cdf8e",
+      "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aaf661cc_f8a2959a",
         "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletThreadTest.cpp",
         "patchSetId": 36
@@ -374,6 +626,24 @@
       "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37825598_6f7c40ee",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletThreadTest.cpp",
+        "patchSetId": 36
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-12-01T01:34:23Z",
+      "side": 1,
+      "message": "No. Removed.",
+      "parentUuid": "aaf661cc_f8a2959a",
+      "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -394,6 +664,24 @@
     },
     {
       "key": {
+        "uuid": "5684621d_28bf95b2",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletThreadTest.cpp",
+        "patchSetId": 36
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-12-01T01:34:23Z",
+      "side": 1,
+      "message": "It appears not, removed.",
+      "parentUuid": "a658c171_912b7067",
+      "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75ae76ff_809e1062",
         "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletThreadTest.cpp",
         "patchSetId": 36
@@ -408,6 +696,24 @@
       "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "735f2818_911bfcc3",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletThreadTest.cpp",
+        "patchSetId": 36
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-12-01T01:34:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75ae76ff_809e1062",
+      "revId": "fca102b4a5b3f95d5ff7c82f316c458060cc9a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
