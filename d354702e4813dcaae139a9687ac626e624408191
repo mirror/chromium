@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "d88c51ec_599f6aa2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-12-01T03:12:10Z",
+      "side": 1,
+      "message": "Great. Let\u0027s just make sure that it\u0027s future proof in case we want to add multiple targets one day. (I think the proto allows this, right?)",
+      "parentUuid": "100eae68_9ccd68c9",
+      "range": {
+        "startLine": 42,
+        "startChar": 12,
+        "endLine": 42,
+        "endChar": 15
+      },
+      "revId": "d354702e4813dcaae139a9687ac626e624408191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dbc310fd_22a990b0",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/webapps/WebApkInfoTest.java",
         "patchSetId": 1
