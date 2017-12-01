@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "89afecdf_68fdef23",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-01T09:20:06Z",
+      "side": 1,
+      "message": "Yes, this was his suggestion from PS8.",
+      "parentUuid": "eeb6b067_e39d266b",
+      "range": {
+        "startLine": 538,
+        "startChar": 6,
+        "endLine": 541,
+        "endChar": 59
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "219e3350_513abac4",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7903a46e_60bae261",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-01T09:20:06Z",
+      "side": 1,
+      "message": "Done.  I feel like it duplicates a lot of the effort in the PRW tests, so let me know if you think it can be done simpler or if it adds value anyway.\n\nBriefly, the complications are justified as follows:\n - Widget: LocationBarView depends on being in a Widget\n - WidgetDelegateView: LocationBarView can\u0027t have Layout() called before Init() but can\u0027t have Init() called before being added to a Widget, so it can\u0027t be the \"ContentsView\".\n - Tab helpers: various implicit dependencies similar to PRWView.",
+      "parentUuid": "219e3350_513abac4",
+      "range": {
+        "startLine": 240,
+        "startChar": 13,
+        "endLine": 240,
+        "endChar": 41
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9eafa24e_f7fda601",
+        "filename": "chrome/browser/ui/views/media_router/presentation_receiver_window_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-01T09:20:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dafbd563_484939a5",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 25
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e2ded0b_48eb522c",
         "filename": "chrome/browser/ui/views/media_router/presentation_receiver_window_view.h",
         "patchSetId": 12
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-30T18:44:35Z",
       "side": 1,
       "message": "Chromium style guide recommends classes like this live in their own header.",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 4
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2088a9e_bcc1f3eb",
+        "filename": "chrome/browser/ui/views/media_router/presentation_receiver_window_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-01T09:20:06Z",
+      "side": 1,
+      "message": "Can you point me to that?  It seems like a waste for such a small and specific class and there seems to be precedent for it.",
+      "parentUuid": "3e2ded0b_48eb522c",
       "range": {
         "startLine": 29,
         "startChar": 2,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "c3cfb766_2faf25ce",
+        "filename": "chrome/browser/ui/views/media_router/presentation_receiver_window_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-01T09:20:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "691add45_f866e87d",
+      "range": {
+        "startLine": 39,
+        "startChar": 7,
+        "endLine": 40,
+        "endChar": 16
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95fef859_0a203d53",
         "filename": "chrome/browser/ui/views/media_router/presentation_receiver_window_view.h",
         "patchSetId": 12
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "97f6a385_5b3e6bf7",
+        "filename": "chrome/browser/ui/views/media_router/presentation_receiver_window_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-01T09:20:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95fef859_0a203d53",
+      "range": {
+        "startLine": 42,
+        "startChar": 7,
+        "endLine": 42,
+        "endChar": 24
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fcd257c_238a4861",
         "filename": "chrome/browser/ui/views/media_router/presentation_receiver_window_view.h",
         "patchSetId": 12
@@ -151,6 +295,30 @@
       "writtenOn": "2017-11-30T18:44:35Z",
       "side": 1,
       "message": "Are you sure you don\u0027t need to call UpdateWindowTitle?",
+      "range": {
+        "startLine": 44,
+        "startChar": 7,
+        "endLine": 44,
+        "endChar": 16
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e2bc629_bb3de9e6",
+        "filename": "chrome/browser/ui/views/media_router/presentation_receiver_window_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-01T09:20:06Z",
+      "side": 1,
+      "message": "I\u0027m on the fence, but PRWViews calls UpdateWindowTitle on the Widget after calling this instead of giving this a Widget* or adding the method to Controller (and making it a WebContentsObserver).",
+      "parentUuid": "3fcd257c_238a4861",
       "range": {
         "startLine": 44,
         "startChar": 7,
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "e8fe7793_390c23e2",
+        "filename": "chrome/browser/ui/views/media_router/presentation_receiver_window_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-01T09:20:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd85b10f_545d8b80",
+      "range": {
+        "startLine": 69,
+        "startChar": 19,
+        "endLine": 69,
+        "endChar": 37
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40d7c443_b4cd1326",
         "filename": "chrome/browser/ui/views/media_router/presentation_receiver_window_views.h",
         "patchSetId": 12
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "27516907_35381929",
+        "filename": "chrome/browser/ui/views/media_router/presentation_receiver_window_views.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-01T09:20:06Z",
+      "side": 1,
+      "message": "This holds a pointer to both a PresentationReceiverWindowFrame and a PresentationReceiverWindowView, which `git cl presubmit -u` told me can\u0027t be included from c/b/ui.  I could be misunderstanding but I would answer the first question with: its direct use of Views classes.  I could add interfaces to PRWFrame and PRWView but I don\u0027t think anything else would ever implement them, right?  I feel like I\u0027m missing the point of your question but I\u0027m not sure what else to add :/",
+      "parentUuid": "40d7c443_b4cd1326",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 38
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4073f2f5_e09d8271",
         "filename": "chrome/test/media_router/presentation_receiver_window_browsertest.cc",
         "patchSetId": 12
@@ -220,6 +436,30 @@
       "writtenOn": "2017-11-30T18:44:35Z",
       "side": 1,
       "message": "Why this does test live in chrome/test? Generally tests live right next to the files under test. So, I would expect it to live in chrome/browser/media/router.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 60
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f9e6c86_0afb178a",
+        "filename": "chrome/test/media_router/presentation_receiver_window_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-01T09:20:06Z",
+      "side": 1,
+      "message": "I put it here because two tests use a script that is shared with other browser tests in this directory.  I could split them up if you prefer.",
+      "parentUuid": "4073f2f5_e09d8271",
       "range": {
         "startLine": 1,
         "startChar": 0,
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "bfcc580c_5c9ec257",
+        "filename": "chrome/test/media_router/presentation_receiver_window_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-01T09:20:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4125b82c_a95b76b0",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 9
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "806c6d8c_cf6ad5fe",
         "filename": "chrome/test/media_router/presentation_receiver_window_browsertest.cc",
         "patchSetId": 12
@@ -275,6 +539,30 @@
       "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e94422e_247aec83",
+        "filename": "chrome/test/media_router/presentation_receiver_window_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-01T09:20:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "806c6d8c_cf6ad5fe",
+      "range": {
+        "startLine": 60,
+        "startChar": 6,
+        "endLine": 60,
+        "endChar": 20
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "7bfa64d4_3c017738",
+        "filename": "chrome/test/media_router/presentation_receiver_window_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-01T09:20:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fab44d6_13a89551",
+      "range": {
+        "startLine": 64,
+        "startChar": 30,
+        "endLine": 64,
+        "endChar": 39
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45c1a935_7e7930cc",
         "filename": "chrome/test/media_router/presentation_receiver_window_browsertest.cc",
         "patchSetId": 12
@@ -321,6 +633,30 @@
       "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c454b583_97066875",
+        "filename": "chrome/test/media_router/presentation_receiver_window_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-01T09:20:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45c1a935_7e7930cc",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 2
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -347,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "43f5a98f_52d4b975",
+        "filename": "chrome/test/media_router/presentation_receiver_window_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-01T09:20:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6e50b44_ea5635d5",
+      "range": {
+        "startLine": 108,
+        "startChar": 0,
+        "endLine": 108,
+        "endChar": 2
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "706cf998_9fcfa26b",
         "filename": "chrome/test/media_router/presentation_receiver_window_browsertest.cc",
         "patchSetId": 12
@@ -367,6 +727,30 @@
       "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e5137a8_82d1b10b",
+        "filename": "chrome/test/media_router/presentation_receiver_window_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-01T09:20:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "706cf998_9fcfa26b",
+      "range": {
+        "startLine": 116,
+        "startChar": 0,
+        "endLine": 116,
+        "endChar": 77
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
