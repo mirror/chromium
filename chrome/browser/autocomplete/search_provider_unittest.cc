@@ -1235,7 +1235,8 @@ TEST_F(SearchProviderTest, DefaultProviderNoSuggestRelevanceInKeywordMode) {
       "\"google:suggesttype\":[\"QUERY\", \"NAVIGATION\"],"
       "\"google:suggestrelevance\":[9900, 9800]}]",
       "[\"a\",[\"akeyword-query\"],[],[],{\"google:suggesttype\":[\"QUERY\"]}]",
-      { "a", "akeyword-query", "k a", "adefault.com", "k adefault-query" } },
+      { "a", "akeyword-query", "k a", "http://adefault.com",
+        "k adefault-query" } },
 
     // Now try with keyword provider suggested relevance scores.
     { "[\"k a\",[\"k adefault-query\", \"adefault.com\"],[],[],"
@@ -1245,7 +1246,8 @@ TEST_F(SearchProviderTest, DefaultProviderNoSuggestRelevanceInKeywordMode) {
       "[\"a\",[\"akeyword-query\"],[],[],{\"google:suggesttype\":[\"QUERY\"],"
       "\"google:verbatimrelevance\":9500,"
       "\"google:suggestrelevance\":[9600]}]",
-      { "akeyword-query", "a", "k a", "adefault.com", "k adefault-query" } }
+      { "akeyword-query", "a", "k a", "http://adefault.com",
+        "k adefault-query" } }
   };
 
   for (size_t i = 0; i < arraysize(cases); ++i) {
@@ -1292,7 +1294,7 @@ TEST_F(SearchProviderTest, DefaultFetcherSuggestRelevance) {
     { "[\"a\",[\"http://b.com\", \"http://c.com\"],[],[],"
        "{\"google:suggesttype\":[\"NAVIGATION\", \"NAVIGATION\"],"
         "\"google:suggestrelevance\":[1, 2]}]",
-      { { "a", true }, { "c.com", false }, { "b.com", false },
+      { { "a", true }, { "http://c.com", false }, { "http://b.com", false },
         kEmptyExpectedMatch, kEmptyExpectedMatch, kEmptyExpectedMatch },
       std::string() },
 
@@ -1300,7 +1302,7 @@ TEST_F(SearchProviderTest, DefaultFetcherSuggestRelevance) {
     // navsuggest result to be be displayed.
     { "[\"a\",[\"http://b.com\", \"http://c.com\"],[],[],"
        "{\"google:suggesttype\":[\"NAVIGATION\", \"NAVIGATION\"]}]",
-      { { "a", true }, { "b.com", false }, kEmptyExpectedMatch,
+      { { "a", true }, { "http://b.com", false }, kEmptyExpectedMatch,
         kEmptyExpectedMatch, kEmptyExpectedMatch, kEmptyExpectedMatch },
       std::string() },
 
@@ -1330,28 +1332,28 @@ TEST_F(SearchProviderTest, DefaultFetcherSuggestRelevance) {
        "{\"google:suggesttype\":[\"NAVIGATION\"],"
         "\"google:verbatimrelevance\":9999,"
         "\"google:suggestrelevance\":[9998]}]",
-      { { "a", true }, { "a.com", false }, kEmptyExpectedMatch,
+      { { "a", true }, { "http://a.com", false }, kEmptyExpectedMatch,
         kEmptyExpectedMatch, kEmptyExpectedMatch, kEmptyExpectedMatch },
       std::string() },
     { "[\"a\",[\"http://a.com\"],[],[],"
        "{\"google:suggesttype\":[\"NAVIGATION\"],"
         "\"google:verbatimrelevance\":9998,"
         "\"google:suggestrelevance\":[9999]}]",
-      { { "a.com", true }, { "a", true }, kEmptyExpectedMatch,
+      { { "http://a.com", true }, { "a", true }, kEmptyExpectedMatch,
         kEmptyExpectedMatch, kEmptyExpectedMatch, kEmptyExpectedMatch },
       ".com" },
     { "[\"a\",[\"http://a.com\"],[],[],"
        "{\"google:suggesttype\":[\"NAVIGATION\"],"
         "\"google:verbatimrelevance\":0,"
         "\"google:suggestrelevance\":[9999]}]",
-      { { "a.com", true }, kEmptyExpectedMatch, kEmptyExpectedMatch,
+      { { "http://a.com", true }, kEmptyExpectedMatch, kEmptyExpectedMatch,
         kEmptyExpectedMatch, kEmptyExpectedMatch, kEmptyExpectedMatch },
       ".com" },
     { "[\"a\",[\"http://a.com\"],[],[],"
        "{\"google:suggesttype\":[\"NAVIGATION\"],"
         "\"google:verbatimrelevance\":-1,"
         "\"google:suggestrelevance\":[9999]}]",
-      { { "a.com", true }, { "a", true }, kEmptyExpectedMatch,
+      { { "http://a.com", true }, { "a", true }, kEmptyExpectedMatch,
         kEmptyExpectedMatch, kEmptyExpectedMatch, kEmptyExpectedMatch },
       ".com" },
 
@@ -1378,14 +1380,14 @@ TEST_F(SearchProviderTest, DefaultFetcherSuggestRelevance) {
     { "[\"a\",[\"http://b.com\"],[],[],"
        "{\"google:suggesttype\":[\"NAVIGATION\"],"
         "\"google:suggestrelevance\":[9999]}]",
-      { { "a", true }, { "b.com", false }, kEmptyExpectedMatch,
+      { { "a", true }, { "http://b.com", false }, kEmptyExpectedMatch,
         kEmptyExpectedMatch, kEmptyExpectedMatch, kEmptyExpectedMatch },
       std::string() },
     { "[\"a\",[\"http://b.com\"],[],[],"
        "{\"google:suggesttype\":[\"NAVIGATION\"],"
         "\"google:suggestrelevance\":[9999],"
         "\"google:verbatimrelevance\":0}]",
-      { { "a", true }, { "b.com", false }, kEmptyExpectedMatch,
+      { { "a", true }, { "http://b.com", false }, kEmptyExpectedMatch,
         kEmptyExpectedMatch, kEmptyExpectedMatch, kEmptyExpectedMatch },
       std::string() },
 
@@ -1417,14 +1419,15 @@ TEST_F(SearchProviderTest, DefaultFetcherSuggestRelevance) {
        "{\"google:suggesttype\":[\"NAVIGATION\"],"
         "\"google:suggestrelevance\":[10],"
         "\"google:verbatimrelevance\":0}]",
-      { { "a.com", true }, kEmptyExpectedMatch, kEmptyExpectedMatch,
+      { { "http://a.com", true }, kEmptyExpectedMatch, kEmptyExpectedMatch,
         kEmptyExpectedMatch, kEmptyExpectedMatch, kEmptyExpectedMatch },
       ".com" },
     { "[\"a\",[\"http://a1.com\", \"http://a2.com\"],[],[],"
        "{\"google:suggesttype\":[\"NAVIGATION\", \"NAVIGATION\"],"
         "\"google:suggestrelevance\":[10, 20],"
         "\"google:verbatimrelevance\":0}]",
-      { { "a2.com", true }, { "a1.com", false }, kEmptyExpectedMatch,
+      { { "http://a2.com", true }, { "http://a1.com", false },
+        kEmptyExpectedMatch,
         kEmptyExpectedMatch, kEmptyExpectedMatch, kEmptyExpectedMatch },
       "2.com" },
 
@@ -1442,8 +1445,9 @@ TEST_F(SearchProviderTest, DefaultFetcherSuggestRelevance) {
                                 "\"NAVIGATION\", \"NAVIGATION\","
                                 "\"NAVIGATION\"],"
         "\"google:suggestrelevance\":[10, 20, 30, 40, 50, 60, 70]}]",
-      { { "a", true }, { "h.com", false }, { "g.com", false },
-        { "f.com", false }, { "e.com", false }, { "d.com", false } },
+      { { "a", true }, { "http://h.com", false }, { "http://g.com", false },
+        { "http://f.com", false }, { "http://e.com", false },
+        { "http://d.com", false } },
       std::string() },
 
     // Ensure that incorrectly sized suggestion relevance lists are ignored.
@@ -1458,13 +1462,13 @@ TEST_F(SearchProviderTest, DefaultFetcherSuggestRelevance) {
     { "[\"a\",[\"http://a1.com\", \"http://a2.com\"],[],[],"
        "{\"google:suggesttype\":[\"NAVIGATION\", \"NAVIGATION\"],"
         "\"google:suggestrelevance\":[10]}]",
-      { { "a", true }, { "a1.com", false }, kEmptyExpectedMatch,
+      { { "a", true }, { "http://a1.com", false }, kEmptyExpectedMatch,
         kEmptyExpectedMatch, kEmptyExpectedMatch, kEmptyExpectedMatch },
       std::string() },
     { "[\"a\",[\"http://a1.com\"],[],[],"
        "{\"google:suggesttype\":[\"NAVIGATION\"],"
        "\"google:suggestrelevance\":[9999, 10]}]",
-      { { "a", true }, { "a1.com", false }, kEmptyExpectedMatch,
+      { { "a", true }, { "http://a1.com", false }, kEmptyExpectedMatch,
         kEmptyExpectedMatch, kEmptyExpectedMatch, kEmptyExpectedMatch },
       std::string() },
 
@@ -1547,11 +1551,11 @@ TEST_F(SearchProviderTest, KeywordFetcherSuggestRelevance) {
     { "[\"a\",[\"http://b.com\", \"http://c.com\", \"d\"],[],[],"
        "{\"google:suggesttype\":[\"NAVIGATION\", \"NAVIGATION\", \"QUERY\"],"
        "\"google:suggestrelevance\":[1301, 1302, 1303]}]",
-      { { "a",     true,  true },
-        { "d",     true,  false },
-        { "c.com", false, false },
-        { "b.com", false, false },
-        { "k a",   false, false },
+      { { "a",            true,  true },
+        { "d",            true,  false },
+        { "http://c.com", false, false },
+        { "http://b.com", false, false },
+        { "k a",          false, false },
         kEmptyMatch },
       std::string() },
 
@@ -1559,9 +1563,9 @@ TEST_F(SearchProviderTest, KeywordFetcherSuggestRelevance) {
     // navsuggest result to be be displayed.
     { "[\"a\",[\"http://b.com\", \"http://c.com\"],[],[],"
        "{\"google:suggesttype\":[\"NAVIGATION\", \"NAVIGATION\"]}]",
-      { { "a",     true,  true },
-        { "b.com", false, false },
-        { "k a",   false, false },
+      { { "a",            true,  true },
+        { "http://b.com", false, false },
+        { "k a",          false, false },
         kEmptyMatch, kEmptyMatch, kEmptyMatch },
       std::string() },
 
@@ -1598,9 +1602,9 @@ TEST_F(SearchProviderTest, KeywordFetcherSuggestRelevance) {
        "{\"google:suggesttype\":[\"NAVIGATION\"],"
         "\"google:verbatimrelevance\":9999,"
         "\"google:suggestrelevance\":[9998]}]",
-      { { "a",     true,  true },
-        { "a.com", false, false },
-        { "k a",   false, false },
+      { { "a",            true,  true },
+        { "http://a.com", false, false },
+        { "k a",          false, false },
         kEmptyMatch, kEmptyMatch, kEmptyMatch },
       std::string() },
 
@@ -1624,9 +1628,9 @@ TEST_F(SearchProviderTest, KeywordFetcherSuggestRelevance) {
     { "[\"a\",[\"http://b.com\"],[],[],"
        "{\"google:suggesttype\":[\"NAVIGATION\"],"
         "\"google:suggestrelevance\":[9999]}]",
-      { { "a",     true,  true },
-        { "b.com", false, false },
-        { "k a",   false, false },
+      { { "a",            true,  true },
+        { "http://b.com", false, false },
+        { "k a",          false, false },
         kEmptyMatch, kEmptyMatch, kEmptyMatch },
       std::string() },
     // If there is no inlineable match, restore the keyword verbatim score.
@@ -1642,9 +1646,9 @@ TEST_F(SearchProviderTest, KeywordFetcherSuggestRelevance) {
        "{\"google:suggesttype\":[\"NAVIGATION\"],"
         "\"google:suggestrelevance\":[9999],"
         "\"google:verbatimrelevance\":0}]",
-      { { "a",     true,  true },
-        { "b.com", false, false },
-        { "k a",   false, false },
+      { { "a",            true,  true },
+        { "http://b.com", false, false },
+        { "k a",          false, false },
         kEmptyMatch, kEmptyMatch, kEmptyMatch },
       std::string() },
 
@@ -1702,12 +1706,12 @@ TEST_F(SearchProviderTest, KeywordFetcherSuggestRelevance) {
                                 "\"NAVIGATION\", \"NAVIGATION\","
                                 "\"NAVIGATION\"],"
         "\"google:suggestrelevance\":[10, 20, 30, 40, 50, 60, 70]}]",
-      { { "a",     true,  true },
-        { "k a",   false, false },
-        { "h.com", false, false },
-        { "g.com", false, false },
-        { "f.com", false, false },
-        { "e.com", false, false } },
+      { { "a",            true,  true },
+        { "k a",          false, false },
+        { "http://h.com", false, false },
+        { "http://g.com", false, false },
+        { "http://f.com", false, false },
+        { "http://e.com", false, false } },
       std::string() },
 
     // Ensure that incorrectly sized suggestion relevance lists are ignored.
@@ -1731,17 +1735,17 @@ TEST_F(SearchProviderTest, KeywordFetcherSuggestRelevance) {
     { "[\"a\",[\"http://a1.com\", \"http://a2.com\"],[],[],"
        "{\"google:suggesttype\":[\"NAVIGATION\", \"NAVIGATION\"],"
         "\"google:suggestrelevance\":[1]}]",
-      { { "a",      true,  true },
-        { "a1.com", false, false },
-        { "k a",    false, false },
+      { { "a",             true,  true },
+        { "http://a1.com", false, false },
+        { "k a",           false, false },
         kEmptyMatch, kEmptyMatch, kEmptyMatch },
       std::string() },
     { "[\"a\",[\"http://a1.com\"],[],[],"
        "{\"google:suggesttype\":[\"NAVIGATION\"],"
        "\"google:suggestrelevance\":[9999, 1]}]",
-      { { "a",      true,  true },
-        { "a1.com", false, false },
-        { "k a",    false, false },
+      { { "a",             true,  true },
+        { "http://a1.com", false, false },
+        { "k a",           false, false },
         kEmptyMatch, kEmptyMatch, kEmptyMatch },
       std::string() },
 
@@ -1785,20 +1789,20 @@ TEST_F(SearchProviderTest, KeywordFetcherSuggestRelevance) {
        "{\"google:suggesttype\":[\"NAVIGATION\", \"NAVIGATION\"],"
         "\"google:verbatimrelevance\":9990,"
         "\"google:suggestrelevance\":[9998, 9999]}]",
-      { { "a",      true,  true },
-        { "a2.com", false, false },
-        { "a1.com", false, false },
-        { "k a",    false, false },
+      { { "a",             true,  true },
+        { "http://a2.com", false, false },
+        { "http://a1.com", false, false },
+        { "k a",           false, false },
         kEmptyMatch, kEmptyMatch },
       std::string() },
     { "[\"a\",[\"http://a1.com\", \"http://a2.com\"],[],[],"
        "{\"google:suggesttype\":[\"NAVIGATION\", \"NAVIGATION\"],"
         "\"google:verbatimrelevance\":9990,"
         "\"google:suggestrelevance\":[9999, 9998]}]",
-      { { "a",      true,  true },
-        { "a1.com", false, false },
-        { "a2.com", false, false },
-        { "k a",    false, false },
+      { { "a",             true,  true },
+        { "http://a1.com", false, false },
+        { "http://a2.com", false, false },
+        { "k a",           false, false },
         kEmptyMatch, kEmptyMatch },
       std::string() },
     { "[\"a\",[\"https://a/\"],[],[],"
@@ -1815,22 +1819,22 @@ TEST_F(SearchProviderTest, KeywordFetcherSuggestRelevance) {
        "{\"google:suggesttype\":[\"NAVIGATION\", \"NAVIGATION\", \"QUERY\"],"
         "\"google:verbatimrelevance\":9990,"
         "\"google:suggestrelevance\":[9998, 9999, 1300]}]",
-      { { "a",      true,  true },
-        { "a2.com", false, false },
-        { "a1.com", false, false },
-        { "a3",     true,  false },
-        { "k a",    false, false },
+      { { "a",             true,  true },
+        { "http://a2.com", false, false },
+        { "http://a1.com", false, false },
+        { "a3",            true,  false },
+        { "k a",           false, false },
         kEmptyMatch },
       std::string() },
     { "[\"a\",[\"http://a1.com\", \"http://a2.com\", \"a3\"],[],[],"
        "{\"google:suggesttype\":[\"NAVIGATION\", \"NAVIGATION\", \"QUERY\"],"
         "\"google:verbatimrelevance\":9990,"
         "\"google:suggestrelevance\":[9999, 9998, 1300]}]",
-      { { "a",      true,  true },
-        { "a1.com", false, false },
-        { "a2.com", false, false },
-        { "a3",     true,  false },
-        { "k a",    false, false },
+      { { "a",             true,  true },
+        { "http://a1.com", false, false },
+        { "http://a2.com", false, false },
+        { "a3",            true,  false },
+        { "k a",           false, false },
         kEmptyMatch },
       std::string() },
     // Check when navsuggest scores more than a query suggestion.  There is
@@ -1839,42 +1843,42 @@ TEST_F(SearchProviderTest, KeywordFetcherSuggestRelevance) {
        "{\"google:suggesttype\":[\"NAVIGATION\", \"NAVIGATION\", \"QUERY\"],"
         "\"google:verbatimrelevance\":9990,"
         "\"google:suggestrelevance\":[9998, 9999, 9997]}]",
-      { { "a3",     true,  true },
-        { "a2.com", false, false },
-        { "a1.com", false, false },
-        { "a",      true,  true },
-        { "k a",    false, false },
+      { { "a3",            true,  true },
+        { "http://a2.com", false, false },
+        { "http://a1.com", false, false },
+        { "a",             true,  true },
+        { "k a",           false, false },
         kEmptyMatch },
       "3" },
     { "[\"a\",[\"http://a1.com\", \"http://a2.com\", \"a3\"],[],[],"
        "{\"google:suggesttype\":[\"NAVIGATION\", \"NAVIGATION\", \"QUERY\"],"
         "\"google:verbatimrelevance\":9990,"
         "\"google:suggestrelevance\":[9999, 9998, 9997]}]",
-      { { "a3",     true,  true },
-        { "a1.com", false, false },
-        { "a2.com", false, false },
-        { "a",      true,  true },
-        { "k a",    false, false },
+      { { "a3",            true,  true },
+        { "http://a1.com", false, false },
+        { "http://a2.com", false, false },
+        { "a",             true,  true },
+        { "k a",           false, false },
         kEmptyMatch },
       "3" },
     { "[\"a\",[\"http://a1.com\", \"http://a2.com\", \"a3\"],[],[],"
        "{\"google:suggesttype\":[\"NAVIGATION\", \"NAVIGATION\", \"QUERY\"],"
         "\"google:verbatimrelevance\":0,"
         "\"google:suggestrelevance\":[9998, 9999, 9997]}]",
-      { { "a3",     true,  true },
-        { "a2.com", false, false },
-        { "a1.com", false, false },
-        { "k a",    false, false },
+      { { "a3",            true,  true },
+        { "http://a2.com", false, false },
+        { "http://a1.com", false, false },
+        { "k a",           false, false },
         kEmptyMatch, kEmptyMatch },
       "3" },
     { "[\"a\",[\"http://a1.com\", \"http://a2.com\", \"a3\"],[],[],"
        "{\"google:suggesttype\":[\"NAVIGATION\", \"NAVIGATION\", \"QUERY\"],"
         "\"google:verbatimrelevance\":0,"
         "\"google:suggestrelevance\":[9999, 9998, 9997]}]",
-      { { "a3",     true,  true },
-        { "a1.com", false, false },
-        { "a2.com", false, false },
-        { "k a",    false, false },
+      { { "a3",            true,  true },
+        { "http://a1.com", false, false },
+        { "http://a2.com", false, false },
+        { "k a",           false, false },
         kEmptyMatch, kEmptyMatch },
       "3" },
     // Check when there is neither verbatim nor a query suggestion that,
@@ -1884,20 +1888,20 @@ TEST_F(SearchProviderTest, KeywordFetcherSuggestRelevance) {
        "{\"google:suggesttype\":[\"NAVIGATION\", \"NAVIGATION\"],"
         "\"google:verbatimrelevance\":0,"
         "\"google:suggestrelevance\":[9998, 9999]}]",
-      { { "a",      true,  true },
-        { "a2.com", false, false },
-        { "a1.com", false, false },
-        { "k a",    false, false },
+      { { "a",             true,  true },
+        { "http://a2.com", false, false },
+        { "http://a1.com", false, false },
+        { "k a",           false, false },
         kEmptyMatch, kEmptyMatch },
       std::string() },
     { "[\"a\",[\"http://a1.com\", \"http://a2.com\"],[],[],"
        "{\"google:suggesttype\":[\"NAVIGATION\", \"NAVIGATION\"],"
         "\"google:verbatimrelevance\":0,"
         "\"google:suggestrelevance\":[9999, 9998]}]",
-      { { "a",      true,  true },
-        { "a1.com", false, false },
-        { "a2.com", false, false },
-        { "k a",    false, false },
+      { { "a",             true,  true },
+        { "http://a1.com", false, false },
+        { "http://a2.com", false, false },
+        { "k a",           false, false },
         kEmptyMatch, kEmptyMatch },
       std::string() },
     // More checks that everything works when it's not necessary to demote.
@@ -1905,22 +1909,22 @@ TEST_F(SearchProviderTest, KeywordFetcherSuggestRelevance) {
        "{\"google:suggesttype\":[\"NAVIGATION\", \"NAVIGATION\", \"QUERY\"],"
         "\"google:verbatimrelevance\":9990,"
         "\"google:suggestrelevance\":[9997, 9998, 9999]}]",
-      { { "a3",     true,  true },
-        { "a2.com", false, false },
-        { "a1.com", false, false },
-        { "a",      true,  true },
-        { "k a",    false, false },
+      { { "a3",            true,  true },
+        { "http://a2.com", false, false },
+        { "http://a1.com", false, false },
+        { "a",             true,  true },
+        { "k a",           false, false },
         kEmptyMatch },
       "3" },
     { "[\"a\",[\"http://a1.com\", \"http://a2.com\", \"a3\"],[],[],"
        "{\"google:suggesttype\":[\"NAVIGATION\", \"NAVIGATION\", \"QUERY\"],"
         "\"google:verbatimrelevance\":9990,"
         "\"google:suggestrelevance\":[9998, 9997, 9999]}]",
-      { { "a3",     true,  true },
-        { "a1.com", false, false },
-        { "a2.com", false, false },
-        { "a",      true,  true },
-        { "k a",    false, false },
+      { { "a3",            true,  true },
+        { "http://a1.com", false, false },
+        { "http://a2.com", false, false },
+        { "a",             true,  true },
+        { "k a",           false, false },
         kEmptyMatch },
       "3" },
   };
@@ -2018,30 +2022,30 @@ TEST_F(SearchProviderTest, DontInlineAutocompleteAsynchronously) {
        "{\"google:verbatimrelevance\":9000,"
         "\"google:suggesttype\":[\"NAVIGATION\", \"NAVIGATION\"],"
         "\"google:suggestrelevance\":[9002, 9001]}]",
-      { { "a", true }, { "ab1.com", false }, { "ab2.com", false },
+      { { "a", true }, { "http://ab1.com", false }, { "http://ab2.com", false },
         kEmptyExpectedMatch },
-      { { "ab1.com", true }, { "ab2.com", true }, { "ab", true },
+      { { "http://ab1.com", true }, { "http://ab2.com", true }, { "ab", true },
         kEmptyExpectedMatch },
       "[\"ab\",[\"ab1.com\", \"ab2.com\"],[],[],"
        "{\"google:verbatimrelevance\":9000,"
         "\"google:suggesttype\":[\"NAVIGATION\", \"NAVIGATION\"],"
         "\"google:suggestrelevance\":[9002, 9001]}]",
-      { { "ab1.com", true }, { "ab2.com", false }, { "ab", true },
+      { { "http://ab1.com", true }, { "http://ab2.com", false }, { "ab", true },
         kEmptyExpectedMatch } },
     // A more realistic test of the same situation.
     { "[\"a\",[\"abcdef\", \"abcdef.com\", \"abc\"],[],[],"
        "{\"google:verbatimrelevance\":900,"
         "\"google:suggesttype\":[\"QUERY\", \"NAVIGATION\", \"QUERY\"],"
         "\"google:suggestrelevance\":[1250, 1200, 1000]}]",
-      { { "a", true }, { "abcdef", false }, { "abcdef.com", false },
+      { { "a", true }, { "abcdef", false }, { "http://abcdef.com", false },
         { "abc", false } },
-      { { "abcdef", true }, { "abcdef.com", true }, { "abc", true },
+      { { "abcdef", true }, { "http://abcdef.com", true }, { "abc", true },
         { "ab", true } },
       "[\"ab\",[\"abcdef\", \"abcdef.com\", \"abc\"],[],[],"
        "{\"google:verbatimrelevance\":900,"
         "\"google:suggesttype\":[\"QUERY\", \"NAVIGATION\", \"QUERY\"],"
         "\"google:suggestrelevance\":[1250, 1200, 1000]}]",
-      { { "abcdef", true }, { "abcdef.com", false }, { "abc", false },
+      { { "abcdef", true }, { "http://abcdef.com", false }, { "abc", false },
         { "ab", true } } },
 
     // Without an original inline autcompletion, a new inline autcompletion
@@ -2079,29 +2083,31 @@ TEST_F(SearchProviderTest, DontInlineAutocompleteAsynchronously) {
        "{\"google:verbatimrelevance\":9000,"
         "\"google:suggesttype\":[\"NAVIGATION\", \"NAVIGATION\"],"
         "\"google:suggestrelevance\":[8000, 7000]}]",
-      { { "a", true }, { "ab1.com", false }, { "ab2.com", false },
+      { { "a", true }, { "http://ab1.com", false }, { "http://ab2.com", false },
         kEmptyExpectedMatch },
-      { { "ab", true }, { "ab1.com", true }, { "ab2.com", true },
+      { { "ab", true }, { "http://ab1.com", true }, { "http://ab2.com", true },
         kEmptyExpectedMatch },
       "[\"ab\",[\"ab1.com\", \"ab2.com\"],[],[],"
        "{\"google:verbatimrelevance\":9000,"
         "\"google:suggesttype\":[\"NAVIGATION\", \"NAVIGATION\"],"
         "\"google:suggestrelevance\":[9002, 9001]}]",
-      { { "ab", true }, { "ab1.com", false }, { "ab2.com", false },
+      { { "ab", true }, { "http://ab1.com", false },
+        { "http://ab2.com", false },
         kEmptyExpectedMatch } },
     { "[\"a\",[\"ab1.com\", \"ab2.com\"],[],[],"
        "{\"google:verbatimrelevance\":9000,"
         "\"google:suggesttype\":[\"NAVIGATION\", \"NAVIGATION\"],"
         "\"google:suggestrelevance\":[8000, 7000]}]",
-      { { "a", true }, { "ab1.com", false }, { "ab2.com", false },
+      { { "a", true }, { "http://ab1.com", false }, { "http://ab2.com", false },
         kEmptyExpectedMatch },
-      { { "ab", true }, { "ab1.com", true }, { "ab2.com", true },
+      { { "ab", true }, { "http://ab1.com", true }, { "http://ab2.com", true },
         kEmptyExpectedMatch },
       "[\"ab\",[\"ab1.com\", \"ab2.com\"],[],[],"
        "{\"google:verbatimrelevance\":9000,"
         "\"google:suggesttype\":[\"NAVIGATION\", \"NAVIGATION\"],"
         "\"google:suggestrelevance\":[9001, 9002]}]",
-      { { "ab", true }, { "ab2.com", false }, { "ab1.com", false },
+      { { "ab", true }, { "http://ab2.com", false },
+        { "http://ab1.com", false },
         kEmptyExpectedMatch } },
 
     // It's okay to abandon an inline autocompletion asynchronously.
@@ -2359,7 +2365,7 @@ TEST_F(SearchProviderTest, DefaultProviderSuggestRelevanceScoringUrlInput) {
                 "{\"google:suggesttype\":[\"NAVIGATION\"],"
                  "\"google:suggestrelevance\":[9999]}]",
       { { "a.com",   AutocompleteMatchType::SEARCH_WHAT_YOU_TYPED, true },
-        { "b.com",   AutocompleteMatchType::NAVSUGGEST,            false },
+        { "http://b.com",   AutocompleteMatchType::NAVSUGGEST,     false },
         kEmptyMatch, kEmptyMatch } },
     { "a.com", "[\"a.com\",[\"https://b.com\"],[],[],"
                 "{\"google:suggesttype\":[\"NAVIGATION\"],"
@@ -2370,7 +2376,7 @@ TEST_F(SearchProviderTest, DefaultProviderSuggestRelevanceScoringUrlInput) {
     { "a.com", "[\"a.com\",[\"http://a.com/a\"],[],[],"
                 "{\"google:suggesttype\":[\"NAVIGATION\"],"
                  "\"google:suggestrelevance\":[9999]}]",
-      { { "a.com/a", AutocompleteMatchType::NAVSUGGEST,            true },
+      { { "http://a.com/a", AutocompleteMatchType::NAVSUGGEST,     true },
         { "a.com",   AutocompleteMatchType::SEARCH_WHAT_YOU_TYPED, true },
         kEmptyMatch, kEmptyMatch } },
     { "a.com", "[\"a.com\",[\"https://a.com\"],[],[],"
@@ -2398,7 +2404,7 @@ TEST_F(SearchProviderTest, DefaultProviderSuggestRelevanceScoringUrlInput) {
     { "a.com", "[\"a.com\",[\"a.com info\", \"http://a.com/b\"],[],[],"
                 "{\"google:suggesttype\":[\"QUERY\", \"NAVIGATION\"],"
                  "\"google:suggestrelevance\":[9999, 9998]}]",
-      { { "a.com/b",    AutocompleteMatchType::NAVSUGGEST,            true  },
+      { { "http://a.com/b",    AutocompleteMatchType::NAVSUGGEST,     true  },
         { "a.com info", AutocompleteMatchType::SEARCH_SUGGEST,        false },
         { "a.com",      AutocompleteMatchType::SEARCH_WHAT_YOU_TYPED, true  },
         kEmptyMatch } },
@@ -2406,7 +2412,7 @@ TEST_F(SearchProviderTest, DefaultProviderSuggestRelevanceScoringUrlInput) {
                 "{\"google:suggesttype\":[\"QUERY\", \"NAVIGATION\"],"
                  "\"google:suggestrelevance\":[9998, 9997],"
                  "\"google:verbatimrelevance\":9999}]",
-      { { "a.com/b",    AutocompleteMatchType::NAVSUGGEST,            true },
+      { { "http://a.com/b",    AutocompleteMatchType::NAVSUGGEST,     true },
         { "a.com",      AutocompleteMatchType::SEARCH_WHAT_YOU_TYPED, true },
         { "a.com info", AutocompleteMatchType::SEARCH_SUGGEST,        false },
         kEmptyMatch } },
@@ -2521,14 +2527,14 @@ TEST_F(SearchProviderTest, SpecificTypeIdentifierParsing) {
       {"a",
        "[\"a\",[\"ab\",\"http://b.com\"],[],[], "
        "{\"google:suggesttype\":[\"QUERY\", \"NAVIGATION\"]}]",
-       {{"ab", 0}, {"b.com", 0}}},
+       {{"ab", 0}, {"http://b.com", 0}}},
 
       // Check that the specific type works for zero-suggest suggestions.
       {"c",
        "[\"c\",[\"cd\",\"http://d.com\"],[],[], "
        "{\"google:suggesttype\":[\"QUERY\", \"NAVIGATION\"],"
        "\"google:subtypeid\":[1, 3]}]",
-       {{"cd", 1}, {"d.com", 3}}},
+       {{"cd", 1}, {"http://d.com", 3}}},
 
       // Check that the specific type is set to zero when the number of
       // suggestions is smaller than the number of id's provided.
@@ -2553,7 +2559,7 @@ TEST_F(SearchProviderTest, SpecificTypeIdentifierParsing) {
        "{\"google:suggesttype\":[\"QUERY\", \"NAVIGATION\"],"
        "\"google:suggestrelevance\":[9300, 9800],"
        "\"google:subtypeid\":[2, 4]}]",
-       {{"ef", 2}, {"e.com", 4}}}};
+       {{"ef", 2}, {"http://e.com", 4}}}};
 
   for (size_t i = 0; i < arraysize(cases); ++i) {
     QueryForInputAndWaitForFetcherResponses(
@@ -2800,18 +2806,18 @@ TEST_F(SearchProviderTest, NavigationInlineDomainClassify) {
   EXPECT_EQ(ASCIIToUTF16("ow.com"), match.inline_autocompletion);
   EXPECT_TRUE(match.allowed_to_be_default_match);
   EXPECT_EQ(ASCIIToUTF16("www.wow.com"), match.fill_into_edit);
-  EXPECT_EQ(ASCIIToUTF16("www.wow.com"), match.contents);
+  EXPECT_EQ(ASCIIToUTF16("http://www.wow.com"), match.contents);
 
   // Ensure that the match for input "w" is marked on "wow" and not "www".
   ASSERT_EQ(3U, match.contents_class.size());
   EXPECT_EQ(0U, match.contents_class[0].offset);
   EXPECT_EQ(AutocompleteMatch::ACMatchClassification::URL,
             match.contents_class[0].style);
-  EXPECT_EQ(4U, match.contents_class[1].offset);
+  EXPECT_EQ(11U, match.contents_class[1].offset);
   EXPECT_EQ(AutocompleteMatch::ACMatchClassification::URL |
             AutocompleteMatch::ACMatchClassification::MATCH,
             match.contents_class[1].style);
-  EXPECT_EQ(5U, match.contents_class[2].offset);
+  EXPECT_EQ(12U, match.contents_class[2].offset);
   EXPECT_EQ(AutocompleteMatch::ACMatchClassification::URL,
             match.contents_class[2].style);
 }
@@ -2949,8 +2955,8 @@ TEST_F(SearchProviderTest, PrefetchMetadataParsing) {
           std::string(),
           {{"ab", false, AutocompleteMatchType::SEARCH_WHAT_YOU_TYPED, false},
            {"abc", true, AutocompleteMatchType::SEARCH_SUGGEST, false},
-           {"b.com", false, AutocompleteMatchType::NAVSUGGEST, false},
-           {"c.com", false, AutocompleteMatchType::NAVSUGGEST, false},
+           {"http://b.com", false, AutocompleteMatchType::NAVSUGGEST, false},
+           {"http://c.com", false, AutocompleteMatchType::NAVSUGGEST, false},
            kEmptyMatch},
       },
       // Default provider suggest response has prefetch details.
@@ -2966,7 +2972,7 @@ TEST_F(SearchProviderTest, PrefetchMetadataParsing) {
           "\"google:suggestrelevance\":[99, 98]}]",
           std::string(),
           {{"ab", true, AutocompleteMatchType::SEARCH_WHAT_YOU_TYPED, false},
-           {"ab.com", false, AutocompleteMatchType::NAVSUGGEST, false},
+           {"http://ab.com", false, AutocompleteMatchType::NAVSUGGEST, false},
            kEmptyMatch,
            kEmptyMatch,
            kEmptyMatch},
@@ -3156,7 +3162,7 @@ TEST_F(SearchProviderTest, ParseDeletionUrl) {
          { { "a", "", AutocompleteMatchType::SEARCH_WHAT_YOU_TYPED },
            { "ab", url[0], AutocompleteMatchType::SEARCH_SUGGEST },
            { "ac", "", AutocompleteMatchType::SEARCH_SUGGEST },
-           { "www.amazon.com", url[1],
+           { "http://www.amazon.com", url[1],
               AutocompleteMatchType::NAVSUGGEST_PERSONALIZED },
            kEmptyMatch,
          },

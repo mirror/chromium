@@ -244,9 +244,10 @@ AutocompleteMatch HistoryQuickProvider::QuickMatchToACMatch(
       OffsetsFromTermMatches(history_match.url_matches);
   match.contents = url_formatter::FormatUrlWithOffsets(
       info.url(),
-      AutocompleteMatch::GetFormatTypes(history_match.match_in_scheme,
-                                        history_match.match_in_subdomain,
-                                        history_match.match_after_host),
+      AutocompleteMatch::GetFormatTypes(
+          GURL(autocomplete_input_.text()).has_scheme(),
+          history_match.match_in_scheme, history_match.match_in_subdomain,
+          history_match.match_after_host),
       net::UnescapeRule::SPACES, nullptr, nullptr, &offsets);
 
   TermMatches new_matches =
