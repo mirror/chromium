@@ -22,6 +22,30 @@
       "revId": "7880031fc48334f87bb6e0040ed12ad6b790a4ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df1a16d4_a9d42f41",
+        "filename": "ash/shell/app_list.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-12-01T23:08:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58dc052e_5419f0ad",
+      "range": {
+        "startLine": 230,
+        "startChar": 3,
+        "endLine": 230,
+        "endChar": 4
+      },
+      "revId": "7880031fc48334f87bb6e0040ed12ad6b790a4ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
