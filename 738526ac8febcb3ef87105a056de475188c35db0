@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "958ef448_4bf9160b",
+        "filename": "ios/web/web_state/navigation_and_load_callbacks_inttest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-01T21:19:16Z",
+      "side": 1,
+      "message": "nit: Do we need |#7|?",
+      "range": {
+        "startLine": 426,
+        "startChar": 29,
+        "endLine": 426,
+        "endChar": 30
+      },
+      "revId": "738526ac8febcb3ef87105a056de475188c35db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6689a487_fcbf8316",
+        "filename": "ios/web/web_state/web_state_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-01T21:19:16Z",
+      "side": 1,
+      "message": "Can we unit test this in web_view_impl_unittest? Integration tests are pretty slow and flaky. This code looks like perfectly unit testable. WDYT?",
+      "range": {
+        "startLine": 554,
+        "startChar": 8,
+        "endLine": 554,
+        "endChar": 15
+      },
+      "revId": "738526ac8febcb3ef87105a056de475188c35db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
