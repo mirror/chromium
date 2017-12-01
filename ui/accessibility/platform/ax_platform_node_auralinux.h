@@ -107,6 +107,10 @@ class AXPlatformNodeAuraLinux : public AXPlatformNodeBase {
   // interfaces accordingly if needed.
   int interface_mask_;
 
+  // Keep latest AtkRole to emit the property-change::accessible-role
+  // signal accordingly.
+  AtkRole atk_role_;
+
   // We own a reference to these ref-counted objects.
   AtkObject* atk_object_;
   AtkHyperlink* atk_hyperlink_;
