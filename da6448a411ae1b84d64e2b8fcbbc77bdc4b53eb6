@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afc5d933_4abdab09",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-12-01T01:03:26Z",
+      "side": 1,
+      "message": "I\u0027d expect tests here to result in the renderer process being terminated because it violates a security property. This test seems to be a positive one and I\u0027m not sure it belongs in this file.",
+      "revId": "da6448a411ae1b84d64e2b8fcbbc77bdc4b53eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34bb6de3_b46fd7cc",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-12-01T01:03:26Z",
+      "side": 1,
+      "message": "It isn\u0027t quite clear to follow how we test reuse of the initial empty document. \n\nAlso, the JS navigates as soon as we add the frame to the DOM, which makes it non-obvious whether there is initial empty document or not. Maybe add the frame to the DOM first, then assign its src?",
+      "revId": "da6448a411ae1b84d64e2b8fcbbc77bdc4b53eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5722d93_031144bf",
+        "filename": "content/public/test/render_view_test.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-12-01T01:03:26Z",
+      "side": 1,
+      "message": "Why did we need these routing ids to change?",
+      "revId": "da6448a411ae1b84d64e2b8fcbbc77bdc4b53eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10a1f663_e462b2f3",
+        "filename": "content/test/test_render_frame.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-12-01T01:03:26Z",
+      "side": 1,
+      "message": "Why do we need this?",
+      "revId": "da6448a411ae1b84d64e2b8fcbbc77bdc4b53eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
