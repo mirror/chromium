@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ba35cb1_cd1b00d0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 37
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-01T22:25:17Z",
+      "side": 1,
+      "message": "Suggestion:\n\"Win video capture: use IMFCaptureEngine for Media Foundation\"\nor some such, so QA folks and sheriffs taking a look at this\nCL, possibly bundled with a ton of others, can quickly scan\nthe name and decide if this CL is guilty of any breakage or\nregression.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 92
+      },
+      "revId": "b7485433fdeae529ff8974013075bcf90e6223fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6683a790_284f3179",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 37
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-01T22:25:17Z",
+      "side": 1,
+      "message": "Nit: reflow to 80 chars wide.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 0
+      },
+      "revId": "b7485433fdeae529ff8974013075bcf90e6223fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a334f05c_ff857ecc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 37
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-01T22:25:17Z",
+      "side": 1,
+      "message": "Instead, write how you tested this, e.g.\n\nTEST\u003dadapted video_capture_device_unittest.cc and/or\nwebrtc_image_capture_browsertest.cc; launch Chrome with\n--force-mediafoundation on Win7+ and capture video using\ne.g. https://webrtc.github.io/samples/src/content/getusermedia/gum/\n\nThe idea being to help future readers of this CL to \nunderstand how you validated your changes/what was supposed\nto be accomplished.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 58
+      },
+      "revId": "b7485433fdeae529ff8974013075bcf90e6223fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
