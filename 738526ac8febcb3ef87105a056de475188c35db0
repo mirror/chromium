@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "28a22cee_c014ea30",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-12-01T22:29:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8972f4a_4c5a3dcb",
+      "range": {
+        "startLine": 7,
+        "startChar": 34,
+        "endLine": 7,
+        "endChar": 44
+      },
+      "revId": "738526ac8febcb3ef87105a056de475188c35db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "958ef448_4bf9160b",
         "filename": "ios/web/web_state/navigation_and_load_callbacks_inttest.mm",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "569abf6f_2ad20ec1",
+        "filename": "ios/web/web_state/navigation_and_load_callbacks_inttest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-12-01T22:29:44Z",
+      "side": 1,
+      "message": "#7 is the specific issue that this CL is addressing. But it\u0027s not too important. Removed.",
+      "parentUuid": "958ef448_4bf9160b",
+      "range": {
+        "startLine": 426,
+        "startChar": 29,
+        "endLine": 426,
+        "endChar": 30
+      },
+      "revId": "738526ac8febcb3ef87105a056de475188c35db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6689a487_fcbf8316",
         "filename": "ios/web/web_state/web_state_impl.mm",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-01T21:19:16Z",
       "side": 1,
       "message": "Can we unit test this in web_view_impl_unittest? Integration tests are pretty slow and flaky. This code looks like perfectly unit testable. WDYT?",
+      "range": {
+        "startLine": 554,
+        "startChar": 8,
+        "endLine": 554,
+        "endChar": 15
+      },
+      "revId": "738526ac8febcb3ef87105a056de475188c35db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21c3e061_9ca97623",
+        "filename": "ios/web/web_state/web_state_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-12-01T22:29:44Z",
+      "side": 1,
+      "message": "It\u0027s not easily testable in web_state_impl_unittest because the bug does not impact any publicly visible WebStateImpl states: cached_session_storage_ is private so test can\u0027t verify that it\u0027s not set when it shouldn\u0027t. Calling NavigationManager::Restore() an extra time requires a real WKWebView to be able to observe the change.\n\nI considered 2 alternatives. The first is to observe the NavigationManager::Restore call by injecting a mock CRWWebController in web_state_impl_unittest and checking that |-loadCurrentURL| is not called twice. I didn\u0027t like it because it requires web_state_impl_unittest to know about the implementation of Restore(), which seems like a change detector.\n\nOption 2 is to keep using real CRWWebController and also create a real WKWebView. Then actually wait for a page load in web_state_impl_unittest. I thought that this is essentially an inttest...",
+      "parentUuid": "6689a487_fcbf8316",
       "range": {
         "startLine": 554,
         "startChar": 8,
