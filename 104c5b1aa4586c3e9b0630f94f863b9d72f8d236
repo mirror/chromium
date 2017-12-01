@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2026ded5_b152c945",
+        "filename": "chrome/browser/android/webapk/webapk_metrics.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-01T03:12:40Z",
+      "side": 1,
+      "message": "case WebAppInstallSource::COUNT should be NOTREACHED(), as you should not pass COUNT into this method (UMA assumes the MAX is exclusive).",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 12
+      },
+      "revId": "104c5b1aa4586c3e9b0630f94f863b9d72f8d236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c9bfecb_2dbc3c22",
+        "filename": "chrome/browser/banners/app_banner_infobar_delegate_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-01T03:12:40Z",
+      "side": 1,
+      "message": "Optional nit: my personal preference is that bool arguments go last if possible, but I won\u0027t block on it.",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 23
+      },
+      "revId": "104c5b1aa4586c3e9b0630f94f863b9d72f8d236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e45eef1_36900b61",
+        "filename": "chrome/browser/installable/installable_metrics.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-01T03:12:40Z",
+      "side": 1,
+      "message": "Nit: \"The\"",
+      "range": {
+        "startLine": 34,
+        "startChar": 3,
+        "endLine": 34,
+        "endChar": 7
+      },
+      "revId": "104c5b1aa4586c3e9b0630f94f863b9d72f8d236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63a9d8b7_9b72638a",
+        "filename": "chrome/browser/installable/installable_metrics.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-01T03:12:40Z",
+      "side": 1,
+      "message": "Nit: static methods usually go before member methods.",
+      "range": {
+        "startLine": 92,
+        "startChar": 2,
+        "endLine": 92,
+        "endChar": 8
+      },
+      "revId": "104c5b1aa4586c3e9b0630f94f863b9d72f8d236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
