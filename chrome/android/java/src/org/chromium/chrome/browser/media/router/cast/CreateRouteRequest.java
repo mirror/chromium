@@ -20,6 +20,7 @@ import org.chromium.base.Log;
 import org.chromium.chrome.browser.media.router.BaseMediaRouteProvider;
 import org.chromium.chrome.browser.media.router.ChromeMediaRouter;
 import org.chromium.chrome.browser.media.router.MediaRoute;
+import org.chromium.chrome.browser.media.router.cast.remoting.RemotingCastSession;
 
 /**
  * Establishes a {@link MediaRoute} by starting a Cast application represented by the given
@@ -48,9 +49,15 @@ public class CreateRouteRequest implements GoogleApiClient.ConnectionCallbacks,
     private final int mRequestId;
     private final CastMessageHandler mMessageHandler;
     private final BaseMediaRouteProvider mRouteProvider;
+    private final RequestedCastSessionType mSessionType;
 
     private GoogleApiClient mApiClient;
     private int mState = STATE_IDLE;
+
+    // Used to identify whether the request should launch a CastSessionImpl or a RemotingCastSession
+    // (based off of wheter the route creation was requested by a RemotingMediaRouteProvider or a
+    // CastMediaRouteProvider).
+    public enum RequestedCastSessionType { CAST, REMOTE }
 
     /**
      * Initializes the request.
@@ -66,7 +73,8 @@ public class CreateRouteRequest implements GoogleApiClient.ConnectionCallbacks,
      */
     public CreateRouteRequest(MediaSource source, MediaSink sink, String presentationId,
             String origin, int tabId, boolean isIncognito, int requestId,
-            BaseMediaRouteProvider routeProvider, CastMessageHandler messageHandler) {
+            BaseMediaRouteProvider routeProvider, RequestedCastSessionType sessionType,
+            CastMessageHandler messageHandler) {
         assert source != null;
         assert sink != null;
 
@@ -78,6 +86,7 @@ public class CreateRouteRequest implements GoogleApiClient.ConnectionCallbacks,
         mIsIncognito = isIncognito;
         mRequestId = requestId;
         mRouteProvider = routeProvider;
+        mSessionType = sessionType;
         mMessageHandler = messageHandler;
     }
 
@@ -215,9 +224,20 @@ public class CreateRouteRequest implements GoogleApiClient.ConnectionCallbacks,
     private void reportSuccess(Cast.ApplicationConnectionResult result) {
         if (mState != STATE_LAUNCH_SUCCEEDED) throwInvalidState();
 
-        CastSession session = new CastSessionImpl(mApiClient, result.getSessionId(),
-                result.getApplicationMetadata(), result.getApplicationStatus(), mSink.getDevice(),
-                mOrigin, mTabId, mIsIncognito, mSource, mMessageHandler);
+        CastSession session = null;
+
+        switch (mSessionType) {
+            case CAST:
+                session = new CastSessionImpl(mApiClient, result.getSessionId(),
+                        result.getApplicationMetadata(), result.getApplicationStatus(),
+                        mSink.getDevice(), mOrigin, mTabId, mIsIncognito, mSource, mMessageHandler);
+                break;
+            case REMOTE:
+                session = new RemotingCastSession(mApiClient, result.getSessionId(),
+                        result.getApplicationMetadata(), result.getApplicationStatus(),
+                        mSink.getDevice(), mOrigin, mTabId, mIsIncognito, mSource);
+                break;
+        }
 
         ChromeCastSessionManager.get().onSessionCreated(session, mRouteProvider);
 

@@ -8,9 +8,11 @@ import android.support.v7.media.MediaRouter;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.browser.media.router.BaseMediaRouteProvider;
 import org.chromium.chrome.browser.media.router.ChromeMediaRouter;
+import org.chromium.chrome.browser.media.router.MediaRoute;
 import org.chromium.chrome.browser.media.router.MediaRouteManager;
 import org.chromium.chrome.browser.media.router.MediaRouteProvider;
 import org.chromium.chrome.browser.media.router.cast.CreateRouteRequest;
+import org.chromium.chrome.browser.media.router.cast.MediaSink;
 import org.chromium.chrome.browser.media.router.cast.MediaSource;
 
 /**
@@ -62,8 +64,27 @@ public class RemotingMediaRouteProvider extends BaseMediaRouteProvider {
 
     // TODO(tguilbert): Implement the functions below. See crbug.com/790766.
     @Override
-    public void onSessionClosed() {}
+    public void onSessionClosed() {
+        if (mSession == null) return;
+
+        for (String routeId : mRoutes.keySet()) mManager.onRouteClosed(routeId);
+        mRoutes.clear();
+
+        mSession = null;
+
+        if (mAndroidMediaRouter != null) {
+            mAndroidMediaRouter.selectRoute(mAndroidMediaRouter.getDefaultRoute());
+        }
+    }
 
     @Override
-    public void onSessionLaunching(CreateRouteRequest request) {}
+    public void onSessionLaunching(CreateRouteRequest request) {
+        MediaSink sink = request.getSink();
+        MediaSource source = request.getSource();
+
+        MediaRoute route =
+                new MediaRoute(sink.getId(), source.getSourceId(), request.getPresentationId());
+        mRoutes.put(route.id, route);
+        mManager.onRouteCreated(route.id, route.sinkId, request.getNativeRequestId(), this, true);
+    }
 }
