@@ -16,6 +16,24 @@
       "revId": "3be146d6077d22f458d840d296a640a831fd68d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9bd300a_a7bda1a6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/AppHooks.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-01T00:00:50Z",
+      "side": 1,
+      "message": "The others are needed for the javadoc :/.",
+      "parentUuid": "9f8e984e_87cdda44",
+      "revId": "3be146d6077d22f458d840d296a640a831fd68d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
