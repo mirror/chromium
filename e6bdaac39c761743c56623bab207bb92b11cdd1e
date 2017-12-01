@@ -16,6 +16,24 @@
       "revId": "e6bdaac39c761743c56623bab207bb92b11cdd1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2a1994d_f301638d",
+        "filename": "tools/grit/grit/node/misc.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-01T18:32:19Z",
+      "side": 1,
+      "message": "I cringe to see \u0027\u0027\u0027! :P. Most other files I looked at are using \u0027\u0027\u0027s but I missed that this is using \"\"\"s. So, Done!",
+      "parentUuid": "edce2950_0d89dbb7",
+      "revId": "e6bdaac39c761743c56623bab207bb92b11cdd1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
