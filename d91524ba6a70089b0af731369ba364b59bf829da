@@ -52,6 +52,24 @@
       "revId": "d91524ba6a70089b0af731369ba364b59bf829da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7393eaf0_9a69930e",
+        "filename": "ash/wm/overview/window_selector_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-12-01T23:19:18Z",
+      "side": 1,
+      "message": "Add check for transient parent.\n\nxdai - Could not quite do it you way since need to check for transient, but did use GetDefaultSnappedWindow.",
+      "parentUuid": "fcb418cf_821e7a3f",
+      "revId": "d91524ba6a70089b0af731369ba364b59bf829da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
