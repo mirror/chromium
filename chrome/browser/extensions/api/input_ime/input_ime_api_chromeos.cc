@@ -25,6 +25,8 @@
 #include "ui/base/ime/chromeos/extension_ime_util.h"
 #include "ui/base/ime/chromeos/input_method_manager.h"
 #include "ui/base/ime/ime_engine_handler_interface.h"
+#include "ui/keyboard/keyboard_controller.h"
+#include "ui/keyboard/keyboard_util.h"
 
 namespace input_ime = extensions::api::input_ime;
 namespace DeleteSurroundingText =
@@ -50,6 +52,7 @@ const char kErrorEngineNotAvailable[] = "Engine is not available";
 const char kErrorSetMenuItemsFail[] = "Could not create menu Items";
 const char kErrorUpdateMenuItemsFail[] = "Could not update menu Items";
 const char kErrorEngineNotActive[] = "The engine is not active.";
+std::string last_unloaded_extension_id;
 
 void SetMenuItemToMenu(
     const input_ime::MenuItem& input,
@@ -627,7 +630,22 @@ void InputImeAPI::OnExtensionLoaded(content::BrowserContext* browser_context,
   InputImeEventRouter* event_router =
       GetInputImeEventRouter(Profile::FromBrowserContext(browser_context));
   if (input_components && event_router) {
-    event_router->RegisterImeExtension(extension->id(), *input_components);
+    chromeos::input_method::InputMethodManager* manager =
+        chromeos::input_method::InputMethodManager::Get();
+    chromeos::ComponentExtensionIMEManager* comp_ext_ime_manager =
+        manager->GetComponentExtensionIMEManager();
+
+    if (extension->id() == last_unloaded_extension_id &&
+        comp_ext_ime_manager->IsWhitelistedExtension(extension->id())) {
+      // If it's first party ime, reactive the engine.
+      InputMethodEngine* engine = GetActiveEngine(
+          Profile::FromBrowserContext(browser_context), extension->id());
+      if (engine)
+        engine->Enable(engine->GetActiveComponentId());
+    } else {
+      event_router->RegisterImeExtension(extension->id(), *input_components);
+    }
+    last_unloaded_extension_id = "";
   }
 }
 
@@ -641,7 +659,26 @@ void InputImeAPI::OnExtensionUnloaded(content::BrowserContext* browser_context,
   InputImeEventRouter* event_router =
       GetInputImeEventRouter(Profile::FromBrowserContext(browser_context));
   if (event_router) {
-    event_router->UnregisterAllImes(extension->id());
+    chromeos::input_method::InputMethodManager* manager =
+        chromeos::input_method::InputMethodManager::Get();
+    chromeos::ComponentExtensionIMEManager* comp_ext_ime_manager =
+        manager->GetComponentExtensionIMEManager();
+
+    if (comp_ext_ime_manager->IsWhitelistedExtension(extension->id())) {
+      // If it's the first party ime. Needn't unregister. But need unload
+      // keyboard container document.
+      keyboard::KeyboardController* keyboard_controller =
+          keyboard::KeyboardController::GetInstance();
+      if (keyboard_controller) {
+        // Clears the keyboard container url and reload it.
+        // It means unload the content in window.
+        keyboard::SetOverrideContentUrl(GURL());
+        keyboard_controller->Reload();
+      }
+      last_unloaded_extension_id = extension->id();
+    } else {
+      event_router->UnregisterAllImes(extension->id());
+    }
   }
 }
 
