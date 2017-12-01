@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "d3c17d25_34548ec2",
+        "filename": "services/shape_detection/detection_utils_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-01T16:53:14Z",
+      "side": 1,
+      "message": "\u003d-0 It\u0027s true, I just tried it and it says e.g.\n\n Check failed: 123 \u003d\u003d 256 (123 vs. 256)",
+      "parentUuid": "da58bbf2_e6d147da",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 50
+      },
+      "revId": "31c8b9da70ffa34b1454bf244bd514bee3515526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbfcbfd3_26224df3",
         "filename": "services/shape_detection/detection_utils_win.h",
         "patchSetId": 6
@@ -108,6 +132,30 @@
       "side": 1,
       "message": "\u003e Now that there\u0027s a .cc file, move the implementation of this\nclass\u0027 methods there.\n\nHow about moving it in a new CL?",
       "parentUuid": "fbfcbfd3_26224df3",
+      "range": {
+        "startLine": 41,
+        "startChar": 6,
+        "endLine": 41,
+        "endChar": 20
+      },
+      "revId": "31c8b9da70ffa34b1454bf244bd514bee3515526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2370c259_358acbd2",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-01T16:53:14Z",
+      "side": 1,
+      "message": "That\u0027s OK: in that case, add a TODO(junwei.fu) with the bug URL,\nplz.",
+      "parentUuid": "f6b17377_82b9c80c",
       "range": {
         "startLine": 41,
         "startChar": 6,
@@ -308,6 +356,30 @@
     },
     {
       "key": {
+        "uuid": "4ebde6b3_4d20c8f8",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-01T16:53:14Z",
+      "side": 1,
+      "message": "I mean, BeginDetect() should be declared+defined as:\n\nstd::unique_ptr\u003cAsyncOperation\u003cIVector\u003cDetectedFace*\u003e\u003e\u003e\nFaceDetectionImplWin::BeginDetect(DetectCallback callback,\n                                  const SkBitmap\u0026 bitmap) { \n//...\n\nand call in l.40 as:\n  BeginDetect(std::move(callback), bitmap)",
+      "parentUuid": "ff327d3d_16e1b42f",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 50
+      },
+      "revId": "31c8b9da70ffa34b1454bf244bd514bee3515526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc0bb69b_eed26e1b",
         "filename": "services/shape_detection/face_detection_impl_win.cc",
         "patchSetId": 6
@@ -343,6 +415,30 @@
       "side": 1,
       "message": "\u003e Hmm this will be seen from JS as a correct detection \nwith a result of \"no faces\", which is probably not accurate\n-- instead, what about just letting the callback get\nout of scope, which will resolve it as an \"error\" ?\n\nIt will hang chrome process and prompt a JS dialog with below messages.\n\n\"The callback pass to FaceDetectionImplWin::Detect was never run.\"",
       "parentUuid": "bc0bb69b_eed26e1b",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 43
+      },
+      "revId": "31c8b9da70ffa34b1454bf244bd514bee3515526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12c03794_7c79f7a2",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-01T16:53:14Z",
+      "side": 1,
+      "message": "Ah, oops, correct, I was thinking about ImageCapture\nwhere the callback is self-scoped.",
+      "parentUuid": "35ff4609_7d4b7f88",
       "range": {
         "startLine": 48,
         "startChar": 0,
