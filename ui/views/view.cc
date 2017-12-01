@@ -619,6 +619,11 @@ void View::Layout() {
   }
 }
 
+void View::LayoutIfNeeded() {
+  if (needs_layout_ && parent_)
+    Layout();
+}
+
 void View::InvalidateLayout() {
   // Always invalidate up. This is needed to handle the case of us already being
   // valid, but not our parent.

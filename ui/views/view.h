@@ -502,6 +502,9 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   // specific to the current Layout Manager)
   virtual void Layout();
 
+  // Performs a layout if needs_layout() and the View has a parent.
+  void LayoutIfNeeded();
+
   // TODO(beng): I think we should remove this.
   // Mark this view and all parents to require a relayout. This ensures the
   // next call to Layout() will propagate to this view, even if the bounds of

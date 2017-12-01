@@ -114,6 +114,7 @@ void LabelButton::SetEnabledTextColors(SkColor color) {
 
 void LabelButton::SetTextShadows(const gfx::ShadowValues& shadows) {
   label_->SetShadows(shadows);
+  LayoutIfNeeded();
 }
 
 void LabelButton::SetTextSubpixelRenderingEnabled(bool enabled) {
@@ -150,6 +151,7 @@ void LabelButton::SetIsDefault(bool is_default) {
   is_default_ ? AddAccelerator(accel) : RemoveAccelerator(accel);
 
   UpdateStyleToIndicateDefaultStatus();
+  LayoutIfNeeded();
 }
 
 void LabelButton::SetStyleDeprecated(ButtonStyle style) {
@@ -481,6 +483,7 @@ void LabelButton::UpdateStyleToIndicateDefaultStatus() {
 void LabelButton::UpdateImage() {
   image_->SetImage(GetImage(state()));
   ResetCachedPreferredSize();
+  LayoutIfNeeded();
 }
 
 void LabelButton::UpdateThemedBorder() {
@@ -495,12 +498,15 @@ void LabelButton::UpdateThemedBorder() {
 void LabelButton::SetTextInternal(const base::string16& text) {
   SetAccessibleName(text);
   label_->SetText(text);
+  LayoutIfNeeded();
 }
 
 void LabelButton::ChildPreferredSizeChanged(View* child) {
   ResetCachedPreferredSize();
   PreferredSizeChanged();
-  Layout();
+  // Do not call Layout() here. The label can change its preferred size many
+  // times during construction. Layout() will be done either when adding to
+  // a Widget, or by callers that alter Label properties while showing.
 }
 
 ui::NativeTheme::Part LabelButton::GetThemePart() const {
