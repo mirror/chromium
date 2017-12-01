@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e219575e_e3a4f825",
+        "filename": "media/base/limits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1212154
+      },
+      "writtenOn": "2017-12-01T11:33:07Z",
+      "side": 1,
+      "message": "In order for these ranges to affect the actual hardware latency there would need to be changes in the platform-specific audio managers, but I assume your intention here is just to allow different callback sizes for Web Audio. It feels a bit funny to change the meaning of the values in limits.h to be the range of buffer sizes that can be used in Web Audio rather than the real hardware-level supported ranges but maybe that\u0027s fine.\n\nI feel like maybe this decision would be better made in the renderer_webaudiodevice_impl:\n\nhttps://cs.chromium.org/chromium/src/content/renderer/media/renderer_webaudiodevice_impl.cc?sq\u003dpackage:chromium\u0026l\u003d141\n\noutput_buffer_size will represent the real hardware buffer size, then we can choose to increase it if we want (based on the latencyHint) before passing it to the sink so that we get that as the callback size up to Web Audio (I think!).\n\nWDYT?",
+      "revId": "8dbad7c1a270adb0b0efde49bac1c6c0ee28b2a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
