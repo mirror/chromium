@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9351716a_44240ba3",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1001841
+      },
+      "writtenOn": "2017-12-01T08:14:00Z",
+      "side": 1,
+      "message": "This is different from the original code.\n#if defined(USE_X11)\n  va_display_ \u003d vaGetDisplay(gfx::GetXDisplay());\n#elif defined(USE_OZONE)\n  va_display_ \u003d vaGetDisplayDRM(drm_fd_.get());\n#endif  // USE_X11\n\nIs this what we want?",
+      "revId": "f78b94359483099eab47823c2d773b7c80e18b3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c4cccb67_b7964ace",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1001841
+      },
+      "writtenOn": "2017-12-01T08:14:00Z",
+      "side": 1,
+      "message": "Is this path always video decode? If not, let\u0027s make the comment more generic. Same for line 251.",
+      "range": {
+        "startLine": 266,
+        "startChar": 32,
+        "endLine": 266,
+        "endChar": 38
+      },
+      "revId": "f78b94359483099eab47823c2d773b7c80e18b3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
