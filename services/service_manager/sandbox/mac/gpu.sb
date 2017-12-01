@@ -30,3 +30,12 @@
 ; Needed for VideoToolbox usage - https://crbug.com/767037
 (if (param-true? macos-1013)
   (allow mach-lookup (global-name "com.apple.coremedia.videodecoder")))
+
+; Needed for OOP raster fonts.
+(allow file-read* (subpath "/System/Library/Fonts"))
+(allow file-read* (subpath "/Library/Fonts"))
+(allow file-read* (subpath (user-homedir-path "/Library/Fonts")))
+(allow mach-lookup (global-name "com.apple.FontObjectsServer"))
+(allow mach-lookup (global-name "com.apple.FontServer"))
+(allow mach-lookup (global-name "com.apple.fonts"))
+(allow file-read* (extension "com.apple.app-sandbox.read")) ; https://crbug.com/662686
