@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b7ee0d4_437d7909",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 6891,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-12-01T04:36:40Z",
+      "side": 1,
+      "message": "quit -\u003e quiet?",
+      "range": {
+        "startLine": 6891,
+        "startChar": 41,
+        "endLine": 6891,
+        "endChar": 0
+      },
+      "revId": "4539c8e42b1b3df7aa5e4431e62f5522e70edbbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
