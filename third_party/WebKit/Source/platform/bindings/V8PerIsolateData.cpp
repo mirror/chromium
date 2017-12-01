@@ -62,14 +62,10 @@ V8PerIsolateData::V8PerIsolateData(
     WebTaskRunner* task_runner,
     V8ContextSnapshotMode v8_context_snapshot_mode)
     : v8_context_snapshot_mode_(v8_context_snapshot_mode),
-      isolate_holder_(
-          task_runner,
-          gin::IsolateHolder::kSingleThread,
-          IsMainThread() ? gin::IsolateHolder::kDisallowAtomicsWait
-                         : gin::IsolateHolder::kAllowAtomicsWait,
-          v8_context_snapshot_mode_ == V8ContextSnapshotMode::kUseSnapshot
-              ? &startup_data_
-              : nullptr),
+      isolate_holder_(task_runner,
+                      gin::IsolateHolder::kSingleThread,
+                      IsMainThread() ? gin::IsolateHolder::kDisallowAtomicsWait
+                                     : gin::IsolateHolder::kAllowAtomicsWait),
       interface_template_map_for_v8_context_snapshot_(GetIsolate()),
       string_cache_(WTF::WrapUnique(new StringCache(GetIsolate()))),
       private_property_(V8PrivateProperty::Create()),
