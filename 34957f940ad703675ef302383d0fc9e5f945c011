@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7300d8b_58f1fd0b",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 38
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-12-01T20:24:52Z",
+      "side": 1,
+      "message": "std::move(mutator)",
+      "range": {
+        "startLine": 24,
+        "startChar": 9,
+        "endLine": 24,
+        "endChar": 16
+      },
+      "revId": "34957f940ad703675ef302383d0fc9e5f945c011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b85988a_66ba54e7",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 38
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-12-01T20:24:52Z",
+      "side": 1,
+      "message": "std::move(mutator_client)",
+      "range": {
+        "startLine": 31,
+        "startChar": 9,
+        "endLine": 31,
+        "endChar": 23
+      },
+      "revId": "34957f940ad703675ef302383d0fc9e5f945c011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

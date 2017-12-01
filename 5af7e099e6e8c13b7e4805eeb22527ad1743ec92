@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aef7ee19_36df3aae",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 39
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-12-01T20:24:52Z",
+      "side": 1,
+      "message": "return std::make_unique\u003cCompositorMutatorImpl\u003e();",
+      "revId": "5af7e099e6e8c13b7e4805eeb22527ad1743ec92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b47d5b59_d496ceb1",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 39
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-12-01T20:24:52Z",
+      "side": 1,
+      "message": "std::unique_ptr\u003cCompositorMutatorClient\u003e mutator_client \u003d std::make_unique\u003cCompositorMutatorClient\u003e(this);",
+      "revId": "5af7e099e6e8c13b7e4805eeb22527ad1743ec92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36e73475_f639e3dc",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 39
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-12-01T20:24:52Z",
+      "side": 1,
+      "message": "Why do we expect that client_ may have gone away?",
+      "revId": "5af7e099e6e8c13b7e4805eeb22527ad1743ec92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37abe54f_f495215c",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 39
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-12-01T20:24:52Z",
+      "side": 1,
+      "message": "Why do we set this immediately vs just on the compositor thread?",
+      "revId": "5af7e099e6e8c13b7e4805eeb22527ad1743ec92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdd47cee_1bf1bdfd",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 39
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-12-01T20:24:52Z",
+      "side": 1,
+      "message": "Specify in method name that it is called from the worklet thread.",
+      "revId": "5af7e099e6e8c13b7e4805eeb22527ad1743ec92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1e74e9b_feca8a6b",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.h",
+        "patchSetId": 39
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-12-01T20:24:52Z",
+      "side": 1,
+      "message": "To further clarify, maybe name these *OnWorkletThread and the private ones *OnCompositorThread instead of *Internal. We use this pattern elsewhere for cross-thread messages.",
+      "revId": "5af7e099e6e8c13b7e4805eeb22527ad1743ec92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "112f79a9_d6e81270",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.h",
+        "patchSetId": 39
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-12-01T20:24:52Z",
+      "side": 1,
+      "message": "nit: no need to put trivial setter in cc file.",
+      "revId": "5af7e099e6e8c13b7e4805eeb22527ad1743ec92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f49bd0b8_704b98a2",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.h",
+        "patchSetId": 39
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-12-01T20:24:52Z",
+      "side": 1,
+      "message": "Probably worth mentioning why the client pointer is safe despite not being owned (i.e. the comment about the LayerTreeHostImpl ownership).",
+      "revId": "5af7e099e6e8c13b7e4805eeb22527ad1743ec92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0398296f_19c52612",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 39
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-12-01T20:24:52Z",
+      "side": 1,
+      "message": "This patch changed the global scope to be a weak pointer - so this cycle no longer exists?",
+      "revId": "5af7e099e6e8c13b7e4805eeb22527ad1743ec92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d153c7fb_7b2ce900",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 39
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-12-01T20:24:52Z",
+      "side": 1,
+      "message": "I\u0027m confused by this, how can this work? If the global scope isn\u0027t on this thread and it\u0027s a weak pointer it could presumably be being collected but not having invalidated this weak pointer yet right?",
+      "revId": "5af7e099e6e8c13b7e4805eeb22527ad1743ec92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59a016d0_f6f31494",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.h",
+        "patchSetId": 39
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-12-01T20:24:52Z",
+      "side": 1,
+      "message": "Who owns the global scope?",
+      "revId": "5af7e099e6e8c13b7e4805eeb22527ad1743ec92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
