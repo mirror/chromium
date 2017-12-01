@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "7c6a7d4a_f6765a2e",
+        "filename": "extensions/browser/api/document_scan/document_scan_interface_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-01T03:42:04Z",
+      "side": 1,
+      "message": "Thank you. So, probably we should change it in another CL.",
+      "parentUuid": "069fdc12_a8ceb881",
+      "revId": "4934e14b9d85969cc82d6168ead8bdba97db2a61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c75a7773_3937ca72",
         "filename": "extensions/browser/api/document_scan/document_scan_interface_chromeos.cc",
         "patchSetId": 1
@@ -87,6 +105,24 @@
       "revId": "4934e14b9d85969cc82d6168ead8bdba97db2a61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf784ccf_7152a2f4",
+        "filename": "extensions/browser/api/document_scan/document_scan_interface_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-01T03:42:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "702030ce_5c24f18c",
+      "revId": "4934e14b9d85969cc82d6168ead8bdba97db2a61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
