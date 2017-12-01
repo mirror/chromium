@@ -2,6 +2,8 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//mojo/public/tools/bindings/mojom.gni")
+
 component("common") {
   output_name = "storage_common"
   sources = [
@@ -44,6 +46,7 @@ component("common") {
   defines = [ "STORAGE_COMMON_IMPLEMENTATION" ]
 
   public_deps = [
+    "//services/network/public/interfaces",
     "//third_party/WebKit/public:blink_headers",
   ]
 
@@ -52,6 +55,16 @@ component("common") {
     "//base/third_party/dynamic_annotations",
     "//net",
     "//url",
+  ]
+}
+
+mojom("mojo_bindings") {
+  sources = [
+    "quota/quota_types.mojom",
+  ]
+
+  public_deps = [
+    "//url/mojo:url_mojom_gurl",
   ]
 }
 

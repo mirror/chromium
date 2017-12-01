@@ -27,7 +27,6 @@
 #include "components/user_manager/user.h"
 #include "media/audio/sounds/sounds_manager.h"
 #include "net/base/data_url.h"
-#include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "url/gurl.h"
 
@@ -137,7 +136,7 @@ void UserImageScreenHandler::HandleScreenReady() {
 
 void UserImageScreenHandler::HandlePhotoTaken(const std::string& image_url) {
   AccessibilityManager::Get()->PlayEarcon(
-      SOUND_CAMERA_SNAP, PlaySoundOption::SPOKEN_FEEDBACK_ENABLED);
+      SOUND_CAMERA_SNAP, PlaySoundOption::ONLY_IF_SPOKEN_FEEDBACK_ENABLED);
 
   std::string raw_data;
   base::StringPiece url(image_url);
@@ -155,7 +154,7 @@ void UserImageScreenHandler::HandlePhotoTaken(const std::string& image_url) {
 
 void UserImageScreenHandler::HandleDiscardPhoto() {
   AccessibilityManager::Get()->PlayEarcon(
-      SOUND_OBJECT_DELETE, PlaySoundOption::SPOKEN_FEEDBACK_ENABLED);
+      SOUND_OBJECT_DELETE, PlaySoundOption::ONLY_IF_SPOKEN_FEEDBACK_ENABLED);
 }
 
 void UserImageScreenHandler::HandleSelectImage(const std::string& image_type,

@@ -6,8 +6,10 @@
 
 #include <stdint.h>
 
+#include <string>
 #include <tuple>
 #include <utility>
+#include <vector>
 
 #include "base/command_line.h"
 #include "base/files/file_path.h"
@@ -196,21 +198,20 @@ class CloseWebContentsDelegate : public WebContentsDelegate {
   bool is_closed() { return close_called_; }
 
  private:
-  DISALLOW_COPY_AND_ASSIGN(CloseWebContentsDelegate);
-
   bool close_called_;
+
+  DISALLOW_COPY_AND_ASSIGN(CloseWebContentsDelegate);
 };
 
 // This observer keeps track of the last deleted RenderViewHost to avoid
 // accessing it and causing use-after-free condition.
 class RenderViewHostDeletedObserver : public WebContentsObserver {
  public:
-  RenderViewHostDeletedObserver(RenderViewHost* rvh)
+  explicit RenderViewHostDeletedObserver(RenderViewHost* rvh)
       : WebContentsObserver(WebContents::FromRenderViewHost(rvh)),
         process_id_(rvh->GetProcess()->GetID()),
         routing_id_(rvh->GetRoutingID()),
-        deleted_(false) {
-  }
+        deleted_(false) {}
 
   void RenderViewDeleted(RenderViewHost* render_view_host) override {
     if (render_view_host->GetProcess()->GetID() == process_id_ &&
@@ -235,10 +236,8 @@ class RenderViewHostDeletedObserver : public WebContentsObserver {
 // to ensure that no RenderFrameHost objects are created when not expected.
 class RenderFrameHostCreatedObserver : public WebContentsObserver {
  public:
-  RenderFrameHostCreatedObserver(WebContents* web_contents)
-      : WebContentsObserver(web_contents),
-        created_(false) {
-  }
+  explicit RenderFrameHostCreatedObserver(WebContents* web_contents)
+      : WebContentsObserver(web_contents), created_(false) {}
 
   void RenderFrameCreated(RenderFrameHost* render_frame_host) override {
     created_ = true;
@@ -257,7 +256,7 @@ class RenderFrameHostCreatedObserver : public WebContentsObserver {
 // This WebContents observer keep track of its RVH change.
 class RenderViewHostChangedObserver : public WebContentsObserver {
  public:
-  RenderViewHostChangedObserver(WebContents* web_contents)
+  explicit RenderViewHostChangedObserver(WebContents* web_contents)
       : WebContentsObserver(web_contents), host_changed_(false) {}
 
   // WebContentsObserver.
@@ -286,10 +285,10 @@ class RenderViewHostChangedObserver : public WebContentsObserver {
 // See http://crbug.com/351815
 class PluginFaviconMessageObserver : public WebContentsObserver {
  public:
-  PluginFaviconMessageObserver(WebContents* web_contents)
+  explicit PluginFaviconMessageObserver(WebContents* web_contents)
       : WebContentsObserver(web_contents),
         plugin_crashed_(false),
-        favicon_received_(false) { }
+        favicon_received_(false) {}
 
   void PluginCrashed(const base::FilePath& plugin_path,
                      base::ProcessId plugin_pid) override {
@@ -1963,13 +1962,13 @@ TEST_F(RenderFrameHostManagerTestWithSiteIsolation, DetachPendingChild) {
   contents()->GetMainFrame()->OnCreateChildFrame(
       contents()->GetMainFrame()->GetProcess()->GetNextRoutingID(),
       TestRenderFrameHost::CreateStubInterfaceProviderRequest(),
-      blink::WebTreeScopeType::kDocument, "frame_name", "uniqueName1",
+      blink::WebTreeScopeType::kDocument, "frame_name", "uniqueName1", false,
       base::UnguessableToken::Create(), blink::FramePolicy(),
       FrameOwnerProperties());
   contents()->GetMainFrame()->OnCreateChildFrame(
       contents()->GetMainFrame()->GetProcess()->GetNextRoutingID(),
       TestRenderFrameHost::CreateStubInterfaceProviderRequest(),
-      blink::WebTreeScopeType::kDocument, "frame_name", "uniqueName2",
+      blink::WebTreeScopeType::kDocument, "frame_name", "uniqueName2", false,
       base::UnguessableToken::Create(), blink::FramePolicy(),
       FrameOwnerProperties());
   RenderFrameHostManager* root_manager =
@@ -2105,7 +2104,7 @@ TEST_F(RenderFrameHostManagerTestWithSiteIsolation,
   contents1->GetMainFrame()->OnCreateChildFrame(
       contents1->GetMainFrame()->GetProcess()->GetNextRoutingID(),
       TestRenderFrameHost::CreateStubInterfaceProviderRequest(),
-      blink::WebTreeScopeType::kDocument, "frame_name", "uniqueName1",
+      blink::WebTreeScopeType::kDocument, "frame_name", "uniqueName1", false,
       base::UnguessableToken::Create(), blink::FramePolicy(),
       FrameOwnerProperties());
   RenderFrameHostManager* iframe =
@@ -2156,7 +2155,7 @@ TEST_F(RenderFrameHostManagerTestWithSiteIsolation,
   main_rfh->OnCreateChildFrame(
       main_rfh->GetProcess()->GetNextRoutingID(),
       TestRenderFrameHost::CreateStubInterfaceProviderRequest(),
-      blink::WebTreeScopeType::kDocument, std::string(), "uniqueName1",
+      blink::WebTreeScopeType::kDocument, std::string(), "uniqueName1", false,
       base::UnguessableToken::Create(), blink::FramePolicy(),
       FrameOwnerProperties());
   RenderFrameHostManager* subframe_rfhm =
@@ -2317,12 +2316,12 @@ TEST_F(RenderFrameHostManagerTest, TraverseComplexOpenerChain) {
   tree1->AddFrame(root1, process_id, 12,
                   TestRenderFrameHost::CreateStubInterfaceProviderRequest(),
                   blink::WebTreeScopeType::kDocument, std::string(),
-                  "uniqueName0", base::UnguessableToken::Create(),
+                  "uniqueName0", false, base::UnguessableToken::Create(),
                   blink::FramePolicy(), FrameOwnerProperties());
   tree1->AddFrame(root1, process_id, 13,
                   TestRenderFrameHost::CreateStubInterfaceProviderRequest(),
                   blink::WebTreeScopeType::kDocument, std::string(),
-                  "uniqueName1", base::UnguessableToken::Create(),
+                  "uniqueName1", false, base::UnguessableToken::Create(),
                   blink::FramePolicy(), FrameOwnerProperties());
 
   std::unique_ptr<TestWebContents> tab2(
@@ -2334,12 +2333,12 @@ TEST_F(RenderFrameHostManagerTest, TraverseComplexOpenerChain) {
   tree2->AddFrame(root2, process_id, 22,
                   TestRenderFrameHost::CreateStubInterfaceProviderRequest(),
                   blink::WebTreeScopeType::kDocument, std::string(),
-                  "uniqueName2", base::UnguessableToken::Create(),
+                  "uniqueName2", false, base::UnguessableToken::Create(),
                   blink::FramePolicy(), FrameOwnerProperties());
   tree2->AddFrame(root2, process_id, 23,
                   TestRenderFrameHost::CreateStubInterfaceProviderRequest(),
                   blink::WebTreeScopeType::kDocument, std::string(),
-                  "uniqueName3", base::UnguessableToken::Create(),
+                  "uniqueName3", false, base::UnguessableToken::Create(),
                   blink::FramePolicy(), FrameOwnerProperties());
 
   std::unique_ptr<TestWebContents> tab3(
@@ -2356,7 +2355,7 @@ TEST_F(RenderFrameHostManagerTest, TraverseComplexOpenerChain) {
   tree4->AddFrame(root4, process_id, 42,
                   TestRenderFrameHost::CreateStubInterfaceProviderRequest(),
                   blink::WebTreeScopeType::kDocument, std::string(),
-                  "uniqueName4", base::UnguessableToken::Create(),
+                  "uniqueName4", false, base::UnguessableToken::Create(),
                   blink::FramePolicy(), FrameOwnerProperties());
 
   root1->child_at(1)->SetOpener(root1->child_at(1));
@@ -2406,19 +2405,19 @@ TEST_F(RenderFrameHostManagerTest, PageFocusPropagatesToSubframeProcesses) {
   main_test_rfh()->OnCreateChildFrame(
       main_test_rfh()->GetProcess()->GetNextRoutingID(),
       TestRenderFrameHost::CreateStubInterfaceProviderRequest(),
-      blink::WebTreeScopeType::kDocument, "frame1", "uniqueName1",
+      blink::WebTreeScopeType::kDocument, "frame1", "uniqueName1", false,
       base::UnguessableToken::Create(), blink::FramePolicy(),
       FrameOwnerProperties());
   main_test_rfh()->OnCreateChildFrame(
       main_test_rfh()->GetProcess()->GetNextRoutingID(),
       TestRenderFrameHost::CreateStubInterfaceProviderRequest(),
-      blink::WebTreeScopeType::kDocument, "frame2", "uniqueName2",
+      blink::WebTreeScopeType::kDocument, "frame2", "uniqueName2", false,
       base::UnguessableToken::Create(), blink::FramePolicy(),
       FrameOwnerProperties());
   main_test_rfh()->OnCreateChildFrame(
       main_test_rfh()->GetProcess()->GetNextRoutingID(),
       TestRenderFrameHost::CreateStubInterfaceProviderRequest(),
-      blink::WebTreeScopeType::kDocument, "frame3", "uniqueName3",
+      blink::WebTreeScopeType::kDocument, "frame3", "uniqueName3", false,
       base::UnguessableToken::Create(), blink::FramePolicy(),
       FrameOwnerProperties());
 
@@ -2511,7 +2510,7 @@ TEST_F(RenderFrameHostManagerTest,
   main_test_rfh()->OnCreateChildFrame(
       main_test_rfh()->GetProcess()->GetNextRoutingID(),
       TestRenderFrameHost::CreateStubInterfaceProviderRequest(),
-      blink::WebTreeScopeType::kDocument, "frame1", "uniqueName1",
+      blink::WebTreeScopeType::kDocument, "frame1", "uniqueName1", false,
       base::UnguessableToken::Create(), blink::FramePolicy(),
       FrameOwnerProperties());
 
@@ -3055,7 +3054,7 @@ TEST_F(RenderFrameHostManagerTestWithSiteIsolation,
   main_test_rfh()->OnCreateChildFrame(
       main_test_rfh()->GetProcess()->GetNextRoutingID(),
       TestRenderFrameHost::CreateStubInterfaceProviderRequest(),
-      blink::WebTreeScopeType::kDocument, "frame1", "uniqueName1",
+      blink::WebTreeScopeType::kDocument, "frame1", "uniqueName1", false,
       base::UnguessableToken::Create(), blink::FramePolicy(),
       FrameOwnerProperties());
 
@@ -3205,6 +3204,36 @@ TEST_F(RenderFrameHostManagerTest,
   // create a NavigationHandle.
   initial_rfh->SimulateNavigationStart(kUrl3);
   EXPECT_FALSE(initial_rfh->navigation_handle());
+}
+
+// Tests that sandbox flags received after a navigation away has started do not
+// affect the document being navigated to.
+TEST_F(RenderFrameHostManagerTest, ReceivedFramePolicyAfterNavigationStarted) {
+  const GURL kUrl1("http://www.google.com");
+  const GURL kUrl2("http://www.chromium.org");
+
+  contents()->NavigateAndCommit(kUrl1);
+  TestRenderFrameHost* initial_rfh = main_test_rfh();
+
+  // The RFH should start out with an empty frame policy.
+  EXPECT_EQ(blink::WebSandboxFlags::kNone,
+            initial_rfh->frame_tree_node()->active_sandbox_flags());
+
+  // Navigate cross-site but don't commit the navigation.
+  auto navigation_to_kUrl2 =
+      NavigationSimulator::CreateBrowserInitiated(kUrl2, contents());
+  navigation_to_kUrl2->ReadyToCommit();
+
+  // Now send the frame policy for the initial page.
+  initial_rfh->SendFramePolicy(blink::WebSandboxFlags::kAll, {});
+  // Verify that the policy landed in the frame tree.
+  EXPECT_EQ(blink::WebSandboxFlags::kAll,
+            initial_rfh->frame_tree_node()->active_sandbox_flags());
+
+  // Commit the naviagation; the new frame should have a clear frame policy.
+  navigation_to_kUrl2->Commit();
+  EXPECT_EQ(blink::WebSandboxFlags::kNone,
+            main_test_rfh()->frame_tree_node()->active_sandbox_flags());
 }
 
 }  // namespace content

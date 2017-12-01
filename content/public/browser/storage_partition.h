@@ -120,8 +120,7 @@ class CONTENT_EXPORT StoragePartition {
   // inside this StoragePartition for the given |storage_origin|.
   // Note session dom storage is not cleared even if you specify
   // REMOVE_DATA_MASK_LOCAL_STORAGE.
-  // |callback| is called when data deletion is done or at least the deletion is
-  // scheduled.
+  // No notification is dispatched upon completion.
   //
   // TODO(ajwong): Right now, the embedder may have some
   // URLRequestContextGetter objects that the StoragePartition does not know
@@ -131,8 +130,7 @@ class CONTENT_EXPORT StoragePartition {
   virtual void ClearDataForOrigin(uint32_t remove_mask,
                                   uint32_t quota_storage_remove_mask,
                                   const GURL& storage_origin,
-                                  net::URLRequestContextGetter* rq_context,
-                                  const base::Closure& callback) = 0;
+                                  net::URLRequestContextGetter* rq_context) = 0;
 
   // A callback type to check if a given origin matches a storage policy.
   // Can be passed empty/null where used, which means the origin will always
@@ -157,7 +155,7 @@ class CONTENT_EXPORT StoragePartition {
                          const OriginMatcherFunction& origin_matcher,
                          const base::Time begin,
                          const base::Time end,
-                         const base::Closure& callback) = 0;
+                         base::OnceClosure callback) = 0;
 
   // Similar to ClearData().
   // Deletes all data out for the StoragePartition.
@@ -177,7 +175,7 @@ class CONTENT_EXPORT StoragePartition {
                          const CookieMatcherFunction& cookie_matcher,
                          const base::Time begin,
                          const base::Time end,
-                         const base::Closure& callback) = 0;
+                         base::OnceClosure callback) = 0;
 
   // Clears the HTTP and media caches associated with this StoragePartition's
   // request contexts. If |begin| and |end| are not null, only entries with
@@ -187,7 +185,7 @@ class CONTENT_EXPORT StoragePartition {
       const base::Time begin,
       const base::Time end,
       const base::Callback<bool(const GURL&)>& url_matcher,
-      const base::Closure& callback) = 0;
+      base::OnceClosure callback) = 0;
 
   // Write any unwritten data to disk.
   // Note: this method does not sync the data - it only ensures that any
@@ -200,7 +198,7 @@ class CONTENT_EXPORT StoragePartition {
   // Overrides the network URLLoaderFactory for subsequent requests. Passing a
   // null pointer will restore the default behavior.
   virtual void SetNetworkFactoryForTesting(
-      mojom::URLLoaderFactoryPtr test_factory) = 0;
+      mojom::URLLoaderFactory* test_factory) = 0;
 
  protected:
   virtual ~StoragePartition() {}

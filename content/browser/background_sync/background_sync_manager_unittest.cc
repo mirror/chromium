@@ -212,8 +212,7 @@ class BackgroundSyncManagerTest : public testing::Test {
         new TestBackgroundSyncManager(helper_->context_wrapper());
     background_sync_manager_.reset(test_background_sync_manager_);
 
-    test_clock_ = new base::SimpleTestClock();
-    background_sync_manager_->set_clock(base::WrapUnique(test_clock_));
+    background_sync_manager_->set_clock(&test_clock_);
 
     // Many tests do not expect the sync event to fire immediately after
     // register (and cleanup up the sync registrations).  Tests can control when
@@ -248,7 +247,6 @@ class BackgroundSyncManagerTest : public testing::Test {
   void DeleteBackgroundSyncManager() {
     background_sync_manager_.reset();
     test_background_sync_manager_ = nullptr;
-    test_clock_ = nullptr;
   }
 
   bool Register(const BackgroundSyncRegistrationOptions& sync_options) {
@@ -422,7 +420,7 @@ class BackgroundSyncManagerTest : public testing::Test {
   std::unique_ptr<BackgroundSyncManager> background_sync_manager_;
   std::unique_ptr<StoragePartitionImpl> storage_partition_impl_;
   TestBackgroundSyncManager* test_background_sync_manager_ = nullptr;
-  base::SimpleTestClock* test_clock_ = nullptr;
+  base::SimpleTestClock test_clock_;
 
   int64_t sw_registration_id_1_;
   int64_t sw_registration_id_2_;
@@ -462,8 +460,9 @@ TEST_F(BackgroundSyncManagerTest, RegisterWithoutLiveSWRegistration) {
       sw_registration_1_->active_version()->provider_host();
   ASSERT_TRUE(provider_host);
 
-  // Remove the registration object host.
-  provider_host->registration_object_hosts_.clear();
+  // Remove the registration object host (it removes itself from |provider_host|
+  // upon destruction).
+  delete provider_host->registration_object_hosts_[sw_registration_1_->id()];
 
   // Ensure |sw_registration_1_| is the last reference to the registration.
   ASSERT_TRUE(sw_registration_1_->HasOneRef());
@@ -1192,7 +1191,7 @@ TEST_F(BackgroundSyncManagerTest, TwoAttempts) {
             test_background_sync_manager_->delayed_task_delta());
 
   // Fire again and this time it should permanently fail.
-  test_clock_->Advance(test_background_sync_manager_->delayed_task_delta());
+  test_clock_.Advance(test_background_sync_manager_->delayed_task_delta());
   test_background_sync_manager_->RunDelayedTask();
   base::RunLoop().RunUntilIdle();
   EXPECT_FALSE(GetRegistration(sync_options_1_));
@@ -1210,7 +1209,7 @@ TEST_F(BackgroundSyncManagerTest, ThreeAttempts) {
   // The second run will fail but it will setup a timer to try again.
   base::TimeDelta first_delta =
       test_background_sync_manager_->delayed_task_delta();
-  test_clock_->Advance(test_background_sync_manager_->delayed_task_delta());
+  test_clock_.Advance(test_background_sync_manager_->delayed_task_delta());
   test_background_sync_manager_->RunDelayedTask();
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(GetRegistration(sync_options_1_));
@@ -1219,7 +1218,7 @@ TEST_F(BackgroundSyncManagerTest, ThreeAttempts) {
   EXPECT_LT(first_delta, test_background_sync_manager_->delayed_task_delta());
 
   // The third run will permanently fail.
-  test_clock_->Advance(test_background_sync_manager_->delayed_task_delta());
+  test_clock_.Advance(test_background_sync_manager_->delayed_task_delta());
   test_background_sync_manager_->RunDelayedTask();
   base::RunLoop().RunUntilIdle();
   EXPECT_FALSE(GetRegistration(sync_options_1_));
@@ -1236,8 +1235,8 @@ TEST_F(BackgroundSyncManagerTest, WaitsFullDelayTime) {
 
   // Fire again one second before it's ready to retry. Expect it to reschedule
   // the delay timer for one more second.
-  test_clock_->Advance(test_background_sync_manager_->delayed_task_delta() -
-                       base::TimeDelta::FromSeconds(1));
+  test_clock_.Advance(test_background_sync_manager_->delayed_task_delta() -
+                      base::TimeDelta::FromSeconds(1));
   test_background_sync_manager_->RunDelayedTask();
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(GetRegistration(sync_options_1_));
@@ -1245,7 +1244,7 @@ TEST_F(BackgroundSyncManagerTest, WaitsFullDelayTime) {
             test_background_sync_manager_->delayed_task_delta());
 
   // Fire one second later and it should fail permanently.
-  test_clock_->Advance(base::TimeDelta::FromSeconds(1));
+  test_clock_.Advance(base::TimeDelta::FromSeconds(1));
   test_background_sync_manager_->RunDelayedTask();
   base::RunLoop().RunUntilIdle();
   EXPECT_FALSE(GetRegistration(sync_options_1_));
@@ -1263,7 +1262,7 @@ TEST_F(BackgroundSyncManagerTest, RetryOnBrowserRestart) {
   base::TimeDelta delta = test_background_sync_manager_->delayed_task_delta();
   CreateBackgroundSyncManager();
   InitFailedSyncEventTest();
-  test_clock_->Advance(delta);
+  test_clock_.Advance(delta);
   InitBackgroundSyncManager();
   base::RunLoop().RunUntilIdle();
   EXPECT_FALSE(GetRegistration(sync_options_1_));
@@ -1281,7 +1280,7 @@ TEST_F(BackgroundSyncManagerTest, RescheduleOnBrowserRestart) {
   base::TimeDelta delta = test_background_sync_manager_->delayed_task_delta();
   CreateBackgroundSyncManager();
   InitFailedSyncEventTest();
-  test_clock_->Advance(delta - base::TimeDelta::FromSeconds(1));
+  test_clock_.Advance(delta - base::TimeDelta::FromSeconds(1));
   InitBackgroundSyncManager();
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(GetRegistration(sync_options_1_));
@@ -1300,7 +1299,7 @@ TEST_F(BackgroundSyncManagerTest, RetryIfClosedMidSync) {
   // fire once and then fail permanently.
   CreateBackgroundSyncManager();
   InitFailedSyncEventTest();
-  test_clock_->Advance(delta);
+  test_clock_.Advance(delta);
   InitBackgroundSyncManager();
   base::RunLoop().RunUntilIdle();
   EXPECT_FALSE(GetRegistration(sync_options_1_));
@@ -1314,7 +1313,7 @@ TEST_F(BackgroundSyncManagerTest, AllTestsEventuallyFire) {
   EXPECT_TRUE(Register(sync_options_1_));
 
   // Run it a second time.
-  test_clock_->Advance(test_background_sync_manager_->delayed_task_delta());
+  test_clock_.Advance(test_background_sync_manager_->delayed_task_delta());
   test_background_sync_manager_->RunDelayedTask();
   base::RunLoop().RunUntilIdle();
 
@@ -1326,7 +1325,7 @@ TEST_F(BackgroundSyncManagerTest, AllTestsEventuallyFire) {
   EXPECT_GT(delay_delta, test_background_sync_manager_->delayed_task_delta());
 
   while (test_background_sync_manager_->IsDelayedTaskScheduled()) {
-    test_clock_->Advance(test_background_sync_manager_->delayed_task_delta());
+    test_clock_.Advance(test_background_sync_manager_->delayed_task_delta());
     test_background_sync_manager_->RunDelayedTask();
     EXPECT_FALSE(test_background_sync_manager_->IsDelayedTaskScheduled());
     base::RunLoop().RunUntilIdle();
@@ -1346,7 +1345,7 @@ TEST_F(BackgroundSyncManagerTest, LastChance) {
   EXPECT_TRUE(GetRegistration(sync_options_1_));
 
   // Run it again.
-  test_clock_->Advance(test_background_sync_manager_->delayed_task_delta());
+  test_clock_.Advance(test_background_sync_manager_->delayed_task_delta());
   test_background_sync_manager_->RunDelayedTask();
   base::RunLoop().RunUntilIdle();
   EXPECT_FALSE(GetRegistration(sync_options_1_));

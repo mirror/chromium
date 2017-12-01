@@ -8,6 +8,9 @@
 #include <string.h>
 
 #include <va/va.h>
+#include <va/va_drm.h>
+#include <va/va_drmcommon.h>
+#include <va/va_version.h>
 
 #include "base/bind.h"
 #include "base/callback_helpers.h"
@@ -24,25 +27,26 @@
 
 #include "media/gpu/vaapi/vaapi_picture.h"
 #include "third_party/libyuv/include/libyuv.h"
+#include "ui/gfx/buffer_format_util.h"
+#include "ui/gfx/native_pixmap.h"
 #include "ui/gl/gl_bindings.h"
+#include "ui/gl/gl_implementation.h"
 
 #if defined(USE_X11)
+#include <va/va_x11.h>
 #include "ui/gfx/x/x11_types.h"  // nogncheck
-#elif defined(USE_OZONE)
-#include <va/va_drm.h>
-#include <va/va_drmcommon.h>
-#include <va/va_version.h>
-#include "ui/gfx/buffer_format_util.h"
+#endif
+
+#if defined(USE_OZONE)
 #include "ui/ozone/public/ozone_platform.h"
 #include "ui/ozone/public/surface_factory_ozone.h"
-#endif  // USE_X11
+#endif
 
 using media_gpu_vaapi::kModuleVa;
+using media_gpu_vaapi::kModuleVa_drm;
 #if defined(USE_X11)
 using media_gpu_vaapi::kModuleVa_x11;
-#elif defined(USE_OZONE)
-using media_gpu_vaapi::kModuleVa_drm;
-#endif  // USE_X11
+#endif
 using media_gpu_vaapi::InitializeStubs;
 using media_gpu_vaapi::StubPathMap;
 
@@ -66,7 +70,6 @@ using media_gpu_vaapi::StubPathMap;
     }                                                \
   } while (0)
 
-#if defined(USE_OZONE)
 namespace {
 
 uint32_t BufferFormatToVAFourCC(gfx::BufferFormat fmt) {
@@ -75,6 +78,8 @@ uint32_t BufferFormatToVAFourCC(gfx::BufferFormat fmt) {
       return VA_FOURCC_BGRX;
     case gfx::BufferFormat::BGRA_8888:
       return VA_FOURCC_BGRA;
+    case gfx::BufferFormat::RGBX_8888:
+      return VA_FOURCC_RGBX;
     case gfx::BufferFormat::UYVY_422:
       return VA_FOURCC_UYVY;
     case gfx::BufferFormat::YVU_420:
@@ -91,6 +96,7 @@ uint32_t BufferFormatToVARTFormat(gfx::BufferFormat fmt) {
       return VA_RT_FORMAT_YUV422;
     case gfx::BufferFormat::BGRX_8888:
     case gfx::BufferFormat::BGRA_8888:
+    case gfx::BufferFormat::RGBX_8888:
       return VA_RT_FORMAT_RGB32;
     case gfx::BufferFormat::YVU_420:
       return VA_RT_FORMAT_YUV420;
@@ -101,7 +107,6 @@ uint32_t BufferFormatToVARTFormat(gfx::BufferFormat fmt) {
 }
 
 }  // namespace
-#endif
 
 namespace media {
 
@@ -116,8 +121,9 @@ static const VAConfigAttrib kCommonVAConfigAttribs[] = {
     {VAConfigAttribRTFormat, VA_RT_FORMAT_YUV420},
 };
 
-// Attributes required for encode.
-static const VAConfigAttrib kEncodeVAConfigAttribs[] = {
+// Attributes required for encode. This only applies to video encode, not JPEG
+// encode.
+static const VAConfigAttrib kVideoEncodeVAConfigAttribs[] = {
     {VAConfigAttribRateControl, VA_RC_CBR},
     {VAConfigAttribEncPackedHeaders,
      VA_ENC_PACKED_HEADER_SEQUENCE | VA_ENC_PACKED_HEADER_PICTURE},
@@ -147,8 +153,6 @@ class VADisplayState {
 
   // Initialize static data before sandbox is enabled.
   static void PreSandboxInitialization();
-  // Returns false on init failure.
-  static bool PostSandboxInitialization();
 
   VADisplayState();
   ~VADisplayState() = delete;
@@ -160,11 +164,12 @@ class VADisplayState {
   base::Lock* va_lock() { return &va_lock_; }
   VADisplay va_display() const { return va_display_; }
 
-#if defined(USE_OZONE)
   void SetDrmFd(base::PlatformFile fd) { drm_fd_.reset(HANDLE_EINTR(dup(fd))); }
-#endif  // USE_OZONE
 
  private:
+  // Returns false on init failure.
+  static bool PostSandboxInitialization();
+
   // Protected by |va_lock_|.
   int refcount_;
 
@@ -173,10 +178,8 @@ class VADisplayState {
   // the entire job submission sequence in ExecuteAndDestroyPendingBuffers().
   base::Lock va_lock_;
 
-#if defined(USE_OZONE)
   // Drm fd used to obtain access to the driver interface by VA.
   base::ScopedFD drm_fd_;
-#endif  // USE_OZONE
 
   // The VADisplay handle.
   VADisplay va_display_;
@@ -193,14 +196,12 @@ VADisplayState* VADisplayState::Get() {
 
 // static
 void VADisplayState::PreSandboxInitialization() {
-#if defined(USE_OZONE)
   const char kDriRenderNode0Path[] = "/dev/dri/renderD128";
   base::File drm_file = base::File(
       base::FilePath::FromUTF8Unsafe(kDriRenderNode0Path),
       base::File::FLAG_OPEN | base::File::FLAG_READ | base::File::FLAG_WRITE);
   if (drm_file.IsValid())
     VADisplayState::Get()->SetDrmFd(drm_file.GetPlatformFile());
-#endif
 }
 
 // static
@@ -209,12 +210,11 @@ bool VADisplayState::PostSandboxInitialization() {
   StubPathMap paths;
 
   paths[kModuleVa].push_back(std::string("libva.so.") + va_suffix);
+  paths[kModuleVa_drm].push_back(std::string("libva-drm.so.") + va_suffix);
 #if defined(USE_X11)
   // libva-x11 does not exist on libva >= 2
   if (VA_MAJOR_VERSION == 0)
     paths[kModuleVa_x11].push_back("libva-x11.so.1");
-#elif defined(USE_OZONE)
-  paths[kModuleVa_drm].push_back(std::string("libva-drm.so.") + va_suffix);
 #endif
 
   const bool success = InitializeStubs(paths);
@@ -236,13 +236,32 @@ VADisplayState::VADisplayState()
 
 bool VADisplayState::Initialize() {
   va_lock_.AssertAcquired();
+
+  static bool result = PostSandboxInitialization();
+  if (!result)
+    return false;
+
   if (refcount_++ > 0)
     return true;
+
+  switch (gl::GetGLImplementation()) {
+    case gl::kGLImplementationEGLGLES2:
+      va_display_ = vaGetDisplayDRM(drm_fd_.get());
+      break;
+    case gl::kGLImplementationDesktopGL:
 #if defined(USE_X11)
-  va_display_ = vaGetDisplay(gfx::GetXDisplay());
-#elif defined(USE_OZONE)
-  va_display_ = vaGetDisplayDRM(drm_fd_.get());
+      va_display_ = vaGetDisplay(gfx::GetXDisplay());
+#else
+      LOG(WARNING) << "HW video decode acceleration not available without "
+                      "DesktopGL (GLX).";
 #endif  // USE_X11
+      break;
+
+    default:
+      LOG(WARNING) << "HW video decode acceleration not available for "
+                   << gl::GetGLImplementationName(gl::GetGLImplementation());
+      return false;
+  }
 
   if (!vaDisplayIsValid(va_display_)) {
     LOG(ERROR) << "Could not get a valid VA display";
@@ -292,17 +311,34 @@ void VADisplayState::Deinitialize(VAStatus* status) {
 }
 
 static std::vector<VAConfigAttrib> GetRequiredAttribs(
-    VaapiWrapper::CodecMode mode) {
+    VaapiWrapper::CodecMode mode,
+    VAProfile profile) {
   std::vector<VAConfigAttrib> required_attribs;
   required_attribs.insert(
       required_attribs.end(), kCommonVAConfigAttribs,
       kCommonVAConfigAttribs + arraysize(kCommonVAConfigAttribs));
-  if (mode == VaapiWrapper::kEncode) {
+  if (mode == VaapiWrapper::kEncode && profile != VAProfileJPEGBaseline) {
     required_attribs.insert(
-        required_attribs.end(), kEncodeVAConfigAttribs,
-        kEncodeVAConfigAttribs + arraysize(kEncodeVAConfigAttribs));
+        required_attribs.end(), kVideoEncodeVAConfigAttribs,
+        kVideoEncodeVAConfigAttribs + arraysize(kVideoEncodeVAConfigAttribs));
   }
   return required_attribs;
+}
+
+static VAEntrypoint GetVaEntryPoint(VaapiWrapper::CodecMode mode,
+                                    VAProfile profile) {
+  switch (mode) {
+    case VaapiWrapper::kDecode:
+      return VAEntrypointVLD;
+    case VaapiWrapper::kEncode:
+      if (profile == VAProfileJPEGBaseline)
+        return VAEntrypointEncPicture;
+      else
+        return VAEntrypointEncSlice;
+    case VaapiWrapper::kCodecModeMax:
+      NOTREACHED();
+      return VAEntrypointVLD;
+  }
 }
 
 // This class encapsulates reading and giving access to the list of supported
@@ -322,7 +358,7 @@ class VASupportedProfiles {
 
  private:
   VASupportedProfiles();
-  ~VASupportedProfiles();
+  ~VASupportedProfiles() = default;
 
   bool GetSupportedVAProfiles(std::vector<VAProfile>* profiles);
 
@@ -385,10 +421,6 @@ VASupportedProfiles::VASupportedProfiles()
       report_error_to_uma_cb_(base::Bind(&base::DoNothing)) {
   static_assert(arraysize(supported_profiles_) == VaapiWrapper::kCodecModeMax,
                 "The array size of supported profile is incorrect.");
-
-  static bool result = VADisplayState::PostSandboxInitialization();
-  if (!result)
-    return;
   {
     base::AutoLock auto_lock(*va_lock_);
     if (!VADisplayState::Get()->Initialize())
@@ -402,13 +434,14 @@ VASupportedProfiles::VASupportedProfiles()
     supported_profiles_[i] = GetSupportedProfileInfosForCodecModeInternal(
         static_cast<VaapiWrapper::CodecMode>(i));
   }
-}
 
-VASupportedProfiles::~VASupportedProfiles() {
-  VAStatus va_res = VA_STATUS_SUCCESS;
-  VADisplayState::Get()->Deinitialize(&va_res);
-  VA_LOG_ON_ERROR(va_res, "vaTerminate failed");
-  va_display_ = nullptr;
+  {
+    base::AutoLock auto_lock(*va_lock_);
+    VAStatus va_res = VA_STATUS_SUCCESS;
+    VADisplayState::Get()->Deinitialize(&va_res);
+    VA_LOG_ON_ERROR(va_res, "vaTerminate failed");
+    va_display_ = nullptr;
+  }
 }
 
 std::vector<VASupportedProfiles::ProfileInfo>
@@ -419,12 +452,11 @@ VASupportedProfiles::GetSupportedProfileInfosForCodecModeInternal(
   if (!GetSupportedVAProfiles(&va_profiles))
     return supported_profile_infos;
 
-  std::vector<VAConfigAttrib> required_attribs = GetRequiredAttribs(mode);
-  VAEntrypoint entrypoint =
-      (mode == VaapiWrapper::kEncode ? VAEntrypointEncSlice : VAEntrypointVLD);
-
   base::AutoLock auto_lock(*va_lock_);
   for (const auto& va_profile : va_profiles) {
+    VAEntrypoint entrypoint = GetVaEntryPoint(mode, va_profile);
+    std::vector<VAConfigAttrib> required_attribs =
+        GetRequiredAttribs(mode, va_profile);
     if (!IsEntrypointSupported_Locked(va_profile, entrypoint))
       continue;
     if (!AreAttribsSupported_Locked(va_profile, entrypoint, required_attribs))
@@ -696,6 +728,12 @@ bool VaapiWrapper::IsJpegDecodeSupported() {
                                                         VAProfileJPEGBaseline);
 }
 
+// static
+bool VaapiWrapper::IsJpegEncodeSupported() {
+  return VASupportedProfiles::Get()->IsProfileSupported(kEncode,
+                                                        VAProfileJPEGBaseline);
+}
+
 void VaapiWrapper::TryToSetVADisplayAttributeToLocalGPU() {
   base::AutoLock auto_lock(*va_lock_);
   VADisplayAttribute item = {VADisplayAttribRenderMode,
@@ -725,9 +763,9 @@ bool VaapiWrapper::VaInitialize(const base::Closure& report_error_to_uma_cb) {
 bool VaapiWrapper::Initialize(CodecMode mode, VAProfile va_profile) {
   TryToSetVADisplayAttributeToLocalGPU();
 
-  VAEntrypoint entrypoint =
-      (mode == kEncode ? VAEntrypointEncSlice : VAEntrypointVLD);
-  std::vector<VAConfigAttrib> required_attribs = GetRequiredAttribs(mode);
+  VAEntrypoint entrypoint = GetVaEntryPoint(mode, va_profile);
+  std::vector<VAConfigAttrib> required_attribs =
+      GetRequiredAttribs(mode, va_profile);
   base::AutoLock auto_lock(*va_lock_);
   VAStatus va_res =
       vaCreateConfig(va_display_, va_profile, entrypoint, &required_attribs[0],
@@ -844,7 +882,6 @@ scoped_refptr<VASurface> VaapiWrapper::CreateUnownedSurface(
   return va_surface;
 }
 
-#if defined(USE_OZONE)
 scoped_refptr<VASurface> VaapiWrapper::CreateVASurfaceForPixmap(
     const scoped_refptr<gfx::NativePixmap>& pixmap) {
   // Create a VASurface for a NativePixmap by importing the underlying dmabufs.
@@ -910,7 +947,6 @@ scoped_refptr<VASurface> VaapiWrapper::CreateVASurfaceForPixmap(
 
   return va_surface;
 }
-#endif
 
 void VaapiWrapper::DestroyUnownedSurface(VASurfaceID va_surface_id) {
   base::AutoLock auto_lock(*va_lock_);
@@ -1165,11 +1201,11 @@ bool VaapiWrapper::UploadVideoFrameToSurface(
   return ret == 0;
 }
 
-bool VaapiWrapper::DownloadAndDestroyCodedBuffer(VABufferID buffer_id,
-                                                 VASurfaceID sync_surface_id,
-                                                 uint8_t* target_ptr,
-                                                 size_t target_size,
-                                                 size_t* coded_data_size) {
+bool VaapiWrapper::DownloadFromCodedBuffer(VABufferID buffer_id,
+                                           VASurfaceID sync_surface_id,
+                                           uint8_t* target_ptr,
+                                           size_t target_size,
+                                           size_t* coded_data_size) {
   base::AutoLock auto_lock(*va_lock_);
 
   VAStatus va_res = vaSyncSurface(va_display_, sync_surface_id);
@@ -1206,14 +1242,23 @@ bool VaapiWrapper::DownloadAndDestroyCodedBuffer(VABufferID buffer_id,
 
   va_res = vaUnmapBuffer(va_display_, buffer_id);
   VA_LOG_ON_ERROR(va_res, "vaUnmapBuffer failed");
+  return buffer_segment == NULL;
+}
 
-  va_res = vaDestroyBuffer(va_display_, buffer_id);
+bool VaapiWrapper::DownloadAndDestroyCodedBuffer(VABufferID buffer_id,
+                                                 VASurfaceID sync_surface_id,
+                                                 uint8_t* target_ptr,
+                                                 size_t target_size,
+                                                 size_t* coded_data_size) {
+  bool result = DownloadFromCodedBuffer(buffer_id, sync_surface_id, target_ptr,
+                                        target_size, coded_data_size);
+
+  VAStatus va_res = vaDestroyBuffer(va_display_, buffer_id);
   VA_LOG_ON_ERROR(va_res, "vaDestroyBuffer failed");
-
   const auto was_found = coded_buffers_.erase(buffer_id);
   DCHECK(was_found);
 
-  return buffer_segment == NULL;
+  return result;
 }
 
 bool VaapiWrapper::BlitSurface(

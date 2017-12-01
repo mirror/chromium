@@ -9,6 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.Point;
 import android.os.StrictMode;
 import android.util.DisplayMetrics;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.SurfaceHolder;
@@ -477,7 +478,7 @@ public class VrShellImpl
 
             @Override
             public void onDenied() {}
-        }, UiUnsupportedMode.ANDROID_PERMISSION_NEEDED);
+        }, UiUnsupportedMode.VOICE_SEARCH_NEEDS_RECORD_AUDIO_OS_PERMISSION);
     }
 
     // Exits CCT, returning to the app that opened it.
@@ -533,6 +534,24 @@ public class VrShellImpl
             mOnDispatchTouchEventForTesting.onDispatchTouchEvent(parentConsumed);
         }
         return parentConsumed;
+    }
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (mTab.getContentViewCore() != null
+                && mTab.getContentViewCore().dispatchKeyEvent(event)) {
+            return true;
+        }
+        return super.dispatchKeyEvent(event);
+    }
+
+    @Override
+    public boolean onGenericMotionEvent(MotionEvent event) {
+        if (mTab.getContentViewCore() != null
+                && mTab.getContentViewCore().onGenericMotionEvent(event)) {
+            return true;
+        }
+        return super.onGenericMotionEvent(event);
     }
 
     @Override
@@ -736,7 +755,6 @@ public class VrShellImpl
 
     @CalledByNative
     private void loadUrl(String url) {
-        // TODO(bshe): reuse voice suggestion provider if possible.
         assert mTab != null;
         mTab.loadUrl(new LoadUrlParams(url));
     }

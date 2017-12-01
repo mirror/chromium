@@ -28,12 +28,14 @@
           "blink::mojom::OffscreenCanvasProvider",
           "blink::mojom::ReportingServiceProxy",
           "blink::mojom::WebDatabaseHost",
+          "content::mojom::ClipboardHost",
           "content::mojom::FieldTrialRecorder",
           "content::mojom::FileUtilitiesHost",
           "content::mojom::FrameSinkProvider",
           "content::mojom::MediaStreamDispatcherHost",
           "content::mojom::MemoryCoordinatorHandle",
           "content::mojom::PushMessaging",
+          "content::mojom::QuotaDispatcherHost",
           "content::mojom::RendererHost",
           "content::mojom::ReportingServiceProxy",
           "content::mojom::ServiceWorkerDispatcherHost",
@@ -70,7 +72,7 @@
         "content_plugin": [ "browser" ],
         "content_renderer": [ "browser" ],
         "content_utility": [ "browser" ],
-        "data_decoder": [ "image_decoder", "json_parser" ],
+        "data_decoder": [ "image_decoder", "json_parser", "xml_parser" ],
         "device": [
           "device:battery_monitor",
           "device:generic_sensor",
@@ -126,6 +128,7 @@
           "blink::mojom::InsecureInputService",
           "blink::mojom::KeyboardLockService",
           "blink::mojom::MediaSessionService",
+          "blink::mojom::NotificationService",
           "blink::mojom::PermissionService",
           "blink::mojom::PresentationService",
           "blink::mojom::TextSuggestionHost",
@@ -174,6 +177,7 @@
     "navigation:dedicated_worker": {
       "provides": {
         "renderer": [
+          "blink::mojom::NotificationService",
           "blink::mojom::PermissionService",
           "payments::mojom::PaymentManager",
           "shape_detection::mojom::BarcodeDetection",
@@ -185,6 +189,7 @@
     "navigation:service_worker": {
       "provides": {
         "renderer": [
+          "blink::mojom::NotificationService",
           "blink::mojom::PermissionService",
           "blink::mojom::WebSocket",
           "payments::mojom::PaymentManager",
@@ -197,6 +202,7 @@
     "navigation:shared_worker": {
       "provides": {
         "renderer": [
+          "blink::mojom::NotificationService",
           "blink::mojom::PermissionService",
           "blink::mojom::WebSocket",
           "payments::mojom::PaymentManager",

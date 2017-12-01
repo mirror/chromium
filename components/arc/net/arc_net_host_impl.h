@@ -21,7 +21,6 @@
 #include "components/arc/common/net.mojom.h"
 #include "components/arc/connection_observer.h"
 #include "components/keyed_service/core/keyed_service.h"
-#include "mojo/public/cpp/bindings/binding.h"
 
 namespace content {
 class BrowserContext;
@@ -87,6 +86,7 @@ class ArcNetHostImpl : public KeyedService,
   void DefaultNetworkChanged(const chromeos::NetworkState* network) override;
   void NetworkConnectionStateChanged(
       const chromeos::NetworkState* network) override;
+  void NetworkListChanged() override;
   void DeviceListChanged() override;
   void GetDefaultNetwork(GetDefaultNetworkCallback callback) override;
 
@@ -98,6 +98,8 @@ class ArcNetHostImpl : public KeyedService,
   void OnConnectionClosed() override;
 
  private:
+  const chromeos::NetworkState* GetDefaultNetworkFromChrome();
+  void UpdateDefaultNetwork();
   void DefaultNetworkSuccessCallback(const std::string& service_path,
                                      const base::DictionaryValue& dictionary);
 
@@ -154,7 +156,6 @@ class ArcNetHostImpl : public KeyedService,
   std::string arc_vpn_service_path_;
 
   THREAD_CHECKER(thread_checker_);
-  mojo::Binding<mojom::NetHost> binding_;
   base::WeakPtrFactory<ArcNetHostImpl> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ArcNetHostImpl);

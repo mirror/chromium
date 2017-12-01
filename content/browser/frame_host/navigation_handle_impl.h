@@ -131,6 +131,7 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   RenderFrameHostImpl* GetParentFrame() override;
   const base::TimeTicks& NavigationStart() override;
   bool IsPost() override;
+  const scoped_refptr<ResourceRequestBody>& GetResourceRequestBody() override;
   const Referrer& GetReferrer() override;
   bool HasUserGesture() override;
   ui::PageTransition GetPageTransition() override;
@@ -252,13 +253,6 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
     render_frame_host_ = render_frame_host;
   }
 
-  // Returns the POST body associated with this navigation.  This will be
-  // null for GET and/or other non-POST requests (or if a response to a POST
-  // request was a redirect that changed the method to GET - for example 302).
-  const scoped_refptr<ResourceRequestBody>& resource_request_body() const {
-    return resource_request_body_;
-  }
-
   // PlzNavigate
   void InitServiceWorkerHandle(
       ServiceWorkerContextWrapper* service_worker_context);
@@ -287,6 +281,17 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
       bool is_external_protocol,
       RequestContextType request_context_type,
       blink::WebMixedContentContextType mixed_content_context_type,
+      const ThrottleChecksFinishedCallback& callback);
+
+  // Updates the state of the navigation handle after encountering a server
+  // redirect.
+  void UpdateStateFollowingRedirect(
+      const GURL& new_url,
+      const std::string& new_method,
+      const GURL& new_referrer_url,
+      bool new_is_external_protocol,
+      scoped_refptr<net::HttpResponseHeaders> response_headers,
+      net::HttpResponseInfo::ConnectionInfo connection_info,
       const ThrottleChecksFinishedCallback& callback);
 
   // Called when the URLRequest will be redirected in the network stack.

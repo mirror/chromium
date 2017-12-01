@@ -72,6 +72,7 @@ class LayoutFlowThread;
 class LayoutGeometryMap;
 class LayoutMultiColumnSpannerPlaceholder;
 class LayoutView;
+class NGPhysicalBoxFragment;
 class ObjectPaintProperties;
 class PaintLayer;
 class PseudoStyleRequest;
@@ -310,6 +311,10 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   // Returns |EnclosingBox()| if it's a LayoutNGBlockFlow, or nullptr otherwise.
   LayoutBlockFlow* EnclosingNGBlockFlow() const;
 
+  // Returns |NGPhysicalBoxFragment| for |EnclosingNGBlockFlow()| or nullptr
+  // otherwise.
+  const NGPhysicalBoxFragment* EnclosingBlockFlowFragment() const;
+
   // Function to return our enclosing flow thread if we are contained inside
   // one. This function follows the containing block chain.
   LayoutFlowThread* FlowThreadContainingBlock() const {
@@ -458,12 +463,18 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   void ShowTreeForThis() const;
   void ShowLayoutTreeForThis() const;
   void ShowLineTreeForThis() const;
-
   void ShowLayoutObject() const;
-  // We don't make stringBuilder an optional parameter so that
-  // showLayoutObject can be called from gdb easily.
-  void ShowLayoutObject(StringBuilder&) const;
-  void ShowLayoutTreeAndMark(const LayoutObject* marked_object1 = nullptr,
+
+  // Dump this layout object to the specified string builder.
+  void DumpLayoutObject(StringBuilder&) const;
+
+  // Dump the subtree established by this layout object to the specified string
+  // builder. There will be one object per line, and descendants will be
+  // indented according to their tree level. The optional "marked_foo"
+  // parameters can be used to mark up to two objects in the subtree with a
+  // label.
+  void DumpLayoutTreeAndMark(StringBuilder&,
+                             const LayoutObject* marked_object1 = nullptr,
                              const char* marked_label1 = nullptr,
                              const LayoutObject* marked_object2 = nullptr,
                              const char* marked_label2 = nullptr,
@@ -1096,6 +1107,8 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   // paintOffset is the offset from the origin of the GraphicsContext at which
   // to paint the current object.
   virtual void Paint(const PaintInfo&, const LayoutPoint& paint_offset) const;
+
+  virtual bool RecalcOverflowAfterStyleChange();
 
   // Subclasses must reimplement this method to compute the size and position
   // of this object and all its descendants.
@@ -1732,6 +1745,9 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   // debugging output
   virtual LayoutRect DebugRect() const;
 
+  // Each LayoutObject has one or more painting fragments (exactly one
+  // in the absence of multicol/pagination).
+  // See ../paint/README.md for more on fragments.
   const FragmentData& FirstFragment() const { return fragment_; }
 
   // Returns the bounding box of the visual rects of all fragments.
@@ -1809,6 +1825,8 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
     }
 #endif
 
+    FragmentData& FirstFragment() { return layout_object_.fragment_; }
+
    protected:
     friend class LayoutBoxModelObject;
     friend class LayoutScrollbar;
@@ -1826,11 +1844,6 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
                              LocationInBackingAndSelectionVisualRect);
     FRIEND_TEST_ALL_PREFIXES(BoxPaintInvalidatorTest,
                              ComputePaintInvalidationReasonBasic);
-
-    // Each LayoutObject has one or more painting fragments (exactly one
-    // in the absence of multicol/pagination).
-    // See ../paint/README.md for more on fragments.
-    FragmentData& FirstFragment() { return layout_object_.fragment_; }
 
     friend class LayoutObject;
     MutableForPainting(const LayoutObject& layout_object)

@@ -7,30 +7,34 @@
 
 #import <Foundation/Foundation.h>
 
-#import "ios/chrome/browser/ui/broadcaster/chrome_broadcast_observer.h"
-
 @protocol ToolbarConsumer;
 
+namespace bookmarks {
+class BookmarkModel;
+}
 namespace web {
 class WebState;
 }
+class VoiceSearchProvider;
 class WebStateList;
 
 // A mediator object that provides the relevant properties of a web state
 // to a consumer.
-@interface ToolbarMediator : NSObject<ChromeBroadcastObserver>
-
-// The WebState whose properties this object mediates. This can change during
-// the lifetime of this object and may be null.
-@property(nonatomic, assign) web::WebState* webState;
+@interface ToolbarMediator : NSObject
 
 // The WebStateList that this mediator listens for any changes on the total
 // number of Webstates.
 @property(nonatomic, assign) WebStateList* webStateList;
 
+// The bookmarks model to know if the page is bookmarked.
+@property(nonatomic, assign) bookmarks::BookmarkModel* bookmarkModel;
+
 // The consumer for this object. This can change during the lifetime of this
 // object and may be nil.
 @property(nonatomic, strong) id<ToolbarConsumer> consumer;
+
+// The voice search provider for this mediator.
+@property(nonatomic, assign) VoiceSearchProvider* voiceSearchProvider;
 
 // Updates the consumer to conforms to |webState|.
 - (void)updateConsumerForWebState:(web::WebState*)webState;

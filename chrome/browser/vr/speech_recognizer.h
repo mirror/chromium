@@ -48,8 +48,17 @@ enum SpeechRecognitionState {
   SPEECH_RECOGNITION_NETWORK_ERROR,
 };
 
+// These enums are used for histogram. Do NOT renumber or delete these enums.
+enum VoiceSearchEndState {
+  VOICE_SEARCH_OPEN_SEARCH_PAGE = 0,
+  VOICE_SEARCH_CANCEL = 1,
+  VOICE_SEARCH_TRY_AGAIN = 2,
+  COUNT,
+};
+
 class VoiceResultDelegate {
  public:
+  virtual ~VoiceResultDelegate() {}
   virtual void OnVoiceResults(const base::string16& result) = 0;
 };
 
@@ -109,6 +118,7 @@ class SpeechRecognizer : public IOBrowserUIInterface {
   BrowserUiInterface* ui_;
   scoped_refptr<net::URLRequestContextGetter> url_request_context_getter_;
   std::string locale_;
+  base::string16 final_result_;
 
   // Note that this object is destroyed on IO thread.
   std::unique_ptr<SpeechRecognizerOnIO> speech_recognizer_on_io_;

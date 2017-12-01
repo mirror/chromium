@@ -76,6 +76,11 @@ WebSecurityOrigin WebDocument::GetSecurityOrigin() const {
   return WebSecurityOrigin(ConstUnwrap<Document>()->GetSecurityOrigin());
 }
 
+void WebDocument::GrantLoadLocalResources() {
+  if (Document* document = Unwrap<Document>())
+    document->GetMutableSecurityOrigin()->GrantLoadLocalResources();
+}
+
 bool WebDocument::IsSecureContext() const {
   const Document* document = ConstUnwrap<Document>();
   return document && document->IsSecureContext();
@@ -179,17 +184,18 @@ WebElement WebDocument::FocusedElement() const {
   return WebElement(ConstUnwrap<Document>()->FocusedElement());
 }
 
-WebStyleSheetId WebDocument::InsertStyleSheet(const WebString& source_code) {
+WebStyleSheetId WebDocument::InsertStyleSheet(const WebString& source_code,
+                                              CSSOrigin origin) {
   Document* document = Unwrap<Document>();
   DCHECK(document);
   StyleSheetContents* parsed_sheet =
       StyleSheetContents::Create(CSSParserContext::Create(*document));
   parsed_sheet->ParseString(source_code);
-  return document->GetStyleEngine().AddUserSheet(parsed_sheet);
+  return document->GetStyleEngine().InjectSheet(parsed_sheet, origin);
 }
 
 void WebDocument::RemoveInsertedStyleSheet(WebStyleSheetId stylesheet_id) {
-  Unwrap<Document>()->GetStyleEngine().RemoveUserSheet(stylesheet_id);
+  Unwrap<Document>()->GetStyleEngine().RemoveInjectedSheet(stylesheet_id);
 }
 
 void WebDocument::WatchCSSSelectors(const WebVector<WebString>& web_selectors) {

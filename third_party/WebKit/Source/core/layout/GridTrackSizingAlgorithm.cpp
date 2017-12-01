@@ -4,6 +4,7 @@
 
 #include "core/layout/GridTrackSizingAlgorithm.h"
 
+#include "core/frame/UseCounter.h"
 #include "core/layout/Grid.h"
 #include "core/layout/GridLayoutUtils.h"
 #include "core/layout/LayoutGrid.h"
@@ -739,6 +740,14 @@ void GridTrackSizingAlgorithm::InitializeTrackSizes() {
       flexible_sized_tracks_index_.push_back(i);
     if (track_size.HasAutoMaxTrackBreadth() && !track_size.IsFitContent())
       auto_sized_tracks_for_stretch_index_.push_back(i);
+
+    if (direction_ == kForRows &&
+        !layout_grid_->CachedHasDefiniteLogicalHeight() &&
+        (track_size.MinTrackBreadth().HasPercentage() ||
+         track_size.MaxTrackBreadth().HasPercentage())) {
+      UseCounter::Count(layout_grid_->GetDocument(),
+                        WebFeature::kGridRowTrackPercentIndefiniteHeight);
+    }
   }
 }
 
@@ -756,8 +765,41 @@ void GridTrackSizingAlgorithm::SizeTrackToFitNonSpanningItem(
     track.SetBaseSize(
         std::max(track.BaseSize(), strategy_->MaxContentForChild(grid_item)));
   } else if (track_size.HasAutoMinTrackBreadth()) {
-    track.SetBaseSize(
-        std::max(track.BaseSize(), strategy_->MinSizeForChild(grid_item)));
+    LayoutUnit min_size = strategy_->MinSizeForChild(grid_item);
+
+    GridTrackSizingDirection child_inline_direction =
+        GridLayoutUtils::FlowAwareDirectionForChild(*layout_grid_, grid_item,
+                                                    kForColumns);
+    bool is_row_axis = direction_ == child_inline_direction;
+    Length grid_item_size = is_row_axis ? grid_item.StyleRef().LogicalWidth()
+                                        : grid_item.StyleRef().LogicalHeight();
+    Length grid_item_min_size = is_row_axis
+                                    ? grid_item.StyleRef().LogicalMinWidth()
+                                    : grid_item.StyleRef().LogicalMinHeight();
+    bool overflow_is_visible =
+        is_row_axis ? grid_item.StyleRef().OverflowInlineDirection() ==
+                          EOverflow::kVisible
+                    : grid_item.StyleRef().OverflowBlockDirection() ==
+                          EOverflow::kVisible;
+
+    if (grid_item_size.IsAuto() && grid_item_min_size.IsAuto() &&
+        overflow_is_visible && track_size.HasFixedMaxTrackBreadth()) {
+      LayoutUnit max_breadth =
+          ValueForLength(track_size.MaxTrackBreadth().length(),
+                         AvailableSpace().value_or(LayoutUnit()));
+      if (min_size > max_breadth) {
+        LayoutUnit margin_and_border_and_padding =
+            is_row_axis ? GridLayoutUtils::MarginLogicalWidthForChild(
+                              *layout_grid_, grid_item) +
+                              grid_item.BorderAndPaddingLogicalWidth()
+                        : GridLayoutUtils::MarginLogicalHeightForChild(
+                              *layout_grid_, grid_item) +
+                              grid_item.BorderAndPaddingLogicalHeight();
+        min_size = std::max(max_breadth, margin_and_border_and_padding);
+      }
+    }
+
+    track.SetBaseSize(std::max(track.BaseSize(), min_size));
   }
 
   if (track_size.HasMinContentMaxTrackBreadth()) {

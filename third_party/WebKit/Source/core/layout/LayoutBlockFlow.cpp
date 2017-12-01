@@ -1500,7 +1500,7 @@ void LayoutBlockFlow::LayoutBlockChildren(bool relayout_children,
   // TODO(foolip): Speculative CHECKs to crash if any non-LayoutBox
   // children ever appear, the childrenInline() check at the call site
   // should make this impossible. crbug.com/632848
-  LayoutObject* first_child = this->FirstChild();
+  LayoutObject* first_child = FirstChild();
   CHECK(!first_child || first_child->IsBox());
   LayoutBox* next = ToLayoutBox(first_child);
   LayoutBox* last_normal_flow_child = nullptr;
@@ -2850,7 +2850,7 @@ void LayoutBlockFlow::WillBeDestroyed() {
   // The reason we don't destroy it before anonymous children is that they may
   // have continuations of their own that are anonymous children of our
   // continuation.
-  LayoutBoxModelObject* continuation = this->Continuation();
+  LayoutBoxModelObject* continuation = Continuation();
   if (continuation) {
     continuation->Destroy();
     SetContinuation(nullptr);
@@ -2998,7 +2998,7 @@ void LayoutBlockFlow::SetStaticInlinePositionForChild(
 }
 
 LayoutInline* LayoutBlockFlow::InlineElementContinuation() const {
-  LayoutBoxModelObject* continuation = this->Continuation();
+  LayoutBoxModelObject* continuation = Continuation();
   return continuation && continuation->IsInline() ? ToLayoutInline(continuation)
                                                   : nullptr;
 }
@@ -3957,7 +3957,7 @@ void LayoutBlockFlow::AddOverhangingFloats(LayoutBlockFlow* child,
        child_it != child_end; ++child_it) {
     FloatingObject& floating_object = *child_it->get();
     LayoutUnit logical_bottom_for_float =
-        std::min(this->LogicalBottomForFloat(floating_object),
+        std::min(LogicalBottomForFloat(floating_object),
                  LayoutUnit::Max() - child_logical_top);
     LayoutUnit logical_bottom = child_logical_top + logical_bottom_for_float;
 
@@ -4256,7 +4256,7 @@ bool LayoutBlockFlow::AllowsPaginationStrut() const {
     // But currently we have no mechanism in place to handle this.
     return false;
   }
-  const LayoutBlock* containing_block = this->ContainingBlock();
+  const LayoutBlock* containing_block = ContainingBlock();
   if (!containing_block || !containing_block->IsLayoutBlockFlow())
     return false;
   const LayoutBlockFlow* containing_block_flow =
@@ -4585,9 +4585,11 @@ bool LayoutBlockFlow::RecalcInlineChildrenOverflowAfterStyleChange() {
     LayoutObject* layout_object = walker.Current().GetLayoutObject();
     if (RecalcNormalFlowChildOverflowIfNeeded(layout_object)) {
       children_overflow_changed = true;
-      if (InlineBox* inline_box_wrapper =
-              ToLayoutBlock(layout_object)->InlineBoxWrapper())
-        line_boxes.insert(&inline_box_wrapper->Root());
+      if (layout_object->IsLayoutBlock()) {
+        if (InlineBox* inline_box_wrapper =
+                ToLayoutBlock(layout_object)->InlineBoxWrapper())
+          line_boxes.insert(&inline_box_wrapper->Root());
+      }
     }
   }
 
@@ -4755,8 +4757,7 @@ void LayoutBlockFlow::AddOutlineRects(
   // For blocks inside inlines, we go ahead and include margins so that we run
   // right up to the inline boxes above and below us (thus getting merged with
   // them to form a single irregular shape).
-  const LayoutInline* inline_element_continuation =
-      this->InlineElementContinuation();
+  const LayoutInline* inline_element_continuation = InlineElementContinuation();
   if (inline_element_continuation) {
     // FIXME: This check really isn't accurate.
     bool next_inline_has_line_box = inline_element_continuation->FirstLineBox();

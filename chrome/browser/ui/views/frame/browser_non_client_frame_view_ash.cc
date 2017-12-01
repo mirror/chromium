@@ -244,6 +244,8 @@ void BrowserNonClientFrameViewAsh::GetWindowMask(const gfx::Size& size,
 void BrowserNonClientFrameViewAsh::ResetWindowControls() {
   caption_button_container_->SetVisible(true);
   caption_button_container_->ResetWindowControls();
+  if (hosted_app_button_container_)
+    hosted_app_button_container_->RefreshContentSettingViews();
 }
 
 void BrowserNonClientFrameViewAsh::UpdateWindowIcon() {
@@ -425,7 +427,7 @@ void BrowserNonClientFrameViewAsh::UpdateProfileIcons() {
   if (!browser->is_type_tabbed() && !browser->is_app())
     return;
   if ((browser->profile()->GetProfileType() == Profile::INCOGNITO_PROFILE) ||
-      chrome::MultiUserWindowManager::ShouldShowAvatar(
+      MultiUserWindowManager::ShouldShowAvatar(
           browser_view()->GetNativeWindow())) {
     UpdateProfileIndicatorIcon();
   }
@@ -509,18 +511,19 @@ BrowserNonClientFrameViewAsh::CreateFrameHeader() {
           browser)) {
     default_frame_header = std::make_unique<HostedAppFrameHeaderAsh>(
         browser->hosted_app_controller(), frame(), this,
-        caption_button_container_, back_button_);
+        caption_button_container_);
 
     // Add the container for extra hosted app buttons (e.g app menu button).
-    SkColor text_color = default_frame_header->GetTitleColor();
+    SkColor button_color = ash::FrameCaptionButton::GetButtonColor(
+        default_frame_header->ShouldUseLightImages());
     hosted_app_button_container_ = new HostedAppButtonContainer(
-        browser_view(), text_color,
-        SkColorSetA(text_color, 255 * ash::kInactiveFrameButtonIconAlphaRatio));
+        browser_view(), button_color,
+        SkColorSetA(button_color,
+                    255 * ash::kInactiveFrameButtonIconAlphaRatio));
     caption_button_container_->AddChildViewAt(hosted_app_button_container_, 0);
-
   } else {
     default_frame_header = std::make_unique<ash::DefaultFrameHeader>(
-        frame(), this, caption_button_container_, back_button_);
+        frame(), this, caption_button_container_);
     if (!browser->is_app()) {
       // For non app (i.e. WebUI) windows (e.g. Settings) use MD frame color.
       default_frame_header->SetFrameColors(kMdWebUIFrameColor,
@@ -528,8 +531,11 @@ BrowserNonClientFrameViewAsh::CreateFrameHeader() {
     }
   }
 
+  if (back_button_)
+    default_frame_header->set_back_button(back_button_);
+
   if (window_icon_)
-    default_frame_header->UpdateLeftHeaderView(window_icon_);
+    default_frame_header->set_left_header_view(window_icon_);
 
   return default_frame_header;
 }

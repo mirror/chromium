@@ -250,9 +250,9 @@ AutomationPredicate.group = AutomationPredicate.match({
  * @return {boolean}
  */
 AutomationPredicate.linebreak = function(first, second) {
-  // TODO(dtseng): Use next/previousOnLin once available.
-  var fl = first.location;
-  var sl = second.location;
+  // TODO(dtseng): Use next/previousOnLine once available.
+  var fl = first.unclippedLocation;
+  var sl = second.unclippedLocation;
   return fl.top != sl.top || (fl.top + fl.height != sl.top + sl.height);
 };
 
@@ -265,8 +265,8 @@ AutomationPredicate.linebreak = function(first, second) {
 AutomationPredicate.container = function(node) {
   return AutomationPredicate.match({
     anyRole: [
-      Role.GENERIC_CONTAINER, Role.DOCUMENT, Role.GROUP, Role.LIST_ITEM,
-      Role.TOOLBAR, Role.WINDOW
+      Role.GENERIC_CONTAINER, Role.DOCUMENT, Role.GROUP, Role.LIST,
+      Role.LIST_ITEM, Role.TOOLBAR, Role.WINDOW
     ],
     anyPredicate: [
       AutomationPredicate.landmark, AutomationPredicate.structuralContainer,
@@ -290,9 +290,9 @@ AutomationPredicate.container = function(node) {
  * @return {boolean}
  */
 AutomationPredicate.structuralContainer = AutomationPredicate.roles([
-  Role.ALERT_DIALOG, Role.DIALOG, Role.ROOT_WEB_AREA, Role.WEB_VIEW,
-  Role.WINDOW, Role.EMBEDDED_OBJECT, Role.IFRAME, Role.IFRAME_PRESENTATIONAL,
-  Role.UNKNOWN
+  Role.ALERT_DIALOG, Role.CLIENT, Role.DIALOG, Role.ROOT_WEB_AREA,
+  Role.WEB_VIEW, Role.WINDOW, Role.EMBEDDED_OBJECT, Role.IFRAME,
+  Role.IFRAME_PRESENTATIONAL, Role.UNKNOWN
 ]);
 
 /**

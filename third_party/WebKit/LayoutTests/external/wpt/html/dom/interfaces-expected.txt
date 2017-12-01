@@ -1,5 +1,5 @@
 This is a testharness.js-based test.
-Found 5286 tests; 5166 PASS, 120 FAIL, 0 TIMEOUT, 0 NOTRUN.
+Found 5284 tests; 5164 PASS, 120 FAIL, 0 TIMEOUT, 0 NOTRUN.
 PASS Test driver
 PASS Document interface: attribute domain
 PASS Document interface: attribute referrer
@@ -481,13 +481,13 @@ PASS HTMLAllCollection interface: existence and properties of interface prototyp
 PASS HTMLAllCollection interface: attribute length
 PASS HTMLAllCollection interface: operation namedItem(DOMString)
 PASS HTMLAllCollection interface: operation item(DOMString)
-FAIL HTMLAllCollection must be primary interface of document.all assert_equals: wrong typeof object expected "function" but got "undefined"
-FAIL Stringification of document.all assert_equals: wrong typeof object expected "function" but got "undefined"
-FAIL HTMLAllCollection interface: document.all must inherit property "length" with the proper type assert_equals: wrong typeof object expected "function" but got "undefined"
-FAIL HTMLAllCollection interface: document.all must inherit property "namedItem(DOMString)" with the proper type assert_equals: wrong typeof object expected "function" but got "undefined"
-FAIL HTMLAllCollection interface: calling namedItem(DOMString) on document.all with too few arguments must throw TypeError assert_equals: wrong typeof object expected "function" but got "undefined"
-FAIL HTMLAllCollection interface: document.all must inherit property "item(DOMString)" with the proper type assert_equals: wrong typeof object expected "function" but got "undefined"
-FAIL HTMLAllCollection interface: calling item(DOMString) on document.all with too few arguments must throw TypeError assert_equals: wrong typeof object expected "function" but got "undefined"
+FAIL HTMLAllCollection must be primary interface of document.all assert_equals: wrong typeof object expected "object" but got "undefined"
+FAIL Stringification of document.all assert_equals: wrong typeof object expected "object" but got "undefined"
+FAIL HTMLAllCollection interface: document.all must inherit property "length" with the proper type assert_equals: wrong typeof object expected "object" but got "undefined"
+FAIL HTMLAllCollection interface: document.all must inherit property "namedItem(DOMString)" with the proper type assert_equals: wrong typeof object expected "object" but got "undefined"
+FAIL HTMLAllCollection interface: calling namedItem(DOMString) on document.all with too few arguments must throw TypeError assert_equals: wrong typeof object expected "object" but got "undefined"
+FAIL HTMLAllCollection interface: document.all must inherit property "item(DOMString)" with the proper type assert_equals: wrong typeof object expected "object" but got "undefined"
+FAIL HTMLAllCollection interface: calling item(DOMString) on document.all with too few arguments must throw TypeError assert_equals: wrong typeof object expected "object" but got "undefined"
 PASS HTMLFormControlsCollection interface: existence and properties of interface object
 PASS HTMLFormControlsCollection interface object length
 PASS HTMLFormControlsCollection interface object name
@@ -768,7 +768,6 @@ PASS HTMLLinkElement interface: attribute hreflang
 PASS HTMLLinkElement interface: attribute type
 PASS HTMLLinkElement interface: attribute sizes
 PASS HTMLLinkElement interface: attribute referrerPolicy
-PASS HTMLLinkElement interface: attribute scope
 FAIL HTMLLinkElement interface: attribute workerType assert_true: The prototype object must have a property "workerType" expected true got false
 FAIL HTMLLinkElement interface: attribute updateViaCache assert_true: The prototype object must have a property "updateViaCache" expected true got false
 PASS HTMLLinkElement interface: attribute charset
@@ -788,7 +787,6 @@ PASS HTMLLinkElement interface: document.createElement("link") must inherit prop
 PASS HTMLLinkElement interface: document.createElement("link") must inherit property "type" with the proper type
 PASS HTMLLinkElement interface: document.createElement("link") must inherit property "sizes" with the proper type
 PASS HTMLLinkElement interface: document.createElement("link") must inherit property "referrerPolicy" with the proper type
-PASS HTMLLinkElement interface: document.createElement("link") must inherit property "scope" with the proper type
 FAIL HTMLLinkElement interface: document.createElement("link") must inherit property "workerType" with the proper type assert_inherits: property "workerType" not found in prototype chain
 FAIL HTMLLinkElement interface: document.createElement("link") must inherit property "updateViaCache" with the proper type assert_inherits: property "updateViaCache" not found in prototype chain
 PASS HTMLLinkElement interface: document.createElement("link") must inherit property "charset" with the proper type

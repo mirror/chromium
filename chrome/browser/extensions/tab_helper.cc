@@ -241,12 +241,6 @@ void TabHelper::SetExtensionAppById(const ExtensionId& extension_app_id) {
     SetExtensionApp(extension);
 }
 
-void TabHelper::SetExtensionAppIconById(const ExtensionId& extension_app_id) {
-  const Extension* extension = GetExtension(extension_app_id);
-  if (extension)
-    UpdateExtensionAppIcon(extension);
-}
-
 SkBitmap* TabHelper::GetExtensionAppIcon() {
   if (extension_app_icon_.empty())
     return NULL;
@@ -299,6 +293,27 @@ void TabHelper::DidFinishNavigation(
   });
 
   content::BrowserContext* context = web_contents()->GetBrowserContext();
+  ExtensionRegistry* registry = ExtensionRegistry::Get(context);
+  const ExtensionSet& enabled_extensions = registry->enabled_extensions();
+
+  if (util::IsNewBookmarkAppsEnabled()) {
+    Browser* browser = chrome::FindBrowserWithWebContents(web_contents());
+    if (browser && browser->is_app()) {
+      const Extension* extension = registry->GetExtensionById(
+          web_app::GetExtensionIdFromApplicationName(browser->app_name()),
+          ExtensionRegistry::EVERYTHING);
+      if (extension && AppLaunchInfo::GetFullLaunchURL(extension).is_valid())
+        SetExtensionApp(extension);
+    } else {
+      UpdateExtensionAppIcon(
+          enabled_extensions.GetExtensionOrAppByURL(
+              navigation_handle->GetURL()));
+    }
+  } else {
+    UpdateExtensionAppIcon(
+        enabled_extensions.GetExtensionOrAppByURL(navigation_handle->GetURL()));
+  }
+
   if (!navigation_handle->IsSameDocument())
     ExtensionActionAPI::Get(context)->ClearAllValuesForTab(web_contents());
 }
@@ -499,11 +514,6 @@ void TabHelper::UpdateExtensionAppIcon(const Extension* extension) {
         base::Bind(&TabHelper::OnImageLoaded,
                    image_loader_ptr_factory_.GetWeakPtr()));
   }
-}
-
-void TabHelper::SetAppIcon(const SkBitmap& app_icon) {
-  extension_app_icon_ = app_icon;
-  web_contents()->NotifyNavigationStateChanged(content::INVALIDATE_TYPE_TITLE);
 }
 
 void TabHelper::SetWebstoreInlineInstallerFactoryForTests(

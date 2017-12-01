@@ -53,6 +53,7 @@
 #include "components/tracing/common/trace_to_console.h"
 #include "components/tracing/common/tracing_switches.h"
 #include "components/viz/common/switches.h"
+#include "components/viz/host/forwarding_compositing_mode_reporter_impl.h"
 #include "components/viz/host/host_frame_sink_manager.h"
 #include "components/viz/service/display_embedder/compositing_mode_reporter_impl.h"
 #include "components/viz/service/display_embedder/server_shared_bitmap_manager.h"
@@ -92,6 +93,7 @@
 #include "content/browser/webui/url_data_manager.h"
 #include "content/common/content_switches_internal.h"
 #include "content/common/service_manager/service_manager_connection_impl.h"
+#include "content/common/site_isolation_policy.h"
 #include "content/common/task_scheduler.h"
 #include "content/public/browser/browser_main_parts.h"
 #include "content/public/browser/content_browser_client.h"
@@ -130,6 +132,7 @@
 #include "third_party/boringssl/src/include/openssl/evp.h"
 #include "ui/base/clipboard/clipboard.h"
 #include "ui/base/ui_base_switches.h"
+#include "ui/base/ui_base_switches_util.h"
 #include "ui/display/display_switches.h"
 #include "ui/gfx/switches.h"
 
@@ -807,13 +810,6 @@ void BrowserMainLoop::PostMainMessageLoopStart() {
     LevelDBWrapperImpl::EnableAggressiveCommitDelay();
   }
 
-  if (parsed_command_line_.HasSwitch(switches::kIsolateOrigins)) {
-    ChildProcessSecurityPolicyImpl* policy =
-        ChildProcessSecurityPolicyImpl::GetInstance();
-    policy->AddIsolatedOriginsFromCommandLine(
-        parsed_command_line_.GetSwitchValueASCII(switches::kIsolateOrigins));
-  }
-
   // Enable memory-infra dump providers.
   InitSkiaEventTracer();
   base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
@@ -914,12 +910,11 @@ int BrowserMainLoop::PreCreateThreads() {
   // Initialize origins that are whitelisted for process isolation.  Must be
   // done after base::FeatureList is initialized, but before any navigations
   // can happen.
-  std::vector<url::Origin> origins =
-      GetContentClient()->browser()->GetOriginsRequiringDedicatedProcess();
   ChildProcessSecurityPolicyImpl* policy =
       ChildProcessSecurityPolicyImpl::GetInstance();
-  for (auto origin : origins)
-    policy->AddIsolatedOrigin(origin);
+  policy->AddIsolatedOrigins(SiteIsolationPolicy::GetIsolatedOrigins());
+  policy->AddIsolatedOrigins(
+      GetContentClient()->browser()->GetOriginsRequiringDedicatedProcess());
 
   return result_code_;
 }
@@ -1276,14 +1271,15 @@ void BrowserMainLoop::ShutdownThreadsAndCleanUp() {
 #if !defined(OS_ANDROID)
   host_frame_sink_manager_.reset();
   frame_sink_manager_impl_.reset();
-#endif
   compositing_mode_reporter_impl_.reset();
+  forwarding_compositing_mode_reporter_impl_.reset();
+#endif
 
-  // The device monitors are using |system_monitor_| as dependency, so delete
-  // them before |system_monitor_| goes away.
-  // On Mac and windows, the monitor needs to be destroyed on the same thread
-  // as they were created. On Linux, the monitor will be deleted when IO thread
-  // goes away.
+// The device monitors are using |system_monitor_| as dependency, so delete
+// them before |system_monitor_| goes away.
+// On Mac and windows, the monitor needs to be destroyed on the same thread
+// as they were created. On Linux, the monitor will be deleted when IO thread
+// goes away.
 #if defined(OS_WIN)
   system_message_window_.reset();
 #elif defined(OS_MACOSX)
@@ -1421,14 +1417,22 @@ viz::FrameSinkManagerImpl* BrowserMainLoop::GetFrameSinkManager() const {
 
 void BrowserMainLoop::GetCompositingModeReporter(
     viz::mojom::CompositingModeReporterRequest request) {
-  bool use_viz =
-      base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kEnableViz);
-  if (IsUsingMus() || use_viz) {
-    // TODO(danakj): Support viz/mus.
-  } else {
-    compositing_mode_reporter_bindings_.AddBinding(
-        compositing_mode_reporter_impl_.get(), std::move(request));
+#if defined(OS_ANDROID)
+  // Android doesn't support non-gpu compositing modes, and doesn't make a
+  // CompositingModeReporter.
+  return;
+#else
+  if (IsUsingMus()) {
+    // Mus == ChromeOS, which doesn't support software compositing, so no need
+    // to report compositing mode.
+    return;
   }
+
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kEnableViz))
+    forwarding_compositing_mode_reporter_impl_->BindRequest(std::move(request));
+  else
+    compositing_mode_reporter_impl_->BindRequest(std::move(request));
+#endif
 }
 
 void BrowserMainLoop::StopStartupTracingTimer() {
@@ -1454,9 +1458,6 @@ int BrowserMainLoop::BrowserThreadsStarted() {
 
 #if BUILDFLAG(ENABLE_MUS)
   if (IsUsingMus()) {
-    base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
-        switches::kMus,
-        IsMusHostingViz() ? switches::kMusHostVizValue : std::string());
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
         switches::kEnableSurfaceSynchronization);
   }
@@ -1480,7 +1481,7 @@ int BrowserMainLoop::BrowserThreadsStarted() {
       BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
 
   // If mus is not hosting viz, then the browser must.
-  bool browser_is_viz_host = !IsMusHostingViz();
+  bool browser_is_viz_host = !switches::IsMusHostingViz();
 
   bool always_uses_gpu = true;
   bool established_gpu_channel = false;
@@ -1489,7 +1490,7 @@ int BrowserMainLoop::BrowserThreadsStarted() {
   established_gpu_channel = false;
   always_uses_gpu = ShouldStartGpuProcessOnBrowserStartup();
   BrowserGpuChannelHostFactory::Initialize(established_gpu_channel);
-#elif defined(USE_AURA) || defined(OS_MACOSX)
+#else
   established_gpu_channel = true;
   if (parsed_command_line_.HasSwitch(switches::kDisableGpu) ||
       parsed_command_line_.HasSwitch(switches::kDisableGpuCompositing) ||
@@ -1502,8 +1503,12 @@ int BrowserMainLoop::BrowserThreadsStarted() {
     host_frame_sink_manager_ = std::make_unique<viz::HostFrameSinkManager>();
     BrowserGpuChannelHostFactory::Initialize(established_gpu_channel);
     if (parsed_command_line_.HasSwitch(switches::kEnableViz)) {
+      forwarding_compositing_mode_reporter_impl_ =
+          std::make_unique<viz::ForwardingCompositingModeReporterImpl>();
+
       auto transport_factory = std::make_unique<VizProcessTransportFactory>(
-          BrowserGpuChannelHostFactory::instance(), GetResizeTaskRunner());
+          BrowserGpuChannelHostFactory::instance(), GetResizeTaskRunner(),
+          forwarding_compositing_mode_reporter_impl_.get());
       transport_factory->ConnectHostFrameSinkManager();
       ImageTransportFactory::SetFactory(std::move(transport_factory));
     } else {
@@ -1534,7 +1539,7 @@ int BrowserMainLoop::BrowserThreadsStarted() {
     env_->set_context_factory_private(GetContextFactoryPrivate());
   }
 #endif  // defined(USE_AURA)
-#endif  // defined(OS_ANDROID)
+#endif  // !defined(OS_ANDROID)
 
 #if defined(OS_ANDROID)
   base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(

@@ -57,6 +57,7 @@
 #include "ui/aura/window_port_for_shutdown.h"
 #include "ui/aura/window_tracker.h"
 #include "ui/base/layout.h"
+#include "ui/base/ui_base_switches_util.h"
 #include "ui/base/ui_base_types.h"
 #include "ui/display/screen.h"
 #include "ui/display/types/display_constants.h"
@@ -208,7 +209,9 @@ WindowTreeClient::WindowTreeClient(
   // Allow for a null request in tests.
   if (request.is_pending())
     binding_.Bind(std::move(request));
-  client::GetTransientWindowClient()->AddObserver(this);
+  // Some tests may not create a TransientWindowClient.
+  if (client::GetTransientWindowClient())
+    client::GetTransientWindowClient()->AddObserver(this);
   if (window_manager_delegate)
     window_manager_delegate->SetWindowManagerClient(this);
   if (connector) {  // |connector| can be null in tests.
@@ -222,11 +225,15 @@ WindowTreeClient::WindowTreeClient(
       io_task_runner = io_thread_->task_runner();
     }
 
-    gpu_ = ui::Gpu::Create(connector, ui::mojom::kServiceName, io_task_runner);
-    compositor_context_factory_ =
-        std::make_unique<MusContextFactory>(gpu_.get());
-    initial_context_factory_ = Env::GetInstance()->context_factory();
-    Env::GetInstance()->set_context_factory(compositor_context_factory_.get());
+    if (switches::IsMusHostingViz()) {
+      gpu_ =
+          ui::Gpu::Create(connector, ui::mojom::kServiceName, io_task_runner);
+      compositor_context_factory_ =
+          std::make_unique<MusContextFactory>(gpu_.get());
+      initial_context_factory_ = Env::GetInstance()->context_factory();
+      Env::GetInstance()->set_context_factory(
+          compositor_context_factory_.get());
+    }
 
     // WindowServerTest will create more than one WindowTreeClient. We will not
     // create the discardable memory manager for those tests.
@@ -253,7 +260,9 @@ WindowTreeClient::~WindowTreeClient() {
 
   capture_synchronizer_.reset();
 
-  client::GetTransientWindowClient()->RemoveObserver(this);
+  // Some tests may not create a TransientWindowClient.
+  if (client::GetTransientWindowClient())
+    client::GetTransientWindowClient()->RemoveObserver(this);
 
   Env* env = Env::GetInstance();
   if (compositor_context_factory_ &&
@@ -515,9 +524,13 @@ void WindowTreeClient::CreateOrUpdateWindowFromWindowData(
   if (window_data.transient_parent_id == kInvalidServerId)
     return;
 
-  // Adjust the transient parent if necessary.
+  // Some tests may not create a TransientWindowClient.
   client::TransientWindowClient* transient_window_client =
       client::GetTransientWindowClient();
+  if (!transient_window_client)
+    return;
+
+  // Adjust the transient parent if necessary.
   Window* existing_transient_parent =
       transient_window_client->GetTransientParent(window->GetWindow());
   WindowMus* new_transient_parent =
@@ -1717,7 +1730,10 @@ void WindowTreeClient::OnConnect() {
 void WindowTreeClient::WmOnAcceleratedWidgetForDisplay(
     int64_t display,
     gpu::SurfaceHandle surface_handle) {
-  // TODO(crbug.com/786453): Implement this.
+  if (window_manager_delegate_) {
+    window_manager_delegate_->OnWmAcceleratedWidgetAvailableForDisplay(
+        display, surface_handle);
+  }
 }
 
 void WindowTreeClient::WmNewDisplayAdded(

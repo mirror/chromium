@@ -270,7 +270,7 @@ TEST_F(LayoutSelectionTest,
           .Build());
   // This commit should not crash.
   Selection().CommitAppearanceIfNeeded();
-  TEST_NEXT(IsLayoutBlock, kNone, NotInvalidate);
+  TEST_NEXT(IsLayoutBlock, kContain, NotInvalidate);
   TEST_NEXT(IsLayoutBlockFlow, kContain, NotInvalidate);
   TEST_NEXT("div1", kStartAndEnd, ShouldInvalidate);
   TEST_NEXT(IsLayoutBlockFlow, kNone, NotInvalidate);
@@ -290,8 +290,8 @@ TEST_F(LayoutSelectionTest, TraverseLayoutObjectLineWrap) {
   TEST_NEXT(IsLayoutBlock, kContain, NotInvalidate);
   TEST_NEXT("bar\n", kStartAndEnd, ShouldInvalidate);
   TEST_NO_NEXT_LAYOUT_OBJECT();
-  EXPECT_EQ(Selection().LayoutSelectionStart(), 0);
-  EXPECT_EQ(Selection().LayoutSelectionEnd(), 4);
+  EXPECT_EQ(0u, Selection().LayoutSelectionStart());
+  EXPECT_EQ(4u, Selection().LayoutSelectionEnd());
 }
 
 TEST_F(LayoutSelectionTest, FirstLetter) {
@@ -328,11 +328,11 @@ TEST_F(LayoutSelectionTest, FirstLetterClearSeletion) {
   TEST_NEXT(IsLayoutBlock, kNone, NotInvalidate);
   TEST_NEXT(IsLayoutBlock, kNone, NotInvalidate);
   TEST_NEXT("foo", kNone, ShouldInvalidate);
-  TEST_NEXT(IsLayoutBlock, kNone, ShouldInvalidate);
+  TEST_NEXT(IsLayoutBlock, kNone, NotInvalidate);
   TEST_NEXT(IsLayoutInline, kNone, NotInvalidate);
   TEST_NEXT(IsLayoutTextFragmentOf("b"), kNone, ShouldInvalidate);
   TEST_NEXT(IsLayoutTextFragmentOf("ar"), kNone, ShouldInvalidate);
-  TEST_NEXT(IsLayoutBlock, kNone, ShouldInvalidate);
+  TEST_NEXT(IsLayoutBlock, kNone, NotInvalidate);
   TEST_NEXT("baz", kNone, ShouldInvalidate);
   TEST_NO_NEXT_LAYOUT_OBJECT();
 }
@@ -368,7 +368,7 @@ TEST_F(LayoutSelectionTest, FirstLetterUpdateSeletion) {
                                .SetBaseAndExtent({baz, 2}, {baz, 3})
                                .Build());
   Selection().CommitAppearanceIfNeeded();
-  TEST_NEXT(IsLayoutBlock, kNone, NotInvalidate);
+  TEST_NEXT(IsLayoutBlock, kContain, NotInvalidate);
   TEST_NEXT(IsLayoutBlock, kNone, NotInvalidate);
   TEST_NEXT("foo", kNone, ShouldInvalidate);
   // TODO(yoichio): Invalidating next LayoutBlock is flaky but it doesn't
@@ -379,7 +379,7 @@ TEST_F(LayoutSelectionTest, FirstLetterUpdateSeletion) {
   TEST_NEXT(IsLayoutInline, kNone, NotInvalidate);
   TEST_NEXT(IsLayoutTextFragmentOf("b"), kNone, ShouldInvalidate);
   TEST_NEXT(IsLayoutTextFragmentOf("ar"), kNone, ShouldInvalidate);
-  TEST_NEXT(IsLayoutBlock, kNone, ShouldInvalidate);
+  TEST_NEXT(IsLayoutBlock, kContain, NotInvalidate);
   TEST_NEXT("baz", kStartAndEnd, ShouldInvalidate);
   TEST_NO_NEXT_LAYOUT_OBJECT();
 }
@@ -416,8 +416,8 @@ TEST_F(LayoutSelectionTest, MoveOnSameNode_Start) {
   TEST_NEXT(IsLayoutInline, kNone, NotInvalidate);
   TEST_NEXT("bar", kEnd, ShouldInvalidate);
   TEST_NO_NEXT_LAYOUT_OBJECT();
-  EXPECT_EQ(1, Selection().LayoutSelectionStart());
-  EXPECT_EQ(1, Selection().LayoutSelectionEnd());
+  EXPECT_EQ(1u, Selection().LayoutSelectionStart());
+  EXPECT_EQ(1u, Selection().LayoutSelectionEnd());
 
   // Paint virtually and clear ShouldInvalidate flag.
   UpdateAllLifecyclePhases();
@@ -438,10 +438,10 @@ TEST_F(LayoutSelectionTest, MoveOnSameNode_Start) {
   TEST_NEXT(IsLayoutBlock, kContain, NotInvalidate);
   TEST_NEXT("foo", kStart, ShouldInvalidate);
   TEST_NEXT(IsLayoutInline, kNone, NotInvalidate);
-  TEST_NEXT("bar", kEnd, ShouldInvalidate);
+  TEST_NEXT("bar", kEnd, NotInvalidate);
   TEST_NO_NEXT_LAYOUT_OBJECT();
-  EXPECT_EQ(2, Selection().LayoutSelectionStart());
-  EXPECT_EQ(1, Selection().LayoutSelectionEnd());
+  EXPECT_EQ(2u, Selection().LayoutSelectionStart());
+  EXPECT_EQ(1u, Selection().LayoutSelectionEnd());
 }
 
 TEST_F(LayoutSelectionTest, MoveOnSameNode_End) {
@@ -454,8 +454,8 @@ TEST_F(LayoutSelectionTest, MoveOnSameNode_End) {
   TEST_NEXT(IsLayoutInline, kNone, NotInvalidate);
   TEST_NEXT("bar", kEnd, ShouldInvalidate);
   TEST_NO_NEXT_LAYOUT_OBJECT();
-  EXPECT_EQ(1, Selection().LayoutSelectionStart());
-  EXPECT_EQ(1, Selection().LayoutSelectionEnd());
+  EXPECT_EQ(1u, Selection().LayoutSelectionStart());
+  EXPECT_EQ(1u, Selection().LayoutSelectionEnd());
 
   // Paint virtually and clear ShouldInvalidate flag.
   UpdateAllLifecyclePhases();
@@ -474,12 +474,12 @@ TEST_F(LayoutSelectionTest, MoveOnSameNode_End) {
   Selection().CommitAppearanceIfNeeded();
   // Only "bar" should be invalidated.
   TEST_NEXT(IsLayoutBlock, kContain, NotInvalidate);
-  TEST_NEXT("foo", kStart, ShouldInvalidate);
+  TEST_NEXT("foo", kStart, NotInvalidate);
   TEST_NEXT(IsLayoutInline, kNone, NotInvalidate);
   TEST_NEXT("bar", kEnd, ShouldInvalidate);
   TEST_NO_NEXT_LAYOUT_OBJECT();
-  EXPECT_EQ(1, Selection().LayoutSelectionStart());
-  EXPECT_EQ(2, Selection().LayoutSelectionEnd());
+  EXPECT_EQ(1u, Selection().LayoutSelectionStart());
+  EXPECT_EQ(2u, Selection().LayoutSelectionEnd());
 }
 
 TEST_F(LayoutSelectionTest, MoveOnSameNode_StartAndEnd) {
@@ -489,8 +489,8 @@ TEST_F(LayoutSelectionTest, MoveOnSameNode_StartAndEnd) {
   TEST_NEXT(IsLayoutBlock, kContain, NotInvalidate);
   TEST_NEXT("foobar", kStartAndEnd, ShouldInvalidate);
   TEST_NO_NEXT_LAYOUT_OBJECT();
-  EXPECT_EQ(1, Selection().LayoutSelectionStart());
-  EXPECT_EQ(4, Selection().LayoutSelectionEnd());
+  EXPECT_EQ(1u, Selection().LayoutSelectionStart());
+  EXPECT_EQ(4u, Selection().LayoutSelectionEnd());
 
   // Paint virtually and clear ShouldInvalidate flag.
   UpdateAllLifecyclePhases();
@@ -509,8 +509,8 @@ TEST_F(LayoutSelectionTest, MoveOnSameNode_StartAndEnd) {
   TEST_NEXT(IsLayoutBlock, kContain, NotInvalidate);
   TEST_NEXT("foobar", kStartAndEnd, ShouldInvalidate);
   TEST_NO_NEXT_LAYOUT_OBJECT();
-  EXPECT_EQ(1, Selection().LayoutSelectionStart());
-  EXPECT_EQ(5, Selection().LayoutSelectionEnd());
+  EXPECT_EQ(1u, Selection().LayoutSelectionStart());
+  EXPECT_EQ(5u, Selection().LayoutSelectionEnd());
 }
 
 TEST_F(LayoutSelectionTest, MoveOnSameNode_StartAndEnd_Collapse) {
@@ -520,8 +520,8 @@ TEST_F(LayoutSelectionTest, MoveOnSameNode_StartAndEnd_Collapse) {
   TEST_NEXT(IsLayoutBlock, kContain, NotInvalidate);
   TEST_NEXT("foobar", kStartAndEnd, ShouldInvalidate);
   TEST_NO_NEXT_LAYOUT_OBJECT();
-  EXPECT_EQ(1, Selection().LayoutSelectionStart());
-  EXPECT_EQ(4, Selection().LayoutSelectionEnd());
+  EXPECT_EQ(1u, Selection().LayoutSelectionStart());
+  EXPECT_EQ(4u, Selection().LayoutSelectionEnd());
 
   // Paint virtually and clear ShouldInvalidate flag.
   UpdateAllLifecyclePhases();
@@ -562,8 +562,8 @@ TEST_F(LayoutSelectionTest, ClearSelection) {
   TEST_NEXT(IsLayoutBlock, kContain, NotInvalidate);
   TEST_NEXT("foo", kStartAndEnd, ShouldInvalidate);
   TEST_NO_NEXT_LAYOUT_OBJECT();
-  EXPECT_EQ(1, Selection().LayoutSelectionStart());
-  EXPECT_EQ(2, Selection().LayoutSelectionEnd());
+  EXPECT_EQ(1u, Selection().LayoutSelectionStart());
+  EXPECT_EQ(2u, Selection().LayoutSelectionEnd());
 
   UpdateAllLifecyclePhases();
   TEST_NEXT(IsLayoutBlock, kContain, NotInvalidate);
@@ -591,8 +591,8 @@ TEST_F(LayoutSelectionTest, SVG) {
   TEST_NEXT(IsSVGText, kContain, ShouldInvalidate);
   TEST_NEXT("foobar", kStartAndEnd, ShouldInvalidate);
   TEST_NO_NEXT_LAYOUT_OBJECT();
-  EXPECT_EQ(2, Selection().LayoutSelectionStart());
-  EXPECT_EQ(3, Selection().LayoutSelectionEnd());
+  EXPECT_EQ(2u, Selection().LayoutSelectionStart());
+  EXPECT_EQ(3u, Selection().LayoutSelectionEnd());
 
   UpdateAllLifecyclePhases();
   TEST_NEXT(IsLayoutBlock, kContain, NotInvalidate);
@@ -612,8 +612,8 @@ TEST_F(LayoutSelectionTest, SVG) {
   TEST_NEXT(IsSVGText, kContain, ShouldInvalidate);
   TEST_NEXT("foobar", kStartAndEnd, ShouldInvalidate);
   TEST_NO_NEXT_LAYOUT_OBJECT();
-  EXPECT_EQ(2, Selection().LayoutSelectionStart());
-  EXPECT_EQ(4, Selection().LayoutSelectionEnd());
+  EXPECT_EQ(2u, Selection().LayoutSelectionStart());
+  EXPECT_EQ(4u, Selection().LayoutSelectionEnd());
 }
 
 // crbug.com/781705
@@ -629,8 +629,8 @@ TEST_F(LayoutSelectionTest, SVGAncestor) {
   TEST_NEXT(IsSVGTSpan, kNone, NotInvalidate);
   TEST_NEXT("foobar", kStartAndEnd, ShouldInvalidate);
   TEST_NO_NEXT_LAYOUT_OBJECT();
-  EXPECT_EQ(2, Selection().LayoutSelectionStart());
-  EXPECT_EQ(3, Selection().LayoutSelectionEnd());
+  EXPECT_EQ(2u, Selection().LayoutSelectionStart());
+  EXPECT_EQ(3u, Selection().LayoutSelectionEnd());
 
   UpdateAllLifecyclePhases();
   TEST_NEXT(IsLayoutBlock, kContain, NotInvalidate);
@@ -652,8 +652,8 @@ TEST_F(LayoutSelectionTest, SVGAncestor) {
   TEST_NEXT(IsSVGTSpan, kNone, NotInvalidate);
   TEST_NEXT("foobar", kStartAndEnd, ShouldInvalidate);
   TEST_NO_NEXT_LAYOUT_OBJECT();
-  EXPECT_EQ(2, Selection().LayoutSelectionStart());
-  EXPECT_EQ(4, Selection().LayoutSelectionEnd());
+  EXPECT_EQ(2u, Selection().LayoutSelectionStart());
+  EXPECT_EQ(4u, Selection().LayoutSelectionEnd());
 }
 
 TEST_F(LayoutSelectionTest, Embed) {

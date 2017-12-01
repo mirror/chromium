@@ -11,6 +11,7 @@
 
 #include "base/macros.h"
 #include "base/strings/string16.h"
+#include "chrome/browser/notifications/notification_common.h"
 
 class GURL;
 class XmlWriter;
@@ -22,9 +23,16 @@ class Image;
 namespace message_center {
 struct ButtonInfo;
 class Notification;
-}
+struct NotificationItem;
+}  // namespace message_center
 
 class NotificationImageRetainer;
+
+// The Notification Toast element name in the toast XML.
+extern const char kNotificationToastElement[];
+
+// The Notification Launch attribute name in the toast XML.
+extern const char kNotificationLaunchAttribute[];
 
 // Builds XML-based notification templates for displaying a given notification
 // in the Windows Action Center.
@@ -38,6 +46,7 @@ class NotificationTemplateBuilder {
   // Builds the notification template for the given |notification|.
   static std::unique_ptr<NotificationTemplateBuilder> Build(
       NotificationImageRetainer* notification_image_retainer,
+      const std::string& launch_attribute,
       const std::string& profile_id,
       const message_center::Notification& notification);
 
@@ -61,9 +70,9 @@ class NotificationTemplateBuilder {
   // Formats the |origin| for display in the notification template.
   std::string FormatOrigin(const GURL& origin) const;
 
-  // Writes the <toast> element with the |notification_id| as the launch string.
+  // Writes the <toast> element with a given |launch_attribute|.
   // Also closes the |xml_writer_| for writing as the toast is now complete.
-  void StartToastElement(const std::string& notification_id,
+  void StartToastElement(const std::string& launch_attribute,
                          const message_center::Notification& notification);
   void EndToastElement();
 
@@ -79,8 +88,13 @@ class NotificationTemplateBuilder {
   // ATTRIBUTION then |content| is treated as the source that the notification
   // is attributed to.
   void WriteTextElement(const std::string& content, TextType text_type);
+
+  // Writes the <text> element containing the list entries.
+  void WriteItems(const std::vector<message_center::NotificationItem>& items);
+
   // Writes the <image> element for the notification icon.
   void WriteIconElement(const message_center::Notification& notification);
+
   // Writes the <image> element for showing a large image within the
   // notification body.
   void WriteLargeImageElement(const message_center::Notification& notification);

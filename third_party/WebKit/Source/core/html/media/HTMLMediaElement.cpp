@@ -129,7 +129,8 @@ using DocumentElementSetMap =
 namespace {
 
 constexpr float kMostlyFillViewportThreshold = 0.85f;
-constexpr double kCheckViewportIntersectionIntervalSeconds = 1;
+constexpr TimeDelta kCheckViewportIntersectionInterval =
+    TimeDelta::FromSeconds(1);
 
 // This enum is used to record histograms. Do not reorder.
 enum MediaControlsShow {
@@ -469,7 +470,6 @@ HTMLMediaElement::HTMLMediaElement(const QualifiedName& tag_name,
       last_seek_time_(0),
       previous_progress_time_(std::numeric_limits<double>::max()),
       duration_(std::numeric_limits<double>::quiet_NaN()),
-      last_time_update_event_wall_time_(0),
       last_time_update_event_media_time_(
           std::numeric_limits<double>::quiet_NaN()),
       default_playback_start_position_(0),
@@ -720,14 +720,14 @@ void HTMLMediaElement::ScheduleTextTrackResourceLoad() {
   pending_action_flags_ |= kLoadTextTrackResource;
 
   if (!load_timer_.IsActive())
-    load_timer_.StartOneShot(0, BLINK_FROM_HERE);
+    load_timer_.StartOneShot(TimeDelta(), BLINK_FROM_HERE);
 }
 
 void HTMLMediaElement::ScheduleNextSourceChild() {
   // Schedule the timer to try the next <source> element WITHOUT resetting state
   // ala invokeLoadAlgorithm.
   pending_action_flags_ |= kLoadMediaResource;
-  load_timer_.StartOneShot(0, BLINK_FROM_HERE);
+  load_timer_.StartOneShot(TimeDelta(), BLINK_FROM_HERE);
 }
 
 void HTMLMediaElement::ScheduleEvent(const AtomicString& event_name) {
@@ -1289,7 +1289,7 @@ void HTMLMediaElement::DeferLoad() {
   ChangeNetworkStateFromLoadingToIdle();
   // 3. Queue a task to set the element's delaying-the-load-event
   // flag to false. This stops delaying the load event.
-  deferred_load_timer_.StartOneShot(0, BLINK_FROM_HERE);
+  deferred_load_timer_.StartOneShot(TimeDelta(), BLINK_FROM_HERE);
   // 4. Wait for the task to be run.
   deferred_load_state_ = kWaitingForStopDelayingLoadEventTask;
   // Continued in executeDeferredLoad().
@@ -1464,7 +1464,8 @@ void HTMLMediaElement::StartProgressEventTimer() {
 
   previous_progress_time_ = WTF::CurrentTime();
   // 350ms is not magic, it is in the spec!
-  progress_event_timer_.StartRepeating(0.350, BLINK_FROM_HERE);
+  progress_event_timer_.StartRepeating(TimeDelta::FromMilliseconds(350),
+                                       BLINK_FROM_HERE);
 }
 
 void HTMLMediaElement::WaitForSourceChange() {
@@ -2526,7 +2527,8 @@ double HTMLMediaElement::EffectiveMediaVolume() const {
 
 // The spec says to fire periodic timeupdate events (those sent while playing)
 // every "15 to 250ms", we choose the slowest frequency
-static const double kMaxTimeupdateEventFrequency = 0.25;
+static const TimeDelta kMaxTimeupdateEventFrequency =
+    TimeDelta::FromMilliseconds(250);
 
 void HTMLMediaElement::StartPlaybackProgressTimer() {
   if (playback_progress_timer_.IsActive())
@@ -2562,7 +2564,7 @@ void HTMLMediaElement::PlaybackProgressTimerFired(TimerBase*) {
 void HTMLMediaElement::ScheduleTimeupdateEvent(bool periodic_event) {
   // Per spec, consult current playback position to check for changing time.
   double media_time = CurrentPlaybackPosition();
-  double now = WTF::CurrentTime();
+  TimeTicks now = TimeTicks::Now();
 
   bool have_not_recently_fired_timeupdate =
       (now - last_time_update_event_wall_time_) >= kMaxTimeupdateEventFrequency;
@@ -2603,7 +2605,7 @@ void HTMLMediaElement::AudioTrackChanged(AudioTrack* track) {
     media_source_->OnTrackChanged(track);
 
   if (!audio_tracks_timer_.IsActive())
-    audio_tracks_timer_.StartOneShot(0, BLINK_FROM_HERE);
+    audio_tracks_timer_.StartOneShot(TimeDelta(), BLINK_FROM_HERE);
 }
 
 void HTMLMediaElement::AudioTracksTimerFired(TimerBase*) {
@@ -4109,7 +4111,7 @@ void HTMLMediaElement::AudioSourceProviderImpl::Trace(blink::Visitor* visitor) {
 void HTMLMediaElement::ActivateViewportIntersectionMonitoring(bool activate) {
   if (activate && !check_viewport_intersection_timer_.IsActive()) {
     check_viewport_intersection_timer_.StartRepeating(
-        kCheckViewportIntersectionIntervalSeconds, BLINK_FROM_HERE);
+        kCheckViewportIntersectionInterval, BLINK_FROM_HERE);
   } else if (!activate) {
     check_viewport_intersection_timer_.Stop();
   }

@@ -5409,6 +5409,9 @@ should be able to be added at any place in this file.
 </action>
 
 <action name="Hotword.HotwordTrigger">
+  <obsolete>
+    Deprecated as of 10/2017. Feature removed with crbug/761426.
+  </obsolete>
   <owner>amistry@chromium.org</owner>
   <owner>rlp@chromium.org</owner>
   <owner>somast@chromium.org</owner>
@@ -5471,6 +5474,16 @@ should be able to be added at any place in this file.
   <description>
     The user triggered an event related to the Chrome Home menu header
     in-product help. See
+    //components/feature_engagement/README.md#Configuring-UMA for details.
+  </description>
+</action>
+
+<action name="InProductHelp.NotifyEvent.IPH_ChromeHomePullToRefresh">
+  <owner>twellington@chromium.org</owner>
+  <owner>mdjones@chromium.org</owner>
+  <description>
+    The user triggered an event related to the Chrome Home in-product help that
+    is shown after a pull-to-refresh. See
     //components/feature_engagement/README.md#Configuring-UMA for details.
   </description>
 </action>
@@ -5660,6 +5673,16 @@ should be able to be added at any place in this file.
   </description>
 </action>
 
+<action name="InProductHelp.NotifyUsedEvent.IPH_ChromeHomePullToRefresh">
+  <owner>twellington@chromium.org</owner>
+  <owner>mdjones@chromium.org</owner>
+  <description>
+    The user triggered a used event related to the Chrome Home in-product help
+    that is shown after a pull-to-refresh. See
+    //components/feature_engagement/README.md#Configuring-UMA for details.
+  </description>
+</action>
+
 <action name="InProductHelp.NotifyUsedEvent.IPH_ContextualSearch">
   <obsolete>
     Replaced with InProductHelp.NotifyUsedEvent.IPH_ContextualSearchWebSearch.
@@ -5843,6 +5866,17 @@ should be able to be added at any place in this file.
     The feature engagement tracker tried to determine whether the Chrome Home
     menu header in-product help should be shown to the user. See
     //components/feature_engagement/README.md#Configuring-UMA for details.
+  </description>
+</action>
+
+<action name="InProductHelp.ShouldTriggerHelpUI.IPH_ChromeHomePullToRefresh">
+  <owner>twellington@chromium.org</owner>
+  <owner>mdjones@chromium.org</owner>
+  <description>
+    The feature engagement tracker tried to determine whether the Chrome Home
+    in-product help that is shown after a pull-to-refresh should be shown to the
+    user. See //components/feature_engagement/README.md#Configuring-UMA for
+    details.
   </description>
 </action>
 
@@ -6071,6 +6105,17 @@ should be able to be added at any place in this file.
 </action>
 
 <action
+    name="InProductHelp.ShouldTriggerHelpUIResult.NotTriggered.IPH_ChromeHomePullToRefresh">
+  <owner>twellington@chromium.org</owner>
+  <owner>mdjones@chromium.org</owner>
+  <description>
+    A pull-to-refresh that could have triggered the Chrome Home in-product help
+    did not. See //components/feature_engagement/README.md#Configuring-UMA for
+    details.
+  </description>
+</action>
+
+<action
     name="InProductHelp.ShouldTriggerHelpUIResult.NotTriggered.IPH_ContextualSearch">
   <obsolete>
     Replaced with
@@ -6289,6 +6334,16 @@ should be able to be added at any place in this file.
 </action>
 
 <action
+    name="InProductHelp.ShouldTriggerHelpUIResult.Triggered.IPH_ChromeHomePullToRefresh">
+  <owner>twellington@chromium.org</owner>
+  <owner>mdjones@chromium.org</owner>
+  <description>
+    A pull-to-refresh triggered the Chrome Home in-product help. See
+    //components/feature_engagement/README.md#Configuring-UMA for details.
+  </description>
+</action>
+
+<action
     name="InProductHelp.ShouldTriggerHelpUIResult.Triggered.IPH_ContextualSearch">
   <obsolete>
     Replaced with
@@ -6486,6 +6541,17 @@ should be able to be added at any place in this file.
   <description>
     A user action would have triggered the Chrome Home menu header in-product
     help, but the feature was configured for tracking only. See
+    //components/feature_engagement/README.md#Configuring-UMA for details.
+  </description>
+</action>
+
+<action
+    name="InProductHelp.ShouldTriggerHelpUIResult.WouldHaveTriggered.IPH_ChromeHomePullToRefresh">
+  <owner>twellington@chromium.org</owner>
+  <owner>mdjones@chromium.org</owner>
+  <description>
+    A pull-to-refresh would have triggered the Chrome Home in-product help, but
+    the feature was configured for tracking only. See
     //components/feature_engagement/README.md#Configuring-UMA for details.
   </description>
 </action>
@@ -16844,6 +16910,15 @@ should be able to be added at any place in this file.
   </description>
 </action>
 
+<action name="Signin_SigninNewAccount_FromNTPContentSuggestions">
+  <owner>bsazonov@chromium.org</owner>
+  <description>
+    Recorded on sign in start from access point
+    signin_metrics::AccessPoint::ACCESS_POINT_NTP_CONTENT_SUGGESTIONS, with a
+    new account.
+  </description>
+</action>
+
 <action name="Signin_SigninNewAccount_FromRecentTabs">
   <owner>jlebel@chromium.org</owner>
   <description>
@@ -16874,6 +16949,15 @@ should be able to be added at any place in this file.
     Recorded on sign in start from access point
     signin_metrics::AccessPoint::ACCESS_POINT_BOOKMARK_MANAGER, using another
     account than the default one.
+  </description>
+</action>
+
+<action name="Signin_SigninNotDefault_FromNTPContentSuggestions">
+  <owner>bsazonov@chromium.org</owner>
+  <description>
+    Recorded on sign in start from access point
+    signin_metrics::AccessPoint::ACCESS_POINT_NTP_CONTENT_SUGGESTIONS, using
+    another account than the default one.
   </description>
 </action>
 
@@ -16919,6 +17003,15 @@ should be able to be added at any place in this file.
   <description>
     Recorded on sign in start from access point
     signin_metrics::AccessPoint::ACCESS_POINT_BOOKMARK_MANAGER, using the
+    default account.
+  </description>
+</action>
+
+<action name="Signin_SigninWithDefault_FromNTPContentSuggestions">
+  <owner>bsazonov@chromium.org</owner>
+  <description>
+    Recorded on sign in start from access point
+    signin_metrics::AccessPoint::ACCESS_POINT_NTP_CONTENT_SUGGESTIONS, using the
     default account.
   </description>
 </action>

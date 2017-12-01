@@ -363,7 +363,7 @@ void PerformanceBase::AddResourceTiming(const ResourceTimingInfo& info) {
 
   ResourceLoadTiming* last_redirect_timing =
       redirect_chain.back().GetResourceLoadTiming();
-  DCHECK(last_redirect_timing);
+  CHECK(last_redirect_timing);
   double last_redirect_end_time = last_redirect_timing->ReceiveHeadersEnd();
 
   PerformanceEntry* entry = PerformanceResourceTiming::Create(
@@ -548,7 +548,7 @@ bool PerformanceBase::HasObserverFor(
 
 void PerformanceBase::ActivateObserver(PerformanceObserver& observer) {
   if (active_observers_.IsEmpty())
-    deliver_observations_timer_.StartOneShot(0, BLINK_FROM_HERE);
+    deliver_observations_timer_.StartOneShot(TimeDelta(), BLINK_FROM_HERE);
 
   active_observers_.insert(&observer);
 }

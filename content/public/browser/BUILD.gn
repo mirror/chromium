@@ -115,8 +115,10 @@ source_set("browser_sources") {
     "download_manager.h",
     "download_manager_delegate.cc",
     "download_manager_delegate.h",
+    "download_request_utils.h",
     "download_save_info.cc",
     "download_save_info.h",
+    "download_source.h",
     "download_url_parameters.cc",
     "download_url_parameters.h",
     "favicon_status.cc",
@@ -246,6 +248,7 @@ source_set("browser_sources") {
     "service_worker_usage_info.h",
     "session_storage_namespace.h",
     "session_storage_usage_info.h",
+    "shared_worker_service.h",
     "site_instance.h",
     "speech_recognition_event_listener.h",
     "speech_recognition_manager.h",
@@ -378,6 +381,8 @@ source_set("browser_sources") {
     sources += [
       "desktop_capture.cc",
       "desktop_capture.h",
+      "webrtc_log.cc",
+      "webrtc_log.h",
     ]
     deps += [ "//third_party/webrtc/modules/desktop_capture" ]
   }

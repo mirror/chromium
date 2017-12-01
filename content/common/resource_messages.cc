@@ -83,8 +83,7 @@ void ParamTraits<net::SSLInfo>::Write(base::Pickle* m, const param_type& p) {
   WriteParam(m, p.public_key_hashes);
   WriteParam(m, p.pinning_failure_log);
   WriteParam(m, p.signed_certificate_timestamps);
-  WriteParam(m, p.ct_compliance_details_available);
-  WriteParam(m, p.ct_cert_policy_compliance);
+  WriteParam(m, p.ct_policy_compliance);
   WriteParam(m, p.ocsp_result.response_status);
   WriteParam(m, p.ocsp_result.revocation_status);
 }
@@ -113,8 +112,7 @@ bool ParamTraits<net::SSLInfo>::Read(const base::Pickle* m,
          ReadParam(m, iter, &r->public_key_hashes) &&
          ReadParam(m, iter, &r->pinning_failure_log) &&
          ReadParam(m, iter, &r->signed_certificate_timestamps) &&
-         ReadParam(m, iter, &r->ct_compliance_details_available) &&
-         ReadParam(m, iter, &r->ct_cert_policy_compliance) &&
+         ReadParam(m, iter, &r->ct_policy_compliance) &&
          ReadParam(m, iter, &r->ocsp_result.response_status) &&
          ReadParam(m, iter, &r->ocsp_result.revocation_status);
 }
@@ -185,11 +183,11 @@ void ParamTraits<storage::DataElement>::Write(base::Pickle* m,
       break;
     }
     case storage::DataElement::TYPE_DATA_PIPE: {
-      blink::mojom::SizeGetterPtr size_getter;
-      WriteParam(
-          m,
-          const_cast<param_type&>(p).ReleaseDataPipe(&size_getter).release());
-      WriteParam(m, size_getter.PassInterface().PassHandle().release());
+      WriteParam(m,
+                 const_cast<network::mojom::DataPipeGetterPtr&>(p.data_pipe())
+                     .PassInterface()
+                     .PassHandle()
+                     .release());
       break;
     }
     case storage::DataElement::TYPE_UNKNOWN: {
@@ -291,17 +289,13 @@ bool ParamTraits<storage::DataElement>::Read(const base::Pickle* m,
       return false;
     }
     case storage::DataElement::TYPE_DATA_PIPE: {
-      mojo::DataPipeConsumerHandle data_pipe;
-      blink::mojom::SizeGetterPtr size_getter;
-      if (!ReadParam(m, iter, &data_pipe))
-        return false;
+      network::mojom::DataPipeGetterPtr data_pipe_getter;
       mojo::MessagePipeHandle message_pipe;
       if (!ReadParam(m, iter, &message_pipe))
         return false;
-      size_getter.Bind(blink::mojom::SizeGetterPtrInfo(
+      data_pipe_getter.Bind(network::mojom::DataPipeGetterPtrInfo(
           mojo::ScopedMessagePipeHandle(message_pipe), 0u));
-      r->SetToDataPipe(mojo::ScopedDataPipeConsumerHandle(data_pipe),
-                       std::move(size_getter));
+      r->SetToDataPipe(std::move(data_pipe_getter));
       return true;
     }
     case storage::DataElement::TYPE_UNKNOWN: {

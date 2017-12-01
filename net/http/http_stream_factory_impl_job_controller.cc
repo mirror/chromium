@@ -1153,6 +1153,10 @@ HttpStreamFactoryImpl::JobController::GetAlternativeServiceInfoInternal(
     QuicServerId server_id(mapped_origin, request_info.privacy_mode);
 
     HostPortPair destination(alternative_service_info.host_port_pair());
+    if (server_id.host() != destination.host() &&
+        !session_->params().quic_allow_remote_alt_svc) {
+      continue;
+    }
     ignore_result(ApplyHostMappingRules(original_url, &destination));
 
     if (session_->quic_stream_factory()->CanUseExistingSession(server_id,
@@ -1312,6 +1316,8 @@ int HttpStreamFactoryImpl::JobController::ReconsiderProxyAfterError(Job* job,
     // Abandon all Jobs and start over.
     job_bound_ = false;
     bound_job_ = nullptr;
+    main_job_is_resumed_ = false;
+    main_job_is_blocked_ = false;
     alternative_job_.reset();
     main_job_.reset();
     next_state_ = STATE_RESOLVE_PROXY_COMPLETE;

@@ -203,6 +203,10 @@ TEST_F('CrExtensionsDetailViewTest', 'Layout', function() {
   this.runMochaTest(extension_detail_view_tests.TestNames.Layout);
 });
 
+TEST_F('CrExtensionsDetailViewTest', 'LayoutSource', function() {
+  this.runMochaTest(extension_detail_view_tests.TestNames.LayoutSource);
+});
+
 TEST_F(
     'CrExtensionsDetailViewTest', 'ClickableElements', function() {
       this.runMochaTest(
@@ -503,8 +507,14 @@ TEST_F('CrExtensionsPackDialogTest', 'PackWarning', function() {
 
 var CrExtensionsOptionsDialogTest = class extends CrExtensionsBrowserTest {
   /** @override */
+  testGenPreamble() {
+    GEN('  InstallExtensionWithInPageOptions();');
+  }
+
+  /** @override */
   get extraLibraries() {
     return super.extraLibraries.concat([
+      '../settings/test_util.js',
       'extension_options_dialog_test.js',
     ]);
   }

@@ -172,12 +172,6 @@ using ::testing::_;
 
 namespace blink {
 
-#if defined(THREAD_SANITIZER)
-#define DISABLE_ON_TSAN(test_name) DISABLED_##test_name
-#else
-#define DISABLE_ON_TSAN(test_name) test_name
-#endif  // defined(THREAD_SANITIZER)
-
 ::std::ostream& operator<<(::std::ostream& os, const WebFloatSize& size) {
   return os << "WebFloatSize: [" << size.width << ", " << size.height << "]";
 }
@@ -928,6 +922,38 @@ TEST_F(WebFrameCSSCallbackTest, DisplayNone) {
       "s.style.display = 'none';");
   EXPECT_EQ(4, UpdateCount())
       << "Undisplaying the span directly should produce another callback.";
+  EXPECT_THAT(MatchedSelectors(), ElementsAre());
+}
+
+TEST_F(WebFrameCSSCallbackTest, DisplayContents) {
+  LoadHTML("<div style='display:contents'><span></span></div>");
+
+  Vector<WebString> selectors(1u, WebString::FromUTF8("span"));
+  Doc().WatchCSSSelectors(WebVector<WebString>(selectors));
+  frame_->View()->UpdateAllLifecyclePhases();
+  RunPendingTasks();
+
+  EXPECT_EQ(1, UpdateCount()) << "Match elements in display:contents trees.";
+  EXPECT_THAT(MatchedSelectors(), ElementsAre("span"));
+
+  ExecuteScript(
+      "s = document.querySelector('span');"
+      "s.style.display = 'contents';");
+  EXPECT_EQ(1, UpdateCount()) << "Match elements which are display:contents.";
+  EXPECT_THAT(MatchedSelectors(), ElementsAre("span"));
+
+  ExecuteScript(
+      "d = document.querySelector('div');"
+      "d.style.display = 'block';");
+  EXPECT_EQ(1, UpdateCount())
+      << "Still match display:contents after parent becomes display:block.";
+  EXPECT_THAT(MatchedSelectors(), ElementsAre("span"));
+
+  ExecuteScript(
+      "d = document.querySelector('div');"
+      "d.style.display = 'none';");
+  EXPECT_EQ(2, UpdateCount())
+      << "No longer matched when parent becomes display:none.";
   EXPECT_THAT(MatchedSelectors(), ElementsAre());
 }
 
@@ -3854,7 +3880,7 @@ TEST_P(ParameterizedWebFrameTest, DontZoomInOnFocusedInTouchAction) {
   // Focus the first textbox that's in a touch-action: pan-x ancestor, this
   // shouldn't cause an autozoom since pan-x disables pinch-zoom.
   web_view_helper.WebView()->AdvanceFocus(false);
-  web_view_helper.WebView()->ScrollFocusedEditableElementIntoRect(WebRect());
+  web_view_helper.WebView()->ScrollFocusedEditableElementIntoView();
   EXPECT_EQ(
       web_view_helper.WebView()->FakePageScaleAnimationPageScaleForTesting(),
       0);
@@ -3866,7 +3892,7 @@ TEST_P(ParameterizedWebFrameTest, DontZoomInOnFocusedInTouchAction) {
   // Focus the second textbox that's in a touch-action: manipulation ancestor,
   // this should cause an autozoom since it allows pinch-zoom.
   web_view_helper.WebView()->AdvanceFocus(false);
-  web_view_helper.WebView()->ScrollFocusedEditableElementIntoRect(WebRect());
+  web_view_helper.WebView()->ScrollFocusedEditableElementIntoView();
   EXPECT_GT(
       web_view_helper.WebView()->FakePageScaleAnimationPageScaleForTesting(),
       initial_scale);
@@ -3879,7 +3905,7 @@ TEST_P(ParameterizedWebFrameTest, DontZoomInOnFocusedInTouchAction) {
   // should cause an autozoom since it's seperated from the node with the
   // touch-action by an overflow:scroll element.
   web_view_helper.WebView()->AdvanceFocus(false);
-  web_view_helper.WebView()->ScrollFocusedEditableElementIntoRect(WebRect());
+  web_view_helper.WebView()->ScrollFocusedEditableElementIntoView();
   EXPECT_GT(
       web_view_helper.WebView()->FakePageScaleAnimationPageScaleForTesting(),
       initial_scale);
@@ -10501,7 +10527,13 @@ TEST_P(ParameterizedWebFrameTest, OrientationFrameDetach) {
   web_view_impl->MainFrameImpl()->SendOrientationChangeEvent();
 }
 
-TEST_P(ParameterizedWebFrameTest, DISABLE_ON_TSAN(MaxFramesDetach)) {
+// Macro is not correctly expanded in TEST_P (We cannot use
+// TEST_P(ParameterizedWebFrameTest, MAYBE_MaxFramesDetach for example).
+#if defined(THREAD_SANITIZER)
+TEST_P(ParameterizedWebFrameTest, DISABLED_MaxFramesDetach) {
+#else
+TEST_P(ParameterizedWebFrameTest, MaxFramesDetach) {
+#endif  // defined(THREAD_SANITIZER)
   RegisterMockedHttpURLLoad("max-frames-detach.html");
   FrameTestHelpers::WebViewHelper web_view_helper;
   WebViewImpl* web_view_impl =
@@ -10965,12 +10997,12 @@ TEST_P(ParameterizedWebFrameTest, ChangeResourcePriority) {
   RegisterMockedHttpURLLoad("image_slow_out_of_viewport.pl");
   client.AddExpectedRequest(
       ToKURL("http://internal.test/promote_img_in_viewport_priority.html"),
-      WebURLRequest::kPriorityVeryHigh);
+      WebURLRequest::Priority::kVeryHigh);
   client.AddExpectedRequest(ToKURL("http://internal.test/image_slow.pl"),
-                            WebURLRequest::kPriorityLow);
+                            WebURLRequest::Priority::kLow);
   client.AddExpectedRequest(
       ToKURL("http://internal.test/image_slow_out_of_viewport.pl"),
-      WebURLRequest::kPriorityLow);
+      WebURLRequest::Priority::kLow);
 
   FrameTestHelpers::WebViewHelper helper;
   helper.Initialize(&client);
@@ -10987,7 +11019,8 @@ TEST_P(ParameterizedWebFrameTest, ChangeResourcePriority) {
                         ->AllResources()
                         .at(ToKURL("http://internal.test/image_slow.pl"));
   DCHECK(image);
-  EXPECT_EQ(kResourceLoadPriorityHigh, image->GetResourceRequest().Priority());
+  EXPECT_EQ(ResourceLoadPriority::kHigh,
+            image->GetResourceRequest().Priority());
 
   client.VerifyAllRequests();
 }
@@ -11003,24 +11036,24 @@ TEST_P(ParameterizedWebFrameTest, ScriptPriority) {
   RegisterMockedHttpURLLoad("priorities/injected-async.js");
   RegisterMockedHttpURLLoad("priorities/body.js");
   client.AddExpectedRequest(ToKURL("http://internal.test/script_priority.html"),
-                            WebURLRequest::kPriorityVeryHigh);
+                            WebURLRequest::Priority::kVeryHigh);
   client.AddExpectedRequest(ToKURL("http://internal.test/priorities/defer.js"),
-                            WebURLRequest::kPriorityLow);
+                            WebURLRequest::Priority::kLow);
   client.AddExpectedRequest(ToKURL("http://internal.test/priorities/async.js"),
-                            WebURLRequest::kPriorityLow);
+                            WebURLRequest::Priority::kLow);
   client.AddExpectedRequest(ToKURL("http://internal.test/priorities/head.js"),
-                            WebURLRequest::kPriorityHigh);
+                            WebURLRequest::Priority::kHigh);
   client.AddExpectedRequest(
       ToKURL("http://internal.test/priorities/document-write.js"),
-      WebURLRequest::kPriorityHigh);
+      WebURLRequest::Priority::kHigh);
   client.AddExpectedRequest(
       ToKURL("http://internal.test/priorities/injected.js"),
-      WebURLRequest::kPriorityLow);
+      WebURLRequest::Priority::kLow);
   client.AddExpectedRequest(
       ToKURL("http://internal.test/priorities/injected-async.js"),
-      WebURLRequest::kPriorityLow);
+      WebURLRequest::Priority::kLow);
   client.AddExpectedRequest(ToKURL("http://internal.test/priorities/body.js"),
-                            WebURLRequest::kPriorityHigh);
+                            WebURLRequest::Priority::kHigh);
 
   FrameTestHelpers::WebViewHelper helper;
   helper.InitializeAndLoad(base_url_ + "script_priority.html", &client);
@@ -11258,6 +11291,93 @@ class WebFrameSimTest : public ::testing::WithParamInterface<bool>,
 };
 
 INSTANTIATE_TEST_CASE_P(All, WebFrameSimTest, ::testing::Bool());
+
+TEST_P(WebFrameSimTest, TestScrollFocusedEditableElementIntoView) {
+  WebView().Resize(WebSize(500, 300));
+  WebView().SetDefaultPageScaleLimits(1.f, 4);
+  WebView().EnableFakePageScaleAnimationForTesting(true);
+  WebView().GetPage()->GetSettings().SetTextAutosizingEnabled(false);
+  WebView().GetPage()->GetSettings().SetViewportEnabled(false);
+  WebView().GetSettings()->SetAutoZoomFocusedNodeToLegibleScale(true);
+
+  SimRequest request("https://example.com/test.html", "text/html");
+  LoadURL("https://example.com/test.html");
+  request.Complete(R"HTML(
+      <!DOCTYPE html>
+      <style>
+        ::-webkit-scrollbar {
+          width: 0px;
+          height: 0px;
+        }
+        body {
+          margin: 0px;
+        }
+        input {
+          border: 0;
+          padding: 0;
+          position: absolute;
+          left: 200px;
+          top: 600px;
+          width: 100px;
+          height: 20px;
+        }
+        #content {
+          background: silver;
+          width: 500px;
+          height: 600px;
+        }
+      </style>
+      <div id="content">a</div>
+      <input type="text">
+  )HTML");
+
+  Compositor().BeginFrame();
+
+  WebView().AdvanceFocus(false);
+
+  LocalFrame* frame = ToLocalFrame(WebView().GetPage()->MainFrame());
+  LocalFrameView* frame_view = frame->View();
+  VisualViewport& visual_viewport = frame->GetPage()->GetVisualViewport();
+  FloatRect inputRect(200, 600, 100, 20);
+
+  frame_view->GetScrollableArea()->SetScrollOffset(ScrollOffset(0, 0),
+                                                   kProgrammaticScroll);
+
+  ASSERT_EQ(FloatPoint(), visual_viewport.VisibleRectInDocument().Location());
+
+  WebView().ScrollFocusedEditableElementIntoView();
+
+  EXPECT_EQ(1, WebView().FakePageScaleAnimationPageScaleForTesting());
+
+  frame_view->LayoutViewportScrollableArea()->SetScrollOffset(
+      ToFloatSize(WebView().FakePageScaleAnimationTargetPositionForTesting()),
+      kProgrammaticScroll);
+
+  EXPECT_TRUE(visual_viewport.VisibleRectInDocument().Contains(inputRect));
+
+  // Reset the testing getters.
+  WebView().EnableFakePageScaleAnimationForTesting(true);
+
+  // This input is already in view, this shouldn't cause a scroll.
+  WebView().ScrollFocusedEditableElementIntoView();
+
+  EXPECT_EQ(0, WebView().FakePageScaleAnimationPageScaleForTesting());
+  EXPECT_EQ(IntPoint(),
+            WebView().FakePageScaleAnimationTargetPositionForTesting());
+
+  // Now resize the visual viewport so that the input box is no longer in view
+  // (e.g. a keyboard is overlayed).
+  WebView().ResizeVisualViewport(IntSize(200, 100));
+  ASSERT_FALSE(visual_viewport.VisibleRectInDocument().Contains(inputRect));
+
+  WebView().ScrollFocusedEditableElementIntoView();
+  frame_view->GetScrollableArea()->SetScrollOffset(
+      ToFloatSize(WebView().FakePageScaleAnimationTargetPositionForTesting()),
+      kProgrammaticScroll);
+
+  EXPECT_TRUE(visual_viewport.VisibleRectInDocument().Contains(inputRect));
+  EXPECT_EQ(1, WebView().FakePageScaleAnimationPageScaleForTesting());
+}
 
 TEST_P(WebFrameSimTest, ChangeBackgroundColor) {
   SimRequest main_resource("https://example.com/test.html", "text/html");

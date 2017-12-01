@@ -10,7 +10,6 @@
 #include <functional>
 #include <map>
 #include <memory>
-#include <queue>
 #include <set>
 #include <string>
 #include <utility>
@@ -136,7 +135,8 @@ class CONTENT_EXPORT ServiceWorkerVersion
     }
     virtual void OnNoControllees(ServiceWorkerVersion* version) {}
     virtual void OnNoWork(ServiceWorkerVersion* version) {}
-    virtual void OnCachedMetadataUpdated(ServiceWorkerVersion* version) {}
+    virtual void OnCachedMetadataUpdated(ServiceWorkerVersion* version,
+                                         size_t size) {}
 
    protected:
     virtual ~Listener() {}
@@ -166,20 +166,6 @@ class CONTENT_EXPORT ServiceWorkerVersion
   }
   // This also updates |site_for_uma_| when it was Site::OTHER.
   void set_fetch_handler_existence(FetchHandlerExistence existence);
-
-  const std::vector<GURL>& foreign_fetch_scopes() const {
-    return foreign_fetch_scopes_;
-  }
-  void set_foreign_fetch_scopes(const std::vector<GURL>& scopes) {
-    foreign_fetch_scopes_ = scopes;
-  }
-
-  const std::vector<url::Origin>& foreign_fetch_origins() const {
-    return foreign_fetch_origins_;
-  }
-  void set_foreign_fetch_origins(const std::vector<url::Origin>& origins) {
-    foreign_fetch_origins_ = origins;
-  }
 
   base::TimeDelta TimeSinceNoControllees() const {
     return GetTickDuration(no_controllees_time_);
@@ -285,9 +271,6 @@ class CONTENT_EXPORT ServiceWorkerVersion
   bool FinishRequest(int request_id,
                      bool was_handled,
                      base::Time dispatch_event_time);
-
-  void RegisterForeignFetchScopes(const std::vector<GURL>& sub_scopes,
-                                  const std::vector<url::Origin>& origins);
 
   // Finishes an external request that was started by StartExternalRequest().
   // Returns false if there was an error finishing the request: e.g. the request
@@ -406,10 +389,10 @@ class CONTENT_EXPORT ServiceWorkerVersion
   void SimulatePingTimeoutForTesting();
 
   // Used to allow tests to change time for testing.
-  void SetTickClockForTesting(std::unique_ptr<base::TickClock> tick_clock);
+  void SetTickClockForTesting(base::TickClock* tick_clock);
 
   // Used to allow tests to change wall clock for testing.
-  void SetClockForTesting(std::unique_ptr<base::Clock> clock);
+  void SetClockForTesting(base::Clock* clock);
 
   // Returns true if the service worker has work to do: it has pending
   // requests, in-progress streaming URLRequestJobs, or pending start callbacks.
@@ -464,8 +447,6 @@ class CONTENT_EXPORT ServiceWorkerVersion
   FRIEND_TEST_ALL_PREFIXES(ServiceWorkerStallInStoppingTest, DetachThenRestart);
   FRIEND_TEST_ALL_PREFIXES(ServiceWorkerStallInStoppingTest,
                            DetachThenRestartNoCrash);
-  FRIEND_TEST_ALL_PREFIXES(ServiceWorkerVersionTest,
-                           RegisterForeignFetchScopes);
   FRIEND_TEST_ALL_PREFIXES(ServiceWorkerVersionTest, RequestNowTimeout);
   FRIEND_TEST_ALL_PREFIXES(ServiceWorkerVersionTest, RequestNowTimeoutKill);
   FRIEND_TEST_ALL_PREFIXES(ServiceWorkerVersionTest, RequestCustomizedTimeout);
@@ -481,11 +462,13 @@ class CONTENT_EXPORT ServiceWorkerVersion
                 const base::TimeTicks& expiration,
                 TimeoutBehavior timeout_behavior);
     ~RequestInfo();
-    bool operator>(const RequestInfo& other) const;
-    int id;
-    ServiceWorkerMetrics::EventType event_type;
-    base::TimeTicks expiration;
-    TimeoutBehavior timeout_behavior;
+    // Compares |expiration|, or |id| if |expiration| is the same.
+    bool operator<(const RequestInfo& other) const;
+
+    const int id;
+    const ServiceWorkerMetrics::EventType event_type;
+    const base::TimeTicks expiration;
+    const TimeoutBehavior timeout_behavior;
   };
 
   struct PendingRequest {
@@ -499,13 +482,11 @@ class CONTENT_EXPORT ServiceWorkerVersion
     base::Time start_time;
     base::TimeTicks start_time_ticks;
     ServiceWorkerMetrics::EventType event_type;
+    // Points to this request's entry in |request_timeouts_|.
+    std::set<RequestInfo>::iterator timeout_iter;
   };
 
   using ServiceWorkerClients = std::vector<ServiceWorkerClientInfo>;
-  using RequestInfoPriorityQueue =
-      std::priority_queue<RequestInfo,
-                          std::vector<RequestInfo>,
-                          std::greater<RequestInfo>>;
 
   // The timeout timer interval.
   static constexpr base::TimeDelta kTimeoutTimerDelay =
@@ -553,7 +534,9 @@ class CONTENT_EXPORT ServiceWorkerVersion
                          const std::vector<uint8_t>& data) override;
   void ClearCachedMetadata(const GURL& url) override;
 
-  void OnSetCachedMetadataFinished(int64_t callback_id, int result);
+  void OnSetCachedMetadataFinished(int64_t callback_id,
+                                   size_t size,
+                                   int result);
   void OnClearCachedMetadataFinished(int64_t callback_id, int result);
 
   // Message handlers.
@@ -671,8 +654,6 @@ class CONTENT_EXPORT ServiceWorkerVersion
   const GURL script_url_;
   const url::Origin script_origin_;
   const GURL scope_;
-  std::vector<GURL> foreign_fetch_scopes_;
-  std::vector<url::Origin> foreign_fetch_origins_;
   FetchHandlerExistence fetch_handler_existence_;
   // The source of truth for navigation preload state is the
   // ServiceWorkerRegistration. |navigation_preload_state_| is essentially a
@@ -690,6 +671,12 @@ class CONTENT_EXPORT ServiceWorkerVersion
   // Holds in-flight requests, including requests due to outstanding push,
   // fetch, sync, etc. events.
   base::IDMap<std::unique_ptr<PendingRequest>> pending_requests_;
+
+  // Keeps track of in-flight requests for timeout purposes. Requests are sorted
+  // by their expiration time (soonest to expire at the beginning of the
+  // set). The timeout timer periodically checks |request_timeouts_| for entries
+  // that should time out.
+  std::set<RequestInfo> request_timeouts_;
 
   // Container for pending external requests for this service worker.
   // (key, value): (request uuid, request id).
@@ -741,13 +728,6 @@ class CONTENT_EXPORT ServiceWorkerVersion
   // expiration times of finished requests.
   base::TimeTicks max_request_expiration_time_;
 
-  // Keeps track of requests for timeout purposes. Requests are sorted by
-  // their expiration time (soonest to expire on top of the priority queue). The
-  // timeout timer periodically checks |timeout_queue_| for entries that should
-  // time out or have already been fulfilled (i.e., removed from
-  // |pending_requests_|).
-  RequestInfoPriorityQueue timeout_queue_;
-
   bool skip_waiting_ = false;
   bool skip_recording_startup_time_ = false;
   bool force_bypass_cache_for_scripts_ = false;
@@ -769,10 +749,10 @@ class CONTENT_EXPORT ServiceWorkerVersion
   ServiceWorkerStatusCode start_worker_status_ = SERVICE_WORKER_OK;
 
   // The clock used to vend tick time.
-  std::unique_ptr<base::TickClock> tick_clock_;
+  base::TickClock* tick_clock_;
 
   // The clock used for actual (wall clock) time
-  std::unique_ptr<base::Clock> clock_;
+  base::Clock* clock_;
 
   std::unique_ptr<PingController> ping_controller_;
 

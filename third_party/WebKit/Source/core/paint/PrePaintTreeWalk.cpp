@@ -65,10 +65,16 @@ void PrePaintTreeWalk::Walk(LocalFrameView& root_frame) {
   if (NeedsTreeBuilderContextUpdate(root_frame, initial_context))
     GeometryMapper::ClearCache();
 
+#if DCHECK_IS_ON()
+  bool needed_paint_property_update = root_frame.NeedsPaintPropertyUpdate();
+#endif
+
   Walk(root_frame, initial_context);
   paint_invalidator_.ProcessPendingDelayedPaintInvalidations();
 
 #if DCHECK_IS_ON()
+  if (!needed_paint_property_update)
+    return;
   if (VLOG_IS_ON(2) && root_frame.GetLayoutView()) {
     LOG(ERROR) << "PrePaintTreeWalk::Walk(root_frame_view=" << &root_frame
                << ")\nPaintLayer tree:";
@@ -93,8 +99,8 @@ void PrePaintTreeWalk::Walk(LocalFrameView& frame_view,
   // ancestorOverflowLayer does not cross frame boundaries.
   context.ancestor_overflow_paint_layer = nullptr;
   if (context.tree_builder_context) {
-    property_tree_builder_.UpdateProperties(frame_view,
-                                            *context.tree_builder_context);
+    FrameViewPaintPropertyTreeBuilder::Update(frame_view,
+                                              *context.tree_builder_context);
   }
   paint_invalidator_.InvalidatePaint(frame_view,
                                      context.tree_builder_context.get(),
@@ -102,7 +108,7 @@ void PrePaintTreeWalk::Walk(LocalFrameView& frame_view,
 
   if (LayoutView* view = frame_view.GetLayoutView()) {
 #ifndef NDEBUG
-    if (VLOG_IS_ON(3)) {
+    if (VLOG_IS_ON(3) && needs_tree_builder_context_update) {
       LOG(ERROR) << "PrePaintTreeWalk::Walk(frame_view=" << &frame_view
                  << ")\nLayout tree:";
       showLayoutTree(view);
@@ -114,7 +120,9 @@ void PrePaintTreeWalk::Walk(LocalFrameView& frame_view,
     view->AssertSubtreeClearedPaintInvalidationFlags();
 #endif
   }
+
   frame_view.ClearNeedsPaintPropertyUpdate();
+  CompositingLayerPropertyUpdater::Update(frame_view);
 }
 
 static void UpdateAuxiliaryObjectProperties(const LayoutObject& object,
@@ -192,9 +200,10 @@ void PrePaintTreeWalk::WalkInternal(const LayoutObject& object,
   // some of the state computed here.
   UpdateAuxiliaryObjectProperties(object, context);
 
+  Optional<ObjectPaintPropertyTreeBuilder> property_tree_builder;
   if (context.tree_builder_context) {
-    property_tree_builder_.UpdatePropertiesForSelf(
-        object, *context.tree_builder_context);
+    property_tree_builder.emplace(object, *context.tree_builder_context);
+    property_tree_builder->UpdateForSelf();
 
     if (context.tree_builder_context->clip_changed) {
       context.paint_invalidator_context->subtree_flags |=
@@ -206,9 +215,7 @@ void PrePaintTreeWalk::WalkInternal(const LayoutObject& object,
                                      *context.paint_invalidator_context);
 
   if (context.tree_builder_context) {
-    property_tree_builder_.UpdatePropertiesForChildren(
-        object, *context.tree_builder_context);
-
+    property_tree_builder->UpdateForChildren();
     InvalidatePaintLayerOptimizationsIfNeeded(object, context);
   }
 

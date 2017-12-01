@@ -106,6 +106,22 @@ void ThreadDebugger::AsyncTaskFinished(void* task) {
   v8_inspector_->asyncTaskFinished(task);
 }
 
+v8_inspector::V8StackTraceId ThreadDebugger::StoreCurrentStackTrace(
+    const String& description) {
+  return v8_inspector_->storeCurrentStackTrace(
+      ToV8InspectorStringView(description));
+}
+
+void ThreadDebugger::ExternalAsyncTaskStarted(
+    const v8_inspector::V8StackTraceId& parent) {
+  v8_inspector_->externalAsyncTaskStarted(parent);
+}
+
+void ThreadDebugger::ExternalAsyncTaskFinished(
+    const v8_inspector::V8StackTraceId& parent) {
+  v8_inspector_->externalAsyncTaskFinished(parent);
+}
+
 unsigned ThreadDebugger::PromiseRejected(
     v8::Local<v8::Context> context,
     const String& error_message,
@@ -470,7 +486,7 @@ void ThreadDebugger::startRepeatingTimer(
       new Timer<ThreadDebugger>(this, &ThreadDebugger::OnTimer));
   Timer<ThreadDebugger>* timer_ptr = timer.get();
   timers_.push_back(std::move(timer));
-  timer_ptr->StartRepeating(interval, BLINK_FROM_HERE);
+  timer_ptr->StartRepeating(TimeDelta::FromSecondsD(interval), BLINK_FROM_HERE);
 }
 
 void ThreadDebugger::cancelTimer(void* data) {

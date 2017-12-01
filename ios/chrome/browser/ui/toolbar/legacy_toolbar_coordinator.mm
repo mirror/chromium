@@ -4,8 +4,8 @@
 
 #import "ios/chrome/browser/ui/toolbar/legacy_toolbar_coordinator.h"
 
+#import "ios/chrome/browser/ui/toolbar/clean/toolbar_button_updater.h"
 #import "ios/chrome/browser/ui/toolbar/omnibox_focuser.h"
-#import "ios/chrome/browser/ui/toolbar/toolbar_button_updater.h"
 #import "ios/chrome/browser/ui/toolbar/web_toolbar_controller.h"
 #import "ios/chrome/browser/ui/tools_menu/public/tools_menu_constants.h"
 #import "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator.h"
@@ -89,12 +89,12 @@
   _toolbarController = toolbarController;
   // ToolbarController needs to know about whether the tools menu is presented
   // or not, and does so by storing a reference to the coordinator to query.
-  [_toolbarController setToolsMenuStateProvider:_toolsMenuCoordinator];
   if ([_toolbarController
           conformsToProtocol:@protocol(ToolsMenuPresentationProvider)]) {
     _toolsMenuCoordinator.presentationProvider =
         (id<ToolsMenuPresentationProvider>)_toolbarController;
   }
+  [toolbarController start];
 }
 
 - (void)setToolbarDelegate:(id<WebToolbarDelegate>)delegate {
@@ -213,16 +213,23 @@
 
 - (UIView*)snapshotForStackViewWithWidth:(CGFloat)width
                           safeAreaInsets:(UIEdgeInsets)safeAreaInsets {
-  CGRect oldFrame = self.toolbarViewController.view.frame;
+  // The snapshotted view must not be in the view hierarchy, because the code
+  // below temporarily changes the frames of views in order to take the snapshot
+  // in simulated target frame. The frames will be returned to normal after the
+  // snapshot is taken.
+  DCHECK(self.toolbarViewController.view.window == nil);
+
+  CGRect oldFrame = self.toolbarViewController.view.superview.frame;
   CGRect newFrame = oldFrame;
   newFrame.size.width = width;
 
-  self.toolbarViewController.view.frame = newFrame;
+  self.toolbarViewController.view.superview.frame = newFrame;
   [self.toolbarController activateFakeSafeAreaInsets:safeAreaInsets];
+  [self.toolbarViewController.view.superview layoutIfNeeded];
 
   UIView* toolbarSnapshotView = [self snapshotForTabSwitcher];
 
-  self.toolbarViewController.view.frame = oldFrame;
+  self.toolbarViewController.view.superview.frame = oldFrame;
   [self.toolbarController deactivateFakeSafeAreaInsets];
 
   return toolbarSnapshotView;

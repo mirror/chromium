@@ -1016,6 +1016,12 @@ service_manager::InterfaceProvider& LocalFrame::GetInterfaceProvider() {
   return *Client()->GetInterfaceProvider();
 }
 
+AssociatedInterfaceProvider*
+LocalFrame::GetRemoteNavigationAssociatedInterfaces() {
+  DCHECK(Client());
+  return Client()->GetRemoteNavigationAssociatedInterfaces();
+}
+
 LocalFrameClient* LocalFrame::Client() const {
   return static_cast<LocalFrameClient*>(Frame::Client());
 }
@@ -1156,6 +1162,11 @@ void LocalFrame::ForceSynchronousDocumentInstall(
         return true;
       });
   GetDocument()->Parser()->Finish();
+
+  // Upon loading of the page, log PageVisits in UseCounter.
+  KURL url = GetDocument()->Url();
+  if (Client() && Client()->ShouldTrackUseCounter(url))
+    GetPage()->GetUseCounter().DidCommitLoad(url);
 }
 
 }  // namespace blink

@@ -39,7 +39,7 @@ if (use_vaapi) {
     if (use_x11) {
       sources += [ "vaapi/va_x11.sigs" ]
     }
-    if (use_ozone) {
+    if (is_linux) {
       sources += [ "vaapi/va_drm.sigs" ]
     }
     stubs_filename_root = "va_stubs"
@@ -312,12 +312,18 @@ component("gpu") {
     sources += [
                  "va_surface.cc",
                  "va_surface.h",
+                 "vaapi/vaapi_picture_factory.cc",
+                 "vaapi/vaapi_picture_factory.h",
                  "vaapi/vaapi_picture.cc",
                  "vaapi/vaapi_picture.h",
                  "vaapi_jpeg_decode_accelerator.cc",
                  "vaapi_jpeg_decode_accelerator.h",
                  "vaapi_jpeg_decoder.cc",
                  "vaapi_jpeg_decoder.h",
+                 "vaapi_jpeg_encode_accelerator.cc",
+                 "vaapi_jpeg_encode_accelerator.h",
+                 "vaapi_jpeg_encoder.cc",
+                 "vaapi_jpeg_encoder.h",
                  "vaapi_video_decode_accelerator.cc",
                  "vaapi_video_decode_accelerator.h",
                  "vaapi_video_encode_accelerator.cc",
@@ -339,12 +345,16 @@ component("gpu") {
         "vaapi/vaapi_tfp_picture.h",
       ]
     }
-    if (use_ozone) {
-      deps += [ "//ui/ozone" ]
+
+    if (is_linux) {
       sources += [
         "vaapi/vaapi_drm_picture.cc",
         "vaapi/vaapi_drm_picture.h",
       ]
+    }
+
+    if (use_ozone) {
+      deps += [ "//ui/ozone" ]
     }
   }
 

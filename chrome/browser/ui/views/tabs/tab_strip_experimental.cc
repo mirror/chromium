@@ -597,10 +597,11 @@ void TabStripExperimental::TabClosing(const TabDataExperimental* data) {
   */
 }
 
-void TabStripExperimental::TabChanged(const TabDataExperimental* data) {
+void TabStripExperimental::TabChanged(const TabDataExperimental* data,
+                                      TabChangeType change_type) {
   TabExperimental* tab = TabForData(data);
   if (tab)
-    tab->DataUpdated();
+    tab->DataUpdated(change_type);
 }
 
 void TabStripExperimental::TabSelectionChanged(
@@ -1146,7 +1147,7 @@ void TabStripExperimental::SetTabBoundsForDrag(
 void TabStripExperimental::AddMessageLoopObserver() {
   if (!mouse_watcher_.get()) {
     mouse_watcher_ = std::make_unique<views::MouseWatcher>(
-        new views::MouseWatcherViewHost(
+        std::make_unique<views::MouseWatcherViewHost>(
             this, gfx::Insets(0, 0, kTabStripAnimationVSlop, 0)),
         this);
   }
@@ -1375,12 +1376,10 @@ void TabStripExperimental::GenerateIdealBounds() {
         const TabDataExperimental* inner_data =
             top_data->children()[inner_i].get();
         const auto inner_found = tabs_.find(inner_data);
-        if (inner_found == tabs_.end()) {
-          NOTREACHED();
-        } else {
-          inner_found->second->set_ideal_bounds(gfx::Rect(
-              x, kTopPaddingForGroups, tab_width, standard_size.height()));
-        }
+        if (inner_found == tabs_.end())
+          continue;  // Can happen during tab close.
+        inner_found->second->set_ideal_bounds(gfx::Rect(
+            x, kTopPaddingForGroups, tab_width, standard_size.height()));
         x += tab_width + TabSpacingAfter(top_data->children(), inner_i);
       }
 

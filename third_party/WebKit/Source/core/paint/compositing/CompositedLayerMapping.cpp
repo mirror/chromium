@@ -2150,10 +2150,12 @@ void CompositedLayerMapping::PositionOverflowControlsLayers() {
   if (GraphicsLayer* layer = LayerForHorizontalScrollbar()) {
     Scrollbar* h_bar = owning_layer_.GetScrollableArea()->HorizontalScrollbar();
     if (h_bar) {
-      layer->SetPosition(h_bar->FrameRect().Location());
-      layer->SetSize(FloatSize(h_bar->FrameRect().Size()));
+      IntRect frame_rect = h_bar->FrameRect();
+      layer->SetPosition(frame_rect.Location());
+      layer->SetOffsetFromLayoutObject(ToIntSize(frame_rect.Location()));
+      layer->SetSize(FloatSize(frame_rect.Size()));
       if (layer->HasContentsLayer())
-        layer->SetContentsRect(IntRect(IntPoint(), h_bar->FrameRect().Size()));
+        layer->SetContentsRect(IntRect(IntPoint(), frame_rect.Size()));
     }
     layer->SetDrawsContent(h_bar && !layer->HasContentsLayer());
   }
@@ -2161,10 +2163,12 @@ void CompositedLayerMapping::PositionOverflowControlsLayers() {
   if (GraphicsLayer* layer = LayerForVerticalScrollbar()) {
     Scrollbar* v_bar = owning_layer_.GetScrollableArea()->VerticalScrollbar();
     if (v_bar) {
-      layer->SetPosition(v_bar->FrameRect().Location());
-      layer->SetSize(FloatSize(v_bar->FrameRect().Size()));
+      IntRect frame_rect = v_bar->FrameRect();
+      layer->SetPosition(frame_rect.Location());
+      layer->SetOffsetFromLayoutObject(ToIntSize(frame_rect.Location()));
+      layer->SetSize(FloatSize(frame_rect.Size()));
       if (layer->HasContentsLayer())
-        layer->SetContentsRect(IntRect(IntPoint(), v_bar->FrameRect().Size()));
+        layer->SetContentsRect(IntRect(IntPoint(), frame_rect.Size()));
     }
     layer->SetDrawsContent(v_bar && !layer->HasContentsLayer());
   }
@@ -2173,6 +2177,8 @@ void CompositedLayerMapping::PositionOverflowControlsLayers() {
     const IntRect& scroll_corner_and_resizer =
         owning_layer_.GetScrollableArea()->ScrollCornerAndResizerRect();
     layer->SetPosition(FloatPoint(scroll_corner_and_resizer.Location()));
+    layer->SetOffsetFromLayoutObject(
+        ToIntSize(scroll_corner_and_resizer.Location()));
     layer->SetSize(FloatSize(scroll_corner_and_resizer.Size()));
     layer->SetDrawsContent(!scroll_corner_and_resizer.IsEmpty());
   }
@@ -2316,39 +2322,31 @@ void CompositedLayerMapping::UpdateRenderingContext() {
       this, functor, kApplyToAllGraphicsLayers);
 }
 
-struct UpdateShouldFlattenTransformFunctor {
-  void operator()(GraphicsLayer* layer) const {
-    layer->SetShouldFlattenTransform(should_flatten);
-  }
-  bool should_flatten;
-};
-
 void CompositedLayerMapping::UpdateShouldFlattenTransform() {
-  // All CLM-managed layers that could affect a descendant layer should update
-  // their should-flatten-transform value (the other layers' transforms don't
-  // matter here).
-  UpdateShouldFlattenTransformFunctor functor = {
-      !owning_layer_.ShouldPreserve3D()};
-  ApplyToGraphicsLayersMode mode = kApplyToLayersAffectedByPreserve3D;
-  ApplyToGraphicsLayers(this, functor, mode);
+  // TODO(trchen): Simplify logic here.
+  //
+  // The code here is equivalent to applying kApplyToLayersAffectedByPreserve3D
+  // layer with the computed ShouldPreserve3D() value, then disable flattening
+  // on kApplyToChildContainingLayers layers if the current layer has
+  // perspective transform, then again disable flattening on main layer and
+  // scrolling layer if we have scrolling layer. See crbug.com/521768.
+  //
+  // If we toggle flattening back and forth as said above, it will result in
+  // unnecessary redrawing because the compositor doesn't have delayed
+  // invalidation for this flag. See crbug.com/783614.
+  bool is_flat = !owning_layer_.ShouldPreserve3D();
 
-  // Note, if we apply perspective, we have to set should flatten differently
-  // so that the transform propagates to child layers correctly.
-  if (HasChildTransformLayer()) {
-    ApplyToGraphicsLayers(
-        this,
-        [](GraphicsLayer* layer) { layer->SetShouldFlattenTransform(false); },
-        kApplyToChildContainingLayers);
-  }
-
-  // Regardless, mark the graphics layer, scrolling layer and scrolling block
-  // selection layer (if they exist) as not flattening. Having them flatten
-  // causes unclipped render surfaces which cause bugs.
-  // http://crbug.com/521768
-  if (HasScrollingLayer()) {
-    graphics_layer_->SetShouldFlattenTransform(false);
-    scrolling_layer_->SetShouldFlattenTransform(false);
-  }
+  if (GraphicsLayer* layer = ChildTransformLayer())
+    layer->SetShouldFlattenTransform(false);
+  if (GraphicsLayer* layer = ScrollingLayer())
+    layer->SetShouldFlattenTransform(false);
+  graphics_layer_->SetShouldFlattenTransform(is_flat && !HasScrollingLayer());
+  if (GraphicsLayer* layer = ClippingLayer())
+    layer->SetShouldFlattenTransform(is_flat && !HasChildTransformLayer());
+  if (GraphicsLayer* layer = ScrollingContentsLayer())
+    layer->SetShouldFlattenTransform(is_flat && !HasChildTransformLayer());
+  if (GraphicsLayer* layer = ForegroundLayer())
+    layer->SetShouldFlattenTransform(is_flat);
 }
 
 struct AnimatingData {
@@ -3517,28 +3515,26 @@ void CompositedLayerMapping::PaintScrollableArea(
   // frame. For painting frame ScrollableAreas, see
   // PaintLayerCompositor::paintContents.
 
+  // Map context and cull_rect which are in the local space of the scrollbar
+  // to the space of the containing scrollable area in which Scrollbar::Paint()
+  // will paint the scrollbar.
+  auto offset = graphics_layer->OffsetFromLayoutObject();
+  CullRect cull_rect(CullRect(interest_rect), offset);
+  TransformRecorder transform_recorder(
+      context, *graphics_layer,
+      AffineTransform::Translation(-offset.Width(), -offset.Height()));
+
   PaintLayerScrollableArea* scrollable_area = owning_layer_.GetScrollableArea();
   if (graphics_layer == LayerForHorizontalScrollbar()) {
-    if (const Scrollbar* scrollbar = scrollable_area->HorizontalScrollbar()) {
-      ScrollableAreaPainter::PaintCompositedScrollbar(*scrollbar, context,
-                                                      CullRect(interest_rect));
-    }
+    if (const Scrollbar* scrollbar = scrollable_area->HorizontalScrollbar())
+      scrollbar->Paint(context, cull_rect);
   } else if (graphics_layer == LayerForVerticalScrollbar()) {
-    if (const Scrollbar* scrollbar = scrollable_area->VerticalScrollbar()) {
-      ScrollableAreaPainter::PaintCompositedScrollbar(*scrollbar, context,
-                                                      CullRect(interest_rect));
-    }
+    if (const Scrollbar* scrollbar = scrollable_area->VerticalScrollbar())
+      scrollbar->Paint(context, cull_rect);
   } else if (graphics_layer == LayerForScrollCorner()) {
-    // Note that scroll corners always paint into local space, whereas
-    // scrollbars paint in the space of their containing frame.
-    IntPoint scroll_corner_and_resizer_location =
-        scrollable_area->ScrollCornerAndResizerRect().Location();
-    CullRect cull_rect(interest_rect);
-    ScrollableAreaPainter(*scrollable_area)
-        .PaintScrollCorner(context, -scroll_corner_and_resizer_location,
-                           cull_rect);
-    ScrollableAreaPainter(*scrollable_area)
-        .PaintResizer(context, -scroll_corner_and_resizer_location, cull_rect);
+    ScrollableAreaPainter painter(*scrollable_area);
+    painter.PaintScrollCorner(context, IntPoint(), cull_rect);
+    painter.PaintResizer(context, IntPoint(), cull_rect);
   }
 }
 

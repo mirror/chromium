@@ -149,7 +149,7 @@ class CustomWindowTargeter : public aura::WindowTargeter {
       return true;
 
     aura::Window::ConvertPointToTarget(window, surface->window(), &local_point);
-    return surface->HitTestRect(gfx::Rect(local_point, gfx::Size(1, 1)));
+    return surface->HitTest(local_point);
   }
 
  private:
@@ -804,10 +804,8 @@ void ShellSurface::OnSurfaceCommit() {
     // region is empty, then it is non interactive window and won't be
     // activated.
     if (container_ == ash::kShellWindowId_SystemModalContainer) {
-      gfx::Rect hit_test_bounds = GetHitTestBounds();
-
-      // Prevent window from being activated when hit test bounds are empty.
-      bool activatable = activatable_ && !hit_test_bounds.IsEmpty();
+      // Prevent window from being activated when hit test region is empty.
+      bool activatable = activatable_ && HasHitTestRegion();
       if (activatable != CanActivate()) {
         set_can_activate(activatable);
         // Activate or deactivate window if activation state changed.
@@ -909,7 +907,7 @@ bool ShellSurface::CanResize() const {
 
 bool ShellSurface::CanMaximize() const {
   // Shell surfaces in system modal container cannot be maximized.
-  if (container_ == ash::kShellWindowId_SystemModalContainer)
+  if (container_ != ash::kShellWindowId_DefaultContainer)
     return false;
 
   // Non-transient shell surfaces can be maximized.
@@ -974,11 +972,10 @@ views::NonClientFrameView* ShellSurface::CreateNonClientFrameView(
 }
 
 bool ShellSurface::WidgetHasHitTestMask() const {
-  return HasHitTestMask();
+  return true;
 }
 
 void ShellSurface::GetWidgetHitTestMask(gfx::Path* mask) const {
-  DCHECK(WidgetHasHitTestMask());
   GetHitTestMask(mask);
 
   gfx::Point origin = host_window()->bounds().origin();
@@ -1348,7 +1345,7 @@ void ShellSurface::CreateShellSurfaceWidget(ui::WindowShowState show_state) {
   // ShellSurfaces in system modal container are only activatable if input
   // region is non-empty. See OnCommitSurface() for more details.
   if (container_ == ash::kShellWindowId_SystemModalContainer)
-    activatable &= !GetHitTestBounds().IsEmpty();
+    activatable &= HasHitTestRegion();
   params.activatable = activatable ? views::Widget::InitParams::ACTIVATABLE_YES
                                    : views::Widget::InitParams::ACTIVATABLE_NO;
 
@@ -1391,7 +1388,7 @@ void ShellSurface::CreateShellSurfaceWidget(ui::WindowShowState show_state) {
   window_state->set_ignore_keyboard_bounds_change(movement_disabled);
 
   // AutoHide shelf in fullscreen state.
-  window_state->set_hide_shelf_when_fullscreen(false);
+  window_state->SetHideShelfWhenFullscreen(false);
 
   // Fade visibility animations for non-activatable windows.
   if (!activatable_) {

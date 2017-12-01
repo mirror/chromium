@@ -47,8 +47,6 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/ssl/chrome_expect_ct_reporter.h"
-#include "chrome/browser/ui/search/new_tab_page_interceptor_service.h"
-#include "chrome/browser/ui/search/new_tab_page_interceptor_service_factory.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/features.h"
@@ -131,6 +129,9 @@
 
 #if defined(OS_ANDROID)
 #include "content/public/browser/android/content_protocol_handler.h"
+#else
+#include "chrome/browser/ui/search/new_tab_page_interceptor_service.h"
+#include "chrome/browser/ui/search/new_tab_page_interceptor_service_factory.h"
 #endif  // defined(OS_ANDROID)
 
 #if defined(OS_CHROMEOS)
@@ -455,12 +456,14 @@ void ProfileIOData::InitializeOnUIThread(Profile* profile) {
   params->protocol_handler_interceptor =
       protocol_handler_registry->CreateJobInterceptorFactory();
 
+#if !defined(OS_ANDROID)
   NewTabPageInterceptorService* new_tab_interceptor_service =
       NewTabPageInterceptorServiceFactory::GetForProfile(profile);
   if (new_tab_interceptor_service) {
     params->new_tab_page_interceptor =
         new_tab_interceptor_service->CreateInterceptor();
   }
+#endif
 
   params->proxy_config_service = ProxyServiceFactory::CreateProxyConfigService(
       profile->GetProxyConfigTracker());
@@ -572,6 +575,12 @@ void ProfileIOData::InitializeOnUIThread(Profile* profile) {
   incognito_availibility_pref_.Init(
       prefs::kIncognitoModeAvailability, pref_service);
   incognito_availibility_pref_.MoveToThread(io_task_runner);
+
+#if defined(OS_CHROMEOS)
+  account_consistency_mirror_required_pref_.Init(
+      prefs::kAccountConsistencyMirrorRequired, pref_service);
+  account_consistency_mirror_required_pref_.MoveToThread(io_task_runner);
+#endif
 
   // We need to make sure that content initializes its own data structures that
   // are associated with each ResourceContext because we might post this
@@ -1423,6 +1432,9 @@ void ProfileIOData::ShutdownOnUIThread(
   if (chrome_http_user_agent_settings_)
     chrome_http_user_agent_settings_->CleanupOnUIThread();
   incognito_availibility_pref_.Destroy();
+#if defined(OS_CHROMEOS)
+  account_consistency_mirror_required_pref_.Destroy();
+#endif
 
   if (!context_getters->empty()) {
     if (BrowserThread::IsMessageLoopValid(BrowserThread::IO)) {

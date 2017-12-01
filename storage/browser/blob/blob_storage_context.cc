@@ -257,7 +257,7 @@ BlobStorageContext::BlobFlattener::BlobFlattener(
   }
 }
 
-BlobStorageContext::BlobFlattener::~BlobFlattener() {}
+BlobStorageContext::BlobFlattener::~BlobFlattener() = default;
 
 BlobStorageContext::BlobSlice::BlobSlice(const BlobEntry& source,
                                          uint64_t slice_offset,
@@ -354,7 +354,8 @@ BlobStorageContext::BlobSlice::BlobSlice(const BlobEntry& source,
         element->SetToFileSystemUrlRange(
             source_item->filesystem_url(), source_item->offset() + item_offset,
             read_size, source_item->expected_modification_time());
-        data_item = new BlobDataItem(std::move(element));
+        data_item = new BlobDataItem(std::move(element),
+                                     source_item->file_system_context());
         break;
       }
       case DataElement::TYPE_DISK_CACHE_ENTRY: {
@@ -382,7 +383,7 @@ BlobStorageContext::BlobSlice::BlobSlice(const BlobEntry& source,
   }
 }
 
-BlobStorageContext::BlobSlice::~BlobSlice() {}
+BlobStorageContext::BlobSlice::~BlobSlice() = default;
 
 BlobStorageContext::BlobStorageContext()
     : memory_controller_(base::FilePath(), scoped_refptr<base::TaskRunner>()),
@@ -394,7 +395,7 @@ BlobStorageContext::BlobStorageContext(
     : memory_controller_(std::move(storage_directory), std::move(file_runner)),
       ptr_factory_(this) {}
 
-BlobStorageContext::~BlobStorageContext() {}
+BlobStorageContext::~BlobStorageContext() = default;
 
 std::unique_ptr<BlobDataHandle> BlobStorageContext::GetBlobDataFromUUID(
     const std::string& uuid) {

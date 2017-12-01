@@ -9,10 +9,13 @@
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_button.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_configuration.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_constants.h"
+#import "ios/chrome/browser/ui/toolbar/clean/toolbar_tools_menu_button.h"
 #include "ios/chrome/browser/ui/toolbar/toolbar_resource_macros.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #include "ios/chrome/grit/ios_strings.h"
 #include "ios/chrome/grit/ios_theme_resources.h"
+#import "ios/public/provider/chrome/browser/chrome_browser_provider.h"
+#import "ios/public/provider/chrome/browser/images/branded_image_provider.h"
 #include "ui/base/l10n/l10n_util.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -120,18 +123,15 @@ const int styleCount = 2;
   return tabSwitcherGridButton;
 }
 
-- (ToolbarButton*)toolsMenuToolbarButton {
-  int toolsMenuButtonImages[styleCount][TOOLBAR_STATE_COUNT] =
-      TOOLBAR_IDR_TWO_STATE(TOOLS);
-  ToolbarButton* toolsMenuButton = [ToolbarButton
-      toolbarButtonWithImageForNormalState:NativeImage(
-                                               toolsMenuButtonImages[self.style]
-                                                                    [DEFAULT])
-                  imageForHighlightedState:NativeImage(
-                                               toolsMenuButtonImages[self.style]
-                                                                    [PRESSED])
-                     imageForDisabledState:nil];
-  [toolsMenuButton setImageEdgeInsets:UIEdgeInsetsMakeDirected(0, -3, 0, 0)];
+- (ToolbarToolsMenuButton*)toolsMenuToolbarButton {
+  ToolbarControllerStyle style = self.style == NORMAL
+                                     ? ToolbarControllerStyleLightMode
+                                     : ToolbarControllerStyleIncognitoMode;
+  ToolbarToolsMenuButton* toolsMenuButton =
+      [[ToolbarToolsMenuButton alloc] initWithFrame:CGRectZero
+                                              style:style
+                                              small:YES];
+
   toolsMenuButton.accessibilityLabel =
       l10n_util::GetNSString(IDS_IOS_TOOLBAR_SETTINGS);
   return toolsMenuButton;
@@ -193,19 +193,58 @@ const int styleCount = 2;
   return stopButton;
 }
 
-- (ToolbarButton*)starToolbarButton {
-  int starButtonImages[styleCount][TOOLBAR_STATE_COUNT] =
+- (ToolbarButton*)bookmarkToolbarButton {
+  int bookmarkButtonImages[styleCount][TOOLBAR_STATE_COUNT] =
       TOOLBAR_IDR_TWO_STATE(STAR);
-  ToolbarButton* starButton = [ToolbarButton
+  ToolbarButton* bookmarkButton = [ToolbarButton
       toolbarButtonWithImageForNormalState:NativeImage(
-                                               starButtonImages[self.style]
-                                                               [DEFAULT])
+                                               bookmarkButtonImages[self.style]
+                                                                   [DEFAULT])
                   imageForHighlightedState:NativeImage(
-                                               starButtonImages[self.style]
-                                                               [PRESSED])
+                                               bookmarkButtonImages[self.style]
+                                                                   [PRESSED])
                      imageForDisabledState:nil];
-  starButton.accessibilityLabel = l10n_util::GetNSString(IDS_TOOLTIP_STAR);
-  return starButton;
+  bookmarkButton.adjustsImageWhenHighlighted = NO;
+  [bookmarkButton
+      setImage:NativeImage(bookmarkButtonImages[self.style][PRESSED])
+      forState:UIControlStateSelected];
+  bookmarkButton.accessibilityLabel = l10n_util::GetNSString(IDS_TOOLTIP_STAR);
+  return bookmarkButton;
+}
+
+- (ToolbarButton*)voiceSearchButton {
+  NSArray<UIImage*>* images = [self voiceSearchImages];
+  ToolbarButton* voiceSearchButton =
+      [ToolbarButton toolbarButtonWithImageForNormalState:images[0]
+                                 imageForHighlightedState:images[1]
+                                    imageForDisabledState:nil];
+  voiceSearchButton.accessibilityLabel =
+      l10n_util::GetNSString(IDS_IOS_ACCNAME_VOICE_SEARCH);
+  return voiceSearchButton;
+}
+
+- (NSArray<UIImage*>*)voiceSearchImages {
+  // The voice search images can be overridden by the branded image provider.
+  int imageID;
+  if (ios::GetChromeBrowserProvider()
+          ->GetBrandedImageProvider()
+          ->GetToolbarVoiceSearchButtonImageId(&imageID)) {
+    return [NSArray
+        arrayWithObjects:NativeImage(imageID), NativeImage(imageID), nil];
+  }
+  int voiceSearchImages[styleCount][TOOLBAR_STATE_COUNT] =
+      TOOLBAR_IDR_TWO_STATE(VOICE);
+  return [NSArray
+      arrayWithObjects:NativeImage(voiceSearchImages[self.style][DEFAULT]),
+                       NativeImage(voiceSearchImages[self.style][PRESSED]),
+                       nil];
+}
+
+- (NSArray<UIImage*>*)TTSImages {
+  int TTSImages[styleCount][TOOLBAR_STATE_COUNT] = TOOLBAR_IDR_TWO_STATE(TTS);
+  return [NSArray arrayWithObjects:NativeImage(TTSImages[self.style][DEFAULT]),
+                                   NativeImage(TTSImages[self.style][PRESSED]),
+                                   nil];
 }
 
 @end

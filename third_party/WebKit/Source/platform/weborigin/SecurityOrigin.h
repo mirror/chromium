@@ -89,11 +89,12 @@ class PLATFORM_EXPORT SecurityOrigin : public RefCounted<SecurityOrigin> {
   String Protocol() const { return protocol_; }
   String Host() const { return host_; }
   String Domain() const { return domain_; }
-  unsigned short Port() const { return port_; }
 
-  // |port()| will return 0 if the port is the default for an origin. This
-  // method instead returns the effective port, even if it is the default port
-  // (e.g. "http" => 80).
+  // Returns 0 if the effective port of this origin is the default for its
+  // scheme.
+  unsigned short Port() const { return port_; }
+  // Returns the effective port, even if it is the default port for the
+  // scheme (e.g. "http" => 80).
   unsigned short EffectivePort() const { return effective_port_; }
 
   // Returns true if a given URL is secure, based either directly on its
@@ -232,14 +233,16 @@ class PLATFORM_EXPORT SecurityOrigin : public RefCounted<SecurityOrigin> {
   // we shouldTreatURLSchemeAsNoAccess.
   String ToString() const;
   AtomicString ToAtomicString() const;
-  // Same as toString above, but ignores Suborigin, if present. This is
+
+  // Same as ToString(), but ignores Suborigin, if present. This is
   // generally not what you want.
+  //
+  // https://w3c.github.io/webappsec-suborigins/#physical-origin
   String ToPhysicalOriginString() const;
 
-  // Similar to toString(), but does not take into account any factors that
+  // Similar to ToString(), but does not take into account any factors that
   // could make the string return "null".
   String ToRawString() const;
-  AtomicString ToRawAtomicString() const;
 
   // This method checks for equality, ignoring the value of document.domain
   // (and whether it was set) but considering the host. It is used for
@@ -288,13 +291,22 @@ class PLATFORM_EXPORT SecurityOrigin : public RefCounted<SecurityOrigin> {
   void BuildRawString(StringBuilder&, bool include_suborigin) const;
 
   String ToRawStringIgnoreSuborigin() const;
-  static bool DeserializeSuboriginAndProtocolAndHost(const String&,
-                                                     const String&,
-                                                     String&,
-                                                     String&,
-                                                     String&);
+
+  // Parses a serialization of a Suborigin. Returns true if successful with
+  // the results stored in |suborigin|, |scheme| and |host|. Otherwise,
+  // returns false leaving the out parameters untouched.
+  //
+  // https://w3c.github.io/webappsec-suborigins/#serializing
+  static bool DeserializeSuboriginAndProtocolAndHost(
+      const String& scheme_with_suffix,
+      const String& host_with_prefix,
+      String& suborigin,
+      String& scheme,
+      String& host);
 
   bool HasSameSuboriginAs(const SecurityOrigin* other) const;
+
+  bool SerializesAsNull() const;
 
   String protocol_;
   String host_;
@@ -302,7 +314,7 @@ class PLATFORM_EXPORT SecurityOrigin : public RefCounted<SecurityOrigin> {
   Suborigin suborigin_;
   unsigned short port_;
   unsigned short effective_port_;
-  bool is_unique_;
+  const bool is_unique_;
   bool universal_access_;
   bool domain_was_set_in_dom_;
   bool can_load_local_resources_;

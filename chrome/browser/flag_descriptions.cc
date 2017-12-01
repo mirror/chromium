@@ -45,6 +45,9 @@ const char kAppBannersDescription[] =
     "Enable the display of Progressive Web App banners, which prompt a user to "
     "add a web app to their shelf, or other platform-specific equivalent.";
 
+const char kAshSidebarName[] = "Sidebar";
+const char kAshSidebarDescription[] = "Enable the experimental sidebar.";
+
 const char kAsyncImageDecodingName[] = "AsyncImageDecoding";
 const char kAsyncImageDecodingDescription[] =
     "Enables asynchronous decoding of images from raster for web content";
@@ -80,10 +83,6 @@ const char kBlockTabUndersName[] = "Block tab-unders";
 const char kBlockTabUndersDescription[] =
     "Blocks tab-unders in Chrome with some native UI to allow the user to "
     "proceed.";
-
-const char kBrowserSideNavigationName[] = "Enable browser side navigation";
-const char kBrowserSideNavigationDescription[] =
-    "Enable browser side navigation (aka PlzNavigate).";
 
 const char kNavigationMojoResponseName[] = "Navigation response using Mojo";
 const char kNavigationMojoResponseDescription[] =
@@ -367,10 +366,10 @@ const char kEnableDataReductionProxySavingsPromoDescription[] =
     "saved 1 MB of data, then the promo will not be shown. Data Saver must be "
     "enabled for the promo to be shown.";
 
-const char kEnableDesktopPWAWindowingName[] =
-    "Windowing related features for desktop PWAs.";
-const char kEnableDesktopPWAWindowingDescription[] =
-    "Enable experimental windowing features for desktop PWAs.";
+const char kEnableDesktopPWAsName[] = "Desktop PWAs";
+const char kEnableDesktopPWAsDescription[] =
+    "Experimental windowing and install banner treatment for Progressive Web "
+    "Apps on desktop platforms. Implies #enable-experimental-app-banners.";
 
 const char kEnableEnumeratingAudioDevicesName[] =
     "Experimentally enable enumerating audio devices.";
@@ -513,6 +512,12 @@ const char kEnablePixelCanvasRecordingDescription[] =
 const char kEnableTokenBindingName[] = "Token Binding.";
 const char kEnableTokenBindingDescription[] = "Enable Token Binding support.";
 
+extern const char kEnableTouchpadAndWheelScrollLatchingName[] =
+    "Wheel Scroll Latching.";
+extern const char kEnableTouchpadAndWheelScrollLatchingDescription[] =
+    "Wheel scroll latching enforces latching to a single element for the "
+    "duration of a scroll sequence.";
+
 const char kEnableUsernameCorrectionName[] = "Enable username correction";
 const char kEnableUsernameCorrectionDescription[] =
     "While on the pending password state, add an edit button to the bubble so "
@@ -561,7 +566,8 @@ const char kExpensiveBackgroundTimerThrottlingDescription[] =
 
 const char kExperimentalAppBannersName[] = "Experimental app banners";
 const char kExperimentalAppBannersDescription[] =
-    "Enables a new experimental app banner flow and UI";
+    "Enables a new experimental app banner flow and UI. Implies "
+    "#enable-app-banners.";
 
 const char kExperimentalCanvasFeaturesName[] = "Experimental canvas features";
 const char kExperimentalCanvasFeaturesDescription[] =
@@ -578,12 +584,6 @@ const char kExperimentalFullscreenExitUIName[] =
 const char kExperimentalFullscreenExitUIDescription[] =
     "Displays experimental UI to allow mouse and touch input methods to exit "
     "fullscreen mode.";
-
-const char kExperimentalHotwordHardwareName[] =
-    "Simulated hardware 'Ok Google' features";
-const char kExperimentalHotwordHardwareDescription[] =
-    "Enables an experimental version of 'Ok Google' hotword detection features "
-    "that have a hardware dependency.";
 
 const char kExperimentalKeyboardLockUiName[] = "Experimental keyboard lock UI.";
 const char kExperimentalKeyboardLockUiDescription[] =
@@ -866,18 +866,16 @@ const char kNewBookmarkAppsName[] = "The new bookmark app system";
 const char kNewBookmarkAppsDescription[] =
     "Enables the new system for creating bookmark apps.";
 
-const char kNewOmniboxAnswerTypesName[] =
-    "New omnibox answers in suggest types";
-const char kNewOmniboxAnswerTypesDescription[] =
-    "Enables new types of answers in the omnibox suggest drop-down: currency "
-    "conversions, dictionary definitions, sports scores, translations, and "
-    "when is.";
-
 const char kNewRemotePlaybackPipelineName[] =
     "Enable the new remote playback pipeline.";
 const char kNewRemotePlaybackPipelineDescription[] =
     "Enable the new pipeline for playing media element remotely via "
     "RemotePlayback API or native controls.";
+const char kUseSurfaceLayerForVideoName[] =
+    "Enable the use of SurfaceLayer objects for videos.";
+const char kUseSurfaceLayerForVideoDescription[] =
+    "Enable compositing onto a Surface instead of a VideoLayer "
+    "for videos.";
 
 const char kNewUsbBackendName[] = "Enable new USB backend";
 const char kNewUsbBackendDescription[] =
@@ -1231,6 +1229,11 @@ const char kServiceWorkerScriptStreamingDescription[] =
     "message pipe and data pipes, and that is never be blocked on the main "
     "thread.";
 
+const char kServiceWorkerScriptFullCodeCacheName[] =
+    "Service worker script full code cache.";
+const char kServiceWorkerScriptFullCodeCacheDescription[] =
+    "Generate V8 full code cache of Service Worker scripts while installing.";
+
 const char kSettingsWindowName[] = "Show settings in a window";
 const char kSettingsWindowDescription[] =
     "Settings will be shown in a dedicated window instead of as a browser tab.";
@@ -1505,13 +1508,6 @@ const char kV8CacheOptionsDescription[] =
 const char kV8CacheOptionsParse[] = "Cache V8 parser data.";
 const char kV8CacheOptionsCode[] = "Cache V8 compiler data.";
 
-const char kV8CacheStrategiesForCacheStorageName[] =
-    "V8 caching strategy for CacheStorage.";
-const char kV8CacheStrategiesForCacheStorageDescription[] =
-    "Caching strategy of scripts in CacheStorage for the V8 JavaScript engine.";
-const char kV8CacheStrategiesForCacheStorageNormal[] = "Normal";
-const char kV8CacheStrategiesForCacheStorageAggressive[] = "Aggressive";
-
 const char kV8ContextSnapshotName[] = "Use a snapshot to create V8 contexts.";
 const char kV8ContextSnapshotDescription[] =
     "Sets to use a snapshot to create V8 contexts in frame creation.";
@@ -1677,6 +1673,11 @@ const char kChromeHomeOptOutSnackbarDescription[] =
     "Show a snackbar prompting users to take a survey the first time they"
     " opt-out of Chrome Home";
 
+const char kChromeHomePersistentIphName[] = "Chrome Home Persistent Iph";
+const char kChromeHomePersistentIphDescription[] =
+    "Wait to dismiss the Chrome Home IPH until the user inteacts with the "
+    "toolbar or a timer expires.";
+
 const char kChromeHomePersonalizedOmniboxSuggestionsName[] =
     "Chrome Home Personalized Omnibox Suggestions";
 const char kChromeHomePersonalizedOmniboxSuggestionsDescription[] =
@@ -1696,6 +1697,12 @@ const char kChromeHomeBottomNavLabelsName[] =
     "Chrome Home bottom navigation menu item labels.";
 const char kChromeHomeBottomNavLabelsDescription[] =
     "Enables text labels for Chrome Home bottom navigation menu items.";
+
+const char kChromeHomeInactivitySheetExpansionName[] =
+    "Expansion of Chrome Home bottom sheet on startup";
+const char kChromeHomeInactivitySheetExpansionDescription[] =
+    "Expand bottom sheet on startup in Chrome Home after a period of"
+    " inactivity.";
 
 const char kChromeHomeName[] = "Chrome Home";
 const char kChromeHomeDescription[] =
@@ -1946,6 +1953,10 @@ const char kNtpCondensedLayoutDescription[] =
 const char kNtpCondensedTileLayoutName[] = "Condensed NTP tile layout";
 const char kNtpCondensedTileLayoutDescription[] =
     "Show a condensed tile layout on the New Tab Page.";
+
+const char kNtpModernLayoutName[] = "Modern NTP layout";
+const char kNtpModernLayoutDescription[] =
+    "Show a modern layout on the New Tab Page.";
 
 const char kSiteExplorationUiName[] = "Site Exploration UI";
 const char kSiteExplorationUiDescription[] =
@@ -2347,15 +2358,6 @@ const char kTranslateNewUxName[] = "New Translate UX";
 const char kTranslateNewUxDescription[] =
     "Enable the new Translate bubble UX is offered instead of the infobar.";
 
-// Non-Mac ---------------------------------------------------------------------
-
-#else  // !defined(OS_MACOSX)
-
-const char kPermissionPromptPersistenceToggleName[] =
-    "Persistence Toggle in Permission Prompts";
-const char kPermissionPromptPersistenceToggleDescription[] =
-    "Whether to display a persistence toggle in permission prompts.";
-
 #endif
 
 // Chrome OS -------------------------------------------------------------------
@@ -2744,6 +2746,12 @@ const char kWebVrAutopresentFromIntentDescription[] =
     "Allow auto presentation of WebVR content from trusted first-party apps.";
 
 #endif  // OS_ANDROID
+
+#if BUILDFLAG(ENABLE_OPENVR)
+const char kOpenVRName[] = "OpenVR hardware support";
+const char kOpenVRDescription[] =
+    "If enabled, Chrome will use OpenVR devices for VR.";
+#endif  // ENABLE_OPENVR
 
 #endif  // ENABLE_VR
 

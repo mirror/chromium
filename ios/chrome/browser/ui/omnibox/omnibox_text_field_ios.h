@@ -7,7 +7,6 @@
 
 #import <UIKit/UIKit.h>
 
-#include "base/mac/scoped_nsobject.h"
 #include "base/strings/string16.h"
 #import "ios/chrome/browser/ui/omnibox/omnibox_text_field_delegate.h"
 
@@ -16,25 +15,6 @@ typedef enum {
   OMNIBOX_TEXT_FIELD_FADE_STYLE_IN,
   OMNIBOX_TEXT_FIELD_FADE_STYLE_OUT
 } OmniboxTextFieldFadeStyle;
-
-@class OmniboxTextFieldIOS;
-
-@interface LocationBarView : UIView
-
-// Initialize the location bar with the given frame, font, text color, and tint
-// color for omnibox.
-- (instancetype)initWithFrame:(CGRect)frame
-                         font:(UIFont*)font
-                    textColor:(UIColor*)textColor
-                    tintColor:(UIColor*)tintColor NS_DESIGNATED_INITIALIZER;
-
-- (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
-
-- (instancetype)initWithCoder:(NSCoder*)aDecoder NS_UNAVAILABLE;
-
-@property(nonatomic, strong) OmniboxTextFieldIOS* textField;
-
-@end
 
 // UITextField subclass to allow for adjusting borders.
 @interface OmniboxTextFieldIOS : UITextField
@@ -84,19 +64,6 @@ typedef enum {
 // on older version of iOS.
 - (NSString*)markedText;
 
-// Display a placeholder image. There is no iOS concept of placeholder images,
-// circumventing it by using leftView property of UITextField and controlling
-// its visibility programatically.
-- (void)showPlaceholderImage;
-
-// Hide a placeholder image. There is no iOS concept of placeholder images,
-// circumventing it by using leftView property of UITextField and controlling
-// its visibility programatically.
-- (void)hidePlaceholderImage;
-
-// Select which placeholder image to display.
-- (void)setPlaceholderImage:(int)imageId;
-
 // Initial touch on the Omnibox triggers a "pre-edit" state. The current
 // URL is shown without any insertion point. First character typed replaces
 // the URL. A second touch turns on the insertion point. |preEditStaticLabel|
@@ -105,9 +72,6 @@ typedef enum {
 - (void)enterPreEditState;
 - (void)exitPreEditState;
 - (BOOL)isPreEditing;
-
-// Enable or disable the padlock button.
-- (void)enableLeftViewButton:(BOOL)isEnabled;
 
 // Returns the current selected text range as an NSRange.
 - (NSRange)selectedNSRange;
@@ -138,12 +102,11 @@ typedef enum {
 @property(nonatomic, strong) UIColor* selectedTextBackgroundColor;
 @property(nonatomic, strong) UIColor* placeholderTextColor;
 @property(nonatomic, assign) BOOL incognito;
-// UIViewPropertyAnimator for expanding the location bar.
-@property(nonatomic, strong)
-    UIViewPropertyAnimator* omniboxExpanderAnimator API_AVAILABLE(ios(10.0));
-// UIViewPropertyAnimator for contracting the location bar.
-@property(nonatomic, strong)
-    UIViewPropertyAnimator* omniboxContractorAnimator API_AVAILABLE(ios(10.0));
+
+- (void)addExpandOmniboxAnimations:(UIViewPropertyAnimator*)animator
+    API_AVAILABLE(ios(10.0));
+- (void)addContractOmniboxAnimations:(UIViewPropertyAnimator*)animator
+    API_AVAILABLE(ios(10.0));
 
 @end
 

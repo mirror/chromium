@@ -1713,30 +1713,6 @@ const char kVideoCaptureAllowed[] = "hardware.video_capture_enabled";
 // capture devices without prompt.
 const char kVideoCaptureAllowedUrls[] = "hardware.video_capture_allowed_urls";
 
-// A boolean pref that controls the enabled-state of hotword search voice
-// trigger.
-const char kHotwordSearchEnabled[] = "hotword.search_enabled_2";
-
-// A boolean pref that controls the enabled-state of hotword search voice
-// trigger from any screen.
-const char kHotwordAlwaysOnSearchEnabled[] = "hotword.always_on_search_enabled";
-
-// A boolean pref that indicates whether the hotword always-on notification
-// has been seen already.
-const char kHotwordAlwaysOnNotificationSeen[] =
-    "hotword.always_on_notification_seen";
-
-// A boolean pref that controls whether the sound of "Ok, Google" plus a few
-// seconds of audio data before and the spoken query are sent back to be stored
-// in a user's Voice & Audio Activity. Updated whenever the user opens
-// chrome://settings and also polled for every 24 hours.
-const char kHotwordAudioLoggingEnabled[] = "hotword.audio_logging_enabled";
-
-// A string holding the locale information under which Hotword was installed.
-// It is used for comparison since the hotword voice search trigger must be
-// reinstalled to handle a new language.
-const char kHotwordPreviousLanguage[] = "hotword.previous_language";
-
 #if defined(OS_CHROMEOS)
 // Dictionary for transient storage of settings that should go into device
 // settings storage before owner has been assigned.
@@ -2273,6 +2249,10 @@ const char kCloudPolicyOverridesMachinePolicy[] = "policy.cloud_override";
 #if BUILDFLAG(ENABLE_EXTENSIONS)
 // Policy that indicates how to handle animated images.
 const char kAnimationPolicy[] = "settings.a11y.animation_policy";
+
+// A list of URLs (for U2F) or domains (for webauthn) that automatically permit
+// direct attestation of a Security Key.
+const char kSecurityKeyPermitAttestation[] = "securitykey.permit_attestation";
 #endif
 
 const char kBackgroundTracingLastUpload[] = "background_tracing.last_upload";
@@ -2301,6 +2281,9 @@ const char kMediaRouterEnableCloudServices[] =
 // user.
 const char kMediaRouterFirstRunFlowAcknowledged[] =
     "media_router.firstrunflow.acknowledged";
+// Whether or not the user has enabled Media Remoting. Defaults to true.
+const char kMediaRouterMediaRemotingEnabled[] =
+    "media_router.media_remoting.enabled";
 // A list of website origins on which the user has chosen to use tab mirroring.
 const char kMediaRouterTabMirroringSources[] =
     "media_router.tab_mirroring_sources";
@@ -2543,5 +2526,16 @@ const char kTabStatsWindowCountMax[] = "tab_stats.window_count_max";
 
 //  Timestamp of the last time the tab stats daily metrics have been reported.
 const char kTabStatsDailySample[] = "tab_stats.last_daily_sample";
+
+// A list of origins (URLs) to treat as "secure origins" for debugging purposes.
+const char kUnsafelyTreatInsecureOriginAsSecure[] =
+    "unsafely_treat_insecure_origin_as_secure";
+
+// A list of origins (URLs) that specifies opting into --isolate-origins=...
+// (selective Site Isolation).
+const char kIsolateOrigins[] = "site_isolation.isolate_origins";
+
+// Boolean that specifies opting into --site-per-process (full Site Isolation).
+const char kSitePerProcess[] = "site_isolation.site_per_process";
 
 }  // namespace prefs

@@ -202,11 +202,8 @@ class Helper : public EmbeddedWorkerTestHelper {
       : EmbeddedWorkerTestHelper(
             base::FilePath(),
             base::MakeRefCounted<URLLoaderFactoryGetter>()) {
-    mojom::URLLoaderFactoryPtr mock_loader_factory;
-    mojo::MakeStrongBinding(std::make_unique<MockNetworkURLLoaderFactory>(),
-                            MakeRequest(&mock_loader_factory));
     url_loader_factory_getter()->SetNetworkFactoryForTesting(
-        std::move(mock_loader_factory));
+        &mock_url_loader_factory_);
   }
   ~Helper() override = default;
 
@@ -448,6 +445,8 @@ class Helper : public EmbeddedWorkerTestHelper {
   // For ResponseMode::kRedirect.
   GURL redirected_url_;
 
+  MockNetworkURLLoaderFactory mock_url_loader_factory_;
+
   DISALLOW_COPY_AND_ASSIGN(Helper);
 };
 
@@ -476,9 +475,9 @@ std::unique_ptr<ResourceResponseHead> CreateResponseInfoFromServiceWorker() {
 // responding as if a service worker is running in the renderer.
 //
 // ServiceWorkerURLLoaderJobTest is also a ServiceWorkerURLLoaderJob::Delegate.
-// In production code, ServiceWorkerControlleeRequestHandler is the Delegate
-// (for non-"foreign fetch" request interceptions). So this class also basically
-// mocks that part of ServiceWorkerControlleeRequestHandler.
+// In production code, ServiceWorkerControlleeRequestHandler is the Delegate. So
+// this class also basically mocks that part of
+// ServiceWorkerControlleeRequestHandler.
 class ServiceWorkerURLLoaderJobTest
     : public testing::Test,
       public ServiceWorkerURLLoaderJob::Delegate {

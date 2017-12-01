@@ -808,6 +808,68 @@ INSTANTIATE_TEST_CASE_P(Version,
                         QuicNetworkTransactionTest,
                         ::testing::ValuesIn(AllSupportedTransportVersions()));
 
+TEST_P(QuicNetworkTransactionTest, WriteErrorHandshakeConfirmed) {
+  base::HistogramTester histograms;
+  session_params_.origins_to_force_quic_on.insert(
+      HostPortPair::FromString("mail.example.org:443"));
+  crypto_client_stream_factory_.set_handshake_mode(
+      MockCryptoClientStream::CONFIRM_HANDSHAKE);
+
+  MockQuicData mock_quic_data;
+  QuicStreamOffset header_stream_offset = 0;
+  mock_quic_data.AddWrite(
+      ConstructInitialSettingsPacket(1, &header_stream_offset));
+  mock_quic_data.AddWrite(SYNCHRONOUS, ERR_INTERNET_DISCONNECTED);
+  mock_quic_data.AddRead(ASYNC, ERR_IO_PENDING);  // Pause
+  mock_quic_data.AddRead(ASYNC, OK);              // No more data to read
+
+  mock_quic_data.AddSocketDataToFactory(&socket_factory_);
+
+  CreateSession();
+
+  HttpNetworkTransaction trans(DEFAULT_PRIORITY, session_.get());
+  TestCompletionCallback callback;
+  int rv = trans.Start(&request_, callback.callback(), net_log_.bound());
+  EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
+  EXPECT_THAT(callback.WaitForResult(), IsError(ERR_QUIC_PROTOCOL_ERROR));
+
+  histograms.ExpectBucketCount("Net.QuicSession.WriteError",
+                               -ERR_INTERNET_DISCONNECTED, 1);
+  histograms.ExpectBucketCount("Net.QuicSession.WriteError.HandshakeConfirmed",
+                               -ERR_INTERNET_DISCONNECTED, 1);
+}
+
+TEST_P(QuicNetworkTransactionTest, WriteErrorHandshakeConfirmedAsync) {
+  base::HistogramTester histograms;
+  session_params_.origins_to_force_quic_on.insert(
+      HostPortPair::FromString("mail.example.org:443"));
+  crypto_client_stream_factory_.set_handshake_mode(
+      MockCryptoClientStream::CONFIRM_HANDSHAKE);
+
+  MockQuicData mock_quic_data;
+  QuicStreamOffset header_stream_offset = 0;
+  mock_quic_data.AddWrite(
+      ConstructInitialSettingsPacket(1, &header_stream_offset));
+  mock_quic_data.AddWrite(ASYNC, ERR_INTERNET_DISCONNECTED);
+  mock_quic_data.AddRead(ASYNC, ERR_IO_PENDING);  // Pause
+  mock_quic_data.AddRead(ASYNC, OK);              // No more data to read
+
+  mock_quic_data.AddSocketDataToFactory(&socket_factory_);
+
+  CreateSession();
+
+  HttpNetworkTransaction trans(DEFAULT_PRIORITY, session_.get());
+  TestCompletionCallback callback;
+  int rv = trans.Start(&request_, callback.callback(), net_log_.bound());
+  EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
+  EXPECT_THAT(callback.WaitForResult(), IsError(ERR_QUIC_PROTOCOL_ERROR));
+
+  histograms.ExpectBucketCount("Net.QuicSession.WriteError",
+                               -ERR_INTERNET_DISCONNECTED, 1);
+  histograms.ExpectBucketCount("Net.QuicSession.WriteError.HandshakeConfirmed",
+                               -ERR_INTERNET_DISCONNECTED, 1);
+}
+
 TEST_P(QuicNetworkTransactionTest, SocketWatcherEnabled) {
   session_params_.origins_to_force_quic_on.insert(
       HostPortPair::FromString("mail.example.org:443"));
@@ -1155,6 +1217,7 @@ TEST_P(QuicNetworkTransactionTest, QuicProxyWithCert) {
 }
 
 TEST_P(QuicNetworkTransactionTest, AlternativeServicesDifferentHost) {
+  session_params_.quic_allow_remote_alt_svc = true;
   HostPortPair origin("www.example.org", 443);
   HostPortPair alternative("mail.example.org", 443);
 
@@ -2989,6 +3052,7 @@ TEST_P(QuicNetworkTransactionTest, ResetAfterHandshakeConfirmedThenBroken) {
 // This is a regression tests for crbug/731303.
 TEST_P(QuicNetworkTransactionTest,
        ResetPooledAfterHandshakeConfirmedThenBroken) {
+  session_params_.quic_allow_remote_alt_svc = true;
   session_params_.retry_without_alt_svc_on_quic_errors = true;
 
   GURL origin1 = request_.url;
@@ -3101,6 +3165,7 @@ TEST_P(QuicNetworkTransactionTest,
       url::SchemeHostPort(origin2),
       AlternativeService(kProtoQUIC, "www.example.com", 443), expiration,
       supported_versions_);
+
   // First request opens connection to |destination1|
   // with QuicServerId.host() == origin1.host().
   SendRequestAndExpectQuicResponse("hello!");
@@ -3144,6 +3209,7 @@ TEST_P(QuicNetworkTransactionTest,
 // service which uses existing QUIC session if available. If no existing QUIC
 // session can be used, use the first alternative service from the list.
 TEST_P(QuicNetworkTransactionTest, UseExistingAlternativeServiceForQuic) {
+  session_params_.quic_allow_remote_alt_svc = true;
   MockRead http_reads[] = {
       MockRead("HTTP/1.1 200 OK\r\n"),
       MockRead("Alt-Svc: quic=\"foo.example.org:443\", quic=\":444\"\r\n\r\n"),
@@ -3279,6 +3345,7 @@ TEST_P(QuicNetworkTransactionTest, UseExistingQUICAlternativeProxy) {
 // Pool to existing session with matching QuicServerId
 // even if alternative service destination is different.
 TEST_P(QuicNetworkTransactionTest, PoolByOrigin) {
+  session_params_.quic_allow_remote_alt_svc = true;
   MockQuicData mock_quic_data;
   QuicStreamOffset request_header_offset(0);
   QuicStreamOffset response_header_offset(0);
@@ -3343,6 +3410,7 @@ TEST_P(QuicNetworkTransactionTest, PoolByOrigin) {
 // even if origin is different, and even if the alternative service with
 // matching destination is not the first one on the list.
 TEST_P(QuicNetworkTransactionTest, PoolByDestination) {
+  session_params_.quic_allow_remote_alt_svc = true;
   GURL origin1 = request_.url;
   GURL origin2("https://www.example.org/");
   ASSERT_NE(origin1.host(), origin2.host());
@@ -3433,6 +3501,7 @@ TEST_P(QuicNetworkTransactionTest, PoolByDestination) {
 // if this is also the first existing QUIC session.
 TEST_P(QuicNetworkTransactionTest,
        UseSharedExistingAlternativeServiceForQuicWithValidCert) {
+  session_params_.quic_allow_remote_alt_svc = true;
   // Default cert is valid for *.example.org
 
   // HTTP data for request to www.example.org.
@@ -5274,6 +5343,7 @@ class QuicNetworkTransactionWithDestinationTest
 
     HttpNetworkSession::Params session_params;
     session_params.enable_quic = true;
+    session_params.quic_allow_remote_alt_svc = true;
     session_params.quic_supported_versions = supported_versions_;
 
     HttpNetworkSession::Context session_context;

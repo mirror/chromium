@@ -219,12 +219,7 @@ public class BrowserActionActivityTest {
                                     i)));
         }
         Assert.assertNotNull(contextMenuItems.get(5).getDrawable(context));
-        // Vector Drawable is not supported on pre-L so the icon will be null.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Assert.assertNotNull(contextMenuItems.get(6).getDrawable(context));
-        } else {
-            Assert.assertNull(contextMenuItems.get(6).getDrawable(context));
-        }
+        Assert.assertNotNull(contextMenuItems.get(6).getDrawable(context));
         Assert.assertNull(contextMenuItems.get(7).getDrawable(context));
         Assert.assertNull(contextMenuItems.get(8).getDrawable(context));
     }
@@ -519,7 +514,8 @@ public class BrowserActionActivityTest {
             @Override
             public boolean isSatisfied() {
                 return activity2.areTabModelsInitialized()
-                        && activity2.getTabModelSelector().isTabStateInitialized();
+                        && activity2.getTabModelSelector().isTabStateInitialized()
+                        && activity2.getActivityTab() != null;
             }
         });
         String cta2ActivityTabUrl = activity2.getActivityTab().getUrl();

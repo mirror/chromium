@@ -173,7 +173,7 @@ class ResourceDispatcherTest : public testing::Test, public IPC::Sender {
         shared_memory->handle().Duplicate();
     EXPECT_TRUE(duplicate_handle.IsValid());
     EXPECT_TRUE(dispatcher_->OnMessageReceived(ResourceMsg_SetDataBuffer(
-        request_id, duplicate_handle, shared_memory->requested_size(), 0)));
+        request_id, duplicate_handle, shared_memory->requested_size())));
   }
 
   void NotifyDataReceived(int request_id, const std::string& data) {
@@ -398,8 +398,12 @@ class TestResourceDispatcherDelegate : public ResourceDispatcherDelegate {
 
   std::unique_ptr<RequestPeer> OnReceivedResponse(
       std::unique_ptr<RequestPeer> current_peer,
-      const std::string& mime_type,
-      const GURL& url) override {
+      int render_frame_id,
+      const GURL& url,
+      const GURL& referrer,
+      const std::string& method,
+      ResourceType resource_type,
+      const ResourceResponseHead& response_head) override {
     return std::make_unique<WrapperPeer>(std::move(current_peer));
   }
 

@@ -41,9 +41,11 @@ namespace chromeos {
 namespace file_system_provider {
 namespace {
 
-const char kProviderId[] = "mbflcebpggnecokmikipoihdbecnjfoj";
+const ProviderId kProviderId =
+    ProviderId::CreateFromExtensionId("mbflcebpggnecokmikipoihdbecnjfoj");
 const char kDisplayName[] = "Camera Pictures";
-const char kCustomProviderId[] = "custom_provider_id";
+const ProviderId kCustomProviderId =
+    ProviderId::CreateFromNativeId("custom provider id");
 
 // The dot in the file system ID is there in order to check that saving to
 // preferences works correctly. File System ID is used as a key in
@@ -101,9 +103,9 @@ class FileSystemProviderServiceTest : public testing::Test {
     extension_registry_.reset(new extensions::ExtensionRegistry(profile_));
 
     service_.reset(new Service(profile_, extension_registry_.get()));
-    service_->SetDefaultFileSystemFactoryForTesting(
+    service_->SetExtensionFileSystemFactoryForTesting(
         base::Bind(&FakeProvidedFileSystem::Create));
-    extension_ = CreateFakeExtension(kProviderId);
+    extension_ = CreateFakeExtension(kProviderId.GetExtensionId());
 
     registry_ = new FakeRegistry;
     // Passes ownership to the service instance.
@@ -139,7 +141,7 @@ TEST_F(FileSystemProviderServiceTest, RegisterFileSystemFactory) {
       kCustomProviderId,
       base::Bind(&FileSystemProviderServiceTest::CreateCustomFakeFileSystem,
                  base::Unretained(this)));
-  service_->SetDefaultFileSystemFactoryForTesting(
+  service_->SetExtensionFileSystemFactoryForTesting(
       base::Bind(&FileSystemProviderServiceTest::CreateDefaultFakeFileSystem,
                  base::Unretained(this)));
 
@@ -321,7 +323,8 @@ TEST_F(FileSystemProviderServiceTest, UnmountFileSystem_WrongExtensionId) {
   LoggingObserver observer;
   service_->AddObserver(&observer);
 
-  const std::string kWrongExtensionId = "helloworldhelloworldhelloworldhe";
+  const ProviderId kWrongProviderId =
+      ProviderId::CreateFromExtensionId("helloworldhelloworldhelloworldhe");
 
   EXPECT_EQ(base::File::FILE_OK,
             service_->MountFileSystem(
@@ -330,7 +333,7 @@ TEST_F(FileSystemProviderServiceTest, UnmountFileSystem_WrongExtensionId) {
   ASSERT_EQ(1u, service_->GetProvidedFileSystemInfoList().size());
 
   EXPECT_EQ(base::File::FILE_ERROR_NOT_FOUND,
-            service_->UnmountFileSystem(kWrongExtensionId, kFileSystemId,
+            service_->UnmountFileSystem(kWrongProviderId, kFileSystemId,
                                         Service::UNMOUNT_REASON_USER));
   ASSERT_EQ(1u, observer.unmounts.size());
   EXPECT_EQ(base::File::FILE_ERROR_NOT_FOUND, observer.unmounts[0].error());
@@ -395,6 +398,24 @@ TEST_F(FileSystemProviderServiceTest, RestoreFileSystem_OnExtensionLoad) {
   EXPECT_EQ(fake_watcher_.entry_path, restored_watcher_it->second.entry_path);
   EXPECT_EQ(fake_watcher_.recursive, restored_watcher_it->second.recursive);
   EXPECT_EQ(fake_watcher_.last_tag, restored_watcher_it->second.last_tag);
+
+  service_->RemoveObserver(&observer);
+}
+
+TEST_F(FileSystemProviderServiceTest, DoNotRememberNonPersistent) {
+  LoggingObserver observer;
+  service_->AddObserver(&observer);
+
+  EXPECT_FALSE(registry_->file_system_info());
+  EXPECT_FALSE(registry_->watchers());
+
+  MountOptions options(kFileSystemId, kDisplayName);
+  options.persistent = false;
+  EXPECT_EQ(base::File::FILE_OK,
+            service_->MountFileSystem(kProviderId, options));
+  EXPECT_EQ(1u, observer.mounts.size());
+
+  EXPECT_FALSE(registry_->file_system_info());
 
   service_->RemoveObserver(&observer);
 }

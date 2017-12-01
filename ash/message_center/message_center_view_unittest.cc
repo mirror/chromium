@@ -52,7 +52,7 @@ enum CallType { GET_PREFERRED_SIZE, GET_HEIGHT_FOR_WIDTH, LAYOUT };
 class DummyEvent : public ui::Event {
  public:
   DummyEvent() : Event(ui::ET_UNKNOWN, base::TimeTicks(), 0) {}
-  ~DummyEvent() override {}
+  ~DummyEvent() override = default;
 };
 
 /* Instrumented/Mock NotificationView subclass ********************************/
@@ -84,7 +84,7 @@ MockNotificationView::MockNotificationView(MessageViewDelegate* controller,
                                            Test* test)
     : NotificationView(controller, notification), test_(test) {}
 
-MockNotificationView::~MockNotificationView() {}
+MockNotificationView::~MockNotificationView() = default;
 
 gfx::Size MockNotificationView::CalculatePreferredSize() const {
   test_->RegisterCall(GET_PREFERRED_SIZE);
@@ -195,8 +195,6 @@ class MessageCenterViewTest : public AshTestBase,
   void ClickOnNotification(const std::string& notification_id) override;
   void RemoveNotification(const std::string& notification_id,
                           bool by_user) override;
-  std::unique_ptr<ui::MenuModel> CreateMenuModel(
-      const Notification& notification) override;
   void ClickOnNotificationButton(const std::string& notification_id,
                                  int button_index) override;
   void ClickOnNotificationButtonWithReply(const std::string& notification_id,
@@ -237,9 +235,9 @@ class MessageCenterViewTest : public AshTestBase,
   DISALLOW_COPY_AND_ASSIGN(MessageCenterViewTest);
 };
 
-MessageCenterViewTest::MessageCenterViewTest() {}
+MessageCenterViewTest::MessageCenterViewTest() = default;
 
-MessageCenterViewTest::~MessageCenterViewTest() {}
+MessageCenterViewTest::~MessageCenterViewTest() = default;
 
 void MessageCenterViewTest::SetUp() {
   AshTestBase::SetUp();
@@ -378,13 +376,6 @@ void MessageCenterViewTest::RemoveNotification(
 
   message_center_->SetVisibleNotifications(Notifications());
   message_center_view_->OnNotificationRemoved(notification_id, by_user);
-}
-
-std::unique_ptr<ui::MenuModel> MessageCenterViewTest::CreateMenuModel(
-    const Notification& notification) {
-  // For this test, this method should not be invoked.
-  NOTREACHED();
-  return nullptr;
 }
 
 void MessageCenterViewTest::ClickOnNotificationButton(

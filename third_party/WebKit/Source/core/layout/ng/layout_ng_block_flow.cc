@@ -55,6 +55,14 @@ void LayoutNGBlockFlow::UpdateBlockLayout(bool relayout_children) {
 
   // This object has already been positioned in legacy layout by our containing
   // block. Copy the position and place the fragment.
+  //
+  // TODO(kojii): This object is not positioned yet when the containing legacy
+  // layout is not normal flow; e.g., table or flexbox. They lay out children to
+  // determine the overall layout, then move children. In flexbox case,
+  // LayoutLineItems() lays out children, which calls this function. Then later,
+  // ApplyLineItemPosition() changes Location() of the children. See also
+  // NGPhysicalFragment::IsPlacedByLayoutNG(). crbug.com/788590
+  //
   // TODO(crbug.com/781241): LogicalLeft() is not calculated by the
   // containing block until after our layout.
   const LayoutBlock* containing_block = ContainingBlock();
@@ -212,10 +220,8 @@ bool LayoutNGBlockFlow::LocalVisualRectFor(const LayoutObject* layout_object,
   DCHECK(layout_object &&
          (layout_object->IsText() || layout_object->IsLayoutInline()));
   DCHECK(visual_rect);
-  LayoutBlockFlow* block_flow = layout_object->EnclosingNGBlockFlow();
-  if (!block_flow || !block_flow->HasNGInlineNodeData())
-    return false;
-  const NGPhysicalBoxFragment* box_fragment = block_flow->CurrentFragment();
+  const NGPhysicalBoxFragment* box_fragment =
+      layout_object->EnclosingBlockFlowFragment();
   // TODO(kojii): CurrentFragment isn't always available after layout clean.
   // Investigate why.
   if (!box_fragment)

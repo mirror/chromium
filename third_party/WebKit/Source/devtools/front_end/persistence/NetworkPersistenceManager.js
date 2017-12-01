@@ -9,6 +9,7 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
   constructor(workspace) {
     super();
     this._bindingSymbol = Symbol('NetworkPersistenceBinding');
+    this._originalResponseContentPromiseSymbol = Symbol('OriginalResponsePromise');
 
     this._enabledSetting = Common.settings.moduleSetting('persistenceNetworkOverridesEnabled');
     this._enabledSetting.addChangeListener(this._enabledChanged, this);
@@ -27,6 +28,8 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
 
     /** @type {?Workspace.Project} */
     this._activeProject = null;
+
+    this._enabled = false;
 
     Persistence.isolatedFileSystemManager.addEventListener(
         Persistence.IsolatedFileSystemManager.Events.FileSystemRemoved,
@@ -107,6 +110,17 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
   }
 
   /**
+   * @param {!Workspace.UISourceCode} uiSourceCode
+   * @return {?Promise<?string>}
+   */
+  originalContentForUISourceCode(uiSourceCode) {
+    if (!uiSourceCode[this._bindingSymbol])
+      return null;
+    var fileSystemUISourceCode = uiSourceCode[this._bindingSymbol].fileSystem;
+    return fileSystemUISourceCode[this._originalResponseContentPromiseSymbol] || null;
+  }
+
+  /**
    * @return {?Workspace.Project}
    */
   projectForActiveDomain() {
@@ -125,7 +139,10 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
   }
 
   _enabledChanged() {
-    if (this._enabledSetting.get()) {
+    if (this._enabled === this._enabledSetting.get())
+      return;
+    this._enabled = this._enabledSetting.get();
+    if (this._enabled) {
       this._eventDescriptors = [
         this._workspace.addEventListener(
             Workspace.Workspace.Events.ProjectAdded,
@@ -153,13 +170,9 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
             event => this._onUISourceCodeWorkingCopyCommitted(
                 /** @type {!Workspace.UISourceCode} */ (event.data.uiSourceCode)))
       ];
-      var networkProjects = this._workspace.projectsForType(Workspace.projectTypes.Network);
       this._updateActiveProject();
-      for (var networkProject of networkProjects)
-        networkProject.uiSourceCodes().forEach(this._onUISourceCodeAdded.bind(this));
     } else {
       Common.EventTarget.removeEventListeners(this._eventDescriptors);
-      this._networkUISourceCodeForEncodedPath.clear();
       this._updateActiveProject();
     }
   }
@@ -185,6 +198,13 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
       oldProject.uiSourceCodes().forEach(this._onUISourceCodeRemoved.bind(this));
     if (project)
       project.uiSourceCodes().forEach(this._onUISourceCodeAdded.bind(this));
+    if (project) {
+      var networkProjects = this._workspace.projectsForType(Workspace.projectTypes.Network);
+      for (var networkProject of networkProjects)
+        networkProject.uiSourceCodes().forEach(this._onUISourceCodeAdded.bind(this));
+    } else {
+      this._networkUISourceCodeForEncodedPath.clear();
+    }
     Persistence.persistence.setAutomappingEnabled(!this._activeProject);
   }
 
@@ -282,13 +302,15 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
    * @param {!Workspace.UISourceCode} networkUISourceCode
    * @param {!Workspace.UISourceCode} fileSystemUISourceCode
    */
-  _bind(networkUISourceCode, fileSystemUISourceCode) {
+  async _bind(networkUISourceCode, fileSystemUISourceCode) {
     if (networkUISourceCode[this._bindingSymbol] || fileSystemUISourceCode[this._bindingSymbol])
       return;
     var binding = new Persistence.PersistenceBinding(networkUISourceCode, fileSystemUISourceCode, true);
     networkUISourceCode[this._bindingSymbol] = binding;
     fileSystemUISourceCode[this._bindingSymbol] = binding;
     Persistence.persistence.addBinding(binding);
+    var content = await fileSystemUISourceCode.requestContent();
+    networkUISourceCode.addRevision(content);
   }
 
   /**
@@ -318,7 +340,7 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
     var lastIndexOfSlash = encodedPath.lastIndexOf('/');
     var encodedFileName = encodedPath.substr(lastIndexOfSlash + 1);
     encodedPath = encodedPath.substr(0, lastIndexOfSlash);
-    this._activeProject.createFile(encodedPath, encodedFileName, content, encoded);
+    await this._activeProject.createFile(encodedPath, encodedFileName, content, encoded);
     this._fileCreatedForTest(encodedPath, encodedFileName);
   }
 
@@ -390,7 +412,10 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
       }
 
       return SDK.multitargetNetworkManager.setInterceptionHandlerForPatterns(
-          Array.from(patterns), this._interceptionHandlerBound);
+          Array.from(patterns).map(
+              pattern =>
+                  ({urlPattern: pattern, interceptionStage: Protocol.Network.InterceptionStage.HeadersReceived})),
+          this._interceptionHandlerBound);
     }
   }
 
@@ -416,6 +441,7 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
       return;
     }
     this._updateInterceptionPatterns();
+    delete uiSourceCode[this._originalResponseContentPromiseSymbol];
     this._unbind(uiSourceCode);
   }
 
@@ -457,11 +483,27 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
     if (!fileSystemUISourceCode)
       return;
 
-    var expectedResourceType = Common.resourceTypes[interceptedRequest.resourceType] || Common.resourceTypes.Other;
-    var mimeType = fileSystemUISourceCode.mimeType();
-    if (Common.ResourceType.fromMimeType(mimeType) !== expectedResourceType)
-      mimeType = expectedResourceType.canonicalMimeType();
+    var mimeType = '';
+    if (interceptedRequest.responseHeaders) {
+      var responseHeaders = SDK.NetworkManager.lowercaseHeaders(interceptedRequest.responseHeaders);
+      mimeType = responseHeaders['content-type'];
+    }
+
+    if (!mimeType) {
+      var expectedResourceType = Common.resourceTypes[interceptedRequest.resourceType] || Common.resourceTypes.Other;
+      mimeType = fileSystemUISourceCode.mimeType();
+      if (Common.ResourceType.fromMimeType(mimeType) !== expectedResourceType)
+        mimeType = expectedResourceType.canonicalMimeType();
+    }
     var project = /** @type {!Persistence.FileSystemWorkspaceBinding.FileSystem} */ (fileSystemUISourceCode.project());
+
+    fileSystemUISourceCode[this._originalResponseContentPromiseSymbol] =
+        interceptedRequest.responseBody().then(response => {
+          if (response.error || response.content === null)
+            return null;
+          return response.encoded ? atob(response.content) : response.content;
+        });
+
     var blob = await project.requestFileBlob(fileSystemUISourceCode);
     interceptedRequest.continueRequestWithContent(new Blob([blob], {type: mimeType}));
   }

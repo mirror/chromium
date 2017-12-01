@@ -215,7 +215,6 @@ const char kChromeUISysInternalsHost[] = "sys-internals";
 const char kChromeUITermsOemURL[] = "chrome://terms/oem";
 const char kChromeUIUserImageHost[] = "userimage";
 const char kChromeUIUserImageURL[] = "chrome://userimage/";
-const char kChromeUIVoiceSearchHost[] = "voicesearch";
 #endif  // defined(OS_CHROMEOS)
 
 #if defined(OS_WIN)
@@ -381,9 +380,8 @@ const char* const kChromeHostURLs[] = {
     kChromeUIPowerHost,
     kChromeUIInternetConfigDialogHost,
     kChromeUIInternetDetailDialogHost,
-    kChromeUIVoiceSearchHost,
 #endif
-#if defined(OS_WIN) || defined(OS_CHROMEOS)
+#if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_LINUX)
     kChromeUIDiscardsHost,
 #endif
 #if defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID)

@@ -74,6 +74,11 @@ ManagePasswordsUIController::~ManagePasswordsUIController() {}
 
 void ManagePasswordsUIController::OnPasswordSubmitted(
     std::unique_ptr<PasswordFormManager> form_manager) {
+  // If the save bubble is already shown (possibly manual fallback for saving)
+  // then ignore the changes because the user may interact with it right now.
+  if (bubble_status_ == SHOWN &&
+      GetState() == password_manager::ui::PENDING_PASSWORD_STATE)
+    return;
   bool show_bubble = !form_manager->IsBlacklisted();
   DestroyAccountChooser();
   save_fallback_timer_.Stop();
@@ -394,6 +399,13 @@ void ManagePasswordsUIController::SavePassword(const base::string16& username,
   // The maximum possible value is defined by OR-ing these values.
   UMA_HISTOGRAM_ENUMERATION("PasswordManager.EditsInSaveBubble",
                             username_edited + 2 * password_changed, 4);
+  UMA_HISTOGRAM_BOOLEAN("PasswordManager.PasswordSavedWithManualFallback",
+                        BubbleIsManualFallbackForSaving());
+  if (GetPasswordFormMetricsRecorder() && BubbleIsManualFallbackForSaving()) {
+    GetPasswordFormMetricsRecorder()->RecordDetailedUserAction(
+        password_manager::PasswordFormMetricsRecorder::DetailedUserAction::
+            kTriggeredManualFallbackForSaving);
+  }
 
   save_fallback_timer_.Stop();
   SavePasswordInternal();
@@ -406,6 +418,14 @@ void ManagePasswordsUIController::SavePassword(const base::string16& username,
 void ManagePasswordsUIController::UpdatePassword(
     const autofill::PasswordForm& password_form) {
   DCHECK_EQ(password_manager::ui::PENDING_PASSWORD_UPDATE_STATE, GetState());
+  UMA_HISTOGRAM_BOOLEAN("PasswordManager.PasswordUpdatedWithManualFallback",
+                        BubbleIsManualFallbackForSaving());
+  if (GetPasswordFormMetricsRecorder() && BubbleIsManualFallbackForSaving()) {
+    GetPasswordFormMetricsRecorder()->RecordDetailedUserAction(
+        password_manager::PasswordFormMetricsRecorder::DetailedUserAction::
+            kTriggeredManualFallbackForUpdating);
+  }
+
   save_fallback_timer_.Stop();
   UpdatePasswordInternal(password_form);
   passwords_data_.TransitionToState(password_manager::ui::MANAGE_STATE);

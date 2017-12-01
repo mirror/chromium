@@ -13,6 +13,8 @@
 #include "device/u2f/u2f_request.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+using ::testing::_;
+
 namespace device {
 namespace {
 
@@ -21,10 +23,11 @@ class FakeU2fRequest : public U2fRequest {
   FakeU2fRequest(std::vector<std::unique_ptr<U2fDiscovery>> discoveries,
                  const ResponseCallback& cb)
       : U2fRequest(std::move(discoveries), cb) {}
-  ~FakeU2fRequest() override {}
+  ~FakeU2fRequest() override = default;
 
   void TryDevice() override {
-    cb_.Run(U2fReturnCode::SUCCESS, std::vector<uint8_t>());
+    cb_.Run(U2fReturnCode::SUCCESS, std::vector<uint8_t>(),
+            std::vector<uint8_t>());
   }
 };
 
@@ -42,7 +45,8 @@ class U2fRequestTest : public testing::Test {
 
 TEST_F(U2fRequestTest, TestIterateDevice) {
   // No discoveries are needed, since |request.devices_| is accessed directly.
-  auto do_nothing = [](U2fReturnCode, const std::vector<uint8_t>&) {};
+  auto do_nothing = [](U2fReturnCode, const std::vector<uint8_t>&,
+                       const std::vector<uint8_t>&) {};
   FakeU2fRequest request({}, base::Bind(do_nothing));
 
   // Add two U2F devices
@@ -71,7 +75,7 @@ TEST_F(U2fRequestTest, TestIterateDevice) {
   // device will be tried again. Check for the expected behavior here.
   auto* mock_device =
       static_cast<MockU2fDevice*>(request.devices_.front().get());
-  EXPECT_CALL(*mock_device, TryWink(testing::_));
+  EXPECT_CALL(*mock_device, TryWinkRef(_));
   task_runner_->FastForwardUntilNoTasksRemain();
 
   EXPECT_EQ(mock_device, request.current_device_.get());
@@ -89,13 +93,14 @@ TEST_F(U2fRequestTest, TestBasicMachine) {
   MockU2fDiscovery* discovery_weak = discovery.get();
   discoveries.push_back(std::move(discovery));
 
-  auto do_nothing = [](U2fReturnCode, const std::vector<uint8_t>&) {};
+  auto do_nothing = [](U2fReturnCode, const std::vector<uint8_t>&,
+                       const std::vector<uint8_t>&) {};
   FakeU2fRequest request(std::move(discoveries), base::Bind(do_nothing));
   request.Start();
 
   // Add one U2F device
   auto device = std::make_unique<MockU2fDevice>();
-  EXPECT_CALL(*device, TryWink(testing::_))
+  EXPECT_CALL(*device, TryWinkRef(_))
       .WillOnce(testing::Invoke(MockU2fDevice::WinkDoNothing));
   discovery_weak->AddDevice(std::move(device));
 

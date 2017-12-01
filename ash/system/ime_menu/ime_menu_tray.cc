@@ -4,6 +4,7 @@
 
 #include "ash/system/ime_menu/ime_menu_tray.h"
 
+#include "ash/accessibility/accessibility_controller.h"
 #include "ash/accessibility/accessibility_delegate.h"
 #include "ash/ash_constants.h"
 #include "ash/ime/ime_controller.h"
@@ -109,7 +110,7 @@ class ImeMenuLabel : public views::Label {
     // truncated.
     SetBorder(views::CreateEmptyBorder(gfx::Insets(0, 6)));
   }
-  ~ImeMenuLabel() override {}
+  ~ImeMenuLabel() override = default;
 
   // views:Label:
   gfx::Size CalculatePreferredSize() const override {
@@ -166,7 +167,7 @@ class ImeTitleView : public views::View, public views::ButtonListener {
     ShowIMESettings();
   }
 
-  ~ImeTitleView() override {}
+  ~ImeTitleView() override = default;
 
  private:
   // Settings button that is only used if the emoji, handwriting and voice
@@ -189,7 +190,7 @@ class ImeButtonsView : public views::View, public views::ButtonListener {
     Init(show_emoji, show_handwriting, show_voice);
   }
 
-  ~ImeButtonsView() override {}
+  ~ImeButtonsView() override = default;
 
   // views::ButtonListener:
   void ButtonPressed(views::Button* sender, const ui::Event& event) override {
@@ -277,7 +278,7 @@ class ImeMenuListView : public ImeListView {
     set_should_focus_ime_after_selection_with_keyboard(true);
   }
 
-  ~ImeMenuListView() override {}
+  ~ImeMenuListView() override = default;
 
  protected:
   void Layout() override {
@@ -508,7 +509,7 @@ base::string16 ImeMenuTray::GetAccessibleNameForBubble() {
 }
 
 bool ImeMenuTray::ShouldEnableExtraKeyboardAccessibility() {
-  return Shell::Get()->accessibility_delegate()->IsSpokenFeedbackEnabled();
+  return Shell::Get()->accessibility_controller()->IsSpokenFeedbackEnabled();
 }
 
 void ImeMenuTray::HideBubble(const views::TrayBubbleView* bubble_view) {

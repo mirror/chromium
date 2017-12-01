@@ -26,13 +26,13 @@
 #include "content/browser/service_worker/service_worker_test_utils.h"
 #include "content/common/service_worker/embedded_worker_messages.h"
 #include "content/common/service_worker/service_worker_messages.h"
-#include "content/common/service_worker/service_worker_types.h"
 #include "content/common/service_worker/service_worker_utils.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/test/mock_resource_context.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/WebKit/common/service_worker/service_worker_provider_type.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 
@@ -207,7 +207,7 @@ class ServiceWorkerDispatcherHostTest : public testing::Test {
     EXPECT_EQ(SERVICE_WORKER_OK, status);
   }
 
-  void SendProviderCreated(ServiceWorkerProviderType type,
+  void SendProviderCreated(blink::mojom::ServiceWorkerProviderType type,
                            const GURL& pattern) {
     const int64_t kProviderId = 99;
     ServiceWorkerProviderHostInfo info(kProviderId, MSG_ROUTING_NONE, type,
@@ -261,6 +261,7 @@ class ServiceWorkerDispatcherHostTest : public testing::Test {
   }
 
   TestBrowserThreadBundle browser_thread_bundle_;
+  base::SimpleTestTickClock tick_clock_;
   content::MockResourceContext resource_context_;
   std::unique_ptr<EmbeddedWorkerTestHelper> helper_;
   scoped_refptr<TestingServiceWorkerDispatcherHost> dispatcher_host_;
@@ -277,15 +278,18 @@ TEST_F(ServiceWorkerDispatcherHostTest, ProviderCreatedAndDestroyed) {
   int process_id = helper_->mock_render_process_id();
 
   // Setup ServiceWorkerProviderHostInfo.
-  ServiceWorkerProviderHostInfo host_info_1(kProviderId, 1 /* route_id */,
-                                            SERVICE_WORKER_PROVIDER_FOR_WINDOW,
-                                            true /* is_parent_frame_secure */);
-  ServiceWorkerProviderHostInfo host_info_2(kProviderId, 1 /* route_id */,
-                                            SERVICE_WORKER_PROVIDER_FOR_WINDOW,
-                                            true /* is_parent_frame_secure */);
-  ServiceWorkerProviderHostInfo host_info_3(kProviderId, 1 /* route_id */,
-                                            SERVICE_WORKER_PROVIDER_FOR_WINDOW,
-                                            true /* is_parent_frame_secure */);
+  ServiceWorkerProviderHostInfo host_info_1(
+      kProviderId, 1 /* route_id */,
+      blink::mojom::ServiceWorkerProviderType::kForWindow,
+      true /* is_parent_frame_secure */);
+  ServiceWorkerProviderHostInfo host_info_2(
+      kProviderId, 1 /* route_id */,
+      blink::mojom::ServiceWorkerProviderType::kForWindow,
+      true /* is_parent_frame_secure */);
+  ServiceWorkerProviderHostInfo host_info_3(
+      kProviderId, 1 /* route_id */,
+      blink::mojom::ServiceWorkerProviderType::kForWindow,
+      true /* is_parent_frame_secure */);
   RemoteProviderInfo remote_info_1 = SetupProviderHostInfoPtrs(&host_info_1);
   RemoteProviderInfo remote_info_2 = SetupProviderHostInfoPtrs(&host_info_2);
   RemoteProviderInfo remote_info_3 = SetupProviderHostInfoPtrs(&host_info_3);
@@ -342,7 +346,8 @@ TEST_F(ServiceWorkerDispatcherHostTest, CleanupOnRendererCrash) {
   GURL script_url = GURL("http://www.example.com/service_worker.js");
   int process_id = helper_->mock_render_process_id();
 
-  SendProviderCreated(SERVICE_WORKER_PROVIDER_FOR_WINDOW, pattern);
+  SendProviderCreated(blink::mojom::ServiceWorkerProviderType::kForWindow,
+                      pattern);
   SetUpRegistration(pattern, script_url);
   int64_t provider_id = provider_host_->provider_id();
 
@@ -380,9 +385,10 @@ TEST_F(ServiceWorkerDispatcherHostTest, CleanupOnRendererCrash) {
   // To show the new dispatcher can operate, simulate provider creation. Since
   // the old dispatcher cleaned up the old provider host, the new one won't
   // complain.
-  ServiceWorkerProviderHostInfo host_info(provider_id, MSG_ROUTING_NONE,
-                                          SERVICE_WORKER_PROVIDER_FOR_WINDOW,
-                                          true /* is_parent_frame_secure */);
+  ServiceWorkerProviderHostInfo host_info(
+      provider_id, MSG_ROUTING_NONE,
+      blink::mojom::ServiceWorkerProviderType::kForWindow,
+      true /* is_parent_frame_secure */);
   ServiceWorkerRemoteProviderEndpoint remote_endpoint;
   remote_endpoint.BindWithProviderHostInfo(&host_info);
   new_dispatcher_host->OnProviderCreated(std::move(host_info));
@@ -408,9 +414,8 @@ TEST_F(ServiceWorkerDispatcherHostTest, DispatchExtendableMessageEvent) {
   const int ref_count = sender_worker_handle->ref_count();
 
   // Set mock clock on version_ to check timeout behavior.
-  base::SimpleTestTickClock* tick_clock = new base::SimpleTestTickClock();
-  tick_clock->SetNowTicks(base::TimeTicks::Now());
-  version_->SetTickClockForTesting(base::WrapUnique(tick_clock));
+  tick_clock_.SetNowTicks(base::TimeTicks::Now());
+  version_->SetTickClockForTesting(&tick_clock_);
 
   // Make sure worker has a non-zero timeout.
   bool called = false;
@@ -426,7 +431,7 @@ TEST_F(ServiceWorkerDispatcherHostTest, DispatchExtendableMessageEvent) {
       base::TimeDelta::FromSeconds(10), ServiceWorkerVersion::KILL_ON_TIMEOUT);
 
   // Advance clock by a couple seconds.
-  tick_clock->Advance(base::TimeDelta::FromSeconds(4));
+  tick_clock_.Advance(base::TimeDelta::FromSeconds(4));
   base::TimeDelta remaining_time = version_->remaining_timeout();
   EXPECT_EQ(base::TimeDelta::FromSeconds(6), remaining_time);
 
@@ -455,7 +460,8 @@ TEST_F(ServiceWorkerDispatcherHostTest, DispatchExtendableMessageEvent_Fail) {
   GURL script_url = GURL("http://www.example.com/service_worker.js");
 
   Initialize(base::WrapUnique(new FailToStartWorkerTestHelper));
-  SendProviderCreated(SERVICE_WORKER_PROVIDER_FOR_WORKER, pattern);
+  SendProviderCreated(blink::mojom::ServiceWorkerProviderType::kForSharedWorker,
+                      pattern);
   SetUpRegistration(pattern, script_url);
 
   // Try to dispatch ExtendableMessageEvent. This should fail to start the

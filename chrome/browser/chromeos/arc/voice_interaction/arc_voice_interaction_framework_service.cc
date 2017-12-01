@@ -231,11 +231,11 @@ ArcVoiceInteractionFrameworkService::ArcVoiceInteractionFrameworkService(
     ArcBridgeService* bridge_service)
     : context_(context),
       arc_bridge_service_(bridge_service),
-      binding_(this),
       highlighter_client_(std::make_unique<HighlighterControllerClient>(this)),
       voice_interaction_controller_client_(
           std::make_unique<VoiceInteractionControllerClient>()),
       weak_ptr_factory_(this) {
+  arc_bridge_service_->voice_interaction_framework()->SetHost(this);
   arc_bridge_service_->voice_interaction_framework()->AddObserver(this);
   ArcSessionManager::Get()->AddObserver(this);
   session_manager::SessionManager::Get()->AddObserver(this);
@@ -247,23 +247,27 @@ ArcVoiceInteractionFrameworkService::~ArcVoiceInteractionFrameworkService() {
   session_manager::SessionManager::Get()->RemoveObserver(this);
   ArcSessionManager::Get()->RemoveObserver(this);
   arc_bridge_service_->voice_interaction_framework()->RemoveObserver(this);
+  arc_bridge_service_->voice_interaction_framework()->SetHost(nullptr);
 }
 
 void ArcVoiceInteractionFrameworkService::OnConnectionReady() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  mojom::VoiceInteractionFrameworkInstance* framework_instance =
-      ARC_GET_INSTANCE_FOR_METHOD(
-          arc_bridge_service_->voice_interaction_framework(), Init);
-  DCHECK(framework_instance);
-  mojom::VoiceInteractionFrameworkHostPtr host_proxy;
-  binding_.Bind(mojo::MakeRequest(&host_proxy));
-  framework_instance->Init(std::move(host_proxy));
 
   if (is_request_pending_) {
     is_request_pending_ = false;
     if (is_pending_request_toggle_) {
+      mojom::VoiceInteractionFrameworkInstance* framework_instance =
+          ARC_GET_INSTANCE_FOR_METHOD(
+              arc_bridge_service_->voice_interaction_framework(),
+              ToggleVoiceInteractionSession);
+      DCHECK(framework_instance);
       framework_instance->ToggleVoiceInteractionSession(IsHomescreenActive());
     } else {
+      mojom::VoiceInteractionFrameworkInstance* framework_instance =
+          ARC_GET_INSTANCE_FOR_METHOD(
+              arc_bridge_service_->voice_interaction_framework(),
+              StartVoiceInteractionSession);
+      DCHECK(framework_instance);
       framework_instance->StartVoiceInteractionSession(IsHomescreenActive());
     }
   }
@@ -273,7 +277,6 @@ void ArcVoiceInteractionFrameworkService::OnConnectionReady() {
 
 void ArcVoiceInteractionFrameworkService::OnConnectionClosed() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  binding_.Close();
   highlighter_client_->Detach();
 }
 
@@ -318,29 +321,15 @@ void ArcVoiceInteractionFrameworkService::SetVoiceInteractionState(
     bool value_prop_accepted =
         prefs->GetBoolean(prefs::kArcVoiceInteractionValuePropAccepted);
 
-    // Currerntly we are doing this so that we don't break existing users. Users
-    // before prefs::kVoiceInteractionEnabled and
-    // prefs::kVoiceInteractionContextEnabled are introduced will have default
-    // |false| value. To avoid breaking existing users, if they have already
-    // accepted value prop (prefs::kArcVoiceInteractionValuePropAccepted ==
-    // true), but prefs::kVoiceInteractionEnabled and
-    // prefs::kVoiceInteractionContextEnabled are not set, we set them to true.
-    // prefs::kArcVoiceInteractionValuePropAccepted == true, but
-    // prefs::kVoiceInteractionEnabled and
-    // prefs::kVoiceInteractionContextEnabled are not set, is an invalid state.
-    // TODO(muyuanli): Remove checking whether |voice_interaction_enabled| is
-    // undefined in the future.
     bool enable_voice_interaction =
         value_prop_accepted &&
-        (!prefs->GetUserPrefValue(prefs::kVoiceInteractionEnabled) ||
-         prefs->GetBoolean(prefs::kVoiceInteractionEnabled));
+        prefs->GetBoolean(prefs::kVoiceInteractionEnabled);
     SetVoiceInteractionEnabled(enable_voice_interaction,
                                base::BindOnce(&DoNothing<bool>));
 
     SetVoiceInteractionContextEnabled(
-        (enable_voice_interaction &&
-         (prefs->GetBoolean(prefs::kVoiceInteractionContextEnabled) ||
-          !prefs->GetUserPrefValue(prefs::kVoiceInteractionContextEnabled))));
+        enable_voice_interaction &&
+        prefs->GetBoolean(prefs::kVoiceInteractionContextEnabled));
   }
 
   // If voice session stopped running, we also stop the assist layer session.

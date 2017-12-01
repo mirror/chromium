@@ -426,12 +426,6 @@ const PrefsUtil::TypedPrefMap& PrefsUtil::GetWhitelistedKeys() {
       settings_private::PrefType::PREF_TYPE_BOOLEAN;
 #endif
 
-  // Search settings.
-  (*s_whitelist)[::prefs::kHotwordSearchEnabled] =
-      settings_private::PrefType::PREF_TYPE_BOOLEAN;
-  (*s_whitelist)[::prefs::kHotwordAlwaysOnSearchEnabled] =
-      settings_private::PrefType::PREF_TYPE_BOOLEAN;
-
   // Proxy settings.
   (*s_whitelist)[proxy_config::prefs::kProxy] =
       settings_private::PrefType::PREF_TYPE_DICTIONARY;
@@ -440,6 +434,10 @@ const PrefsUtil::TypedPrefMap& PrefsUtil::GetWhitelistedKeys() {
   (*s_whitelist)[::prefs::kMediaRouterEnableCloudServices] =
       settings_private::PrefType::PREF_TYPE_BOOLEAN;
 #endif  // defined(GOOGLE_CHROME_BUILD)
+
+  // Media Remoting settings.
+  (*s_whitelist)[::prefs::kMediaRouterMediaRemotingEnabled] =
+      settings_private::PrefType::PREF_TYPE_BOOLEAN;
 
   return *s_whitelist;
 }

@@ -6,6 +6,8 @@
 
 #include <memory>
 
+#include "base/bind.h"
+#include "base/bind_helpers.h"
 #include "base/logging.h"
 #include "base/memory/ref_counted.h"
 #include "base/strings/string_util.h"
@@ -19,7 +21,7 @@
 #include "chrome/browser/signin/chrome_signin_client.h"
 #include "chrome/browser/signin/chrome_signin_client_factory.h"
 #include "chrome/browser/signin/dice_response_handler.h"
-#include "chrome/browser/signin/process_dice_header_observer_impl.h"
+#include "chrome/browser/signin/process_dice_header_delegate_impl.h"
 #include "chrome/browser/tab_contents/tab_util.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/common/url_constants.h"
@@ -255,7 +257,7 @@ void ProcessDiceHeaderUIThread(
       DiceResponseHandler::GetForProfile(profile);
   dice_response_handler->ProcessDiceHeader(
       dice_params,
-      base::MakeUnique<ProcessDiceHeaderObserverImpl>(web_contents));
+      base::MakeUnique<ProcessDiceHeaderDelegateImpl>(web_contents));
 }
 #endif  // BUILDFLAG(ENABLE_DICE_SUPPORT)
 
@@ -350,7 +352,7 @@ void ProcessDiceResponseHeaderIfExists(net::URLRequest* request,
 
   content::BrowserThread::PostTask(
       content::BrowserThread::UI, FROM_HERE,
-      base::Bind(ProcessDiceHeaderUIThread, params,
+      base::Bind(ProcessDiceHeaderUIThread, base::Passed(std::move(params)),
                  info->GetWebContentsGetterForRequest()));
 }
 #endif  // BUILDFLAG(ENABLE_DICE_SUPPORT)
@@ -384,6 +386,14 @@ void FixAccountConsistencyRequestHeader(net::URLRequest* request,
     profile_mode_mask |= PROFILE_MODE_INCOGNITO_DISABLED;
   }
 
+#if defined(OS_CHROMEOS)
+  // Mirror account consistency required by profile.
+  if (io_data->account_consistency_mirror_required()->GetValue()) {
+    // Can't add new accounts.
+    profile_mode_mask |= PROFILE_MODE_ADD_ACCOUNT_DISABLED;
+  }
+#endif
+
   std::string account_id = io_data->google_services_account_id()->GetValue();
 
   // If new url is eligible to have the header, add it, otherwise remove it.
@@ -400,10 +410,18 @@ void FixAccountConsistencyRequestHeader(net::URLRequest* request,
   if (dice_header_added)
     DiceURLRequestUserData::AttachToRequest(request);
 
+#if defined(OS_CHROMEOS)
+  bool mirror_enabled =
+      io_data->account_consistency_mirror_required()->GetValue() ||
+      IsAccountConsistencyMirrorEnabled();
+#else
+  bool mirror_enabled = IsAccountConsistencyMirrorEnabled();
+#endif
+
   // Mirror header:
   AppendOrRemoveMirrorRequestHeader(request, redirect_url, account_id,
                                     io_data->GetCookieSettings(),
-                                    profile_mode_mask);
+                                    mirror_enabled, profile_mode_mask);
 }
 
 void ProcessAccountConsistencyResponseHeaders(net::URLRequest* request,

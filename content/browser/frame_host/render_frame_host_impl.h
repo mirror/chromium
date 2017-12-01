@@ -59,6 +59,7 @@
 #include "third_party/WebKit/public/platform/WebSuddenTerminationDisablerType.h"
 #include "third_party/WebKit/public/platform/modules/bluetooth/web_bluetooth.mojom.h"
 #include "third_party/WebKit/public/platform/modules/presentation/presentation.mojom.h"
+#include "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom.h"
 #include "third_party/WebKit/public/web/WebTextDirection.h"
 #include "third_party/WebKit/public/web/WebTreeScopeType.h"
 #include "ui/accessibility/ax_modes.h"
@@ -99,6 +100,7 @@ class Rect;
 namespace content {
 class AssociatedInterfaceProviderImpl;
 class AssociatedInterfaceRegistryImpl;
+class AuthenticatorImpl;
 class LegacyIPCFrameInputHandler;
 class FrameTree;
 class FrameTreeNode;
@@ -159,6 +161,15 @@ class CONTENT_EXPORT RenderFrameHostImpl
   static RenderFrameHostImpl* FromOverlayRoutingToken(
       const base::UnguessableToken& token);
 
+  // Allows overriding the URLLoaderFactory creation for subresources.
+  // Passing a null callback will restore the default behavior.
+  using CreateNetworkFactoryCallback =
+      base::Callback<void(mojom::URLLoaderFactoryRequest request,
+                          int process_id,
+                          mojom::URLLoaderFactoryPtrInfo original_factory)>;
+  static void SetNetworkFactoryForTesting(
+      const CreateNetworkFactoryCallback& url_loader_factory_callback);
+
   ~RenderFrameHostImpl() override;
 
   // RenderFrameHost
@@ -196,7 +207,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void SaveImageAt(int x, int y) override;
   RenderViewHost* GetRenderViewHost() override;
   service_manager::InterfaceProvider* GetRemoteInterfaces() override;
-  AssociatedInterfaceProvider* GetRemoteAssociatedInterfaces() override;
+  blink::AssociatedInterfaceProvider* GetRemoteAssociatedInterfaces() override;
   blink::mojom::PageVisibilityState GetVisibilityState() override;
   bool IsRenderFrameLive() override;
   bool IsCurrent() override;
@@ -288,6 +299,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
                           blink::WebTreeScopeType scope,
                           const std::string& frame_name,
                           const std::string& frame_unique_name,
+                          bool is_created_by_script,
                           const base::UnguessableToken& devtools_frame_token,
                           const blink::FramePolicy& frame_policy,
                           const FrameOwnerProperties& frame_owner_properties);
@@ -301,8 +313,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
   RenderViewHostImpl* render_view_host() { return render_view_host_; }
   RenderFrameHostDelegate* delegate() { return delegate_; }
   FrameTreeNode* frame_tree_node() { return frame_tree_node_; }
-
-  const GURL& last_committed_url() const { return last_committed_url_; }
 
   // Allows FrameTreeNode::SetCurrentURL to update this frame's last committed
   // URL.  Do not call this directly, since we rely on SetCurrentURL to track
@@ -690,6 +700,10 @@ class CONTENT_EXPORT RenderFrameHostImpl
 
   void SetKeepAliveTimeoutForTesting(base::TimeDelta timeout);
 
+  blink::WebSandboxFlags active_sandbox_flags() {
+    return active_sandbox_flags_;
+  }
+
  protected:
   friend class RenderFrameHostFactory;
 
@@ -735,6 +749,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
                            LoadEventForwardingWhilePendingDeletion);
   FRIEND_TEST_ALL_PREFIXES(SitePerProcessBrowserTest,
                            ContextMenuAfterCrossProcessNavigation);
+  FRIEND_TEST_ALL_PREFIXES(SitePerProcessBrowserTest,
+                           ActiveSandboxFlagsRetainedAfterSwapOut);
   FRIEND_TEST_ALL_PREFIXES(SecurityExploitBrowserTest,
                            AttemptDuplicateRenderViewHost);
 
@@ -784,7 +800,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void OnDidAccessInitialDocument();
   void OnDidChangeOpener(int32_t opener_routing_id);
   void OnDidChangeName(const std::string& name, const std::string& unique_name);
-  void OnDidSetFeaturePolicyHeader(
+  void OnDidSetFramePolicyHeaders(
+      blink::WebSandboxFlags sandbox_flags,
       const blink::ParsedFeaturePolicy& parsed_header);
 
   // A new set of CSP |policies| has been added to the document.
@@ -977,6 +994,10 @@ class CONTENT_EXPORT RenderFrameHostImpl
 
   void BindPresentationServiceRequest(
       blink::mojom::PresentationServiceRequest request);
+
+#if !defined(OS_ANDROID)
+  void BindAuthenticatorRequest(webauth::mojom::AuthenticatorRequest request);
+#endif
 
   // service_manager::mojom::InterfaceProvider:
   void GetInterface(const std::string& interface_name,
@@ -1320,6 +1341,10 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // Hosts blink::mojom::PresentationService for the RenderFrame.
   std::unique_ptr<PresentationServiceImpl> presentation_service_;
 
+#if !defined(OS_ANDROID)
+  std::unique_ptr<AuthenticatorImpl> authenticator_impl_;
+#endif
+
   std::unique_ptr<AssociatedInterfaceProviderImpl>
       remote_associated_interfaces_;
 
@@ -1329,6 +1354,14 @@ class CONTENT_EXPORT RenderFrameHostImpl
 
   // Tracks the feature policy which has been set on this frame.
   std::unique_ptr<blink::FeaturePolicy> feature_policy_;
+
+  // Tracks the sandbox flags which are in effect on this frame. This includes
+  // any flags which have been set by a Content-Security-Policy header, in
+  // addition to those which are set by the embedding frame. This is initially a
+  // copy of the active sandbox flags which are stored in the FrameTreeNode for
+  // this RenderFrameHost, but may diverge if this RenderFrameHost is pending
+  // deletion.
+  blink::WebSandboxFlags active_sandbox_flags_;
 
 #if defined(OS_ANDROID)
   // An InterfaceProvider for Java-implemented interfaces that are scoped to

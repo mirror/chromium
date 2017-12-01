@@ -37,7 +37,7 @@
 #include "media/gpu/ipc/service/gpu_video_decode_accelerator.h"
 #include "media/gpu/ipc/service/gpu_video_encode_accelerator.h"
 #include "media/gpu/ipc/service/media_gpu_channel_manager.h"
-#include "media/mojo/services/gpu_jpeg_decode_accelerator.h"
+#include "media/mojo/services/mojo_jpeg_decode_accelerator_service.h"
 #include "media/mojo/services/mojo_video_encode_accelerator_provider.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "ui/gl/gl_implementation.h"
@@ -311,9 +311,9 @@ void GpuServiceImpl::CreateArcProtectedBufferManagerOnMainThread(
 #endif  // defined(OS_CHROMEOS)
 
 void GpuServiceImpl::CreateJpegDecodeAccelerator(
-    media::mojom::GpuJpegDecodeAcceleratorRequest jda_request) {
+    media::mojom::JpegDecodeAcceleratorRequest jda_request) {
   DCHECK(io_runner_->BelongsToCurrentThread());
-  media::GpuJpegDecodeAccelerator::Create(std::move(jda_request));
+  media::MojoJpegDecodeAcceleratorService::Create(std::move(jda_request));
 }
 
 void GpuServiceImpl::CreateVideoEncodeAcceleratorProvider(
@@ -479,6 +479,11 @@ void GpuServiceImpl::UpdateGpuInfoPlatform(
   std::move(on_gpu_info_updated).Run();
 }
 #endif
+
+void GpuServiceImpl::DidCreateContextSuccessfully() {
+  DCHECK(main_runner_->BelongsToCurrentThread());
+  (*gpu_host_)->DidCreateContextSuccessfully();
+}
 
 void GpuServiceImpl::DidCreateOffscreenContext(const GURL& active_url) {
   DCHECK(main_runner_->BelongsToCurrentThread());

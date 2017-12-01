@@ -73,7 +73,9 @@
 #import "ios/chrome/browser/find_in_page/find_tab_helper.h"
 #include "ios/chrome/browser/first_run/first_run.h"
 #import "ios/chrome/browser/geolocation/omnibox_geolocation_controller.h"
+#include "ios/chrome/browser/infobars/infobar_container_delegate_ios.h"
 #include "ios/chrome/browser/infobars/infobar_container_ios.h"
+#import "ios/chrome/browser/infobars/infobar_container_state_delegate.h"
 #include "ios/chrome/browser/infobars/infobar_container_view.h"
 #include "ios/chrome/browser/infobars/infobar_manager_impl.h"
 #import "ios/chrome/browser/language/url_language_histogram_factory.h"
@@ -118,6 +120,7 @@
 #import "ios/chrome/browser/ui/authentication/re_signin_infobar_delegate.h"
 #import "ios/chrome/browser/ui/background_generator.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_interaction_controller.h"
+#include "ios/chrome/browser/ui/bookmarks/bookmark_model_bridge_observer.h"
 #import "ios/chrome/browser/ui/browser_container_view.h"
 #import "ios/chrome/browser/ui/browser_view_controller_dependency_factory.h"
 #import "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.h"
@@ -177,9 +180,11 @@
 #import "ios/chrome/browser/ui/tabs/requirements/tab_strip_presentation.h"
 #import "ios/chrome/browser/ui/tabs/tab_strip_legacy_coordinator.h"
 #include "ios/chrome/browser/ui/toolbar/legacy_toolbar_coordinator.h"
+#import "ios/chrome/browser/ui/toolbar/legacy_toolbar_ui_updater.h"
 #include "ios/chrome/browser/ui/toolbar/toolbar_model_delegate_ios.h"
 #include "ios/chrome/browser/ui/toolbar/toolbar_model_ios.h"
 #import "ios/chrome/browser/ui/toolbar/toolbar_snapshot_providing.h"
+#import "ios/chrome/browser/ui/toolbar/toolbar_ui.h"
 #import "ios/chrome/browser/ui/toolbar/web_toolbar_controller.h"
 #import "ios/chrome/browser/ui/tools_menu/public/tools_menu_configuration_provider.h"
 #import "ios/chrome/browser/ui/tools_menu/public/tools_menu_presentation_provider.h"
@@ -249,7 +254,6 @@
 using base::UserMetricsAction;
 using bookmarks::BookmarkNode;
 
-class BrowserBookmarkModelBridge;
 class InfoBarContainerDelegateIOS;
 
 namespace {
@@ -381,11 +385,13 @@ NSString* const kBrowserViewControllerSnackbarCategory =
 
 @interface BrowserViewController ()<ActivityServicePresentation,
                                     AppRatingPromptDelegate,
+                                    BookmarkModelBridgeObserver,
                                     CaptivePortalDetectorTabHelperDelegate,
                                     CRWNativeContentProvider,
                                     CRWWebStateDelegate,
                                     DialogPresenterDelegate,
                                     LegacyFullscreenControllerDelegate,
+                                    InfobarContainerStateDelegate,
                                     KeyCommandsPlumbing,
                                     NetExportTabHelperDelegate,
                                     ManageAccountsDelegate,
@@ -518,7 +524,7 @@ NSString* const kBrowserViewControllerSnackbarCategory =
   NSMutableDictionary* _dominantColorCache;
 
   // Bridge to register for bookmark changes.
-  std::unique_ptr<BrowserBookmarkModelBridge> _bookmarkModelBridge;
+  std::unique_ptr<bookmarks::BookmarkModelBridge> _bookmarkModelBridge;
 
   // Cached pointer to the bookmarks model.
   bookmarks::BookmarkModel* _bookmarkModel;  // weak
@@ -565,6 +571,9 @@ NSString* const kBrowserViewControllerSnackbarCategory =
 
   // Coordinator for the toolbar.
   LegacyToolbarCoordinator* _toolbarCoordinator;
+
+  // The toolbar UI updater for the toolbar managed by |_toolbarCoordinator|.
+  LegacyToolbarUIUpdater* _toolbarUIUpdater;
 
   // Coordinator for the External Search UI.
   ExternalSearchCoordinator* _externalSearchCoordinator;
@@ -722,6 +731,9 @@ NSString* const kBrowserViewControllerSnackbarCategory =
 - (UIImageView*)pageFullScreenOpenCloseAnimationView;
 // Updates the toolbar display based on the current tab.
 - (void)updateToolbar;
+// Starts or stops broadcasting the toolbar UI depending on whether the BVC is
+// visible and active.
+- (void)updateToolbarBroadcastState;
 // Updates |dialogPresenter|'s |active| property to account for the BVC's
 // |active|, |visible|, and |inNewTabAnimation| properties.
 - (void)updateDialogPresenterActiveState;
@@ -785,8 +797,6 @@ bubblePresenterForFeature:(const base::Feature&)feature
                       selectText:(BOOL)selectText
                      shouldFocus:(BOOL)shouldFocus;
 
-// The infobar state (typically height) has changed.
-- (void)infoBarContainerStateChanged:(bool)is_animating;
 // Adds a CardView on top of the contentArea either taking the size of the full
 // screen or just the size of the space under the header.
 // Returns the CardView that was added.
@@ -890,107 +900,6 @@ bubblePresenterForFeature:(const base::Feature&)feature
 // Adds the given url to the reading list.
 - (void)addToReadingListURL:(const GURL&)URL title:(NSString*)title;
 @end
-
-class InfoBarContainerDelegateIOS
-    : public infobars::InfoBarContainer::Delegate {
- public:
-  explicit InfoBarContainerDelegateIOS(BrowserViewController* controller)
-      : controller_(controller) {}
-
-  ~InfoBarContainerDelegateIOS() override {}
-
- private:
-  SkColor GetInfoBarSeparatorColor() const override {
-    NOTIMPLEMENTED();
-    return SK_ColorBLACK;
-  }
-
-  int ArrowTargetHeightForInfoBar(
-      size_t index,
-      const gfx::SlideAnimation& animation) const override {
-    return 0;
-  }
-
-  void ComputeInfoBarElementSizes(const gfx::SlideAnimation& animation,
-                                  int arrow_target_height,
-                                  int bar_target_height,
-                                  int* arrow_height,
-                                  int* arrow_half_width,
-                                  int* bar_height) const override {
-    DCHECK_NE(-1, bar_target_height)
-        << "Infobars don't have a default height on iOS";
-    *arrow_height = 0;
-    *arrow_half_width = 0;
-    *bar_height = animation.CurrentValueBetween(0, bar_target_height);
-  }
-
-  void InfoBarContainerStateChanged(bool is_animating) override {
-    [controller_ infoBarContainerStateChanged:is_animating];
-  }
-
-  bool DrawInfoBarArrows(int* x) const override { return false; }
-
-  __weak BrowserViewController* controller_;
-};
-
-// Called from the BrowserBookmarkModelBridge from C++ -> ObjC.
-@interface BrowserViewController (BookmarkBridgeMethods)
-// If a bookmark matching the currentTab url is added or moved, update the
-// toolbar state so the star highlight is in sync.
-- (void)bookmarkNodeModified:(const BookmarkNode*)node;
-- (void)allBookmarksRemoved;
-@end
-
-// Handle notification that bookmarks has been removed changed so we can update
-// the bookmarked star icon.
-class BrowserBookmarkModelBridge : public bookmarks::BookmarkModelObserver {
- public:
-  explicit BrowserBookmarkModelBridge(BrowserViewController* owner)
-      : owner_(owner) {}
-
-  ~BrowserBookmarkModelBridge() override {}
-
-  void BookmarkNodeRemoved(bookmarks::BookmarkModel* model,
-                           const BookmarkNode* parent,
-                           int old_index,
-                           const BookmarkNode* node,
-                           const std::set<GURL>& removed_urls) override {
-    [owner_ bookmarkNodeModified:node];
-  }
-
-  void BookmarkModelLoaded(bookmarks::BookmarkModel* model,
-                           bool ids_reassigned) override {}
-
-  void BookmarkNodeMoved(bookmarks::BookmarkModel* model,
-                         const BookmarkNode* old_parent,
-                         int old_index,
-                         const BookmarkNode* new_parent,
-                         int new_index) override {}
-
-  void BookmarkNodeAdded(bookmarks::BookmarkModel* model,
-                         const BookmarkNode* parent,
-                         int index) override {
-    [owner_ bookmarkNodeModified:parent->GetChild(index)];
-  }
-
-  void BookmarkNodeChanged(bookmarks::BookmarkModel* model,
-                           const BookmarkNode* node) override {}
-
-  void BookmarkNodeFaviconChanged(bookmarks::BookmarkModel* model,
-                                  const BookmarkNode* node) override {}
-
-  void BookmarkNodeChildrenReordered(bookmarks::BookmarkModel* model,
-                                     const BookmarkNode* node) override {}
-
-  void BookmarkAllUserNodesRemoved(
-      bookmarks::BookmarkModel* model,
-      const std::set<GURL>& removed_urls) override {
-    [owner_ allBookmarksRemoved];
-  }
-
- private:
-  __weak BrowserViewController* owner_;
-};
 
 @implementation BrowserViewController
 
@@ -1133,6 +1042,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 
   [_model setWebUsageEnabled:active];
   [self updateDialogPresenterActiveState];
+  [self updateToolbarBroadcastState];
 
   if (active) {
     // Make sure the tab (if any; it's possible to get here without a current
@@ -1156,6 +1066,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   [_model setPrimary:primary];
   if (primary) {
     [self updateDialogPresenterActiveState];
+    [self updateToolbarBroadcastState];
   } else {
     self.dialogPresenter.active = false;
   }
@@ -1242,6 +1153,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   _viewVisible = viewVisible;
   self.visible = viewVisible;
   [self updateDialogPresenterActiveState];
+  [self updateToolbarBroadcastState];
 }
 
 - (BOOL)isToolbarOnScreen {
@@ -1253,6 +1165,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     return;
   _inNewTabAnimation = inNewTabAnimation;
   [self updateDialogPresenterActiveState];
+  [self updateToolbarBroadcastState];
 }
 
 - (BOOL)isInNewTabAnimation {
@@ -1358,6 +1271,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   [super viewDidAppear:animated];
   self.viewVisible = YES;
   [self updateDialogPresenterActiveState];
+  [self updateToolbarBroadcastState];
 
   // |viewDidAppear| can be called after |browserState| is destroyed. Since
   // |presentBubblesIfEligible| requires that |self.browserState| is not NULL,
@@ -1391,6 +1305,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 - (void)viewWillDisappear:(BOOL)animated {
   self.viewVisible = NO;
   [self updateDialogPresenterActiveState];
+  [self updateToolbarBroadcastState];
   [[_model currentTab] wasHidden];
   [_bookmarkInteractionController dismissSnackbar];
   if (IsIPadIdiom() && _infoBarContainer) {
@@ -1412,7 +1327,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   // This reinitializes the toolbar, including updating the Overlay View,
   // if there is one.
   [self updateToolbar];
-  [self infoBarContainerStateChanged:false];
+  [self infoBarContainerStateDidChangeAnimated:NO];
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -1447,6 +1362,8 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     _readingListCoordinator = nil;
     self.recentTabsCoordinator = nil;
     _toolbarCoordinator = nil;
+    [_toolbarUIUpdater stopUpdating];
+    _toolbarUIUpdater = nil;
     _toolbarModelDelegate = nil;
     _toolbarModelIOS = nil;
     [self.tabStripCoordinator stop];
@@ -1592,6 +1509,20 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   [super presentViewController:viewControllerToPresent
                       animated:flag
                     completion:finalCompletionHandler];
+}
+
+- (BOOL)shouldAutorotate {
+  if (_voiceSearchController && _voiceSearchController->IsVisible()) {
+    // Don't rotate if a voice search is being presented or dismissed.  Once the
+    // transition animations finish, only the Voice Search UIViewController's
+    // |-shouldAutorotate| will be called.
+    return NO;
+  } else if (_sideSwipeController && ![_sideSwipeController shouldAutorotate]) {
+    // Don't auto rotate if side swipe controller view says not to.
+    return NO;
+  } else {
+    return [super shouldAutorotate];
+  }
 }
 
 #pragma mark - Notification handling
@@ -1851,8 +1782,8 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   // during testing, so explicitly support this).
   _bookmarkModel = ios::BookmarkModelFactory::GetForBrowserState(_browserState);
   if (_bookmarkModel) {
-    _bookmarkModelBridge.reset(new BrowserBookmarkModelBridge(self));
-    _bookmarkModel->AddObserver(_bookmarkModelBridge.get());
+    _bookmarkModelBridge.reset(
+        new bookmarks::BookmarkModelBridge(self, _bookmarkModel));
   }
 }
 
@@ -1930,6 +1861,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   [_dispatcher startDispatchingToTarget:_toolbarCoordinator
                             forProtocol:@protocol(OmniboxFocuser)];
   [_toolbarCoordinator setTabCount:[_model count]];
+  [self updateToolbarBroadcastState];
   if (_voiceSearchController)
     _voiceSearchController->SetDelegate(
         [_toolbarCoordinator voiceSearchDelegate]);
@@ -2183,6 +2115,24 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
                     ![_toolbarCoordinator showingOmniboxPopup];
     }
     [_toolbarCoordinator.toolbarViewController.view setHidden:hideToolbar];
+  }
+}
+
+- (void)updateToolbarBroadcastState {
+  BOOL shouldBroadcast =
+      self.active && self.viewVisible && !self.inNewTabAnimation;
+  BOOL broadcasting = _toolbarUIUpdater != nil;
+  if (shouldBroadcast == broadcasting)
+    return;
+  if (shouldBroadcast) {
+    _toolbarUIUpdater = [[LegacyToolbarUIUpdater alloc]
+        initWithToolbarUI:[[ToolbarUIState alloc] init]
+             toolbarOwner:self
+             webStateList:[_model webStateList]];
+    [_toolbarUIUpdater startUpdating];
+  } else {
+    [_toolbarUIUpdater stopUpdating];
+    _toolbarUIUpdater = nil;
   }
 }
 
@@ -2627,8 +2577,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
   self.tabStripView = nil;
   _infoBarContainer = nil;
   _readingListMenuNotifier = nil;
-  if (_bookmarkModel)
-    _bookmarkModel->RemoveObserver(_bookmarkModelBridge.get());
+  _bookmarkModelBridge.reset();
   [_model removeObserver:self];
   [[UpgradeCenter sharedInstance] unregisterClient:self];
   [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -3115,6 +3064,12 @@ bubblePresenterForFeature:(const base::Feature&)feature
 
 #pragma mark - LegacyFullscreenControllerDelegate methods
 
+- (void)redrawHeader {
+  for (HeaderDefinition* header in self.headerViews) {
+    [header.view setNeedsLayout];
+  }
+}
+
 - (CGFloat)headerOffset {
   if (IsIPadIdiom())
     return StatusBarHeight();
@@ -3354,19 +3309,9 @@ bubblePresenterForFeature:(const base::Feature&)feature
     case OverscrollAction::CLOSE_TAB:
       [self.dispatcher closeCurrentTab];
       break;
-    case OverscrollAction::REFRESH: {
-      web::WebState* webState = [_model currentTab].webState;
-      if (webState) {
-        if (webState->IsLoading()) {
-          webState->Stop();
-        }
-        // |check_for_repost| is true because the reload is explicitly initiated
-        // by the user.
-        webState->GetNavigationManager()->Reload(web::ReloadType::NORMAL,
-                                                 true /* check_for_repost */);
-      }
+    case OverscrollAction::REFRESH:
+      [self reload];
       break;
-    }
     case OverscrollAction::NONE:
       NOTREACHED();
       break;
@@ -4221,10 +4166,6 @@ bubblePresenterForFeature:(const base::Feature&)feature
   return _toolbarModelIOS.get();
 }
 
-- (void)willUpdateToolbarSnapshot {
-  [[_model currentTab].overscrollActionsController clear];
-}
-
 - (CardView*)addCardViewInFullscreen:(BOOL)fullScreen {
   CGRect frame = [_contentArea frame];
   if (!fullScreen) {
@@ -4833,6 +4774,10 @@ bubblePresenterForFeature:(const base::Feature&)feature
 
 #pragma mark - ToolbarOwner
 
+- (CGFloat)toolbarHeight {
+  return [self headerHeight];
+}
+
 - (CGRect)toolbarFrame {
   return _toolbarCoordinator.toolbarViewController.view.frame;
 }
@@ -4977,10 +4922,9 @@ bubblePresenterForFeature:(const base::Feature&)feature
   }
 }
 
+#pragma mark - InfobarContainerStateDelegate
 
-#pragma mark - InfoBarControllerDelegate
-
-- (void)infoBarContainerStateChanged:(bool)isAnimating {
+- (void)infoBarContainerStateDidChangeAnimated:(BOOL)animated {
   InfoBarContainerView* infoBarContainerView = _infoBarContainer->view();
   DCHECK(infoBarContainerView);
   CGRect containerFrame = infoBarContainerView.frame;
@@ -5000,19 +4944,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
       }];
 }
 
-- (BOOL)shouldAutorotate {
-  if (_voiceSearchController && _voiceSearchController->IsVisible()) {
-    // Don't rotate if a voice search is being presented or dismissed.  Once the
-    // transition animations finish, only the Voice Search UIViewController's
-    // |-shouldAutorotate| will be called.
-    return NO;
-  } else if (_sideSwipeController && ![_sideSwipeController shouldAutorotate]) {
-    // Don't auto rotate if side swipe controller view says not to.
-    return NO;
-  } else {
-    return [super shouldAutorotate];
-  }
-}
+#pragma mark - UIGestureRecognizerDelegate
 
 // Always return yes, as this tap should work with various recognizers,
 // including UITextTapRecognizer, UILongPressGestureRecognizer,
@@ -5109,22 +5041,43 @@ bubblePresenterForFeature:(const base::Feature&)feature
   return [self hasControllerForURL:url];
 }
 
-#pragma mark - BookmarkBridgeMethods
+// TODO(crbug.com/788705): BVC doesn't need to implement
+// BookmarkModelBridgeObserver once the new toolbar is turned on.
+#pragma mark - BookmarkModelBridgeObserver
 
 // If an added or removed bookmark is the same as the current url, update the
 // toolbar so the star highlight is kept in sync.
-- (void)bookmarkNodeModified:(const BookmarkNode*)node {
-  if ([_model currentTab].webState &&
-      node->url() == [_model currentTab].webState->GetLastCommittedURL()) {
-    [self updateToolbar];
-  }
+- (void)bookmarkNodeChildrenChanged:(const BookmarkNode*)bookmarkNode {
+  [self updateToolbar];
 }
 
 // If all bookmarks are removed, update the toolbar so the star highlight is
 // kept in sync.
-- (void)allBookmarksRemoved {
+- (void)bookmarkModelRemovedAllNodes {
   [self updateToolbar];
 }
+
+// In case we are on a bookmarked page before the model is loaded.
+- (void)bookmarkModelLoaded {
+  [self updateToolbar];
+}
+
+- (void)bookmarkNodeChanged:(const BookmarkNode*)bookmarkNode {
+  // No-op -- required by BookmarkModelBridgeObserver but not used.
+}
+
+- (void)bookmarkNode:(const BookmarkNode*)bookmarkNode
+     movedFromParent:(const BookmarkNode*)oldParent
+            toParent:(const BookmarkNode*)newParent {
+  // No-op -- required by BookmarkModelBridgeObserver but not used.
+}
+
+- (void)bookmarkNodeDeleted:(const BookmarkNode*)node
+                 fromFolder:(const BookmarkNode*)folder {
+  // No-op -- required by BookmarkModelBridgeObserver but not used.
+}
+
+#pragma mark - Alerts
 
 - (void)showErrorAlertWithStringTitle:(NSString*)title
                               message:(NSString*)message {

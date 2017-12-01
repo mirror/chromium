@@ -208,6 +208,7 @@ class CORE_EXPORT EmptyChromeClient : public ChromeClient {
   void UpdateEventRectsForSubframeIfNecessary(LocalFrame* frame) override {}
   void SetHasScrollEventHandlers(LocalFrame*, bool) override {}
   void SetNeedsLowLatencyInput(LocalFrame*, bool) override {}
+  void RequestUnbufferedInputEvents(LocalFrame*) override {}
   void SetTouchAction(LocalFrame*, TouchAction) override {}
 
   void DidAssociateFormControlsAfterLoad(LocalFrame*) override {}
@@ -238,13 +239,13 @@ class CORE_EXPORT EmptyLocalFrameClient : public LocalFrameClient {
 
   bool InShadowTree() const override { return false; }
 
-  Frame* Opener() const override { return 0; }
+  Frame* Opener() const override { return nullptr; }
   void SetOpener(Frame*) override {}
 
-  Frame* Parent() const override { return 0; }
-  Frame* Top() const override { return 0; }
-  Frame* NextSibling() const override { return 0; }
-  Frame* FirstChild() const override { return 0; }
+  Frame* Parent() const override { return nullptr; }
+  Frame* Top() const override { return nullptr; }
+  Frame* NextSibling() const override { return nullptr; }
+  Frame* FirstChild() const override { return nullptr; }
   void WillBeDetached() override {}
   void Detached(FrameDetachType) override {}
   void FrameFocused() const override {}
@@ -347,7 +348,7 @@ class CORE_EXPORT EmptyLocalFrameClient : public LocalFrameClient {
   }
   bool AllowScriptExtensions() override { return false; }
 
-  WebCookieJar* CookieJar() const override { return 0; }
+  WebCookieJar* CookieJar() const override { return nullptr; }
 
   service_manager::InterfaceProvider* GetInterfaceProvider() override {
     return &interface_provider_;

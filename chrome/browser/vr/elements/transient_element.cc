@@ -14,12 +14,13 @@ TransientElement::TransientElement(const base::TimeDelta& timeout)
 TransientElement::~TransientElement() {}
 
 void TransientElement::SetVisible(bool visible) {
+  bool will_be_visible = GetTargetOpacity() == opacity_when_visible();
   // We're already at the desired visibility, no-op.
-  if (visible == (GetTargetOpacity() == opacity_when_visible()))
+  if (visible == will_be_visible)
     return;
 
   if (visible)
-    set_visible_time_ = last_frame_time();
+    set_visible_time_ = base::TimeTicks();
 
   super::SetVisible(visible);
 }
@@ -27,7 +28,7 @@ void TransientElement::SetVisible(bool visible) {
 void TransientElement::SetVisibleImmediately(bool visible) {
   bool will_be_visible = GetTargetOpacity() == opacity_when_visible();
   if (!will_be_visible && visible)
-    set_visible_time_ = last_frame_time();
+    set_visible_time_ = base::TimeTicks();
 
   super::SetVisibleImmediately(visible);
 }
@@ -37,7 +38,7 @@ void TransientElement::RefreshVisible() {
   if (GetTargetOpacity() != opacity_when_visible())
     return;
 
-  set_visible_time_ = last_frame_time();
+  set_visible_time_ = base::TimeTicks();
 }
 
 SimpleTransientElement::SimpleTransientElement(const base::TimeDelta& timeout)
@@ -54,11 +55,12 @@ bool SimpleTransientElement::OnBeginFrame(
 
   // SetVisible may have been called during initialization which means that the
   // last frame time would be zero.
-  if (set_visible_time_.is_null())
+  if (set_visible_time_.is_null() && opacity() > 0.0f)
     set_visible_time_ = last_frame_time();
 
   base::TimeDelta duration = time - set_visible_time_;
-  if (duration >= timeout_) {
+
+  if (!set_visible_time_.is_null() && duration >= timeout_) {
     super::SetVisible(false);
     return true;
   }
@@ -84,16 +86,18 @@ bool ShowUntilSignalTransientElement::OnBeginFrame(
 
   // SetVisible may have been called during initialization which means that the
   // last frame time would be zero.
-  if (set_visible_time_.is_null())
+  if (set_visible_time_.is_null() && opacity() > 0.0f)
     set_visible_time_ = last_frame_time();
 
   bool set_invisible = false;
 
   base::TimeDelta duration = time - set_visible_time_;
-  if (duration > timeout_) {
+
+  if (!set_visible_time_.is_null() && duration > timeout_) {
     callback_.Run(TransientElementHideReason::kTimeout);
     set_invisible = true;
-  } else if (duration >= min_duration_ && signaled_) {
+  } else if (!set_visible_time_.is_null() && duration >= min_duration_ &&
+             signaled_) {
     callback_.Run(TransientElementHideReason::kSignal);
     set_invisible = true;
   }
@@ -104,8 +108,8 @@ bool ShowUntilSignalTransientElement::OnBeginFrame(
   return false;
 }
 
-void ShowUntilSignalTransientElement::Signal() {
-  signaled_ = true;
+void ShowUntilSignalTransientElement::Signal(bool value) {
+  signaled_ = value;
 }
 
 }  // namespace vr

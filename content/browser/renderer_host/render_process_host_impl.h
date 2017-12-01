@@ -72,10 +72,6 @@ class GpuClient;
 class IndexedDBDispatcherHost;
 class InProcessChildThreadParams;
 class NotificationMessageFilter;
-#if BUILDFLAG(ENABLE_WEBRTC)
-class MediaStreamDispatcherHost;
-class P2PSocketDispatcherHost;
-#endif
 class PermissionServiceContext;
 class PeerConnectionTrackerHost;
 class PushMessagingManager;
@@ -89,6 +85,11 @@ class SiteInstance;
 class SiteInstanceImpl;
 class StoragePartition;
 class StoragePartitionImpl;
+
+#if BUILDFLAG(ENABLE_WEBRTC)
+class MediaStreamDispatcherHost;
+class P2PSocketDispatcherHost;
+#endif
 
 typedef base::Thread* (*RendererMainThreadFactoryFunction)(
     const InProcessChildThreadParams& params);
@@ -192,10 +193,9 @@ class CONTENT_EXPORT RenderProcessHostImpl
   void DisableAudioDebugRecordings() override;
   bool StartWebRTCEventLog(const base::FilePath& file_path) override;
   bool StopWebRTCEventLog() override;
-  void SetEchoCanceller3(bool enable) override;
-  void SetWebRtcLogMessageCallback(
-      base::Callback<void(const std::string&)> callback) override;
-  void ClearWebRtcLogMessageCallback() override;
+  void SetEchoCanceller3(
+      bool enable,
+      base::OnceCallback<void(bool, const std::string&)> callback) override;
   WebRtcStopRtpDumpCallback StartRtpDump(
       bool incoming,
       bool outgoing,
@@ -390,7 +390,7 @@ class CONTENT_EXPORT RenderProcessHostImpl
 
   PermissionServiceContext& permission_service_context() {
     return *permission_service_context_;
-  };
+  }
 
  protected:
   // A proxy for our IPC::Channel that lives on the IO thread.
@@ -532,6 +532,7 @@ class CONTENT_EXPORT RenderProcessHostImpl
   void SendDisableAecDumpToRenderer();
   base::FilePath GetAecDumpFilePathWithExtensions(const base::FilePath& file);
   base::SequencedTaskRunner& GetAecDumpFileTaskRunner();
+  void OnAec3Enabled();
 #endif
 
   static void OnMojoError(int render_process_id, const std::string& error);
@@ -710,7 +711,7 @@ class CONTENT_EXPORT RenderProcessHostImpl
 
   // Must be accessed on UI thread.
   std::vector<int> aec_dump_consumers_;
-  base::Optional<bool> override_aec3_;
+  base::OnceCallback<void(bool, const std::string&)> aec3_set_callback_;
 
   WebRtcStopRtpDumpCallback stop_rtp_dump_callback_;
 

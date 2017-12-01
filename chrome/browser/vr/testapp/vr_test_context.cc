@@ -14,13 +14,13 @@
 #include "chrome/browser/vr/model/model.h"
 #include "chrome/browser/vr/model/omnibox_suggestions.h"
 #include "chrome/browser/vr/model/toolbar_state.h"
+#include "chrome/browser/vr/speech_recognizer.h"
 #include "chrome/browser/vr/test/constants.h"
 #include "chrome/browser/vr/ui.h"
 #include "chrome/browser/vr/ui_element_renderer.h"
 #include "chrome/browser/vr/ui_input_manager.h"
 #include "chrome/browser/vr/ui_renderer.h"
 #include "chrome/browser/vr/ui_scene.h"
-#include "chrome/browser/vr/ui_scene_manager.h"
 #include "components/omnibox/browser/vector_icons.h"
 #include "components/security_state/core/security_state.h"
 #include "components/toolbar/vector_icons.h"
@@ -79,6 +79,8 @@ VrTestContext::VrTestContext() : view_scale_factor_(kDefaultViewScaleFactor) {
   ui_->SetAudioCaptureEnabled(true);
   ui_->SetBluetoothConnected(true);
   ui_->SetLocationAccess(true);
+  ui_->input_manager()->set_hit_test_strategy(
+      UiInputManager::PROJECT_TO_LASER_ORIGIN_FOR_TEST);
 }
 
 VrTestContext::~VrTestContext() = default;
@@ -100,6 +102,11 @@ void VrTestContext::DrawFrame() {
   ui_->scene()->OnBeginFrame(current_time, kForwardVector);
   ui_->OnProjMatrixChanged(render_info.left_eye_model.proj_matrix);
   ui_->ui_renderer()->Draw(render_info);
+
+  // This is required in order to show the WebVR toasts.
+  if (model_->web_vr_has_produced_frames()) {
+    ui_->ui_renderer()->DrawWebVrOverlayForeground(render_info);
+  }
 
   // TODO(cjgrant): Render viewport-aware elements.
 }
@@ -124,14 +131,24 @@ void VrTestContext::HandleInput(ui::Event* event) {
         incognito_ = !incognito_;
         ui_->SetIncognito(incognito_);
         break;
-      case ui::DomCode::US_S: {
+      case ui::DomCode::US_O:
         CreateFakeOmniboxSuggestions();
         break;
-        case ui::DomCode::US_V:
-          ui_->SetVideoCaptureEnabled(
-              !model_->permissions.video_capture_enabled);
-          break;
-      }
+      case ui::DomCode::US_D:
+        ui_->Dump();
+        break;
+      case ui::DomCode::US_V:
+        CreateFakeVoiceSearchResult();
+        break;
+      case ui::DomCode::US_W:
+        CycleWebVrModes();
+        break;
+      case ui::DomCode::US_S:
+        ToggleSplashScreen();
+        break;
+      case ui::DomCode::US_R:
+        ui_->OnWebVrFrameAvailable();
+        break;
       default:
         break;
     }
@@ -193,8 +210,17 @@ void VrTestContext::HandleInput(ui::Event* event) {
 }
 
 ControllerModel VrTestContext::UpdateController() {
-  // We first comput two points behind the mouse position in normalized device
-  // coordinates. The z components are arbitrary.
+  // We could map mouse position to controller position, and skip this logic,
+  // but it will make targeting elements with a mouse feel strange and not
+  // mouse-like. Instead, we make the reticle track the mouse position linearly
+  // by working from reticle position backwards to compute controller position.
+  // We also don't apply the elbow model (the controller pivots around its
+  // centroid), so do not expect the positioning of the controller in the test
+  // app to exactly match what will happen in production.
+  //
+  // We first set up a controller model that simulates firing the laser directly
+  // through a screen pixel. We do this by computing two points behind the mouse
+  // position in normalized device coordinates. The z components are arbitrary.
   gfx::Point3F mouse_point_far(
       2.0 * last_mouse_point_.x() / window_size_.width() - 1.0,
       -2.0 * last_mouse_point_.y() / window_size_.height() + 1.0, 0.8);
@@ -296,6 +322,42 @@ void VrTestContext::CreateFakeOmniboxSuggestions() {
   ui_->SetOmniboxSuggestions(std::move(result));
 }
 
+void VrTestContext::CreateFakeVoiceSearchResult() {
+  if (!model_->speech.recognizing_speech)
+    return;
+  ui_->SetRecognitionResult(
+      base::UTF8ToUTF16("I would like to see cat videos, please."));
+  SetVoiceSearchActive(false);
+}
+
+void VrTestContext::CycleWebVrModes() {
+  switch (model_->web_vr_timeout_state) {
+    case kWebVrNoTimeoutPending:
+      ui_->SetWebVrMode(true, false);
+      break;
+    case kWebVrAwaitingFirstFrame:
+      ui_->OnWebVrTimeoutImminent();
+      break;
+    case kWebVrTimeoutImminent:
+      ui_->OnWebVrTimedOut();
+      break;
+    case kWebVrTimedOut:
+      ui_->SetWebVrMode(false, false);
+      break;
+  }
+}
+
+void VrTestContext::ToggleSplashScreen() {
+  if (!show_web_vr_splash_screen_) {
+    UiInitialState state;
+    state.web_vr_autopresentation_expected = true;
+    ui_->ReinitializeForTest(state);
+  } else {
+    ui_->ReinitializeForTest(UiInitialState());
+  }
+  show_web_vr_splash_screen_ = !show_web_vr_splash_screen_;
+}
+
 gfx::Transform VrTestContext::ProjectionMatrix() const {
   gfx::Transform transform(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, -1, 0.5);
   if (window_size_.height() > 0) {
@@ -311,8 +373,15 @@ gfx::Transform VrTestContext::ViewProjectionMatrix() const {
 }
 
 void VrTestContext::SetVoiceSearchActive(bool active) {
-  OnUnsupportedMode(UiUnsupportedMode::kAndroidPermissionNeeded);
+  if (!voice_search_enabled_) {
+    OnUnsupportedMode(UiUnsupportedMode::kAndroidPermissionNeeded);
+    return;
+  }
+  ui_->SetSpeechRecognitionEnabled(active);
+  if (active)
+    ui_->OnSpeechRecognitionStateChanged(SPEECH_RECOGNITION_RECOGNIZING);
 }
+
 void VrTestContext::ExitPresent() {}
 void VrTestContext::ExitFullscreen() {}
 
@@ -332,9 +401,13 @@ void VrTestContext::OnUnsupportedMode(vr::UiUnsupportedMode mode) {
   }
 }
 
-void VrTestContext::OnExitVrPromptResult(vr::UiUnsupportedMode reason,
-                                         vr::ExitVrPromptChoice choice) {
+void VrTestContext::OnExitVrPromptResult(vr::ExitVrPromptChoice choice,
+                                         vr::UiUnsupportedMode reason) {
   LOG(ERROR) << "exit prompt result: " << choice;
+  if (reason == UiUnsupportedMode::kAndroidPermissionNeeded &&
+      choice == CHOICE_EXIT) {
+    voice_search_enabled_ = true;
+  }
   ui_->SetExitVrPromptEnabled(false, UiUnsupportedMode::kCount);
 }
 

@@ -130,6 +130,9 @@
       status: "stable",
     },
     {
+      name: "BlockingDownloadsInSandbox",
+    },
+    {
       name: "BlockMetaSetCookie",
       status: "experimental"
     },
@@ -163,10 +166,6 @@
     },
     {
       name: "ClientPlaceholdersForServerLoFi",
-    },
-    {
-      name: "CoalescedEvents",
-      status: "stable",
     },
     {
       name: "CompositedSelectionUpdate",
@@ -308,11 +307,6 @@
       status: "test",
     },
     {
-      name: "CustomSchemeHandler",
-      depends_on: ["NavigatorContentUtils"],
-      status: "experimental",
-    },
-    {
       name: "Database",
       status: "stable",
     },
@@ -390,6 +384,10 @@
       status: "stable",
     },
     {
+      name: "FeaturePolicyAutoplayFeature",
+      status: "experimental"
+    },
+    {
       name: "FeaturePolicyExperimentalFeatures",
     },
     {
@@ -431,11 +429,6 @@
       name: "ForceTallerSelectPopup",
     },
     {
-      name: "ForeignFetch",
-      origin_trial_feature_name: "ForeignFetch",
-      status: "experimental",
-    },
-    {
       name: "FractionalMouseEvent",
     },
     {
@@ -448,7 +441,7 @@
     {
       name: "FramebustingNeedsSameOriginOrUserGesture",
       settable_from_internals: true,
-      status: "experimental",
+      status: "stable",
     },
     {
       name: "FramesTimingFunction",
@@ -492,7 +485,7 @@
       status: "test",
     },
     {
-      name: "ImageAsyncAttribute",
+      name: "ImageDecodingAttribute",
       status: "test",
     },
     {
@@ -505,10 +498,6 @@
     {
       name: "InertAttribute",
       status: "experimental",
-    },
-    {
-      name: "InputEvent",
-      status: "stable",
     },
     {
       name: "InputModeAttribute",
@@ -549,11 +538,6 @@
     },
     {
       name: "LazyParseCSS",
-      status: "experimental",
-    },
-    {
-      name: "LinkServiceWorker",
-      origin_trial_feature_name: "ForeignFetch",
       status: "experimental",
     },
     {
@@ -716,6 +700,9 @@
     {
       name: "Notifications",
       status: "stable",
+    },
+    {
+      name: "NotificationsWithMojo",
     },
     {
       name: "NullableDocumentDomain",
@@ -888,10 +875,6 @@
       name: "RootLayerScrolling",
     },
     {
-      name: "RTCRtpSender",
-      status: "experimental",
-    },
-    {
       name: "ScriptedSpeech",
       status: "stable",
     },
@@ -935,6 +918,9 @@
     {
       name: "ServerTiming",
       status: "experimental",
+    },
+    {
+      name: "ServiceWorkerScriptFullCodeCache",
     },
     {
       name: "ServiceWorkerScriptStreaming",

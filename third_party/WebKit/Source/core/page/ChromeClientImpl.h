@@ -147,6 +147,7 @@ class CORE_EXPORT ChromeClientImpl final : public ChromeClient {
   // appropriate scroll optimizations can be chosen.
   void SetHasScrollEventHandlers(LocalFrame*, bool has_event_handlers) override;
   void SetNeedsLowLatencyInput(LocalFrame*, bool needs_low_latency) override;
+  void RequestUnbufferedInputEvents(LocalFrame*) override;
   void SetTouchAction(LocalFrame*, TouchAction) override;
 
   void AttachRootGraphicsLayer(GraphicsLayer*, LocalFrame* local_root) override;
@@ -222,8 +223,6 @@ class CORE_EXPORT ChromeClientImpl final : public ChromeClient {
   std::unique_ptr<WebFrameScheduler> CreateFrameScheduler(
       BlameContext*,
       WebFrameScheduler::FrameType) override;
-
-  double LastFrameTimeMonotonic() const override;
 
   void RegisterPopupOpeningObserver(PopupOpeningObserver*) override;
   void UnregisterPopupOpeningObserver(PopupOpeningObserver*) override;

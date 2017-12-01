@@ -5,6 +5,7 @@
 #ifndef Member_h
 #define Member_h
 
+#include "platform/heap/Heap.h"
 #include "platform/heap/HeapPage.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/HashFunctions.h"
@@ -244,16 +245,29 @@ class Member : public MemberBase<T, TracenessMemberConfiguration::kTraced> {
 
  protected:
   ALWAYS_INLINE void WriteBarrier(const T* value) const {
-#if defined(HEAP_INCREMENTAL_MARKING)
     if (value) {
-      BasePage const* const page = PageFromObject(value);
+      // The following method for retrieving a page works as allocation of
+      // mixins on large object pages is prohibited.
+      BasePage* const page = PageFromObject(value);
       if (page->IsIncrementalMarking()) {
         DCHECK(ThreadState::Current()->IsIncrementalMarking());
-        // TODO(mlippautz): Add to marking work list once include-cycles have
-        // been resolved.
+        HeapObjectHeader* const header =
+            page->IsLargeObjectPage()
+                ? static_cast<LargeObjectPage*>(page)->GetHeapObjectHeader()
+                : static_cast<NormalPage*>(page)->FindHeaderFromAddress(
+                      reinterpret_cast<Address>(
+                          const_cast<typename std::remove_const<T>::type*>(
+                              value)));
+        if (header->IsMarked())
+          return;
+
+        // Mark and push trace callback.
+        header->Mark();
+        ThreadState::Current()->Heap().PushTraceCallback(
+            header->Payload(),
+            ThreadHeap::GcInfo(header->GcInfoIndex())->trace_);
       }
     }
-#endif  // HEAP_INCREMENTAL_MARKING
   }
 };
 

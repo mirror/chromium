@@ -38,7 +38,7 @@ class TestBubbleDialogDelegate : public views::BubbleDialogDelegateView {
  public:
   explicit TestBubbleDialogDelegate(views::View* anchor)
       : BubbleDialogDelegateView(anchor, views::BubbleBorder::NONE) {}
-  ~TestBubbleDialogDelegate() override {}
+  ~TestBubbleDialogDelegate() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TestBubbleDialogDelegate);
@@ -51,7 +51,7 @@ class MockImmersiveFullscreenControllerDelegate
       : top_container_view_(top_container_view),
         enabled_(false),
         visible_fraction_(1) {}
-  ~MockImmersiveFullscreenControllerDelegate() override {}
+  ~MockImmersiveFullscreenControllerDelegate() override = default;
 
   // ImmersiveFullscreenControllerDelegate overrides:
   void OnImmersiveRevealStarted() override {
@@ -86,8 +86,8 @@ class MockImmersiveFullscreenControllerDelegate
 
 class ConsumeEventHandler : public ui::test::TestEventHandler {
  public:
-  ConsumeEventHandler() {}
-  ~ConsumeEventHandler() override {}
+  ConsumeEventHandler() = default;
+  ~ConsumeEventHandler() override = default;
 
  private:
   void OnEvent(ui::Event* event) override {
@@ -113,7 +113,7 @@ class ImmersiveFullscreenControllerTest : public AshTestBase {
 
   ImmersiveFullscreenControllerTest()
       : widget_(nullptr), top_container_(nullptr), content_view_(nullptr) {}
-  ~ImmersiveFullscreenControllerTest() override {}
+  ~ImmersiveFullscreenControllerTest() override = default;
 
   ImmersiveFullscreenController* controller() { return controller_.get(); }
 
@@ -757,14 +757,14 @@ TEST_F(ImmersiveFullscreenControllerTest, EventsDoNotLeakToWindowUnderneath) {
 TEST_F(ImmersiveFullscreenControllerTest, WindowStateImmersiveFullscreen) {
   ash::wm::WindowState* window_state = ash::wm::GetWindowState(window());
 
-  EXPECT_FALSE(window_state->in_immersive_fullscreen());
+  EXPECT_FALSE(window_state->IsInImmersiveFullscreen());
   SetEnabled(true);
   ASSERT_TRUE(controller()->IsEnabled());
-  EXPECT_TRUE(window_state->in_immersive_fullscreen());
+  EXPECT_TRUE(window_state->IsInImmersiveFullscreen());
 
   SetEnabled(false);
   ASSERT_FALSE(controller()->IsEnabled());
-  EXPECT_FALSE(window_state->in_immersive_fullscreen());
+  EXPECT_FALSE(window_state->IsInImmersiveFullscreen());
 }
 
 // Test how focus and activation affects whether the top-of-window views are

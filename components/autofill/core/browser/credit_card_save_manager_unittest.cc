@@ -504,16 +504,6 @@ class TestAutofillManager : public AutofillManager {
   DISALLOW_COPY_AND_ASSIGN(TestAutofillManager);
 };
 
-// Get Ukm sources from the Ukm service.
-std::vector<const ukm::UkmSource*> GetUkmSources(
-    ukm::TestUkmRecorder* service) {
-  std::vector<const ukm::UkmSource*> sources;
-  for (const auto& kv : service->GetSources())
-    sources.push_back(kv.second.get());
-
-  return sources;
-}
-
 }  // anonymous namespace
 
 class TestCreditCardSaveManager : public CreditCardSaveManager {
@@ -652,11 +642,13 @@ class CreditCardSaveManagerTest : public testing::Test {
     if (is_https) {
       form->origin = GURL("https://myform.com/form.html");
       form->action = GURL("https://myform.com/submit.html");
-      form->main_frame_origin = GURL("https://myform_root.com/form.html");
+      form->main_frame_origin =
+          url::Origin::Create(GURL("https://myform_root.com/form.html"));
     } else {
       form->origin = GURL("http://myform.com/form.html");
       form->action = GURL("http://myform.com/submit.html");
-      form->main_frame_origin = GURL("http://myform_root.com/form.html");
+      form->main_frame_origin =
+          url::Origin::Create(GURL("http://myform_root.com/form.html"));
     }
 
     FormFieldData field;
@@ -720,28 +712,14 @@ class CreditCardSaveManagerTest : public testing::Test {
   }
 
   void ExpectUniqueFillableFormParsedUkm() {
-    // Check that one source is logged.
-    ASSERT_EQ(1U, test_ukm_recorder_.sources_count());
-    const ukm::UkmSource* source = GetUkmSources(&test_ukm_recorder_)[0];
-
-    // Check that one entry is logged.
-    EXPECT_EQ(1U, test_ukm_recorder_.entries_count());
-    const ukm::mojom::UkmEntry* entry = test_ukm_recorder_.GetEntry(0);
-    EXPECT_EQ(source->id(), entry->source_id);
-
-    EXPECT_EQ(source->id(), entry->source_id);
-
-    // Check if there is an entry for developer engagement decision.
-    EXPECT_EQ(base::HashMetricName(UkmDeveloperEngagementType::kEntryName),
-              entry->event_hash);
-    EXPECT_EQ(1U, entry->metrics.size());
-
-    // Check that the expected developer engagement metric is logged.
-    const ukm::mojom::UkmMetric* metric = ukm::TestUkmRecorder::FindMetric(
-        entry, UkmDeveloperEngagementType::kDeveloperEngagementName);
-    ASSERT_NE(nullptr, metric);
-    EXPECT_EQ(1 << AutofillMetrics::FILLABLE_FORM_PARSED_WITHOUT_TYPE_HINTS,
-              metric->value);
+    auto entries = test_ukm_recorder_.GetEntriesByName(
+        UkmDeveloperEngagementType::kEntryName);
+    EXPECT_EQ(1u, entries.size());
+    for (const auto* const entry : entries) {
+      test_ukm_recorder_.ExpectEntryMetric(
+          entry, UkmDeveloperEngagementType::kDeveloperEngagementName,
+          1 << AutofillMetrics::FILLABLE_FORM_PARSED_WITHOUT_TYPE_HINTS);
+    }
   }
 
   void ExpectUniqueCardUploadDecision(
@@ -776,23 +754,13 @@ class CreditCardSaveManagerTest : public testing::Test {
   void ExpectMetric(const char* metric_name,
                     const char* entry_name,
                     int expected_metric_value,
-                    int expected_num_matching_entries) {
-    int num_matching_entries = 0;
-    for (size_t i = 0; i < test_ukm_recorder_.entries_count(); ++i) {
-      const ukm::mojom::UkmEntry* entry = test_ukm_recorder_.GetEntry(i);
-      // Check if there is an entry for |entry_name|.
-      if (entry->event_hash == base::HashMetricName(entry_name)) {
-        EXPECT_EQ(1UL, entry->metrics.size());
-
-        // Check that the expected |metric_value| is logged.
-        const ukm::mojom::UkmMetric* metric =
-            ukm::TestUkmRecorder::FindMetric(entry, metric_name);
-        ASSERT_NE(nullptr, metric);
-        EXPECT_EQ(expected_metric_value, metric->value);
-        ++num_matching_entries;
-      }
+                    size_t expected_num_matching_entries) {
+    auto entries = test_ukm_recorder_.GetEntriesByName(entry_name);
+    EXPECT_EQ(expected_num_matching_entries, entries.size());
+    for (const auto* const entry : entries) {
+      test_ukm_recorder_.ExpectEntryMetric(entry, metric_name,
+                                           expected_metric_value);
     }
-    EXPECT_EQ(expected_num_matching_entries, num_matching_entries);
   }
 
  protected:
@@ -1199,7 +1167,7 @@ TEST_F(CreditCardSaveManagerTest, UploadCreditCard_MultipleCvcFields) {
   credit_card_form.origin = GURL("https://myform.com/form.html");
   credit_card_form.action = GURL("https://myform.com/submit.html");
   credit_card_form.main_frame_origin =
-      GURL("https://myform_root.com/form.html");
+      url::Origin::Create(GURL("http://myform_root.com/form.html"));
 
   FormFieldData field;
   test::CreateTestFormField("Card Name", "cardname", "", "text", &field);
@@ -1261,7 +1229,7 @@ TEST_F(CreditCardSaveManagerTest, UploadCreditCard_NoCvcFieldOnForm) {
   credit_card_form.origin = GURL("https://myform.com/form.html");
   credit_card_form.action = GURL("https://myform.com/submit.html");
   credit_card_form.main_frame_origin =
-      GURL("https://myform_root.com/form.html");
+      url::Origin::Create(GURL("http://myform_root.com/form.html"));
 
   FormFieldData field;
   test::CreateTestFormField("Card Name", "cardname", "", "text", &field);
@@ -1318,7 +1286,7 @@ TEST_F(CreditCardSaveManagerTest,
   credit_card_form.origin = GURL("https://myform.com/form.html");
   credit_card_form.action = GURL("https://myform.com/submit.html");
   credit_card_form.main_frame_origin =
-      GURL("https://myform_root.com/form.html");
+      url::Origin::Create(GURL("http://myform_root.com/form.html"));
 
   FormFieldData field;
   test::CreateTestFormField("Card Name", "cardname", "", "text", &field);
@@ -1378,7 +1346,7 @@ TEST_F(CreditCardSaveManagerTest,
   credit_card_form.origin = GURL("https://myform.com/form.html");
   credit_card_form.action = GURL("https://myform.com/submit.html");
   credit_card_form.main_frame_origin =
-      GURL("https://myform_root.com/form.html");
+      url::Origin::Create(GURL("http://myform_root.com/form.html"));
 
   FormFieldData field;
   test::CreateTestFormField("Card Name", "cardname", "", "text", &field);
@@ -1440,7 +1408,7 @@ TEST_F(CreditCardSaveManagerTest,
   credit_card_form.origin = GURL("https://myform.com/form.html");
   credit_card_form.action = GURL("https://myform.com/submit.html");
   credit_card_form.main_frame_origin =
-      GURL("https://myform_root.com/form.html");
+      url::Origin::Create(GURL("http://myform_root.com/form.html"));
 
   FormFieldData field;
   test::CreateTestFormField("Card Name", "cardname", "", "text", &field);
@@ -1509,7 +1477,7 @@ TEST_F(CreditCardSaveManagerTest,
   credit_card_form.origin = GURL("https://myform.com/form.html");
   credit_card_form.action = GURL("https://myform.com/submit.html");
   credit_card_form.main_frame_origin =
-      GURL("https://myform_root.com/form.html");
+      url::Origin::Create(GURL("http://myform_root.com/form.html"));
 
   FormFieldData field;
   test::CreateTestFormField("Card Name", "cardname", "", "text", &field);
@@ -1573,7 +1541,7 @@ TEST_F(CreditCardSaveManagerTest,
   credit_card_form.origin = GURL("https://myform.com/form.html");
   credit_card_form.action = GURL("https://myform.com/submit.html");
   credit_card_form.main_frame_origin =
-      GURL("https://myform_root.com/form.html");
+      url::Origin::Create(GURL("http://myform_root.com/form.html"));
 
   FormFieldData field;
   test::CreateTestFormField("Card Name", "cardname", "", "text", &field);

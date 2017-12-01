@@ -430,9 +430,8 @@ int TabStripModelImpl::GetIndexOfWebContents(
   return kNoTab;
 }
 
-void TabStripModelImpl::UpdateWebContentsStateAt(
-    int index,
-    TabStripModelObserver::TabChangeType change_type) {
+void TabStripModelImpl::UpdateWebContentsStateAt(int index,
+                                                 TabChangeType change_type) {
   DCHECK(ContainsIndex(index));
 
   for (auto& observer : observers())
@@ -460,8 +459,9 @@ void TabStripModelImpl::CloseAllTabs() {
 
 bool TabStripModelImpl::CloseWebContentsAt(int index, uint32_t close_types) {
   DCHECK(ContainsIndex(index));
-  std::vector<content::WebContents*> closing_tabs(1, GetWebContentsAt(index));
-  return InternalCloseTabs(closing_tabs, close_types);
+  WebContents* contents = GetWebContentsAt(index);
+  return InternalCloseTabs(base::span<WebContents* const>(&contents, 1),
+                           close_types);
 }
 
 bool TabStripModelImpl::TabsAreLoading() const {
@@ -772,12 +772,9 @@ bool TabStripModelImpl::IsContextMenuCommandEnabled(
 
     case CommandToggleTabAudioMuted:
     case CommandToggleSiteMuted: {
-      TabMutedReason reason = command_id == CommandToggleSiteMuted
-                                  ? TabMutedReason::CONTENT_SETTING
-                                  : TabMutedReason::CONTEXT_MENU;
       std::vector<int> indices = GetIndicesForCommand(context_index);
       for (size_t i = 0; i < indices.size(); ++i) {
-        if (!chrome::CanToggleAudioMute(GetWebContentsAt(indices[i]), reason))
+        if (!chrome::CanToggleAudioMute(GetWebContentsAt(indices[i])))
           return false;
       }
       return true;
@@ -1107,7 +1104,7 @@ std::vector<content::WebContents*> TabStripModelImpl::GetWebContentsesByIndices(
 }
 
 bool TabStripModelImpl::InternalCloseTabs(
-    const std::vector<content::WebContents*>& items,
+    base::span<content::WebContents* const> items,
     uint32_t close_types) {
   if (items.empty())
     return true;

@@ -43,6 +43,7 @@
 #include "net/base/url_util.h"
 #include "storage/browser/blob/blob_storage_context.h"
 #include "third_party/WebKit/common/message_port/message_port_channel.h"
+#include "third_party/WebKit/common/service_worker/service_worker_client.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 
@@ -148,7 +149,8 @@ ServiceWorkerProviderHost::PreCreateNavigationHost(
       ChildProcessHost::kInvalidUniqueID,
       ServiceWorkerProviderHostInfo(
           NextBrowserProvidedProviderId(), MSG_ROUTING_NONE,
-          SERVICE_WORKER_PROVIDER_FOR_WINDOW, are_ancestors_secure),
+          blink::mojom::ServiceWorkerProviderType::kForWindow,
+          are_ancestors_secure),
       context, nullptr /* dispatcher_host */));
   host->web_contents_getter_ = web_contents_getter;
   return host;
@@ -160,10 +162,10 @@ ServiceWorkerProviderHost::PreCreateForController(
     base::WeakPtr<ServiceWorkerContextCore> context) {
   auto host = base::WrapUnique(new ServiceWorkerProviderHost(
       ChildProcessHost::kInvalidUniqueID,
-      ServiceWorkerProviderHostInfo(NextBrowserProvidedProviderId(),
-                                    MSG_ROUTING_NONE,
-                                    SERVICE_WORKER_PROVIDER_FOR_CONTROLLER,
-                                    true /* is_parent_frame_secure */),
+      ServiceWorkerProviderHostInfo(
+          NextBrowserProvidedProviderId(), MSG_ROUTING_NONE,
+          blink::mojom::ServiceWorkerProviderType::kForServiceWorker,
+          true /* is_parent_frame_secure */),
       std::move(context), nullptr));
   return host;
 }
@@ -193,9 +195,10 @@ ServiceWorkerProviderHost::ServiceWorkerProviderHost(
       allow_association_(true),
       binding_(this),
       interface_provider_binding_(this) {
-  DCHECK_NE(SERVICE_WORKER_PROVIDER_UNKNOWN, info_.type);
+  DCHECK_NE(blink::mojom::ServiceWorkerProviderType::kUnknown, info_.type);
 
-  if (info_.type == SERVICE_WORKER_PROVIDER_FOR_CONTROLLER) {
+  if (info_.type ==
+      blink::mojom::ServiceWorkerProviderType::kForServiceWorker) {
     // Actual |render_process_id| will be set after choosing a process for the
     // controller, and |render_thread id| will be set when the service worker
     // context gets started.
@@ -210,11 +213,12 @@ ServiceWorkerProviderHost::ServiceWorkerProviderHost(
   context_->RegisterProviderHostByClientID(client_uuid_, this);
 
   // |client_| and |binding_| will be bound on CompleteNavigationInitialized
-  // (PlzNavigate) or on CompleteStartWorkerPreparation (providers for
-  // controller).
+  // (providers for clients created during PlzNavigate) or on
+  // CompleteStartWorkerPreparation (providers for service workers).
   if (!info_.client_ptr_info.is_valid() && !info_.host_request.is_pending()) {
     DCHECK(IsBrowserSideNavigationEnabled() ||
-           info_.type == SERVICE_WORKER_PROVIDER_FOR_CONTROLLER);
+           info_.type ==
+               blink::mojom::ServiceWorkerProviderType::kForServiceWorker);
     return;
   }
 
@@ -243,7 +247,7 @@ ServiceWorkerProviderHost::~ServiceWorkerProviderHost() {
 }
 
 int ServiceWorkerProviderHost::frame_id() const {
-  if (info_.type == SERVICE_WORKER_PROVIDER_FOR_WINDOW)
+  if (info_.type == blink::mojom::ServiceWorkerProviderType::kForWindow)
     return info_.route_id;
   return MSG_ROUTING_NONE;
 }
@@ -337,41 +341,38 @@ void ServiceWorkerProviderHost::SetControllerVersionAttribute(
   if (previous_version.get())
     previous_version->RemoveControllee(this);
 
-  // SetController message should be sent only for controllees.
+  // SetController message should be sent only for clients.
   DCHECK(IsProviderForClient());
   SendSetControllerServiceWorker(version, notify_controllerchange);
 }
 
 bool ServiceWorkerProviderHost::IsProviderForClient() const {
   switch (info_.type) {
-    case SERVICE_WORKER_PROVIDER_FOR_WINDOW:
-    case SERVICE_WORKER_PROVIDER_FOR_WORKER:
-    case SERVICE_WORKER_PROVIDER_FOR_SHARED_WORKER:
+    case blink::mojom::ServiceWorkerProviderType::kForWindow:
+    case blink::mojom::ServiceWorkerProviderType::kForSharedWorker:
       return true;
-    case SERVICE_WORKER_PROVIDER_FOR_CONTROLLER:
+    case blink::mojom::ServiceWorkerProviderType::kForServiceWorker:
       return false;
-    case SERVICE_WORKER_PROVIDER_UNKNOWN:
+    case blink::mojom::ServiceWorkerProviderType::kUnknown:
       NOTREACHED() << info_.type;
   }
   NOTREACHED() << info_.type;
   return false;
 }
 
-blink::WebServiceWorkerClientType ServiceWorkerProviderHost::client_type()
+blink::mojom::ServiceWorkerClientType ServiceWorkerProviderHost::client_type()
     const {
   switch (info_.type) {
-    case SERVICE_WORKER_PROVIDER_FOR_WINDOW:
-      return blink::kWebServiceWorkerClientTypeWindow;
-    case SERVICE_WORKER_PROVIDER_FOR_WORKER:
-      return blink::kWebServiceWorkerClientTypeWorker;
-    case SERVICE_WORKER_PROVIDER_FOR_SHARED_WORKER:
-      return blink::kWebServiceWorkerClientTypeSharedWorker;
-    case SERVICE_WORKER_PROVIDER_FOR_CONTROLLER:
-    case SERVICE_WORKER_PROVIDER_UNKNOWN:
+    case blink::mojom::ServiceWorkerProviderType::kForWindow:
+      return blink::mojom::ServiceWorkerClientType::kWindow;
+    case blink::mojom::ServiceWorkerProviderType::kForSharedWorker:
+      return blink::mojom::ServiceWorkerClientType::kSharedWorker;
+    case blink::mojom::ServiceWorkerProviderType::kForServiceWorker:
+    case blink::mojom::ServiceWorkerProviderType::kUnknown:
       NOTREACHED() << info_.type;
   }
   NOTREACHED() << info_.type;
-  return blink::kWebServiceWorkerClientTypeWindow;
+  return blink::mojom::ServiceWorkerClientType::kWindow;
 }
 
 void ServiceWorkerProviderHost::AssociateRegistration(
@@ -544,7 +545,7 @@ void ServiceWorkerProviderHost::PostMessageToClient(
 void ServiceWorkerProviderHost::CountFeature(uint32_t feature) {
   if (!dispatcher_host_)
     return;
-  // CountFeature message should be sent only for controllees.
+  // CountFeature message should be sent only for clients.
   DCHECK(IsProviderForClient());
   DCHECK_LT(feature,
             static_cast<uint32_t>(blink::mojom::WebFeature::kNumberOfFeatures));
@@ -579,7 +580,7 @@ ServiceWorkerProviderHost::PrepareForCrossSiteTransfer() {
   DCHECK_NE(ChildProcessHost::kInvalidUniqueID, render_process_id_);
   DCHECK_NE(MSG_ROUTING_NONE, info_.route_id);
   DCHECK_EQ(kDocumentMainThreadId, render_thread_id_);
-  DCHECK_NE(SERVICE_WORKER_PROVIDER_UNKNOWN, info_.type);
+  DCHECK_NE(blink::mojom::ServiceWorkerProviderType::kUnknown, info_.type);
 
   // Clear the controller from the renderer-side provider, since no one knows
   // what's going to happen until after cross-site transfer finishes.
@@ -649,7 +650,7 @@ void ServiceWorkerProviderHost::CompleteNavigationInitialized(
     base::WeakPtr<ServiceWorkerDispatcherHost> dispatcher_host) {
   CHECK(IsBrowserSideNavigationEnabled());
   DCHECK_EQ(ChildProcessHost::kInvalidUniqueID, render_process_id_);
-  DCHECK_EQ(SERVICE_WORKER_PROVIDER_FOR_WINDOW, info_.type);
+  DCHECK_EQ(blink::mojom::ServiceWorkerProviderType::kForWindow, info_.type);
   DCHECK_EQ(kDocumentMainThreadId, render_thread_id_);
 
   DCHECK_NE(ChildProcessHost::kInvalidUniqueID, process_id);
@@ -689,7 +690,8 @@ ServiceWorkerProviderHost::CompleteStartWorkerPreparation(
   DCHECK(context_);
   DCHECK_EQ(kInvalidEmbeddedWorkerThreadId, render_thread_id_);
   DCHECK_EQ(ChildProcessHost::kInvalidUniqueID, render_process_id_);
-  DCHECK_EQ(SERVICE_WORKER_PROVIDER_FOR_CONTROLLER, provider_type());
+  DCHECK_EQ(blink::mojom::ServiceWorkerProviderType::kForServiceWorker,
+            provider_type());
   DCHECK(!running_hosted_version_);
 
   DCHECK_NE(ChildProcessHost::kInvalidUniqueID, process_id);
@@ -1120,7 +1122,7 @@ bool ServiceWorkerProviderHost::IsValidRegisterMessage(
     const GURL& script_url,
     const blink::mojom::ServiceWorkerRegistrationOptions& options,
     std::string* out_error) const {
-  if (client_type() != blink::kWebServiceWorkerClientTypeWindow) {
+  if (client_type() != blink::mojom::ServiceWorkerClientType::kWindow) {
     *out_error = ServiceWorkerConsts::kBadMessageFromNonWindow;
     return false;
   }
@@ -1144,7 +1146,7 @@ bool ServiceWorkerProviderHost::IsValidRegisterMessage(
 bool ServiceWorkerProviderHost::IsValidGetRegistrationMessage(
     const GURL& client_url,
     std::string* out_error) const {
-  if (client_type() != blink::kWebServiceWorkerClientTypeWindow) {
+  if (client_type() != blink::mojom::ServiceWorkerClientType::kWindow) {
     *out_error = ServiceWorkerConsts::kBadMessageFromNonWindow;
     return false;
   }
@@ -1163,7 +1165,7 @@ bool ServiceWorkerProviderHost::IsValidGetRegistrationMessage(
 
 bool ServiceWorkerProviderHost::IsValidGetRegistrationsMessage(
     std::string* out_error) const {
-  if (client_type() != blink::kWebServiceWorkerClientTypeWindow) {
+  if (client_type() != blink::mojom::ServiceWorkerClientType::kWindow) {
     *out_error = ServiceWorkerConsts::kBadMessageFromNonWindow;
     return false;
   }
@@ -1177,7 +1179,7 @@ bool ServiceWorkerProviderHost::IsValidGetRegistrationsMessage(
 
 bool ServiceWorkerProviderHost::IsValidGetRegistrationForReadyMessage(
     std::string* out_error) const {
-  if (client_type() != blink::kWebServiceWorkerClientTypeWindow) {
+  if (client_type() != blink::mojom::ServiceWorkerClientType::kWindow) {
     *out_error = ServiceWorkerConsts::kBadMessageFromNonWindow;
     return false;
   }
@@ -1212,9 +1214,11 @@ ServiceWorkerProviderHost::CreateServiceWorkerRegistrationObjectInfo(
   if (existing_host != registration_object_hosts_.end()) {
     return existing_host->second->CreateObjectInfo();
   }
+  // The newly created ServiceWorkerRegistrationObjectHost instance will destroy
+  // itself once it loses all its Mojo bindings.
   registration_object_hosts_[registration_id] =
-      std::make_unique<ServiceWorkerRegistrationObjectHost>(
-          context_, this, std::move(registration));
+      new ServiceWorkerRegistrationObjectHost(context_, AsWeakPtr(),
+                                              std::move(registration));
   return registration_object_hosts_[registration_id]->CreateObjectInfo();
 }
 

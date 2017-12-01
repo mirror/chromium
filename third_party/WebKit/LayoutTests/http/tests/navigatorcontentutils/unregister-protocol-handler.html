@@ -18,7 +18,7 @@ var invalid_schemes = ['http', 'https', 'file', 'web+'];
 invalid_schemes.forEach(function (scheme) {
     var succeeded = false;
     try {
-        window.navigator.unregisterProtocolHandler(scheme, "invalid scheme %s", "title");
+        window.navigator.unregisterProtocolHandler(scheme, "invalid scheme %s");
     } catch (e) {
         succeeded = 'SecurityError' == e.name;
         errorMessage = e.message;
@@ -34,7 +34,7 @@ var valid_schemes = ['bitcoin', 'BitcoIn', 'geo', 'im', 'irc', 'Irc', 'ircs', 'm
 valid_schemes.forEach(function (scheme) {
     var succeeded = false;
     try {
-        window.navigator.unregisterProtocolHandler(scheme, "valid scheme %s", "title");
+        window.navigator.unregisterProtocolHandler(scheme, "valid scheme %s");
         succeeded = true;
     } catch (e) {
         succeeded = false;
@@ -50,7 +50,7 @@ var invalid_schemes = ['mailto:', 'ssh:/', 'magnet:+', 'tel:sip'];
 invalid_schemes.forEach(function (scheme) {
     var succeeded = false;
     try {
-        window.navigator.unregisterProtocolHandler(scheme, 'invalid scheme uri=%s', 'title');
+        window.navigator.unregisterProtocolHandler(scheme, 'invalid scheme uri=%s');
     } catch (e) {
         succeeded = 'SecurityError' == e.name;
         errorMessage = e.message;
@@ -66,7 +66,7 @@ var invalid_urls = ["", "%S"];
 invalid_urls.forEach(function (url) {
    var succeeded = false;
    try {
-        window.navigator.unregisterProtocolHandler('web+myscheme', url, 'title');
+        window.navigator.unregisterProtocolHandler('web+myscheme', url);
     } catch (e) {
         succeeded = 'SyntaxError' == e.name;
         errorMessage = e.message;
@@ -82,7 +82,7 @@ invalid_urls.forEach(function (url) {
 succeeded = false;
 var errorMessage;
 try {
-    window.navigator.unregisterProtocolHandler('web+myprotocol', "http://www.example.com/soup?url=%s", "title");
+    window.navigator.unregisterProtocolHandler('web+myprotocol', "http://www.example.com/soup?url=%s");
 } catch (e) {
     succeeded = true;
     errorMessage = e.message;
@@ -96,7 +96,7 @@ else
 // Test that the API has default no-op implementation.
 var succeeded = true;
 try {
-    window.navigator.unregisterProtocolHandler('web+myscheme', "%s", "title");
+    window.navigator.unregisterProtocolHandler('web+myscheme', "%s");
 } catch (e) {
     succeeded = false;
 }
@@ -106,31 +106,6 @@ if (succeeded)
 else
     debug('FAIL Invalid call did not succeed.');
 
-// Check if unregisterProtocolHandler can unregister scheme.
-debug("\nCheck if unregisterProtocolHandler can unregister scheme correctly. If isProtocolHandlerRegistered() returns 'new' state, unregisterProtoclHandler() works well.");
-debug("'bitcoin' scheme will be registered and unregistered for testing.\n");
-try {
-    // Register 'bitcoin' scheme for testing.
-    window.navigator.registerProtocolHandler('bitcoin', 'invalid scheme uri=%s', 'title');
-    var state = window.navigator.isProtocolHandlerRegistered('bitcoin', 'valid scheme %s');
-    if (state == "registered")
-        debug("PASS window.navigator.isProtocolHandlerRegistered returns 'registered' state. 'bitcoin' is registered successfully.");
-    else if (state == "new")
-        debug("FAIL window.navigator.isProtocolHandlerRegistered returns 'new' state. Fail to register 'bitcoin' scheme.");
-    else if (state == "declined")
-        debug("FAIL window.navigator.isProtocolHandlerRegistered returns 'declined' state. Fail to register 'bitcoin' scheme.");
-
-    window.navigator.unregisterProtocolHandler('bitcoin', 'invalid scheme uri=%s');
-    var state = window.navigator.isProtocolHandlerRegistered('bitcoin', 'valid scheme %s');
-    if (state == "new")
-        debug("PASS window.navigator.isProtocolHandlerRegistered returns 'new' state. 'bitcoin' is unregistered successfully.");
-    else if (state == "registered")
-        debug("FAIL window.navigator.isProtocolHandlerRegistered returns 'registered' state. Fail to unregister 'bitcoin' scheme.");
-    else if (state == "declined")
-        debug("FAIL window.navigator.isProtocolHandlerRegistered returns 'declined' state. Fail to unregister 'bitcoin' scheme.");
-} catch (e) {
-    debug('FAIL window.navigator.isProtocolHandlerRegistered call is failed: "' + e.message + '".');
-}
 debug("\n");
 
 </script>

@@ -100,6 +100,9 @@ class CONTENT_EXPORT MainThreadEventQueue
   void ClearClient();
   void SetNeedsLowLatency(bool low_latency);
 
+  // Request unbuffered input events until next pointerup.
+  void RequestUnbufferedInputEvents();
+
  protected:
   friend class base::RefCountedThreadSafe<MainThreadEventQueue>;
   virtual ~MainThreadEventQueue();
@@ -111,10 +114,6 @@ class CONTENT_EXPORT MainThreadEventQueue
   void HandleEventOnMainThread(const blink::WebCoalescedInputEvent& event,
                                const ui::LatencyInfo& latency,
                                HandledEventCallback handled_callback);
-
-  void SendEventToMainThread(const blink::WebInputEvent* event,
-                             const ui::LatencyInfo& latency,
-                             InputEventDispatchType original_dispatch_type);
 
   bool IsRafAlignedEvent(
       const std::unique_ptr<MainThreadEventQueueTask>& item) const;
@@ -132,9 +131,9 @@ class CONTENT_EXPORT MainThreadEventQueue
   bool enable_fling_passive_listener_flag_;
   bool enable_non_blocking_due_to_main_thread_responsiveness_flag_;
   base::TimeDelta main_thread_responsiveness_threshold_;
-  bool handle_raf_aligned_touch_input_;
-  bool handle_raf_aligned_mouse_input_;
   bool needs_low_latency_;
+  bool allow_raf_aligned_input_;
+  bool needs_low_latency_until_pointer_up_ = false;
 
   // Contains data to be shared between main thread and compositor thread.
   struct SharedState {

@@ -495,13 +495,15 @@ bool LayoutTableCell::IsInEndColumn() const {
 }
 
 CSSPropertyID LayoutTableCell::ResolveBorderProperty(
-    CSSPropertyID property) const {
-  return CSSProperty::Get(property).ResolveDirectionAwareProperty(
-      TableStyle().Direction(), TableStyle().GetWritingMode());
+    const CSSProperty& property) const {
+  return property
+      .ResolveDirectionAwareProperty(TableStyle().Direction(),
+                                     TableStyle().GetWritingMode())
+      .PropertyID();
 }
 
 CollapsedBorderValue LayoutTableCell::ComputeCollapsedStartBorder() const {
-  LayoutTable* table = this->Table();
+  LayoutTable* table = Table();
   bool in_start_column = IsInStartColumn();
   LayoutTableCell* cell_preceding =
       in_start_column ? nullptr : table->CellPreceding(*this);
@@ -516,9 +518,9 @@ CollapsedBorderValue LayoutTableCell::ComputeCollapsedStartBorder() const {
   // For the start border, we need to check, in order of precedence:
   // (1) Our start border.
   CSSPropertyID start_color_property =
-      ResolveBorderProperty(CSSPropertyWebkitBorderStartColor);
+      ResolveBorderProperty(GetCSSPropertyWebkitBorderStartColor());
   CSSPropertyID end_color_property =
-      ResolveBorderProperty(CSSPropertyWebkitBorderEndColor);
+      ResolveBorderProperty(GetCSSPropertyWebkitBorderEndColor());
   CollapsedBorderValue result(BorderStartInTableDirection(),
                               ResolveColor(start_color_property),
                               kBorderPrecedenceCell);
@@ -631,7 +633,7 @@ CollapsedBorderValue LayoutTableCell::ComputeCollapsedStartBorder() const {
 }
 
 CollapsedBorderValue LayoutTableCell::ComputeCollapsedEndBorder() const {
-  LayoutTable* table = this->Table();
+  LayoutTable* table = Table();
   // Note: We have to use the effective column information instead of whether we
   // have a cell after as a table doesn't have to be regular (any row can have
   // less cells than the total cell count).
@@ -649,9 +651,9 @@ CollapsedBorderValue LayoutTableCell::ComputeCollapsedEndBorder() const {
   // For end border, we need to check, in order of precedence:
   // (1) Our end border.
   CSSPropertyID start_color_property =
-      ResolveBorderProperty(CSSPropertyWebkitBorderStartColor);
+      ResolveBorderProperty(GetCSSPropertyWebkitBorderStartColor());
   CSSPropertyID end_color_property =
-      ResolveBorderProperty(CSSPropertyWebkitBorderEndColor);
+      ResolveBorderProperty(GetCSSPropertyWebkitBorderEndColor());
   CollapsedBorderValue result = CollapsedBorderValue(
       BorderEndInTableDirection(), ResolveColor(end_color_property),
       kBorderPrecedenceCell);
@@ -761,7 +763,7 @@ CollapsedBorderValue LayoutTableCell::ComputeCollapsedEndBorder() const {
 }
 
 CollapsedBorderValue LayoutTableCell::ComputeCollapsedBeforeBorder() const {
-  LayoutTable* table = this->Table();
+  LayoutTable* table = Table();
   LayoutTableCell* cell_above = table->CellAbove(*this);
   // We can use the border shared with |cell_above| if it is valid.
   if (StartsAtSameColumn(cell_above) &&
@@ -774,9 +776,9 @@ CollapsedBorderValue LayoutTableCell::ComputeCollapsedBeforeBorder() const {
   // For before border, we need to check, in order of precedence:
   // (1) Our before border.
   CSSPropertyID before_color_property =
-      ResolveBorderProperty(CSSPropertyWebkitBorderBeforeColor);
+      ResolveBorderProperty(GetCSSPropertyWebkitBorderBeforeColor());
   CSSPropertyID after_color_property =
-      ResolveBorderProperty(CSSPropertyWebkitBorderAfterColor);
+      ResolveBorderProperty(GetCSSPropertyWebkitBorderAfterColor());
   CollapsedBorderValue result = CollapsedBorderValue(
       Style()->BorderBeforeStyle(), Style()->BorderBeforeWidth(),
       ResolveColor(before_color_property), kBorderPrecedenceCell);
@@ -892,7 +894,7 @@ CollapsedBorderValue LayoutTableCell::ComputeCollapsedBeforeBorder() const {
 }
 
 CollapsedBorderValue LayoutTableCell::ComputeCollapsedAfterBorder() const {
-  LayoutTable* table = this->Table();
+  LayoutTable* table = Table();
   LayoutTableCell* cell_below = table->CellBelow(*this);
   // We can use the border shared with |cell_below| if it is valid.
   if (StartsAtSameColumn(cell_below) &&
@@ -905,9 +907,9 @@ CollapsedBorderValue LayoutTableCell::ComputeCollapsedAfterBorder() const {
   // For after border, we need to check, in order of precedence:
   // (1) Our after border.
   CSSPropertyID before_color_property =
-      ResolveBorderProperty(CSSPropertyWebkitBorderBeforeColor);
+      ResolveBorderProperty(GetCSSPropertyWebkitBorderBeforeColor());
   CSSPropertyID after_color_property =
-      ResolveBorderProperty(CSSPropertyWebkitBorderAfterColor);
+      ResolveBorderProperty(GetCSSPropertyWebkitBorderAfterColor());
   CollapsedBorderValue result = CollapsedBorderValue(
       Style()->BorderAfterStyle(), Style()->BorderAfterWidth(),
       ResolveColor(after_color_property), kBorderPrecedenceCell);

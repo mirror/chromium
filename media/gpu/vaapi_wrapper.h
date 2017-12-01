@@ -32,14 +32,12 @@
 #include "ui/gfx/geometry/size.h"
 
 #if defined(USE_X11)
-#include <va/va_x11.h>
+#include "ui/gfx/x/x11.h"
 #endif  // USE_X11
 
-#if defined(USE_OZONE)
 namespace gfx {
 class NativePixmap;
 }
-#endif
 
 namespace media {
 
@@ -88,6 +86,9 @@ class MEDIA_GPU_EXPORT VaapiWrapper
   // Return true when JPEG decode is supported.
   static bool IsJpegDecodeSupported();
 
+  // Return true when JPEG encode is supported.
+  static bool IsJpegEncodeSupported();
+
   // Create |num_surfaces| backing surfaces in driver for VASurfaces of
   // |va_format|, each of size |size|. Returns true when successful, with the
   // created IDs in |va_surfaces| to be managed and later wrapped in
@@ -113,13 +114,11 @@ class MEDIA_GPU_EXPORT VaapiWrapper
       const gfx::Size& size,
       const std::vector<VASurfaceAttrib>& va_attribs);
 
-#if defined(USE_OZONE)
   // Create a VASurface for |pixmap|. The ownership of the surface is
   // transferred to the caller. It differs from surfaces created using
   // CreateSurfaces(), where VaapiWrapper is the owner of the surfaces.
   scoped_refptr<VASurface> CreateVASurfaceForPixmap(
       const scoped_refptr<gfx::NativePixmap>& pixmap);
-#endif
 
   // Submit parameters or slice data of |va_buffer_type|, copying them from
   // |buffer| of size |size|, into HW codec. The data in |buffer| is no
@@ -185,6 +184,14 @@ class MEDIA_GPU_EXPORT VaapiWrapper
   // be used as a sync point, i.e. it will have to become idle before starting
   // the download. |sync_surface_id| should be the source surface passed
   // to the encode job.
+  bool DownloadFromCodedBuffer(VABufferID buffer_id,
+                               VASurfaceID sync_surface_id,
+                               uint8_t* target_ptr,
+                               size_t target_size,
+                               size_t* coded_data_size);
+
+  // See DownloadFromCodedBuffer() for details. After downloading, it deletes
+  // the VA buffer with |buffer_id|.
   bool DownloadAndDestroyCodedBuffer(VABufferID buffer_id,
                                      VASurfaceID sync_surface_id,
                                      uint8_t* target_ptr,

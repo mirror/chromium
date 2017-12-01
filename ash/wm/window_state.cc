@@ -12,6 +12,7 @@
 #include "ash/public/interfaces/window_pin_type.mojom.h"
 #include "ash/public/interfaces/window_state_type.mojom.h"
 #include "ash/screen_util.h"
+#include "ash/shell.h"
 #include "ash/wm/default_state.h"
 #include "ash/wm/window_animations.h"
 #include "ash/wm/window_positioning_utils.h"
@@ -43,8 +44,8 @@ namespace {
 // manager with proper friendship.
 class BoundsSetter : public aura::LayoutManager {
  public:
-  BoundsSetter() {}
-  ~BoundsSetter() override {}
+  BoundsSetter() = default;
+  ~BoundsSetter() override = default;
 
   // aura::LayoutManager overrides:
   void OnWindowResized() override {}
@@ -328,6 +329,15 @@ void WindowState::RemoveObserver(WindowStateObserver* observer) {
   observer_list_.RemoveObserver(observer);
 }
 
+bool WindowState::GetHideShelfWhenFullscreen() const {
+  return window_->GetProperty(kHideShelfWhenFullscreenKey);
+}
+
+void WindowState::SetHideShelfWhenFullscreen(bool value) {
+  base::AutoReset<bool> resetter(&ignore_property_change_, true);
+  window_->SetProperty(kHideShelfWhenFullscreenKey, value);
+}
+
 bool WindowState::GetWindowPositionManaged() const {
   return window_->GetProperty(kWindowPositionManagedTypeKey);
 }
@@ -342,6 +352,15 @@ bool WindowState::CanConsumeSystemKeys() const {
 
 void WindowState::SetCanConsumeSystemKeys(bool can_consume_system_keys) {
   window_->SetProperty(kCanConsumeSystemKeysKey, can_consume_system_keys);
+}
+
+bool WindowState::IsInImmersiveFullscreen() const {
+  return window_->GetProperty(aura::client::kImmersiveFullscreenKey);
+}
+
+void WindowState::SetInImmersiveFullscreen(bool enabled) {
+  base::AutoReset<bool> resetter(&ignore_property_change_, true);
+  window_->SetProperty(aura::client::kImmersiveFullscreenKey, enabled);
 }
 
 void WindowState::set_bounds_changed_by_user(bool bounds_changed_by_user) {
@@ -373,7 +392,6 @@ WindowState::WindowState(aura::Window* window)
       ignored_by_shelf_(false),
       can_consume_system_keys_(false),
       unminimize_to_restore_bounds_(false),
-      in_immersive_fullscreen_(false),
       hide_shelf_when_fullscreen_(true),
       autohide_shelf_when_maximized_or_fullscreen_(false),
       minimum_visibility_(false),
@@ -548,11 +566,6 @@ void WindowState::OnWindowPropertyChanged(aura::Window* window,
     }
     return;
   }
-  if (key == aura::client::kImmersiveFullscreenKey) {
-    in_immersive_fullscreen_ =
-        window_->GetProperty(aura::client::kImmersiveFullscreenKey);
-    return;
-  }
   if (key == kWindowPinTypeKey) {
     if (!ignore_property_change_) {
       WMEvent event(WMEventTypeFromWindowPinType(GetPinType()));
@@ -564,6 +577,15 @@ void WindowState::OnWindowPropertyChanged(aura::Window* window,
     if (!ignore_property_change_) {
       // This change came from somewhere else. Revert it.
       window->SetProperty(kWindowStateTypeKey, GetStateType());
+    }
+    return;
+  }
+  if (key == kHideShelfWhenFullscreenKey ||
+      key == aura::client::kImmersiveFullscreenKey) {
+    if (!ignore_property_change_) {
+      // This change came from outside ash. Update our shelf visibility based
+      // on our changed state.
+      ash::Shell::Get()->UpdateShelfVisibility();
     }
     return;
   }

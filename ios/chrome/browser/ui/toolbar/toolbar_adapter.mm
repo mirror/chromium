@@ -14,12 +14,10 @@
 
 @implementation ToolbarAdapter
 @synthesize backgroundView = _backgroundView;
-@synthesize buttonUpdater = _buttonAdapter;
 @synthesize toolbarCoordinator = _toolbarCoordinator;
 @synthesize delegate = _delegate;
 @synthesize toolsPopupController = _toolsPopupController;
 @synthesize URLLoader = _URLLoader;
-@synthesize viewController = _viewController;
 
 - (instancetype)initWithDispatcher:
                     (id<ApplicationCommands, BrowserCommands>)dispatcher
@@ -47,6 +45,14 @@
   self.toolbarCoordinator.URLLoader = URLLoader;
 }
 
+- (ToolbarButtonUpdater*)buttonUpdater {
+  return self.toolbarCoordinator.buttonUpdater;
+}
+
+- (UIViewController*)viewController {
+  return self.toolbarCoordinator.viewController;
+}
+
 #pragma mark - Abstract WebToolbar
 
 - (void)browserStateDestroyed {
@@ -54,15 +60,15 @@
 }
 
 - (void)updateToolbarState {
-  return;
+  [self.toolbarCoordinator updateOmniboxState];
 }
 
 - (void)showPrerenderingAnimation {
-  return;
+  [self.toolbarCoordinator showPrerenderingAnimation];
 }
 
 - (void)currentPageLoadStarted {
-  return;
+  // No op, the mediator is taking care of this.
 }
 
 - (CGRect)visibleOmniboxFrame {
@@ -88,11 +94,11 @@
 #pragma mark - Abstract Toolbar
 
 - (void)setShareButtonEnabled:(BOOL)enabled {
-  return;
+  // No op.
 }
 
 - (void)triggerToolsMenuButtonAnimation {
-  return;
+  [self.toolbarCoordinator triggerToolsMenuButtonAnimation];
 }
 
 - (void)adjustToolbarHeight {
@@ -100,11 +106,11 @@
 }
 
 - (void)setBackgroundAlpha:(CGFloat)alpha {
-  return;
+  [self.toolbarCoordinator setBackgroundToIncognitoNTPColorWithAlpha:1 - alpha];
 }
 
 - (void)setTabCount:(NSInteger)tabCount {
-  return;
+  // No op.
 }
 
 - (void)activateFakeSafeAreaInsets:(UIEdgeInsets)fakeSafeAreaInsets {
@@ -115,13 +121,12 @@
   return;
 }
 
-- (void)setToolsMenuStateProvider:
-    (id<ToolsMenuPresentationStateProvider>)provider {
-  return;
+- (void)setToolsMenuIsVisibleForToolsMenuButton:(BOOL)isVisible {
+  [self.toolbarCoordinator setToolsMenuIsVisibleForToolsMenuButton:isVisible];
 }
 
-- (void)setToolsMenuIsVisibleForToolsMenuButton:(BOOL)isVisible {
-  return;
+- (void)start {
+  [self.toolbarCoordinator start];
 }
 
 #pragma mark - OmniboxFocuser
@@ -154,28 +159,8 @@
 
 #pragma mark - ActivityServicePositioner
 
-- (CGRect)shareButtonAnchorRect {
-  return CGRectZero;
-}
-
 - (UIView*)shareButtonView {
-  return nil;
-}
-
-#pragma mark - TabHistoryPositioner
-
-- (CGPoint)originPointForToolbarButton:(ToolbarButtonType)toolbarButton {
-  return CGPointZero;
-}
-
-#pragma mark - TabHistoryUIUpdater
-
-- (void)updateUIForTabHistoryPresentationFrom:(ToolbarButtonType)button {
-  return;
-}
-
-- (void)updateUIForTabHistoryWasDismissed {
-  return;
+  return [[self.toolbarCoordinator activityServicePositioner] shareButtonView];
 }
 
 #pragma mark - QRScannerResultLoading
@@ -189,11 +174,13 @@
 #pragma mark - BubbleViewAnchorPointProvider
 
 - (CGPoint)anchorPointForTabSwitcherButton:(BubbleArrowDirection)direction {
-  return CGPointZero;
+  return [[self.toolbarCoordinator bubbleAnchorPointProvider]
+      anchorPointForTabSwitcherButton:direction];
 }
 
 - (CGPoint)anchorPointForToolsMenuButton:(BubbleArrowDirection)direction {
-  return CGPointZero;
+  return [[self.toolbarCoordinator bubbleAnchorPointProvider]
+      anchorPointForToolsMenuButton:direction];
 }
 
 @end

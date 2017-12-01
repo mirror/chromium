@@ -265,11 +265,17 @@ void KeyboardController::NotifyContentsBoundsChanging(
 
       // TODO(blakeo): reduce redundant successive calls with that have
       // identical bounds.
-      const gfx::Rect unusable_workspace_region =
+      const gfx::Rect obscured_workspace_region =
+          container_behavior_->BoundsObscureUsableRegion() ? new_bounds
+                                                           : gfx::Rect();
+      observer.OnKeyboardWorkspaceOccludedBoundsChanging(
+          obscured_workspace_region);
+
+      const gfx::Rect workspace_layout_offset_region =
           container_behavior_->BoundsAffectWorkspaceLayout() ? new_bounds
                                                              : gfx::Rect();
-      observer.OnKeyboardWorkspaceOccludedBoundsChanging(
-          unusable_workspace_region);
+      observer.OnKeyboardWorkspaceDisplacingBoundsChanging(
+          workspace_layout_offset_region);
 
       // TODO(blakeo): remove this when all consumers have migrated to one of
       // the notifications above.
@@ -750,6 +756,13 @@ void KeyboardController::SetContainerType(const ContainerType type) {
   } else {
     SetContainerBehaviorInternal(type);
   }
+}
+
+bool KeyboardController::SetDraggableArea(const gfx::Rect& rect) {
+  if (container_behavior_) {
+    return container_behavior_->SetDraggableArea(rect);
+  }
+  return false;
 }
 
 }  // namespace keyboard

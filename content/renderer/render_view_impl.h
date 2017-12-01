@@ -42,6 +42,7 @@
 #include "content/renderer/stats_collection_observer.h"
 #include "ipc/ipc_platform_file.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
+#include "third_party/WebKit/public/platform/WebScopedVirtualTimePauser.h"
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
 #include "third_party/WebKit/public/web/WebAXObject.h"
 #include "third_party/WebKit/public/web/WebConsoleMessage.h"
@@ -231,6 +232,8 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
 
   void UseSynchronousResizeModeForTesting(bool enable);
 
+  void DidCommitProvisionalHistoryLoad();
+
   // Control autoresize mode.
   void EnableAutoResizeForTesting(const gfx::Size& min_size,
                                   const gfx::Size& max_size);
@@ -366,7 +369,6 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
   void HandleInputEvent(const blink::WebCoalescedInputEvent& input_event,
                         const ui::LatencyInfo& latency_info,
                         HandledEventCallback callback) override;
-  void ScrollFocusedEditableNodeIntoRect(const gfx::Rect& rect);
 
   void UpdateWebViewWithDeviceScaleFactor();
 
@@ -466,8 +468,6 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
 
   // RenderWidgetOwnerDelegate implementation ----------------------------------
 
-  bool DoesRenderWidgetHaveTouchEventHandlersAt(
-      const gfx::Point& point) const override;
   bool RenderWidgetWillHandleMouseEvent(
       const blink::WebMouseEvent& event) override;
 
@@ -734,11 +734,6 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
   // states for the sizes).
   base::OneShotTimer check_preferred_size_timer_;
 
-  // Bookkeeping to suppress redundant scroll and focus requests for an already
-  // scrolled and focused editable node.
-  bool has_scrolled_focused_editable_node_into_rect_;
-  gfx::Rect rect_for_scrolled_focused_editable_node_;
-
   // Used to indicate the zoom level to be used during subframe loads, since
   // they should match page zoom level.
   double page_zoom_level_;
@@ -792,6 +787,8 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
       disambiguation_bitmaps_;
 
   std::unique_ptr<IdleUserDetector> idle_user_detector_;
+
+  blink::WebScopedVirtualTimePauser history_navigation_virtual_time_pauser_;
 
   // ---------------------------------------------------------------------------
   // ADDING NEW DATA? Please see if it fits appropriately in one of the above

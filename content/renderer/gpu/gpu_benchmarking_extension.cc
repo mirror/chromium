@@ -21,7 +21,6 @@
 #include "cc/layers/layer.h"
 #include "cc/paint/skia_paint_canvas.h"
 #include "cc/trees/layer_tree_host.h"
-#include "content/common/child_process_messages.h"
 #include "content/common/input/synthetic_gesture_params.h"
 #include "content/common/input/synthetic_pinch_gesture_params.h"
 #include "content/common/input/synthetic_pointer_action_list_params.h"
@@ -1104,10 +1103,10 @@ bool GpuBenchmarking::HasGpuChannel() {
 
 bool GpuBenchmarking::HasGpuProcess() {
   bool has_gpu_process = false;
-  if (!RenderThreadImpl::current()->Send(
-          new ChildProcessHostMsg_HasGpuProcess(&has_gpu_process)))
+  if (!RenderThreadImpl::current()->render_message_filter()->HasGpuProcess(
+          &has_gpu_process)) {
     return false;
-
+  }
   return has_gpu_process;
 }
 

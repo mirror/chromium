@@ -5,7 +5,6 @@
 module content.mojom;
 
 import "content/common/service_worker/controller_service_worker.mojom";
-import "content/common/service_worker/service_worker_types.mojom";
 import "mojo/common/string16.mojom";
 import "third_party/WebKit/public/platform/modules/serviceworker/service_worker_error_type.mojom";
 import "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom";
@@ -74,7 +73,7 @@ interface ServiceWorkerContainerHost {
 
 // mojom::ServiceWorkerContainer is a renderer-side interface.
 // The browser process uses this interface to send messages to documents or
-// the service worker's context.
+// the service worker.
 //
 // Roughly corresponds to the web-exposed ServiceWorkerContainer interface,
 // i.e., navigator.serviceWorker. Actually, the plan is for this interface to be

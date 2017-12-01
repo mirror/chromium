@@ -23,6 +23,8 @@
 #include "core/html/HTMLMarqueeElement.h"
 
 #include <cstdlib>
+
+#include "base/macros.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/V8HTMLMarqueeElement.h"
 #include "core/CSSPropertyNames.h"
@@ -44,7 +46,6 @@
 #include "core/html/HTMLStyleElement.h"
 #include "core/html/parser/HTMLParserIdioms.h"
 #include "core/html_names.h"
-#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
@@ -78,8 +79,6 @@ void HTMLMarqueeElement::DidAddUserAgentShadowRoot(ShadowRoot& shadow_root) {
 
 class HTMLMarqueeElement::RequestAnimationFrameCallback final
     : public FrameRequestCallbackCollection::FrameCallback {
-  WTF_MAKE_NONCOPYABLE(RequestAnimationFrameCallback);
-
  public:
   explicit RequestAnimationFrameCallback(HTMLMarqueeElement* marquee)
       : marquee_(marquee) {}
@@ -96,11 +95,11 @@ class HTMLMarqueeElement::RequestAnimationFrameCallback final
 
  private:
   Member<HTMLMarqueeElement> marquee_;
+
+  DISALLOW_COPY_AND_ASSIGN(RequestAnimationFrameCallback);
 };
 
 class HTMLMarqueeElement::AnimationFinished final : public EventListener {
-  WTF_MAKE_NONCOPYABLE(AnimationFinished);
-
  public:
   explicit AnimationFinished(HTMLMarqueeElement* marquee)
       : EventListener(kCPPEventListenerType), marquee_(marquee) {}
@@ -121,6 +120,8 @@ class HTMLMarqueeElement::AnimationFinished final : public EventListener {
 
  private:
   Member<HTMLMarqueeElement> marquee_;
+
+  DISALLOW_COPY_AND_ASSIGN(AnimationFinished);
 };
 
 Node::InsertionNotificationRequest HTMLMarqueeElement::InsertedInto(
@@ -249,7 +250,7 @@ StringKeyframeEffectModel* HTMLMarqueeElement::CreateEffectModel(
   MutableCSSPropertyValueSet::SetResult set_result;
 
   SecureContextMode secure_context_mode =
-      mover_->GetDocument().SecureContextMode();
+      mover_->GetDocument().GetSecureContextMode();
 
   scoped_refptr<StringKeyframe> keyframe1 = StringKeyframe::Create();
   set_result = keyframe1->SetCSSPropertyValue(
@@ -265,7 +266,7 @@ StringKeyframeEffectModel* HTMLMarqueeElement::CreateEffectModel(
 
   return StringKeyframeEffectModel::Create(
       {std::move(keyframe1), std::move(keyframe2)},
-      LinearTimingFunction::Shared());
+      EffectModel::kCompositeReplace, LinearTimingFunction::Shared());
 }
 
 void HTMLMarqueeElement::ContinueAnimation() {

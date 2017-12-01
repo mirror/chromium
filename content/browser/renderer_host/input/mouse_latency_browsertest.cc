@@ -237,8 +237,9 @@ IN_PROC_BROWSER_TEST_F(MouseLatencyBrowserTest,
 #define MAYBE_CoalescedMouseMovesCorrectlyTerminated \
   DISABLED_CoalescedMouseMovesCorrectlyTerminated
 #else
+// Test fails/flakes on multiple platforms. https://crbug.com/789096
 #define MAYBE_CoalescedMouseMovesCorrectlyTerminated \
-  CoalescedMouseMovesCorrectlyTerminated
+  DISABLED_CoalescedMouseMovesCorrectlyTerminated
 #endif
 IN_PROC_BROWSER_TEST_F(MouseLatencyBrowserTest,
                        MAYBE_CoalescedMouseMovesCorrectlyTerminated) {

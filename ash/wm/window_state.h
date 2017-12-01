@@ -204,13 +204,8 @@ class ASH_EXPORT WindowState : public aura::WindowObserver {
 
   // Gets/sets whether the shelf should be hidden when this window is
   // fullscreen.
-  bool hide_shelf_when_fullscreen() const {
-    return hide_shelf_when_fullscreen_;
-  }
-
-  void set_hide_shelf_when_fullscreen(bool value) {
-    hide_shelf_when_fullscreen_ = value;
-  }
+  bool GetHideShelfWhenFullscreen() const;
+  void SetHideShelfWhenFullscreen(bool value);
 
   // Gets/sets whether the shelf should be autohidden when this window is
   // fullscreen or active.
@@ -281,10 +276,8 @@ class ASH_EXPORT WindowState : public aura::WindowObserver {
   // different from the normal fullscreen mode by allowing the user to reveal
   // the top portion of the window through a touch / mouse gesture. It might
   // also allow the shelf to be shown in some situations.
-  bool in_immersive_fullscreen() const { return in_immersive_fullscreen_; }
-  void set_in_immersive_fullscreen(bool enable) {
-    in_immersive_fullscreen_ = enable;
-  }
+  bool IsInImmersiveFullscreen() const;
+  void SetInImmersiveFullscreen(bool enabled);
 
   // True if the window should not adjust the window's bounds when
   // virtual keyboard bounds changes.
@@ -388,7 +381,6 @@ class ASH_EXPORT WindowState : public aura::WindowObserver {
   std::unique_ptr<DragDetails> drag_details_;
 
   bool unminimize_to_restore_bounds_;
-  bool in_immersive_fullscreen_;
   bool ignore_keyboard_bounds_change_ = false;
   bool hide_shelf_when_fullscreen_;
   bool autohide_shelf_when_maximized_or_fullscreen_;

@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "media/gpu/vaapi/vaapi_picture.h"
+
 #include "media/gpu/vaapi_wrapper.h"
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_implementation.h"

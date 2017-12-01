@@ -183,7 +183,8 @@ public class OverlayPanelContent {
 
             @Override
             public int getTopControlsHeight() {
-                return mBarHeightPx;
+                return (int) (mBarHeightPx
+                        / mActivity.getWindowAndroid().getDisplay().getDipScale());
             }
 
             @Override
@@ -258,7 +259,7 @@ public class OverlayPanelContent {
      * @return The newly created ContentViewCore.
      */
     protected ContentViewCore createContentViewCore(ChromeActivity activity) {
-        return new ContentViewCore(activity, ChromeVersionInfo.getProductVersion());
+        return ContentViewCore.create(activity, ChromeVersionInfo.getProductVersion());
     }
 
     /**

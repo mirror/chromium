@@ -25,7 +25,7 @@ CSSPaintValue::CSSPaintValue(
   argument_variable_data_.swap(variable_data);
 }
 
-CSSPaintValue::~CSSPaintValue() {}
+CSSPaintValue::~CSSPaintValue() = default;
 
 String CSSPaintValue::CustomCSSText() const {
   StringBuilder result;
@@ -81,7 +81,8 @@ bool CSSPaintValue::ParseInputArguments(const Document& document) {
 
   for (size_t i = 0; i < argument_variable_data_.size(); ++i) {
     // If we are parsing a paint() function, we must be a secure context.
-    DCHECK_EQ(SecureContextMode::kSecureContext, document.SecureContextMode());
+    DCHECK_EQ(SecureContextMode::kSecureContext,
+              document.GetSecureContextMode());
     const CSSValue* parsed_value = argument_variable_data_[i]->ParseForSyntax(
         input_argument_types[i], SecureContextMode::kSecureContext);
     if (!parsed_value) {

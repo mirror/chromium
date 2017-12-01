@@ -95,11 +95,15 @@ static constexpr float kSplashScreenMinDurationSeconds = 3;
 static constexpr float kButtonZOffsetHoverDMM = 0.048;
 
 static constexpr float kCloseButtonDistance = 2.4f;
+static constexpr float kCloseButtonVerticalOffset =
+    kFullscreenVerticalOffset - (kFullscreenHeight * 0.5f) - 0.35f;
 static constexpr float kCloseButtonHeight =
     kUrlBarHeightDMM * kCloseButtonDistance;
 static constexpr float kCloseButtonWidth =
     kUrlBarHeightDMM * kCloseButtonDistance;
 static constexpr float kCloseButtonFullscreenDistance = 2.9f;
+static constexpr float kCloseButtonFullscreenVerticalOffset =
+    kFullscreenVerticalOffset - (kFullscreenHeight / 2) - 0.35f;
 static constexpr float kCloseButtonFullscreenHeight =
     kUrlBarHeightDMM * kCloseButtonFullscreenDistance;
 static constexpr float kCloseButtonFullscreenWidth =
@@ -118,9 +122,6 @@ static constexpr float kSceneSize = 25.0;
 static constexpr float kSceneHeight = 4.0;
 static constexpr int kFloorGridlineCount = 40;
 
-// Tiny distance to offset textures that should appear in the same plane.
-static constexpr float kTextureOffset = 0.01f;
-
 static constexpr float kVoiceSearchUIGroupButtonDMM = 0.096f;
 static constexpr float kVoiceSearchButtonWidth =
     kVoiceSearchUIGroupButtonDMM * kUrlBarDistance;
@@ -133,6 +134,10 @@ static constexpr float kVoiceSearchCloseButtonHeight =
     kVoiceSearchCloseButtonWidth;
 static constexpr float kVoiceSearchCloseButtonYOffset =
     0.316f * kContentDistance + 0.5f * kVoiceSearchCloseButtonWidth;
+static constexpr float kVoiceSearchRecognitionResultTextHeight =
+    0.026f * kContentDistance;
+static constexpr float kVoiceSearchRecognitionResultTextWidth =
+    0.4f * kContentDistance;
 
 static constexpr float kUnderDevelopmentNoticeFontHeightM =
     0.02f * kUrlBarDistance;
@@ -148,63 +153,43 @@ static constexpr float kSpinnerHeight = kCloseButtonHeight;
 static constexpr float kSpinnerVerticalOffset = kSplashScreenTextVerticalOffset;
 static constexpr float kSpinnerDistance = kSplashScreenTextDistance;
 
-static constexpr float kTimeoutMessageBackgroundWidthM =
-    kUnderDevelopmentNoticeWidthM;
-static constexpr float kTimeoutMessageBackgroundHeightM =
-    kUnderDevelopmentNoticeHeightM * 0.85;
-static constexpr float kTimeoutMessageCornerRadius = kContentCornerRadius * 1.5;
+static constexpr float kTimeoutMessageHorizontalPaddingDMM = 0.04f;
+static constexpr float kTimeoutMessageVerticalPaddingDMM = 0.024f;
 
-static constexpr float kTimeoutMessageLayoutGap = kIndicatorGap * 0.5;
+static constexpr float kTimeoutMessageCornerRadiusDMM = 0.008f;
 
-static constexpr float kTimeoutMessageIconWidth = kCloseButtonWidth * 0.6;
-static constexpr float kTimeoutMessageIconHeight = kCloseButtonHeight * 0.6;
-
-static constexpr float kTimeoutMessageTextFontHeightM =
-    kUnderDevelopmentNoticeFontHeightM;
-
-static constexpr float kTimeoutMessageTextHeightM =
-    kUnderDevelopmentNoticeHeightM;
-static constexpr float kTimeoutMessageTextWidthM =
-    kUnderDevelopmentNoticeWidthM * 0.7;
+static constexpr float kTimeoutMessageLayoutGapDMM = 0.024f;
+static constexpr float kTimeoutMessageIconWidthDMM = 0.056f;
+static constexpr float kTimeoutMessageIconHeightDMM = 0.056f;
+static constexpr float kTimeoutMessageTextFontHeightDMM = 0.022f;
+static constexpr float kTimeoutMessageTextHeightDMM = 0.056f;
+static constexpr float kTimeoutMessageTextWidthDMM = 0.4f;
 
 static constexpr float kTimeoutButtonVerticalOffset = kUrlBarVerticalOffset;
 static constexpr float kTimeoutButtonDistance = kUrlBarDistance;
+static constexpr float kTimeoutButtonDepthOffset = -0.1f;
 static constexpr float kTimeoutButtonRotationRad = kUrlBarRotationRad;
-static constexpr float kTimeoutButtonWidth = kCloseButtonWidth;
-static constexpr float kTimeoutButtonHeight = kCloseButtonHeight;
+static constexpr float kWebVrTimeoutMessageButtonDiameterDMM = 0.096f;
 
-static constexpr float kTimeoutButtonTextWidth = kCloseButtonWidth;
-static constexpr float kTimeoutButtonTextHeight = kCloseButtonHeight * 0.25;
-static constexpr float kTimeoutButtonTextVerticalOffset =
-    kTimeoutButtonTextHeight;
-
-// If the screen space bounds or the aspect ratio of the content quad change
-// beyond these thresholds we propagate the new content bounds so that the
-// content's resolution can be adjusted.
-static constexpr float kContentBoundsPropagationThreshold = 0.2f;
-// Changes of the aspect ratio lead to a
-// distorted content much more quickly. Thus, have a smaller threshold here.
-static constexpr float kContentAspectRatioPropagationThreshold = 0.01f;
+static constexpr float kTimeoutButtonTextWidthDMM = 0.058f;
+static constexpr float kTimeoutButtonTextHeightDMM = 0.024f;
+static constexpr float kTimeoutButtonTextVerticalOffsetDMM = 0.024f;
 
 static constexpr float kScreenDimmerOpacity = 0.9f;
 
 static constexpr gfx::Point3F kOrigin = {0.0f, 0.0f, 0.0f};
-
-// Fraction of the distance to the object the reticle is drawn at to avoid
-// rounding errors drawing the reticle behind the object.
-// TODO(mthiesse): Find a better approach for drawing the reticle on an object.
-// Right now we have to wedge it very precisely between the content window and
-// backplane to avoid rendering artifacts. We should stop using the depth buffer
-// since the back-to-front order of our elements is well defined. This would,
-// among other things, prevent z-fighting when we draw content in the same
-// plane.
-static constexpr float kReticleOffset = 0.999f;
 
 static constexpr float kLaserWidth = 0.01f;
 
 static constexpr float kReticleWidth = 0.025f;
 static constexpr float kReticleHeight = 0.025f;
 
+static constexpr float kOmniboxContainerWidth = 4.5;
+static constexpr float kOmniboxContainerHeight = 12 * 0.02f;
+static constexpr float kOmniboxContainerCornerRadius = 0.01;
+static constexpr float kOmniboxContainerVeriticalOffset = 0.7;
+static constexpr float kOmniboxTextHeight = 0.05;
+static constexpr float kOmniboxCloseButtonVerticalOffset = -0.5;
 static constexpr float kSuggestionGap = 0.01f;
 static constexpr float kSuggestionLineGap = 0.01f;
 static constexpr float kSuggestionIconGap = 0.01f;

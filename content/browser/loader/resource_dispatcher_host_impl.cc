@@ -65,8 +65,6 @@
 #include "content/browser/loader/upload_data_stream_builder.h"
 #include "content/browser/loader/wake_lock_resource_throttle.h"
 #include "content/browser/resource_context_impl.h"
-#include "content/browser/service_worker/foreign_fetch_request_handler.h"
-#include "content/browser/service_worker/link_header_support.h"
 #include "content/browser/service_worker/service_worker_context_wrapper.h"
 #include "content/browser/service_worker/service_worker_navigation_handle_core.h"
 #include "content/browser/service_worker/service_worker_request_handler.h"
@@ -77,7 +75,10 @@
 #include "content/common/resource_messages.h"
 #include "content/common/site_isolation_policy.h"
 #include "content/common/view_messages.h"
+#include "content/public/browser/browser_child_process_host.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/child_process_data.h"
+#include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/global_request_id.h"
 #include "content/public/browser/navigation_ui_data.h"
 #include "content/public/browser/plugin_service.h"
@@ -87,6 +88,8 @@
 #include "content/public/browser/stream_handle.h"
 #include "content/public/browser/stream_info.h"
 #include "content/public/common/browser_side_navigation_policy.h"
+#include "content/public/common/child_process_host.h"
+#include "content/public/common/content_client.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/origin_util.h"
 #include "content/public/common/resource_request.h"
@@ -247,6 +250,32 @@ void HandleSyncLoadResult(base::WeakPtr<ResourceMessageFilter> filter,
     sync_result->set_reply_error();
   }
   filter->Send(sync_result.release());
+}
+
+bool ValidatePluginChildId(int plugin_child_id) {
+  if (plugin_child_id == ChildProcessHost::kInvalidUniqueID)
+    return true;
+
+#if BUILDFLAG(ENABLE_PLUGINS)
+  // TODO(nick): These checks could be stricter, since they enforce only that
+  // |plugin_child_id| is a valid plugin process, and not that it has a plugin
+  // instance owned by the renderer process making the resource request. Fix
+  // this by eliminating |plugin_child_id| altogether, and stop proxying plugin
+  // URL requests through the renderer (https://crbug.com/778711).
+  auto* plugin_host = BrowserChildProcessHost::FromID(plugin_child_id);
+  if (plugin_host) {
+    int process_type = plugin_host->GetData().process_type;
+    if (process_type == PROCESS_TYPE_PPAPI_PLUGIN) {
+      return true;
+    } else if (process_type >= PROCESS_TYPE_CONTENT_END) {
+      if (GetContentClient()->browser()->GetExternalBrowserPpapiHost(
+              plugin_child_id) != nullptr) {
+        return true;
+      }
+    }
+  }
+#endif
+  return false;
 }
 
 // Used to log the cache flags for back-forward navigation requests.
@@ -601,21 +630,6 @@ void ResourceDispatcherHostImpl::DidReceiveRedirect(
     delegate_->OnRequestRedirected(
         new_url, loader->request(), info->GetContext(), response);
   }
-
-  // Don't notify WebContents observers for requests known to be
-  // downloads; they aren't really associated with the Webcontents.
-  // Note that not all downloads are known before content sniffing.
-  if (info->IsDownload())
-    return;
-
-  // Notify the observers on the UI thread.
-  net::URLRequest* request = loader->request();
-  std::unique_ptr<ResourceRedirectDetails> detail(new ResourceRedirectDetails(
-      loader->request(),
-      !!request->ssl_info().cert,
-      new_url));
-  loader_delegate_->DidGetRedirectForResourceRequest(
-      info->GetWebContentsGetterForRequest(), std::move(detail));
 }
 
 void ResourceDispatcherHostImpl::DidReceiveResponse(
@@ -629,8 +643,6 @@ void ResourceDispatcherHostImpl::DidReceiveResponse(
     scheduler_->OnReceivedSpdyProxiedHttpResponse(
         info->GetChildID(), info->GetRouteID());
   }
-
-  ProcessRequestForLinkHeaders(request);
 
   if (delegate_)
     delegate_->OnResponseStarted(request, info->GetContext(), response);
@@ -895,9 +907,8 @@ void ResourceDispatcherHostImpl::UpdateRequestForTransfer(
   // ResourceHandlers should always get state related to the request from the
   // ResourceRequestInfo rather than caching it locally.  This lets us update
   // the info object when a transfer occurs.
-  info->UpdateForTransfer(route_id, request_data.render_frame_id,
-                          request_data.origin_pid, request_id, requester_info,
-                          std::move(mojo_request),
+  info->UpdateForTransfer(route_id, request_data.render_frame_id, request_id,
+                          requester_info, std::move(mojo_request),
                           std::move(url_loader_client));
 
   // Update maps that used the old IDs, if necessary.  Some transfers in tests
@@ -1326,7 +1337,7 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
   ResourceRequestInfoImpl* extra_info = new ResourceRequestInfoImpl(
       requester_info, route_id,
       -1,  // frame_tree_node_id
-      request_data.origin_pid, request_id, request_data.render_frame_id,
+      request_data.plugin_child_id, request_id, request_data.render_frame_id,
       request_data.is_main_frame, request_data.resource_type,
       request_data.transition_type, request_data.should_replace_current_entry,
       false,  // is download
@@ -1374,16 +1385,6 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
         request_data.keepalive, request_data.resource_type,
         request_data.fetch_request_context_type, request_data.fetch_frame_type,
         request_data.request_body);
-
-    ForeignFetchRequestHandler::InitializeHandler(
-        new_request.get(), requester_info->service_worker_context(),
-        blob_context, child_id, request_data.service_worker_provider_id,
-        service_worker_mode, request_data.fetch_request_mode,
-        request_data.fetch_credentials_mode, request_data.fetch_redirect_mode,
-        request_data.fetch_integrity, request_data.keepalive,
-        request_data.resource_type, request_data.fetch_request_context_type,
-        request_data.fetch_frame_type, request_data.request_body,
-        request_data.initiated_in_secure_context);
 
     // Have the appcache associate its extra info with the request.
     AppCacheInterceptor::SetExtraRequestInfo(
@@ -1671,8 +1672,9 @@ ResourceRequestInfoImpl* ResourceDispatcherHostImpl::CreateRequestInfo(
   return new ResourceRequestInfoImpl(
       ResourceRequesterInfo::CreateForDownloadOrPageSave(child_id),
       render_view_route_id,
-      -1,  // frame_tree_node_id
-      0, MakeRequestID(), render_frame_route_id,
+      -1,                                  // frame_tree_node_id
+      ChildProcessHost::kInvalidUniqueID,  // plugin_child_id
+      MakeRequestID(), render_frame_route_id,
       false,  // is_main_frame
       RESOURCE_TYPE_SUB_RESOURCE, ui::PAGE_TRANSITION_LINK,
       false,     // should_replace_current_entry
@@ -2090,7 +2092,7 @@ void ResourceDispatcherHostImpl::BeginNavigationRequest(
               : scoped_refptr<ServiceWorkerContextWrapper>()),
       -1,  // route_id
       info.frame_tree_node_id,
-      -1,  // request_data.origin_pid,
+      ChildProcessHost::kInvalidUniqueID,  // plugin_child_id
       MakeRequestID(),
       -1,  // request_data.render_frame_id,
       info.is_main_frame, resource_type, info.common_params.transition,
@@ -2688,6 +2690,14 @@ bool ResourceDispatcherHostImpl::ShouldServiceRequest(
                                   requester_info->file_system_context(),
                                   request_data.request_body)) {
     NOTREACHED() << "Denied unauthorized upload";
+    return false;
+  }
+
+  // Check that |plugin_child_id|, if present, is actually a plugin process.
+  if (!ValidatePluginChildId(request_data.plugin_child_id)) {
+    NOTREACHED() << "Invalid request_data.plugin_child_id: "
+                 << request_data.plugin_child_id << " (" << child_id << ", "
+                 << request_data.render_frame_id << ")";
     return false;
   }
 

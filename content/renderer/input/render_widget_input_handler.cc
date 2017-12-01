@@ -302,19 +302,6 @@ void RenderWidgetInputHandler::HandleInputEvent(
 
     LogPassiveEventListenersUma(processed, touch.dispatch_type,
                                 input_event.TimeStampSeconds(), latency_info);
-
-    // TODO(lanwei): Remove this metric for event latency outside fling in M56,
-    // once we've gathered enough data to decide if we want to ship the passive
-    // event listener for fling, see https://crbug.com/638661.
-    if (touch.dispatch_type == WebInputEvent::kBlocking &&
-        touch.touch_start_or_first_touch_move &&
-        base::TimeTicks::IsHighResolution()) {
-      base::TimeTicks now = base::TimeTicks::Now();
-      UMA_HISTOGRAM_CUSTOM_COUNTS(
-          "Event.Touch.TouchLatencyOutsideFling",
-          GetEventLatencyMicros(input_event.TimeStampSeconds(), now), 1,
-          100000000, 50);
-    }
   } else if (input_event.GetType() == WebInputEvent::kMouseWheel) {
     LogPassiveEventListenersUma(
         processed,
@@ -334,23 +321,6 @@ void RenderWidgetInputHandler::HandleInputEvent(
   InputEventAckState ack_result = processed == WebInputEventResult::kNotHandled
                                       ? INPUT_EVENT_ACK_STATE_NOT_CONSUMED
                                       : INPUT_EVENT_ACK_STATE_CONSUMED;
-  if (processed == WebInputEventResult::kNotHandled &&
-      input_event.GetType() == WebInputEvent::kTouchStart) {
-    const WebTouchEvent& touch_event =
-        static_cast<const WebTouchEvent&>(input_event);
-    // Hit-test for all the pressed touch points. If there is a touch-handler
-    // for any of the touch points, then the renderer should continue to receive
-    // touch events.
-    ack_result = INPUT_EVENT_ACK_STATE_NO_CONSUMER_EXISTS;
-    for (size_t i = 0; i < touch_event.touches_length; ++i) {
-      if (touch_event.touches[i].state == WebTouchPoint::kStatePressed &&
-          delegate_->HasTouchEventHandlersAt(
-              gfx::ToFlooredPoint(touch_event.touches[i].PositionInWidget()))) {
-        ack_result = INPUT_EVENT_ACK_STATE_NOT_CONSUMED;
-        break;
-      }
-    }
-  }
 
   // Send gesture scroll events and their dispositions to the compositor thread,
   // so that they can be used to produce the elastic overscroll effect on Mac.

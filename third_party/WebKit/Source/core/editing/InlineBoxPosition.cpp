@@ -220,13 +220,28 @@ bool IsCaretAtEdgeOfInlineTextBox(int caret_offset,
   return box.NextLeafChild() && box.NextLeafChild()->IsLineBreak();
 }
 
+template <typename Strategy>
+const LayoutObject& GetLayoutObjectSkippingShadowRoot(
+    const PositionTemplate<Strategy>& position) {
+  // TODO(editing-dev): This function doesn't handle all types of positions. We
+  // may want to investigate callers and decide if we need to generalize it.
+  DCHECK(position.IsNotNull());
+  const Node* anchor_node = position.AnchorNode();
+  const LayoutObject* result =
+      anchor_node->IsShadowRoot()
+          ? ToShadowRoot(anchor_node)->host().GetLayoutObject()
+          : anchor_node->GetLayoutObject();
+  DCHECK(result) << position;
+  return *result;
+}
+
 InlineBoxPosition ComputeInlineBoxPositionForTextNode(
     const LayoutText* text_layout_object,
     int caret_offset,
     TextAffinity affinity,
     TextDirection primary_direction) {
   // TODO(editing-dev): Add the following DCHECK when ready.
-  // DCHECK(CanUseInlineBox(*layout_object));
+  // DCHECK(CanUseInlineBox(*text_layout_object));
 
   InlineBox* inline_box = nullptr;
   InlineTextBox* candidate = nullptr;
@@ -269,15 +284,12 @@ InlineBoxPosition ComputeInlineBoxPositionForAtomicInline(
     const LayoutObject* layout_object,
     int caret_offset,
     TextDirection primary_direction) {
-  // TODO(crbug.com/567964): Change the following branch to DCHECK once fixed.
-  if (!layout_object->IsInline())
-    return InlineBoxPosition();
-
   // TODO(editing-dev): Add the following DCHECK when ready.
   // DCHECK(CanUseInlineBox(*layout_object);
   DCHECK(layout_object->IsBox());
-  DCHECK(ToLayoutBox(layout_object)->InlineBoxWrapper());
   InlineBox* const inline_box = ToLayoutBox(layout_object)->InlineBoxWrapper();
+  if (!inline_box)
+    return InlineBoxPosition();
   if ((caret_offset > inline_box->CaretMinOffset() &&
        caret_offset < inline_box->CaretMaxOffset()))
     return InlineBoxPosition(inline_box, caret_offset);
@@ -287,9 +299,12 @@ InlineBoxPosition ComputeInlineBoxPositionForAtomicInline(
 }
 
 template <typename Strategy>
-InlineBoxPosition ComputeInlineBoxPositionForBlockFlow(
-    const PositionTemplate<Strategy>& position,
-    TextDirection primary_direction) {
+PositionWithAffinityTemplate<Strategy> ComputeInlineAdjustedPosition(
+    const PositionWithAffinityTemplate<Strategy>&);
+
+template <typename Strategy>
+PositionWithAffinityTemplate<Strategy> AdjustBlockFlowPositionToInline(
+    const PositionTemplate<Strategy>& position) {
   // Try a visually equivalent position with possibly opposite editability. This
   // helps in case |position| is in an editable block but surrounded by
   // non-editable positions. It acts to negate the logic at the beginning of
@@ -297,89 +312,116 @@ InlineBoxPosition ComputeInlineBoxPositionForBlockFlow(
   const PositionTemplate<Strategy>& downstream_equivalent =
       DownstreamIgnoringEditingBoundaries(position);
   if (downstream_equivalent != position) {
-    return ComputeInlineBoxPosition(downstream_equivalent,
-                                    TextAffinity::kUpstream, primary_direction);
+    return ComputeInlineAdjustedPosition(PositionWithAffinityTemplate<Strategy>(
+        downstream_equivalent, TextAffinity::kUpstream));
   }
   const PositionTemplate<Strategy>& upstream_equivalent =
       UpstreamIgnoringEditingBoundaries(position);
   if (upstream_equivalent == position ||
       DownstreamIgnoringEditingBoundaries(upstream_equivalent) == position)
-    return InlineBoxPosition();
+    return PositionWithAffinityTemplate<Strategy>();
 
-  return ComputeInlineBoxPosition(upstream_equivalent, TextAffinity::kUpstream,
-                                  primary_direction);
+  return ComputeInlineAdjustedPosition(PositionWithAffinityTemplate<Strategy>(
+      upstream_equivalent, TextAffinity::kUpstream));
 }
 
+// TODO(xiaochengh): Expose this function for current callers of
+// ComputeInlineBoxPosition() for deciding to use legacy or NG implementation.
 template <typename Strategy>
-InlineBoxPosition ComputeInlineBoxPositionTemplate(
-    const PositionTemplate<Strategy>& position,
-    TextAffinity affinity,
+PositionWithAffinityTemplate<Strategy> ComputeInlineAdjustedPosition(
+    const PositionWithAffinityTemplate<Strategy>& position) {
+  const LayoutObject& layout_object =
+      GetLayoutObjectSkippingShadowRoot(position.GetPosition());
+
+  if (layout_object.IsText())
+    return position;
+
+  if (layout_object.IsAtomicInlineLevel()) {
+    // TODO(crbug.com/567964): Change the following branch to DCHECK once fixed.
+    if (!layout_object.IsInline())
+      return PositionWithAffinityTemplate<Strategy>();
+    return position;
+  }
+
+  if (!layout_object.IsLayoutBlockFlow() ||
+      !CanHaveChildrenForEditing(position.AnchorNode()) ||
+      !HasRenderedNonAnonymousDescendantsWithHeight(&layout_object))
+    return PositionWithAffinityTemplate<Strategy>();
+  return AdjustBlockFlowPositionToInline(position.GetPosition());
+}
+
+// TODO(xiaochengh): Expose this function for code depending on legacy layout.
+template <typename Strategy>
+InlineBoxPosition ComputeInlineBoxPositionForInlineAdjustedPosition(
+    const PositionWithAffinityTemplate<Strategy>& adjusted,
     TextDirection primary_direction) {
-  int caret_offset = position.ComputeEditingOffset();
-  Node* const anchor_node = position.AnchorNode();
-  LayoutObject* layout_object =
-      anchor_node->IsShadowRoot()
-          ? ToShadowRoot(anchor_node)->host().GetLayoutObject()
-          : anchor_node->GetLayoutObject();
+  const PositionTemplate<Strategy>& position = adjusted.GetPosition();
+  const LayoutObject& layout_object =
+      GetLayoutObjectSkippingShadowRoot(position);
+  const int caret_offset = position.ComputeEditingOffset();
 
-  DCHECK(layout_object) << position;
-
-  if (layout_object->IsText()) {
+  if (layout_object.IsText()) {
     return ComputeInlineBoxPositionForTextNode(
-        ToLayoutText(layout_object), caret_offset, affinity, primary_direction);
+        &ToLayoutText(layout_object), caret_offset, adjusted.Affinity(),
+        primary_direction);
   }
 
-  if (layout_object->IsAtomicInlineLevel()) {
-    return ComputeInlineBoxPositionForAtomicInline(layout_object, caret_offset,
-                                                   primary_direction);
-  }
-
-  if (!layout_object->IsLayoutBlockFlow() ||
-      !CanHaveChildrenForEditing(anchor_node) ||
-      !HasRenderedNonAnonymousDescendantsWithHeight(layout_object))
-    return InlineBoxPosition();
-  return ComputeInlineBoxPositionForBlockFlow(position, primary_direction);
+  DCHECK(layout_object.IsAtomicInlineLevel());
+  DCHECK(layout_object.IsInline());
+  return ComputeInlineBoxPositionForAtomicInline(&layout_object, caret_offset,
+                                                 primary_direction);
 }
 
 template <typename Strategy>
 InlineBoxPosition ComputeInlineBoxPositionTemplate(
-    const PositionTemplate<Strategy>& position,
-    TextAffinity affinity) {
+    const PositionWithAffinityTemplate<Strategy>& position,
+    TextDirection primary_direction) {
+  const PositionWithAffinityTemplate<Strategy> adjusted =
+      ComputeInlineAdjustedPosition(position);
+  if (adjusted.IsNull())
+    return InlineBoxPosition();
+  return ComputeInlineBoxPositionForInlineAdjustedPosition(adjusted,
+                                                           primary_direction);
+}
+
+template <typename Strategy>
+InlineBoxPosition ComputeInlineBoxPositionTemplate(
+    const PositionWithAffinityTemplate<Strategy>& position) {
   return ComputeInlineBoxPositionTemplate<Strategy>(
-      position, affinity, PrimaryDirectionOf(*position.AnchorNode()));
+      position, PrimaryDirectionOf(*position.AnchorNode()));
 }
 
 }  // namespace
 
-InlineBoxPosition ComputeInlineBoxPosition(const Position& position,
-                                           TextAffinity affinity) {
-  return ComputeInlineBoxPositionTemplate<EditingStrategy>(position, affinity);
+// TODO(xiaochengh): Migrate current callers of ComputeInlineBoxPosition to
+// ComputeInlineAdjustedPosition() instead.
+
+InlineBoxPosition ComputeInlineBoxPosition(
+    const PositionWithAffinity& position) {
+  return ComputeInlineBoxPositionTemplate<EditingStrategy>(position);
 }
 
-InlineBoxPosition ComputeInlineBoxPosition(const PositionInFlatTree& position,
-                                           TextAffinity affinity) {
-  return ComputeInlineBoxPositionTemplate<EditingInFlatTreeStrategy>(position,
-                                                                     affinity);
+InlineBoxPosition ComputeInlineBoxPosition(
+    const PositionInFlatTreeWithAffinity& position) {
+  return ComputeInlineBoxPositionTemplate<EditingInFlatTreeStrategy>(position);
 }
 
 InlineBoxPosition ComputeInlineBoxPosition(const VisiblePosition& position) {
   DCHECK(position.IsValid()) << position;
-  return ComputeInlineBoxPosition(position.DeepEquivalent(),
-                                  position.Affinity());
+  return ComputeInlineBoxPosition(position.ToPositionWithAffinity());
 }
 
-InlineBoxPosition ComputeInlineBoxPosition(const Position& position,
-                                           TextAffinity affinity,
+InlineBoxPosition ComputeInlineBoxPosition(const PositionWithAffinity& position,
                                            TextDirection primary_direction) {
-  return ComputeInlineBoxPositionTemplate<EditingStrategy>(position, affinity,
+  return ComputeInlineBoxPositionTemplate<EditingStrategy>(position,
                                                            primary_direction);
 }
 
-InlineBoxPosition ComputeInlineBoxPosition(const PositionInFlatTree& position,
-                                           TextAffinity affinity,
-                                           TextDirection primary_direction) {
+InlineBoxPosition ComputeInlineBoxPosition(
+    const PositionInFlatTreeWithAffinity& position,
+    TextDirection primary_direction) {
   return ComputeInlineBoxPositionTemplate<EditingInFlatTreeStrategy>(
-      position, affinity, primary_direction);
+      position, primary_direction);
 }
 
 }  // namespace blink

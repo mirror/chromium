@@ -83,15 +83,8 @@ crbug.com/771643 virtual/spv175/compositing/composited-descendant-requiring-bord
 crbug.com/771643 virtual/spv175/compositing/composited-scaled-child-with-border-radius-parent-clip.html [ Failure ]
 crbug.com/771643 virtual/spv175/compositing/composited-translated-child-with-border-radius-parent-clip.html [ Failure ]
 crbug.com/771643 virtual/spv175/compositing/opacity-with-mask.html [ Failure ]
-crbug.com/771643 virtual/spv175/compositing/perspective-origin-with-scrollbars.html [ Failure ]
-crbug.com/771643 virtual/spv175/compositing/scrollbar-painting.html [ Failure ]
-crbug.com/771643 virtual/spv175/compositing/backgrounds/local-background.html [ Failure ]
 crbug.com/771643 virtual/spv175/compositing/fixed-body-background-positioned.html [ Failure Pass ]
-crbug.com/771643 virtual/spv175/compositing/geometry/composited-in-columns.html [ Failure ]
 crbug.com/771643 virtual/spv175/compositing/geometry/repaint-foreground-layer.html [ Crash ]
-crbug.com/771643 virtual/spv175/compositing/gestures/gesture-tapHighlight-2-overflow-div-scrolled-inner.html [ Failure ]
-crbug.com/771643 virtual/spv175/compositing/gestures/gesture-tapHighlight-2-overflow-div-scrolled-outer.html [ Failure ]
-crbug.com/771643 virtual/spv175/compositing/gestures/gesture-tapHighlight-2-overflow-div.html [ Failure ]
 crbug.com/771643 virtual/spv175/compositing/images/direct-image-dynamic-border-radius.html [ Failure ]
 crbug.com/771643 virtual/spv175/compositing/masks/direct-image-mask.html [ Failure ]
 crbug.com/771643 virtual/spv175/compositing/masks/mask-with-added-filters.html [ Failure Pass ]
@@ -104,27 +97,19 @@ crbug.com/771643 virtual/spv175/compositing/overflow/border-radius-on-parent-com
 crbug.com/771643 virtual/spv175/compositing/overflow/border-radius-on-two-ancestors-composited-grandchild.html [ Failure ]
 crbug.com/771643 virtual/spv175/compositing/overflow/border-radius-outside-bounds-of-compositing-ancestor.html [ Failure ]
 crbug.com/771643 virtual/spv175/compositing/overflow/border-radius-styles-with-composited-child.html [ Failure ]
-crbug.com/771643 virtual/spv175/compositing/overflow/clip-content-under-overflow-controls.html [ Failure ]
 crbug.com/771643 virtual/spv175/compositing/overflow/composited-layer-under-border-radius-under-composited-layer.html [ Failure ]
 crbug.com/771643 virtual/spv175/compositing/overflow/do-not-paint-outline-into-composited-scrolling-contents.html [ Failure ]
-crbug.com/771643 virtual/spv175/compositing/overflow/fixed-element-escape-fixed-overflow-clip.html [ Failure ]
 crbug.com/771643 virtual/spv175/compositing/overflow/grandchild-composited-with-border-radius-ancestor.html [ Failure ]
 crbug.com/771643 virtual/spv175/compositing/overflow/grandchild-with-border-radius-ancestor.html [ Failure ]
 crbug.com/771643 virtual/spv175/compositing/overflow/mask-with-small-content-rect.html [ Failure ]
 crbug.com/771643 virtual/spv175/compositing/overflow/overflow-scroll-with-negative-offset-translucent-outline.html [ Failure ]
-crbug.com/771643 virtual/spv175/compositing/overflow/overflow-scroll.html [ Failure ]
 crbug.com/771643 virtual/spv175/compositing/overflow/relpos-under-abspos-border-radius.html [ Failure ]
 crbug.com/771643 virtual/spv175/compositing/overflow/scroll-ancestor-update.html [ Failure ]
 crbug.com/771643 virtual/spv175/compositing/overflow/scroll-neg-z-index-and-composited-child.html [ Failure ]
-crbug.com/771643 virtual/spv175/compositing/overflow/scrollbar-painting.html [ Failure ]
-crbug.com/771643 virtual/spv175/compositing/overflow/scrollbars-with-clipped-owner.html [ Failure ]
 crbug.com/771643 virtual/spv175/compositing/overflow/siblings-composited-with-border-radius-ancestor-one-clipped.html [ Failure ]
 crbug.com/771643 virtual/spv175/compositing/overflow/siblings-composited-with-border-radius-ancestor.html [ Failure ]
 crbug.com/771643 virtual/spv175/compositing/overflow/siblings-with-border-radius-ancestor.html [ Failure ]
 crbug.com/771643 virtual/spv175/compositing/overflow/tiled-mask.html [ Failure ]
-crbug.com/771643 virtual/spv175/compositing/reflections/nested-reflection-on-overflow.html [ Failure ]
-crbug.com/771643 virtual/spv175/compositing/scrollbars/composited-custom-scrollbar.html [ Failure ]
-crbug.com/771643 virtual/spv175/compositing/scrollbars/custom-composited-different-track-parts.html [ Failure ]
 crbug.com/771643 virtual/spv175/compositing/squashing/squash-composited-input.html [ Failure ]
 crbug.com/771643 virtual/spv175/compositing/squashing/squash-overflow-hidden-scrolltop.html [ Failure ]
 crbug.com/771643 virtual/spv175/compositing/squashing/squash-with-ancestor-reflection.html [ Failure ]
@@ -136,29 +121,17 @@ crbug.com/771643 virtual/spv175/paint/invalidation/repaint-across-writing-mode-b
 crbug.com/771643 virtual/spv175/paint/invalidation/resize-mask.html [ Failure ]
 crbug.com/771643 virtual/spv175/paint/invalidation/compositing/newly-composited-repaint-rect.html [ Failure ]
 crbug.com/771643 virtual/spv175/paint/invalidation/compositing/resize-squashing-layer-that-needs-full-repaint.html [ Failure ]
-crbug.com/771643 virtual/spv175/paint/invalidation/compositing/should-not-repaint-composited-descendants-on-overflow-change.html [ Failure ]
 crbug.com/771643 virtual/spv175/paint/invalidation/compositing/subpixel-offset-scaled-transform-composited.html [ Failure ]
-crbug.com/771643 virtual/spv175/paint/invalidation/filters/filter-on-html-element-with-fixed-position-child.html [ Failure ]
+# Seems to pass with DCHECK.
+crbug.com/771643 virtual/spv175/paint/invalidation/filters/filter-on-html-element-with-fixed-position-child.html [ Failure Pass ]
 crbug.com/771643 virtual/spv175/paint/invalidation/forms/select-option-background-color.html [ Failure ]
-crbug.com/771643 virtual/spv175/paint/invalidation/multicol/column-rule-change.html [ Failure ]
-crbug.com/771643 virtual/spv175/paint/invalidation/multicol/column-rules-fixed-height.html [ Failure ]
-crbug.com/771643 virtual/spv175/paint/invalidation/multicol/multicol-as-paint-container.html [ Failure ]
-crbug.com/771643 virtual/spv175/paint/invalidation/multicol/multicol-nested.html [ Failure ]
-crbug.com/771643 virtual/spv175/paint/invalidation/multicol/multicol-repaint.html [ Failure ]
-crbug.com/771643 virtual/spv175/paint/invalidation/multicol/multicol-rule-actual-columns-change.html [ Failure ]
-crbug.com/771643 virtual/spv175/paint/invalidation/multicol/multicol-with-block.html [ Failure ]
-crbug.com/771643 virtual/spv175/paint/invalidation/multicol/multicol-with-inline.html [ Failure ]
 crbug.com/771643 virtual/spv175/paint/invalidation/multicol/multicol-with-overflowing-block-rl.html [ Failure ]
-crbug.com/771643 virtual/spv175/paint/invalidation/multicol/multicol-with-text.html [ Failure ]
 crbug.com/771643 virtual/spv175/paint/invalidation/overflow/composited-overflow-with-negative-offset-outline.html [ Failure ]
-crbug.com/771643 virtual/spv175/paint/invalidation/overflow/opacity-change-on-overflow-float.html [ Failure ]
 crbug.com/771643 virtual/spv175/paint/invalidation/overflow/paged-with-overflowing-block-rl.html [ Failure ]
 crbug.com/771643 virtual/spv175/paint/invalidation/position/position-change-keeping-geometry.html [ Failure ]
-crbug.com/771643 virtual/spv175/paint/invalidation/position/transform-absolute-child.html [ Failure ]
 crbug.com/771643 virtual/spv175/paint/invalidation/reflection/reflection-repaint-test.html [ Failure ]
-crbug.com/771643 virtual/spv175/paint/invalidation/reflection/reflection-redraw.html [ Failure ]
-crbug.com/771643 virtual/spv175/paint/invalidation/scroll/composited-add-resizer.html [ Failure ]
-crbug.com/771643 virtual/spv175/paint/invalidation/scroll/non-stacking-scroller-with-abspos-descendant-indirect.html [ Failure ]
+# Seems to pass with DCHECK.
+crbug.com/771643 virtual/spv175/paint/invalidation/reflection/reflection-redraw.html [ Failure Pass ]
 crbug.com/771643 virtual/spv175/paint/invalidation/scroll/repaint-during-scroll-with-zoom.html [ Failure ]
 crbug.com/771643 virtual/spv175/paint/invalidation/scroll/resize-scrollable-iframe.html [ Failure ]
 crbug.com/771643 virtual/spv175/paint/invalidation/scroll/scroll-descendant-with-cached-cliprects.html [ Failure ]
@@ -170,11 +143,8 @@ crbug.com/771643 virtual/spv175/paint/invalidation/svg/mask-clip-target-transfor
 crbug.com/771643 virtual/spv175/paint/invalidation/svg/paintorder-filtered.svg [ Failure ]
 crbug.com/771643 virtual/spv175/paint/invalidation/svg/resource-invalidate-on-target-update.svg [ Failure ]
 crbug.com/771643 virtual/spv175/paint/invalidation/svg/text-viewbox-rescale.html [ Failure ]
-crbug.com/771643 virtual/spv175/paint/invalidation/svg/transform-focus-ring-repaint.html [ Failure ]
 crbug.com/771643 virtual/spv175/paint/invalidation/svg/use-clipped-hit.svg [ Failure ]
 crbug.com/771643 virtual/spv175/paint/invalidation/svg/zoom-coords-viewattr-01-b.svg [ Failure ]
-crbug.com/771643 virtual/spv175/paint/invalidation/table/single-line-cells-repeating-thead-break-inside-on-thead-only.html [ Failure ]
-crbug.com/771643 virtual/spv175/paint/invalidation/transform/transform-repaint-descendants.html [ Failure ]
 crbug.com/771643 virtual/spv175/paint/masks/fieldset-mask.html [ Failure ]
 crbug.com/771643 virtual/spv175/paint/masks/table-cell-masks.html [ Failure ]
 crbug.com/771643 virtual/spv175/paint/pagination/pagination-change-clip-crash.html [ Failure ]
@@ -428,7 +398,6 @@ crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-wrap-bfc-
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-wrap-bfc-003-right-table.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-wrap-bfc-004.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-wrap-bfc-006.xht [ Failure ]
-crbug.com/723135 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-zero-height-wrap-001.xht [ Failure ]
 crbug.com/723135 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-zero-height-wrap-002.xht [ Failure ]
 
 ### virtual/layout_ng/external/wpt/css/CSS2/floats-clear
@@ -450,12 +419,6 @@ crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-130
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-131.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-137.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-143.xht [ Failure ]
-
-# Regressions while changing zero-block-size float behaviour.
-crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/001.html [ Failure ]
-crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/005.html [ Failure ]
-crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/block-inside-inline/001.html [ Failure ]
-crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/block-inside-inline/005.html [ Failure ]
 
 ### virtual/layout_ng/external/wpt/css/CSS2/linebox
 
@@ -629,12 +592,6 @@ crbug.com/635619 [ Mac ] virtual/layout_ng/fast/block/float/width-update-after-c
 ### virtual/layout_ng/fast/block/margin-collapse
 crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/103.html [ Failure ]
 
-### virtual/layout_ng/fast/block/margin-collapse/block-inside-inline
-crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/block-inside-inline/010.html [ Failure ]
-crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/block-inside-inline/011.html [ Failure ]
-crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/block-inside-inline/012.html [ Failure ]
-crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/block-inside-inline/015.html [ Failure ]
-
 ### virtual/layout_ng/fast/block/margin-collapse
 crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/clear-nested-float-more-than-one-previous-sibling-away.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/webkit-margin-collapse-container.html [ Failure ]
@@ -644,6 +601,16 @@ crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/webkit-margin-coll
 ### virtual/layout_ng/overflow
 crbug.com/724701 virtual/layout_ng/overflow/overflow-basic-004.html [ Failure ]
 crbug.com/728378 virtual/layout_ng/overflow/overflow-position-003.html [ Failure ]
+
+### single pixel underline Mac failures
+crbug.com/635619 [ Mac ] virtual/layout_ng/fast/block/margin-collapse/001.html [ Failure ]
+crbug.com/635619 [ Mac ] virtual/layout_ng/fast/block/margin-collapse/005.html [ Failure ]
+crbug.com/635619 [ Mac ] virtual/layout_ng/fast/block/margin-collapse/block-inside-inline/001.html [ Failure ]
+crbug.com/635619 [ Mac ] virtual/layout_ng/fast/block/margin-collapse/block-inside-inline/005.html [ Failure ]
+crbug.com/635619 [ Mac ] virtual/layout_ng/fast/block/margin-collapse/block-inside-inline/010.html [ Failure ]
+crbug.com/635619 [ Mac ] virtual/layout_ng/fast/block/margin-collapse/block-inside-inline/011.html [ Failure ]
+crbug.com/635619 [ Mac ] virtual/layout_ng/fast/block/margin-collapse/block-inside-inline/012.html [ Failure ]
+crbug.com/635619 [ Mac ] virtual/layout_ng/fast/block/margin-collapse/block-inside-inline/015.html [ Failure ]
 
 # ====== LayoutNG,LayoutNGPaintFragments ======
 
@@ -708,40 +675,39 @@ crbug.com/714962 virtual/layout_ng_paint/fast/inline/styledEmptyInlinesWithBRs.h
 
 crbug.com/776656 virtual/incremental-shadow-dom/external/wpt/shadow-dom/HTMLSlotElement-interface.html [ Failure ]
 crbug.com/776656 virtual/incremental-shadow-dom/external/wpt/shadow-dom/MouseEvent-prototype-offsetX-offsetY.html [ Failure ]
-crbug.com/776656 virtual/incremental-shadow-dom/external/wpt/shadow-dom/leaktests/html-collection.html [ Failure Crash ]
-crbug.com/776656 virtual/incremental-shadow-dom/external/wpt/shadow-dom/slotchange-event.html [ Failure Crash ]
+crbug.com/788608 virtual/incremental-shadow-dom/external/wpt/shadow-dom/leaktests/html-collection.html [ Failure Crash ]
 crbug.com/776656 virtual/incremental-shadow-dom/external/wpt/shadow-dom/slots-fallback-in-document.html [ Failure ]
 crbug.com/776656 virtual/incremental-shadow-dom/external/wpt/shadow-dom/slots-fallback.html [ Failure ]
 crbug.com/776656 virtual/incremental-shadow-dom/external/wpt/shadow-dom/slots.html [ Failure ]
 crbug.com/776656 virtual/incremental-shadow-dom/external/wpt/shadow-dom/untriaged/elements-and-dom-objects/extensions-to-event-interface/event-path-001.html [ Failure ]
-crbug.com/776656 virtual/incremental-shadow-dom/external/wpt/shadow-dom/untriaged/html-elements-in-shadow-trees/html-forms/test-002.html [ Failure Crash ]
+crbug.com/788635 virtual/incremental-shadow-dom/external/wpt/shadow-dom/untriaged/html-elements-in-shadow-trees/html-forms/test-002.html [ Failure Crash ]
 crbug.com/776656 virtual/incremental-shadow-dom/external/wpt/shadow-dom/untriaged/shadow-trees/reprojection/reprojection-001.html [ Failure ]
 crbug.com/776656 virtual/incremental-shadow-dom/external/wpt/shadow-dom/untriaged/shadow-trees/shadow-root-002.html [ Failure ]
 crbug.com/776656 virtual/incremental-shadow-dom/external/wpt/shadow-dom/untriaged/styles/test-003.html [ Failure ]
 crbug.com/776656 virtual/incremental-shadow-dom/external/wpt/shadow-dom/untriaged/user-interaction/ranges-and-selections/test-002.html [ Failure ]
-crbug.com/776656 virtual/incremental-shadow-dom/fast/dom/shadow/adopt-node-with-shadow-root.html [ Failure Crash ]
-crbug.com/776656 virtual/incremental-shadow-dom/fast/dom/shadow/content-child-whitespace-between-span.html [ Failure Crash ]
-crbug.com/776656 virtual/incremental-shadow-dom/fast/dom/shadow/custom-pseudo-scope.html [ Failure Crash ]
-crbug.com/776656 virtual/incremental-shadow-dom/fast/dom/shadow/details-summary-distributed.html [ Failure Crash ]
-crbug.com/776656 virtual/incremental-shadow-dom/fast/dom/shadow/drag-and-drop-in-user-agent-shadow.html [ Failure Crash ]
-crbug.com/776656 virtual/incremental-shadow-dom/fast/dom/shadow/event-path-for-user-agent-shadow-tree.html [ Failure Crash ]
-crbug.com/776656 virtual/incremental-shadow-dom/fast/dom/shadow/exposed-object-within-shadow.html [ Failure Crash ]
-crbug.com/776656 virtual/incremental-shadow-dom/fast/dom/shadow/focus-controller-recursion-crash.html [ Failure Crash ]
-crbug.com/776656 virtual/incremental-shadow-dom/fast/dom/shadow/make-marquee-bold-by-exec-command-crash.html [ Failure Crash ]
-crbug.com/776656 virtual/incremental-shadow-dom/fast/dom/shadow/marquee-and-link-element-crash.html [ Failure Crash ]
-crbug.com/776656 virtual/incremental-shadow-dom/fast/dom/shadow/move-marquee-crossing-treescope-crash.html [ Failure Crash ]
-crbug.com/776656 virtual/incremental-shadow-dom/fast/dom/shadow/no-renderers-for-light-children.html [ Failure Crash ]
-crbug.com/776656 virtual/incremental-shadow-dom/fast/dom/shadow/normalize-progress-element-crash.html [ Failure Crash ]
-crbug.com/776656 virtual/incremental-shadow-dom/fast/dom/shadow/querySelector-for-useragent-shadowroot.html [ Failure Crash ]
-crbug.com/776656 virtual/incremental-shadow-dom/fast/dom/shadow/remove-details-in-exec-command-crash.html [ Failure Crash ]
-crbug.com/776656 virtual/incremental-shadow-dom/fast/dom/shadow/shadow-contents-event.html [ Failure Crash ]
-crbug.com/776656 virtual/incremental-shadow-dom/fast/dom/shadow/shadow-contents-select.html [ Failure Crash ]
-crbug.com/776656 virtual/incremental-shadow-dom/fast/dom/shadow/shadow-dom-event-dispatching-details-summary.html [ Failure Crash ]
-crbug.com/776656 virtual/incremental-shadow-dom/fast/dom/shadow/shadowdom-for-textarea-only-shadow.html [ Failure Crash ]
-crbug.com/776656 virtual/incremental-shadow-dom/fast/dom/shadow/shadowdom-for-textarea-with-attribute.html [ Failure Crash ]
-crbug.com/776656 virtual/incremental-shadow-dom/fast/dom/shadow/shadowdom-for-textarea-with-style.html [ Failure Crash ]
-crbug.com/776656 virtual/incremental-shadow-dom/fast/dom/shadow/tree-scope-crash.html [ Failure Crash ]
-crbug.com/776656 virtual/incremental-shadow-dom/fast/dom/shadow/user-modify-in-datalist-crash.html [ Failure Crash ]
+crbug.com/788608 virtual/incremental-shadow-dom/fast/dom/shadow/adopt-node-with-shadow-root.html [ Failure Crash ]
+crbug.com/788610 virtual/incremental-shadow-dom/fast/dom/shadow/content-child-whitespace-between-span.html [ Failure Crash ]
+crbug.com/788635 virtual/incremental-shadow-dom/fast/dom/shadow/custom-pseudo-scope.html [ Failure Crash ]
+crbug.com/788610 virtual/incremental-shadow-dom/fast/dom/shadow/details-summary-distributed.html [ Failure Crash ]
+crbug.com/788617 virtual/incremental-shadow-dom/fast/dom/shadow/drag-and-drop-in-user-agent-shadow.html [ Failure Crash ]
+crbug.com/788610 virtual/incremental-shadow-dom/fast/dom/shadow/event-path-for-user-agent-shadow-tree.html [ Failure Crash ]
+crbug.com/788608 virtual/incremental-shadow-dom/fast/dom/shadow/exposed-object-within-shadow.html [ Failure Crash ]
+crbug.com/788623 virtual/incremental-shadow-dom/fast/dom/shadow/focus-controller-recursion-crash.html [ Failure Crash ]
+crbug.com/788625 virtual/incremental-shadow-dom/fast/dom/shadow/make-marquee-bold-by-exec-command-crash.html [ Failure Crash ]
+crbug.com/788625 virtual/incremental-shadow-dom/fast/dom/shadow/marquee-and-link-element-crash.html [ Failure Crash ]
+crbug.com/788625 virtual/incremental-shadow-dom/fast/dom/shadow/move-marquee-crossing-treescope-crash.html [ Failure Crash ]
+crbug.com/788635 virtual/incremental-shadow-dom/fast/dom/shadow/no-renderers-for-light-children.html [ Failure Crash ]
+crbug.com/787717 virtual/incremental-shadow-dom/fast/dom/shadow/normalize-progress-element-crash.html [ Failure Crash ]
+crbug.com/787717 virtual/incremental-shadow-dom/fast/dom/shadow/querySelector-for-useragent-shadowroot.html [ Failure Crash ]
+crbug.com/788610 virtual/incremental-shadow-dom/fast/dom/shadow/remove-details-in-exec-command-crash.html [ Failure Crash ]
+crbug.com/788610 virtual/incremental-shadow-dom/fast/dom/shadow/shadow-contents-event.html [ Failure Crash ]
+crbug.com/788610 virtual/incremental-shadow-dom/fast/dom/shadow/shadow-contents-select.html [ Failure Crash ]
+crbug.com/788610 virtual/incremental-shadow-dom/fast/dom/shadow/shadow-dom-event-dispatching-details-summary.html [ Failure Crash ]
+crbug.com/788635 virtual/incremental-shadow-dom/fast/dom/shadow/shadowdom-for-textarea-only-shadow.html [ Failure Crash ]
+crbug.com/788635 virtual/incremental-shadow-dom/fast/dom/shadow/shadowdom-for-textarea-with-attribute.html [ Failure Crash ]
+crbug.com/788635 virtual/incremental-shadow-dom/fast/dom/shadow/shadowdom-for-textarea-with-style.html [ Failure Crash ]
+crbug.com/788635 virtual/incremental-shadow-dom/fast/dom/shadow/tree-scope-crash.html [ Failure Crash ]
+crbug.com/788610 virtual/incremental-shadow-dom/fast/dom/shadow/user-modify-in-datalist-crash.html [ Failure Crash ]
 crbug.com/776656 virtual/incremental-shadow-dom/fast/dom/shadow/user-modify-inheritance.html [ Failure ]
 crbug.com/776656 virtual/incremental-shadow-dom/shadow-dom/active-element.html [ Failure ]
 crbug.com/776656 virtual/incremental-shadow-dom/shadow-dom/css-cascade-outer-scope2.html [ Failure ]
@@ -773,7 +739,6 @@ crbug.com/776656 virtual/incremental-shadow-dom/shadow-dom/slots-text-nodes.html
 crbug.com/776656 virtual/incremental-shadow-dom/shadow-dom/slotted-pseudo-element-dynamic-attribute-change.html [ Failure ]
 crbug.com/776656 virtual/incremental-shadow-dom/shadow-dom/slotted-pseudo-element-shared-style.html [ Failure ]
 crbug.com/776656 virtual/incremental-shadow-dom/shadow-dom/slotted-pseudo-element.html [ Failure ]
-crbug.com/776656 virtual/incremental-shadow-dom/shadow-dom/v0/get-destination-insertion-points-re-distribution.html [ Failure Crash ]
 
 # ====== IncrementalShadowDOM-only failures until here ======
 
@@ -793,6 +758,9 @@ crbug.com/785571 virtual/mojo-loading/http/tests/devtools/console/console-contex
 
 # ====== DevTools test migration failures until here ======
 
+crbug.com/789225 http/tests/devtools/console/console-focus.js [ Pass Failure ]
+crbug.com/789225 virtual/mojo-loading/http/tests/devtools/console/console-focus.js [ Pass Failure ]
+
 crbug.com/667560 [ Win ] http/tests/devtools/console-cross-origin-iframe-logging.js [ Pass Timeout ]
 crbug.com/667560 [ Win ] virtual/mojo-loading/http/tests/devtools/console-cross-origin-iframe-logging.js [ Pass Timeout ]
 
@@ -805,6 +773,8 @@ crbug.com/773353 [ Mac ] http/tests/devtools/coverage/coverage-view.js [ Pass Fa
 crbug.com/773353 [ Mac ] virtual/mojo-loading/http/tests/devtools/coverage/coverage-view.js [ Pass Failure ]
 
 crbug.com/767269 [ Win ] inspector-protocol/layout-fonts/cjk-ideograph-fallback-by-lang.js [ Pass Failure ]
+
+crbug.com/788110 [ Linux ] inspector-protocol/layout-fonts/unicode-range-combining-chars-fallback.js [ Pass Failure ]
 
 # Run these tests with under virtual/scalefactor... only.
 crbug.com/567837 fast/hidpi/static [ Skip ]
@@ -1102,6 +1072,9 @@ crbug.com/411164 [ Win ] virtual/mojo-loading/http/tests/security/powerfulFeatur
 
 crbug.com/699347 http/tests/security/setDomainRelaxationForbiddenForURLScheme.html [ Crash ]
 crbug.com/699347 virtual/mojo-loading/http/tests/security/setDomainRelaxationForbiddenForURLScheme.html [ Crash ]
+
+crbug.com/788042 animations/animation-ready-reject-script-forbidden.html [ Timeout ]
+crbug.com/788042 virtual/threaded/animations/animation-ready-reject-script-forbidden.html [ Timeout ]
 
 # In external/wpt/html/, we prefer checking in failure
 # expectation files. The following tests with [ Failure ] don't have failure
@@ -1616,6 +1589,7 @@ crbug.com/336604 external/wpt/css/css-flexbox/flexbox_visibility-collapse-line-w
 crbug.com/336604 external/wpt/css/css-flexbox/flexbox_visibility-collapse.html [ Failure ]
 crbug.com/249112 external/wpt/css/css-flexbox/flex-minimum-width-flex-items-006.xht [ Failure ]
 
+crbug.com/788379 external/wpt/css/css-flexbox/anonymous-flex-item-005.html [ Failure ]
 crbug.com/467127 external/wpt/css/css-flexbox/flex-aspect-ratio-img-column-003.html [ Failure ]
 crbug.com/467127 external/wpt/css/css-flexbox/flex-aspect-ratio-img-row-002.html [ Failure ]
 crbug.com/467127 external/wpt/css/css-flexbox/flex-aspect-ratio-img-row-003.html [ Failure ]
@@ -1987,6 +1961,7 @@ crbug.com/711529 virtual/mojo-loading/http/tests/permissions/test-api-surface.ht
 crbug.com/711529 virtual/mojo-loading/http/tests/permissions/test-query.html [ Timeout ]
 crbug.com/711529 virtual/mojo-loading/http/tests/security/cross-origin-createImageBitmap-structured-clone.html [ Timeout ]
 crbug.com/711529 virtual/mojo-loading/http/tests/workers/shared-worker-performance-timeline.html [ Timeout ]
+crbug.com/711529 virtual/mojo-notifications/http/tests/notifications/serviceworker-notification-event.html [ Timeout ]
 
 crbug.com/713587 external/wpt/css/css-ui/caret-color-006.html [ Skip ]
 
@@ -2058,7 +2033,31 @@ crbug.com/751952 virtual/mojo-loading/http/tests/devtools/unit/datagrid-editable
 crbug.com/751952 virtual/origin-trials-runtimeflags-disabled/http/tests/origin_trials/webexposed/budget-api-origin-trial-interfaces.html [ Pass Failure ]
 
 # ====== New tests from wpt-importer added here ======
-crbug.com/626703 [ Retina ] external/wpt/WebCryptoAPI/generateKey/test_successes_RSASSA-PKCS1-v1_5.https.html [ Timeout ]
+crbug.com/626703 external/wpt/accelerometer/Accelerometer-disabled-by-feature-policy.https.sub.html [ Timeout ]
+crbug.com/626703 external/wpt/accelerometer/Accelerometer-enabled-by-feature-policy-attribute-redirect-on-load.https.sub.html [ Timeout ]
+crbug.com/626703 external/wpt/accelerometer/Accelerometer-enabled-by-feature-policy-attribute.https.sub.html [ Timeout ]
+crbug.com/626703 external/wpt/accelerometer/Accelerometer-enabled-by-feature-policy.https.sub.html [ Timeout ]
+crbug.com/626703 external/wpt/accelerometer/Accelerometer-enabled-on-self-origin-by-feature-policy.https.sub.html [ Timeout ]
+crbug.com/626703 external/wpt/gyroscope/Gyroscope-disabled-by-feature-policy.https.sub.html [ Timeout ]
+crbug.com/626703 external/wpt/gyroscope/Gyroscope-enabled-by-feature-policy-attribute-redirect-on-load.https.sub.html [ Timeout ]
+crbug.com/626703 external/wpt/gyroscope/Gyroscope-enabled-by-feature-policy-attribute.https.sub.html [ Timeout ]
+crbug.com/626703 external/wpt/gyroscope/Gyroscope-enabled-by-feature-policy.https.sub.html [ Timeout ]
+crbug.com/626703 external/wpt/gyroscope/Gyroscope-enabled-on-self-origin-by-feature-policy.https.sub.html [ Timeout ]
+crbug.com/626703 external/wpt/magnetometer/Magnetometer-disabled-by-feature-policy.https.sub.html [ Timeout ]
+crbug.com/626703 external/wpt/magnetometer/Magnetometer-enabled-by-feature-policy-attribute-redirect-on-load.https.sub.html [ Timeout ]
+crbug.com/626703 external/wpt/magnetometer/Magnetometer-enabled-by-feature-policy-attribute.https.sub.html [ Timeout ]
+crbug.com/626703 external/wpt/magnetometer/Magnetometer-enabled-by-feature-policy.https.sub.html [ Timeout ]
+crbug.com/626703 external/wpt/magnetometer/Magnetometer-enabled-on-self-origin-by-feature-policy.https.sub.html [ Timeout ]
+crbug.com/626703 external/wpt/orientation-sensor/AbsoluteOrientationSensor-disabled-by-feature-policy.https.sub.html [ Timeout ]
+crbug.com/626703 external/wpt/orientation-sensor/AbsoluteOrientationSensor-enabled-by-feature-policy-attribute-redirect-on-load.https.sub.html [ Timeout ]
+crbug.com/626703 external/wpt/orientation-sensor/AbsoluteOrientationSensor-enabled-by-feature-policy-attribute.https.sub.html [ Timeout ]
+crbug.com/626703 external/wpt/orientation-sensor/AbsoluteOrientationSensor-enabled-by-feature-policy.https.sub.html [ Timeout ]
+crbug.com/626703 external/wpt/orientation-sensor/AbsoluteOrientationSensor-enabled-on-self-origin-by-feature-policy.https.sub.html [ Timeout ]
+crbug.com/626703 external/wpt/orientation-sensor/RelativeOrientationSensor-disabled-by-feature-policy.https.sub.html [ Timeout ]
+crbug.com/626703 external/wpt/orientation-sensor/RelativeOrientationSensor-enabled-by-feature-policy-attribute-redirect-on-load.https.sub.html [ Timeout ]
+crbug.com/626703 external/wpt/orientation-sensor/RelativeOrientationSensor-enabled-by-feature-policy-attribute.https.sub.html [ Timeout ]
+crbug.com/626703 external/wpt/orientation-sensor/RelativeOrientationSensor-enabled-by-feature-policy.https.sub.html [ Timeout ]
+crbug.com/626703 external/wpt/orientation-sensor/RelativeOrientationSensor-enabled-on-self-origin-by-feature-policy.https.sub.html [ Timeout ]
 crbug.com/626703 external/wpt/html/rendering/non-replaced-elements/the-page/body-margin-1i.html [ Failure ]
 crbug.com/626703 external/wpt/html/rendering/non-replaced-elements/the-page/body-margin-1j.html [ Failure ]
 crbug.com/626703 external/wpt/html/rendering/non-replaced-elements/the-page/body-margin-1k.html [ Failure ]
@@ -2486,6 +2485,39 @@ crbug.com/626703 [ Win ] external/wpt/css/css-ui/text-overflow-020.html [ Failur
 crbug.com/626703 [ Win ] external/wpt/css/css-writing-modes/box-offsets-rel-pos-vlr-005.xht [ Failure ]
 crbug.com/626703 [ Win ] external/wpt/css/css-writing-modes/box-offsets-rel-pos-vrl-004.xht [ Failure ]
 
+# css-multicol tests failing on initial import from web-platform-tests
+crbug.com/788337 external/wpt/css/css-multicol/multicol-block-no-clip-001.xht [ Failure ]
+crbug.com/788337 external/wpt/css/css-multicol/multicol-block-no-clip-002.xht [ Failure ]
+crbug.com/788337 external/wpt/css/css-multicol/multicol-br-inside-avoidcolumn-001.xht [ Failure ]
+crbug.com/788337 external/wpt/css/css-multicol/multicol-break-001.xht [ Failure ]
+crbug.com/788337 external/wpt/css/css-multicol/multicol-count-computed-001.xht [ Failure ]
+crbug.com/788337 external/wpt/css/css-multicol/multicol-count-computed-002.xht [ Failure ]
+crbug.com/788337 external/wpt/css/css-multicol/multicol-count-computed-003.xht [ Failure ]
+crbug.com/788337 external/wpt/css/css-multicol/multicol-count-computed-005.xht [ Failure ]
+crbug.com/788337 external/wpt/css/css-multicol/multicol-count-large-001.xht [ Failure ]
+crbug.com/788337 external/wpt/css/css-multicol/multicol-count-large-002.xht [ Failure ]
+crbug.com/788337 external/wpt/css/css-multicol/multicol-fill-auto-block-children-002.xht [ Failure ]
+crbug.com/788337 external/wpt/css/css-multicol/multicol-fill-auto.xht [ Failure ]
+crbug.com/788337 external/wpt/css/css-multicol/multicol-height-block-child-001.xht [ Failure ]
+crbug.com/788337 external/wpt/css/css-multicol/multicol-inherit-004.xht [ Failure ]
+crbug.com/788337 external/wpt/css/css-multicol/multicol-nested-column-rule-001.xht [ Failure ]
+crbug.com/788337 external/wpt/css/css-multicol/multicol-rule-004.xht [ Failure ]
+crbug.com/788337 external/wpt/css/css-multicol/multicol-rule-fraction-003.xht [ Failure ]
+crbug.com/788337 external/wpt/css/css-multicol/multicol-rule-inset-000.xht [ Failure ]
+crbug.com/788337 external/wpt/css/css-multicol/multicol-rule-outset-000.xht [ Failure ]
+crbug.com/788337 external/wpt/css/css-multicol/multicol-rule-style-inset-001.xht [ Failure ]
+crbug.com/788337 external/wpt/css/css-multicol/multicol-rule-style-outset-001.xht [ Failure ]
+crbug.com/788337 external/wpt/css/css-multicol/multicol-span-all-003.xht [ Failure ]
+crbug.com/788337 external/wpt/css/css-multicol/multicol-span-all-child-001.xht [ Failure ]
+crbug.com/788337 external/wpt/css/css-multicol/multicol-span-all-child-002.xht [ Failure ]
+crbug.com/788337 external/wpt/css/css-multicol/multicol-span-all-margin-nested-002.xht [ Failure ]
+crbug.com/788337 external/wpt/css/css-multicol/multicol-span-all-margin-nested-003.xht [ Failure ]
+crbug.com/788337 external/wpt/css/css-multicol/multicol-span-float-001.xht [ Failure ]
+crbug.com/788337 external/wpt/css/css-multicol/multicol-table-cell-vertical-align-001.xht [ Failure ]
+crbug.com/788337 external/wpt/css/css-multicol/multicol-width-ems-001.xht [ Failure ]
+crbug.com/788337 external/wpt/css/css-multicol/multicol-width-small-001.xht [ Failure ]
+crbug.com/788337 external/wpt/css/css-multicol/multicol-zero-height-001.xht [ Failure ]
+
 # This test times out on debug builds, see https://crbug.com/755810
 crbug.com/626703 [ Debug ] external/wpt/html/semantics/tabular-data/processing-model-1/span-limits.html [ Skip ]
 
@@ -2593,7 +2625,6 @@ crbug.com/701047 [ Mac10.12 ] editing/pasteboard/paste-line-endings-003.html [ F
 crbug.com/701047 [ Mac10.12 ] editing/pasteboard/paste-line-endings-004.html [ Failure ]
 crbug.com/701047 [ Mac10.12 ] editing/pasteboard/paste-line-endings-005.html [ Failure ]
 crbug.com/701047 [ Mac10.12 ] editing/pasteboard/paste-text-016.html [ Failure ]
-crbug.com/701047 [ Mac10.12 ] editing/selection/4975120.html [ Failure ]
 crbug.com/701047 [ Mac10.12 ] editing/selection/move-3875618-fix.html [ Failure ]
 crbug.com/701047 [ Mac10.12 ] editing/selection/move-3875641-fix.html [ Failure ]
 crbug.com/701047 [ Mac10.12 ] editing/selection/move-by-sentence-001.html [ Failure ]
@@ -2962,8 +2993,10 @@ crbug.com/786249 virtual/mojo-loading/http/tests/inspector-protocol/network/resp
 
 # ====== Begin of display: contents tests ======
 
-crbug.com/657748 external/wpt/css/css-display/display-contents-dynamic-flex-002-inline.html [ Failure ]
-crbug.com/657748 external/wpt/css/css-display/display-contents-dynamic-table-001-inline.html [ Failure ]
+crbug.com/181374 external/wpt/css/css-display/display-contents-dynamic-table-001-inline.html [ Failure ]
+crbug.com/717460 external/wpt/css/css-display/display-contents-first-letter-002.html [ Failure ]
+crbug.com/706316 external/wpt/css/css-display/display-contents-first-line-002.html [ Failure ]
+crbug.com/709808 external/wpt/css/css-display/display-contents-text-inherit.html [ Failure ]
 
 # ====== End of display: contents tests ======
 
@@ -3066,8 +3099,6 @@ crbug.com/722212 virtual/mouseevent_fractional/fast/events/pointerevents/mouse-p
 # Crashes on win
 crbug.com/722943 media/audio-repaint.html [ Skip ]
 
-crbug.com/714166 http/tests/devtools/network/waterfall-images.html [ Skip ]
-crbug.com/715405 virtual/mojo-loading/http/tests/devtools/network/waterfall-images.html [ Skip ]
 crbug.com/708175 external/wpt/IndexedDB/interleaved-cursors.html [ Failure Pass ]
 
 crbug.com/715718 external/wpt/media-source/mediasource-activesourcebuffers.html [ Failure Pass ]
@@ -3159,65 +3190,8 @@ crbug.com/785931 virtual/gpu-rasterization/images/imagemap-focus-ring-outline-co
 crbug.com/785931 virtual/gpu/fast/canvas/canvas-composite-video-shadow.html [ NeedsManualRebaseline ]
 crbug.com/785931 virtual/gpu/fast/canvas/canvas-composite-video.html [ NeedsManualRebaseline ]
 
-# These tests are failing on Mac-10.12 when using an Intel GPU.
-crbug.com/736177 [ Mac10.12 ] css2.1/t1202-counter-04-b.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] css2.1/t1202-counters-04-b.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] fast/block/basic/001.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] fast/block/float/intruding-painted-twice.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] fast/borders/inline-mask-overlay-image-outset.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] fast/css-generated-content/012.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] fast/css-generated-content/014.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] fast/css/acid2-pixel.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] fast/css/clip-zooming.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] fast/css/h1-in-section-elements.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] fast/css/rem-calc-dynamic-scaling.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] fast/css/rem-dynamic-scaling.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] fast/dom/HTMLMeterElement/meter-optimums.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] fast/dynamic/012.html [ Failure Pass ]
+# crbug.com/736177: Failures likely related to different results on Mac with different GPUs
 crbug.com/736177 [ Mac10.12 ] fast/forms/form-element-geometry.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] fast/inline/absolute-positioned-inline-in-centred-block.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] fast/inline/left-right-center-inline-alignment-in-ltr-and-rtl-blocks.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] fast/selectors/166.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] fast/text/color-emoji.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] fast/text/emoticons.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] fast/text/fallback-traits-fixup.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] fast/text/unicode-fallback-font.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] html/details_summary/details-marker-style.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] http/tests/misc/acid2-pixel.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] virtual/mojo-loading/http/tests/misc/acid2-pixel.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] media/video-zoom-controls.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] paint/markers/document-markers-zoom-150.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] scrollbars/custom-scrollbar-with-incomplete-style.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] svg/W3C-SVG-1.1/script-handle-02-b.svg [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] svg/W3C-SVG-1.1/script-handle-03-b.svg [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] svg/W3C-SVG-1.1/script-handle-04-b.svg [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] svg/W3C-SVG-1.1/struct-use-05-b.svg [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] svg/W3C-SVG-1.1/text-fonts-01-t.svg [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] svg/as-border-image/svg-as-border-image-2.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] svg/batik/text/textLayout.svg [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] svg/custom/focus-ring-text.svg [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] svg/text/surrogate-pair-queries.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] svg/text/text-path-middle-align.svg [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] svg/transforms/svg-css-transforms-clip-path.xhtml [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] svg/transforms/svg-css-transforms.xhtml [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] tables/mozilla/bugs/bug18359.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] tables/mozilla/bugs/bug2479-3.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] tables/mozilla/bugs/bug2479-4.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] tables/mozilla/bugs/bug46480-1.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] tables/mozilla/bugs/bug46480-2.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] tables/mozilla/bugs/bug8032-1.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] tables/mozilla/bugs/bug8858.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] tables/mozilla/other/test3.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] tables/mozilla/other/test6.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] tables/mozilla/other/wa_table_thtd_rowspan.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] tables/mozilla/other/wa_table_tr_align.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] tables/mozilla_expected_failures/bugs/bug1128.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] tables/mozilla_expected_failures/bugs/bug2479-5.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] tables/mozilla_expected_failures/bugs/bug91057.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] transforms/svg-vs-css.xhtml [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] virtual/layout_ng/fast/block/basic/001.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] virtual/prefer_compositing_to_lcd_text/scrollbars/custom-scrollbar-with-incomplete-style.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] virtual/rootlayerscrolls/scrollbars/custom-scrollbar-with-incomplete-style.html [ Failure Pass ]
 # These tests are failing on both Mac-10.12 when using an Intel GPU and Mac-10.11.6 when using no GPU
 crbug.com/736177 [ Mac ] fast/forms/control-restrict-line-height.html [ Failure Pass ]
 crbug.com/736177 [ Mac ] fast/forms/input-appearance-height.html [ Failure Pass ]
@@ -3265,7 +3239,6 @@ crbug.com/736177 [ Mac10.12 Retina ] virtual/prefer_compositing_to_lcd_text/comp
 crbug.com/736177 [ Mac10.12 Retina ] virtual/scalefactor200/fast/hidpi/static/validation-bubble-appearance-hidpi.html [ Failure Pass ]
 # fast/css/text-overflow-input.html test is flaky on all Mac platforms
 crbug.com/736177 [ Mac ] fast/css/text-overflow-input.html [ Failure Pass ]
-
 crbug.com/736177 [ Mac ] svg/as-border-image/svg-as-border-image.html [ Failure Pass ]
 
 crbug.com/734762 inspector-protocol/timeline/page-frames.js [ Failure ]
@@ -3284,17 +3257,6 @@ crbug.com/763597 external/wpt/html/semantics/scripting-1/the-script-element/modu
 
 # module script lacks XHTML support
 crbug.com/717643 external/wpt/html/semantics/scripting-1/the-script-element/module/module-in-xhtml.xhtml [ Failure ]
-
-crbug.com/778796 http/tests/devtools/console/console-custom-formatters.js [ Skip ]
-crbug.com/778796 http/tests/devtools/console/console-uncaught-promise-in-worker.js [ Skip ]
-crbug.com/778796 http/tests/devtools/sources/debugger-async/async-callstack-promises.js [ Skip ]
-crbug.com/778796 http/tests/devtools/sources/debugger-step/debugger-step-through-promises.js [ Skip ]
-crbug.com/778796 http/tests/devtools/sources/debugger/async-callstack-fetch.js [ Skip ]
-crbug.com/778796 virtual/mojo-loading/http/tests/devtools/console/console-custom-formatters.js [ Skip ]
-crbug.com/778796 virtual/mojo-loading/http/tests/devtools/console/console-uncaught-promise-in-worker.js [ Skip ]
-crbug.com/778796 virtual/mojo-loading/http/tests/devtools/sources/debugger-async/async-callstack-promises.js [ Skip ]
-crbug.com/778796 virtual/mojo-loading/http/tests/devtools/sources/debugger-step/debugger-step-through-promises.js [ Skip ]
-crbug.com/778796 virtual/mojo-loading/http/tests/devtools/sources/debugger/async-callstack-fetch.js [ Skip ]
 
 # known bug: import() inside set{Timeout,Interval}
 crbug.com/773622 external/wpt/html/semantics/scripting-1/the-script-element/module/dynamic-import/string-compilation-base-url-classic.html [ Failure ]
@@ -3547,7 +3509,6 @@ crbug.com/755405 [ Android ] external/wpt/user-timing/invoke_without_parameter.h
 crbug.com/755405 [ Android ] external/wpt/web-animations/animation-model/combining-effects/effect-composition.html [ Failure ]
 crbug.com/755405 [ Android ] external/wpt/web-animations/animation-model/keyframe-effects/effect-value-context.html [ Failure ]
 crbug.com/755405 [ Android ] external/wpt/web-animations/interfaces/Animatable/getAnimations.html [ Failure ]
-crbug.com/755405 [ Android ] external/wpt/web-animations/interfaces/Animation/playState.html [ Failure ]
 crbug.com/755405 [ Android ] external/wpt/web-animations/interfaces/Animation/ready.html [ Failure ]
 crbug.com/755405 [ Android ] external/wpt/web-animations/interfaces/AnimationEffectTiming/delay.html [ Failure ]
 crbug.com/755405 [ Android ] external/wpt/web-animations/interfaces/Document/getAnimations.html [ Failure ]
@@ -3799,11 +3760,13 @@ crbug.com/626703 [ Win Debug ] external/wpt/encoding/legacy-mb-tchinese/big5/big
 
 crbug.com/766129 svg/wicd/test-rightsizing-b.xhtml [ Failure Pass ]
 
-# These key generation tests are slow and sometimes time out.
-crbug.com/757698 external/wpt/WebCryptoAPI/generateKey/successes_RSA-OAEP.https.worker.html [ Pass Timeout ]
-crbug.com/757698 external/wpt/WebCryptoAPI/generateKey/successes_RSA-PSS.https.worker.html [ Pass Timeout ]
-crbug.com/757698 external/wpt/WebCryptoAPI/generateKey/successes_RSASSA-PKCS1-v1_5.https.worker.html [ Pass Timeout ]
-crbug.com/757698 external/wpt/WebCryptoAPI/generateKey/test_successes_RSA-OAEP.https.html [ Pass Timeout ]
+# RSA key generation is intrinsically very slow. Even when marked as [ Slow ], these tests can still time out.
+crbug.com/787971 external/wpt/WebCryptoAPI/generateKey/successes_RSA-OAEP.https.worker.html [ Pass Timeout ]
+crbug.com/787971 external/wpt/WebCryptoAPI/generateKey/successes_RSA-PSS.https.worker.html [ Pass Timeout ]
+crbug.com/787971 external/wpt/WebCryptoAPI/generateKey/successes_RSASSA-PKCS1-v1_5.https.worker.html [ Pass Timeout ]
+crbug.com/787971 external/wpt/WebCryptoAPI/generateKey/test_successes_RSA-OAEP.https.html [ Pass Timeout ]
+crbug.com/787971 external/wpt/WebCryptoAPI/generateKey/test_successes_RSA-PSS.https.html [ Pass Timeout ]
+crbug.com/787971 external/wpt/WebCryptoAPI/generateKey/test_successes_RSASSA-PKCS1-v1_5.https.html [ Pass Timeout ]
 
 # Tests occasionaly timing out (flaky) on WebKit Win7 dbg builder
 crbug.com/757955 [ Win7 Debug ] http/tests/devtools/sources/debugger-pause/pause-on-elements-panel.js [ Pass Timeout ]
@@ -3968,7 +3931,6 @@ crbug.com/778745 http/tests/inspector-protocol/cachestorage/read-cached-response
 crbug.com/778745 virtual/mojo-loading/http/tests/inspector-protocol/cachestorage/read-cached-response.js [ Pass Failure ]
 
 # Sheriff failures 2017-10-24
-crbug.com/777777 external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-tracks.https.html [ Pass Failure ]
 crbug.com/773122 crbug.com/777813 [ Win ] fast/text/font-ascent-mac.html [ Failure Pass ]
 
 # Sheriff failures 2017-11-03
@@ -4047,7 +4009,7 @@ crbug.com/667560 virtual/mojo-loading/http/tests/devtools/elements/elements-pane
 
 # Sheriff failures 2017-11-16
 crbug.com/785980 [ Win10 ] virtual/mojo-loading/http/tests/devtools/network/network-xhr-same-url-as-main-resource.js [ Failure Pass ]
-crbug.com/785980 [ Win10 ] http/tests/devtools/network/network-xhr-same-url-as-main-resource.js [ Failure Pass ]
+crbug.com/785980 [ Win7 Win10 ] http/tests/devtools/network/network-xhr-same-url-as-main-resource.js [ Failure Pass ]
 
 # Sheriff failures 2017-11-17
 crbug.com/786235 http/tests/misc/resource-timing-sizes-tags.html [ Failure Pass ]
@@ -4056,3 +4018,21 @@ crbug.com/786348 [ Win7 ] virtual/mojo-loading/http/tests/devtools/console/conso
 
 # Sheriff failures 2017-11-21
 crbug.com/786641 [ Win Linux ] virtual/gpu/fast/canvas/OffscreenCanvas-2d-imageSmoothing-in-worker.html [ Timeout Pass ]
+
+# Sheriff failures 2017-11-28
+crbug.com/789111 http/tests/devtools/service-workers/service-worker-v8-cache.js [ Pass Failure ]
+crbug.com/789139 [ Linux ] http/tests/devtools/sources/debugger/live-edit-no-reveal.js [ Pass Failure ]
+crbug.com/789139 [ Linux ] virtual/mojo-loading/http/tests/devtools/sources/debugger/live-edit-no-reveal.js [ Pass Failure ]
+crbug.com/785179 [ Mac10.11 ] http/tests/devtools/console/console-viewport-stick-to-bottom.js [ Pass Failure ]
+# Sheriff failures 2017-11-29
+crbug.com/789567 [ Mac ] virtual/rootlayerscrolls/scrollbars/custom-scrollbar-inactive-pseudo.html [ Failure Pass ]
+crbug.com/789567 [ Mac ] virtual/rootlayerscrolls/scrollbars/custom-scrollbar-adjust-on-inactive-pseudo.html [ Failure Pass ]
+crbug.com/789567 [ Mac ] virtual/prefer_compositing_to_lcd_text/scrollbars/custom-scrollbar-inactive-pseudo.html [ Failure Pass ]
+crbug.com/789478 [ Mac ] virtual/prefer_compositing_to_lcd_text/scrollbars/custom-scrollbar-adjust-on-inactive-pseudo.html [ Pass Failure ]
+crbug.com/789485 [ Linux ] virtual/mouseevent_fractional/fast/events/touch/gesture/gesture-tap-mouse-events-between-frames.html [ Pass Failure ]
+crbug.com/789533 virtual/gpu/fast/canvas/OffscreenCanvas-2d-imageSmoothing.html [ Pass Failure ]
+crbug.com/789707 [ Mac ] editing/selection/4975120.html [ Pass Failure ]
+# Sheriff failures 2017-11-30
+crbug.com/789485 [ Win ] virtual/scroll_customization/fast/events/touch/gesture/gesture-tap-mouse-events-between-frames.html [ Pass Failure ]
+crbug.com/789921 [ Win7 ] media/video-controls-overflow-menu-last-button-visible.html [ Pass Failure ]
+crbug.com/789111 virtual/pwa-full-code-cache/http/tests/devtools/service-workers/service-worker-v8-cache.js [ Pass Failure ]

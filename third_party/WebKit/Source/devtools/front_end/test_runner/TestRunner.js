@@ -17,7 +17,7 @@ TestRunner._executeTestScript = function() {
   fetch(testScriptURL)
       .then(data => data.text())
       .then(testScript => {
-        if (!self.testRunner || Runtime.queryParam('debugFrontend')) {
+        if (TestRunner._isDebugTest()) {
           TestRunner.addResult = console.log;
           TestRunner.completeTest = () => console.log('Test completed');
 
@@ -351,14 +351,33 @@ TestRunner._setupTestHelpers = function(target) {
   TestRunner.mainTarget = target;
 };
 
+/**
+ * @param {string} code
+ * @return {!Promise<*>}
+ */
+TestRunner.evaluateInPageRemoteObject = async function(code) {
+  var response = await TestRunner._evaluateInPage(code);
+  return TestRunner.runtimeModel.createRemoteObject(response.result);
+};
+
+/**
+ * @param {string} code
+ * @param {function(*, !Protocol.Runtime.ExceptionDetails=):void} callback
+ */
+TestRunner.evaluateInPage = async function(code, callback) {
+  var response = await TestRunner._evaluateInPage(code);
+  TestRunner.safeWrap(callback)(response.result.value, response.exceptionDetails);
+};
+
 /** @type {number} */
 TestRunner._evaluateInPageCounter = 0;
 
 /**
- * @param {string|!Function} code
- * @param {!Function} callback
+ * @param {string} code
+ * @return {!Promise<{response: !SDK.RemoteObject,
+ *   exceptionDetails: (!Protocol.Runtime.ExceptionDetails|undefined)}>}
  */
-TestRunner.evaluateInPage = async function(code, callback) {
+TestRunner._evaluateInPage = async function(code) {
   var lines = new Error().stack.split('at ');
 
   // Handles cases where the function is safe wrapped
@@ -374,22 +393,25 @@ TestRunner.evaluateInPage = async function(code, callback) {
   if (code.indexOf('sourceURL=') === -1)
     code += `//# sourceURL=${sourceURL}`;
   var response = await TestRunner.RuntimeAgent.invoke_evaluate({expression: code, objectGroup: 'console'});
-  if (!response[Protocol.Error]) {
-    TestRunner.safeWrap(callback)(
-        TestRunner.runtimeModel.createRemoteObject(response.result), response.exceptionDetails);
+  var error = response[Protocol.Error];
+  if (error) {
+    TestRunner.addResult('Error: ' + error);
+    TestRunner.completeTest();
+    return;
   }
+  return response;
 };
 
 /**
  * Doesn't append sourceURL to snippets evaluated in inspected page
  * to avoid churning test expectations
  * @param {string} code
- * @return {!Promise<undefined>}
+ * @return {!Promise<*>}
  */
 TestRunner.evaluateInPageAnonymously = async function(code) {
   var response = await TestRunner.RuntimeAgent.invoke_evaluate({expression: code, objectGroup: 'console'});
   if (!response[Protocol.Error])
-    return Promise.resolve();
+    return response.result.value;
   TestRunner.addResult(
       'Error: ' +
       (response.exceptionDetails && response.exceptionDetails.text || 'exception from evaluateInPageAnonymously.'));
@@ -397,8 +419,8 @@ TestRunner.evaluateInPageAnonymously = async function(code) {
 };
 
 /**
- * @param {string|!Function} code
- * @return {!Promise<!SDK.RemoteObject>}
+ * @param {string} code
+ * @return {!Promise<*>}
  */
 TestRunner.evaluateInPagePromise = function(code) {
   return new Promise(success => TestRunner.evaluateInPage(code, success));
@@ -406,7 +428,7 @@ TestRunner.evaluateInPagePromise = function(code) {
 
 /**
  * @param {string} code
- * @return {!Promise<!SDK.RemoteObject|undefined>}
+ * @return {!Promise<*>}
  */
 TestRunner.evaluateInPageAsync = async function(code) {
   var response = await TestRunner.RuntimeAgent.invoke_evaluate(
@@ -414,7 +436,7 @@ TestRunner.evaluateInPageAsync = async function(code) {
 
   var error = response[Protocol.Error];
   if (!error && !response.exceptionDetails)
-    return TestRunner.runtimeModel.createRemoteObject(response.result);
+    return response.result.value;
   TestRunner.addResult(
       'Error: ' +
       (error || response.exceptionDetails && response.exceptionDetails.text || 'exception while evaluation in page.'));
@@ -424,7 +446,7 @@ TestRunner.evaluateInPageAsync = async function(code) {
 /**
  * @param {string} name
  * @param {!Array<*>} args
- * @return {!Promise<!SDK.RemoteObject|undefined>}
+ * @return {!Promise<*>}
  */
 TestRunner.callFunctionInPageAsync = function(name, args) {
   args = args || [];
@@ -483,7 +505,7 @@ TestRunner.deprecatedRunAfterPendingDispatches = function(callback) {
  * are relative to the test file and not the inspected page
  * (i.e. http/tests/devtools/resources/inspected-page.html).
  * @param {string} html
- * @return {!Promise<undefined>}
+ * @return {!Promise<*>}
  */
 TestRunner.loadHTML = function(html) {
   if (!html.includes('<base')) {
@@ -501,7 +523,7 @@ TestRunner.loadHTML = function(html) {
 
 /**
  * @param {string} path
- * @return {!Promise<!SDK.RemoteObject|undefined>}
+ * @return {!Promise<*>}
  */
 TestRunner.addScriptTag = function(path) {
   return TestRunner.evaluateInPageAsync(`
@@ -516,7 +538,7 @@ TestRunner.addScriptTag = function(path) {
 
 /**
  * @param {string} path
- * @return {!Promise<!SDK.RemoteObject|undefined>}
+ * @return {!Promise<*>}
  */
 TestRunner.addStylesheetTag = function(path) {
   return TestRunner.evaluateInPageAsync(`
@@ -541,7 +563,7 @@ TestRunner.addStylesheetTag = function(path) {
 /**
  * @param {string} path
  * @param {!Object|undefined} options
- * @return {!Promise<!SDK.RemoteObject|undefined>}
+ * @return {!Promise<*>}
  */
 TestRunner.addIframe = function(path, options = {}) {
   options.id = options.id || '';
@@ -1267,7 +1289,9 @@ TestRunner._consoleOutputHook = function(messageType) {
  * messages are shown in the right places, instead of having all of the console
  * messages printed at the top of the test expectation file (default behavior).
  */
-TestRunner.printDevToolsConsole = function() {
+TestRunner._printDevToolsConsole = function() {
+  if (TestRunner._isDebugTest())
+    return;
   console.log = TestRunner._consoleOutputHook.bind(TestRunner, 'log');
   console.error = TestRunner._consoleOutputHook.bind(TestRunner, 'error');
   console.info = TestRunner._consoleOutputHook.bind(TestRunner, 'info');
@@ -1277,8 +1301,8 @@ TestRunner.printDevToolsConsole = function() {
  * @param {string} querySelector
  */
 TestRunner.dumpInspectedPageElementText = async function(querySelector) {
-  var remoteObject = await TestRunner.evaluateInPageAsync(`document.querySelector('${querySelector}').innerText`);
-  TestRunner.addResult(remoteObject.value);
+  var value = await TestRunner.evaluateInPageAsync(`document.querySelector('${querySelector}').innerText`);
+  TestRunner.addResult(value);
 };
 
 /** @type {boolean} */
@@ -1296,6 +1320,7 @@ TestRunner._TestObserver = class {
     if (TestRunner._startedTest)
       return;
     TestRunner._startedTest = true;
+    TestRunner._printDevToolsConsole();
     TestRunner._setupTestHelpers(target);
     TestRunner._runTest();
   }
@@ -1318,6 +1343,13 @@ TestRunner._runTest = async function() {
     </body>
   `);
   TestRunner._executeTestScript();
+};
+
+/**
+ * @return {boolean}
+ */
+TestRunner._isDebugTest = function() {
+  return !self.testRunner || !!Runtime.queryParam('debugFrontend');
 };
 
 // Old-style tests start test using inspector-test.js

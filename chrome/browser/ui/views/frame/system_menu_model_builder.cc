@@ -34,14 +34,13 @@ namespace {
 // settings page.
 bool IsChromeSettingsAppOrPopupWindow(Browser* browser) {
   DCHECK(browser);
-  TabStripModel* tab_strip = browser->tab_strip_model();
-  DCHECK_EQ(1, tab_strip->count());
-  const GURL gurl(tab_strip->GetWebContentsAt(0)->GetURL());
-  if (gurl.SchemeIs(content::kChromeUIScheme) &&
-      gurl.host().find(chrome::kChromeUISettingsHost) != std::string::npos) {
-    return true;
-  }
-  return false;
+  content::WebContents* web_contents =
+      browser->tab_strip_model()->GetActiveWebContents();
+  if (!web_contents)
+    return false;
+  const GURL& gurl = web_contents->GetURL();
+  return gurl.SchemeIs(content::kChromeUIScheme) &&
+         gurl.host_piece() == chrome::kChromeUISettingsHost;
 }
 
 }  // namespace
@@ -166,8 +165,7 @@ void SystemMenuModelBuilder::AppendTeleportMenu(ui::SimpleMenuModel* model) {
 
   // If this does not belong to a profile or there is no window, or the window
   // is not owned by anyone, we don't show the menu addition.
-  chrome::MultiUserWindowManager* manager =
-      chrome::MultiUserWindowManager::GetInstance();
+  MultiUserWindowManager* manager = MultiUserWindowManager::GetInstance();
   const AccountId account_id =
       multi_user_util::GetAccountIdFromProfile(browser()->profile());
   aura::Window* window = browser()->window()->GetNativeWindow();

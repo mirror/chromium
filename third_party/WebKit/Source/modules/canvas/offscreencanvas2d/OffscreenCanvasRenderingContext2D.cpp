@@ -197,12 +197,6 @@ PaintCanvas* OffscreenCanvasRenderingContext2D::ExistingDrawingCanvas() const {
 void OffscreenCanvasRenderingContext2D::DisableDeferral(DisableDeferralReason) {
 }
 
-AffineTransform OffscreenCanvasRenderingContext2D::BaseTransform() const {
-  if (!HasImageBuffer())
-    return AffineTransform();  // identity
-  return GetImageBuffer()->BaseTransform();
-}
-
 void OffscreenCanvasRenderingContext2D::DidDraw(const SkIRect& dirty_rect) {
   dirty_rect_for_commit_.join(dirty_rect);
 }
@@ -300,8 +294,9 @@ void OffscreenCanvasRenderingContext2D::setFont(const String& new_font) {
     return;
   }
 
-  CSSParser::ParseValue(style, CSSPropertyFont, new_font, true,
-                        Host()->GetTopExecutionContext()->SecureContextMode());
+  CSSParser::ParseValue(
+      style, CSSPropertyFont, new_font, true,
+      Host()->GetTopExecutionContext()->GetSecureContextMode());
 
   FontDescription desc =
       FontStyleResolver::ComputeFont(*style, Host()->GetFontSelector());

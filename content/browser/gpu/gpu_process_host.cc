@@ -164,6 +164,9 @@ static const char* const kSwitchNames[] = {
     switches::kUseCmdDecoder,
     switches::kIgnoreGpuBlacklist,
     switches::kForceVideoOverlays,
+#if defined(OS_ANDROID)
+    switches::kMadviseRandomExecutableCode,
+#endif
 };
 
 enum GPUProcessLifetimeEvent {
@@ -406,12 +409,11 @@ GpuProcessHost* GpuProcessHost::Get(GpuProcessKind kind, bool force_create) {
 }
 
 // static
-void GpuProcessHost::GetHasGpuProcess(
-    const base::Callback<void(bool)>& callback) {
+void GpuProcessHost::GetHasGpuProcess(base::OnceCallback<void(bool)> callback) {
   if (!BrowserThread::CurrentlyOn(BrowserThread::IO)) {
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
-        base::BindOnce(&GpuProcessHost::GetHasGpuProcess, callback));
+        base::BindOnce(&GpuProcessHost::GetHasGpuProcess, std::move(callback)));
     return;
   }
   bool has_gpu = false;
@@ -422,8 +424,7 @@ void GpuProcessHost::GetHasGpuProcess(
       break;
     }
   }
-  BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                          base::BindOnce(callback, has_gpu));
+  std::move(callback).Run(has_gpu);
 }
 
 // static
@@ -738,13 +739,15 @@ void GpuProcessHost::DestroyGpuMemoryBuffer(gfx::GpuMemoryBufferId id,
 
 void GpuProcessHost::ConnectFrameSinkManager(
     viz::mojom::FrameSinkManagerRequest request,
-    viz::mojom::FrameSinkManagerClientPtr client) {
+    viz::mojom::FrameSinkManagerClientPtrInfo client,
+    viz::mojom::CompositingModeWatcherPtrInfo mode_watcher) {
   TRACE_EVENT0("gpu", "GpuProcessHost::ConnectFrameSinkManager");
   viz::mojom::FrameSinkManagerParamsPtr params =
       viz::mojom::FrameSinkManagerParams::New();
   params->restart_id = host_id_;
   params->frame_sink_manager = std::move(request);
-  params->frame_sink_manager_client = client.PassInterface();
+  params->frame_sink_manager_client = std::move(client);
+  params->compositing_mode_watcher = std::move(mode_watcher);
   gpu_main_ptr_->CreateFrameSinkManager(std::move(params));
 }
 
@@ -771,10 +774,6 @@ void GpuProcessHost::SendDestroyingVideoSurface(int surface_id,
   gpu_service_ptr_->DestroyingVideoSurface(
       surface_id, base::Bind(&GpuProcessHost::OnDestroyingVideoSurfaceAck,
                              weak_ptr_factory_.GetWeakPtr()));
-}
-
-void GpuProcessHost::DidSuccessfullyInitializeContext() {
-  gpu_recent_crash_count_ = 0;
 }
 #endif
 
@@ -884,6 +883,15 @@ void GpuProcessHost::DidFailInitialize() {
   GpuDataManagerImpl* gpu_data_manager = GpuDataManagerImpl::GetInstance();
   gpu_data_manager->OnGpuProcessInitFailure();
   RunRequestGPUInfoCallbacks(gpu_data_manager->GetGPUInfo());
+}
+
+void GpuProcessHost::DidCreateContextSuccessfully() {
+#if defined(OS_ANDROID)
+  // Android may kill the GPU process to free memory, especially when the app
+  // is the background, so Android cannot have a hard limit on GPU starts.
+  // Reset crash count on Android when context creation succeeds.
+  gpu_recent_crash_count_ = 0;
+#endif
 }
 
 void GpuProcessHost::DidCreateOffscreenContext(const GURL& url) {

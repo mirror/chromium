@@ -35,7 +35,6 @@
 #include "content/public/browser/notification_details.h"
 #include "content/public/browser/notification_source.h"
 #include "content/public/browser/render_widget_host_view.h"
-#include "content/public/browser/resource_request_details.h"
 #include "content/public/browser/ssl_host_state_delegate.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/browser/web_contents_delegate.h"
@@ -3488,8 +3487,8 @@ TEST_F(WebContentsImplTest, LoadResourceWithEmptySecurityInfo) {
   ASSERT_TRUE(state_delegate);
   state_delegate->AllowCert(test_url.host(), *cert.get(), 1);
   EXPECT_TRUE(state_delegate->HasAllowException(test_url.host()));
-  contents()->controller_.ssl_manager()->DidStartResourceResponse(test_url,
-                                                                  false, 0);
+  contents()->controller_.ssl_manager()->DidStartResourceResponse(
+      test_url, false, 0, RESOURCE_TYPE_MAIN_FRAME);
 
   EXPECT_TRUE(state_delegate->HasAllowException(test_url.host()));
 
@@ -3550,6 +3549,7 @@ class TestJavaScriptDialogManager : public JavaScriptDialogManager {
   };
 
   void RunBeforeUnloadDialog(WebContents* web_contents,
+                             RenderFrameHost* render_frame_host,
                              bool is_reload,
                              DialogClosedCallback callback) override {}
 

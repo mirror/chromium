@@ -28,6 +28,11 @@ using ui::LatencyInfo;
 namespace content {
 namespace {
 
+ukm::SourceId GenerateUkmSourceId() {
+  ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get();
+  return ukm_recorder ? ukm_recorder->GetNewSourceID() : ukm::kInvalidSourceId;
+}
+
 std::string WebInputEventTypeToInputModalityString(WebInputEvent::Type type) {
   if (type == blink::WebInputEvent::kMouseWheel) {
     return "Wheel";
@@ -138,16 +143,15 @@ void RecordEQTAccuracy(base::TimeDelta queueing_time,
 }  // namespace
 
 RenderWidgetHostLatencyTracker::RenderWidgetHostLatencyTracker(
-    bool metric_sampling)
-    : LatencyTracker(metric_sampling),
-      ukm_source_id_(ukm::kInvalidSourceId),
+    bool metric_sampling,
+    RenderWidgetHostDelegate* delegate)
+    : LatencyTracker(metric_sampling, GenerateUkmSourceId()),
       last_event_id_(0),
       latency_component_id_(0),
-      device_scale_factor_(1),
       has_seen_first_gesture_scroll_update_(false),
       active_multi_finger_gesture_(false),
       touch_start_default_prevented_(false),
-      render_widget_host_delegate_(nullptr) {}
+      render_widget_host_delegate_(delegate) {}
 
 RenderWidgetHostLatencyTracker::~RenderWidgetHostLatencyTracker() {}
 
@@ -174,11 +178,13 @@ void RenderWidgetHostLatencyTracker::ComputeInputLatencyHistograms(
     return;
   }
 
+  // The event will have gone through OnInputEvent(). So the BEGIN_RWH component
+  // should always be available here.
   LatencyInfo::LatencyComponent rwh_component;
-  if (!latency.FindLatency(ui::INPUT_EVENT_LATENCY_BEGIN_RWH_COMPONENT,
-                           latency_component_id, &rwh_component)) {
-    return;
-  }
+  bool found_component =
+      latency.FindLatency(ui::INPUT_EVENT_LATENCY_BEGIN_RWH_COMPONENT,
+                          latency_component_id, &rwh_component);
+  DCHECK(found_component);
   DCHECK_EQ(rwh_component.event_count, 1u);
 
   bool multi_finger_touch_gesture =
@@ -188,18 +194,25 @@ void RenderWidgetHostLatencyTracker::ComputeInputLatencyHistograms(
   if (latency.FindLatency(ui::INPUT_EVENT_LATENCY_UI_COMPONENT, 0,
                           &ui_component)) {
     DCHECK_EQ(ui_component.event_count, 1u);
+    CONFIRM_EVENT_TIMES_EXIST(ui_component, rwh_component);
     base::TimeDelta ui_delta =
         rwh_component.last_event_time - ui_component.first_event_time;
 
     if (latency.source_event_type() == ui::SourceEventType::WHEEL) {
-      UMA_HISTOGRAM_CUSTOM_COUNTS("Event.Latency.Browser.WheelUI",
-                                  ui_delta.InMicroseconds(), 1, 20000, 100);
+      UMA_HISTOGRAM_CUSTOM_COUNTS(
+          "Event.Latency.Browser.WheelUI",
+          std::max(static_cast<int64_t>(0), ui_delta.InMicroseconds()), 1,
+          20000, 100);
     } else if (latency.source_event_type() == ui::SourceEventType::TOUCH) {
-      UMA_HISTOGRAM_CUSTOM_COUNTS("Event.Latency.Browser.TouchUI",
-                                  ui_delta.InMicroseconds(), 1, 20000, 100);
+      UMA_HISTOGRAM_CUSTOM_COUNTS(
+          "Event.Latency.Browser.TouchUI",
+          std::max(static_cast<int64_t>(0), ui_delta.InMicroseconds()), 1,
+          20000, 100);
     } else if (latency.source_event_type() == ui::SourceEventType::KEY_PRESS) {
-      UMA_HISTOGRAM_CUSTOM_COUNTS("Event.Latency.Browser.KeyPressUI",
-                                  ui_delta.InMicroseconds(), 1, 20000, 50);
+      UMA_HISTOGRAM_CUSTOM_COUNTS(
+          "Event.Latency.Browser.KeyPressUI",
+          std::max(static_cast<int64_t>(0), ui_delta.InMicroseconds()), 1,
+          20000, 50);
     } else {
       // We should only report these histograms for wheel, touch and keyboard.
       NOTREACHED();
@@ -263,9 +276,13 @@ void RenderWidgetHostLatencyTracker::OnInputEvent(
   DCHECK(latency);
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  latency->set_ukm_source_id(GetUkmSourceId());
-  static uint64_t global_trace_id = 0;
-  latency->set_trace_id(++global_trace_id);
+  OnEventStart(latency);
+  if (!set_url_for_ukm_ && render_widget_host_delegate_ &&
+      ukm_source_id() != ukm::kInvalidSourceId) {
+    render_widget_host_delegate_->UpdateUrlForUkmSource(ukm::UkmRecorder::Get(),
+                                                        ukm_source_id());
+    set_url_for_ukm_ = true;
+  }
 
   if (event.GetType() == WebInputEvent::kTouchStart) {
     const WebTouchEvent& touch_event =
@@ -279,10 +296,12 @@ void RenderWidgetHostLatencyTracker::OnInputEvent(
            event.GetType() == WebInputEvent::kRawKeyDown);
   }
 
-  if (latency->FindLatency(ui::INPUT_EVENT_LATENCY_BEGIN_RWH_COMPONENT,
-                           latency_component_id_, nullptr)) {
-    return;
-  }
+  // This is the only place to add the BEGIN_RWH component. So this component
+  // should not already be present in the latency info.
+  bool found_component =
+      latency->FindLatency(ui::INPUT_EVENT_LATENCY_BEGIN_RWH_COMPONENT,
+                           latency_component_id_, nullptr);
+  DCHECK(!found_component);
 
   if (event.TimeStampSeconds() &&
       !latency->FindLatency(ui::INPUT_EVENT_LATENCY_ORIGINAL_COMPONENT, 0,
@@ -376,16 +395,11 @@ void RenderWidgetHostLatencyTracker::OnSwapCompositorFrame(
   }
 }
 
-void RenderWidgetHostLatencyTracker::SetDelegate(
-    RenderWidgetHostDelegate* delegate) {
-  render_widget_host_delegate_ = delegate;
-}
-
 void RenderWidgetHostLatencyTracker::ReportRapporScrollLatency(
     const std::string& name,
     const LatencyInfo::LatencyComponent& start_component,
     const LatencyInfo::LatencyComponent& end_component) {
-  CONFIRM_VALID_TIMING(start_component, end_component)
+  CONFIRM_EVENT_TIMES_EXIST(start_component, end_component)
   rappor::RapporService* rappor_service =
       GetContentClient()->browser()->GetRapporService();
   if (rappor_service && render_widget_host_delegate_) {
@@ -394,22 +408,12 @@ void RenderWidgetHostLatencyTracker::ReportRapporScrollLatency(
     render_widget_host_delegate_->AddDomainInfoToRapporSample(sample.get());
     sample->SetUInt64Field(
         "Latency",
-        (end_component.last_event_time - start_component.first_event_time)
-            .InMicroseconds(),
+        std::max(static_cast<int64_t>(0), (end_component.last_event_time -
+                                           start_component.first_event_time)
+                                              .InMicroseconds()),
         rappor::NO_NOISE);
     rappor_service->RecordSample(name, std::move(sample));
   }
-}
-
-ukm::SourceId RenderWidgetHostLatencyTracker::GetUkmSourceId() {
-  ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get();
-  if (ukm_recorder && ukm_source_id_ == ukm::kInvalidSourceId &&
-      render_widget_host_delegate_) {
-    ukm_source_id_ = ukm_recorder->GetNewSourceID();
-    render_widget_host_delegate_->UpdateUrlForUkmSource(ukm_recorder,
-                                                        ukm_source_id_);
-  }
-  return ukm_source_id_;
 }
 
 }  // namespace content

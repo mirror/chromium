@@ -167,7 +167,6 @@ IPC_STRUCT_TRAITS_BEGIN(content::ContextMenuParams)
   IPC_STRUCT_TRAITS_MEMBER(has_image_contents)
   IPC_STRUCT_TRAITS_MEMBER(properties)
   IPC_STRUCT_TRAITS_MEMBER(page_url)
-  IPC_STRUCT_TRAITS_MEMBER(keyword_url)
   IPC_STRUCT_TRAITS_MEMBER(frame_url)
   IPC_STRUCT_TRAITS_MEMBER(media_flags)
   IPC_STRUCT_TRAITS_MEMBER(selection_text)
@@ -253,7 +252,9 @@ IPC_STRUCT_TRAITS_END()
 IPC_STRUCT_TRAITS_BEGIN(content::ScreenInfo)
   IPC_STRUCT_TRAITS_MEMBER(device_scale_factor)
   IPC_STRUCT_TRAITS_MEMBER(color_space)
+#if defined(OS_MACOSX)
   IPC_STRUCT_TRAITS_MEMBER(icc_profile)
+#endif
   IPC_STRUCT_TRAITS_MEMBER(depth)
   IPC_STRUCT_TRAITS_MEMBER(depth_per_component)
   IPC_STRUCT_TRAITS_MEMBER(is_monochrome)
@@ -593,6 +594,7 @@ IPC_STRUCT_BEGIN(FrameHostMsg_CreateChildFrame_Params)
   IPC_STRUCT_MEMBER(blink::WebTreeScopeType, scope)
   IPC_STRUCT_MEMBER(std::string, frame_name)
   IPC_STRUCT_MEMBER(std::string, frame_unique_name)
+  IPC_STRUCT_MEMBER(bool, is_created_by_script)
   IPC_STRUCT_MEMBER(blink::FramePolicy, frame_policy)
   IPC_STRUCT_MEMBER(content::FrameOwnerProperties, frame_owner_properties)
 IPC_STRUCT_END()
@@ -876,6 +878,10 @@ IPC_MESSAGE_ROUTED1(FrameMsg_Collapse, bool /* collapsed */)
 // Notifies the frame that its parent has changed the frame's sandbox flags or
 // container policy.
 IPC_MESSAGE_ROUTED1(FrameMsg_DidUpdateFramePolicy, blink::FramePolicy)
+
+// Sent to a frame proxy when the active sandbox flags on its real frame have
+// been updated by a CSP header which sets sandbox flags.
+IPC_MESSAGE_ROUTED1(FrameMsg_DidSetActiveSandboxFlags, blink::WebSandboxFlags)
 
 // Update a proxy's window.name property.  Used when the frame's name is
 // changed in another process.
@@ -1172,10 +1178,12 @@ IPC_MESSAGE_ROUTED2(FrameHostMsg_DidChangeName,
                     std::string /* name */,
                     std::string /* unique_name */)
 
-// Notifies the browser process that a non-empty Feature-Policy HTTP header was
-// delivered with the document being loaded into the frame. |parsed_header| is
-// a list of an origin whitelist for each feature in the policy.
-IPC_MESSAGE_ROUTED1(FrameHostMsg_DidSetFeaturePolicyHeader,
+// Notifies the browser process that HTTP headers which affect the frame
+// polices were delivered with the document being lodaded into the frame. This
+// can be either or both of 'Feature-Policy' or 'Content-Security-Policy' (which
+// can set sandbox flags).
+IPC_MESSAGE_ROUTED2(FrameHostMsg_DidSetFramePolicyHeaders,
+                    blink::WebSandboxFlags,
                     blink::ParsedFeaturePolicy /* parsed_header */)
 
 // Notifies the browser process about a new Content Security Policy that needs

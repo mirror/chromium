@@ -20,6 +20,7 @@
 #include "ash/shelf/shelf_widget.h"
 #include "ash/shell.h"
 #include "ash/shell_port.h"
+#include "ash/sidebar/sidebar.h"
 #include "ash/system/status_area_widget.h"
 #include "ash/wm/fullscreen_window_finder.h"
 #include "ash/wm/mru_window_tracker.h"
@@ -509,7 +510,7 @@ void ShelfLayoutManager::SetChromeVoxPanelHeight(int height) {
 ShelfLayoutManager::TargetBounds::TargetBounds()
     : opacity(0.0f), status_opacity(0.0f) {}
 
-ShelfLayoutManager::TargetBounds::~TargetBounds() {}
+ShelfLayoutManager::TargetBounds::~TargetBounds() = default;
 
 void ShelfLayoutManager::SetState(ShelfVisibilityState visibility_state) {
   State state;
@@ -913,6 +914,12 @@ ShelfAutoHideState ShelfLayoutManager::CalculateAutoHideState(
   if (shelf_widget_->IsShowingAppList())
     return SHELF_AUTO_HIDE_SHOWN;
 
+  Sidebar* sidebar =
+      RootWindowController::ForWindow(shelf_widget_->GetNativeView())
+          ->sidebar();
+  if (sidebar && sidebar->IsVisible())
+    return SHELF_AUTO_HIDE_SHOWN;
+
   if (shelf_widget_->status_area_widget() &&
       shelf_widget_->status_area_widget()->ShouldShowShelf())
     return SHELF_AUTO_HIDE_SHOWN;
@@ -1066,7 +1073,7 @@ bool ShelfLayoutManager::IsShelfHiddenForFullscreen() const {
   const aura::Window* fullscreen_window =
       wm::GetWindowForFullscreenMode(shelf_widget_->GetNativeWindow());
   return fullscreen_window &&
-         wm::GetWindowState(fullscreen_window)->hide_shelf_when_fullscreen();
+         wm::GetWindowState(fullscreen_window)->GetHideShelfWhenFullscreen();
 }
 
 bool ShelfLayoutManager::IsShelfAutoHideForFullscreenMaximized() const {

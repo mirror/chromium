@@ -4,7 +4,7 @@
 
 #include "core/layout/ng/ng_physical_fragment.h"
 
-#include "core/layout/LayoutObject.h"
+#include "core/layout/LayoutBlock.h"
 #include "core/layout/ng/geometry/ng_border_edges.h"
 #include "core/layout/ng/geometry/ng_box_strut.h"
 #include "core/layout/ng/inline/ng_physical_line_box_fragment.h"
@@ -196,6 +196,15 @@ Node* NGPhysicalFragment::GetNode() const {
   return layout_object_ ? layout_object_->GetNode() : nullptr;
 }
 
+bool NGPhysicalFragment::IsPlacedByLayoutNG() const {
+  // TODO(kojii): Move this to a flag for |LayoutNGBlockFlow::UpdateBlockLayout|
+  // to set.
+  if (!layout_object_)
+    return false;
+  const LayoutBlock* container = layout_object_->ContainingBlock();
+  return container && container->IsLayoutNGMixin();
+}
+
 NGPixelSnappedPhysicalBoxStrut NGPhysicalFragment::BorderWidths() const {
   unsigned edges = BorderEdges();
   NGPhysicalBoxStrut box_strut(
@@ -285,5 +294,9 @@ void NGPhysicalFragment::ShowFragmentTree() const {
   fprintf(stderr, "%s\n", DumpFragmentTree(DumpAll).Utf8().data());
 }
 #endif  // !NDEBUG
+
+NGPhysicalOffsetRect NGPhysicalFragmentWithOffset::RectInContainerBox() const {
+  return {offset_to_container_box, fragment->Size()};
+}
 
 }  // namespace blink

@@ -42,7 +42,6 @@
 #include "services/viz/public/cpp/compositing/surface_id_struct_traits.h"
 #include "services/viz/public/cpp/compositing/surface_info_struct_traits.h"
 #include "services/viz/public/cpp/compositing/surface_sequence_struct_traits.h"
-#include "services/viz/public/cpp/compositing/texture_mailbox_struct_traits.h"
 #include "services/viz/public/cpp/compositing/transferable_resource_struct_traits.h"
 #include "services/viz/public/interfaces/compositing/begin_frame_args.mojom.h"
 #include "services/viz/public/interfaces/compositing/compositor_frame.mojom.h"
@@ -312,10 +311,9 @@ TEST_F(StructTraitsTest, CopyOutputRequest_TextureRequest) {
   const auto result_format = CopyOutputRequest::ResultFormat::RGBA_TEXTURE;
   const int8_t mailbox_name[GL_MAILBOX_SIZE_CHROMIUM] = {
       0, 9, 8, 7, 6, 5, 4, 3, 2, 1, 9, 7, 5, 3, 1, 3};
-  const uint32_t target = 3;
   gpu::Mailbox mailbox;
   mailbox.SetName(mailbox_name);
-  TextureMailbox texture_mailbox(mailbox, gpu::SyncToken(), target);
+  gpu::SyncToken sync_token;
   const gfx::Rect result_rect(10, 10);
 
   base::RunLoop run_loop_for_result;
@@ -328,7 +326,7 @@ TEST_F(StructTraitsTest, CopyOutputRequest_TextureRequest) {
             quit_closure.Run();
           },
           run_loop_for_result.QuitClosure(), result_rect)));
-  input->SetTextureMailbox(texture_mailbox);
+  input->SetMailbox(mailbox, sync_token);
   EXPECT_FALSE(input->is_scaled());
   std::unique_ptr<CopyOutputRequest> output;
   SerializeAndDeserialize<mojom::CopyOutputRequest>(input, &output);
@@ -337,13 +335,12 @@ TEST_F(StructTraitsTest, CopyOutputRequest_TextureRequest) {
   EXPECT_FALSE(output->is_scaled());
   EXPECT_FALSE(output->has_source());
   EXPECT_FALSE(output->has_area());
-  EXPECT_TRUE(output->has_texture_mailbox());
-  EXPECT_EQ(mailbox, output->texture_mailbox().mailbox());
-  EXPECT_EQ(target, output->texture_mailbox().target());
+  EXPECT_TRUE(output->has_mailbox());
+  EXPECT_EQ(mailbox, output->mailbox());
 
   base::RunLoop run_loop_for_release;
   output->SendResult(std::make_unique<CopyOutputTextureResult>(
-      result_rect, texture_mailbox,
+      result_rect, mailbox, sync_token, gfx::ColorSpace(),
       SingleReleaseCallback::Create(base::Bind(
           [](const base::Closure& quit_closure,
              const gpu::SyncToken& expected_sync_token,
@@ -352,7 +349,7 @@ TEST_F(StructTraitsTest, CopyOutputRequest_TextureRequest) {
             EXPECT_FALSE(is_lost);
             quit_closure.Run();
           },
-          run_loop_for_release.QuitClosure(), gpu::SyncToken()))));
+          run_loop_for_release.QuitClosure(), sync_token))));
 
   // Wait for the result to be delivered to the other side: The
   // CopyOutputRequest callback will be called, at which point
@@ -1200,7 +1197,7 @@ TEST_F(StructTraitsTest, CopyOutputResult_Empty) {
   EXPECT_EQ(output->format(), CopyOutputResult::Format::RGBA_BITMAP);
   EXPECT_TRUE(output->rect().IsEmpty());
   EXPECT_FALSE(output->AsSkBitmap().readyToDraw());
-  EXPECT_EQ(output->GetTextureMailbox(), nullptr);
+  EXPECT_EQ(output->GetTextureResult(), nullptr);
 }
 
 TEST_F(StructTraitsTest, CopyOutputResult_Bitmap) {
@@ -1219,7 +1216,7 @@ TEST_F(StructTraitsTest, CopyOutputResult_Bitmap) {
   EXPECT_FALSE(output->IsEmpty());
   EXPECT_EQ(output->format(), CopyOutputResult::Format::RGBA_BITMAP);
   EXPECT_EQ(output->rect(), result_rect);
-  EXPECT_EQ(output->GetTextureMailbox(), nullptr);
+  EXPECT_EQ(output->GetTextureResult(), nullptr);
 
   const SkBitmap& out_bitmap = output->AsSkBitmap();
   EXPECT_TRUE(out_bitmap.readyToDraw());
@@ -1246,7 +1243,6 @@ TEST_F(StructTraitsTest, CopyOutputResult_Texture) {
       gfx::ColorSpace::CreateDisplayP3D65();
   const int8_t mailbox_name[GL_MAILBOX_SIZE_CHROMIUM] = {
       0, 9, 8, 7, 6, 5, 4, 3, 2, 1, 9, 7, 5, 3, 1, 3};
-  const uint32_t target = 3;
   gpu::SyncToken sync_token(gpu::CommandBufferNamespace::GPU_IO, 0,
                             gpu::CommandBufferId::FromUnsafeValue(0x123),
                             71234838);
@@ -1262,10 +1258,9 @@ TEST_F(StructTraitsTest, CopyOutputResult_Texture) {
       run_loop.QuitClosure(), sync_token));
   gpu::Mailbox mailbox;
   mailbox.SetName(mailbox_name);
-  TextureMailbox texture_mailbox(mailbox, gpu::SyncToken(), target);
-  texture_mailbox.set_color_space(result_color_space);
   std::unique_ptr<CopyOutputResult> input =
-      std::make_unique<CopyOutputTextureResult>(result_rect, texture_mailbox,
+      std::make_unique<CopyOutputTextureResult>(result_rect, mailbox,
+                                                sync_token, result_color_space,
                                                 std::move(callback));
 
   std::unique_ptr<CopyOutputResult> output;
@@ -1274,9 +1269,10 @@ TEST_F(StructTraitsTest, CopyOutputResult_Texture) {
   EXPECT_FALSE(output->IsEmpty());
   EXPECT_EQ(output->format(), CopyOutputResult::Format::RGBA_TEXTURE);
   EXPECT_EQ(output->rect(), result_rect);
-  ASSERT_NE(output->GetTextureMailbox(), nullptr);
-  EXPECT_EQ(output->GetTextureMailbox()->mailbox(), mailbox);
-  EXPECT_EQ(output->GetTextureMailbox()->color_space(), result_color_space);
+  ASSERT_NE(output->GetTextureResult(), nullptr);
+  EXPECT_EQ(output->GetTextureResult()->mailbox, mailbox);
+  EXPECT_EQ(output->GetTextureResult()->sync_token, sync_token);
+  EXPECT_EQ(output->GetTextureResult()->color_space, result_color_space);
 
   std::unique_ptr<SingleReleaseCallback> out_callback =
       output->TakeTextureOwnership();
@@ -1284,44 +1280,6 @@ TEST_F(StructTraitsTest, CopyOutputResult_Texture) {
   // If the CopyOutputResult callback is called (which is the intended
   // behaviour), this will exit. Otherwise, this test will time out and fail.
   run_loop.Run();
-}
-
-TEST_F(StructTraitsTest, TextureMailbox) {
-  const int8_t mailbox_name[GL_MAILBOX_SIZE_CHROMIUM] = {
-      0, 9, 8, 7, 6, 5, 4, 3, 2, 1, 9, 7, 5, 3, 1, 2};
-  const gpu::CommandBufferNamespace command_buffer_namespace = gpu::IN_PROCESS;
-  const int32_t extra_data_field = 0xbeefbeef;
-  const gpu::CommandBufferId command_buffer_id(
-      gpu::CommandBufferId::FromUnsafeValue(0xdeadbeef));
-  const uint64_t release_count = 0xdeadbeefdeadL;
-  gpu::SyncToken sync_token(command_buffer_namespace, extra_data_field,
-                            command_buffer_id, release_count);
-  sync_token.SetVerifyFlush();
-  const uint32_t texture_target = 1337;
-  const gfx::Size size_in_pixels(93, 24);
-  const bool is_overlay_candidate = true;
-  const bool nearest_neighbor = true;
-  const gfx::ColorSpace color_space = gfx::ColorSpace(
-      gfx::ColorSpace::PrimaryID::BT470M, gfx::ColorSpace::TransferID::GAMMA28,
-      gfx::ColorSpace::MatrixID::BT2020_NCL, gfx::ColorSpace::RangeID::LIMITED);
-
-  gpu::Mailbox mailbox;
-  mailbox.SetName(mailbox_name);
-  TextureMailbox input(mailbox, sync_token, texture_target, size_in_pixels,
-                       is_overlay_candidate);
-  input.set_nearest_neighbor(nearest_neighbor);
-  input.set_color_space(color_space);
-
-  TextureMailbox output;
-  SerializeAndDeserialize<mojom::TextureMailbox>(input, &output);
-
-  EXPECT_EQ(mailbox, output.mailbox());
-  EXPECT_EQ(sync_token, output.sync_token());
-  EXPECT_EQ(texture_target, output.target());
-  EXPECT_EQ(size_in_pixels, output.size_in_pixels());
-  EXPECT_EQ(is_overlay_candidate, output.is_overlay_candidate());
-  EXPECT_EQ(nearest_neighbor, output.nearest_neighbor());
-  EXPECT_EQ(color_space, output.color_space());
 }
 
 }  // namespace viz

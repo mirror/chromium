@@ -16,6 +16,10 @@
 #include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/Optional.h"
 
+namespace v8_inspector {
+struct V8StackTraceId;
+}
+
 namespace blink {
 
 class DedicatedWorker;
@@ -40,9 +44,11 @@ class CORE_EXPORT DedicatedWorkerMessagingProxy
   void StartWorkerGlobalScope(const KURL& script_url,
                               const String& user_agent,
                               const String& source_code,
-                              ReferrerPolicy);
+                              ReferrerPolicy,
+                              const v8_inspector::V8StackTraceId&);
   void PostMessageToWorkerGlobalScope(scoped_refptr<SerializedScriptValue>,
-                                      Vector<MessagePortChannel>);
+                                      Vector<MessagePortChannel>,
+                                      const v8_inspector::V8StackTraceId&);
 
   // Implements ThreadedMessagingProxyBase.
   void WorkerThreadCreated() override;
@@ -52,7 +58,8 @@ class CORE_EXPORT DedicatedWorkerMessagingProxy
   // These methods come from worker context thread via
   // DedicatedWorkerObjectProxy and are called on the parent context thread.
   void PostMessageToWorkerObject(scoped_refptr<SerializedScriptValue>,
-                                 Vector<MessagePortChannel>);
+                                 Vector<MessagePortChannel>,
+                                 const v8_inspector::V8StackTraceId&);
   void DispatchErrorEvent(const String& error_message,
                           std::unique_ptr<SourceLocation>,
                           int exception_id);

@@ -7,6 +7,7 @@
 
 #include "core/layout/LayoutBox.h"
 #include "core/paint/PaintInfo.h"
+#include "core/paint/ng/ng_paint_fragment.h"
 #include "platform/graphics/paint/ScopedPaintChunkProperties.h"
 
 namespace blink {
@@ -22,12 +23,19 @@ class AdjustPaintOffsetScope {
                          const LayoutPoint& paint_offset)
       : old_paint_info_(paint_info) {
     if (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled() ||
-        !ShouldAdjustForPaintOffsetTranslation(box)) {
+        !AdjustForPaintOffsetTranslation(box))
       adjusted_paint_offset_ = paint_offset + box.Location();
-      return;
-    }
+  }
 
-    AdjustForPaintOffsetTranslation(box);
+  AdjustPaintOffsetScope(const NGPaintFragment& fragment,
+                         const PaintInfo& paint_info,
+                         const LayoutPoint& paint_offset)
+      : old_paint_info_(paint_info) {
+    DCHECK(fragment.GetLayoutObject());
+    const LayoutBox& box = ToLayoutBox(*fragment.GetLayoutObject());
+    if (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled() ||
+        !AdjustForPaintOffsetTranslation(box))
+      adjusted_paint_offset_ = paint_offset + fragment.Offset().ToLayoutPoint();
   }
 
   const PaintInfo& GetPaintInfo() const {
@@ -43,8 +51,9 @@ class AdjustPaintOffsetScope {
   LayoutPoint AdjustedPaintOffset() const { return adjusted_paint_offset_; }
 
  private:
-  static bool ShouldAdjustForPaintOffsetTranslation(const LayoutBox&);
-  void AdjustForPaintOffsetTranslation(const LayoutBox&);
+  // Returns true if paint info and offset has been adjusted for
+  // PaintOffsetTranslation.
+  bool AdjustForPaintOffsetTranslation(const LayoutBox&);
 
   const PaintInfo& old_paint_info_;
   LayoutPoint adjusted_paint_offset_;

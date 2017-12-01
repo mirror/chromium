@@ -41,11 +41,8 @@
 #include "content/browser/renderer_host/render_widget_helper.h"
 #include "content/browser/resource_context_impl.h"
 #include "content/common/cache_storage/cache_storage_types.h"
-#include "content/common/child_process_host_impl.h"
-#include "content/common/child_process_messages.h"
 #include "content/common/content_constants_internal.h"
 #include "content/common/render_message_filter.mojom.h"
-#include "content/common/render_process_messages.h"
 #include "content/common/view_messages.h"
 #include "content/public/browser/browser_child_process_host.h"
 #include "content/public/browser/browser_context.h"
@@ -81,7 +78,6 @@
 #include "content/common/mac/font_loader.h"
 #include "ui/accelerated_widget_mac/window_resize_helper_mac.h"
 #endif
-
 #if defined(OS_LINUX)
 #include "base/linux_util.h"
 #include "base/threading/platform_thread.h"
@@ -93,7 +89,7 @@ namespace content {
 namespace {
 
 const uint32_t kRenderFilteredMessageClasses[] = {
-    ChildProcessMsgStart, RenderProcessMsgStart, ViewMsgStart,
+    ChildProcessMsgStart, ViewMsgStart,
 };
 
 #if defined(OS_MACOSX)
@@ -159,15 +155,6 @@ bool RenderMessageFilter::OnMessageReceived(const IPC::Message& message) {
         ViewHostMsg_ResizeOrRepaint_ACK,
         ResizeHelperPostMsgToUIThread(render_process_id_, message))
 #endif
-    IPC_MESSAGE_HANDLER_DELAY_REPLY(ChildProcessHostMsg_HasGpuProcess,
-                                    OnHasGpuProcess)
-#if defined(OS_LINUX)
-    IPC_MESSAGE_HANDLER(ChildProcessHostMsg_SetThreadPriority,
-                        OnSetThreadPriority)
-#endif
-#if defined(OS_MACOSX)
-    IPC_MESSAGE_HANDLER_DELAY_REPLY(RenderProcessHostMsg_LoadFont, OnLoadFont)
-#endif
     IPC_MESSAGE_HANDLER(ViewHostMsg_MediaLogEvents, OnMediaLogEvents)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
@@ -211,25 +198,16 @@ void RenderMessageFilter::CreateFullscreenWidget(
   std::move(callback).Run(route_id);
 }
 
+void RenderMessageFilter::LoadFont(const base::string16& font_name,
+                                   float font_point_size,
+                                   LoadFontCallback callback) {
 #if defined(OS_MACOSX)
-
-void RenderMessageFilter::OnLoadFont(const FontDescriptor& font,
-                                     IPC::Message* reply_msg) {
-  FontLoader::LoadFont(
-      font,
-      base::BindOnce(&RenderMessageFilter::SendLoadFontReply, this, reply_msg));
-}
-
-void RenderMessageFilter::SendLoadFontReply(IPC::Message* reply,
-                                            uint32_t data_size,
-                                            base::SharedMemoryHandle handle,
-                                            uint32_t font_id) {
-  RenderProcessHostMsg_LoadFont::WriteReplyParams(reply, data_size, handle,
-                                                  font_id);
-  Send(reply);
-}
-
+  FontLoader::LoadFont(font_name, font_point_size, std::move(callback));
+#else
+  // TODO(https://crbug.com/676224): remove this reporting.
+  mojo::ReportBadMessage("LoadFont is OS_MACOSX only.");
 #endif  // defined(OS_MACOSX)
+}
 
 #if defined(OS_LINUX)
 void RenderMessageFilter::SetThreadPriorityOnFileThread(
@@ -250,18 +228,22 @@ void RenderMessageFilter::SetThreadPriorityOnFileThread(
 
   base::PlatformThread::SetThreadPriority(peer_tid, priority);
 }
+#endif
 
-void RenderMessageFilter::OnSetThreadPriority(base::PlatformThreadId ns_tid,
-                                              base::ThreadPriority priority) {
+void RenderMessageFilter::SetThreadPriority(int32_t ns_tid,
+                                            base::ThreadPriority priority) {
+#if defined(OS_LINUX)
   constexpr base::TaskTraits kTraits = {
       base::MayBlock(), base::TaskPriority::USER_BLOCKING,
       base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN};
   base::PostTaskWithTraits(
       FROM_HERE, kTraits,
       base::BindOnce(&RenderMessageFilter::SetThreadPriorityOnFileThread, this,
-                     ns_tid, priority));
-}
+                     static_cast<base::PlatformThreadId>(ns_tid), priority));
+#else
+  mojo::ReportBadMessage("SetThreadPriority is only supported on OS_LINUX");
 #endif
+}
 
 void RenderMessageFilter::DidGenerateCacheableMetadata(
     const GURL& url,
@@ -332,18 +314,8 @@ void RenderMessageFilter::OnMediaLogEvents(
     media_internals_->OnMediaEvents(render_process_id_, events);
 }
 
-void RenderMessageFilter::OnHasGpuProcess(IPC::Message* reply_ptr) {
-  std::unique_ptr<IPC::Message> reply(reply_ptr);
-  GpuProcessHost::GetHasGpuProcess(
-      base::Bind(&RenderMessageFilter::GetHasGpuProcessCallback,
-                 weak_ptr_factory_.GetWeakPtr(), base::Passed(&reply)));
-}
-
-void RenderMessageFilter::GetHasGpuProcessCallback(
-    std::unique_ptr<IPC::Message> reply,
-    bool has_gpu) {
-  ChildProcessHostMsg_HasGpuProcess::WriteReplyParams(reply.get(), has_gpu);
-  Send(reply.release());
+void RenderMessageFilter::HasGpuProcess(HasGpuProcessCallback callback) {
+  GpuProcessHost::GetHasGpuProcess(std::move(callback));
 }
 
 }  // namespace content

@@ -70,7 +70,7 @@ class BlobRegistryImpl::BlobUnderConstruction {
   // collection in the blob service.
   void StartTransportation();
 
-  ~BlobUnderConstruction() {}
+  ~BlobUnderConstruction() = default;
 
   const std::string& uuid() const { return builder_.uuid(); }
 
@@ -386,7 +386,8 @@ void BlobRegistryImpl::BlobUnderConstruction::ResolvedAllBlobDependencies() {
       const auto& f = element->get_file_filesystem();
       builder_.AppendFileSystemFile(
           f->url, f->offset, f->length,
-          f->expected_modification_time.value_or(base::Time()));
+          f->expected_modification_time.value_or(base::Time()),
+          blob_registry_->file_system_context_);
     } else if (element->is_blob()) {
       DCHECK(blob_uuid_it != referenced_blob_uuids_.end());
       const std::string& blob_uuid = *blob_uuid_it++;
@@ -481,7 +482,7 @@ BlobRegistryImpl::BlobRegistryImpl(
       file_system_context_(std::move(file_system_context)),
       weak_ptr_factory_(this) {}
 
-BlobRegistryImpl::~BlobRegistryImpl() {}
+BlobRegistryImpl::~BlobRegistryImpl() = default;
 
 void BlobRegistryImpl::Bind(blink::mojom::BlobRegistryRequest request,
                             std::unique_ptr<Delegate> delegate) {

@@ -612,12 +612,6 @@ extern const char kAudioCaptureAllowedUrls[];
 extern const char kVideoCaptureAllowed[];
 extern const char kVideoCaptureAllowedUrls[];
 
-extern const char kHotwordSearchEnabled[];
-extern const char kHotwordAlwaysOnSearchEnabled[];
-extern const char kHotwordAlwaysOnNotificationSeen[];
-extern const char kHotwordAudioLoggingEnabled[];
-extern const char kHotwordPreviousLanguage[];
-
 #if defined(OS_CHROMEOS)
 extern const char kDeviceSettingsCache[];
 extern const char kHardwareKeyboardLayout[];
@@ -809,6 +803,7 @@ extern const char kRestartInBackground[];
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
 extern const char kAnimationPolicy[];
+extern const char kSecurityKeyPermitAttestation[];
 #endif
 
 extern const char kBackgroundTracingLastUpload[];
@@ -823,6 +818,7 @@ extern const char kLatestVersionWhenClickedUpdateMenuItem[];
 extern const char kMediaRouterCloudServicesPrefSet[];
 extern const char kMediaRouterEnableCloudServices[];
 extern const char kMediaRouterFirstRunFlowAcknowledged[];
+extern const char kMediaRouterMediaRemotingEnabled[];
 extern const char kMediaRouterTabMirroringSources[];
 
 extern const char kOriginTrialPublicKey[];
@@ -903,6 +899,11 @@ extern const char kTabStatsTotalTabCountMax[];
 extern const char kTabStatsMaxTabsPerWindow[];
 extern const char kTabStatsWindowCountMax[];
 extern const char kTabStatsDailySample[];
+
+extern const char kUnsafelyTreatInsecureOriginAsSecure[];
+
+extern const char kIsolateOrigins[];
+extern const char kSitePerProcess[];
 
 }  // namespace prefs
 

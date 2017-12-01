@@ -95,9 +95,7 @@ promise_test(function(test) {
     .then(backgroundFetchRegistration => {
       assert_true(backgroundFetchRegistration instanceof BackgroundFetchRegistration);
       assert_equals(backgroundFetchRegistration.id, id);
-      assert_object_equals(backgroundFetchRegistration.icons, options.icons);
       assert_equals(backgroundFetchRegistration.downloadTotal, options.downloadTotal);
-      assert_equals(backgroundFetchRegistration.title, options.title);
 
       // TODO(crbug.com/769770): Remove support for the deprecated attributes.
       assert_equals(backgroundFetchRegistration.totalDownloadSize, options.downloadTotal);

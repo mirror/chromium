@@ -35,7 +35,7 @@ js2gtest("browser_tests_js_webui") {
   # action so need to be separated out.
   sources = [
     "../../../browser/ui/webui/app_list/start_page_browsertest.js",
-    "../../../browser/ui/webui/chromeos/bluetooth_pairing_ui_browsertest.js",
+    "../../../browser/ui/webui/chromeos/bluetooth_pairing_dialog_browsertest.js",
     "../../../browser/ui/webui/chromeos/certificate_manager_dialog_browsertest.js",
     "../../../browser/ui/webui/chromeos/set_time_ui_browsertest.js",
     "../../../browser/ui/webui/extensions/chromeos/kiosk_apps_browsertest.js",
@@ -108,6 +108,10 @@ js2gtest("browser_tests_js_webui") {
   ]
 
   extra_js_files = [ "//chrome/browser/resources/md_downloads/constants.js" ]
+
+  if (is_win || is_mac || is_desktop_linux || is_chromeos) {
+    sources += [ "discards/discards_browsertest.js" ]
+  }
 
   if (is_chromeos) {
     sources += [

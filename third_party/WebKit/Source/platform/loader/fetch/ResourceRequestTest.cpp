@@ -25,7 +25,7 @@ TEST(ResourceRequestTest, CrossThreadResourceRequestData) {
   original.SetHTTPMethod(HTTPNames::GET);
   original.SetHTTPHeaderField(AtomicString("Foo"), AtomicString("Bar"));
   original.SetHTTPHeaderField(AtomicString("Piyo"), AtomicString("Fuga"));
-  original.SetPriority(kResourceLoadPriorityLow, 20);
+  original.SetPriority(ResourceLoadPriority::kLow, 20);
 
   scoped_refptr<EncodedFormData> original_body(
       EncodedFormData::Create("Test Body"));
@@ -39,7 +39,7 @@ TEST(ResourceRequestTest, CrossThreadResourceRequestData) {
   original.SetFetchCredentialsMode(
       network::mojom::FetchCredentialsMode::kSameOrigin);
   original.SetRequestorID(30);
-  original.SetRequestorProcessID(40);
+  original.SetPluginChildID(40);
   original.SetAppCacheHostID(50);
   original.SetRequestContext(WebURLRequest::kRequestContextAudio);
   original.SetFrameType(WebURLRequest::kFrameTypeNested);
@@ -57,7 +57,7 @@ TEST(ResourceRequestTest, CrossThreadResourceRequestData) {
   EXPECT_STREQ("GET", original.HttpMethod().Utf8().data());
   EXPECT_STREQ("Bar", original.HttpHeaderFields().Get("Foo").Utf8().data());
   EXPECT_STREQ("Fuga", original.HttpHeaderFields().Get("Piyo").Utf8().data());
-  EXPECT_EQ(kResourceLoadPriorityLow, original.Priority());
+  EXPECT_EQ(ResourceLoadPriority::kLow, original.Priority());
   EXPECT_STREQ("Test Body",
                original.HttpBody()->FlattenToString().Utf8().data());
   EXPECT_FALSE(original.AllowStoredCredentials());
@@ -71,7 +71,7 @@ TEST(ResourceRequestTest, CrossThreadResourceRequestData) {
   EXPECT_EQ(network::mojom::FetchCredentialsMode::kSameOrigin,
             original.GetFetchCredentialsMode());
   EXPECT_EQ(30, original.RequestorID());
-  EXPECT_EQ(40, original.RequestorProcessID());
+  EXPECT_EQ(40, original.GetPluginChildID());
   EXPECT_EQ(50, original.AppCacheHostID());
   EXPECT_EQ(WebURLRequest::kRequestContextAudio, original.GetRequestContext());
   EXPECT_EQ(WebURLRequest::kFrameTypeNested, original.GetFrameType());
@@ -92,7 +92,7 @@ TEST(ResourceRequestTest, CrossThreadResourceRequestData) {
                copy1.RequestorOrigin()->Host().Utf8().data());
   EXPECT_STREQ("GET", copy1.HttpMethod().Utf8().data());
   EXPECT_STREQ("Bar", copy1.HttpHeaderFields().Get("Foo").Utf8().data());
-  EXPECT_EQ(kResourceLoadPriorityLow, copy1.Priority());
+  EXPECT_EQ(ResourceLoadPriority::kLow, copy1.Priority());
   EXPECT_STREQ("Test Body", copy1.HttpBody()->FlattenToString().Utf8().data());
   EXPECT_FALSE(copy1.AllowStoredCredentials());
   EXPECT_FALSE(copy1.ReportUploadProgress());
@@ -105,7 +105,7 @@ TEST(ResourceRequestTest, CrossThreadResourceRequestData) {
   EXPECT_EQ(network::mojom::FetchCredentialsMode::kSameOrigin,
             copy1.GetFetchCredentialsMode());
   EXPECT_EQ(30, copy1.RequestorID());
-  EXPECT_EQ(40, copy1.RequestorProcessID());
+  EXPECT_EQ(40, copy1.GetPluginChildID());
   EXPECT_EQ(50, copy1.AppCacheHostID());
   EXPECT_EQ(WebURLRequest::kRequestContextAudio, copy1.GetRequestContext());
   EXPECT_EQ(WebURLRequest::kFrameTypeNested, copy1.GetFrameType());

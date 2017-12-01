@@ -169,6 +169,8 @@ static_library("test_support") {
     "../public/test/text_input_test_utils_mac.mm",
     "../public/test/unittest_test_suite.cc",
     "../public/test/unittest_test_suite.h",
+    "../public/test/url_loader_interceptor.cc",
+    "../public/test/url_loader_interceptor.h",
     "../public/test/web_contents_binding_set_test_binder.h",
     "../public/test/web_contents_tester.cc",
     "../public/test/web_contents_tester.h",
@@ -270,6 +272,7 @@ static_library("test_support") {
   configs += [
     "//build/config:precompiled_headers",
     "//v8:external_startup_data",
+    "//tools/v8_context_snapshot:use_v8_context_snapshot",
   ]
 
   public_deps = [
@@ -282,6 +285,7 @@ static_library("test_support") {
     "//media/mojo/interfaces",
     "//third_party/WebKit/public:blink",
     "//third_party/WebKit/public:test_support",
+    "//tools/v8_context_snapshot",
   ]
   deps = [
     ":content_test_mojo_bindings",
@@ -379,8 +383,6 @@ static_library("test_support") {
     sources += [
       "../renderer/media/mock_data_channel_impl.cc",
       "../renderer/media/mock_data_channel_impl.h",
-      "../renderer/media/mock_media_stream_dispatcher.cc",
-      "../renderer/media/mock_media_stream_dispatcher.h",
       "../renderer/media/mock_mojo_media_stream_dispatcher_host.cc",
       "../renderer/media/mock_mojo_media_stream_dispatcher_host.h",
       "../renderer/media/mock_peer_connection_impl.cc",
@@ -808,6 +810,7 @@ test("content_browsertests") {
     "../renderer/webclipboard_impl_browsertest.cc",
     "../test/browser_test_utils_browsertest.cc",
     "../test/content_browser_test_test.cc",
+    "../test/url_loader_interceptor_test.cc",
     "../test/webui_resource_browsertest.cc",
   ]
 
@@ -1330,7 +1333,7 @@ test("content_unittests") {
     "../browser/payments/payment_manager_unittest.cc",
     "../browser/permissions/permission_service_impl_unittest.cc",
     "../browser/presentation/presentation_service_impl_unittest.cc",
-    "../browser/renderer_host/clipboard_message_filter_unittest.cc",
+    "../browser/renderer_host/clipboard_host_impl_unittest.cc",
     "../browser/renderer_host/compositor_resize_lock_unittest.cc",
     "../browser/renderer_host/cursor_manager_unittest.cc",
     "../browser/renderer_host/dwrite_font_proxy_message_filter_win_unittest.cc",
@@ -1394,8 +1397,6 @@ test("content_unittests") {
     "../browser/resolve_proxy_msg_helper_unittest.cc",
     "../browser/screen_orientation/screen_orientation_provider_unittest.cc",
     "../browser/service_worker/embedded_worker_instance_unittest.cc",
-    "../browser/service_worker/foreign_fetch_request_handler_unittest.cc",
-    "../browser/service_worker/link_header_support_unittest.cc",
     "../browser/service_worker/service_worker_cache_writer_unittest.cc",
     "../browser/service_worker/service_worker_context_core_unittest.cc",
     "../browser/service_worker/service_worker_context_request_handler_unittest.cc",
@@ -1473,7 +1474,6 @@ test("content_unittests") {
     "../common/input/touch_event_stream_validator_unittest.cc",
     "../common/inter_process_time_ticks_converter_unittest.cc",
     "../common/mac/attributed_string_coder_unittest.mm",
-    "../common/mac/font_descriptor_unittest.mm",
     "../common/manifest_util_unittest.cc",
     "../common/media/media_devices_unittest.cc",
     "../common/origin_util_unittest.cc",
@@ -1491,6 +1491,7 @@ test("content_unittests") {
     "../common/service_manager/service_manager_connection_impl_unittest.cc",
     "../common/service_worker/service_worker_types_unittest.cc",
     "../common/service_worker/service_worker_utils_unittest.cc",
+    "../common/site_isolation_policy_unittest.cc",
     "../common/throttling_url_loader_unittest.cc",
     "../common/unique_name_helper_unittest.cc",
     "../common/webplugininfo_unittest.cc",
@@ -1567,9 +1568,9 @@ test("content_unittests") {
     "../renderer/render_widget_unittest.cc",
     "../renderer/scheduler/resource_dispatch_throttler_unittest.cc",
     "../renderer/service_worker/service_worker_dispatcher_unittest.cc",
-    "../renderer/service_worker/service_worker_event_timer_unittest.cc",
     "../renderer/service_worker/service_worker_provider_context_unittest.cc",
     "../renderer/service_worker/service_worker_subresource_loader_unittest.cc",
+    "../renderer/service_worker/service_worker_timeout_timer_unittest.cc",
     "../renderer/service_worker/thread_safe_script_container_unittest.cc",
     "../renderer/service_worker/web_service_worker_installed_scripts_manager_impl_unittest.cc",
     "../renderer/skia_benchmarking_extension_unittest.cc",
@@ -1739,6 +1740,7 @@ test("content_unittests") {
     # Put WebRTC-related plugins sources in the "enable_webrtc &&
     # enable_plugins" section below.
     sources += [
+      "../browser/plugin_service_impl_unittest.cc",
       "../browser/renderer_host/pepper/browser_ppapi_host_test.cc",
       "../browser/renderer_host/pepper/browser_ppapi_host_test.h",
       "../browser/renderer_host/pepper/pepper_file_system_browser_host_unittest.cc",
@@ -1785,7 +1787,7 @@ test("content_unittests") {
       "../renderer/media/media_stream_constraints_util_unittest.cc",
       "../renderer/media/media_stream_constraints_util_video_content_unittest.cc",
       "../renderer/media/media_stream_constraints_util_video_device_unittest.cc",
-      "../renderer/media/media_stream_dispatcher_unittest.cc",
+      "../renderer/media/media_stream_device_observer_unittest.cc",
       "../renderer/media/media_stream_video_capturer_source_unittest.cc",
       "../renderer/media/media_stream_video_renderer_sink_unittest.cc",
       "../renderer/media/media_stream_video_source_unittest.cc",
@@ -1816,6 +1818,7 @@ test("content_unittests") {
       "../renderer/media/webrtc/webrtc_media_stream_adapter_unittest.cc",
       "../renderer/media/webrtc/webrtc_media_stream_track_adapter_map_unittest.cc",
       "../renderer/media/webrtc/webrtc_media_stream_track_adapter_unittest.cc",
+      "../renderer/media/webrtc/webrtc_set_remote_description_observer_unittest.cc",
       "../renderer/media/webrtc/webrtc_video_capturer_adapter_unittest.cc",
       "../renderer/media/webrtc_audio_renderer_unittest.cc",
       "../renderer/media/webrtc_local_audio_source_provider_unittest.cc",

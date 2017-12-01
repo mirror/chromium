@@ -57,15 +57,14 @@ void BlobImpl::ReadRange(uint64_t offset,
                          mojo::ScopedDataPipeProducerHandle handle,
                          blink::mojom::BlobReaderClientPtr client) {
   MojoBlobReader::Create(
-      nullptr, handle_.get(),
-      net::HttpByteRange::Bounded(offset, offset + length - 1),
+      handle_.get(), net::HttpByteRange::Bounded(offset, offset + length - 1),
       base::MakeUnique<ReaderDelegate>(std::move(handle), std::move(client)));
 }
 
 void BlobImpl::ReadAll(mojo::ScopedDataPipeProducerHandle handle,
                        blink::mojom::BlobReaderClientPtr client) {
   MojoBlobReader::Create(
-      nullptr, handle_.get(), net::HttpByteRange(),
+      handle_.get(), net::HttpByteRange(),
       base::MakeUnique<ReaderDelegate>(std::move(handle), std::move(client)));
 }
 
@@ -88,7 +87,7 @@ BlobImpl::BlobImpl(std::unique_ptr<BlobDataHandle> handle,
       base::Bind(&BlobImpl::OnConnectionError, base::Unretained(this)));
 }
 
-BlobImpl::~BlobImpl() {}
+BlobImpl::~BlobImpl() = default;
 
 void BlobImpl::OnConnectionError() {
   if (!bindings_.empty())

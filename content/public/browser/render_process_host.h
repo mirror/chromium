@@ -273,26 +273,25 @@ class CONTENT_EXPORT RenderProcessHost : public IPC::Sender,
   virtual bool StopWebRTCEventLog() = 0;
 
   // Enables or disables WebRTC's echo canceller AEC3. Disabled implies
-  // selecting the older AEC2.
-  // Note: This will be removed once the AEC3 is fully rolled out and the old
-  // AEC is deprecated.
-  virtual void SetEchoCanceller3(bool enable) = 0;
+  // selecting the older AEC2. The operation is asynchronous, |callback| is run
+  // when done with the boolean indicating if successful and an error message.
+  // The error message is empty if successful.
+  // TODO(crbug.com/696930): Remove once the AEC3 is fully rolled out and the
+  // old AEC is deprecated.
+  virtual void SetEchoCanceller3(
+      bool enable,
+      base::OnceCallback<void(bool /* success */,
+                              const std::string& /* error_message */)>
+          callback) = 0;
 
-  // When set, |callback| receives log messages regarding, for example, media
-  // devices (webcams, mics, etc) that were initially requested in the render
-  // process associated with this RenderProcessHost.
-  virtual void SetWebRtcLogMessageCallback(
-      base::Callback<void(const std::string&)> callback) = 0;
-  virtual void ClearWebRtcLogMessageCallback() = 0;
+  using WebRtcRtpPacketCallback =
+      base::Callback<void(std::unique_ptr<uint8_t[]> packet_header,
+                          size_t header_length,
+                          size_t packet_length,
+                          bool incoming)>;
 
-  typedef base::Callback<void(std::unique_ptr<uint8_t[]> packet_header,
-                              size_t header_length,
-                              size_t packet_length,
-                              bool incoming)>
-      WebRtcRtpPacketCallback;
-
-  typedef base::Callback<void(bool incoming, bool outgoing)>
-      WebRtcStopRtpDumpCallback;
+  using WebRtcStopRtpDumpCallback =
+      base::Callback<void(bool incoming, bool outgoing)>;
 
   // Starts passing RTP packets to |packet_callback| and returns the callback
   // used to stop dumping.
@@ -504,6 +503,6 @@ class CONTENT_EXPORT RenderProcessHost : public IPC::Sender,
   static size_t GetMaxRendererProcessCount();
 };
 
-}  // namespace content.
+}  // namespace content
 
 #endif  // CONTENT_PUBLIC_BROWSER_RENDER_PROCESS_HOST_H_

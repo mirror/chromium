@@ -10,7 +10,6 @@
 
 #include "base/macros.h"
 #include "base/strings/string16.h"
-#include "chrome/browser/vr/color_scheme.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/size.h"
@@ -40,12 +39,26 @@ class UiTexture {
 
   bool dirty() const { return dirty_; }
 
-  void SetMode(ColorScheme::Mode mode);
   void OnInitialized();
+
+  // Foreground and background colors are used pervasively in textures, but more
+  // element-specific colors should be set on the appropriate class.
+  void SetForegroundColor(SkColor color);
+  void SetBackgroundColor(SkColor color);
 
   // This function sets |font_list| to a list of available fonts for |text|. If
   // no font supports |text|, it returns false and leave |font_list| untouched.
-  static bool GetFontList(int size,
+  static bool GetDefaultFontList(int font_size,
+                                 base::string16 text,
+                                 gfx::FontList* font_list);
+
+  // This function sets |font_list| to a list of available fonts for |text|. If
+  // the font with |preferred_font_name| is available and supports |text|,
+  // |font_list| will be configured to use the preferred font instead of default
+  // font. If no font supports |text|, it returns false and leave |font_list|
+  // untouched.
+  static bool GetFontList(const std::string& preferred_font_name,
+                          int font_size,
                           base::string16 text,
                           gfx::FontList* font_list);
 
@@ -64,9 +77,12 @@ class UiTexture {
  protected:
   virtual void Draw(SkCanvas* canvas, const gfx::Size& texture_size) = 0;
 
-  virtual void OnSetMode();
-  ColorScheme::Mode mode() const { return mode_; }
-  const ColorScheme& color_scheme() const;
+  template <typename T>
+  void SetAndDirty(T* target, const T& value) {
+    if (*target != value)
+      set_dirty();
+    *target = value;
+  }
 
   // Prepares a set of RenderText objects with the given color and fonts.
   // Attempts to fit the text within the provided size. |flags| specifies how
@@ -90,15 +106,18 @@ class UiTexture {
       SkColor color,
       TextAlignment text_alignment);
 
+  static bool IsRTL();
+  static void SetForceFontFallbackFailureForTesting(bool force);
+
   void set_dirty() { dirty_ = true; }
 
-  static bool IsRTL();
-  static gfx::FontList GetDefaultFontList(int size);
-  static void SetForceFontFallbackFailureForTesting(bool force);
+  SkColor foreground_color() const { return foreground_color_; }
+  SkColor background_color() const { return background_color_; }
 
  private:
   bool dirty_ = true;
-  ColorScheme::Mode mode_ = ColorScheme::kModeNormal;
+  SkColor foreground_color_;
+  SkColor background_color_;
 
   DISALLOW_COPY_AND_ASSIGN(UiTexture);
 };

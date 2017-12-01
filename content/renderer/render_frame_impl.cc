@@ -45,7 +45,7 @@
 #include "content/common/accessibility_messages.h"
 #include "content/common/associated_interface_provider_impl.h"
 #include "content/common/associated_interfaces.mojom.h"
-#include "content/common/clipboard_messages.h"
+#include "content/common/clipboard.mojom.h"
 #include "content/common/content_constants_internal.h"
 #include "content/common/content_security_policy/csp_context.h"
 #include "content/common/content_security_policy_header.h"
@@ -65,7 +65,7 @@
 #include "content/common/swapped_out_messages.h"
 #include "content/common/view_messages.h"
 #include "content/public/common/appcache_info.h"
-#include "content/public/common/associated_interface_provider.h"
+#include "content/public/common/bind_interface_helpers.h"
 #include "content/public/common/bindings_policy.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_constants.h"
@@ -122,7 +122,7 @@
 #include "content/renderer/media/audio_ipc_factory.h"
 #include "content/renderer/media/media_devices_listener_impl.h"
 #include "content/renderer/media/media_permission_dispatcher.h"
-#include "content/renderer/media/media_stream_dispatcher.h"
+#include "content/renderer/media/media_stream_device_observer.h"
 #include "content/renderer/media/user_media_client_impl.h"
 #include "content/renderer/mojo/blink_connector_js_wrapper.h"
 #include "content/renderer/mojo/blink_interface_registry_impl.h"
@@ -174,6 +174,7 @@
 #include "services/service_manager/public/interfaces/interface_provider.mojom.h"
 #include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
 #include "storage/common/data_element.h"
+#include "third_party/WebKit/common/associated_interfaces/associated_interface_provider.h"
 #include "third_party/WebKit/common/frame_policy.h"
 #include "third_party/WebKit/common/page/page_visibility_state.mojom.h"
 #include "third_party/WebKit/public/platform/FilePathConversion.h"
@@ -196,6 +197,7 @@
 #include "third_party/WebKit/public/platform/modules/fetch/fetch_api_request.mojom-shared.h"
 #include "third_party/WebKit/public/platform/modules/permissions/permission.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h"
+#include "third_party/WebKit/public/web/WebAutofillClient.h"
 #include "third_party/WebKit/public/web/WebColorSuggestion.h"
 #include "third_party/WebKit/public/web/WebConsoleMessage.h"
 #include "third_party/WebKit/public/web/WebContextFeatures.h"
@@ -1191,11 +1193,6 @@ void RenderFrameImpl::CreateFrame(
     render_frame->render_widget_ = RenderWidget::CreateForFrame(
         widget_params.routing_id, widget_params.hidden,
         render_frame->render_view_->screen_info(), compositor_deps, web_frame);
-    // TODO(avi): The main frame re-uses the RenderViewImpl as its widget, so
-    // avoid double-registering the frame as an observer.
-    // https://crbug.com/545684
-    if (web_frame->Parent())
-      render_frame->render_widget_->RegisterRenderFrame(render_frame);
   }
 
   render_frame->Initialize();
@@ -1306,7 +1303,6 @@ RenderFrameImpl::RenderFrameImpl(CreateParams params)
       presentation_dispatcher_(nullptr),
       push_messaging_client_(nullptr),
       screen_orientation_dispatcher_(nullptr),
-      manifest_manager_(nullptr),
       render_accessibility_(nullptr),
       previews_state_(PREVIEWS_UNSPECIFIED),
       effective_connection_type_(
@@ -1347,8 +1343,6 @@ RenderFrameImpl::RenderFrameImpl(CreateParams params)
 
   RenderThread::Get()->AddRoute(routing_id_, this);
 
-  render_view_->RegisterRenderFrame(this);
-
   // Everything below subclasses RenderFrameObserver and is automatically
   // deleted when the RenderFrame gets deleted.
 #if defined(OS_ANDROID)
@@ -1360,7 +1354,7 @@ RenderFrameImpl::RenderFrameImpl(CreateParams params)
   plugin_power_saver_helper_ = new PluginPowerSaverHelper(this);
 #endif
 
-  manifest_manager_ = new ManifestManager(this);
+  manifest_manager_ = std::make_unique<ManifestManager>(this);
   memset(&peak_memory_metrics_, 0,
          sizeof(RenderThreadImpl::RendererMemoryMetrics));
 }
@@ -1406,13 +1400,14 @@ RenderFrameImpl::~RenderFrameImpl() {
     render_view_->main_render_frame_ = nullptr;
   }
 
-  render_view_->UnregisterRenderFrame(this);
   g_routing_id_frame_map.Get().erase(routing_id_);
   RenderThread::Get()->RemoveRoute(routing_id_);
 }
 
 void RenderFrameImpl::Initialize() {
   is_main_frame_ = !frame_->Parent();
+
+  GetRenderWidget()->RegisterRenderFrame(this);
 
   RenderFrameImpl* parent_frame =
       RenderFrameImpl::FromWebFrame(frame_->Parent());
@@ -1668,11 +1663,11 @@ void RenderFrameImpl::OnImeFinishComposingText(bool keep_selection) {
 }
 #endif  // BUILDFLAG(ENABLE_PLUGINS)
 
-MediaStreamDispatcher* RenderFrameImpl::GetMediaStreamDispatcher() {
+MediaStreamDeviceObserver* RenderFrameImpl::GetMediaStreamDeviceObserver() {
   if (!web_user_media_client_)
     InitializeUserMediaClient();
   return web_user_media_client_
-             ? web_user_media_client_->media_stream_dispatcher()
+             ? web_user_media_client_->media_stream_device_observer()
              : nullptr;
 }
 
@@ -1890,8 +1885,8 @@ void RenderFrameImpl::BindFrameNavigationControl(
   frame_navigation_control_binding_.Bind(std::move(request));
 }
 
-ManifestManager* RenderFrameImpl::manifest_manager() {
-  return manifest_manager_;
+blink::mojom::ManifestManager& RenderFrameImpl::GetManifestManager() {
+  return *manifest_manager_;
 }
 
 void RenderFrameImpl::SetPendingNavigationParams(
@@ -2056,9 +2051,7 @@ void RenderFrameImpl::OnMoveCaret(const gfx::Point& point) {
 
 void RenderFrameImpl::OnScrollFocusedEditableNodeIntoRect(
     const gfx::Rect& rect) {
-  // TODO(dtapuska): Move the implementation of scroll focused
-  // editable node into rect into this class.
-  render_view_->ScrollFocusedEditableNodeIntoRect(rect);
+  ScrollFocusedEditableElementIntoRect(rect);
 }
 
 void RenderFrameImpl::OnUndo() {
@@ -2101,8 +2094,9 @@ void RenderFrameImpl::OnCopyToFindPboard() {
   // than the |OnCopy()| case.
   if (frame_->HasSelection()) {
     base::string16 selection = frame_->SelectionAsText().Utf16();
-    RenderThread::Get()->Send(
-        new ClipboardHostMsg_FindPboardWriteStringAsync(selection));
+    RenderThreadImpl::current_blink_platform_impl()
+        ->GetClipboardHost()
+        .WriteStringToFindPboard(selection);
   }
 }
 #endif
@@ -2901,12 +2895,12 @@ service_manager::InterfaceProvider* RenderFrameImpl::GetRemoteInterfaces() {
   return &remote_interfaces_;
 }
 
-AssociatedInterfaceRegistry*
+blink::AssociatedInterfaceRegistry*
 RenderFrameImpl::GetAssociatedInterfaceRegistry() {
   return &associated_interfaces_;
 }
 
-AssociatedInterfaceProvider*
+blink::AssociatedInterfaceProvider*
 RenderFrameImpl::GetRemoteAssociatedInterfaces() {
   if (!remote_associated_interfaces_) {
     ChildThreadImpl* thread = ChildThreadImpl::current();
@@ -3236,8 +3230,11 @@ blink::WebMediaPlayer* RenderFrameImpl::CreateMediaPlayer(
     WebContentDecryptionModule* initial_cdm,
     const blink::WebString& sink_id,
     blink::WebLayerTreeView* layer_tree_view) {
-  return media_factory_.CreateMediaPlayer(
-      source, client, encrypted_client, initial_cdm, sink_id, layer_tree_view);
+  const cc::LayerTreeSettings& settings =
+      GetRenderWidget()->compositor()->GetLayerTreeSettings();
+  return media_factory_.CreateMediaPlayer(source, client, encrypted_client,
+                                          initial_cdm, sink_id, layer_tree_view,
+                                          settings);
 }
 
 std::unique_ptr<blink::WebApplicationCacheHost>
@@ -3378,6 +3375,11 @@ service_manager::InterfaceProvider* RenderFrameImpl::GetInterfaceProvider() {
   return &remote_interfaces_;
 }
 
+blink::AssociatedInterfaceProvider*
+RenderFrameImpl::GetRemoteNavigationAssociatedInterfaces() {
+  return GetRemoteAssociatedInterfaces();
+}
+
 void RenderFrameImpl::DidAccessInitialDocument() {
   DCHECK(!frame_->Parent());
   // NOTE: Do not call back into JavaScript here, since this call is made from a
@@ -3433,11 +3435,11 @@ blink::WebLocalFrame* RenderFrameImpl::CreateChildFrame(
   // Note that Blink can't be changed to just pass |fallback_name| as |name| in
   // the case |name| is empty: |fallback_name| should never affect the actual
   // browsing context name, only unique name generation.
-  bool is_new_subframe_created_by_script =
+  params.is_created_by_script =
       v8::Isolate::GetCurrent() && v8::Isolate::GetCurrent()->InContext();
   params.frame_unique_name = unique_name_helper_.GenerateNameForNewChildFrame(
       params.frame_name.empty() ? fallback_name.Utf8() : params.frame_name,
-      is_new_subframe_created_by_script);
+      params.is_created_by_script);
   params.frame_policy = {sandbox_flags, container_policy};
   params.frame_owner_properties =
       ConvertWebFrameOwnerPropertiesToFrameOwnerProperties(
@@ -3473,7 +3475,7 @@ blink::WebLocalFrame* RenderFrameImpl::CreateChildFrame(
       devtools_frame_token);
   child_render_frame->unique_name_helper_.set_propagated_name(
       params.frame_unique_name);
-  if (is_new_subframe_created_by_script)
+  if (params.is_created_by_script)
     child_render_frame->unique_name_helper_.Freeze();
   child_render_frame->InitializeBlameContext(this);
   blink::WebLocalFrame* web_frame = parent->CreateLocalChild(
@@ -3510,10 +3512,9 @@ void RenderFrameImpl::FrameDetached(DetachType type) {
     Send(new FrameHostMsg_Detach(routing_id_));
 
   // Clean up the associated RenderWidget for the frame, if there is one.
-  if (render_widget_) {
-    render_widget_->UnregisterRenderFrame(this);
+  GetRenderWidget()->UnregisterRenderFrame(this);
+  if (render_widget_)
     render_widget_->CloseForFrame();
-  }
 
   // We need to clean up subframes by removing them from the map and deleting
   // the RenderFrameImpl.  In contrast, the main frame is owned by its
@@ -3592,9 +3593,15 @@ void RenderFrameImpl::DidChangeFramePolicy(
       {flags, container_policy}));
 }
 
-void RenderFrameImpl::DidSetFeaturePolicyHeader(
+void RenderFrameImpl::DidSetFramePolicyHeaders(
+    blink::WebSandboxFlags flags,
     const blink::ParsedFeaturePolicy& parsed_header) {
-  Send(new FrameHostMsg_DidSetFeaturePolicyHeader(routing_id_, parsed_header));
+  // If either Feature Policy or Sandbox Flags are different from the default
+  // (empty) values, then send them to the browser.
+  if (!parsed_header.empty() || flags != blink::WebSandboxFlags::kNone) {
+    Send(new FrameHostMsg_DidSetFramePolicyHeaders(routing_id_, flags,
+                                                   parsed_header));
+  }
 }
 
 void RenderFrameImpl::DidAddContentSecurityPolicies(
@@ -4029,6 +4036,9 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
           request_params.pending_history_list_offset;
     }
   }
+
+  if (commit_type == blink::WebHistoryCommitType::kWebBackForwardCommit)
+    render_view_->DidCommitProvisionalHistoryLoad();
 
   for (auto& observer : render_view_->observers_)
     observer.DidCommitProvisionalLoad(frame_, is_new_navigation);
@@ -4914,7 +4924,7 @@ blink::WebPushClient* RenderFrameImpl::PushClient() {
 
 blink::WebRelatedAppsFetcher* RenderFrameImpl::GetRelatedAppsFetcher() {
   if (!related_apps_fetcher_)
-    related_apps_fetcher_.reset(new RelatedAppsFetcher(manifest_manager_));
+    related_apps_fetcher_.reset(new RelatedAppsFetcher(&GetManifestManager()));
 
   return related_apps_fetcher_.get();
 }
@@ -5453,6 +5463,7 @@ void RenderFrameImpl::HandleWebAccessibilityEvent(
 }
 
 void RenderFrameImpl::FocusedNodeChanged(const WebNode& node) {
+  has_scrolled_focused_editable_node_into_rect_ = false;
   bool is_editable = false;
   gfx::Rect node_bounds;
   if (!node.IsNull() && node.IsElementNode()) {
@@ -6645,6 +6656,33 @@ void RenderFrameImpl::SetCustomURLLoaderFactory(
   }
 }
 
+void RenderFrameImpl::ScrollFocusedEditableElementIntoRect(
+    const gfx::Rect& rect) {
+  // TODO(ekaramad): Perhaps we should remove |rect| since all it seems to be
+  // doing is helping verify if scrolling animation for a given focused editable
+  // element has finished.
+  blink::WebAutofillClient* autofill_client = frame_->AutofillClient();
+  if (has_scrolled_focused_editable_node_into_rect_ &&
+      rect == rect_for_scrolled_focused_editable_node_ && autofill_client) {
+    autofill_client->DidCompleteFocusChangeInFrame();
+    return;
+  }
+
+  if (!render_view_->webview()->ScrollFocusedEditableElementIntoView())
+    return;
+
+  rect_for_scrolled_focused_editable_node_ = rect;
+  has_scrolled_focused_editable_node_into_rect_ = true;
+  if (!GetRenderWidget()->compositor()->HasPendingPageScaleAnimation() &&
+      autofill_client) {
+    autofill_client->DidCompleteFocusChangeInFrame();
+  }
+}
+
+void RenderFrameImpl::DidChangeVisibleViewport() {
+  has_scrolled_focused_editable_node_into_rect_ = false;
+}
+
 void RenderFrameImpl::InitializeUserMediaClient() {
   RenderThreadImpl* render_thread = RenderThreadImpl::current();
   if (!render_thread)  // Will be NULL during unit tests.
@@ -6654,7 +6692,7 @@ void RenderFrameImpl::InitializeUserMediaClient() {
   DCHECK(!web_user_media_client_);
   web_user_media_client_ = new UserMediaClientImpl(
       this, RenderThreadImpl::current()->GetPeerConnectionDependencyFactory(),
-      std::make_unique<MediaStreamDispatcher>(this),
+      std::make_unique<MediaStreamDeviceObserver>(this),
       render_thread->GetWorkerTaskRunner());
   registry_.AddInterface(
       base::Bind(&MediaDevicesListenerImpl::Create, GetRoutingID()));
@@ -7044,8 +7082,9 @@ void RenderFrameImpl::RegisterMojoInterfaces() {
         &RenderFrameImpl::OnHostZoomClientRequest, weak_factory_.GetWeakPtr()));
 
     // Web manifests are only requested for main frames.
-    registry_.AddInterface(base::Bind(&ManifestManager::BindToRequest,
-                                      base::Unretained(manifest_manager_)));
+    registry_.AddInterface(
+        base::Bind(&ManifestManager::BindToRequest,
+                   base::Unretained(manifest_manager_.get())));
   }
 }
 

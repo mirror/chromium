@@ -594,12 +594,32 @@ void SavePasswordsConsumer::OnGetPasswordStoreResults(
 
 - (void)deletePassword:(const autofill::PasswordForm&)form {
   passwordStore_->RemoveLogin(form);
-  for (auto it = savedForms_.begin(); it != savedForms_.end(); ++it) {
-    if (**it == form) {
-      savedForms_.erase(it);
-      break;
-    }
+
+  std::vector<std::unique_ptr<autofill::PasswordForm>>& forms =
+      form.blacklisted_by_user ? blacklistedForms_ : savedForms_;
+  auto iterator = std::find_if(
+      forms.begin(), forms.end(),
+      [&form](const std::unique_ptr<autofill::PasswordForm>& value) {
+        return *value == form;
+      });
+  DCHECK(iterator != forms.end());
+  forms.erase(iterator);
+
+  password_manager::DuplicatesMap& duplicates =
+      form.blacklisted_by_user ? blacklistedPasswordDuplicates_
+                               : savedPasswordDuplicates_;
+  password_manager::PasswordEntryType entryType =
+      form.blacklisted_by_user
+          ? password_manager::PasswordEntryType::BLACKLISTED
+          : password_manager::PasswordEntryType::SAVED;
+  std::string key = password_manager::CreateSortKey(form, entryType);
+  auto duplicatesRange = duplicates.equal_range(key);
+  for (auto iterator = duplicatesRange.first;
+       iterator != duplicatesRange.second; ++iterator) {
+    passwordStore_->RemoveLogin(*(iterator->second));
   }
+  duplicates.erase(key);
+
   [self updateEditButton];
   [self reloadData];
   [self.navigationController popViewControllerAnimated:YES];

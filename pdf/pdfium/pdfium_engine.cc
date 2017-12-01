@@ -1042,7 +1042,6 @@ void PDFiumEngine::ScrolledToXPosition(int position) {
   position_.set_x(position);
   CalculateVisiblePages();
   client_->Scroll(pp::Point(old_x - position, 0));
-  OnSelectionChanged();
 }
 
 void PDFiumEngine::ScrolledToYPosition(int position) {
@@ -1052,7 +1051,6 @@ void PDFiumEngine::ScrolledToYPosition(int position) {
   position_.set_y(position);
   CalculateVisiblePages();
   client_->Scroll(pp::Point(0, old_y - position));
-  OnSelectionChanged();
 }
 
 void PDFiumEngine::PrePaint() {
@@ -1230,8 +1228,11 @@ void PDFiumEngine::OnPendingRequestComplete() {
   for (int pending_page : pending_pages_) {
     if (CheckPageAvailable(pending_page, &still_pending)) {
       update_pages = true;
-      if (IsPageVisible(pending_page))
+      if (IsPageVisible(pending_page)) {
+        client_->NotifyPageBecameVisible(
+            pages_[pending_page]->GetPageFeatures());
         client_->Invalidate(GetPageScreenRect(pending_page));
+      }
     }
   }
   pending_pages_.swap(still_pending);
@@ -2345,16 +2346,14 @@ void PDFiumEngine::SearchUsingICU(const base::string16& term,
   if (text_length <= 0)
     return;
 
-  // Adding +1 to text_length to account for the string terminator that is
-  // included.
   base::string16 page_text;
   PDFiumAPIStringBufferAdapter<base::string16> api_string_adapter(
-      &page_text, text_length + 1, false);
+      &page_text, text_length, false);
   unsigned short* data =
       reinterpret_cast<unsigned short*>(api_string_adapter.GetData());
-  int written = FPDFText_GetText(pages_[current_page]->GetTextPage(),
-                                 character_to_start_searching_from,
-                                 text_length + 1, data);
+  int written =
+      FPDFText_GetText(pages_[current_page]->GetTextPage(),
+                       character_to_start_searching_from, text_length, data);
   api_string_adapter.Close(written);
 
   std::vector<PDFEngine::Client::SearchStringResult> results =
@@ -3110,16 +3109,23 @@ void PDFiumEngine::CalculateVisiblePages() {
   pending_pages_.clear();
   doc_loader_->ClearPendingRequests();
 
-  visible_pages_.clear();
+  std::vector<int> formerly_visible_pages;
+  std::swap(visible_pages_, formerly_visible_pages);
+
   pp::Rect visible_rect(plugin_size_);
-  for (size_t i = 0; i < pages_.size(); ++i) {
+  for (int i = 0; i < static_cast<int>(pages_.size()); ++i) {
     // Check an entire PageScreenRect, since we might need to repaint side
     // borders and shadows even if the page itself is not visible.
     // For example, when user use pdf with different page sizes and zoomed in
     // outside page area.
     if (visible_rect.Intersects(GetPageScreenRect(i))) {
       visible_pages_.push_back(i);
-      CheckPageAvailable(i, &pending_pages_);
+      if (CheckPageAvailable(i, &pending_pages_)) {
+        auto it = std::find(formerly_visible_pages.begin(),
+                            formerly_visible_pages.end(), i);
+        if (it == formerly_visible_pages.end())
+          client_->NotifyPageBecameVisible(pages_[i]->GetPageFeatures());
+      }
     } else {
       // Need to unload pages when we're not using them, since some PDFs use a
       // lot of memory.  See http://crbug.com/48791
@@ -3622,7 +3628,7 @@ PDFiumEngine::MouseDownState::MouseDownState(
     const PDFiumPage::LinkTarget& target)
     : area_(area), target_(target) {}
 
-PDFiumEngine::MouseDownState::~MouseDownState() {}
+PDFiumEngine::MouseDownState::~MouseDownState() = default;
 
 void PDFiumEngine::MouseDownState::Set(const PDFiumPage::Area& area,
                                        const PDFiumPage::LinkTarget& target) {
@@ -3652,7 +3658,7 @@ bool PDFiumEngine::MouseDownState::Matches(
 
 PDFiumEngine::FindTextIndex::FindTextIndex() : valid_(false), index_(0) {}
 
-PDFiumEngine::FindTextIndex::~FindTextIndex() {}
+PDFiumEngine::FindTextIndex::~FindTextIndex() = default;
 
 void PDFiumEngine::FindTextIndex::Invalidate() {
   valid_ = false;

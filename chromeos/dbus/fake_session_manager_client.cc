@@ -63,8 +63,7 @@ FakeSessionManagerClient::FakeSessionManagerClient()
       arc_available_(false),
       weak_ptr_factory_(this) {}
 
-FakeSessionManagerClient::~FakeSessionManagerClient() {
-}
+FakeSessionManagerClient::~FakeSessionManagerClient() = default;
 
 void FakeSessionManagerClient::Init(dbus::Bus* bus) {
 }
@@ -335,10 +334,10 @@ void FakeSessionManagerClient::EmitArcBooted(
 void FakeSessionManagerClient::GetArcStartTime(
     DBusMethodCallback<base::TimeTicks> callback) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(std::move(callback),
-                                arc_available_ ? base::make_optional(
-                                                     base::TimeTicks::Now())
-                                               : base::nullopt));
+      FROM_HERE,
+      base::BindOnce(std::move(callback),
+                     arc_available_ ? base::make_optional(arc_start_time_)
+                                    : base::nullopt));
 }
 
 void FakeSessionManagerClient::RemoveArcData(

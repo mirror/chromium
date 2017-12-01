@@ -26,7 +26,9 @@ const base::Feature kAllowContentInitiatedDataUrlNavigations{
 const base::Feature kAsmJsToWebAssembly{"AsmJsToWebAssembly",
                                         base::FEATURE_ENABLED_BY_DEFAULT};
 
-// Enables async wheel events.
+// Enables async wheel events. Note that this feature depends on
+// TouchpadAndWheelScrollLatching and enabling it when latching is disabled
+// won't have any impacts.
 const base::Feature kAsyncWheelEvents{"AsyncWheelEvents",
                                       base::FEATURE_DISABLED_BY_DEFAULT};
 
@@ -114,7 +116,7 @@ const base::Feature kFontCacheScaling{"FontCacheScaling",
 // same-origin to the top frame, or if a user gesture is being processed.
 const base::Feature kFramebustingNeedsSameOriginOrUserGesture{
     "FramebustingNeedsSameOriginOrUserGesture",
-    base::FEATURE_DISABLED_BY_DEFAULT};
+    base::FEATURE_ENABLED_BY_DEFAULT};
 
 // Enables extended Gamepad API features like motion tracking and haptics.
 const base::Feature kGamepadExtensions{"GamepadExtensions",
@@ -141,6 +143,12 @@ const base::Feature kLazyParseCSS{"LazyParseCSS",
 const base::Feature kLoadingWithMojo{"LoadingWithMojo",
                                      base::FEATURE_ENABLED_BY_DEFAULT};
 
+// If this feature is enabled, media-device enumerations use a cache that is
+// invalidated upon notifications sent by base::SystemMonitor. If disabled, the
+// cache is considered invalid on every enumeration request.
+const base::Feature kMediaDevicesSystemMonitorCache{
+    "MediaDevicesSystemMonitorCaching", base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Enables the memory coordinator.
 // WARNING:
 // The memory coordinator is not ready for use and enabling this may cause
@@ -166,7 +174,7 @@ const base::Feature kMojoBlobs{"MojoBlobs", base::FEATURE_ENABLED_BY_DEFAULT};
 
 // Mojo-based Input Event routing.
 const base::Feature kMojoInputMessages{"MojoInputMessages",
-                                       base::FEATURE_DISABLED_BY_DEFAULT};
+                                       base::FEATURE_ENABLED_BY_DEFAULT};
 
 // Mojo-based Session Storage.
 const base::Feature kMojoSessionStorage{"MojoSessionStorage",
@@ -183,6 +191,10 @@ const base::Feature kModuleScriptsDynamicImport{
 // ES6 Modules import.meta.url.
 const base::Feature kModuleScriptsImportMetaUrl{
     "ModuleScriptsImportMetaUrl", base::FEATURE_ENABLED_BY_DEFAULT};
+
+// Use Mojo IPC for notifications.
+const base::Feature kNotificationsWithMojo{"NotificationsWithMojo",
+                                           base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Resource fetch optimizations for workers. See crbug.com/443374
 const base::Feature kOffMainThreadFetch{"OffMainThreadFetch",
@@ -226,10 +238,6 @@ const base::Feature kPurgeAndSuspend {
       base::FEATURE_ENABLED_BY_DEFAULT
 #endif
 };
-
-// RAF aligned mouse input events support.
-const base::Feature kRafAlignedMouseInputEvents{
-    "RafAlignedMouseInput", base::FEATURE_ENABLED_BY_DEFAULT};
 
 // If Pepper 3D Image Chromium is allowed, this feature controls whether it is
 // enabled.
@@ -279,6 +287,10 @@ const base::Feature kServiceWorkerPaymentApps{
 // Streaming installed scripts on starting service workers.
 const base::Feature kServiceWorkerScriptStreaming{
     "ServiceWorkerScriptStreaming", base::FEATURE_ENABLED_BY_DEFAULT};
+
+// Generate V8 full code cache of service worker scripts.
+const base::Feature kServiceWorkerScriptFullCodeCache{
+    "ServiceWorkerScriptFullCodeCache", base::FEATURE_DISABLED_BY_DEFAULT};
 
 // An experiment to require process isolation for the sign-in origin,
 // https://accounts.google.com.  Launch bug: https://crbug.com/739418.
@@ -407,6 +419,13 @@ const base::Feature kWebUsb{"WebUSB", base::FEATURE_ENABLED_BY_DEFAULT};
 // Enables/disables the Image Capture API.
 const base::Feature kImageCaptureAPI{"ImageCaptureAPI",
                                      base::FEATURE_ENABLED_BY_DEFAULT};
+
+// Alternative to switches::kIsolateOrigins, for turning on origin isolation.
+// List of origins to isolate has to be specified via
+// kIsolateOriginsFieldTrialParamName.
+const base::Feature kIsolateOrigins{"IsolateOrigins",
+                                    base::FEATURE_DISABLED_BY_DEFAULT};
+const char kIsolateOriginsFieldTrialParamName[] = "OriginsList";
 
 const base::Feature kKeepAliveRendererForKeepaliveRequests{
     "KeepAliveRendererForKeepaliveRequests", base::FEATURE_ENABLED_BY_DEFAULT};

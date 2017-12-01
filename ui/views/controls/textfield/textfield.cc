@@ -234,12 +234,16 @@ bool IsControlKeyModifier(int flags) {
 const char Textfield::kViewClassName[] = "Textfield";
 
 // static
-size_t Textfield::GetCaretBlinkMs() {
-  static const size_t default_value = 500;
+base::TimeDelta Textfield::GetCaretBlinkInterval() {
+  static constexpr base::TimeDelta default_value =
+      base::TimeDelta::FromMilliseconds(500);
 #if defined(OS_WIN)
   static const size_t system_value = ::GetCaretBlinkTime();
-  if (system_value != 0)
-    return (system_value == INFINITE) ? 0 : system_value;
+  if (system_value != 0) {
+    return (system_value == INFINITE)
+               ? base::TimeDelta()
+               : base::TimeDelta::FromMilliseconds(system_value);
+  }
 #endif
   return default_value;
 }
@@ -289,12 +293,21 @@ Textfield::Textfield()
   UpdateBorder();
   SetFocusBehavior(FocusBehavior::ALWAYS);
 
+#if !defined(OS_MACOSX)
+  // Do not map accelerators on Mac. E.g. They might not reflect custom
+  // keybindings that a user has set. But also on Mac, these commands dispatch
+  // via the "responder chain" when the OS searches through menu items in the
+  // menu bar. The menu then sends e.g., a "cut:" command to NativeWidgetMac,
+  // which will pass it to Textfield via OnKeyEvent() after associating the
+  // correct edit command.
+
   // These allow BrowserView to pass edit commands from the Chrome menu to us
   // when we're focused by simply asking the FocusManager to
   // ProcessAccelerator() with the relevant accelerators.
   AddAccelerator(ui::Accelerator(ui::VKEY_X, ui::EF_CONTROL_DOWN));
   AddAccelerator(ui::Accelerator(ui::VKEY_C, ui::EF_CONTROL_DOWN));
   AddAccelerator(ui::Accelerator(ui::VKEY_V, ui::EF_CONTROL_DOWN));
+#endif
 }
 
 Textfield::~Textfield() {
@@ -1626,6 +1639,12 @@ void Textfield::SetTextEditCommandForNextKeyEvent(ui::TextEditCommand command) {
   scheduled_text_edit_command_ = command;
 }
 
+const std::string& Textfield::GetClientSourceInfo() const {
+  // TODO(yhanada): Implement this method.
+  NOTIMPLEMENTED_LOG_ONCE();
+  return base::EmptyString();
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // Textfield, protected:
 
@@ -1940,8 +1959,8 @@ void Textfield::UpdateBackgroundColor() {
   } else {
     SetBackground(CreateSolidBackground(color));
   }
-  // Disable subpixel rendering when the background color is transparent
-  // because it draws incorrect colors around the glyphs in that case.
+  // Disable subpixel rendering when the background color is not opaque because
+  // it draws incorrect colors around the glyphs in that case.
   // See crbug.com/115198
   GetRenderText()->set_subpixel_rendering_suppressed(SkColorGetA(color) !=
                                                      SK_AlphaOPAQUE);
@@ -2004,6 +2023,13 @@ void Textfield::PaintTextAndCursor(gfx::Canvas* canvas) {
   // Draw placeholder text if needed.
   gfx::RenderText* render_text = GetRenderText();
   if (text().empty() && !GetPlaceholderText().empty()) {
+    // Disable subpixel rendering when the background color is not opaque
+    // because it draws incorrect colors around the glyphs in that case.
+    // See crbug.com/786343
+    int placeholder_text_draw_flags = placeholder_text_draw_flags_;
+    if (SkColorGetA(GetBackgroundColor()) != SK_AlphaOPAQUE)
+      placeholder_text_draw_flags |= gfx::Canvas::NO_SUBPIXEL_RENDERING;
+
     canvas->DrawStringRectWithFlags(
         GetPlaceholderText(),
         placeholder_font_list_.has_value() ? placeholder_font_list_.value()
@@ -2011,7 +2037,7 @@ void Textfield::PaintTextAndCursor(gfx::Canvas* canvas) {
         ui::MaterialDesignController::IsSecondaryUiMaterial()
             ? SkColorSetA(GetTextColor(), 0x83)
             : placeholder_text_color_,
-        render_text->display_rect(), placeholder_text_draw_flags_);
+        render_text->display_rect(), placeholder_text_draw_flags);
   }
 
   render_text->Draw(canvas);
@@ -2143,15 +2169,13 @@ bool Textfield::ShouldShowCursor() const {
 }
 
 bool Textfield::ShouldBlinkCursor() const {
-  return ShouldShowCursor() && Textfield::GetCaretBlinkMs() != 0;
+  return ShouldShowCursor() && !Textfield::GetCaretBlinkInterval().is_zero();
 }
 
 void Textfield::StartBlinkingCursor() {
   DCHECK(ShouldBlinkCursor());
-  cursor_blink_timer_.Start(
-      FROM_HERE,
-      base::TimeDelta::FromMilliseconds(Textfield::GetCaretBlinkMs()), this,
-      &Textfield::OnCursorBlinkTimerFired);
+  cursor_blink_timer_.Start(FROM_HERE, Textfield::GetCaretBlinkInterval(), this,
+                            &Textfield::OnCursorBlinkTimerFired);
 }
 
 void Textfield::StopBlinkingCursor() {

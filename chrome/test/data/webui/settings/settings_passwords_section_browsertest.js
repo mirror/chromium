@@ -144,7 +144,7 @@ TEST_F('SettingsPasswordSectionBrowserTest', 'uiTests', function() {
    */
   function createPasswordListItem(passwordItem) {
     var passwordListItem = document.createElement('password-list-item');
-    passwordListItem.item = passwordItem;
+    passwordListItem.item = {entry: passwordItem, password: ''};
     document.body.appendChild(passwordListItem);
     Polymer.dom.flush();
     return passwordListItem;
@@ -158,7 +158,7 @@ TEST_F('SettingsPasswordSectionBrowserTest', 'uiTests', function() {
    */
   function createPasswordDialog(passwordItem) {
     var passwordDialog = document.createElement('password-edit-dialog');
-    passwordDialog.item = passwordItem;
+    passwordDialog.item = {entry: passwordItem, password: ''};
     document.body.appendChild(passwordDialog);
     Polymer.dom.flush();
     return passwordDialog;
@@ -250,7 +250,9 @@ TEST_F('SettingsPasswordSectionBrowserTest', 'uiTests', function() {
 
       // Assert that the data is passed into the iron list. If this fails,
       // then other expectations will also fail.
-      assertEquals(passwordList, passwordsSection.$.passwordList.items);
+      assertDeepEquals(
+          passwordList,
+          passwordsSection.$.passwordList.items.map(entry => entry.entry));
 
       validatePasswordList(passwordsSection.$.passwordList, passwordList);
 
@@ -272,10 +274,12 @@ TEST_F('SettingsPasswordSectionBrowserTest', 'uiTests', function() {
       validatePasswordList(passwordsSection.$.passwordList, passwordList);
       // Simulate 'longwebsite.com' being removed from the list.
       passwordsSection.splice('savedPasswords', 1, 1);
+      passwordList.splice(1, 1);
       flushPasswordSection(passwordsSection);
 
-      assertFalse(listContainsUrl(passwordsSection.savedPasswords,
-                                       'longwebsite.com'));
+      assertFalse(listContainsUrl(
+          passwordsSection.savedPasswords.map(entry => entry.entry),
+          'longwebsite.com'));
       assertFalse(listContainsUrl(passwordList, 'longwebsite.com'));
 
       validatePasswordList(passwordsSection.$.passwordList, passwordList);
@@ -495,7 +499,7 @@ TEST_F('SettingsPasswordSectionBrowserTest', 'uiTests', function() {
 
       assertFalse(passwordDialog.$.showPasswordButton.hidden);
 
-      passwordDialog.password = PASSWORD;
+      passwordDialog.set('item.password', PASSWORD);
       Polymer.dom.flush();
 
       assertEquals(PASSWORD,
@@ -513,7 +517,7 @@ TEST_F('SettingsPasswordSectionBrowserTest', 'uiTests', function() {
       // Hidden passwords should be disabled.
       assertTrue(passwordListItem.$$('#password').disabled);
 
-      passwordListItem.password = PASSWORD;
+      passwordListItem.set('item.password', PASSWORD);
       Polymer.dom.flush();
 
       assertEquals(PASSWORD, passwordListItem.$$('#password').value);
@@ -536,9 +540,10 @@ TEST_F('SettingsPasswordSectionBrowserTest', 'uiTests', function() {
         var actualItem = event.detail.item;
         assertEquals(
             expectedItem.loginPair.urls.origin,
-            actualItem.loginPair.urls.origin);
+            actualItem.entry.loginPair.urls.origin);
         assertEquals(
-            expectedItem.loginPair.username, actualItem.loginPair.username);
+            expectedItem.loginPair.username,
+            actualItem.entry.loginPair.username);
         done();
       });
 
@@ -553,9 +558,10 @@ TEST_F('SettingsPasswordSectionBrowserTest', 'uiTests', function() {
         var actualItem = event.detail.item;
         assertEquals(
             expectedItem.loginPair.urls.origin,
-            actualItem.loginPair.urls.origin);
+            actualItem.entry.loginPair.urls.origin);
         assertEquals(
-            expectedItem.loginPair.username, actualItem.loginPair.username);
+            expectedItem.loginPair.username,
+            actualItem.entry.loginPair.username);
         done();
       });
 
@@ -571,6 +577,26 @@ TEST_F('SettingsPasswordSectionBrowserTest', 'uiTests', function() {
       };
 
       MockInteractions.tap(exportDialog.$.exportPasswordsButton);
+    });
+
+    test('closingPasswordsSectionHidesUndoToast', function(done) {
+      var passwordEntry = FakeDataMaker.passwordEntry('goo.gl', 'bart', 1);
+      var passwordsSection =
+          createPasswordsSection(passwordManager, [passwordEntry], []);
+
+      // Click the remove button on the first password and assert that an undo
+      // toast is shown.
+      var firstNode = Polymer.dom(passwordsSection.$.passwordList).children[1];
+      MockInteractions.tap(firstNode.$$('#passwordMenu'));
+      MockInteractions.tap(passwordsSection.$.menuRemovePassword);
+      assertTrue(passwordsSection.$.undoToast.open);
+
+      // Remove the passwords section from the DOM and check that this closes
+      // the undo toast.
+      document.body.removeChild(passwordsSection);
+      assertFalse(passwordsSection.$.undoToast.open);
+
+      done();
     });
   });
 

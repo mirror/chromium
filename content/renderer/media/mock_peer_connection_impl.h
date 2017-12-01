@@ -97,10 +97,23 @@ class MockPeerConnectionImpl : public webrtc::PeerConnectionInterface {
                     webrtc::SessionDescriptionInterface* desc));
   void SetLocalDescriptionWorker(
       webrtc::SetSessionDescriptionObserver* observer,
-      webrtc::SessionDescriptionInterface* desc) ;
+      webrtc::SessionDescriptionInterface* desc);
+  // TODO(hbos): Remove once no longer mandatory to implement.
   MOCK_METHOD2(SetRemoteDescription,
                void(webrtc::SetSessionDescriptionObserver* observer,
                     webrtc::SessionDescriptionInterface* desc));
+  void SetRemoteDescription(
+      std::unique_ptr<webrtc::SessionDescriptionInterface> desc,
+      rtc::scoped_refptr<webrtc::SetRemoteDescriptionObserverInterface>
+          observer) override {
+    SetRemoteDescriptionForMock(&desc, &observer);
+  }
+  // Work-around due to MOCK_METHOD being unable to handle move-only arguments.
+  MOCK_METHOD2(
+      SetRemoteDescriptionForMock,
+      void(std::unique_ptr<webrtc::SessionDescriptionInterface>* desc,
+           rtc::scoped_refptr<webrtc::SetRemoteDescriptionObserverInterface>*
+               observer));
   void SetRemoteDescriptionWorker(
       webrtc::SetSessionDescriptionObserver* observer,
       webrtc::SessionDescriptionInterface* desc);
@@ -165,10 +178,14 @@ class MockPeerConnectionImpl : public webrtc::PeerConnectionInterface {
 
 class FakeRtpReceiver : public webrtc::RtpReceiverInterface {
  public:
-  FakeRtpReceiver(rtc::scoped_refptr<webrtc::MediaStreamTrackInterface> track);
+  FakeRtpReceiver(rtc::scoped_refptr<webrtc::MediaStreamTrackInterface> track,
+                  std::vector<rtc::scoped_refptr<webrtc::MediaStreamInterface>>
+                      streams = {});
   ~FakeRtpReceiver() override;
 
   rtc::scoped_refptr<webrtc::MediaStreamTrackInterface> track() const override;
+  std::vector<rtc::scoped_refptr<webrtc::MediaStreamInterface>> streams()
+      const override;
   cricket::MediaType media_type() const override;
   std::string id() const override;
   webrtc::RtpParameters GetParameters() const override;
@@ -177,6 +194,7 @@ class FakeRtpReceiver : public webrtc::RtpReceiverInterface {
 
  private:
   rtc::scoped_refptr<webrtc::MediaStreamTrackInterface> track_;
+  std::vector<rtc::scoped_refptr<webrtc::MediaStreamInterface>> streams_;
 };
 
 }  // namespace content

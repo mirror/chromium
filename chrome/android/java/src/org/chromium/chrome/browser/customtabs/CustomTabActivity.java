@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.customtabs;
 import static org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider.CUSTOM_TABS_UI_TYPE_DEFAULT;
 import static org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider.CUSTOM_TABS_UI_TYPE_INFO_PAGE;
 import static org.chromium.chrome.browser.webapps.WebappActivity.ACTIVITY_TYPE_OTHER;
+import static org.chromium.chrome.browser.webapps.WebappActivity.ACTIVITY_TYPE_WEBAPK;
 
 import android.app.Activity;
 import android.app.PendingIntent;
@@ -232,6 +233,10 @@ public class CustomTabActivity extends ChromeActivity {
     private TabModelObserver mTabModelObserver = new EmptyTabModelObserver() {
         @Override
         public void didAddTab(Tab tab, TabLaunchType type) {
+            // Ensure that the PageLoadMetrics observer is attached in all cases, if in
+            // the future we do not go through initializeMainTab. ObserverList.addObserver
+            // will deduplicate additions, so it is safe to add both here as well as in
+            // initializeMainTab().
             PageLoadMetrics.addObserver(mMetricsObserver);
             tab.addObserver(mTabObserver);
         }
@@ -544,7 +549,14 @@ public class CustomTabActivity extends ChromeActivity {
                 getIntent(), IntentHandler.EXTRA_PARENT_TAB_ID, Tab.INVALID_TAB_ID);
         Tab tab = new Tab(assignedTabId, parentTabId, false, getWindowAndroid(),
                 TabLaunchType.FROM_EXTERNAL_APP, null, null);
-        tab.setAppAssociatedWith(mConnection.getClientPackageNameForSession(mSession));
+        if (getIntent().getIntExtra(
+                    CustomTabIntentDataProvider.EXTRA_BROWSER_LAUNCH_SOURCE, ACTIVITY_TYPE_OTHER)
+                == ACTIVITY_TYPE_WEBAPK) {
+            String webapkPackageName = getIntent().getStringExtra(Browser.EXTRA_APPLICATION_ID);
+            tab.setAppAssociatedWith(webapkPackageName);
+        } else {
+            tab.setAppAssociatedWith(mConnection.getClientPackageNameForSession(mSession));
+        }
         tab.initialize(
                 webContents, getTabContentManager(),
                 new CustomTabDelegateFactory(
@@ -613,6 +625,9 @@ public class CustomTabActivity extends ChromeActivity {
                 getApplication(), mSession, mIntentDataProvider.isOpenedByChrome());
 
         mMetricsObserver = new PageLoadMetricsObserver(mConnection, mSession, tab);
+        // Immediately add the observer to PageLoadMetrics to catch early events that may
+        // be generated in the middle of tab initialization.
+        PageLoadMetrics.addObserver(mMetricsObserver);
         tab.addObserver(mTabObserver);
 
         prepareTabBackground(tab);

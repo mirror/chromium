@@ -408,8 +408,8 @@ ExtensionFunction::ResponseAction FileManagerPrivateGetProfilesFunction::Run() {
 
   // Obtains the display profile ID.
   AppWindow* const app_window = GetCurrentAppWindow(this);
-  chrome::MultiUserWindowManager* const window_manager =
-      chrome::MultiUserWindowManager::GetInstance();
+  MultiUserWindowManager* const window_manager =
+      MultiUserWindowManager::GetInstance();
   const AccountId current_profile_id = multi_user_util::GetAccountIdFromProfile(
       Profile::FromBrowserContext(browser_context()));
   const AccountId display_profile_id =
@@ -561,9 +561,11 @@ FileManagerPrivateAddProvidedFileSystemFunction::Run() {
 
   using chromeos::file_system_provider::Service;
   using chromeos::file_system_provider::ProvidingExtensionInfo;
+  using chromeos::file_system_provider::ProviderId;
   Service* const service = Service::Get(chrome_details_.GetProfile());
 
-  if (!service->RequestMount(params->extension_id))
+  if (!service->RequestMount(
+          ProviderId::CreateFromExtensionId(params->extension_id)))
     return RespondNow(Error("Failed to request a new mount."));
 
   return RespondNow(NoArguments());

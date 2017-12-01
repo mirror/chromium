@@ -32,9 +32,7 @@ void ViewPainter::Paint(const PaintInfo& paint_info,
   DCHECK(LayoutPoint(IntPoint(paint_offset.X().ToInt(),
                               paint_offset.Y().ToInt())) == paint_offset);
 
-  const LocalFrameView* frame_view = layout_view_.GetFrameView();
-  if (frame_view->ShouldThrottleRendering())
-    return;
+  DCHECK(!layout_view_.GetFrameView()->ShouldThrottleRendering());
 
   layout_view_.PaintObject(paint_info, paint_offset);
   BlockPainter(layout_view_)
@@ -87,12 +85,10 @@ void ViewPainter::PaintBoxDecorationBackground(const PaintInfo& paint_info) {
                               layout_view_.ScrolledContentOffset());
     }
     if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
-      PaintChunkProperties properties(layout_view_.FirstFragment()
-                                          .GetRarePaintData()
-                                          ->ContentsProperties());
       scoped_scroll_property.emplace(
-          paint_info.context.GetPaintController(), *display_item_client,
-          DisplayItem::kDocumentBackground, properties);
+          paint_info.context.GetPaintController(),
+          layout_view_.FirstFragment().GetRarePaintData()->ContentsProperties(),
+          *display_item_client, DisplayItem::kDocumentBackground);
     }
   }
 

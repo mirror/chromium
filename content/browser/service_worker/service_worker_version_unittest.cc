@@ -35,8 +35,11 @@
 
 // IPC messages for testing ---------------------------------------------------
 
+#undef IPC_IPC_MESSAGE_MACROS_H_
+#undef IPC_MESSAGE_EXTRA
 #define IPC_MESSAGE_IMPL
 #include "ipc/ipc_message_macros.h"
+#include "ipc/ipc_message_templates_impl.h"
 
 #define IPC_MESSAGE_START TestMsgStart
 
@@ -217,7 +220,8 @@ class ServiceWorkerVersionTest : public testing::Test {
   struct CachedMetadataUpdateListener : public ServiceWorkerVersion::Listener {
     CachedMetadataUpdateListener() = default;
     ~CachedMetadataUpdateListener() override = default;
-    void OnCachedMetadataUpdated(ServiceWorkerVersion* version) override {
+    void OnCachedMetadataUpdated(ServiceWorkerVersion* version,
+                                 size_t size) override {
       ++updated_count;
     }
     int updated_count = 0;
@@ -302,10 +306,8 @@ class ServiceWorkerVersionTest : public testing::Test {
     EXPECT_EQ(SERVICE_WORKER_ERROR_MAX_VALUE, status);
   }
 
-  base::SimpleTestTickClock* SetTickClockForTesting() {
-    base::SimpleTestTickClock* tick_clock = new base::SimpleTestTickClock();
-    version_->SetTickClockForTesting(base::WrapUnique(tick_clock));
-    return tick_clock;
+  void SetTickClockForTesting(base::SimpleTestTickClock* tick_clock) {
+    version_->SetTickClockForTesting(tick_clock);
   }
 
   TestBrowserThreadBundle thread_bundle_;
@@ -1091,7 +1093,8 @@ TEST_F(ServiceWorkerVersionTest, RequestCustomizedTimeout) {
   version_->SetStatus(ServiceWorkerVersion::ACTIVATED);
   StartWorker(version_.get(), ServiceWorkerMetrics::EventType::SYNC);
 
-  base::SimpleTestTickClock* tick_clock = SetTickClockForTesting();
+  base::SimpleTestTickClock tick_clock;
+  SetTickClockForTesting(&tick_clock);
 
   // Create two requests. One which times out in 10 seconds, one in 20 seconds.
   int timeout_seconds = 10;
@@ -1116,7 +1119,7 @@ TEST_F(ServiceWorkerVersionTest, RequestCustomizedTimeout) {
   EXPECT_EQ(SERVICE_WORKER_ERROR_MAX_VALUE, second_status);
 
   // Now advance time until the second task timeout should expire.
-  tick_clock->Advance(base::TimeDelta::FromSeconds(timeout_seconds + 1));
+  tick_clock.Advance(base::TimeDelta::FromSeconds(timeout_seconds + 1));
   version_->timeout_timer_.user_task().Run();
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(SERVICE_WORKER_ERROR_MAX_VALUE, first_status);
@@ -1126,7 +1129,7 @@ TEST_F(ServiceWorkerVersionTest, RequestCustomizedTimeout) {
   EXPECT_EQ(EmbeddedWorkerStatus::RUNNING, version_->running_status());
 
   // Now advance time until both tasks should be expired.
-  tick_clock->Advance(base::TimeDelta::FromSeconds(timeout_seconds + 1));
+  tick_clock.Advance(base::TimeDelta::FromSeconds(timeout_seconds + 1));
   version_->timeout_timer_.user_task().Run();
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(SERVICE_WORKER_ERROR_TIMEOUT, first_status);
@@ -1294,77 +1297,6 @@ TEST_F(ServiceWorkerStallInStoppingTest, DetachThenRestart) {
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(has_stopped);
   EXPECT_EQ(SERVICE_WORKER_OK, start_status);
-}
-
-TEST_F(ServiceWorkerVersionTest, RegisterForeignFetchScopes) {
-  version_->SetStatus(ServiceWorkerVersion::INSTALLING);
-  // Start a worker.
-  StartWorker(version_.get(), ServiceWorkerMetrics::EventType::UNKNOWN);
-  EXPECT_EQ(0, helper_->mock_render_process_host()->bad_msg_count());
-
-  GURL valid_scope_1("https://www.example.com/test/subscope");
-  GURL valid_scope_2("https://www.example.com/test/othersubscope");
-  std::vector<GURL> valid_scopes;
-  valid_scopes.push_back(valid_scope_1);
-  valid_scopes.push_back(valid_scope_2);
-
-  std::vector<url::Origin> all_origins;
-  url::Origin valid_origin = url::Origin::Create(GURL("https://chromium.org/"));
-  std::vector<url::Origin> valid_origin_list(1, valid_origin);
-
-  // Invalid subscope, should kill worker (but in tests will only increase bad
-  // message count).
-  version_->RegisterForeignFetchScopes(std::vector<GURL>(1, GURL()),
-                                       valid_origin_list);
-  base::RunLoop().RunUntilIdle();
-  EXPECT_EQ(1, helper_->mock_render_process_host()->bad_msg_count());
-  EXPECT_EQ(0u, version_->foreign_fetch_scopes_.size());
-  EXPECT_EQ(0u, version_->foreign_fetch_origins_.size());
-
-  // Subscope outside the scope of the worker.
-  version_->RegisterForeignFetchScopes(
-      std::vector<GURL>(1, GURL("https://www.example.com/wrong")),
-      valid_origin_list);
-  base::RunLoop().RunUntilIdle();
-  EXPECT_EQ(2, helper_->mock_render_process_host()->bad_msg_count());
-  EXPECT_EQ(0u, version_->foreign_fetch_scopes_.size());
-  EXPECT_EQ(0u, version_->foreign_fetch_origins_.size());
-
-  // Subscope on wrong origin.
-  version_->RegisterForeignFetchScopes(
-      std::vector<GURL>(1, GURL("https://example.com/test/")),
-      valid_origin_list);
-  base::RunLoop().RunUntilIdle();
-  EXPECT_EQ(3, helper_->mock_render_process_host()->bad_msg_count());
-  EXPECT_EQ(0u, version_->foreign_fetch_scopes_.size());
-  EXPECT_EQ(0u, version_->foreign_fetch_origins_.size());
-
-  // Invalid origin.
-  version_->RegisterForeignFetchScopes(
-      valid_scopes, std::vector<url::Origin>(1, url::Origin()));
-  base::RunLoop().RunUntilIdle();
-  EXPECT_EQ(4, helper_->mock_render_process_host()->bad_msg_count());
-  EXPECT_EQ(0u, version_->foreign_fetch_scopes_.size());
-  EXPECT_EQ(0u, version_->foreign_fetch_origins_.size());
-
-  // Valid subscope, no origins.
-  version_->RegisterForeignFetchScopes(std::vector<GURL>(1, valid_scope_1),
-                                       all_origins);
-  base::RunLoop().RunUntilIdle();
-  EXPECT_EQ(4, helper_->mock_render_process_host()->bad_msg_count());
-  EXPECT_EQ(1u, version_->foreign_fetch_scopes_.size());
-  EXPECT_EQ(valid_scope_1, version_->foreign_fetch_scopes_[0]);
-  EXPECT_EQ(0u, version_->foreign_fetch_origins_.size());
-
-  // Valid subscope, explicit origins.
-  version_->RegisterForeignFetchScopes(valid_scopes, valid_origin_list);
-  base::RunLoop().RunUntilIdle();
-  EXPECT_EQ(4, helper_->mock_render_process_host()->bad_msg_count());
-  EXPECT_EQ(2u, version_->foreign_fetch_scopes_.size());
-  EXPECT_EQ(valid_scope_1, version_->foreign_fetch_scopes_[0]);
-  EXPECT_EQ(valid_scope_2, version_->foreign_fetch_scopes_[1]);
-  EXPECT_EQ(1u, version_->foreign_fetch_origins_.size());
-  EXPECT_EQ(valid_origin, version_->foreign_fetch_origins_[0]);
 }
 
 TEST_F(ServiceWorkerVersionTest, RendererCrashDuringEvent) {

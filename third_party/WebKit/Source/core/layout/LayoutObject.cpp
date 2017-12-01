@@ -661,7 +661,7 @@ bool LayoutObject::ScrollRectToVisible(const LayoutRect& rect,
                                        ScrollType scroll_type,
                                        bool make_visible_in_visual_viewport,
                                        ScrollBehavior scroll_behavior) {
-  LayoutBox* enclosing_box = this->EnclosingBox();
+  LayoutBox* enclosing_box = EnclosingBox();
   if (!enclosing_box)
     return false;
 
@@ -704,6 +704,16 @@ LayoutBlockFlow* LayoutObject::EnclosingNGBlockFlow() const {
   LayoutBox* box = EnclosingBox();
   DCHECK(box);
   return box->IsLayoutNGMixin() ? ToLayoutBlockFlow(box) : nullptr;
+}
+
+const NGPhysicalBoxFragment* LayoutObject::EnclosingBlockFlowFragment() const {
+  DCHECK(IsInline() || IsText());
+  LayoutBlockFlow* const block_flow = EnclosingNGBlockFlow();
+  if (!block_flow || !block_flow->HasNGInlineNodeData())
+    return nullptr;
+  // TODO(kojii): CurrentFragment isn't always available after layout clean.
+  // Investigate why.
+  return block_flow->CurrentFragment();
 }
 
 LayoutBox* LayoutObject::EnclosingScrollableBox() const {
@@ -1116,13 +1126,25 @@ const LayoutBoxModelObject& LayoutObject::ContainerForPaintInvalidation()
   return *layout_view;
 }
 
+bool LayoutObject::RecalcOverflowAfterStyleChange() {
+  if (!ChildNeedsOverflowRecalcAfterStyleChange())
+    return false;
+  bool children_overflow_changed = false;
+  for (LayoutObject* current = SlowFirstChild(); current;
+       current = current->NextSibling()) {
+    if (current->RecalcOverflowAfterStyleChange())
+      children_overflow_changed = true;
+  }
+  return children_overflow_changed;
+}
+
 const LayoutBoxModelObject* LayoutObject::EnclosingCompositedContainer() const {
   LayoutBoxModelObject* container = nullptr;
   // FIXME: CompositingState is not necessarily up to date for many callers of
   // this function.
   DisableCompositingQueryAsserts disabler;
 
-  if (PaintLayer* painting_layer = this->PaintingLayer()) {
+  if (PaintLayer* painting_layer = PaintingLayer()) {
     if (PaintLayer* compositing_layer =
             painting_layer
                 ->EnclosingLayerForPaintInvalidationCrossingFrameBoundaries())
@@ -1133,7 +1155,7 @@ const LayoutBoxModelObject* LayoutObject::EnclosingCompositedContainer() const {
 
 String LayoutObject::DecoratedName() const {
   StringBuilder name;
-  name.Append(this->GetName());
+  name.Append(GetName());
 
   if (IsAnonymous())
     name.Append(" (anonymous)");
@@ -1157,7 +1179,7 @@ String LayoutObject::DebugName() const {
   StringBuilder name;
   name.Append(DecoratedName());
 
-  if (const Node* node = this->GetNode()) {
+  if (const Node* node = GetNode()) {
     name.Append(' ');
     name.Append(node->DebugName());
   }
@@ -1302,7 +1324,7 @@ bool LayoutObject::MapToVisualRectInAncestorSpaceInternal(
   if (ancestor == this)
     return true;
 
-  if (LayoutObject* parent = this->Parent()) {
+  if (LayoutObject* parent = Parent()) {
     if (parent->IsBox()) {
       LayoutBox* parent_box = ToLayoutBox(parent);
 
@@ -1341,7 +1363,7 @@ void LayoutObject::ShowTreeForThis() const {
 }
 
 void LayoutObject::ShowLayoutTreeForThis() const {
-  showLayoutTree(this, 0);
+  showLayoutTree(this, nullptr);
 }
 
 void LayoutObject::ShowLineTreeForThis() const {
@@ -1354,10 +1376,11 @@ void LayoutObject::ShowLineTreeForThis() const {
 
 void LayoutObject::ShowLayoutObject() const {
   StringBuilder string_builder;
-  ShowLayoutObject(string_builder);
+  DumpLayoutObject(string_builder);
+  DLOG(INFO) << "\n" << string_builder.ToString().Utf8().data();
 }
 
-void LayoutObject::ShowLayoutObject(StringBuilder& string_builder) const {
+void LayoutObject::DumpLayoutObject(StringBuilder& string_builder) const {
   string_builder.Append(
       String::Format("%s %p", DecoratedName().Ascii().data(), this));
 
@@ -1373,32 +1396,33 @@ void LayoutObject::ShowLayoutObject(StringBuilder& string_builder) const {
     while (string_builder.length() < kShowTreeCharacterOffset)
       string_builder.Append(' ');
     string_builder.Append('\t');
-    WTFLogAlways("%s%s", string_builder.ToString().Utf8().data(),
-                 GetNode()->ToString().Utf8().data());
-  } else {
-    WTFLogAlways("%s", string_builder.ToString().Utf8().data());
+    string_builder.Append(GetNode()->ToString().Utf8().data());
   }
 }
 
-void LayoutObject::ShowLayoutTreeAndMark(const LayoutObject* marked_object1,
+void LayoutObject::DumpLayoutTreeAndMark(StringBuilder& string_builder,
+                                         const LayoutObject* marked_object1,
                                          const char* marked_label1,
                                          const LayoutObject* marked_object2,
                                          const char* marked_label2,
                                          unsigned depth) const {
-  StringBuilder string_builder;
+  StringBuilder object_info;
   if (marked_object1 == this && marked_label1)
-    string_builder.Append(marked_label1);
+    object_info.Append(marked_label1);
   if (marked_object2 == this && marked_label2)
-    string_builder.Append(marked_label2);
-  while (string_builder.length() < depth * 2)
-    string_builder.Append(' ');
+    object_info.Append(marked_label2);
+  while (object_info.length() < depth * 2)
+    object_info.Append(' ');
 
-  ShowLayoutObject(string_builder);
+  DumpLayoutObject(object_info);
+  string_builder.Append(object_info);
 
   for (const LayoutObject* child = SlowFirstChild(); child;
-       child = child->NextSibling())
-    child->ShowLayoutTreeAndMark(marked_object1, marked_label1, marked_object2,
-                                 marked_label2, depth + 1);
+       child = child->NextSibling()) {
+    string_builder.Append('\n');
+    child->DumpLayoutTreeAndMark(string_builder, marked_object1, marked_label1,
+                                 marked_object2, marked_label2, depth + 1);
+  }
 }
 
 #endif  // NDEBUG
@@ -1585,7 +1609,7 @@ void LayoutObject::MarkAncestorsForOverflowRecalcIfNeeded() {
     // This enables us to only recompute overflow the modified sections / rows.
     object = object->IsTableCell() || object->IsTableRow()
                  ? object->Parent()
-                 : object->ContainingBlock();
+                 : object->Container();
     if (object)
       object->SetChildNeedsOverflowRecalcAfterStyleChange();
   } while (object);
@@ -1886,7 +1910,7 @@ void LayoutObject::StyleDidChange(StyleDifference diff,
   // paints (in setStyle()).
 
   if (old_style && !AreCursorsEqual(old_style, Style())) {
-    if (LocalFrame* frame = this->GetFrame()) {
+    if (LocalFrame* frame = GetFrame()) {
       // Cursor update scheduling is done by the local root, which is the main
       // frame if there are no RemoteFrame ancestors in the frame tree. Use of
       // localFrameRoot() is discouraged but will change when cursor update
@@ -2098,7 +2122,7 @@ void LayoutObject::MapLocalToAncestor(const LayoutBoxModelObject* ancestor,
     return;
 
   AncestorSkipInfo skip_info(ancestor);
-  const LayoutObject* container = this->Container(&skip_info);
+  const LayoutObject* container = Container(&skip_info);
   if (!container)
     return;
 
@@ -2188,7 +2212,7 @@ void LayoutObject::MapAncestorToLocal(const LayoutBoxModelObject* ancestor,
     return;
 
   AncestorSkipInfo skip_info(ancestor);
-  LayoutObject* container = this->Container(&skip_info);
+  LayoutObject* container = Container(&skip_info);
   if (!container)
     return;
 
@@ -2422,7 +2446,7 @@ void LayoutObject::ComputeLayerHitTestRects(
   const PaintLayer* current_layer = nullptr;
 
   if (!HasLayer()) {
-    LayoutObject* container = this->Container();
+    LayoutObject* container = Container();
     if (container) {
       current_layer = container->EnclosingLayer();
       if (current_layer->GetLayoutObject() != container) {
@@ -2439,9 +2463,9 @@ void LayoutObject::ComputeLayerHitTestRects(
     }
   }
 
-  this->AddLayerHitTestRects(layer_rects, current_layer, layer_offset,
-                             supported_fast_actions, LayoutRect(),
-                             TouchAction::kTouchActionAuto);
+  AddLayerHitTestRects(layer_rects, current_layer, layer_offset,
+                       supported_fast_actions, LayoutRect(),
+                       TouchAction::kTouchActionAuto);
 }
 
 void LayoutObject::AddLayerHitTestRects(
@@ -2452,7 +2476,7 @@ void LayoutObject::AddLayerHitTestRects(
     const LayoutRect& container_rect,
     TouchAction container_whitelisted_touch_action) const {
   DCHECK(current_layer);
-  DCHECK_EQ(current_layer, this->EnclosingLayer());
+  DCHECK_EQ(current_layer, EnclosingLayer());
 
   // Compute the rects for this layoutObject only and add them to the results.
   // Note that we could avoid passing the offset and instead adjust each result,
@@ -2621,7 +2645,7 @@ void LayoutObject::WillBeDestroyed() {
   if (children)
     children->DestroyLeftoverChildren();
 
-  if (LocalFrame* frame = this->GetFrame()) {
+  if (LocalFrame* frame = GetFrame()) {
     // If this layoutObject is being autoscrolled, stop the autoscrolling.
     if (frame->GetPage())
       frame->GetPage()->GetAutoscrollController().StopAutoscrollIfNeeded(this);
@@ -2631,7 +2655,7 @@ void LayoutObject::WillBeDestroyed() {
   // its child set.
   // We do it now, before remove(), while the parent pointer is still available.
   if (AXObjectCache* cache = GetDocument().ExistingAXObjectCache())
-    cache->ChildrenChanged(this->Parent());
+    cache->ChildrenChanged(Parent());
 
   Remove();
 
@@ -2976,7 +3000,7 @@ bool LayoutObject::HitTest(HitTestResult& result,
 }
 
 Node* LayoutObject::NodeForHitTest() const {
-  Node* node = this->GetNode();
+  Node* node = GetNode();
 
   // If we hit the anonymous layoutObjects inside generated content we should
   // actually hit the generated content so walk up to the PseudoElement.
@@ -3334,7 +3358,7 @@ bool LayoutObject::CanUpdateSelectionOnRootLineBoxes() const {
   if (NeedsLayout())
     return false;
 
-  const LayoutBlock* containing_block = this->ContainingBlock();
+  const LayoutBlock* containing_block = ContainingBlock();
   return containing_block ? !containing_block->NeedsLayout() : false;
 }
 
@@ -3396,7 +3420,7 @@ static PaintInvalidationReason DocumentLifecycleBasedPaintInvalidationReason(
 }
 
 inline void LayoutObject::MarkAncestorsForPaintInvalidation() {
-  for (LayoutObject* parent = this->ParentCrossingFrames();
+  for (LayoutObject* parent = ParentCrossingFrames();
        parent && !parent->ShouldCheckForPaintInvalidation();
        parent = parent->ParentCrossingFrames())
     parent->bitfields_.SetMayNeedPaintInvalidation(true);
@@ -3734,18 +3758,18 @@ void showTree(const blink::LayoutObject* object) {
   if (object)
     object->ShowTreeForThis();
   else
-    WTFLogAlways("%s", "Cannot showTree. Root is (nil)");
+    DLOG(INFO) << "Cannot showTree. Root is (nil)";
 }
 
 void showLineTree(const blink::LayoutObject* object) {
   if (object)
     object->ShowLineTreeForThis();
   else
-    WTFLogAlways("%s", "Cannot showLineTree. Root is (nil)");
+    DLOG(INFO) << "Cannot showLineTree. Root is (nil)";
 }
 
 void showLayoutTree(const blink::LayoutObject* object1) {
-  showLayoutTree(object1, 0);
+  showLayoutTree(object1, nullptr);
 }
 
 void showLayoutTree(const blink::LayoutObject* object1,
@@ -3754,9 +3778,14 @@ void showLayoutTree(const blink::LayoutObject* object1,
     const blink::LayoutObject* root = object1;
     while (root->Parent())
       root = root->Parent();
-    root->ShowLayoutTreeAndMark(object1, "*", object2, "-", 0);
+    if (object1) {
+      StringBuilder string_builder;
+      root->DumpLayoutTreeAndMark(string_builder, object1, "*", object2, "-",
+                                  0);
+      DLOG(INFO) << "\n" << string_builder.ToString().Utf8().data();
+    }
   } else {
-    WTFLogAlways("%s", "Cannot showLayoutTree. Root is (nil)");
+    DLOG(INFO) << "Cannot showLayoutTree. Root is (nil)";
   }
 }
 

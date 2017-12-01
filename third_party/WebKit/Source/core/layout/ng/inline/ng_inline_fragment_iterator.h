@@ -6,9 +6,8 @@
 #define NGInlineFragmentIterator_h
 
 #include "core/CoreExport.h"
-#include "core/layout/ng/geometry/ng_physical_offset.h"
+#include "core/layout/ng/ng_physical_fragment.h"
 #include "platform/wtf/Allocator.h"
-#include "platform/wtf/HashMap.h"
 #include "platform/wtf/Vector.h"
 
 namespace blink {
@@ -16,7 +15,6 @@ namespace blink {
 class LayoutObject;
 class NGPhysicalBoxFragment;
 class NGPhysicalContainerFragment;
-class NGPhysicalFragment;
 struct NGPhysicalOffset;
 
 // Iterate through inline descendant fragments.
@@ -29,13 +27,7 @@ class CORE_EXPORT NGInlineFragmentIterator {
   NGInlineFragmentIterator(const NGPhysicalBoxFragment&,
                            const LayoutObject* filter);
 
-  // The data struct the iterator returns.
-  struct Result {
-    const NGPhysicalFragment* fragment;
-    NGPhysicalOffset offset_to_container_box;
-  };
-  using Results = Vector<Result, 1>;
-  using LayoutObjectMap = HashMap<const LayoutObject*, Results>;
+  using Results = Vector<NGPhysicalFragmentWithOffset, 1>;
 
   Results::const_iterator begin() const { return results_.begin(); }
   Results::const_iterator end() const { return results_.end(); }

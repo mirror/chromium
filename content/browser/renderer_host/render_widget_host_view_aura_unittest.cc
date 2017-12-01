@@ -290,7 +290,6 @@ class MockRenderWidgetHostDelegate : public RenderWidgetHostDelegate {
     result->is_monochrome = display.is_monochrome();
     result->device_scale_factor = display.device_scale_factor();
     result->color_space = display.color_space();
-    result->color_space.GetICCProfile(&result->icc_profile);
 
     // The Display rotation and the ScreenInfo orientation are not the same
     // angle. The former is the physical display rotation while the later is the
@@ -545,13 +544,12 @@ class FakeRenderWidgetHostViewAura : public RenderWidgetHostViewAura {
 
   void InterceptCopyOfOutput(std::unique_ptr<viz::CopyOutputRequest> request) {
     last_copy_request_ = std::move(request);
-    if (last_copy_request_->has_texture_mailbox()) {
+    if (last_copy_request_->has_mailbox()) {
       // Give the resulting texture a size.
       viz::GLHelper* gl_helper =
           ImageTransportFactory::GetInstance()->GetGLHelper();
       GLuint texture = gl_helper->ConsumeMailboxToTexture(
-          last_copy_request_->texture_mailbox().mailbox(),
-          last_copy_request_->texture_mailbox().sync_token());
+          last_copy_request_->mailbox(), last_copy_request_->sync_token());
       gl_helper->ResizeTexture(texture, window()->bounds().size());
       gl_helper->DeleteTexture(texture);
     }
@@ -2817,7 +2815,8 @@ TEST_F(RenderWidgetHostViewAuraTest, DISABLED_Resize) {
 TEST_F(RenderWidgetHostViewAuraTest, SkippedDelegatedFrames) {
   gfx::Rect view_rect(100, 100);
   gfx::Size frame_size = view_rect.size();
-  viz::LocalSurfaceId local_surface_id = kArbitraryLocalSurfaceId;
+  viz::LocalSurfaceId local_surface_id =
+      local_surface_id_allocator_.GenerateId();
 
   view_->InitAsChild(nullptr);
   aura::client::ParentWindowWithContext(
@@ -2930,7 +2929,8 @@ TEST_F(RenderWidgetHostViewAuraTest, SkippedDelegatedFrames) {
 TEST_F(RenderWidgetHostViewAuraTest, ResizeAfterReceivingFrame) {
   gfx::Rect view_rect(100, 100);
   gfx::Size frame_size = view_rect.size();
-  viz::LocalSurfaceId local_surface_id = kArbitraryLocalSurfaceId;
+  viz::LocalSurfaceId local_surface_id =
+      local_surface_id_allocator_.GenerateId();
 
   view_->InitAsChild(nullptr);
   aura::client::ParentWindowWithContext(
@@ -3669,7 +3669,6 @@ class RenderWidgetHostViewAuraCopyRequestTest
       : callback_count_(0),
         result_(false),
         frame_subscriber_(nullptr),
-        tick_clock_(nullptr),
         view_rect_(100, 100) {}
 
   void CallbackMethod(bool result) {
@@ -3708,9 +3707,7 @@ class RenderWidgetHostViewAuraCopyRequestTest
   }
 
   void InstallFakeTickClock() {
-    // Create a fake tick clock and transfer ownership to the frame host.
-    tick_clock_ = new base::SimpleTestTickClock();
-    view_->GetDelegatedFrameHost()->tick_clock_ = base::WrapUnique(tick_clock_);
+    view_->GetDelegatedFrameHost()->tick_clock_ = &tick_clock_;
   }
 
   void SubmitCompositorFrame() {
@@ -3729,7 +3726,8 @@ class RenderWidgetHostViewAuraCopyRequestTest
     std::unique_ptr<viz::CopyOutputRequest> request =
         std::move(view_->last_copy_request_);
     request->SendResult(std::make_unique<viz::CopyOutputTextureResult>(
-        view_rect_, request->texture_mailbox(),
+        view_rect_, request->mailbox(), request->sync_token(),
+        gfx::ColorSpace(),
         viz::SingleReleaseCallback::Create(
             base::Bind([](const gpu::SyncToken&, bool) {}))));
     RunLoopUntilCallback();
@@ -3761,7 +3759,7 @@ class RenderWidgetHostViewAuraCopyRequestTest
   int callback_count_;
   bool result_;
   FakeFrameSubscriber* frame_subscriber_;  // Owned by |view_|.
-  base::SimpleTestTickClock* tick_clock_;  // Owned by DelegatedFrameHost.
+  base::SimpleTestTickClock tick_clock_;
   const gfx::Rect view_rect_;
 
  private:
@@ -3826,7 +3824,7 @@ TEST_F(RenderWidgetHostViewAuraCopyRequestTest, DestroyedAfterCopyRequest) {
   SubmitCompositorFrame();
   EXPECT_EQ(0, callback_count_);
   EXPECT_TRUE(view_->last_copy_request_);
-  EXPECT_TRUE(view_->last_copy_request_->has_texture_mailbox());
+  EXPECT_TRUE(view_->last_copy_request_->has_mailbox());
 
   // Notify DelegatedFrameHost that the copy requests were moved to the
   // compositor thread by calling OnCompositingDidCommit().
@@ -3866,13 +3864,13 @@ TEST_F(RenderWidgetHostViewAuraCopyRequestTest, PresentTime) {
 
   // Verify our initial state.
   EXPECT_EQ(base::TimeTicks(), frame_subscriber_->last_present_time());
-  EXPECT_EQ(base::TimeTicks(), tick_clock_->NowTicks());
+  EXPECT_EQ(base::TimeTicks(), tick_clock_.NowTicks());
 
   // Start our fake clock from a non-zero, but not an even multiple of the
   // interval, value to differentiate it from our initialization state.
   const base::TimeDelta kDefaultInterval =
       viz::BeginFrameArgs::DefaultInterval();
-  tick_clock_->Advance(kDefaultInterval / 3);
+  tick_clock_.Advance(kDefaultInterval / 3);
 
   // Swap the first frame without any vsync information.
   ASSERT_EQ(base::TimeTicks(), vsync_timebase());
@@ -3881,7 +3879,7 @@ TEST_F(RenderWidgetHostViewAuraCopyRequestTest, PresentTime) {
   // During this first call, there is no known vsync information, so while the
   // callback should succeed the present time is effectively just current time.
   SubmitCompositorFrameAndRelease();
-  EXPECT_EQ(tick_clock_->NowTicks(), frame_subscriber_->last_present_time());
+  EXPECT_EQ(tick_clock_.NowTicks(), frame_subscriber_->last_present_time());
 
   // Now initialize the vsync parameters with a null timebase, but a known vsync
   // interval; which should give us slightly better frame time estimates.
@@ -3898,7 +3896,7 @@ TEST_F(RenderWidgetHostViewAuraCopyRequestTest, PresentTime) {
 
   // Now initialize the vsync parameters with a valid timebase and a known vsync
   // interval; which should give us the best frame time estimates.
-  const base::TimeTicks kBaseTime = tick_clock_->NowTicks();
+  const base::TimeTicks kBaseTime = tick_clock_.NowTicks();
   OnUpdateVSyncParameters(kBaseTime, kDefaultInterval);
   ASSERT_EQ(kBaseTime, vsync_timebase());
   ASSERT_EQ(kDefaultInterval, vsync_interval());
@@ -3908,7 +3906,7 @@ TEST_F(RenderWidgetHostViewAuraCopyRequestTest, PresentTime) {
   // the vsync timebase.  Advance time by a non integer number of intervals to
   // verify.
   const double kElapsedIntervals = 2.5;
-  tick_clock_->Advance(kDefaultInterval * kElapsedIntervals);
+  tick_clock_.Advance(kDefaultInterval * kElapsedIntervals);
   SubmitCompositorFrameAndRelease();
   EXPECT_EQ(kBaseTime + kDefaultInterval * std::ceil(kElapsedIntervals),
             frame_subscriber_->last_present_time());

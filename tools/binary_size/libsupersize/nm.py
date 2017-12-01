@@ -57,6 +57,7 @@ import sys
 import threading
 
 import concurrent
+import models
 import path_util
 
 _MSG_ANALYZE_PATHS = 1
@@ -86,9 +87,9 @@ def _MakeToolPrefixAbsolute(tool_prefix):
 def _IsRelevantNmName(name):
   # Skip lines like:
   # 00000000 t $t
-  # 00000000 r $d
+  # 00000000 r $d.23
   # 00000344 N
-  return name and not (len(name) == 2 and name.startswith('$'))
+  return name and not name.startswith('$')
 
 
 def _IsRelevantObjectFileName(name):
@@ -236,7 +237,7 @@ def LookupElfRodataInfo(elf_path, tool_prefix):
     # [Nr] Name           Type        Addr     Off     Size   ES Flg Lk Inf Al
     # [07] .rodata        PROGBITS    025e7000 237c000 5ec4f6 00   A  0   0 256
     if '.rodata ' in line:
-      fields = line[line.index('.rodata'):].split()
+      fields = line[line.index(models.SECTION_RODATA):].split()
       return int(fields[2], 16), int(fields[3], 16), int(fields[4], 16)
   raise AssertionError('No .rodata for command: ' + repr(args))
 

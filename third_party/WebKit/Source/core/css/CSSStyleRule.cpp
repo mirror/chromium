@@ -43,7 +43,7 @@ static SelectorTextCache& GetSelectorTextCache() {
 CSSStyleRule::CSSStyleRule(StyleRule* style_rule, CSSStyleSheet* parent)
     : CSSRule(parent), style_rule_(style_rule) {}
 
-CSSStyleRule::~CSSStyleRule() {}
+CSSStyleRule::~CSSStyleRule() = default;
 
 CSSStyleDeclaration* CSSStyleRule::style() const {
   if (!properties_cssom_wrapper_) {
@@ -69,7 +69,7 @@ String CSSStyleRule::selectorText() const {
 void CSSStyleRule::setSelectorText(const ExecutionContext* execution_context,
                                    const String& selector_text) {
   const CSSParserContext* context = CSSParserContext::Create(
-      ParserContext(execution_context->SecureContextMode()), nullptr);
+      ParserContext(execution_context->GetSecureContextMode()), nullptr);
   CSSSelectorList selector_list = CSSParser::ParseSelector(
       context, parentStyleSheet() ? parentStyleSheet()->Contents() : nullptr,
       selector_text);

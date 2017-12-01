@@ -29,7 +29,6 @@
 #include "media/gpu/vp8_decoder.h"
 #include "media/gpu/vp9_decoder.h"
 #include "media/video/picture.h"
-#include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_image.h"
 
 #define DVLOGF(level) DVLOG(level) << __func__ << "(): "
@@ -56,11 +55,6 @@ static const uint8_t kZigzagScan8x8[64] = {
     12, 19, 26, 33, 40, 48, 41, 34, 27, 20, 13, 6,  7,  14, 21, 28,
     35, 42, 49, 56, 57, 50, 43, 36, 29, 22, 15, 23, 30, 37, 44, 51,
     58, 59, 52, 45, 38, 31, 39, 46, 53, 60, 61, 54, 47, 55, 62, 63};
-
-// Buffer format to use for output buffers backing PictureBuffers. This is the
-// format decoded frames in VASurfaces are converted into.
-const gfx::BufferFormat kAllocatePictureFormat = gfx::BufferFormat::BGRX_8888;
-const gfx::BufferFormat kImportPictureFormat = gfx::BufferFormat::YVU_420;
 }
 
 static void ReportToUMA(VAVDADecoderFailure failure) {
@@ -333,7 +327,7 @@ VaapiVideoDecodeAccelerator::VaapiVideoDecodeAccelerator(
     const BindGLImageCallback& bind_image_cb)
     : state_(kUninitialized),
       input_ready_(&lock_),
-      create_vaapi_picture_callback_(base::Bind(&VaapiPicture::CreatePicture)),
+      vaapi_picture_factory_(new VaapiPictureFactory()),
       surfaces_available_(&lock_),
       task_runner_(base::ThreadTaskRunnerHandle::Get()),
       decoder_thread_("VaapiDecoderThread"),
@@ -341,7 +335,7 @@ VaapiVideoDecodeAccelerator::VaapiVideoDecodeAccelerator(
       finish_flush_pending_(false),
       awaiting_va_surfaces_recycle_(false),
       requested_num_pics_(0),
-      output_format_(kAllocatePictureFormat),
+      output_format_(gfx::BufferFormat::BGRX_8888),
       make_context_current_cb_(make_context_current_cb),
       bind_image_cb_(bind_image_cb),
       weak_this_factory_(this) {
@@ -365,11 +359,11 @@ bool VaapiVideoDecodeAccelerator::Initialize(const Config& config,
 
   switch (config.output_mode) {
     case Config::OutputMode::ALLOCATE:
-      output_format_ = kAllocatePictureFormat;
+      output_format_ = vaapi_picture_factory_->GetBufferFormatForAllocateMode();
       break;
 
     case Config::OutputMode::IMPORT:
-      output_format_ = kImportPictureFormat;
+      output_format_ = vaapi_picture_factory_->GetBufferFormatForImportMode();
       break;
 
     default:
@@ -385,20 +379,6 @@ bool VaapiVideoDecodeAccelerator::Initialize(const Config& config,
   base::AutoLock auto_lock(lock_);
   DCHECK_EQ(state_, kUninitialized);
   VLOGF(2) << "Initializing VAVDA, profile: " << GetProfileName(profile);
-
-#if defined(USE_X11)
-  if (gl::GetGLImplementation() != gl::kGLImplementationDesktopGL) {
-    VLOGF(1) << "HW video decode acceleration not available without "
-                "DesktopGL (GLX).";
-    return false;
-  }
-#elif defined(USE_OZONE)
-  if (gl::GetGLImplementation() != gl::kGLImplementationEGLGLES2) {
-    VLOGF(1) << "HW video decode acceleration not available without "
-             << "EGLGLES2.";
-    return false;
-  }
-#endif  // USE_X11
 
   vaapi_wrapper_ = VaapiWrapper::CreateForVideoCodec(
       VaapiWrapper::kDecode, profile, base::Bind(&ReportToUMA, VAAPI_ERROR));
@@ -735,7 +715,7 @@ void VaapiVideoDecodeAccelerator::TryFinishSurfaceSetChange() {
   task_runner_->PostTask(
       FROM_HERE, base::Bind(&Client::ProvidePictureBuffers, client_,
                             requested_num_pics_, format, 1, requested_pic_size_,
-                            VaapiPicture::GetGLTextureTarget()));
+                            vaapi_picture_factory_->GetGLTextureTarget()));
 }
 
 void VaapiVideoDecodeAccelerator::Decode(
@@ -804,7 +784,7 @@ void VaapiVideoDecodeAccelerator::AssignPictureBuffers(
                               ? buffers[i].service_texture_ids()[0]
                               : 0;
 
-    std::unique_ptr<VaapiPicture> picture(create_vaapi_picture_callback_.Run(
+    std::unique_ptr<VaapiPicture> picture(vaapi_picture_factory_->Create(
         vaapi_wrapper_, make_context_current_cb_, bind_image_cb_,
         buffers[i].id(), requested_pic_size_, service_id, client_id));
     RETURN_AND_NOTIFY_ON_FAILURE(

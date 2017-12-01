@@ -54,7 +54,13 @@ QuicSession::QuicSession(QuicConnection* connection,
                        perspective() == Perspective::IS_SERVER,
                        nullptr),
       currently_writing_stream_id_(0),
-      can_use_slices_(FLAGS_quic_reloadable_flag_quic_use_mem_slices) {}
+      can_use_slices_(FLAGS_quic_reloadable_flag_quic_use_mem_slices),
+      allow_multiple_acks_for_data_(
+          FLAGS_quic_reloadable_flag_quic_allow_multiple_acks_for_data2) {
+  if (allow_multiple_acks_for_data_) {
+    QUIC_FLAG_COUNT(quic_reloadable_flag_quic_allow_multiple_acks_for_data2);
+  }
+}
 
 void QuicSession::Initialize() {
   connection_->set_visitor(this);
@@ -958,7 +964,8 @@ void QuicSession::OnStreamFrameAcked(const QuicStreamFrame& frame,
   QuicStream* stream = GetStream(frame.stream_id);
   // Stream can already be reset when sent frame gets acked.
   if (stream != nullptr) {
-    stream->OnStreamFrameAcked(frame, ack_delay_time);
+    stream->OnStreamFrameAcked(frame.offset, frame.data_length, frame.fin,
+                               ack_delay_time);
   }
 }
 
@@ -972,7 +979,7 @@ void QuicSession::OnStreamFrameRetransmitted(const QuicStreamFrame& frame) {
         ConnectionCloseBehavior::SEND_CONNECTION_CLOSE_PACKET);
     return;
   }
-  stream->OnStreamFrameRetransmitted(frame);
+  stream->OnStreamFrameRetransmitted(frame.offset, frame.data_length);
 }
 
 void QuicSession::OnStreamFrameDiscarded(const QuicStreamFrame& frame) {
@@ -985,7 +992,7 @@ void QuicSession::OnStreamFrameDiscarded(const QuicStreamFrame& frame) {
         ConnectionCloseBehavior::SEND_CONNECTION_CLOSE_PACKET);
     return;
   }
-  stream->OnStreamFrameDiscarded(frame);
+  stream->OnStreamFrameDiscarded(frame.offset, frame.data_length, frame.fin);
 }
 
 bool QuicSession::WriteStreamData(QuicStreamId id,

@@ -102,7 +102,7 @@ class CORE_EXPORT HTMLFormControlElement : public LabelableElement,
   void HideVisibleValidationMessage();
   bool checkValidity(
       HeapVector<Member<HTMLFormControlElement>>* unhandled_invalid_controls =
-          0,
+          nullptr,
       CheckValidityEventBehavior = kCheckValidityDispatchInvalidEvent);
   bool reportValidity();
   // This must be called only after the caller check the element is focusable.
@@ -125,7 +125,7 @@ class CORE_EXPORT HTMLFormControlElement : public LabelableElement,
   bool IsAutofilled() const { return is_autofilled_; }
   void SetAutofilled(bool = true);
 
-  static HTMLFormControlElement* EnclosingFormControlElement(Node*);
+  static const HTMLFormControlElement* EnclosingFormControlElement(const Node*);
 
   String NameForAutofill() const;
 

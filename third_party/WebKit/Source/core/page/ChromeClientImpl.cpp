@@ -946,6 +946,17 @@ void ChromeClientImpl::SetNeedsLowLatencyInput(LocalFrame* frame,
     client->SetNeedsLowLatencyInput(needs_low_latency);
 }
 
+void ChromeClientImpl::RequestUnbufferedInputEvents(LocalFrame* frame) {
+  DCHECK(frame);
+  WebLocalFrameImpl* web_frame = WebLocalFrameImpl::FromFrame(frame);
+  WebFrameWidgetBase* widget = web_frame->LocalRoot()->FrameWidget();
+  if (!widget)
+    return;
+
+  if (WebWidgetClient* client = widget->Client())
+    client->RequestUnbufferedInputEvents();
+}
+
 void ChromeClientImpl::SetTouchAction(LocalFrame* frame,
                                       TouchAction touch_action) {
   DCHECK(frame);
@@ -1100,10 +1111,6 @@ std::unique_ptr<WebFrameScheduler> ChromeClientImpl::CreateFrameScheduler(
     WebFrameScheduler::FrameType frame_type) {
   return web_view_->Scheduler()->CreateFrameScheduler(blame_context,
                                                       frame_type);
-}
-
-double ChromeClientImpl::LastFrameTimeMonotonic() const {
-  return web_view_->LastFrameTimeMonotonic();
 }
 
 WebAutofillClient* ChromeClientImpl::AutofillClientFromFrame(

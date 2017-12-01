@@ -51,6 +51,7 @@ class ChromeAutofillClient
   syncer::SyncService* GetSyncService() override;
   IdentityProvider* GetIdentityProvider() override;
   ukm::UkmRecorder* GetUkmRecorder() override;
+  AddressNormalizer* GetAddressNormalizer() override;
   SaveCardBubbleController* GetSaveCardBubbleController() override;
   void ShowAutofillSettings() override;
   void ShowUnmaskPrompt(const CreditCard& card,
@@ -96,6 +97,10 @@ class ChromeAutofillClient
   void WebContentsDestroyed() override;
   // Hide autofill popup if an interstitial is shown.
   void DidAttachInterstitialPage() override;
+
+  base::WeakPtr<AutofillPopupControllerImpl> popup_controller_for_testing() {
+    return popup_controller_;
+  }
 
 #if !defined(OS_ANDROID)
   // ZoomObserver implementation.

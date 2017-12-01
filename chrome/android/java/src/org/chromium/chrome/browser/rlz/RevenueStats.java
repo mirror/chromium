@@ -4,10 +4,10 @@
 
 package org.chromium.chrome.browser.rlz;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 
 import org.chromium.base.ContextUtils;
+import org.chromium.base.ThreadUtils;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.chrome.browser.AppHooks;
 import org.chromium.chrome.browser.tab.Tab;
@@ -19,12 +19,17 @@ import org.chromium.chrome.browser.tab.Tab;
 public class RevenueStats {
     private static final String PREF_RLZ_NOTIFIED = "rlz_first_search_notified";
 
-    private static final RevenueStats sInstance = AppHooks.get().createRevenueStatsInstance();
+    private static RevenueStats sInstance;
 
     /**
      * Returns the singleton instance of ExternalAuthUtils, creating it if needed.
      */
     public static RevenueStats getInstance() {
+        assert ThreadUtils.runningOnUiThread();
+        if (sInstance == null) {
+            sInstance = AppHooks.get().createRevenueStatsInstance();
+        }
+
         return sInstance;
     }
 
@@ -36,7 +41,7 @@ public class RevenueStats {
     /**
      * Returns whether the RLZ provider has been notified that the first search has occurred.
      */
-    protected static boolean getRlzNotified(Context context) {
+    protected static boolean getRlzNotified() {
         return ContextUtils.getAppSharedPreferences().getBoolean(
                 PREF_RLZ_NOTIFIED, false);
     }
@@ -45,7 +50,7 @@ public class RevenueStats {
      * Stores whether the RLZ provider has been notified that the first search has occurred as
      * shared preference.
      */
-    protected static void setRlzNotified(Context context, boolean notified) {
+    protected static void setRlzNotified(boolean notified) {
         SharedPreferences.Editor sharedPreferencesEditor =
                 ContextUtils.getAppSharedPreferences().edit();
         sharedPreferencesEditor.putBoolean(PREF_RLZ_NOTIFIED, notified);

@@ -23,6 +23,7 @@
 #include "chrome/browser/android/vr_shell/vr_metrics_util.h"
 #include "chrome/browser/android/vr_shell/vr_shell.h"
 #include "chrome/browser/android/vr_shell/vr_usage_monitor.h"
+#include "chrome/browser/vr/assets.h"
 #include "chrome/browser/vr/elements/ui_element.h"
 #include "chrome/browser/vr/fps_meter.h"
 #include "chrome/browser/vr/model/camera_model.h"
@@ -228,8 +229,6 @@ VrShellGl::VrShellGl(GlBrowserInterface* browser_interface,
       fps_meter_(new vr::FPSMeter()),
       webvr_js_time_(new vr::SlidingAverage(kWebVRSlidingAverageSize)),
       webvr_render_time_(new vr::SlidingAverage(kWebVRSlidingAverageSize)),
-      skips_redraw_when_not_dirty_(base::FeatureList::IsEnabled(
-          features::kVrBrowsingExperimentalRendering)),
       weak_ptr_factory_(this) {
   GvrInit(gvr_api);
 }
@@ -309,6 +308,9 @@ void VrShellGl::InitializeGl(gfx::AcceleratedWidget window) {
 
   ui_->OnGlInitialized(content_texture_id,
                        vr::UiElementRenderer::kTextureLocationExternal, true);
+
+  vr::Assets::GetInstance()->LoadWhenComponentReady(base::BindOnce(
+      &VrShellGl::OnAssetsLoaded, weak_ptr_factory_.GetWeakPtr()));
 
   webvr_vsync_align_ = base::FeatureList::IsEnabled(features::kWebVrVsyncAlign);
 
@@ -398,7 +400,7 @@ void VrShellGl::SubmitFrame(int16_t frame_index,
   }
   // Always notify the client that we're done with the mailbox even
   // if we haven't drawn it, so that it's eligible for destruction.
-  submit_client_->OnSubmitFrameTransferred();
+  submit_client_->OnSubmitFrameTransferred(true);
   if (!swapped) {
     // We dropped without drawing, report this as completed rendering
     // now to unblock the client. We're not going to receive it in
@@ -457,9 +459,10 @@ void VrShellGl::OnWebVRFrameAvailable() {
 
   ui_->OnWebVrFrameAvailable();
 
-  DrawFrame(frame_index, base::TimeTicks::Now());
   if (web_vr_mode_)
     ++webvr_frames_received_;
+
+  DrawFrame(frame_index, base::TimeTicks::Now());
   ScheduleOrCancelWebVrFrameTimeout();
 }
 
@@ -906,7 +909,7 @@ void VrShellGl::DrawFrame(int16_t frame_index, base::TimeTicks current_time) {
 
   bool dirty = ShouldDrawWebVr() || head_moved || redraw_needed;
 
-  if (!dirty && skips_redraw_when_not_dirty_)
+  if (!dirty && ui_->SkipsRedrawWhenNotDirty())
     return;
 
   TRACE_EVENT_BEGIN0("gpu", "VrShellGl::AcquireFrame");
@@ -946,12 +949,15 @@ void VrShellGl::DrawIntoAcquiredFrame(int16_t frame_index,
 
   // At this point, we draw non-WebVR content that could, potentially, fill the
   // viewport.  NB: this is not just 2d browsing stuff, we may have a splash
-  // screen showing in WebVR mode that must also fill the screen.
-  ui_->ui_renderer()->Draw(render_info_primary_);
+  // screen showing in WebVR mode that must also fill the screen. That said,
+  // while the splash screen is up ShouldDrawWebVr() will return false.
+  if (!ShouldDrawWebVr()) {
+    ui_->ui_renderer()->Draw(render_info_primary_);
 
-  // Draw keyboard. TODO(ymalik,crbug.com/780135): Keyboard should be a UI
-  // element and this special rendering logic should move out of here.
-  DrawKeyboard();
+    // Draw keyboard. TODO(ymalik,crbug.com/780135): Keyboard should be a UI
+    // element and this special rendering logic should move out of here.
+    DrawKeyboard();
+  }
 
   content_frame_available_ = false;
   acquired_frame_.Unbind();
@@ -1409,6 +1415,15 @@ void VrShellGl::ClosePresentationBindings() {
              device::mojom::VRPresentationProvider::VSyncStatus::CLOSING);
   }
   binding_.Close();
+}
+
+void VrShellGl::OnAssetsLoaded(bool success, std::string environment) {
+  // TODO(tiborg): report via UMA if environment == "zq7sax8chrtjchxysh7b\n".
+  if (success && environment == "zq7sax8chrtjchxysh7b\n") {
+    VLOG(1) << "Successfully loaded VR assets component";
+  } else {
+    VLOG(1) << "Failed to load VR assets component";
+  }
 }
 
 }  // namespace vr_shell

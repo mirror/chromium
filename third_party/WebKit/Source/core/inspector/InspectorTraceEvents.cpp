@@ -392,22 +392,22 @@ const char InspectorScheduleStyleInvalidationTrackingEvent::kRuleSet[] =
 const char* ResourcePriorityString(ResourceLoadPriority priority) {
   const char* priority_string = nullptr;
   switch (priority) {
-    case kResourceLoadPriorityVeryLow:
+    case ResourceLoadPriority::kVeryLow:
       priority_string = "VeryLow";
       break;
-    case kResourceLoadPriorityLow:
+    case ResourceLoadPriority::kLow:
       priority_string = "Low";
       break;
-    case kResourceLoadPriorityMedium:
+    case ResourceLoadPriority::kMedium:
       priority_string = "Medium";
       break;
-    case kResourceLoadPriorityHigh:
+    case ResourceLoadPriority::kHigh:
       priority_string = "High";
       break;
-    case kResourceLoadPriorityVeryHigh:
+    case ResourceLoadPriority::kVeryHigh:
       priority_string = "VeryHigh";
       break;
-    case kResourceLoadPriorityUnresolved:
+    case ResourceLoadPriority::kUnresolved:
       break;
   }
   return priority_string;
@@ -813,10 +813,10 @@ static std::unique_ptr<TracedValue> GenericTimerData(ExecutionContext* context,
 std::unique_ptr<TracedValue> InspectorTimerInstallEvent::Data(
     ExecutionContext* context,
     int timer_id,
-    int timeout,
+    TimeDelta timeout,
     bool single_shot) {
   std::unique_ptr<TracedValue> value = GenericTimerData(context, timer_id);
-  value->SetInteger("timeout", timeout);
+  value->SetInteger("timeout", timeout.InMilliseconds());
   value->SetBoolean("singleShot", single_shot);
   SetCallStack(value.get());
   return value;

@@ -46,24 +46,34 @@
 
 - (void)updateHiddenInCurrentSizeClass {
   BOOL newHiddenValue = YES;
-  switch (self.traitCollection.horizontalSizeClass) {
-    case UIUserInterfaceSizeClassRegular:
-      newHiddenValue =
-          !(self.visibilityMask & ToolbarComponentVisibilityRegularWidth);
-      break;
-    case UIUserInterfaceSizeClassCompact:
-      // First check if the button should be visible only when it's enabled,
-      // if not, check if it should be visible in this case.
-      if (self.visibilityMask &
-          ToolbarComponentVisibilityCompactWidthOnlyWhenEnabled) {
-        newHiddenValue = !self.enabled;
-      } else if (self.visibilityMask & ToolbarComponentVisibilityCompactWidth) {
-        newHiddenValue = NO;
-      }
-      break;
-    case UIUserInterfaceSizeClassUnspecified:
-    default:
-      break;
+  if (!IsIPadIdiom()) {
+    if (self.visibilityMask &
+        ToolbarComponentVisibilityCompactWidthOnlyWhenEnabled) {
+      newHiddenValue = !self.enabled;
+    } else if (self.visibilityMask & ToolbarComponentVisibilityCompactWidth) {
+      newHiddenValue = NO;
+    }
+  } else {
+    switch (self.traitCollection.horizontalSizeClass) {
+      case UIUserInterfaceSizeClassRegular:
+        newHiddenValue =
+            !(self.visibilityMask & ToolbarComponentVisibilityRegularWidth);
+        break;
+      case UIUserInterfaceSizeClassCompact:
+        // First check if the button should be visible only when it's enabled,
+        // if not, check if it should be visible in this case.
+        if (self.visibilityMask &
+            ToolbarComponentVisibilityCompactWidthOnlyWhenEnabled) {
+          newHiddenValue = !self.enabled;
+        } else if (self.visibilityMask &
+                   ToolbarComponentVisibilityCompactWidth) {
+          newHiddenValue = NO;
+        }
+        break;
+      case UIUserInterfaceSizeClassUnspecified:
+      default:
+        break;
+    }
   }
   if (newHiddenValue != self.hiddenInCurrentSizeClass) {
     self.hiddenInCurrentSizeClass = newHiddenValue;
@@ -71,6 +81,15 @@
   }
 }
 
+- (void)setHiddenInCurrentState:(BOOL)hiddenInCurrentState {
+  _hiddenInCurrentState = hiddenInCurrentState;
+  [self setHiddenForCurrentStateAndSizeClass];
+}
+
+#pragma mark - Private
+
+// Checks if the button should be visible based on its hiddenInCurrentSizeClass
+// and hiddenInCurrentState properties, then updates its visibility accordingly.
 - (void)setHiddenForCurrentStateAndSizeClass {
   self.hidden = self.hiddenInCurrentState || self.hiddenInCurrentSizeClass;
 }

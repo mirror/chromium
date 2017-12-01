@@ -18,7 +18,6 @@
 #include "platform/graphics/GraphicsLayer.h"
 #include "platform/graphics/paint/ClipRecorder.h"
 #include "platform/graphics/paint/DrawingRecorder.h"
-#include "platform/graphics/paint/ScopedPaintChunkProperties.h"
 
 namespace blink {
 
@@ -258,21 +257,6 @@ void ScrollableAreaPainter::PaintScrollCorner(
 
   DrawingRecorder recorder(context, client, DisplayItem::kScrollbarCorner);
   context.FillRect(abs_rect, Color::kWhite);
-}
-
-void ScrollableAreaPainter::PaintCompositedScrollbar(
-    const Scrollbar& scrollbar,
-    GraphicsContext& context,
-    const CullRect& cull_rect_arg) {
-  // Map context and cull_rect which are in the local space of the scrollbar
-  // to the space of the containing scrollable area in which Scrollbar::Paint()
-  // will paint the scrollbar.
-  const IntRect& scrollbar_rect = scrollbar.FrameRect();
-  CullRect cull_rect(cull_rect_arg, scrollbar_rect.Location());
-  AffineTransform translation =
-      AffineTransform::Translation(-scrollbar_rect.X(), -scrollbar_rect.Y());
-  TransformRecorder transform_recorder(context, scrollbar, translation);
-  scrollbar.Paint(context, cull_rect);
 }
 
 PaintLayerScrollableArea& ScrollableAreaPainter::GetScrollableArea() const {

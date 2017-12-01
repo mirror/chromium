@@ -17,7 +17,6 @@
 #include "ui/gfx/animation/animation_delegate.h"
 
 namespace gfx {
-class FontList;
 class Rect;
 class SlideAnimation;
 }  // namespace gfx
@@ -40,7 +39,6 @@ class ASH_EXPORT DefaultFrameHeader : public FrameHeader,
       views::Widget* frame,
       views::View* header_view,
       FrameCaptionButtonContainerView* caption_button_container,
-      FrameCaptionButton* back_button,
       mojom::WindowStyle window_style = mojom::WindowStyle::DEFAULT);
   ~DefaultFrameHeader() override;
 
@@ -54,12 +52,13 @@ class ASH_EXPORT DefaultFrameHeader : public FrameHeader,
   void SchedulePaintForTitle() override;
   void SetPaintAsActive(bool paint_as_active) override;
 
-  // Sets the left header view for the header. Passing |nullptr| removes the
-  // view.
-  void UpdateLeftHeaderView(views::View* left_header_view);
+  void set_left_header_view(views::View* left_header_view) {
+    left_header_view_ = left_header_view;
+  }
 
-  // Sets the back button for the header. Passing |nullptr| removes the view.
-  void UpdateBackButton(FrameCaptionButton* button);
+  void set_back_button(FrameCaptionButton* back_button) {
+    back_button_ = back_button;
+  }
 
   // Sets the active and inactive frame colors. Note the inactive frame color
   // will have some transparency added when the frame is drawn.
@@ -75,9 +74,6 @@ class ASH_EXPORT DefaultFrameHeader : public FrameHeader,
   bool ShouldUseLightImages() const;
 
  protected:
-  // Returns the FontList to use for the title.
-  static const gfx::FontList& GetTitleFontList();
-
   // Paints the title bar, primarily the title string.
   virtual void PaintTitleBar(gfx::Canvas* canvas);
 

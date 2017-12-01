@@ -24,10 +24,11 @@
 #include "services/service_manager/public/cpp/service_context.h"
 #include "services/ui/common/switches.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/aura/env.h"
 #include "ui/aura/mus/window_tree_host_mus.h"
-#include "ui/aura/test/env_test_helper.h"
 #include "ui/aura/test/mus/input_method_mus_test_api.h"
 #include "ui/aura/window.h"
+#include "ui/base/ui_base_switches.h"
 #include "ui/compositor/test/fake_context_factory.h"
 #include "ui/gl/gl_switches.h"
 #include "ui/views/mus/desktop_window_tree_host_mus.h"
@@ -68,16 +69,13 @@ class PlatformTestHelperMus : public PlatformTestHelper {
  public:
   PlatformTestHelperMus(service_manager::Connector* connector,
                         const service_manager::Identity& identity) {
-    aura::test::EnvTestHelper().SetWindowTreeClient(nullptr);
     // It is necessary to recreate the MusClient for each test,
     // since a new MessageLoop is created for each test.
     mus_client_ = test::MusClientTestApi::Create(connector, identity);
     ViewsDelegate::GetInstance()->set_native_widget_factory(base::Bind(
         &PlatformTestHelperMus::CreateNativeWidget, base::Unretained(this)));
   }
-  ~PlatformTestHelperMus() override {
-    aura::test::EnvTestHelper().SetWindowTreeClient(nullptr);
-  }
+  ~PlatformTestHelperMus() override {}
 
   // PlatformTestHelper:
   void OnTestHelperCreated(ViewsTestHelper* helper) override {
@@ -251,6 +249,8 @@ void ViewsMusTestSuite::Initialize() {
   EnsureCommandLineSwitch(ui::switches::kUseTestConfig);
 
   EnsureCommandLineSwitch(switches::kOverrideUseSoftwareGLForTests);
+  base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
+      switches::kMus, switches::kMusHostVizValue);
 
   ViewsTestSuite::Initialize();
   service_manager_connections_ = std::make_unique<ServiceManagerConnection>();

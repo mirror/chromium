@@ -129,9 +129,8 @@ class TabStripModelExperimental : public TabStripModel {
   content::WebContents* GetWebContentsAt(int view_index) const override;
   int GetIndexOfWebContents(
       const content::WebContents* contents) const override;
-  void UpdateWebContentsStateAt(
-      int view_index,
-      TabStripModelObserver::TabChangeType change_type) override;
+  void UpdateWebContentsStateAt(int view_index,
+                                TabChangeType change_type) override;
   void SetTabNeedsAttentionAt(int index, bool attention) override;
   void CloseAllTabs() override;
   bool TabsAreLoading() const override;
@@ -235,9 +234,8 @@ class TabStripModelExperimental : public TabStripModel {
       Notify notify_types,
       const ui::ListSelectionModel& old_model);
 
-  bool InternalCloseTabs(
-      const std::vector<content::WebContents*>& tabs_to_close,
-      uint32_t close_types);
+  bool InternalCloseTabs(base::span<content::WebContents* const> tabs_to_close,
+                         uint32_t close_types);
 
   // Returns the iterator associated with the give view index, or end() if
   // not found.

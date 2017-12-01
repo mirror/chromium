@@ -206,9 +206,23 @@ class CC_PAINT_EXPORT PaintOp {
   static bool IsUnsetRect(const SkRect& rect) {
     return rect.fLeft == SK_ScalarInfinity;
   }
+
   static bool IsValidOrUnsetRect(const SkRect& rect) {
     return IsUnsetRect(rect) || rect.isFinite();
   }
+
+  // PaintOp supports having nans, but some tests want to make sure
+  // that operator== is true on two objects.  These helpers compare
+  // various types in a way where nan == nan is true.
+  static bool AreEqualEvenIfNaN(float left, float right) {
+    if (std::isnan(left) && std::isnan(right))
+      return true;
+    return left == right;
+  }
+  static bool AreSkPointsEqual(const SkPoint& left, const SkPoint& right);
+  static bool AreSkRectsEqual(const SkRect& left, const SkRect& right);
+  static bool AreSkRRectsEqual(const SkRRect& left, const SkRRect& right);
+  static bool AreSkMatricesEqual(const SkMatrix& left, const SkMatrix& right);
 
   static constexpr bool kIsDrawOp = false;
   static constexpr bool kHasPaintFlags = false;
@@ -855,8 +869,6 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
       ptr_ += op->skip;
       op_offset_ += op->skip;
 
-      // Debugging crbug.com/738182.
-      base::debug::Alias(op);
       CHECK_LE(op_offset_, buffer_->used_);
       return *this;
     }

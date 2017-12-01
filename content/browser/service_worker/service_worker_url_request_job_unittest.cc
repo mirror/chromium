@@ -18,6 +18,7 @@
 #include "base/test/histogram_tester.h"
 #include "base/test/simple_test_tick_clock.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "base/time/default_tick_clock.h"
 #include "base/time/time.h"
 #include "content/browser/blob_storage/chrome_blob_storage_context.h"
 #include "content/browser/loader/resource_request_info_impl.h"
@@ -151,8 +152,7 @@ class MockProtocolHandler : public net::URLRequestJobFactory::ProtocolHandler {
 // the memory.
 std::unique_ptr<storage::BlobProtocolHandler> CreateMockBlobProtocolHandler(
     storage::BlobStorageContext* blob_storage_context) {
-  return std::make_unique<storage::BlobProtocolHandler>(blob_storage_context,
-                                                        nullptr);
+  return std::make_unique<storage::BlobProtocolHandler>(blob_storage_context);
 }
 
 std::unique_ptr<ServiceWorkerHeaderMap> MakeHeaders() {
@@ -711,15 +711,14 @@ TEST_F(ServiceWorkerURLRequestJobTest, CustomTimeout) {
   version_->SetStatus(ServiceWorkerVersion::ACTIVATED);
 
   // Set mock clock on version_ to check timeout behavior.
-  {
-    auto tick_clock = std::make_unique<base::SimpleTestTickClock>();
-    tick_clock->SetNowTicks(base::TimeTicks::Now());
-    version_->SetTickClockForTesting(std::move(tick_clock));
-  }
+  base::SimpleTestTickClock tick_clock;
+  tick_clock.SetNowTicks(base::TimeTicks::Now());
+  version_->SetTickClockForTesting(&tick_clock);
 
   protocol_handler_->set_custom_timeout(base::TimeDelta::FromSeconds(5));
   TestRequest(200, "OK", std::string(), true /* expect_valid_ssl */);
   EXPECT_EQ(base::TimeDelta::FromSeconds(5), version_->remaining_timeout());
+  version_->SetTickClockForTesting(base::DefaultTickClock::GetInstance());
 }
 
 class ProviderDeleteHelper : public EmbeddedWorkerTestHelper {

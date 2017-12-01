@@ -114,7 +114,7 @@ class PluginDataRemoverImpl::Context
     AddRef();
     plugin_name_ = pepper_info->name;
     // Use the broker since we run this function outside the sandbox.
-    plugin_service->OpenChannelToPpapiBroker(0, plugin_path, this);
+    plugin_service->OpenChannelToPpapiBroker(0, 0, plugin_path, this);
   }
 
   // Called when a timeout happens in order not to block the client
@@ -195,7 +195,8 @@ class PluginDataRemoverImpl::Context
       return;
 
     DCHECK(!channel_.get());
-    channel_ = IPC::Channel::CreateClient(handle, this);
+    channel_ = IPC::Channel::CreateClient(handle, this,
+                                          base::ThreadTaskRunnerHandle::Get());
     if (!channel_->Connect()) {
       NOTREACHED() << "Couldn't connect to plugin";
       SignalDone();

@@ -139,7 +139,8 @@ class TabStripExperimental : public TabStrip,
   // TabStripModelExperimentalObserver implementation:
   void TabInserted(const TabDataExperimental* data, bool is_active) override;
   void TabClosing(const TabDataExperimental* data) override;
-  void TabChanged(const TabDataExperimental* data) override;
+  void TabChanged(const TabDataExperimental* data,
+                  TabChangeType change_type) override;
   void TabSelectionChanged(const TabDataExperimental* old_data,
                            const TabDataExperimental* new_data) override;
 
@@ -178,8 +179,6 @@ class TabStripExperimental : public TabStrip,
   SkColor GetToolbarTopSeparatorColor() const override;
   base::string16 GetAccessibleTabName(const Tab* tab) const override;
   int GetBackgroundResourceId(bool* custom_image) const override;
-  void UpdateTabAccessibilityState(const Tab* tab,
-                                   ui::AXNodeData* node_data) override;
                                    */
 
   // MouseWatcherListener overrides:

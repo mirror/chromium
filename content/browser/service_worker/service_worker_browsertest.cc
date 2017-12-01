@@ -96,6 +96,9 @@ namespace content {
 
 namespace {
 
+// V8ScriptRunner::setCacheTimeStamp() stores 12 byte data (tag + timestamp).
+const int kV8CacheTimeStampDataSize = sizeof(unsigned) + sizeof(double);
+
 struct FetchResult {
   ServiceWorkerStatusCode status;
   ServiceWorkerFetchEventResult result;
@@ -804,10 +807,7 @@ class ServiceWorkerVersionBrowserTest : public ServiceWorkerBrowserTest {
     int request_id =
         version_->StartRequest(ServiceWorkerMetrics::EventType::INSTALL,
                                CreateReceiver(BrowserThread::UI, done, result));
-    mojom::ServiceWorkerInstallEventMethodsAssociatedPtrInfo ptr_info;
-    mojo::MakeRequest(&ptr_info);
     version_->event_dispatcher()->DispatchInstallEvent(
-        std::move(ptr_info),
         base::BindOnce(&self::ReceiveInstallEventOnIOThread,
                        base::Unretained(this), done, result, request_id));
   }
@@ -2612,12 +2612,15 @@ class ServiceWorkerVersionBrowserV8CacheTest
 
  protected:
   // ServiceWorkerVersion::Listener overrides
-  void OnCachedMetadataUpdated(ServiceWorkerVersion* version) override {
+  void OnCachedMetadataUpdated(ServiceWorkerVersion* version,
+                               size_t size) override {
+    metadata_size_ = size;
     BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
                             cache_updated_closure_);
   }
 
   base::Closure cache_updated_closure_;
+  size_t metadata_size_ = 0;
 };
 
 IN_PROC_BROWSER_TEST_F(ServiceWorkerVersionBrowserV8CacheTest, Restart) {
@@ -2625,21 +2628,96 @@ IN_PROC_BROWSER_TEST_F(ServiceWorkerVersionBrowserV8CacheTest, Restart) {
   RunOnIOThread(base::Bind(&self::SetUpRegistrationAndListenerOnIOThread,
                            base::Unretained(this),
                            "/service_worker/worker.js"));
+  {
+    base::RunLoop cached_metadata_run_loop;
+    cache_updated_closure_ = cached_metadata_run_loop.QuitClosure();
 
+    // Start a worker.
+    StartWorker(SERVICE_WORKER_OK);
+
+    // Wait for the metadata to be stored. This run loop should finish when
+    // OnCachedMetadataUpdated() is called.
+    cached_metadata_run_loop.Run();
+  }
+
+  // Time stamp data must be stored to the storage.
+  EXPECT_EQ(kV8CacheTimeStampDataSize, static_cast<int>(metadata_size_));
+
+  // Stop the worker.
+  StopWorker();
+
+  {
+    base::RunLoop cached_metadata_run_loop;
+    cache_updated_closure_ = cached_metadata_run_loop.QuitClosure();
+    // Restart the worker.
+    StartWorker(SERVICE_WORKER_OK);
+    // Wait for the matadata to be stored. This run loop should finish when
+    // OnCachedMetadataUpdated() is called.
+    cached_metadata_run_loop.Run();
+  }
+
+  // The V8 code cache should be stored to the storage. It must have size
+  // greater than 12 bytes.
+  EXPECT_GT(static_cast<int>(metadata_size_), kV8CacheTimeStampDataSize);
+
+  // Stop the worker.
+  StopWorker();
+}
+
+class ServiceWorkerVersionBrowserV8FullCodeCacheTest
+    : public ServiceWorkerVersionBrowserTest,
+      public ServiceWorkerVersion::Listener {
+ public:
+  using self = ServiceWorkerVersionBrowserV8FullCodeCacheTest;
+  ServiceWorkerVersionBrowserV8FullCodeCacheTest() {
+    scoped_feature_list_.InitAndEnableFeature(
+        features::kServiceWorkerScriptFullCodeCache);
+  }
+  ~ServiceWorkerVersionBrowserV8FullCodeCacheTest() override {
+    if (version_)
+      version_->RemoveListener(this);
+  }
+  void SetUpRegistrationAndListenerOnIOThread(const std::string& worker_url) {
+    SetUpRegistrationOnIOThread(worker_url);
+    version_->AddListener(this);
+  }
+
+ protected:
+  // ServiceWorkerVersion::Listener overrides
+  void OnCachedMetadataUpdated(ServiceWorkerVersion* version,
+                               size_t size) override {
+    metadata_size_ = size;
+    BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
+                            cache_updated_closure_);
+  }
+
+  base::Closure cache_updated_closure_;
+  size_t metadata_size_ = 0;
+
+ private:
+  base::test::ScopedFeatureList scoped_feature_list_;
+};
+
+IN_PROC_BROWSER_TEST_F(ServiceWorkerVersionBrowserV8FullCodeCacheTest,
+                       FullCode) {
+  StartServerAndNavigateToSetup();
+  RunOnIOThread(base::Bind(&self::SetUpRegistrationAndListenerOnIOThread,
+                           base::Unretained(this),
+                           "/service_worker/worker.js"));
   base::RunLoop cached_metadata_run_loop;
   cache_updated_closure_ = cached_metadata_run_loop.QuitClosure();
 
   // Start a worker.
   StartWorker(SERVICE_WORKER_OK);
 
-  // Wait for the matadata is stored. This run loop should finish when
+  // Wait for the metadata to be stored. This run loop should finish when
   // OnCachedMetadataUpdated() is called.
   cached_metadata_run_loop.Run();
 
-  // Stop the worker.
-  StopWorker();
-  // Restart the worker.
-  StartWorker(SERVICE_WORKER_OK);
+  // The V8 code cache should be stored to the storage. It must have size
+  // greater than 12 bytes.
+  EXPECT_GT(static_cast<int>(metadata_size_), kV8CacheTimeStampDataSize);
+
   // Stop the worker.
   StopWorker();
 }
@@ -2714,7 +2792,7 @@ class CacheStorageSideDataSizeChecker
       std::unique_ptr<storage::BlobDataHandle> blob_data_handle) {
     ASSERT_EQ(CacheStorageError::kSuccess, error);
     blob_data_handle_ = std::move(blob_data_handle);
-    blob_reader_ = blob_data_handle_->CreateReader(file_system_context_);
+    blob_reader_ = blob_data_handle_->CreateReader();
     const storage::BlobReader::Status status = blob_reader_->CalculateSize(
         base::Bind(&self::OnBlobReaderCalculateSizeCallback, this, result,
                    continuation));
@@ -2762,10 +2840,11 @@ class CacheStorageSideDataSizeChecker
   DISALLOW_COPY_AND_ASSIGN(CacheStorageSideDataSizeChecker);
 };
 
-class ServiceWorkerV8CacheStrategiesTest : public ServiceWorkerBrowserTest {
+class ServiceWorkerV8CodeCacheForCacheStorageTest
+    : public ServiceWorkerBrowserTest {
  public:
-  ServiceWorkerV8CacheStrategiesTest() {}
-  ~ServiceWorkerV8CacheStrategiesTest() override {}
+  ServiceWorkerV8CodeCacheForCacheStorageTest() = default;
+  ~ServiceWorkerV8CodeCacheForCacheStorageTest() override = default;
 
   void SetUpOnMainThread() override {
     ServiceWorkerBrowserTest::SetUpOnMainThread();
@@ -2773,61 +2852,6 @@ class ServiceWorkerV8CacheStrategiesTest : public ServiceWorkerBrowserTest {
   }
 
  protected:
-  void CheckStrategyIsNone() {
-    RegisterAndActivateServiceWorker();
-
-    NavigateToTestPage();
-    WaitUntilSideDataSizeIs(0);
-
-    NavigateToTestPage();
-    WaitUntilSideDataSizeIs(0);
-
-    NavigateToTestPage();
-    WaitUntilSideDataSizeIs(0);
-  }
-
-  void CheckStrategyIsNormal() {
-    RegisterAndActivateServiceWorker();
-
-    NavigateToTestPage();
-    // fetch_event_response_via_cache.js returns |cloned_response| for the first
-    // load. So the V8 code cache should not be stored to the CacheStorage.
-    WaitUntilSideDataSizeIs(0);
-
-    NavigateToTestPage();
-    // V8ScriptRunner::setCacheTimeStamp() stores 12 byte data (tag +
-    // timestamp).
-    WaitUntilSideDataSizeIs(kV8CacheTimeStampDataSize);
-
-    NavigateToTestPage();
-    // The V8 code cache must be stored to the CacheStorage which must be bigger
-    // than 12 byte.
-    WaitUntilSideDataSizeIsBiggerThan(kV8CacheTimeStampDataSize);
-  }
-
-  void CheckStrategyIsAggressive() {
-    RegisterAndActivateServiceWorker();
-
-    NavigateToTestPage();
-    // fetch_event_response_via_cache.js returns |cloned_response| for the first
-    // load. So the V8 code cache should not be stored to the CacheStorage.
-    WaitUntilSideDataSizeIs(0);
-
-    NavigateToTestPage();
-    // The V8 code cache must be stored to the CacheStorage which must be bigger
-    // than 12 byte.
-    WaitUntilSideDataSizeIsBiggerThan(kV8CacheTimeStampDataSize);
-
-    NavigateToTestPage();
-    WaitUntilSideDataSizeIsBiggerThan(kV8CacheTimeStampDataSize);
-  }
-
- private:
-  static const char kPageUrl[];
-  static const char kWorkerUrl[];
-  static const char kScriptUrl[];
-  static const int kV8CacheTimeStampDataSize;
-
   void RegisterAndActivateServiceWorker() {
     scoped_refptr<WorkerActivatedObserver> observer =
         new WorkerActivatedObserver(wrapper());
@@ -2847,16 +2871,6 @@ class ServiceWorkerV8CacheStrategiesTest : public ServiceWorkerBrowserTest {
     EXPECT_EQ(title, title_watcher.WaitAndGetTitle());
   }
 
-  int GetSideDataSize() {
-    StoragePartition* partition = BrowserContext::GetDefaultStoragePartition(
-        shell()->web_contents()->GetBrowserContext());
-    return CacheStorageSideDataSizeChecker::GetSize(
-        static_cast<CacheStorageContextImpl*>(
-            partition->GetCacheStorageContext()),
-        partition->GetFileSystemContext(), embedded_test_server()->base_url(),
-        std::string("cache_name"), embedded_test_server()->GetURL(kScriptUrl));
-  }
-
   void WaitUntilSideDataSizeIs(int expected_size) {
     while (true) {
       if (GetSideDataSize() == expected_size)
@@ -2871,80 +2885,71 @@ class ServiceWorkerV8CacheStrategiesTest : public ServiceWorkerBrowserTest {
     }
   }
 
-  DISALLOW_COPY_AND_ASSIGN(ServiceWorkerV8CacheStrategiesTest);
+ private:
+  static const char kPageUrl[];
+  static const char kWorkerUrl[];
+  static const char kScriptUrl[];
+
+  int GetSideDataSize() {
+    StoragePartition* partition = BrowserContext::GetDefaultStoragePartition(
+        shell()->web_contents()->GetBrowserContext());
+    return CacheStorageSideDataSizeChecker::GetSize(
+        static_cast<CacheStorageContextImpl*>(
+            partition->GetCacheStorageContext()),
+        partition->GetFileSystemContext(), embedded_test_server()->base_url(),
+        std::string("cache_name"), embedded_test_server()->GetURL(kScriptUrl));
+  }
+
+  DISALLOW_COPY_AND_ASSIGN(ServiceWorkerV8CodeCacheForCacheStorageTest);
 };
 
-const char ServiceWorkerV8CacheStrategiesTest::kPageUrl[] =
+const char ServiceWorkerV8CodeCacheForCacheStorageTest::kPageUrl[] =
     "/service_worker/v8_cache_test.html";
-const char ServiceWorkerV8CacheStrategiesTest::kWorkerUrl[] =
+const char ServiceWorkerV8CodeCacheForCacheStorageTest::kWorkerUrl[] =
     "/service_worker/fetch_event_response_via_cache.js";
-const char ServiceWorkerV8CacheStrategiesTest::kScriptUrl[] =
+const char ServiceWorkerV8CodeCacheForCacheStorageTest::kScriptUrl[] =
     "/service_worker/v8_cache_test.js";
-// V8ScriptRunner::setCacheTimeStamp() stores 12 byte data (tag + timestamp).
-const int ServiceWorkerV8CacheStrategiesTest::kV8CacheTimeStampDataSize =
-    sizeof(unsigned) + sizeof(double);
 
-IN_PROC_BROWSER_TEST_F(ServiceWorkerV8CacheStrategiesTest,
+IN_PROC_BROWSER_TEST_F(ServiceWorkerV8CodeCacheForCacheStorageTest,
                        V8CacheOnCacheStorage) {
-  // The strategy is "aggressive" on default.
-  CheckStrategyIsAggressive();
+  RegisterAndActivateServiceWorker();
+
+  // First load: fetch_event_response_via_cache.js returns |cloned_response|.
+  // The V8 code cache should not be stored in CacheStorage.
+  NavigateToTestPage();
+  WaitUntilSideDataSizeIs(0);
+
+  // Second load: The V8 code cache should be stored in CacheStorage. It must
+  // have size greater than 12 bytes.
+  NavigateToTestPage();
+  WaitUntilSideDataSizeIsBiggerThan(kV8CacheTimeStampDataSize);
 }
 
-class ServiceWorkerV8CacheStrategiesNoneTest
-    : public ServiceWorkerV8CacheStrategiesTest {
+class ServiceWorkerV8CodeCacheForCacheStorageNoneTest
+    : public ServiceWorkerV8CodeCacheForCacheStorageTest {
  public:
-  ServiceWorkerV8CacheStrategiesNoneTest() {}
-  ~ServiceWorkerV8CacheStrategiesNoneTest() override {}
+  ServiceWorkerV8CodeCacheForCacheStorageNoneTest() {}
+  ~ServiceWorkerV8CodeCacheForCacheStorageNoneTest() override {}
   void SetUpCommandLine(base::CommandLine* command_line) override {
-    command_line->AppendSwitchASCII(switches::kV8CacheStrategiesForCacheStorage,
-                                    "none");
+    command_line->AppendSwitchASCII(switches::kV8CacheOptions, "none");
   }
 
  private:
-  DISALLOW_COPY_AND_ASSIGN(ServiceWorkerV8CacheStrategiesNoneTest);
+  DISALLOW_COPY_AND_ASSIGN(ServiceWorkerV8CodeCacheForCacheStorageNoneTest);
 };
 
-IN_PROC_BROWSER_TEST_F(ServiceWorkerV8CacheStrategiesNoneTest,
+IN_PROC_BROWSER_TEST_F(ServiceWorkerV8CodeCacheForCacheStorageNoneTest,
                        V8CacheOnCacheStorage) {
-  CheckStrategyIsNone();
-}
+  RegisterAndActivateServiceWorker();
 
-class ServiceWorkerV8CacheStrategiesNormalTest
-    : public ServiceWorkerV8CacheStrategiesTest {
- public:
-  ServiceWorkerV8CacheStrategiesNormalTest() {}
-  ~ServiceWorkerV8CacheStrategiesNormalTest() override {}
-  void SetUpCommandLine(base::CommandLine* command_line) override {
-    command_line->AppendSwitchASCII(switches::kV8CacheStrategiesForCacheStorage,
-                                    "normal");
-  }
+  // First load.
+  NavigateToTestPage();
+  WaitUntilSideDataSizeIs(0);
 
- private:
-  DISALLOW_COPY_AND_ASSIGN(ServiceWorkerV8CacheStrategiesNormalTest);
-};
-
-IN_PROC_BROWSER_TEST_F(ServiceWorkerV8CacheStrategiesNormalTest,
-                       V8CacheOnCacheStorage) {
-  CheckStrategyIsNormal();
-}
-
-class ServiceWorkerV8CacheStrategiesAggressiveTest
-    : public ServiceWorkerV8CacheStrategiesTest {
- public:
-  ServiceWorkerV8CacheStrategiesAggressiveTest() {}
-  ~ServiceWorkerV8CacheStrategiesAggressiveTest() override {}
-  void SetUpCommandLine(base::CommandLine* command_line) override {
-    command_line->AppendSwitchASCII(switches::kV8CacheStrategiesForCacheStorage,
-                                    "aggressive");
-  }
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(ServiceWorkerV8CacheStrategiesAggressiveTest);
-};
-
-IN_PROC_BROWSER_TEST_F(ServiceWorkerV8CacheStrategiesAggressiveTest,
-                       V8CacheOnCacheStorage) {
-  CheckStrategyIsAggressive();
+  // Second load: The V8 code cache must not be stored even after the second
+  // load when --v8-cache-options=none is set.
+  NavigateToTestPage();
+  WaitUntilSideDataSizeIs(0);
 }
 
 // ServiceWorkerDisableWebSecurityTests check the behavior when the web security

@@ -50,6 +50,9 @@ declare_args() {
   # disable security measures like sandboxing or ASLR.
   # IMPORTANT: Unsafe developer builds should never be distributed to end users.
   is_unsafe_developer_build = !is_official_build
+
+  # Set to true to disable COM init check hooks.
+  com_init_check_hook_disabled = false
 }
 
 if (is_android) {
@@ -182,6 +185,8 @@ jumbo_component("base") {
     "android/jni_utils.h",
     "android/jni_weak_ref.cc",
     "android/jni_weak_ref.h",
+    "android/library_loader/anchor_functions.cc",
+    "android/library_loader/anchor_functions.h",
     "android/library_loader/library_load_from_apk_status_codes.h",
     "android/library_loader/library_loader_hooks.cc",
     "android/library_loader/library_loader_hooks.h",
@@ -511,20 +516,12 @@ jumbo_component("base") {
     "memory/scoped_policy.h",
     "memory/scoped_refptr.h",
     "memory/shared_memory.h",
-    "memory/shared_memory_android.cc",
     "memory/shared_memory_handle.cc",
     "memory/shared_memory_handle.h",
-    "memory/shared_memory_handle_android.cc",
-    "memory/shared_memory_handle_mac.cc",
-    "memory/shared_memory_handle_win.cc",
     "memory/shared_memory_helper.cc",
     "memory/shared_memory_helper.h",
-    "memory/shared_memory_mac.cc",
-    "memory/shared_memory_nacl.cc",
-    "memory/shared_memory_posix.cc",
     "memory/shared_memory_tracker.cc",
     "memory/shared_memory_tracker.h",
-    "memory/shared_memory_win.cc",
     "memory/singleton.cc",
     "memory/singleton.h",
     "memory/weak_ptr.cc",
@@ -1126,12 +1123,6 @@ jumbo_component("base") {
     }
   }
 
-  # MacOS and Android have their own custom shared memory implementations due
-  # to supporting both POSIX and native handles.
-  if (is_posix && !is_mac && !is_android) {
-    sources += [ "memory/shared_memory_handle_posix.cc" ]
-  }
-
   all_dependent_configs = []
   defines = []
   data = []
@@ -1213,6 +1204,10 @@ jumbo_component("base") {
   # Android.
   if (is_android) {
     sources -= [ "debug/stack_trace_posix.cc" ]
+    sources += [
+      "memory/shared_memory_android.cc",
+      "memory/shared_memory_handle_android.cc",
+    ]
 
     # Android uses some Linux sources, put those back.
     set_sources_assignment_filter([])
@@ -1253,8 +1248,6 @@ jumbo_component("base") {
     # below, rather than using the generic POSIX or Linux-y ones.
     sources -= [
       "debug/stack_trace_posix.cc",
-      "memory/shared_memory_handle_posix.cc",
-      "memory/shared_memory_posix.cc",
       "message_loop/message_pump_libevent.cc",
       "message_loop/message_pump_libevent.h",
       "posix/unix_domain_socket.cc",
@@ -1272,6 +1265,8 @@ jumbo_component("base") {
       "files/file_path_watcher_fuchsia.cc",
       "fuchsia/default_job.cc",
       "fuchsia/default_job.h",
+      "fuchsia/fuchsia_logging.cc",
+      "fuchsia/fuchsia_logging.h",
       "fuchsia/scoped_zx_handle.h",
       "memory/shared_memory_fuchsia.cc",
       "memory/shared_memory_handle_fuchsia.cc",
@@ -1302,6 +1297,7 @@ jumbo_component("base") {
     set_sources_assignment_filter([])
     sources += [
       "files/file_path_watcher_stub.cc",
+      "memory/shared_memory_nacl.cc",
       "process/process_metrics_nacl.cc",
       "sync_socket_nacl.cc",
       "threading/platform_thread_linux.cc",
@@ -1328,7 +1324,6 @@ jumbo_component("base") {
       "memory/discardable_shared_memory.h",
       "memory/shared_memory_helper.cc",
       "memory/shared_memory_helper.h",
-      "memory/shared_memory_posix.cc",
       "native_library.cc",
       "native_library_posix.cc",
       "path_service.cc",
@@ -1382,7 +1377,6 @@ jumbo_component("base") {
   } else {
     # Remove NaCl stuff.
     sources -= [
-      "memory/shared_memory_nacl.cc",
       "os_compat_nacl.cc",
       "os_compat_nacl.h",
       "rand_util_nacl.cc",
@@ -1408,6 +1402,8 @@ jumbo_component("base") {
   # Windows.
   if (is_win) {
     sources += [
+      "memory/shared_memory_handle_win.cc",
+      "memory/shared_memory_win.cc",
       "power_monitor/power_monitor_device_source_win.cc",
       "profiler/win32_stack_frame_unwinder.cc",
       "profiler/win32_stack_frame_unwinder.h",
@@ -1427,6 +1423,10 @@ jumbo_component("base") {
       "//base/trace_event/etw_manifest:chrome_events_win",
       "//base/win:base_win_features",
     ]
+
+    if (com_init_check_hook_disabled) {
+      defines += [ "COM_INIT_CHECK_HOOK_DISABLED" ]
+    }
 
     if (is_component_build) {
       # Copy the VS runtime DLLs into the isolate so that they don't have to be
@@ -1519,8 +1519,11 @@ jumbo_component("base") {
 
   # Desktop Mac.
   if (is_mac) {
+    sources -= [ "profiler/native_stack_sampler_posix.cc" ]
     sources += [
       "mac/scoped_typeref.h",
+      "memory/shared_memory_handle_mac.cc",
+      "memory/shared_memory_mac.cc",
       "power_monitor/power_monitor_device_source_mac.mm",
       "time/time_conversion_posix.cc",
       "time/time_exploded_posix.cc",
@@ -1540,17 +1543,12 @@ jumbo_component("base") {
   # Mac or iOS.
   if (is_mac || is_ios) {
     sources -= [
-      "memory/shared_memory_posix.cc",
       "native_library_posix.cc",
       "strings/sys_string_conversions_posix.cc",
       "synchronization/waitable_event_posix.cc",
       "synchronization/waitable_event_watcher_posix.cc",
       "threading/platform_thread_internal_posix.cc",
     ]
-
-    if (is_mac) {
-      sources -= [ "profiler/native_stack_sampler_posix.cc" ]
-    }
   } else {
     # Non-Mac/ios.
     sources -= [
@@ -1659,7 +1657,6 @@ jumbo_component("base") {
       "mac/scoped_objc_class_swizzler.h",
       "mac/scoped_objc_class_swizzler.mm",
       "mac/scoped_typeref.h",
-      "memory/shared_memory_posix.cc",
       "message_loop/message_pump_mac.h",
       "message_loop/message_pump_mac.mm",
       "power_monitor/power_monitor_device_source_ios.mm",
@@ -1672,6 +1669,16 @@ jumbo_component("base") {
     ]
 
     set_sources_assignment_filter(sources_assignment_filter)
+  }
+
+  # Android, Fuchsia, and MacOS have their own custom shared memory handle
+  # implementations. e.g. due to supporting both POSIX and native handles.
+  if (is_posix && !is_android && !is_fuchsia && !is_mac) {
+    sources += [ "memory/shared_memory_handle_posix.cc" ]
+  }
+
+  if (is_posix && !is_fuchsia && !is_mac && !is_nacl) {
+    sources += [ "memory/shared_memory_posix.cc" ]
   }
 
   if (is_posix && !is_fuchsia && !is_mac && !is_ios) {
@@ -2648,7 +2655,6 @@ if (is_android) {
       "android/java/src/org/chromium/base/annotations/NativeCall.java",
       "android/java/src/org/chromium/base/annotations/NativeClassQualifiedName.java",
       "android/java/src/org/chromium/base/annotations/RemovableInRelease.java",
-      "android/java/src/org/chromium/base/annotations/SuppressFBWarnings.java",
       "android/java/src/org/chromium/base/annotations/UsedByReflection.java",
       "android/java/src/org/chromium/base/library_loader/LegacyLinker.java",
       "android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
@@ -2751,6 +2757,7 @@ if (is_android) {
       "test/android/javatests/src/org/chromium/base/test/params/ParameterizedRunnerDelegate.java",
       "test/android/javatests/src/org/chromium/base/test/params/ParameterizedRunnerDelegateCommon.java",
       "test/android/javatests/src/org/chromium/base/test/params/ParameterAnnotations.java",
+      "test/android/javatests/src/org/chromium/base/test/params/ParameterProvider.java",
       "test/android/javatests/src/org/chromium/base/test/util/AdvancedMockContext.java",
       "test/android/javatests/src/org/chromium/base/test/util/AnnotationProcessor.java",
       "test/android/javatests/src/org/chromium/base/test/util/CallbackHelper.java",
@@ -2793,8 +2800,8 @@ if (is_android) {
     java_files = [ "test/android/javatests/src/org/chromium/base/test/TestChildProcessConnection.java" ]
   }
 
-  java_library("base_junit_test_support") {
-    # Skip platform checks since Robolectric depends on requires_android targets.
+  android_library("base_junit_test_support") {
+    # Plaform checks are broken for Robolectric.
     bypass_platform_checks = true
     testonly = true
     java_files = [ "android/junit/src/org/chromium/base/metrics/test/ShadowRecordHistogram.java" ]
@@ -2806,7 +2813,7 @@ if (is_android) {
 
   junit_binary("base_junit_tests") {
     java_files = [
-      "android/junit/src/org/chromium/base/BaseChromiumApplicationTest.java",
+      "android/junit/src/org/chromium/base/ApplicationStatusTest.java",
       "android/junit/src/org/chromium/base/DiscardableReferencePoolTest.java",
       "android/junit/src/org/chromium/base/LogTest.java",
       "android/junit/src/org/chromium/base/NonThreadSafeTest.java",
@@ -2839,6 +2846,7 @@ if (is_android) {
       "android/library_loader/library_load_from_apk_status_codes.h",
       "android/library_loader/library_loader_hooks.h",
       "memory/memory_pressure_listener.h",
+      "metrics/histogram_base.h",
     ]
   }
 

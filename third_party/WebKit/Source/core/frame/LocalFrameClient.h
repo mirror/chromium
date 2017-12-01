@@ -69,6 +69,7 @@ namespace mojom {
 enum class WebFeature : int32_t;
 }  // namespace mojom
 
+class AssociatedInterfaceProvider;
 class Document;
 class DocumentLoader;
 class HTMLFormElement;
@@ -280,7 +281,8 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
                                     SandboxFlags,
                                     const ParsedFeaturePolicy&) {}
 
-  virtual void DidSetFeaturePolicyHeader(
+  virtual void DidSetFramePolicyHeaders(
+      SandboxFlags,
       const ParsedFeaturePolicy& parsed_header) {}
 
   // Called when a set of new Content Security Policies is added to the frame's
@@ -307,7 +309,7 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
   virtual ContentSettingsClient& GetContentSettingsClient() = 0;
 
   virtual SharedWorkerRepositoryClient* GetSharedWorkerRepositoryClient() {
-    return 0;
+    return nullptr;
   }
 
   virtual std::unique_ptr<WebApplicationCacheHost> CreateApplicationCacheHost(
@@ -348,6 +350,11 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
   virtual BlameContext* GetFrameBlameContext() { return nullptr; }
 
   virtual service_manager::InterfaceProvider* GetInterfaceProvider() {
+    return nullptr;
+  }
+
+  virtual AssociatedInterfaceProvider*
+  GetRemoteNavigationAssociatedInterfaces() {
     return nullptr;
   }
 

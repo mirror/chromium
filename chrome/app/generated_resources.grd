@@ -1165,11 +1165,17 @@ are declared in build/common.gypi.
 
       <!-- Download Shelf-->
       <if expr="use_titlecase">
+        <message name="IDS_HIDE_DOWNLOADS" desc="Button label for screenreader users, for button at the corner of the download shelf that closes the download shelf (title case)">
+          Close Downloads Bar
+        </message>
         <message name="IDS_SHOW_ALL_DOWNLOADS" desc="Button label shown at the corner of the download shelf that opens the downloads page (title case)">
           Show All
         </message>
       </if>
       <if expr="not use_titlecase">
+        <message name="IDS_HIDE_DOWNLOADS" desc="Button label for screenreader users, for button at the corner of the download shelf that closes the download shelf (sentence case)">
+          Close downloads bar
+        </message>
         <message name="IDS_SHOW_ALL_DOWNLOADS" desc="Button label shown at the corner of the download shelf that opens the downloads page (sentence case)">
           Show all
         </message>
@@ -1896,6 +1902,23 @@ From <ph name="DOWNLOAD_DOMAIN">$3<ex>example.com</ex></ph>
         </message>
       </if>
 
+      <!-- "Install web app" confirmation bubble -->
+      <if expr="chromeos">
+        <message name="IDS_INSTALL_TO_OS_LAUNCH_SURFACE_BUBBLE_TITLE" desc="Title of the bubble for installing a web app to the shelf.">
+          Install to shelf
+        </message>
+      </if>
+      <if expr="is_macosx">
+        <message name="IDS_INSTALL_TO_OS_LAUNCH_SURFACE_BUBBLE_TITLE" desc="In Title Case: Title of the bubble for installing a web app to the Applications Folder on Mac. Note `Applications` should match the name that appears under Favourites in Finder on macOS.">
+          Install to Applications
+        </message>
+      </if>
+      <if expr="not chromeos and not is_macosx">
+        <message name="IDS_INSTALL_TO_OS_LAUNCH_SURFACE_BUBBLE_TITLE" desc="Title of the bubble for installing a web app to the desktop.">
+          Install to desktop
+        </message>
+      </if>
+
       <message name="IDS_BOOKMARK_APP_AX_BUBBLE_NAME_LABEL" desc="Text preceding the name of a bookmark app, read by spoken feedback.">
         Shortcut name
       </message>
@@ -1933,6 +1956,23 @@ From <ph name="DOWNLOAD_DOMAIN">$3<ex>example.com</ex></ph>
       <if expr="not chromeos and not is_macosx">
         <message name="IDS_ADD_TO_OS_LAUNCH_SURFACE" desc="Button text for adding a bookmark app to the desktop.">
           Add to desktop...
+        </message>
+      </if>
+
+      <!-- "Install web app" menu item -->
+      <if expr="chromeos">
+        <message name="IDS_INSTALL_TO_OS_LAUNCH_SURFACE" desc="Button text for installing a web app to the shelf.">
+          Install to shelf...
+        </message>
+      </if>
+      <if expr="is_macosx">
+        <message name="IDS_INSTALL_TO_OS_LAUNCH_SURFACE" desc="In Title Case: Button text for installing a web app to the Applications Folder. Note `Applications` should match the name that appears under Favourites in Finder on macOS">
+          Install to Applications...
+        </message>
+      </if>
+      <if expr="not chromeos and not is_macosx">
+        <message name="IDS_INSTALL_TO_OS_LAUNCH_SURFACE" desc="Button text for installing a web app to the desktop.">
+          Install to desktop...
         </message>
       </if>
 
@@ -3285,9 +3325,6 @@ From <ph name="DOWNLOAD_DOMAIN">$3<ex>example.com</ex></ph>
           PWG Raster Convertor
         </message>
       </if>
-      <message name="IDS_UTILITY_PROCESS_DIAL_DEVICE_DESCRIPTION_PARSER_NAME" desc="The name of the utility process used for parsing XML of uPnP device descriptions of DIAL devices.">
-        DIAL Device Description Parser
-      </message>
       <message name="IDS_UTILITY_PROCESS_PATCH_NAME" desc="The name of the utility process used for patching file operations.">
           Patch Service
       </message>
@@ -4799,15 +4836,6 @@ Keep your key file in a safe place. You will need it to create new versions of y
         Set which search engine is used when searching from the
         <ph name="BEGIN_LINK">&lt;a target="_blank" href="$1"&gt;</ph>omnibox<ph name="END_LINK">&lt;/a&gt;<ex>&lt;/a&gt;</ex></ph>.
       </message>
-      <message name="IDS_HOTWORD_GENERIC_ERROR_MESSAGE" desc="The default error message text when no additional details are known.">
-        This feature is temporarily unavailable. <ph name="BEGIN_LINK">&lt;a target="_blank" href="$1"&gt;</ph>Help<ph name="END_LINK">&lt;/a&gt;<ex>&lt;/a&gt;</ex></ph>
-      </message>
-      <message name="IDS_HOTWORD_NACL_DISABLED_ERROR_MESSAGE" desc="The error message text when hotwording fails because NaCl is disabled.">
-        Native Client plugin needs to be enabled to use this feature.
-      </message>
-      <message name="IDS_HOTWORD_MICROPHONE_ERROR_MESSAGE" desc="The error message text when hotwording fails because the microphone isn't working.">
-        Microphone is currently unavailable. <ph name="BEGIN_LINK">&lt;a target="_blank" href="chrome://settings/content#media-stream-settings"&gt;</ph>Manage microphone<ph name="END_LINK">&lt;/a&gt;<ex>&lt;/a&gt;</ex></ph>
-      </message>
       <if expr="is_win">
         <!-- Conflicts page -->
         <message name="IDS_CONFLICTS_CHECK_PAGE_TABLE_TITLE_SUFFIX_ONE" desc="What gets appended after the page title if no conflicts were found.">
@@ -5078,16 +5106,6 @@ Keep your key file in a safe place. You will need it to create new versions of y
       <message name="IDS_NACL_APP_MISSING_ARCH_MESSAGE" desc="Shown if a Native Client app does not support the current architecture">
         This page uses a Native Client app that doesn't work on your computer.
       </message>
-
-      <!-- chrome://voicesearch strings -->
-      <if expr="chromeos">
-        <message name="IDS_VOICESEARCH_LOADING_MESSAGE" desc="Shown while loading until full list of modules is retrieved">
-          Loading...
-        </message>
-        <message name="IDS_VOICESEARCH_TITLE_MESSAGE" desc="Shown while loading until full list of modules is retrieved">
-          About Voice Search
-        </message>
-      </if>
 
       <!-- About box strings -->
       <if expr="is_win">
@@ -6751,18 +6769,20 @@ I don't think this site should be blocked!
         <message name="IDS_GOOGLE_CLOUD_PRINT" desc="The name of the Google Cloud Print product.">
           Google Cloud Print
         </message>
-        <message name="IDS_CLOUD_PRINT_CONNECTOR_DISABLED_BUTTON" desc="The label of the cloud connector configure button when it hasn't been set up yet.">
-          Add printers
-        </message>
-        <message name="IDS_CLOUD_PRINT_CONNECTOR_ENABLED_LABEL" desc="The label of the cloud print setup button when it has been set up.">
-          You have registered your printers with <ph name="CLOUD_PRINT_NAME">$1<ex>Google Cloud Print</ex></ph> using the account <ph name="EMAIL">$2<ex>foo@bar.com</ex></ph>
-        </message>
-        <message name="IDS_CLOUD_PRINT_CONNECTOR_ENABLED_BUTTON" desc="The label of the cloud print connector configure button when it has been set up.">
-          Disconnect printers
-        </message>
-        <message name="IDS_CLOUD_PRINT_CONNECTOR_ENABLING_BUTTON" desc="The label of the cloud connector configure button while it is being set up.">
-          Enabling...
-        </message>
+        <if expr="not chromeos">
+          <message name="IDS_CLOUD_PRINT_CONNECTOR_DISABLED_BUTTON" desc="The label of the cloud connector configure button when it hasn't been set up yet.">
+            Add printers
+          </message>
+          <message name="IDS_CLOUD_PRINT_CONNECTOR_ENABLED_LABEL" desc="The label of the cloud print setup button when it has been set up.">
+            You have registered your printers with <ph name="CLOUD_PRINT_NAME">$1<ex>Google Cloud Print</ex></ph> using the account <ph name="EMAIL">$2<ex>foo@bar.com</ex></ph>
+          </message>
+          <message name="IDS_CLOUD_PRINT_CONNECTOR_ENABLED_BUTTON" desc="The label of the cloud print connector configure button when it has been set up.">
+            Disconnect printers
+          </message>
+          <message name="IDS_CLOUD_PRINT_CONNECTOR_ENABLING_BUTTON" desc="The label of the cloud connector configure button while it is being set up.">
+            Enabling...
+          </message>
+        </if>
 
         <message name="IDS_CONTROLLED_SETTING_POLICY" desc="Text displayed in the controlled settings bubble when a setting's value is enforced by policy.">
           This setting is enforced by your administrator.
@@ -6979,6 +6999,9 @@ I don't think this site should be blocked!
       <message name="IDS_COLLECTED_COOKIES_BLOCKED_AUX_TEXT" desc="The text used to label a cookie which has been marked as blocked.">
         Blocked
       </message>
+      <message name="IDS_COLLECTED_COOKIES_CLEAR_ON_EXIT_AUX_TEXT" desc="The text used to label a cookie which has been marked to be cleared on exit.">
+        Cleared on Exit
+      </message>
       <message name="IDS_COLLECTED_COOKIES_INFOBAR_MESSAGE" desc="The string shown in the infobar after the user has changed the allowed/blocked state of a cookie, reminding them to reload the page in order for the new cookies to take effect.">
         New cookie settings will take effect after reloading the page.
       </message>
@@ -7190,6 +7213,9 @@ I don't think this site should be blocked!
       </message>
       <message name="IDS_COOKIES_SERVICE_WORKERS" desc="Label for Service Workers (name of an HTML standard)">
         Service Workers
+      </message>
+      <message name="IDS_COOKIES_SHARED_WORKERS" desc="Label for Shared Workers (name of an HTML standard)">
+        Shared Workers
       </message>
       <message name="IDS_COOKIES_CACHE_STORAGE" desc="The text shown when there is Cache Storage (name of a Web standard) in the Cookies table">
         Cache Storage
@@ -7486,6 +7512,9 @@ I don't think this site should be blocked!
       </message>
       <message name="IDS_PROFILES_SETTINGS_LINK" desc="The link text to the Chrome settings page in the account removal view.">
         settings
+      </message>
+      <message name="IDS_PROFILES_SYNCED_TO_TITLE" desc="Title of the profile card when sync is complete.">
+        Synced to
       </message>
       <message name="IDS_PROFILES_SYNC_SETTINGS_LINK" desc="The link text to the Chrome sync settings page in the avatar menu tutorial card.">
         Settings
@@ -8707,6 +8736,9 @@ Please help our engineers fix this problem. Tell us what happened right before y
         <message name="IDS_SAVE_PAGE_MAC" desc="The Mac menu item to save a page in the file menu.">
           Save Page As...
         </message>
+        <message name="IDS_EMAIL_LINK_MAC" desc="The Mac menu item to email a link to the current page in the share submenu">
+          Email Link
+        </message>
         <message name="IDS_EMAIL_PAGE_LOCATION_MAC" desc="The Mac menu item to email the page location in the file menu.">
           Email Page Location
         </message>
@@ -8900,8 +8932,8 @@ Please help our engineers fix this problem. Tell us what happened right before y
         <message name="IDS_DUPLICATE_TAB_MAC" desc="The Mac menu item for duplicating the selected tab(s).">
           Duplicate Tab
         </message>
-        <message name="IDS_MUTE_TAB_MAC" desc="The Mac menu item for muting the selected tab(s).">
-          Mute Tab
+        <message name="IDS_MUTE_SITE_MAC" desc="The Mac menu item for muting the selected tab(s).">
+          Mute Site
         </message>
         <message name="IDS_PIN_TAB_MAC" desc="The Mac menu item for pinning the selected tab(s).">
           Pin Tab
@@ -9715,7 +9747,7 @@ For more information, visit our <ph name="BEGIN_LINK">&lt;a target="_blank" href
             Please unlock your profile before adding a person.
           </message>
           <message name="IDS_USER_MANAGER_PROMPT_MESSAGE" desc="Prompt message displayed on UserManager when force-sign-in policy is enabled.">
-            To use Chrome, please sign in.
+            To use Chrome, please sign in
           </message>
           <message name="IDS_LOGIN_POD_USER_REMOVE_WARNING_NONSYNC" desc="Main text shown as a warning when attempting to remove an user.">
             This will permanently delete your browsing data from this device.
@@ -9879,9 +9911,6 @@ For more information, visit our <ph name="BEGIN_LINK">&lt;a target="_blank" href
         <message name="IDS_APP_LIST_START_SPEECH_RECOGNITION" desc="Tooltip text for the button to start the speech recognition.">
           Click to start voice search
         </message>
-        <message name="IDS_APP_LIST_HOTWORD_LISTENING" desc="Tooltip text for the mic button when it waits for the hotword.">
-          Click, or say "Ok Google" to start voice search
-        </message>
         <message name="IDS_SEARCH_BOX_ACCESSIBILITY_NAME" desc="Hint text for the search box in fullscreen app list window with additional instructions to use the arrow keys in Accessibility mode.">
           Search your device, apps, and web. Use the arrow keys to navigate your apps.
         </message>
@@ -9893,9 +9922,6 @@ For more information, visit our <ph name="BEGIN_LINK">&lt;a target="_blank" href
         </message>
         <message name="IDS_SEARCH_BOX_HINT_FULLSCREEN" desc="Hint text for the search box in fullscreen app list window.">
           Search your device, apps, web...
-        </message>
-        <message name="IDS_SEARCH_BOX_HOTWORD_HINT" desc="Hint text for the search box in app list window when the hotword is enabled.">
-          Search, or say "Ok Google"
         </message>
         <if expr="not use_titlecase">
           <message name="IDS_APP_LIST_CONTEXT_MENU_NEW_TAB" desc="Title text for the 'open new' context menu item of an app list item configured to open in a tab">
@@ -10187,12 +10213,14 @@ For more information, visit our <ph name="BEGIN_LINK">&lt;a target="_blank" href
         <message name="IDS_LOCAL_DISCOVERY_MY_DEVICES" desc="Title for 'my devices' section in devices page">
           My devices
         </message>
-        <message name="IDS_LOCAL_DISCOVERY_CLOUD_PRINT_CONNECTOR_DISABLED_LABEL" desc="In local discovery page: The label of the cloud print setup button when it hasn't been set up yet.">
-          You can add classic printers connected to your computer to <ph name="CLOUD_PRINT_NAME">$1<ex>Google Cloud Print</ex></ph>.
-        </message>
-        <message name="IDS_LOCAL_DISCOVERY_CONNECTOR_SECTION" desc="In local discovery page: Title of cloud print connector section.">
-          Classic printers
-        </message>
+        <if expr="not chromeos">
+          <message name="IDS_LOCAL_DISCOVERY_CLOUD_PRINT_CONNECTOR_DISABLED_LABEL" desc="In local discovery page: The label of the cloud print setup button when it hasn't been set up yet.">
+            You can add classic printers connected to your computer to <ph name="CLOUD_PRINT_NAME">$1<ex>Google Cloud Print</ex></ph>.
+          </message>
+          <message name="IDS_LOCAL_DISCOVERY_CONNECTOR_SECTION" desc="In local discovery page: Title of cloud print connector section.">
+            Classic printers
+          </message>
+        </if>
         <message name="IDS_LOCAL_DISCOVERY_NOTIFICATIONS_DISABLE_BUTTON_LABEL" desc="Label for button disabling local device notifications">
           Don't show this again
         </message>
@@ -10531,115 +10559,6 @@ For more information, visit our <ph name="BEGIN_LINK">&lt;a target="_blank" href
       <!-- Device permissions dialog strings. -->
       <message name="IDS_DEVICE_PERMISSIONS_DIALOG_SELECT" desc="Button confirming the devices selected for access by the app.">
         Select
-      </message>
-
-      <!-- Hotword Audio Verification (opt-in) App strings. -->
-      <message name="IDS_HOTWORD_BROWSER_NAME" desc="Name of the device when we're not running in CrOS">
-        <ph name="IDS_SHORT_PRODUCT_NAME">$1<ex>Chromium</ex></ph> browser
-      </message>
-      <message name="IDS_HOTWORD_OPT_IN_CLOSE" desc="Label for the close button for the 'Ok Google' hotword opt-in dialog.">
-        Close
-      </message>
-      <message name="IDS_HOTWORD_OPT_IN_CANCEL" desc="Text on the cancel button for the 'Ok Google' hotword opt-in dialog.">
-        CANCEL
-      </message>
-      <message name="IDS_HOTWORD_OPT_IN_INTRO_TITLE" desc="Title of the intro page of the 'Ok Google' hotword opt-in dialog.">
-        Voice search at any time
-      </message>
-      <message name="IDS_HOTWORD_OPT_IN_INTRO_SUBTITLE" desc="Sub-title of the intro page of the 'Ok Google' hotword opt-in dialog.">
-        Say "Ok Google" when your screen is on and unlocked
-      </message>
-      <message name="IDS_HOTWORD_OPT_IN_INTRO_DESCRIPTION" desc="Description explaining the steps required to continue through the hotword opt-in process.">
-        To make this happen, you'll need to enable Voice &amp; Audio Activity and train your <ph name="DEVICE_TYPE">$1<ex>Chromebook</ex></ph> in the following steps.
-      </message>
-      <message name="IDS_HOTWORD_OPT_IN_INTRO_DESCRIPTION_AUDIO_HISTORY_ENABLED" desc="Description explaining the steps required to continue through the hotword opt-in process.">
-        To make this happen, you'll need to train your <ph name="DEVICE_TYPE">$1<ex>Chromebook</ex></ph> in the following step.
-      </message>
-      <message name="IDS_HOTWORD_OPT_IN_INTRO_START" desc="Text on the start button for the 'Ok Google' hotword opt-in dialog.">
-        Get Started
-      </message>
-      <message name="IDS_HOTWORD_OPT_IN_AUDIO_HISTORY_TITLE" desc="Title of the Audio History page of the 'Ok Google' hotword opt-in dialog.">
-        Enable Voice &amp; Audio Activity
-      </message>
-      <message name="IDS_HOTWORD_OPT_IN_AUDIO_HISTORY_DESCRIPTION_1" desc="Description of the Audio History page of the 'Ok Google' hotword opt-in dialog.">
-        When you use audio activation commands, such as "Ok Google" or touching a microphone icon, your private Voice &amp; Audio Activity stores some voice and other audio to your account. A recording of the following speech/audio, plus a few seconds before, will be stored.
-      </message>
-      <message name="IDS_HOTWORD_OPT_IN_AUDIO_HISTORY_DESCRIPTION_2" desc="Description of the Audio History page of the 'Ok Google' hotword opt-in dialog.">
-        This helps Google recognize your voice and improve speech and audio recognition in order to give you results faster and with fewer hassles. <ph name="BEGIN_LINK">&lt;a target="_blank" href="https://support.google.com/websearch?p=chromebook_audiohistory"&gt;</ph>Learn more<ph name="END_LINK">&lt;/a&gt;<ex>&lt;/a&gt;</ex></ph>
-      </message>
-      <message name="IDS_HOTWORD_OPT_IN_AUDIO_HISTORY_DESCRIPTION_3" desc="Description of the Audio History page of the 'Ok Google' hotword opt-in dialog.">
-        You can change this setting or <ph name="BEGIN_LINK">&lt;a target="_blank" href="https://history.google.com/history/audio"&gt;</ph>manage your private data<ph name="END_LINK">&lt;/a&gt;<ex>&lt;/a&gt;</ex></ph> whenever you like. Please remember that when Voice &amp; Audio Activity is on, this data may be saved from any of your signed-in devices.
-      </message>
-      <message name="IDS_HOTWORD_OPT_IN_AUDIO_HISTORY_AGREE" desc="Text on the agree button for the Audio History section of the 'Ok Google' hotword opt-in dialog.">
-        Enable
-      </message>
-      <message name="IDS_HOTWORD_OPT_IN_AUDIO_HISTORY_WAIT" desc="Text displayed when waiting for Audio History setting in the 'Ok Google' hotword opt-in dialog.">
-        Enabling Voice &amp; Audio Activity...
-      </message>
-      <message name="IDS_HOTWORD_OPT_IN_ERROR" desc="Text displayed on error setting Audio History and training in the 'Ok Google' hotword opt-in dialog.">
-        Something went wrong. Please try again.
-      </message>
-      <message name="IDS_HOTWORD_OPT_IN_TRAINING_TITLE" desc="Title of the voice model training page of the 'Ok Google' hotword opt-in dialog.">
-        Let's train your <ph name="DEVICE_TYPE">$1<ex>Chromebook</ex></ph>
-      </message>
-      <message name="IDS_HOTWORD_OPT_IN_TRAINING_DESCRIPTION" desc="Description on the voice model training page of the 'Ok Google' hotword opt-in dialog.">
-        To help your <ph name="DEVICE_TYPE">$1<ex>Chromebook</ex></ph> respond to you and for reliable and easy access to voice search, you need to teach Google the sound of your voice.
-      </message>
-      <message name="IDS_HOTWORD_OPT_IN_TRAINING_SPEAK" desc="The text describing the action the user should take on the voice model training page of the 'Ok Google' hotword opt-in dialog.">
-        Just say "Ok Google" three times
-      </message>
-      <message name="IDS_HOTWORD_OPT_IN_TRAINING_FIRST_PROMPT" desc="The first prompt text on the voice model training page of the 'Ok Google' hotword opt-in dialog.">
-        Say "Ok Google"
-      </message>
-      <message name="IDS_HOTWORD_OPT_IN_TRAINING_MIDDLE_PROMPT" desc="The middle prompt text on the voice model training page of the 'Ok Google' hotword opt-in dialog.">
-        Say "Ok Google" again
-      </message>
-      <message name="IDS_HOTWORD_OPT_IN_TRAINING_LAST_PROMPT" desc="The last prompt text on the voice model training page of the 'Ok Google' hotword opt-in dialog.">
-        Say "Ok Google" one last time
-      </message>
-      <message name="IDS_HOTWORD_OPT_IN_TRAINING_RECORDED" desc="The message displayed when an 'Ok Google' utterance has been completed.">
-        Complete
-      </message>
-      <message name="IDS_HOTWORD_OPT_IN_TRAINING_TIMEOUT" desc="The message displayed when an 'Ok Google' training has time out.">
-        Training timed out
-      </message>
-      <message name="IDS_HOTWORD_OPT_IN_TRAINING_RETRY" desc="Text on the retry button of the voice model training page of the 'Ok Google' hotword opt-in dialog.">
-        RETRY
-      </message>
-      <message name="IDS_HOTWORD_OPT_IN_FINISHED_TITLE" desc="Title of the finished page of the 'Ok Google' hotword opt-in dialog.">
-        You're all set!
-      </message>
-      <message name="IDS_HOTWORD_OPT_IN_FINISHED_LIST_INTRO" desc="The text at the beginning of the list describing the Chromebook's new abilities. ">
-        Your <ph name="DEVICE_TYPE">$1<ex>Chromebook</ex></ph> can now:
-      </message>
-      <message name="IDS_HOTWORD_OPT_IN_FINISHED_LIST_ITEM_1" desc="The text of the first item in the list of Chromebook abilities. ">
-        Recognize your voice when you say "Ok Google"
-      </message>
-      <message name="IDS_HOTWORD_OPT_IN_FINISHED_LIST_ITEM_2" desc="The text of the second item in the list of Chromebook abilities. ">
-        Respond to "Ok Google" when the screen is on and unlocked
-      </message>
-      <message name="IDS_HOTWORD_OPT_IN_FINISHED_SETTINGS" desc="The text indicating where the user can change their Chrome settings. ">
-        You can change this at any time in <ph name="BEGIN_LINK">&lt;a target="_blank" href="#" id="settings-link"&gt;</ph>Chrome Settings<ph name="END_LINK">&lt;/a&gt;<ex>&lt;/a&gt;</ex></ph>.
-      </message>
-      <message name="IDS_HOTWORD_OPT_IN_FINISHED_AUDIO_HISTORY" desc="The text indicating where the user can change their account history. ">
-        Search queries will be tied to your Google Account. You can view and delete them in your <ph name="BEGIN_LINK">&lt;a target="_blank" href="https://www.google.com/settings/accounthistory"&gt;</ph>Account History<ph name="END_LINK">&lt;/a&gt;<ex>&lt;/a&gt;</ex></ph>.
-      </message>
-      <message name="IDS_HOTWORD_OPT_IN_FINISH" desc="Text on the finish button for the 'Ok Google' hotword opt-in dialog.">
-        OK
-      </message>
-      <message name="IDS_HOTWORD_OPT_IN_FINISHED_WAIT" desc="The text displayed when waiting for the voice model training to complete.">
-        Processing...
-      </message>
-
-      <!-- Hotword Notification -->
-      <message name="IDS_HOTWORD_NOTIFICATION_TITLE" desc="The text displayed as the title for the hotword notification. ">
-        Voice search at any time
-      </message>
-      <message name="IDS_HOTWORD_NOTIFICATION_DESCRIPTION" desc="The text displayed as the description for the hotword notification. ">
-        Enable "Ok Google" to voice search when your screen is on and unlocked
-      </message>
-      <message name="IDS_HOTWORD_NOTIFICATION_BUTTON" desc="The text displayed on the button of the hotword notification. ">
-        Enable "Ok Google"
       </message>
 
       <!-- About device logs UI display strings -->
@@ -11038,10 +10957,11 @@ For more information, visit our <ph name="BEGIN_LINK">&lt;a target="_blank" href
       <message name="IDS_VR_SHELL_AUDIO_PERMISSION_PROMPT_CONTINUE_BUTTON" desc="Text on the exit button of the prompt that shows up when user needs to grant audio permission to Chrome to perform a voice search">
         Continue
       </message>
+      <!-- TODO(https://crbug.com/787654): Make mixed case before using in production on a non-Android platform. -->
       <message name="IDS_VR_SHELL_EXIT_PROMPT_EXIT_VR_BUTTON" desc="Text on the exit button of the exit prompt that shows up when the user clicks on URL bar security icon in VR">
         EXIT VR
       </message>
-      <message name="IDS_PAGE_INFO_VR_BROWSER_UNSUPPORTED_MODE" desc="This text is displayed as a large toast to inform the user that they cannot currently browse in VR and they will soon exit VR mode.">
+      <message name="IDS_VR_BROWSER_UNSUPPORTED_PAGE" desc="This text is displayed as a large toast to inform the user that they cannot currently browse the current page in VR and they will soon exit VR mode.">
         This page contains features not yet supported in VR. Exiting...
       </message>
       <message name="IDS_VR_UNDER_DEVELOPMENT_NOTICE" desc="Text to be shown below the URL bar to announce that this is under development.">

@@ -175,8 +175,10 @@ void ResourceDispatcher::OnReceivedResponse(
 
   if (delegate_) {
     std::unique_ptr<RequestPeer> new_peer = delegate_->OnReceivedResponse(
-        std::move(request_info->peer), response_head.mime_type,
-        request_info->url);
+        std::move(request_info->peer), request_info->render_frame_id,
+        request_info->response_url, request_info->response_referrer,
+        request_info->response_method, request_info->resource_type,
+        response_head);
     DCHECK(new_peer);
     request_info->peer = std::move(new_peer);
   }
@@ -186,8 +188,7 @@ void ResourceDispatcher::OnReceivedResponse(
   request_info->site_isolation_metadata =
       SiteIsolationStatsGatherer::OnReceivedResponse(
           request_info->frame_origin, request_info->response_url,
-          request_info->resource_type, request_info->origin_pid,
-          renderer_response_info);
+          request_info->resource_type, renderer_response_info);
   request_info->peer->OnReceivedResponse(renderer_response_info);
 }
 
@@ -206,8 +207,7 @@ void ResourceDispatcher::OnReceivedCachedMetadata(
 
 void ResourceDispatcher::OnSetDataBuffer(int request_id,
                                          base::SharedMemoryHandle shm_handle,
-                                         int shm_size,
-                                         base::ProcessId renderer_pid) {
+                                         int shm_size) {
   TRACE_EVENT0("loader", "ResourceDispatcher::OnSetDataBuffer");
   PendingRequestInfo* request_info = GetPendingRequestInfo(request_id);
   if (!request_info)
@@ -224,10 +224,6 @@ void ResourceDispatcher::OnSetDataBuffer(int request_id,
 
   bool ok = request_info->buffer->Map(shm_size);
   if (!ok) {
-    // Added to help debug crbug/160401.
-    base::ProcessId renderer_pid_copy = renderer_pid;
-    base::debug::Alias(&renderer_pid_copy);
-
     base::SharedMemoryHandle shm_handle_copy = shm_handle;
     base::debug::Alias(&shm_handle_copy);
 
@@ -315,6 +311,8 @@ void ResourceDispatcher::OnReceivedRedirect(
     // We update the response_url here so that we can send it to
     // SiteIsolationStatsGatherer later when OnReceivedResponse is called.
     request_info->response_url = redirect_info.new_url;
+    request_info->response_method = redirect_info.new_method;
+    request_info->response_referrer = GURL(redirect_info.new_referrer);
     request_info->pending_redirect_message.reset(
         new ResourceHostMsg_FollowRedirect(request_id));
     if (!request_info->is_deferred) {
@@ -479,16 +477,20 @@ void ResourceDispatcher::OnTransferSizeUpdated(int request_id,
 ResourceDispatcher::PendingRequestInfo::PendingRequestInfo(
     std::unique_ptr<RequestPeer> peer,
     ResourceType resource_type,
-    int origin_pid,
+    int render_frame_id,
     const url::Origin& frame_origin,
     const GURL& request_url,
+    const std::string& method,
+    const GURL& referrer,
     bool download_to_file)
     : peer(std::move(peer)),
       resource_type(resource_type),
-      origin_pid(origin_pid),
+      render_frame_id(render_frame_id),
       url(request_url),
       frame_origin(frame_origin),
       response_url(request_url),
+      response_method(method),
+      response_referrer(referrer),
       download_to_file(download_to_file),
       request_start(base::TimeTicks::Now()) {}
 
@@ -627,8 +629,9 @@ int ResourceDispatcher::StartAsync(
   // Compute a unique request_id for this renderer process.
   int request_id = MakeRequestID();
   pending_requests_[request_id] = std::make_unique<PendingRequestInfo>(
-      std::move(peer), request->resource_type, request->origin_pid,
-      frame_origin, request->url, request->download_to_file);
+      std::move(peer), request->resource_type, request->render_frame_id,
+      frame_origin, request->url, request->method, request->referrer,
+      request->download_to_file);
 
   if (resource_scheduling_filter_.get() && loading_task_runner) {
     resource_scheduling_filter_->SetRequestIdTaskRunner(request_id,

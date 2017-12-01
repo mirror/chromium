@@ -40,7 +40,6 @@ class InterfacePtr;
 namespace ui {
 class ContextFactory;
 class ContextFactoryPrivate;
-class Gpu;
 class PlatformEventSource;
 namespace mojom {
 class WindowTreeClient;
@@ -49,6 +48,7 @@ class WindowTreeClient;
 namespace aura {
 namespace test {
 class EnvTestHelper;
+class EnvWindowTreeClientSetter;
 }
 
 class EnvInputStateController;
@@ -130,8 +130,6 @@ class AURA_EXPORT Env : public ui::EventTarget,
   void SetWindowTreeClient(WindowTreeClient* window_tree_client);
   bool HasWindowTreeClient() const { return window_tree_client_ != nullptr; }
 
-  ui::Gpu* GetGpuConnection();
-
   // Schedules an embed of a client. See
   // mojom::WindowTreeClient::ScheduleEmbed() for details.
   void ScheduleEmbed(
@@ -140,6 +138,7 @@ class AURA_EXPORT Env : public ui::EventTarget,
 
  private:
   friend class test::EnvTestHelper;
+  friend class test::EnvWindowTreeClientSetter;
   friend class EventInjector;
   friend class MusMouseLocationUpdater;
   friend class Window;

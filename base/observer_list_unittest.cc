@@ -13,6 +13,7 @@
 #include "base/compiler_specific.h"
 #include "base/location.h"
 #include "base/memory/weak_ptr.h"
+#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/sequenced_task_runner.h"
 #include "base/single_thread_task_runner.h"
@@ -30,14 +31,14 @@ namespace {
 class Foo {
  public:
   virtual void Observe(int x) = 0;
-  virtual ~Foo() {}
+  virtual ~Foo() = default;
   virtual int GetValue() const { return 0; }
 };
 
 class Adder : public Foo {
  public:
   explicit Adder(int scaler) : total(0), scaler_(scaler) {}
-  ~Adder() override {}
+  ~Adder() override = default;
 
   void Observe(int x) override { total += x * scaler_; }
   int GetValue() const override { return total; }
@@ -57,7 +58,7 @@ class Disrupter : public Foo {
   Disrupter(ObserverList<Foo>* list, bool remove_self)
       : Disrupter(list, nullptr, remove_self) {}
 
-  ~Disrupter() override {}
+  ~Disrupter() override = default;
 
   void Observe(int x) override {
     if (remove_self_)
@@ -115,7 +116,7 @@ class AddRemoveThread : public PlatformThread::Delegate,
         ready_(ready),
         weak_factory_(this) {}
 
-  ~AddRemoveThread() override {}
+  ~AddRemoveThread() override = default;
 
   void ThreadMain() override {
     loop_ = new MessageLoop();  // Fire up a message loop.
@@ -527,7 +528,7 @@ TEST(ObserverListThreadSafeTest, WithoutSequence) {
 class FooRemover : public Foo {
  public:
   explicit FooRemover(ObserverListThreadSafe<Foo>* list) : list_(list) {}
-  ~FooRemover() override {}
+  ~FooRemover() override = default;
 
   void AddFooToRemove(Foo* foo) {
     foos_.push_back(foo);
@@ -874,7 +875,7 @@ TEST(ObserverListTest, ClearNotifyExistingOnly) {
 class ListDestructor : public Foo {
  public:
   explicit ListDestructor(ObserverList<Foo>* list) : list_(list) {}
-  ~ListDestructor() override {}
+  ~ListDestructor() override = default;
 
   void Observe(int x) override { delete list_; }
 

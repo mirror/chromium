@@ -98,7 +98,7 @@ class GpuProcessHost : public BrowserChildProcessHostDelegate,
       bool force_create = true);
 
   // Returns whether there is an active GPU process or not.
-  static void GetHasGpuProcess(const base::Callback<void(bool)>& callback);
+  static void GetHasGpuProcess(base::OnceCallback<void(bool)> callback);
 
   // Helper function to run a callback on the IO thread. The callback receives
   // the appropriate GpuProcessHost instance. Note that the callback can be
@@ -147,8 +147,10 @@ class GpuProcessHost : public BrowserChildProcessHostDelegate,
   // Connects to FrameSinkManager running in the viz process. In this
   // configuration the display compositor runs in the viz process and the
   // browser must submit CompositorFrames over IPC.
-  void ConnectFrameSinkManager(viz::mojom::FrameSinkManagerRequest request,
-                               viz::mojom::FrameSinkManagerClientPtr client);
+  void ConnectFrameSinkManager(
+      viz::mojom::FrameSinkManagerRequest request,
+      viz::mojom::FrameSinkManagerClientPtrInfo client,
+      viz::mojom::CompositingModeWatcherPtrInfo mode_watcher);
 
   void RequestGPUInfo(RequestGPUInfoCallback request_cb);
   void RequestHDRStatus(RequestHDRStatusCallback request_cb);
@@ -157,12 +159,6 @@ class GpuProcessHost : public BrowserChildProcessHostDelegate,
   // Tells the GPU process that the given surface is being destroyed so that it
   // can stop using it.
   void SendDestroyingVideoSurface(int surface_id, const base::Closure& done_cb);
-
-  // Android-only notification when a context is initialized. Because the gpu
-  // process can be killed arbitrarily on this OS, the host needs to always
-  // restart it. This signal is used to differentiate a repeatedly failing gpu
-  // process from one that was functional but killed.
-  void DidSuccessfullyInitializeContext();
 #endif
 
   // What kind of GPU process, e.g. sandboxed or unsandboxed.
@@ -202,6 +198,7 @@ class GpuProcessHost : public BrowserChildProcessHostDelegate,
   void DidInitialize(const gpu::GPUInfo& gpu_info,
                      const gpu::GpuFeatureInfo& gpu_feature_info) override;
   void DidFailInitialize() override;
+  void DidCreateContextSuccessfully() override;
   void DidCreateOffscreenContext(const GURL& url) override;
   void DidDestroyOffscreenContext(const GURL& url) override;
   void DidDestroyChannel(int32_t client_id) override;

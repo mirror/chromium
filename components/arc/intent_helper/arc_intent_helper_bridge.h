@@ -5,6 +5,7 @@
 #ifndef COMPONENTS_ARC_INTENT_HELPER_ARC_INTENT_HELPER_BRIDGE_H_
 #define COMPONENTS_ARC_INTENT_HELPER_ARC_INTENT_HELPER_BRIDGE_H_
 
+#include <map>
 #include <memory>
 #include <set>
 #include <string>
@@ -14,11 +15,9 @@
 #include "base/observer_list.h"
 #include "base/threading/thread_checker.h"
 #include "components/arc/common/intent_helper.mojom.h"
-#include "components/arc/connection_observer.h"
 #include "components/arc/intent_helper/activity_icon_loader.h"
 #include "components/arc/intent_helper/arc_intent_helper_observer.h"
 #include "components/keyed_service/core/keyed_service.h"
-#include "mojo/public/cpp/bindings/binding.h"
 #include "url/gurl.h"
 
 class KeyedServiceBaseFactory;
@@ -35,7 +34,6 @@ class IntentFilter;
 // Receives intents from ARC.
 class ArcIntentHelperBridge
     : public KeyedService,
-      public ConnectionObserver<mojom::IntentHelperInstance>,
       public mojom::IntentHelperHost {
  public:
   // Returns singleton instance for the given BrowserContext,
@@ -58,17 +56,13 @@ class ArcIntentHelperBridge
   void RemoveObserver(ArcIntentHelperObserver* observer);
   bool HasObserver(ArcIntentHelperObserver* observer) const;
 
-  // ConnectionObserver<mojom::IntentHelperInstance>
-  void OnConnectionReady() override;
-  void OnConnectionClosed() override;
-
   // mojom::IntentHelperHost
   void OnIconInvalidated(const std::string& package_name) override;
   void OnIntentFiltersUpdated(
       std::vector<IntentFilter> intent_filters) override;
   void OnOpenDownloads() override;
   void OnOpenUrl(const std::string& url) override;
-  void OnOpenChromeSettings(mojom::SettingsPage page) override;
+  void OnOpenChromePage(mojom::ChromePage page) override;
   void OpenWallpaperPicker() override;
   void SetWallpaperDeprecated(const std::vector<uint8_t>& jpeg_data) override;
   void OpenVolumeControl() override;
@@ -90,7 +84,7 @@ class ArcIntentHelperBridge
       internal::ActivityIconLoader::OnIconsReadyCallback;
   using GetResult = internal::ActivityIconLoader::GetResult;
   GetResult GetActivityIcons(const std::vector<ActivityName>& activities,
-                             const OnIconsReadyCallback& callback);
+                             OnIconsReadyCallback callback);
 
   // Returns true when |url| can only be handled by Chrome. Otherwise, which is
   // when there might be one or more ARC apps that can handle |url|, returns
@@ -116,15 +110,9 @@ class ArcIntentHelperBridge
  private:
   THREAD_CHECKER(thread_checker_);
 
-  // Returns true if |url| is whitelisted. This function also returns true when
-  // |url| is neither chrome:// nor about:.
-  // TODO(yusukes): Properly fix b/68953603 and remove the function.
-  bool IsWhitelistedChromeUrl(const GURL& url);
-
   content::BrowserContext* const context_;
   ArcBridgeService* const arc_bridge_service_;  // Owned by ArcServiceManager.
 
-  mojo::Binding<mojom::IntentHelperHost> binding_;
   std::unique_ptr<OpenUrlDelegate> open_url_delegate_;
   internal::ActivityIconLoader icon_loader_;
 
@@ -134,8 +122,12 @@ class ArcIntentHelperBridge
 
   base::ObserverList<ArcIntentHelperObserver> observer_list_;
 
-  // TODO(yusukes): Properly fix b/68953603 and remove the variable.
-  std::set<GURL> whitelisted_urls_;
+  // about: and chrome://settings pages assistant requires to launch via
+  // OnOpenChromePage.
+  const std::map<mojom::ChromePage, std::string> allowed_chrome_pages_map_;
+
+  // Schemes that ARC is known to send via OnOpenUrl.
+  const std::set<std::string> allowed_arc_schemes_;
 
   DISALLOW_COPY_AND_ASSIGN(ArcIntentHelperBridge);
 };

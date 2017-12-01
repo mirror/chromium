@@ -298,7 +298,29 @@ bool LayoutFlexibleBox::HasLeftOverflow() const {
   return flex_direction == EFlexDirection::kColumnReverse;
 }
 
+void LayoutFlexibleBox::MergeAnonymousFlexItems(LayoutObject* remove_child) {
+  // When we remove a flex item, and the previous and next in-flow siblings of
+  // the item are text nodes wrapped in anonymous flex items, the adjacent text
+  // nodes need to be merged into the same flex item.
+  LayoutObject* prev_in_flow =
+      ToLayoutBox(remove_child)->PreviousInFlowSiblingBox();
+  if (!prev_in_flow || !prev_in_flow->IsAnonymousBlock())
+    return;
+  LayoutObject* next_in_flow =
+      ToLayoutBox(remove_child)->NextInFlowSiblingBox();
+  if (!next_in_flow || !next_in_flow->IsAnonymousBlock())
+    return;
+  ToLayoutBoxModelObject(next_in_flow)
+      ->MoveAllChildrenTo(ToLayoutBoxModelObject(prev_in_flow));
+  ToLayoutBlockFlow(next_in_flow)->DeleteLineBoxTree();
+  next_in_flow->Destroy();
+  intrinsic_size_along_main_axis_.erase(next_in_flow);
+}
+
 void LayoutFlexibleBox::RemoveChild(LayoutObject* child) {
+  if (!DocumentBeingDestroyed())
+    MergeAnonymousFlexItems(child);
+
   LayoutBlock::RemoveChild(child);
   intrinsic_size_along_main_axis_.erase(child);
 }
@@ -1092,9 +1114,11 @@ LayoutUnit LayoutFlexibleBox::CrossSizeForPercentageResolution(
 
   // Here we implement https://drafts.csswg.org/css-flexbox/#algo-stretch
   if (HasOrthogonalFlow(child) && child.HasOverrideLogicalContentWidth())
-    return child.OverrideLogicalContentWidth();
-  if (!HasOrthogonalFlow(child) && child.HasOverrideLogicalContentHeight())
-    return child.OverrideLogicalContentHeight();
+    return child.OverrideLogicalContentWidth() - child.ScrollbarLogicalWidth();
+  if (!HasOrthogonalFlow(child) && child.HasOverrideLogicalContentHeight()) {
+    return child.OverrideLogicalContentHeight() -
+           child.ScrollbarLogicalHeight();
+  }
 
   // We don't currently implement the optimization from
   // https://drafts.csswg.org/css-flexbox/#definite-sizes case 1. While that
@@ -1124,10 +1148,12 @@ LayoutUnit LayoutFlexibleBox::MainSizeForPercentageResolution(
 
   if (HasOrthogonalFlow(child))
     return child.HasOverrideLogicalContentHeight()
-               ? child.OverrideLogicalContentHeight()
+               ? child.OverrideLogicalContentHeight() -
+                     child.ScrollbarLogicalHeight()
                : LayoutUnit(-1);
   return child.HasOverrideLogicalContentWidth()
-             ? child.OverrideLogicalContentWidth()
+             ? child.OverrideLogicalContentWidth() -
+                   child.ScrollbarLogicalWidth()
              : LayoutUnit(-1);
 }
 

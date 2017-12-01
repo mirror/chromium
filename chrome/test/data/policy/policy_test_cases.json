@@ -30,6 +30,12 @@
     "indicator_selector": "A CSS selector that locates the controlled setting indicator directly affected by the policy. This is appended to the selector 'span.controlled-setting-indicator'."
   },
 
+  "UnsafelyTreatInsecureOriginAsSecure": {
+    "os": ["win", "linux", "max", "chromeos", "android"],
+    "test_policy": { "UnsafelyTreatInsecureOriginAsSecure": ["http://example.com/"] },
+    "pref_mappings": [ { "pref": "unsafely_treat_insecure_origin_as_securex" } ]
+  },
+
   "HomepageLocation": {
     "os": ["win", "linux", "mac", "chromeos"],
     "can_be_recommended": true,
@@ -870,6 +876,34 @@
     "test_policy": { "PromptForDownloadLocation": false },
     "pref_mappings": [
       { "pref": "download.prompt_for_download" }
+    ]
+  },
+
+  "IsolateOrigins": {
+    "os": ["win", "linux", "mac", "chromeos"],
+    "test_policy": { "IsolateOrigins": "" },
+    "note": "There is a pref behind this setting, but due to the fact that tests override the default with a command-line flag on some trybots, this setting cannot be verified with the common test."
+  },
+
+  "SitePerProcess": {
+    "os": ["win", "linux", "mac", "chromeos"],
+    "test_policy": { "SitePerProcess": false },
+    "note": "There is a pref behind this setting, but due to the fact that tests override the default with a command-line flag on some trybots, this setting cannot be verified with the common test."
+  },
+
+  "DefaultDownloadDirectory": {
+    "os": ["win", "linux", "mac", "chbromeos"],
+    "test_policy": { "DefaultDownloadDirectory": "${user_home}/test-downloads" },
+    "can_be_recommended": true,
+    "pref_mappings": [
+      { "pref": "download.default_directory",
+        "check_for_mandatory": false,
+        "check_for_recommended": true
+      },
+      { "pref": "savefile.default_directory",
+        "check_for_mandatory": false,
+        "check_for_recommended": true
+      }
     ]
   },
 
@@ -1733,6 +1767,14 @@
           { "policy": { "AllowFileSelectionDialogs": false } }
         ]
       }
+    ]
+  },
+
+  "SecurityKeyPermitAttestation": {
+    "os": ["win", "linux", "mac", "chromeos"],
+    "test_policy": { "SecurityKeyPermitAttestation": ["https://example.com", "example.net"] },
+    "pref_mappings": [
+      { "pref": "securitykey.permit_attestation" }
     ]
   },
 

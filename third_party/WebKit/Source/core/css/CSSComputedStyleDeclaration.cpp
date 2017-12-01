@@ -191,9 +191,9 @@ void LogUnimplementedPropertyID(CSSPropertyID property_id) {
 
 }  // namespace
 
-const Vector<CSSPropertyID>&
+const Vector<const CSSProperty*>&
 CSSComputedStyleDeclaration::ComputableProperties() {
-  DEFINE_STATIC_LOCAL(Vector<CSSPropertyID>, properties, ());
+  DEFINE_STATIC_LOCAL(Vector<const CSSProperty*>, properties, ());
   if (properties.IsEmpty()) {
     CSSProperty::FilterEnabledCSSPropertiesIntoVector(
         kComputedPropertyArray, WTF_ARRAY_LENGTH(kComputedPropertyArray),
@@ -211,18 +211,18 @@ CSSComputedStyleDeclaration::CSSComputedStyleDeclaration(
           CSSSelector::ParsePseudoId(pseudo_element_name)),
       allow_visited_style_(allow_visited_style) {}
 
-CSSComputedStyleDeclaration::~CSSComputedStyleDeclaration() {}
+CSSComputedStyleDeclaration::~CSSComputedStyleDeclaration() = default;
 
 String CSSComputedStyleDeclaration::cssText() const {
   StringBuilder result;
-  const Vector<CSSPropertyID>& properties = ComputableProperties();
+  static const Vector<const CSSProperty*>& properties = ComputableProperties();
 
   for (unsigned i = 0; i < properties.size(); i++) {
     if (i)
       result.Append(' ');
-    result.Append(getPropertyName(properties[i]));
+    result.Append(getPropertyName(properties[i]->PropertyID()));
     result.Append(": ");
-    result.Append(GetPropertyValue(properties[i]));
+    result.Append(GetPropertyValue(properties[i]->PropertyID()));
     result.Append(';');
   }
 
@@ -358,8 +358,7 @@ const CSSValue* CSSComputedStyleDeclaration::GetPropertyCSSValue(
     return nullptr;
 
   const CSSValue* value = ComputedStyleCSSValueMapping::Get(
-      property_class.PropertyID(), *style, layout_object, styled_node,
-      allow_visited_style_);
+      property_class, *style, layout_object, styled_node, allow_visited_style_);
   if (value)
     return value;
 
@@ -385,7 +384,7 @@ String CSSComputedStyleDeclaration::item(unsigned i) const {
   if (i >= length())
     return "";
 
-  return getPropertyNameString(ComputableProperties()[i]);
+  return getPropertyNameString(ComputableProperties()[i]->PropertyID());
 }
 
 bool CSSComputedStyleDeclaration::CssPropertyMatches(
@@ -416,11 +415,11 @@ MutableCSSPropertyValueSet* CSSComputedStyleDeclaration::CopyProperties()
 }
 
 MutableCSSPropertyValueSet* CSSComputedStyleDeclaration::CopyPropertiesInSet(
-    const Vector<CSSPropertyID>& properties) const {
+    const Vector<const CSSProperty*>& properties) const {
   HeapVector<CSSPropertyValue, 256> list;
   list.ReserveInitialCapacity(properties.size());
   for (unsigned i = 0; i < properties.size(); ++i) {
-    const CSSProperty& property = CSSProperty::Get(properties[i]);
+    const CSSProperty& property = *properties[i];
     const CSSValue* value = GetPropertyCSSValue(property);
     if (value)
       list.push_back(CSSPropertyValue(property, *value, false));

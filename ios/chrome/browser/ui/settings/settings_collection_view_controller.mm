@@ -113,6 +113,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
   ItemTypeLogJavascript,
   ItemTypeShowAutofillTypePredictions,
   ItemTypeCellCatalog,
+  ItemTypeArticlesForYou,
 };
 
 #if CHROMIUM_BUILD && !defined(NDEBUG)
@@ -183,8 +184,12 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
   BOOL _hasRecordedSigninImpression;
   // PrefBackedBoolean for ShowMemoryDebugTools switch.
   PrefBackedBoolean* _showMemoryDebugToolsEnabled;
+  // PrefBackedBoolean for ArticlesForYou switch.
+  PrefBackedBoolean* _articlesEnabled;
   // The item related to the switch for the show suggestions setting.
   CollectionViewSwitchItem* _showMemoryDebugToolsItem;
+  // The item related to the switch for the show suggestions setting.
+  CollectionViewSwitchItem* _articlesForYouItem;
 
   // Mediator to configure the sign-in promo cell. Also used to received
   // identity update notifications.
@@ -267,6 +272,11 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
 
     PrefService* prefService = _browserState->GetPrefs();
 
+    _articlesEnabled = [[PrefBackedBoolean alloc]
+        initWithPrefService:prefService
+                   prefName:prefs::kArticlesForYouEnabled];
+    [_articlesEnabled setObserver:self];
+
     _voiceLocaleCode.Init(prefs::kVoiceSearchLocale, prefService);
 
     _prefChangeRegistrar.Init(prefService);
@@ -301,11 +311,7 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
   _notificationBridge.reset();
   _identityServiceObserver.reset();
   [_showMemoryDebugToolsEnabled setObserver:nil];
-}
-
-- (void)signinPromoCloseButtonAction {
-  [_signinPromoViewMediator signinPromoViewClosed];
-  [self reloadData];
+  [_articlesEnabled setObserver:nil];
 }
 
 #pragma mark View lifecycle
@@ -330,13 +336,6 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
   AuthenticationService* authService =
       AuthenticationServiceFactory::GetForBrowserState(_browserState);
   if (!authService->IsAuthenticated()) {
-    if (!_hasRecordedSigninImpression) {
-      // Once the Settings are open, this button impression will at most be
-      // recorded once until they are closed.
-      base::RecordAction(
-          base::UserMetricsAction("Signin_Impression_FromSettings"));
-      _hasRecordedSigninImpression = YES;
-    }
     if ([SigninPromoViewMediator
             shouldDisplaySigninPromoViewWithAccessPoint:
                 signin_metrics::AccessPoint::ACCESS_POINT_SETTINGS
@@ -356,6 +355,7 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
     [model addItem:[self signInTextItem]
         toSectionWithIdentifier:SectionIdentifierSignIn];
   } else {
+    _hasRecordedSigninImpression = NO;
     [_signinPromoViewMediator signinPromoViewRemoved];
     _signinPromoViewMediator = nil;
     [model addItem:[self accountCellItem]
@@ -389,6 +389,9 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
   [model addItem:[self voiceSearchDetailItem]
       toSectionWithIdentifier:SectionIdentifierAdvanced];
   [model addItem:[self privacyDetailItem]
+      toSectionWithIdentifier:SectionIdentifierAdvanced];
+  _articlesForYouItem = [self articlesForYouSwitchItem];
+  [model addItem:_articlesForYouItem
       toSectionWithIdentifier:SectionIdentifierAdvanced];
   [model addItem:[self contentSettingsDetailItem]
       toSectionWithIdentifier:SectionIdentifierAdvanced];
@@ -439,6 +442,13 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
         [_signinPromoViewMediator createConfigurator];
     [_signinPromoViewMediator signinPromoViewVisible];
     return signinPromoItem;
+  }
+  if (!_hasRecordedSigninImpression) {
+    // Once the Settings are open, this button impression will at most be
+    // recorded once until they are closed.
+    base::RecordAction(
+        base::UserMetricsAction("Signin_Impression_FromSettings"));
+    _hasRecordedSigninImpression = YES;
   }
   AccountSignInItem* signInTextItem =
       [[AccountSignInItem alloc] initWithType:ItemTypeSignInButton];
@@ -559,6 +569,17 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
 
   return showMemoryDebugSwitchItem;
 }
+
+- (CollectionViewSwitchItem*)articlesForYouSwitchItem {
+  CollectionViewSwitchItem* articlesForYouSwitchItem =
+      [self switchItemWithType:ItemTypeArticlesForYou
+                         title:l10n_util::GetNSString(
+                                   IDS_IOS_CONTENT_SUGGESTIONS_SETTING_TITLE)
+               withDefaultsKey:nil];
+  articlesForYouSwitchItem.on = [_articlesEnabled value];
+
+  return articlesForYouSwitchItem;
+}
 #if CHROMIUM_BUILD && !defined(NDEBUG)
 
 - (CollectionViewSwitchItem*)viewSourceSwitchItem {
@@ -669,14 +690,18 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
                       forControlEvents:UIControlEventValueChanged];
       break;
     }
+    case ItemTypeArticlesForYou: {
+      CollectionViewSwitchCell* switchCell =
+          base::mac::ObjCCastStrict<CollectionViewSwitchCell>(cell);
+      [switchCell.switchView addTarget:self
+                                action:@selector(articlesForYouSwitchToggled:)
+                      forControlEvents:UIControlEventValueChanged];
+      break;
+    }
     case ItemTypeSigninPromo: {
       SigninPromoCell* signinPromoCell =
           base::mac::ObjCCast<SigninPromoCell>(cell);
       signinPromoCell.signinPromoView.delegate = _signinPromoViewMediator;
-      __weak SettingsCollectionViewController* weakSelf = self;
-      signinPromoCell.signinPromoView.closeButtonAction = ^() {
-        [weakSelf signinPromoCloseButtonAction];
-      };
       break;
     }
     case ItemTypeViewSource: {
@@ -858,6 +883,20 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
   BOOL newSwitchValue = sender.isOn;
   switchItem.on = newSwitchValue;
   [_showMemoryDebugToolsEnabled setValue:newSwitchValue];
+}
+
+- (void)articlesForYouSwitchToggled:(UISwitch*)sender {
+  NSIndexPath* switchPath =
+      [self.collectionViewModel indexPathForItemType:ItemTypeArticlesForYou
+                                   sectionIdentifier:SectionIdentifierAdvanced];
+
+  CollectionViewSwitchItem* switchItem =
+      base::mac::ObjCCastStrict<CollectionViewSwitchItem>(
+          [self.collectionViewModel itemAtIndexPath:switchPath]);
+
+  BOOL newSwitchValue = sender.isOn;
+  switchItem.on = newSwitchValue;
+  [_articlesEnabled setValue:newSwitchValue];
 }
 
 #if CHROMIUM_BUILD && !defined(NDEBUG)
@@ -1050,9 +1089,9 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
 - (void)settingsWillBeDismissed {
   DCHECK(!_settingsHasBeenDismissed);
   _settingsHasBeenDismissed = YES;
+  [self.signinInteractionCoordinator cancel];
   [_signinPromoViewMediator signinPromoViewRemoved];
   _signinPromoViewMediator = nil;
-  [self.signinInteractionCoordinator cancel];
   [self stopBrowserStateServiceObservers];
 }
 
@@ -1112,12 +1151,17 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
 #pragma mark - BooleanObserver
 
 - (void)booleanDidChange:(id<ObservableBoolean>)observableBoolean {
-  DCHECK_EQ(observableBoolean, _showMemoryDebugToolsEnabled);
-  // Update the Item.
-  _showMemoryDebugToolsItem.on = [_showMemoryDebugToolsEnabled value];
-
-  // Update the Cell.
-  [self reconfigureCellsForItems:@[ _showMemoryDebugToolsItem ]];
+  if (observableBoolean == _showMemoryDebugToolsEnabled) {
+    // Update the Item.
+    _showMemoryDebugToolsItem.on = [_showMemoryDebugToolsEnabled value];
+    // Update the Cell.
+    [self reconfigureCellsForItems:@[ _showMemoryDebugToolsItem ]];
+  } else if (observableBoolean == _articlesEnabled) {
+    _articlesForYouItem.on = [_articlesEnabled value];
+    [self reconfigureCellsForItems:@[ _articlesForYouItem ]];
+  } else {
+    NOTREACHED();
+  }
 }
 
 #pragma mark - PrefObserverDelegate
@@ -1162,20 +1206,7 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
 - (void)configureSigninPromoWithConfigurator:
             (SigninPromoViewConfigurator*)configurator
                              identityChanged:(BOOL)identityChanged {
-  if (self.signinInteractionCoordinator.isActive) {
-    // When sign-in is started in a cold state (no default account), the sign-in
-    // interaction coordinator does the sign-in and then asks for sync
-    // authorization. If the user cancels this operation, the coordinator
-    // signs-out from this new account, and then the sign in UI disappears while
-    // removing the new account asynchronously.
-    // This leads to an UI glitch. The sign in UI disappears before the newly
-    // added account is removed. The user can see the sign-in promo in warm
-    // state quickly before being replaced by the cold state sign-in promo. To
-    // avoid this UI glitch, all notifications from the mediator should be
-    // ignored, while the sign-in is in progress to avoid showing the warm
-    // state.
-    return;
-  }
+  DCHECK(!self.signinInteractionCoordinator.isActive);
   if (![self.collectionViewModel hasItemForItemType:ItemTypeSigninPromo
                                   sectionIdentifier:SectionIdentifierSignIn]) {
     return;
@@ -1202,6 +1233,11 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
   [self showSignInWithIdentity:identity
                    promoAction:promoAction
                     completion:completion];
+}
+
+- (void)signinPromoViewMediatorCloseButtonWasTapped:
+    (SigninPromoViewMediator*)mediator {
+  [self reloadData];
 }
 
 @end

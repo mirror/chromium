@@ -85,6 +85,7 @@
 #include "chrome/browser/chromeos/policy/device_local_account.h"
 #include "chrome/browser/chromeos/power/freezer_cgroup_process_manager.h"
 #include "chrome/browser/chromeos/power/idle_action_warning_observer.h"
+#include "chrome/browser/chromeos/power/ml/user_activity_logging_controller.h"
 #include "chrome/browser/chromeos/power/power_data_collector.h"
 #include "chrome/browser/chromeos/power/power_metrics_reporter.h"
 #include "chrome/browser/chromeos/power/power_prefs.h"
@@ -738,6 +739,9 @@ void ChromeBrowserMainPartsChromeos::PreMainMessageLoopRun() {
   chromeos::ResourceReporter::GetInstance()->StartMonitoring(
       task_manager::TaskManagerInterface::GetTaskManager());
 
+  if (!base::FeatureList::IsEnabled(features::kNativeNotifications))
+    notification_client_.reset(NotificationPlatformBridge::Create());
+
   ChromeBrowserMainPartsLinux::PreMainMessageLoopRun();
 }
 
@@ -885,9 +889,6 @@ void ChromeBrowserMainPartsChromeos::PreProfileInit() {
   // header of new-style notification.
   message_center::MessageCenter::Get()->SetProductOSName(
       l10n_util::GetStringUTF16(IDS_SHORT_PRODUCT_OS_NAME));
-
-  if (!base::FeatureList::IsEnabled(features::kNativeNotifications))
-    notification_client_.reset(NotificationPlatformBridge::Create());
 
   // Register all installed components for regular update.
   base::PostTaskWithTraitsAndReplyWithResult(
@@ -1095,6 +1096,11 @@ void ChromeBrowserMainPartsChromeos::PostBrowserStart() {
     night_light_client_->Start();
   }
 
+  if (base::FeatureList::IsEnabled(features::kUserActivityEventLogging)) {
+    user_activity_logging_controller_ =
+        std::make_unique<power::ml::UserActivityLoggingController>();
+  }
+
   ChromeBrowserMainPartsLinux::PostBrowserStart();
 }
 
@@ -1153,6 +1159,7 @@ void ChromeBrowserMainPartsChromeos::PostMainMessageLoopRun() {
   keyboard_event_rewriters_.reset();
   low_disk_notification_.reset();
   chrome_launcher_controller_initializer_.reset();
+  user_activity_logging_controller_.reset();
 
   // Detach D-Bus clients before DBusThreadManager is shut down.
   idle_action_warning_observer_.reset();
@@ -1192,6 +1199,9 @@ void ChromeBrowserMainPartsChromeos::PostMainMessageLoopRun() {
   // is called.
   g_browser_process->platform_part()->browser_policy_connector_chromeos()->
       PreShutdown();
+
+  // Close the notification client before destroying the profile manager.
+  notification_client_.reset();
 
   // NOTE: Closes ash and destroys ash::Shell.
   ChromeBrowserMainPartsLinux::PostMainMessageLoopRun();

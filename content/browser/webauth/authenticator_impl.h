@@ -16,7 +16,7 @@
 #include "base/timer/timer.h"
 #include "content/browser/webauth/register_response_data.h"
 #include "content/common/content_export.h"
-#include "mojo/public/cpp/bindings/binding.h"
+#include "mojo/public/cpp/bindings/binding_set.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom.h"
 #include "url/origin.h"
@@ -33,21 +33,25 @@ class RenderFrameHost;
 // Implementation of the public Authenticator interface.
 class CONTENT_EXPORT AuthenticatorImpl : public webauth::mojom::Authenticator {
  public:
-  static void Create(RenderFrameHost* render_frame_host,
-                     webauth::mojom::AuthenticatorRequest request);
-  AuthenticatorImpl(RenderFrameHost* render_frame_host);
+  explicit AuthenticatorImpl(RenderFrameHost* render_frame_host);
   ~AuthenticatorImpl() override;
+
+  // Creates a binding between this object and |request|. Note that a
+  // AuthenticatorImpl instance can be bound to multiple requests (as happens in
+  // the case of simultaneous starting and finishing operations).
+  void Bind(webauth::mojom::AuthenticatorRequest request);
 
  private:
   // mojom:Authenticator
-  void MakeCredential(webauth::mojom::MakeCredentialOptionsPtr options,
+  void MakeCredential(webauth::mojom::MakePublicKeyCredentialOptionsPtr options,
                       MakeCredentialCallback callback) override;
 
   // Callback to handle the async response from a U2fDevice.
   void OnDeviceResponse(MakeCredentialCallback callback,
                         std::unique_ptr<CollectedClientData> client_data,
                         device::U2fReturnCode status_code,
-                        const std::vector<uint8_t>& data);
+                        const std::vector<uint8_t>& data,
+                        const std::vector<uint8_t>& key_handle);
 
   // Runs when timer expires and cancels all issued requests to a U2fDevice.
   void OnTimeout(
@@ -55,11 +59,11 @@ class CONTENT_EXPORT AuthenticatorImpl : public webauth::mojom::Authenticator {
                               webauth::mojom::PublicKeyCredentialInfoPtr)>
           callback);
 
+  // Owns pipes to this Authenticator from |render_frame_host_|.
+  mojo::BindingSet<webauth::mojom::Authenticator> bindings_;
   std::unique_ptr<device::U2fRequest> u2f_request_;
   base::OneShotTimer timer_;
-
   RenderFrameHost* render_frame_host_;
-
   base::WeakPtrFactory<AuthenticatorImpl> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(AuthenticatorImpl);

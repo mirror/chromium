@@ -86,7 +86,6 @@ class WebView : protected WebWidget {
   using WebWidget::ThemeChanged;
   using WebWidget::HandleInputEvent;
   using WebWidget::SetCursorVisibilityState;
-  using WebWidget::HasTouchEventHandlersAt;
   using WebWidget::ApplyViewportDeltas;
   using WebWidget::MouseCaptureLost;
   using WebWidget::SetFocus;
@@ -179,12 +178,9 @@ class WebView : protected WebWidget {
   // send it.
   virtual void ClearFocusedElement() = 0;
 
-  // If it is editable, scrolls the element currently in focus into |rect|,
-  // where |rect| is in viewport space.
+  // If it is editable, scrolls the element currently in focus into view.
   // Returns false if there is currently no currently focused element.
-  virtual bool ScrollFocusedEditableElementIntoRect(const WebRect&) {
-    return false;
-  }
+  virtual bool ScrollFocusedEditableElementIntoView() { return false; }
 
   // Smooth scroll the root layer to |targetX|, |targetY| in |durationMs|.
   virtual void SmoothScroll(int target_x, int target_y, long duration_ms) {}

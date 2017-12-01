@@ -50,9 +50,9 @@ class WebGraphicsContext3DProviderForTests
     return gpu_feature_info_;
   }
   viz::GLHelper* GetGLHelper() override { return nullptr; }
-  void SetLostContextCallback(const base::Closure&) {}
+  void SetLostContextCallback(const base::Closure&) override {}
   void SetErrorMessageCallback(
-      const base::Callback<void(const char*, int32_t id)>&) {}
+      base::RepeatingCallback<void(const char*, int32_t id)>) {}
   void SignalQuery(uint32_t, base::OnceClosure) override {}
 
  private:
@@ -438,7 +438,7 @@ class DrawingBufferForTests : public DrawingBuffer {
             false /* wantStencil */,
             DrawingBuffer::kAllowChromiumImage /* ChromiumImageUsage */,
             CanvasColorParams()),
-        live_(0) {}
+        live_(nullptr) {}
 
   ~DrawingBufferForTests() override {
     if (live_)

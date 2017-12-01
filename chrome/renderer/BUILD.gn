@@ -89,8 +89,6 @@ static_library("renderer") {
     "prerender/prerenderer_client.h",
     "sandbox_status_extension_android.cc",
     "sandbox_status_extension_android.h",
-    "searchbox/search_bouncer.cc",
-    "searchbox/search_bouncer.h",
     "security_filter_peer.cc",
     "security_filter_peer.h",
     "tts_dispatcher.cc",
@@ -401,6 +399,8 @@ static_library("renderer") {
 
   if (!is_android) {
     sources += [
+      "searchbox/search_bouncer.cc",
+      "searchbox/search_bouncer.h",
       "searchbox/searchbox.cc",
       "searchbox/searchbox.h",
       "searchbox/searchbox_extension.cc",
@@ -430,10 +430,6 @@ static_library("test_support") {
     "//testing/gmock",
     "//testing/gtest",
   ]
-
-  if (enable_print_preview) {
-    deps += [ "//chrome/service" ]
-  }
 
   if (enable_webrtc) {
     sources += [

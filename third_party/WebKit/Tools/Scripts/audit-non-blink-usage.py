@@ -31,6 +31,7 @@ _CONFIG = [
 
             # //base constructs that are allowed everywhere
             'base::AdoptRef',
+            'base::MakeRefCounted',
             'base::Optional',
             'base::SingleThreadTaskRunner',
             'base::UnguessableToken',
@@ -39,6 +40,9 @@ _CONFIG = [
             'base::nullopt',
             'base::span',
             'logging::GetVlogLevel',
+
+            # Debugging helpers from //base/debug are allowed everywhere.
+            'base::debug::.+',
 
             # Standalone utility libraries that only depend on //base
             'skia::.+',
@@ -121,6 +125,17 @@ _CONFIG = [
         # base::RefCounted should still be explicitly blocked, since
         # WTF::RefCounted should be used instead.
         'allowed': ['(?!base::RefCounted).+'],
+    },
+    {
+        'paths': [
+            'third_party/WebKit/Source/core/exported/',
+            'third_party/WebKit/Source/modules/exported/',
+        ],
+        'allowed': [
+            'base::Time',
+            'base::TimeTicks',
+            'base::TimeDelta',
+        ],
     },
 ]
 

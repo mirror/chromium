@@ -4,6 +4,7 @@
 
 #include "chrome/browser/vr/elements/ui_element_name.h"
 
+#include "base/logging.h"
 #include "base/macros.h"
 
 namespace vr {
@@ -30,6 +31,13 @@ static const char* g_ui_element_name_strings[] = {
     "kCeiling",
     "kFloor",
     "kUrlBar",
+    "kOmniboxRoot",
+    "kOmniboxContainer",
+    "kOmniboxTextField",
+    "kOmniboxClearTextFieldButton",
+    "kOmniboxCloseButton",
+    "kOmniboxSuggestions",
+    "k2dBrowsingVisibiltyControlForOmnibox",
     "kIndicatorLayout",
     "kAudioCaptureIndicator",
     "kVideoCaptureIndicator",
@@ -84,18 +92,17 @@ static const char* g_ui_element_name_strings[] = {
     "kSpeechRecognitionListeningInnerCircle",
     "kSpeechRecognitionListeningMicrophoneIcon",
     "kSpeechRecognitionListeningCloseButton",
-    "kSuggestionLayout",
-    "kNumUiElementNames",
 };
 
 static_assert(
-    kNumUiElementNames + 1 == arraysize(g_ui_element_name_strings),
+    kNumUiElementNames == arraysize(g_ui_element_name_strings),
     "Mismatch between the kUiElementName enum and the corresponding array "
     "of strings.");
 
 }  // namespace
 
 std::string UiElementNameToString(UiElementName name) {
+  DCHECK_GT(kNumUiElementNames, name);
   return g_ui_element_name_strings[name];
 }
 

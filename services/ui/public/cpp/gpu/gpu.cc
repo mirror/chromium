@@ -12,7 +12,6 @@
 #include "build/build_config.h"
 #include "gpu/command_buffer/common/scheduling_priority.h"
 #include "mojo/public/cpp/bindings/sync_call_restrictions.h"
-#include "mojo/public/cpp/system/platform_handle.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/ui/public/cpp/gpu/client_gpu_memory_buffer_manager.h"
 #include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
@@ -182,12 +181,7 @@ std::unique_ptr<Gpu> Gpu::Create(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
   GpuPtrFactory factory =
       base::BindRepeating(&DefaultFactory, connector, service_name);
-  auto gpu =
-      base::WrapUnique(new Gpu(std::move(factory), std::move(task_runner)));
-#if defined(OS_CHROMEOS)
-  gpu->InitializeArc(connector, service_name);
-#endif  // defined(OS_CHROMEOS)
-  return gpu;
+  return base::WrapUnique(new Gpu(std::move(factory), std::move(task_runner)));
 }
 
 scoped_refptr<viz::ContextProvider> Gpu::CreateContextProvider(
@@ -214,28 +208,8 @@ scoped_refptr<viz::ContextProvider> Gpu::CreateContextProvider(
       shared_context_provider, command_buffer_metrics::MUS_CLIENT_CONTEXT);
 }
 
-#if defined(OS_CHROMEOS)
-void Gpu::CreateArcVideoDecodeAccelerator(
-    arc::mojom::VideoDecodeAcceleratorRequest vda_request) {
-  DCHECK(main_task_runner_->BelongsToCurrentThread());
-  arc_->CreateVideoDecodeAccelerator(std::move(vda_request));
-}
-
-void Gpu::CreateArcVideoEncodeAccelerator(
-    arc::mojom::VideoEncodeAcceleratorRequest vea_request) {
-  DCHECK(main_task_runner_->BelongsToCurrentThread());
-  arc_->CreateVideoEncodeAccelerator(std::move(vea_request));
-}
-
-void Gpu::CreateArcProtectedBufferManager(
-    arc::mojom::ProtectedBufferManagerRequest pbm_request) {
-  DCHECK(main_task_runner_->BelongsToCurrentThread());
-  arc_->CreateProtectedBufferManager(std::move(pbm_request));
-}
-#endif  // OS_CHROMEOS
-
 void Gpu::CreateJpegDecodeAccelerator(
-    media::mojom::GpuJpegDecodeAcceleratorRequest jda_request) {
+    media::mojom::JpegDecodeAcceleratorRequest jda_request) {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
   (*gpu_)->CreateJpegDecodeAccelerator(std::move(jda_request));
 }
@@ -337,31 +311,5 @@ void Gpu::OnEstablishedGpuChannel() {
 scoped_refptr<base::SingleThreadTaskRunner> Gpu::GetIOThreadTaskRunner() {
   return io_task_runner_;
 }
-
-std::unique_ptr<base::SharedMemory> Gpu::AllocateSharedMemory(size_t size) {
-  mojo::ScopedSharedBufferHandle handle =
-      mojo::SharedBufferHandle::Create(size);
-  if (!handle.is_valid())
-    return nullptr;
-
-  base::SharedMemoryHandle platform_handle;
-  size_t shared_memory_size;
-  bool readonly;
-  MojoResult result = mojo::UnwrapSharedMemoryHandle(
-      std::move(handle), &platform_handle, &shared_memory_size, &readonly);
-  if (result != MOJO_RESULT_OK)
-    return nullptr;
-  DCHECK_EQ(shared_memory_size, size);
-
-  return std::make_unique<base::SharedMemory>(platform_handle, readonly);
-}
-
-#if defined(OS_CHROMEOS)
-void Gpu::InitializeArc(service_manager::Connector* connector,
-                        const std::string& service_name) {
-  DCHECK(main_task_runner_->BelongsToCurrentThread());
-  connector->BindInterface(service_name, &arc_);
-}
-#endif  // defined(OS_CHROMEOS)
 
 }  // namespace ui

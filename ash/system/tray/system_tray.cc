@@ -9,6 +9,7 @@
 #include <memory>
 #include <vector>
 
+#include "ash/accessibility/accessibility_controller.h"
 #include "ash/login_status.h"
 #include "ash/metrics/user_metrics_recorder.h"
 #include "ash/public/cpp/ash_switches.h"
@@ -135,7 +136,7 @@ class CancelCastingDialog : public views::DialogDelegateView {
 class PaddingTrayItem : public SystemTrayItem {
  public:
   PaddingTrayItem() : SystemTrayItem(nullptr, UMA_NOT_RECORDED) {}
-  ~PaddingTrayItem() override {}
+  ~PaddingTrayItem() override = default;
 
   // SystemTrayItem:
   views::View* CreateTrayView(LoginStatus status) override {
@@ -621,7 +622,7 @@ bool SystemTray::ShouldEnableExtraKeyboardAccessibility() {
   // e.g. volume slider. Persistent system bubble is a bubble which is not
   // closed even if user clicks outside of the bubble.
   return system_bubble_ && !system_bubble_->is_persistent() &&
-         Shell::Get()->accessibility_delegate()->IsSpokenFeedbackEnabled();
+         Shell::Get()->accessibility_controller()->IsSpokenFeedbackEnabled();
 }
 
 void SystemTray::HideBubble(const TrayBubbleView* bubble_view) {

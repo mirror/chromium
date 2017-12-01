@@ -1089,7 +1089,7 @@ enum WebFeature {
   kSVGSMILPausing = 1506,
   kSVGSMILCurrentTime = 1507,
   kHTMLBodyElementOnSelectionChangeAttribute = 1508,
-  kForeignFetchInterception = 1509,
+  kForeignFetchInterception = 1509,  // Obsolete.
   kUsbGetDevices = 1519,
   kUsbRequestDevice = 1520,
   kUsbDeviceOpen = 1521,
@@ -1511,10 +1511,6 @@ enum WebFeature {
   kFieldEditInSecureContext = 1981,
   kFieldEditInNonSecureContext = 1982,
   kCredentialManagerGetMediationRequired = 1984,
-  kCredentialManagerIdName = 1985,
-  kCredentialManagerPasswordName = 1986,
-  kCredentialManagerAdditionalData = 1987,
-  kCredentialManagerCustomFetch = 1988,
   kNetInfoRtt = 1989,
   kNetInfoDownlink = 1990,
   kShapeDetection_BarcodeDetectorConstructor = 1991,
@@ -1767,6 +1763,13 @@ enum WebFeature {
   kV8MediaCapabilitiesInfo_Smooth_AttributeGetter = 2242,
   kV8MediaCapabilitiesInfo_PowerEfficient_AttributeGetter = 2243,
   kWindowEventInV0ShadowTree = 2244,
+  kHTMLAnchorElementDownloadInSandboxWithUserGesture = 2245,
+  kHTMLAnchorElementDownloadInSandboxWithoutUserGesture = 2246,
+  kWindowOpenRealmMismatch = 2247,
+  kGridRowTrackPercentIndefiniteHeight = 2248,
+  kVRGetDisplaysSupportsPresent = 2249,
+  kDuplicatedAttribute = 2250,
+  kDuplicatedAttributeForExecutedScript = 2251,
 
   // Add new features immediately above this line. Don't change assigned
   // numbers of any item, and don't reuse removed slots.

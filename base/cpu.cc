@@ -107,17 +107,14 @@ std::string* CpuInfoBrand() {
     std::string contents;
     ReadFileToString(FilePath("/proc/cpuinfo"), &contents);
     DCHECK(!contents.empty());
-    if (contents.empty()) {
-      return new std::string();
-    }
 
     std::istringstream iss(contents);
     std::string line;
     while (std::getline(iss, line)) {
-      if ((line.compare(0, strlen(kModelNamePrefix), kModelNamePrefix) == 0 ||
-           line.compare(0, strlen(kProcessorPrefix), kProcessorPrefix) == 0)) {
+      if (line.compare(0, strlen(kModelNamePrefix), kModelNamePrefix) == 0)
         return new std::string(line.substr(strlen(kModelNamePrefix)));
-      }
+      if (line.compare(0, strlen(kProcessorPrefix), kProcessorPrefix) == 0)
+        return new std::string(line.substr(strlen(kProcessorPrefix)));
     }
 
     return new std::string();

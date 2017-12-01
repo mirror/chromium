@@ -53,12 +53,8 @@ OffscreenCanvasFrameDispatcherImpl::OffscreenCanvasFrameDispatcherImpl(
 
     scoped_refptr<base::SingleThreadTaskRunner> task_runner;
     auto scheduler = blink::Platform::Current()->CurrentThread()->Scheduler();
-    if (scheduler) {
-      WebTaskRunner* web_task_runner = scheduler->CompositorTaskRunner();
-      if (web_task_runner) {
-        task_runner = web_task_runner->ToSingleThreadTaskRunner();
-      }
-    }
+    if (scheduler)
+      task_runner = scheduler->CompositorTaskRunner();
     viz::mojom::blink::CompositorFrameSinkClientPtr client;
     binding_.Bind(mojo::MakeRequest(&client), task_runner);
     provider->CreateCompositorFrameSink(frame_sink_id_, std::move(client),
@@ -205,7 +201,9 @@ void OffscreenCanvasFrameDispatcherImpl::DispatchFrame(
       // Case 3: canvas is not gpu-accelerated, but compositor is.
       commit_type = kCommitSoftwareCanvasGPUCompositing;
       offscreen_canvas_resource_provider_
-          ->SetTransferableResourceToSharedGPUContext(resource, image);
+          ->SetTransferableResourceToStaticBitmapImage(
+              resource, image->MakeAccelerated(
+                            SharedGpuContext::ContextProviderWrapper()));
     } else {
       // Case 4: both canvas and compositor are not gpu accelerated.
       commit_type = kCommitSoftwareCanvasSoftwareCompositing;

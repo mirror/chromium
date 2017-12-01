@@ -232,17 +232,17 @@ String MixedContentTypeForContextType(WebMixedContentContextType context_type) {
 
 String ResourcePriorityJSON(ResourceLoadPriority priority) {
   switch (priority) {
-    case kResourceLoadPriorityVeryLow:
+    case ResourceLoadPriority::kVeryLow:
       return protocol::Network::ResourcePriorityEnum::VeryLow;
-    case kResourceLoadPriorityLow:
+    case ResourceLoadPriority::kLow:
       return protocol::Network::ResourcePriorityEnum::Low;
-    case kResourceLoadPriorityMedium:
+    case ResourceLoadPriority::kMedium:
       return protocol::Network::ResourcePriorityEnum::Medium;
-    case kResourceLoadPriorityHigh:
+    case ResourceLoadPriority::kHigh:
       return protocol::Network::ResourcePriorityEnum::High;
-    case kResourceLoadPriorityVeryHigh:
+    case ResourceLoadPriority::kVeryHigh:
       return protocol::Network::ResourcePriorityEnum::VeryHigh;
-    case kResourceLoadPriorityUnresolved:
+    case ResourceLoadPriority::kUnresolved:
       break;
   }
   NOTREACHED();
@@ -976,7 +976,7 @@ void InspectorNetworkAgent::DelayedRemoveReplayXHR(XMLHttpRequest* xhr) {
     return;
   replay_xhrs_to_be_deleted_.insert(xhr);
   replay_xhrs_.erase(xhr);
-  remove_finished_replay_xhr_timer_.StartOneShot(0, BLINK_FROM_HERE);
+  remove_finished_replay_xhr_timer_.StartOneShot(TimeDelta(), BLINK_FROM_HERE);
 }
 
 void InspectorNetworkAgent::DidFailXHRLoading(ExecutionContext* context,

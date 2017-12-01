@@ -527,7 +527,10 @@ __gCrWeb['common'] = __gCrWeb.common;
    */
   __gCrWeb.common.removeQueryAndReferenceFromURL = function(url) {
     var parsed = new URL(url);
-    return parsed.origin + parsed.pathname;
+    // For some protocols (eg. data:, javascript:) URL.origin is "null" so
+    // URL.protocol is used instead.
+    return (parsed.origin !== "null" ? parsed.origin : parsed.protocol)
+      + parsed.pathname;
   };
 
   /**
@@ -545,7 +548,7 @@ __gCrWeb['common'] = __gCrWeb.common;
     if (!form)
       return '';
     var name = form.getAttribute('name');
-    if (name && name.length != 0) {
+    if (name && name.length != 0 && document.forms.namedItem(name) === form) {
       return name;
     }
     name = form.getAttribute('id');

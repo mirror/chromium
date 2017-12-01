@@ -160,18 +160,6 @@ split_static_library("ui") {
     "protocol_dialog_delegate.h",
     "proximity_auth/proximity_auth_error_bubble.h",
     "screen_capture_notification_ui.h",
-    "search/new_tab_page_interceptor_service.cc",
-    "search/new_tab_page_interceptor_service.h",
-    "search/new_tab_page_interceptor_service_factory.cc",
-    "search/new_tab_page_interceptor_service_factory.h",
-    "search/ntp_user_data_logger.cc",
-    "search/ntp_user_data_logger.h",
-    "search/search_ipc_router.cc",
-    "search/search_ipc_router.h",
-    "search/search_ipc_router_policy_impl.cc",
-    "search/search_ipc_router_policy_impl.h",
-    "search/search_tab_helper.cc",
-    "search/search_tab_helper.h",
     "search_engines/edit_search_engine_controller.cc",
     "search_engines/edit_search_engine_controller.h",
     "search_engines/keyword_editor_controller.cc",
@@ -375,7 +363,6 @@ split_static_library("ui") {
     "//chrome/browser/ui/webui/omnibox:mojo_bindings",
     "//chrome/browser/ui/webui/usb_internals:mojo_bindings",
     "//chrome/common",
-    "//chrome/common:search_mojom",
     "//chrome/common/net",
     "//chrome/installer/util:with_no_strings",
     "//components/about_ui",
@@ -530,6 +517,10 @@ split_static_library("ui") {
     "//v8:v8_version",
   ]
   allow_circular_includes_from = []
+
+  if (is_win || is_mac || is_desktop_linux || is_chromeos) {
+    deps += [ "//chrome/browser/ui/webui/discards:mojo_bindings" ]
+  }
 
   if (!is_fuchsia) {
     # TODO(crbug.com/753619): Enable crash reporting on Fuchsia.
@@ -859,6 +850,18 @@ split_static_library("ui") {
       "scoped_tabbed_browser_displayer.h",
       "search/instant_controller.cc",
       "search/instant_controller.h",
+      "search/new_tab_page_interceptor_service.cc",
+      "search/new_tab_page_interceptor_service.h",
+      "search/new_tab_page_interceptor_service_factory.cc",
+      "search/new_tab_page_interceptor_service_factory.h",
+      "search/ntp_user_data_logger.cc",
+      "search/ntp_user_data_logger.h",
+      "search/search_ipc_router.cc",
+      "search/search_ipc_router.h",
+      "search/search_ipc_router_policy_impl.cc",
+      "search/search_ipc_router_policy_impl.h",
+      "search/search_tab_helper.cc",
+      "search/search_tab_helper.h",
       "singleton_tabs.cc",
       "singleton_tabs.h",
       "startup/automation_infobar_delegate.cc",
@@ -896,10 +899,16 @@ split_static_library("ui") {
       "tabs/pinned_tab_service.h",
       "tabs/pinned_tab_service_factory.cc",
       "tabs/pinned_tab_service_factory.h",
+      "tabs/tab_activity_watcher.cc",
+      "tabs/tab_activity_watcher.h",
+      "tabs/tab_change_type.h",
       "tabs/tab_features.cc",
       "tabs/tab_features.h",
       "tabs/tab_menu_model.cc",
       "tabs/tab_menu_model.h",
+      "tabs/tab_metrics_logger.h",
+      "tabs/tab_metrics_logger_impl.cc",
+      "tabs/tab_metrics_logger_impl.h",
       "tabs/tab_strip_model.cc",
       "tabs/tab_strip_model.h",
       "tabs/tab_strip_model_delegate.h",
@@ -1137,7 +1146,9 @@ split_static_library("ui") {
       "//chrome/browser:theme_properties",
       "//chrome/browser/media/router",
       "//chrome/browser/profile_resetter:profile_reset_report_proto",
+      "//chrome/browser/ui/tabs:tab_metrics_event_proto",
       "//chrome/common:features",
+      "//chrome/common:search_mojom",
       "//components/feedback/proto",
       "//components/keep_alive_registry",
       "//components/network_session_configurator/common",
@@ -1150,6 +1161,7 @@ split_static_library("ui") {
       "//device/bluetooth",
       "//mash/public/interfaces",
       "//services/device/public/interfaces",
+      "//services/metrics/public/cpp:metrics_cpp",
       "//third_party/libaddressinput",
       "//third_party/libaddressinput:strings",
       "//ui/events",
@@ -1331,8 +1343,8 @@ split_static_library("ui") {
       "views/touch_uma/touch_uma_ash.cc",
       "webui/chromeos/bluetooth_dialog_localized_strings_provider.cc",
       "webui/chromeos/bluetooth_dialog_localized_strings_provider.h",
-      "webui/chromeos/bluetooth_pairing_ui.cc",
-      "webui/chromeos/bluetooth_pairing_ui.h",
+      "webui/chromeos/bluetooth_pairing_dialog.cc",
+      "webui/chromeos/bluetooth_pairing_dialog.h",
       "webui/chromeos/certificate_manager_dialog_ui.cc",
       "webui/chromeos/certificate_manager_dialog_ui.h",
       "webui/chromeos/cryptohome_ui.cc",
@@ -1460,8 +1472,6 @@ split_static_library("ui") {
       "webui/chromeos/system_web_dialog_delegate.h",
       "webui/chromeos/user_image_source.cc",
       "webui/chromeos/user_image_source.h",
-      "webui/chromeos/voice_search_ui.cc",
-      "webui/chromeos/voice_search_ui.h",
       "webui/extensions/chromeos/kiosk_apps_handler.cc",
       "webui/extensions/chromeos/kiosk_apps_handler.h",
       "webui/help/help_utils_chromeos.cc",
@@ -1547,6 +1557,13 @@ split_static_library("ui") {
     sources += [
       "webui/settings/printing_handler.cc",
       "webui/settings/printing_handler.h",
+    ]
+  }
+
+  if (is_win || is_mac || is_desktop_linux || is_chromeos) {
+    sources += [
+      "webui/discards/discards_ui.cc",
+      "webui/discards/discards_ui.h",
     ]
   }
 
@@ -2746,9 +2763,9 @@ split_static_library("ui") {
       "views/new_back_shortcut_bubble.h",
       "views/overlay/overlay_window_views.cc",
       "views/overlay/overlay_window_views.h",
-      "views/page_info/chosen_object_row.cc",
-      "views/page_info/chosen_object_row.h",
-      "views/page_info/chosen_object_row_observer.h",
+      "views/page_info/chosen_object_view.cc",
+      "views/page_info/chosen_object_view.h",
+      "views/page_info/chosen_object_view_observer.h",
       "views/page_info/non_accessible_image_view.cc",
       "views/page_info/non_accessible_image_view.h",
       "views/page_info/page_info_bubble_view.cc",
@@ -3059,6 +3076,8 @@ split_static_library("ui") {
         "views/tabs/stacked_tab_strip_layout.h",
         "views/tabs/tab.cc",
         "views/tabs/tab.h",
+        "views/tabs/tab_close_button.cc",
+        "views/tabs/tab_close_button.h",
         "views/tabs/tab_controller.h",
         "views/tabs/tab_drag_controller.cc",
         "views/tabs/tab_drag_controller.h",
@@ -3657,8 +3676,6 @@ static_library("test_support") {
   sources = [
     "cocoa/test/cocoa_test_helper.h",
     "cocoa/test/cocoa_test_helper.mm",
-    "cocoa/test/menu_test_observer.h",
-    "cocoa/test/menu_test_observer.mm",
     "cocoa/test/run_loop_testing.h",
     "cocoa/test/run_loop_testing.mm",
     "cocoa/test/scoped_force_rtl_mac.h",

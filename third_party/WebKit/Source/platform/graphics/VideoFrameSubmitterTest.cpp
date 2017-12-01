@@ -13,6 +13,7 @@
 #include "cc/layers/video_frame_provider.h"
 #include "cc/test/layer_test_common.h"
 #include "cc/test/test_context_provider.h"
+#include "cc/trees/layer_tree_settings.h"
 #include "cc/trees/task_runner_provider.h"
 #include "components/viz/test/fake_external_begin_frame_source.h"
 #include "media/base/video_frame.h"
@@ -80,13 +81,16 @@ class MockVideoFrameResourceProvider
             base::BindRepeating(
                 [](base::OnceCallback<void(viz::ContextProvider*)>) {}),
             nullptr,
-            nullptr) {
+            nullptr,
+            cc::LayerTreeSettings()) {
     blink::VideoFrameResourceProvider::Initialize(context_provider);
   }
   ~MockVideoFrameResourceProvider() = default;
 
   MOCK_METHOD1(Initialize, void(viz::ContextProvider*));
-  MOCK_METHOD1(AppendQuads, void(viz::RenderPass*));
+  MOCK_METHOD2(AppendQuads,
+               void(viz::RenderPass*, scoped_refptr<media::VideoFrame>));
+  MOCK_METHOD0(ReleaseFrameResources, void());
   MOCK_METHOD2(PrepareSendToParent,
                void(const cc::LayerTreeResourceProvider::ResourceIdArray&,
                     std::vector<viz::TransferableResource>*));
@@ -108,6 +112,11 @@ class VideoFrameSubmitterTest : public ::testing::Test {
         provider_(new StrictMock<MockVideoFrameProvider>()),
         context_provider_(cc::TestContextProvider::Create()) {
     context_provider_->BindToCurrentThread();
+  }
+
+  void SetUp() override {
+    MakeSubmitter();
+    scoped_task_environment_.RunUntilIdle();
   }
 
   void MakeSubmitter() {
@@ -181,8 +190,9 @@ TEST_F(VideoFrameSubmitterTest,
   EXPECT_CALL(*sink_, DoSubmitCompositorFrame(_, _));
   EXPECT_CALL(*provider_, PutCurrentFrame());
   EXPECT_CALL(*sink_, SetNeedsBeginFrame(false));
-  EXPECT_CALL(*resource_provider_, AppendQuads(_));
+  EXPECT_CALL(*resource_provider_, AppendQuads(_, _));
   EXPECT_CALL(*resource_provider_, PrepareSendToParent(_, _));
+  EXPECT_CALL(*resource_provider_, ReleaseFrameResources());
 
   submitter_->StopUsingProvider();
 
@@ -218,8 +228,9 @@ TEST_F(VideoFrameSubmitterTest, DidReceiveFrameSubmitsFrame) {
           gfx::Size(8, 8), base::TimeDelta())));
   EXPECT_CALL(*sink_, DoSubmitCompositorFrame(_, _));
   EXPECT_CALL(*provider_, PutCurrentFrame());
-  EXPECT_CALL(*resource_provider_, AppendQuads(_));
+  EXPECT_CALL(*resource_provider_, AppendQuads(_, _));
   EXPECT_CALL(*resource_provider_, PrepareSendToParent(_, _));
+  EXPECT_CALL(*resource_provider_, ReleaseFrameResources());
 
   submitter_->DidReceiveFrame();
   scoped_task_environment_.RunUntilIdle();
@@ -241,8 +252,9 @@ TEST_F(VideoFrameSubmitterTest, OnBeginFrameSubmitsFrame) {
           gfx::Size(8, 8), base::TimeDelta())));
   EXPECT_CALL(*sink_, DoSubmitCompositorFrame(_, _));
   EXPECT_CALL(*provider_, PutCurrentFrame());
-  EXPECT_CALL(*resource_provider_, AppendQuads(_));
+  EXPECT_CALL(*resource_provider_, AppendQuads(_, _));
   EXPECT_CALL(*resource_provider_, PrepareSendToParent(_, _));
+  EXPECT_CALL(*resource_provider_, ReleaseFrameResources());
 
   viz::BeginFrameArgs args = begin_frame_source_->CreateBeginFrameArgs(
       BEGINFRAME_FROM_HERE, now_src_.get());

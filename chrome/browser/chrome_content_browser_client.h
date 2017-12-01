@@ -27,6 +27,7 @@
 #include "services/service_manager/public/cpp/binder_registry.h"
 
 class ChromeContentBrowserClientParts;
+class PrefRegistrySimple;
 
 namespace base {
 class CommandLine;
@@ -65,6 +66,11 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
   ChromeContentBrowserClient();
   ~ChromeContentBrowserClient() override;
 
+  // TODO(https://crbug.com/787567): This file is about calls from content/ out
+  // to chrome/ to get values or notify about events, but both of these
+  // functions are from chrome/ to chrome/ and don't involve content/ at all.
+  // That suggests they belong somewhere else at the chrome/ layer.
+  static void RegisterLocalStatePrefs(PrefRegistrySimple* registry);
   static void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry);
 
   // Notification that the application locale has changed. This allows us to
@@ -92,6 +98,7 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
       bool* in_memory) override;
   content::WebContentsViewDelegate* GetWebContentsViewDelegate(
       content::WebContents* web_contents) override;
+  bool AllowGpuLaunchRetryOnIOThread() override;
   void RenderProcessWillLaunch(content::RenderProcessHost* host) override;
   GURL GetEffectiveURL(content::BrowserContext* browser_context,
                        const GURL& url,
@@ -164,6 +171,13 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
       const GURL& first_party,
       content::ResourceContext* context,
       const base::Callback<content::WebContents*(void)>& wc_getter) override;
+  bool AllowSharedWorker(const GURL& worker_url,
+                         const GURL& main_frame_url,
+                         const std::string& name,
+                         const url::Origin& constructor_origin,
+                         content::BrowserContext* context,
+                         int render_process_id,
+                         int render_frame_id) override;
   bool AllowGetCookie(const GURL& url,
                       const GURL& first_party,
                       const net::CookieList& cookie_list,
@@ -296,7 +310,7 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
 #endif
   void ExposeInterfacesToRenderer(
       service_manager::BinderRegistry* registry,
-      content::AssociatedInterfaceRegistry* associated_registry,
+      blink::AssociatedInterfaceRegistry* associated_registry,
       content::RenderProcessHost* render_process_host) override;
   void ExposeInterfacesToMediaService(
       service_manager::BinderRegistry* registry,

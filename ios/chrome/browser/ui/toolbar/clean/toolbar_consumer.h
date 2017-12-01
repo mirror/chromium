@@ -14,13 +14,17 @@
 // Updates the toolbar with the current back navigation state.
 - (void)setCanGoBack:(BOOL)canGoBack;
 // Updates the toolbar with the current loading state.
-- (void)setIsLoading:(BOOL)isLoading;
+- (void)setLoadingState:(BOOL)loading;
 // Updates the toolbar with the current progress of the loading WebState.
 - (void)setLoadingProgressFraction:(double)progress;
-// Sets whether the toolbar should display for a visible tab strip or not.
-- (void)setTabStripVisible:(BOOL)visible;
 // Updates the toolbar with the current number of total tabs.
 - (void)setTabCount:(int)tabCount;
+// Sets the bookmarks status of the page.
+- (void)setPageBookmarked:(BOOL)bookmarked;
+// Sets whether the voice search is enabled or not.
+- (void)setVoiceSearchEnabled:(BOOL)enabled;
+// Sets whether the share menu is enabled.
+- (void)setShareMenuEnabled:(BOOL)enabled;
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_TOOLBAR_CLEAN_TOOLBAR_CONSUMER_H_

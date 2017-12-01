@@ -294,21 +294,6 @@ crbug.com/763610 external/wpt/css/CSS2/cascade [ WontFix ]
 # The revert keyword is not yet supported.
 external/wpt/css/css-cascade/revert-val-001.html [ WontFix ]
 
-# Temporary disabling of most encrypted-media WPT tests while enabling
-# https only. Once the switch is complete (and the WPT tests renamed so they
-# run using https), they can be re-enabled.
-crbug.com/672605 external/wpt/encrypted-media/clearkey-check-initdata-type.https.html [ WontFix ]
-crbug.com/672605 external/wpt/encrypted-media/clearkey-events.https.html [ WontFix ]
-crbug.com/672605 external/wpt/encrypted-media/clearkey-generate-request-disallowed-input.https.html [ WontFix ]
-crbug.com/672605 external/wpt/encrypted-media/clearkey-invalid-license.https.html [ WontFix ]
-crbug.com/672605 external/wpt/encrypted-media/clearkey-keystatuses-multiple-sessions.https.html [ WontFix ]
-crbug.com/672605 external/wpt/encrypted-media/clearkey-keystatuses.https.html [ WontFix ]
-crbug.com/672605 external/wpt/encrypted-media/clearkey-not-callable-after-createsession.https.html [ WontFix ]
-crbug.com/672605 external/wpt/encrypted-media/idlharness.https.html [ WontFix ]
-
-# Note that all the encrypted-media tests below require https too but are
-# disabled for other reasons also.
-
 # These tests require a DRM system that is not available with content_shell.
 external/wpt/encrypted-media/drm-check-initdata-type.https.html [ WontFix ]
 external/wpt/encrypted-media/drm-events.https.html [ WontFix ]
@@ -403,9 +388,6 @@ external/wpt/encrypted-media/clearkey-mp4-update-disallowed-input.https.html [ W
 external/wpt/encrypted-media/clearkey-mp4-waiting-for-a-key.https.html [ WontFix ]
 external/wpt/encrypted-media/clearkey-events-session-closed-event.https.html [ WontFix ]
 external/wpt/encrypted-media/clearkey-update-non-ascii-input.https.html [ WontFix ]
-
-# This W3C EME test fetches a file, which is not allowed.
-#external/wpt/encrypted-media/idlharness.html [ WontFix ]
 
 # Below are manual tests from web-platform-tests without automation.
 external/wpt/2dcontext/drawing-paths-to-the-canvas/canvas_focus_drawFocusIfNeeded_AAPI_001-manual.html [ WontFix ]
@@ -1805,10 +1787,57 @@ external/wpt/css/css-transforms/translateY/svg-translatey-relative-002.html [ Wo
 external/wpt/css/css-transforms/ttwf-transform-skewx-001.html [ WontFix ]
 external/wpt/css/css-transforms/ttwf-transform-skewy-001.html [ WontFix ]
 external/wpt/css/css-transforms/ttwf-transform-translatex-001.html [ WontFix ]
+
+# The ic unit isn't supported. https://crbug.com/778495
 external/wpt/css/css-values/ic-unit-001.html [ WontFix ]
 external/wpt/css/css-values/ic-unit-002.html [ WontFix ]
 external/wpt/css/css-values/ic-unit-003.html [ WontFix ]
 external/wpt/css/css-values/ic-unit-004.html [ WontFix ]
+
+# lab() and lch() aren't supported.
+external/wpt/css/css-color/lab-001.html [ WontFix ]
+external/wpt/css/css-color/lab-002.html [ WontFix ]
+external/wpt/css/css-color/lab-003.html [ WontFix ]
+external/wpt/css/css-color/lab-004.html [ WontFix ]
+external/wpt/css/css-color/lab-005.html [ WontFix ]
+external/wpt/css/css-color/lab-006.html [ WontFix ]
+external/wpt/css/css-color/lab-007.html [ WontFix ]
+external/wpt/css/css-color/lch-001.html [ WontFix ]
+external/wpt/css/css-color/lch-002.html [ WontFix ]
+external/wpt/css/css-color/lch-003.html [ WontFix ]
+external/wpt/css/css-color/lch-004.html [ WontFix ]
+external/wpt/css/css-color/lch-005.html [ WontFix ]
+external/wpt/css/css-color/lch-006.html [ WontFix ]
+external/wpt/css/css-color/lch-007.html [ WontFix ]
+
+# New rgb() and rgba() syntax not supported. https://crbug.com/788707
+external/wpt/css/css-color/rgb-001.html [ WontFix ]
+external/wpt/css/css-color/rgb-002.html [ WontFix ]
+external/wpt/css/css-color/rgb-003.html [ WontFix ]
+external/wpt/css/css-color/rgb-004.html [ WontFix ]
+external/wpt/css/css-color/rgb-005.html [ WontFix ]
+external/wpt/css/css-color/rgb-006.html [ WontFix ]
+external/wpt/css/css-color/rgb-007.html [ WontFix ]
+external/wpt/css/css-color/rgb-008.html [ WontFix ]
+external/wpt/css/css-color/rgba-001.html [ WontFix ]
+external/wpt/css/css-color/rgba-002.html [ WontFix ]
+external/wpt/css/css-color/rgba-003.html [ WontFix ]
+external/wpt/css/css-color/rgba-004.html [ WontFix ]
+external/wpt/css/css-color/rgba-005.html [ WontFix ]
+external/wpt/css/css-color/rgba-006.html [ WontFix ]
+external/wpt/css/css-color/rgba-007.html [ WontFix ]
+external/wpt/css/css-color/rgba-008.html [ WontFix ]
+
+# Failures on the initial import of css-color. Test suite had many other bugs,
+# so these may also be incorrect tests, but probably some real issues too.
+external/wpt/css/css-color/t32-opacity-offscreen-multiple-boxes-1-c.xht [ WontFix ]
+external/wpt/css/css-color/t32-opacity-offscreen-multiple-boxes-2-c.xht [ WontFix ]
+external/wpt/css/css-color/t422-rgba-onscreen-b.xht [ WontFix ]
+external/wpt/css/css-color/t422-rgba-onscreen-multiple-boxes-c.xht [ WontFix ]
+external/wpt/css/css-color/t424-hsl-basic-a.xht [ WontFix ]
+external/wpt/css/css-color/t424-hsl-parsing-f.xht [ WontFix ]
+external/wpt/css/css-color/t425-hsla-onscreen-multiple-boxes-c.xht [ WontFix ]
+external/wpt/css/css-color/t425-hsla-parsing-f.xht [ WontFix ]
 
 # Requires --use-fake-ui-for-media-stream to run.
 external/wpt/mediacapture-streams/MediaStream-default-feature-policy.https.html [ WontFix ]

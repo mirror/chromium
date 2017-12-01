@@ -37,6 +37,7 @@
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameClient.h"
+#include "core/frame/Location.h"
 #include "core/frame/UseCounter.h"
 #include "core/frame/csp/CSPDirectiveList.h"
 #include "core/frame/csp/CSPSource.h"
@@ -103,21 +104,27 @@ bool ContentSecurityPolicy::IsNonceableElement(const Element* element) {
   // To prevent an attacker from hijacking an existing nonce via a dangling
   // markup injection, we walk through the attributes of each nonced script
   // element: if their names or values contain "<script" or "<style", we won't
-  // apply the nonce when loading script.
+  // apply the nonce when loading script. We'll also skip elements for which
+  // the HTML parser dropped attributes.
   //
   // See http://blog.innerht.ml/csp-2015/#danglingmarkupinjection for an example
   // of the kind of attack this is aimed at mitigating.
-  static const char kScriptString[] = "<script";
-  static const char kStyleString[] = "<style";
-  for (const Attribute& attr : element->Attributes()) {
-    AtomicString name = attr.LocalName().LowerASCII();
-    AtomicString value = attr.Value().LowerASCII();
-    if (name.Find(kScriptString) != WTF::kNotFound ||
-        name.Find(kStyleString) != WTF::kNotFound ||
-        value.Find(kScriptString) != WTF::kNotFound ||
-        value.Find(kStyleString) != WTF::kNotFound) {
-      nonceable = false;
-      break;
+  if (element->HasDuplicateAttribute())
+    nonceable = false;
+
+  if (nonceable) {
+    static const char kScriptString[] = "<SCRIPT";
+    static const char kStyleString[] = "<STYLE";
+    for (const Attribute& attr : element->Attributes()) {
+      const AtomicString& name = attr.LocalName();
+      const AtomicString& value = attr.Value();
+      if (name.FindIgnoringASCIICase(kScriptString) != WTF::kNotFound ||
+          name.FindIgnoringASCIICase(kStyleString) != WTF::kNotFound ||
+          value.FindIgnoringASCIICase(kScriptString) != WTF::kNotFound ||
+          value.FindIgnoringASCIICase(kStyleString) != WTF::kNotFound) {
+        nonceable = false;
+        break;
+      }
     }
   }
 
@@ -261,6 +268,9 @@ void ContentSecurityPolicy::CopyPluginTypesFrom(
 
 void ContentSecurityPolicy::DidReceiveHeaders(
     const ContentSecurityPolicyResponseHeaders& headers) {
+  if (headers.ShouldParseWasmEval()) {
+    supports_wasm_eval_ = true;
+  }
   if (!headers.ContentSecurityPolicy().IsEmpty())
     AddAndReportPolicyFromHeaderValue(headers.ContentSecurityPolicy(),
                                       kContentSecurityPolicyHeaderTypeEnforce,
@@ -584,6 +594,19 @@ bool ContentSecurityPolicy::AllowEval(
   for (const auto& policy : policies_) {
     is_allowed &= policy->AllowEval(script_state, reporting_policy,
                                     exception_status, script_content);
+  }
+  return is_allowed;
+}
+
+bool ContentSecurityPolicy::AllowWasmEval(
+    ScriptState* script_state,
+    SecurityViolationReportingPolicy reporting_policy,
+    ContentSecurityPolicy::ExceptionStatus exception_status,
+    const String& script_content) const {
+  bool is_allowed = true;
+  for (const auto& policy : policies_) {
+    is_allowed &= policy->AllowWasmEval(script_state, reporting_policy,
+                                        exception_status, script_content);
   }
   return is_allowed;
 }

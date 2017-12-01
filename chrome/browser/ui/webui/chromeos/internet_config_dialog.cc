@@ -18,15 +18,10 @@
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_data_source.h"
 #include "third_party/cros_system_api/dbus/service_constants.h"
-#include "ui/base/l10n/l10n_util.h"
 
 namespace chromeos {
 
 namespace {
-
-// Width matches the internet config dialog in Settings UI (including margins).
-constexpr int kInternetConfigDialogWidth = 460;
-constexpr int kInternetConfigDialogHeight = 480;
 
 void AddInternetStrings(content::WebUIDataSource* html_source) {
   // Add default strings first.
@@ -75,10 +70,6 @@ InternetConfigDialog::InternetConfigDialog(const std::string& network_type,
       network_id_(network_id) {}
 
 InternetConfigDialog::~InternetConfigDialog() {}
-
-void InternetConfigDialog::GetDialogSize(gfx::Size* size) const {
-  size->SetSize(kInternetConfigDialogWidth, kInternetConfigDialogHeight);
-}
 
 std::string InternetConfigDialog::GetDialogArgs() const {
   base::DictionaryValue args;

@@ -128,7 +128,6 @@ type:*ActiveVerifier*
 # ANGLE
 src:*third_party/angle/src/libANGLE/*
 src:*third_party/angle/src/third_party/libXNVCtrl/NVCtrl.c
-src:*ui/gl/angle_platform_impl.cc
 # third_party/angle/src/gpu_info_util/SystemInfo_libpci.cpp
 fun:*GetPCIDevicesWithLibPCI*
 # third_party/angle/src/common/event_tracer.cpp
@@ -153,8 +152,6 @@ src:*net/proxy/proxy_config_service_linux.cc
 
 # Calls to auto-generated stubs by ui/gl/generate_bindings.py
 src:*ui/gl/gl_bindings_autogen_*
-# ui/gl/gl_implementation.c
-fun:*GetGLProcAddress*
 
 src:*components/os_crypt/*
 src:*chrome/browser/password_manager/native_backend_libsecret*
@@ -177,6 +174,9 @@ fun:*CertVerifyProcNSS*VerifyInternalImpl*
 
 # third_party/skia/include/gpu/gl/GrGLFunctions.h
 fun:*GrGLFunction*
+
+# chrome/browser/ui/libgtkui/gtk_util.cc
+fun:*AppendCssNodeToStyleContext*
 
 ######### Function pointers cast to incorrect type signatures
 

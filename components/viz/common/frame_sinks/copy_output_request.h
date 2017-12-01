@@ -13,9 +13,11 @@
 #include "base/task_runner.h"
 #include "base/unguessable_token.h"
 #include "components/viz/common/frame_sinks/copy_output_result.h"
-#include "components/viz/common/quads/texture_mailbox.h"
 #include "components/viz/common/resources/single_release_callback.h"
 #include "components/viz/common/viz_common_export.h"
+#include "gpu/command_buffer/common/mailbox.h"
+#include "gpu/command_buffer/common/sync_token.h"
+#include "mojo/public/cpp/bindings/struct_traits.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/vector2d.h"
 
@@ -109,9 +111,13 @@ class VIZ_COMMON_EXPORT CopyOutputRequest {
   // Legacy support for providing textures up-front, to copy results into.
   // TODO(miu): Remove these methods after tab capture is moved to VIZ.
   // http://crbug.com/754872
-  void SetTextureMailbox(const TextureMailbox& texture_mailbox);
-  bool has_texture_mailbox() const { return texture_mailbox_.has_value(); }
-  const TextureMailbox& texture_mailbox() const { return *texture_mailbox_; }
+  // The texture bound to the mailbox is expected to have a GL_TEXTURE_2D
+  // target.
+  void SetMailbox(const gpu::Mailbox& mailbox,
+                  const gpu::SyncToken& sync_token);
+  bool has_mailbox() const { return mailbox_.has_value(); }
+  const gpu::Mailbox& mailbox() const { return *mailbox_; }
+  const gpu::SyncToken& sync_token() const { return *sync_token_; }
 
   // Sends the result from executing this request. Called by the internal
   // implementation, usually a DirectRenderer.
@@ -139,7 +145,8 @@ class VIZ_COMMON_EXPORT CopyOutputRequest {
   base::Optional<base::UnguessableToken> source_;
   base::Optional<gfx::Rect> area_;
   base::Optional<gfx::Rect> result_selection_;
-  base::Optional<TextureMailbox> texture_mailbox_;
+  base::Optional<gpu::Mailbox> mailbox_;
+  base::Optional<gpu::SyncToken> sync_token_;
 
   DISALLOW_COPY_AND_ASSIGN(CopyOutputRequest);
 };

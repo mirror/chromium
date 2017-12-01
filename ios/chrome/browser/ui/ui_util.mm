@@ -63,8 +63,9 @@ bool IsIPhoneX() {
 }
 
 bool IsSafeAreaCompatibleToolbarEnabled() {
-  return IsIPhoneX() &&
-         base::FeatureList::IsEnabled(kSafeAreaCompatibleToolbar);
+  return (IsIPhoneX() &&
+          base::FeatureList::IsEnabled(kSafeAreaCompatibleToolbar)) ||
+         base::FeatureList::IsEnabled(kCleanToolbar);
 }
 
 CGFloat StatusBarHeight() {
@@ -73,8 +74,7 @@ CGFloat StatusBarHeight() {
 
   if (IsIPhoneX()) {
     if (IsSafeAreaCompatibleToolbarEnabled()) {
-      CGRect statusBarFrame = [UIApplication sharedApplication].statusBarFrame;
-      return CGRectGetHeight(statusBarFrame);
+      return IsPortrait() ? 44 : 0;
     } else {
       // Return the height of the portrait status bar even in landscape because
       // the Toolbar does not properly layout itself if the status bar height

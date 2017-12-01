@@ -21,10 +21,10 @@
 #include "components/autofill/core/common/password_form_generation_data.h"
 #include "components/autofill/core/common/password_generation_util.h"
 #include "components/autofill/core/common/signatures_util.h"
-#include "content/public/common/associated_interface_provider.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/render_view.h"
 #include "google_apis/gaia/gaia_urls.h"
+#include "third_party/WebKit/common/associated_interfaces/associated_interface_provider.h"
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
 #include "third_party/WebKit/public/platform/WebVector.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
@@ -244,7 +244,7 @@ void PasswordGenerationAgent::OnDynamicFormsSeen() {
 
 void PasswordGenerationAgent::OnFieldAutofilled(
     const blink::WebInputElement& password_element) {
-  if (generation_element_ == password_element)
+  if (password_is_generated_ && generation_element_ == password_element)
     PasswordNoLongerGenerated();
 }
 
@@ -607,6 +607,7 @@ void PasswordGenerationAgent::HidePopup() {
 }
 
 void PasswordGenerationAgent::PasswordNoLongerGenerated() {
+  DCHECK(password_is_generated_);
   // Do not treat the password as generated, either here or in the browser.
   password_is_generated_ = false;
   password_edited_ = false;

@@ -5,6 +5,8 @@
 #include "core/html/custom/CustomElementRegistry.h"
 
 #include <memory>
+
+#include "base/macros.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "core/dom/Document.h"
@@ -17,7 +19,7 @@
 #include "core/html/custom/CustomElementDefinitionBuilder.h"
 #include "core/html/custom/CustomElementDescriptor.h"
 #include "core/html/custom/CustomElementTestHelpers.h"
-#include "core/testing/DummyPageHolder.h"
+#include "core/testing/PageTestBase.h"
 #include "platform/bindings/ScriptForbiddenScope.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/text/AtomicString.h"
@@ -25,22 +27,16 @@
 
 namespace blink {
 
-class CustomElementRegistryTest : public ::testing::Test {
+class CustomElementRegistryTest : public PageTestBase {
  protected:
-  void SetUp() {
-    page_.reset(DummyPageHolder::Create(IntSize(1, 1)).release());
-  }
-
-  void TearDown() { page_ = nullptr; }
-
-  Document& GetDocument() { return page_->GetDocument(); }
+  void SetUp() { PageTestBase::SetUp(IntSize(1, 1)); }
 
   CustomElementRegistry& Registry() {
-    return *page_->GetFrame().DomWindow()->customElements();
+    return *GetFrame().DomWindow()->customElements();
   }
 
   ScriptState* GetScriptState() {
-    return ToScriptStateForMainWorld(&page_->GetFrame());
+    return ToScriptStateForMainWorld(&GetFrame());
   }
 
   void CollectCandidates(const CustomElementDescriptor& desc,
@@ -55,9 +51,6 @@ class CustomElementRegistryTest : public ::testing::Test {
     return element->attachShadow(GetScriptState(), shadow_root_init,
                                  no_exceptions);
   }
-
- private:
-  std::unique_ptr<DummyPageHolder> page_;
 };
 
 TEST_F(CustomElementRegistryTest,
@@ -166,8 +159,6 @@ TEST_F(CustomElementRegistryTest, collectCandidates_shouldBeInDocumentOrder) {
 // Classes which use trace macros cannot be local because of the
 // traceImpl template.
 class LogUpgradeDefinition : public TestCustomElementDefinition {
-  WTF_MAKE_NONCOPYABLE(LogUpgradeDefinition);
-
  public:
   LogUpgradeDefinition(const CustomElementDescriptor& descriptor)
       : TestCustomElementDefinition(
@@ -256,11 +247,12 @@ class LogUpgradeDefinition : public TestCustomElementDefinition {
     EXPECT_EQ(element, element_);
     attribute_changed_.push_back(AttributeChanged{name, old_value, new_value});
   }
+
+  DISALLOW_COPY_AND_ASSIGN(LogUpgradeDefinition);
 };
 
 class LogUpgradeBuilder final : public TestCustomElementDefinitionBuilder {
   STACK_ALLOCATED();
-  WTF_MAKE_NONCOPYABLE(LogUpgradeBuilder);
 
  public:
   LogUpgradeBuilder() {}
@@ -269,6 +261,8 @@ class LogUpgradeBuilder final : public TestCustomElementDefinitionBuilder {
                                  CustomElementDefinition::Id) override {
     return new LogUpgradeDefinition(descriptor);
   }
+
+  DISALLOW_COPY_AND_ASSIGN(LogUpgradeBuilder);
 };
 
 TEST_F(CustomElementRegistryTest, define_upgradesInDocumentElements) {

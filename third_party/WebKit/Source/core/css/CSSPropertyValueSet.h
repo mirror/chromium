@@ -122,7 +122,7 @@ class CORE_EXPORT CSSPropertyValueSet
   ImmutableCSSPropertyValueSet* ImmutableCopyIfNeeded() const;
 
   MutableCSSPropertyValueSet* CopyPropertiesInSet(
-      const Vector<CSSPropertyID>&) const;
+      const Vector<const CSSProperty*>&) const;
 
   String AsText() const;
 
@@ -170,8 +170,8 @@ class CORE_EXPORT CSSPropertyValueSet
 class CSSLazyPropertyParser
     : public GarbageCollectedFinalized<CSSLazyPropertyParser> {
  public:
-  CSSLazyPropertyParser() {}
-  virtual ~CSSLazyPropertyParser() {}
+  CSSLazyPropertyParser() = default;
+  virtual ~CSSLazyPropertyParser() = default;
   virtual CSSPropertyValueSet* ParseProperties() = 0;
   virtual void Trace(blink::Visitor*);
   DISALLOW_COPY_AND_ASSIGN(CSSLazyPropertyParser);
@@ -224,7 +224,7 @@ DEFINE_TYPE_CASTS(ImmutableCSSPropertyValueSet,
 
 class CORE_EXPORT MutableCSSPropertyValueSet : public CSSPropertyValueSet {
  public:
-  ~MutableCSSPropertyValueSet() {}
+  ~MutableCSSPropertyValueSet() = default;
   static MutableCSSPropertyValueSet* Create(CSSParserMode);
   static MutableCSSPropertyValueSet* Create(const CSSPropertyValue* properties,
                                             unsigned count);
@@ -244,7 +244,7 @@ class CORE_EXPORT MutableCSSPropertyValueSet : public CSSPropertyValueSet {
                         const String& value,
                         bool important,
                         SecureContextMode,
-                        StyleSheetContents* context_style_sheet = 0);
+                        StyleSheetContents* context_style_sheet = nullptr);
   SetResult SetProperty(const AtomicString& custom_property_name,
                         const PropertyRegistry*,
                         const String& value,
@@ -258,11 +258,11 @@ class CORE_EXPORT MutableCSSPropertyValueSet : public CSSPropertyValueSet {
   bool SetProperty(CSSPropertyID,
                    CSSValueID identifier,
                    bool important = false);
-  bool SetProperty(const CSSPropertyValue&, CSSPropertyValue* slot = 0);
+  bool SetProperty(const CSSPropertyValue&, CSSPropertyValue* slot = nullptr);
 
   template <typename T>  // CSSPropertyID or AtomicString
-  bool RemoveProperty(T property, String* return_text = 0);
-  bool RemovePropertiesInSet(const CSSPropertyID* set, unsigned length);
+  bool RemoveProperty(T property, String* return_text = nullptr);
+  bool RemovePropertiesInSet(const CSSProperty** set, unsigned length);
   void RemoveEquivalentProperties(const CSSPropertyValueSet*);
   void RemoveEquivalentProperties(const CSSStyleDeclaration*);
 

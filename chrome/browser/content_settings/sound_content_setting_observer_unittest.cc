@@ -24,6 +24,7 @@ constexpr char kURL2[] = "http://youtube.com/";
 constexpr char kSiteMutedEvent[] = "Media.SiteMuted";
 constexpr char kSiteMutedReason[] = "MuteReason";
 #if !defined(OS_ANDROID)
+constexpr char kChromeURL[] = "chrome://dino";
 constexpr char kExtensionId[] = "extensionid";
 #endif
 
@@ -68,17 +69,17 @@ class SoundContentSettingObserverTest : public ChromeRenderViewHostTestHarness {
   }
 
   bool RecordedSiteMuted() {
-    const ukm::UkmSource* source = test_ukm_recorder_->GetSourceForUrl(kURL1);
-    if (!source)
-      return false;
-    return test_ukm_recorder_->HasEntry(*source, kSiteMutedEvent);
+    auto entries = test_ukm_recorder_->GetEntriesByName(kSiteMutedEvent);
+    return !entries.empty();
   }
 
   void ExpectRecordedForReason(SoundContentSettingObserver::MuteReason reason) {
-    const ukm::UkmSource* source = test_ukm_recorder_->GetSourceForUrl(kURL1);
-    EXPECT_NE(nullptr, source);
-    test_ukm_recorder_->ExpectMetric(*source, kSiteMutedEvent, kSiteMutedReason,
-                                     reason);
+    auto entries = test_ukm_recorder_->GetEntriesByName(kSiteMutedEvent);
+    EXPECT_EQ(1u, entries.size());
+    for (const auto* const entry : entries) {
+      test_ukm_recorder_->ExpectEntrySourceHasUrl(entry, GURL(kURL1));
+      test_ukm_recorder_->ExpectEntryMetric(entry, kSiteMutedReason, reason);
+    }
   }
 
 // TabMutedReason does not exist on Android.
@@ -184,6 +185,41 @@ TEST_F(SoundContentSettingObserverTest, DontUnmuteWhenMutedForMediaCapture) {
   // Navigating to a new URL should not unmute the tab muted for media capture.
   NavigateAndCommit(GURL(kURL2));
   EXPECT_TRUE(web_contents()->IsAudioMuted());
+}
+
+TEST_F(SoundContentSettingObserverTest, DontUnmuteChromeTabWhenMuted) {
+  NavigateAndCommit(GURL(kChromeURL));
+  EXPECT_FALSE(web_contents()->IsAudioMuted());
+
+  SetMuteStateForReason(true, TabMutedReason::CONTENT_SETTING_CHROME);
+  EXPECT_TRUE(web_contents()->IsAudioMuted());
+
+  NavigateAndCommit(GURL(kChromeURL));
+  EXPECT_TRUE(web_contents()->IsAudioMuted());
+}
+
+TEST_F(SoundContentSettingObserverTest,
+       UnmuteChromeTabWhenNavigatingToNonChromeUrl) {
+  NavigateAndCommit(GURL(kChromeURL));
+  EXPECT_FALSE(web_contents()->IsAudioMuted());
+
+  SetMuteStateForReason(true, TabMutedReason::CONTENT_SETTING_CHROME);
+  EXPECT_TRUE(web_contents()->IsAudioMuted());
+
+  NavigateAndCommit(GURL(kURL1));
+  EXPECT_FALSE(web_contents()->IsAudioMuted());
+}
+
+TEST_F(SoundContentSettingObserverTest,
+       UnmuteNonChromeTabWhenNavigatingToChromeUrl) {
+  NavigateAndCommit(GURL(kURL1));
+  EXPECT_FALSE(web_contents()->IsAudioMuted());
+
+  ChangeSoundContentSettingTo(CONTENT_SETTING_BLOCK);
+  EXPECT_TRUE(web_contents()->IsAudioMuted());
+
+  NavigateAndCommit(GURL(kChromeURL));
+  EXPECT_FALSE(web_contents()->IsAudioMuted());
 }
 #endif  // !defined(OS_ANDROID)
 

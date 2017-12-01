@@ -167,22 +167,22 @@ void PopulateURLLoadTiming(const net::LoadTimingInfo& load_timing,
 net::RequestPriority ConvertWebKitPriorityToNetPriority(
     const WebURLRequest::Priority& priority) {
   switch (priority) {
-    case WebURLRequest::kPriorityVeryHigh:
+    case WebURLRequest::Priority::kVeryHigh:
       return net::HIGHEST;
 
-    case WebURLRequest::kPriorityHigh:
+    case WebURLRequest::Priority::kHigh:
       return net::MEDIUM;
 
-    case WebURLRequest::kPriorityMedium:
+    case WebURLRequest::Priority::kMedium:
       return net::LOW;
 
-    case WebURLRequest::kPriorityLow:
+    case WebURLRequest::Priority::kLow:
       return net::LOWEST;
 
-    case WebURLRequest::kPriorityVeryLow:
+    case WebURLRequest::Priority::kVeryLow:
       return net::IDLE;
 
-    case WebURLRequest::kPriorityUnresolved:
+    case WebURLRequest::Priority::kUnresolved:
     default:
       NOTREACHED();
       return net::LOW;
@@ -612,10 +612,10 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
 
   resource_request->headers = GetWebURLRequestHeaders(request);
   resource_request->load_flags = GetLoadFlagsForWebURLRequest(request);
-  // origin_pid only needs to be non-zero if the request originates outside
-  // the render process, so we can use requestorProcessID even for requests
-  // from in-process plugins.
-  resource_request->origin_pid = request.RequestorProcessID();
+  // |plugin_child_id| only needs to be non-zero if the request originates
+  // outside the render process, so we can use requestorProcessID even
+  // for requests from in-process plugins.
+  resource_request->plugin_child_id = request.GetPluginChildID();
   resource_request->resource_type = WebURLRequestToResourceType(request);
   resource_request->priority =
       ConvertWebKitPriorityToNetPriority(request.GetPriority());
@@ -1124,7 +1124,6 @@ void WebURLLoaderImpl::PopulateURLResponse(const WebURL& url,
       blink::FilePathToWebString(info.download_file_path));
   response->SetWasFetchedViaSPDY(info.was_fetched_via_spdy);
   response->SetWasFetchedViaServiceWorker(info.was_fetched_via_service_worker);
-  response->SetWasFetchedViaForeignFetch(info.was_fetched_via_foreign_fetch);
   response->SetWasFallbackRequiredByServiceWorker(
       info.was_fallback_required_by_service_worker);
   response->SetResponseTypeViaServiceWorker(

@@ -172,7 +172,7 @@ static ResourceRequest CreateResourceRequest(const char* method,
       url::Origin::Create(url);  // ensure initiator is set
   request.referrer_policy = blink::kWebReferrerPolicyDefault;
   request.load_flags = 0;
-  request.origin_pid = 0;
+  request.plugin_child_id = -1;
   request.resource_type = type;
   request.request_context = 0;
   request.appcache_host_id = kAppCacheNoHostId;
@@ -810,13 +810,7 @@ class TestWebContentsObserver : public WebContentsObserver {
  public:
   explicit TestWebContentsObserver(WebContents* web_contents)
       : WebContentsObserver(web_contents),
-        resource_request_redirect_count_(0),
         resource_response_start_count_(0) {}
-
-  void DidGetRedirectForResourceRequest(
-      const ResourceRedirectDetails& details) override {
-    ++resource_request_redirect_count_;
-  }
 
   void DidGetResourceResponseStart(
       const ResourceRequestDetails& details) override {
@@ -825,12 +819,7 @@ class TestWebContentsObserver : public WebContentsObserver {
 
   int resource_response_start_count() { return resource_response_start_count_; }
 
-  int resource_request_redirect_count() {
-    return resource_request_redirect_count_;
-  }
-
  private:
-  int resource_request_redirect_count_;
   int resource_response_start_count_;
 };
 
@@ -1208,7 +1197,8 @@ void ResourceDispatcherHostTest::
                                                          const GURL& url,
                                                          ResourceType type) {
   ResourceRequest request = CreateResourceRequest("GET", type, url);
-  request.origin_pid = web_contents_->GetMainFrame()->GetProcess()->GetID();
+  DCHECK_EQ(web_contents_filter_->child_id(),
+            web_contents_->GetMainFrame()->GetProcess()->GetID());
   request.render_frame_id = web_contents_->GetMainFrame()->GetRoutingID();
   ResourceHostMsg_RequestResource msg(
       web_contents_->GetRenderViewHost()->GetRoutingID(), request_id, request,
@@ -3753,19 +3743,6 @@ TEST_F(ResourceDispatcherHostTest, TransferResponseStarted) {
             web_contents_observer_->resource_response_start_count());
 }
 
-// Confirm that request redirected notifications are correctly
-// transmitted to the WebContents.
-TEST_F(ResourceDispatcherHostTest, TransferRequestRedirected) {
-  int initial_count = web_contents_observer_->resource_request_redirect_count();
-
-  MakeWebContentsAssociatedTestRequest(
-      1, net::URLRequestTestJob::test_url_redirect_to_url_2());
-  content::RunAllTasksUntilIdle();
-
-  EXPECT_EQ(initial_count + 1,
-            web_contents_observer_->resource_request_redirect_count());
-}
-
 // Confirm that DidChangePriority messages are respected.
 TEST_F(ResourceDispatcherHostTest, DidChangePriority) {
   // ResourceScheduler only throttles http and https requests.
@@ -3813,18 +3790,6 @@ TEST_F(ResourceDispatcherHostTest, TransferResponseStartedDownload) {
   content::RunAllTasksUntilIdle();
   EXPECT_EQ(initial_count,
             web_contents_observer_->resource_response_start_count());
-}
-
-// Confirm that request redirected notifications for downloads are not
-// transmitted to the WebContents.
-TEST_F(ResourceDispatcherHostTest, TransferRequestRedirectedDownload) {
-  int initial_count(web_contents_observer_->resource_request_redirect_count());
-
-  MakeWebContentsAssociatedDownloadRequest(
-      1, net::URLRequestTestJob::test_url_redirect_to_url_2());
-  content::RunAllTasksUntilIdle();
-  EXPECT_EQ(initial_count,
-            web_contents_observer_->resource_request_redirect_count());
 }
 
 // Tests that a ResourceThrottle that needs to process the response before any

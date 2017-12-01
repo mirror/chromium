@@ -47,25 +47,20 @@ webauth::mojom::PublicKeyCredentialInfoPtr CreatePublicKeyCredentialInfo(
 }
 }  // namespace
 
-// static
-void AuthenticatorImpl::Create(
-    RenderFrameHost* render_frame_host,
-    webauth::mojom::AuthenticatorRequest request) {
-  auto authenticator_impl =
-      std::make_unique<AuthenticatorImpl>(render_frame_host);
-  mojo::MakeStrongBinding(std::move(authenticator_impl), std::move(request));
+AuthenticatorImpl::AuthenticatorImpl(RenderFrameHost* render_frame_host)
+    : render_frame_host_(render_frame_host), weak_factory_(this) {
+  DCHECK(render_frame_host_);
 }
 
 AuthenticatorImpl::~AuthenticatorImpl() {}
 
-AuthenticatorImpl::AuthenticatorImpl(RenderFrameHost* render_frame_host)
-    : render_frame_host_(render_frame_host), weak_factory_(this) {
-  DCHECK(render_frame_host);
+void AuthenticatorImpl::Bind(webauth::mojom::AuthenticatorRequest request) {
+  bindings_.AddBinding(this, std::move(request));
 }
 
 // mojom::Authenticator
 void AuthenticatorImpl::MakeCredential(
-    webauth::mojom::MakeCredentialOptionsPtr options,
+    webauth::mojom::MakePublicKeyCredentialOptionsPtr options,
     MakeCredentialCallback callback) {
   // Ensure no other operations are in flight.
   // TODO(kpaulhamus): Do this properly. http://crbug.com/785954.
@@ -99,14 +94,15 @@ void AuthenticatorImpl::MakeCredential(
 
   // Check that at least one of the cryptographic parameters is supported.
   // Only ES256 is currently supported by U2F_V2.
-  if (!HasValidAlgorithm(options->crypto_parameters)) {
+  if (!HasValidAlgorithm(options->public_key_parameters)) {
     std::move(callback).Run(
         webauth::mojom::AuthenticatorStatus::NOT_SUPPORTED_ERROR, nullptr);
     return;
   }
 
   std::unique_ptr<CollectedClientData> client_data =
-      CollectedClientData::Create(caller_origin.Serialize(),
+      CollectedClientData::Create(authenticator_utils::kCreateType,
+                                  caller_origin.Serialize(),
                                   std::move(options->challenge));
 
   // SHA-256 hash of the JSON data structure
@@ -155,11 +151,14 @@ void AuthenticatorImpl::MakeCredential(
 }
 
 // Callback to handle the async response from a U2fDevice.
+// |data| is returned for both successful sign and register responses, whereas
+//  |key_handle| is only returned for successful sign responses.
 void AuthenticatorImpl::OnDeviceResponse(
     MakeCredentialCallback callback,
     std::unique_ptr<CollectedClientData> client_data,
     device::U2fReturnCode status_code,
-    const std::vector<uint8_t>& u2f_register_response) {
+    const std::vector<uint8_t>& u2f_register_response,
+    const std::vector<uint8_t>& key_handle) {
   timer_.Stop();
 
   if (status_code == device::U2fReturnCode::SUCCESS) {

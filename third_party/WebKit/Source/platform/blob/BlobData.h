@@ -151,7 +151,6 @@ typedef Vector<BlobDataItem> BlobDataItemList;
 
 class PLATFORM_EXPORT BlobData {
   USING_FAST_MALLOC(BlobData);
-  WTF_MAKE_NONCOPYABLE(BlobData);
 
  public:
   static std::unique_ptr<BlobData> Create();
@@ -219,6 +218,8 @@ class PLATFORM_EXPORT BlobData {
   String content_type_;
   FileCompositionStatus file_composition_;
   BlobDataItemList items_;
+
+  DISALLOW_COPY_AND_ASSIGN(BlobData);
 };
 
 class PLATFORM_EXPORT BlobDataHandle
@@ -264,6 +265,13 @@ class PLATFORM_EXPORT BlobDataHandle
   mojom::blink::BlobPtr CloneBlobPtr();
 
   static void SetBlobRegistryForTesting(mojom::blink::BlobRegistry*);
+
+  void ReadAll(mojo::ScopedDataPipeProducerHandle,
+               mojom::blink::BlobReaderClientPtr);
+  void ReadRange(uint64_t offset,
+                 uint64_t length,
+                 mojo::ScopedDataPipeProducerHandle,
+                 mojom::blink::BlobReaderClientPtr);
 
  private:
   BlobDataHandle();

@@ -171,27 +171,22 @@ class RawFileElementReader : public net::UploadFileElementReader {
 // A subclass of net::UploadElementReader to read data pipes.
 class DataPipeElementReader : public net::UploadElementReader {
  public:
-  DataPipeElementReader(mojo::ScopedDataPipeConsumerHandle data_pipe,
-                        blink::mojom::SizeGetterPtr size_getter)
-      : data_pipe_(std::move(data_pipe)),
+  DataPipeElementReader(
+      scoped_refptr<ResourceRequestBody> resource_request_body,
+      network::mojom::DataPipeGetterPtr data_pipe_getter_)
+      : resource_request_body_(std::move(resource_request_body)),
+        data_pipe_getter_(std::move(data_pipe_getter_)),
         handle_watcher_(FROM_HERE, mojo::SimpleWatcher::ArmingPolicy::MANUAL),
-        size_getter_(std::move(size_getter)),
-        weak_factory_(this) {
-    size_getter_->GetSize(base::Bind(&DataPipeElementReader::GetSizeCallback,
-                                     weak_factory_.GetWeakPtr()));
-    handle_watcher_.Watch(data_pipe_.get(), MOJO_HANDLE_SIGNAL_READABLE,
-                          base::Bind(&DataPipeElementReader::OnHandleReadable,
-                                     base::Unretained(this)));
-  }
+        weak_factory_(this) {}
 
   ~DataPipeElementReader() override {}
 
  private:
-  void GetSizeCallback(uint64_t size) {
-    calculated_size_ = true;
-    size_ = size;
+  void ReadCallback(int32_t status, uint64_t size) {
+    if (status == net::OK)
+      size_ = size;
     if (!init_callback_.is_null())
-      std::move(init_callback_).Run(net::OK);
+      std::move(init_callback_).Run(status);
   }
 
   void OnHandleReadable(MojoResult result) {
@@ -208,8 +203,24 @@ class DataPipeElementReader : public net::UploadElementReader {
 
   // net::UploadElementReader implementation:
   int Init(const net::CompletionCallback& callback) override {
-    if (calculated_size_)
-      return net::OK;
+    // Init rewinds the stream. Throw away current state.
+    if (!read_callback_.is_null())
+      std::move(read_callback_).Run(net::ERR_FAILED);
+    buf_ = nullptr;
+    buf_length_ = 0;
+    handle_watcher_.Cancel();
+    size_ = 0;
+    bytes_read_ = 0;
+
+    // Get a new data pipe and start.
+    mojo::DataPipe data_pipe;
+    data_pipe_getter_->Read(std::move(data_pipe.producer_handle),
+                            base::BindOnce(&DataPipeElementReader::ReadCallback,
+                                           weak_factory_.GetWeakPtr()));
+    data_pipe_ = std::move(data_pipe.consumer_handle);
+    handle_watcher_.Watch(data_pipe_.get(), MOJO_HANDLE_SIGNAL_READABLE,
+                          base::Bind(&DataPipeElementReader::OnHandleReadable,
+                                     base::Unretained(this)));
 
     init_callback_ = std::move(callback);
     return net::ERR_IO_PENDING;
@@ -244,12 +255,12 @@ class DataPipeElementReader : public net::UploadElementReader {
     return net::ERR_FAILED;
   }
 
+  scoped_refptr<ResourceRequestBody> resource_request_body_;
+  network::mojom::DataPipeGetterPtr data_pipe_getter_;
   mojo::ScopedDataPipeConsumerHandle data_pipe_;
   mojo::SimpleWatcher handle_watcher_;
   scoped_refptr<net::IOBuffer> buf_;
   int buf_length_ = 0;
-  blink::mojom::SizeGetterPtr size_getter_;
-  bool calculated_size_ = false;
   uint64_t size_ = 0;
   uint64_t bytes_read_ = 0;
   net::CompletionCallback init_callback_;
@@ -287,12 +298,9 @@ std::unique_ptr<net::UploadDataStream> CreateUploadDataStream(
         break;
       }
       case ResourceRequestBody::Element::TYPE_DATA_PIPE: {
-        blink::mojom::SizeGetterPtr size_getter;
-        mojo::ScopedDataPipeConsumerHandle data_pipe =
-            const_cast<storage::DataElement*>(&element)->ReleaseDataPipe(
-                &size_getter);
         element_readers.push_back(std::make_unique<DataPipeElementReader>(
-            std::move(data_pipe), std::move(size_getter)));
+            body, const_cast<storage::DataElement*>(&element)
+                      ->ReleaseDataPipeGetter()));
         break;
       }
       case ResourceRequestBody::Element::TYPE_DISK_CACHE_ENTRY:
@@ -497,6 +505,11 @@ void URLLoader::OnCertificateRequested(net::URLRequest* unused,
 void URLLoader::OnSSLCertificateError(net::URLRequest* request,
                                       const net::SSLInfo& ssl_info,
                                       bool fatal) {
+  // The network service can be null in tests.
+  if (!context_->network_service()) {
+    OnSSLCertificateErrorResponse(ssl_info, net::ERR_INSECURE_RESPONSE);
+    return;
+  }
   context_->network_service()->client()->OnSSLCertificateError(
       resource_type_, url_request_->url(), process_id_, render_frame_id_,
       ssl_info, fatal,
@@ -681,6 +694,12 @@ void URLLoader::NotifyCompleted(int error_code) {
   status.encoded_body_length = url_request_->GetRawBodyBytes();
   status.decoded_body_length = total_written_bytes_;
 
+  if ((options_ & mojom::kURLLoadOptionSendSSLInfoForCertificateError) &&
+      net::IsCertStatusError(url_request_->ssl_info().cert_status) &&
+      !net::IsCertStatusMinorError(url_request_->ssl_info().cert_status)) {
+    status.ssl_info = url_request_->ssl_info();
+  }
+
   url_loader_client_->OnComplete(status);
   DeleteIfNeeded();
 }
@@ -729,7 +748,7 @@ void URLLoader::DeleteIfNeeded() {
 
 void URLLoader::SendResponseToClient() {
   base::Optional<net::SSLInfo> ssl_info;
-  if (options_ & mojom::kURLLoadOptionSendSSLInfo)
+  if (options_ & mojom::kURLLoadOptionSendSSLInfoWithResponse)
     ssl_info = url_request_->ssl_info();
   mojom::DownloadedTempFilePtr downloaded_file_ptr;
   url_loader_client_->OnReceiveResponse(response_->head, ssl_info,

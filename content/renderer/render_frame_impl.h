@@ -73,6 +73,7 @@
 #include "third_party/WebKit/public/platform/WebLoadingBehaviorFlag.h"
 #include "third_party/WebKit/public/platform/WebMediaPlayer.h"
 #include "third_party/WebKit/public/platform/media_engagement.mojom.h"
+#include "third_party/WebKit/public/platform/modules/manifest/manifest_manager.mojom.h"
 #include "third_party/WebKit/public/platform/site_engagement.mojom.h"
 #include "third_party/WebKit/public/web/WebAXObject.h"
 #include "third_party/WebKit/public/web/WebDocumentLoader.h"
@@ -143,7 +144,7 @@ class ExternalPopupMenu;
 class HistoryEntry;
 class ManifestManager;
 class MediaPermissionDispatcher;
-class MediaStreamDispatcher;
+class MediaStreamDeviceObserver;
 class NavigationState;
 class PepperPluginInstanceImpl;
 class PresentationDispatcher;
@@ -423,7 +424,7 @@ class CONTENT_EXPORT RenderFrameImpl
 
   // May return NULL in some cases, especially if userMediaClient() returns
   // NULL.
-  MediaStreamDispatcher* GetMediaStreamDispatcher();
+  MediaStreamDeviceObserver* GetMediaStreamDeviceObserver();
 
   void ScriptedPrint(bool user_initiated);
 
@@ -461,8 +462,8 @@ class CONTENT_EXPORT RenderFrameImpl
       const std::string& interface_name,
       mojo::ScopedMessagePipeHandle interface_pipe) override;
   service_manager::InterfaceProvider* GetRemoteInterfaces() override;
-  AssociatedInterfaceRegistry* GetAssociatedInterfaceRegistry() override;
-  AssociatedInterfaceProvider* GetRemoteAssociatedInterfaces() override;
+  blink::AssociatedInterfaceRegistry* GetAssociatedInterfaceRegistry() override;
+  blink::AssociatedInterfaceProvider* GetRemoteAssociatedInterfaces() override;
 #if BUILDFLAG(ENABLE_PLUGINS)
   void RegisterPeripheralPlugin(
       const url::Origin& content_origin,
@@ -552,6 +553,8 @@ class CONTENT_EXPORT RenderFrameImpl
   std::unique_ptr<blink::WebServiceWorkerProvider> CreateServiceWorkerProvider()
       override;
   service_manager::InterfaceProvider* GetInterfaceProvider() override;
+  blink::AssociatedInterfaceProvider* GetRemoteNavigationAssociatedInterfaces()
+      override;
   void DidAccessInitialDocument() override;
   blink::WebLocalFrame* CreateChildFrame(
       blink::WebLocalFrame* parent,
@@ -574,7 +577,8 @@ class CONTENT_EXPORT RenderFrameImpl
       blink::WebFrame* child_frame,
       blink::WebSandboxFlags flags,
       const blink::ParsedFeaturePolicy& container_policy) override;
-  void DidSetFeaturePolicyHeader(
+  void DidSetFramePolicyHeaders(
+      blink::WebSandboxFlags flags,
       const blink::ParsedFeaturePolicy& parsed_header) override;
   void DidAddContentSecurityPolicies(
       const blink::WebVector<blink::WebContentSecurityPolicy>&) override;
@@ -761,7 +765,7 @@ class CONTENT_EXPORT RenderFrameImpl
   void BindFrameNavigationControl(
       mojom::FrameNavigationControlAssociatedRequest request);
 
-  ManifestManager* manifest_manager();
+  blink::mojom::ManifestManager& GetManifestManager();
 
   // TODO(creis): Remove when the only caller, the HistoryController, is no
   // more.
@@ -844,6 +848,9 @@ class CONTENT_EXPORT RenderFrameImpl
   // Sets the custom URLLoaderFactory instance to be used for network requests.
   void SetCustomURLLoaderFactory(mojom::URLLoaderFactoryPtr factory);
 
+  void ScrollFocusedEditableElementIntoRect(const gfx::Rect& rect);
+  void DidChangeVisibleViewport();
+
  protected:
   explicit RenderFrameImpl(CreateParams params);
 
@@ -858,6 +865,7 @@ class CONTENT_EXPORT RenderFrameImpl
   FRIEND_TEST_ALL_PREFIXES(ExternalPopupMenuTest, ShowPopupThenNavigate);
   FRIEND_TEST_ALL_PREFIXES(RenderAccessibilityImplTest,
                            AccessibilityMessagesQueueWhileSwappedOut);
+  FRIEND_TEST_ALL_PREFIXES(RenderFrameImplTest, LocalChildFrameWasShown);
   FRIEND_TEST_ALL_PREFIXES(RenderFrameImplTest, ZoomLimit);
   FRIEND_TEST_ALL_PREFIXES(RenderFrameImplTest,
                            TestOverlayRoutingTokenSendsLater);
@@ -1434,7 +1442,7 @@ class CONTENT_EXPORT RenderFrameImpl
 
   // The Manifest Manager handles the manifest requests from the browser
   // process.
-  ManifestManager* manifest_manager_;
+  std::unique_ptr<ManifestManager> manifest_manager_;
 
   // The current accessibility mode.
   ui::AXMode accessibility_mode_;
@@ -1587,6 +1595,11 @@ class CONTENT_EXPORT RenderFrameImpl
   // |devtools_frame_token_| is only defined by the browser and is never
   // sent back from the renderer in the control calls.
   blink::WebString devtools_frame_token_;
+
+  // Bookkeeping to suppress redundant scroll and focus requests for an already
+  // scrolled and focused editable node.
+  bool has_scrolled_focused_editable_node_into_rect_ = false;
+  gfx::Rect rect_for_scrolled_focused_editable_node_;
 
   base::WeakPtrFactory<RenderFrameImpl> weak_factory_;
 

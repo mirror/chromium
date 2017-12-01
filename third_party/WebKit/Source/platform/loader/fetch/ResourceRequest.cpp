@@ -59,10 +59,10 @@ ResourceRequest::ResourceRequest(const KURL& url)
       should_reset_app_cache_(false),
       cache_mode_(mojom::FetchCacheMode::kDefault),
       service_worker_mode_(WebURLRequest::ServiceWorkerMode::kAll),
-      priority_(kResourceLoadPriorityLowest),
+      priority_(ResourceLoadPriority::kLowest),
       intra_priority_value_(0),
       requestor_id_(0),
-      requestor_process_id_(0),
+      plugin_child_id_(-1),
       app_cache_host_id_(0),
       previews_state_(WebURLRequest::kPreviewsUnspecified),
       request_context_(WebURLRequest::kRequestContextUnspecified),
@@ -106,7 +106,7 @@ ResourceRequest::ResourceRequest(CrossThreadResourceRequestData* data)
   SetServiceWorkerMode(data->service_worker_mode_);
   SetShouldResetAppCache(data->should_reset_app_cache_);
   SetRequestorID(data->requestor_id_);
-  SetRequestorProcessID(data->requestor_process_id_);
+  SetPluginChildID(data->plugin_child_id_);
   SetAppCacheHostID(data->app_cache_host_id_);
   SetPreviewsState(data->previews_state_);
   SetRequestContext(data->request_context_);
@@ -129,6 +129,43 @@ ResourceRequest::ResourceRequest(CrossThreadResourceRequestData* data)
 ResourceRequest::ResourceRequest(const ResourceRequest&) = default;
 
 ResourceRequest& ResourceRequest::operator=(const ResourceRequest&) = default;
+
+std::unique_ptr<ResourceRequest> ResourceRequest::CreateRedirectRequest(
+    const KURL& new_url,
+    const AtomicString& new_method,
+    const KURL& new_site_for_cookies,
+    const String& new_referrer,
+    ReferrerPolicy new_referrer_policy,
+    WebURLRequest::ServiceWorkerMode service_worker_mode) const {
+  std::unique_ptr<ResourceRequest> request =
+      std::make_unique<ResourceRequest>(new_url);
+  request->SetHTTPMethod(new_method);
+  request->SetSiteForCookies(new_site_for_cookies);
+  String referrer =
+      new_referrer.IsEmpty() ? Referrer::NoReferrer() : String(new_referrer);
+  request->SetHTTPReferrer(
+      Referrer(referrer, static_cast<ReferrerPolicy>(new_referrer_policy)));
+  request->SetServiceWorkerMode(service_worker_mode);
+  request->SetRedirectStatus(RedirectStatus::kFollowedRedirect);
+
+  // Copy from parameters for |this|.
+  request->SetDownloadToFile(DownloadToFile());
+  request->SetUseStreamOnResponse(UseStreamOnResponse());
+  request->SetRequestContext(GetRequestContext());
+  request->SetFrameType(GetFrameType());
+  request->SetShouldResetAppCache(ShouldResetAppCache());
+  request->SetFetchRequestMode(GetFetchRequestMode());
+  request->SetFetchCredentialsMode(GetFetchCredentialsMode());
+  request->SetKeepalive(GetKeepalive());
+  request->SetPriority(Priority());
+
+  if (request->HttpMethod() == HttpMethod())
+    request->SetHTTPBody(HttpBody());
+  request->SetCheckForBrowserSideNavigation(CheckForBrowserSideNavigation());
+  request->SetCORSPreflightPolicy(CORSPreflightPolicy());
+
+  return request;
+}
 
 std::unique_ptr<CrossThreadResourceRequestData> ResourceRequest::CopyData()
     const {
@@ -156,7 +193,7 @@ std::unique_ptr<CrossThreadResourceRequestData> ResourceRequest::CopyData()
   data->service_worker_mode_ = service_worker_mode_;
   data->should_reset_app_cache_ = should_reset_app_cache_;
   data->requestor_id_ = requestor_id_;
-  data->requestor_process_id_ = requestor_process_id_;
+  data->plugin_child_id_ = plugin_child_id_;
   data->app_cache_host_id_ = app_cache_host_id_;
   data->previews_state_ = previews_state_;
   data->request_context_ = request_context_;

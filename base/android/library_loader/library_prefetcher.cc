@@ -14,6 +14,8 @@
 #include <utility>
 #include <vector>
 
+#include "base/android/library_loader/anchor_functions.h"
+#include "base/bits.h"
 #include "base/files/file.h"
 #include "base/format_macros.h"
 #include "base/macros.h"
@@ -95,11 +97,22 @@ bool MincoreOnRange(const NativeLibraryPrefetcher::AddressRange& range,
     residency->resize(size_in_pages);
   int err = HANDLE_EINTR(
       mincore(reinterpret_cast<void*>(range.first), size, &(*residency)[0]));
-  if (err) {
-    PLOG(ERROR) << "mincore() failed";
-    return false;
-  }
-  return true;
+  PLOG_IF(ERROR, err) << "mincore() failed";
+  return !err;
+}
+
+#if defined(ARCH_CPU_ARMEL)
+// Returns the start and end of .text, aligned to the lower and upper page
+// boundaries, respectively.
+NativeLibraryPrefetcher::AddressRange GetTextRange() {
+  // |kStartOftext| may not be at the beginning of a page, since .plt can be
+  // before it, yet in the same mapping for instance.
+  size_t start_page = kStartOfText - kStartOfText % kPageSize;
+  // Set the end to the page on which the beginning of the last symbol is. The
+  // actual symbol may spill into the next page by a few bytes, but this is
+  // outside of the executable code range anyway.
+  size_t end_page = base::bits::Align(kEndOfText, kPageSize);
+  return {start_page, end_page};
 }
 
 // Timestamp in ns since Unix Epoch, and residency, as returned by mincore().
@@ -132,7 +145,8 @@ bool CollectResidency(const NativeLibraryPrefetcher::AddressRange& range,
   return true;
 }
 
-void DumpResidency(std::unique_ptr<std::vector<TimestampAndResidency>> data) {
+void DumpResidency(const NativeLibraryPrefetcher::AddressRange& range,
+                   std::unique_ptr<std::vector<TimestampAndResidency>> data) {
   auto path = base::FilePath(
       base::StringPrintf("/data/local/tmp/chrome/residency-%d.txt", getpid()));
   auto file =
@@ -142,6 +156,15 @@ void DumpResidency(std::unique_ptr<std::vector<TimestampAndResidency>> data) {
                 << path.value();
     return;
   }
+
+  // First line: start-end of text range.
+  CheckOrderingSanity();
+  CHECK_LT(range.first, kStartOfText);
+  CHECK_LT(kEndOfText, range.second);
+  auto start_end =
+      base::StringPrintf("%" PRIuS " %" PRIuS "\n", kStartOfText - range.first,
+                         kEndOfText - range.first);
+  file.WriteAtCurrentPos(start_end.c_str(), start_end.size());
 
   for (const auto& data_point : *data) {
     auto timestamp =
@@ -156,7 +179,7 @@ void DumpResidency(std::unique_ptr<std::vector<TimestampAndResidency>> data) {
     file.WriteAtCurrentPos(&dump[0], dump.size());
   }
 }
-
+#endif  // defined(ARCH_CPU_ARMEL)
 }  // namespace
 
 // static
@@ -277,28 +300,35 @@ int NativeLibraryPrefetcher::PercentageOfResidentNativeLibraryCode() {
 
 // static
 void NativeLibraryPrefetcher::PeriodicallyCollectResidency() {
+#if defined(ARCH_CPU_ARMEL)
   CHECK_EQ(static_cast<long>(kPageSize), sysconf(_SC_PAGESIZE));
-  std::vector<AddressRange> ranges;
-  if (!FindRanges(&ranges))
-    return;
 
-  // To keep only the range containing .text, find out which one contains
-  // ourself.
-  const size_t here = reinterpret_cast<size_t>(
-      &NativeLibraryPrefetcher::PeriodicallyCollectResidency);
-  auto it =
-      std::find_if(ranges.begin(), ranges.end(), [here](const AddressRange& r) {
-        return r.first <= here && here <= r.second;
-      });
-  CHECK(ranges.end() != it);
-
+  const auto& range = GetTextRange();
   auto data = std::make_unique<std::vector<TimestampAndResidency>>();
   for (int i = 0; i < 60; ++i) {
-    if (!CollectResidency(*it, data.get()))
+    if (!CollectResidency(range, data.get()))
       return;
     usleep(2e5);
   }
-  DumpResidency(std::move(data));
+  DumpResidency(range, std::move(data));
+#else
+  CHECK(false) << "Only supported on ARM";
+#endif
+}
+
+// static
+void NativeLibraryPrefetcher::MadviseRandomText() {
+#if defined(ARCH_CPU_ARMEL)
+  CheckOrderingSanity();
+  const auto& range = GetTextRange();
+  size_t size = range.second - range.first;
+  int err = madvise(reinterpret_cast<void*>(range.first), size, MADV_RANDOM);
+  if (err) {
+    PLOG(ERROR) << "madvise() failed";
+  }
+#else
+  CHECK(false) << "Only supported on ARM.";
+#endif  // defined(ARCH_CPU_ARMEL)
 }
 
 }  // namespace android

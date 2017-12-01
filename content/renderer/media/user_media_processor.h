@@ -16,6 +16,7 @@
 #include "base/sequence_checker.h"
 #include "content/common/content_export.h"
 #include "content/common/media/media_devices.mojom.h"
+#include "content/common/media/media_stream.mojom.h"
 #include "content/renderer/media/media_stream_dispatcher_eventhandler.h"
 #include "content/renderer/media/media_stream_source.h"
 #include "third_party/WebKit/public/platform/WebVector.h"
@@ -36,7 +37,7 @@ namespace content {
 
 class AudioCaptureSettings;
 class MediaStreamAudioSource;
-class MediaStreamDispatcher;
+class MediaStreamDeviceObserver;
 class MediaStreamVideoSource;
 class PeerConnectionDependencyFactory;
 class VideoCaptureSettings;
@@ -69,7 +70,7 @@ class CONTENT_EXPORT UserMediaProcessor
   UserMediaProcessor(
       RenderFrame* render_frame,
       PeerConnectionDependencyFactory* dependency_factory,
-      std::unique_ptr<MediaStreamDispatcher> media_stream_dispatcher,
+      std::unique_ptr<MediaStreamDeviceObserver> media_stream_device_observer,
       MediaDevicesDispatcherCallback media_devices_dispatcher_cb,
       const scoped_refptr<base::TaskRunner>& worker_task_runner);
   ~UserMediaProcessor() override;
@@ -100,19 +101,17 @@ class CONTENT_EXPORT UserMediaProcessor
   // those sources.
   void StopAllProcessing();
 
-  MediaStreamDispatcher* media_stream_dispatcher() const {
-    return media_stream_dispatcher_.get();
+  MediaStreamDeviceObserver* media_stream_device_observer() const {
+    return media_stream_device_observer_.get();
   }
 
   // MediaStreamDispatcherEventHandler implementation.
-  void OnStreamGenerated(int request_id,
-                         const std::string& label,
-                         const MediaStreamDevices& audio_devices,
-                         const MediaStreamDevices& video_devices) override;
-  void OnStreamGenerationFailed(int request_id,
-                                MediaStreamRequestResult result) override;
-  void OnDeviceStopped(const std::string& label,
-                       const MediaStreamDevice& device) override;
+  void OnDeviceStopped(const MediaStreamDevice& device) override;
+
+  void set_media_stream_dispatcher_host_for_testing(
+      mojom::MediaStreamDispatcherHostPtr dispatcher_host) {
+    dispatcher_host_ = std::move(dispatcher_host);
+  }
 
  protected:
   // These methods are virtual for test purposes. A test can override them to
@@ -147,6 +146,14 @@ class CONTENT_EXPORT UserMediaProcessor
   class RequestInfo;
   typedef std::vector<blink::WebMediaStreamSource> LocalStreamSources;
 
+  void OnStreamGenerated(int request_id,
+                         MediaStreamRequestResult result,
+                         const std::string& label,
+                         const MediaStreamDevices& audio_devices,
+                         const MediaStreamDevices& video_devices);
+  void OnStreamGenerationFailed(int request_id,
+                                MediaStreamRequestResult result);
+
   bool IsCurrentRequestInfo(int request_id) const;
   bool IsCurrentRequestInfo(
       const blink::WebUserMediaRequest& web_request) const;
@@ -162,7 +169,7 @@ class CONTENT_EXPORT UserMediaProcessor
   void OnLocalSourceStopped(const blink::WebMediaStreamSource& source);
 
   // Creates a WebKit representation of stream sources based on
-  // |devices| from the MediaStreamDispatcher.
+  // |devices| from the MediaStreamDispatcherHost.
   blink::WebMediaStreamSource InitializeVideoSourceObject(
       const MediaStreamDevice& device);
 
@@ -235,6 +242,7 @@ class CONTENT_EXPORT UserMediaProcessor
   void StopLocalSource(const blink::WebMediaStreamSource& source,
                        bool notify_dispatcher);
 
+  const mojom::MediaStreamDispatcherHostPtr& GetMediaStreamDispatcherHost();
   const ::mojom::MediaDevicesDispatcherHostPtr& GetMediaDevicesDispatcher();
 
   void SetupAudioInput();
@@ -262,12 +270,16 @@ class CONTENT_EXPORT UserMediaProcessor
   // audio.
   PeerConnectionDependencyFactory* const dependency_factory_;
 
-  // UserMediaProcessor owns MediaStreamDispatcher instead of RenderFrameImpl
-  // (or RenderFrameObserver) to ensure tear-down occurs in the right order.
-  const std::unique_ptr<MediaStreamDispatcher> media_stream_dispatcher_;
+  // UserMediaProcessor owns MediaStreamDeviceObserver instead of
+  // RenderFrameImpl (or RenderFrameObserver) to ensure tear-down occurs in the
+  // right order.
+  const std::unique_ptr<MediaStreamDeviceObserver>
+      media_stream_device_observer_;
 
   LocalStreamSources local_sources_;
   LocalStreamSources pending_local_sources_;
+
+  mojom::MediaStreamDispatcherHostPtr dispatcher_host_;
 
   // UserMedia requests are processed sequentially. |current_request_info_|
   // contains the request currently being processed, if any, and

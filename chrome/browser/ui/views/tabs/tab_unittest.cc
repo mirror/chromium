@@ -11,6 +11,7 @@
 #include "chrome/browser/ui/layout_constants.h"
 #include "chrome/browser/ui/tabs/tab_utils.h"
 #include "chrome/browser/ui/views/tabs/alert_indicator_button.h"
+#include "chrome/browser/ui/views/tabs/tab_close_button.h"
 #include "chrome/browser/ui/views/tabs/tab_controller.h"
 #include "chrome/grit/theme_resources.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -77,8 +78,6 @@ class FakeTabController : public TabController {
     *custom_image = false;
     return IDR_THEME_TAB_BACKGROUND;
   }
-  void UpdateTabAccessibilityState(const Tab* tab,
-                                   ui::AXNodeData* node_data) override {}
   base::string16 GetAccessibleTabName(const Tab* tab) const override {
     return base::string16();
   }

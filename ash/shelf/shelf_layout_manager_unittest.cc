@@ -142,7 +142,7 @@ class ShelfDragCallback {
               shelf_widget_bounds_.bottom());
   }
 
-  virtual ~ShelfDragCallback() {}
+  virtual ~ShelfDragCallback() = default;
 
   void ProcessScroll(ui::EventType type, const gfx::Vector2dF& delta) {
     if (GetShelfLayoutManager()->visibility_state() == SHELF_HIDDEN)
@@ -228,7 +228,7 @@ class ShelfLayoutObserverTest : public ShelfLayoutManagerObserver {
  public:
   ShelfLayoutObserverTest() : changed_auto_hide_state_(false) {}
 
-  ~ShelfLayoutObserverTest() override {}
+  ~ShelfLayoutObserverTest() override = default;
 
   bool changed_auto_hide_state() const { return changed_auto_hide_state_; }
 
@@ -247,7 +247,7 @@ class ShelfLayoutObserverTest : public ShelfLayoutManagerObserver {
 
 class ShelfLayoutManagerTest : public AshTestBase {
  public:
-  ShelfLayoutManagerTest() {}
+  ShelfLayoutManagerTest() = default;
 
   // Calls the private SetState() function.
   void SetState(ShelfLayoutManager* layout_manager,
@@ -534,7 +534,7 @@ void ShelfLayoutManagerTest::RunGestureDragTests(gfx::Vector2d delta) {
   // Put |widget| into fullscreen. Set the shelf to be auto hidden when |widget|
   // is fullscreen. (eg browser immersive fullscreen).
   widget->SetFullscreen(true);
-  wm::GetWindowState(window)->set_hide_shelf_when_fullscreen(false);
+  wm::GetWindowState(window)->SetHideShelfWhenFullscreen(false);
   layout_manager->UpdateVisibilityState();
 
   gfx::Rect bounds_fullscreen = window->bounds();
@@ -570,7 +570,7 @@ void ShelfLayoutManagerTest::RunGestureDragTests(gfx::Vector2d delta) {
 
   // Set the shelf to be hidden when |widget| is fullscreen. (eg tab fullscreen
   // with or without immersive browser fullscreen).
-  wm::GetWindowState(window)->set_hide_shelf_when_fullscreen(true);
+  wm::GetWindowState(window)->SetHideShelfWhenFullscreen(true);
 
   layout_manager->UpdateVisibilityState();
   EXPECT_EQ(SHELF_HIDDEN, shelf->GetVisibilityState());
@@ -1834,7 +1834,7 @@ TEST_F(ShelfLayoutManagerTest, AutohideShelfForAutohideWhenActiveWindow) {
 
   // The hide_shelf_when_active flag should override the behavior of the
   // hide_shelf_when_fullscreen flag even if the window is currently fullscreen.
-  wm::GetWindowState(window_two)->set_hide_shelf_when_fullscreen(false);
+  wm::GetWindowState(window_two)->SetHideShelfWhenFullscreen(false);
   widget_two->SetFullscreen(true);
   EXPECT_EQ(SHELF_AUTO_HIDE, shelf->GetVisibilityState());
   wm::GetWindowState(window_two)->Restore();
@@ -2086,8 +2086,8 @@ TEST_F(ShelfLayoutManagerTest, ShelfLayoutInUnifiedDesktop) {
 
 class ShelfLayoutManagerKeyboardTest : public AshTestBase {
  public:
-  ShelfLayoutManagerKeyboardTest() {}
-  ~ShelfLayoutManagerKeyboardTest() override {}
+  ShelfLayoutManagerKeyboardTest() = default;
+  ~ShelfLayoutManagerKeyboardTest() override = default;
 
   // AshTestBase:
   void SetUp() override {

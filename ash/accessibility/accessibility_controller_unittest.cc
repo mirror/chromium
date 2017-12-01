@@ -4,6 +4,7 @@
 
 #include "ash/accessibility/accessibility_controller.h"
 
+#include "ash/accessibility/test_accessibility_controller_client.h"
 #include "ash/ash_constants.h"
 #include "ash/public/cpp/ash_pref_names.h"
 #include "ash/session/session_controller.h"
@@ -15,6 +16,10 @@
 
 namespace ash {
 
+void CopyResult(base::TimeDelta* dest, base::TimeDelta src) {
+  *dest = src;
+}
+
 class TestAccessibilityObserver : public AccessibilityObserver {
  public:
   TestAccessibilityObserver() = default;
@@ -23,10 +28,15 @@ class TestAccessibilityObserver : public AccessibilityObserver {
   // AccessibilityObserver:
   void OnAccessibilityStatusChanged(
       AccessibilityNotificationVisibility notify) override {
-    changed_++;
+    if (notify == A11Y_NOTIFICATION_NONE) {
+      ++notification_none_changed_;
+    } else if (notify == A11Y_NOTIFICATION_SHOW) {
+      ++notification_show_changed_;
+    }
   }
 
-  int changed_ = 0;
+  int notification_none_changed_ = 0;
+  int notification_show_changed_ = 0;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TestAccessibilityObserver);
@@ -43,6 +53,8 @@ TEST_F(AccessibilityControllerTest, PrefsAreRegistered) {
   EXPECT_TRUE(prefs->FindPreference(prefs::kAccessibilityMonoAudioEnabled));
   EXPECT_TRUE(
       prefs->FindPreference(prefs::kAccessibilityScreenMagnifierEnabled));
+  EXPECT_TRUE(
+      prefs->FindPreference(prefs::kAccessibilitySpokenFeedbackEnabled));
 }
 
 TEST_F(AccessibilityControllerTest, SetHighContrastEnabled) {
@@ -52,15 +64,15 @@ TEST_F(AccessibilityControllerTest, SetHighContrastEnabled) {
 
   TestAccessibilityObserver observer;
   Shell::Get()->system_tray_notifier()->AddAccessibilityObserver(&observer);
-  EXPECT_EQ(0, observer.changed_);
+  EXPECT_EQ(0, observer.notification_none_changed_);
 
   controller->SetHighContrastEnabled(true);
   EXPECT_TRUE(controller->IsHighContrastEnabled());
-  EXPECT_EQ(1, observer.changed_);
+  EXPECT_EQ(1, observer.notification_none_changed_);
 
   controller->SetHighContrastEnabled(false);
   EXPECT_FALSE(controller->IsHighContrastEnabled());
-  EXPECT_EQ(2, observer.changed_);
+  EXPECT_EQ(2, observer.notification_none_changed_);
 
   Shell::Get()->system_tray_notifier()->RemoveAccessibilityObserver(&observer);
 }
@@ -72,15 +84,15 @@ TEST_F(AccessibilityControllerTest, SetLargeCursorEnabled) {
 
   TestAccessibilityObserver observer;
   Shell::Get()->system_tray_notifier()->AddAccessibilityObserver(&observer);
-  EXPECT_EQ(0, observer.changed_);
+  EXPECT_EQ(0, observer.notification_none_changed_);
 
   controller->SetLargeCursorEnabled(true);
   EXPECT_TRUE(controller->IsLargeCursorEnabled());
-  EXPECT_EQ(1, observer.changed_);
+  EXPECT_EQ(1, observer.notification_none_changed_);
 
   controller->SetLargeCursorEnabled(false);
   EXPECT_FALSE(controller->IsLargeCursorEnabled());
-  EXPECT_EQ(2, observer.changed_);
+  EXPECT_EQ(2, observer.notification_none_changed_);
 
   Shell::Get()->system_tray_notifier()->RemoveAccessibilityObserver(&observer);
 }
@@ -109,17 +121,56 @@ TEST_F(AccessibilityControllerTest, SetMonoAudioEnabled) {
 
   TestAccessibilityObserver observer;
   Shell::Get()->system_tray_notifier()->AddAccessibilityObserver(&observer);
-  EXPECT_EQ(0, observer.changed_);
+  EXPECT_EQ(0, observer.notification_none_changed_);
 
   controller->SetMonoAudioEnabled(true);
   EXPECT_TRUE(controller->IsMonoAudioEnabled());
-  EXPECT_EQ(1, observer.changed_);
+  EXPECT_EQ(1, observer.notification_none_changed_);
 
   controller->SetMonoAudioEnabled(false);
   EXPECT_FALSE(controller->IsMonoAudioEnabled());
-  EXPECT_EQ(2, observer.changed_);
+  EXPECT_EQ(2, observer.notification_none_changed_);
 
   Shell::Get()->system_tray_notifier()->RemoveAccessibilityObserver(&observer);
+}
+
+TEST_F(AccessibilityControllerTest, SetSpokenFeedbackEnabled) {
+  AccessibilityController* controller =
+      Shell::Get()->accessibility_controller();
+  EXPECT_FALSE(controller->IsSpokenFeedbackEnabled());
+
+  TestAccessibilityObserver observer;
+  Shell::Get()->system_tray_notifier()->AddAccessibilityObserver(&observer);
+  EXPECT_EQ(0, observer.notification_none_changed_);
+  EXPECT_EQ(0, observer.notification_show_changed_);
+
+  controller->SetSpokenFeedbackEnabled(true, A11Y_NOTIFICATION_SHOW);
+  EXPECT_TRUE(controller->IsSpokenFeedbackEnabled());
+  EXPECT_EQ(0, observer.notification_none_changed_);
+  EXPECT_EQ(1, observer.notification_show_changed_);
+
+  controller->SetSpokenFeedbackEnabled(false, A11Y_NOTIFICATION_NONE);
+  EXPECT_FALSE(controller->IsSpokenFeedbackEnabled());
+  EXPECT_EQ(1, observer.notification_none_changed_);
+  EXPECT_EQ(1, observer.notification_show_changed_);
+
+  Shell::Get()->system_tray_notifier()->RemoveAccessibilityObserver(&observer);
+}
+
+// Tests that ash's controller gets shutdown sound duration properly from
+// remote client.
+TEST_F(AccessibilityControllerTest, GetShutdownSoundDuration) {
+  AccessibilityController* controller =
+      Shell::Get()->accessibility_controller();
+  TestAccessibilityControllerClient client;
+  controller->SetClient(client.CreateInterfacePtrAndBind());
+
+  base::TimeDelta sound_duration;
+  controller->PlayShutdownSound(
+      base::Bind(&CopyResult, base::Unretained(&sound_duration)));
+  controller->FlushMojoForTest();
+  EXPECT_EQ(TestAccessibilityControllerClient::kShutdownSoundDuration,
+            sound_duration);
 }
 
 using AccessibilityControllerSigninTest = NoSessionAshTestBase;

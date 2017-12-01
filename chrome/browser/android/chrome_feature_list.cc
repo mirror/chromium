@@ -66,6 +66,8 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kChromeHomeBottomNavLabels,
     &kChromeHomeDestroySuggestions,
     &kChromeHomeDropAllButFirstThumbnail,
+    &kChromeHomeInactivitySheetExpansion,
+    &kChromeHomePersistentIph,
     &kChromeHomePromo,
     &kChromeHomePromoOnStartup,
     &kChromeHomeOptOutSnackbar,
@@ -77,6 +79,7 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kContentSuggestionsSettings,
     &kContentSuggestionsThumbnailDominantColor,
     &kContextualSearchMlTapSuppression,
+    &kContextualSearchRankerQuery,
     &kContextualSuggestionsCarousel,
     &kCustomContextMenu,
     &kCustomFeedbackUi,
@@ -91,6 +94,7 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kNoCreditCardAbort,
     &kNTPCondensedLayoutFeature,
     &kNTPCondensedTileLayoutFeature,
+    &kNTPModernLayoutFeature,
     &kNTPLaunchAfterInactivity,
     &kNTPOfflinePagesFeature,
     &NTPShowGoogleGInOmniboxFeature,
@@ -128,6 +132,7 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &offline_pages::kOfflinePagesCTV2Feature,  // See crbug.com/734753.
     &offline_pages::kOfflinePagesSharingFeature,
     &omnibox::kAndroidChromeHomePersonalizedSuggestions,
+    &password_manager::features::kPasswordExport,
     &password_manager::features::kViewPasswords,
     &subresource_filter::kSafeBrowsingSubresourceFilterExperimentalUI,
     &safe_browsing::kDispatchSafetyNetCheckOffThread,
@@ -185,6 +190,12 @@ const base::Feature kChromeHomeDestroySuggestions{
 const base::Feature kChromeHomeDropAllButFirstThumbnail{
     "ChromeHomeDropAllButFirstThumbnail", base::FEATURE_DISABLED_BY_DEFAULT};
 
+const base::Feature kChromeHomeInactivitySheetExpansion{
+    "ChromeHomeInactivitySheetExpansion", base::FEATURE_DISABLED_BY_DEFAULT};
+
+const base::Feature kChromeHomePersistentIph{"ChromeHomePersistentIph",
+                                             base::FEATURE_DISABLED_BY_DEFAULT};
+
 const base::Feature kChromeHomePromo{"ChromeHomePromo",
                                      base::FEATURE_DISABLED_BY_DEFAULT};
 
@@ -218,6 +229,9 @@ const base::Feature kContentSuggestionsThumbnailDominantColor{
 
 const base::Feature kContextualSearchMlTapSuppression{
     "ContextualSearchMlTapSuppression", base::FEATURE_DISABLED_BY_DEFAULT};
+
+const base::Feature kContextualSearchRankerQuery{
+    "ContextualSearchRankerQuery", base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kContextualSuggestionsCarousel{
     "ContextualSuggestionsCarousel", base::FEATURE_DISABLED_BY_DEFAULT};
@@ -257,7 +271,7 @@ const base::Feature kSearchEnginePromoNewDevice{
     "SearchEnginePromo.NewDevice", base::FEATURE_ENABLED_BY_DEFAULT};
 
 const base::Feature kNewPhotoPicker{"NewPhotoPicker",
-                                    base::FEATURE_DISABLED_BY_DEFAULT};
+                                    base::FEATURE_ENABLED_BY_DEFAULT};
 
 const base::Feature kNoCreditCardAbort{"NoCreditCardAbort",
                                        base::FEATURE_DISABLED_BY_DEFAULT};
@@ -267,6 +281,9 @@ const base::Feature kNTPCondensedLayoutFeature{
 
 const base::Feature kNTPCondensedTileLayoutFeature{
     "NTPCondensedTileLayout", base::FEATURE_ENABLED_BY_DEFAULT};
+
+const base::Feature kNTPModernLayoutFeature{"NTPModernLayout",
+                                            base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kNTPLaunchAfterInactivity{
     "NTPLaunchAfterInactivity", base::FEATURE_DISABLED_BY_DEFAULT};

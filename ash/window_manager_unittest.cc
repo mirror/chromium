@@ -41,8 +41,8 @@ namespace ash {
 
 class WindowTreeClientDelegate : public aura::WindowTreeClientDelegate {
  public:
-  WindowTreeClientDelegate() {}
-  ~WindowTreeClientDelegate() override {}
+  WindowTreeClientDelegate() = default;
+  ~WindowTreeClientDelegate() override = default;
 
   void WaitForEmbed() { run_loop_.Run(); }
 
@@ -76,7 +76,7 @@ class WindowManagerServiceTest : public service_manager::test::ServiceTest {
  public:
   WindowManagerServiceTest()
       : service_manager::test::ServiceTest("mash_unittests") {}
-  ~WindowManagerServiceTest() override {}
+  ~WindowManagerServiceTest() override = default;
 
   void TearDown() override {
     // Unset the screen installed by the test.
@@ -108,7 +108,7 @@ TEST_F(WindowManagerServiceTest, OpenWindow) {
   aura::WindowTreeClient client(connector(), &window_tree_delegate, nullptr,
                                 nullptr, nullptr, false);
   client.ConnectViaWindowTreeFactory();
-  aura::test::EnvTestHelper().SetWindowTreeClient(&client);
+  aura::test::EnvWindowTreeClientSetter env_window_tree_client_setter(&client);
   std::map<std::string, std::vector<uint8_t>> properties;
   properties[ui::mojom::WindowManager::kWindowType_InitProperty] =
       mojo::ConvertTo<std::vector<uint8_t>>(

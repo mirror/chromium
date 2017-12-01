@@ -31,6 +31,8 @@ class VrTestContext : public vr::UiBrowserInterface {
   ~VrTestContext() override;
 
   void OnGlInitialized();
+  // TODO(vollick): we should refactor VrShellGl's rendering logic and use it
+  // directly. crbug.com/767282
   void DrawFrame();
   void HandleInput(ui::Event* event);
 
@@ -40,8 +42,8 @@ class VrTestContext : public vr::UiBrowserInterface {
   void NavigateBack() override;
   void ExitCct() override;
   void OnUnsupportedMode(vr::UiUnsupportedMode mode) override;
-  void OnExitVrPromptResult(vr::UiUnsupportedMode reason,
-                            vr::ExitVrPromptChoice choice) override;
+  void OnExitVrPromptResult(vr::ExitVrPromptChoice choice,
+                            vr::UiUnsupportedMode reason) override;
   void OnContentScreenBoundsChanged(const gfx::SizeF& bounds) override;
   void SetVoiceSearchActive(bool active) override;
   void StartAutocomplete(const base::string16& string) override;
@@ -53,6 +55,9 @@ class VrTestContext : public vr::UiBrowserInterface {
  private:
   unsigned int CreateFakeContentTexture();
   void CreateFakeOmniboxSuggestions();
+  void CreateFakeVoiceSearchResult();
+  void CycleWebVrModes();
+  void ToggleSplashScreen();
   gfx::Transform ProjectionMatrix() const;
   gfx::Transform ViewProjectionMatrix() const;
   ControllerModel UpdateController();
@@ -75,6 +80,9 @@ class VrTestContext : public vr::UiBrowserInterface {
 
   bool fullscreen_ = false;
   bool incognito_ = false;
+
+  bool show_web_vr_splash_screen_ = false;
+  bool voice_search_enabled_ = false;
 
   ControllerModel last_controller_model_;
 

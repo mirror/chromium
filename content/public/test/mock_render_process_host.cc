@@ -414,13 +414,9 @@ bool MockRenderProcessHost::StopWebRTCEventLog() {
   return false;
 }
 
-void MockRenderProcessHost::SetEchoCanceller3(bool enable) {}
-
-void MockRenderProcessHost::SetWebRtcLogMessageCallback(
-    base::Callback<void(const std::string&)> callback) {
-}
-
-void MockRenderProcessHost::ClearWebRtcLogMessageCallback() {}
+void MockRenderProcessHost::SetEchoCanceller3(
+    bool enable,
+    base::OnceCallback<void(bool, const std::string&)> callback) {}
 
 RenderProcessHost::WebRtcStopRtpDumpCallback
 MockRenderProcessHost::StartRtpDump(

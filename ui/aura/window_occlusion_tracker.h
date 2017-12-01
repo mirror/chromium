@@ -151,8 +151,8 @@ class AURA_EXPORT WindowOcclusionTracker : public ui::LayerAnimationObserver,
                              const gfx::Rect& old_bounds,
                              const gfx::Rect& new_bounds,
                              ui::PropertyChangeReason reason) override;
-  void OnWindowOpacityChanged(Window* window,
-                              ui::PropertyChangeReason reason) override;
+  void OnWindowOpacitySet(Window* window,
+                          ui::PropertyChangeReason reason) override;
   void OnWindowTransformed(Window* window,
                            ui::PropertyChangeReason reason) override;
   void OnWindowStackingChanged(Window* window) override;
@@ -160,6 +160,7 @@ class AURA_EXPORT WindowOcclusionTracker : public ui::LayerAnimationObserver,
   void OnWindowAddedToRootWindow(Window* window) override;
   void OnWindowRemovingFromRootWindow(Window* window,
                                       Window* new_root) override;
+  void OnWindowLayerRecreated(Window* window) override;
 
   struct RootWindowState {
     // Number of Windows whose occlusion state is tracked under this root

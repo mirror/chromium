@@ -56,7 +56,6 @@
 #include "chrome/browser/ui/scoped_tabbed_browser_displayer.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/grit/chromium_strings.h"
-#include "chrome/grit/generated_resources.h"
 #include "chrome/grit/theme_resources.h"
 #include "chromeos/chromeos_switches.h"
 #include "components/prefs/pref_service.h"
@@ -102,17 +101,6 @@ class AccessibilityDelegateImpl : public ash::AccessibilityDelegate {
   }
   ~AccessibilityDelegateImpl() override {
     ash::Shell::Get()->RemoveShellObserver(AccessibilityManager::Get());
-  }
-
-  bool IsSpokenFeedbackEnabled() const override {
-    DCHECK(AccessibilityManager::Get());
-    return AccessibilityManager::Get()->IsSpokenFeedbackEnabled();
-  }
-
-  void ToggleSpokenFeedback(
-      ash::AccessibilityNotificationVisibility notify) override {
-    DCHECK(AccessibilityManager::Get());
-    AccessibilityManager::Get()->ToggleSpokenFeedback(notify);
   }
 
   void SetMagnifierEnabled(bool enabled) override {
@@ -260,16 +248,6 @@ class AccessibilityDelegateImpl : public ash::AccessibilityDelegate {
   void PlaySpokenFeedbackToggleCountdown(int tick_count) override {
     DCHECK(AccessibilityManager::Get());
     AccessibilityManager::Get()->PlaySpokenFeedbackToggleCountdown(tick_count);
-  }
-
-  void PlayEarcon(int sound_key) override {
-    DCHECK(AccessibilityManager::Get());
-    AccessibilityManager::Get()->PlayEarcon(
-        sound_key, chromeos::PlaySoundOption::SPOKEN_FEEDBACK_ENABLED);
-  }
-
-  base::TimeDelta PlayShutdownSound() const override {
-    return AccessibilityManager::Get()->PlayShutdownSound();
   }
 
   void HandleAccessibilityGesture(ui::AXGesture gesture) override {

@@ -8,6 +8,7 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/time/time.h"
+#include "cc/test/geometry_test_utils.h"
 #include "chrome/browser/vr/content_input_delegate.h"
 #include "chrome/browser/vr/elements/rect.h"
 #include "chrome/browser/vr/elements/ui_element.h"
@@ -15,10 +16,10 @@
 #include "chrome/browser/vr/test/animation_utils.h"
 #include "chrome/browser/vr/test/constants.h"
 #include "chrome/browser/vr/test/mock_content_input_delegate.h"
-#include "chrome/browser/vr/test/ui_scene_manager_test.h"
+#include "chrome/browser/vr/test/ui_test.h"
 #include "chrome/browser/vr/ui_scene.h"
 #include "chrome/browser/vr/ui_scene_constants.h"
-#include "chrome/browser/vr/ui_scene_manager.h"
+#include "chrome/browser/vr/ui_scene_creator.h"
 #include "chrome/browser/vr/ui_unsupported_mode.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "third_party/WebKit/public/platform/WebGestureEvent.h"
@@ -69,33 +70,38 @@ class UiInputManagerTest : public testing::Test {
 
   void HandleInput(const gfx::Vector3dF& laser_direction,
                    UiInputManager::ButtonState button_state) {
-    ControllerModel controller_model;
-    controller_model.laser_direction = laser_direction;
-    controller_model.laser_origin = {0, 0, 0};
-    controller_model.touchpad_button_state = button_state;
-    ReticleModel reticle_model;
-    GestureList gesture_list;
-    input_manager_->HandleInput(MsToTicks(1), controller_model, &reticle_model,
-                                &gesture_list);
+    HandleInput({0, 0, 0}, laser_direction, button_state);
+  }
+
+  void HandleInput(const gfx::Point3F& laser_origin,
+                   const gfx::Vector3dF& laser_direction,
+                   UiInputManager::ButtonState button_state) {
+    controller_model_.laser_direction = laser_direction;
+    controller_model_.laser_origin = laser_origin;
+    controller_model_.touchpad_button_state = button_state;
+    input_manager_->HandleInput(MsToTicks(1), controller_model_,
+                                &reticle_model_, &gesture_list_);
   }
 
  protected:
   std::unique_ptr<UiScene> scene_;
   std::unique_ptr<UiInputManager> input_manager_;
+  ReticleModel reticle_model_;
+  ControllerModel controller_model_;
+  GestureList gesture_list_;
   InSequence inSequence;
 };
 
-class UiInputManagerContentTest : public UiSceneManagerTest {
+class UiInputManagerContentTest : public UiTest {
  public:
   void SetUp() override {
-    UiSceneManagerTest::SetUp();
-    MakeManager(kNotInCct, kNotInWebVr);
-    input_manager_ = base::MakeUnique<UiInputManager>(scene_.get());
-    EXPECT_TRUE(scene_->OnBeginFrame(MicrosecondsToTicks(1), kForwardVector));
+    UiTest::SetUp();
+    CreateScene(kNotInCct, kNotInWebVr);
+    input_manager_ = ui_->input_manager();
   }
 
  protected:
-  std::unique_ptr<UiInputManager> input_manager_;
+  UiInputManager* input_manager_;
 };
 
 TEST_F(UiInputManagerTest, ReticleRenderTarget) {
@@ -232,8 +238,42 @@ TEST_F(UiInputManagerTest, ElementDeletion) {
   Mock::VerifyAndClearExpectations(p_element);
 }
 
+// This ensures that the input manager can support both the strategy of hit
+// testing along the laser's ray as well as the ray from the world origin to a
+// point far along the laser.
+TEST_F(UiInputManagerTest, HitTestStrategy) {
+  auto element = base::MakeUnique<Rect>();
+  auto* p_element = element.get();
+  element->SetTranslate(0, 0, -2.5);
+  element->SetVisible(true);
+  element->SetSize(1000.0f, 1000.0f);
+  scene_->AddUiElement(kRoot, std::move(element));
+  scene_->OnBeginFrame(base::TimeTicks(), kForwardVector);
+
+  gfx::Point3F center;
+  p_element->world_space_transform().TransformPoint(&center);
+  gfx::Point3F laser_origin(0.5, -0.5, 0.0);
+
+  HandleInput(laser_origin, center - laser_origin, kDown);
+
+  ASSERT_NE(0, reticle_model_.target_element_id);
+  EXPECT_EQ(p_element->id(), reticle_model_.target_element_id);
+  EXPECT_POINT3F_EQ(gfx::Point3F(-0.45f, 0.45f, -2.5f),
+                    reticle_model_.target_point);
+
+  input_manager_->set_hit_test_strategy(
+      UiInputManager::PROJECT_TO_LASER_ORIGIN_FOR_TEST);
+
+  HandleInput(laser_origin, center - laser_origin, kDown);
+
+  ASSERT_NE(0, reticle_model_.target_element_id);
+  EXPECT_EQ(p_element->id(), reticle_model_.target_element_id);
+  EXPECT_POINT3F_EQ(gfx::Point3F(0.0f, 0.0, -2.5f),
+                    reticle_model_.target_point);
+}
+
 TEST_F(UiInputManagerContentTest, NoMouseMovesDuringClick) {
-  EXPECT_TRUE(AnimateBy(MsToDelta(500)));
+  EXPECT_TRUE(RunFor(MsToDelta(500)));
   // It would be nice if the controller weren't platform specific and we could
   // mock out the underlying sensor data. For now, we will hallucinate
   // parameters to HandleInput.
@@ -267,7 +307,7 @@ TEST_F(UiInputManagerContentTest, NoMouseMovesDuringClick) {
 
 TEST_F(UiInputManagerContentTest, ExitPromptHitTesting) {
   model_->active_modal_prompt_type = kModalPromptTypeExitVRForSiteInfo;
-  EXPECT_TRUE(AnimateBy(MsToDelta(500)));
+  EXPECT_TRUE(RunFor(MsToDelta(500)));
 
   UiElement* exit_prompt =
       scene_->GetUiElementByName(UiElementName::kExitPrompt);
@@ -290,8 +330,9 @@ TEST_F(UiInputManagerContentTest, ExitPromptHitTesting) {
 }
 
 TEST_F(UiInputManagerContentTest, AudioPermissionPromptHitTesting) {
-  model_->active_modal_prompt_type = kModalPromptTypeExitVRForAudioPermission;
-  EXPECT_TRUE(AnimateBy(MsToDelta(500)));
+  model_->active_modal_prompt_type =
+      kModalPromptTypeExitVRForVoiceSearchRecordAudioOsPermission;
+  EXPECT_TRUE(RunFor(MsToDelta(500)));
 
   UiElement* url_bar = scene_->GetUiElementByName(UiElementName::kUrlBar);
   gfx::Point3F url_bar_center;
@@ -338,8 +379,9 @@ TEST_F(UiInputManagerContentTest, TreeVsZOrder) {
   EXPECT_EQ(content_quad->id(), reticle_model.target_element_id);
 
   // We will now move the content quad behind the backplane.
-  content_quad->SetTranslate(0, 0, -2.0 * kTextureOffset);
-  EXPECT_TRUE(AnimateBy(MsToDelta(500)));
+  content_quad->SetTranslate(0, 0, -1.0);
+  OnBeginFrame();
+
   input_manager_->HandleInput(MsToTicks(1), controller_model, &reticle_model,
                               &gesture_list);
 

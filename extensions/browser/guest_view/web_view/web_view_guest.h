@@ -56,6 +56,14 @@ class WebViewGuest : public guest_view::GuestView<WebViewGuest> {
                                              std::string* partition_name,
                                              bool* in_memory);
 
+  // Opposite of GetGuestPartitionConfigForSite: Creates a specially formatted
+  // URL used by the SiteInstance associated with the WebViewGuest. See
+  // GetGuestPartitionConfigForSite for the URL format.
+  static GURL GetSiteForGuestPartitionConfig(
+      const std::string& partition_domain,
+      const std::string& partition_name,
+      bool in_memory);
+
   // Returns the WebView partition ID associated with the render process
   // represented by |render_process_host|, if any. Otherwise, an empty string is
   // returned.
@@ -251,11 +259,11 @@ class WebViewGuest : public guest_view::GuestView<WebViewGuest> {
 
   // WebContentsObserver implementation.
   void DidStartNavigation(content::NavigationHandle* navigation_handle) final;
+  void DidRedirectNavigation(
+      content::NavigationHandle* navigation_handle) final;
   void DidFinishNavigation(content::NavigationHandle* navigation_handle) final;
   void DocumentOnLoadCompletedInMainFrame() final;
   void RenderProcessGone(base::TerminationStatus status) final;
-  void DidGetRedirectForResourceRequest(
-      const content::ResourceRedirectDetails& details) final;
   void UserAgentOverrideSet(const std::string& user_agent) final;
   void FrameNameChanged(content::RenderFrameHost* render_frame_host,
                         const std::string& name) final;

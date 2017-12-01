@@ -114,14 +114,20 @@ class MockDtmfSender : public DtmfSenderInterface {
 };
 
 FakeRtpReceiver::FakeRtpReceiver(
-    rtc::scoped_refptr<webrtc::MediaStreamTrackInterface> track)
-    : track_(track) {}
+    rtc::scoped_refptr<webrtc::MediaStreamTrackInterface> track,
+    std::vector<rtc::scoped_refptr<webrtc::MediaStreamInterface>> streams)
+    : track_(std::move(track)), streams_(std::move(streams)) {}
 
 FakeRtpReceiver::~FakeRtpReceiver() {}
 
 rtc::scoped_refptr<webrtc::MediaStreamTrackInterface> FakeRtpReceiver::track()
     const {
   return track_;
+}
+
+std::vector<rtc::scoped_refptr<webrtc::MediaStreamInterface>>
+FakeRtpReceiver::streams() const {
+  return streams_;
 }
 
 cricket::MediaType FakeRtpReceiver::media_type() const {
@@ -165,8 +171,17 @@ MockPeerConnectionImpl::MockPeerConnectionImpl(
       observer_(observer) {
   ON_CALL(*this, SetLocalDescription(_, _)).WillByDefault(testing::Invoke(
       this, &MockPeerConnectionImpl::SetLocalDescriptionWorker));
+  // TODO(hbos): Remove once no longer mandatory to implement.
   ON_CALL(*this, SetRemoteDescription(_, _)).WillByDefault(testing::Invoke(
       this, &MockPeerConnectionImpl::SetRemoteDescriptionWorker));
+  ON_CALL(*this, SetRemoteDescriptionForMock(_, _))
+      .WillByDefault(testing::Invoke(
+          [this](
+              std::unique_ptr<webrtc::SessionDescriptionInterface>* desc,
+              rtc::scoped_refptr<webrtc::SetRemoteDescriptionObserverInterface>*
+                  observer) {
+            SetRemoteDescriptionWorker(nullptr, desc->release());
+          }));
 }
 
 MockPeerConnectionImpl::~MockPeerConnectionImpl() {}

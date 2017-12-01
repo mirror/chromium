@@ -49,7 +49,7 @@ RemoteFontFaceSource::RemoteFontFaceSource(CSSFontFace* css_font_face,
   font_->AddClient(this);
 }
 
-RemoteFontFaceSource::~RemoteFontFaceSource() {}
+RemoteFontFaceSource::~RemoteFontFaceSource() = default;
 
 void RemoteFontFaceSource::Dispose() {
   if (font_) {
@@ -220,7 +220,7 @@ void RemoteFontFaceSource::BeginLoadIfNeeded() {
         font_->IsLowPriorityLoadingAllowedForRemoteFont()) {
       // Set the loading priority to VeryLow since this font is not required
       // for painting the text.
-      font_->DidChangePriority(kResourceLoadPriorityVeryLow, 0);
+      font_->DidChangePriority(ResourceLoadPriority::kVeryLow, 0);
     }
     if (font_selector_->GetExecutionContext()->Fetcher()->StartLoad(font_)) {
       // Start timers only when load is actually started asynchronously.

@@ -12,19 +12,11 @@
 #include "ui/accessibility/ax_action_data.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/accessibility/ax_text_utils.h"
+#include "ui/accessibility/ax_tree_data.h"
 #include "ui/accessibility/platform/atk_util_auralinux.h"
+#include "ui/accessibility/platform/ax_platform_atk_hyperlink.h"
 #include "ui/accessibility/platform/ax_platform_node_delegate.h"
 #include "ui/gfx/geometry/rect_conversions.h"
-
-// Some ATK interfaces require returning a (const gchar*), use
-// this macro to make it safe to return a pointer to a temporary
-// string.
-#define RETURN_STRING(str_expr) \
-  {                             \
-    static std::string result;  \
-    result = (str_expr);        \
-    return result.c_str();      \
-  }
 
 //
 // ax_platform_node_auralinux AtkObject definition and implementation.
@@ -296,7 +288,10 @@ static AtkObject* ax_platform_node_auralinux_ref_accessible_at_point(
   if (!obj)
     return nullptr;
 
-  return obj->HitTestSync(x, y, coord_type);
+  AtkObject* result = obj->HitTestSync(x, y, coord_type);
+  if (result)
+    g_object_ref(result);
+  return result;
 }
 
 static gboolean ax_platform_node_auralinux_grab_focus(
@@ -404,6 +399,203 @@ static const GInterfaceInfo ActionInfo = {
     reinterpret_cast<GInterfaceInitFunc>(ax_action_interface_base_init),
     nullptr, nullptr};
 
+// AtkDocument interface.
+
+static const gchar* ax_platform_node_auralinux_get_document_attribute_value(
+    AtkDocument* atk_doc,
+    const gchar* attribute) {
+  g_return_val_if_fail(ATK_IS_DOCUMENT(atk_doc), nullptr);
+
+  AtkObject* atk_object = ATK_OBJECT(atk_doc);
+  ui::AXPlatformNodeAuraLinux* obj =
+      AtkObjectToAXPlatformNodeAuraLinux(atk_object);
+  if (!obj)
+    return nullptr;
+
+  return obj->GetDocumentAttributeValue(attribute);
+}
+
+static AtkAttributeSet* ax_platform_node_auralinux_get_document_attributes(
+    AtkDocument* atk_doc) {
+  g_return_val_if_fail(ATK_IS_DOCUMENT(atk_doc), 0);
+
+  AtkObject* atk_object = ATK_OBJECT(atk_doc);
+  ui::AXPlatformNodeAuraLinux* obj =
+      AtkObjectToAXPlatformNodeAuraLinux(atk_object);
+  if (!obj)
+    return nullptr;
+
+  return obj->GetDocumentAttributes();
+}
+
+void ax_document_interface_base_init(AtkDocumentIface* iface) {
+  iface->get_document_attribute_value =
+      ax_platform_node_auralinux_get_document_attribute_value;
+  iface->get_document_attributes =
+      ax_platform_node_auralinux_get_document_attributes;
+}
+
+static const GInterfaceInfo DocumentInfo = {
+    reinterpret_cast<GInterfaceInitFunc>(ax_document_interface_base_init),
+    nullptr, nullptr};
+
+//
+// AtkImage interface.
+//
+
+static void ax_platform_node_auralinux_get_image_position(
+    AtkImage* atk_img,
+    gint* x,
+    gint* y,
+    AtkCoordType coord_type) {
+  g_return_if_fail(ATK_IMAGE(atk_img));
+
+  AtkObject* atk_object = ATK_OBJECT(atk_img);
+  ui::AXPlatformNodeAuraLinux* obj =
+      AtkObjectToAXPlatformNodeAuraLinux(atk_object);
+  if (!obj)
+    return;
+
+  obj->GetPosition(x, y, coord_type);
+}
+
+static const gchar* ax_platform_node_auralinux_get_image_description(
+    AtkImage* atk_img) {
+  g_return_val_if_fail(ATK_IMAGE(atk_img), nullptr);
+
+  AtkObject* atk_object = ATK_OBJECT(atk_img);
+  ui::AXPlatformNodeAuraLinux* obj =
+      AtkObjectToAXPlatformNodeAuraLinux(atk_object);
+  if (!obj)
+    return nullptr;
+
+  return obj->GetStringAttribute(ui::AX_ATTR_DESCRIPTION).c_str();
+}
+
+static void ax_platform_node_auralinux_get_image_size(AtkImage* atk_img,
+                                                      gint* width,
+                                                      gint* height) {
+  g_return_if_fail(ATK_IMAGE(atk_img));
+
+  AtkObject* atk_object = ATK_OBJECT(atk_img);
+  ui::AXPlatformNodeAuraLinux* obj =
+      AtkObjectToAXPlatformNodeAuraLinux(atk_object);
+  if (!obj)
+    return;
+
+  obj->GetSize(width, height);
+}
+
+void ax_image_interface_base_init(AtkImageIface* iface) {
+  iface->get_image_position = ax_platform_node_auralinux_get_image_position;
+  iface->get_image_description =
+      ax_platform_node_auralinux_get_image_description;
+  iface->get_image_size = ax_platform_node_auralinux_get_image_size;
+}
+
+static const GInterfaceInfo ImageInfo = {
+    reinterpret_cast<GInterfaceInitFunc>(ax_image_interface_base_init), nullptr,
+    nullptr};
+
+//
+// AtkValue interface
+//
+
+static void ax_platform_node_auralinux_get_current_value(AtkValue* atk_value,
+                                                         GValue* value) {
+  g_return_if_fail(ATK_VALUE(atk_value));
+
+  AtkObject* atk_object = ATK_OBJECT(atk_value);
+  ui::AXPlatformNodeAuraLinux* obj =
+      AtkObjectToAXPlatformNodeAuraLinux(atk_object);
+  if (!obj)
+    return;
+
+  obj->GetFloatAttributeInGValue(ui::AX_ATTR_VALUE_FOR_RANGE, value);
+}
+
+static void ax_platform_node_auralinux_get_minimum_value(AtkValue* atk_value,
+                                                         GValue* value) {
+  g_return_if_fail(ATK_VALUE(atk_value));
+
+  AtkObject* atk_object = ATK_OBJECT(atk_value);
+  ui::AXPlatformNodeAuraLinux* obj =
+      AtkObjectToAXPlatformNodeAuraLinux(atk_object);
+  if (!obj)
+    return;
+
+  obj->GetFloatAttributeInGValue(ui::AX_ATTR_MIN_VALUE_FOR_RANGE, value);
+}
+
+static void ax_platform_node_auralinux_get_maximum_value(AtkValue* atk_value,
+                                                         GValue* value) {
+  g_return_if_fail(ATK_VALUE(atk_value));
+
+  AtkObject* atk_object = ATK_OBJECT(atk_value);
+  ui::AXPlatformNodeAuraLinux* obj =
+      AtkObjectToAXPlatformNodeAuraLinux(atk_object);
+  if (!obj)
+    return;
+
+  obj->GetFloatAttributeInGValue(ui::AX_ATTR_MAX_VALUE_FOR_RANGE, value);
+}
+
+static void ax_platform_node_auralinux_get_minimum_increment(
+    AtkValue* atk_value,
+    GValue* value) {
+  g_return_if_fail(ATK_VALUE(atk_value));
+
+  AtkObject* atk_object = ATK_OBJECT(atk_value);
+  ui::AXPlatformNodeAuraLinux* obj =
+      AtkObjectToAXPlatformNodeAuraLinux(atk_object);
+  if (!obj)
+    return;
+
+  memset(value, 0, sizeof(*value));
+  g_value_init(value, G_TYPE_FLOAT);
+  g_value_set_float(value, obj->GetStepAttribute());
+}
+
+static void ax_value_interface_base_init(AtkValueIface* iface) {
+  iface->get_current_value = ax_platform_node_auralinux_get_current_value;
+  iface->get_maximum_value = ax_platform_node_auralinux_get_maximum_value;
+  iface->get_minimum_value = ax_platform_node_auralinux_get_minimum_value;
+  iface->get_minimum_increment =
+      ax_platform_node_auralinux_get_minimum_increment;
+}
+
+static const GInterfaceInfo ValueInfo = {
+    reinterpret_cast<GInterfaceInitFunc>(ax_value_interface_base_init), nullptr,
+    nullptr};
+
+//
+// AtkHyperlinkImpl interface.
+//
+
+static AtkHyperlink* ax_platform_node_auralinux_get_hyperlink(
+    AtkHyperlinkImpl* atk_hyperlink_impl) {
+  g_return_val_if_fail(ATK_HYPERLINK_IMPL(atk_hyperlink_impl), 0);
+
+  AtkObject* atk_object = ATK_OBJECT(atk_hyperlink_impl);
+  ui::AXPlatformNodeAuraLinux* obj =
+      AtkObjectToAXPlatformNodeAuraLinux(atk_object);
+  if (!obj)
+    return 0;
+
+  AtkHyperlink* atk_hyperlink = obj->GetAtkHyperlink();
+  g_object_ref(atk_hyperlink);
+
+  return atk_hyperlink;
+}
+
+void ax_hyperlink_impl_interface_base_init(AtkHyperlinkImplIface* iface) {
+  iface->get_hyperlink = ax_platform_node_auralinux_get_hyperlink;
+}
+
+static const GInterfaceInfo HyperlinkImplInfo = {
+    reinterpret_cast<GInterfaceInitFunc>(ax_hyperlink_impl_interface_base_init),
+    nullptr, nullptr};
+
 //
 // The rest of the AXPlatformNodeAtk code, not specific to one
 // of the Atk* interfaces.
@@ -508,7 +700,9 @@ int AXPlatformNodeAuraLinux::GetGTypeInterfaceMask() {
 
   // Value Interface
   int role = GetAtkRole();
-  if (role == ATK_ROLE_SCROLL_BAR || role == ATK_ROLE_SLIDER) {
+  if (role == ATK_ROLE_SCROLL_BAR || role == ATK_ROLE_SLIDER ||
+      role == ATK_ROLE_PROGRESS_BAR || role == ATK_ROLE_SEPARATOR ||
+      role == ATK_ROLE_SPIN_BUTTON) {
     interface_mask |= 1 << ATK_VALUE_INTERFACE;
   }
 
@@ -519,6 +713,10 @@ int AXPlatformNodeAuraLinux::GetGTypeInterfaceMask() {
   // Image Interface
   if (role == ATK_ROLE_IMAGE || role == ATK_ROLE_IMAGE_MAP)
     interface_mask |= 1 << ATK_IMAGE_INTERFACE;
+
+  // HyperlinkImpl interface
+  if (role == ATK_ROLE_LINK)
+    interface_mask |= 1 << ATK_HYPERLINK_INTERFACE;
 
   return interface_mask;
 }
@@ -537,30 +735,53 @@ GType AXPlatformNodeAuraLinux::GetAccessibilityGType() {
       nullptr /* value table */
   };
 
-  int interface_mask = GetGTypeInterfaceMask();
-  const char* atk_type_name = GetUniqueAccessibilityGTypeName(interface_mask);
+  const char* atk_type_name = GetUniqueAccessibilityGTypeName(interface_mask_);
   GType type = g_type_from_name(atk_type_name);
   if (type)
     return type;
 
   type = g_type_register_static(AX_PLATFORM_NODE_AURALINUX_TYPE, atk_type_name,
                                 &type_info, GTypeFlags(0));
-  if (interface_mask & (1 << ATK_COMPONENT_INTERFACE))
+  if (interface_mask_ & (1 << ATK_COMPONENT_INTERFACE))
     g_type_add_interface_static(type, ATK_TYPE_COMPONENT, &ComponentInfo);
-  if (interface_mask & (1 << ATK_ACTION_INTERFACE))
+  if (interface_mask_ & (1 << ATK_ACTION_INTERFACE))
     g_type_add_interface_static(type, ATK_TYPE_ACTION, &ActionInfo);
+  if (interface_mask_ & (1 << ATK_DOCUMENT_INTERFACE))
+    g_type_add_interface_static(type, ATK_TYPE_DOCUMENT, &DocumentInfo);
+  if (interface_mask_ & (1 << ATK_IMAGE_INTERFACE))
+    g_type_add_interface_static(type, ATK_TYPE_IMAGE, &ImageInfo);
+  if (interface_mask_ & (1 << ATK_VALUE_INTERFACE))
+    g_type_add_interface_static(type, ATK_TYPE_VALUE, &ValueInfo);
+  if (interface_mask_ & (1 << ATK_HYPERLINK_INTERFACE))
+    g_type_add_interface_static(type, ATK_TYPE_HYPERLINK_IMPL,
+                                &HyperlinkImplInfo);
 
   return type;
 }
 
 AtkObject* AXPlatformNodeAuraLinux::CreateAtkObject() {
   EnsureGTypeInit();
+  interface_mask_ = GetGTypeInterfaceMask();
   GType type = GetAccessibilityGType();
   AtkObject* atk_object = static_cast<AtkObject*>(g_object_new(type, nullptr));
 
   atk_object_initialize(atk_object, this);
 
   return ATK_OBJECT(atk_object);
+}
+
+void AXPlatformNodeAuraLinux::DestroyAtkObjects() {
+  if (atk_hyperlink_) {
+    ax_platform_atk_hyperlink_set_object(
+        AX_PLATFORM_ATK_HYPERLINK(atk_hyperlink_), nullptr);
+    g_object_unref(atk_hyperlink_);
+    atk_hyperlink_ = nullptr;
+  }
+  if (atk_object_) {
+    ax_platform_node_auralinux_detach(AX_PLATFORM_NODE_AURALINUX(atk_object_));
+    g_object_unref(atk_object_);
+    atk_object_ = nullptr;
+  }
 }
 
 // static
@@ -800,17 +1021,58 @@ void AXPlatformNodeAuraLinux::GetAtkRelations(AtkRelationSet* atk_relation_set)
 }
 
 AXPlatformNodeAuraLinux::AXPlatformNodeAuraLinux()
-    : atk_object_(nullptr) {
-}
+    : interface_mask_(0), atk_object_(nullptr), atk_hyperlink_(nullptr) {}
 
 AXPlatformNodeAuraLinux::~AXPlatformNodeAuraLinux() {
-  g_object_unref(atk_object_);
+  DestroyAtkObjects();
+}
+
+void AXPlatformNodeAuraLinux::Destroy() {
+  DestroyAtkObjects();
+  AXPlatformNodeBase::Destroy();
 }
 
 void AXPlatformNodeAuraLinux::Init(AXPlatformNodeDelegate* delegate) {
   // Initialize ATK.
   AXPlatformNodeBase::Init(delegate);
-  atk_object_ = CreateAtkObject();
+  DataChanged();
+}
+
+void AXPlatformNodeAuraLinux::DataChanged() {
+  if (atk_object_) {
+    // If the object's role changes and that causes its
+    // interface mask to change, we need to create a new
+    // AtkObject for it.
+    int interface_mask = GetGTypeInterfaceMask();
+    if (interface_mask != interface_mask_)
+      DestroyAtkObjects();
+  }
+
+  if (!atk_object_) {
+    atk_object_ = CreateAtkObject();
+  }
+}
+
+void AXPlatformNodeAuraLinux::AddAccessibilityTreeProperties(
+    base::DictionaryValue* dict) {
+  AtkRole role = GetAtkRole();
+  if (role != ATK_ROLE_UNKNOWN)
+    dict->SetString("role", std::string(atk_role_get_name(role)));
+  const gchar* name = atk_object_get_name(atk_object_);
+  if (name)
+    dict->SetString("name", std::string(name));
+  const gchar* description = atk_object_get_description(atk_object_);
+  if (description)
+    dict->SetString("description", std::string(description));
+
+  AtkStateSet* state_set = atk_object_ref_state_set(atk_object_);
+  auto states = std::make_unique<base::ListValue>();
+  for (int i = ATK_STATE_INVALID; i < ATK_STATE_LAST_DEFINED; i++) {
+    AtkStateType state_type = static_cast<AtkStateType>(i);
+    if (atk_state_set_contains_state(state_set, state_type))
+      states->AppendString(atk_state_type_get_name(state_type));
+  }
+  dict->Set("states", std::move(states));
 }
 
 gfx::NativeViewAccessible AXPlatformNodeAuraLinux::GetNativeViewAccessible() {
@@ -904,7 +1166,83 @@ const gchar* AXPlatformNodeAuraLinux::GetDefaultActionName() {
   base::string16 action_verb = ui::ActionVerbToUnlocalizedString(
       static_cast<ui::AXDefaultActionVerb>(action));
 
-  RETURN_STRING(base::UTF16ToUTF8(action_verb));
+  ATK_AURALINUX_RETURN_STRING(base::UTF16ToUTF8(action_verb));
+}
+
+// AtkDocumentHelpers
+
+const gchar* AXPlatformNodeAuraLinux::GetDocumentAttributeValue(
+    const gchar* attribute) const {
+  if (!g_ascii_strcasecmp(attribute, "DocType"))
+    return delegate_->GetTreeData().doctype.c_str();
+  else if (!g_ascii_strcasecmp(attribute, "MimeType"))
+    return delegate_->GetTreeData().mimetype.c_str();
+  else if (!g_ascii_strcasecmp(attribute, "Title"))
+    return delegate_->GetTreeData().title.c_str();
+  else if (!g_ascii_strcasecmp(attribute, "URI"))
+    return delegate_->GetTreeData().url.c_str();
+
+  return nullptr;
+}
+
+AtkAttributeSet* AXPlatformNodeAuraLinux::GetDocumentAttributes() const {
+  AtkAttributeSet* attribute_set = nullptr;
+  const gchar* doc_attributes[] = {"DocType", "MimeType", "Title", "URI"};
+  const gchar* value = nullptr;
+
+  for (unsigned i = 0; i < G_N_ELEMENTS(doc_attributes); i++) {
+    value = GetDocumentAttributeValue(doc_attributes[i]);
+    if (value) {
+      AtkAttribute* attribute =
+          static_cast<AtkAttribute*>(g_malloc(sizeof(AtkAttribute)));
+      attribute->name = g_strdup(doc_attributes[i]);
+      attribute->value = g_strdup(value);
+      attribute_set = g_slist_prepend(attribute_set, attribute);
+    }
+  }
+
+  return attribute_set;
+}
+
+//
+// AtkValue helpers
+//
+
+float AXPlatformNodeAuraLinux::GetStepAttribute() {
+  // TODO(jose.dapena): Get Correct value of Step attribute.
+  return 1.0;
+}
+
+//
+// AtkHyperlink helpers
+//
+
+AtkHyperlink* AXPlatformNodeAuraLinux::GetAtkHyperlink() {
+  DCHECK(ATK_HYPERLINK_IMPL(atk_object_));
+  g_return_val_if_fail(ATK_HYPERLINK_IMPL(atk_object_), 0);
+
+  if (!atk_hyperlink_) {
+    atk_hyperlink_ =
+        ATK_HYPERLINK(g_object_new(AX_PLATFORM_ATK_HYPERLINK_TYPE, 0));
+    ax_platform_atk_hyperlink_set_object(
+        AX_PLATFORM_ATK_HYPERLINK(atk_hyperlink_), this);
+  }
+
+  return atk_hyperlink_;
+}
+
+//
+// Misc helpers
+//
+
+void AXPlatformNodeAuraLinux::GetFloatAttributeInGValue(AXFloatAttribute attr,
+                                                        GValue* value) {
+  float float_val;
+  if (GetFloatAttribute(attr, &float_val)) {
+    memset(value, 0, sizeof(*value));
+    g_value_init(value, G_TYPE_FLOAT);
+    g_value_set_float(value, float_val);
+  }
 }
 
 }  // namespace ui

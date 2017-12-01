@@ -174,10 +174,8 @@ std::unique_ptr<ResourceRequest> CreateResourceRequest(
   request->allow_download = true;
   request->is_main_frame = true;
 
-  if (params->render_process_host_id() >= 0) {
-    request->origin_pid = params->render_process_host_id();
+  if (params->render_process_host_id() >= 0)
     request->render_frame_id = params->render_frame_host_routing_id();
-  }
 
   bool has_upload_data = false;
   if (!params->post_body().empty()) {
@@ -405,6 +403,42 @@ void HandleResponseHeaders(const net::HttpResponseHeaders* headers,
       headers->HasHeaderValue("Accept-Ranges", "bytes") ||
       (headers->HasHeader("Content-Range") &&
        headers->response_code() == net::HTTP_PARTIAL_CONTENT);
+}
+
+download::DownloadSource ToDownloadSource(
+    content::DownloadSource download_source) {
+  switch (download_source) {
+    case DownloadSource::UNKNOWN:
+      return download::DownloadSource::UNKNOWN;
+    case DownloadSource::NAVIGATION:
+      return download::DownloadSource::NAVIGATION;
+    case DownloadSource::DRAG_AND_DROP:
+      return download::DownloadSource::DRAG_AND_DROP;
+    case DownloadSource::MANUAL_RESUMPTION:
+      return download::DownloadSource::MANUAL_RESUMPTION;
+    case DownloadSource::AUTO_RESUMPTION:
+      return download::DownloadSource::AUTO_RESUMPTION;
+    case DownloadSource::FROM_RENDERER:
+      return download::DownloadSource::FROM_RENDERER;
+    case DownloadSource::EXTENSION_API:
+      return download::DownloadSource::EXTENSION_API;
+    case DownloadSource::EXTENSION_INSTALLER:
+      return download::DownloadSource::EXTENSION_INSTALLER;
+    case DownloadSource::PLUGIN:
+      return download::DownloadSource::PLUGIN;
+    case DownloadSource::PLUGIN_INSTALLER:
+      return download::DownloadSource::PLUGIN_INSTALLER;
+    case DownloadSource::INTERNAL_API:
+      return download::DownloadSource::INTERNAL_API;
+    case DownloadSource::SAVE_PACKAGE:
+      return download::DownloadSource::SAVE_PACKAGE;
+    case DownloadSource::OFFLINE_PAGE:
+      return download::DownloadSource::OFFLINE_PAGE;
+    case DownloadSource::COUNT:
+      break;
+  }
+  NOTREACHED();
+  return download::DownloadSource::UNKNOWN;
 }
 
 }  // namespace content

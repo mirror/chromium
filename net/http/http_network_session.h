@@ -148,6 +148,8 @@ class NET_EXPORT HttpNetworkSession : public base::MemoryCoordinatorClient {
     // If true, alt-svc headers advertising QUIC in IETF format will be
     // supported.
     bool support_ietf_format_quic_altsvc;
+    // If true, all QUIC sessions are closed when any local IP address changes.
+    bool quic_close_sessions_on_ip_change;
     // Specifies QUIC idle connection state lifetime.
     int quic_idle_connection_timeout_seconds;
     // Specifies the reduced ping timeout subsequent connections should use when
@@ -173,6 +175,9 @@ class NET_EXPORT HttpNetworkSession : public base::MemoryCoordinatorClient {
     // If true, allows migration of QUIC connections to a server-specified
     // alternate server address.
     bool quic_allow_server_migration;
+    // If true, allows QUIC to use alternative services with a different
+    // hostname from the origin.
+    bool quic_allow_remote_alt_svc;
     // If true, bidirectional streams over QUIC will be disabled.
     bool quic_disable_bidirectional_streams;
     // If true, enable force HOL blocking.  For measurement purposes.

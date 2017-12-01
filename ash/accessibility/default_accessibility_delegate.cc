@@ -11,13 +11,9 @@
 
 namespace ash {
 
-DefaultAccessibilityDelegate::DefaultAccessibilityDelegate() {}
+DefaultAccessibilityDelegate::DefaultAccessibilityDelegate() = default;
 
-DefaultAccessibilityDelegate::~DefaultAccessibilityDelegate() {}
-
-bool DefaultAccessibilityDelegate::IsSpokenFeedbackEnabled() const {
-  return spoken_feedback_enabled_;
-}
+DefaultAccessibilityDelegate::~DefaultAccessibilityDelegate() = default;
 
 void DefaultAccessibilityDelegate::SetMagnifierEnabled(bool enabled) {
   screen_magnifier_enabled_ = enabled;
@@ -102,7 +98,7 @@ bool DefaultAccessibilityDelegate::IsSwitchAccessEnabled() const {
 bool DefaultAccessibilityDelegate::ShouldShowAccessibilityMenu() const {
   AccessibilityController* controller =
       Shell::Get()->accessibility_controller();
-  return spoken_feedback_enabled_ || screen_magnifier_enabled_ ||
+  return controller->IsSpokenFeedbackEnabled() || screen_magnifier_enabled_ ||
          autoclick_enabled_ || virtual_keyboard_enabled_ ||
          controller->IsMonoAudioEnabled() ||
          controller->IsLargeCursorEnabled() ||
@@ -114,11 +110,6 @@ bool DefaultAccessibilityDelegate::IsBrailleDisplayConnected() const {
 }
 
 void DefaultAccessibilityDelegate::SilenceSpokenFeedback() const {}
-
-void DefaultAccessibilityDelegate::ToggleSpokenFeedback(
-    AccessibilityNotificationVisibility notify) {
-  spoken_feedback_enabled_ = !spoken_feedback_enabled_;
-}
 
 void DefaultAccessibilityDelegate::SaveScreenMagnifierScale(double scale) {}
 
@@ -132,12 +123,6 @@ bool DefaultAccessibilityDelegate::ShouldToggleSpokenFeedbackViaTouch() {
 
 void DefaultAccessibilityDelegate::PlaySpokenFeedbackToggleCountdown(
     int tick_count) {}
-
-void DefaultAccessibilityDelegate::PlayEarcon(int sound_key) {}
-
-base::TimeDelta DefaultAccessibilityDelegate::PlayShutdownSound() const {
-  return base::TimeDelta();
-}
 
 void DefaultAccessibilityDelegate::HandleAccessibilityGesture(
     ui::AXGesture gesture) {}

@@ -33,7 +33,7 @@ class TestActivityTracker : public ThreadActivityTracker {
       : ThreadActivityTracker(memset(memory.get(), 0, mem_size), mem_size),
         mem_segment_(std::move(memory)) {}
 
-  ~TestActivityTracker() override {}
+  ~TestActivityTracker() override = default;
 
  private:
   std::unique_ptr<char[]> mem_segment_;
@@ -49,7 +49,7 @@ class ActivityTrackerTest : public testing::Test {
 
   using ActivityId = ThreadActivityTracker::ActivityId;
 
-  ActivityTrackerTest() {}
+  ActivityTrackerTest() = default;
 
   ~ActivityTrackerTest() override {
     GlobalActivityTracker* global_tracker = GlobalActivityTracker::Get();
@@ -260,16 +260,16 @@ class SimpleLockThread : public SimpleThread {
         data_changed_(false),
         is_running_(false) {}
 
-  ~SimpleLockThread() override {}
+  ~SimpleLockThread() override = default;
 
   void Run() override {
     ThreadActivityTracker* tracker =
         GlobalActivityTracker::Get()->GetOrCreateTrackerForCurrentThread();
-    tracker->ClearDataChangedForTesting();
+    uint32_t pre_version = tracker->GetDataVersionForTesting();
 
     is_running_.store(true, std::memory_order_relaxed);
     lock_->Acquire();
-    data_changed_ = tracker->WasDataChangedForTesting();
+    data_changed_ = tracker->GetDataVersionForTesting() != pre_version;
     lock_->Release();
     is_running_.store(false, std::memory_order_relaxed);
   }
@@ -297,14 +297,13 @@ TEST_F(ActivityTrackerTest, LockTest) {
   ASSERT_EQ(0U, GetGlobalUserDataMemoryCacheUsed());
 
   Lock lock;
-  tracker->ClearDataChangedForTesting();
-  ASSERT_FALSE(tracker->WasDataChangedForTesting());
+  uint32_t pre_version = tracker->GetDataVersionForTesting();
 
   // Check no activity when only "trying" a lock.
   EXPECT_TRUE(lock.Try());
-  EXPECT_FALSE(tracker->WasDataChangedForTesting());
+  EXPECT_EQ(pre_version, tracker->GetDataVersionForTesting());
   lock.Release();
-  EXPECT_FALSE(tracker->WasDataChangedForTesting());
+  EXPECT_EQ(pre_version, tracker->GetDataVersionForTesting());
 
   // Check no activity when acquiring a free lock.
   SimpleLockThread t1("locker1", &lock);
@@ -402,7 +401,7 @@ class SimpleActivityThread : public SimpleThread {
         exit_(false),
         exit_condition_(&lock_) {}
 
-  ~SimpleActivityThread() override {}
+  ~SimpleActivityThread() override = default;
 
   void Run() override {
     ThreadActivityTracker::ActivityId id =

@@ -35,7 +35,7 @@ namespace blink {
 CSSPageRule::CSSPageRule(StyleRulePage* page_rule, CSSStyleSheet* parent)
     : CSSRule(parent), page_rule_(page_rule) {}
 
-CSSPageRule::~CSSPageRule() {}
+CSSPageRule::~CSSPageRule() = default;
 
 CSSStyleDeclaration* CSSPageRule::style() const {
   if (!properties_cssom_wrapper_)
@@ -58,7 +58,7 @@ String CSSPageRule::selectorText() const {
 void CSSPageRule::setSelectorText(const ExecutionContext* execution_context,
                                   const String& selector_text) {
   CSSParserContext* context = CSSParserContext::Create(
-      ParserContext(execution_context->SecureContextMode()), nullptr);
+      ParserContext(execution_context->GetSecureContextMode()), nullptr);
   DCHECK(context);
   CSSSelectorList selector_list = CSSParser::ParsePageSelector(
       *context, parentStyleSheet() ? parentStyleSheet()->Contents() : nullptr,

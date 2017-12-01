@@ -18,6 +18,7 @@
 #include "content/public/browser/vpn_service_proxy.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/url_loader_throttle.h"
+#include "device/geolocation/public/cpp/location_provider.h"
 #include "media/audio/audio_manager.h"
 #include "media/base/cdm_factory.h"
 #include "media/media_features.h"
@@ -61,6 +62,10 @@ void ContentBrowserClient::SetBrowserStartupIsCompleteForTesting() {}
 WebContentsViewDelegate* ContentBrowserClient::GetWebContentsViewDelegate(
     WebContents* web_contents) {
   return nullptr;
+}
+
+bool ContentBrowserClient::AllowGpuLaunchRetryOnIOThread() {
+  return true;
 }
 
 GURL ContentBrowserClient::GetEffectiveURL(BrowserContext* browser_context,
@@ -212,6 +217,17 @@ bool ContentBrowserClient::AllowServiceWorker(
   return true;
 }
 
+bool ContentBrowserClient::AllowSharedWorker(
+    const GURL& worker_url,
+    const GURL& main_frame_url,
+    const std::string& name,
+    const url::Origin& constructor_origin,
+    BrowserContext* context,
+    int render_process_id,
+    int render_frame_id) {
+  return true;
+}
+
 bool ContentBrowserClient::IsDataSaverEnabled(BrowserContext* context) {
   return false;
 }
@@ -302,6 +318,11 @@ void ContentBrowserClient::SelectClientCertificate(
 
 net::URLRequestContext* ContentBrowserClient::OverrideRequestContextForURL(
     const GURL& url, ResourceContext* context) {
+  return nullptr;
+}
+
+std::unique_ptr<device::LocationProvider>
+ContentBrowserClient::OverrideSystemLocationProvider() {
   return nullptr;
 }
 

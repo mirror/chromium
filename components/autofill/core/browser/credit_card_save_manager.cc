@@ -139,7 +139,7 @@ void CreditCardSaveManager::AttemptToOfferCardUploadSave(
   int upload_decision_metrics =
       SetProfilesForCreditCardUpload(card, &upload_request_);
 
-  pending_upload_request_url_ = GURL(submitted_form.main_frame_url());
+  pending_upload_request_origin_ = submitted_form.main_frame_origin();
 
   should_cvc_be_requested_ = false;
   if (upload_request_.cvc.empty()) {
@@ -155,7 +155,7 @@ void CreditCardSaveManager::AttemptToOfferCardUploadSave(
   }
   if (upload_decision_metrics) {
     LogCardUploadDecisions(upload_decision_metrics);
-    pending_upload_request_url_ = GURL();
+    pending_upload_request_origin_ = url::Origin();
     return;
   }
 
@@ -246,7 +246,7 @@ void CreditCardSaveManager::OnDidGetUploadDetails(
     DCHECK(found_cvc_field_ && found_value_in_cvc_field_);
 
   LogCardUploadDecisions(upload_decision_metrics);
-  pending_upload_request_url_ = GURL();
+  pending_upload_request_origin_ = url::Origin();
 }
 
 int CreditCardSaveManager::SetProfilesForCreditCardUpload(
@@ -447,19 +447,18 @@ CreditCardSaveManager::GetCVCCardUploadDecisionMetric() const {
   if (found_cvc_field_) {
     return found_value_in_cvc_field_ ? AutofillMetrics::INVALID_CVC_VALUE
                                      : AutofillMetrics::CVC_VALUE_NOT_FOUND;
-  } else {
-    return found_cvc_value_in_non_cvc_field_
-               ? AutofillMetrics::FOUND_POSSIBLE_CVC_VALUE_IN_NON_CVC_FIELD
-               : AutofillMetrics::CVC_FIELD_NOT_FOUND;
   }
+  return found_cvc_value_in_non_cvc_field_
+             ? AutofillMetrics::FOUND_POSSIBLE_CVC_VALUE_IN_NON_CVC_FIELD
+             : AutofillMetrics::CVC_FIELD_NOT_FOUND;
 }
 
 void CreditCardSaveManager::LogCardUploadDecisions(
     int upload_decision_metrics) {
   AutofillMetrics::LogCardUploadDecisionMetrics(upload_decision_metrics);
-  AutofillMetrics::LogCardUploadDecisionsUkm(client_->GetUkmRecorder(),
-                                             pending_upload_request_url_,
-                                             upload_decision_metrics);
+  AutofillMetrics::LogCardUploadDecisionsUkm(
+      client_->GetUkmRecorder(), pending_upload_request_origin_.GetURL(),
+      upload_decision_metrics);
 }
 
 }  // namespace autofill

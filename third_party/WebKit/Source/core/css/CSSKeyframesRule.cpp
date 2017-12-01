@@ -46,7 +46,7 @@ StyleRuleKeyframes::StyleRuleKeyframes(const StyleRuleKeyframes& o)
       version_(o.version_),
       is_prefixed_(o.is_prefixed_) {}
 
-StyleRuleKeyframes::~StyleRuleKeyframes() {}
+StyleRuleKeyframes::~StyleRuleKeyframes() = default;
 
 void StyleRuleKeyframes::ParserAppendKeyframe(StyleRuleKeyframe* keyframe) {
   if (!keyframe)
@@ -87,7 +87,7 @@ CSSKeyframesRule::CSSKeyframesRule(StyleRuleKeyframes* keyframes_rule,
       child_rule_cssom_wrappers_(keyframes_rule->Keyframes().size()),
       is_prefixed_(keyframes_rule->IsVendorPrefixed()) {}
 
-CSSKeyframesRule::~CSSKeyframesRule() {}
+CSSKeyframesRule::~CSSKeyframesRule() = default;
 
 void CSSKeyframesRule::setName(const String& name) {
   CSSStyleSheet::RuleMutationScope mutation_scope(this);
@@ -102,7 +102,7 @@ void CSSKeyframesRule::appendRule(const ExecutionContext* execution_context,
 
   CSSStyleSheet* style_sheet = parentStyleSheet();
   CSSParserContext* context = CSSParserContext::CreateWithStyleSheet(
-      ParserContext(execution_context->SecureContextMode()), style_sheet);
+      ParserContext(execution_context->GetSecureContextMode()), style_sheet);
   StyleRuleKeyframe* keyframe =
       CSSParser::ParseKeyframeRule(context, rule_text);
   if (!keyframe)

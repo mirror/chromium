@@ -735,7 +735,7 @@ void Browser::OnWindowClosing() {
   // pages).
   bool should_quit_if_last_browser =
       browser_shutdown::IsTryingToQuit() ||
-      !KeepAliveRegistry::GetInstance()->IsKeepingAlive();
+      KeepAliveRegistry::GetInstance()->IsKeepingAliveOnlyByBrowserOrigin();
 
   if (should_quit_if_last_browser && ShouldStartShutdown())
     browser_shutdown::OnShutdownStarting(browser_shutdown::WINDOW_CLOSE);
@@ -2128,7 +2128,7 @@ void Browser::ScheduleUIUpdate(WebContents* source,
     // this for any tab so they start & stop quickly.
     tab_strip_model_->UpdateWebContentsStateAt(
         tab_strip_model_->GetIndexOfWebContents(source),
-        TabStripModelObserver::LOADING_ONLY);
+        TabChangeType::kLoadingOnly);
     // The status bubble needs to be updated during INVALIDATE_TYPE_LOAD too,
     // but we do that asynchronously by not stripping INVALIDATE_TYPE_LOAD from
     // changed_flags.
@@ -2141,7 +2141,7 @@ void Browser::ScheduleUIUpdate(WebContents* source,
     // asynchronously.
     tab_strip_model_->UpdateWebContentsStateAt(
         tab_strip_model_->GetIndexOfWebContents(source),
-        TabStripModelObserver::TITLE_NOT_LOADING);
+        TabChangeType::kTitleNotLoading);
   }
 
   // If the only updates were synchronously handled above, we're done.
@@ -2207,7 +2207,7 @@ void Browser::ProcessPendingUIUpdates() {
         (content::INVALIDATE_TYPE_TAB | content::INVALIDATE_TYPE_TITLE)) {
       tab_strip_model_->UpdateWebContentsStateAt(
           tab_strip_model_->GetIndexOfWebContents(contents),
-          TabStripModelObserver::ALL);
+          TabChangeType::kAll);
     }
 
     // Update the bookmark bar. It may happen that the tab is crashed, and if
@@ -2464,8 +2464,20 @@ bool Browser::ShouldHideUIForFullscreen() const {
   return window_ && window_->ShouldHideUIForFullscreen();
 }
 
+bool Browser::IsBrowserClosing() const {
+  const BrowserList::BrowserSet& closing_browsers =
+      BrowserList::GetInstance()->currently_closing_browsers();
+
+  return base::ContainsKey(closing_browsers, this);
+}
+
 bool Browser::ShouldStartShutdown() const {
-  return BrowserList::GetInstance()->size() <= 1;
+  if (IsBrowserClosing())
+    return false;
+
+  const size_t closing_browsers_count =
+      BrowserList::GetInstance()->currently_closing_browsers().size();
+  return BrowserList::GetInstance()->size() == closing_browsers_count + 1u;
 }
 
 bool Browser::MaybeCreateBackgroundContents(

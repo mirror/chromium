@@ -6,6 +6,7 @@
 
 #import <CoreLocation/CoreLocation.h>
 
+#include "base/mac/foundation_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics.h"
 #include "base/metrics/user_metrics_action.h"
@@ -14,22 +15,35 @@
 #include "components/omnibox/browser/omnibox_edit_model.h"
 #include "components/search_engines/util.h"
 #include "ios/chrome/browser/autocomplete/autocomplete_scheme_classifier_impl.h"
+#include "ios/chrome/browser/bookmarks/bookmark_model_factory.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/chrome_url_constants.h"
+#include "ios/chrome/browser/reading_list/reading_list_model_factory.h"
 #include "ios/chrome/browser/search_engines/template_url_service_factory.h"
 #include "ios/chrome/browser/ui/omnibox/location_bar_controller.h"
 #include "ios/chrome/browser/ui/omnibox/location_bar_controller_impl.h"
 #include "ios/chrome/browser/ui/omnibox/location_bar_delegate.h"
+#include "ios/chrome/browser/ui/omnibox/location_bar_view.h"
+#import "ios/chrome/browser/ui/omnibox/omnibox_popup_positioner.h"
+#include "ios/chrome/browser/ui/omnibox/omnibox_popup_view_ios.h"
 #import "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_button_factory.h"
+#import "ios/chrome/browser/ui/toolbar/clean/toolbar_button_updater.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator_delegate.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_mediator.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_style.h"
+#import "ios/chrome/browser/ui/toolbar/clean/toolbar_tools_menu_button.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.h"
+#import "ios/chrome/browser/ui/toolbar/keyboard_assist/toolbar_assistive_keyboard_delegate.h"
+#import "ios/chrome/browser/ui/toolbar/keyboard_assist/toolbar_assistive_keyboard_views.h"
 #import "ios/chrome/browser/ui/toolbar/public/web_toolbar_controller_constants.h"
 #include "ios/chrome/browser/ui/toolbar/toolbar_model_ios.h"
+#import "ios/chrome/browser/ui/toolbar/tools_menu_button_observer_bridge.h"
 #import "ios/chrome/browser/ui/url_loader.h"
+#import "ios/chrome/browser/ui/voice/text_to_speech_player.h"
+#import "ios/chrome/browser/ui/voice/voice_search_notification_names.h"
 #import "ios/chrome/browser/web_state_list/web_state_list.h"
+#import "ios/public/provider/chrome/browser/chrome_browser_provider.h"
 #import "ios/third_party/material_components_ios/src/components/Typography/src/MaterialTypography.h"
 #import "ios/web/public/navigation_item.h"
 #import "ios/web/public/navigation_manager.h"
@@ -40,28 +54,41 @@
 #error "This file requires ARC support."
 #endif
 
-@interface ToolbarCoordinator ()<LocationBarDelegate> {
+@interface ToolbarCoordinator ()<LocationBarDelegate, OmniboxPopupPositioner> {
   std::unique_ptr<LocationBarControllerImpl> _locationBar;
+  std::unique_ptr<OmniboxPopupViewIOS> _popupView;
 }
 
 // The View Controller managed by this coordinator.
-@property(nonatomic, strong) ToolbarViewController* viewController;
+@property(nonatomic, strong) ToolbarViewController* toolbarViewController;
 // The mediator owned by this coordinator.
 @property(nonatomic, strong) ToolbarMediator* mediator;
 // LocationBarView containing the omnibox. At some point, this property and the
 // |_locationBar| should become a LocationBarCoordinator.
 @property(nonatomic, strong) LocationBarView* locationBarView;
+// Object taking care of adding the accessory views to the keyboard.
+@property(nonatomic, strong)
+    ToolbarAssistiveKeyboardDelegateImpl* keyboardDelegate;
+// Whether this coordinator has been started.
+@property(nonatomic, assign) BOOL started;
+// Button observer for the ToolsMenu button.
+@property(nonatomic, strong)
+    ToolsMenuButtonObserverBridge* toolsMenuButtonObserverBridge;
 
 @end
 
 @implementation ToolbarCoordinator
 @synthesize delegate = _delegate;
 @synthesize browserState = _browserState;
+@synthesize buttonUpdater = _buttonUpdater;
 @synthesize dispatcher = _dispatcher;
+@synthesize keyboardDelegate = _keyboardDelegate;
 @synthesize locationBarView = _locationBarView;
 @synthesize mediator = _mediator;
+@synthesize started = _started;
+@synthesize toolbarViewController = _toolbarViewController;
+@synthesize toolsMenuButtonObserverBridge = _toolsMenuButtonObserverBridge;
 @synthesize URLLoader = _URLLoader;
-@synthesize viewController = _viewController;
 @synthesize webStateList = _webStateList;
 
 - (instancetype)init {
@@ -71,9 +98,31 @@
   return self;
 }
 
+#pragma mark - Properties
+
+- (UIViewController*)viewController {
+  return self.toolbarViewController;
+}
+
+- (void)setDelegate:(id<ToolbarCoordinatorDelegate>)delegate {
+  if (_delegate == delegate)
+    return;
+
+  // TTS notifications cannot be handled without a delegate.
+  if (_delegate && self.started)
+    [self stopObservingTTSNotifications];
+  _delegate = delegate;
+  if (_delegate && self.started)
+    [self startObservingTTSNotifications];
+}
+
 #pragma mark - BrowserCoordinator
 
 - (void)start {
+  if (self.started)
+    return;
+
+  self.started = YES;
   BOOL isIncognito = self.browserState->IsOffTheRecord();
   // TODO(crbug.com/785253): Move this to the LocationBarCoordinator once it is
   // created.
@@ -89,31 +138,76 @@
                                    tintColor:tintColor];
   _locationBar = base::MakeUnique<LocationBarControllerImpl>(
       self.locationBarView, self.browserState, self, self.dispatcher);
+
+  self.keyboardDelegate = [[ToolbarAssistiveKeyboardDelegateImpl alloc] init];
+  self.keyboardDelegate.dispatcher = self.dispatcher;
+  self.keyboardDelegate.omniboxTextField = self.locationBarView.textField;
+  ConfigureAssistiveKeyboardViews(self.locationBarView.textField, kDotComTLD,
+                                  self.keyboardDelegate);
+
+  _popupView = _locationBar->CreatePopupView(self);
   // End of TODO(crbug.com/785253):.
 
   ToolbarStyle style = isIncognito ? INCOGNITO : NORMAL;
   ToolbarButtonFactory* factory =
       [[ToolbarButtonFactory alloc] initWithStyle:style];
 
-  self.viewController =
+  self.buttonUpdater = [[ToolbarButtonUpdater alloc] init];
+  self.buttonUpdater.factory = factory;
+  self.toolbarViewController =
       [[ToolbarViewController alloc] initWithDispatcher:self.dispatcher
-                                          buttonFactory:factory];
+                                          buttonFactory:factory
+                                          buttonUpdater:self.buttonUpdater];
+  self.toolbarViewController.locationBarView = self.locationBarView;
+  self.toolbarViewController.dispatcher = self.dispatcher;
 
-  self.mediator.consumer = self.viewController;
+  DCHECK(self.toolbarViewController.toolsMenuButton);
+  self.toolsMenuButtonObserverBridge = [[ToolsMenuButtonObserverBridge alloc]
+      initWithModel:ReadingListModelFactory::GetForBrowserState(
+                        self.browserState)
+      toolbarButton:self.toolbarViewController.toolsMenuButton];
+
+  self.mediator.voiceSearchProvider =
+      ios::GetChromeBrowserProvider()->GetVoiceSearchProvider();
+  self.mediator.consumer = self.toolbarViewController;
   self.mediator.webStateList = self.webStateList;
+  self.mediator.bookmarkModel =
+      ios::BookmarkModelFactory::GetForBrowserState(self.browserState);
+
+  if (self.delegate)
+    [self startObservingTTSNotifications];
 }
 
 - (void)stop {
+  self.started = NO;
   [self.mediator disconnect];
+  // The popup has to be destroyed before the location bar.
+  _popupView.reset();
   _locationBar.reset();
   self.locationBarView = nil;
+  [self stopObservingTTSNotifications];
 }
 
 #pragma mark - Public
 
+- (id<ActivityServicePositioner>)activityServicePositioner {
+  return self.toolbarViewController;
+}
+
+- (id<BubbleViewAnchorPointProvider>)bubbleAnchorPointProvider {
+  return self.toolbarViewController;
+}
+
+- (void)updateOmniboxState {
+  _locationBar->SetShouldShowHintText(
+      [self.delegate toolbarModelIOS]->ShouldDisplayHintText());
+  _locationBar->OnToolbarUpdated();
+}
+
 - (void)updateToolbarState {
   // TODO(crbug.com/784911): This function should probably triggers something in
   // the mediator. Investigate how to handle it.
+  [self updateOmniboxState];
 }
 
 - (void)updateToolbarForSideSwipeSnapshot:(web::WebState*)webState {
@@ -131,13 +225,61 @@
   self.viewController.view.hidden = NO;
   [_locationBarView setHidden:YES];
   [self.mediator updateConsumerForWebState:webState];
-  [self.viewController updateForSideSwipeSnapshotOnNTP:isNTP];
+  [self.toolbarViewController updateForSideSwipeSnapshotOnNTP:isNTP];
 }
 
 - (void)resetToolbarAfterSideSwipeSnapshot {
   [self.mediator updateConsumerForWebState:[self getWebState]];
   [_locationBarView setHidden:NO];
-  [self.viewController resetAfterSideSwipeSnapshot];
+  [self.toolbarViewController resetAfterSideSwipeSnapshot];
+}
+
+- (void)setToolsMenuIsVisibleForToolsMenuButton:(BOOL)isVisible {
+  [self.toolbarViewController.toolsMenuButton setToolsMenuIsVisible:isVisible];
+}
+
+- (void)triggerToolsMenuButtonAnimation {
+  [self.toolbarViewController.toolsMenuButton triggerAnimation];
+}
+
+- (void)showPrerenderingAnimation {
+  [self.toolbarViewController showPrerenderingAnimation];
+}
+
+// TODO(crbug.com/786940): This protocol should move to the ViewController
+// owning the Toolbar. This can wait until the omnibox and toolbar refactoring
+// is more advanced.
+#pragma mark OmniboxPopupPositioner methods.
+
+- (UIView*)popupAnchorView {
+  return self.toolbarViewController.view;
+}
+
+- (CGRect)popupFrame:(CGFloat)height {
+  UIView* parent = [[self popupAnchorView] superview];
+  CGRect frame = [parent bounds];
+
+  if (IsIPadIdiom()) {
+    // For iPad, the omnibox is displayed between the location bar and the
+    // bottom of the toolbar.
+    CGRect fieldFrame = [parent convertRect:[_locationBarView bounds]
+                                   fromView:_locationBarView];
+    CGFloat maxY = CGRectGetMaxY(fieldFrame);
+    frame.origin.y = maxY + kiPadOmniboxPopupVerticalOffset;
+    frame.size.height = height;
+  } else {
+    // For iPhone place the popup just below the toolbar.
+    CGRect fieldFrame =
+        [parent convertRect:[self.toolbarViewController.view bounds]
+                   fromView:self.toolbarViewController.view];
+    frame.origin.y = CGRectGetMaxY(fieldFrame);
+    frame.size.height = CGRectGetMaxY([parent bounds]) - frame.origin.y;
+  }
+  return frame;
+}
+
+- (void)setBackgroundToIncognitoNTPColorWithAlpha:(CGFloat)alpha {
+  [self.toolbarViewController setBackgroundToIncognitoNTPColorWithAlpha:alpha];
 }
 
 #pragma mark - LocationBarDelegate
@@ -175,14 +317,14 @@
 - (void)locationBarHasBecomeFirstResponder {
   [self.delegate locationBarDidBecomeFirstResponder];
   if (@available(iOS 10, *)) {
-    [self.viewController expandOmniboxAnimated:YES];
+    [self.toolbarViewController expandOmniboxAnimated:YES];
   }
 }
 
 - (void)locationBarHasResignedFirstResponder {
   [self.delegate locationBarDidResignFirstResponder];
   if (@available(iOS 10, *)) {
-    [self.viewController contractOmnibox];
+    [self.toolbarViewController contractOmnibox];
   }
 }
 
@@ -223,7 +365,7 @@
     model->OnSetFocus(false);
     model->SetCaretVisibility(false);
   } else {
-    [self.viewController expandOmniboxAnimated:NO];
+    [self.toolbarViewController expandOmniboxAnimated:NO];
   }
 
   [self focusOmnibox];
@@ -266,6 +408,69 @@
     // Omnibox.
     UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification,
                                     _locationBarView.textField);
+  }
+}
+
+#pragma mark - TTS
+
+// Starts observing the NSNotifications from the Text-To-Speech player.
+- (void)startObservingTTSNotifications {
+  // The toolbar is only used to play text-to-speech search results on iPads.
+  if (IsIPadIdiom()) {
+    NSNotificationCenter* defaultCenter = [NSNotificationCenter defaultCenter];
+    [defaultCenter addObserver:self
+                      selector:@selector(audioReadyForPlayback:)
+                          name:kTTSAudioReadyForPlaybackNotification
+                        object:nil];
+    const auto& selectorsForTTSNotifications =
+        [[self class] selectorsForTTSNotificationNames];
+    for (const auto& selectorForNotification : selectorsForTTSNotifications) {
+      [defaultCenter addObserver:self.buttonUpdater
+                        selector:selectorForNotification.second
+                            name:selectorForNotification.first
+                          object:nil];
+    }
+  }
+}
+
+// Stops observing the NSNotifications from the Text-To-Speech player.
+- (void)stopObservingTTSNotifications {
+  NSNotificationCenter* defaultCenter = [NSNotificationCenter defaultCenter];
+  [defaultCenter removeObserver:self
+                           name:kTTSAudioReadyForPlaybackNotification
+                         object:nil];
+  const auto& selectorsForTTSNotifications =
+      [[self class] selectorsForTTSNotificationNames];
+  for (const auto& selectorForNotification : selectorsForTTSNotifications) {
+    [defaultCenter removeObserver:self.buttonUpdater
+                             name:selectorForNotification.first
+                           object:nil];
+  }
+}
+
+// Returns a map where the keys are names of text-to-speech notifications and
+// the values are the selectors to use for these notifications.
++ (const std::map<__strong NSString*, SEL>&)selectorsForTTSNotificationNames {
+  static std::map<__strong NSString*, SEL> selectorsForNotifications;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    selectorsForNotifications[kTTSWillStartPlayingNotification] =
+        @selector(updateIsTTSPlaying:);
+    selectorsForNotifications[kTTSDidStopPlayingNotification] =
+        @selector(updateIsTTSPlaying:);
+    selectorsForNotifications[kVoiceSearchWillHideNotification] =
+        @selector(moveVoiceOverToVoiceSearchButton);
+  });
+  return selectorsForNotifications;
+}
+
+// Received when a TTS player has received audio data.
+- (void)audioReadyForPlayback:(NSNotification*)notification {
+  if ([self.buttonUpdater canStartPlayingTTS]) {
+    // Only trigger TTS playback when the voice search button is visible.
+    TextToSpeechPlayer* TTSPlayer =
+        base::mac::ObjCCastStrict<TextToSpeechPlayer>(notification.object);
+    [TTSPlayer beginPlayback];
   }
 }
 

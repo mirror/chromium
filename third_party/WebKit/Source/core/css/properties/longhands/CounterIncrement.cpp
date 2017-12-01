@@ -4,17 +4,18 @@
 
 #include "core/css/properties/longhands/CounterIncrement.h"
 
-#include "core/css/properties/CSSPropertyCounterUtils.h"
+#include "core/css/properties/CSSParsingUtils.h"
 
 namespace blink {
 namespace CSSLonghand {
+
+const int kCounterIncrementDefaultValue = 1;
 
 const CSSValue* CounterIncrement::ParseSingleValue(
     CSSParserTokenRange& range,
     const CSSParserContext&,
     const CSSParserLocalContext&) const {
-  return CSSPropertyCounterUtils::ConsumeCounter(
-      range, CSSPropertyCounterUtils::kIncrementDefaultValue);
+  return CSSParsingUtils::ConsumeCounter(range, kCounterIncrementDefaultValue);
 }
 
 }  // namespace CSSLonghand

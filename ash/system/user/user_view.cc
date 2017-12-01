@@ -144,24 +144,6 @@ views::View* CreateAddUserView(AddUserSessionPolicy policy) {
   return view;
 }
 
-class UserViewMouseWatcherHost : public views::MouseWatcherHost {
- public:
-  explicit UserViewMouseWatcherHost(const gfx::Rect& screen_area)
-      : screen_area_(screen_area) {}
-  ~UserViewMouseWatcherHost() override {}
-
-  // Implementation of MouseWatcherHost.
-  bool Contains(const gfx::Point& screen_point,
-                views::MouseWatcherHost::MouseEventType type) override {
-    return screen_area_.Contains(screen_point);
-  }
-
- private:
-  gfx::Rect screen_area_;
-
-  DISALLOW_COPY_AND_ASSIGN(UserViewMouseWatcherHost);
-};
-
 // A view that acts as the contents of the widget that appears when clicking
 // the active user. If the mouse exits this view or an otherwise unhandled
 // click is detected, it will invoke a closure passed at construction time.
@@ -173,7 +155,7 @@ class UserDropdownWidgetContents : public views::View {
     set_notify_enter_exit_on_child(true);
   }
 
-  ~UserDropdownWidgetContents() override {}
+  ~UserDropdownWidgetContents() override = default;
 
   bool OnMousePressed(const ui::MouseEvent& event) override { return true; }
   void OnMouseReleased(const ui::MouseEvent& event) override {
@@ -194,8 +176,8 @@ class UserDropdownWidgetContents : public views::View {
 // separator 3dp below the host view.
 class ActiveUserBorder : public views::Border {
  public:
-  ActiveUserBorder() {}
-  ~ActiveUserBorder() override {}
+  ActiveUserBorder() = default;
+  ~ActiveUserBorder() override = default;
 
   // views::Border:
   void Paint(const views::View& view, gfx::Canvas* canvas) override {
@@ -375,9 +357,8 @@ void UserView::ToggleUserDropdownWidget() {
       color_utils::GetResultingPaintColor(kMenuSeparatorColor, bg_color));
   const int separator_horizontal_padding =
       (kTrayPopupItemMinStartWidth - kTrayItemSize) / 2;
-  separator->SetBorder(
-      views::CreateSolidSidedBorder(0, separator_horizontal_padding, 0,
-                                    separator_horizontal_padding, bg_color));
+  separator->SetBorder(views::CreateEmptyBorder(
+      0, separator_horizontal_padding, 0, separator_horizontal_padding));
   user_dropdown_padding->AddChildView(separator);
 
   // Add other logged in users.

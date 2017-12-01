@@ -48,17 +48,19 @@
 #include "ios/chrome/browser/ui/omnibox/location_bar_controller.h"
 #include "ios/chrome/browser/ui/omnibox/location_bar_controller_impl.h"
 #include "ios/chrome/browser/ui/omnibox/location_bar_delegate.h"
+#include "ios/chrome/browser/ui/omnibox/location_bar_view.h"
 #include "ios/chrome/browser/ui/omnibox/omnibox_popup_view_ios.h"
 #include "ios/chrome/browser/ui/omnibox/omnibox_view_ios.h"
 #import "ios/chrome/browser/ui/popup_menu/popup_menu_view.h"
 #import "ios/chrome/browser/ui/reversed_animation.h"
 #include "ios/chrome/browser/ui/rtl_geometry.h"
+#import "ios/chrome/browser/ui/toolbar/clean/toolbar_button_factory.h"
+#import "ios/chrome/browser/ui/toolbar/clean/toolbar_button_updater.h"
 #import "ios/chrome/browser/ui/toolbar/keyboard_assist/toolbar_assistive_keyboard_delegate.h"
 #import "ios/chrome/browser/ui/toolbar/keyboard_assist/toolbar_assistive_keyboard_views.h"
 #import "ios/chrome/browser/ui/toolbar/public/toolbar_controller_base_feature.h"
 #import "ios/chrome/browser/ui/toolbar/public/toolbar_utils.h"
 #import "ios/chrome/browser/ui/toolbar/public/web_toolbar_controller_constants.h"
-#import "ios/chrome/browser/ui/toolbar/toolbar_button_updater.h"
 #import "ios/chrome/browser/ui/toolbar/toolbar_controller+protected.h"
 #import "ios/chrome/browser/ui/toolbar/toolbar_model_ios.h"
 #include "ios/chrome/browser/ui/toolbar/toolbar_resource_macros.h"
@@ -130,21 +132,11 @@ using ios::material::TimingFunction;
   // If set to |YES|, disables animations that tests would otherwise trigger.
   BOOL _unitTesting;
 
-  // If set to |YES|, text to speech is currently playing and the toolbar voice
-  // icon should indicate so.
-  BOOL _isTTSPlaying;
-
   // Keeps track of the last known toolbar frame.
   CGRect _lastKnownToolbarFrame;
 
   // Keeps track of last known trait collection used by the subviews.
   UITraitCollection* _lastKnownTraitCollection;
-
-  // A snapshot of the current toolbar view. Only valid for phone, will be nil
-  // if on tablet.
-  UIImage* _snapshot;
-  // A hash of the state of the toolbar when the snapshot was taken.
-  uint32_t _snapshotHash;
 
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   API_AVAILABLE(ios(11.0)) DropAndNavigateInteraction* _dropInteraction;
@@ -170,17 +162,9 @@ using ios::material::TimingFunction;
 - (void)setForwardButtonEnabled:(BOOL)enabled;
 - (void)startProgressBar;
 - (void)stopProgressBar;
-- (void)hideProgressBarAndTakeSnapshot;
+- (void)hideProgressBar;
 - (void)showReloadButton;
 - (void)showStopButton;
-// Creates a hash of the state of the toolbar to know whether or not the cached
-// snapshot is out of date.
-// The hash takes into account any UI that may change the appearance of the
-// toolbar. The one UI state it ignores is the stack view button's press
-// state. That is because we want the snapshot to be valid when the stack is
-// pressed, rather than creating a new snapshot exactly during the user
-// interaction this snapshot is aimed to optimize.
-- (uint32_t)snapshotHashWithWidth:(CGFloat)width;
 // Called by long press gesture recognizer, used to display back/forward
 // history.
 - (void)handleLongPress:(UILongPressGestureRecognizer*)gesture;
@@ -193,10 +177,6 @@ using ios::material::TimingFunction;
 - (void)stopObservingTTSNotifications;
 // Received when a TTS player has received audio data.
 - (void)audioReadyForPlayback:(NSNotification*)notification;
-// Updates the TTS button depending on whether or not TTS is currently playing.
-- (void)updateIsTTSPlaying:(NSNotification*)notify;
-// Moves VoiceOver to the button used to perform a voice search.
-- (void)moveVoiceOverToVoiceSearchButton;
 // Fade in and out toolbar items as the frame moves off screen.
 - (void)updateToolbarAlphaForFrame:(CGRect)frame;
 // Navigate to |query| from omnibox.
@@ -219,9 +199,12 @@ using ios::material::TimingFunction;
 // When the collapse animation is complete, hide the Material background and
 // restore the omnibox's background image.
 - (void)animationDidStop:(CAAnimation*)anim finished:(BOOL)flag;
-- (void)updateSnapshotWithWidth:(CGFloat)width forced:(BOOL)force;
 // Updates all buttons visibility, including the parent class buttons.
 - (void)updateToolbarButtons;
+
+// Redifined as readwrite
+@property(nonatomic, strong, readwrite) ToolbarButtonUpdater* buttonUpdater;
+
 @end
 
 @implementation WebToolbarController
@@ -287,6 +270,7 @@ using ios::material::TimingFunction;
 #pragma clang diagnostic pop
   }
   if (_incognito) {
+    [_locationBarView setIncognito:YES];
     [_locationBarView.textField setIncognito:YES];
     [_locationBarView.textField
         setSelectedTextBackgroundColor:[UIColor colorWithWhite:1 alpha:0.1]];
@@ -301,7 +285,12 @@ using ios::material::TimingFunction;
     [_locationBarView.textField setPlaceholderTextColor:placeholderTextColor];
   }
 
+  ToolbarStyle incognitoStyle =
+      _browserState->IsOffTheRecord() ? INCOGNITO : NORMAL;
+  ToolbarButtonFactory* factory =
+      [[ToolbarButtonFactory alloc] initWithStyle:incognitoStyle];
   _buttonUpdater = [[ToolbarButtonUpdater alloc] init];
+  _buttonUpdater.factory = factory;
 
   _backButton = [[UIButton alloc]
       initWithFrame:LayoutRectGetRect(kBackButtonFrame[idiom])];
@@ -387,6 +376,7 @@ using ios::material::TimingFunction;
                                      UIViewAutoresizingFlexibleLeadingMargin()];
     _voiceSearchButton = [[UIButton alloc]
         initWithFrame:LayoutRectGetRect(kVoiceSearchButtonFrame)];
+    _buttonUpdater.voiceSearchButton = _voiceSearchButton;
     [_voiceSearchButton
         setAutoresizingMask:UIViewAutoresizingFlexibleTopMargin |
                             UIViewAutoresizingFlexibleLeadingMargin()];
@@ -566,6 +556,9 @@ using ios::material::TimingFunction;
   return self;
 }
 
+- (void)start {
+}
+
 #pragma mark -
 #pragma mark Acessors
 
@@ -617,8 +610,6 @@ using ios::material::TimingFunction;
 
   if (!_initialLayoutComplete)
     _initialLayoutComplete = YES;
-  if (!toolbarModelIOS->IsLoading() && !IsIPadIdiom())
-    [self updateSnapshotWithWidth:0 forced:NO];
 }
 
 - (void)updateToolbarForSideSwipeSnapshot:(Tab*)tab {
@@ -790,7 +781,8 @@ using ios::material::TimingFunction;
 
 - (int)imageEnumForButton:(UIButton*)button {
   if (button == _voiceSearchButton)
-    return _isTTSPlaying ? WebToolbarButtonNameTTS : WebToolbarButtonNameVoice;
+    return self.buttonUpdater.TTSPlaying ? WebToolbarButtonNameTTS
+                                         : WebToolbarButtonNameVoice;
   if (button == _starButton)
     return WebToolbarButtonNameStar;
   if (button == _stopButton)
@@ -1153,13 +1145,6 @@ using ios::material::TimingFunction;
   // Hide the clear and voice search buttons during omniBox frame animations.
   [_locationBarView.textField setRightViewMode:UITextFieldViewModeNever];
 
-  // Make sure the accessory images are in the correct positions so they do not
-  // move during the animation.
-  [_locationBarView.textField rightView].frame =
-      [_locationBarView.textField rightViewRectForBounds:newOmniboxFrame];
-  [_locationBarView.textField leftView].frame =
-      [_locationBarView.textField leftViewRectForBounds:newOmniboxFrame];
-
   CGRect materialBackgroundFrame = RectShiftedDownForStatusBar(newOmniboxFrame);
 
   // Extreme jank happens during initial layout if an animation is invoked. Not
@@ -1322,20 +1307,19 @@ using ios::material::TimingFunction;
                                  }];
     }
     CGFloat delay = _unitTesting ? 0 : kLoadCompleteHideProgressBarDelay;
-    [self performSelector:@selector(hideProgressBarAndTakeSnapshot)
+    [self performSelector:@selector(hideProgressBar)
                withObject:nil
                afterDelay:delay];
   }
 }
 
-- (void)hideProgressBarAndTakeSnapshot {
+- (void)hideProgressBar {
   // The UI may have been torn down while this selector was queued.  If
   // |self.delegate| is nil, it is not safe to continue.
   if (!self.delegate)
     return;
 
   [_determinateProgressView setHidden:YES];
-  [self updateSnapshotWithWidth:0 forced:NO];
   _prerenderAnimating = NO;
 }
 
@@ -1405,10 +1389,14 @@ using ios::material::TimingFunction;
   // The toolbar is only used to play text-to-speech search results on iPads.
   if (IsIPadIdiom()) {
     NSNotificationCenter* defaultCenter = [NSNotificationCenter defaultCenter];
+    [defaultCenter addObserver:self
+                      selector:@selector(audioReadyForPlayback:)
+                          name:kTTSAudioReadyForPlaybackNotification
+                        object:nil];
     const auto& selectorsForTTSNotifications =
         [[self class] selectorsForTTSNotificationNames];
     for (const auto& selectorForNotification : selectorsForTTSNotifications) {
-      [defaultCenter addObserver:self
+      [defaultCenter addObserver:self.buttonUpdater
                         selector:selectorForNotification.second
                             name:selectorForNotification.first
                           object:nil];
@@ -1418,10 +1406,13 @@ using ios::material::TimingFunction;
 
 - (void)stopObservingTTSNotifications {
   NSNotificationCenter* defaultCenter = [NSNotificationCenter defaultCenter];
+  [defaultCenter removeObserver:self
+                           name:kTTSAudioReadyForPlaybackNotification
+                         object:nil];
   const auto& selectorsForTTSNotifications =
       [[self class] selectorsForTTSNotificationNames];
   for (const auto& selectorForNotification : selectorsForTTSNotifications) {
-    [defaultCenter removeObserver:self
+    [defaultCenter removeObserver:self.buttonUpdater
                              name:selectorForNotification.first
                            object:nil];
   }
@@ -1436,40 +1427,10 @@ using ios::material::TimingFunction;
   }
 }
 
-- (void)updateIsTTSPlaying:(NSNotification*)notify {
-  BOOL wasTTSPlaying = _isTTSPlaying;
-  _isTTSPlaying =
-      [notify.name isEqualToString:kTTSWillStartPlayingNotification];
-  if (wasTTSPlaying != _isTTSPlaying && IsIPadIdiom()) {
-    [self setUpButton:_voiceSearchButton
-           withImageEnum:(_isTTSPlaying
-                              ? WebToolbarButtonNameTTS
-                              : WebToolbarButtonNameVoice)forInitialState
-                        :UIControlStateNormal
-        hasDisabledImage:NO
-           synchronously:NO];
-  }
-  [self updateToolbarState];
-  if (_isTTSPlaying && UIAccessibilityIsVoiceOverRunning()) {
-    // Moving VoiceOver without RunBlockAfterDelay results in VoiceOver not
-    // staying on |_voiceSearchButton| and instead moving to views inside the
-    // UIWebView.
-    // Use |voiceSearchButton| in the block to prevent |self| from being
-    // retained.
-    UIButton* voiceSearchButton = _voiceSearchButton;
-    RunBlockAfterDelay(0.0, ^{
-      UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification,
-                                      voiceSearchButton);
-    });
-  }
-}
-
 + (const std::map<__strong NSString*, SEL>&)selectorsForTTSNotificationNames {
   static std::map<__strong NSString*, SEL> selectorsForNotifications;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    selectorsForNotifications[kTTSAudioReadyForPlaybackNotification] =
-        @selector(audioReadyForPlayback:);
     selectorsForNotifications[kTTSWillStartPlayingNotification] =
         @selector(updateIsTTSPlaying:);
     selectorsForNotifications[kTTSDidStopPlayingNotification] =
@@ -1478,11 +1439,6 @@ using ios::material::TimingFunction;
         @selector(moveVoiceOverToVoiceSearchButton);
   });
   return selectorsForNotifications;
-}
-
-- (void)moveVoiceOverToVoiceSearchButton {
-  UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification,
-                                  _voiceSearchButton);
 }
 
 #pragma mark Omnibox Animation.
@@ -1556,9 +1512,9 @@ using ios::material::TimingFunction;
               }
 
               // Omnibox and OmniboxBackground.
-              _locationBarView.textField.frame =
+              _locationBarView.frame =
                   CGRectMake(newOmniboxFrame.origin.x + omniboxLeadingPadding,
-                             _locationBarView.textField.frame.origin.y,
+                             _locationBarView.frame.origin.y,
                              toBounds.size.width - 10, toBounds.size.height);
               _omniboxBackground.frame = CGRectMake(
                   self.view.bounds.origin.x, self.view.bounds.origin.y,
@@ -1595,8 +1551,7 @@ using ios::material::TimingFunction;
   [self configureFadeOutNavigationControlsAnimation];
 
   // Set the _omnibox animator.
-  _locationBarView.textField.omniboxExpanderAnimator =
-      self.omniboxExpanderAnimator;
+  [_locationBarView addExpandOmniboxAnimations:self.omniboxExpanderAnimator];
 
   [self.omniboxExpanderAnimator startAnimation];
 }
@@ -1637,9 +1592,8 @@ using ios::material::TimingFunction;
                              weakCancelButton.frame.size.height);
 
               // Omnibox and OmniboxBackground bounds.
-              _locationBarView.textField.frame = CGRectMake(
-                  newOmniboxFrame.origin.x,
-                  _locationBarView.textField.frame.origin.y,
+              _locationBarView.frame = CGRectMake(
+                  newOmniboxFrame.origin.x, _locationBarView.frame.origin.y,
                   newOmniboxFrame.size.width - 10, newOmniboxFrame.size.height);
               _omniboxBackground.frame = CGRectMake(
                   newOmniboxFrame.origin.x,
@@ -1661,8 +1615,8 @@ using ios::material::TimingFunction;
   [self configureFadeInNavigationControlsAnimation];
 
   // Set the _omnibox animator.
-  _locationBarView.textField.omniboxContractorAnimator =
-      self.omniboxContractorAnimator;
+  [_locationBarView
+      addContractOmniboxAnimations:self.omniboxContractorAnimator];
 
   [self.omniboxContractorAnimator startAnimation];
 }
@@ -1748,7 +1702,7 @@ using ios::material::TimingFunction;
     if (_locationBar.get()->IsShowingPlaceholderWhileCollapsed())
       [self fadeOutOmniboxLeadingView];
     else
-      [_locationBarView.textField leftView].alpha = 0;
+      [_locationBarView leadingButton].alpha = 0;
 
     if (_incognito)
       [self fadeInIncognitoIcon];
@@ -1759,7 +1713,7 @@ using ios::material::TimingFunction;
     if (_locationBar.get()->IsShowingPlaceholderWhileCollapsed())
       [self fadeInOmniboxLeadingView];
     else
-      [_locationBarView.textField leftView].alpha = 1;
+      [_locationBarView leadingButton].alpha = 1;
 
     if (_incognito)
       [self fadeOutIncognitoIcon];
@@ -1850,21 +1804,7 @@ using ios::material::TimingFunction;
 }
 
 - (void)fadeInOmniboxLeadingView {
-  UIView* leadingView = [_locationBarView.textField leftView];
-  leadingView.alpha = 0;
-  // Instead of passing a delay into -fadeInView:, wait to call -fadeInView:.
-  // The CABasicAnimation's start and end positions are calculated immediately
-  // instead of after the animation's delay, but the omnibox's layer isn't set
-  // yet to its final state and as a result the start and end positions will not
-  // be correct.
-  dispatch_time_t delay = dispatch_time(
-      DISPATCH_TIME_NOW, ios::material::kDuration2 * NSEC_PER_SEC);
-  dispatch_after(delay, dispatch_get_main_queue(), ^(void) {
-    [self fadeInView:leadingView
-        fromLeadingOffset:kPositionAnimationLeadingOffset
-             withDuration:ios::material::kDuration1
-               afterDelay:0];
-  });
+  [_locationBarView fadeInLeadingButton];
 }
 
 - (void)fadeOutOmniboxTrailingView {
@@ -1912,29 +1852,7 @@ using ios::material::TimingFunction;
 }
 
 - (void)fadeOutOmniboxLeadingView {
-  UIView* leadingView = [_locationBarView.textField leftView];
-
-  // Animate the opacity of leadingView to 0.
-  [CATransaction begin];
-  [CATransaction setAnimationDuration:ios::material::kDuration2];
-  [CATransaction
-      setAnimationTimingFunction:TimingFunction(ios::material::CurveEaseInOut)];
-  CABasicAnimation* fadeOut =
-      [CABasicAnimation animationWithKeyPath:@"opacity"];
-  fadeOut.fromValue = @1;
-  fadeOut.toValue = @0;
-  leadingView.layer.opacity = 0;
-  [leadingView.layer addAnimation:fadeOut forKey:@"fade"];
-
-  // Animate leadingView |kPositionAnimationLeadingOffset| pixels trailing.
-  CABasicAnimation* shift = [CABasicAnimation animationWithKeyPath:@"position"];
-  CGPoint startPosition = [leadingView layer].position;
-  CGPoint endPosition =
-      CGPointLayoutOffset(startPosition, kPositionAnimationLeadingOffset);
-  shift.fromValue = [NSValue valueWithCGPoint:startPosition];
-  shift.toValue = [NSValue valueWithCGPoint:endPosition];
-  [[leadingView layer] addAnimation:shift forKey:@"shift"];
-  [CATransaction commit];
+  [_locationBarView fadeOutLeadingButton];
 }
 
 #pragma mark Toolbar Buttons Animation.
@@ -2140,101 +2058,6 @@ using ios::material::TimingFunction;
   CGRect frame = LayoutRectGetRect(cancelButtonLayout);
   // Use the property to force creation.
   [self.cancelButton setFrame:frame];
-}
-
-#pragma mark Snapshot.
-
-- (void)updateSnapshotWithWidth:(CGFloat)width forced:(BOOL)force {
-  // If |width| is 0, the current view's width is acceptable.
-  if (width < 1)
-    width = [self view].frame.size.width;
-
-  // Snapshot is not used on the iPad.
-  if (IsIPadIdiom()) {
-    NOTREACHED();
-    return;
-  }
-  // If the snapshot is valid, don't redraw.
-  if (_snapshot && _snapshotHash == [self snapshotHashWithWidth:width])
-    return;
-
-  // Don't update the snapshot while the progress bar is moving, or while the
-  // tools menu is open, unless |force| is true.
-  BOOL shouldRedraw =
-      force || (![self.toolsMenuStateProvider isShowingToolsMenu] &&
-                [_determinateProgressView isHidden]);
-  if (!shouldRedraw)
-    return;
-
-  if ([[self delegate]
-          respondsToSelector:@selector(willUpdateToolbarSnapshot)]) {
-    [[self delegate] willUpdateToolbarSnapshot];
-  }
-
-  // Temporarily resize the toolbar if necessary in order to match the desired
-  // width. (Such a mismatch can occur if the device has been rotated while this
-  // view was not visible, for example.)
-  CGRect frame = [self view].frame;
-  CGFloat oldWidth = frame.size.width;
-  frame.size.width = width;
-  if (!IsSafeAreaCompatibleToolbarEnabled())
-    [self view].frame = frame;
-
-  UIGraphicsBeginImageContextWithOptions(frame.size, NO, 0.0);
-  [[self view].layer renderInContext:UIGraphicsGetCurrentContext()];
-  _snapshot = UIGraphicsGetImageFromCurrentImageContext();
-  UIGraphicsEndImageContext();
-
-  // If self.view is offscreen during render, UIKit sets views' origin to 0,0.
-  if (IsSafeAreaCompatibleToolbarEnabled() && frame.origin.y != 0) {
-    CGRect fixFrame = [self view].frame;
-    fixFrame.origin.y = frame.origin.y;
-    [self view].frame = fixFrame;
-  }
-
-  // In the past, when the current tab was prerendered, taking a snapshot
-  // sometimes lead to layout of its UIWebView. As this may be the fist time
-  // the UIWebViews was laid out, its scroll view was scrolled. This lead
-  // to scroll events that changed the frame of the toolbar when fullscreen
-  // was enabled.
-  // DCHECK that the toolbar frame does not change while taking a snapshot.
-  DCHECK_EQ(frame.origin.x, [self view].frame.origin.x);
-  DCHECK_EQ(frame.origin.y, [self view].frame.origin.y);
-  DCHECK_EQ(frame.size.width, [self view].frame.size.width);
-  DCHECK_EQ(frame.size.height, [self view].frame.size.height);
-
-  frame.size.width = oldWidth;
-  if (!IsSafeAreaCompatibleToolbarEnabled()) {
-    [self view].frame = frame;
-  }
-
-  _snapshotHash = [self snapshotHashWithWidth:width];
-}
-
-- (uint32_t)snapshotHashWithWidth:(CGFloat)width {
-  uint32_t hash = [super snapshotHash];
-  // Take only the lower 3 bits of the UIButton state, as they are the only
-  // ones that change per enabled, highlighted, or nomal.
-  const uint32_t kButtonStateMask = 0x07;
-  hash ^= ([_backButton state] & kButtonStateMask) |
-          (([_forwardButton state] & kButtonStateMask) << 3) |
-          (([_cancelButton state] & kButtonStateMask) << 6);
-  // Omnibox size & text it contains.
-  hash ^= [[_locationBarView.textField text] hash];
-  hash ^= static_cast<uint32_t>([_locationBarView frame].size.width) << 16;
-  hash ^= static_cast<uint32_t>([_locationBarView frame].size.height) << 24;
-  // Also note progress bar state.
-  float progress = 0;
-  if (_determinateProgressView && ![_determinateProgressView isHidden])
-    progress = [_determinateProgressView progress];
-  // The progress is in the range 0 to 1, so static_cast<uint32_t> won't work.
-  // Normally, static_cast does the right thing: truncates the float to an int.
-  // Here, that would not provide the necessary granularity.
-  hash ^= *(reinterpret_cast<uint32_t*>(&progress));
-  // Size changes matter.
-  hash ^= static_cast<uint32_t>(width) << 15;
-  hash ^= static_cast<uint32_t>([self view].frame.size.height) << 23;
-  return hash;
 }
 
 #pragma mark Helpers

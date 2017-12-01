@@ -47,7 +47,7 @@ CSSGroupingRule::CSSGroupingRule(StyleRuleGroup* group_rule,
       group_rule_(group_rule),
       child_rule_cssom_wrappers_(group_rule->ChildRules().size()) {}
 
-CSSGroupingRule::~CSSGroupingRule() {}
+CSSGroupingRule::~CSSGroupingRule() = default;
 
 unsigned CSSGroupingRule::insertRule(const ExecutionContext* execution_context,
                                      const String& rule_string,
@@ -66,7 +66,7 @@ unsigned CSSGroupingRule::insertRule(const ExecutionContext* execution_context,
 
   CSSStyleSheet* style_sheet = parentStyleSheet();
   CSSParserContext* context = CSSParserContext::CreateWithStyleSheet(
-      ParserContext(execution_context->SecureContextMode()), style_sheet);
+      ParserContext(execution_context->GetSecureContextMode()), style_sheet);
   StyleRuleBase* new_rule = CSSParser::ParseRule(
       context, style_sheet ? style_sheet->Contents() : nullptr, rule_string);
   if (!new_rule) {

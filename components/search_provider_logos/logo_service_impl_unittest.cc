@@ -119,9 +119,9 @@ Logo GetSampleLogo(const GURL& logo_url, base::Time response_time) {
   logo.metadata.fingerprint = "8bc33a80";
   logo.metadata.source_url =
       AppendPreliminaryParamsToDoodleURL(false, logo_url);
-  logo.metadata.on_click_url = GURL("http://www.google.com/search?q=potato");
+  logo.metadata.on_click_url = GURL("https://www.google.com/search?q=potato");
   logo.metadata.alt_text = "A logo about potatoes";
-  logo.metadata.animated_url = GURL("http://www.google.com/logos/doodle.png");
+  logo.metadata.animated_url = GURL("https://www.google.com/logos/doodle.png");
   logo.metadata.mime_type = "image/png";
   return logo;
 }
@@ -134,7 +134,7 @@ Logo GetSampleLogo2(const GURL& logo_url, base::Time response_time) {
   logo.metadata.fingerprint = "71082741021409127";
   logo.metadata.source_url =
       AppendPreliminaryParamsToDoodleURL(false, logo_url);
-  logo.metadata.on_click_url = GURL("http://example.com/page25");
+  logo.metadata.on_click_url = GURL("https://example.com/page25");
   logo.metadata.alt_text = "The logo for example.com";
   logo.metadata.mime_type = "image/jpeg";
   return logo;
@@ -634,7 +634,7 @@ TEST_F(LogoServiceImplTest, ValidateCachedLogo) {
   {
     // Ensure that cached logo is still returned correctly on subsequent
     // requests. In particular, the metadata should stay valid.
-    // http://crbug.com/480090
+    // https://crbug.com/480090
     EXPECT_CALL(*logo_cache_, UpdateCachedLogoMetadata(_)).Times(1);
     EXPECT_CALL(*logo_cache_, SetCachedLogo(_)).Times(0);
     EXPECT_CALL(*logo_cache_, OnGetCachedLogo()).Times(AtMost(1));
@@ -654,9 +654,9 @@ TEST_F(LogoServiceImplTest, UpdateCachedLogoMetadata) {
   Logo fresh_logo = cached_logo;
   fresh_logo.image.reset();
   fresh_logo.metadata.mime_type.clear();
-  fresh_logo.metadata.on_click_url = GURL("http://new.onclick.url");
+  fresh_logo.metadata.on_click_url = GURL("https://new.onclick.url");
   fresh_logo.metadata.alt_text = "new alt text";
-  fresh_logo.metadata.animated_url = GURL("http://new.animated.url");
+  fresh_logo.metadata.animated_url = GURL("https://new.animated.url");
   fresh_logo.metadata.expiration_time =
       test_clock_->Now() + base::TimeDelta::FromDays(8);
   SetServerResponseWhenFingerprint(fresh_logo.metadata.fingerprint,
@@ -727,7 +727,7 @@ TEST_F(LogoServiceImplTest, InvalidateCachedLogo) {
 TEST_F(LogoServiceImplTest, DeleteCachedLogoFromOldUrl) {
   SetServerResponse("", net::URLRequestStatus::FAILED, net::HTTP_OK);
   Logo cached_logo =
-      GetSampleLogo(GURL("http://oldsearchprovider.com"), test_clock_->Now());
+      GetSampleLogo(GURL("https://oldsearchprovider.com"), test_clock_->Now());
   logo_cache_->EncodeAndSetCachedLogo(cached_logo);
 
   EXPECT_CALL(*logo_cache_, UpdateCachedLogoMetadata(_)).Times(0);
@@ -881,14 +881,7 @@ void EnqueueCallbacks(LogoServiceImpl* logo_service,
                             fresh_callbacks, start_index + 1));
 }
 
-#if defined(THREAD_SANITIZER)
-// Flakes on Linux TSan: http://crbug/754599 (data race).
-#define MAYBE_SupportOverlappingLogoRequests \
-  DISABLED_SupportOverlappingLogoRequests
-#else
-#define MAYBE_SupportOverlappingLogoRequests SupportOverlappingLogoRequests
-#endif
-TEST_F(LogoServiceImplTest, MAYBE_SupportOverlappingLogoRequests) {
+TEST_F(LogoServiceImplTest, SupportOverlappingLogoRequests) {
   Logo cached_logo = GetSampleLogo(DoodleURL(), test_clock_->Now());
   logo_cache_->EncodeAndSetCachedLogo(cached_logo);
   ON_CALL(*logo_cache_, SetCachedLogo(_)).WillByDefault(Return());
@@ -913,10 +906,10 @@ TEST_F(LogoServiceImplTest, MAYBE_SupportOverlappingLogoRequests) {
                 Run(LogoCallbackReason::DETERMINED, Eq(fresh_logo)));
     fresh_callbacks.push_back(mocks.back()->Get());
   }
-  EnqueueCallbacks(logo_service_.get(), &cached_callbacks, &fresh_callbacks, 0);
-
   EXPECT_CALL(*logo_cache_, SetCachedLogo(_)).Times(AtMost(3));
   EXPECT_CALL(*logo_cache_, OnGetCachedLogo()).Times(AtMost(3));
+
+  EnqueueCallbacks(logo_service_.get(), &cached_callbacks, &fresh_callbacks, 0);
 
   task_environment_.RunUntilIdle();
 }

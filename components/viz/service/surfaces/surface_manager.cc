@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <utility>
 
+#include "base/containers/adapters.h"
 #include "base/containers/queue.h"
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
@@ -462,6 +463,52 @@ void SurfaceManager::RemoveTemporaryReference(const SurfaceId& surface_id,
     temporary_reference_ranges_.erase(frame_sink_id);
 }
 
+Surface* SurfaceManager::GetLatestInFlightSurface(
+    const FrameSinkId& parent,
+    const SurfaceId& primary_surface_id,
+    const SurfaceId& fallback_surface_id) {
+  if (!using_surface_references())
+    return nullptr;
+
+  // The fallback surface must exist before we begin looking for more recent
+  // surfaces. This guarantees that the |parent| is allowed to embed the
+  // |fallback_surface_id| and is not guessing surface IDs.
+  Surface* fallback_surface = GetSurfaceForId(fallback_surface_id);
+  if (!fallback_surface || !fallback_surface->HasActiveFrame())
+    return nullptr;
+
+  // If the FrameSinkId of the primary and the fallback surface IDs do not
+  // match then we should avoid presenting a fallback newer than intended by
+  // |parent|.
+  if (primary_surface_id.frame_sink_id() != fallback_surface_id.frame_sink_id())
+    return fallback_surface;
+
+  auto it =
+      temporary_reference_ranges_.find(fallback_surface_id.frame_sink_id());
+  if (it == temporary_reference_ranges_.end())
+    return fallback_surface;
+
+  const std::vector<LocalSurfaceId>& temp_surfaces = it->second;
+  for (const LocalSurfaceId& local_surface_id : base::Reversed(temp_surfaces)) {
+    // The in-flight surface cannot be newer than the primary surface ID.
+    if (local_surface_id.local_id() >
+        primary_surface_id.local_surface_id().local_id()) {
+      continue;
+    }
+
+    // |parent| must own this temporary reference.
+    SurfaceId surface_id(fallback_surface_id.frame_sink_id(), local_surface_id);
+    if (parent != temporary_references_[surface_id].owner)
+      continue;
+
+    Surface* surface = GetSurfaceForId(surface_id);
+    if (surface && surface->HasActiveFrame())
+      return surface;
+  }
+
+  return fallback_surface;
+}
+
 void SurfaceManager::MarkOldTemporaryReference() {
   if (temporary_references_.empty()) {
     UMA_HISTOGRAM_EXACT_LINEAR(kUmaNumOldTemporaryReferences, 0, kUmaStatMax);
@@ -534,8 +581,8 @@ void SurfaceManager::SurfaceActivated(Surface* surface) {
 
 void SurfaceManager::SurfaceDependenciesChanged(
     Surface* surface,
-    const base::flat_set<SurfaceId>& added_dependencies,
-    const base::flat_set<SurfaceId>& removed_dependencies) {
+    const base::flat_set<FrameSinkId>& added_dependencies,
+    const base::flat_set<FrameSinkId>& removed_dependencies) {
   dependency_tracker_.OnSurfaceDependenciesChanged(surface, added_dependencies,
                                                    removed_dependencies);
 }

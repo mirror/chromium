@@ -172,6 +172,8 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
 
   void ClosePresentationBindings();
 
+  void OnAssetsLoaded(bool success, std::string environment);
+
   // samplerExternalOES texture data for WebVR content image.
   int webvr_texture_id_ = 0;
 
@@ -265,7 +267,6 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
   std::vector<gvr::BufferSpec> specs_;
 
   bool content_frame_available_ = false;
-  bool skips_redraw_when_not_dirty_;
   gfx::Transform last_used_head_pose_;
 
   bool keyboard_enabled_ = false;

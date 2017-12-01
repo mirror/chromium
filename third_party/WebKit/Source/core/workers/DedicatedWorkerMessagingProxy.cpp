@@ -10,6 +10,7 @@
 #include "core/events/ErrorEvent.h"
 #include "core/events/MessageEvent.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
+#include "core/inspector/MainThreadDebugger.h"
 #include "core/origin_trials/OriginTrialContext.h"
 #include "core/workers/DedicatedWorker.h"
 #include "core/workers/DedicatedWorkerObjectProxy.h"
@@ -45,6 +46,7 @@ ConnectToWorkerInterfaceProvider(Document* document,
 struct DedicatedWorkerMessagingProxy::QueuedTask {
   scoped_refptr<SerializedScriptValue> message;
   Vector<MessagePortChannel> channels;
+  v8_inspector::V8StackTraceId stack_id;
 };
 
 DedicatedWorkerMessagingProxy::DedicatedWorkerMessagingProxy(
@@ -63,7 +65,8 @@ void DedicatedWorkerMessagingProxy::StartWorkerGlobalScope(
     const KURL& script_url,
     const String& user_agent,
     const String& source_code,
-    ReferrerPolicy referrer_policy) {
+    ReferrerPolicy referrer_policy,
+    const v8_inspector::V8StackTraceId& stack_id) {
   DCHECK(IsParentContextThread());
   if (AskedToTerminate()) {
     // Worker.terminate() could be called from JS before the thread was
@@ -90,12 +93,13 @@ void DedicatedWorkerMessagingProxy::StartWorkerGlobalScope(
 
   InitializeWorkerThread(std::move(global_scope_creation_params),
                          CreateBackingThreadStartupData(ToIsolate(document)),
-                         script_url);
+                         script_url, stack_id);
 }
 
 void DedicatedWorkerMessagingProxy::PostMessageToWorkerGlobalScope(
     scoped_refptr<SerializedScriptValue> message,
-    Vector<MessagePortChannel> channels) {
+    Vector<MessagePortChannel> channels,
+    const v8_inspector::V8StackTraceId& stack_id) {
   DCHECK(IsParentContextThread());
   if (AskedToTerminate())
     return;
@@ -105,13 +109,13 @@ void DedicatedWorkerMessagingProxy::PostMessageToWorkerGlobalScope(
         &DedicatedWorkerObjectProxy::ProcessMessageFromWorkerObject,
         CrossThreadUnretained(&WorkerObjectProxy()), std::move(message),
         WTF::Passed(std::move(channels)),
-        CrossThreadUnretained(GetWorkerThread()));
+        CrossThreadUnretained(GetWorkerThread()), stack_id);
     GetWorkerThread()
         ->GetTaskRunner(TaskType::kPostedMessage)
         ->PostTask(BLINK_FROM_HERE, std::move(task));
   } else {
     queued_early_tasks_.push_back(
-        QueuedTask{std::move(message), std::move(channels)});
+        QueuedTask{std::move(message), std::move(channels), stack_id});
   }
 }
 
@@ -125,7 +129,7 @@ void DedicatedWorkerMessagingProxy::WorkerThreadCreated() {
         CrossThreadUnretained(&WorkerObjectProxy()),
         std::move(queued_task.message),
         WTF::Passed(std::move(queued_task.channels)),
-        CrossThreadUnretained(GetWorkerThread()));
+        CrossThreadUnretained(GetWorkerThread()), queued_task.stack_id);
     GetWorkerThread()
         ->GetTaskRunner(TaskType::kPostedMessage)
         ->PostTask(BLINK_FROM_HERE, std::move(task));
@@ -140,15 +144,18 @@ bool DedicatedWorkerMessagingProxy::HasPendingActivity() const {
 
 void DedicatedWorkerMessagingProxy::PostMessageToWorkerObject(
     scoped_refptr<SerializedScriptValue> message,
-    Vector<MessagePortChannel> channels) {
+    Vector<MessagePortChannel> channels,
+    const v8_inspector::V8StackTraceId& stack_id) {
   DCHECK(IsParentContextThread());
   if (!worker_object_ || AskedToTerminate())
     return;
 
   MessagePortArray* ports =
       MessagePort::EntanglePorts(*GetExecutionContext(), std::move(channels));
+  MainThreadDebugger::Instance()->ExternalAsyncTaskStarted(stack_id);
   worker_object_->DispatchEvent(
       MessageEvent::Create(ports, std::move(message)));
+  MainThreadDebugger::Instance()->ExternalAsyncTaskFinished(stack_id);
 }
 
 void DedicatedWorkerMessagingProxy::DispatchErrorEvent(

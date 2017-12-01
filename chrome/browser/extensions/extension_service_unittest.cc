@@ -100,7 +100,6 @@
 #include "content/public/common/content_constants.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/test_utils.h"
-#include "extensions/browser/extension_dialog_auto_confirm.h"
 #include "extensions/browser/extension_prefs.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/extension_system.h"
@@ -122,7 +121,6 @@
 #include "extensions/common/manifest_constants.h"
 #include "extensions/common/manifest_handlers/background_info.h"
 #include "extensions/common/manifest_handlers/permissions_parser.h"
-#include "extensions/common/manifest_handlers/plugins_handler.h"
 #include "extensions/common/manifest_url_handlers.h"
 #include "extensions/common/permissions/permission_set.h"
 #include "extensions/common/permissions/permissions_data.h"
@@ -604,23 +602,6 @@ class ExtensionServiceTest
   }
 
  protected:
-  // Paths to some of the fake extensions.
-  base::FilePath good1_path() {
-    return data_dir()
-        .AppendASCII("good")
-        .AppendASCII("Extensions")
-        .AppendASCII(good1)
-        .AppendASCII("2");
-  }
-
-  base::FilePath good2_path() {
-    return data_dir()
-        .AppendASCII("good")
-        .AppendASCII("Extensions")
-        .AppendASCII(good2)
-        .AppendASCII("1.0");
-  }
-
   void TestExternalProvider(MockExternalProvider* provider,
                             Manifest::Location location);
 
@@ -880,7 +861,6 @@ TEST_F(ExtensionServiceTest, LoadAllExtensionsFromDirectorySuccess) {
   expected_path =
       base::MakeAbsoluteFilePath(extension->path().AppendASCII("script2.js"));
   EXPECT_TRUE(resource01.ComparePathWithDefault(expected_path));
-  EXPECT_TRUE(!extensions::PluginInfo::HasPlugins(extension));
   EXPECT_EQ(1u, scripts[1]->url_patterns().patterns().size());
   EXPECT_EQ("http://*.news.com/*",
             scripts[1]->url_patterns().begin()->GetAsString());
@@ -907,24 +887,6 @@ TEST_F(ExtensionServiceTest, LoadAllExtensionsFromDirectorySuccess) {
   EXPECT_TRUE(
       extensions::ContentScriptsInfo::GetContentScripts(loaded_[1].get())
           .empty());
-
-  // We don't parse the plugins section on Chrome OS.
-#if defined(OS_CHROMEOS)
-  EXPECT_TRUE(!extensions::PluginInfo::HasPlugins(loaded_[1].get()));
-#else
-  ASSERT_TRUE(extensions::PluginInfo::HasPlugins(loaded_[1].get()));
-  const std::vector<extensions::PluginInfo>* plugins =
-      extensions::PluginInfo::GetPlugins(loaded_[1].get());
-  ASSERT_TRUE(plugins);
-  ASSERT_EQ(2u, plugins->size());
-  EXPECT_EQ(loaded_[1]->path().AppendASCII("content_plugin.dll").value(),
-            plugins->at(0).path.value());
-  EXPECT_TRUE(plugins->at(0).is_public);
-  EXPECT_EQ(loaded_[1]->path().AppendASCII("extension_plugin.dll").value(),
-            plugins->at(1).path.value());
-  EXPECT_FALSE(plugins->at(1).is_public);
-#endif
-
   EXPECT_EQ(Manifest::INTERNAL, loaded_[1]->location());
 
   int index = expected_num_extensions - 1;
@@ -1411,7 +1373,6 @@ TEST_F(ExtensionServiceTest, GrantedPermissions) {
   ASSERT_TRUE(known_perms.get());
   EXPECT_FALSE(known_perms->IsEmpty());
   EXPECT_EQ(expected_api_perms, known_perms->apis());
-  EXPECT_FALSE(known_perms->HasEffectiveFullAccess());
   EXPECT_EQ(expected_host_perms, known_perms->effective_hosts());
 }
 
@@ -1712,34 +1673,6 @@ TEST_F(ExtensionServiceTest, DefaultAppsGrantedPermissions) {
   EXPECT_TRUE(known_perms.get());
   EXPECT_FALSE(known_perms->IsEmpty());
   EXPECT_EQ(expected_api_perms, known_perms->apis());
-  EXPECT_FALSE(known_perms->HasEffectiveFullAccess());
-}
-#endif
-
-#if !defined(OS_POSIX) || defined(OS_MACOSX)
-// Tests that the granted permissions full_access bit gets set correctly when
-// an extension contains an NPAPI plugin.
-// Only run this on platforms that support NPAPI plugins.
-TEST_F(ExtensionServiceTest, GrantedFullAccessPermissions) {
-  InitPluginService();
-
-  InitializeEmptyExtensionService();
-
-  ASSERT_TRUE(base::PathExists(good1_path()));
-  const Extension* extension = PackAndInstallCRX(good1_path(), INSTALL_NEW);
-  EXPECT_EQ(0u, GetErrors().size());
-  EXPECT_EQ(1u, registry()->enabled_extensions().size());
-  ExtensionPrefs* prefs = ExtensionPrefs::Get(profile());
-
-  std::unique_ptr<const PermissionSet> permissions =
-      prefs->GetGrantedPermissions(extension->id());
-  EXPECT_FALSE(permissions->IsEmpty());
-  EXPECT_TRUE(permissions->HasEffectiveFullAccess());
-  EXPECT_FALSE(permissions->apis().empty());
-  EXPECT_TRUE(permissions->HasAPIPermission(APIPermission::kPlugin));
-
-  // Full access implies full host access too...
-  EXPECT_TRUE(permissions->HasEffectiveAccessToAllHosts());
 }
 #endif
 
@@ -1798,7 +1731,6 @@ TEST_F(ExtensionServiceTest, GrantedAPIAndHostPermissions) {
       prefs->GetGrantedPermissions(extension_id);
   ASSERT_TRUE(current_perms.get());
   ASSERT_FALSE(current_perms->IsEmpty());
-  ASSERT_FALSE(current_perms->HasEffectiveFullAccess());
   ASSERT_EQ(expected_api_permissions, current_perms->apis());
   ASSERT_EQ(expected_host_permissions, current_perms->effective_hosts());
 
@@ -1838,7 +1770,6 @@ TEST_F(ExtensionServiceTest, GrantedAPIAndHostPermissions) {
   current_perms = prefs->GetGrantedPermissions(extension_id);
   ASSERT_TRUE(current_perms.get());
   ASSERT_FALSE(current_perms->IsEmpty());
-  ASSERT_FALSE(current_perms->HasEffectiveFullAccess());
   ASSERT_EQ(expected_api_permissions, current_perms->apis());
   ASSERT_EQ(expected_host_permissions, current_perms->effective_hosts());
 }
@@ -2780,80 +2711,6 @@ TEST_F(ExtensionServiceTest, LoadExtensionsCanDowngrade) {
   EXPECT_EQ(1u, registry()->enabled_extensions().size());
   EXPECT_EQ("1.0", loaded_[0]->VersionString());
 }
-
-#if !defined(OS_POSIX) || defined(OS_MACOSX)
-// LOAD extensions with plugins require approval.
-// Only run this on platforms that support NPAPI plugins.
-TEST_F(ExtensionServiceTest, LoadExtensionsWithPlugins) {
-  base::FilePath extension_with_plugin_path = good1_path();
-  base::FilePath extension_no_plugin_path = good2_path();
-
-  InitPluginService();
-  InitializeEmptyExtensionService();
-
-  // Start by canceling any install prompts.
-  std::unique_ptr<extensions::ScopedTestDialogAutoConfirm> auto_confirm(
-      new extensions::ScopedTestDialogAutoConfirm(
-          extensions::ScopedTestDialogAutoConfirm::CANCEL));
-
-  // The extension that has a plugin should not install.
-  extensions::UnpackedInstaller::Create(service())
-      ->Load(extension_with_plugin_path);
-  content::RunAllTasksUntilIdle();
-  EXPECT_EQ(0u, GetErrors().size());
-  EXPECT_EQ(0u, loaded_.size());
-  EXPECT_EQ(0u, registry()->enabled_extensions().size());
-  EXPECT_EQ(0u, registry()->disabled_extensions().size());
-
-  // But the extension with no plugin should since there's no prompt.
-  ExtensionErrorReporter::GetInstance()->ClearErrors();
-  extensions::UnpackedInstaller::Create(service())
-      ->Load(extension_no_plugin_path);
-  content::RunAllTasksUntilIdle();
-  EXPECT_EQ(0u, GetErrors().size());
-  EXPECT_EQ(1u, loaded_.size());
-  EXPECT_EQ(1u, registry()->enabled_extensions().size());
-  EXPECT_EQ(0u, registry()->disabled_extensions().size());
-  EXPECT_TRUE(registry()->enabled_extensions().Contains(good2));
-
-  // The plugin extension should install if we accept the dialog.
-  auto_confirm.reset();
-  auto_confirm.reset(new extensions::ScopedTestDialogAutoConfirm(
-      extensions::ScopedTestDialogAutoConfirm::ACCEPT));
-
-  ExtensionErrorReporter::GetInstance()->ClearErrors();
-  extensions::UnpackedInstaller::Create(service())
-      ->Load(extension_with_plugin_path);
-  content::RunAllTasksUntilIdle();
-  EXPECT_EQ(0u, GetErrors().size());
-  EXPECT_EQ(2u, loaded_.size());
-  EXPECT_EQ(2u, registry()->enabled_extensions().size());
-  EXPECT_EQ(0u, registry()->disabled_extensions().size());
-  EXPECT_TRUE(registry()->enabled_extensions().Contains(good1));
-  EXPECT_TRUE(registry()->enabled_extensions().Contains(good2));
-
-  // Make sure the granted permissions have been setup.
-  std::unique_ptr<const PermissionSet> permissions =
-      ExtensionPrefs::Get(profile())->GetGrantedPermissions(good1);
-  ASSERT_TRUE(permissions);
-  EXPECT_FALSE(permissions->IsEmpty());
-  EXPECT_TRUE(permissions->HasEffectiveFullAccess());
-  EXPECT_FALSE(permissions->apis().empty());
-  EXPECT_TRUE(permissions->HasAPIPermission(APIPermission::kPlugin));
-
-  // We should be able to reload the extension without getting another prompt.
-  loaded_.clear();
-  auto_confirm.reset();
-  auto_confirm.reset(new extensions::ScopedTestDialogAutoConfirm(
-      extensions::ScopedTestDialogAutoConfirm::CANCEL));
-
-  service()->ReloadExtension(good1);
-  content::RunAllTasksUntilIdle();
-  EXPECT_EQ(1u, loaded_.size());
-  EXPECT_EQ(2u, registry()->enabled_extensions().size());
-  EXPECT_EQ(0u, registry()->disabled_extensions().size());
-}
-#endif  // !defined(OS_POSIX) || defined(OS_MACOSX)
 
 namespace {
 

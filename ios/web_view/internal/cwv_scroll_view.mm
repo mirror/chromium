@@ -62,12 +62,27 @@
   return _proxy.dragging;
 }
 
+- (BOOL)isTracking {
+  return _proxy.tracking;
+}
+
 - (BOOL)scrollsToTop {
   return _proxy.scrollsToTop;
 }
 
 - (void)setScrollsToTop:(BOOL)scrollsToTop {
   _proxy.scrollsToTop = scrollsToTop;
+}
+
+- (UIScrollViewContentInsetAdjustmentBehavior)contentInsetAdjustmentBehavior
+    API_AVAILABLE(ios(11.0)) {
+  return _proxy.contentInsetAdjustmentBehavior;
+}
+
+- (void)setContentInsetAdjustmentBehavior:
+    (UIScrollViewContentInsetAdjustmentBehavior)contentInsetAdjustmentBehavior
+    API_AVAILABLE(ios(11.0)) {
+  _proxy.contentInsetAdjustmentBehavior = contentInsetAdjustmentBehavior;
 }
 
 - (UIPanGestureRecognizer*)panGestureRecognizer {

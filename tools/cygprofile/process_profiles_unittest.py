@@ -30,16 +30,16 @@ class ProcessProfilesTestCase(unittest.TestCase):
     self.assertListEqual(self.offset_to_symbol_info, offset_to_symbol_info)
 
   def testGetReachedSymbolsFromDump(self):
-    dump = (
-        [True, False,  # No symbol
-         True, True, False, False,  # 2 hits for symbol_1,
-         False, False,  # Hole
-         False, False,  # No symbol_2
-         False, True, False  # symbol_3
-        ])
+    # 2 hits for symbol_1, 0 for symbol_2, 1 for symbol_3
+    dump = [8, 12, 48]
     reached = process_profiles.GetReachedSymbolsFromDump(
         dump, self.offset_to_symbol_info)
-    self.assertSetEqual(set([self.symbol_1, self.symbol_3]), reached)
+    self.assertListEqual([self.symbol_1, self.symbol_3], reached)
+    # Ordering matters, no repetitions
+    dump = [48, 12, 8, 12, 8, 16]
+    reached = process_profiles.GetReachedSymbolsFromDump(
+        dump, self.offset_to_symbol_info)
+    self.assertListEqual([self.symbol_3, self.symbol_1], reached)
 
   def testSymbolNameToPrimary(self):
     symbol_infos = [SymbolInfo('1', 8, 16),
@@ -49,6 +49,14 @@ class ProcessProfilesTestCase(unittest.TestCase):
     self.assertDictEqual({'1': symbol_infos[0],
                           'AnAlias': symbol_infos[0],
                           'Another': symbol_infos[2]}, symbol_name_to_primary)
+
+  def testSortedFilenames(self):
+    filenames = ['second-1234-456.txt', 'first-345345-123.txt',
+                 'third.bar.-789.txt']
+    sorted_filenames = process_profiles._SortedFilenames(filenames)
+    self.assertListEqual(
+        ['first-345345-123.txt', 'second-1234-456.txt', 'third.bar.-789.txt'],
+        sorted_filenames)
 
 
 if __name__ == '__main__':

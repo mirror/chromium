@@ -79,10 +79,12 @@ typedef AccessibilityStatusCallbackList::Subscription
 class ChromeVoxPanelWidgetObserver;
 
 enum class PlaySoundOption {
-  ALWAYS = 0,               // The sound is always played.
-  SPOKEN_FEEDBACK_ENABLED,  // The sound is played only if spoken feedback is
-                            // enabled, or --ash-enable-system-sounds flag is
-                            // used.
+  // The sound is always played.
+  ALWAYS = 0,
+
+  // The sound is played only if spoken feedback is enabled, or
+  // --ash-enable-system-sounds flag is used.
+  ONLY_IF_SPOKEN_FEEDBACK_ENABLED,
 };
 
 // AccessibilityManager changes the statuses of accessibility features
@@ -146,9 +148,6 @@ class AccessibilityManager
 
   // Returns true if spoken feedback is enabled, or false if not.
   bool IsSpokenFeedbackEnabled() const;
-
-  // Toggles whether Chrome OS spoken feedback is on or off.
-  void ToggleSpokenFeedback(ash::AccessibilityNotificationVisibility notify);
 
   // Enables or disables the high contrast mode for Chrome.
   void EnableHighContrast(bool enabled);
@@ -264,7 +263,7 @@ class AccessibilityManager
   void OnViewFocusedInArc(const gfx::Rect& bounds_in_screen);
 
   // Plays an earcon. Earcons are brief and distinctive sounds that indicate
-  // when their mapped event has occurred. The sound key enums can be found in
+  // the their mapped event has occurred. The |sound_key| enums can be found in
   // chromeos/audio/chromeos_sounds.h.
   bool PlayEarcon(int sound_key, PlaySoundOption option);
 
@@ -312,7 +311,7 @@ class AccessibilityManager
   void UpdateAlwaysShowMenuFromPref();
   void OnLargeCursorChanged();
   void UpdateStickyKeysFromPref();
-  void UpdateSpokenFeedbackFromPref();
+  void OnSpokenFeedbackChanged();
   void OnHighContrastChanged();
   void UpdateAutoclickFromPref();
   void UpdateAutoclickDelayFromPref();
@@ -388,7 +387,6 @@ class AccessibilityManager
   PrefHandler switch_access_pref_handler_;
 
   bool sticky_keys_enabled_;
-  bool spoken_feedback_enabled_;
   bool autoclick_enabled_;
   base::TimeDelta autoclick_delay_ms_;
   bool virtual_keyboard_enabled_;

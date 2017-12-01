@@ -9,9 +9,11 @@
 #include "base/bind.h"
 #include "base/logging.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "chrome/browser/extensions/launch_util.h"
 #include "chrome/browser/prerender/prerender_contents.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/extensions/app_launch_params.h"
@@ -23,6 +25,7 @@
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
+#include "extensions/browser/extension_prefs.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
@@ -36,13 +39,26 @@ namespace extensions {
 
 namespace {
 
+bool IsWindowedBookmarkApp(const Extension* app,
+                           content::BrowserContext* context) {
+  if (!app || !app->from_bookmark())
+    return false;
+
+  if (GetLaunchContainer(extensions::ExtensionPrefs::Get(context), app) !=
+      LAUNCH_CONTAINER_WINDOW) {
+    return false;
+  }
+
+  return true;
+}
+
 scoped_refptr<const Extension> GetAppForURL(
     const GURL& url,
     const content::WebContents* web_contents) {
-  content::BrowserContext* browser_context = web_contents->GetBrowserContext();
+  content::BrowserContext* context = web_contents->GetBrowserContext();
   for (scoped_refptr<const extensions::Extension> app :
-       ExtensionRegistry::Get(browser_context)->enabled_extensions()) {
-    if (!app->from_bookmark())
+       ExtensionRegistry::Get(context)->enabled_extensions()) {
+    if (!IsWindowedBookmarkApp(app.get(), context))
       continue;
 
     const UrlHandlerInfo* url_handler =
@@ -71,11 +87,6 @@ BookmarkAppNavigationThrottle::MaybeCreateThrottleFor(
     return nullptr;
   }
 
-  if (navigation_handle->IsPost()) {
-    DVLOG(1) << "Don't intercept: Method is POST.";
-    return nullptr;
-  }
-
   content::BrowserContext* browser_context =
       navigation_handle->GetWebContents()->GetBrowserContext();
   Profile* profile = Profile::FromBrowserContext(browser_context);
@@ -101,29 +112,78 @@ const char* BookmarkAppNavigationThrottle::GetNameForLogging() {
 
 content::NavigationThrottle::ThrottleCheckResult
 BookmarkAppNavigationThrottle::WillStartRequest() {
-  return ProcessNavigation();
+  return ProcessNavigation(false /* is_redirect */);
 }
 
 content::NavigationThrottle::ThrottleCheckResult
 BookmarkAppNavigationThrottle::WillRedirectRequest() {
-  return ProcessNavigation();
+  return ProcessNavigation(true /* is_redirect */);
 }
 
 content::NavigationThrottle::ThrottleCheckResult
-BookmarkAppNavigationThrottle::ProcessNavigation() {
+BookmarkAppNavigationThrottle::ProcessNavigation(bool is_redirect) {
+  if (navigation_handle()->WasStartedFromContextMenu()) {
+    DVLOG(1) << "Don't intercept: Navigation started from the context menu.";
+    return content::NavigationThrottle::PROCEED;
+  }
+
   ui::PageTransition transition_type = navigation_handle()->GetPageTransition();
-  if (!(PageTransitionCoreTypeIs(transition_type, ui::PAGE_TRANSITION_LINK))) {
+
+  // When launching an app, if the page redirects to an out-of-scope URL, then
+  // continue the navigation in a regular browser window. (Launching an app
+  // results in an AUTO_BOOKMARK transition).
+  //
+  // Note that for non-redirecting app launches, GetAppForWindow() might return
+  // null, because the navigation's WebContents might not be attached to a
+  // window yet.
+  //
+  // TODO(crbug.com/789051): Possibly fall through to the logic below to
+  // open target in app window, if it belongs to an app.
+  if (is_redirect &&
+      PageTransitionCoreTypeIs(transition_type,
+                               ui::PAGE_TRANSITION_AUTO_BOOKMARK) &&
+      GetAppForWindow() != GetTargetApp()) {
+    DVLOG(1) << "Out-of-scope navigation during launch. Opening in Chrome.";
+    Browser* browser = chrome::FindBrowserWithWebContents(
+        navigation_handle()->GetWebContents());
+    DCHECK(browser);
+    chrome::OpenInChrome(browser);
+  }
+
+  if (!PageTransitionCoreTypeIs(transition_type, ui::PAGE_TRANSITION_LINK) &&
+      !PageTransitionCoreTypeIs(transition_type,
+                                ui::PAGE_TRANSITION_FORM_SUBMIT)) {
     DVLOG(1) << "Don't intercept: Transition type is "
              << PageTransitionGetCoreTransitionString(transition_type);
     return content::NavigationThrottle::PROCEED;
   }
 
-  auto app_for_window_ref = GetAppForWindow();
-  auto target_app_ref = GetTargetApp();
+  int32_t transition_qualifier = PageTransitionGetQualifier(transition_type);
+  if (transition_qualifier & ui::PAGE_TRANSITION_FORWARD_BACK) {
+    DVLOG(1) << "Don't intercept: Forward or back navigation.";
+    return content::NavigationThrottle::PROCEED;
+  }
 
-  if (app_for_window_ref == target_app_ref) {
+  if (transition_qualifier & ui::PAGE_TRANSITION_FROM_ADDRESS_BAR) {
+    DVLOG(1) << "Don't intercept: Address bar navigation.";
+    return content::NavigationThrottle::PROCEED;
+  }
+
+  scoped_refptr<const Extension> app_for_window = GetAppForWindow();
+  scoped_refptr<const Extension> target_app = GetTargetApp();
+
+  if (app_for_window == target_app) {
     DVLOG(1) << "Don't intercept: The target URL is in the same scope as the "
              << "current app.";
+    return content::NavigationThrottle::PROCEED;
+  }
+
+  // If this is a browser tab, and the user is submitting a form, then keep the
+  // navigation in the browser tab.
+  if (!app_for_window &&
+      PageTransitionCoreTypeIs(transition_type,
+                               ui::PAGE_TRANSITION_FORM_SUBMIT)) {
+    DVLOG(1) << "Keep form submissions in the browser.";
     return content::NavigationThrottle::PROCEED;
   }
 
@@ -134,12 +194,12 @@ BookmarkAppNavigationThrottle::ProcessNavigation() {
   // open a new app window if the Youtube app is installed, but navigating from
   // https://www.google.com/ to https://www.google.com/maps does open a new
   // app window if only the Maps app is installed.
-  if (!app_for_window_ref && target_app_ref == GetAppForCurrentURL()) {
+  if (!app_for_window && target_app == GetAppForCurrentURL()) {
     DVLOG(1) << "Don't intercept: Keep same-app navigations in the browser.";
     return content::NavigationThrottle::PROCEED;
   }
 
-  if (target_app_ref) {
+  if (target_app) {
     auto* prerender_contents = prerender::PrerenderContents::FromWebContents(
         navigation_handle()->GetWebContents());
     if (prerender_contents) {
@@ -149,10 +209,10 @@ BookmarkAppNavigationThrottle::ProcessNavigation() {
       return content::NavigationThrottle::CANCEL_AND_IGNORE;
     }
 
-    return OpenInAppWindowAndCloseTabIfNecessary(target_app_ref);
+    return OpenInAppWindowAndCloseTabIfNecessary(target_app);
   }
 
-  if (app_for_window_ref) {
+  if (app_for_window) {
     // The experience when navigating to an out-of-scope website inside an app
     // window is not great, so we bounce these navigations back to the browser.
     // TODO(crbug.com/774895): Stop bouncing back to the browser once the
@@ -229,6 +289,8 @@ void BookmarkAppNavigationThrottle::OpenInNewTab() {
                                     WindowOpenDisposition::NEW_FOREGROUND_TAB,
                                     navigation_handle()->GetPageTransition(),
                                     navigation_handle()->IsRendererInitiated());
+  url_params.uses_post = navigation_handle()->IsPost();
+  url_params.post_data = navigation_handle()->GetResourceRequestBody();
   url_params.redirect_chain = navigation_handle()->GetRedirectChain();
   url_params.frame_tree_node_id = navigation_handle()->GetFrameTreeNodeId();
   url_params.user_gesture = navigation_handle()->HasUserGesture();
@@ -242,16 +304,16 @@ void BookmarkAppNavigationThrottle::OpenInNewTab() {
 scoped_refptr<const Extension>
 BookmarkAppNavigationThrottle::GetAppForWindow() {
   content::WebContents* source = navigation_handle()->GetWebContents();
+  content::BrowserContext* context = source->GetBrowserContext();
   Browser* browser = chrome::FindBrowserWithWebContents(source);
   if (!browser || !browser->is_app())
     return nullptr;
 
-  const Extension* app =
-      ExtensionRegistry::Get(source->GetBrowserContext())
-          ->GetExtensionById(
-              web_app::GetExtensionIdFromApplicationName(browser->app_name()),
-              extensions::ExtensionRegistry::ENABLED);
-  if (!app || !app->from_bookmark())
+  const Extension* app = ExtensionRegistry::Get(context)->GetExtensionById(
+      web_app::GetExtensionIdFromApplicationName(browser->app_name()),
+      extensions::ExtensionRegistry::ENABLED);
+
+  if (!IsWindowedBookmarkApp(app, context))
     return nullptr;
 
   // Bookmark Apps for installable websites have scope.

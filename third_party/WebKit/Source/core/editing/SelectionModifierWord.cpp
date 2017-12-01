@@ -307,7 +307,7 @@ VisiblePosition VisualWordPosition(const VisiblePosition& visible_position,
 
   TextDirection block_direction =
       DirectionOfEnclosingBlockOf(visible_position.DeepEquivalent());
-  InlineBox* previously_visited_box = nullptr;
+  const InlineBox* previously_visited_box = nullptr;
   VisiblePosition current = visible_position;
   TextBreakIterator* iter = nullptr;
 
@@ -324,8 +324,9 @@ VisiblePosition VisualWordPosition(const VisiblePosition& visible_position,
       return VisiblePosition();
 
     InlineBoxPosition box_position = ComputeInlineBoxPosition(
-        adjacent_character_position.DeepEquivalent(), TextAffinity::kUpstream);
-    InlineBox* box = box_position.inline_box;
+        PositionWithAffinity(adjacent_character_position.DeepEquivalent(),
+                             TextAffinity::kUpstream));
+    const InlineBox* box = box_position.inline_box;
     int offset_in_box = box_position.offset_in_box;
 
     if (!box)
@@ -335,7 +336,7 @@ VisiblePosition VisualWordPosition(const VisiblePosition& visible_position,
       continue;
     }
 
-    InlineTextBox* text_box = ToInlineTextBox(box);
+    const InlineTextBox* text_box = ToInlineTextBox(box);
     int previous_box_length = 0;
     bool previous_box_in_different_block = false;
     bool next_box_in_different_block = false;

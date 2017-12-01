@@ -581,16 +581,6 @@ const FeatureEntry::Choice kV8CacheOptionsChoices[] = {
     {flag_descriptions::kV8CacheOptionsCode, switches::kV8CacheOptions, "code"},
 };
 
-const FeatureEntry::Choice kV8CacheStrategiesForCacheStorageChoices[] = {
-    {flags_ui::kGenericExperimentChoiceDefault, "", ""},
-    {flags_ui::kGenericExperimentChoiceDisabled,
-     switches::kV8CacheStrategiesForCacheStorage, "none"},
-    {flag_descriptions::kV8CacheStrategiesForCacheStorageNormal,
-     switches::kV8CacheStrategiesForCacheStorage, "normal"},
-    {flag_descriptions::kV8CacheStrategiesForCacheStorageAggressive,
-     switches::kV8CacheStrategiesForCacheStorage, "aggressive"},
-};
-
 #if defined(OS_ANDROID)
 const FeatureEntry::Choice kProgressBarCompletionChoices[] = {
     {flags_ui::kGenericExperimentChoiceDefault, "", ""},
@@ -1658,6 +1648,10 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kServiceWorkerScriptStreamingName,
      flag_descriptions::kServiceWorkerScriptStreamingDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kServiceWorkerScriptStreaming)},
+    {"enable-service-worker-script-full-code-cache",
+     flag_descriptions::kServiceWorkerScriptFullCodeCacheName,
+     flag_descriptions::kServiceWorkerScriptFullCodeCacheDescription, kOsAll,
+     FEATURE_VALUE_TYPE(features::kServiceWorkerScriptFullCodeCache)},
     {"enable-pwa-full-code-cache",
      flag_descriptions::kEnablePWAFullCodeCacheName,
      flag_descriptions::kEnablePWAFullCodeCacheDescription, kOsAll,
@@ -1877,6 +1871,11 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kChromeHomeBottomNavLabelsName,
      flag_descriptions::kChromeHomeBottomNavLabelsDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::kChromeHomeBottomNavLabels)},
+    {"enable-chrome-home-bottom-sheet-inactivity-expansion",
+     flag_descriptions::kChromeHomeInactivitySheetExpansionName,
+     flag_descriptions::kChromeHomeInactivitySheetExpansionDescription,
+     kOsAndroid,
+     FEATURE_VALUE_TYPE(chrome::android::kChromeHomeInactivitySheetExpansion)},
     {"enable-chrome-home-opt-out-snackbar",
      flag_descriptions::kChromeHomeOptOutSnackbarName,
      flag_descriptions::kChromeHomeOptOutSnackbarDescription, kOsAndroid,
@@ -1889,6 +1888,10 @@ const FeatureEntry kFeatureEntries[] = {
     {"chrome-home-swipe-logic", flag_descriptions::kChromeHomeSwipeLogicName,
      flag_descriptions::kChromeHomeSwipeLogicDescription, kOsAndroid,
      MULTI_VALUE_TYPE(kChromeHomeSwipeLogicChoices)},
+    {"enable-chrome-home-persistent-iph",
+     flag_descriptions::kChromeHomePersistentIphName,
+     flag_descriptions::kChromeHomePersistentIphDescription, kOsAndroid,
+     FEATURE_VALUE_TYPE(chrome::android::kChromeHomePersistentIph)},
     {"enable-chrome-memex", flag_descriptions::kChromeMemexName,
      flag_descriptions::kChromeMemexDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::kChromeMemexFeature)},
@@ -1945,10 +1948,6 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kUserConsentForExtensionScriptsDescription, kOsAll,
      SINGLE_VALUE_TYPE(extensions::switches::kEnableScriptsRequireAction)},
 #endif  // ENABLE_EXTENSIONS
-    {"enable-hotword-hardware",
-     flag_descriptions::kExperimentalHotwordHardwareName,
-     flag_descriptions::kExperimentalHotwordHardwareDescription, kOsCrOS,
-     SINGLE_VALUE_TYPE(switches::kEnableExperimentalHotwordHardware)},
 #if BUILDFLAG(ENABLE_EXTENSIONS)
     {"enable-embedded-extension-options",
      flag_descriptions::kEmbeddedExtensionOptionsName,
@@ -1956,6 +1955,12 @@ const FeatureEntry kFeatureEntries[] = {
      SINGLE_VALUE_TYPE(extensions::switches::kEnableEmbeddedExtensionOptions)},
 #endif  // ENABLE_EXTENSIONS
 #if !defined(OS_ANDROID)
+#if defined(OS_CHROMEOS)
+    {"enable-ash-sidebar", flag_descriptions::kAshSidebarName,
+     flag_descriptions::kAshSidebarDescription, kOsCrOS,
+     ENABLE_DISABLE_VALUE_TYPE(ash::switches::kAshSidebarEnabled,
+                               ash::switches::kAshSidebarDisabled)},
+#endif  // OS_CHROMEOS
     {"enable-message-center-new-style-notification",
      flag_descriptions::kMessageCenterNewStyleNotificationName,
      flag_descriptions::kMessageCenterNewStyleNotificationDescription,
@@ -2104,9 +2109,8 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kBypassAppBannerEngagementChecksName,
      flag_descriptions::kBypassAppBannerEngagementChecksDescription, kOsAll,
      SINGLE_VALUE_TYPE(switches::kBypassAppBannerEngagementChecks)},
-    {"enable-desktop-pwa-windowing",
-     flag_descriptions::kEnableDesktopPWAWindowingName,
-     flag_descriptions::kEnableDesktopPWAWindowingDescription, kOsDesktop,
+    {"enable-desktop-pwas", flag_descriptions::kEnableDesktopPWAsName,
+     flag_descriptions::kEnableDesktopPWAsDescription, kOsDesktop,
      FEATURE_VALUE_TYPE(features::kDesktopPWAWindowing)},
     {"use-sync-sandbox", flag_descriptions::kSyncSandboxName,
      flag_descriptions::kSyncSandboxDescription, kOsAll,
@@ -2232,6 +2236,11 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kWebVrAutopresentFromIntentDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::kWebVrAutopresentFromIntent)},
 #endif  // OS_ANDROID
+#if BUILDFLAG(ENABLE_OPENVR)
+    {"openvr", flag_descriptions::kOpenVRName,
+     flag_descriptions::kOpenVRDescription, kOsWin,
+     FEATURE_VALUE_TYPE(features::kOpenVR)},
+#endif  // ENABLE_OPENVR
 #endif  // ENABLE_VR
 #if defined(OS_CHROMEOS)
     {"disable-accelerated-mjpeg-decode",
@@ -2242,10 +2251,6 @@ const FeatureEntry kFeatureEntries[] = {
     {"v8-cache-options", flag_descriptions::kV8CacheOptionsName,
      flag_descriptions::kV8CacheOptionsDescription, kOsAll,
      MULTI_VALUE_TYPE(kV8CacheOptionsChoices)},
-    {"v8-cache-strategies-for-cache-storage",
-     flag_descriptions::kV8CacheStrategiesForCacheStorageName,
-     flag_descriptions::kV8CacheStrategiesForCacheStorageDescription, kOsAll,
-     MULTI_VALUE_TYPE(kV8CacheStrategiesForCacheStorageChoices)},
     {"simplified-fullscreen-ui", flag_descriptions::kSimplifiedFullscreenUiName,
      flag_descriptions::kSimplifiedFullscreenUiDescription,
      kOsWin | kOsLinux | kOsCrOS,
@@ -2560,6 +2565,9 @@ const FeatureEntry kFeatureEntries[] = {
          chrome::android::kNTPCondensedTileLayoutFeature,
          kNTPCondensedTileLayoutFeatureVariations,
          chrome::android::kNTPCondensedTileLayoutFeature.name)},
+    {"ntp-modern-layout", flag_descriptions::kNtpModernLayoutName,
+     flag_descriptions::kNtpModernLayoutDescription, kOsAndroid,
+     FEATURE_VALUE_TYPE(chrome::android::kNTPModernLayoutFeature)},
     {"enable-site-exploration-ui", flag_descriptions::kSiteExplorationUiName,
      flag_descriptions::kSiteExplorationUiDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(ntp_tiles::kSiteExplorationUiFeature)},
@@ -2746,6 +2754,10 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kNewRemotePlaybackPipelineName,
      flag_descriptions::kNewRemotePlaybackPipelineDescription, kOsAll,
      FEATURE_VALUE_TYPE(media::kNewRemotePlaybackPipeline)},
+    {"enable-surfaces-for-videos",
+     flag_descriptions::kUseSurfaceLayerForVideoName,
+     flag_descriptions::kUseSurfaceLayerForVideoDescription, kOsAll,
+     FEATURE_VALUE_TYPE(media::kUseSurfaceLayerForVideo)},
 #if defined(OS_CHROMEOS)
     {"quick-unlock-pin", flag_descriptions::kQuickUnlockPinName,
      flag_descriptions::kQuickUnlockPinDescription, kOsCrOS,
@@ -2810,14 +2822,6 @@ const FeatureEntry kFeatureEntries[] = {
     {"modal-permission-prompts", flag_descriptions::kModalPermissionPromptsName,
      flag_descriptions::kModalPermissionPromptsDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(features::kModalPermissionPrompts)},
-#endif
-#if !defined(OS_MACOSX)
-    {"permission-prompt-persistence-toggle",
-     flag_descriptions::kPermissionPromptPersistenceToggleName,
-     flag_descriptions::kPermissionPromptPersistenceToggleDescription,
-     kOsWin | kOsCrOS | kOsLinux | kOsAndroid,
-     FEATURE_VALUE_TYPE(
-         features::kDisplayPersistenceToggleInPermissionPrompts)},
 #endif
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW)
     {"enable-new-print-preview", flag_descriptions::kEnableNewPrintPreview,
@@ -2998,9 +3002,6 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableZeroSuggestRedirectToChromeName,
      flag_descriptions::kEnableZeroSuggestRedirectToChromeDescription, kOsAll,
      FEATURE_VALUE_TYPE(omnibox::kZeroSuggestRedirectToChrome)},
-    {"new-omnibox-answer-types", flag_descriptions::kNewOmniboxAnswerTypesName,
-     flag_descriptions::kNewOmniboxAnswerTypesDescription, kOsAll,
-     FEATURE_VALUE_TYPE(omnibox::kNewOmniboxAnswerTypes)},
     {"left-to-right-urls", flag_descriptions::kLeftToRightUrlsName,
      flag_descriptions::kLeftToRightUrlsDescription, kOsDesktop,
      FEATURE_VALUE_TYPE(features::kLeftToRightUrls)},
@@ -3277,9 +3278,6 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnablePictureInPictureDescription, kOsDesktop,
      SINGLE_VALUE_TYPE(switches::kEnablePictureInPicture)},
 #endif  // !defined(OS_ANDROID)
-    {"browser-side-navigation", flag_descriptions::kBrowserSideNavigationName,
-     flag_descriptions::kBrowserSideNavigationDescription, kOsAll,
-     FEATURE_VALUE_TYPE(features::kBrowserSideNavigation)},
     {"navigation-mojo-response", flag_descriptions::kNavigationMojoResponseName,
      flag_descriptions::kNavigationMojoResponseDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kNavigationMojoResponse)},
@@ -3624,6 +3622,11 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kAv1DecoderDescription, kOsDesktop,
      FEATURE_VALUE_TYPE(media::kAv1Decoder)},
 #endif  // ENABLE_AV1_DECODER
+
+    {"enable-wheel-scroll-latching",
+     flag_descriptions::kEnableTouchpadAndWheelScrollLatchingName,
+     flag_descriptions::kEnableTouchpadAndWheelScrollLatchingDescription,
+     kOsAll, FEATURE_VALUE_TYPE(features::kTouchpadAndWheelScrollLatching)},
 
     // NOTE: Adding a new flag requires adding a corresponding entry to enum
     // "LoginCustomFlags" in tools/metrics/histograms/enums.xml. See "Flag

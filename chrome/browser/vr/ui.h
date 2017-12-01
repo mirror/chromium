@@ -22,7 +22,6 @@ class UiBrowserInterface;
 class UiInputManager;
 class UiRenderer;
 class UiScene;
-class UiSceneManager;
 struct ControllerModel;
 struct Model;
 struct OmniboxSuggestions;
@@ -34,6 +33,7 @@ struct UiInitialState {
   bool web_vr_autopresentation_expected = false;
   bool browsing_disabled = false;
   bool has_or_can_request_audio_permission = true;
+  bool skips_redraw_when_not_dirty = false;
 };
 
 // This class manages all GLThread owned objects and GL rendering for VrShell.
@@ -43,6 +43,11 @@ class Ui : public BrowserUiInterface {
   Ui(UiBrowserInterface* browser,
      ContentInputForwarder* content_input_forwarder,
      const UiInitialState& ui_initial_state);
+
+  Ui(UiBrowserInterface* browser,
+     std::unique_ptr<ContentInputDelegate> content_input_delegate,
+     const UiInitialState& ui_initial_state);
+
   ~Ui() override;
 
   // TODO(crbug.com/767957): Refactor to hide these behind the UI interface.
@@ -90,20 +95,25 @@ class Ui : public BrowserUiInterface {
   void OnWebVrTimedOut();
   void OnWebVrTimeoutImminent();
   bool IsControllerVisible() const;
+  bool SkipsRedrawWhenNotDirty() const;
   void OnSwapContents(int new_content_id);
   void OnContentBoundsChanged(int width, int height);
   void OnPlatformControllerInitialized(PlatformController* controller);
 
   Model* model_for_test() { return model_.get(); }
 
+  void ReinitializeForTest(const UiInitialState& ui_initial_state);
+
+  void Dump();
+
  private:
+  void InitializeModel(const UiInitialState& ui_initial_state);
   UiBrowserInterface* browser_;
 
   // This state may be further abstracted into a SkiaUi object.
   std::unique_ptr<vr::UiScene> scene_;
   std::unique_ptr<vr::Model> model_;
   std::unique_ptr<vr::ContentInputDelegate> content_input_delegate_;
-  std::unique_ptr<vr::UiSceneManager> scene_manager_;
   std::unique_ptr<vr::UiElementRenderer> ui_element_renderer_;
   std::unique_ptr<vr::UiInputManager> input_manager_;
   std::unique_ptr<vr::UiRenderer> ui_renderer_;

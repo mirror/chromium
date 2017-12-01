@@ -12,7 +12,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.filters.LargeTest;
 import android.support.test.filters.SmallTest;
+import android.util.Base64;
 
 import org.junit.Assert;
 import org.junit.Rule;
@@ -47,6 +49,7 @@ import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.browser.test.util.DOMUtils;
 import org.chromium.content.common.ContentSwitches;
 import org.chromium.content_public.browser.LoadUrlParams;
+import org.chromium.net.test.EmbeddedTestServer;
 import org.chromium.ui.base.PageTransition;
 
 /**
@@ -113,6 +116,27 @@ public class WebappNavigationTest {
     }
 
     /**
+     * Test that navigating a TWA outside of the TWA scope by tapping a regular link:
+     * - Launches a CCT.
+     * - Uses the TWA theme colour in the CCT toolbar.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Webapps"})
+    public void testRegularLinkOffOriginTwa() throws Exception {
+        Intent launchIntent = mActivityTestRule.createIntent().putExtra(
+                ShortcutHelper.EXTRA_THEME_COLOR, (long) Color.CYAN);
+        mActivityTestRule.addTwaExtrasToIntent(launchIntent);
+        WebappActivity activity = runWebappActivityAndWaitForIdle(launchIntent);
+
+        addAnchorAndClick(offOriginUrl(), "_self");
+
+        CustomTabActivity customTab = waitFor(CustomTabActivity.class);
+        ChromeTabUtils.waitForTabPageLoaded(customTab.getActivityTab(), offOriginUrl());
+        Assert.assertEquals(Color.CYAN, customTab.getToolbarManager().getPrimaryColor());
+    }
+
+    /**
      * Test that navigating outside of the webapp scope by changing the top location via JavaScript:
      * - Shows a CCT-like webapp toolbar.
      * - Preserves the theme color specified in the launch intent.
@@ -133,6 +157,29 @@ public class WebappNavigationTest {
         ChromeTabUtils.waitForTabPageLoaded(activity.getActivityTab(), offOriginUrl());
         assertToolbarShowState(activity, true);
         Assert.assertEquals(Color.CYAN, activity.getToolbarManager().getPrimaryColor());
+    }
+
+    /**
+     * Test that navigating a TWA outside of the TWA scope by changing the top location via
+     * JavaScript:
+     * - Launches a CCT.
+     * - Uses the TWA theme colour in the CCT toolbar.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Webapps"})
+    public void testWindowTopLocationOffOriginTwa() throws Exception {
+        Intent launchIntent = mActivityTestRule.createIntent().putExtra(
+                ShortcutHelper.EXTRA_THEME_COLOR, (long) Color.CYAN);
+        mActivityTestRule.addTwaExtrasToIntent(launchIntent);
+        WebappActivity activity = runWebappActivityAndWaitForIdle(launchIntent);
+
+        mActivityTestRule.runJavaScriptCodeInCurrentTab(
+                String.format("window.top.location = '%s'", offOriginUrl()));
+
+        CustomTabActivity customTab = waitFor(CustomTabActivity.class);
+        ChromeTabUtils.waitForTabPageLoaded(customTab.getActivityTab(), offOriginUrl());
+        Assert.assertEquals(Color.CYAN, customTab.getToolbarManager().getPrimaryColor());
     }
 
     /**
@@ -321,8 +368,7 @@ public class WebappNavigationTest {
         Tab tab = activity.getActivityTab();
 
         String otherInScopeUrl = mActivityTestRule.getTestServer().getURL(IN_SCOPE_PAGE_PATH);
-        mActivityTestRule.loadUrlInTab(
-                otherInScopeUrl, PageTransition.LINK, activity.getActivityTab());
+        mActivityTestRule.loadUrlInTab(otherInScopeUrl, PageTransition.LINK, tab);
         Assert.assertEquals(otherInScopeUrl, tab.getUrl());
 
         mActivityTestRule.loadUrlInTab(offOriginUrl(), PageTransition.LINK, tab);
@@ -339,6 +385,43 @@ public class WebappNavigationTest {
 
         // We should end up on most recent in-scope URL.
         ChromeTabUtils.waitForTabPageLoaded(tab, otherInScopeUrl);
+    }
+
+    /**
+     * When a CCT is launched as a result of a redirect chain, closing the CCT should return the
+     * user to the navigation entry prior to the redirect chain.
+     */
+    @Test
+    @LargeTest
+    @Feature({"Webapps"})
+    public void testCloseButtonReturnsToUrlBeforeRedirects() throws Exception {
+        Intent launchIntent = mActivityTestRule.createIntent();
+        mActivityTestRule.addTwaExtrasToIntent(launchIntent);
+        WebappActivity activity = runWebappActivityAndWaitForIdle(launchIntent);
+
+        EmbeddedTestServer testServer = mActivityTestRule.getTestServer();
+        String initialInScopeUrl = testServer.getURL(WEB_APP_PATH);
+        ChromeTabUtils.waitForTabPageLoaded(activity.getActivityTab(), initialInScopeUrl);
+
+        final String redirectingUrl = testServer.getURL(
+                "/chrome/test/data/android/redirect/js_redirect.html"
+                + "?replace_text="
+                + Base64.encodeToString("PARAM_URL".getBytes("utf-8"), Base64.URL_SAFE) + ":"
+                + Base64.encodeToString(offOriginUrl().getBytes("utf-8"), Base64.URL_SAFE));
+        addAnchorAndClick(redirectingUrl, "_self");
+
+        CustomTabActivity customTab = waitFor(CustomTabActivity.class);
+        ChromeTabUtils.waitForTabPageLoaded(customTab.getActivityTab(), offOriginUrl());
+
+        // Close the CCT.
+        assertToolbarShowState(customTab, true);
+        ThreadUtils.runOnUiThreadBlocking(()-> customTab.getToolbarManager()
+                                                       .getToolbarLayout()
+                                                       .findViewById(R.id.close_button)
+                                                       .callOnClick());
+
+        // The WebappActivity should be navigated to the page prior to the redirect.
+        ChromeTabUtils.waitForTabPageLoaded(activity.getActivityTab(), initialInScopeUrl);
     }
 
     @Test

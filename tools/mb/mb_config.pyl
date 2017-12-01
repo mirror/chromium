@@ -115,15 +115,15 @@
       'CrWinAsan(dll)': 'asan_clang_shared_v8_heap_x86_full_symbols_release',
       'CrWinAsanCov': 'asan_clang_edge_fuzzer_static_v8_heap_x86_full_symbols_release',
 
-      # If CrWinClang is modified, please update CrWinClangGoma on chromium.fyi
-      # in the same way.
-      'CrWinClang': 'clang_official_release_bot_minimal_symbols_x86',
+      # TODO(crbug.com/751220): These are MSVC bots. Rename the buildbots at
+      # some point.
+      'CrWinClang': 'win_msvc_release_bot_x86',
+      'CrWinClang(dbg)': 'win_msvc_debug_bot_x86',
+      'CrWinClang(shared)': 'win_msvc_shared_release_bot_x86',
+      'CrWinClang64': 'win_msvc_release_bot',
+      'CrWinClang64(dbg)': 'win_msvc_debug_bot',
+      'CrWinClang64(dll)': 'win_msvc_shared_release_bot',
 
-      'CrWinClang(dbg)': 'clang_debug_bot_minimal_symbols_x86',
-      'CrWinClang(shared)': 'clang_minimal_symbols_shared_release_bot_x86_dcheck',
-      'CrWinClang64': 'clang_official_release_bot_minimal_symbols',
-      'CrWinClang64(dbg)': 'win_clang_debug_bot',
-      'CrWinClang64(dll)': 'clang_shared_release_bot_dcheck',
       'CrWinClangLLD': 'clang_tot_official_static_use_lld_x86',
       'CrWinClangLLD64': 'clang_tot_shared_release_use_lld_dcheck',
       'CrWinClngLLD64dbg': 'clang_tot_full_symbols_shared_debug_use_lld',
@@ -468,7 +468,7 @@
     'chromium.webrtc': {
       'Linux Builder': 'release_bot_chrome_with_codecs',
       'Mac Builder': 'release_bot_chrome_with_codecs',
-      'Win Builder': 'release_bot_x86_minimal_symbols',
+      'Win Builder': 'release_bot_x86_minimal_symbols_no_com_init_hooks',
     },
 
     'chromium.webrtc.fyi': {
@@ -479,8 +479,8 @@
       'Linux Builder (dbg)': 'debug_bot',
       'Mac Builder': 'release_bot_chrome_with_codecs',
       'Mac Builder (dbg)': 'debug_bot',
-      'Win Builder': 'release_bot_x86_minimal_symbols',
-      'Win Builder (dbg)': 'debug_bot_x86_minimal_symbols',
+      'Win Builder': 'release_bot_x86_minimal_symbols_no_com_init_hooks',
+      'Win Builder (dbg)': 'debug_bot_x86_minimal_symbols_no_com_init_hooks',
     },
 
     'chromium.win': {
@@ -646,7 +646,7 @@
       'linux_site_isolation': 'release_trybot',
       'linux_upload_clang': 'release_bot',
       'vr_linux': 'vr_release_trybot',
-      'leak_detection_linux_perf': 'release_trybot',
+      'leak_detection_linux': 'release_trybot',
     },
 
     'tryserver.chromium.mac': {
@@ -699,6 +699,7 @@
       'mac_perf_bisect_builder': 'official_goma',
       'mac_retina_perf_bisect': 'official_goma',
       'mac_retina_perf_cq': 'official_goma',
+      'obbs_fyi': 'official_goma_perf',
       'Win Builder': 'official_goma_x86',
       'Win x64 Builder': 'official_goma',
       'win_8_perf_bisect': 'official_goma_x86',
@@ -1123,36 +1124,8 @@
       'clang', 'debug_trybot', 'x86',
     ],
 
-    'clang_debug_bot_minimal_symbols_x86': [
-      # Now that the default win bots use clang, use a "clang" bot to make sure
-      # things stay compilable with msvc. TODO(thakis): Having a "clang" bot
-      # check that is very confusing, so rename to "msvc", crbug.com/751220
-      'no_clang', 'debug_bot', 'minimal_symbols', 'x86',
-    ],
-
     'clang_release_bot_minimal_symbols_x86': [
       'clang', 'release_bot', 'minimal_symbols', 'x86',
-    ],
-
-    'clang_minimal_symbols_shared_release_bot_x86_dcheck': [
-      # Now that the default win bots use clang, use a "clang" bot to make sure
-      # things stay compilable with msvc. TODO(thakis): Having a "clang" bot
-      # check that is very confusing, so rename to "msvc", crbug.com/751220
-      'no_clang', 'minimal_symbols', 'shared_release_bot', 'x86', 'dcheck_always_on',
-    ],
-
-    'clang_official_release_bot_minimal_symbols': [
-      # Now that the default win bots use clang, use a "clang" bot to make sure
-      # things stay compilable with msvc. TODO(thakis): Having a "clang" bot
-      # check that is very confusing, so rename to "msvc", crbug.com/751220
-      'no_clang', 'official', 'release_bot', 'minimal_symbols',
-    ],
-
-    'clang_official_release_bot_minimal_symbols_x86': [
-      # Now that the default win bots use clang, use a "clang" bot to make sure
-      # things stay compilable with msvc. TODO(thakis): Having a "clang" bot
-      # check that is very confusing, so rename to "msvc", crbug.com/751220
-      'no_clang', 'official', 'release_bot', 'minimal_symbols', 'x86',
     ],
 
     'clang_official_release_bot_minimal_symbols_x86_clang': [
@@ -1168,13 +1141,6 @@
 
     'clang_official_release_trybot_x86': [
       'clang', 'official', 'release_trybot', 'x86',
-    ],
-
-    'clang_shared_release_bot_dcheck': [
-      # Now that the default win bots use clang, use a "clang" bot to make sure
-      # things stay compilable with msvc. TODO(thakis): Having a "clang" bot
-      # check that is very confusing, so rename to "msvc", crbug.com/751220
-      'no_clang', 'shared_release_bot', 'dcheck_always_on',
     ],
 
     'clang_tot_asan_lsan_static_release': [
@@ -1313,6 +1279,10 @@
     # both MSVC and clang.
     'debug_bot_minimal_symbols': [ 'debug_bot', 'minimal_symbols' ],
     'debug_bot_x86_minimal_symbols': [ 'debug_bot', 'x86', 'minimal_symbols' ],
+
+    'debug_bot_x86_minimal_symbols_no_com_init_hooks': [
+      'debug_bot', 'x86', 'minimal_symbols', 'no_com_init_hooks'
+    ],
 
     'debug_libfuzzer_asan': [
       'debug', 'libfuzzer', 'asan', 'chromeos_codecs', 'pdf_xfa', 'disable_nacl',
@@ -1557,7 +1527,7 @@
     ],
 
     'release_bot_fuchsia_cast_audio': [
-      'release_bot', 'fuchsia', 'cast', 'cast_audio',
+      'release_bot', 'fuchsia', 'cast', 'cast_audio', 'no_symbols',
     ],
 
     'release_bot_fuchsia_arm64': [
@@ -1565,7 +1535,7 @@
     ],
 
     'release_bot_fuchsia_arm64_cast_audio': [
-      'release_bot', 'fuchsia', 'arm64', 'cast', 'cast_audio',
+      'release_bot', 'fuchsia', 'arm64', 'cast', 'cast_audio', 'no_symbols',
     ],
 
     'release_bot_mac_new_sdk': [
@@ -1585,6 +1555,10 @@
     # both MSVC and clang.
     'release_bot_minimal_symbols': [ 'release_bot', 'minimal_symbols' ],
     'release_bot_x86_minimal_symbols': [ 'release_bot', 'x86', 'minimal_symbols' ],
+
+    'release_bot_x86_minimal_symbols_no_com_init_hooks': [
+      'release_bot', 'x86', 'minimal_symbols', 'no_com_init_hooks'
+    ],
 
     # TODO(tikuta): Remove this once gcp goma backend supports all windows nacl compilers.
     'release_bot_x86_minimal_symbols_disable_nacl_no_clang': [
@@ -1718,11 +1692,27 @@
     ],
 
     'win_msvc_release_bot': [
-      'no_clang', 'release_bot', 'minimal_symbols',
+      'no_clang', 'minimal_symbols', 'release_bot',
+    ],
+
+    'win_msvc_release_bot_x86': [
+      'no_clang', 'minimal_symbols', 'release_bot', 'x86',
     ],
 
     'win_msvc_debug_bot': [
-      'no_clang', 'debug_bot', 'minimal_symbols',
+      'no_clang', 'minimal_symbols', 'debug_bot',
+    ],
+
+    'win_msvc_debug_bot_x86': [
+      'no_clang', 'minimal_symbols', 'debug_bot', 'x86',
+    ],
+
+    'win_msvc_shared_release_bot': [
+      'no_clang', 'minimal_symbols', 'shared_release_bot', 'dcheck_always_on',
+    ],
+
+    'win_msvc_shared_release_bot_x86': [
+      'no_clang', 'minimal_symbols', 'shared_release_bot', 'dcheck_always_on', 'x86',
     ],
 
     # TODO(tikuta): Remove this once gcp goma backend supports all windows nacl compilers.
@@ -2014,6 +2004,10 @@
       # GCC is unsupported starting in r13.
       'mixins': ['clang'],
       'gn_args': 'android_ndk_version="r13b" android_ndk_major_version=13',
+    },
+
+    'no_com_init_hooks': {
+      'gn_args': 'com_init_check_hook_disabled=true',
     },
 
     'no_gnome_keyring': {

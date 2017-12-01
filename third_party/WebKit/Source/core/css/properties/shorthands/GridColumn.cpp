@@ -7,7 +7,7 @@
 #include "core/StylePropertyShorthand.h"
 #include "core/css/parser/CSSParserContext.h"
 #include "core/css/parser/CSSPropertyParserHelpers.h"
-#include "core/css/properties/CSSPropertyGridUtils.h"
+#include "core/css/properties/CSSParsingUtils.h"
 
 namespace blink {
 namespace CSSShorthand {
@@ -24,16 +24,18 @@ bool GridColumn::ParseShorthand(
 
   CSSValue* start_value = nullptr;
   CSSValue* end_value = nullptr;
-  if (!CSSPropertyGridUtils::ConsumeGridItemPositionShorthand(
+  if (!CSSParsingUtils::ConsumeGridItemPositionShorthand(
           important, range, start_value, end_value)) {
     return false;
   }
 
   CSSPropertyParserHelpers::AddProperty(
-      shorthand.properties()[0], CSSPropertyGridColumn, *start_value, important,
+      shorthand.properties()[0]->PropertyID(), CSSPropertyGridColumn,
+      *start_value, important,
       CSSPropertyParserHelpers::IsImplicitProperty::kNotImplicit, properties);
   CSSPropertyParserHelpers::AddProperty(
-      shorthand.properties()[1], CSSPropertyGridColumn, *end_value, important,
+      shorthand.properties()[1]->PropertyID(), CSSPropertyGridColumn,
+      *end_value, important,
       CSSPropertyParserHelpers::IsImplicitProperty::kNotImplicit, properties);
 
   return true;

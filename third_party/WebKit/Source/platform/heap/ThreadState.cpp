@@ -121,6 +121,7 @@ ThreadState::ThreadState()
       invalidate_dead_objects_in_wrappers_marking_deque_(nullptr),
       perform_cleanup_(nullptr),
       wrapper_tracing_in_progress_(false),
+      incremental_marking_(false),
 #if defined(ADDRESS_SANITIZER)
       asan_fake_stack_(__asan_get_current_fake_stack()),
 #endif
@@ -1234,8 +1235,13 @@ void ThreadState::IncrementalMarkingFinalize() {
 void ThreadState::CollectGarbage(BlinkGC::StackState stack_state,
                                  BlinkGC::GCType gc_type,
                                  BlinkGC::GCReason reason) {
-  // Nested collectGarbage() invocations aren't supported.
+  // Nested garbage collection invocations are not supported.
   CHECK(!IsGCForbidden());
+  // Garbage collection during sweeping is not supported. This can happen when
+  // finalizers trigger garbage collections.
+  if (SweepForbidden())
+    return;
+
   CompleteSweep();
 
   RUNTIME_CALL_TIMER_SCOPE_IF_ISOLATE_EXISTS(

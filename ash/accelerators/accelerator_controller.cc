@@ -11,7 +11,6 @@
 #include "ash/accelerators/accelerator_controller_delegate.h"
 #include "ash/accelerators/debug_commands.h"
 #include "ash/accessibility/accessibility_controller.h"
-#include "ash/accessibility/accessibility_delegate.h"
 #include "ash/display/display_configuration_controller.h"
 #include "ash/display/display_move_window_util.h"
 #include "ash/focus_cycler.h"
@@ -102,7 +101,7 @@ const int kToastDurationMs = 2500;
 class DeprecatedAcceleratorNotificationDelegate
     : public message_center::NotificationDelegate {
  public:
-  DeprecatedAcceleratorNotificationDelegate() {}
+  DeprecatedAcceleratorNotificationDelegate() = default;
 
   // message_center::NotificationDelegate:
   void Click() override {
@@ -112,7 +111,7 @@ class DeprecatedAcceleratorNotificationDelegate
 
  private:
   // Private destructor since NotificationDelegate is ref-counted.
-  ~DeprecatedAcceleratorNotificationDelegate() override {}
+  ~DeprecatedAcceleratorNotificationDelegate() override = default;
 
   DISALLOW_COPY_AND_ASSIGN(DeprecatedAcceleratorNotificationDelegate);
 };
@@ -444,7 +443,7 @@ void HandleToggleMessageCenterBubble() {
       status_area_widget->web_notification_tray();
   if (!notification_tray->visible())
     return;
-  if (notification_tray->IsMessageCenterBubbleVisible())
+  if (notification_tray->IsMessageCenterVisible())
     notification_tray->CloseBubble();
   else
     notification_tray->ShowBubble(false /* show_by_click */);
@@ -505,7 +504,7 @@ bool CanHandleToggleAppList(const ui::Accelerator& accelerator,
     // When spoken feedback is enabled, we should neither toggle the list nor
     // consume the key since Search+Shift is one of the shortcuts the a11y
     // feature uses. crbug.com/132296
-    if (Shell::Get()->accessibility_delegate()->IsSpokenFeedbackEnabled())
+    if (Shell::Get()->accessibility_controller()->IsSpokenFeedbackEnabled())
       return false;
   }
   return true;
@@ -827,8 +826,10 @@ void HandleToggleHighContrast() {
 void HandleToggleSpokenFeedback() {
   base::RecordAction(UserMetricsAction("Accel_Toggle_Spoken_Feedback"));
 
-  Shell::Get()->accessibility_delegate()->ToggleSpokenFeedback(
-      A11Y_NOTIFICATION_SHOW);
+  AccessibilityController* controller =
+      Shell::Get()->accessibility_controller();
+  controller->SetSpokenFeedbackEnabled(!controller->IsSpokenFeedbackEnabled(),
+                                       A11Y_NOTIFICATION_SHOW);
 }
 
 void HandleVolumeDown(mojom::VolumeController* volume_controller,
@@ -872,7 +873,7 @@ AcceleratorController::AcceleratorController(
   Init();
 }
 
-AcceleratorController::~AcceleratorController() {}
+AcceleratorController::~AcceleratorController() = default;
 
 void AcceleratorController::Register(
     const std::vector<ui::Accelerator>& accelerators,

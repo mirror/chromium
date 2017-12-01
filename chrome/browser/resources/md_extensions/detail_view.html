@@ -16,6 +16,7 @@
 <link rel="import" href="chrome://resources/polymer/v1_0/iron-icons/iron-icons.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/paper-icon-button/paper-icon-button-light.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/paper-styles/color.html">
+<link rel="import" href="chrome://resources/polymer/v1_0/paper-styles/shadow.html">
 <link rel="import" href="item_behavior.html">
 <link rel="import" href="item_util.html">
 <link rel="import" href="navigation_helper.html">
@@ -54,6 +55,7 @@
       }
 
       #main {
+        @apply(--shadow-elevation-2dp);
         background-color: white;
         margin: auto;
         min-height: 100%;
@@ -69,8 +71,8 @@
       }
 
       #icon {
-        -webkit-margin-end: 8px;
-        -webkit-margin-start: 20px;
+        -webkit-margin-end: 12px;
+        -webkit-margin-start: 16px;
         height: 24px;
         width: 24px;
       }
@@ -83,6 +85,10 @@
       #learn-more-link {
         color: var(--google-blue-700);
         text-decoration: none;
+      }
+
+      .three-line {
+        min-height: var(--cr-section-three-line-min-height);
       }
 
       .section {
@@ -122,11 +128,6 @@
 
       .actionable {
         cursor: pointer;
-      }
-
-      #allow-incognito cr-tooltip-icon {
-        -webkit-margin-start: 20px;
-        display: inline;
       }
 
       .inspectable-view {
@@ -256,7 +257,9 @@
         </div>
         <div class="section continuation block">
           <div class="section-title">$i18n{itemDescriptionLabel}</div>
-          <div class="section-content">[[data.description]]</div>
+          <div class="section-content">
+            [[getDescription_(data.description, '$i18nPolymer{noDescription}')]]
+          </div>
         </div>
         <div class="section block">
           <div class="section-title">$i18n{itemVersion}</div>
@@ -320,17 +323,13 @@
         <template is="dom-if" if="[[shouldShowOptionsSection_(data.*)]]">
           <div id="options-section">
             <template is="dom-if" if="[[data.incognitoAccess.isEnabled]]">
-              <extensions-toggle-row id="allow-incognito"
+              <extensions-toggle-row id="allow-incognito" class="three-line"
                   checked="[[data.incognitoAccess.isActive]]"
                   on-change="onAllowIncognitoChange_">
-                <span>
-                  $i18n{itemAllowIncognito}
-                  <cr-tooltip-icon
-                      icon-class="cr:error-outline"
-                      tooltip-text="$i18n{incognitoInfoWarning}"
-                      on-click="onIconClick_">
-                  </cr-tooltip-icon>
-                </span>
+                <div>
+                  <div>$i18n{itemAllowIncognito}</div>
+                  <div class="section-content">$i18n{incognitoInfoWarning}</div>
+                </div>
               </extensions-toggle-row>
             </template>
             <template is="dom-if" if="[[data.fileAccess.isEnabled]]">
@@ -365,7 +364,7 @@
         </div>
         <div class="section block">
           <div class="section-title">$i18n{itemSource}</div>
-          <div class="section-content">
+          <div id="source" class="section-content">
             [[computeSourceString_(data.*)]]
           </div>
           <div id="load-path" class="section-content"

@@ -9154,6 +9154,43 @@ TEST_F(LayerTreeHostImplTest, CreateETC1UIResource) {
   EXPECT_NE(0u, id1);
 }
 
+TEST_F(LayerTreeHostImplTest,
+       GpuRasterizationStatusChangeDoesNotEvictUIResources) {
+  // Create a host impl with MSAA support and a forced sample count of 4.
+  LayerTreeSettings msaaSettings = DefaultSettings();
+  msaaSettings.gpu_rasterization_msaa_sample_count = 4;
+  EXPECT_TRUE(CreateHostImpl(
+      msaaSettings, FakeLayerTreeFrameSink::Create3dForGpuRasterization(
+                        msaaSettings.gpu_rasterization_msaa_sample_count)));
+
+  host_impl_->SetHasGpuRasterizationTrigger(true);
+  host_impl_->SetContentHasSlowPaths(false);
+  host_impl_->CommitComplete();
+  EXPECT_EQ(GpuRasterizationStatus::ON, host_impl_->gpu_rasterization_status());
+  EXPECT_TRUE(host_impl_->use_gpu_rasterization());
+  EXPECT_FALSE(host_impl_->use_msaa());
+
+  UIResourceId ui_resource_id = 1;
+  UIResourceBitmap bitmap(gfx::Size(1, 1), false /* is_opaque */);
+  host_impl_->CreateUIResource(ui_resource_id, bitmap);
+  viz::ResourceId resource_id =
+      host_impl_->ResourceIdForUIResource(ui_resource_id);
+  EXPECT_NE(viz::kInvalidResourceId, resource_id);
+  EXPECT_FALSE(host_impl_->EvictedUIResourcesExist());
+
+  host_impl_->SetHasGpuRasterizationTrigger(true);
+  host_impl_->SetContentHasSlowPaths(true);
+  host_impl_->CommitComplete();
+  EXPECT_EQ(GpuRasterizationStatus::MSAA_CONTENT,
+            host_impl_->gpu_rasterization_status());
+  EXPECT_TRUE(host_impl_->use_gpu_rasterization());
+  EXPECT_TRUE(host_impl_->use_msaa());
+
+  resource_id = host_impl_->ResourceIdForUIResource(ui_resource_id);
+  EXPECT_NE(viz::kInvalidResourceId, resource_id);
+  EXPECT_FALSE(host_impl_->EvictedUIResourcesExist());
+}
+
 class FrameSinkClient : public viz::TestLayerTreeFrameSinkClient {
  public:
   explicit FrameSinkClient(
@@ -11303,6 +11340,77 @@ TEST_F(LayerTreeHostImplTest, ScrollAnimated) {
                    scrolling_layer->CurrentScrollOffset());
   EXPECT_EQ(nullptr, host_impl_->CurrentlyScrollingNode());
   host_impl_->DidFinishImplFrame();
+}
+
+// Test to ensure that animated scrolls correctly account for the page scale
+// factor. That is, if you zoom into the page, a wheel scroll should scroll the
+// content *less* than before so that it appears to move the same distance when
+// zoomed in.
+TEST_F(LayerTreeHostImplTest, ScrollAnimatedWhileZoomed) {
+  const gfx::Size content_size(1000, 1000);
+  const gfx::Size viewport_size(50, 100);
+  CreateBasicVirtualViewportLayers(viewport_size, content_size);
+  LayerImpl* scrolling_layer = host_impl_->InnerViewportScrollLayer();
+
+  DrawFrame();
+
+  // Zoom in to 2X
+  {
+    float min_page_scale = 1.f, max_page_scale = 4.f;
+    float page_scale_factor = 2.f;
+    host_impl_->active_tree()->PushPageScaleFromMainThread(
+        page_scale_factor, min_page_scale, max_page_scale);
+    host_impl_->active_tree()->SetPageScaleOnActiveTree(page_scale_factor);
+  }
+
+  // Start an animated scroll then do another animated scroll immediately
+  // afterwards. This will ensure we test both the starting animation and
+  // animation update code.
+  {
+    EXPECT_EQ(
+        InputHandler::SCROLL_ON_IMPL_THREAD,
+        host_impl_->ScrollAnimated(gfx::Point(10, 10), gfx::Vector2d(0, 10))
+            .thread);
+    EXPECT_EQ(
+        InputHandler::SCROLL_ON_IMPL_THREAD,
+        host_impl_->ScrollAnimated(gfx::Point(10, 10), gfx::Vector2d(0, 20))
+            .thread);
+
+    EXPECT_EQ(scrolling_layer->scroll_tree_index(),
+              host_impl_->CurrentlyScrollingNode()->id);
+  }
+
+  base::TimeTicks start_time =
+      base::TimeTicks() + base::TimeDelta::FromMilliseconds(100);
+
+  viz::BeginFrameArgs begin_frame_args =
+      viz::CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
+
+  // Tick a frame to get the animation started.
+  {
+    begin_frame_args.frame_time = start_time;
+    begin_frame_args.sequence_number++;
+    host_impl_->WillBeginImplFrame(begin_frame_args);
+    host_impl_->Animate();
+    host_impl_->UpdateAnimationState(true);
+
+    EXPECT_NE(0, scrolling_layer->CurrentScrollOffset().y());
+    host_impl_->DidFinishImplFrame();
+  }
+
+  // Tick ahead to the end of the animation. We scrolled 30 viewport pixels but
+  // since we're zoomed in to 2x we should have scrolled 15 content pixels.
+  {
+    begin_frame_args.frame_time =
+        start_time + base::TimeDelta::FromMilliseconds(1000);
+    begin_frame_args.sequence_number++;
+    host_impl_->WillBeginImplFrame(begin_frame_args);
+    host_impl_->Animate();
+    host_impl_->UpdateAnimationState(true);
+
+    EXPECT_EQ(15, scrolling_layer->CurrentScrollOffset().y());
+    host_impl_->DidFinishImplFrame();
+  }
 }
 
 TEST_F(LayerTreeHostImplTest, SecondScrollAnimatedBeginNotIgnored) {

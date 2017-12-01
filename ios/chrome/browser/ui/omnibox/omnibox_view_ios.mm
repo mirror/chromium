@@ -24,6 +24,7 @@
 #include "ios/chrome/browser/autocomplete/autocomplete_scheme_classifier_impl.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/ui/omnibox/chrome_omnibox_client_ios.h"
+#import "ios/chrome/browser/ui/omnibox/location_bar_view.h"
 #include "ios/chrome/browser/ui/omnibox/omnibox_text_field_paste_delegate.h"
 #include "ios/chrome/browser/ui/omnibox/omnibox_util.h"
 #include "ios/chrome/browser/ui/omnibox/web_omnibox_edit_controller.h"
@@ -160,6 +161,7 @@ UIColor* IncognitoSecureTextColor() {
 
 OmniboxViewIOS::OmniboxViewIOS(OmniboxTextFieldIOS* field,
                                WebOmniboxEditController* controller,
+                               LeftImageProvider* left_image_provider,
                                ios::ChromeBrowserState* browser_state)
     : OmniboxView(
           controller,
@@ -167,6 +169,7 @@ OmniboxViewIOS::OmniboxViewIOS(OmniboxTextFieldIOS* field,
       browser_state_(browser_state),
       field_(field),
       controller_(controller),
+      left_image_provider_(left_image_provider),
       ignore_popup_updates_(false),
       attributing_display_string_(nil),
       popup_provider_(nullptr) {
@@ -362,7 +365,6 @@ void OmniboxViewIOS::OnDidBeginEditing() {
   // Text attributes (e.g. text color) should not be shown while editing, so
   // strip them out by calling setText (as opposed to setAttributedText).
   [field_ setText:[field_ text]];
-  [field_ enableLeftViewButton:NO];
   OnBeforePossibleChange();
   // In the case where the user taps the fakebox on the Google landing page,
   // the WebToolbarController invokes OnSetFocus before calling
@@ -391,7 +393,6 @@ void OmniboxViewIOS::OnDidBeginEditing() {
 
 void OmniboxViewIOS::OnDidEndEditing() {
   CloseOmniboxPopup();
-  [field_ enableLeftViewButton:YES];
   model()->OnWillKillFocus();
   model()->OnKillFocus();
   if ([field_ isPreEditing])
@@ -783,7 +784,7 @@ bool OmniboxViewIOS::ShouldIgnoreUserInputDueToPendingVoiceSearch() {
 }
 
 void OmniboxViewIOS::SetLeftImage(int imageId) {
-  [field_ setPlaceholderImage:imageId];
+  left_image_provider_->SetLeftImage(imageId);
 }
 
 void OmniboxViewIOS::HideKeyboardAndEndEditing() {

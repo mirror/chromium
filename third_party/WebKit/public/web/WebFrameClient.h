@@ -45,7 +45,6 @@
 #include "WebIconURL.h"
 #include "WebNavigationPolicy.h"
 #include "WebNavigationType.h"
-#include "WebNavigatorContentUtilsClient.h"
 #include "WebTextDirection.h"
 #include "WebTriggeringEventInfo.h"
 #include "public/platform/BlameContext.h"
@@ -86,6 +85,7 @@ enum class WebFeature : int32_t;
 }  // namespace mojom
 
 enum class WebTreeScopeType;
+class AssociatedInterfaceProvider;
 class WebApplicationCacheHost;
 class WebApplicationCacheHostClient;
 class WebColorChooser;
@@ -199,6 +199,14 @@ class BLINK_EXPORT WebFrameClient {
   // the browser. This method may not return nullptr.
   virtual service_manager::InterfaceProvider* GetInterfaceProvider();
 
+  // Returns an AssociatedInterfaceProvider the frame can use to request
+  // navigation-associated interfaces from the browser. See also
+  // LocalFrame::GetRemoteNavigationAssociatedInterfaces().
+  virtual AssociatedInterfaceProvider*
+  GetRemoteNavigationAssociatedInterfaces() {
+    return nullptr;
+  }
+
   // General notifications -----------------------------------------------
 
   // Indicates if creating a plugin without an associated renderer is supported.
@@ -267,9 +275,10 @@ class BLINK_EXPORT WebFrameClient {
       WebSandboxFlags flags,
       const ParsedFeaturePolicy& container_policy) {}
 
-  // Called when a Feature-Policy HTTP header is encountered while loading the
-  // frame's document.
-  virtual void DidSetFeaturePolicyHeader(
+  // Called when a Feature-Policy or Content-Security-Policy HTTP header (for
+  // sandbox flags) is encountered while loading the frame's document.
+  virtual void DidSetFramePolicyHeaders(
+      WebSandboxFlags flags,
       const ParsedFeaturePolicy& parsed_header) {}
 
   // Called when a new Content Security Policy is added to the frame's
@@ -815,13 +824,6 @@ class BLINK_EXPORT WebFrameClient {
   // Unregisters a given URL handler for the given protocol.
   virtual void UnregisterProtocolHandler(const WebString& scheme,
                                          const WebURL& url) {}
-
-  // Check if a given URL handler is registered for the given protocol.
-  virtual WebCustomHandlersState IsProtocolHandlerRegistered(
-      const WebString& scheme,
-      const WebURL& url) {
-    return kWebCustomHandlersNew;
-  }
 
   // Audio Output Devices API --------------------------------------------
 

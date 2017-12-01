@@ -336,15 +336,12 @@ bool AreExperimentalMuteControlsEnabled() {
       switches::kEnableTabAudioMuting);
 }
 
-bool CanToggleAudioMute(content::WebContents* contents, TabMutedReason reason) {
+bool CanToggleAudioMute(content::WebContents* contents) {
   switch (GetTabAlertStateForContents(contents)) {
     case TabAlertState::NONE:
     case TabAlertState::AUDIO_PLAYING:
     case TabAlertState::AUDIO_MUTING:
-      // chrome:// URLs can't be muted due to the sound content setting.
-      return reason != TabMutedReason::CONTENT_SETTING ||
-             !contents->GetLastCommittedURL().SchemeIs(
-                 content::kChromeUIScheme);
+      return true;
     case TabAlertState::MEDIA_RECORDING:
     case TabAlertState::TAB_CAPTURING:
     case TabAlertState::BLUETOOTH_CONNECTED:
@@ -385,18 +382,8 @@ TabMutedResult SetTabAudioMuted(content::WebContents* contents,
     return TabMutedResult::FAIL_NOT_ENABLED;
   }
 
-  if (!chrome::CanToggleAudioMute(contents, reason)) {
-    if (reason != TabMutedReason::CONTENT_SETTING ||
-        GetTabAudioMutedReason(contents) != TabMutedReason::CONTENT_SETTING) {
-      return TabMutedResult::FAIL_TABCAPTURE;
-    }
-
-    // If we're just unmuting a chrome:// URL tab that had been muted because
-    // the previous website on the tab was muted via content settings, then we
-    // will allow the unmute. Otherwise, return since we can't toggle mute.
-    if (mute)
-      return TabMutedResult::FAIL_MUTE_DISALLOWED;
-  }
+  if (!chrome::CanToggleAudioMute(contents))
+    return TabMutedResult::FAIL_TABCAPTURE;
 
   contents->SetAudioMuted(mute);
 
@@ -441,24 +428,40 @@ void SetSitesMuted(const TabStripModel& tab_strip,
   for (int tab_index : indices) {
     content::WebContents* web_contents = tab_strip.GetWebContentsAt(tab_index);
     GURL url = web_contents->GetLastCommittedURL();
-    Profile* profile =
-        Profile::FromBrowserContext(web_contents->GetBrowserContext());
-    HostContentSettingsMap* settings =
-        HostContentSettingsMapFactory::GetForProfile(profile);
-    ContentSetting setting =
-        mute ? CONTENT_SETTING_BLOCK : CONTENT_SETTING_ALLOW;
-    if (setting == settings->GetDefaultContentSetting(
-                       CONTENT_SETTINGS_TYPE_SOUND, nullptr)) {
-      setting = CONTENT_SETTING_DEFAULT;
+    if (url.SchemeIs(content::kChromeUIScheme)) {
+      // chrome:// URLs don't have content settings but can be muted, so just
+      // mute the WebContents.
+      SetTabAudioMuted(web_contents, mute,
+                       TabMutedReason::CONTENT_SETTING_CHROME, std::string());
+    } else {
+      Profile* profile =
+          Profile::FromBrowserContext(web_contents->GetBrowserContext());
+      HostContentSettingsMap* settings =
+          HostContentSettingsMapFactory::GetForProfile(profile);
+      ContentSetting setting =
+          mute ? CONTENT_SETTING_BLOCK : CONTENT_SETTING_ALLOW;
+      if (setting == settings->GetDefaultContentSetting(
+                         CONTENT_SETTINGS_TYPE_SOUND, nullptr)) {
+        setting = CONTENT_SETTING_DEFAULT;
+      }
+      settings->SetContentSettingDefaultScope(
+          url, url, CONTENT_SETTINGS_TYPE_SOUND, std::string(), setting);
     }
-    settings->SetContentSettingDefaultScope(
-        url, url, CONTENT_SETTINGS_TYPE_SOUND, std::string(), setting);
   }
 }
 
 bool IsSiteMuted(const TabStripModel& tab_strip, const int index) {
   content::WebContents* web_contents = tab_strip.GetWebContentsAt(index);
   GURL url = web_contents->GetLastCommittedURL();
+
+  // chrome:// URLs don't have content settings but can be muted, so just check
+  // the current muted state and TabMutedReason of the WebContents.
+  if (url.SchemeIs(content::kChromeUIScheme)) {
+    return web_contents->IsAudioMuted() &&
+           GetTabAudioMutedReason(web_contents) ==
+               TabMutedReason::CONTENT_SETTING_CHROME;
+  }
+
   Profile* profile =
       Profile::FromBrowserContext(web_contents->GetBrowserContext());
   HostContentSettingsMap* settings =

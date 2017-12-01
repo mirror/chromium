@@ -127,6 +127,12 @@ const base::Feature kTabStripKeyboardFocus{"TabStripKeyboardFocus",
                                            base::FEATURE_DISABLED_BY_DEFAULT};
 #endif  // defined(OS_MACOSX)
 
+#if !defined(OS_ANDROID)
+// Enables logging UKMs for background tab activity by TabActivityWatcher.
+const base::Feature kTabMetricsLogging{"TabMetricsLogging",
+                                       base::FEATURE_ENABLED_BY_DEFAULT};
+#endif
+
 // Enables Basic/Advanced tabs in ClearBrowsingData.
 const base::Feature kTabsInCbd{"TabsInCBD", base::FEATURE_ENABLED_BY_DEFAULT};
 
@@ -182,12 +188,6 @@ const base::Feature kDesktopIOSPromotion{"DesktopIOSPromotion",
 const base::Feature kDesktopPWAWindowing{"DesktopPWAWindowing",
                                          base::FEATURE_DISABLED_BY_DEFAULT};
 
-// Experiment to display a toggle allowing users to opt-out of persisting a
-// Grant or Deny decision in a permission prompt.
-const base::Feature kDisplayPersistenceToggleInPermissionPrompts{
-    "DisplayPersistenceToggleInPermissionPrompts",
-    base::FEATURE_DISABLED_BY_DEFAULT};
-
 #if !defined(OS_ANDROID)
 const base::Feature kDoodlesOnLocalNtp{"DoodlesOnLocalNtp",
                                        base::FEATURE_DISABLED_BY_DEFAULT};
@@ -238,6 +238,12 @@ const base::Feature kVrBrowsingExperimentalFeatures{
 // Controls experimental rendering features for VR browsing.
 const base::Feature kVrBrowsingExperimentalRendering{
     "VrBrowsingExperimentalRendering", base::FEATURE_DISABLED_BY_DEFAULT};
+
+#if BUILDFLAG(ENABLE_OPENVR)
+// Controls OpenVR support.
+const base::Feature kOpenVR{"OpenVR", base::FEATURE_DISABLED_BY_DEFAULT};
+#endif  // ENABLE_OPENVR
+
 #endif  // BUILDFLAG(ENABLE_VR)
 
 #if defined(OS_WIN)
@@ -284,7 +290,7 @@ const base::Feature kMacFullSizeContentView{"MacFullSizeContentView",
 
 // Enables "Share" submenu in File menu.
 const base::Feature kMacSystemShareMenu{"MacSystemShareMenu",
-                                        base::FEATURE_ENABLED_BY_DEFAULT};
+                                        base::FEATURE_DISABLED_BY_DEFAULT};
 #endif
 
 // Enables or disables the Material Design version of chrome://bookmarks.
@@ -328,7 +334,7 @@ const base::Feature kMediaRemoting{"MediaRemoting",
 // of the Media Router dialog with the controller bundled with the WebUI
 // resources.
 const base::Feature kMediaRouterUIRouteController{
-    "MediaRouterUIRouteController", base::FEATURE_DISABLED_BY_DEFAULT};
+    "MediaRouterUIRouteController", base::FEATURE_ENABLED_BY_DEFAULT};
 #endif  // !defined(OS_ANDROID)
 
 // Enables or disables modal permission prompts.
@@ -455,7 +461,7 @@ const base::Feature kPwaMinimalUi{"PwaMinimalUi",
 #if !defined(OS_ANDROID)
 const base::Feature kRemoveUsageOfDeprecatedGaiaSigninEndpoint{
     "RemoveUsageOfDeprecatedGaiaSigninEndpoint",
-    base::FEATURE_DISABLED_BY_DEFAULT};
+    base::FEATURE_ENABLED_BY_DEFAULT};
 #endif
 
 #if defined(OS_CHROMEOS)
@@ -524,6 +530,13 @@ const base::Feature kTopSitesFromSiteEngagement{
 const base::Feature kUseGoogleLocalNtp{"UseGoogleLocalNtp",
                                        base::FEATURE_DISABLED_BY_DEFAULT};
 
+#if defined(OS_CHROMEOS)
+// Enables or disables user activity event logging for power management on
+// Chrome OS.
+const base::Feature kUserActivityEventLogging{
+    "UserActivityEventLogging", base::FEATURE_DISABLED_BY_DEFAULT};
+#endif
+
 #if !defined(OS_ANDROID)
 // Enables or disables Voice Search on the local NTP.
 const base::Feature kVoiceSearchOnLocalNtp{"VoiceSearchOnLocalNtp",
@@ -578,6 +591,7 @@ const base::Feature kEasyUnlockPromotions{"EasyUnlockPromotions",
 // Enables or disables TPM firmware update capability on Chrome OS.
 const base::Feature kTPMFirmwareUpdate{"TPMFirmwareUpdate",
                                        base::FEATURE_DISABLED_BY_DEFAULT};
+
 #endif  // defined(OS_CHROMEOS)
 
 }  // namespace features

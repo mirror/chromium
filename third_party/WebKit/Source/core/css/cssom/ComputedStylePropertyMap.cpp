@@ -6,6 +6,7 @@
 
 #include "core/css/ComputedStyleCSSValueMapping.h"
 #include "core/css/cssom/StyleValueFactory.h"
+#include "core/dom/Document.h"
 #include "core/dom/PseudoElement.h"
 
 namespace blink {
@@ -50,8 +51,8 @@ const CSSValue* ComputedStylePropertyMap::GetProperty(
   const ComputedStyle* style = UpdateStyle();
   if (!style)
     return nullptr;
-  return ComputedStyleCSSValueMapping::Get(property_id, *style,
-                                           nullptr /* layout_object */);
+  return ComputedStyleCSSValueMapping::Get(CSSProperty::Get(property_id),
+                                           *style, nullptr /* layout_object */);
 }
 
 const CSSValue* ComputedStylePropertyMap::GetCustomProperty(
@@ -65,9 +66,9 @@ const CSSValue* ComputedStylePropertyMap::GetCustomProperty(
 
 Vector<String> ComputedStylePropertyMap::getProperties() {
   Vector<String> result;
-  for (CSSPropertyID property_id :
+  for (const CSSProperty* property :
        CSSComputedStyleDeclaration::ComputableProperties()) {
-    result.push_back(getPropertyNameString(property_id));
+    result.push_back(getPropertyNameString(property->PropertyID()));
   }
   return result;
 }

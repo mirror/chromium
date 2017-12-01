@@ -33,13 +33,13 @@
 #ifndef InputTypeView_h
 #define InputTypeView_h
 
+#include "base/macros.h"
 #include "core/CoreExport.h"
 #include "core/dom/events/EventDispatcher.h"
 #include "platform/heap/Handle.h"
 #include "platform/text/TextDirection.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Forward.h"
-#include "platform/wtf/Noncopyable.h"
 #include "public/platform/WebFocusType.h"
 
 namespace blink {
@@ -69,8 +69,6 @@ class ClickHandlingState final : public EventDispatchHandlingState {
 // HTMLInputElement. Do not expose instances of InputTypeView and classes
 // derived from it to classes other than HTMLInputElement.
 class CORE_EXPORT InputTypeView : public GarbageCollectedMixin {
-  WTF_MAKE_NONCOPYABLE(InputTypeView);
-
  public:
   virtual ~InputTypeView();
   void Trace(blink::Visitor*) override;
@@ -106,6 +104,7 @@ class CORE_EXPORT InputTypeView : public GarbageCollectedMixin {
   virtual TextDirection ComputedTextDirection();
   virtual void StartResourceLoading();
   virtual void ClosePopupView();
+  virtual bool NeedsShadowSubtree() const;
   virtual void CreateShadowSubtree();
   virtual void DestroyShadowSubtree();
   virtual void MinOrMaxAttributeChanged();
@@ -139,6 +138,8 @@ class CORE_EXPORT InputTypeView : public GarbageCollectedMixin {
 
  private:
   Member<HTMLInputElement> element_;
+
+  DISALLOW_COPY_AND_ASSIGN(InputTypeView);
 };
 
 }  // namespace blink

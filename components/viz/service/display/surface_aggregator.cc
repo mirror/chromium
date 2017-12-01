@@ -42,6 +42,8 @@ const char kUmaMissingSurface[] =
     "Compositing.SurfaceAggregator.SurfaceDrawQuad.MissingSurface";
 const char kUmaNoActiveFrame[] =
     "Compositing.SurfaceAggregator.SurfaceDrawQuad.NoActiveFrame";
+const char kUmaUsingFallbackSurface[] =
+    "Compositing.SurfaceAggregator.SurfaceDrawQuad.UsingFallbackSurface";
 
 void MoveMatchingRequests(
     RenderPassId render_pass_id,
@@ -185,6 +187,7 @@ void SurfaceAggregator::UnrefResources(
 void SurfaceAggregator::HandleSurfaceQuad(
     const SurfaceDrawQuad* surface_quad,
     float parent_device_scale_factor,
+    const FrameSinkId& parent_frame_sink_id,
     const gfx::Transform& target_transform,
     const ClipData& clip_rect,
     RenderPass* dest_pass,
@@ -212,13 +215,15 @@ void SurfaceAggregator::HandleSurfaceQuad(
     return;
   }
 
-  SurfaceId fallback_surface_id = *surface_quad->fallback_surface_id;
-  Surface* fallback_surface = manager_->GetSurfaceForId(fallback_surface_id);
+  Surface* fallback_surface = manager_->GetLatestInFlightSurface(
+      parent_frame_sink_id, primary_surface_id,
+      *surface_quad->fallback_surface_id);
 
   // If the fallback is specified and missing then that's an error. Report the
   // error to console, and log the UMA.
   if (!fallback_surface || !fallback_surface->HasActiveFrame()) {
-    ReportMissingFallbackSurface(fallback_surface_id, fallback_surface);
+    ReportMissingFallbackSurface(*surface_quad->fallback_surface_id,
+                                 fallback_surface);
     EmitDefaultBackgroundColorQuad(surface_quad, target_transform, clip_rect,
                                    dest_pass);
     return;
@@ -241,6 +246,8 @@ void SurfaceAggregator::HandleSurfaceQuad(
         target_transform, clip_rect,
         fallback_frame.metadata.root_background_color, dest_pass);
   }
+
+  ++uma_stats_.using_fallback_surface;
 
   EmitSurfaceContent(fallback_surface, parent_device_scale_factor,
                      surface_quad->shared_quad_state, surface_quad->rect,
@@ -359,6 +366,7 @@ void SurfaceAggregator::EmitSurfaceContent(
         dest_pass->transform_to_root_target);
 
     CopyQuadsToPass(source.quad_list, source.shared_quad_state_list,
+                    surface->surface_id().frame_sink_id(),
                     surface->GetActiveFrame().device_scale_factor(),
                     child_to_parent_map, gfx::Transform(), ClipData(),
                     copy_pass.get(), surface_id);
@@ -413,6 +421,7 @@ void SurfaceAggregator::EmitSurfaceContent(
         CalculateClipRect(clip_rect, surface_quad_clip_rect, target_transform);
 
     CopyQuadsToPass(quads, last_pass.shared_quad_state_list,
+                    surface->surface_id().frame_sink_id(),
                     surface->GetActiveFrame().device_scale_factor(),
                     child_to_parent_map, surface_transform, quads_clip,
                     dest_pass, surface_id);
@@ -624,6 +633,7 @@ SharedQuadState* SurfaceAggregator::CopyAndScaleSharedQuadState(
 void SurfaceAggregator::CopyQuadsToPass(
     const QuadList& source_quad_list,
     const SharedQuadStateList& source_shared_quad_state_list,
+    const FrameSinkId& parent_frame_sink_id,
     float parent_device_scale_factor,
     const std::unordered_map<ResourceId, ResourceId>& child_to_parent_map,
     const gfx::Transform& target_transform,
@@ -667,8 +677,8 @@ void SurfaceAggregator::CopyQuadsToPass(
         continue;
 
       HandleSurfaceQuad(surface_quad, parent_device_scale_factor,
-                        target_transform, clip_rect, dest_pass,
-                        ignore_undamaged, &damage_rect_in_quad_space,
+                        parent_frame_sink_id, target_transform, clip_rect,
+                        dest_pass, ignore_undamaged, &damage_rect_in_quad_space,
                         &damage_rect_in_quad_space_valid);
     } else {
       if (quad->shared_quad_state != last_copied_source_shared_quad_state) {
@@ -774,6 +784,7 @@ void SurfaceAggregator::CopyPasses(const CompositorFrame& frame,
         source.has_damage_from_contributing_content, source.generate_mipmap);
 
     CopyQuadsToPass(source.quad_list, source.shared_quad_state_list,
+                    surface->surface_id().frame_sink_id(),
                     frame.device_scale_factor(), child_to_parent_map,
                     gfx::Transform(), ClipData(), copy_pass.get(),
                     surface->surface_id());
@@ -980,25 +991,28 @@ gfx::Rect SurfaceAggregator::PrewalkTree(Surface* surface,
   // referenced_surfaces_.
   referenced_surfaces_.insert(surface->surface_id());
   for (const auto& surface_info : child_surfaces) {
-    Surface* surface = manager_->GetSurfaceForId(surface_info.primary_id);
+    Surface* child_surface = manager_->GetSurfaceForId(surface_info.primary_id);
     gfx::Rect surface_damage;
-    if (!surface || !surface->HasActiveFrame()) {
-      // If the primary surface si not available then we assume the damage is
+    if (!child_surface || !child_surface->HasActiveFrame()) {
+      // If the primary surface is not available then we assume the damage is
       // the full size of the SurfaceDrawQuad because we might need to introduce
       // gutter.
       surface_damage = surface_info.quad_rect;
       if (surface_info.fallback_id) {
-        Surface* fallback_surface =
-            manager_->GetSurfaceForId(*surface_info.fallback_id);
+        // TODO(fsamuel): Consider caching this value somewhere so that
+        // HandleSurfaceQuad doesn't need to call it again.
+        Surface* fallback_surface = manager_->GetLatestInFlightSurface(
+            surface->surface_id().frame_sink_id(), surface_info.primary_id,
+            *surface_info.fallback_id);
         if (fallback_surface && fallback_surface->HasActiveFrame())
-          surface = fallback_surface;
+          child_surface = fallback_surface;
       }
     }
 
-    if (surface) {
-      surface_damage.Union(PrewalkTree(surface, surface_info.has_moved_pixels,
-                                       surface_info.parent_pass_id, will_draw,
-                                       result));
+    if (child_surface) {
+      surface_damage.Union(
+          PrewalkTree(child_surface, surface_info.has_moved_pixels,
+                      surface_info.parent_pass_id, will_draw, result));
     }
 
     if (surface_damage.IsEmpty())
@@ -1195,7 +1209,9 @@ CompositorFrame SurfaceAggregator::Aggregate(const SurfaceId& surface_id) {
                              kUmaStatMaxSurfaces);
   UMA_HISTOGRAM_EXACT_LINEAR(kUmaNoActiveFrame, uma_stats_.no_active_frame,
                              kUmaStatMaxSurfaces);
-
+  UMA_HISTOGRAM_EXACT_LINEAR(kUmaUsingFallbackSurface,
+                             uma_stats_.using_fallback_surface,
+                             kUmaStatMaxSurfaces);
   return frame;
 }
 

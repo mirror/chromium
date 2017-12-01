@@ -21,6 +21,7 @@
 #include "base/feature_list.h"
 #include "base/files/file_util.h"
 #include "base/guid.h"
+#include "base/i18n/rtl.h"
 #include "base/logging.h"
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/histogram_macros.h"
@@ -113,7 +114,12 @@ bool SectionIsAutofilled(const FormStructure& form_structure,
 // characters removed.
 base::string16 SanitizeCreditCardFieldValue(const base::string16& value) {
   base::string16 sanitized;
+  // We remove whitespace as well as some invisible unicode characters.
   base::TrimWhitespace(value, base::TRIM_ALL, &sanitized);
+  base::TrimString(sanitized,
+                   base::string16({base::i18n::kRightToLeftMark,
+                                   base::i18n::kLeftToRightMark}),
+                   &sanitized);
   // Some sites have ____-____-____-____ in their credit card number fields, for
   // example.
   base::ReplaceChars(sanitized, base::ASCIIToUTF16("-_"),
@@ -372,16 +378,14 @@ bool AutofillManager::OnFormSubmitted(const FormData& form) {
 
   CreditCard credit_card =
       form_data_importer_->ExtractCreditCardFromForm(*submitted_form);
-  if (IsValidCreditCardNumber(credit_card.number())) {
-    credit_card_form_event_logger_->DetectedCardInSubmittedForm();
-    if (personal_data_->IsKnownCard(credit_card)) {
-      credit_card_form_event_logger_->SubmittedKnownCard();
-    }
-  }
+  AutofillMetrics::CardNumberStatus card_number_status =
+      GetCardNumberStatus(credit_card);
 
-  address_form_event_logger_->OnFormSubmitted(/*force_logging=*/false);
+  address_form_event_logger_->OnFormSubmitted(/*force_logging=*/false,
+                                              card_number_status);
   if (IsCreditCardAutofillEnabled())
-    credit_card_form_event_logger_->OnFormSubmitted(enable_ablation_logging_);
+    credit_card_form_event_logger_->OnFormSubmitted(enable_ablation_logging_,
+                                                    card_number_status);
 
   // Update Personal Data with the form's submitted data.
   // Also triggers offering local/upload credit card save, if applicable.
@@ -899,7 +903,8 @@ bool AutofillManager::GetDeletionConfirmationText(const base::string16& value,
     }
 
     return true;
-  } else if (GetProfile(identifier, &profile)) {
+  }
+  if (GetProfile(identifier, &profile)) {
     if (profile->record_type() != AutofillProfile::LOCAL_PROFILE)
       return false;
 
@@ -1077,11 +1082,7 @@ bool AutofillManager::IsCreditCardAutofillEnabled() {
 
 bool AutofillManager::ShouldUploadForm(const FormStructure& form) {
   return IsAutofillEnabled() && !driver()->IsIncognito() &&
-         form.ShouldBeParsed() &&
-         (form.active_field_count() >= kRequiredFieldsForUpload ||
-          (form.all_fields_are_passwords() &&
-           form.active_field_count() >=
-               kRequiredFieldsForFormsWithOnlyPasswordFields));
+         form.ShouldBeUploaded();
 }
 
 // Note that |submitted_form| is passed as a pointer rather than as a reference
@@ -1094,11 +1095,14 @@ void AutofillManager::UploadFormDataAsyncCallback(
     const TimeTicks& interaction_time,
     const TimeTicks& submission_time,
     bool observed_submission) {
-  submitted_form->LogQualityMetrics(load_time, interaction_time,
-                                    submission_time,
-                                    form_interactions_ukm_logger_.get(),
-                                    did_show_suggestions_, observed_submission);
-  if (submitted_form->ShouldBeCrowdsourced())
+  if (submitted_form->ShouldRunHeuristics() ||
+      submitted_form->ShouldBeQueried()) {
+    submitted_form->LogQualityMetrics(
+        load_time, interaction_time, submission_time,
+        form_interactions_ukm_logger_.get(), did_show_suggestions_,
+        observed_submission);
+  }
+  if (submitted_form->ShouldBeUploaded())
     UploadFormData(*submitted_form, observed_submission);
 }
 
@@ -1182,7 +1186,7 @@ AutofillManager::AutofillManager(
                                              payments_client_.get(),
                                              personal_data,
                                              app_locale_)),
-      field_filler_(app_locale),
+      field_filler_(app_locale, client->GetAddressNormalizer()),
       autocomplete_history_manager_(
           std::make_unique<AutocompleteHistoryManager>(driver, client)),
       form_interactions_ukm_logger_(
@@ -1208,9 +1212,6 @@ AutofillManager::AutofillManager(
   CountryNames::SetLocaleString(app_locale_);
   if (personal_data_ && client_)
     personal_data_->OnSyncServiceInitialized(client_->GetSyncService());
-
-  if (personal_data_ && driver)
-    personal_data_->SetURLRequestContextGetter(driver->GetURLRequestContext());
 }
 
 bool AutofillManager::RefreshDataModels() {
@@ -1316,27 +1317,13 @@ void AutofillManager::FillOrPreviewDataModelForm(
 
   FormData result = form;
 
-  base::string16 profile_full_name;
-  std::string profile_language_code;
-  if (!is_credit_card) {
-    profile_full_name =
-        data_model.GetInfo(AutofillType(NAME_FULL), app_locale_);
-    profile_language_code =
-        static_cast<const AutofillProfile*>(&data_model)->language_code();
-  }
-
   // If the relevant section is auto-filled, we should fill |field| but not the
   // rest of the form.
   if (SectionIsAutofilled(*form_structure, form, autofill_field->section())) {
     for (FormFieldData& iter : result.fields) {
       if (iter.SameFieldAs(field)) {
-        const base::string16 value =
-            data_model.GetInfo(autofill_field->Type(), app_locale_);
-        if (!value.empty()) {
-          FillFieldWithValue(autofill_field, value, profile_language_code,
-                             profile_full_name, &iter,
-                             /*should_notify=*/!is_credit_card);
-        }
+        FillFieldWithValue(autofill_field, data_model, &iter,
+                           /*should_notify=*/!is_credit_card, cvc);
         break;
       }
     }
@@ -1361,8 +1348,9 @@ void AutofillManager::FillOrPreviewDataModelForm(
       continue;
 
     if (form_structure->field(i)->only_fill_when_focused() &&
-        !form_structure->field(i)->SameFieldAs(field))
+        !form_structure->field(i)->SameFieldAs(field)) {
       continue;
+    }
 
     DCHECK(form_structure->field(i)->SameFieldAs(result.fields[i]));
 
@@ -1379,17 +1367,6 @@ void AutofillManager::FillOrPreviewDataModelForm(
       continue;
     }
 
-    base::string16 value =
-        data_model.GetInfo(cached_field->Type(), app_locale_);
-    if (cached_field->Type().GetStorableType() ==
-        CREDIT_CARD_VERIFICATION_CODE) {
-      value = cvc;
-    }
-
-    // Do not attempt to fill empty values because it would skew the metrics.
-    if (value.empty())
-      continue;
-
     // Must match ForEachMatchingFormField() in form_autofill_util.cc.
     // Only notify autofilling of empty fields and the field that initiated
     // the filling (note that "select-one" controls may not be empty but will
@@ -1398,10 +1375,11 @@ void AutofillManager::FillOrPreviewDataModelForm(
                          (result.fields[i].SameFieldAs(field) ||
                           result.fields[i].form_control_type == "select-one" ||
                           result.fields[i].value.empty());
-    // Fill the non-empty |value| into the result vector, which will be sent to
-    // the renderer.
-    FillFieldWithValue(cached_field, value, profile_language_code,
-                       profile_full_name, &result.fields[i], should_notify);
+
+    // Fill the non-empty value from |data_model| into the result vector, which
+    // will be sent to the renderer.
+    FillFieldWithValue(cached_field, data_model, &result.fields[i],
+                       should_notify, cvc);
   }
 
   autofilled_form_signatures_.push_front(form_structure->FormSignatureAsStr());
@@ -1602,7 +1580,8 @@ void AutofillManager::ParseForms(const std::vector<FormData>& forms) {
     return;
 
   // Setup the url for metrics that we will collect for this form.
-  form_interactions_ukm_logger_->OnFormsParsed(forms[0].main_frame_origin);
+  form_interactions_ukm_logger_->OnFormsParsed(
+      forms[0].main_frame_origin.GetURL());
 
   std::vector<FormStructure*> non_queryable_forms;
   std::vector<FormStructure*> queryable_forms;
@@ -1619,7 +1598,7 @@ void AutofillManager::ParseForms(const std::vector<FormData>& forms) {
     form_types.insert(current_form_types.begin(), current_form_types.end());
     // Set aside forms with method GET or author-specified types, so that they
     // are not included in the query to the server.
-    if (form_structure->ShouldBeCrowdsourced())
+    if (form_structure->ShouldBeQueried())
       queryable_forms.push_back(form_structure);
     else
       non_queryable_forms.push_back(form_structure);
@@ -1925,15 +1904,13 @@ void AutofillManager::DisambiguateNameUploadTypes(
   }
 }
 
-void AutofillManager::FillFieldWithValue(
-    AutofillField* autofill_field,
-    const base::string16& value,
-    const std::string& profile_language_code,
-    const base::string16& profile_full_name,
-    FormFieldData* field_data,
-    bool should_notify) {
-  if (field_filler_.FillFormField(*autofill_field, value, profile_language_code,
-                                  field_data)) {
+void AutofillManager::FillFieldWithValue(AutofillField* autofill_field,
+                                         const AutofillDataModel& data_model,
+                                         FormFieldData* field_data,
+                                         bool should_notify,
+                                         const base::string16& cvc) {
+  if (field_filler_.FillFormField(*autofill_field, data_model, field_data,
+                                  cvc)) {
     // Mark the cached field as autofilled, so that we can detect when a
     // user edits an autofilled field (for metrics).
     autofill_field->is_autofilled = true;
@@ -1942,10 +1919,31 @@ void AutofillManager::FillFieldWithValue(
     // it. This allows the renderer to distinguish autofilled fields from
     // fields with non-empty values, such as select-one fields.
     field_data->is_autofilled = true;
+    AutofillMetrics::LogUserHappinessMetric(
+        AutofillMetrics::FIELD_WAS_AUTOFILLED, autofill_field->Type().group());
 
-    if (should_notify)
-      client_->DidFillOrPreviewField(value, profile_full_name);
+    if (should_notify) {
+      client_->DidFillOrPreviewField(
+          /*value=*/data_model.GetInfo(autofill_field->Type(), app_locale_),
+          /*profile_full_name=*/data_model.GetInfo(AutofillType(NAME_FULL),
+                                                   app_locale_));
+    }
   }
+}
+
+AutofillMetrics::CardNumberStatus AutofillManager::GetCardNumberStatus(
+    CreditCard& credit_card) {
+  base::string16 number = credit_card.number();
+  if (number.empty())
+    return AutofillMetrics::EMPTY_CARD;
+  else if (!HasCorrectLength(number))
+    return AutofillMetrics::WRONG_SIZE_CARD;
+  else if (!PassesLuhnCheck(number))
+    return AutofillMetrics::FAIL_LUHN_CHECK_CARD;
+  else if (personal_data_->IsKnownCard(credit_card))
+    return AutofillMetrics::KNOWN_CARD;
+  else
+    return AutofillMetrics::UNKNOWN_CARD;
 }
 
 }  // namespace autofill

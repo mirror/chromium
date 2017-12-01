@@ -19,7 +19,6 @@
 #include "ui/events/event_handler.h"
 
 namespace ui {
-enum class DomCode;
 class KeyEvent;
 }
 
@@ -57,7 +56,6 @@ class Keyboard : public ui::EventHandler,
   // Overridden from ui::EventHandler:
   void OnKeyEvent(ui::KeyEvent* event) override;
 
-
   // Overridden from SurfaceObserver:
   void OnSurfaceDestroying(Surface* surface) override;
 
@@ -74,6 +72,9 @@ class Keyboard : public ui::EventHandler,
   void OnSurfaceFocused(Surface* gained_focus) override;
 
  private:
+  // Change keyboard focus to |surface|.
+  void SetFocus(Surface* surface);
+
   // Processes expired key state changes in |pending_key_acks_| as they have not
   // been acknowledged.
   void ProcessExpiredPendingKeyAcks();
@@ -105,9 +106,6 @@ class Keyboard : public ui::EventHandler,
 
   // The current focus surface for the keyboard.
   Surface* focus_ = nullptr;
-
-  // Vector of currently pressed keys.
-  std::vector<ui::DomCode> pressed_keys_;
 
   // Current set of modifier flags.
   int modifier_flags_ = 0;

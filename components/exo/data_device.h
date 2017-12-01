@@ -9,7 +9,11 @@
 
 #include "base/macros.h"
 #include "components/exo/data_offer_observer.h"
+#include "components/exo/seat_observer.h"
+#include "components/exo/surface.h"
+#include "components/exo/surface_observer.h"
 #include "components/exo/wm_helper.h"
+#include "ui/base/clipboard/clipboard_observer.h"
 
 namespace ui {
 class DropTargetEvent;
@@ -21,16 +25,23 @@ class DataDeviceDelegate;
 class DataOffer;
 class DataSource;
 class FileHelper;
-class Surface;
+class Seat;
 
 enum class DndAction { kNone, kCopy, kMove, kAsk };
 
 class ScopedDataOffer;
+class ScopedSurface;
 
 // DataDevice to start drag and drop and copy and paste oprations.
-class DataDevice : public WMHelper::DragDropObserver, public DataOfferObserver {
+class DataDevice : public WMHelper::DragDropObserver,
+                   public DataOfferObserver,
+                   public ui::ClipboardObserver,
+                   public SurfaceObserver,
+                   public SeatObserver {
  public:
-  explicit DataDevice(DataDeviceDelegate* delegate, FileHelper* file_helper);
+  explicit DataDevice(DataDeviceDelegate* delegate,
+                      Seat* seat,
+                      FileHelper* file_helper);
   ~DataDevice() override;
 
   // Starts drag-and-drop operation.
@@ -48,7 +59,7 @@ class DataDevice : public WMHelper::DragDropObserver, public DataOfferObserver {
   // Sets selection data to the clipboard.
   // |source| represents data comes from the client. |serial| is the unique
   // number comes from input events which triggers the drag and drop operation.
-  void SetSelection(const DataSource* source, uint32_t serial);
+  void SetSelection(DataSource* source, uint32_t serial);
 
   // Overridden from WMHelper::DragDropObserver:
   void OnDragEntered(const ui::DropTargetEvent& event) override;
@@ -56,15 +67,28 @@ class DataDevice : public WMHelper::DragDropObserver, public DataOfferObserver {
   void OnDragExited() override;
   int OnPerformDrop(const ui::DropTargetEvent& event) override;
 
+  // Overridden from ui::ClipbaordObserver:
+  void OnClipboardDataChanged() override;
+
+  // Overridden from SeatObserver:
+  void OnSurfaceFocusing(Surface* surface) override;
+  void OnSurfaceFocused(Surface* surface) override;
+
   // Overridden from DataOfferObserver:
   void OnDataOfferDestroying(DataOffer* data_offer) override;
 
+  // Overridden from SurfaceObserver:
+  void OnSurfaceDestroying(Surface* surface) override;
+
  private:
   Surface* GetEffectiveTargetForEvent(const ui::DropTargetEvent& event) const;
+  void SetSelectionToCurrentClipboardData();
 
   DataDeviceDelegate* const delegate_;
+  Seat* const seat_;
   FileHelper* const file_helper_;
   std::unique_ptr<ScopedDataOffer> data_offer_;
+  std::unique_ptr<ScopedSurface> focused_surface_;
 
   DISALLOW_COPY_AND_ASSIGN(DataDevice);
 };

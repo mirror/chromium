@@ -11,6 +11,11 @@
 
 namespace flag_descriptions {
 
+const char kBookmarkNewEditPageName[] = "Bookmark New Edit Page";
+const char kBookmarkNewEditPageDescription[] =
+    "When enabled, the new bookmark edit page and folder picker will be used "
+    "in the new bookmark UI.";
+
 const char kBookmarkNewGenerationName[] = "Bookmark New Generation";
 const char kBookmarkNewGenerationDescription[] =
     "When enabled, change to the new bookmark UI which will support bookmark "
@@ -79,6 +84,10 @@ const char kOmniboxUIHideSuggestionUrlTrivialSubdomainsName[] =
 const char kOmniboxUIHideSuggestionUrlTrivialSubdomainsDescription[] =
     "Elides trivially informative subdomains (www, m) from suggested URLs in "
     "the omnibox dropdown.";
+
+const char kPasswordExportName[] = "Password Export";
+const char kPasswordExportDescription[] =
+    "Enables password exporting functionality in password settings.";
 
 const char kPhysicalWeb[] = "Physical Web";
 const char kPhysicalWebDescription[] =

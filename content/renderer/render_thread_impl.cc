@@ -63,14 +63,12 @@
 #include "content/child/memory/child_memory_coordinator_impl.h"
 #include "content/child/runtime_features.h"
 #include "content/child/thread_safe_sender.h"
-#include "content/common/child_process_messages.h"
 #include "content/common/content_constants_internal.h"
 #include "content/common/dom_storage/dom_storage_messages.h"
 #include "content/common/features.h"
 #include "content/common/frame_messages.h"
 #include "content/common/frame_owner_properties.h"
 #include "content/common/gpu_stream_constants.h"
-#include "content/common/render_process_messages.h"
 #include "content/common/resource_messages.h"
 #include "content/common/site_isolation_policy.h"
 #include "content/common/view_messages.h"
@@ -125,7 +123,6 @@
 #include "content/renderer/notifications/notification_dispatcher.h"
 #include "content/renderer/p2p/socket_dispatcher.h"
 #include "content/renderer/quota_dispatcher.h"
-#include "content/renderer/quota_message_filter.h"
 #include "content/renderer/render_frame_proxy.h"
 #include "content/renderer/render_process_impl.h"
 #include "content/renderer/render_view_impl.h"
@@ -188,6 +185,7 @@
 #include "third_party/skia/include/core/SkGraphics.h"
 #include "ui/base/layout.h"
 #include "ui/base/ui_base_switches.h"
+#include "ui/base/ui_base_switches_util.h"
 #include "ui/display/display_switches.h"
 #include "ui/gl/gl_switches.h"
 
@@ -330,16 +328,6 @@ void* CreateHistogram(
 void AddHistogramSample(void* hist, int sample) {
   base::Histogram* histogram = static_cast<base::Histogram*>(hist);
   histogram->Add(sample);
-}
-
-bool IsMusHostingViz() {
-#if BUILDFLAG(ENABLE_MUS)
-  const auto* cmdline = base::CommandLine::ForCurrentProcess();
-  return cmdline->GetSwitchValueASCII(switches::kMus) ==
-         switches::kMusHostVizValue;
-#else
-  return false;
-#endif
 }
 
 class FrameFactoryImpl : public mojom::FrameFactory {
@@ -656,10 +644,12 @@ RenderThreadImpl::RenderThreadImpl(
 RenderThreadImpl::RenderThreadImpl(
     std::unique_ptr<base::MessageLoop> main_message_loop,
     std::unique_ptr<blink::scheduler::RendererScheduler> scheduler)
-    : ChildThreadImpl(Options::Builder()
-                          .AutoStartServiceManagerConnection(false)
-                          .ConnectToBrowser(true)
-                          .Build()),
+    : ChildThreadImpl(
+          Options::Builder()
+              .AutoStartServiceManagerConnection(false)
+              .ConnectToBrowser(true)
+              .IPCTaskRunner(scheduler ? scheduler->IPCTaskRunner() : nullptr)
+              .Build()),
       renderer_scheduler_(std::move(scheduler)),
       main_message_loop_(std::move(main_message_loop)),
       categorized_worker_pool_(new CategorizedWorkerPool()),
@@ -697,10 +687,11 @@ void RenderThreadImpl::Init(
       base::BindRepeating(&CreateSingleSampleMetricsProvider,
                           message_loop()->task_runner(), GetConnector()));
 
-  gpu_ = ui::Gpu::Create(
-      GetConnector(),
-      IsMusHostingViz() ? ui::mojom::kServiceName : mojom::kBrowserServiceName,
-      GetIOTaskRunner());
+  gpu_ =
+      ui::Gpu::Create(GetConnector(),
+                      switches::IsMusHostingViz() ? ui::mojom::kServiceName
+                                                  : mojom::kBrowserServiceName,
+                      GetIOTaskRunner());
 
   viz::mojom::SharedBitmapAllocationNotifierPtr
       shared_bitmap_allocation_notifier_ptr;
@@ -721,12 +712,7 @@ void RenderThreadImpl::Init(
   resource_message_filter_ =
       new ChildResourceMessageFilter(resource_dispatcher_.get());
   AddFilter(resource_message_filter_.get());
-  quota_message_filter_ =
-      new QuotaMessageFilter(thread_safe_sender());
-  quota_dispatcher_.reset(new QuotaDispatcher(thread_safe_sender(),
-                                              quota_message_filter_.get()));
-
-  AddFilter(quota_message_filter_->GetFilter());
+  quota_dispatcher_.reset(new QuotaDispatcher(message_loop()->task_runner()));
 
   auto registry = std::make_unique<service_manager::BinderRegistry>();
   BlinkInterfaceRegistryImpl interface_registry(
@@ -987,8 +973,9 @@ void RenderThreadImpl::Init(
                                 mojo::MakeRequest(&storage_partition_service_));
 
 #if defined(OS_LINUX)
-  ChildProcess::current()->SetIOThreadPriority(base::ThreadPriority::DISPLAY);
-  ChildThreadImpl::current()->SetThreadPriority(
+  render_message_filter()->SetThreadPriority(
+      ChildProcess::current()->io_thread_id(), base::ThreadPriority::DISPLAY);
+  render_message_filter()->SetThreadPriority(
       categorized_worker_pool_->background_worker_thread_id(),
       base::ThreadPriority::BACKGROUND);
 #endif
@@ -1197,8 +1184,8 @@ void RenderThreadImpl::InitializeCompositorThread() {
       base::BindOnce(base::IgnoreResult(&ThreadRestrictions::SetIOAllowed),
                      false));
 #if defined(OS_LINUX)
-  ChildThreadImpl::current()->SetThreadPriority(compositor_thread_->ThreadId(),
-                                                base::ThreadPriority::DISPLAY);
+  render_message_filter()->SetThreadPriority(compositor_thread_->ThreadId(),
+                                             base::ThreadPriority::DISPLAY);
 #endif
 
   if (!base::FeatureList::IsEnabled(features::kMojoInputMessages)) {
@@ -2032,7 +2019,7 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
   }
 
 #if defined(USE_AURA)
-  if (IsMusHostingViz()) {
+  if (switches::IsMusHostingViz()) {
     if (!RendererWindowTreeClient::Get(routing_id)) {
       callback.Run(nullptr);
       return;
@@ -2171,7 +2158,7 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
       &params));
 }
 
-AssociatedInterfaceRegistry*
+blink::AssociatedInterfaceRegistry*
 RenderThreadImpl::GetAssociatedInterfaceRegistry() {
   return &associated_interfaces_;
 }

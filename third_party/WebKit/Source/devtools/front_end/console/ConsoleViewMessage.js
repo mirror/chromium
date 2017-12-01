@@ -595,15 +595,10 @@ Console.ConsoleViewMessage = class {
     note.classList.add('info-note');
     note.title = Common.UIString('Value below was evaluated just now.');
 
-    var section = new ObjectUI.ObjectPropertiesSection(
-        obj, titleElement, this._linkifier, undefined, undefined, undefined, this._onObjectChange.bind(this));
+    var section = new ObjectUI.ObjectPropertiesSection(obj, titleElement, this._linkifier);
     section.element.classList.add('console-view-object-properties-section');
     section.enableContextMenu();
     return section.element;
-  }
-
-  _onObjectChange() {
-    // This method is sniffed in tests.
   }
 
   /**
@@ -1340,7 +1335,7 @@ Console.ConsoleViewMessage = class {
 
   /**
    * @param {string} string
-   * @return {!Array<{type: string, text: string}>}
+   * @return {!Array<{type: string, text: (string|undefined)}>}
    */
   static _tokenizeMessageText(string) {
     if (!Console.ConsoleViewMessage._tokenizerRegexes) {
@@ -1361,7 +1356,8 @@ Console.ConsoleViewMessage = class {
       Console.ConsoleViewMessage._tokenizerRegexes = Array.from(handlers.keys());
       Console.ConsoleViewMessage._tokenizerTypes = Array.from(handlers.values());
     }
-
+    if (string.length > Console.ConsoleViewMessage._MaxTokenizableStringLength)
+      return [{text: string, type: undefined}];
     var results = TextUtils.TextUtils.splitStringByRegexes(string, Console.ConsoleViewMessage._tokenizerRegexes);
     return results.map(
         result => ({text: result.value, type: Console.ConsoleViewMessage._tokenizerTypes[result.regexIndex]}));
@@ -1465,3 +1461,5 @@ Console.ConsoleGroupViewMessage = class extends Console.ConsoleViewMessage {
  * @type {number}
  */
 Console.ConsoleViewMessage.MaxLengthForLinks = 40;
+
+Console.ConsoleViewMessage._MaxTokenizableStringLength = 10000;

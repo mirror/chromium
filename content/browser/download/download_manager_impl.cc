@@ -51,6 +51,7 @@
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/resource_context.h"
 #include "content/public/browser/web_contents_delegate.h"
+#include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/previews_state.h"
 #include "content/public/common/referrer.h"
@@ -68,6 +69,19 @@
 
 namespace content {
 namespace {
+
+WebContents* GetWebContents(int render_process_id,
+                            int render_frame_id,
+                            int frame_tree_node_id) {
+  DCHECK(IsBrowserSideNavigationEnabled());
+
+  WebContents* web_contents = WebContents::FromRenderFrameHost(
+      RenderFrameHost::FromID(render_process_id, render_frame_id));
+  if (web_contents)
+    return web_contents;
+
+  return WebContents::FromFrameTreeNodeId(frame_tree_node_id);
+}
 
 StoragePartitionImpl* GetStoragePartition(BrowserContext* context,
                                           int render_process_id,
@@ -180,18 +194,23 @@ DownloadManagerImpl::UniqueUrlDownloadHandlerPtr BeginResourceDownload(
     return nullptr;
   }
 
+  ResourceRequestInfo::WebContentsGetter getter =
+      base::Bind(&GetWebContents, params->render_process_host_id(),
+                 params->render_frame_host_routing_id(), -1);
+  // TODO(qinmin): Check the storage permission before creating the URLLoader.
+  // This is already done for context menu download, but it is missing for
+  // download service and download resumption.
   return DownloadManagerImpl::UniqueUrlDownloadHandlerPtr(
       ResourceDownloader::BeginDownload(
           download_manager, std::move(params), std::move(request),
-          url_loader_factory_getter, file_system_context, download_id, false)
+          url_loader_factory_getter, file_system_context, getter, download_id,
+          false)
           .release());
 }
 
 // Creates a ResourceDownloader to own the URLLoader and intercept the response,
 // and passes it back to the DownloadManager.
 void InterceptNavigationResponse(
-    base::OnceCallback<void(DownloadManagerImpl::UniqueUrlDownloadHandlerPtr)>
-        callback,
     base::WeakPtr<DownloadManagerImpl> download_manager,
     const scoped_refptr<ResourceResponse>& response,
     mojo::ScopedDataPipeConsumerHandle consumer_handle,
@@ -202,16 +221,30 @@ void InterceptNavigationResponse(
     std::vector<GURL> url_chain,
     base::Optional<network::URLLoaderCompletionStatus> status) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  DownloadManagerImpl::UniqueUrlDownloadHandlerPtr resource_downloader(
-      ResourceDownloader::InterceptNavigationResponse(
-          download_manager, std::move(resource_request), response,
-          std::move(consumer_handle), ssl_status, frame_tree_node_id,
-          std::move(url_loader), std::move(url_chain), std::move(status))
-          .release());
+  GURL url = resource_request->url;
+  std::string method = resource_request->method;
+  ResourceRequestInfo::WebContentsGetter getter =
+      base::Bind(&GetWebContents, ChildProcessHost::kInvalidUniqueID,
+                 MSG_ROUTING_NONE, frame_tree_node_id);
+  std::unique_ptr<ResourceDownloader> resource_downloader =
+      ResourceDownloader::CreateWithURLLoader(
+          download_manager, std::move(resource_request), getter,
+          std::move(url_loader), std::move(status));
+
+  // Use Unretained() is safe as |resource_downloader| will be deleted on
+  // the IO thread.
+  base::OnceClosure start_interception_cb = base::BindOnce(
+      &ResourceDownloader::StartNavigationInterception,
+      base::Unretained(resource_downloader.get()), response,
+      std::move(consumer_handle), ssl_status, std::move(url_chain));
 
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
-      base::BindOnce(std::move(callback), std::move(resource_downloader)));
+      base::BindOnce(&DownloadManagerImpl::CheckDownloadAllowed,
+                     download_manager, getter, url, method,
+                     DownloadManagerImpl::UniqueUrlDownloadHandlerPtr(
+                         resource_downloader.release()),
+                     std::move(start_interception_cb)));
 }
 
 class DownloadItemFactoryImpl : public DownloadItemFactory {
@@ -683,7 +716,6 @@ DownloadInterruptReason DownloadManagerImpl::BeginDownloadRequest(
     int render_view_route_id,
     int render_frame_route_id,
     bool do_not_prompt_for_login) {
-  LOG(ERROR) << "BeginDownloadRequest";
   if (ResourceDispatcherHostImpl::Get()->is_shutdown())
     return DOWNLOAD_INTERRUPT_REASON_USER_SHUTDOWN;
 
@@ -738,10 +770,33 @@ DownloadManagerImpl::GetNavigationInterceptionCB(
     int frame_tree_node_id) {
   return base::BindOnce(
       &InterceptNavigationResponse,
-      base::BindOnce(&DownloadManagerImpl::AddUrlDownloadHandler,
-                     weak_factory_.GetWeakPtr()),
       weak_factory_.GetWeakPtr(), response, std::move(consumer_handle),
       ssl_status, frame_tree_node_id);
+}
+
+void DownloadManagerImpl::CheckDownloadAllowed(
+    const content::ResourceRequestInfo::WebContentsGetter& web_contents_getter,
+    const GURL& url,
+    const std::string& request_method,
+    UniqueUrlDownloadHandlerPtr downloader,
+    base::OnceClosure callback) {
+  if (delegate_) {
+    delegate_->CheckDownloadAllowed(
+        web_contents_getter, url, request_method,
+        base::BindOnce(&DownloadManagerImpl::OnDownloadAllowedCheckComplete,
+                       weak_factory_.GetWeakPtr(), std::move(downloader),
+                       std::move(callback)));
+  }
+}
+
+void DownloadManagerImpl::OnDownloadAllowedCheckComplete(
+    UniqueUrlDownloadHandlerPtr downloader,
+    base::OnceClosure callback,
+    bool allow) {
+  if (!allow)
+    return;
+  AddUrlDownloadHandler(std::move(downloader));
+  BrowserThread::PostTask(BrowserThread::IO, FROM_HERE, std::move(callback));
 }
 
 int DownloadManagerImpl::RemoveDownloadsByURLAndTime(
@@ -925,8 +980,9 @@ void DownloadManagerImpl::BeginDownloadInternal(
   download::InProgressCache* in_progress_cache =
       GetBrowserContext()->GetDownloadManagerDelegate()->GetInProgressCache();
   if (in_progress_cache) {
-    in_progress_cache->AddOrReplaceEntry(download::DownloadEntry(
-        params.get()->guid(), params.get()->request_origin()));
+    in_progress_cache->AddOrReplaceEntry(
+        download::DownloadEntry(params->guid(), params->request_origin(),
+                                ToDownloadSource(params->download_source())));
   }
 
   if (base::FeatureList::IsEnabled(features::kNetworkService)) {

@@ -84,7 +84,6 @@
 #include "chrome/browser/prefs/chrome_pref_service_factory.h"
 #include "chrome/browser/prefs/incognito_mode_prefs.h"
 #include "chrome/browser/prefs/pref_metrics_service.h"
-#include "chrome/browser/printing/cloud_print/cloud_print_proxy_service_factory.h"
 #include "chrome/browser/process_singleton.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_attributes_entry.h"
@@ -189,21 +188,30 @@
 #include "ui/base/resource/resource_bundle_android.h"
 #else
 #include "chrome/browser/feedback/feedback_profile_observer.h"
+#include "chrome/browser/ui/tabs/tab_activity_watcher.h"
+#include "chrome/browser/usb/web_usb_detector.h"
 #endif  // defined(OS_ANDROID)
 
-#if BUILDFLAG(ENABLE_OFFLINE_PAGES)
-#include "chrome/browser/offline_pages/offline_page_info_handler.h"
+#if !defined(OS_ANDROID) && !defined(OS_CHROMEOS)
+#include "chrome/browser/first_run/upgrade_util.h"
 #endif
-
-#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
-#include "chrome/browser/first_run/upgrade_util_linux.h"
-#endif  // defined(OS_LINUX) && !defined(OS_CHROMEOS)
 
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/chromeos/settings/cros_settings.h"
 #include "chromeos/chromeos_switches.h"
 #include "chromeos/settings/cros_settings_names.h"
 #endif  // defined(OS_CHROMEOS)
+
+#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+#include "chrome/browser/first_run/upgrade_util_linux.h"
+#endif  // defined(OS_LINUX) && !defined(OS_CHROMEOS)
+
+#if defined(OS_MACOSX)
+#include <Security/Security.h>
+
+#include "base/mac/scoped_nsautorelease_pool.h"
+#include "chrome/browser/mac/keystone_glue.h"
+#endif  // defined(OS_MACOSX)
 
 // TODO(port): several win-only methods have been pulled out of this, but
 // BrowserMain() as a whole needs to be broken apart so that it's usable by
@@ -227,21 +235,10 @@
 #include "ui/shell_dialogs/select_file_dialog.h"
 #endif  // defined(OS_WIN)
 
-#if defined(OS_MACOSX)
-#include <Security/Security.h>
-
-#include "base/mac/scoped_nsautorelease_pool.h"
-#include "chrome/browser/mac/keystone_glue.h"
-#endif  // defined(OS_MACOSX)
-
-#if !defined(OS_ANDROID) && !defined(OS_CHROMEOS)
-#include "chrome/browser/first_run/upgrade_util.h"
+#if defined(OS_WIN) || defined(OS_MACOSX) || \
+    (defined(OS_LINUX) && !defined(OS_CHROMEOS))
+#include "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h"
 #endif
-
-#if BUILDFLAG(ENABLE_NACL)
-#include "chrome/browser/component_updater/pnacl_component_installer.h"
-#include "components/nacl/browser/nacl_process_host.h"
-#endif  // BUILDFLAG(ENABLE_NACL)
 
 #if BUILDFLAG(ENABLE_BACKGROUND)
 #include "chrome/browser/background/background_mode_manager.h"
@@ -258,12 +255,23 @@
 #include "extensions/components/javascript_dialog_extensions_client/javascript_dialog_extension_client_impl.h"
 #endif  // BUILDFLAG(ENABLE_EXTENSIONS)
 
-#if BUILDFLAG(ENABLE_PRINT_PREVIEW)
-#include "chrome/browser/printing/cloud_print/cloud_print_proxy_service.h"
-#if !defined(OFFICIAL_BUILD)
+#if BUILDFLAG(ENABLE_NACL)
+#include "chrome/browser/component_updater/pnacl_component_installer.h"
+#include "components/nacl/browser/nacl_process_host.h"
+#endif  // BUILDFLAG(ENABLE_NACL)
+
+#if BUILDFLAG(ENABLE_OFFLINE_PAGES)
+#include "chrome/browser/offline_pages/offline_page_info_handler.h"
+#endif
+
+#if BUILDFLAG(ENABLE_PRINT_PREVIEW) && !defined(OFFICIAL_BUILD)
 #include "printing/printed_document.h"
-#endif  // !defined(OFFICIAL_BUILD)
-#endif  // BUILDFLAG(ENABLE_PRINT_PREVIEW)
+#endif
+
+#if BUILDFLAG(ENABLE_PRINT_PREVIEW) && !defined(OS_CHROMEOS)
+#include "chrome/browser/printing/cloud_print/cloud_print_proxy_service.h"
+#include "chrome/browser/printing/cloud_print/cloud_print_proxy_service_factory.h"
+#endif
 
 #if BUILDFLAG(ENABLE_RLZ)
 #include "chrome/browser/rlz/chrome_rlz_tracker_delegate.h"
@@ -274,27 +282,15 @@
 #include "chrome/browser/media/webrtc/webrtc_log_util.h"
 #endif  // BUILDFLAG(ENABLE_WEBRTC)
 
-#if defined(USE_AURA)
-#include "ui/aura/env.h"
-#endif  // defined(USE_AURA)
-
-#if !defined(OS_ANDROID)
-#include "chrome/browser/usb/web_usb_detector.h"
+#if BUILDFLAG(ENABLE_VR)
+#include "chrome/browser/vr/service/vr_service_impl.h"
 #endif
 
 #if defined(USE_AURA)
 #include "chrome/browser/lifetime/application_lifetime.h"
 #include "content/public/common/service_manager_connection.h"
 #include "services/service_manager/runner/common/client_util.h"
-#endif
-
-#if defined(OS_WIN) || defined(OS_MACOSX) || \
-    (defined(OS_LINUX) && !defined(OS_CHROMEOS))
-#include "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h"
-#endif
-
-#if BUILDFLAG(ENABLE_VR)
-#include "chrome/browser/vr/service/vr_service_impl.h"
+#include "ui/aura/env.h"
 #endif
 
 using content::BrowserThread;
@@ -1158,6 +1154,22 @@ int ChromeBrowserMainParts::PreCreateThreadsImpl() {
   // tasks.
   SetupFieldTrials();
 
+  // Add Site Isolation switches as dictated by policy.
+  auto* command_line = base::CommandLine::ForCurrentProcess();
+  auto* local_state = g_browser_process->local_state();
+  if (local_state->GetBoolean(prefs::kSitePerProcess) &&
+      !command_line->HasSwitch(switches::kSitePerProcess)) {
+    command_line->AppendSwitch(switches::kSitePerProcess);
+  }
+  // We don't check for `HasSwitch` here, because we don't want the command-line
+  // switch to take precedence over enterprise policy. (This behavior is in
+  // harmony with other enterprise policy settings.)
+  if (local_state->HasPrefPath(prefs::kIsolateOrigins)) {
+    command_line->AppendSwitchASCII(
+        switches::kIsolateOrigins,
+        local_state->GetString(prefs::kIsolateOrigins));
+  }
+
   // ChromeOS needs ui::ResourceBundle::InitSharedInstance to be called before
   // this.
   browser_process_->PreCreateThreads(parsed_command_line());
@@ -1347,6 +1359,10 @@ void ChromeBrowserMainParts::PostBrowserStart() {
         FROM_HERE, BrowserThread::GetTaskRunnerForThread(BrowserThread::UI),
         base::BindOnce(&WebUsbDetector::Initialize,
                        base::Unretained(web_usb_detector_.get())));
+  }
+  if (base::FeatureList::IsEnabled(features::kTabMetricsLogging)) {
+    // Initialize the TabActivityWatcher to begin logging tab activity events.
+    TabActivityWatcher::GetInstance();
   }
 #endif
 
@@ -1721,7 +1737,7 @@ int ChromeBrowserMainParts::PreMainMessageLoopRunImpl() {
   browser_process_->metrics_service()->LogNeedForCleanShutdown();
 #endif  // !defined(OS_ANDROID)
 
-#if BUILDFLAG(ENABLE_PRINT_PREVIEW)
+#if BUILDFLAG(ENABLE_PRINT_PREVIEW) && !defined(OS_CHROMEOS)
   // Create the instance of the cloud print proxy service so that it can launch
   // the service process if needed. This is needed because the service process
   // might have shutdown because an update was available.
@@ -1729,7 +1745,7 @@ int ChromeBrowserMainParts::PreMainMessageLoopRunImpl() {
   // BrowserContextKeyedServiceFactory::ServiceIsCreatedWithBrowserContext()
   // instead?
   CloudPrintProxyServiceFactory::GetForProfile(profile_);
-#endif  // BUILDFLAG(ENABLE_PRINT_PREVIEW)
+#endif
 
   // Start watching all browser threads for responsiveness.
   metrics::MetricsService::SetExecutionPhase(

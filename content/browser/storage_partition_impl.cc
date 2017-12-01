@@ -357,10 +357,10 @@ struct StoragePartitionImpl::QuotaManagedDataDeletionHelper {
 struct StoragePartitionImpl::DataDeletionHelper {
   DataDeletionHelper(uint32_t remove_mask,
                      uint32_t quota_storage_remove_mask,
-                     const base::Closure& callback)
+                     base::OnceClosure callback)
       : remove_mask(remove_mask),
         quota_storage_remove_mask(quota_storage_remove_mask),
-        callback(callback),
+        callback(std::move(callback)),
         task_count(0) {}
 
   void IncrementTaskCountOnUI();
@@ -392,7 +392,7 @@ struct StoragePartitionImpl::DataDeletionHelper {
   uint32_t quota_storage_remove_mask;
 
   // Accessed on UI thread.
-  const base::Closure callback;
+  base::OnceClosure callback;
   // Accessed on UI thread.
   int task_count;
 };
@@ -552,8 +552,8 @@ std::unique_ptr<StoragePartitionImpl> StoragePartitionImpl::Create(
   if (base::FeatureList::IsEnabled(features::kNetworkService)) {
     BlobURLLoaderFactory::BlobContextGetter blob_getter =
         base::BindOnce(&BlobStorageContextGetter, blob_context);
-    partition->blob_url_loader_factory_ = BlobURLLoaderFactory::Create(
-        std::move(blob_getter), partition->filesystem_context_);
+    partition->blob_url_loader_factory_ =
+        BlobURLLoaderFactory::Create(std::move(blob_getter));
 
     partition->url_loader_factory_getter_ = new URLLoaderFactoryGetter();
     partition->url_loader_factory_getter_->Initialize(partition.get());
@@ -729,11 +729,10 @@ void StoragePartitionImpl::ClearDataImpl(
     net::URLRequestContextGetter* rq_context,
     const base::Time begin,
     const base::Time end,
-    const base::Closure& callback) {
+    base::OnceClosure callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DataDeletionHelper* helper = new DataDeletionHelper(remove_mask,
-                                                      quota_storage_remove_mask,
-                                                      callback);
+  DataDeletionHelper* helper = new DataDeletionHelper(
+      remove_mask, quota_storage_remove_mask, std::move(callback));
   // |helper| deletes itself when done in
   // DataDeletionHelper::DecrementTaskCountOnUI().
   helper->ClearDataOnUIThread(
@@ -864,7 +863,7 @@ void StoragePartitionImpl::DataDeletionHelper::DecrementTaskCountOnUI() {
   DCHECK_GT(task_count, 0);
   --task_count;
   if (!task_count) {
-    callback.Run();
+    std::move(callback).Run();
     delete this;
   }
 }
@@ -958,13 +957,12 @@ void StoragePartitionImpl::ClearDataForOrigin(
     uint32_t remove_mask,
     uint32_t quota_storage_remove_mask,
     const GURL& storage_origin,
-    net::URLRequestContextGetter* request_context_getter,
-    const base::Closure& callback) {
+    net::URLRequestContextGetter* request_context_getter) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   ClearDataImpl(remove_mask, quota_storage_remove_mask, storage_origin,
                 OriginMatcherFunction(), CookieMatcherFunction(),
                 request_context_getter, base::Time(), base::Time::Max(),
-                callback);
+                base::Bind(&base::DoNothing));
 }
 
 void StoragePartitionImpl::ClearData(
@@ -974,10 +972,10 @@ void StoragePartitionImpl::ClearData(
     const OriginMatcherFunction& origin_matcher,
     const base::Time begin,
     const base::Time end,
-    const base::Closure& callback) {
+    base::OnceClosure callback) {
   ClearDataImpl(remove_mask, quota_storage_remove_mask, storage_origin,
                 origin_matcher, CookieMatcherFunction(), GetURLRequestContext(),
-                begin, end, callback);
+                begin, end, std::move(callback));
 }
 
 void StoragePartitionImpl::ClearData(
@@ -987,24 +985,25 @@ void StoragePartitionImpl::ClearData(
     const CookieMatcherFunction& cookie_matcher,
     const base::Time begin,
     const base::Time end,
-    const base::Closure& callback) {
+    base::OnceClosure callback) {
   ClearDataImpl(remove_mask, quota_storage_remove_mask, GURL(), origin_matcher,
-                cookie_matcher, GetURLRequestContext(), begin, end, callback);
+                cookie_matcher, GetURLRequestContext(), begin, end,
+                std::move(callback));
 }
 
 void StoragePartitionImpl::ClearHttpAndMediaCaches(
     const base::Time begin,
     const base::Time end,
     const base::Callback<bool(const GURL&)>& url_matcher,
-    const base::Closure& callback) {
+    base::OnceClosure callback) {
   // StoragePartitionHttpCacheDataRemover deletes itself when it is done.
   if (url_matcher.is_null()) {
     StoragePartitionHttpCacheDataRemover::CreateForRange(this, begin, end)
-        ->Remove(callback);
+        ->Remove(std::move(callback));
   } else {
     StoragePartitionHttpCacheDataRemover::CreateForURLsAndRange(
         this, url_matcher, begin, end)
-        ->Remove(callback);
+        ->Remove(std::move(callback));
   }
 }
 
@@ -1019,9 +1018,8 @@ void StoragePartitionImpl::ClearBluetoothAllowedDevicesMapForTesting() {
 }
 
 void StoragePartitionImpl::SetNetworkFactoryForTesting(
-    mojom::URLLoaderFactoryPtr test_factory) {
-  url_loader_factory_getter_->SetNetworkFactoryForTesting(
-      std::move(test_factory));
+    mojom::URLLoaderFactory* test_factory) {
+  url_loader_factory_getter_->SetNetworkFactoryForTesting(test_factory);
 }
 
 BrowserContext* StoragePartitionImpl::browser_context() const {

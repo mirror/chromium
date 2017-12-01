@@ -17,6 +17,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/trace_event/memory_usage_estimator.h"
 
 namespace base {
 
@@ -621,6 +622,21 @@ bool Value::Equals(const Value* other) const {
   return *this == *other;
 }
 
+size_t Value::EstimateMemoryUsage() const {
+  switch (type_) {
+    case Type::STRING:
+      return base::trace_event::EstimateMemoryUsage(string_value_);
+    case Type::BINARY:
+      return base::trace_event::EstimateMemoryUsage(binary_value_);
+    case Type::DICTIONARY:
+      return base::trace_event::EstimateMemoryUsage(dict_);
+    case Type::LIST:
+      return base::trace_event::EstimateMemoryUsage(list_);
+    default:
+      return 0;
+  }
+}
+
 void Value::InternalMoveConstructFrom(Value&& that) {
   type_ = that.type_;
 
@@ -1113,7 +1129,7 @@ DictionaryValue::Iterator::Iterator(const DictionaryValue& target)
 
 DictionaryValue::Iterator::Iterator(const Iterator& other) = default;
 
-DictionaryValue::Iterator::~Iterator() {}
+DictionaryValue::Iterator::~Iterator() = default;
 
 DictionaryValue* DictionaryValue::DeepCopy() const {
   return new DictionaryValue(dict_);
@@ -1355,11 +1371,9 @@ std::unique_ptr<ListValue> ListValue::CreateDeepCopy() const {
   return std::make_unique<ListValue>(list_);
 }
 
-ValueSerializer::~ValueSerializer() {
-}
+ValueSerializer::~ValueSerializer() = default;
 
-ValueDeserializer::~ValueDeserializer() {
-}
+ValueDeserializer::~ValueDeserializer() = default;
 
 std::ostream& operator<<(std::ostream& out, const Value& value) {
   std::string json;

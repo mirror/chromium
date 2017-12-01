@@ -1194,9 +1194,9 @@ jumbo_source_set("browser") {
     "push_messaging/push_messaging_router.h",
     "quota_dispatcher_host.cc",
     "quota_dispatcher_host.h",
-    "renderer_host/clipboard_message_filter.cc",
-    "renderer_host/clipboard_message_filter.h",
-    "renderer_host/clipboard_message_filter_mac.mm",
+    "renderer_host/clipboard_host_impl.cc",
+    "renderer_host/clipboard_host_impl.h",
+    "renderer_host/clipboard_host_impl_mac.mm",
     "renderer_host/cursor_manager.cc",
     "renderer_host/cursor_manager.h",
     "renderer_host/dip_util.cc",
@@ -1340,7 +1340,6 @@ jumbo_source_set("browser") {
     "renderer_host/media/media_stream_manager.cc",
     "renderer_host/media/media_stream_manager.h",
     "renderer_host/media/media_stream_provider.h",
-    "renderer_host/media/media_stream_requester.h",
     "renderer_host/media/media_stream_track_metrics_host.cc",
     "renderer_host/media/media_stream_track_metrics_host.h",
     "renderer_host/media/media_stream_ui_proxy.cc",
@@ -1454,10 +1453,6 @@ jumbo_source_set("browser") {
     "service_worker/embedded_worker_registry.cc",
     "service_worker/embedded_worker_registry.h",
     "service_worker/embedded_worker_status.h",
-    "service_worker/foreign_fetch_request_handler.cc",
-    "service_worker/foreign_fetch_request_handler.h",
-    "service_worker/link_header_support.cc",
-    "service_worker/link_header_support.h",
     "service_worker/service_worker_blob_reader.cc",
     "service_worker/service_worker_blob_reader.h",
     "service_worker/service_worker_cache_writer.cc",
@@ -1790,6 +1785,8 @@ jumbo_source_set("browser") {
     sources += [
       "media/capture/cursor_renderer.cc",
       "media/capture/cursor_renderer.h",
+      "media/capture/fake_webcontent_capture_machine.cc",
+      "media/capture/fake_webcontent_capture_machine.h",
       "media/capture/web_contents_video_capture_device.cc",
       "media/capture/web_contents_video_capture_device.h",
       "media/capture/window_activity_tracker.cc",
@@ -1964,8 +1961,6 @@ jumbo_source_set("browser") {
   if (use_atk) {
     sources += [
       "accessibility/accessibility_tree_formatter_auralinux.cc",
-      "accessibility/browser_accessibility_atk_hyperlink.cc",
-      "accessibility/browser_accessibility_atk_hyperlink.h",
       "accessibility/browser_accessibility_auralinux.cc",
       "accessibility/browser_accessibility_auralinux.h",
       "accessibility/browser_accessibility_manager_auralinux.cc",
@@ -2014,7 +2009,6 @@ jumbo_source_set("browser") {
       "android/content_view_statics.cc",
       "android/date_time_chooser_android.cc",
       "android/date_time_chooser_android.h",
-      "android/gesture_event_type.h",
       "android/ime_adapter_android.cc",
       "android/ime_adapter_android.h",
       "android/interstitial_page_delegate_android.cc",
@@ -2082,24 +2076,9 @@ jumbo_source_set("browser") {
     ]
 
     jumbo_excluded_sources = [
-      # Currently the Android JNI bindings generator is not compatible with
-      # Jumbo. It generates and assumes static Init() methods and those will
-      # clash in a jumbo build. Bug https://crbug.com/779013.
-      # Files with JNI Init() methods:
-      "accessibility/web_contents_accessibility_android.cc",
-      "android/content_view_core.cc",
-      "android/content_view_render_view.cc",
-      "android/dialog_overlay_impl.cc",
-      "android/ime_adapter_android.cc",
-      "android/interstitial_page_delegate_android.cc",
-      "android/popup_zoomer.cc",
-      "android/selection_popup_controller.cc",
-      "android/smart_selection_client.cc",
-      "android/text_suggestion_host_android.cc",
-      "android/tracing_controller_android.cc",
-      "android/web_contents_observer_proxy.cc",
-
-      "android/java/java_method.cc",  # kJavaLangClass and 2 others
+      # Files with kJavaLangClass and similar constants:
+      # Bug https://crbug.com/787557.
+      "android/java/java_method.cc",  # and in gin_java_bound_object.cc.
     ]
 
     set_sources_assignment_filter([])
@@ -2161,12 +2140,12 @@ jumbo_source_set("browser") {
       "speech/speech_recognizer_impl.h",
 
       # Most webauth code is non-Android
-      "webauth/attestation_data.cc",
-      "webauth/attestation_data.h",
       "webauth/attestation_object.cc",
       "webauth/attestation_object.h",
       "webauth/attestation_statement.cc",
       "webauth/attestation_statement.h",
+      "webauth/attested_credential_data.cc",
+      "webauth/attested_credential_data.h",
       "webauth/authenticator_data.cc",
       "webauth/authenticator_data.h",
       "webauth/authenticator_impl.cc",

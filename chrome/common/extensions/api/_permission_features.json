@@ -139,6 +139,7 @@
       "B6C2EFAB3EC3BF6EF03701408B6B09A67B2D0069",  // http://crbug.com/642141
       "96FF2FFA5C9173C76D47184B3E86D267B37781DE",  // http://crbug.com/642141
       "0136FCB13DB29FD5CD442F56E59E53B61F1DF96F",  // http://crbug.com/642141
+      "9834387FDA1F66A1B5CA06CB442137B556F12F2A",  // http://crbug.com/772346
       "930F7D9989A5FBCDCCD7D85BB5C3B7006C24D91D"   // http://crbug.com/782139
     ]
   },
@@ -364,14 +365,6 @@
   "history": {
     "channel": "stable",
     "extension_types": ["extension", "legacy_packaged_app"]
-  },
-  "hotwordPrivate": {
-    "channel": "stable",
-    "extension_types": ["extension", "platform_app"],
-    "whitelist": [
-      "62CCAAD339E6451BBF97C4BBDF758E934A05AD0B",  // hotword component
-      "B6356EFF4047BC5F868C7D91868B6F5C01951A8A"   // hotword_audio_verification
-    ]
   },
   "identity": {
     "channel": "stable",

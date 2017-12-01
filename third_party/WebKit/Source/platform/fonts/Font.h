@@ -81,12 +81,12 @@ class PLATFORM_EXPORT Font {
     kDoNotPaintIfFontNotReady,
     kUseFallbackIfFontNotReady
   };
-  bool DrawText(PaintCanvas*,
+  void DrawText(PaintCanvas*,
                 const TextRunPaintInfo&,
                 const FloatPoint&,
                 float device_scale_factor,
                 const PaintFlags&) const;
-  bool DrawText(PaintCanvas*,
+  void DrawText(PaintCanvas*,
                 const NGTextFragmentPaintInfo&,
                 const FloatPoint&,
                 float device_scale_factor,
@@ -235,7 +235,7 @@ inline const FontData* Font::FontDataAt(unsigned index) const {
 }
 
 inline FontSelector* Font::GetFontSelector() const {
-  return font_fallback_list_ ? font_fallback_list_->GetFontSelector() : 0;
+  return font_fallback_list_ ? font_fallback_list_->GetFontSelector() : nullptr;
 }
 
 inline float Font::TabWidth(const SimpleFontData* font_data,

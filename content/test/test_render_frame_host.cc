@@ -4,6 +4,9 @@
 
 #include "content/test/test_render_frame_host.h"
 
+#include <memory>
+#include <utility>
+
 #include "base/guid.h"
 #include "base/run_loop.h"
 #include "content/browser/frame_host/frame_tree.h"
@@ -137,7 +140,7 @@ TestRenderFrameHost* TestRenderFrameHost::AppendChild(
   OnCreateChildFrame(GetProcess()->GetNextRoutingID(),
                      CreateStubInterfaceProviderRequest(),
                      blink::WebTreeScopeType::kDocument, frame_name,
-                     frame_unique_name, base::UnguessableToken::Create(),
+                     frame_unique_name, false, base::UnguessableToken::Create(),
                      blink::FramePolicy(), FrameOwnerProperties());
   return static_cast<TestRenderFrameHost*>(
       child_creation_observer_.last_created_frame());
@@ -315,7 +318,7 @@ void TestRenderFrameHost::SimulateFeaturePolicyHeader(
   header[0].feature = feature;
   header[0].matches_all_origins = false;
   header[0].origins = whitelist;
-  OnDidSetFeaturePolicyHeader(header);
+  OnDidSetFramePolicyHeaders(blink::WebSandboxFlags::kNone, header);
 }
 
 const std::vector<std::string>& TestRenderFrameHost::GetConsoleMessages() {
@@ -583,6 +586,12 @@ void TestRenderFrameHost::SimulateWillStartRequest(
   navigation_handle()->CallWillStartRequestForTesting(
       false /* is_post */, Referrer(GURL(), blink::kWebReferrerPolicyDefault),
       true /* user_gesture */, transition, false /* is_external_protocol */);
+}
+
+void TestRenderFrameHost::SendFramePolicy(
+    blink::WebSandboxFlags sandbox_flags,
+    const blink::ParsedFeaturePolicy& declared_policy) {
+  OnDidSetFramePolicyHeaders(sandbox_flags, declared_policy);
 }
 
 mojom::FrameNavigationControl* TestRenderFrameHost::GetNavigationControl() {

@@ -162,10 +162,13 @@ bool TextControlElement::IsPlaceholderEmpty() const {
 
 bool TextControlElement::PlaceholderShouldBeVisible() const {
   return SupportsPlaceholder() && InnerEditorValue().IsEmpty() &&
-         (!IsPlaceholderEmpty() || !IsEmptySuggestedValue());
+         !IsPlaceholderEmpty() && SuggestedValue().IsEmpty();
 }
 
 HTMLElement* TextControlElement::PlaceholderElement() const {
+  if (!SupportsPlaceholder())
+    return nullptr;
+  DCHECK(UserAgentShadowRoot());
   return ToHTMLElementOrDie(
       UserAgentShadowRoot()->getElementById(ShadowElementNames::Placeholder()));
 }
@@ -179,13 +182,19 @@ void TextControlElement::UpdatePlaceholderVisibility() {
 
   bool place_holder_was_visible = IsPlaceholderVisible();
   SetPlaceholderVisibility(PlaceholderShouldBeVisible());
-  if (place_holder_was_visible == IsPlaceholderVisible())
-    return;
 
-  PseudoStateChanged(CSSSelector::kPseudoPlaceholderShown);
   placeholder->SetInlineStyleProperty(
-      CSSPropertyDisplay, IsPlaceholderVisible() ? CSSValueBlock : CSSValueNone,
+      CSSPropertyDisplay,
+      IsPlaceholderVisible() || !SuggestedValue().IsEmpty() ? CSSValueBlock
+                                                            : CSSValueNone,
       true);
+
+  // If there was a visibility change not caused by the suggested value, set
+  // that the pseudo state changed.
+  if (place_holder_was_visible != IsPlaceholderVisible() &&
+      SuggestedValue().IsEmpty()) {
+    PseudoStateChanged(CSSSelector::kPseudoPlaceholderShown);
+  }
 }
 
 void TextControlElement::setSelectionStart(unsigned start) {
@@ -505,22 +514,16 @@ unsigned TextControlElement::ComputeSelectionStart() const {
   LocalFrame* frame = GetDocument().GetFrame();
   if (!frame)
     return 0;
-  {
-    // To avoid regression on speedometer benchmark[1] test, we should not
-    // update layout tree in this code block.
-    // [1] http://browserbench.org/Speedometer/
-    DocumentLifecycle::DisallowTransitionScope disallow_transition(
-        GetDocument().Lifecycle());
-    const SelectionInDOMTree& selection =
-        frame->Selection().GetSelectionInDOMTree();
-    if (frame->Selection().Granularity() == TextGranularity::kCharacter) {
-      return IndexForPosition(InnerEditorElement(),
-                              selection.ComputeStartPosition());
-    }
-  }
-  const VisibleSelection& visible_selection =
-      frame->Selection().ComputeVisibleSelectionInDOMTreeDeprecated();
-  return IndexForPosition(InnerEditorElement(), visible_selection.Start());
+
+  // To avoid regression on speedometer benchmark[1] test, we should not
+  // update layout tree in this code block.
+  // [1] http://browserbench.org/Speedometer/
+  DocumentLifecycle::DisallowTransitionScope disallow_transition(
+      GetDocument().Lifecycle());
+  const SelectionInDOMTree& selection =
+      frame->Selection().GetSelectionInDOMTree();
+  return IndexForPosition(InnerEditorElement(),
+                          selection.ComputeStartPosition());
 }
 
 unsigned TextControlElement::selectionEnd() const {
@@ -536,22 +539,15 @@ unsigned TextControlElement::ComputeSelectionEnd() const {
   LocalFrame* frame = GetDocument().GetFrame();
   if (!frame)
     return 0;
-  {
-    // To avoid regression on speedometer benchmark[1] test, we should not
-    // update layout tree in this code block.
-    // [1] http://browserbench.org/Speedometer/
-    DocumentLifecycle::DisallowTransitionScope disallow_transition(
-        GetDocument().Lifecycle());
-    const SelectionInDOMTree& selection =
-        frame->Selection().GetSelectionInDOMTree();
-    if (frame->Selection().Granularity() == TextGranularity::kCharacter) {
-      return IndexForPosition(InnerEditorElement(),
-                              selection.ComputeEndPosition());
-    }
-  }
-  const VisibleSelection& visible_selection =
-      frame->Selection().ComputeVisibleSelectionInDOMTreeDeprecated();
-  return IndexForPosition(InnerEditorElement(), visible_selection.End());
+
+  // To avoid regression on speedometer benchmark[1] test, we should not
+  // update layout tree in this code block.
+  // [1] http://browserbench.org/Speedometer/
+  DocumentLifecycle::DisallowTransitionScope disallow_transition(
+      GetDocument().Lifecycle());
+  const SelectionInDOMTree& selection =
+      frame->Selection().GetSelectionInDOMTree();
+  return IndexForPosition(InnerEditorElement(), selection.ComputeEndPosition());
 }
 
 static const AtomicString& DirectionString(
@@ -807,6 +803,8 @@ void TextControlElement::SetInnerEditorValue(const String& value) {
   if (!IsTextControl() || OpenShadowRoot())
     return;
 
+  DCHECK(InnerEditorElement());
+
   bool text_is_changed = value != InnerEditorValue();
   HTMLElement* inner_editor = InnerEditorElement();
   if (!text_is_changed && inner_editor->HasChildren())
@@ -996,13 +994,16 @@ void TextControlElement::SetSuggestedValue(const String& value) {
   HTMLElement* placeholder = PlaceholderElement();
   if (!placeholder)
     return;
+
   UpdatePlaceholderVisibility();
 
-  // Change the pseudo-id to set the style for suggested values or reset the
-  // placeholder style depending on if there is a suggested value.
-  placeholder->SetShadowPseudoId(
-      AtomicString(suggested_value_.IsEmpty() ? "-webkit-input-placeholder"
-                                              : "-internal-input-suggested"));
+  if (suggested_value_.IsEmpty()) {
+    // Reset the pseudo-id for placeholders to use the appropriated style
+    placeholder->SetShadowPseudoId(AtomicString("-webkit-input-placeholder"));
+  } else {
+    // Set the pseudo-id for suggested values to use the appropriated style.
+    placeholder->SetShadowPseudoId(AtomicString("-internal-input-suggested"));
+  }
 }
 
 HTMLElement* TextControlElement::CreateInnerEditorElement() {

@@ -38,6 +38,10 @@ extern const base::Feature kTranslateUI2016Q2;
 // These settings support the new UI.
 extern const base::Feature kImprovedLanguageSettings;
 
+// Enables or disables using the most recent target language as the default
+// target language option.
+extern const base::Feature kTranslateRecentTarget;
+
 // The trial (study) name in finch study config.
 extern const char kTranslateUI2016Q2TrialName[];
 
@@ -106,6 +110,7 @@ class TranslatePrefs {
   static const char kPrefTranslateBlockedLanguages[];
   static const char kPrefTranslateLastDeniedTimeForLanguage[];
   static const char kPrefTranslateTooOftenDeniedForLanguage[];
+  static const char kPrefTranslateRecentTarget[];
 #if defined(OS_ANDROID)
   static const char kPrefTranslateAutoAlwaysCount[];
   static const char kPrefTranslateAutoNeverCount[];
@@ -173,8 +178,11 @@ class TranslatePrefs {
   // available in the given locale.
   // The list returned in |languages| is sorted alphabetically based on the
   // display names in the given locale.
+  // May cause a supported language list fetch unless |translate_allowed| is
+  // false.
   static void GetLanguageInfoList(
       const std::string& app_locale,
+      bool translate_allowed,
       std::vector<TranslateLanguageInfo>* languages);
 
   bool IsSiteBlacklisted(const std::string& site) const;
@@ -246,6 +254,11 @@ class TranslatePrefs {
                             const std::string& language);
   bool ShouldAutoTranslate(const std::string& original_language,
                            std::string* target_language);
+
+  // Stores and retrieves the last-observed translate target language. Used to
+  // determine which target language to offer in future.
+  void SetRecentTargetLanguage(const std::string& target_language);
+  std::string GetRecentTargetLanguage() const;
 
   static void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry);
   static void MigrateUserPrefs(PrefService* user_prefs,

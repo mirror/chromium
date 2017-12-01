@@ -16,7 +16,6 @@
 #include "content/public/browser/render_process_host.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/service_names.mojom.h"
-#include "services/metrics/public/cpp/ukm_source_id.h"
 #include "services/resource_coordinator/public/cpp/page_resource_coordinator.h"
 #include "services/resource_coordinator/public/cpp/process_resource_coordinator.h"
 #include "services/resource_coordinator/public/cpp/resource_coordinator_features.h"
@@ -29,8 +28,12 @@ DEFINE_WEB_CONTENTS_USER_DATA_KEY(ResourceCoordinatorWebContentsObserver);
 ResourceCoordinatorWebContentsObserver::ResourceCoordinatorWebContentsObserver(
     content::WebContents* web_contents)
     : WebContentsObserver(web_contents) {
-  service_manager::Connector* connector =
-      content::ServiceManagerConnection::GetForProcess()->GetConnector();
+  service_manager::Connector* connector = nullptr;
+  // |ServiceManagerConnection| is null in test.
+  if (content::ServiceManagerConnection::GetForProcess()) {
+    connector =
+        content::ServiceManagerConnection::GetForProcess()->GetConnector();
+  }
 
   page_resource_coordinator_ =
       base::MakeUnique<resource_coordinator::PageResourceCoordinator>(
@@ -84,15 +87,11 @@ void ResourceCoordinatorWebContentsObserver::DidFinishNavigation(
     return;
   }
 
-  if (navigation_handle->IsInMainFrame()) {
-    UpdateUkmRecorder(navigation_handle->GetNavigationId());
-    ResetFlag();
-    page_resource_coordinator_->OnMainFrameNavigationCommitted();
-  }
-
   content::RenderFrameHost* render_frame_host =
       navigation_handle->GetRenderFrameHost();
 
+  // Make sure the hierarchical structure is constructured before sending signal
+  // to Resource Coordinator.
   auto* frame_resource_coordinator =
       render_frame_host->GetFrameResourceCoordinator();
   page_resource_coordinator_->AddFrame(*frame_resource_coordinator);
@@ -100,6 +99,12 @@ void ResourceCoordinatorWebContentsObserver::DidFinishNavigation(
   auto* process_resource_coordinator =
       render_frame_host->GetProcess()->GetProcessResourceCoordinator();
   process_resource_coordinator->AddFrame(*frame_resource_coordinator);
+
+  if (navigation_handle->IsInMainFrame()) {
+    UpdateUkmRecorder(navigation_handle->GetNavigationId());
+    ResetFlag();
+    page_resource_coordinator_->OnMainFrameNavigationCommitted();
+  }
 }
 
 void ResourceCoordinatorWebContentsObserver::TitleWasSet(

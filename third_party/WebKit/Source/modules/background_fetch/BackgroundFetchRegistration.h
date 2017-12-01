@@ -16,7 +16,6 @@
 
 namespace blink {
 
-class IconDefinition;
 class ScriptPromiseResolver;
 class ScriptState;
 class ServiceWorkerRegistration;
@@ -35,9 +34,7 @@ class BackgroundFetchRegistration final
                               unsigned long long upload_total,
                               unsigned long long uploaded,
                               unsigned long long download_total,
-                              unsigned long long downloaded,
-                              HeapVector<IconDefinition> icons,
-                              const String& title);
+                              unsigned long long downloaded);
   ~BackgroundFetchRegistration() override;
 
   // Initializes the BackgroundFetchRegistration to be associated with the given
@@ -63,10 +60,6 @@ class BackgroundFetchRegistration final
   DEFINE_ATTRIBUTE_EVENT_LISTENER(progress);
 
   ScriptPromise abort(ScriptState*);
-
-  // TODO(crbug.com/769770): Remove the following deprecated attributes.
-  HeapVector<IconDefinition> icons() const;
-  String title() const;
 
   // EventTargetWithInlineData implementation.
   const AtomicString& InterfaceName() const override;
@@ -94,8 +87,6 @@ class BackgroundFetchRegistration final
   unsigned long long uploaded_;
   unsigned long long download_total_;
   unsigned long long downloaded_;
-  HeapVector<IconDefinition> icons_;
-  String title_;
 
   mojo::Binding<blink::mojom::blink::BackgroundFetchRegistrationObserver>
       observer_binding_;

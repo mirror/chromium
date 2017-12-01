@@ -48,7 +48,9 @@ class KEYBOARD_EXPORT ContainerFloatingBehavior : public ContainerBehavior {
                           const gfx::Rect& display_bounds) override;
   ContainerType GetType() const override;
   bool TextBlurHidesKeyboard() const override;
+  bool BoundsObscureUsableRegion() const override;
   bool BoundsAffectWorkspaceLayout() const override;
+  bool SetDraggableArea(const gfx::Rect& rect) override;
 
  private:
   // Ensures that the keyboard is neither off the screen nor overlapping an
@@ -77,6 +79,8 @@ class KEYBOARD_EXPORT ContainerFloatingBehavior : public ContainerBehavior {
   // Current state of a cursor drag to move the keyboard, if one exists.
   // Otherwise nullptr.
   std::unique_ptr<DragDescriptor> drag_descriptor_ = nullptr;
+
+  gfx::Rect draggable_area_ = gfx::Rect();
 };
 
 }  // namespace keyboard

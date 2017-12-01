@@ -18,9 +18,15 @@
 #include "chrome/browser/ui/permission_bubble/permission_prompt.h"
 #include "chrome/browser/vr/vr_tab_helper.h"
 #include "chrome/common/chrome_switches.h"
+#include "components/url_formatter/elide_url.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/navigation_handle.h"
 #include "url/origin.h"
+
+#if !defined(OS_ANDROID)
+#include "chrome/browser/extensions/extension_ui_util.h"
+#include "extensions/common/constants.h"
+#endif  // !defined(OS_ANDROID)
 
 namespace {
 
@@ -132,7 +138,6 @@ PermissionRequestManager::PermissionRequestManager(
       view_(nullptr),
       main_frame_has_fully_loaded_(false),
       tab_is_visible_(web_contents->IsVisible()),
-      persist_(true),
       auto_response_for_test_(NONE),
       weak_factory_(this) {}
 
@@ -340,8 +345,24 @@ const std::vector<PermissionRequest*>& PermissionRequestManager::Requests() {
   return requests_;
 }
 
-void PermissionRequestManager::TogglePersist(bool new_value) {
-  persist_ = new_value;
+base::string16 PermissionRequestManager::GetDisplayOrigin() {
+  DCHECK(!requests_.empty());
+  GURL origin_url = requests_[0]->GetOrigin();
+
+#if !defined(OS_ANDROID)
+  if (origin_url.SchemeIs(extensions::kExtensionScheme)) {
+    base::string16 extension_name =
+        extensions::ui_util::GetEnabledExtensionNameForUrl(
+            origin_url, web_contents()->GetBrowserContext());
+    if (!extension_name.empty()) {
+      return extension_name;
+    }
+  }
+#endif  // !defined(OS_ANDROID)
+
+  // Web URLs should be displayed as the origin in the URL.
+  return url_formatter::FormatUrlForSecurityDisplay(
+      origin_url, url_formatter::SchemeDisplay::OMIT_CRYPTOGRAPHIC);
 }
 
 void PermissionRequestManager::Accept() {
@@ -506,26 +527,22 @@ void PermissionRequestManager::PermissionGrantedIncludingDuplicates(
     PermissionRequest* request) {
   DCHECK_EQ(request, GetExistingRequest(request))
       << "Only requests in [queued_[frame_]]requests_ can have duplicates";
-  request->set_persist(persist_);
   request->PermissionGranted();
   auto range = duplicate_requests_.equal_range(request);
-  for (auto it = range.first; it != range.second; ++it) {
-    it->second->set_persist(persist_);
+  for (auto it = range.first; it != range.second; ++it)
     it->second->PermissionGranted();
-  }
 }
+
 void PermissionRequestManager::PermissionDeniedIncludingDuplicates(
     PermissionRequest* request) {
   DCHECK_EQ(request, GetExistingRequest(request))
       << "Only requests in [queued_]requests_ can have duplicates";
-  request->set_persist(persist_);
   request->PermissionDenied();
   auto range = duplicate_requests_.equal_range(request);
-  for (auto it = range.first; it != range.second; ++it) {
-    it->second->set_persist(persist_);
+  for (auto it = range.first; it != range.second; ++it)
     it->second->PermissionDenied();
-  }
 }
+
 void PermissionRequestManager::CancelledIncludingDuplicates(
     PermissionRequest* request) {
   DCHECK_EQ(request, GetExistingRequest(request))
@@ -535,6 +552,7 @@ void PermissionRequestManager::CancelledIncludingDuplicates(
   for (auto it = range.first; it != range.second; ++it)
     it->second->Cancelled();
 }
+
 void PermissionRequestManager::RequestFinishedIncludingDuplicates(
     PermissionRequest* request) {
   // We can't call GetExistingRequest here, because other entries in requests_,

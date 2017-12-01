@@ -32,6 +32,7 @@
 #include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "services/network/public/interfaces/fetch_api.mojom.h"
+#include "third_party/WebKit/common/service_worker/service_worker_provider_type.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 
 namespace blink {
@@ -54,8 +55,8 @@ class WebContents;
 
 // This class is the browser-process representation of a service worker
 // provider. There are two general types of providers: 1) those for a client
-// (windows, dedicated workers, or shared workers), and 2) those for hosting a
-// running service worker.
+// (windows or shared workers), and 2) those for hosting a running service
+// worker.
 //
 // For client providers, there is a provider per document or a worker and the
 // lifetime of this object is tied to the lifetime of its document or the worker
@@ -191,9 +192,9 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
   // The running version, if any, that this provider is providing resource
   // loads for.
   ServiceWorkerVersion* running_hosted_version() const {
-    // Only providers for controllers can host a running version.
     DCHECK(!running_hosted_version_ ||
-           info_.type == SERVICE_WORKER_PROVIDER_FOR_CONTROLLER);
+           info_.type ==
+               blink::mojom::ServiceWorkerProviderType::kForServiceWorker);
     return running_hosted_version_.get();
   }
 
@@ -206,9 +207,11 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
   void SetTopmostFrameUrl(const GURL& url);
   const GURL& topmost_frame_url() const { return topmost_frame_url_; }
 
-  ServiceWorkerProviderType provider_type() const { return info_.type; }
+  blink::mojom::ServiceWorkerProviderType provider_type() const {
+    return info_.type;
+  }
   bool IsProviderForClient() const;
-  blink::WebServiceWorkerClientType client_type() const;
+  blink::mojom::ServiceWorkerClientType client_type() const;
 
   // For service worker clients. Associates to |registration| to listen for its
   // version change events and sets the controller. If |notify_controllerchange|
@@ -286,11 +289,12 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
       ServiceWorkerProviderHostInfo info,
       base::WeakPtr<ServiceWorkerDispatcherHost> dispatcher_host);
 
-  // Completes initialization of provider hosts for controllers and returns the
-  // value to create ServiceWorkerNetworkProvider on the renderer which will be
-  // connected to this instance.
-  // This instance will keep the reference to |hosted_version|, so please be
-  // careful not to create a reference cycle.
+  // Completes initialization of this provider host (which is for hosting a
+  // service worker). It is called once a renderer process has been found to
+  // host the worker. Returns the info needed for creating a
+  // ServiceWorkerNetworkProvider on the renderer which will be connected to
+  // this instance. This instance will keep the reference to |hosted_version|,
+  // so please be careful not to create a reference cycle.
   mojom::ServiceWorkerProviderInfoForStartWorkerPtr
   CompleteStartWorkerPreparation(
       int process_id,
@@ -328,7 +332,6 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
   void NotifyControllerLost();
 
  private:
-  friend class ForeignFetchRequestHandlerTest;
   friend class LinkHeaderServiceWorkerTest;
   friend class ServiceWorkerProviderHostTest;
   friend class ServiceWorkerWriteToCacheJobTest;
@@ -506,8 +509,7 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
   // the service worker registration JavaScript objects for the hosted execution
   // context (service worker global scope or service worker client) in the
   // renderer process.
-  std::map<int64_t /* registration_id */,
-           std::unique_ptr<ServiceWorkerRegistrationObjectHost>>
+  std::map<int64_t /* registration_id */, ServiceWorkerRegistrationObjectHost*>
       registration_object_hosts_;
 
   // The ready() promise is only allowed to be created once.

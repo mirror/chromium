@@ -37,19 +37,24 @@ class ComputedStyle;
 
 class CORE_EXPORT CSSImageValue : public CSSValue {
  public:
-  static CSSImageValue* Create(const KURL& url, StyleImage* image = 0) {
+  static CSSImageValue* Create(const KURL& url, StyleImage* image = nullptr) {
     return Create(url.GetString(), url, Referrer(), image);
+  }
+  static CSSImageValue* Create(const AtomicString& relative_url,
+                               const KURL& absolute_url,
+                               StyleImage* image = nullptr) {
+    return Create(relative_url, absolute_url, Referrer(), image);
   }
   static CSSImageValue* Create(const String& raw_value,
                                const KURL& url,
                                const Referrer& referrer,
-                               StyleImage* image = 0) {
+                               StyleImage* image = nullptr) {
     return Create(AtomicString(raw_value), url, referrer, image);
   }
   static CSSImageValue* Create(const AtomicString& raw_value,
                                const KURL& url,
                                const Referrer& referrer,
-                               StyleImage* image = 0) {
+                               StyleImage* image = nullptr) {
     return new CSSImageValue(raw_value, url, referrer, image);
   }
   static CSSImageValue* Create(const AtomicString& absolute_url) {
@@ -84,6 +89,10 @@ class CORE_EXPORT CSSImageValue : public CSSValue {
 
   CSSImageValue* ValueWithURLMadeAbsolute() const {
     return Create(KURL(absolute_url_), cached_image_.Get());
+  }
+
+  CSSImageValue* Clone() const {
+    return Create(relative_url_, KURL(absolute_url_), cached_image_.Get());
   }
 
   void SetInitiator(const AtomicString& name) { initiator_name_ = name; }

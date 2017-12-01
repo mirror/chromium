@@ -23,6 +23,7 @@
 #include "components/autofill/core/browser/form_types.h"
 #include "components/autofill/core/browser/proto/server.pb.h"
 #include "url/gurl.h"
+#include "url/origin.h"
 
 enum UploadRequired { UPLOAD_NOT_REQUIRED, UPLOAD_REQUIRED, USE_UPLOAD_RATES };
 
@@ -102,14 +103,22 @@ class FormStructure {
   // Returns true if this form matches the structural requirements for Autofill.
   bool ShouldBeParsed() const;
 
-  // Returns true if we should query the crowdsourcing server to determine this
-  // form's field types.  If the form includes author-specified types, this will
+  // Returns true if heuristic autofill type detection should be attempted for
+  // this form.
+  bool ShouldRunHeuristics() const;
+
+  // Returns true if we should query the crowd-sourcing server to determine this
+  // form's field types. If the form includes author-specified types, this will
   // return false unless there are password fields in the form. If there are no
   // password fields the assumption is that the author has expressed their
   // intent and crowdsourced data should not be used to override this. Password
   // fields are different because there is no way to specify password generation
   // directly.
-  bool ShouldBeCrowdsourced() const;
+  bool ShouldBeQueried() const;
+
+  // Returns true if we should upload votes for this form to the crowd-sourcing
+  // server.
+  bool ShouldBeUploaded() const;
 
   // Sets the field types to be those set for |cached_form|.
   void UpdateFromCache(const FormStructure& cached_form,
@@ -192,7 +201,7 @@ class FormStructure {
 
   const GURL& target_url() const { return target_url_; }
 
-  const GURL& main_frame_url() const { return main_frame_url_; }
+  const url::Origin& main_frame_origin() const { return main_frame_origin_; }
 
   bool has_author_specified_types() const {
     return has_author_specified_types_;
@@ -294,8 +303,8 @@ class FormStructure {
   // The target URL.
   GURL target_url_;
 
-  // The source URL of the main frame of this form.
-  GURL main_frame_url_;
+  // The origin of the main frame of this form.
+  url::Origin main_frame_origin_;
 
   // The number of fields able to be auto-filled.
   size_t autofill_count_;

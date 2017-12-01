@@ -41,6 +41,7 @@
 #include "ui/aura/window_tree_host.h"
 #include "ui/compositor/compositor.h"
 #include "ui/compositor/layer.h"
+#include "ui/compositor/layer_animator.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
 #include "ui/events/event_target_iterator.h"
@@ -1099,7 +1100,7 @@ void Window::OnLayerBoundsChanged(const gfx::Rect& old_bounds,
 void Window::OnLayerOpacityChanged(ui::PropertyChangeReason reason) {
   WindowOcclusionTracker::ScopedPauseOcclusionTracking pause_occlusion_tracking;
   for (WindowObserver& observer : observers_)
-    observer.OnWindowOpacityChanged(this, reason);
+    observer.OnWindowOpacitySet(this, reason);
 }
 
 void Window::OnLayerTransformed(ui::PropertyChangeReason reason) {
@@ -1159,6 +1160,14 @@ void Window::ConvertEventToTarget(ui::EventTarget* target,
 }
 
 std::unique_ptr<ui::Layer> Window::RecreateLayer() {
+  WindowOcclusionTracker::ScopedPauseOcclusionTracking pause_occlusion_tracking;
+
+  ui::LayerAnimator* const animator = layer()->GetAnimator();
+  const bool was_animating_opacity =
+      animator->IsAnimatingProperty(ui::LayerAnimationElement::OPACITY);
+  const bool was_animating_transform =
+      animator->IsAnimatingProperty(ui::LayerAnimationElement::TRANSFORM);
+
   std::unique_ptr<ui::Layer> old_layer = LayerOwner::RecreateLayer();
 
   // If a frame sink is attached to the window, then allocate a new surface
@@ -1166,6 +1175,24 @@ std::unique_ptr<ui::Layer> Window::RecreateLayer() {
   // by a frame sent to the frame sink.
   if (GetFrameSinkId().is_valid() && old_layer)
     AllocateLocalSurfaceId();
+
+  // Observers are guaranteed to be notified when an opacity or transform
+  // animation ends.
+  if (was_animating_opacity) {
+    for (WindowObserver& observer : observers_) {
+      observer.OnWindowOpacitySet(this,
+                                  ui::PropertyChangeReason::FROM_ANIMATION);
+    }
+  }
+  if (was_animating_transform) {
+    for (WindowObserver& observer : observers_) {
+      observer.OnWindowTransformed(this,
+                                   ui::PropertyChangeReason::FROM_ANIMATION);
+    }
+  }
+
+  for (WindowObserver& observer : observers_)
+    observer.OnWindowLayerRecreated(this);
 
   return old_layer;
 }

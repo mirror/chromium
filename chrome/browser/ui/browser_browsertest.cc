@@ -98,7 +98,6 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/browser_side_navigation_policy.h"
-#include "content/public/common/content_switches.h"
 #include "content/public/common/frame_navigate_params.h"
 #include "content/public/common/renderer_preferences.h"
 #include "content/public/common/url_constants.h"
@@ -1469,11 +1468,10 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, OpenAppWindowLikeNtp) {
       WindowOpenDisposition::NEW_WINDOW, extensions::SOURCE_TEST));
   ASSERT_TRUE(app_window);
 
-  // Apps launched in a window from the NTP have an extensions tab helper and
-  // an extension_app set in it.
+  // Apps launched in a window from the NTP have an extensions tab helper but
+  // do not have extension_app set in it.
   ASSERT_TRUE(extensions::TabHelper::FromWebContents(app_window));
-  EXPECT_EQ(
-      extension_app,
+  EXPECT_FALSE(
       extensions::TabHelper::FromWebContents(app_window)->extension_app());
   EXPECT_EQ(extensions::AppLaunchInfo::GetFullLaunchURL(extension_app),
             app_window->GetURL());
@@ -2001,13 +1999,49 @@ IN_PROC_BROWSER_TEST_F(BrowserTest2, NoTabsInPopups) {
 }
 #endif
 
-IN_PROC_BROWSER_TEST_F(BrowserTest, WindowOpenClose) {
+IN_PROC_BROWSER_TEST_F(BrowserTest, WindowOpenClose1) {
   base::CommandLine::ForCurrentProcess()->AppendSwitch(
       switches::kDisablePopupBlocking);
-  base::CommandLine::ForCurrentProcess()->AppendSwitch(
-      switches::kDisableBackgroundTimerThrottling);
   GURL url = ui_test_utils::GetTestUrl(
       base::FilePath(), base::FilePath().AppendASCII("window.close.html"));
+  GURL::Replacements add_query;
+  std::string query("test1");
+  add_query.SetQuery(query.c_str(), url::Component(0, query.length()));
+  url = url.ReplaceComponents(add_query);
+
+  base::string16 title = ASCIIToUTF16("Title Of Awesomeness");
+  content::TitleWatcher title_watcher(
+      browser()->tab_strip_model()->GetActiveWebContents(), title);
+  ui_test_utils::NavigateToURLBlockUntilNavigationsComplete(browser(), url, 2);
+  EXPECT_EQ(title, title_watcher.WaitAndGetTitle());
+}
+
+IN_PROC_BROWSER_TEST_F(BrowserTest, WindowOpenClose2) {
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kDisablePopupBlocking);
+  GURL url = ui_test_utils::GetTestUrl(
+      base::FilePath(), base::FilePath().AppendASCII("window.close.html"));
+  GURL::Replacements add_query;
+  std::string query("test2");
+  add_query.SetQuery(query.c_str(), url::Component(0, query.length()));
+  url = url.ReplaceComponents(add_query);
+
+  base::string16 title = ASCIIToUTF16("Title Of Awesomeness");
+  content::TitleWatcher title_watcher(
+      browser()->tab_strip_model()->GetActiveWebContents(), title);
+  ui_test_utils::NavigateToURLBlockUntilNavigationsComplete(browser(), url, 2);
+  EXPECT_EQ(title, title_watcher.WaitAndGetTitle());
+}
+
+IN_PROC_BROWSER_TEST_F(BrowserTest, WindowOpenClose3) {
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kDisablePopupBlocking);
+  GURL url = ui_test_utils::GetTestUrl(
+      base::FilePath(), base::FilePath().AppendASCII("window.close.html"));
+  GURL::Replacements add_query;
+  std::string query("test3");
+  add_query.SetQuery(query.c_str(), url::Component(0, query.length()));
+  url = url.ReplaceComponents(add_query);
 
   base::string16 title = ASCIIToUTF16("Title Of Awesomeness");
   content::TitleWatcher title_watcher(

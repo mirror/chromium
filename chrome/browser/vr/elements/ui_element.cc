@@ -9,6 +9,7 @@
 #include "base/logging.h"
 #include "base/numerics/ranges.h"
 #include "base/stl_util.h"
+#include "base/strings/stringprintf.h"
 #include "base/time/time.h"
 #include "third_party/WebKit/public/platform/WebGestureEvent.h"
 #include "third_party/skia/include/core/SkRRect.h"
@@ -19,6 +20,12 @@
 namespace vr {
 
 namespace {
+
+static constexpr char kRed[] = "\x1b[31m";
+static constexpr char kGreen[] = "\x1b[32m";
+static constexpr char kBlue[] = "\x1b[34m";
+static constexpr char kCyan[] = "\x1b[36m";
+static constexpr char kReset[] = "\x1b[0m";
 
 static constexpr float kHitTestResolutionInMeter = 0.000001f;
 
@@ -57,6 +64,27 @@ UiElement::UiElement() : id_(AllocateId()) {
 UiElement::~UiElement() {
   animation_player_.set_target(nullptr);
 }
+
+void UiElement::set_name(UiElementName name) {
+  name_ = name;
+  OnSetName();
+}
+
+void UiElement::OnSetName() {}
+
+void UiElement::set_type(UiElementType type) {
+  type_ = type;
+  OnSetType();
+}
+
+void UiElement::OnSetType() {}
+
+void UiElement::set_draw_phase(DrawPhase draw_phase) {
+  draw_phase_ = draw_phase;
+  OnSetDrawPhase();
+}
+
+void UiElement::OnSetDrawPhase() {}
 
 void UiElement::Render(UiElementRenderer* renderer,
                        const CameraModel& model) const {
@@ -160,6 +188,7 @@ void UiElement::SetVisible(bool visible) {
 
 void UiElement::SetVisibleImmediately(bool visible) {
   opacity_ = visible ? opacity_when_visible_ : 0.0;
+  animation_player_.RemoveAnimations(OPACITY);
 }
 
 bool UiElement::IsVisible() const {
@@ -232,9 +261,25 @@ cc::TransformOperations UiElement::GetTargetTransform() const {
       TargetProperty::TRANSFORM, transform_operations_);
 }
 
+gfx::Transform UiElement::ComputeTargetWorldSpaceTransform() const {
+  gfx::Transform m;
+  for (const UiElement* current = this; current; current = current->parent()) {
+    m.ConcatTransform(current->GetTargetLocalTransform());
+  }
+  return m;
+}
+
 float UiElement::GetTargetOpacity() const {
   return animation_player_.GetTargetFloatValue(TargetProperty::OPACITY,
                                                opacity_);
+}
+
+float UiElement::ComputeTargetOpacity() const {
+  float opacity = 1.0;
+  for (const UiElement* current = this; current; current = current->parent()) {
+    opacity *= current->GetTargetOpacity();
+  }
+  return opacity;
 }
 
 float UiElement::computed_opacity() const {
@@ -294,16 +339,6 @@ void UiElement::HitTest(const HitTestRequest& request,
   }
 }
 
-void UiElement::SetMode(ColorScheme::Mode mode) {
-  for (auto& child : children_) {
-    child->SetMode(mode);
-  }
-  if (mode_ == mode)
-    return;
-  mode_ = mode;
-  OnSetMode();
-}
-
 const gfx::Transform& UiElement::world_space_transform() const {
   DCHECK_LE(kUpdatedWorldSpaceTransform, phase_);
   return world_space_transform_;
@@ -314,10 +349,84 @@ bool UiElement::IsWorldPositioned() const {
 }
 
 std::string UiElement::DebugName() const {
-  return UiElementNameToString(name());
+  return base::StringPrintf(
+      "%s%s%s",
+      UiElementNameToString(name() == kNone ? owner_name_for_test() : name())
+          .c_str(),
+      type() == kTypeNone ? "" : ":",
+      type() == kTypeNone ? "" : UiElementTypeToString(type()).c_str());
 }
 
-void UiElement::OnSetMode() {}
+void UiElement::DumpHierarchy(std::vector<size_t> counts,
+                              std::ostringstream* os) const {
+  // Put our ancestors in a vector for easy reverse traversal.
+  std::vector<const UiElement*> ancestors;
+  for (const UiElement* ancestor = parent(); ancestor;
+       ancestor = ancestor->parent()) {
+    ancestors.push_back(ancestor);
+  }
+  DCHECK_EQ(counts.size(), ancestors.size());
+
+  *os << kBlue;
+  for (size_t i = 0; i < counts.size(); ++i) {
+    if (i + 1 == counts.size()) {
+      *os << "+-";
+    } else if (ancestors[ancestors.size() - i - 1]->children().size() >
+               counts[i] + 1) {
+      *os << "| ";
+    } else {
+      *os << "  ";
+    }
+  }
+  *os << kReset;
+
+  if (!IsVisible() || draw_phase() == kPhaseNone) {
+    *os << kBlue;
+  }
+
+  *os << DebugName() << kReset << " " << kCyan << DrawPhaseToString(draw_phase_)
+      << " " << kReset;
+
+  if (draw_phase_ != kPhaseNone && !size().IsEmpty()) {
+    *os << kRed << "[" << size().width() << ", " << size().height() << "] "
+        << kReset;
+  }
+
+  *os << kGreen;
+  DumpGeometry(os);
+  *os << kReset << std::endl;
+
+  counts.push_back(0u);
+  for (auto& child : children_) {
+    child->DumpHierarchy(counts, os);
+    counts.back()++;
+  }
+}
+
+void UiElement::DumpGeometry(std::ostringstream* os) const {
+  if (!transform_operations_.at(0).IsIdentity()) {
+    const auto& translate = transform_operations_.at(0).translate;
+    *os << "t(" << translate.x << ", " << translate.y << ", " << translate.z
+        << ") ";
+  }
+
+  if (!transform_operations_.at(1).IsIdentity()) {
+    const auto& rotate = transform_operations_.at(1).rotate;
+    if (rotate.axis.x > 0.0f) {
+      *os << "rx(" << rotate.angle << ") ";
+    } else if (rotate.axis.y > 0.0f) {
+      *os << "ry(" << rotate.angle << ") ";
+    } else if (rotate.axis.z > 0.0f) {
+      *os << "rz(" << rotate.angle << ") ";
+    }
+  }
+
+  if (!transform_operations_.at(2).IsIdentity()) {
+    const auto& scale = transform_operations_.at(2).scale;
+    *os << "s(" << scale.x << ", " << scale.y << ", " << scale.z << ") ";
+  }
+}
+
 void UiElement::OnUpdatedWorldSpaceTransform() {}
 
 gfx::SizeF UiElement::stale_size() const {
@@ -457,7 +566,7 @@ void UiElement::DoLayOutChildren() {
   gfx::RectF bounds;
   bool first = false;
   for (auto& child : children_) {
-    if (!child->IsVisible()) {
+    if (!child->IsVisible() || child->size().IsEmpty()) {
       continue;
     }
     gfx::Point3F child_center(child->local_origin());
@@ -513,7 +622,9 @@ void UiElement::UpdateComputedOpacity() {
 void UiElement::UpdateWorldSpaceTransformRecursive() {
   gfx::Transform transform;
   transform.Translate(local_origin_.x(), local_origin_.y());
-  transform.Scale(size_.width(), size_.height());
+  if (!size_.IsEmpty()) {
+    transform.Scale(size_.width(), size_.height());
+  }
 
   // Compute an inheritable transformation that can be applied to this element,
   // and it's children, if applicable.
@@ -537,6 +648,10 @@ void UiElement::UpdateWorldSpaceTransformRecursive() {
 
 gfx::Transform UiElement::LocalTransform() const {
   return layout_offset_.Apply() * transform_operations_.Apply();
+}
+
+gfx::Transform UiElement::GetTargetLocalTransform() const {
+  return layout_offset_.Apply() * GetTargetTransform().Apply();
 }
 
 }  // namespace vr

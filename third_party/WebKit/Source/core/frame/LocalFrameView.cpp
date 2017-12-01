@@ -1143,7 +1143,7 @@ void LocalFrameView::ScheduleOrPerformPostLayoutTasks() {
     // after we return.  postLayoutTasks() can make us need to update again, and
     // we can get stuck in a nasty cycle unless we call it through the timer
     // here.
-    post_layout_tasks_timer_.StartOneShot(0, BLINK_FROM_HERE);
+    post_layout_tasks_timer_.StartOneShot(TimeDelta(), BLINK_FROM_HERE);
     if (NeedsLayout())
       UpdateLayout();
   }
@@ -1876,17 +1876,6 @@ void LocalFrameView::ScrollContentsSlowPath() {
     DCHECK(!GetLayoutViewItem().IsNull());
     GetLayoutViewItem().InvalidatePaintRectangle(LayoutRect(update_rect));
   }
-  LayoutEmbeddedContentItem frame_layout_item = frame_->OwnerLayoutItem();
-  if (!frame_layout_item.IsNull()) {
-    if (IsEnclosedInCompositingLayer()) {
-      LayoutRect rect(
-          frame_layout_item.BorderLeft() + frame_layout_item.PaddingLeft(),
-          frame_layout_item.BorderTop() + frame_layout_item.PaddingTop(),
-          LayoutUnit(VisibleWidth()), LayoutUnit(VisibleHeight()));
-      frame_layout_item.InvalidatePaintRectangle(rect);
-      return;
-    }
-  }
 }
 
 void LocalFrameView::RestoreScrollbar() {
@@ -2588,7 +2577,7 @@ void LocalFrameView::ScheduleUpdatePluginsIfNecessary() {
   DCHECK(!IsInPerformLayout());
   if (update_plugins_timer_.IsActive() || part_update_set_.IsEmpty())
     return;
-  update_plugins_timer_.StartOneShot(0, BLINK_FROM_HERE);
+  update_plugins_timer_.StartOneShot(TimeDelta(), BLINK_FROM_HERE);
 }
 
 void LocalFrameView::PerformPostLayoutTasks() {
@@ -3714,6 +3703,20 @@ IntPoint LocalFrameView::ConvertSelfToChild(const EmbeddedContentView& child,
   return new_point;
 }
 
+IntRect LocalFrameView::AbsoluteToRootFrame(
+    const IntRect& absolute_rect) const {
+  IntRect rect_in_frame(absolute_rect);
+  // With RLS turned on, this will be a no-op.
+  rect_in_frame.Move(-ScrollOffsetInt());
+  return ConvertToRootFrame(rect_in_frame);
+}
+
+IntRect LocalFrameView::RootFrameToDocument(const IntRect& rect_in_root_frame) {
+  IntRect local_rect = ConvertFromRootFrame(rect_in_root_frame);
+  local_rect.Move(LayoutViewportScrollableArea()->ScrollOffsetInt());
+  return local_rect;
+}
+
 IntRect LocalFrameView::ConvertToContainingEmbeddedContentView(
     const IntRect& local_rect) const {
   if (LocalFrameView* parent = ParentFrameView()) {
@@ -4746,6 +4749,8 @@ static void PositionScrollbarLayer(GraphicsLayer* graphics_layer,
 
   IntRect scrollbar_rect = scrollbar->FrameRect();
   graphics_layer->SetPosition(scrollbar_rect.Location());
+  graphics_layer->SetOffsetFromLayoutObject(
+      ToIntSize(scrollbar_rect.Location()));
 
   if (scrollbar_rect.Size() == graphics_layer->Size())
     return;
@@ -4768,6 +4773,7 @@ static void PositionScrollCornerLayer(GraphicsLayer* graphics_layer,
     return;
   graphics_layer->SetDrawsContent(!corner_rect.IsEmpty());
   graphics_layer->SetPosition(corner_rect.Location());
+  graphics_layer->SetOffsetFromLayoutObject(ToIntSize(corner_rect.Location()));
   if (corner_rect.Size() != graphics_layer->Size())
     graphics_layer->SetNeedsDisplay();
   graphics_layer->SetSize(FloatSize(corner_rect.Size()));

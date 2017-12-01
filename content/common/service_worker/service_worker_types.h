@@ -21,9 +21,9 @@
 #include "content/public/common/service_worker_modes.h"
 #include "services/network/public/interfaces/fetch_api.mojom.h"
 #include "third_party/WebKit/common/page/page_visibility_state.mojom.h"
+#include "third_party/WebKit/common/service_worker/service_worker_client.mojom.h"
 #include "third_party/WebKit/public/platform/modules/cache_storage/cache_storage.mojom.h"
 #include "third_party/WebKit/public/platform/modules/fetch/fetch_api_request.mojom.h"
-#include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerClientType.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_state.mojom.h"
@@ -58,22 +58,6 @@ static const int kInvalidEmbeddedWorkerThreadId = -1;
 // fetch occurred over 24 hours ago.
 static constexpr base::TimeDelta kServiceWorkerScriptMaxCacheAge =
     base::TimeDelta::FromHours(24);
-
-// ServiceWorker provider type.
-enum ServiceWorkerProviderType {
-  SERVICE_WORKER_PROVIDER_UNKNOWN,
-
-  // For ServiceWorker clients.
-  SERVICE_WORKER_PROVIDER_FOR_WINDOW,
-  SERVICE_WORKER_PROVIDER_FOR_WORKER,
-  SERVICE_WORKER_PROVIDER_FOR_SHARED_WORKER,
-
-  // For ServiceWorkers.
-  SERVICE_WORKER_PROVIDER_FOR_CONTROLLER,
-
-  SERVICE_WORKER_PROVIDER_TYPE_LAST =
-      SERVICE_WORKER_PROVIDER_FOR_CONTROLLER
-};
 
 // Indicates how the service worker handled a fetch event.
 enum ServiceWorkerFetchEventResult {
@@ -209,7 +193,7 @@ class ChangedVersionAttributesMask {
 
 struct ServiceWorkerClientQueryOptions {
   ServiceWorkerClientQueryOptions();
-  blink::WebServiceWorkerClientType client_type;
+  blink::mojom::ServiceWorkerClientType client_type;
   bool include_uncontrolled;
 };
 

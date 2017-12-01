@@ -202,6 +202,9 @@ typedef base::hash_map<RenderFrameHostID, RenderFrameHostImpl*>
 base::LazyInstance<RoutingIDFrameMap>::DestructorAtExit g_routing_id_frame_map =
     LAZY_INSTANCE_INITIALIZER;
 
+base::LazyInstance<RenderFrameHostImpl::CreateNetworkFactoryCallback>::Leaky
+    g_url_loader_factory_callback_for_test = LAZY_INSTANCE_INITIALIZER;
+
 using TokenFrameMap = base::hash_map<base::UnguessableToken,
                                      RenderFrameHostImpl*,
                                      base::UnguessableTokenHash>;
@@ -447,6 +450,17 @@ RenderFrameHostImpl* RenderFrameHostImpl::FromOverlayRoutingToken(
   return it == g_token_frame_map.Get().end() ? nullptr : it->second;
 }
 
+// static
+void RenderFrameHostImpl::SetNetworkFactoryForTesting(
+    const CreateNetworkFactoryCallback& url_loader_factory_callback) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  DCHECK(url_loader_factory_callback.is_null() ||
+         g_url_loader_factory_callback_for_test.Get().is_null())
+      << "It is not expected that this is called with non-null callback when "
+      << "another overriding callback is already set.";
+  g_url_loader_factory_callback_for_test.Get() = url_loader_factory_callback;
+}
+
 RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
                                          RenderViewHostImpl* render_view_host,
                                          RenderFrameHostDelegate* delegate,
@@ -487,6 +501,7 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
       frame_host_associated_binding_(this),
       waiting_for_init_(renderer_initiated_creation),
       has_focused_editable_element_(false),
+      active_sandbox_flags_(blink::WebSandboxFlags::kNone),
       interface_provider_binding_(this),
       keep_alive_timeout_(base::TimeDelta::FromSeconds(30)),
       weak_ptr_factory_(this) {
@@ -669,7 +684,7 @@ bool RenderFrameHostImpl::IsCrossProcessSubframe() {
 }
 
 const GURL& RenderFrameHostImpl::GetLastCommittedURL() {
-  return last_committed_url();
+  return last_committed_url_;
 }
 
 const url::Origin& RenderFrameHostImpl::GetLastCommittedOrigin() {
@@ -776,7 +791,7 @@ service_manager::InterfaceProvider* RenderFrameHostImpl::GetRemoteInterfaces() {
   return remote_interfaces_.get();
 }
 
-AssociatedInterfaceProvider*
+blink::AssociatedInterfaceProvider*
 RenderFrameHostImpl::GetRemoteAssociatedInterfaces() {
   if (!remote_associated_interfaces_) {
     mojom::AssociatedInterfaceProviderAssociatedPtr remote_interfaces;
@@ -894,8 +909,8 @@ bool RenderFrameHostImpl::OnMessageReceived(const IPC::Message &msg) {
                         OnDidAccessInitialDocument)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidChangeOpener, OnDidChangeOpener)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidChangeName, OnDidChangeName)
-    IPC_MESSAGE_HANDLER(FrameHostMsg_DidSetFeaturePolicyHeader,
-                        OnDidSetFeaturePolicyHeader)
+    IPC_MESSAGE_HANDLER(FrameHostMsg_DidSetFramePolicyHeaders,
+                        OnDidSetFramePolicyHeaders)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidAddContentSecurityPolicies,
                         OnDidAddContentSecurityPolicies)
     IPC_MESSAGE_HANDLER(FrameHostMsg_EnforceInsecureRequestPolicy,
@@ -1322,6 +1337,7 @@ void RenderFrameHostImpl::OnCreateChildFrame(
     blink::WebTreeScopeType scope,
     const std::string& frame_name,
     const std::string& frame_unique_name,
+    bool is_created_by_script,
     const base::UnguessableToken& devtools_frame_token,
     const blink::FramePolicy& frame_policy,
     const FrameOwnerProperties& frame_owner_properties) {
@@ -1342,8 +1358,8 @@ void RenderFrameHostImpl::OnCreateChildFrame(
   frame_tree_->AddFrame(frame_tree_node_, GetProcess()->GetID(), new_routing_id,
                         std::move(new_interface_provider_provider_request),
                         scope, frame_name, frame_unique_name,
-                        devtools_frame_token, frame_policy,
-                        frame_owner_properties);
+                        is_created_by_script, devtools_frame_token,
+                        frame_policy, frame_owner_properties);
 }
 
 void RenderFrameHostImpl::DidNavigate(
@@ -1366,10 +1382,13 @@ void RenderFrameHostImpl::DidNavigate(
   if (!params.url_is_unreachable)
     last_successful_url_ = params.url;
 
-  // After setting the last committed origin, reset the feature policy in the
-  // RenderFrameHost to a blank policy based on the parent frame.
-  if (!is_same_document_navigation)
+  // After setting the last committed origin, reset the feature policy and
+  // sandbox flags in the RenderFrameHost to a blank policy based on the parent
+  // frame.
+  if (!is_same_document_navigation) {
     ResetFeaturePolicy();
+    active_sandbox_flags_ = frame_tree_node()->active_sandbox_flags();
+  }
 }
 
 void RenderFrameHostImpl::SetLastCommittedOrigin(const url::Origin& origin) {
@@ -2221,11 +2240,17 @@ void RenderFrameHostImpl::OnDidChangeName(const std::string& name,
   delegate_->DidChangeName(this, name);
 }
 
-void RenderFrameHostImpl::OnDidSetFeaturePolicyHeader(
+void RenderFrameHostImpl::OnDidSetFramePolicyHeaders(
+    blink::WebSandboxFlags sandbox_flags,
     const blink::ParsedFeaturePolicy& parsed_header) {
+  if (!is_active())
+    return;
   frame_tree_node()->SetFeaturePolicyHeader(parsed_header);
   ResetFeaturePolicy();
   feature_policy_->SetHeaderPolicy(parsed_header);
+  frame_tree_node()->UpdateActiveSandboxFlags(sandbox_flags);
+  // Save a copy of the now-active sandbox flags on this RFHI.
+  active_sandbox_flags_ = frame_tree_node()->active_sandbox_flags();
 }
 
 void RenderFrameHostImpl::OnDidAddContentSecurityPolicies(
@@ -2638,7 +2663,7 @@ void RenderFrameHostImpl::OnToggleFullscreen(bool enter_fullscreen) {
 
   // TODO(alexmos): See if this can use the last committed origin instead.
   if (enter_fullscreen)
-    delegate_->EnterFullscreenMode(last_committed_url().GetOrigin());
+    delegate_->EnterFullscreenMode(GetLastCommittedURL().GetOrigin());
   else
     delegate_->ExitFullscreenMode(/* will_cause_resize */ true);
 
@@ -2839,8 +2864,8 @@ void RenderFrameHostImpl::CreateNewWindow(
   bool can_create_window =
       IsCurrent() && render_frame_created_ &&
       GetContentClient()->browser()->CanCreateWindow(
-          this, last_committed_url(),
-          frame_tree_node_->frame_tree()->GetMainFrame()->last_committed_url(),
+          this, GetLastCommittedURL(),
+          frame_tree_node_->frame_tree()->GetMainFrame()->GetLastCommittedURL(),
           last_committed_origin_.GetURL(), params->window_container_type,
           params->target_url, params->referrer, params->frame_name,
           params->disposition, *params->features, params->user_gesture,
@@ -3108,7 +3133,8 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
 #if !defined(OS_ANDROID)
   if (base::FeatureList::IsEnabled(features::kWebAuth)) {
     registry_->AddInterface(
-        base::Bind(&AuthenticatorImpl::Create, base::Unretained(this)));
+        base::Bind(&RenderFrameHostImpl::BindAuthenticatorRequest,
+                   base::Unretained(this)));
   }
 #endif  // !defined(OS_ANDROID)
 
@@ -3489,8 +3515,17 @@ void RenderFrameHostImpl::CommitNavigation(
     if (!default_factory.is_bound()) {
       // Otherwise default to a Network Service-backed loader from the
       // appropriate NetworkContext.
-      storage_partition->GetNetworkContext()->CreateURLLoaderFactory(
-          mojo::MakeRequest(&default_factory), GetProcess()->GetID());
+      if (g_url_loader_factory_callback_for_test.Get().is_null()) {
+        storage_partition->GetNetworkContext()->CreateURLLoaderFactory(
+            mojo::MakeRequest(&default_factory), GetProcess()->GetID());
+      } else {
+        mojom::URLLoaderFactoryPtr original_factory;
+        storage_partition->GetNetworkContext()->CreateURLLoaderFactory(
+            mojo::MakeRequest(&original_factory), GetProcess()->GetID());
+        g_url_loader_factory_callback_for_test.Get().Run(
+            mojo::MakeRequest(&default_factory), GetProcess()->GetID(),
+            original_factory.PassInterface());
+      }
     }
 
     DCHECK(default_factory.is_bound());
@@ -3601,7 +3636,7 @@ void RenderFrameHostImpl::SetUpMojoIfNeeded() {
                          mojom::FrameHostAssociatedRequest request) {
     impl->frame_host_associated_binding_.Bind(std::move(request));
   };
-  static_cast<AssociatedInterfaceRegistry*>(associated_registry_.get())
+  static_cast<blink::AssociatedInterfaceRegistry*>(associated_registry_.get())
       ->AddInterface(base::Bind(make_binding, base::Unretained(this)));
 
   RegisterMojoInterfaces();
@@ -4267,6 +4302,16 @@ void RenderFrameHostImpl::BindPresentationServiceRequest(
 
   presentation_service_->Bind(std::move(request));
 }
+
+#if !defined(OS_ANDROID)
+void RenderFrameHostImpl::BindAuthenticatorRequest(
+    webauth::mojom::AuthenticatorRequest request) {
+  if (!authenticator_impl_)
+    authenticator_impl_.reset(new AuthenticatorImpl(this));
+
+  authenticator_impl_->Bind(std::move(request));
+}
+#endif
 
 void RenderFrameHostImpl::GetInterface(
     const std::string& interface_name,

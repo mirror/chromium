@@ -4,8 +4,6 @@
 
 #include "media/gpu/vaapi/vaapi_tfp_picture.h"
 
-#include <X11/Xlib.h>
-
 #include "media/gpu/va_surface.h"
 #include "media/gpu/vaapi_wrapper.h"
 #include "ui/gfx/x/x11_types.h"
@@ -81,10 +79,10 @@ bool VaapiTFPPicture::Allocate(gfx::BufferFormat format) {
 
   XWindowAttributes win_attr;
   int screen = DefaultScreen(x_display_);
-  XGetWindowAttributes(x_display_, RootWindow(x_display_, screen), &win_attr);
+  XGetWindowAttributes(x_display_, XRootWindow(x_display_, screen), &win_attr);
   // TODO(posciak): pass the depth required by libva, not the RootWindow's
   // depth
-  x_pixmap_ = XCreatePixmap(x_display_, RootWindow(x_display_, screen),
+  x_pixmap_ = XCreatePixmap(x_display_, XRootWindow(x_display_, screen),
                             size_.width(), size_.height(), win_attr.depth);
   if (!x_pixmap_) {
     DLOG(ERROR) << "Failed creating an X Pixmap for TFP";
@@ -107,25 +105,6 @@ bool VaapiTFPPicture::DownloadFromSurface(
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   return vaapi_wrapper_->PutSurfaceIntoPixmap(va_surface->id(), x_pixmap_,
                                               va_surface->size());
-}
-
-// static
-std::unique_ptr<VaapiPicture> VaapiPicture::CreatePicture(
-    const scoped_refptr<VaapiWrapper>& vaapi_wrapper,
-    const MakeGLContextCurrentCallback& make_context_current_cb,
-    const BindGLImageCallback& bind_image_cb,
-    int32_t picture_buffer_id,
-    const gfx::Size& size,
-    uint32_t texture_id,
-    uint32_t client_texture_id) {
-  return base::MakeUnique<VaapiTFPPicture>(
-      vaapi_wrapper, make_context_current_cb, bind_image_cb, picture_buffer_id,
-      size, texture_id, client_texture_id);
-}
-
-// static
-uint32_t VaapiPicture::GetGLTextureTarget() {
-  return GL_TEXTURE_2D;
 }
 
 }  // namespace media

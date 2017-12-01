@@ -270,7 +270,7 @@ class CORE_EXPORT ChromeClient : public PlatformChromeClient {
   virtual void UpdateEventRectsForSubframeIfNecessary(LocalFrame*) = 0;
   virtual void SetHasScrollEventHandlers(LocalFrame*, bool) = 0;
   virtual void SetNeedsLowLatencyInput(LocalFrame*, bool) = 0;
-
+  virtual void RequestUnbufferedInputEvents(LocalFrame*) = 0;
   virtual void SetTouchAction(LocalFrame*, TouchAction) = 0;
 
   // Checks if there is an opened popup, called by LayoutMenuList::showPopup().
@@ -341,10 +341,6 @@ class CORE_EXPORT ChromeClient : public PlatformChromeClient {
   virtual std::unique_ptr<WebFrameScheduler> CreateFrameScheduler(
       BlameContext*,
       WebFrameScheduler::FrameType) = 0;
-
-  // Returns the time of the beginning of the last beginFrame, in seconds, if
-  // any, and 0.0 otherwise.
-  virtual double LastFrameTimeMonotonic() const { return 0.0; }
 
   virtual void InstallSupplements(LocalFrame&);
 

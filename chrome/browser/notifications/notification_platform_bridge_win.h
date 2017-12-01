@@ -8,6 +8,7 @@
 #include <windows.ui.notifications.h>
 #include <string>
 
+#include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/sequenced_task_runner.h"
 #include "chrome/browser/notifications/notification_platform_bridge.h"
@@ -23,7 +24,7 @@ class NotificationPlatformBridgeWin : public NotificationPlatformBridge {
   ~NotificationPlatformBridgeWin() override;
 
   // NotificationPlatformBridge implementation.
-  void Display(NotificationCommon::Type notification_type,
+  void Display(NotificationHandler::Type notification_type,
                const std::string& profile_id,
                bool incognito,
                const message_center::Notification& notification,
@@ -37,7 +38,26 @@ class NotificationPlatformBridgeWin : public NotificationPlatformBridge {
   void SetReadyCallback(NotificationBridgeReadyCallback callback) override;
 
  private:
+  friend class NotificationPlatformBridgeWinImpl;
   friend class NotificationPlatformBridgeWinTest;
+  FRIEND_TEST_ALL_PREFIXES(NotificationPlatformBridgeWinTest, EncodeDecode);
+
+  // Takes an |encoded| string as input and decodes it, returning the values in
+  // the out parameters. Returns true if successful, but false otherwise.
+  static bool DecodeTemplateId(const std::string& encoded,
+                               NotificationHandler::Type* notification_type,
+                               std::string* notification_id,
+                               std::string* profile_id,
+                               bool* incognito,
+                               GURL* origin_url) WARN_UNUSED_RESULT;
+
+  // Encodes a template ID string given the input parameters.
+  static std::string EncodeTemplateId(
+      NotificationHandler::Type notification_type,
+      const std::string& notification_id,
+      const std::string& profile_id,
+      bool incognito,
+      const GURL& origin_url);
 
   // Obtain an IToastNotification interface from a given XML (provided by the
   // NotificationTemplateBuilder). For testing use only.

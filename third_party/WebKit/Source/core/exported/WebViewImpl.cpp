@@ -91,6 +91,7 @@
 #include "core/loader/FrameLoadRequest.h"
 #include "core/loader/FrameLoader.h"
 #include "core/loader/FrameLoaderStateMachine.h"
+#include "core/loader/InteractiveDetector.h"
 #include "core/loader/PrerendererClient.h"
 #include "core/page/ChromeClientImpl.h"
 #include "core/page/ContextMenuController.h"
@@ -374,7 +375,6 @@ WebViewImpl::WebViewImpl(WebViewClient* client,
                      ->CurrentThread()
                      ->Scheduler()
                      ->CreateWebViewScheduler(this, this)),
-      last_frame_time_monotonic_(0),
       override_compositor_visibility_(false) {
   Page::PageClients page_clients;
   page_clients.chrome_client = chrome_client_.Get();
@@ -899,6 +899,9 @@ bool WebViewImpl::StartPageScaleAnimation(const IntPoint& target_position,
 
 void WebViewImpl::EnableFakePageScaleAnimationForTesting(bool enable) {
   enable_fake_page_scale_animation_for_testing_ = enable;
+  fake_page_scale_animation_target_position_ = IntPoint();
+  fake_page_scale_animation_use_anchor_ = false;
+  fake_page_scale_animation_page_scale_factor_ = 0;
 }
 
 void WebViewImpl::SetShowFPSCounter(bool show) {
@@ -1462,12 +1465,6 @@ bool WebViewImpl::ZoomToMultipleTargetsRect(const WebRect& rect_in_root_frame) {
   return true;
 }
 
-bool WebViewImpl::HasTouchEventHandlersAt(const WebPoint& point) {
-  // FIXME: Implement this. Note that the point must be divided by
-  // pageScaleFactor.
-  return true;
-}
-
 #if !defined(OS_MACOSX)
 // Mac has no way to open a context menu based on a keyboard event.
 WebInputEventResult WebViewImpl::SendContextMenuEvent() {
@@ -1847,8 +1844,6 @@ void WebViewImpl::BeginFrame(double last_frame_time_monotonic) {
   if (WebFrameWidgetBase* widget = MainFrameImpl()->FrameWidget())
     widget->UpdateGestureAnimation(last_frame_time_monotonic);
 
-  last_frame_time_monotonic_ = last_frame_time_monotonic;
-
   DocumentLifecycle::AllowThrottlingScope throttling_scope(
       MainFrameImpl()->GetFrame()->GetDocument()->Lifecycle());
   PageWidgetDelegate::Animate(*page_, last_frame_time_monotonic);
@@ -2021,10 +2016,21 @@ WebInputEventResult WebViewImpl::HandleInputEvent(
     return WebInputEventResult::kHandledSystem;
   }
 
+  Document& main_frame_document = *MainFrameImpl()->GetFrame()->GetDocument();
+
   if (input_event.GetType() != WebInputEvent::kMouseMove) {
-    FirstMeaningfulPaintDetector::From(
-        *MainFrameImpl()->GetFrame()->GetDocument())
-        .NotifyInputEvent();
+    FirstMeaningfulPaintDetector::From(main_frame_document).NotifyInputEvent();
+  }
+
+  if (input_event.GetType() != WebInputEvent::kMouseMove &&
+      input_event.GetType() != WebInputEvent::kMouseEnter &&
+      input_event.GetType() != WebInputEvent::kMouseLeave) {
+    InteractiveDetector* interactive_detector(
+        InteractiveDetector::From(main_frame_document));
+    if (interactive_detector) {
+      interactive_detector->OnInvalidatingInputEvent(
+          input_event.TimeStampSeconds());
+    }
   }
 
   if (mouse_capture_node_ &&
@@ -2181,13 +2187,20 @@ bool WebViewImpl::SelectionBounds(WebRect& anchor_web,
   if (!local_frame)
     return false;
 
+  LocalFrameView* frame_view = local_frame->View();
+  if (!frame_view)
+    return false;
+
   IntRect anchor;
   IntRect focus;
   if (!local_frame->Selection().ComputeAbsoluteBounds(anchor, focus))
     return false;
 
-  anchor_web = local_frame->View()->ContentsToViewport(anchor);
-  focus_web = local_frame->View()->ContentsToViewport(focus);
+  VisualViewport& visual_viewport = GetPage()->GetVisualViewport();
+  anchor_web = visual_viewport.RootFrameToViewport(
+      frame_view->AbsoluteToRootFrame(anchor));
+  focus_web = visual_viewport.RootFrameToViewport(
+      frame_view->AbsoluteToRootFrame(focus));
   return true;
 }
 
@@ -2481,17 +2494,30 @@ static bool IsElementEditable(const Element* element) {
                                 "textbox");
 }
 
-bool WebViewImpl::ScrollFocusedEditableElementIntoRect(
-    const WebRect& rect_in_viewport) {
-  LocalFrame* frame =
-      GetPage()->MainFrame() && GetPage()->MainFrame()->IsLocalFrame()
-          ? GetPage()->DeprecatedLocalMainFrame()
-          : nullptr;
-  Element* element = FocusedElement();
-  if (!frame || !frame->View() || !element)
+bool WebViewImpl::ScrollFocusedEditableElementIntoView() {
+  Frame* frame = GetPage()->MainFrame();
+  if (!frame)
     return false;
 
-  if (!IsElementEditable(element))
+  Element* element = FocusedElement();
+  if (!element || !IsElementEditable(element))
+    return false;
+
+  if (frame->IsRemoteFrame()) {
+    // The rest of the logic here is not implemented for OOPIFs. For now instead
+    // of implementing the logic below (which involves finding the scale and
+    // scrolling point), editable elements inside OOPIFs are scrolled into view
+    // instead. However, a common logic should be implemented for both OOPIFs
+    // and in-process frames to assure a consistent behavior across all frame
+    // types (https://crbug.com/784982).
+    LayoutObject* layout_object = element->GetLayoutObject();
+    if (!layout_object)
+      return false;
+    layout_object->ScrollRectToVisible(element->BoundingBox());
+    return true;
+  }
+
+  if (!frame->View())
     return false;
 
   element->GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
@@ -2501,9 +2527,10 @@ bool WebViewImpl::ScrollFocusedEditableElementIntoRect(
       !GetPage()->GetVisualViewport().ShouldDisableDesktopWorkarounds();
 
   if (zoom_in_to_legible_scale) {
-    // When deciding whether to zoom in on a focused text box, we should decide
-    // not to zoom in if the user won't be able to zoom out. e.g if the textbox
-    // is within a touch-action: none container the user can't zoom back out.
+    // When deciding whether to zoom in on a focused text box, we should
+    // decide not to zoom in if the user won't be able to zoom out. e.g if the
+    // textbox is within a touch-action: none container the user can't zoom
+    // back out.
     TouchAction action = TouchActionUtil::ComputeEffectiveTouchAction(*element);
     if (!(action & TouchAction::kTouchActionPinchZoom))
       zoom_in_to_legible_scale = false;
@@ -2535,18 +2562,20 @@ void WebViewImpl::ComputeScaleAndScrollForFocusedNode(
     IntPoint& new_scroll,
     bool& need_animation) {
   VisualViewport& visual_viewport = GetPage()->GetVisualViewport();
+  LocalFrameView* main_frame_view = MainFrameImpl()->GetFrameView();
 
   WebRect caret_in_viewport, unused_end;
   SelectionBounds(caret_in_viewport, unused_end);
 
   // 'caretInDocument' is rect encompassing the blinking cursor relative to the
   // root document.
-  IntRect caret_in_document = MainFrameImpl()->GetFrameView()->FrameToContents(
+  IntRect caret_in_document = main_frame_view->RootFrameToDocument(
       visual_viewport.ViewportToRootFrame(caret_in_viewport));
+
+  LocalFrameView* textbox_view = focused_node->GetDocument().View();
   IntRect textbox_rect_in_document =
-      MainFrameImpl()->GetFrameView()->FrameToContents(
-          focused_node->GetDocument().View()->ContentsToRootFrame(
-              PixelSnappedIntRect(focused_node->Node::BoundingBox())));
+      main_frame_view->RootFrameToDocument(textbox_view->AbsoluteToRootFrame(
+          PixelSnappedIntRect(focused_node->Node::BoundingBox())));
 
   if (!zoom_in_to_legible_scale) {
     new_scale = PageScaleFactor();

@@ -19,12 +19,12 @@
 #include "platform/scheduler/base/task_time_observer.h"
 #include "platform/scheduler/child/idle_canceled_delayed_task_sweeper.h"
 #include "platform/scheduler/child/idle_helper.h"
+#include "platform/scheduler/child/pollable_thread_safe_flag.h"
 #include "platform/scheduler/renderer/auto_advancing_virtual_time_domain.h"
 #include "platform/scheduler/renderer/deadline_task_runner.h"
 #include "platform/scheduler/renderer/idle_time_estimator.h"
 #include "platform/scheduler/renderer/main_thread_scheduler_helper.h"
 #include "platform/scheduler/renderer/main_thread_task_queue.h"
-#include "platform/scheduler/renderer/pollable_thread_safe_flag.h"
 #include "platform/scheduler/renderer/queueing_time_estimator.h"
 #include "platform/scheduler/renderer/render_widget_signals.h"
 #include "platform/scheduler/renderer/renderer_metrics_helper.h"
@@ -94,7 +94,8 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   static const char* VirtualTimePolicyToString(
       WebViewScheduler::VirtualTimePolicy virtual_time_policy);
 
-  RendererSchedulerImpl(scoped_refptr<SchedulerTqmDelegate> main_task_runner);
+  explicit RendererSchedulerImpl(
+      std::unique_ptr<TaskQueueManager> task_queue_manager);
   ~RendererSchedulerImpl() override;
 
   // RendererScheduler implementation:
@@ -635,6 +636,10 @@ class PLATFORM_EXPORT RendererSchedulerImpl
     bool stopping_when_backgrounded_enabled;
     bool stopped_when_backgrounded;
     bool was_shutdown;
+    TraceableCounter<base::TimeDelta, kTracingCategoryNameInfo>
+        loading_task_estimated_cost;
+    TraceableCounter<base::TimeDelta, kTracingCategoryNameInfo>
+        timer_task_estimated_cost;
     TraceableState<bool, kTracingCategoryNameInfo> loading_tasks_seem_expensive;
     TraceableState<bool, kTracingCategoryNameInfo> timer_tasks_seem_expensive;
     TraceableState<bool, kTracingCategoryNameDefault> touchstart_expected_soon;

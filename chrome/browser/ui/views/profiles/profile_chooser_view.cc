@@ -11,6 +11,7 @@
 #include "base/macros.h"
 #include "base/metrics/user_metrics.h"
 #include "base/strings/utf_string_conversions.h"
+#include "build/build_config.h"
 #include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/lifetime/application_lifetime.h"
@@ -167,8 +168,11 @@ views::ImageButton* CreateBackButton(views::ButtonListener* listener) {
 }
 
 BadgedProfilePhoto::BadgeType GetProfileBadgeType(const Profile* profile) {
-  if (!profile->IsSupervised())
-    return BadgedProfilePhoto::BADGE_TYPE_NONE;
+  if (!profile->IsSupervised()) {
+    return signin::IsDiceEnabledForProfile(profile->GetPrefs())
+               ? BadgedProfilePhoto::BADGE_TYPE_SYNC_COMPLETE
+               : BadgedProfilePhoto::BADGE_TYPE_NONE;
+  }
   return profile->IsChild() ? BadgedProfilePhoto::BADGE_TYPE_CHILD
                             : BadgedProfilePhoto::BADGE_TYPE_SUPERVISOR;
 }
@@ -342,12 +346,7 @@ void ProfileChooserView::ResetView() {
   open_other_profile_indexes_map_.clear();
   delete_account_button_map_.clear();
   reauth_account_button_map_.clear();
-  sync_error_signin_button_ = nullptr;
-  sync_error_passphrase_button_ = nullptr;
-  sync_error_settings_unconfirmed_button_ = nullptr;
-  sync_error_upgrade_button_ = nullptr;
-  sync_error_signin_again_button_ = nullptr;
-  sync_error_signout_button_ = nullptr;
+  sync_error_button_ = nullptr;
   manage_accounts_link_ = nullptr;
   manage_accounts_button_ = nullptr;
   signin_current_profile_button_ = nullptr;
@@ -482,9 +481,11 @@ void ProfileChooserView::ShowView(profiles::BubbleViewMode view_to_display,
 
   layout->StartRow(1, 0);
   layout->AddView(sub_view);
-  Layout();
-  if (GetBubbleFrameView())
+  if (GetBubbleFrameView()) {
     SizeToContents();
+    // SizeToContents() will perform a layout, but only if the size changed.
+    Layout();
+  }
   if (view_to_focus)
     view_to_focus->RequestFocus();
 }
@@ -524,6 +525,15 @@ bool ProfileChooserView::AcceleratorPressed(
 }
 
 views::View* ProfileChooserView::GetInitiallyFocusedView() {
+#if defined(OS_MACOSX)
+  // On Mac, buttons are not focusable when full keyboard access is turned off,
+  // causing views::Widget to fall back to focusing the first focusable View.
+  // This behavior is not desired in the |ProfileChooserView| because of its
+  // menu-like design using |HoverButtons|. Avoid this by returning null when
+  // full keyboard access is off.
+  if (!GetFocusManager() || !GetFocusManager()->keyboard_accessible())
+    return nullptr;
+#endif
   return signin_current_profile_button_;
 }
 
@@ -563,23 +573,40 @@ void ProfileChooserView::ButtonPressed(views::Button* sender,
     PostActionPerformed(ProfileMetrics::PROFILE_DESKTOP_MENU_LOCK);
   } else if (sender == close_all_windows_button_) {
     profiles::CloseProfileWindows(browser_->profile());
-  } else if (sender == sync_error_signin_button_) {
-    ShowViewFromMode(profiles::BUBBLE_VIEW_MODE_GAIA_REAUTH);
-  } else if (sender == sync_error_passphrase_button_ ||
-             sender == sync_error_settings_unconfirmed_button_) {
-    chrome::ShowSettingsSubPage(browser_, chrome::kSyncSetupSubPage);
-  } else if (sender == sync_error_upgrade_button_) {
-    chrome::OpenUpdateChromeDialog(browser_);
-  } else if (sender == sync_error_signin_again_button_) {
-    if (ProfileSyncServiceFactory::GetForProfile(browser_->profile()))
-      browser_sync::ProfileSyncService::SyncEvent(
-          browser_sync::ProfileSyncService::STOP_FROM_OPTIONS);
-    SigninManagerFactory::GetForProfile(browser_->profile())
-        ->SignOut(signin_metrics::USER_CLICKED_SIGNOUT_SETTINGS,
-                  signin_metrics::SignoutDelete::IGNORE_METRIC);
-    ShowViewFromMode(profiles::BUBBLE_VIEW_MODE_GAIA_SIGNIN);
-  } else if (sender == sync_error_signout_button_) {
-    chrome::ShowSettingsSubPage(browser_, chrome::kSignOutSubPage);
+  } else if (sender == sync_error_button_) {
+    sync_ui_util::AvatarSyncErrorType error =
+        static_cast<sync_ui_util::AvatarSyncErrorType>(sender->id());
+    switch (error) {
+      case sync_ui_util::MANAGED_USER_UNRECOVERABLE_ERROR:
+        chrome::ShowSettingsSubPage(browser_, chrome::kSignOutSubPage);
+        break;
+      case sync_ui_util::UNRECOVERABLE_ERROR:
+        if (ProfileSyncServiceFactory::GetForProfile(browser_->profile())) {
+          browser_sync::ProfileSyncService::SyncEvent(
+              browser_sync::ProfileSyncService::STOP_FROM_OPTIONS);
+        }
+        SigninManagerFactory::GetForProfile(browser_->profile())
+            ->SignOut(signin_metrics::USER_CLICKED_SIGNOUT_SETTINGS,
+                      signin_metrics::SignoutDelete::IGNORE_METRIC);
+        ShowViewFromMode(profiles::BUBBLE_VIEW_MODE_GAIA_SIGNIN);
+        break;
+      case sync_ui_util::SUPERVISED_USER_AUTH_ERROR:
+        NOTREACHED();
+        break;
+      case sync_ui_util::AUTH_ERROR:
+        ShowViewFromMode(profiles::BUBBLE_VIEW_MODE_GAIA_REAUTH);
+        break;
+      case sync_ui_util::UPGRADE_CLIENT_ERROR:
+        chrome::OpenUpdateChromeDialog(browser_);
+        break;
+      case sync_ui_util::PASSPHRASE_ERROR:
+      case sync_ui_util::SETTINGS_UNCONFIRMED_ERROR:
+        chrome::ShowSettingsSubPage(browser_, chrome::kSyncSetupSubPage);
+        break;
+      case sync_ui_util::NO_SYNC_ERROR:
+        NOTREACHED();
+        break;
+    }
   } else if (sender == remove_account_button_) {
     RemoveAccount();
   } else if (sender == account_removal_cancel_button_) {
@@ -733,40 +760,14 @@ views::View* ProfileChooserView::CreateProfileChooserView(
 
 views::View* ProfileChooserView::CreateSyncErrorViewIfNeeded() {
   int content_string_id, button_string_id;
-  views::LabelButton** button_out = nullptr;
   SigninManagerBase* signin_manager =
       SigninManagerFactory::GetForProfile(browser_->profile());
   sync_ui_util::AvatarSyncErrorType error =
       sync_ui_util::GetMessagesForAvatarSyncError(
           browser_->profile(), *signin_manager, &content_string_id,
           &button_string_id);
-  switch (error) {
-    case sync_ui_util::MANAGED_USER_UNRECOVERABLE_ERROR:
-      button_out = &sync_error_signout_button_;
-      break;
-    case sync_ui_util::UNRECOVERABLE_ERROR:
-      button_out = &sync_error_signin_again_button_;
-      break;
-    case sync_ui_util::SUPERVISED_USER_AUTH_ERROR:
-      button_out = nullptr;
-      break;
-    case sync_ui_util::AUTH_ERROR:
-      button_out = &sync_error_signin_button_;
-      break;
-    case sync_ui_util::UPGRADE_CLIENT_ERROR:
-      button_out = &sync_error_upgrade_button_;
-      break;
-    case sync_ui_util::PASSPHRASE_ERROR:
-      button_out = &sync_error_passphrase_button_;
-      break;
-    case sync_ui_util::SETTINGS_UNCONFIRMED_ERROR:
-      button_out = &sync_error_settings_unconfirmed_button_;
-      break;
-    case sync_ui_util::NO_SYNC_ERROR:
-      return nullptr;
-    default:
-      NOTREACHED();
-  }
+  if (error == sync_ui_util::NO_SYNC_ERROR)
+    return nullptr;
 
   ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
 
@@ -811,9 +812,6 @@ views::View* ProfileChooserView::CreateSyncErrorViewIfNeeded() {
 
   // Adds an action button if an action exists.
   if (button_string_id) {
-    // If the button string is specified, then the button itself needs to be
-    // already initialized.
-    DCHECK(button_out);
     // Adds a padding row between error title/content and the button.
     auto* padding = new views::View;
     padding->SetPreferredSize(gfx::Size(
@@ -821,9 +819,12 @@ views::View* ProfileChooserView::CreateSyncErrorViewIfNeeded() {
         provider->GetDistanceMetric(views::DISTANCE_RELATED_CONTROL_VERTICAL)));
     vertical_view->AddChildView(padding);
 
-    *button_out = views::MdTextButton::CreateSecondaryUiBlueButton(
+    sync_error_button_ = views::MdTextButton::CreateSecondaryUiBlueButton(
         this, l10n_util::GetStringUTF16(button_string_id));
-    vertical_view->AddChildView(*button_out);
+    // Track the error type so that the correct action can be taken in
+    // ButtonPressed().
+    sync_error_button_->set_id(error);
+    vertical_view->AddChildView(sync_error_button_);
     view->SetBorder(views::CreateEmptyBorder(0, 0, small_vertical_spacing, 0));
   }
 
@@ -855,9 +856,13 @@ views::View* ProfileChooserView::CreateCurrentProfileView(
   // Show the profile name by itself if not signed in or account consistency is
   // disabled. Otherwise, show the email attached to the profile.
   bool show_email = avatar_item.signed_in && !account_consistency_enabled;
-  HoverButton* profile_card =
-      new HoverButton(this, std::move(current_profile_photo), profile_name,
-                      show_email ? avatar_item.username : base::string16());
+  const base::string16 hover_button_title =
+      signin::IsDiceEnabledForProfile(browser_->profile()->GetPrefs())
+          ? l10n_util::GetStringUTF16(IDS_PROFILES_SYNCED_TO_TITLE)
+          : profile_name;
+  HoverButton* profile_card = new HoverButton(
+      this, std::move(current_profile_photo), hover_button_title,
+      show_email ? avatar_item.username : base::string16());
   if (show_email)
     profile_card->SetSubtitleElideBehavior(gfx::ELIDE_EMAIL);
   current_profile_card_ = profile_card;
@@ -897,13 +902,16 @@ views::View* ProfileChooserView::CreateCurrentProfileView(
                         views::DISTANCE_RELATED_CONTROL_VERTICAL),
                     kMenuEdgeMargin),
         kMenuEdgeMargin);
-    extra_links_layout->set_cross_axis_alignment(
-        views::BoxLayout::CROSS_AXIS_ALIGNMENT_START);
     extra_links_view->SetLayoutManager(extra_links_layout);
     views::Label* promo =
         new views::Label(l10n_util::GetStringUTF16(IDS_PROFILES_SIGNIN_PROMO));
     promo->SetMultiLine(true);
     promo->SetHorizontalAlignment(gfx::ALIGN_LEFT);
+
+    // Provide a hint to the layout manager by giving the promo text a maximum
+    // width. This ensures it has the correct number of lines when determining
+    // the initial Widget size.
+    promo->SetMaximumWidth(kFixedMenuWidth);
     extra_links_view->AddChildView(promo);
 
     signin_current_profile_button_ =

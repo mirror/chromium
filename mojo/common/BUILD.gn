@@ -21,11 +21,16 @@ mojom("common_custom_types") {
     "process_id.mojom",
     "string16.mojom",
     "text_direction.mojom",
+    "thread_priority.mojom",
     "time.mojom",
     "unguessable_token.mojom",
     "values.mojom",
     "version.mojom",
   ]
+
+  if (is_win) {
+    sources += [ "logfont_win.mojom" ]
+  }
 
   # TODO(crbug.com/699569): Convert to use the new JS bindings.
   js_bindings_mode = "both"

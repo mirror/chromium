@@ -46,6 +46,7 @@
 #include "net/http/http_response_headers.h"
 #include "net/http/http_response_info.h"
 #include "third_party/WebKit/common/origin_trials/trial_token_validator.h"
+#include "third_party/WebKit/common/service_worker/service_worker_client.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_error_type.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom.h"
 #include "third_party/WebKit/public/web/WebConsoleMessage.h"
@@ -290,8 +291,8 @@ ServiceWorkerVersion::ServiceWorkerVersion(
       binding_(this),
       context_(context),
       script_cache_map_(this, context),
-      tick_clock_(std::make_unique<base::DefaultTickClock>()),
-      clock_(std::make_unique<base::DefaultClock>()),
+      tick_clock_(base::DefaultTickClock::GetInstance()),
+      clock_(base::DefaultClock::GetInstance()),
       ping_controller_(new PingController(this)),
       validator_(TrialPolicyImpl::CreateValidatorForPolicy()),
       weak_factory_(this) {
@@ -574,16 +575,23 @@ int ServiceWorkerVersion::StartRequestWithCustomTimeout(
       << "Event of type " << static_cast<int>(event_type)
       << " can only be dispatched to an active worker: " << status();
 
-  int request_id = pending_requests_.Add(
+  auto request =
       std::make_unique<PendingRequest>(std::move(error_callback), clock_->Now(),
-                                       tick_clock_->NowTicks(), event_type));
+                                       tick_clock_->NowTicks(), event_type);
+  PendingRequest* request_rawptr = request.get();
+  int request_id = pending_requests_.Add(std::move(request));
   TRACE_EVENT_ASYNC_BEGIN2("ServiceWorker", "ServiceWorkerVersion::Request",
-                           pending_requests_.Lookup(request_id), "Request id",
-                           request_id, "Event type",
+                           request_rawptr, "Request id", request_id,
+                           "Event type",
                            ServiceWorkerMetrics::EventTypeToString(event_type));
+
   base::TimeTicks expiration_time = tick_clock_->NowTicks() + timeout;
-  timeout_queue_.push(
-      RequestInfo(request_id, event_type, expiration_time, timeout_behavior));
+  bool is_inserted = false;
+  std::set<RequestInfo>::iterator iter;
+  std::tie(iter, is_inserted) = request_timeouts_.emplace(
+      request_id, event_type, expiration_time, timeout_behavior);
+  DCHECK(is_inserted);
+  request_rawptr->timeout_iter = iter;
   if (expiration_time > max_request_expiration_time_)
     max_request_expiration_time_ = expiration_time;
   return request_id;
@@ -625,6 +633,7 @@ bool ServiceWorkerVersion::FinishRequest(int request_id,
   RestartTick(&idle_time_);
   TRACE_EVENT_ASYNC_END1("ServiceWorker", "ServiceWorkerVersion::Request",
                          request, "Handled", was_handled);
+  request_timeouts_.erase(request->timeout_iter);
   pending_requests_.Remove(request_id);
   if (!HasWork()) {
     for (auto& observer : listeners_)
@@ -839,14 +848,12 @@ void ServiceWorkerVersion::SimulatePingTimeoutForTesting() {
   ping_controller_->SimulateTimeoutForTesting();
 }
 
-void ServiceWorkerVersion::SetTickClockForTesting(
-    std::unique_ptr<base::TickClock> tick_clock) {
-  tick_clock_ = std::move(tick_clock);
+void ServiceWorkerVersion::SetTickClockForTesting(base::TickClock* tick_clock) {
+  tick_clock_ = tick_clock;
 }
 
-void ServiceWorkerVersion::SetClockForTesting(
-    std::unique_ptr<base::Clock> clock) {
-  clock_ = std::move(clock);
+void ServiceWorkerVersion::SetClockForTesting(base::Clock* clock) {
+  clock_ = clock;
 }
 
 const net::HttpResponseInfo*
@@ -867,9 +874,11 @@ ServiceWorkerVersion::RequestInfo::RequestInfo(
 ServiceWorkerVersion::RequestInfo::~RequestInfo() {
 }
 
-bool ServiceWorkerVersion::RequestInfo::operator>(
+bool ServiceWorkerVersion::RequestInfo::operator<(
     const RequestInfo& other) const {
-  return expiration > other.expiration;
+  if (expiration == other.expiration)
+    return id < other.id;
+  return expiration < other.expiration;
 }
 
 ServiceWorkerVersion::PendingRequest::PendingRequest(
@@ -1021,7 +1030,7 @@ void ServiceWorkerVersion::SetCachedMetadata(const GURL& url,
   script_cache_map_.WriteMetadata(
       url, data,
       base::Bind(&ServiceWorkerVersion::OnSetCachedMetadataFinished,
-                 weak_factory_.GetWeakPtr(), callback_id));
+                 weak_factory_.GetWeakPtr(), callback_id, data.size()));
 }
 
 void ServiceWorkerVersion::ClearCachedMetadata(const GURL& url) {
@@ -1035,12 +1044,13 @@ void ServiceWorkerVersion::ClearCachedMetadata(const GURL& url) {
 }
 
 void ServiceWorkerVersion::OnSetCachedMetadataFinished(int64_t callback_id,
+                                                       size_t size,
                                                        int result) {
   TRACE_EVENT_ASYNC_END1("ServiceWorker",
                          "ServiceWorkerVersion::SetCachedMetadata", callback_id,
                          "result", result);
   for (auto& listener : listeners_)
-    listener.OnCachedMetadataUpdated(this);
+    listener.OnCachedMetadataUpdated(this, size);
 }
 
 void ServiceWorkerVersion::OnClearCachedMetadataFinished(int64_t callback_id,
@@ -1049,7 +1059,7 @@ void ServiceWorkerVersion::OnClearCachedMetadataFinished(int64_t callback_id,
                          "ServiceWorkerVersion::ClearCachedMetadata",
                          callback_id, "result", result);
   for (auto& listener : listeners_)
-    listener.OnCachedMetadataUpdated(this);
+    listener.OnCachedMetadataUpdated(this, 0);
 }
 
 void ServiceWorkerVersion::OnGetClient(int request_id,
@@ -1075,8 +1085,10 @@ void ServiceWorkerVersion::OnGetClientFinished(
     int request_id,
     const ServiceWorkerClientInfo& client_info) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  TRACE_EVENT_ASYNC_END1("ServiceWorker", "ServiceWorkerVersion::OnGetClient",
-                         request_id, "client_type", client_info.client_type);
+  TRACE_EVENT_ASYNC_END1(
+      "ServiceWorker", "ServiceWorkerVersion::OnGetClient", request_id,
+      "client_type",
+      ServiceWorkerUtils::ClientTypeToString(client_info.client_type));
 
   // When Clients.get() is called on the script evaluation phase, the running
   // status can be STARTING here.
@@ -1094,8 +1106,9 @@ void ServiceWorkerVersion::OnGetClients(
     const ServiceWorkerClientQueryOptions& options) {
   TRACE_EVENT_ASYNC_BEGIN2(
       "ServiceWorker", "ServiceWorkerVersion::OnGetClients", request_id,
-      "client_type", options.client_type, "include_uncontrolled",
-      options.include_uncontrolled);
+      "client_type",
+      ServiceWorkerUtils::ClientTypeToString(options.client_type),
+      "include_uncontrolled", options.include_uncontrolled);
   service_worker_client_utils::GetClients(
       weak_factory_.GetWeakPtr(), options,
       base::Bind(&ServiceWorkerVersion::OnGetClientsFinished,
@@ -1267,7 +1280,7 @@ void ServiceWorkerVersion::OnFocusClient(int request_id,
     return;
   }
   if (provider_host->client_type() !=
-      blink::kWebServiceWorkerClientTypeWindow) {
+      blink::mojom::ServiceWorkerClientType::kWindow) {
     // focus() should be called only for WindowClient. This may happen due to
     // bad message.
     return;
@@ -1404,38 +1417,6 @@ void ServiceWorkerVersion::OnClaimClients(int request_id) {
 
 void ServiceWorkerVersion::OnPongFromWorker() {
   ping_controller_->OnPongReceived();
-}
-
-void ServiceWorkerVersion::RegisterForeignFetchScopes(
-    const std::vector<GURL>& sub_scopes,
-    const std::vector<url::Origin>& origins) {
-  DCHECK(status() == INSTALLING || status() == REDUNDANT) << status();
-  // Renderer should have already verified all these urls are inside the
-  // worker's scope, but verify again here on the browser process side.
-  GURL origin = scope_.GetOrigin();
-  std::string scope_path = scope_.path();
-  for (const GURL& url : sub_scopes) {
-    if (!url.is_valid() || url.GetOrigin() != origin ||
-        !base::StartsWith(url.path(), scope_path,
-                          base::CompareCase::SENSITIVE)) {
-      DVLOG(1) << "Received unexpected invalid URL from renderer process.";
-      BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                              base::BindOnce(&KillEmbeddedWorkerProcess,
-                                             embedded_worker_->process_id()));
-      return;
-    }
-  }
-  for (const url::Origin& url : origins) {
-    if (url.unique()) {
-      DVLOG(1) << "Received unexpected unique origin from renderer process.";
-      BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                              base::BindOnce(&KillEmbeddedWorkerProcess,
-                                             embedded_worker_->process_id()));
-      return;
-    }
-  }
-  set_foreign_fetch_scopes(sub_scopes);
-  set_foreign_fetch_origins(origins);
 }
 
 void ServiceWorkerVersion::DidEnsureLiveRegistrationForStartWorker(
@@ -1678,8 +1659,9 @@ void ServiceWorkerVersion::OnTimeoutTimer() {
 
   // Requests have not finished before their expiration.
   bool stop_for_timeout = false;
-  while (!timeout_queue_.empty()) {
-    RequestInfo info = timeout_queue_.top();
+  auto timeout_iter = request_timeouts_.begin();
+  while (timeout_iter != request_timeouts_.end()) {
+    const RequestInfo& info = *timeout_iter;
     if (!RequestExpired(info.expiration))
       break;
     if (MaybeTimeOutRequest(info)) {
@@ -1687,7 +1669,7 @@ void ServiceWorkerVersion::OnTimeoutTimer() {
           stop_for_timeout || info.timeout_behavior == KILL_ON_TIMEOUT;
       ServiceWorkerMetrics::RecordEventTimeout(info.event_type);
     }
-    timeout_queue_.pop();
+    timeout_iter = request_timeouts_.erase(timeout_iter);
   }
   if (stop_for_timeout && running_status() != EmbeddedWorkerStatus::STOPPING)
     embedded_worker_->Stop();
@@ -1817,14 +1799,18 @@ bool ServiceWorkerVersion::MaybeTimeOutRequest(const RequestInfo& info) {
 
 void ServiceWorkerVersion::SetAllRequestExpirations(
     const base::TimeTicks& expiration) {
-  RequestInfoPriorityQueue new_requests;
-  while (!timeout_queue_.empty()) {
-    RequestInfo info = timeout_queue_.top();
-    info.expiration = expiration;
-    new_requests.push(info);
-    timeout_queue_.pop();
+  std::set<RequestInfo> new_timeouts;
+  for (const auto& info : request_timeouts_) {
+    bool is_inserted = false;
+    std::set<RequestInfo>::iterator iter;
+    std::tie(iter, is_inserted) = new_timeouts.emplace(
+        info.id, info.event_type, expiration, info.timeout_behavior);
+    DCHECK(is_inserted);
+    PendingRequest* request = pending_requests_.Lookup(info.id);
+    DCHECK(request);
+    request->timeout_iter = iter;
   }
-  timeout_queue_ = new_requests;
+  request_timeouts_.swap(new_timeouts);
 }
 
 ServiceWorkerStatusCode ServiceWorkerVersion::DeduceStartWorkerFailureReason(

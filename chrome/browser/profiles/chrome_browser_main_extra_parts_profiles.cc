@@ -52,10 +52,8 @@
 #include "chrome/browser/prerender/prerender_link_manager_factory.h"
 #include "chrome/browser/prerender/prerender_manager_factory.h"
 #include "chrome/browser/prerender/prerender_message_filter.h"
-#include "chrome/browser/printing/cloud_print/cloud_print_proxy_service_factory.h"
 #include "chrome/browser/profiles/gaia_info_update_service_factory.h"
 #include "chrome/browser/safe_browsing/certificate_reporting_service_factory.h"
-#include "chrome/browser/search/instant_service_factory.h"
 #include "chrome/browser/search/suggestions/suggestions_service_factory.h"
 #include "chrome/browser/search_engines/template_url_fetcher_factory.h"
 #include "chrome/browser/search_engines/template_url_service_factory.h"
@@ -66,6 +64,7 @@
 #include "chrome/browser/signin/account_investigator_factory.h"
 #include "chrome/browser/signin/account_reconcilor_factory.h"
 #include "chrome/browser/signin/account_tracker_service_factory.h"
+#include "chrome/browser/signin/chrome_signin_client_factory.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
 #include "chrome/browser/sync/profile_sync_service_factory.h"
 #include "chrome/browser/sync/user_event_service_factory.h"
@@ -86,21 +85,15 @@
 #include "ppapi/features/features.h"
 #include "printing/features/features.h"
 
-#if BUILDFLAG(ENABLE_EXTENSIONS)
-#include "apps/browser_context_keyed_service_factories.h"
-#include "chrome/browser/apps/browser_context_keyed_service_factories.h"
-#include "chrome/browser/extensions/api/networking_private/networking_private_ui_delegate_factory_impl.h"
-#include "chrome/browser/extensions/browser_context_keyed_service_factories.h"
-#include "chrome/browser/extensions/extension_management.h"
-#include "chrome/browser/search/hotword_service_factory.h"
-#include "chrome/browser/signin/easy_unlock_service_factory.h"
-#include "chrome/browser/ui/bookmarks/enhanced_bookmark_key_service_factory.h"
-#include "extensions/browser/api/networking_private/networking_private_delegate_factory.h"
-#include "extensions/browser/browser_context_keyed_service_factories.h"
-#endif
-
-#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
-#include "chrome/browser/captive_portal/captive_portal_service_factory.h"
+#if defined(OS_ANDROID)
+#include "chrome/browser/android/data_usage/data_use_ui_tab_model_factory.h"
+#include "chrome/browser/android/search_permissions/search_permissions_service.h"
+#else
+#include "chrome/browser/cryptauth/chrome_cryptauth_service_factory.h"
+#include "chrome/browser/media/router/media_router_ui_service_factory.h"
+#include "chrome/browser/search/instant_service_factory.h"
+#include "chrome/browser/ui/global_error/global_error_service_factory.h"
+#include "chrome/browser/usb/usb_chooser_context_factory.h"
 #endif
 
 #if defined(OS_CHROMEOS)
@@ -110,9 +103,52 @@
 #include "chrome/browser/chromeos/policy/user_cloud_policy_token_forwarder_factory.h"
 #include "chrome/browser/chromeos/policy/user_network_configuration_updater_factory.h"
 #include "chrome/browser/chromeos/policy/user_policy_manager_factory_chromeos.h"
+#include "chrome/browser/chromeos/printing/cups_print_job_manager_factory.h"
+#include "chrome/browser/chromeos/printing/synced_printers_manager_factory.h"
+#include "chrome/browser/chromeos/tether/tether_service_factory.h"
+#include "chrome/browser/extensions/api/platform_keys/verify_trust_api.h"
 #else
 #include "chrome/browser/policy/cloud/user_cloud_policy_manager_factory.h"
 #include "chrome/browser/policy/cloud/user_policy_signin_service_factory.h"
+#endif
+
+#if defined(OS_WIN)
+#include "chrome/browser/profile_resetter/triggered_profile_resetter_factory.h"
+#include "chrome/browser/ui/desktop_ios_promotion/sms_service_factory.h"
+#endif
+
+#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
+#include "chrome/browser/captive_portal/captive_portal_service_factory.h"
+#endif
+
+#if BUILDFLAG(ENABLE_DESKTOP_IN_PRODUCT_HELP)
+#include "chrome/browser/feature_engagement/bookmark/bookmark_tracker_factory.h"
+#include "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker_factory.h"
+#include "chrome/browser/feature_engagement/new_tab/new_tab_tracker_factory.h"
+#endif
+
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+#include "apps/browser_context_keyed_service_factories.h"
+#include "chrome/browser/apps/browser_context_keyed_service_factories.h"
+#include "chrome/browser/extensions/api/networking_private/networking_private_ui_delegate_factory_impl.h"
+#include "chrome/browser/extensions/browser_context_keyed_service_factories.h"
+#include "chrome/browser/extensions/extension_management.h"
+#include "chrome/browser/signin/easy_unlock_service_factory.h"
+#include "chrome/browser/ui/bookmarks/enhanced_bookmark_key_service_factory.h"
+#include "extensions/browser/api/networking_private/networking_private_delegate_factory.h"
+#include "extensions/browser/browser_context_keyed_service_factories.h"
+#endif
+
+#if BUILDFLAG(ENABLE_PRINT_PREVIEW) && !defined(OS_CHROMEOS)
+#include "chrome/browser/printing/cloud_print/cloud_print_proxy_service_factory.h"
+#endif
+
+#if BUILDFLAG(ENABLE_SERVICE_DISCOVERY)
+#include "chrome/browser/printing/cloud_print/privet_notifications_factory.h"
+#endif
+
+#if BUILDFLAG(ENABLE_SPELLCHECK)
+#include "chrome/browser/spellchecker/spellcheck_factory.h"
 #endif
 
 #if BUILDFLAG(ENABLE_SUPERVISED_USERS)
@@ -122,42 +158,6 @@
 #include "chrome/browser/supervised_user/chromeos/manager_password_service_factory.h"
 #include "chrome/browser/supervised_user/chromeos/supervised_user_password_service_factory.h"
 #endif
-#endif
-
-#if defined(OS_CHROMEOS)
-#include "chrome/browser/chromeos/printing/cups_print_job_manager_factory.h"
-#include "chrome/browser/chromeos/printing/synced_printers_manager_factory.h"
-#include "chrome/browser/chromeos/tether/tether_service_factory.h"
-#include "chrome/browser/extensions/api/platform_keys/verify_trust_api.h"
-#endif
-
-#if defined(OS_ANDROID)
-#include "chrome/browser/android/data_usage/data_use_ui_tab_model_factory.h"
-#include "chrome/browser/android/search_permissions/search_permissions_service.h"
-#else
-#include "chrome/browser/cryptauth/chrome_cryptauth_service_factory.h"
-#include "chrome/browser/media/router/media_router_ui_service_factory.h"
-#include "chrome/browser/ui/global_error/global_error_service_factory.h"
-#include "chrome/browser/usb/usb_chooser_context_factory.h"
-#endif
-
-#if defined(OS_WIN)
-#include "chrome/browser/profile_resetter/triggered_profile_resetter_factory.h"
-#include "chrome/browser/ui/desktop_ios_promotion/sms_service_factory.h"
-#endif
-
-#if BUILDFLAG(ENABLE_DESKTOP_IN_PRODUCT_HELP)
-#include "chrome/browser/feature_engagement/bookmark/bookmark_tracker_factory.h"
-#include "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker_factory.h"
-#include "chrome/browser/feature_engagement/new_tab/new_tab_tracker_factory.h"
-#endif
-
-#if BUILDFLAG(ENABLE_SPELLCHECK)
-#include "chrome/browser/spellchecker/spellcheck_factory.h"
-#endif
-
-#if BUILDFLAG(ENABLE_SERVICE_DISCOVERY)
-#include "chrome/browser/printing/cloud_print/privet_notifications_factory.h"
 #endif
 
 namespace chrome {
@@ -216,13 +216,14 @@ EnsureBrowserContextKeyedServiceFactoriesBuilt() {
 #endif
   CertificateReportingServiceFactory::GetInstance();
 #if defined(OS_ANDROID)
-  chrome::android::DataUseUITabModelFactory::GetInstance();
+  android::DataUseUITabModelFactory::GetInstance();
 #endif
   ChromeBrowsingDataRemoverDelegateFactory::GetInstance();
 #if !defined(OS_ANDROID)
   ChromeCryptAuthServiceFactory::GetInstance();
 #endif
-#if BUILDFLAG(ENABLE_PRINT_PREVIEW)
+  ChromeSigninClientFactory::GetInstance();
+#if BUILDFLAG(ENABLE_PRINT_PREVIEW) && !defined(OS_CHROMEOS)
   CloudPrintProxyServiceFactory::GetInstance();
 #endif
   ConsentAuditorFactory::GetInstance();
@@ -255,13 +256,12 @@ EnsureBrowserContextKeyedServiceFactoriesBuilt() {
 #endif
   GoogleURLTrackerFactory::GetInstance();
   HistoryServiceFactory::GetInstance();
-#if BUILDFLAG(ENABLE_EXTENSIONS)
-  HotwordServiceFactory::GetInstance();
-#endif
   HostContentSettingsMapFactory::GetInstance();
   InMemoryURLIndexFactory::GetInstance();
   invalidation::ProfileInvalidationProviderFactory::GetInstance();
+#if !defined(OS_ANDROID)
   InstantServiceFactory::GetInstance();
+#endif
 #if BUILDFLAG(ENABLE_SERVICE_DISCOVERY)
   cloud_print::PrivetNotificationServiceFactory::GetInstance();
 #endif

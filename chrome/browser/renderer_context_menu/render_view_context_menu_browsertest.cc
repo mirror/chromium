@@ -25,7 +25,7 @@
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_notification_types.h"
-#include "chrome/browser/extensions/bookmark_app_helper.h"
+#include "chrome/browser/extensions/browsertest_util.h"
 #include "chrome/browser/pdf/pdf_extension_test_util.h"
 #include "chrome/browser/profiles/profile_attributes_entry.h"
 #include "chrome/browser/profiles/profile_attributes_storage.h"
@@ -60,7 +60,6 @@
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/render_widget_host.h"
 #include "content/public/browser/web_contents.h"
-#include "content/public/common/associated_interface_provider.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/test_utils.h"
 #include "extensions/browser/api/extensions_api_client.h"
@@ -74,6 +73,7 @@
 #include "net/url_request/url_request_filter.h"
 #include "net/url_request/url_request_interceptor.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
+#include "third_party/WebKit/common/associated_interfaces/associated_interface_provider.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "third_party/WebKit/public/web/WebContextMenuData.h"
 #include "ui/base/models/menu_model.h"
@@ -170,38 +170,19 @@ class ContextMenuBrowserTest : public InProcessBrowserTest {
   }
 
   const extensions::Extension* InstallTestBookmarkApp(const GURL& app_url) {
-    Profile* profile = browser()->profile();
-    size_t num_extensions = extensions::ExtensionRegistry::Get(profile)
-                                ->enabled_extensions()
-                                .size();
     WebApplicationInfo web_app_info;
     web_app_info.app_url = app_url;
     web_app_info.scope = app_url;
     web_app_info.title = base::UTF8ToUTF16("Test app");
     web_app_info.description = base::UTF8ToUTF16("Test description");
 
-    content::WindowedNotificationObserver windowed_observer(
-        extensions::NOTIFICATION_CRX_INSTALLER_DONE,
-        content::NotificationService::AllSources());
-    extensions::CreateOrUpdateBookmarkApp(
-        extensions::ExtensionSystem::Get(profile)->extension_service(),
-        &web_app_info);
-    windowed_observer.Wait();
-
-    EXPECT_EQ(++num_extensions, extensions::ExtensionRegistry::Get(profile)
-                                    ->enabled_extensions()
-                                    .size());
-    return content::Details<const extensions::Extension>(
-               windowed_observer.details())
-        .ptr();
+    return extensions::browsertest_util::InstallBookmarkApp(
+        browser()->profile(), web_app_info);
   }
 
   Browser* OpenTestBookmarkApp(const extensions::Extension* bookmark_app) {
-    OpenApplication(AppLaunchParams(browser()->profile(), bookmark_app,
-                                    extensions::LAUNCH_CONTAINER_WINDOW,
-                                    WindowOpenDisposition::CURRENT_TAB,
-                                    extensions::SOURCE_CHROME_INTERNAL));
-    return chrome::FindLastActive();
+    return extensions::browsertest_util::LaunchAppBrowser(browser()->profile(),
+                                                          bookmark_app);
   }
 };
 

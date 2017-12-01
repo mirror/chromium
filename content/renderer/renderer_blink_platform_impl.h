@@ -18,6 +18,7 @@
 #include "cc/blink/web_compositor_support_impl.h"
 #include "components/viz/client/client_shared_bitmap_manager.h"
 #include "content/child/blink_platform_impl.h"
+#include "content/common/clipboard.mojom.h"
 #include "content/common/content_export.h"
 #include "content/common/file_utilities.mojom.h"
 #include "content/common/possibly_associated_interface_ptr.h"
@@ -63,8 +64,6 @@ class ChildURLLoaderFactoryGetter;
 class LocalStorageCachedAreas;
 class NotificationDispatcher;
 class PlatformEventObserverBase;
-class QuotaMessageFilter;
-class RendererClipboardDelegate;
 class ThreadSafeSender;
 class WebClipboardImpl;
 class WebDatabaseObserverImpl;
@@ -269,6 +268,9 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
   // destructed.
   void SetCompositorThread(blink::scheduler::WebThreadBase* compositor_thread);
 
+  // Return the mojo interface for making ClipboardHost calls.
+  mojom::ClipboardHost& GetClipboardHost();
+
  private:
   PossiblyAssociatedInterfacePtr<mojom::URLLoaderFactory>
   CreateNetworkURLLoaderFactory();
@@ -295,7 +297,6 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
   std::unique_ptr<blink::WebThread> main_thread_;
   std::unique_ptr<service_manager::Connector> connector_;
 
-  std::unique_ptr<RendererClipboardDelegate> clipboard_delegate_;
   std::unique_ptr<WebClipboardImpl> clipboard_;
 
   class FileUtilities;
@@ -324,7 +325,6 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
   scoped_refptr<base::SingleThreadTaskRunner> default_task_runner_;
   scoped_refptr<IPC::SyncMessageFilter> sync_message_filter_;
   scoped_refptr<ThreadSafeSender> thread_safe_sender_;
-  scoped_refptr<QuotaMessageFilter> quota_message_filter_;
   viz::ClientSharedBitmapManager* shared_bitmap_manager_;
 
   std::unique_ptr<WebDatabaseObserverImpl> web_database_observer_impl_;
@@ -347,6 +347,7 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
   scoped_refptr<blink::mojom::ThreadSafeWebDatabaseHostPtr> web_database_host_;
 
   mojom::FileUtilitiesHostPtrInfo file_utilities_host_info_;
+  mojom::ClipboardHostPtr clipboard_host_;
 
   scoped_refptr<NotificationDispatcher> notification_dispatcher_;
 

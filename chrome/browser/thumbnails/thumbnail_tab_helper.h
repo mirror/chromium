@@ -19,8 +19,11 @@
 namespace content {
 class NavigationHandle;
 class RenderViewHost;
-class RenderWidgetHost;
-}
+}  // namespace content
+
+namespace thumbnails {
+class ThumbnailService;
+}  // namespace thumbnails
 
 class ThumbnailTabHelper
     : public content::NotificationObserver,
@@ -33,12 +36,36 @@ class ThumbnailTabHelper
   explicit ThumbnailTabHelper(content::WebContents* contents);
   friend class content::WebContentsUserData<ThumbnailTabHelper>;
 
+  enum class TriggerReason {
+    TAB_HIDDEN,
+    NAVIGATING_AWAY,
+  };
+
+  // Used for UMA histograms. Don't change or delete entries, and only add new
+  // ones at the end.
+  enum class Outcome {
+    SUCCESS = 0,
+    NOT_ATTEMPTED_PENDING_NAVIGATION,
+    NOT_ATTEMPTED_NO_PAINT_YET,
+    NOT_ATTEMPTED_IN_PROGRESS,
+    NOT_ATTEMPTED_NO_WEBCONTENTS,
+    NOT_ATTEMPTED_NO_URL,
+    NOT_ATTEMPTED_SHOULD_NOT_ACQUIRE,
+    NOT_ATTEMPTED_VIEW_NOT_AVAILABLE,
+    NOT_ATTEMPTED_EMPTY_RECT,
+    CANCELED,
+    READBACK_FAILED,
+    // Add new entries here!
+    COUNT
+  };
+
   // content::NotificationObserver overrides.
   void Observe(int type,
                const content::NotificationSource& source,
                const content::NotificationDetails& details) override;
 
   // content::WebContentsObserver overrides.
+  void RenderViewCreated(content::RenderViewHost* render_view_host) override;
   void RenderViewHostChanged(content::RenderViewHost* old_host,
                              content::RenderViewHost* new_host) override;
   void RenderViewDeleted(content::RenderViewHost* render_view_host) override;
@@ -55,25 +82,27 @@ class ThumbnailTabHelper
   void StartWatchingRenderViewHost(content::RenderViewHost* render_view_host);
   void StopWatchingRenderViewHost(content::RenderViewHost* render_view_host);
 
-  // Update the thumbnail of the given tab contents if necessary.
-  void UpdateThumbnailIfNecessary();
+  // Starts the process of capturing a thumbnail of the current tab contents if
+  // necessary and possible.
+  void StartThumbnailCaptureIfNecessary(TriggerReason trigger);
 
-  // Create a thumbnail from the web contents bitmap.
-  void ProcessCapturedBitmap(
-      const SkBitmap& bitmap,
-      content::ReadbackResponse response);
+  // Creates a thumbnail from the web contents bitmap.
+  void ProcessCapturedBitmap(TriggerReason trigger,
+                             const SkBitmap& bitmap,
+                             content::ReadbackResponse response);
 
-  // Pass the thumbnail to the thumbnail service.
-  void UpdateThumbnail(const SkBitmap& thumbnail);
+  // Passes the thumbnail to the thumbnail service.
+  void StoreThumbnail(const SkBitmap& thumbnail);
 
-  // Clean up after thumbnail generation has ended.
+  // Cleans up after thumbnail generation has ended.
   void CleanUpFromThumbnailGeneration();
 
-  // Called when a render view host was created for a WebContents.
-  void RenderViewHostCreated(content::RenderViewHost* render_view_host);
+  // Called when the current tab gets hidden.
+  void TabHidden();
 
-  // Indicates that the given widget has changed is visibility.
-  void WidgetHidden(content::RenderWidgetHost* widget);
+  scoped_refptr<thumbnails::ThumbnailService> GetThumbnailService();
+
+  static void LogThumbnailingOutcome(TriggerReason trigger, Outcome outcome);
 
   const bool capture_on_navigating_away_;
 

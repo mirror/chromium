@@ -54,8 +54,8 @@ void SetShelfAutoHideBehaviorPref(int64_t display_id,
 
 class TabletModeWindowManagerTest : public AshTestBase {
  public:
-  TabletModeWindowManagerTest() {}
-  ~TabletModeWindowManagerTest() override {}
+  TabletModeWindowManagerTest() = default;
+  ~TabletModeWindowManagerTest() override = default;
 
   // Initialize parameters for test windows.  If |can_maximize| is not
   // set, |max_size| is the upper limiting size for the window,
@@ -1478,10 +1478,10 @@ TEST_F(TabletModeWindowManagerTest, NoExitImmersiveModeWithEdgeSwipeFromTop) {
   wm::WMEvent event(wm::WM_EVENT_TOGGLE_FULLSCREEN);
   window_state->OnWMEvent(&event);
   EXPECT_TRUE(window_state->IsFullscreen());
-  EXPECT_FALSE(window_state->in_immersive_fullscreen());
+  EXPECT_FALSE(window_state->IsInImmersiveFullscreen());
   EXPECT_EQ(window.get(), wm::GetActiveWindow());
 
-  window_state->set_in_immersive_fullscreen(true);
+  window_state->SetInImmersiveFullscreen(true);
 
   // Do an edge swipe top into screen.
   ui::test::EventGenerator generator(Shell::GetPrimaryRootWindow());
@@ -1490,7 +1490,7 @@ TEST_F(TabletModeWindowManagerTest, NoExitImmersiveModeWithEdgeSwipeFromTop) {
 
   // It should have not exited full screen or immersive mode.
   EXPECT_TRUE(window_state->IsFullscreen());
-  EXPECT_TRUE(window_state->in_immersive_fullscreen());
+  EXPECT_TRUE(window_state->IsInImmersiveFullscreen());
 
   DestroyTabletModeWindowManager();
 }
@@ -1508,10 +1508,10 @@ TEST_F(TabletModeWindowManagerTest,
   wm::WMEvent event(wm::WM_EVENT_TOGGLE_FULLSCREEN);
   window_state->OnWMEvent(&event);
   EXPECT_TRUE(window_state->IsFullscreen());
-  EXPECT_FALSE(window_state->in_immersive_fullscreen());
+  EXPECT_FALSE(window_state->IsInImmersiveFullscreen());
   EXPECT_EQ(window.get(), wm::GetActiveWindow());
-  window_state->set_in_immersive_fullscreen(true);
-  EXPECT_TRUE(window_state->in_immersive_fullscreen());
+  window_state->SetInImmersiveFullscreen(true);
+  EXPECT_TRUE(window_state->IsInImmersiveFullscreen());
 
   // Do an edge swipe bottom into screen.
   ui::test::EventGenerator generator(Shell::GetPrimaryRootWindow());
@@ -1521,7 +1521,7 @@ TEST_F(TabletModeWindowManagerTest,
 
   // The window should still be full screen and immersive.
   EXPECT_TRUE(window_state->IsFullscreen());
-  EXPECT_TRUE(window_state->in_immersive_fullscreen());
+  EXPECT_TRUE(window_state->IsInImmersiveFullscreen());
 
   DestroyTabletModeWindowManager();
 }
@@ -1635,8 +1635,8 @@ namespace {
 
 class TestObserver : public wm::WindowStateObserver {
  public:
-  TestObserver() {}
-  ~TestObserver() override {}
+  TestObserver() = default;
+  ~TestObserver() override = default;
 
   // wm::WindowStateObserver:
   void OnPreWindowStateTypeChange(wm::WindowState* window_state,

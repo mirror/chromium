@@ -5,17 +5,23 @@
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.h"
 
 #import "base/mac/foundation_util.h"
+#import "ios/chrome/browser/ui/bubble/bubble_util.h"
 #import "ios/chrome/browser/ui/commands/application_commands.h"
 #import "ios/chrome/browser/ui/commands/browser_commands.h"
 #import "ios/chrome/browser/ui/commands/history_popup_commands.h"
+#import "ios/chrome/browser/ui/commands/start_voice_search_command.h"
 #include "ios/chrome/browser/ui/rtl_geometry.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_button.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_button_factory.h"
+#import "ios/chrome/browser/ui/toolbar/clean/toolbar_button_updater.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_component_options.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_configuration.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_constants.h"
+#import "ios/chrome/browser/ui/toolbar/clean/toolbar_tools_menu_button.h"
 #import "ios/chrome/browser/ui/toolbar/public/toolbar_controller_constants.h"
+#import "ios/chrome/browser/ui/toolbar/public/web_toolbar_controller_constants.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
+#import "ios/chrome/browser/ui/util/constraints_ui_util.h"
 #import "ios/third_party/material_components_ios/src/components/ProgressView/src/MaterialProgressView.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -24,44 +30,74 @@
 
 @interface ToolbarViewController ()
 @property(nonatomic, strong) ToolbarButtonFactory* buttonFactory;
+@property(nonatomic, strong) ToolbarButtonUpdater* buttonUpdater;
 @property(nonatomic, strong) UIView* locationBarContainer;
 @property(nonatomic, strong) UIStackView* stackView;
 @property(nonatomic, strong) ToolbarButton* backButton;
 @property(nonatomic, strong) ToolbarButton* forwardButton;
 @property(nonatomic, strong) ToolbarButton* tabSwitchStripButton;
-@property(nonatomic, strong) ToolbarButton* tabSwitchGridButton;
-@property(nonatomic, strong) ToolbarButton* toolsMenuButton;
+@property(nonatomic, strong, readwrite) ToolbarToolsMenuButton* toolsMenuButton;
 @property(nonatomic, strong) ToolbarButton* shareButton;
 @property(nonatomic, strong) ToolbarButton* reloadButton;
 @property(nonatomic, strong) ToolbarButton* stopButton;
+@property(nonatomic, strong) ToolbarButton* voiceSearchButton;
+@property(nonatomic, strong) ToolbarButton* bookmarkButton;
+@property(nonatomic, assign) BOOL voiceSearchEnabled;
 @property(nonatomic, strong) MDCProgressView* progressBar;
+// Background view, used to display the incognito NTP background color on the
+// toolbar.
+@property(nonatomic, strong) UIView* backgroundView;
+// Whether a page is loading.
+@property(nonatomic, assign, getter=isLoading) BOOL loading;
 @end
 
 @implementation ToolbarViewController
+@synthesize backgroundView = _backgroundView;
 @synthesize buttonFactory = _buttonFactory;
+@synthesize buttonUpdater = _buttonUpdater;
 @synthesize dispatcher = _dispatcher;
-@synthesize locationBarViewController = _locationBarViewController;
+@synthesize locationBarView = _locationBarView;
 @synthesize stackView = _stackView;
+@synthesize loading = _loading;
 @synthesize locationBarContainer = _locationBarContainer;
 @synthesize backButton = _backButton;
 @synthesize forwardButton = _forwardButton;
 @synthesize tabSwitchStripButton = _tabSwitchStripButton;
-@synthesize tabSwitchGridButton = _tabSwitchGridButton;
 @synthesize toolsMenuButton = _toolsMenuButton;
 @synthesize shareButton = _shareButton;
 @synthesize reloadButton = _reloadButton;
 @synthesize stopButton = _stopButton;
+@synthesize voiceSearchButton = _voiceSearchButton;
+@synthesize bookmarkButton = _bookmarkButton;
+@synthesize voiceSearchEnabled = _voiceSearchEnabled;
 @synthesize progressBar = _progressBar;
+
+#pragma mark - Properties accessor
+
+- (UIView*)backgroundView {
+  if (!_backgroundView) {
+    _backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
+    _backgroundView.translatesAutoresizingMaskIntoConstraints = NO;
+    _backgroundView.backgroundColor =
+        [UIColor colorWithWhite:kNTPBackgroundColorBrightnessIncognito
+                          alpha:1.0];
+    [self.view insertSubview:_backgroundView atIndex:0];
+    AddSameConstraints(self.view, _backgroundView);
+  }
+  return _backgroundView;
+}
 
 #pragma mark - Public
 
 - (instancetype)initWithDispatcher:
                     (id<ApplicationCommands, BrowserCommands>)dispatcher
-                     buttonFactory:(ToolbarButtonFactory*)buttonFactory {
+                     buttonFactory:(ToolbarButtonFactory*)buttonFactory
+                     buttonUpdater:(ToolbarButtonUpdater*)buttonUpdater {
   _dispatcher = dispatcher;
   self = [super initWithNibName:nil bundle:nil];
   if (self) {
     _buttonFactory = buttonFactory;
+    _buttonUpdater = buttonUpdater;
     [self setUpToolbarButtons];
     [self setUpLocationBarContainer];
     [self setUpProgressBar];
@@ -85,17 +121,42 @@
   // TODO(crbug.com/785756): Implement this.
 }
 
+- (void)setBackgroundToIncognitoNTPColorWithAlpha:(CGFloat)alpha {
+  self.backgroundView.alpha = alpha;
+}
+
+- (void)showPrerenderingAnimation {
+  __weak ToolbarViewController* weakSelf = self;
+  [self.progressBar setProgress:0];
+  [self.progressBar setHidden:NO
+                     animated:YES
+                   completion:^(BOOL finished) {
+                     [weakSelf stopProgressBar];
+                   }];
+}
+
 #pragma mark - View lifecyle
 
 - (void)viewDidLoad {
+  // The view can be obstructed by the background view.
   self.view.backgroundColor =
       [self.buttonFactory.toolbarConfiguration backgroundColor];
-  [self addChildViewController:self.locationBarViewController
-                     toSubview:self.locationBarContainer];
+
   [self setUpToolbarStackView];
+  if (self.locationBarView) {
+    [self.locationBarContainer addSubview:self.locationBarView];
+    AddSameConstraints(self.locationBarContainer, self.locationBarView);
+  }
+  [self.locationBarContainer addSubview:self.bookmarkButton];
+  [self.locationBarContainer addSubview:self.voiceSearchButton];
   [self.view addSubview:self.stackView];
   [self.view addSubview:self.progressBar];
   [self setConstraints];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+  [self updateAllButtonsVisibility];
+  [super viewDidAppear:animated];
 }
 
 #pragma mark - View Setup
@@ -105,17 +166,15 @@
   self.stackView = [[UIStackView alloc] initWithArrangedSubviews:@[
     self.backButton, self.forwardButton, self.reloadButton, self.stopButton,
     self.locationBarContainer, self.shareButton, self.tabSwitchStripButton,
-    self.tabSwitchGridButton, self.toolsMenuButton
+    self.toolsMenuButton
   ]];
   self.stackView.translatesAutoresizingMaskIntoConstraints = NO;
   self.stackView.spacing = kStackViewSpacing;
   self.stackView.distribution = UIStackViewDistributionFill;
-  [self updateAllButtonsVisibility];
 }
 
 - (void)setConstraints {
-  [self.view setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
-                                 UIViewAutoresizingFlexibleHeight];
+  self.view.translatesAutoresizingMaskIntoConstraints = NO;
   NSArray* constraints = @[
     [self.stackView.topAnchor constraintEqualToAnchor:self.view.topAnchor
                                              constant:kVerticalMargin],
@@ -135,14 +194,30 @@
         constraintEqualToAnchor:self.view.bottomAnchor],
     [self.progressBar.heightAnchor
         constraintEqualToConstant:kProgressBarHeight],
+    [self.bookmarkButton.centerYAnchor
+        constraintEqualToAnchor:self.locationBarContainer.centerYAnchor],
+    [self.voiceSearchButton.centerYAnchor
+        constraintEqualToAnchor:self.locationBarContainer.centerYAnchor],
+    [self.voiceSearchButton.trailingAnchor
+        constraintEqualToAnchor:self.locationBarContainer.trailingAnchor],
+    [self.bookmarkButton.trailingAnchor
+        constraintEqualToAnchor:self.voiceSearchButton.leadingAnchor],
   ];
 
   // Constraint so Toolbar stackview never overlaps with the Status Bar.
-  NSLayoutConstraint* constraintTop = [self.stackView.topAnchor
-      constraintGreaterThanOrEqualToAnchor:self.topLayoutGuide.bottomAnchor
-                                  constant:kVerticalMargin];
-  constraintTop.priority = UILayoutPriorityRequired;
-  constraintTop.active = YES;
+  NSLayoutYAxisAnchor* topAnchor;
+  if (@available(iOS 11, *)) {
+    topAnchor = self.view.safeAreaLayoutGuide.topAnchor;
+  } else {
+    topAnchor = self.topLayoutGuide.topAnchor;
+  }
+  [self.stackView.topAnchor
+      constraintGreaterThanOrEqualToAnchor:topAnchor
+                                  constant:kVerticalMargin]
+      .active = YES;
+  [self.view.bottomAnchor constraintEqualToAnchor:topAnchor
+                                         constant:kToolbarHeight]
+      .active = YES;
 
   // Set the constraints priority to UILayoutPriorityDefaultHigh so these are
   // not broken when the views are hidden or the VC's view size is 0.
@@ -201,19 +276,6 @@
                                 action:@selector(displayTabSwitcher)
                       forControlEvents:UIControlEventTouchUpInside];
 
-  // Tab switcher Grid button.
-  self.tabSwitchGridButton = [self.buttonFactory tabSwitcherGridToolbarButton];
-  self.tabSwitchGridButton.visibilityMask =
-      ToolbarComponentVisibilityCompactWidth |
-      ToolbarComponentVisibilityRegularWidth;
-  [buttonConstraints
-      addObject:[self.tabSwitchGridButton.widthAnchor
-                    constraintEqualToConstant:kToolbarButtonWidth]];
-  [self.tabSwitchGridButton addTarget:self.dispatcher
-                               action:@selector(displayTabSwitcher)
-                     forControlEvents:UIControlEventTouchUpInside];
-  self.tabSwitchGridButton.hiddenInCurrentState = YES;
-
   // Tools menu button.
   self.toolsMenuButton = [self.buttonFactory toolsMenuToolbarButton];
   self.toolsMenuButton.visibilityMask = ToolbarComponentVisibilityCompactWidth |
@@ -231,10 +293,9 @@
   [buttonConstraints
       addObject:[self.shareButton.widthAnchor
                     constraintEqualToConstant:kToolbarButtonWidth]];
-  // TODO(crbug.com/740793): Remove alert once share is implemented.
   self.shareButton.titleLabel.text = @"Share";
-  [self.shareButton addTarget:self
-                       action:@selector(showAlert:)
+  [self.shareButton addTarget:self.dispatcher
+                       action:@selector(sharePage)
              forControlEvents:UIControlEventTouchUpInside];
 
   // Reload button.
@@ -256,6 +317,30 @@
   [self.stopButton addTarget:self.dispatcher
                       action:@selector(stopLoading)
             forControlEvents:UIControlEventTouchUpInside];
+
+  // Voice Search button.
+  self.voiceSearchButton = [self.buttonFactory voiceSearchButton];
+  self.voiceSearchButton.visibilityMask =
+      ToolbarComponentVisibilityRegularWidth;
+  [buttonConstraints
+      addObject:[self.voiceSearchButton.widthAnchor
+                    constraintEqualToConstant:kToolbarButtonWidth]];
+  self.voiceSearchButton.enabled = NO;
+
+  // Bookmark button.
+  self.bookmarkButton = [self.buttonFactory bookmarkToolbarButton];
+  self.bookmarkButton.visibilityMask = ToolbarComponentVisibilityRegularWidth;
+  [buttonConstraints
+      addObject:[self.bookmarkButton.widthAnchor
+                    constraintEqualToConstant:kToolbarButtonWidth]];
+  [self.bookmarkButton addTarget:self.dispatcher
+                          action:@selector(bookmarkPage)
+                forControlEvents:UIControlEventTouchUpInside];
+
+  // Add buttons to button updater.
+  self.buttonUpdater.backButton = self.backButton;
+  self.buttonUpdater.forwardButton = self.forwardButton;
+  self.buttonUpdater.voiceSearchButton = self.voiceSearchButton;
 
   // Set the button constraint priority to UILayoutPriorityDefaultHigh so
   // these are not broken when being hidden by the StackView.
@@ -317,24 +402,18 @@
   [viewController didMoveToParentViewController:self];
 }
 
-- (void)setLocationBarViewController:(UIViewController*)controller {
-  if (self.locationBarViewController == controller) {
+- (void)setLocationBarView:(UIView*)view {
+  if (_locationBarView == view) {
     return;
   }
+  view.translatesAutoresizingMaskIntoConstraints = NO;
 
   if ([self isViewLoaded]) {
-    // Remove the old child view controller.
-    if (self.locationBarViewController) {
-      DCHECK_EQ(self, self.locationBarViewController.parentViewController);
-      [self.locationBarViewController willMoveToParentViewController:nil];
-      [self.locationBarViewController.view removeFromSuperview];
-      [self.locationBarViewController removeFromParentViewController];
-    }
-    // Add the new child view controller.
-    [self addChildViewController:controller
-                       toSubview:self.locationBarContainer];
+    [_locationBarView removeFromSuperview];
+    [self.locationBarContainer addSubview:view];
+    AddSameConstraints(self.locationBarContainer, view);
   }
-  _locationBarViewController = controller;
+  _locationBarView = view;
 }
 
 #pragma mark - Trait Collection Changes
@@ -343,12 +422,7 @@
   [super traitCollectionDidChange:previousTraitCollection];
   if (self.traitCollection.horizontalSizeClass !=
       previousTraitCollection.horizontalSizeClass) {
-    for (UIView* view in self.stackView.arrangedSubviews) {
-      if ([view isKindOfClass:[ToolbarButton class]]) {
-        ToolbarButton* button = base::mac::ObjCCastStrict<ToolbarButton>(view);
-        [button updateHiddenInCurrentSizeClass];
-      }
-    }
+    [self updateAllButtonsVisibility];
   }
 }
 
@@ -365,21 +439,20 @@
   self.backButton.enabled = canGoBack;
 }
 
-- (void)setIsLoading:(BOOL)isLoading {
-  self.reloadButton.hiddenInCurrentState = isLoading;
-  self.stopButton.hiddenInCurrentState = !isLoading;
-  [self.progressBar setHidden:!isLoading animated:YES completion:nil];
-  [self updateAllButtonsVisibility];
+- (void)setLoadingState:(BOOL)loading {
+  _loading = loading;
+  self.reloadButton.hiddenInCurrentState = loading;
+  self.stopButton.hiddenInCurrentState = !loading;
+  if (!loading) {
+    [self stopProgressBar];
+  } else {
+    [self.progressBar setProgress:0];
+    [self.progressBar setHidden:NO animated:YES completion:nil];
+  }
 }
 
 - (void)setLoadingProgressFraction:(double)progress {
   [self.progressBar setProgress:progress animated:YES completion:nil];
-}
-
-- (void)setTabStripVisible:(BOOL)visible {
-  self.tabSwitchStripButton.hiddenInCurrentState = visible;
-  self.tabSwitchGridButton.hiddenInCurrentState = !visible;
-  [self updateAllButtonsVisibility];
 }
 
 - (void)setTabCount:(int)tabCount {
@@ -416,39 +489,49 @@
   [self.tabSwitchStripButton setAccessibilityValue:tabStripButtonValue];
 }
 
-#pragma mark - ZoomTransitionDelegate
-
-- (CGRect)rectForZoomWithKey:(NSObject*)key inView:(UIView*)view {
-  return [view convertRect:self.toolsMenuButton.bounds
-                  fromView:self.toolsMenuButton];
+- (void)setPageBookmarked:(BOOL)bookmarked {
+  self.bookmarkButton.selected = bookmarked;
 }
 
-#pragma mark - TabHistoryPositioner
-
-- (CGPoint)originPointForToolbarButton:(ToolbarButtonType)toolbarButton {
-  UIButton* historyButton =
-      (toolbarButton == ToolbarButtonTypeBack) ? _backButton : _forwardButton;
-
-  // Set the origin for the tools popup to the leading side of the bottom of the
-  // pressed buttons.
-  CGRect buttonBounds = [historyButton.imageView bounds];
-  CGPoint leadingBottomCorner = CGPointMake(CGRectGetLeadingEdge(buttonBounds),
-                                            CGRectGetMaxY(buttonBounds));
-  CGPoint origin = [historyButton.imageView convertPoint:leadingBottomCorner
-                                                  toView:historyButton.window];
-  return origin;
+- (void)setVoiceSearchEnabled:(BOOL)voiceSearchEnabled {
+  _voiceSearchEnabled = voiceSearchEnabled;
+  if (voiceSearchEnabled) {
+    self.voiceSearchButton.enabled = YES;
+    [self.voiceSearchButton addTarget:self.dispatcher
+                               action:@selector(preloadVoiceSearch)
+                     forControlEvents:UIControlEventTouchDown];
+    [self.voiceSearchButton addTarget:self
+                               action:@selector(startVoiceSearch:)
+                     forControlEvents:UIControlEventTouchUpInside];
+  }
 }
 
-#pragma mark - TabHistoryUIUpdater
-
-- (void)updateUIForTabHistoryPresentationFrom:(ToolbarButtonType)button {
-  ToolbarButton* historyButton = button ? self.backButton : self.forwardButton;
-  historyButton.selected = YES;
+- (void)setShareMenuEnabled:(BOOL)enabled {
+  self.shareButton.enabled = enabled;
 }
 
-- (void)updateUIForTabHistoryWasDismissed {
-  self.backButton.selected = NO;
-  self.forwardButton.selected = NO;
+#pragma mark - ActivityServicePositioner
+
+- (UIView*)shareButtonView {
+  return self.shareButton;
+}
+
+#pragma mark = BubbleViewAnchorPointProvider
+
+- (CGPoint)anchorPointForTabSwitcherButton:(BubbleArrowDirection)direction {
+  CGPoint anchorPoint =
+      bubble_util::AnchorPoint(self.tabSwitchStripButton.frame, direction);
+  return [self.tabSwitchStripButton.superview
+      convertPoint:anchorPoint
+            toView:self.tabSwitchStripButton.window];
+}
+
+- (CGPoint)anchorPointForToolsMenuButton:(BubbleArrowDirection)direction {
+  CGPoint anchorPoint =
+      bubble_util::AnchorPoint(self.toolsMenuButton.frame, direction);
+  return
+      [self.toolsMenuButton.superview convertPoint:anchorPoint
+                                            toView:self.toolsMenuButton.window];
 }
 
 #pragma mark - Helper Methods
@@ -458,9 +541,11 @@
   for (UIView* view in self.stackView.arrangedSubviews) {
     if ([view isKindOfClass:[ToolbarButton class]]) {
       ToolbarButton* button = base::mac::ObjCCastStrict<ToolbarButton>(view);
-      [button setHiddenForCurrentStateAndSizeClass];
+      [button updateHiddenInCurrentSizeClass];
     }
   }
+  [self.bookmarkButton updateHiddenInCurrentSizeClass];
+  [self.voiceSearchButton updateHiddenInCurrentSizeClass];
 }
 
 // Sets the priority for an array of constraints and activates them.
@@ -472,20 +557,29 @@
   [NSLayoutConstraint activateConstraints:constraintsArray];
 }
 
-// TODO(crbug.com/740793): Remove this method once no item is using it.
-- (void)showAlert:(UIButton*)sender {
-  UIAlertController* alertController =
-      [UIAlertController alertControllerWithTitle:sender.titleLabel.text
-                                          message:nil
-                                   preferredStyle:UIAlertControllerStyleAlert];
-  UIAlertAction* action =
-      [UIAlertAction actionWithTitle:@"Done"
-                               style:UIAlertActionStyleCancel
-                             handler:nil];
-  [alertController addAction:action];
-  [self.parentViewController presentViewController:alertController
-                                          animated:YES
-                                        completion:nil];
+#pragma mark - Private
+
+// Sets the progress of the progressBar to 1 then hides it.
+- (void)stopProgressBar {
+  __weak MDCProgressView* weakProgressBar = self.progressBar;
+  __weak ToolbarViewController* weakSelf = self;
+  [self.progressBar
+      setProgress:1
+         animated:YES
+       completion:^(BOOL finished) {
+         if (!weakSelf.loading) {
+           [weakProgressBar setHidden:YES animated:YES completion:nil];
+         }
+       }];
+}
+
+// TODO(crbug.com/789104): Use named layout guide instead of passing the view.
+// Target of the voice search button.
+- (void)startVoiceSearch:(id)sender {
+  UIView* view = base::mac::ObjCCastStrict<UIView>(sender);
+  StartVoiceSearchCommand* command =
+      [[StartVoiceSearchCommand alloc] initWithOriginView:view];
+  [self.dispatcher startVoiceSearch:command];
 }
 
 @end

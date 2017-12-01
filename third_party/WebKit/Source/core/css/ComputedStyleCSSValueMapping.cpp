@@ -106,21 +106,21 @@ static CSSValue* PixelValueForUnzoomedLength(
   return CSSValue::Create(length, style.EffectiveZoom());
 }
 
-static CSSValueList* CreatePositionListForLayer(CSSPropertyID property_id,
+static CSSValueList* CreatePositionListForLayer(const CSSProperty& property,
                                                 const FillLayer& layer,
                                                 const ComputedStyle& style) {
   CSSValueList* position_list = CSSValueList::CreateSpaceSeparated();
   if (layer.IsBackgroundXOriginSet()) {
-    DCHECK(property_id == CSSPropertyBackgroundPosition ||
-           property_id == CSSPropertyWebkitMaskPosition);
+    DCHECK(property.IDEquals(CSSPropertyBackgroundPosition) ||
+           property.IDEquals(CSSPropertyWebkitMaskPosition));
     position_list->Append(
         *CSSIdentifierValue::Create(layer.BackgroundXOrigin()));
   }
   position_list->Append(
       *ZoomAdjustedPixelValueForLength(layer.XPosition(), style));
   if (layer.IsBackgroundYOriginSet()) {
-    DCHECK(property_id == CSSPropertyBackgroundPosition ||
-           property_id == CSSPropertyWebkitMaskPosition);
+    DCHECK(property.IDEquals(CSSPropertyBackgroundPosition) ||
+           property.IDEquals(CSSPropertyWebkitMaskPosition));
     position_list->Append(
         *CSSIdentifierValue::Create(layer.BackgroundYOrigin()));
   }
@@ -187,10 +187,10 @@ static CSSValue* ValueForFillSourceType(EMaskSourceType type) {
 }
 
 static CSSValue* ValueForPositionOffset(const ComputedStyle& style,
-                                        CSSPropertyID property_id,
+                                        const CSSProperty& property,
                                         const LayoutObject* layout_object) {
   Length offset, opposite;
-  switch (property_id) {
+  switch (property.PropertyID()) {
     case CSSPropertyLeft:
       offset = style.Left();
       opposite = style.Right();
@@ -214,7 +214,8 @@ static CSSValue* ValueForPositionOffset(const ComputedStyle& style,
   if (offset.IsPercentOrCalc() && layout_object && layout_object->IsBox() &&
       layout_object->IsPositioned()) {
     LayoutUnit containing_block_size =
-        (property_id == CSSPropertyLeft || property_id == CSSPropertyRight)
+        (property.IDEquals(CSSPropertyLeft) ||
+         property.IDEquals(CSSPropertyRight))
             ? ToLayoutBox(layout_object)
                   ->ContainingBlockLogicalWidthForContent()
             : ToLayoutBox(layout_object)
@@ -240,8 +241,8 @@ static CSSValue* ValueForPositionOffset(const ComputedStyle& style,
       if (opposite.IsPercentOrCalc()) {
         if (layout_object->IsBox()) {
           LayoutUnit containing_block_size =
-              (property_id == CSSPropertyLeft ||
-               property_id == CSSPropertyRight)
+              (property.IDEquals(CSSPropertyLeft) ||
+               property.IDEquals(CSSPropertyRight))
                   ? ToLayoutBox(layout_object)
                         ->ContainingBlockLogicalWidthForContent()
                   : ToLayoutBox(layout_object)
@@ -273,7 +274,7 @@ static CSSValue* ValueForPositionOffset(const ComputedStyle& style,
           LayoutSize(container->ClientLeft(), container->ClientTop());
       LayoutUnit position;
 
-      switch (property_id) {
+      switch (property.PropertyID()) {
         case CSSPropertyLeft:
           position = client_offset.Width() - layout_box->MarginLeft();
           break;
@@ -535,7 +536,7 @@ static CSSValueList* ValuesForGridShorthand(
   CSSValueList* list = CSSValueList::CreateSlashSeparated();
   for (size_t i = 0; i < shorthand.length(); ++i) {
     const CSSValue* value = ComputedStyleCSSValueMapping::Get(
-        shorthand.properties()[i], style, layout_object, styled_node,
+        *shorthand.properties()[i], style, layout_object, styled_node,
         allow_visited_style);
     DCHECK(value);
     list->Append(*value);
@@ -552,7 +553,7 @@ static CSSValueList* ValuesForShorthandProperty(
   CSSValueList* list = CSSValueList::CreateSpaceSeparated();
   for (size_t i = 0; i < shorthand.length(); ++i) {
     const CSSValue* value = ComputedStyleCSSValueMapping::Get(
-        shorthand.properties()[i], style, layout_object, styled_node,
+        *shorthand.properties()[i], style, layout_object, styled_node,
         allow_visited_style);
     DCHECK(value);
     list->Append(*value);
@@ -578,16 +579,16 @@ static CSSValue* ValuesForFontVariantProperty(const ComputedStyle& style,
     kNoneLigatures,
     kConcatenateNonNormal
   };
+  StylePropertyShorthand shorthand = fontVariantShorthand();
   VariantShorthandCases shorthand_case = kAllNormal;
-  for (size_t i = 0; i < fontVariantShorthand().length(); ++i) {
+  for (size_t i = 0; i < shorthand.length(); ++i) {
     const CSSValue* value = ComputedStyleCSSValueMapping::Get(
-        fontVariantShorthand().properties()[i], style, layout_object,
-        styled_node, allow_visited_style);
+        *shorthand.properties()[i], style, layout_object, styled_node,
+        allow_visited_style);
 
     if (shorthand_case == kAllNormal && value->IsIdentifierValue() &&
         ToCSSIdentifierValue(value)->GetValueID() == CSSValueNone &&
-        fontVariantShorthand().properties()[i] ==
-            CSSPropertyFontVariantLigatures) {
+        shorthand.properties()[i]->IDEquals(CSSPropertyFontVariantLigatures)) {
       shorthand_case = kNoneLigatures;
     } else if (!(value->IsIdentifierValue() &&
                  ToCSSIdentifierValue(value)->GetValueID() == CSSValueNormal)) {
@@ -603,10 +604,10 @@ static CSSValue* ValuesForFontVariantProperty(const ComputedStyle& style,
       return CSSIdentifierValue::Create(CSSValueNone);
     case kConcatenateNonNormal: {
       CSSValueList* list = CSSValueList::CreateSpaceSeparated();
-      for (size_t i = 0; i < fontVariantShorthand().length(); ++i) {
+      for (size_t i = 0; i < shorthand.length(); ++i) {
         const CSSValue* value = ComputedStyleCSSValueMapping::Get(
-            fontVariantShorthand().properties()[i], style, layout_object,
-            styled_node, allow_visited_style);
+            *shorthand.properties()[i], style, layout_object, styled_node,
+            allow_visited_style);
         DCHECK(value);
         if (value->IsIdentifierValue() &&
             ToCSSIdentifierValue(value)->GetValueID() == CSSValueNone) {
@@ -637,7 +638,7 @@ static CSSValueList* ValuesForBackgroundShorthand(
     CSSValueList* before_slash = CSSValueList::CreateSpaceSeparated();
     if (!curr_layer->Next()) {  // color only for final layer
       const CSSValue* value = ComputedStyleCSSValueMapping::Get(
-          CSSPropertyBackgroundColor, style, layout_object, styled_node,
+          GetCSSPropertyBackgroundColor(), style, layout_object, styled_node,
           allow_visited_style);
       DCHECK(value);
       before_slash->Append(*value);
@@ -649,7 +650,7 @@ static CSSValueList* ValuesForBackgroundShorthand(
         *ValueForFillRepeat(curr_layer->RepeatX(), curr_layer->RepeatY()));
     before_slash->Append(*CSSIdentifierValue::Create(curr_layer->Attachment()));
     before_slash->Append(*CreatePositionListForLayer(
-        CSSPropertyBackgroundPosition, *curr_layer, style));
+        GetCSSPropertyBackgroundPosition(), *curr_layer, style));
     list->Append(*before_slash);
     CSSValueList* after_slash = CSSValueList::CreateSpaceSeparated();
     after_slash->Append(*ValueForFillSize(curr_layer->Size(), style));
@@ -1655,21 +1656,21 @@ static CSSValue* ValueForContentData(const ComputedStyle& style) {
 }
 
 static CSSValue* ValueForCounterDirectives(const ComputedStyle& style,
-                                           CSSPropertyID property_id) {
+                                           const CSSProperty& property) {
   const CounterDirectiveMap* map = style.GetCounterDirectives();
   if (!map)
     return CSSIdentifierValue::Create(CSSValueNone);
 
   CSSValueList* list = CSSValueList::CreateSpaceSeparated();
   for (const auto& item : *map) {
-    bool is_valid_counter_value = property_id == CSSPropertyCounterIncrement
+    bool is_valid_counter_value = property.IDEquals(CSSPropertyCounterIncrement)
                                       ? item.value.IsIncrement()
                                       : item.value.IsReset();
     if (!is_valid_counter_value)
       continue;
 
     list->Append(*CSSCustomIdentValue::Create(item.key));
-    short number = property_id == CSSPropertyCounterIncrement
+    short number = property.IDEquals(CSSPropertyCounterIncrement)
                        ? item.value.IncrementValue()
                        : item.value.ResetValue();
     list->Append(*CSSPrimitiveValue::Create(
@@ -1712,16 +1713,16 @@ static CSSValueList* ValuesForSidesShorthand(
   CSSValueList* list = CSSValueList::CreateSpaceSeparated();
   // Assume the properties are in the usual order top, right, bottom, left.
   const CSSValue* top_value = ComputedStyleCSSValueMapping::Get(
-      shorthand.properties()[0], style, layout_object, styled_node,
+      *shorthand.properties()[0], style, layout_object, styled_node,
       allow_visited_style);
   const CSSValue* right_value = ComputedStyleCSSValueMapping::Get(
-      shorthand.properties()[1], style, layout_object, styled_node,
+      *shorthand.properties()[1], style, layout_object, styled_node,
       allow_visited_style);
   const CSSValue* bottom_value = ComputedStyleCSSValueMapping::Get(
-      shorthand.properties()[2], style, layout_object, styled_node,
+      *shorthand.properties()[2], style, layout_object, styled_node,
       allow_visited_style);
   const CSSValue* left_value = ComputedStyleCSSValueMapping::Get(
-      shorthand.properties()[3], style, layout_object, styled_node,
+      *shorthand.properties()[3], style, layout_object, styled_node,
       allow_visited_style);
 
   // All 4 properties must be specified.
@@ -1750,10 +1751,10 @@ static CSSValuePair* ValuesForInlineBlockShorthand(
     Node* styled_node,
     bool allow_visited_style) {
   const CSSValue* start_value = ComputedStyleCSSValueMapping::Get(
-      shorthand.properties()[0], style, layout_object, styled_node,
+      *shorthand.properties()[0], style, layout_object, styled_node,
       allow_visited_style);
   const CSSValue* end_value = ComputedStyleCSSValueMapping::Get(
-      shorthand.properties()[1], style, layout_object, styled_node,
+      *shorthand.properties()[1], style, layout_object, styled_node,
       allow_visited_style);
   // Both properties must be specified.
   if (!start_value || !end_value)
@@ -2017,11 +2018,12 @@ CSSValue* ComputedStyleCSSValueMapping::ValueForOffset(
       DCHECK(ToCSSIdentifierValue(position)->GetValueID() == CSSValueAuto);
   }
 
-  CSSPropertyID longhands[] = {CSSPropertyOffsetPath, CSSPropertyOffsetDistance,
-                               CSSPropertyOffsetRotate};
-  for (CSSPropertyID longhand : longhands) {
+  static const CSSProperty* longhands[3] = {&GetCSSPropertyOffsetPath(),
+                                            &GetCSSPropertyOffsetDistance(),
+                                            &GetCSSPropertyOffsetRotate()};
+  for (const CSSProperty* longhand : longhands) {
     const CSSValue* value = ComputedStyleCSSValueMapping::Get(
-        longhand, style, layout_object, styled_node, allow_visited_style);
+        *longhand, style, layout_object, styled_node, allow_visited_style);
     DCHECK(value);
     list->Append(*value);
   }
@@ -2230,19 +2232,18 @@ static bool WidthOrHeightShouldReturnUsedValue(const LayoutObject* object) {
 }
 
 const CSSValue* ComputedStyleCSSValueMapping::Get(
-    CSSPropertyID property_id,
+    const CSSProperty& property,
     const ComputedStyle& style,
     const LayoutObject* layout_object,
     Node* styled_node,
     bool allow_visited_style) {
-  if (property_id == CSSPropertyInvalid)
+  if (property.IDEquals(CSSPropertyInvalid))
     return nullptr;
   const SVGComputedStyle& svg_style = style.SvgStyle();
-  property_id = CSSProperty::Get(property_id)
-                    .ResolveDirectionAwareProperty(style.Direction(),
-                                                   style.GetWritingMode());
-  DCHECK_NE(property_id, CSSPropertyInvalid);
-  switch (property_id) {
+  const CSSProperty& resolved_property = property.ResolveDirectionAwareProperty(
+      style.Direction(), style.GetWritingMode());
+  DCHECK(!resolved_property.IDEquals(CSSPropertyInvalid));
+  switch (resolved_property.PropertyID()) {
     case CSSPropertyBackgroundColor:
       return allow_visited_style
                  ? CSSColorValue::Create(
@@ -2252,9 +2253,10 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
     case CSSPropertyBackgroundImage:
     case CSSPropertyWebkitMaskImage: {
       CSSValueList* list = CSSValueList::CreateCommaSeparated();
-      const FillLayer* curr_layer = property_id == CSSPropertyWebkitMaskImage
-                                        ? &style.MaskLayers()
-                                        : &style.BackgroundLayers();
+      const FillLayer* curr_layer =
+          resolved_property.IDEquals(CSSPropertyWebkitMaskImage)
+              ? &style.MaskLayers()
+              : &style.BackgroundLayers();
       for (; curr_layer; curr_layer = curr_layer->Next()) {
         if (curr_layer->GetImage())
           list->Append(*curr_layer->GetImage()->ComputedCSSValue());
@@ -2266,9 +2268,10 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
     case CSSPropertyBackgroundSize:
     case CSSPropertyWebkitMaskSize: {
       CSSValueList* list = CSSValueList::CreateCommaSeparated();
-      const FillLayer* curr_layer = property_id == CSSPropertyWebkitMaskSize
-                                        ? &style.MaskLayers()
-                                        : &style.BackgroundLayers();
+      const FillLayer* curr_layer =
+          resolved_property.IDEquals(CSSPropertyWebkitMaskSize)
+              ? &style.MaskLayers()
+              : &style.BackgroundLayers();
       for (; curr_layer; curr_layer = curr_layer->Next())
         list->Append(*ValueForFillSize(curr_layer->Size(), style));
       return list;
@@ -2276,9 +2279,10 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
     case CSSPropertyBackgroundRepeat:
     case CSSPropertyWebkitMaskRepeat: {
       CSSValueList* list = CSSValueList::CreateCommaSeparated();
-      const FillLayer* curr_layer = property_id == CSSPropertyWebkitMaskRepeat
-                                        ? &style.MaskLayers()
-                                        : &style.BackgroundLayers();
+      const FillLayer* curr_layer =
+          resolved_property.IDEquals(CSSPropertyWebkitMaskRepeat)
+              ? &style.MaskLayers()
+              : &style.BackgroundLayers();
       for (; curr_layer; curr_layer = curr_layer->Next())
         list->Append(
             *ValueForFillRepeat(curr_layer->RepeatX(), curr_layer->RepeatY()));
@@ -2294,7 +2298,7 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
     case CSSPropertyWebkitMaskComposite: {
       CSSValueList* list = CSSValueList::CreateCommaSeparated();
       const FillLayer* curr_layer =
-          property_id == CSSPropertyWebkitMaskComposite
+          resolved_property.IDEquals(CSSPropertyWebkitMaskComposite)
               ? &style.MaskLayers()
               : &style.BackgroundLayers();
       for (; curr_layer; curr_layer = curr_layer->Next())
@@ -2312,13 +2316,14 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
     case CSSPropertyBackgroundOrigin:
     case CSSPropertyWebkitMaskClip:
     case CSSPropertyWebkitMaskOrigin: {
-      bool is_clip = property_id == CSSPropertyBackgroundClip ||
-                     property_id == CSSPropertyWebkitMaskClip;
+      bool is_clip = resolved_property.IDEquals(CSSPropertyBackgroundClip) ||
+                     resolved_property.IDEquals(CSSPropertyWebkitMaskClip);
       CSSValueList* list = CSSValueList::CreateCommaSeparated();
-      const FillLayer* curr_layer = (property_id == CSSPropertyWebkitMaskClip ||
-                                     property_id == CSSPropertyWebkitMaskOrigin)
-                                        ? &style.MaskLayers()
-                                        : &style.BackgroundLayers();
+      const FillLayer* curr_layer =
+          (resolved_property.IDEquals(CSSPropertyWebkitMaskClip) ||
+           resolved_property.IDEquals(CSSPropertyWebkitMaskOrigin))
+              ? &style.MaskLayers()
+              : &style.BackgroundLayers();
       for (; curr_layer; curr_layer = curr_layer->Next()) {
         EFillBox box = is_clip ? curr_layer->Clip() : curr_layer->Origin();
         list->Append(*CSSIdentifierValue::Create(box));
@@ -2328,19 +2333,21 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
     case CSSPropertyBackgroundPosition:
     case CSSPropertyWebkitMaskPosition: {
       CSSValueList* list = CSSValueList::CreateCommaSeparated();
-      const FillLayer* curr_layer = property_id == CSSPropertyWebkitMaskPosition
-                                        ? &style.MaskLayers()
-                                        : &style.BackgroundLayers();
-      for (; curr_layer; curr_layer = curr_layer->Next())
+      const FillLayer* curr_layer =
+          resolved_property.IDEquals(CSSPropertyWebkitMaskPosition)
+              ? &style.MaskLayers()
+              : &style.BackgroundLayers();
+      for (; curr_layer; curr_layer = curr_layer->Next()) {
         list->Append(
-            *CreatePositionListForLayer(property_id, *curr_layer, style));
+            *CreatePositionListForLayer(resolved_property, *curr_layer, style));
+      }
       return list;
     }
     case CSSPropertyBackgroundPositionX:
     case CSSPropertyWebkitMaskPositionX: {
       CSSValueList* list = CSSValueList::CreateCommaSeparated();
       const FillLayer* curr_layer =
-          property_id == CSSPropertyWebkitMaskPositionX
+          resolved_property.IDEquals(CSSPropertyWebkitMaskPositionX)
               ? &style.MaskLayers()
               : &style.BackgroundLayers();
       for (; curr_layer; curr_layer = curr_layer->Next())
@@ -2352,7 +2359,7 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
     case CSSPropertyWebkitMaskPositionY: {
       CSSValueList* list = CSSValueList::CreateCommaSeparated();
       const FillLayer* curr_layer =
-          property_id == CSSPropertyWebkitMaskPositionY
+          resolved_property.IDEquals(CSSPropertyWebkitMaskPositionY)
               ? &style.MaskLayers()
               : &style.BackgroundLayers();
       for (; curr_layer; curr_layer = curr_layer->Next())
@@ -2421,7 +2428,7 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
     case CSSPropertyBorderLeftWidth:
       return ZoomAdjustedPixelValue(style.BorderLeftWidth(), style);
     case CSSPropertyBottom:
-      return ValueForPositionOffset(style, CSSPropertyBottom, layout_object);
+      return ValueForPositionOffset(style, resolved_property, layout_object);
     case CSSPropertyWebkitBoxAlign:
       return CSSIdentifierValue::Create(style.BoxAlign());
     case CSSPropertyWebkitBoxDecorationBreak:
@@ -2765,7 +2772,7 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
     case CSSPropertyJustifySelf:
       return ValueForItemPositionWithOverflowAlignment(style.JustifySelf());
     case CSSPropertyLeft:
-      return ValueForPositionOffset(style, CSSPropertyLeft, layout_object);
+      return ValueForPositionOffset(style, resolved_property, layout_object);
     case CSSPropertyLetterSpacing:
       if (!style.LetterSpacing())
         return CSSIdentifierValue::Create(CSSValueNormal);
@@ -2964,7 +2971,7 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
       }
       return CSSIdentifierValue::Create(CSSValueNone);
     case CSSPropertyRight:
-      return ValueForPositionOffset(style, CSSPropertyRight, layout_object);
+      return ValueForPositionOffset(style, resolved_property, layout_object);
     case CSSPropertyWebkitRubyPosition:
       return CSSIdentifierValue::Create(style.GetRubyPosition());
     case CSSPropertyScrollBehavior:
@@ -3073,7 +3080,7 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
     case CSSPropertyTextTransform:
       return CSSIdentifierValue::Create(style.TextTransform());
     case CSSPropertyTop:
-      return ValueForPositionOffset(style, CSSPropertyTop, layout_object);
+      return ValueForPositionOffset(style, resolved_property, layout_object);
     case CSSPropertyTouchAction:
       return TouchActionFlagsToCSSValue(style.GetTouchAction());
     case CSSPropertyUnicodeBidi:
@@ -3482,9 +3489,8 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
     case CSSPropertyContent:
       return ValueForContentData(style);
     case CSSPropertyCounterIncrement:
-      return ValueForCounterDirectives(style, property_id);
     case CSSPropertyCounterReset:
-      return ValueForCounterDirectives(style, property_id);
+      return ValueForCounterDirectives(style, resolved_property);
     case CSSPropertyClipPath:
       if (ClipPathOperation* operation = style.ClipPath()) {
         if (operation->GetType() == ClipPathOperation::SHAPE)
@@ -3521,13 +3527,14 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
       return ValuesForBackgroundShorthand(style, layout_object, styled_node,
                                           allow_visited_style);
     case CSSPropertyBorder: {
-      const CSSValue* value = Get(CSSPropertyBorderTop, style, layout_object,
-                                  styled_node, allow_visited_style);
-      const CSSPropertyID kProperties[] = {CSSPropertyBorderRight,
-                                           CSSPropertyBorderBottom,
-                                           CSSPropertyBorderLeft};
+      const CSSValue* value =
+          Get(GetCSSPropertyBorderTop(), style, layout_object, styled_node,
+              allow_visited_style);
+      static const CSSProperty* kProperties[3] = {&GetCSSPropertyBorderRight(),
+                                                  &GetCSSPropertyBorderBottom(),
+                                                  &GetCSSPropertyBorderLeft()};
       for (size_t i = 0; i < WTF_ARRAY_LENGTH(kProperties); ++i) {
-        if (!DataEquivalent(value, Get(kProperties[i], style, layout_object,
+        if (!DataEquivalent(value, Get(*kProperties[i], style, layout_object,
                                        styled_node, allow_visited_style)))
           return nullptr;
       }

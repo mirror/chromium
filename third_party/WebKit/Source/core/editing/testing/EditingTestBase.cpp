@@ -77,6 +77,14 @@ std::string EditingTestBase::GetSelectionTextInFlatTreeFromBody(
                                                      selection);
 }
 
+std::string EditingTestBase::GetCaretTextFromBody(
+    const Position& position) const {
+  DCHECK(position.IsValidFor(GetDocument()))
+      << "A valid position must be provided " << position;
+  return GetSelectionTextFromBody(
+      SelectionInDOMTree::Builder().Collapse(position).Build());
+}
+
 ShadowRoot* EditingTestBase::CreateShadowRootForElementWithIDAndSetInnerHTML(
     TreeScope& scope,
     const char* host_element_id,
@@ -90,21 +98,11 @@ ShadowRoot* EditingTestBase::CreateShadowRootForElementWithIDAndSetInnerHTML(
   return &shadow_root;
 }
 
-void EditingTestBase::SetBodyContent(const std::string& body_content) {
-  GetDocument().body()->SetInnerHTMLFromString(
-      String::FromUTF8(body_content.c_str()), ASSERT_NO_EXCEPTION);
-  UpdateAllLifecyclePhases();
-}
-
 ShadowRoot* EditingTestBase::SetShadowContent(const char* shadow_content,
                                               const char* host) {
   ShadowRoot* shadow_root = CreateShadowRootForElementWithIDAndSetInnerHTML(
       GetDocument(), host, shadow_content);
   return shadow_root;
-}
-
-void EditingTestBase::UpdateAllLifecyclePhases() {
-  GetDocument().View()->UpdateAllLifecyclePhases();
 }
 
 }  // namespace blink

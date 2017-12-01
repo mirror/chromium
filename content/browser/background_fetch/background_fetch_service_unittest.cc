@@ -262,15 +262,7 @@ TEST_F(BackgroundFetchServiceTest, FetchRegistrationProperties) {
 
   // The |registration| should reflect the options given in |options|.
   EXPECT_EQ(registration.developer_id, kExampleDeveloperId);
-  ASSERT_EQ(registration.icons.size(), options.icons.size());
 
-  for (size_t i = 0; i < registration.icons.size(); ++i) {
-    EXPECT_EQ(registration.icons[i].src, options.icons[i].src);
-    EXPECT_EQ(registration.icons[i].sizes, options.icons[i].sizes);
-    EXPECT_EQ(registration.icons[i].type, options.icons[i].type);
-  }
-
-  EXPECT_EQ(registration.title, options.title);
   EXPECT_EQ(registration.download_total, options.download_total);
 
   blink::mojom::BackgroundFetchError second_error;
@@ -282,15 +274,7 @@ TEST_F(BackgroundFetchServiceTest, FetchRegistrationProperties) {
 
   // The |second_registration| should reflect the options given in |options|.
   EXPECT_EQ(second_registration.developer_id, kExampleDeveloperId);
-  ASSERT_EQ(second_registration.icons.size(), options.icons.size());
 
-  for (size_t i = 0; i < second_registration.icons.size(); ++i) {
-    EXPECT_EQ(second_registration.icons[i].src, options.icons[i].src);
-    EXPECT_EQ(second_registration.icons[i].sizes, options.icons[i].sizes);
-    EXPECT_EQ(second_registration.icons[i].type, options.icons[i].type);
-  }
-
-  EXPECT_EQ(second_registration.title, options.title);
   EXPECT_EQ(second_registration.download_total, options.download_total);
 }
 
@@ -553,7 +537,6 @@ TEST_F(BackgroundFetchServiceTest, UpdateUI) {
       Fetch(service_worker_registration_id, kExampleDeveloperId, requests,
             options, &error, &registration);
   ASSERT_EQ(blink::mojom::BackgroundFetchError::NONE, error);
-  ASSERT_EQ(options.title, registration.title);
 
   std::string second_title = "2nd title";
 
@@ -567,8 +550,6 @@ TEST_F(BackgroundFetchServiceTest, UpdateUI) {
   GetRegistration(service_worker_registration_id, kExampleDeveloperId, &error,
                   &second_registration);
   ASSERT_EQ(blink::mojom::BackgroundFetchError::NONE, error);
-  EXPECT_NE(options.title, second_registration.title);
-  EXPECT_EQ(second_title, second_registration.title);
 }
 
 TEST_F(BackgroundFetchServiceTest, Abort) {
@@ -751,7 +732,6 @@ TEST_F(BackgroundFetchServiceTest, UniqueId) {
                   &gotten_registration);
   EXPECT_EQ(blink::mojom::BackgroundFetchError::NONE, error);
   EXPECT_EQ(second_registration.unique_id, gotten_registration.unique_id);
-  EXPECT_EQ(second_registration.title, gotten_registration.title);
 
   // Calling UpdateUI for the second registration should succeed, and update the
   // title of the second registration only.
@@ -774,7 +754,6 @@ TEST_F(BackgroundFetchServiceTest, UniqueId) {
                   &gotten_registration);
   EXPECT_EQ(blink::mojom::BackgroundFetchError::NONE, error);
   EXPECT_EQ(second_registration.unique_id, gotten_registration.unique_id);
-  EXPECT_EQ(updated_second_registration_title, gotten_registration.title);
 
   // Aborting the previously aborted registration should fail with INVALID_ID
   // since it is no longer active.

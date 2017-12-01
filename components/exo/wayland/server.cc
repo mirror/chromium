@@ -351,17 +351,17 @@ void surface_frame(wl_client* client,
 void surface_set_opaque_region(wl_client* client,
                                wl_resource* resource,
                                wl_resource* region_resource) {
-  GetUserDataAs<Surface>(resource)->SetOpaqueRegion(
-      region_resource ? *GetUserDataAs<SkRegion>(region_resource)
-                      : SkRegion(SkIRect::MakeEmpty()));
+  SkRegion region = region_resource ? *GetUserDataAs<SkRegion>(region_resource)
+                                    : SkRegion(SkIRect::MakeEmpty());
+  GetUserDataAs<Surface>(resource)->SetOpaqueRegion(cc::Region(region));
 }
 
 void surface_set_input_region(wl_client* client,
                               wl_resource* resource,
                               wl_resource* region_resource) {
-  GetUserDataAs<Surface>(resource)->SetInputRegion(
-      region_resource ? *GetUserDataAs<SkRegion>(region_resource)
-                      : SkRegion(SkIRect::MakeLargest()));
+  SkRegion region = region_resource ? *GetUserDataAs<SkRegion>(region_resource)
+                                    : SkRegion(SkIRect::MakeLargest());
+  GetUserDataAs<Surface>(resource)->SetInputRegion(cc::Region(region));
 }
 
 void surface_commit(wl_client* client, wl_resource* resource) {
@@ -992,43 +992,11 @@ void shell_surface_set_transient(wl_client* client,
   if (shell_surface->enabled())
     return;
 
-  // Parent widget can be found by locating the closest ancestor with a widget.
-  views::Widget* parent_widget = nullptr;
-  aura::Window* parent_window =
-      GetUserDataAs<Surface>(parent_resource)->window();
-  while (parent_window) {
-    parent_widget = views::Widget::GetWidgetForNativeWindow(parent_window);
-    if (parent_widget)
-      break;
-    parent_window = parent_window->parent();
-  }
-
-  DLOG_IF(WARNING, parent_resource && !!parent_widget)
-      << "Parent surface is not a visible shell surface";
-
-  gfx::Point origin(x, y);
-  ShellSurface* parent_shell_surface = nullptr;
-
-  // Set parent if found and it is associated with a shell surface.
-  if (parent_widget &&
-      ShellSurface::GetMainSurface(parent_widget->GetNativeWindow())) {
-    wm::ConvertPointToScreen(
-        ShellSurface::GetMainSurface(parent_widget->GetNativeWindow())
-            ->window(),
-        &origin);
-    // Shell surface widget delegate implementation of GetContentsView()
-    // returns a pointer to the shell surface instance.
-    parent_shell_surface = static_cast<ShellSurface*>(
-        parent_widget->widget_delegate()->GetContentsView());
-  }
-
   if (flags & WL_SHELL_SURFACE_TRANSIENT_INACTIVE) {
-    shell_surface->SetOrigin(origin);
     shell_surface->SetContainer(ash::kShellWindowId_SystemModalContainer);
     shell_surface->SetActivatable(false);
-  } else {
-    shell_surface->SetParent(parent_shell_surface);
   }
+
   shell_surface->SetEnabled(true);
 }
 
@@ -1090,15 +1058,6 @@ const struct wl_shell_surface_interface shell_surface_implementation = {
 ////////////////////////////////////////////////////////////////////////////////
 // wl_shell_interface:
 
-void HandleShellSurfaceCloseCallback(wl_resource* resource) {
-  // Shell surface interface doesn't have a close event. Just send a ping event
-  // for now.
-  uint32_t serial = wl_display_next_serial(
-      wl_client_get_display(wl_resource_get_client(resource)));
-  wl_shell_surface_send_ping(resource, serial);
-  wl_client_flush(wl_resource_get_client(resource));
-}
-
 uint32_t HandleShellSurfaceConfigureCallback(
     wl_resource* resource,
     const gfx::Size& size,
@@ -1131,10 +1090,6 @@ void shell_get_shell_surface(wl_client* client,
   // Shell surfaces are initially disabled and needs to be explicitly mapped
   // before they are enabled and can become visible.
   shell_surface->SetEnabled(false);
-
-  shell_surface->set_close_callback(
-      base::Bind(&HandleShellSurfaceCloseCallback,
-                 base::Unretained(shell_surface_resource)));
 
   shell_surface->set_configure_callback(
       base::Bind(&HandleShellSurfaceConfigureCallback,
@@ -1782,9 +1737,8 @@ void xdg_surface_v6_get_popup(wl_client* client,
   gfx::Point origin = position;
   views::View::ConvertPointToScreen(
       parent->GetWidget()->widget_delegate()->GetContentsView(), &origin);
-  shell_surface->SetParent(parent);
   shell_surface->SetOrigin(origin);
-  shell_surface->SetContainer(ash::kShellWindowId_SystemModalContainer);
+  shell_surface->SetContainer(ash::kShellWindowId_MenuContainer);
   shell_surface->SetBoundsMode(ShellSurface::BoundsMode::FIXED);
   shell_surface->SetActivatable(false);
   shell_surface->SetCanMinimize(false);
@@ -2128,10 +2082,6 @@ class WaylandRemoteShell : public ash::TabletModeObserver,
     display::Screen::GetScreen()->RemoveObserver(this);
   }
 
-  bool IsMultiDisplaySupported() const {
-    return wl_resource_get_version(remote_shell_resource_) >= 5;
-  }
-
   std::unique_ptr<ShellSurface> CreateShellSurface(
       Surface* surface,
       int container,
@@ -2148,21 +2098,15 @@ class WaylandRemoteShell : public ash::TabletModeObserver,
 
   // Overridden from display::DisplayObserver:
   void OnDisplayAdded(const display::Display& new_display) override {
-    if (IsMultiDisplaySupported())
-      ScheduleSendDisplayMetrics(0);
+    ScheduleSendDisplayMetrics(0);
   }
 
   void OnDisplayRemoved(const display::Display& old_display) override {
-    if (IsMultiDisplaySupported())
-      ScheduleSendDisplayMetrics(0);
+    ScheduleSendDisplayMetrics(0);
   }
 
   void OnDisplayMetricsChanged(const display::Display& display,
                                uint32_t changed_metrics) override {
-    if (!IsMultiDisplaySupported() &&
-        display::Screen::GetScreen()->GetPrimaryDisplay().id() != display.id())
-      return;
-
     // No need to update when a primary display has changed without bounds
     // change. See WaylandPrimaryDisplayObserver::OnDisplayMetricsChanged
     // for more details.
@@ -2223,37 +2167,23 @@ class WaylandRemoteShell : public ash::TabletModeObserver,
 
     const display::Screen* screen = display::Screen::GetScreen();
 
-    if (IsMultiDisplaySupported()) {
-      for (const auto& display : screen->GetAllDisplays()) {
-        const gfx::Rect& bounds = display.bounds();
-        const gfx::Insets& insets = display.GetWorkAreaInsets();
+    for (const auto& display : screen->GetAllDisplays()) {
+      const gfx::Rect& bounds = display.bounds();
+      const gfx::Insets& insets = display.GetWorkAreaInsets();
 
-        double device_scale_factor =
-            WMHelper::GetInstance()->GetDisplayInfo(display.id())
-                .device_scale_factor();
+      double device_scale_factor = WMHelper::GetInstance()
+                                       ->GetDisplayInfo(display.id())
+                                       .device_scale_factor();
 
-        zcr_remote_shell_v1_send_workspace(
-            remote_shell_resource_, static_cast<uint32_t>(display.id() >> 32),
-            static_cast<uint32_t>(display.id()), bounds.x(), bounds.y(),
-            bounds.width(), bounds.height(), insets.left(), insets.top(),
-            insets.right(), insets.bottom(),
-            DisplayTransform(display.rotation()),
-            wl_fixed_from_double(device_scale_factor), display.IsInternal());
-      }
-
-      zcr_remote_shell_v1_send_configure(remote_shell_resource_, layout_mode_);
+      zcr_remote_shell_v1_send_workspace(
+          remote_shell_resource_, static_cast<uint32_t>(display.id() >> 32),
+          static_cast<uint32_t>(display.id()), bounds.x(), bounds.y(),
+          bounds.width(), bounds.height(), insets.left(), insets.top(),
+          insets.right(), insets.bottom(), DisplayTransform(display.rotation()),
+          wl_fixed_from_double(device_scale_factor), display.IsInternal());
     }
 
-    display::Display primary_display = screen->GetPrimaryDisplay();
-    const gfx::Insets& insets = primary_display.GetWorkAreaInsets();
-
-    zcr_remote_shell_v1_send_configuration_changed(
-        remote_shell_resource_, primary_display.size().width(),
-        primary_display.size().height(),
-        DisplayTransform(primary_display.rotation()),
-        wl_fixed_from_double(primary_display.device_scale_factor()),
-        insets.left(), insets.top(), insets.right(), insets.bottom(),
-        layout_mode_);
+    zcr_remote_shell_v1_send_configure(remote_shell_resource_, layout_mode_);
     wl_client_flush(wl_resource_get_client(remote_shell_resource_));
   }
 
@@ -2406,11 +2336,9 @@ void remote_shell_get_remote_surface(wl_client* client,
   shell_surface->set_state_changed_callback(
       base::Bind(&HandleRemoteSurfaceStateChangedCallback,
                  base::Unretained(remote_surface_resource)));
-  if (shell->IsMultiDisplaySupported()) {
-    shell_surface->set_configure_callback(
-        base::Bind(&HandleRemoteSurfaceConfigureCallback,
-                   base::Unretained(remote_surface_resource)));
-  }
+  shell_surface->set_configure_callback(
+      base::Bind(&HandleRemoteSurfaceConfigureCallback,
+                 base::Unretained(remote_surface_resource)));
 
   SetImplementation(remote_surface_resource, &remote_surface_implementation,
                     std::move(shell_surface));
@@ -3110,8 +3038,9 @@ class WaylandKeyboardDelegate
     return surface_resource &&
            wl_resource_get_client(surface_resource) == client();
   }
-  void OnKeyboardEnter(Surface* surface,
-                       const std::vector<ui::DomCode>& pressed_keys) override {
+  void OnKeyboardEnter(
+      Surface* surface,
+      const base::flat_set<ui::DomCode>& pressed_keys) override {
     wl_resource* surface_resource = GetSurfaceResource(surface);
     DCHECK(surface_resource);
     wl_array keys;

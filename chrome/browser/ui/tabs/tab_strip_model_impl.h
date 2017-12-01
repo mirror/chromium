@@ -11,6 +11,7 @@
 #include <memory>
 #include <vector>
 
+#include "base/containers/span.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
@@ -61,9 +62,7 @@ class TabStripModelImpl : public TabStripModel {
   content::WebContents* GetWebContentsAt(int index) const override;
   int GetIndexOfWebContents(
       const content::WebContents* contents) const override;
-  void UpdateWebContentsStateAt(
-      int index,
-      TabStripModelObserver::TabChangeType change_type) override;
+  void UpdateWebContentsStateAt(int index, TabChangeType change_type) override;
   void SetTabNeedsAttentionAt(int index, bool attention) override;
   void CloseAllTabs() override;
   bool TabsAreLoading() const override;
@@ -190,7 +189,7 @@ class TabStripModelImpl : public TabStripModel {
   //
   // Returns true if the WebContentses were closed immediately, false if we
   // are waiting for the result of an onunload handler.
-  bool InternalCloseTabs(const std::vector<content::WebContents*>& items,
+  bool InternalCloseTabs(base::span<content::WebContents* const> items,
                          uint32_t close_types);
 
   // Gets the WebContents at an index. Does no bounds checking.

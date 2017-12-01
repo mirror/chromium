@@ -1681,7 +1681,7 @@ std::ostream& operator<<(std::ostream& ostream, const Node& node) {
   if (node.IsShadowRoot()) {
     // nodeName of ShadowRoot is #document-fragment.  It's confused with
     // DocumentFragment.
-    return ostream << "#shadow-root";
+    return ostream << "#shadow-root(" << ToShadowRoot(node).GetType() << ")";
   }
   if (node.IsDocumentTypeNode())
     return ostream << "DOCTYPE " << node.nodeName().Utf8().data();
@@ -2407,11 +2407,6 @@ void Node::DefaultEventHandler(Event* event) {
           frame->GetEventHandler().StartMiddleClickAutoscroll(layout_object);
       }
     }
-  } else if (event->type() == EventTypeNames::webkitEditableContentChanged) {
-    // TODO(chongz): Remove after shipped.
-    // New InputEvent are dispatched in Editor::appliedEditing, etc.
-    if (!RuntimeEnabledFeatures::InputEventEnabled())
-      DispatchInputEvent();
   }
 }
 

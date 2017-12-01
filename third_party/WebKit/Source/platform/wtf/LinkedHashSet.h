@@ -29,15 +29,18 @@
 
 namespace WTF {
 
-// LinkedHashSet: Just like HashSet, this class provides a Set
-// interface - a collection of unique objects with O(1) insertion,
-// removal and test for containership. However, it also has an
-// order - iterating it will always give back values in the order
-// in which they are added.
-
-// Unlike ListHashSet, but like most WTF collections, iteration is NOT safe
-// against mutation of the LinkedHashSet.
-
+// LinkedHashSet provides a Set interface like HashSet, but also has a
+// predictable iteration order. It has O(1) insertion, removal, and test for
+// containership. It maintains a linked list through its contents such that
+// iterating it yields values in the order in which they were inserted.
+//
+// LinkedHashSet iterators are invalidated by mutation of the set. This means,
+// for example, that you cannot modify the container while iterating
+// over it (this will DCHECK in debug). Instead, you should either copy the
+// entries to a vector before iterating, or maintain a separate list of pending
+// updates.
+//
+// Unlike ListHashSet, this container supports WeakMember<T>.
 template <typename Value,
           typename HashFunctions,
           typename HashTraits,
@@ -115,7 +118,7 @@ class LinkedHashSetNodeBase {
   // since they point to something that does not point at us. This is used
   // inside the shouldExpand() "if" in HashTable::add.
   LinkedHashSetNodeBase(const LinkedHashSetNodeBase& other)
-      : prev_(0), next_(0) {}
+      : prev_(nullptr), next_(nullptr) {}
 
   LinkedHashSetNodeBase(LinkedHashSetNodeBase&& other)
       : prev_(other.prev_), next_(other.next_) {
@@ -591,6 +594,7 @@ class LinkedHashSetConstIterator {
 template <typename LinkedHashSetType>
 class LinkedHashSetReverseIterator
     : public LinkedHashSetIterator<LinkedHashSetType> {
+  typedef LinkedHashSetReverseIterator<LinkedHashSetType> reverse_iterator;
   typedef LinkedHashSetIterator<LinkedHashSetType> Superclass;
   typedef LinkedHashSetConstReverseIterator<LinkedHashSetType>
       const_reverse_iterator;
@@ -614,7 +618,8 @@ class LinkedHashSetReverseIterator
   // Postfix ++ and -- intentionally omitted.
 
   operator const_reverse_iterator() const {
-    return *reinterpret_cast<const_reverse_iterator*>(this);
+    return *reinterpret_cast<const_reverse_iterator*>(
+        const_cast<reverse_iterator*>(this));
   }
 
   template <typename T, typename U, typename V, typename W>

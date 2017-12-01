@@ -11,17 +11,14 @@
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/render_text.h"
 #include "ui/views/view.h"
+#include "ui/views/widget/native_widget_aura.h"
 
 HostedAppFrameHeaderAsh::HostedAppFrameHeaderAsh(
     extensions::HostedAppBrowserController* app_controller,
     views::Widget* frame,
     views::View* header_view,
-    ash::FrameCaptionButtonContainerView* caption_button_container,
-    ash::FrameCaptionButton* back_button)
-    : DefaultFrameHeader(frame,
-                         header_view,
-                         caption_button_container,
-                         back_button),
+    ash::FrameCaptionButtonContainerView* caption_button_container)
+    : DefaultFrameHeader(frame, header_view, caption_button_container),
       app_controller_(app_controller),
       app_name_(base::UTF8ToUTF16(app_controller->GetAppShortName())),
       app_and_domain_(l10n_util::GetStringFUTF16(
@@ -46,7 +43,7 @@ HostedAppFrameHeaderAsh::~HostedAppFrameHeaderAsh() {}
 std::unique_ptr<gfx::RenderText> HostedAppFrameHeaderAsh::CreateRenderText() {
   std::unique_ptr<gfx::RenderText> render_text(
       gfx::RenderText::CreateInstance());
-  render_text->SetFontList(GetTitleFontList());
+  render_text->SetFontList(views::NativeWidgetAura::GetWindowTitleFontList());
   render_text->SetCursorEnabled(false);
   render_text->SetColor(GetTitleColor());
   render_text->SetElideBehavior(gfx::FADE_TAIL);

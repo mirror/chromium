@@ -39,7 +39,6 @@
 #include "platform/geometry/IntRect.h"
 #include "platform/graphics/CanvasHeuristicParameters.h"
 #include "platform/graphics/GraphicsContext.h"
-#include "platform/graphics/ImageBufferClient.h"
 #include "platform/graphics/RecordingImageBufferSurface.h"
 #include "platform/graphics/StaticBitmapImage.h"
 #include "platform/graphics/UnacceleratedImageBufferSurface.h"
@@ -51,7 +50,6 @@
 #include "platform/image-encoders/ImageEncoder.h"
 #include "platform/network/mime/MIMETypeRegistry.h"
 #include "platform/runtime_enabled_features.h"
-#include "platform/wtf/CheckedNumeric.h"
 #include "platform/wtf/MathExtras.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/Vector.h"
@@ -92,24 +90,11 @@ std::unique_ptr<ImageBuffer> ImageBuffer::Create(
 ImageBuffer::ImageBuffer(std::unique_ptr<ImageBufferSurface> surface)
     : weak_ptr_factory_(this),
       snapshot_state_(kInitialSnapshotState),
-      surface_(std::move(surface)),
-      client_(nullptr),
-      gpu_readback_invoked_in_current_frame_(false),
-      gpu_readback_successive_frames_(0),
-      gpu_memory_usage_(0) {
+      surface_(std::move(surface)) {
   surface_->SetImageBuffer(this);
-  UpdateGPUMemoryUsage();
 }
 
-intptr_t ImageBuffer::global_gpu_memory_usage_ = 0;
-unsigned ImageBuffer::global_accelerated_image_buffer_count_ = 0;
-
 ImageBuffer::~ImageBuffer() {
-  if (gpu_memory_usage_) {
-    DCHECK_GT(global_accelerated_image_buffer_count_, 0u);
-    global_accelerated_image_buffer_count_--;
-  }
-  ImageBuffer::global_gpu_memory_usage_ -= gpu_memory_usage_;
   surface_->SetImageBuffer(nullptr);
 }
 
@@ -138,22 +123,6 @@ bool ImageBuffer::IsSurfaceValid() const {
 }
 
 void ImageBuffer::FinalizeFrame() {
-  if (IsAccelerated() &&
-      CanvasHeuristicParameters::kGPUReadbackForcesNoAcceleration &&
-      !RuntimeEnabledFeatures::Canvas2dFixedRenderingModeEnabled()) {
-    if (gpu_readback_invoked_in_current_frame_) {
-      gpu_readback_successive_frames_++;
-      gpu_readback_invoked_in_current_frame_ = false;
-    } else {
-      gpu_readback_successive_frames_ = 0;
-    }
-
-    if (gpu_readback_successive_frames_ >=
-        CanvasHeuristicParameters::kGPUReadbackMinSuccessiveFrames) {
-      DisableAcceleration();
-    }
-  }
-
   surface_->FinalizeFrame();
 }
 
@@ -163,16 +132,6 @@ void ImageBuffer::DoPaintInvalidation(const FloatRect& dirty_rect) {
 
 bool ImageBuffer::RestoreSurface() const {
   return surface_->IsValid() || surface_->Restore();
-}
-
-void ImageBuffer::NotifySurfaceInvalid() {
-  if (client_)
-    client_->NotifySurfaceInvalid();
-}
-
-void ImageBuffer::ResetCanvas(PaintCanvas* canvas) const {
-  if (client_)
-    client_->RestoreCanvasMatrixClipStack(canvas);
 }
 
 scoped_refptr<StaticBitmapImage> ImageBuffer::NewImageSnapshot(
@@ -311,17 +270,17 @@ void ImageBuffer::Draw(GraphicsContext& context,
 }
 
 bool ImageBuffer::GetImageData(const IntRect& rect,
-                               WTF::ArrayBufferContents& contents) const {
+                               WTF::ArrayBufferContents& contents,
+                               bool* is_gpu_readback_invoked) const {
   uint8_t bytes_per_pixel = surface_->ColorParams().BytesPerPixel();
   CheckedNumeric<int> data_size = bytes_per_pixel;
-  data_size *= rect.Width();
-  data_size *= rect.Height();
+  data_size *= rect.Size().Area();
   if (!data_size.IsValid() ||
       data_size.ValueOrDie() > v8::TypedArray::kMaxLength)
     return false;
 
   if (!IsSurfaceValid()) {
-    size_t alloc_size_in_bytes = rect.Width() * rect.Height() * bytes_per_pixel;
+    size_t alloc_size_in_bytes = rect.Size().Area() * bytes_per_pixel;
     auto data = WTF::ArrayBufferContents::CreateDataHandle(
         alloc_size_in_bytes, WTF::ArrayBufferContents::kZeroInitialize);
     if (!data)
@@ -344,7 +303,7 @@ bool ImageBuffer::GetImageData(const IntRect& rect,
       || rect.X() < 0 || rect.Y() < 0 ||
       rect.MaxX() > surface_->Size().Width() ||
       rect.MaxY() > surface_->Size().Height();
-  size_t alloc_size_in_bytes = rect.Width() * rect.Height() * bytes_per_pixel;
+  size_t alloc_size_in_bytes = rect.Size().Area() * bytes_per_pixel;
   WTF::ArrayBufferContents::InitializationPolicy initialization_policy =
       may_have_stray_area ? WTF::ArrayBufferContents::kZeroInitialize
                           : WTF::ArrayBufferContents::kDontInitialize;
@@ -363,11 +322,13 @@ bool ImageBuffer::GetImageData(const IntRect& rect,
                                        kUnpremul_SkAlphaType);
   sk_sp<SkImage> sk_image = snapshot->PaintImageForCurrentFrame().GetSkImage();
   bool read_pixels_successful = sk_image->readPixels(
-      info, result.Data(), bytes_per_pixel * rect.Width(), rect.X(), rect.Y());
+      info, result.Data(), info.minRowBytes(), rect.X(), rect.Y());
   DCHECK(read_pixels_successful ||
          !sk_image->bounds().intersect(SkIRect::MakeXYWH(
              rect.X(), rect.Y(), info.width(), info.height())));
-  gpu_readback_invoked_in_current_frame_ = true;
+  if (is_gpu_readback_invoked) {
+    *is_gpu_readback_invoked = true;
+  }
   result.Transfer(contents);
   return true;
 }
@@ -428,47 +389,6 @@ void ImageBuffer::PutByteArray(const unsigned char* source,
   surface_->WritePixels(info, src_addr, src_bytes_per_row, dest_x, dest_y);
 }
 
-void ImageBuffer::UpdateGPUMemoryUsage() const {
-  if (this->IsAccelerated()) {
-    // If image buffer is accelerated, we should keep track of GPU memory usage.
-    int gpu_buffer_count = 2;
-    CheckedNumeric<intptr_t> checked_gpu_usage =
-        surface_->ColorParams().BytesPerPixel() * gpu_buffer_count;
-    checked_gpu_usage *= this->Size().Width();
-    checked_gpu_usage *= this->Size().Height();
-    intptr_t gpu_memory_usage =
-        checked_gpu_usage.ValueOrDefault(std::numeric_limits<intptr_t>::max());
-
-    if (!gpu_memory_usage_)  // was not accelerated before
-      global_accelerated_image_buffer_count_++;
-
-    global_gpu_memory_usage_ += (gpu_memory_usage - gpu_memory_usage_);
-    gpu_memory_usage_ = gpu_memory_usage;
-  } else if (gpu_memory_usage_) {
-    // In case of switching from accelerated to non-accelerated mode,
-    // the GPU memory usage needs to be updated too.
-    DCHECK_GT(global_accelerated_image_buffer_count_, 0u);
-    global_accelerated_image_buffer_count_--;
-    global_gpu_memory_usage_ -= gpu_memory_usage_;
-    gpu_memory_usage_ = 0;
-
-    if (client_)
-      client_->DidDisableAcceleration();
-  }
-}
-
-void ImageBuffer::DisableAcceleration() {
-  if (!IsAccelerated())
-    return;
-
-  // Create and configure a recording (unaccelerated) surface.
-  std::unique_ptr<ImageBufferSurface> surface =
-      WTF::WrapUnique(new RecordingImageBufferSurface(
-          surface_->Size(), RecordingImageBufferSurface::kAllowFallback,
-          surface_->ColorParams()));
-  SetSurface(std::move(surface));
-}
-
 void ImageBuffer::SetSurface(std::unique_ptr<ImageBufferSurface> surface) {
   scoped_refptr<StaticBitmapImage> image =
       surface_->NewImageSnapshot(kPreferNoAcceleration, kSnapshotReasonPaint);
@@ -489,18 +409,16 @@ void ImageBuffer::SetSurface(std::unique_ptr<ImageBufferSurface> surface) {
     image = nullptr;
     image = StaticBitmapImage::Create(texture_image->makeNonTextureImage());
   }
+  SkPaint paint;
+  paint.setBlendMode(SkBlendMode::kSrc);
   surface->Canvas()->drawImage(image->PaintImageForCurrentFrame(), 0, 0);
   surface->SetImageBuffer(this);
-  if (client_)
-    client_->RestoreCanvasMatrixClipStack(surface->Canvas());
   surface_ = std::move(surface);
-
-  UpdateGPUMemoryUsage();
 }
 
-void ImageBuffer::SetNeedsCompositingUpdate() {
-  if (client_)
-    client_->SetNeedsCompositingUpdate();
+void ImageBuffer::OnCanvasDisposed() {
+  if (surface_)
+    surface_->SetCanvasResourceHost(nullptr);
 }
 
 bool ImageDataBuffer::EncodeImage(const String& mime_type,

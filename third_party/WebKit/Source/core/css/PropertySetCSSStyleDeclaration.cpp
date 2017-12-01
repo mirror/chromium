@@ -180,7 +180,7 @@ void AbstractPropertySetCSSStyleDeclaration::setCSSText(
   WillMutate();
 
   PropertySet().ParseDeclarationList(
-      text, execution_context->SecureContextMode(), ContextStyleSheet());
+      text, execution_context->GetSecureContextMode(), ContextStyleSheet());
 
   DidMutate(kPropertyChanged);
 
@@ -249,7 +249,8 @@ void AbstractPropertySetCSSStyleDeclaration::setProperty(
     return;
 
   SetPropertyInternal(property_id, property_name, value, important,
-                      execution_context->SecureContextMode(), exception_state);
+                      execution_context->GetSecureContextMode(),
+                      exception_state);
 }
 
 String AbstractPropertySetCSSStyleDeclaration::removeProperty(
@@ -357,7 +358,7 @@ StyleRuleCSSStyleDeclaration::StyleRuleCSSStyleDeclaration(
     : PropertySetCSSStyleDeclaration(property_set_arg),
       parent_rule_(parent_rule) {}
 
-StyleRuleCSSStyleDeclaration::~StyleRuleCSSStyleDeclaration() {}
+StyleRuleCSSStyleDeclaration::~StyleRuleCSSStyleDeclaration() = default;
 
 void StyleRuleCSSStyleDeclaration::WillMutate() {
   if (parent_rule_ && parent_rule_->parentStyleSheet())

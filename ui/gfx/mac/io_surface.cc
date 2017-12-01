@@ -224,12 +224,23 @@ IOSurfaceRef CreateIOSurface(const gfx::Size& size, gfx::BufferFormat format) {
 
 void IOSurfaceSetColorSpace(IOSurfaceRef io_surface,
                             const gfx::ColorSpace& color_space) {
-  // Retrieve the ICC profile data.
-  std::vector<char> icc_profile_data;
-  if (!color_space.GetAsFullRangeRGB().GetICCProfileData(&icc_profile_data)) {
-    DLOG(ERROR) << "Failed to set color space for IOSurface: no ICC profile.";
+  // Retrieve the ICC profile data that created this profile, if it exists.
+  ICCProfile icc_profile = ICCProfile::FromCacheMac(color_space);
+
+  // If that fails, generate parametric data.
+  if (!icc_profile.IsValid()) {
+    icc_profile =
+        ICCProfile::FromParametricColorSpace(color_space.GetAsFullRangeRGB());
+  }
+
+  // If that fails, we can't use this color space.
+  if (!icc_profile.IsValid()) {
+    DLOG(ERROR) << "Failed to set color space for IOSurface: no ICC profile: "
+                << color_space.ToString();
     return;
   }
+  std::vector<char> icc_profile_data = icc_profile.GetData();
+
   // Package it as a CFDataRef and send it to the IOSurface.
   base::ScopedCFTypeRef<CFDataRef> cf_data_icc_profile(CFDataCreate(
       nullptr, reinterpret_cast<const UInt8*>(icc_profile_data.data()),
