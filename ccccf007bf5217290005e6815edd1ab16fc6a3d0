@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d925680_8b03e9dd",
+        "filename": "chrome/browser/android/metrics/launch_metrics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-01T17:55:27Z",
+      "side": 1,
+      "message": "HOW DARE YOU ADD web_contents?!!!!\n\nFor things like this, feel free to TBR me!",
+      "range": {
+        "startLine": 66,
+        "startChar": 39,
+        "endLine": 66,
+        "endChar": 51
+      },
+      "revId": "ccccf007bf5217290005e6815edd1ab16fc6a3d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
