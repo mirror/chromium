@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "925db90f_e062a280",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-01T06:08:45Z",
+      "side": 1,
+      "message": "Compile error:\n\nerror: \u0027framework_instance_\u0027 is a private member of \u0027arc::ArcVoiceInteractionFrameworkServiceTest\u0027\n      framework_instance_.get());",
+      "revId": "3e8f7c763fa0b7c22e77185d26ba2281424b786c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
