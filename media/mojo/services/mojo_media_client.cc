@@ -12,6 +12,7 @@
 #include "media/base/renderer_factory.h"
 #include "media/base/video_decoder.h"
 #include "media/base/video_renderer_sink.h"
+#include "media/cdm/cdm_proxy.h"
 
 namespace media {
 
@@ -56,6 +57,10 @@ std::unique_ptr<RendererFactory> MojoMediaClient::CreateRendererFactory(
 
 std::unique_ptr<CdmFactory> MojoMediaClient::CreateCdmFactory(
     service_manager::mojom::InterfaceProvider* host_interfaces) {
+  return nullptr;
+}
+
+std::unique_ptr<CdmProxy> MojoMediaClient::CreateCdmProxy() {
   return nullptr;
 }
 
