@@ -105,6 +105,7 @@ void UmaRecordStaleIndexQuality(int missed_entry_count,
                    STALE_INDEX_MAX);
 }
 
+/*
 bool WritePickleFile(base::Pickle* pickle, const base::FilePath& file_name) {
   File file(
       file_name,
@@ -119,7 +120,7 @@ bool WritePickleFile(base::Pickle* pickle, const base::FilePath& file_name) {
     return false;
   }
   return true;
-}
+}*/
 
 // Called for each cache directory traversal iteration.
 void ProcessEntryFile(SimpleIndex::EntrySet* entries,
@@ -305,10 +306,10 @@ void SimpleIndexFile::SyncWriteToDisk(net::CacheType cache_type,
     return;
   }
   SerializeFinalData(cache_dir_mtime, pickle.get());
-  if (!WritePickleFile(pickle.get(), temp_index_filename)) {
+  //if (!WritePickleFile(pickle.get(), temp_index_filename)) {
     LOG(ERROR) << "Failed to write the temporary index file";
     return;
-  }
+  //}
 
   // Atomically rename the temporary index file to become the real one.
   if (!base::ReplaceFile(temp_index_filename, index_filename, NULL))
