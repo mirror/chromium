@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2c194fb_51bf8f76",
+        "filename": "device/vr/vr_service.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-01T15:33:30Z",
+      "side": 1,
+      "message": "nit: wrap to 80 chars.",
+      "range": {
+        "startLine": 134,
+        "startChar": 68,
+        "endLine": 134,
+        "endChar": 93
+      },
+      "revId": "091103df72c6e9f424afd08b1a7e58999487eac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d979908e_9258369f",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-01T15:33:30Z",
+      "side": 1,
+      "message": "why \u0027context\u0027?",
+      "range": {
+        "startLine": 789,
+        "startChar": 70,
+        "endLine": 789,
+        "endChar": 77
+      },
+      "revId": "091103df72c6e9f424afd08b1a7e58999487eac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "102a48a8_0cd0cf1e",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 791,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-01T15:33:30Z",
+      "side": 1,
+      "message": "I think this code would be easier to follow if you moved the check outside of this function call.\n\neg\nif (wait_for_previous_render_ \u003d\u003d WaitPrevStrategy::AFTER_BITMAP)\n  wait_time +\u003d WaitForPreviousRenderPhase();",
+      "range": {
+        "startLine": 791,
+        "startChar": 6,
+        "endLine": 791,
+        "endChar": 42
+      },
+      "revId": "091103df72c6e9f424afd08b1a7e58999487eac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9abe79c1_e9fd0901",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-01T15:33:30Z",
+      "side": 1,
+      "message": "If OpenVR handles timing at the platform without needing the js to wait, why can\u0027t we do the same for Daydream? Isn\u0027t the real reason we don\u0027t need this for openVR because we don\u0027t have any parallelization in the openVR pipeline?",
+      "range": {
+        "startLine": 112,
+        "startChar": 53,
+        "endLine": 112,
+        "endChar": 76
+      },
+      "revId": "091103df72c6e9f424afd08b1a7e58999487eac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4147c67a_e9e62bd8",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-01T15:33:30Z",
+      "side": 1,
+      "message": "You say OpenVR here, but then use external display as a signal for that. That sounds like it\u0027s going to cause headaches in the future because you\u0027re using a generic device property to infer which headset you\u0027re targeting?",
+      "range": {
+        "startLine": 112,
+        "startChar": 5,
+        "endLine": 112,
+        "endChar": 11
+      },
+      "revId": "091103df72c6e9f424afd08b1a7e58999487eac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9d1e060_0879276b",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-01T15:33:30Z",
+      "side": 1,
+      "message": "Looks like this strategy is never used. Do you plan to use it in the future?",
+      "range": {
+        "startLine": 114,
+        "startChar": 4,
+        "endLine": 114,
+        "endChar": 17
+      },
+      "revId": "091103df72c6e9f424afd08b1a7e58999487eac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3800db57_98a8aa59",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-01T15:33:30Z",
+      "side": 1,
+      "message": "What do you mean by Backwards compatible?",
+      "range": {
+        "startLine": 220,
+        "startChar": 5,
+        "endLine": 220,
+        "endChar": 25
+      },
+      "revId": "091103df72c6e9f424afd08b1a7e58999487eac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
