@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72bb7652_ae29be5f",
+        "filename": "chrome/browser/resources/md_extensions/navigation_helper.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-01T20:37:08Z",
+      "side": 1,
+      "message": "Nit (optional): Maybe s/prior/previous\nThey are synonyms, but the latter seems more commonly used in code (per my experience).",
+      "revId": "7b139b6f646a4bb9e166665702c4ee18a0039a36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1be38a93_53dbf020",
+        "filename": "chrome/browser/resources/md_extensions/navigation_helper.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-01T20:37:08Z",
+      "side": 1,
+      "message": "This multi-part comparison is repeated at lines 143-145 and 158-160. How about creating a helper method, similar to the following:\n\nisPageStateEqual(a, b) {\n  return a.page \u003d\u003d b.page \u0026\u0026\n    a.subpage \u003d\u003d b.subpage \u0026\u0026\n    a.extensionId \u003d\u003d b.extensionId;\n}",
+      "revId": "7b139b6f646a4bb9e166665702c4ee18a0039a36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33556ff6_38cf9e4b",
+        "filename": "chrome/browser/resources/md_extensions/navigation_helper.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-01T20:37:08Z",
+      "side": 1,
+      "message": "Is notifyRouteChanged_() called twice, without a return statement here?",
+      "revId": "7b139b6f646a4bb9e166665702c4ee18a0039a36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dec6ad8_e733c5a0",
+        "filename": "chrome/browser/resources/md_extensions/navigation_helper.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-01T20:37:08Z",
+      "side": 1,
+      "message": "Is this different than the |currentPage| variable already defined at line 195?",
+      "range": {
+        "startLine": 205,
+        "startChar": 26,
+        "endLine": 205,
+        "endChar": 47
+      },
+      "revId": "7b139b6f646a4bb9e166665702c4ee18a0039a36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
