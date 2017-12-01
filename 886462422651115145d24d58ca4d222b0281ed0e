@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e38f2661_b27da3ac",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-01T19:22:10Z",
+      "side": 1,
+      "message": "Switching to 20s.\nChanging it to static field of the store.",
+      "parentUuid": "2a135d6e_96f88a0e",
+      "range": {
+        "startLine": 24,
+        "startChar": 39,
+        "endLine": 24,
+        "endChar": 40
+      },
+      "revId": "886462422651115145d24d58ca4d222b0281ed0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c014b96_ec0547a3",
         "filename": "components/offline_pages/core/offline_page_metadata_store_test_util.cc",
         "patchSetId": 6

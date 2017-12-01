@@ -52,6 +52,24 @@
       "revId": "f430f8fdec9a1931117906727fab1887613fe7b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "81bfdab0_24744445",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-01T19:22:10Z",
+      "side": 1,
+      "message": "I added an explicit reset of db.\nI want to clean the db_ pointer so that it is not reset accidentally when we are using *db on the IO thread. This could happen of we accidentally call Execute, or destroy the store.\nThis way is safer from memory management perspective.\nThe only problem we might have here is tearing down the threads starting from UI.",
+      "parentUuid": "9d71d9fb_34a15664",
+      "revId": "f430f8fdec9a1931117906727fab1887613fe7b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
