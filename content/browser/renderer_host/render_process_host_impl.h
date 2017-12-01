@@ -27,7 +27,6 @@
 #include "content/browser/renderer_host/frame_sink_provider_impl.h"
 #include "content/browser/renderer_host/media/renderer_audio_output_stream_factory_context_impl.h"
 #include "content/browser/renderer_host/offscreen_canvas_provider_impl.h"
-#include "content/browser/webrtc/webrtc_eventlog_host.h"
 #include "content/common/associated_interface_registry_impl.h"
 #include "content/common/associated_interfaces.mojom.h"
 #include "content/common/child_control.mojom.h"
@@ -713,8 +712,6 @@ class CONTENT_EXPORT RenderProcessHostImpl
   base::OnceCallback<void(bool, const std::string&)> aec3_set_callback_;
 
   WebRtcStopRtpDumpCallback stop_rtp_dump_callback_;
-
-  WebRTCEventLogHost webrtc_eventlog_host_;
 
   scoped_refptr<base::SequencedTaskRunner>
       audio_debug_recordings_file_task_runner_;

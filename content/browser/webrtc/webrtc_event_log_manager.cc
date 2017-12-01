@@ -25,6 +25,12 @@
 namespace content {
 
 namespace {
+#if defined(OS_ANDROID)
+const size_t kMaxNumberLocalWebRtcEventLogFiles = 3;
+#else
+const size_t kMaxNumberLocalWebRtcEventLogFiles = 5;
+#endif
+
 inline void MaybeReplyWithBool(const base::Location& from_here,
                                base::OnceCallback<void(bool)> reply,
                                bool value) {
@@ -46,20 +52,6 @@ struct MaybeReplyWithBoolOnExit final {
   base::OnceCallback<void(bool)> reply;
   bool value;
 };
-
-struct MaybeReplyWithFilePathOnExit final {
-  explicit MaybeReplyWithFilePathOnExit(
-      base::OnceCallback<void(base::FilePath)> reply)
-      : reply(std::move(reply)) {}
-  ~MaybeReplyWithFilePathOnExit() {
-    if (reply) {
-      BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                              base::BindOnce(std::move(reply), file_path));
-    }
-  }
-  base::OnceCallback<void(base::FilePath)> reply;
-  base::FilePath file_path;  // Empty path is the default value.
-};
 }  // namespace
 
 base::LazyInstance<WebRtcEventLogManager>::Leaky g_webrtc_event_log_manager =
@@ -71,6 +63,8 @@ WebRtcEventLogManager* WebRtcEventLogManager::GetInstance() {
 
 WebRtcEventLogManager::WebRtcEventLogManager()
     : clock_for_testing_(nullptr),
+      local_logs_observer_(nullptr),
+      max_local_log_file_size_bytes_(kUnlimitedFileSize),
       file_task_runner_(base::CreateSequencedTaskRunnerWithTraits(
           {base::MayBlock(), base::TaskPriority::BACKGROUND,
            base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN})) {
@@ -81,29 +75,50 @@ WebRtcEventLogManager::~WebRtcEventLogManager() {
   // This should never actually run, except in unit tests.
 }
 
-void WebRtcEventLogManager::LocalWebRtcEventLogStart(
-    int render_process_id,
-    int lid,
-    const base::FilePath& base_path,
-    size_t max_file_size_bytes,
-    base::OnceCallback<void(base::FilePath)> reply) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  file_task_runner_->PostTask(
-      FROM_HERE,
-      base::BindOnce(&WebRtcEventLogManager::StartLocalLogFile,
-                     base::Unretained(this), render_process_id, lid, base_path,
-                     max_file_size_bytes, std::move(reply)));
-}
-
-void WebRtcEventLogManager::LocalWebRtcEventLogStop(
+void WebRtcEventLogManager::PeerConnectionAdded(
     int render_process_id,
     int lid,
     base::OnceCallback<void(bool)> reply) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   file_task_runner_->PostTask(
-      FROM_HERE, base::BindOnce(&WebRtcEventLogManager::StopLocalLogFile,
-                                base::Unretained(this), render_process_id, lid,
-                                std::move(reply)));
+      FROM_HERE,
+      base::BindOnce(&WebRtcEventLogManager::PeerConnectionAddedInternal,
+                     base::Unretained(this), render_process_id, lid,
+                     std::move(reply)));
+}
+
+void WebRtcEventLogManager::PeerConnectionRemoved(
+    int render_process_id,
+    int lid,
+    base::OnceCallback<void(bool)> reply) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  file_task_runner_->PostTask(
+      FROM_HERE,
+      base::BindOnce(&WebRtcEventLogManager::PeerConnectionRemovedInternal,
+                     base::Unretained(this), render_process_id, lid,
+                     std::move(reply)));
+}
+
+void WebRtcEventLogManager::EnableLocalLogging(
+    base::FilePath base_path,
+    size_t max_file_size_bytes,
+    base::OnceCallback<void(bool)> reply) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  DCHECK(!base_path.empty());
+  file_task_runner_->PostTask(
+      FROM_HERE,
+      base::BindOnce(&WebRtcEventLogManager::EnableLocalLoggingInternal,
+                     base::Unretained(this), base_path, max_file_size_bytes,
+                     std::move(reply)));
+}
+
+void WebRtcEventLogManager::DisableLocalLogging(
+    base::OnceCallback<void(bool)> reply) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  file_task_runner_->PostTask(
+      FROM_HERE,
+      base::BindOnce(&WebRtcEventLogManager::DisableLocalLoggingInternal,
+                     base::Unretained(this), std::move(reply)));
 }
 
 void WebRtcEventLogManager::OnWebRtcEventLogWrite(
@@ -122,50 +137,147 @@ void WebRtcEventLogManager::OnWebRtcEventLogWrite(
   // or reach their maximum size.) https://crbug.com/775415
 }
 
-void WebRtcEventLogManager::InjectClockForTesting(base::Clock* clock) {
-  clock_for_testing_ = clock;
+void WebRtcEventLogManager::SetLocalLogsObserver(
+    LocalLogsObserver* observer,
+    base::OnceCallback<void()> reply) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  file_task_runner_->PostTask(
+      FROM_HERE,
+      base::BindOnce(&WebRtcEventLogManager::SetLocalLogsObserverInternal,
+                     base::Unretained(this), observer, std::move(reply)));
 }
 
-base::FilePath WebRtcEventLogManager::GetLocalFilePath(
-    const base::FilePath& base_path,
-    int render_process_id,
-    int lid) {
-  base::Time::Exploded now;
-  if (clock_for_testing_) {
-    clock_for_testing_->Now().LocalExplode(&now);
-  } else {
-    base::Time::Now().LocalExplode(&now);
-  }
-
-  // [user_defined]_[date]_[time]_[pid]_[lid].log
-  char stamp[100];
-  int written =
-      base::snprintf(stamp, arraysize(stamp), "%04d%02d%02d_%02d%02d_%d_%d",
-                     now.year, now.month, now.day_of_month, now.hour,
-                     now.minute, render_process_id, lid);
-  CHECK(0 < written);
-  CHECK(static_cast<size_t>(written) < arraysize(stamp));
-
-  return base_path.InsertBeforeExtension(FILE_PATH_LITERAL("_"))
-      .InsertBeforeExtensionASCII(base::StringPiece(stamp))
-      .AddExtension(FILE_PATH_LITERAL("log"));
-}
-
-void WebRtcEventLogManager::StartLocalLogFile(
+void WebRtcEventLogManager::PeerConnectionAddedInternal(
     int render_process_id,
     int lid,
-    const base::FilePath& base_path,
-    size_t max_file_size_bytes,
-    base::OnceCallback<void(base::FilePath)> reply) {
+    base::OnceCallback<void(bool)> reply) {
+  DCHECK(file_task_runner_->RunsTasksInCurrentSequence());
+  const auto result = active_peer_connections_.emplace(render_process_id, lid);
+
+  if (!result.second) {  // PeerConnection already registered.
+    MaybeReplyWithBool(FROM_HERE, std::move(reply), false);
+    return;
+  }
+
+  if (!local_logs_base_path_.empty() &&
+      local_logs_.size() < kMaxNumberLocalWebRtcEventLogFiles) {
+    // Note that success/failure of starting the local log file is unrelated
+    // to the success/failure of PeerConnectionAdded().
+    StartLocalLogFile(render_process_id, lid);
+  }
+
+  MaybeReplyWithBool(FROM_HERE, std::move(reply), true);
+}
+
+void WebRtcEventLogManager::PeerConnectionRemovedInternal(
+    int render_process_id,
+    int lid,
+    base::OnceCallback<void(bool)> reply) {
   DCHECK(file_task_runner_->RunsTasksInCurrentSequence());
 
-  // This object's destructor will ensure a reply (if |reply| is non-empty),
-  // regardless of which path is taken out of the function.
-  MaybeReplyWithFilePathOnExit on_exit(std::move(reply));
+  const PeerConnectionKey key = PeerConnectionKey(render_process_id, lid);
+  auto peer_connection = active_peer_connections_.find(key);
+
+  if (peer_connection == active_peer_connections_.end()) {
+    DCHECK(local_logs_.find(key) == local_logs_.end());
+    MaybeReplyWithBool(FROM_HERE, std::move(reply), false);
+    return;
+  }
+
+  auto local_log = local_logs_.find(key);
+  if (local_log != local_logs_.end()) {
+    // Note that success/failure of stopping the local log file is unrelated
+    // to the success/failure of PeerConnectionRemoved().
+    StopLocalLogFile(render_process_id, lid);
+  }
+
+  active_peer_connections_.erase(peer_connection);
+
+  MaybeReplyWithBool(FROM_HERE, std::move(reply), true);
+}
+
+void WebRtcEventLogManager::EnableLocalLoggingInternal(
+    base::FilePath base_path,
+    size_t max_file_size_bytes,
+    base::OnceCallback<void(bool)> reply) {
+  if (!local_logs_base_path_.empty()) {
+    MaybeReplyWithBool(FROM_HERE, std::move(reply), false);
+    return;
+  }
+
+  DCHECK_EQ(local_logs_.size(), 0u);
+
+  std::map<PeerConnectionKey, base::FilePath> added_logs;
+
+  local_logs_base_path_ = base_path;
+  max_local_log_file_size_bytes_ = max_file_size_bytes;
+
+  for (const PeerConnectionKey& peer_connection : active_peer_connections_) {
+    if (local_logs_.size() >= kMaxNumberLocalWebRtcEventLogFiles) {
+      break;
+    }
+
+    const base::FilePath file_path = StartLocalLogFile(
+        peer_connection.render_process_id, peer_connection.lid);
+
+    if (local_logs_observer_) {
+      // Note: An empty |file_path| would indicate that opening was attempted,
+      // but was not successful.
+      added_logs.emplace(peer_connection, file_path);
+    }
+  }
+
+  if (local_logs_observer_) {
+    local_logs_observer_->OnLocalLogsStarted(added_logs);
+  }
+
+  MaybeReplyWithBool(FROM_HERE, std::move(reply), true);
+}
+
+void WebRtcEventLogManager::DisableLocalLoggingInternal(
+    base::OnceCallback<void(bool)> reply) {
+  if (local_logs_base_path_.empty()) {
+    MaybeReplyWithBool(FROM_HERE, std::move(reply), false);
+    return;
+  }
+
+  std::set<PeerConnectionKey> removed_logs;
+
+  // Perform an orderly closing of all active local logs.
+  for (auto local_log = local_logs_.begin(); local_log != local_logs_.end();) {
+    removed_logs.insert(local_log->first);
+    local_log = CloseLocalLogFile(local_log);
+  }
+
+  local_logs_base_path_.clear();  // Marks local-logging as disabled.
+  max_local_log_file_size_bytes_ = kUnlimitedFileSize;  // For clarity's sake.
+
+  if (local_logs_observer_) {
+    local_logs_observer_->OnLocalLogsStopped(removed_logs);
+  }
+
+  MaybeReplyWithBool(FROM_HERE, std::move(reply), true);
+}
+
+void WebRtcEventLogManager::SetLocalLogsObserverInternal(
+    LocalLogsObserver* observer,
+    base::OnceCallback<void()> reply) {
+  DCHECK(file_task_runner_->RunsTasksInCurrentSequence());
+
+  local_logs_observer_ = observer;
+
+  if (reply) {
+    BrowserThread::PostTask(BrowserThread::UI, FROM_HERE, std::move(reply));
+  }
+}
+
+base::FilePath WebRtcEventLogManager::StartLocalLogFile(int render_process_id,
+                                                        int lid) {
+  DCHECK(file_task_runner_->RunsTasksInCurrentSequence());
 
   // Add some information to the name given by the caller.
   base::FilePath file_path =
-      GetLocalFilePath(base_path, render_process_id, lid);
+      GetLocalFilePath(local_logs_base_path_, render_process_id, lid);
   CHECK(!file_path.empty()) << "Couldn't set path for local WebRTC log file.";
 
   // In the unlikely case that this filename is already taken, find a unique
@@ -173,7 +285,7 @@ void WebRtcEventLogManager::StartLocalLogFile(
   int unique_number =
       base::GetUniquePathNumber(file_path, base::FilePath::StringType());
   if (unique_number < 0) {
-    return;  // No available file path was found.
+    return base::FilePath();  // No available file path was found.
   } else if (unique_number != 0) {
     // The filename is taken, but a unique number was found.
     // TODO(eladalon): Fix the way the unique number is used.
@@ -189,28 +301,22 @@ void WebRtcEventLogManager::StartLocalLogFile(
   base::File file(file_path, file_flags);
   if (!file.IsValid() || !file.created()) {
     LOG(WARNING) << "Couldn't create and/or open local WebRTC event log file.";
-    return;
+    return base::FilePath();
   }
 
   // If the file was successfully created, it's now ready to be written to.
   DCHECK(local_logs_.find({render_process_id, lid}) == local_logs_.end());
-  local_logs_.emplace(PeerConnectionKey{render_process_id, lid},
-                      LogFile(std::move(file), max_file_size_bytes));
+  local_logs_.emplace(PeerConnectionKey(render_process_id, lid),
+                      LogFile(std::move(file), max_local_log_file_size_bytes_));
 
-  on_exit.file_path = file_path;  // Report success (if reply nonempty).
+  return file_path;
 }
 
-void WebRtcEventLogManager::StopLocalLogFile(
-    int render_process_id,
-    int lid,
-    base::OnceCallback<void(bool)> reply) {
+void WebRtcEventLogManager::StopLocalLogFile(int render_process_id, int lid) {
   DCHECK(file_task_runner_->RunsTasksInCurrentSequence());
-  auto it = local_logs_.find(PeerConnectionKey{render_process_id, lid});
+  auto it = local_logs_.find(PeerConnectionKey(render_process_id, lid));
   if (it != local_logs_.end()) {
     CloseLocalLogFile(it);
-    MaybeReplyWithBool(FROM_HERE, std::move(reply), true);
-  } else {
-    MaybeReplyWithBool(FROM_HERE, std::move(reply), false);
   }
 }
 
@@ -227,7 +333,7 @@ void WebRtcEventLogManager::WriteToLocalLogFile(
   // regardless of which path is taken out of the function.
   MaybeReplyWithBoolOnExit on_exit(std::move(reply), false);
 
-  auto it = local_logs_.find(PeerConnectionKey{render_process_id, lid});
+  auto it = local_logs_.find(PeerConnectionKey(render_process_id, lid));
   if (it == local_logs_.end()) {
     return;
   }
@@ -267,10 +373,44 @@ void WebRtcEventLogManager::WriteToLocalLogFile(
   }
 }
 
-void WebRtcEventLogManager::CloseLocalLogFile(LocalLogFilesMap::iterator it) {
+WebRtcEventLogManager::LocalLogFilesMap::iterator
+WebRtcEventLogManager::CloseLocalLogFile(LocalLogFilesMap::iterator it) {
   DCHECK(file_task_runner_->RunsTasksInCurrentSequence());
   it->second.file.Flush();
-  local_logs_.erase(it);  // file.Close() called by destructor.
+  return local_logs_.erase(it);  // file.Close() called by destructor.
+}
+
+base::FilePath WebRtcEventLogManager::GetLocalFilePath(
+    const base::FilePath& base_path,
+    int render_process_id,
+    int lid) {
+  // Expected to be called from within |file_task_runner_|, but there's no
+  // real constraint for that.
+  base::Time::Exploded now;
+  if (clock_for_testing_) {
+    clock_for_testing_->Now().LocalExplode(&now);
+  } else {
+    base::Time::Now().LocalExplode(&now);
+  }
+
+  // [user_defined]_[date]_[time]_[pid]_[lid].log
+  char stamp[100];
+  int written =
+      base::snprintf(stamp, arraysize(stamp), "%04d%02d%02d_%02d%02d_%d_%d",
+                     now.year, now.month, now.day_of_month, now.hour,
+                     now.minute, render_process_id, lid);
+  CHECK(0 < written);
+  CHECK(static_cast<size_t>(written) < arraysize(stamp));
+
+  return base_path.InsertBeforeExtension(FILE_PATH_LITERAL("_"))
+      .InsertBeforeExtensionASCII(base::StringPiece(stamp))
+      .AddExtension(FILE_PATH_LITERAL("log"));
+}
+
+void WebRtcEventLogManager::InjectClockForTesting(base::Clock* clock) {
+  // Testing only; no need for threading guarantees (called before anything
+  // could be put on the TQ).
+  clock_for_testing_ = clock;
 }
 
 }  // namespace content
