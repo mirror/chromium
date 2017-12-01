@@ -33,6 +33,24 @@
       "revId": "e7f2d4d2667b46e160f7415b8d59b9c1c371ad23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01de1e59_ef8de416",
+        "filename": "third_party/zlib/contrib/optimizations/inffast_chunk.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-01T11:24:37Z",
+      "side": 0,
+      "message": "\u003e While at it, why remove ARM\u0027s copyright?\n\u003e\n\u003e Opensource thrives on respect for copyrights and building on each others ideas.\n\nIf you copy an expression in code (inffast,h here) into a new file, the copyright of that code does not change.  One cannot claim copyright over it just due to the act of copying.\n\nIf you change a variable name(s) only in that expression in code, (inflate_fast -\u003e inflate_fast_chunky here), do you think it\u0027s fair to claim copyright over it? The advice I received from our opensource folks was no, it is not fair.\n\nPerhaps speak to your ARM opensource folks if possible if you are unclear about these points, but let\u0027s respect Mark Adler\u0027s copyright in this file.",
+      "parentUuid": "64505cbb_8b685df8",
+      "revId": "e7f2d4d2667b46e160f7415b8d59b9c1c371ad23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
