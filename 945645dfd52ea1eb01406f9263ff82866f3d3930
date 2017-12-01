@@ -34,6 +34,24 @@
       "revId": "945645dfd52ea1eb01406f9263ff82866f3d3930",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdffefd3_845d4a03",
+        "filename": "components/exo/wayland/protocol/aura-shell.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-01T21:06:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "529e2ef5_8aba421c",
+      "revId": "945645dfd52ea1eb01406f9263ff82866f3d3930",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
