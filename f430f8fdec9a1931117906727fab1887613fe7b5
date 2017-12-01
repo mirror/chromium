@@ -16,6 +16,24 @@
       "revId": "f430f8fdec9a1931117906727fab1887613fe7b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "500c52c1_3a77136b",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-01T06:06:29Z",
+      "side": 1,
+      "message": "You see, by the magic of unique_ptr I don\u0027t have to do anything, hence the comment.\n\nAlso look at line 657, specifically std::move(db_), which I believe should dispose of db_.",
+      "parentUuid": "7bb27d7a_96a5bb03",
+      "revId": "f430f8fdec9a1931117906727fab1887613fe7b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
