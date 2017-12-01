@@ -48,6 +48,7 @@ class MediaInterfaceProxy : public media::mojom::InterfaceFactory {
                       media::mojom::RendererRequest request) final;
   void CreateCdm(const std::string& key_system,
                  media::mojom::ContentDecryptionModuleRequest request) final;
+  void CreateCdmProxy(media::mojom::CdmProxyRequest request) final;
 
  private:
   using InterfaceFactoryPtr = media::mojom::InterfaceFactoryPtr;
@@ -85,6 +86,11 @@ class MediaInterfaceProxy : public media::mojom::InterfaceFactory {
   // Callback for connection error from the InterfaceFactoryPtr in the
   // |cdm_interface_factory_map_| associated with |cdm_guid|.
   void OnCdmServiceConnectionError(const std::string& cdm_guid);
+
+  // Creates a CdmProxy for the CDM in CdmService. Not implemented in
+  // CreateCdmProxy() because we don't want any client to be able to create
+  // a CdmProxy.
+  void CreateCdmProxyInternal(media::mojom::CdmProxyRequest request);
 #endif  // BUILDFLAG(ENABLE_STANDALONE_CDM_SERVICE)
 
   // Safe to hold a raw pointer since |this| is owned by RenderFrameHostImpl.
