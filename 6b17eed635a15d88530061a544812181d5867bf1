@@ -120,6 +120,41 @@
     },
     {
       "key": {
+        "uuid": "29c1f333_1c0dbd27",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-12-01T23:14:38Z",
+      "side": 1,
+      "message": "Doesn\u0027t seem out of bounds for TEST_F functions to know about the implementation of TestWebState. Each TEST_F could need to mutate WebState differently.",
+      "parentUuid": "a0c90d16_088aaf5d",
+      "revId": "6b17eed635a15d88530061a544812181d5867bf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93ac5274_7729aec0",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-12-01T23:14:38Z",
+      "side": 1,
+      "message": "Why add WasHidden() calls?\nThe only tests that verify this are StateAtRendererTermination... \n\nIf there is a concern about malformed WebStates, then should this be called each time a TestWebState is created?",
+      "revId": "6b17eed635a15d88530061a544812181d5867bf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99d458b2_31317599",
         "filename": "ios/chrome/browser/metrics/tab_usage_recorder_unittest.mm",
         "patchSetId": 5
