@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbb4fcba_3166da1c",
+        "filename": "chrome/browser/safe_browsing/download_protection/download_protection_service_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2093,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-01T16:57:07Z",
+      "side": 1,
+      "message": "This takes a StringPiece now based on Patchset 9",
+      "revId": "3e8cfc825772d6e82a16a1fd3e472c737a2f95de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
