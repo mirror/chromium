@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fe676e4_009a8564",
+        "filename": "ui/base/class_property.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-01T22:41:25Z",
+      "side": 1,
+      "message": "The comment block should explain when to use DECLARE_EXPORTED_UI_CLASS_PROPERTY_TYPE.",
+      "revId": "b7b401552126bb4fd6c73803b131914210a8abf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e989595a_02347af7",
+        "filename": "ui/base/class_property.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-01T22:41:25Z",
+      "side": 1,
+      "message": "}  // namespace ui\n\nAlso line 226. Lines 240 and 253 can use \"// namespace\" as well.",
+      "revId": "b7b401552126bb4fd6c73803b131914210a8abf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb7d25ad_e12aed73",
+        "filename": "ui/views/view_constants_aura.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-01T22:41:25Z",
+      "side": 1,
+      "message": "including, same for similar comment in other files.",
+      "range": {
+        "startLine": 23,
+        "startChar": 27,
+        "endLine": 23,
+        "endChar": 31
+      },
+      "revId": "b7b401552126bb4fd6c73803b131914210a8abf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
