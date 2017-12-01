@@ -16,6 +16,24 @@
       "revId": "6300abc73fb6391b1e04fe0ba0138ef339eac26f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "945bfac4_c5abfa72",
+        "filename": "media/test/data/README",
+        "patchSetId": 10
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-01T19:37:02Z",
+      "side": 1,
+      "message": "Oops, crrev.com/c/804055 to fix it.",
+      "parentUuid": "89a0ef70_c605d15d",
+      "revId": "6300abc73fb6391b1e04fe0ba0138ef339eac26f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
