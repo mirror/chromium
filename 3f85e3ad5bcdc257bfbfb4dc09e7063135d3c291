@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c94f6e59_c47b14e9",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-01T04:07:42Z",
+      "side": 1,
+      "message": "Changed param type to int and added additional check for case when user passes in value higher than |kCBORMaxDepth|. Thus, decoder will now only accept value smaller than |kCBORMaxDepth| to  |max_nesting_level|.",
+      "parentUuid": "422ac74f_b77fc70c",
+      "revId": "3f85e3ad5bcdc257bfbfb4dc09e7063135d3c291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54aadb4f_df3530bb",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 22
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-01T01:32:23Z",
       "side": 1,
       "message": "I think the checked_cast will prevent this from ever happening. A size_t value that is too large to fit in a positive int will CHECK before we get to this point.\n\nAnd we\u0027re still allowing 2**31 and other huge values. I think it\u0027s better to set a tighter limit here, if you can.",
+      "revId": "3f85e3ad5bcdc257bfbfb4dc09e7063135d3c291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7dd2dc1_54e21650",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-01T04:07:42Z",
+      "side": 1,
+      "message": "The reasoning for checking negative |max_nesting_level| is due to implementation detail. For all nested CBORvalues, we call CBORReader::DecodeCBOR() recursively. At every recursive call, we decrease |max_nesting_level| by 1. Thus, whenever |max_nesting_level| reaches -1, we know that the decoding CBORvalue has too much nesting layers.\n\nPlease let me know if you have any other suggestions! :) \n\np.s. Sanity check for values such as 2^^31 was added as well.",
+      "parentUuid": "54aadb4f_df3530bb",
       "revId": "3f85e3ad5bcdc257bfbfb4dc09e7063135d3c291",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "bce5f39e_aaf21b7f",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-01T04:07:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b4d2a986_1ac7f3d8",
+      "revId": "3f85e3ad5bcdc257bfbfb4dc09e7063135d3c291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4856b662_eb58ac36",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 22
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "812afd12_414831a1",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-01T04:07:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4856b662_eb58ac36",
+      "revId": "3f85e3ad5bcdc257bfbfb4dc09e7063135d3c291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61f1c0f9_84154887",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 22
@@ -81,6 +153,24 @@
       "writtenOn": "2017-12-01T01:32:23Z",
       "side": 1,
       "message": "http://en.cppreference.com/w/cpp/iterator/distance says that the complexity of std::distance is... linear, unless our iterators meet the requirements of RandomAccessIterator. Do they? If it really is O(N), we should do something else.\n\nAlso, apparently the return value can be negative, so checked_cast is warranted. I was going to say \"use checked_cast for the sake of form, and it\u0027ll be compiled away\", but apparently it could actually be necessary as well as good form.",
+      "revId": "3f85e3ad5bcdc257bfbfb4dc09e7063135d3c291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b42bd076_c6c380c3",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-01T04:07:42Z",
+      "side": 1,
+      "message": "I believe so. http://www.cplusplus.com/reference/vector/vector/ says that iterator member of std::vectors are random access iterators. Please let me know if I\u0027m missing anything!\n\nChanged static_cast to checked_cast.",
+      "parentUuid": "61f1c0f9_84154887",
       "revId": "3f85e3ad5bcdc257bfbfb4dc09e7063135d3c291",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "fa90b088_292700f2",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-01T04:07:42Z",
+      "side": 1,
+      "message": "Changed existing API return value to const char*",
+      "parentUuid": "e56c2b68_51187aa3",
+      "revId": "3f85e3ad5bcdc257bfbfb4dc09e7063135d3c291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fa16ce6_399748d9",
         "filename": "content/browser/webauth/cbor/cbor_reader.h",
         "patchSetId": 22
@@ -118,6 +226,24 @@
       "revId": "3f85e3ad5bcdc257bfbfb4dc09e7063135d3c291",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e319785b_69815be8",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-01T04:07:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9fa16ce6_399748d9",
+      "revId": "3f85e3ad5bcdc257bfbfb4dc09e7063135d3c291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "5735c681_4113f375",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-01T04:07:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06325201_0a32d5a8",
+      "revId": "3f85e3ad5bcdc257bfbfb4dc09e7063135d3c291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a355157_dd71856f",
         "filename": "content/browser/webauth/cbor/cbor_reader.h",
         "patchSetId": 22
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "97fd1c35_f9fdac5d",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-01T04:07:42Z",
+      "side": 1,
+      "message": "The reasoning behind choosing size_t for exposed static CBORReader::Read() function and int for private CBORReader::Decode() was to prevent callers from the API from passing in any negative values. \n\nHowever, I believe if the caller does pass in negative value as |max_nesting_level| current implementation will always return TOO_MUCH_NESTING_ERROR, which is also correct.\n\nChanged type of |max_nesting_level| to int.",
+      "parentUuid": "9a355157_dd71856f",
+      "revId": "3f85e3ad5bcdc257bfbfb4dc09e7063135d3c291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35960629_d5e96449",
         "filename": "content/browser/webauth/cbor/cbor_reader.h",
         "patchSetId": 22
@@ -169,6 +331,24 @@
       "revId": "3f85e3ad5bcdc257bfbfb4dc09e7063135d3c291",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00b3db00_771d7261",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-01T04:07:42Z",
+      "side": 1,
+      "message": "Thanks for the catch! :-)",
+      "parentUuid": "35960629_d5e96449",
+      "revId": "3f85e3ad5bcdc257bfbfb4dc09e7063135d3c291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
