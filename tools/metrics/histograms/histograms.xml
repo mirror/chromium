@@ -79700,6 +79700,27 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Signin.ForceSigninVerficationRequest" enum="BooleanRequested">
+  <owner>zmin@chromium.org</owner>
+  <summary>
+    The number force-sign-in verfication request sented when profile is loaded.
+  </summary>
+</histogram>
+
+<histogram name="Signin.ForceSigninVerficationTime.Failure" units="ms">
+  <owner>zmin@chromium.org</owner>
+  <summary>
+    Elapsed time from profile loaded until persistent verfication error.
+  </summary>
+</histogram>
+
+<histogram name="Signin.ForceSigninVerficationTime.Success" units="ms">
+  <owner>zmin@chromium.org</owner>
+  <summary>
+    Elapsed time from profile loaded until verfication successed.
+  </summary>
+</histogram>
+
 <histogram name="Signin.InvestigatedScenario" enum="SigninInvestigatedScenario">
   <owner>skym@chromium.org</owner>
   <summary>
