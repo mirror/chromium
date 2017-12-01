@@ -759,6 +759,11 @@ AtkObject* AXPlatformNodeAuraLinux::CreateAtkObject() {
 
   atk_object_initialize(atk_object, this);
 
+  if (GetParent()) {
+    g_signal_emit_by_name(ATK_OBJECT(GetParent()), "children-changed::add",
+                          GetIndexInParent(), atk_object);
+  }
+
   return ATK_OBJECT(atk_object);
 }
 
@@ -770,6 +775,10 @@ void AXPlatformNodeAuraLinux::DestroyAtkObjects() {
     atk_hyperlink_ = nullptr;
   }
   if (atk_object_) {
+    if (GetParent()) {
+      g_signal_emit_by_name(ATK_OBJECT(GetParent()), "children-changed::remove",
+                            -1, atk_object_);
+    }
     ax_platform_node_auralinux_detach(AX_PLATFORM_NODE_AURALINUX(atk_object_));
     g_object_unref(atk_object_);
     atk_object_ = nullptr;
