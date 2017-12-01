@@ -644,9 +644,11 @@ class NSSInitSingleton {
 #if defined(OS_CHROMEOS)
       status = NSS_Init(nss_config_dir.c_str());
 #else
-      status = NSS_InitReadWrite(nss_config_dir.c_str());
+      //status = NSS_InitReadWrite(nss_config_dir.c_str());
+      status = SECFailure;
 #endif
       if (status != SECSuccess) {
+        //base::debug::StackTrace().Print();
         LOG(ERROR) << "Error initializing NSS with a persistent "
                       "database (" << nss_config_dir
                    << "): " << GetNSSErrorMessage();
