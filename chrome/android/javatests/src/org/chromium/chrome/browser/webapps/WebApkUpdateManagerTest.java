@@ -158,9 +158,10 @@ public class WebApkUpdateManagerTest {
                 WebApkInfo info = WebApkInfo.create(WEBAPK_ID, "", creationData.scope, null, null,
                         creationData.name, creationData.shortName, creationData.displayMode,
                         creationData.orientation, 0, creationData.themeColor,
-                        creationData.backgroundColor, "", WebApkVersion.CURRENT_SHELL_APK_VERSION,
-                        creationData.manifestUrl, creationData.startUrl,
-                        creationData.iconUrlToMurmur2HashMap, false /* forceNavigation */);
+                        creationData.backgroundColor, "", "",
+                        WebApkVersion.CURRENT_SHELL_APK_VERSION, creationData.manifestUrl,
+                        creationData.startUrl, creationData.iconUrlToMurmur2HashMap,
+                        false /* forceNavigation */);
                 updateManager.updateIfNeeded(mTab, info);
             }
         });

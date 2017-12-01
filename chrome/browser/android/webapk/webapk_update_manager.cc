@@ -69,6 +69,7 @@ static void JNI_WebApkUpdateManager_StoreWebApkUpdateRequestToFile(
     jint java_orientation,
     jlong java_theme_color,
     jlong java_background_color,
+    const JavaParamRef<jstring>& java_share_url_template,
     const JavaParamRef<jstring>& java_web_manifest_url,
     const JavaParamRef<jstring>& java_webapk_package,
     jint java_webapk_version,
@@ -95,6 +96,7 @@ static void JNI_WebApkUpdateManager_StoreWebApkUpdateRequestToFile(
   info.best_badge_icon_url =
       GURL(ConvertJavaStringToUTF8(env, java_badge_icon_url));
   info.manifest_url = GURL(ConvertJavaStringToUTF8(env, java_web_manifest_url));
+  info.share_url_template = ConvertJavaStringToUTF16(java_share_url_template);
 
   base::android::AppendJavaStringArrayToStringVector(env, java_icon_urls.obj(),
                                                      &info.icon_urls);

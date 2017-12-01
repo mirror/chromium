@@ -348,6 +348,6 @@ public class WebApkUtilsTest {
     private void setHostBrowserInMetadata(String hostBrowserPackage) {
         Bundle bundle = new Bundle();
         bundle.putString(WebApkMetaDataKeys.RUNTIME_HOST, hostBrowserPackage);
-        WebApkTestHelper.registerWebApkWithMetaData(WEBAPK_PACKAGE_NAME, bundle);
+        WebApkTestHelper.registerWebApkWithMetaData(WEBAPK_PACKAGE_NAME, bundle, null);
     }
 }
