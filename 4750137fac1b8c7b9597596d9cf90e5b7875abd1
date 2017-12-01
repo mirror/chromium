@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "227809d1_2c0e3647",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-12-01T23:58:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6729d03_5d98342e",
+      "revId": "4750137fac1b8c7b9597596d9cf90e5b7875abd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fda0a294_e4b27fc5",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "4750137fac1b8c7b9597596d9cf90e5b7875abd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e47f74f_23e4ae65",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-12-01T23:58:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fda0a294_e4b27fc5",
+      "revId": "4750137fac1b8c7b9597596d9cf90e5b7875abd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9d47aa1a_c2193f1a",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-12-01T23:58:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59579f77_f317fc71",
+      "revId": "4750137fac1b8c7b9597596d9cf90e5b7875abd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c24fc869_aba78243",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "4750137fac1b8c7b9597596d9cf90e5b7875abd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f215643c_93fe5f9c",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-12-01T23:58:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c24fc869_aba78243",
+      "revId": "4750137fac1b8c7b9597596d9cf90e5b7875abd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "7e648e96_10aa8be9",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-12-01T23:58:41Z",
+      "side": 1,
+      "message": "I will add a TODO for this because I cannot debug this properly.\nBorders on inline elements are displayed incorrectly on my machine, and borders are how boxes happen.",
+      "parentUuid": "f889ee78_b399d392",
+      "revId": "4750137fac1b8c7b9597596d9cf90e5b7875abd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35287504_97ec4f22",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
         "patchSetId": 8
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "6fa0c82f_eaf303a2",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-12-01T23:58:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35287504_97ec4f22",
+      "revId": "4750137fac1b8c7b9597596d9cf90e5b7875abd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb5e49a5_4571df5e",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
         "patchSetId": 8
@@ -115,6 +223,24 @@
       "writtenOn": "2017-12-01T04:17:15Z",
       "side": 1,
       "message": "So, this loop tries to reorder start_fragment and end_fragment in the logical order? Great if you could clarify the what this is trying to achieve in the comment above.\n\nAssuming so, hmm, this doesn\u0027t work when bidi reordered text, because bidi reorder is not driven by the Direction() value.\nex:\n\u003cdiv dir\u003drtl\u003e12 34 56\u003c/div\u003e\n\n...or maybe you\u0027re not trying to compute the logical order?\n\nI haven\u0027t really understood the computation in NGOutOfFlowLayoutPart::GetContainingBlockInfo yet, but if all what you need is bounding box, it\u0027s probably better to compute box here and unite them.",
+      "revId": "4750137fac1b8c7b9597596d9cf90e5b7875abd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60dea82d_abad843b",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-12-01T23:58:41Z",
+      "side": 1,
+      "message": "I am not sure if \"logical order\" is the correct term here. I am trying to implement spec from dbaron comment at https://github.com/w3c/csswg-drafts/issues/609\n\n\u003e\u003e\u003e\u003e\n* form a containing block from the block-start and inline-start padding-box edges of the first fragment and the block-end and inline-end padding-box edges of the last fragment\n* If that containing block has a negative width or height, turn each negative width or height into 0 by keeping the edge (in that dimension) that came from the first fragment the same, and changing the edge that came from the last fragment to be equal to the edge from the first fragment\n\u003c\u003c\u003c\u003c\n\nAs you can see, it is not a simple union of rects between first and last fragment.\n\nThe question is how to define first and last fragment. I\u0027ve interpreted it as physically first/physically last. Because inline is always in ltr, when inline-cb is ltr everything works. But in rtl I have to reverse them. I think I can come up with a theoretical example where this does not work, but I\u0027ll need your help to come up with actual DOM to produce this fragment tree.\nI\u0027ve added a TODO.",
+      "parentUuid": "bb5e49a5_4571df5e",
       "revId": "4750137fac1b8c7b9597596d9cf90e5b7875abd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "afd5dcde_93b6d68b",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-12-01T23:58:41Z",
+      "side": 1,
+      "message": "I\u0027ve added STACK_ALLOCATED.",
+      "parentUuid": "0afa49e3_041d0e0a",
+      "revId": "4750137fac1b8c7b9597596d9cf90e5b7875abd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e0c58b2_2c755804",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part.h",
         "patchSetId": 8
@@ -169,6 +313,24 @@
       "revId": "4750137fac1b8c7b9597596d9cf90e5b7875abd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "effb6af5_da3f56af",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-12-01T23:58:41Z",
+      "side": 1,
+      "message": "I tried before. Got a compile error when putting this into a map. Looks like HashTraits::EmptyValue wants to call default constructor.\n\n../../third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part.cc:20:24: error: call to implicitly-deleted default constructor of \u0027blink::NGOutOfFlowLayoutPart::ContainingBlockInfo\u0027\nNGOutOfFlowLayoutPart::NGOutOfFlowLayoutPart(\n                       ^\n../../third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part.h:62:26: note: default constructor of \u0027ContainingBlockInfo\u0027 is implicitly deleted because field \u0027style2\u0027 of reference type \u0027const blink::ComputedStyle \u0026\u0027 would not be initialized\n    const ComputedStyle\u0026 style2;",
+      "parentUuid": "0e0c58b2_2c755804",
+      "revId": "4750137fac1b8c7b9597596d9cf90e5b7875abd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
