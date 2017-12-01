@@ -41,6 +41,7 @@
 namespace blink {
 
 class SimpleFontData;
+class TextRun;
 
 struct HarfBuzzRunGlyphData {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
@@ -49,8 +50,6 @@ struct HarfBuzzRunGlyphData {
   float advance;
   FloatSize offset;
 };
-
-enum AdjustMidCluster { kAdjustToStart, kAdjustToEnd };
 
 struct ShapeResult::RunInfo {
   USING_FAST_MALLOC(RunInfo);
@@ -87,9 +86,11 @@ struct ShapeResult::RunInfo {
   CanvasRotationInVertical CanvasRotation() const { return canvas_rotation_; }
   unsigned NextSafeToBreakOffset(unsigned) const;
   unsigned PreviousSafeToBreakOffset(unsigned) const;
-  float XPositionForVisualOffset(unsigned, AdjustMidCluster) const;
-  float XPositionForOffset(unsigned, AdjustMidCluster) const;
-  int CharacterIndexForXPosition(float, bool include_partial_glyphs) const;
+  float XPositionForVisualOffset(const TextRun&, unsigned) const;
+  float XPositionForOffset(const TextRun&, unsigned) const;
+  int CharacterIndexForXPosition(const TextRun*,
+                                 float,
+                                 bool include_partial_glyphs) const;
   void SetGlyphAndPositions(unsigned index,
                             uint16_t glyph_id,
                             float advance,
@@ -209,6 +210,100 @@ struct ShapeResult::RunInfo {
           // Glyph in range; apply functor.
           return func(glyph_data, total_advance, character_index);
         });
+  }
+
+  // Same as the above, except it only applies the functor to glyphs in the
+  // specified range, and stops after the range. This function also returns
+  // glyphs that would be partially included in the range (if they spawn
+  // multiple characters).
+  template <typename Func>
+  float ForEachPartialGlyphInRange(float initial_advance,
+                                   unsigned from,
+                                   unsigned to,
+                                   unsigned index_offset,
+                                   Func func) const {
+    unsigned start = start_index_;
+    unsigned end = num_characters_;
+    float total_advance = initial_advance;
+    unsigned sequence_begin = 0;
+    float current_sequence = 0;
+
+    if (!Rtl()) {
+      for (unsigned i = 0; i < glyph_data_.size(); ++i) {
+        unsigned index =
+            glyph_data_[i].character_index + start_index_ + index_offset;
+        if (start == index) {
+          current_sequence += glyph_data_[i].advance;
+          continue;
+        }
+
+        end = index;
+
+        if ((start >= from && start < to) || (end > from && end < to) ||
+            (start <= from && end >= to)) {
+          for (unsigned j = sequence_begin; j < i; ++j) {
+            func(glyph_data_[j], total_advance,
+                 glyph_data_[j].character_index + start_index_ + index_offset);
+            total_advance += glyph_data_[j].advance;
+          }
+        } else {
+          total_advance += current_sequence;
+        }
+
+        current_sequence = glyph_data_[i].advance;
+        sequence_begin = i;
+        start = index;
+        end = num_characters_;
+      }
+
+      end = num_characters_;
+      if ((start >= from && start < to) || (end > from && end < to) ||
+          (start <= from && end >= to)) {
+        for (unsigned j = sequence_begin; j < glyph_data_.size(); ++j) {
+          func(glyph_data_[j], total_advance,
+               glyph_data_[j].character_index + start_index_ + index_offset);
+          total_advance += glyph_data_[j].advance;
+        }
+      }
+    } else {
+      start = end = num_characters_;
+      for (unsigned i = 0; i < glyph_data_.size(); ++i) {
+        unsigned index =
+            glyph_data_[i].character_index + start_index_ + index_offset;
+        if (start == index) {
+          current_sequence += glyph_data_[i].advance;
+          continue;
+        }
+
+        if ((start >= from && start < to) || (end > from && end < to) ||
+            (start <= from && end >= to)) {
+          for (unsigned j = sequence_begin; j < i; ++j) {
+            func(glyph_data_[j], total_advance,
+                 glyph_data_[j].character_index + start_index_ + index_offset);
+            total_advance += glyph_data_[j].advance;
+          }
+        } else {
+          total_advance += current_sequence;
+        }
+
+        current_sequence = glyph_data_[i].advance;
+        sequence_begin = i;
+        end = start;
+        start = index;
+      }
+
+      end = 0;
+      if ((start >= from && start < to) || (end > from && end < to) ||
+          (start <= from && end >= to)) {
+        for (unsigned j = sequence_begin; j < glyph_data_.size(); ++j) {
+          func(glyph_data_[j], total_advance,
+               glyph_data_[j].character_index + start_index_ + index_offset);
+          total_advance += glyph_data_[j].advance;
+        }
+      }
+    }
+
+    return total_advance;
   }
 
   scoped_refptr<SimpleFontData> font_data_;

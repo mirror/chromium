@@ -358,6 +358,42 @@ class PLATFORM_EXPORT NonSharedCharacterBreakIterator final {
 // counted as 1 grapheme cluster.
 PLATFORM_EXPORT unsigned NumGraphemeClusters(const String&);
 
+// Counts the number of grapheme clusters but using cursor rules instead
+// of word breaking rules.
+// This is used both with WTF::String and TextRun input.
+template <typename TextContainerType>
+PLATFORM_EXPORT unsigned NumCursorGraphemesClusters(
+    const TextContainerType& text,
+    uint16_t start,
+    uint16_t end) {
+  if (start > end) {
+    uint16_t temp = start;
+    start = end;
+    end = temp;
+  }
+  uint16_t length = end - start;
+
+  if (!length)
+    return 0;
+
+  // TODO(fserb): CR LF is the only latin-1 extended grapheme cluster.
+  if (text.Is8Bit())
+    return length;
+
+  DCHECK_LE(static_cast<unsigned>(start + length), text.length());
+
+  const UChar* str = text.Characters16();
+  TextBreakIterator* it = CursorMovementIterator(&str[start], length);
+
+  int cursor_pos = it->current();
+  int num_graphemes = -1;
+  while (0 <= cursor_pos) {
+    cursor_pos = it->next();
+    num_graphemes++;
+  }
+  return std::max(0, num_graphemes);
+}
+
 }  // namespace blink
 
 #endif
