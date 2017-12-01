@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58dc052e_5419f0ad",
+        "filename": "ash/shell/app_list.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-01T23:02:17Z",
+      "side": 1,
+      "message": "no ;",
+      "range": {
+        "startLine": 230,
+        "startChar": 3,
+        "endLine": 230,
+        "endChar": 4
+      },
+      "revId": "7880031fc48334f87bb6e0040ed12ad6b790a4ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
