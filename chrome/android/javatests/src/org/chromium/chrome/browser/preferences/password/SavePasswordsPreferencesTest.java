@@ -4,10 +4,15 @@
 
 package org.chromium.chrome.browser.preferences.password;
 
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
+
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
-import android.support.test.espresso.action.ViewActions;
-import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.filters.SmallTest;
 
 import org.junit.Assert;
@@ -162,14 +167,42 @@ public class SavePasswordsPreferencesTest {
     @Feature({"Preferences"})
     @EnableFeatures("password-export")
     public void testExportMenuItem() throws Exception {
+        ReauthenticationManager.setApiOverride(ReauthenticationManager.OverrideState.AVAILABLE);
+        ReauthenticationManager.setScreenLockSetUpOverride(
+                ReauthenticationManager.OverrideState.AVAILABLE);
+
         final Preferences preferences =
                 PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
                         SavePasswordsPreferences.class.getName());
 
         Espresso.openActionBarOverflowOrOptionsMenu(
                 InstrumentationRegistry.getInstrumentation().getTargetContext());
-        Espresso.onView(ViewMatchers.withText(
-                                R.string.save_password_preferences_export_action_title))
-                .perform(ViewActions.click());
+        Espresso.onView(withText(R.string.save_password_preferences_export_action_title))
+                .perform(click());
+    }
+
+    /**
+     * Check whether the user is asked to set up a screen lock if attempting to export passwords.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @EnableFeatures("password-export")
+    public void testExportMenuItemNoLock() throws Exception {
+        ReauthenticationManager.setApiOverride(ReauthenticationManager.OverrideState.AVAILABLE);
+        ReauthenticationManager.setScreenLockSetUpOverride(
+                ReauthenticationManager.OverrideState.UNAVAILABLE);
+
+        final Preferences preferences =
+                PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
+                        SavePasswordsPreferences.class.getName());
+
+        Espresso.openActionBarOverflowOrOptionsMenu(
+                InstrumentationRegistry.getInstrumentation().getTargetContext());
+        Espresso.onView(withText(R.string.save_password_preferences_export_action_title))
+                .perform(click());
+        Espresso.onView(withText(R.string.password_export_set_lock_screen))
+                .inRoot(withDecorView(isEnabled()))
+                .check(matches(isDisplayed()));
     }
 }
