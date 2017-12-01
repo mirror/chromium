@@ -15,11 +15,16 @@ namespace content {
 class WebContents;
 }
 
+namespace service_manager {
+class Connector;
+}
+
 namespace autofill {
 
 void LoadRiskData(uint64_t obfuscated_gaia_id,
                   content::WebContents* web_contents,
-                  const base::Callback<void(const std::string&)>& callback);
+                  const base::Callback<void(const std::string&)>& callback,
+                  service_manager::Connector* connector = nullptr);
 
 }  // namespace autofill
 
