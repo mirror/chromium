@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7ae9d0f_20e99bc4",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-01T02:23:47Z",
+      "side": 1,
+      "message": "nit: move this below events(), rename to num_update_open_tabs_urls_calls(), and mark it const",
+      "revId": "bedb6cae7a3a79b7b84f2c4039cb1ac1afe91d6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f68ef3a1_a6ed6945",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-01T02:23:47Z",
+      "side": 1,
+      "message": "nit: num_update_open_tabs_urls_calls_?\n\n(note s/tab/tabs/ to match method name too)",
+      "revId": "bedb6cae7a3a79b7b84f2c4039cb1ac1afe91d6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca7dd02f_1215c083",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-01T02:23:47Z",
+      "side": 1,
+      "message": "how about just making the delegate protected instead? then you can get rid of GetEvents() too",
+      "revId": "bedb6cae7a3a79b7b84f2c4039cb1ac1afe91d6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e1ba3db_f690d932",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-01T02:23:47Z",
+      "side": 1,
+      "message": "check that it\u0027s 1 here?",
+      "revId": "bedb6cae7a3a79b7b84f2c4039cb1ac1afe91d6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
