@@ -18,7 +18,8 @@ namespace ui {
 AXSystemCaretWin::AXSystemCaretWin(gfx::AcceleratedWidget event_target)
     : event_target_(event_target) {
   caret_ = static_cast<AXPlatformNodeWin*>(AXPlatformNodeWin::Create(this));
-  data_.id = GetNextAXPlatformNodeUniqueId();
+  DCHECK(caret_);
+  data_.id = caret_->unique_id();
   data_.role = AX_ROLE_CARET;
   // |get_accState| should return 0 which means that the caret is visible.
   data_.state = 0;
@@ -28,7 +29,7 @@ AXSystemCaretWin::AXSystemCaretWin(gfx::AcceleratedWidget event_target)
 
   if (event_target_) {
     ::NotifyWinEvent(EVENT_OBJECT_CREATE, event_target_, OBJID_CARET,
-                     -data_.id);
+                     -caret_->unique_id());
   }
 }
 
@@ -38,7 +39,7 @@ AXSystemCaretWin::~AXSystemCaretWin() {
   // retrieve the destroyed object in this stack frame.
   if (event_target_) {
     ::NotifyWinEvent(EVENT_OBJECT_DESTROY, event_target_, OBJID_CARET,
-                     -data_.id);
+                     -caret_->unique_id());
   }
 }
 
@@ -57,7 +58,7 @@ void AXSystemCaretWin::MoveCaretTo(const gfx::Rect& bounds) {
   data_.location = gfx::RectF(bounds);
   if (event_target_) {
     ::NotifyWinEvent(EVENT_OBJECT_LOCATIONCHANGE, event_target_, OBJID_CARET,
-                     -data_.id);
+                     -caret_->unique_id());
   }
 }
 
