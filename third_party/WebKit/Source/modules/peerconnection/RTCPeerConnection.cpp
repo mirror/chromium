@@ -80,7 +80,6 @@
 #include "modules/peerconnection/RTCStatsRequestImpl.h"
 #include "modules/peerconnection/RTCTrackEvent.h"
 #include "modules/peerconnection/RTCVoidRequestImpl.h"
-#include "modules/peerconnection/RTCVoidRequestPromiseImpl.h"
 #include "platform/bindings/Microtask.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/bindings/V8ThrowException.h"
@@ -695,7 +694,7 @@ ScriptPromise RTCPeerConnection::setLocalDescription(
 
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
   ScriptPromise promise = resolver->Promise();
-  RTCVoidRequest* request = RTCVoidRequestPromiseImpl::Create(this, resolver);
+  RTCVoidRequest* request = RTCVoidRequestPromiseImpl::Create(resolver, this);
   peer_handler_->SetLocalDescription(
       request, WebRTCSessionDescription(session_description_init.type(),
                                         session_description_init.sdp()));
@@ -755,7 +754,7 @@ ScriptPromise RTCPeerConnection::setRemoteDescription(
 
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
   ScriptPromise promise = resolver->Promise();
-  RTCVoidRequest* request = RTCVoidRequestPromiseImpl::Create(this, resolver);
+  RTCVoidRequest* request = RTCVoidRequestPromiseImpl::Create(resolver, this);
   peer_handler_->SetRemoteDescription(
       request, WebRTCSessionDescription(session_description_init.type(),
                                         session_description_init.sdp()));
@@ -978,7 +977,7 @@ ScriptPromise RTCPeerConnection::addIceCandidate(
 
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
   ScriptPromise promise = resolver->Promise();
-  RTCVoidRequest* request = RTCVoidRequestPromiseImpl::Create(this, resolver);
+  RTCVoidRequest* request = RTCVoidRequestPromiseImpl::Create(resolver, this);
   scoped_refptr<WebRTCICECandidate> web_candidate = ConvertToWebRTCIceCandidate(
       ExecutionContext::From(script_state), candidate);
   bool implemented =
@@ -1767,6 +1766,7 @@ void RTCPeerConnection::Trace(blink::Visitor* visitor) {
   EventTargetWithInlineData::Trace(visitor);
   PausableObject::Trace(visitor);
   MediaStreamObserver::Trace(visitor);
+  RTCPromiseRequester::Trace(visitor);
 }
 
 }  // namespace blink

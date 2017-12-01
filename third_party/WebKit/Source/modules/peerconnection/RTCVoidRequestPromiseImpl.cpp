@@ -7,28 +7,29 @@
 #include "bindings/core/v8/ScriptPromiseResolver.h"
 #include "core/dom/DOMException.h"
 #include "core/dom/ExceptionCode.h"
-#include "modules/peerconnection/RTCPeerConnection.h"
 
 namespace blink {
 
 RTCVoidRequestPromiseImpl* RTCVoidRequestPromiseImpl::Create(
-    RTCPeerConnection* requester,
-    ScriptPromiseResolver* resolver) {
-  return new RTCVoidRequestPromiseImpl(requester, resolver);
+    ScriptPromiseResolver* resolver,
+    RTCPromiseRequester* requester) {
+  return new RTCVoidRequestPromiseImpl(resolver, requester);
 }
 
 RTCVoidRequestPromiseImpl::RTCVoidRequestPromiseImpl(
-    RTCPeerConnection* requester,
-    ScriptPromiseResolver* resolver)
-    : requester_(requester), resolver_(resolver) {
-  DCHECK(requester_);
+    ScriptPromiseResolver* resolver,
+    RTCPromiseRequester* requester)
+    : is_pending_(true), resolver_(resolver), requester_(requester) {
   DCHECK(resolver_);
 }
 
 RTCVoidRequestPromiseImpl::~RTCVoidRequestPromiseImpl() {}
 
 void RTCVoidRequestPromiseImpl::RequestSucceeded() {
-  if (requester_ && requester_->ShouldFireDefaultCallbacks()) {
+  if (!is_pending_)
+    return;
+
+  if (!requester_ || !requester_->DetachOnResolveOrReject()) {
     resolver_->Resolve();
   } else {
     // This is needed to have the resolver release its internal resources
@@ -36,11 +37,14 @@ void RTCVoidRequestPromiseImpl::RequestSucceeded() {
     resolver_->Detach();
   }
 
-  Clear();
+  RequestCompleted();
 }
 
 void RTCVoidRequestPromiseImpl::RequestFailed(const String& error) {
-  if (requester_ && requester_->ShouldFireDefaultCallbacks()) {
+  if (!is_pending_)
+    return;
+
+  if (!requester_ || !requester_->DetachOnResolveOrReject()) {
     // TODO(guidou): The error code should come from the content layer. See
     // crbug.com/589455
     resolver_->Reject(DOMException::Create(kOperationError, error));
@@ -50,10 +54,11 @@ void RTCVoidRequestPromiseImpl::RequestFailed(const String& error) {
     resolver_->Detach();
   }
 
-  Clear();
+  RequestCompleted();
 }
 
-void RTCVoidRequestPromiseImpl::Clear() {
+void RTCVoidRequestPromiseImpl::RequestCompleted() {
+  is_pending_ = false;
   requester_.Clear();
 }
 
