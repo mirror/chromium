@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "91a3de97_75aa4877",
+        "filename": "chrome/android/java/res/values/dimens.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-12-01T12:45:10Z",
+      "side": 1,
+      "message": "replace to pref_languages_padding_large to pref_languages_add_button_padding, because that\u0027s current only usage.\n \npref_languages_padding is used everywhere, which is the standard padding.",
+      "parentUuid": "a5f06bf5_ad83438f",
+      "range": {
+        "startLine": 465,
+        "startChar": 17,
+        "endLine": 465,
+        "endChar": 45
+      },
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2eb8206a_9b6f22ef",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageItem.java",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ac1dcb1_d7361328",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageItem.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-12-01T12:45:10Z",
+      "side": 1,
+      "message": "Interesting, I thought \"cl format\" will handle that. Will take care next time.",
+      "parentUuid": "2eb8206a_9b6f22ef",
+      "range": {
+        "startLine": 21,
+        "startChar": 18,
+        "endLine": 21,
+        "endChar": 20
+      },
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bbdb4c2e_2b46c9cb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageItem.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-12-01T12:45:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "18ed8562_a14a6969",
+      "range": {
+        "startLine": 24,
+        "startChar": 30,
+        "endLine": 24,
+        "endChar": 32
+      },
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92678c38_6db36fe9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListBaseAdapter.java",
         "patchSetId": 10
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "6aed4536_ba507154",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListBaseAdapter.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-12-01T12:45:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "92678c38_6db36fe9",
+      "range": {
+        "startLine": 75,
+        "startChar": 39,
+        "endLine": 75,
+        "endChar": 41
+      },
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a140e71_e09dd9db",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
         "patchSetId": 10
@@ -111,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "32edd42c_b80aa6c0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-12-01T12:45:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2a140e71_e09dd9db",
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3bafb754_9cbfdad9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
         "patchSetId": 10
@@ -122,6 +236,24 @@
       "writtenOn": "2017-12-01T01:47:05Z",
       "side": 1,
       "message": "In what scenarios is this method called more than once?",
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fda3474_bfea5664",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-12-01T12:45:10Z",
+      "side": 1,
+      "message": "Please refer to the comment below, I didn\u0027t find the scenario in my case, but for safe I did the same as other customized preferences.",
+      "parentUuid": "3bafb754_9cbfdad9",
       "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -151,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "256730a0_d89465bb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-12-01T12:45:10Z",
+      "side": 1,
+      "message": "Can\u0027t find a official document link, but in my testings, a customized preference\u0027s onBindView was called when other preferences\u0027 state was changed.\n\nIn my case, when I toggle the bottom switch of this page, it will trigger this onBindView. I checked out other\u0027s code, and I realized they had the same issue, so I borrowed their comments.\nhttps://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/preferences/SpinnerPreference.java?l\u003d102",
+      "parentUuid": "0a161c48_15512de2",
+      "range": {
+        "startLine": 111,
+        "startChar": 49,
+        "endLine": 111,
+        "endChar": 58
+      },
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d56d6046_70f4c0fa",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageSelectionFragment.java",
         "patchSetId": 10
@@ -171,6 +327,30 @@
       "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acc240b4_354396a6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageSelectionFragment.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-12-01T12:45:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d56d6046_70f4c0fa",
+      "range": {
+        "startLine": 30,
+        "startChar": 51,
+        "endLine": 30,
+        "endChar": 71
+      },
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -197,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "18dd35fe_6dc3e71a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageSelectionFragment.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-12-01T12:45:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "faef0370_8e6e16c3",
+      "range": {
+        "startLine": 32,
+        "startChar": 13,
+        "endLine": 32,
+        "endChar": 38
+      },
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8953915_b43308e5",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageSelectionFragment.java",
         "patchSetId": 10
@@ -208,6 +412,30 @@
       "writtenOn": "2017-12-01T01:47:05Z",
       "side": 1,
       "message": "A comment I made on a previous patch appears to have gotten left behind..\nShould we also search in getNativeDisplayName() and/or getCode()?",
+      "range": {
+        "startLine": 65,
+        "startChar": 25,
+        "endLine": 65,
+        "endChar": 39
+      },
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2786d325_d08e2fc5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageSelectionFragment.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-12-01T12:45:10Z",
+      "side": 1,
+      "message": "Sorry for the missing that comment, I did see it and considered that for a while but haven\u0027t got an easily good solution for native names searching yet, and that\u0027s why I forgot to reply. \n\nIt\u0027s easy for code searching, but difficult for native names.\nThe complexity is how to figure out what kind of characters the user are typing, as the display name searching logic, a locale is needed when we convert the chars to lower case. \n\nSo for native names, either we simply compare the strings without toLowerCase or we need to introduce some library to detect string\u0027s possible locale codes.  WDYT?",
+      "parentUuid": "a8953915_b43308e5",
       "range": {
         "startLine": 65,
         "startChar": 25,
@@ -237,6 +465,24 @@
     },
     {
       "key": {
+        "uuid": "f381f4ba_298e5076",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageSelectionFragment.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-12-01T12:45:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "861824d9_cf444233",
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fabc8fd_82dd42ff",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguagesManager.java",
         "patchSetId": 10
@@ -257,6 +503,30 @@
       "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "106d8bf8_6d5226cd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguagesManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-12-01T12:45:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9fabc8fd_82dd42ff",
+      "range": {
+        "startLine": 70,
+        "startChar": 12,
+        "endLine": 71,
+        "endChar": 48
+      },
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -283,6 +553,30 @@
     },
     {
       "key": {
+        "uuid": "a7970ac2_53c680cf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguagesManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-12-01T12:45:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ee8a16a9_a7026603",
+      "range": {
+        "startLine": 112,
+        "startChar": 58,
+        "endLine": 112,
+        "endChar": 67
+      },
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6fbbe7c_773ed7b6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguagesPreferences.java",
         "patchSetId": 10
@@ -306,6 +600,30 @@
     },
     {
       "key": {
+        "uuid": "aa11bdc5_2fcf0f88",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguagesPreferences.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-12-01T12:45:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f6fbbe7c_773ed7b6",
+      "range": {
+        "startLine": 73,
+        "startChar": 8,
+        "endLine": 74,
+        "endChar": 56
+      },
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f47567c7_4bb313f0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguagesPreferences.java",
         "patchSetId": 10
@@ -317,6 +635,24 @@
       "writtenOn": "2017-12-01T01:47:05Z",
       "side": 1,
       "message": "Typo in Selection",
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e145c9df_d8379aa6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguagesPreferences.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-12-01T12:45:10Z",
+      "side": 1,
+      "message": "replaced by launchAddLanguage",
+      "parentUuid": "f47567c7_4bb313f0",
       "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
