@@ -44,6 +44,7 @@ class GpuMojoMediaClient : public MojoMediaClient {
       RequestOverlayInfoCB request_overlay_info_cb) final;
   std::unique_ptr<CdmFactory> CreateCdmFactory(
       service_manager::mojom::InterfaceProvider* interface_provider) final;
+  std::unique_ptr<CdmProxy> CreateCdmProxy() final;
 
  private:
   gpu::GpuPreferences gpu_preferences_;
