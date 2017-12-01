@@ -106,6 +106,16 @@ class VRDisplay final : public EventTargetWithInlineData,
  protected:
   friend class VRController;
 
+  // Some implementations need to synchronize submitting with the completion of
+  // the previous frame, i.e. the Android surface path needs to wait to avoid
+  // lost frames in the transfer surface and to avoid overstuffed buffers.
+  // OpenVR uses NEVER to skip this wait because the platform handles timing.
+  enum class WaitPrevStrategy {
+    BEFORE_BITMAP,
+    AFTER_BITMAP,
+    NEVER,
+  };
+
   VRDisplay(NavigatorVR*,
             device::mojom::blink::VRMagicWindowProviderPtr,
             device::mojom::blink::VRDisplayHostPtr,
@@ -160,6 +170,9 @@ class VRDisplay final : public EventTargetWithInlineData,
   void ProcessScheduledAnimations(double timestamp);
   void ProcessScheduledWindowAnimations(double timestamp);
 
+  void WaitForPreviousTransfer();
+  WTF::TimeDelta WaitForPreviousRenderPhase(WaitPrevStrategy context);
+
   // In order to help the VR device with scheduling, never request a new VSync
   // until the current frame is either submitted or abandoned. If vrDisplay.rAF
   // is called earlier, defer the GetVSync until vrDisplay.submitFrame is
@@ -203,6 +216,9 @@ class VRDisplay final : public EventTargetWithInlineData,
   // Used to keep the image alive until the next frame if using
   // waitForPreviousTransferToFinish.
   scoped_refptr<Image> previous_image_;
+
+  // Backwards compatible default wait strategy.
+  WaitPrevStrategy wait_for_previous_render_ = WaitPrevStrategy::AFTER_BITMAP;
 
   TraceWrapperMember<ScriptedAnimationController>
       scripted_animation_controller_;
