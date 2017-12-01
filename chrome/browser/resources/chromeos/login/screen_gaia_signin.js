@@ -729,8 +729,6 @@ login.createScreen('GaiaSigninScreen', 'gaia-signin', function() {
       params.menuKeyboardOptions = false;
       params.menuEnterpriseEnrollment =
           !(data.enterpriseManagedDevice || data.hasDeviceOwner);
-      params.isFirstUser =
-          !(data.enterpriseManagedDevice || data.hasDeviceOwner);
 
       this.gaiaAuthParams_ = params;
 
