@@ -1222,6 +1222,19 @@ bool ChromeContentBrowserClient::ShouldLockToOrigin(
   return true;
 }
 
+bool ChromeContentBrowserClient::ShouldBypassDocumentBlocking(
+    const url::Origin& initiator,
+    const GURL& url) {
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  if (ChromeContentBrowserClientExtensionsPart::ShouldBypassDocumentBlocking(
+          initiator, url)) {
+    return true;
+  }
+#endif
+
+  return false;
+}
+
 // These are treated as WebUI schemes but do not get WebUI bindings. Also,
 // view-source is allowed for these schemes.
 void ChromeContentBrowserClient::GetAdditionalWebUISchemes(
