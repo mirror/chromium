@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "610f521f_f874de07",
+        "filename": "sandbox/linux/syscall_broker/broker_command.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-12-01T23:29:47Z",
+      "side": 1,
+      "message": "Done.  Sadly this doesn\u0027t have an initializer_list construtor which makes it kinda clumsy.",
+      "parentUuid": "3329aea8_f326d73e",
+      "revId": "e721d292a52b84587d64aa28485606d9f9360323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "749b0009_a88bec9a",
         "filename": "sandbox/linux/syscall_broker/broker_command.h",
         "patchSetId": 8
@@ -39,6 +57,30 @@
       "revId": "e721d292a52b84587d64aa28485606d9f9360323",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e928544_2ec05d1d",
+        "filename": "sandbox/linux/syscall_broker/broker_command.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-12-01T23:29:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "749b0009_a88bec9a",
+      "range": {
+        "startLine": 51,
+        "startChar": 71,
+        "endLine": 51,
+        "endChar": 72
+      },
+      "revId": "e721d292a52b84587d64aa28485606d9f9360323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
