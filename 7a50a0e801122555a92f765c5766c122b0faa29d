@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3d2136b_229a3662",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-01T18:47:35Z",
+      "side": 1,
+      "message": "Is this DCHECK valid? API contract for this method does not require web view to be empty.",
+      "range": {
+        "startLine": 370,
+        "startChar": 36,
+        "endLine": 370,
+        "endChar": 43
+      },
+      "revId": "7a50a0e801122555a92f765c5766c122b0faa29d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5896f46_a7af14e9",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1316,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-01T18:47:35Z",
+      "side": 1,
+      "message": "Is it possible for |currentNavItem| to return null*?\n\n*Given that either currentBackForwardListItemHolder call has succeeded or _pendingNavigationInfo is not null.",
+      "range": {
+        "startLine": 1316,
+        "startChar": 15,
+        "endLine": 1316,
+        "endChar": 29
+      },
+      "revId": "7a50a0e801122555a92f765c5766c122b0faa29d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "263602ff_36059a82",
+        "filename": "ios/web/web_state/web_state_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-01T18:47:35Z",
+      "side": 1,
+      "message": "Can we test this change?",
+      "range": {
+        "startLine": 554,
+        "startChar": 18,
+        "endLine": 554,
+        "endChar": 0
+      },
+      "revId": "7a50a0e801122555a92f765c5766c122b0faa29d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
