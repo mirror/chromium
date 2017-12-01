@@ -16,6 +16,24 @@
       "revId": "3144f5963cca7e7083ebd01e6880f5ed3507bc3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e9473af_1fc76f76",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/UIString.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-01T18:58:50Z",
+      "side": 1,
+      "message": "That does not compile.",
+      "parentUuid": "c514ac78_599839b8",
+      "revId": "3144f5963cca7e7083ebd01e6880f5ed3507bc3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
