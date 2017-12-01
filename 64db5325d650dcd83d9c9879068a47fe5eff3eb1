@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "3ccfc77c_ea5ee90d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-01T05:49:21Z",
+      "side": 1,
+      "message": "Likely the list is one to two elements long, so I don\u0027t think we need to worry too much about iteration cost.",
+      "parentUuid": "65086d0c_0608e63b",
+      "range": {
+        "startLine": 59,
+        "startChar": 18,
+        "endLine": 59,
+        "endChar": 22
+      },
+      "revId": "64db5325d650dcd83d9c9879068a47fe5eff3eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f5c8eba_82e31ad8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
         "patchSetId": 8
@@ -342,6 +366,30 @@
       "side": 1,
       "message": "Hm.. I feel like we might still need to depend on Manager in the Presenter, The presenter itself should just show/hide the views, but show/dismiss the dialog should still be handled by the manager. Also, there are different options to dismiss dialogs (dismiss or cancel single dialog, and cancel all dialogs), and these options might all be needed for a presenter, so I am not sure having just one OnCancel Runnable is sufficient.",
       "parentUuid": "68fdae72_f11b4eb6",
+      "range": {
+        "startLine": 74,
+        "startChar": 63,
+        "endLine": 74,
+        "endChar": 78
+      },
+      "revId": "64db5325d650dcd83d9c9879068a47fe5eff3eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e07edbea_330ff036",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-01T05:49:21Z",
+      "side": 1,
+      "message": "I think we should keep thinking about this.  Ideally, I think the presenter should be fully in charge of the presentation of the dialog, which includes showing and hiding.  I think the challenge is where the manager wants to hear about the dialogs going away as well as the ability for it dismiss a dialog if the presenter is showing it.\n\nI wonder if the concept of the current dialog should be in the presenter (i.e. am I showing anything).  The dialogmanager would just iterate across it\u0027s presenters and assume no more than one is showing at a given time.  Dismiss would still be on the manager, but it would walk the presenters and say, is this your current dialog, if so, dismiss it.",
+      "parentUuid": "216bd189_fd360db4",
       "range": {
         "startLine": 74,
         "startChar": 63,

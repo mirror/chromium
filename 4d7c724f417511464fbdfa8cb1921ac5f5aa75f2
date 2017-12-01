@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81340002_0e4f2e40",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-01T05:49:21Z",
+      "side": 1,
+      "message": "I\u0027d say it still makes sense to have a protected method createModalDialogManager that would allow sub classes to inject Presenters at that point.",
+      "range": {
+        "startLine": 411,
+        "startChar": 8,
+        "endLine": 411,
+        "endChar": 27
+      },
+      "revId": "4d7c724f417511464fbdfa8cb1921ac5f5aa75f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f43f355c_97aa6fa1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1907,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-01T05:49:21Z",
+      "side": 1,
+      "message": "Do app modal dialogs handle back press themselves?  Is this more needed for tab modal?\n\nIn general, I think the ordering if this gets complicated.  For app modal, back press should happen here, but for tab modal, we should likely give backpress to the bottom sheet first, same for the tab switcher.",
+      "range": {
+        "startLine": 1907,
+        "startChar": 12,
+        "endLine": 1907,
+        "endChar": 33
+      },
+      "revId": "4d7c724f417511464fbdfa8cb1921ac5f5aa75f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "639eabb7_db0ec761",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalPresenter.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-01T05:49:21Z",
+      "side": 1,
+      "message": "I would set this to GONE",
+      "range": {
+        "startLine": 145,
+        "startChar": 25,
+        "endLine": 145,
+        "endChar": 38
+      },
+      "revId": "4d7c724f417511464fbdfa8cb1921ac5f5aa75f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afa15bb3_4306615f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalPresenter.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-01T05:49:21Z",
+      "side": 1,
+      "message": "let\u0027s add an assert that this isn\u0027t null",
+      "range": {
+        "startLine": 179,
+        "startChar": 8,
+        "endLine": 179,
+        "endChar": 31
+      },
+      "revId": "4d7c724f417511464fbdfa8cb1921ac5f5aa75f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40481133_043fd274",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalPresenter.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-01T05:49:21Z",
+      "side": 1,
+      "message": "I wonder if the tab should be the one telling this to the fullscreenmanager.  Should we have the concept of \"showing tab modal dialog\" to a tab that would handle this and the next line for us?",
+      "range": {
+        "startLine": 239,
+        "startChar": 55,
+        "endLine": 239,
+        "endChar": 88
+      },
+      "revId": "4d7c724f417511464fbdfa8cb1921ac5f5aa75f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7126ce74_befff3f8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/javascript/JavascriptModalDialogView.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-01T05:49:21Z",
+      "side": 1,
+      "message": "should this be retrieved out of the params?\n\nI\u0027m wondering if this constructor should actually be private and there be a static method that takes a controller, message, promptText, shouldShowSuppressCheckBox and creates the correct params for that.",
+      "range": {
+        "startLine": 32,
+        "startChar": 13,
+        "endLine": 32,
+        "endChar": 25
+      },
+      "revId": "4d7c724f417511464fbdfa8cb1921ac5f5aa75f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
