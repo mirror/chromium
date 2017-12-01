@@ -178,6 +178,10 @@ class TabUsageRecorder : public web::WebStateObserver,
   // Resets all tracked data.  Used for testing.
   void ResetAll();
 
+  // Called when the web process is terminated (usually by crashing, though
+  // possibly by other means).
+  void RenderProcessGone(web::WebState* web_state) override;
+
  private:
   // TODO(crbug.com/731724): remove this once the code has been refactored not
   // to depends on injecting values in |termination_timestamps_|.
@@ -213,7 +217,6 @@ class TabUsageRecorder : public web::WebStateObserver,
   void PageLoaded(
       web::WebState* web_state,
       web::PageLoadCompletionStatus load_completion_status) override;
-  void RenderProcessGone(web::WebState* web_state) override;
   void WebStateDestroyed(web::WebState* web_state) override;
 
   // WebStateListObserver implementation.
