@@ -34,6 +34,24 @@
       "revId": "bcc62fc10ba1cad02259fb778f89b3e58ad08bb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03775b15_ff5655ad",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsLayer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1316,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-01T23:01:55Z",
+      "side": 1,
+      "message": "\u003e Actually after we forced PaintOffsetTranslation for composited layers, the second half should be useless. We can address this in another CL or leave it as-is.\n\nIf it\u0027s useless, the offset field can be removed and and you can use OffsetFromLayoutObject\ndirectly. Might as well do that in this CL?",
+      "parentUuid": "476371af_68d217da",
+      "revId": "bcc62fc10ba1cad02259fb778f89b3e58ad08bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
