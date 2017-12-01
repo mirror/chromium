@@ -67,6 +67,9 @@ namespace {
 // This limit was arrived at arbitrarily. crbug.com/449744
 const int kMaxRecursionDepth = 44;
 
+const int kHotHours = 72;
+const int kMinimalCodeLength = 1024;
+
 // In order to make sure all pending messages to be processed in
 // v8::Function::Call, we don't call throwStackOverflowException
 // directly. Instead, we create a v8::Function of
@@ -293,8 +296,6 @@ static CompileFn SelectCompileFunction(
     CachedMetadataHandler* cache_handler,
     v8::Local<v8::String> code,
     v8::ScriptCompiler::NoCacheReason no_handler_reason) {
-  static const int kMinimalCodeLength = 1024;
-  static const int kHotHours = 72;
 
   // Caching is not available in this case.
   if (!cache_handler) {
@@ -573,6 +574,79 @@ v8::MaybeLocal<v8::Value> V8ScriptRunner::RunCompiledScript(
 
   CHECK(!isolate->IsDead());
   return result;
+}
+
+void V8ScriptRunner::ProduceCache(v8::Isolate* isolate,
+                                  v8::Local<v8::Script> script,
+                                  CachedMetadataHandler* cache_handler,
+                                  const String& source_code,
+                                  V8CacheOptions cache_options) {
+  TRACE_EVENT0("v8", "v8.run");
+  RuntimeCallStatsScopedTracer rcs_scoped_tracer(isolate);
+  RUNTIME_CALL_TIMER_SCOPE(isolate, RuntimeCallStats::CounterId::kV8);
+
+  // ProduceCache only produces cache when a V8 flag
+  // (enable_cache_after_execute) is enabled. Currently, V8 produces cache
+  // either on compile or when explicitly requested depending on the flag.
+  // This is done to enable a trial and see the efficiency of the cache after
+  // execute. Currently, we collect statistics during compile even when we
+  // produce cache here.
+  // TODO(783124): clean up the statistics collection when we decouple
+  // producing cache from compile.
+
+  // TODO(783124): The code cache heuristics are duplicated both while
+  // selecting the compile function and here. Unify them into one place.
+  if (cache_handler) {
+    return;
+  }
+
+  // Check if cache already exists.
+  uint32_t code_cache_tag = V8ScriptRunner::TagForCodeCache(cache_handler);
+  if (cache_handler->GetCachedMetadata(code_cache_tag)) {
+    return;
+  }
+
+  // If the script is too small then don't cache.
+  if (source_code.length() < kMinimalCodeLength) {
+    return;
+  }
+
+  switch (cache_options) {
+    case kV8CacheOptionsParse: {
+      // Parse Cache option doesn't change. This option would be soon
+      // removed, so it is not needed to move this to the new explicit API.
+      return;
+    }
+    case kV8CacheOptionsDefault:
+    case kV8CacheOptionsCode: {
+      // Only cache recently seen resources
+      if (!IsResourceHotForCaching(cache_handler, kHotHours)) {
+        return;
+      }
+      break;
+    }
+    case kV8CacheOptionsCodeWithoutHeatCheck:
+    case kV8CacheOptionsFullCodeWithoutHeatCheck: {
+      break;
+    }
+    case kV8CacheOptionsNone:
+      return;
+    default:
+      NOTREACHED();
+  }
+
+  v8::ScriptCompiler::CachedData* cached_data =
+      v8::ScriptCompiler::CreateCodeCache(script->GetUnboundScript(),
+                                          V8String(isolate, source_code));
+  if (cached_data) {
+    const char* data = reinterpret_cast<const char*>(cached_data->data);
+    int length = cached_data->length;
+    cache_handler->ClearCachedMetadata(CachedMetadataHandler::kCacheLocally);
+    uint32_t tag = CacheTag(kCacheTagCode, cache_handler->Encoding());
+    cache_handler->SetCachedMetadata(tag, data, length,
+                                     CachedMetadataHandler::kSendToPlatform);
+  }
+  delete cached_data;
 }
 
 v8::MaybeLocal<v8::Value> V8ScriptRunner::CompileAndRunInternalScript(
