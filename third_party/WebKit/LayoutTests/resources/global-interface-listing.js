@@ -1,13 +1,19 @@
+var jsTestIsAsync = true;
+
 // * |globalObject| should be the global (usually |this|).
 // * |propertyNamesInGlobal| should be a list of properties captured before
 //   other scripts are loaded, using: Object.getOwnPropertyNames(this);
-// * |platformSpecific| determines the platform-filtering of interfaces and
-//   properties. Only platform-specific interfaces/properties will be tested if
-//   set to true, and only all-platform interfaces/properties will be used
-//   if set to false.
 // * |outputFunc| is called back with each line of output.
+// * |options| include:
+//   * |platformSpecific| determines the platform-filtering of interfaces and
+//     properties. Only platform-specific interfaces/properties will be tested
+//     if set to true, and only all-platform interfaces/properties will be used
+//     if set to false (the default).
 
-function globalInterfaceListing(globalObject, propertyNamesInGlobal, platformSpecific, outputFunc) {
+
+function globalInterfaceListing(globalObject, propertyNamesInGlobal, outputFunc, options) {
+
+  options = Object.assign({platformSpecific: false}, options);
 
 // List of builtin JS constructors; Blink is not controlling what properties these
 // objects have, so exercising them in a Blink test doesn't make sense.
@@ -125,18 +131,18 @@ var platformSpecificGlobalProperties = new Set([
 
 function filterPlatformSpecificInterface(interfaceName) {
     return platformSpecificProperties.hasOwnProperty(interfaceName) ||
-        platformSpecificInterfaces.has(interfaceName) == platformSpecific;
+        platformSpecificInterfaces.has(interfaceName) == options.platformSpecific;
 }
 
 function filterPlatformSpecificProperty(interfaceName, property) {
     return (platformSpecificInterfaces.has(interfaceName) ||
             (platformSpecificProperties.hasOwnProperty(interfaceName) &&
              platformSpecificProperties[interfaceName].has(property))) ==
-        platformSpecific;
+        options.platformSpecific;
 }
 
 function filterPlatformSpecificGlobalProperty(property) {
-    return platformSpecificGlobalProperties.has(property) == platformSpecific;
+    return platformSpecificGlobalProperties.has(property) == options.platformSpecific;
 }
 
 function collectPropertyInfo(object, propertyKey, output) {
@@ -216,4 +222,5 @@ memberNames.forEach(function(propertyKey) {
     collectPropertyInfo(globalObject, propertyKey, propertyStrings);
 });
 propertyStrings.sort().filter(filterPlatformSpecificGlobalProperty).forEach(outputProperty);
+finishJSTest();
 }
