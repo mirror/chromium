@@ -22,6 +22,30 @@
       "revId": "5fca0dd31a387e76af0ceea61ebe34f0e5581784",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "473093c0_fa0b87aa",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 3278,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-01T02:36:39Z",
+      "side": 0,
+      "message": "Ack, nice find, opportunistic removal sgtm.",
+      "parentUuid": "96e07fb1_e8275692",
+      "range": {
+        "startLine": 3276,
+        "startChar": 0,
+        "endLine": 3278,
+        "endChar": 18
+      },
+      "revId": "5fca0dd31a387e76af0ceea61ebe34f0e5581784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

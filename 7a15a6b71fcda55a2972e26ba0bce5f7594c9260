@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0acd1da2_a115cdcd",
+        "filename": "chrome/browser/extensions/api/image_writer_private/image_writer_utility_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-01T02:36:39Z",
+      "side": 1,
+      "message": "I think you want removable_storage_writer_.reset() here.  NB: ResetRequest() already does the removable_storage_writer_client_.reset() part.",
+      "revId": "7a15a6b71fcda55a2972e26ba0bce5f7594c9260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a147c5a_b7edf470",
+        "filename": "chrome/browser/extensions/api/image_writer_private/image_writer_utility_client.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-01T02:36:39Z",
+      "side": 1,
+      "message": "aside: No way I could find to DCHECK for an unbound connector, sadly.",
+      "revId": "7a15a6b71fcda55a2972e26ba0bce5f7594c9260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3423c848_19e72c81",
+        "filename": "chrome/browser/extensions/api/image_writer_private/image_writer_utility_client.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-01T02:36:39Z",
+      "side": 1,
+      "message": "Change in member destruction order relative diff-left: maybe not a drama, but maybe we should preserve the order of diff-let, something like this:\n\n  std::unique_ptr\u003cservice_manager::Connector\u003e connector_;\n\n  chrome::mojom::RemovableStorageWriterPtr removable_storage_writer_;\n\n  std::unique_ptr\u003cRemovableStorageWriterClientImpl\u003e\n        removable_storage_writer_client_;",
+      "revId": "7a15a6b71fcda55a2972e26ba0bce5f7594c9260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64217ba6_2ef94c75",
+        "filename": "chrome/browser/extensions/api/image_writer_private/operation_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-01T02:36:39Z",
+      "side": 1,
+      "message": "grrrrr @ git cl format. add a space after this line.",
+      "revId": "7a15a6b71fcda55a2972e26ba0bce5f7594c9260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66598b65_505e6297",
+        "filename": "chrome/browser/extensions/api/image_writer_private/write_from_file_operation.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-01T02:36:39Z",
+      "side": 1,
+      "message": "git cl format. add a space after this line.",
+      "revId": "7a15a6b71fcda55a2972e26ba0bce5f7594c9260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3810cd8_98288c49",
+        "filename": "chrome/browser/extensions/api/image_writer_private/write_from_file_operation_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-01T02:36:39Z",
+      "side": 1,
+      "message": "git cl format. add a space after this line.",
+      "revId": "7a15a6b71fcda55a2972e26ba0bce5f7594c9260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1570dd10_52c4b26d",
+        "filename": "chrome/browser/extensions/api/image_writer_private/write_from_url_operation.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-01T02:36:39Z",
+      "side": 1,
+      "message": "WriteFromUrlOperation::~WriteFromUrlOperation() \u003d default; seems to be in vogue these days :)",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 47
+      },
+      "revId": "7a15a6b71fcda55a2972e26ba0bce5f7594c9260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c32ea0e0_a4a5e6ac",
+        "filename": "chrome/services/removable_storage_writer/manifest.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-01T02:36:39Z",
+      "side": 1,
+      "message": "File: chrome/browser/chrome_content_utility_manifest_overlay.json\n\nis not in the CL, but will still have an entry for extensions::mojom::RemovableStorageWriter.  We can remove that too, now we have a RemovableStorageWriter service, right?",
+      "revId": "7a15a6b71fcda55a2972e26ba0bce5f7594c9260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23ecfe69_035ba6e7",
+        "filename": "chrome/utility/chrome_content_utility_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-01T02:36:39Z",
+      "side": 1,
+      "message": "paused and studied here: use of this helper here and below looks good re: elevation, no elevation.",
+      "revId": "7a15a6b71fcda55a2972e26ba0bce5f7594c9260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
