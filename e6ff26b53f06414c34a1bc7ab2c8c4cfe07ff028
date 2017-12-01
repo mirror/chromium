@@ -48,6 +48,122 @@
     },
     {
       "key": {
+        "uuid": "783d5253_2cca021f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/ChromeMediaRouterDialogController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-12-01T15:05:54Z",
+      "side": 1,
+      "message": "do you mean to pass sourceId to the dialog manager so it creates the selector there?\n\nIIRC buildRouteSelector() can return null if the app id is invalid (Cast Android SDK throws an exception that we catch) so we\u0027d have to plumb a call from the dialog manager to nativeOnMediaSourceNotSupported in that case (which is fine by me).",
+      "parentUuid": "c40ec23b_6345d93a",
+      "range": {
+        "startLine": 87,
+        "startChar": 12,
+        "endLine": 87,
+        "endChar": 25
+      },
+      "revId": "e6ff26b53f06414c34a1bc7ab2c8c4cfe07ff028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "967c15d1_bc300b18",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/CastMediaSource.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-12-01T15:05:54Z",
+      "side": 1,
+      "message": "nit: as a potential P4 TODO: source URN should be replaced with source id throughout the code and comments. URN referred to something like org.chromium.x:cast:cast://APP-ID?params but we never get the full prefix and the C++ MediaRouter framework is using MediaSource::ID everywhere IIRC.",
+      "range": {
+        "startLine": 18,
+        "startChar": 82,
+        "endLine": 18,
+        "endChar": 85
+      },
+      "revId": "e6ff26b53f06414c34a1bc7ab2c8c4cfe07ff028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "754850eb_8731f433",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/CastMediaSource.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-12-01T15:05:54Z",
+      "side": 1,
+      "message": "nit: Can this file be marked as a copy somehow when uploading the change so we don\u0027t lose change history and all that? Is it just how Gerrit shows it?",
+      "range": {
+        "startLine": 20,
+        "startChar": 13,
+        "endLine": 20,
+        "endChar": 28
+      },
+      "revId": "e6ff26b53f06414c34a1bc7ab2c8c4cfe07ff028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48f61c9a_b223af12",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/CastMediaSource.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-12-01T15:05:54Z",
+      "side": 1,
+      "message": "clientId is a Cast Web SDK specific member, does it have to be exposed via MediaSource? do you plan to remove it later?",
+      "range": {
+        "startLine": 129,
+        "startChar": 18,
+        "endLine": 129,
+        "endChar": 29
+      },
+      "revId": "e6ff26b53f06414c34a1bc7ab2c8c4cfe07ff028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6277876_91109de7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/MediaSource.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-12-01T15:05:54Z",
+      "side": 1,
+      "message": "nit: ditto w.r.t client id and MediaSource",
+      "range": {
+        "startLine": 34,
+        "startChar": 18,
+        "endLine": 34,
+        "endChar": 29
+      },
+      "revId": "e6ff26b53f06414c34a1bc7ab2c8c4cfe07ff028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0321feb_5ad573d2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingMediaRouteProvider.java",
         "patchSetId": 6
