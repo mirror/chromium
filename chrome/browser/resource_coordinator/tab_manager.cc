@@ -64,6 +64,8 @@
 #include "ash/multi_profile_uma.h"
 #include "ash/shell.h"
 #include "chrome/browser/resource_coordinator/tab_manager_delegate_chromeos.h"
+#include "chromeos/dbus/dbus_thread_manager.h"
+#include "chromeos/dbus/event_logger_client.h"
 #include "components/user_manager/user_manager.h"
 #endif
 
@@ -652,6 +654,11 @@ void TabManager::PurgeMemoryAndDiscardTab(DiscardTabCondition condition) {
   TabManager* manager = g_browser_process->GetTabManager();
   manager->PurgeBrowserMemory();
   manager->DiscardTab(condition);
+#if defined(OS_CHROMEOS)
+  chromeos::EventLoggerClient* client =
+      chromeos::DBusThreadManager::Get()->GetEventLoggerClient();
+  client->LogEvent("tab-discard");
+#endif
 }
 
 // static
