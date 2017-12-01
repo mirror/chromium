@@ -456,7 +456,6 @@ using content::PosixFileDescriptorInfo;
 using extensions::APIPermission;
 using extensions::ChromeContentBrowserClientExtensionsPart;
 using extensions::Extension;
-using extensions::InfoMap;
 using extensions::Manifest;
 #endif
 
