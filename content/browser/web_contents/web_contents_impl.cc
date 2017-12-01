@@ -1414,8 +1414,8 @@ void WebContentsImpl::SetAudioMuted(bool mute) {
   NotifyNavigationStateChanged(INVALIDATE_TYPE_TAB);
 }
 
-bool WebContentsImpl::IsCurrentlyAudible() {
-  return audio_stream_monitor()->IsCurrentlyAudible();
+bool WebContentsImpl::IsCurrentlyAudible() const {
+  return audio_stream_monitor_.IsCurrentlyAudible();
 }
 
 bool WebContentsImpl::IsConnectedToBluetoothDevice() const {
