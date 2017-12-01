@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cf3216e_f993fd37",
+        "filename": "chrome/common/web_application_info.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-01T05:39:54Z",
+      "side": 1,
+      "message": "Ideally I think we would convert this struct to be defined in Mojo as well, but that\u0027s a pretty big task so it probably makes sense to convert from IPC first, then convert the struct.",
+      "range": {
+        "startLine": 8,
+        "startChar": 7,
+        "endLine": 8,
+        "endChar": 25
+      },
+      "revId": "853ddc1db50d965265b32fc28a0c4f9b7784b41c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3b6e38a_da1be635",
+        "filename": "chrome/common/web_application_info.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-01T05:39:54Z",
+      "side": 1,
+      "message": "It\u0027s confusing that this interface name mirrors that of an actual struct (and the name also makes it sound like a struct). Possibly call this WebApplicationInfoProvider? (And rename the mojom file too)",
+      "range": {
+        "startLine": 11,
+        "startChar": 10,
+        "endLine": 11,
+        "endChar": 28
+      },
+      "revId": "853ddc1db50d965265b32fc28a0c4f9b7784b41c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14458514_e4400427",
+        "filename": "chrome/renderer/chrome_render_frame_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-01T05:39:54Z",
+      "side": 1,
+      "message": "Does this need to be std::move(callback).Run()?",
+      "range": {
+        "startLine": 303,
+        "startChar": 2,
+        "endLine": 303,
+        "endChar": 10
+      },
+      "revId": "853ddc1db50d965265b32fc28a0c4f9b7784b41c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
