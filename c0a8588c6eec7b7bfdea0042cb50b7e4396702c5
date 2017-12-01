@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93c37ca6_fced7e40",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/git_cl.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-12-01T20:21:12Z",
+      "side": 1,
+      "message": "Does this introduce a regression?\n\nIn https://crbug.com/785178 we saw Swarming tasks with URL like: https://ci.chromium.org/p/chromium/builders/luci.chromium.try/linux_android_rel_ng/6768\n\nSo perhaps we should filter out both \u0027/task/\u0027 and \u0027/builders/\u0027? Again, I\u0027m a bit wary about these seemingly arbitrary rules. Who shall we ask to know the URL schemas for sure?",
+      "revId": "c0a8588c6eec7b7bfdea0042cb50b7e4396702c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
