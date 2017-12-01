@@ -22,6 +22,30 @@
       "revId": "d1eb8710f8a8117b13904d2fae682fa9050de223",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f4fe0de_80971ca1",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-12-01T00:28:20Z",
+      "side": 1,
+      "message": "Uhh...I didn\u0027t know this, and meant to change it to public, but in Java, you can apparently call a \"protected\" method from another class in the same package. Should I change it to public?",
+      "parentUuid": "283d70e9_a707db5c",
+      "range": {
+        "startLine": 677,
+        "startChar": 4,
+        "endLine": 677,
+        "endChar": 13
+      },
+      "revId": "d1eb8710f8a8117b13904d2fae682fa9050de223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
