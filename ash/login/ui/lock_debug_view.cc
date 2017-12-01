@@ -182,14 +182,9 @@ class LockDebugView::DebugDataDispatcherTransformer
     debug_dispatcher_.SetLockScreenNoteState(lock_screen_note_state_);
   }
 
-  void ToggleLockScreenDevChannelInfo() {
-    show_dev_channel_info_ = !show_dev_channel_info_;
-    if (show_dev_channel_info_) {
-      debug_dispatcher_.SetDevChannelInfo(kDebugOsVersion, kDebugEnterpriseInfo,
-                                          kDebugBluetoothName);
-    } else {
-      debug_dispatcher_.SetDevChannelInfo("", "", "");
-    }
+  void AddLockScreenDevChannelInfo() {
+    debug_dispatcher_.SetDevChannelInfo(kDebugOsVersion, kDebugEnterpriseInfo,
+                                        kDebugBluetoothName);
   }
 
   // LoginDataDispatcher::Observer:
@@ -251,9 +246,6 @@ class LockDebugView::DebugDataDispatcherTransformer
   // The current lock screen note action state.
   mojom::TrayActionState lock_screen_note_state_;
 
-  // If the dev channel info is being shown.
-  bool show_dev_channel_info_ = false;
-
   DISALLOW_COPY_AND_ASSIGN(DebugDataDispatcherTransformer);
 };
 
@@ -284,8 +276,8 @@ LockDebugView::LockDebugView(mojom::TrayActionState initial_note_action_state,
 
   toggle_blur_ = AddButton("Blur");
   toggle_note_action_ = AddButton("Toggle note action");
-  toggle_dev_channel_info_ = AddButton("Toggle dev channel info");
   toggle_caps_lock_ = AddButton("Toggle caps lock");
+  add_dev_channel_info_ = AddButton("Add dev channel info");
   add_user_ = AddButton("Add user");
   remove_user_ = AddButton("Remove user");
   toggle_auth_ = AddButton("Auth (allowed)");
@@ -316,17 +308,17 @@ void LockDebugView::ButtonPressed(views::Button* sender,
     return;
   }
 
-  // Enable or disable dev channel info.
-  if (sender == toggle_dev_channel_info_) {
-    debug_data_dispatcher_->ToggleLockScreenDevChannelInfo();
-    return;
-  }
-
   // Enable or disable caps lock.
   if (sender == toggle_caps_lock_) {
     chromeos::input_method::ImeKeyboard* keyboard =
         chromeos::input_method::InputMethodManager::Get()->GetImeKeyboard();
     keyboard->SetCapsLockEnabled(!keyboard->CapsLockIsEnabled());
+    return;
+  }
+
+  // Add dev channel info.
+  if (sender == add_dev_channel_info_) {
+    debug_data_dispatcher_->AddLockScreenDevChannelInfo();
     return;
   }
 
