@@ -56,7 +56,8 @@ content::mojom::NetworkContext* SystemNetworkContextManager::GetContext() {
     return io_thread_network_context_.get();
   }
 
-  if (!network_service_network_context_) {
+  if (!network_service_network_context_ ||
+      network_service_network_context_.encountered_error()) {
     content::mojom::NetworkService* network_service =
         content::GetNetworkService();
     if (!is_quic_allowed_)
@@ -152,4 +153,8 @@ SystemNetworkContextManager::CreateNetworkContextParams() {
   proxy_config_monitor_.AddToNetworkContextParams(network_context_params.get());
 
   return network_context_params;
+}
+
+void SystemNetworkContextManager::FlushNetworkInterfaceForTesting() {
+  network_service_network_context_.FlushForTesting();
 }

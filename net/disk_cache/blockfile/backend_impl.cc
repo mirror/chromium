@@ -41,6 +41,8 @@
 #include "net/disk_cache/blockfile/webfonts_histogram.h"
 #include "net/disk_cache/cache_util.h"
 
+#include <base/debug/stack_trace.h>
+
 // Provide a BackendImpl object to macros from histogram_macros.h.
 #define CACHE_UMA_BACKEND_IMPL_OBJ this
 
@@ -1558,12 +1560,16 @@ void BackendImpl::PrepareForRestart() {
 }
 
 int BackendImpl::NewEntry(Addr address, scoped_refptr<EntryImpl>* entry) {
+  LOG(ERROR) << "BackendImpl::NewEntry address:" << address.value();
   EntriesMap::iterator it = open_entries_.find(address.value());
   if (it != open_entries_.end()) {
+    LOG(ERROR) << "1. Easy job. This entry is already in memory.";
     // Easy job. This entry is already in memory.
     *entry = base::WrapRefCounted(it->second);
     return 0;
   }
+
+  LOG(ERROR) << "2. BackendImpl::NewEntry";
 
   STRESS_DCHECK(block_files_.IsValid(address));
 
@@ -1573,14 +1579,20 @@ int BackendImpl::NewEntry(Addr address, scoped_refptr<EntryImpl>* entry) {
     return ERR_INVALID_ADDRESS;
   }
 
+LOG(ERROR) << "3. BackendImpl::NewEntry";
+
   scoped_refptr<EntryImpl> cache_entry(
       new EntryImpl(this, address, read_only_));
   IncreaseNumRefs();
   *entry = NULL;
 
+LOG(ERROR) << "4. BackendImpl::NewEntry";
+
   TimeTicks start = TimeTicks::Now();
   if (!cache_entry->entry()->Load())
     return ERR_READ_FAILURE;
+
+LOG(ERROR) << "5. BackendImpl::NewEntry";
 
   if (IsLoaded()) {
     CACHE_UMA(AGE_MS, "LoadTime", 0, start);
@@ -1591,14 +1603,15 @@ int BackendImpl::NewEntry(Addr address, scoped_refptr<EntryImpl>* entry) {
     STRESS_NOTREACHED();
     return ERR_INVALID_ENTRY;
   }
-
+LOG(ERROR) << "6. BackendImpl::NewEntry";
   STRESS_DCHECK(block_files_.IsValid(
                     Addr(cache_entry->entry()->Data()->rankings_node)));
 
   if (!cache_entry->LoadNodeAddress())
     return ERR_READ_FAILURE;
-
+LOG(ERROR) << "7. BackendImpl::NewEntry";
   if (!rankings_.SanityCheck(cache_entry->rankings(), false)) {
+    LOG(ERROR) << "8. BackendImpl::NewEntry";
     STRESS_NOTREACHED();
     cache_entry->SetDirtyFlag(0);
     // Don't remove this from the list (it is not linked properly). Instead,
@@ -1606,17 +1619,19 @@ int BackendImpl::NewEntry(Addr address, scoped_refptr<EntryImpl>* entry) {
     // rankings node to be deleted if we find it through a list.
     rankings_.SetContents(cache_entry->rankings(), 0);
   } else if (!rankings_.DataSanityCheck(cache_entry->rankings(), false)) {
+    LOG(ERROR) << "9. BackendImpl::NewEntry";
     STRESS_NOTREACHED();
     cache_entry->SetDirtyFlag(0);
     rankings_.SetContents(cache_entry->rankings(), address.value());
   }
 
   if (!cache_entry->DataSanityCheck()) {
+    LOG(ERROR) << "10. BackendImpl::NewEntry";
     LOG(WARNING) << "Messed up entry found.";
     cache_entry->SetDirtyFlag(0);
     cache_entry->FixForDelete();
   }
-
+LOG(ERROR) << "11. BackendImpl::NewEntry";
   // Prevent overwriting the dirty flag on the destructor.
   cache_entry->SetDirtyFlag(GetCurrentEntryId());
 
@@ -1624,11 +1639,12 @@ int BackendImpl::NewEntry(Addr address, scoped_refptr<EntryImpl>* entry) {
     Trace("Dirty entry 0x%p 0x%x", reinterpret_cast<void*>(cache_entry.get()),
           address.value());
   }
-
+LOG(ERROR) << "12. BackendImpl::NewEntry";
   open_entries_[address.value()] = cache_entry.get();
 
   cache_entry->BeginLogging(net_log_, false);
   *entry = std::move(cache_entry);
+  LOG(ERROR) << "End BackendImpl::NewEntry";
   return 0;
 }
 
@@ -1637,7 +1653,9 @@ scoped_refptr<EntryImpl> BackendImpl::MatchEntry(const std::string& key,
                                                  bool find_parent,
                                                  Addr entry_addr,
                                                  bool* match_error) {
+  LOG(ERROR) << "BackendImpl::MatchEntry key:" << key << " hash:" << hash << " mask_:" << mask_;
   Addr address(data_->table[hash & mask_]);
+  LOG(ERROR) << " address:" << address.value();
   scoped_refptr<EntryImpl> cache_entry, parent_entry;
   bool found = false;
   std::set<CacheAddr> visited;
@@ -1821,6 +1839,9 @@ scoped_refptr<EntryImpl> BackendImpl::ResurrectEntry(
 
 void BackendImpl::DestroyInvalidEntry(EntryImpl* entry) {
   LOG(WARNING) << "Destroying invalid entry.";
+  base::debug::StackTrace().Print();
+  LOG(ERROR) << "Destroying invalid entry.";
+  LOG(ERROR) << "base::Process::Current().Pid() = " << base::Process::Current().Pid();
   Trace("Destroying invalid entry 0x%p", entry);
 
   entry->SetPointerForInvalidEntry(GetCurrentEntryId());
@@ -1840,7 +1861,11 @@ void BackendImpl::AddStorageSize(int32_t bytes) {
 
 void BackendImpl::SubstractStorageSize(int32_t bytes) {
   data_->header.num_bytes -= bytes;
-  DCHECK_GE(data_->header.num_bytes, 0);
+  if (data_->header.num_bytes < 0) {
+    LOG(ERROR) << "BackendImpl::SubstractStorageSize";
+    LOG(ERROR) << "base::Process::Current().Pid() = " << base::Process::Current().Pid();
+  }
+  CHECK_GE(data_->header.num_bytes, 0);
 }
 
 void BackendImpl::IncreaseNumRefs() {
