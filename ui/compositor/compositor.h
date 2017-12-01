@@ -10,6 +10,7 @@
 #include <memory>
 #include <string>
 
+#include "base/containers/flat_set.h"
 #include "base/containers/hash_tables.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
@@ -453,7 +454,7 @@ class COMPOSITOR_EXPORT Compositor : public cc::LayerTreeHostClient,
   double forced_refresh_rate_ = 0.f;
 
   // A map from child id to parent id.
-  std::unordered_set<viz::FrameSinkId, viz::FrameSinkIdHash> child_frame_sinks_;
+  base::flat_set<viz::FrameSinkId> child_frame_sinks_;
   bool widget_valid_ = false;
   bool layer_tree_frame_sink_requested_ = false;
   const viz::FrameSinkId frame_sink_id_;
