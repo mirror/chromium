@@ -137,6 +137,30 @@
       "revId": "0fc6404d134074217a0f8774626581fb0e8a4512",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5bc729e1_10d57633",
+        "filename": "content/browser/service_worker/service_worker_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2586,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-01T00:54:37Z",
+      "side": 1,
+      "message": "By the way, horo is re-enabling the test at https://chromium-review.googlesource.com/c/chromium/src/+/800191\n\nBut I\u0027m a little confused about how the old test worked and what the new test is testing. The original code seems to do with swapping processes for redirects, but I don\u0027t see where a redirect occurs in this test.\n\nI thought \"cross site transfer\" was going to go away when PlzNavigate is enabled, so this test would soon be deleted.\n\nWe originally needed this test because during a navigation, we create a browser-side \"ServiceWorkerProviderHost\" for a renderer process where the navigation is occurring and keep that around to track the renderer-side document. When a \"cross-site transfer\" occurs, we have to create a new ProviderHost for the navigation.\n\nIs this new test still doing something involving \"cross site transfer\" where it will exercise our service worker cross-site transfer code (via ResourceLoader calling ServiceWorkerRequestHandler::PrepareForCrossSiteTransfer), or is it now testing a generic navigation under SitePerProcess? Maybe \"CrossSiteTransfer\" wouldn\u0027t be a good name for this test anymore?",
+      "parentUuid": "7dbaeee5_caee6662",
+      "range": {
+        "startLine": 2585,
+        "startChar": 23,
+        "endLine": 2586,
+        "endChar": 46
+      },
+      "revId": "0fc6404d134074217a0f8774626581fb0e8a4512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
