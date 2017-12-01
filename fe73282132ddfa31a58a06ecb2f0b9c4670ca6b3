@@ -33,6 +33,92 @@
       "revId": "fe73282132ddfa31a58a06ecb2f0b9c4670ca6b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da338b59_c4ea043b",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-12-01T04:10:19Z",
+      "side": 1,
+      "message": "I guess the auto formatting is forced by PRESUBMIT.\nThese days (I guess it is since a year ago), we\u0027ve been forcing clang-format to Files app\u0027s new/modified JS code.\nAs this CL modifies a part of this block, formatting this block should be forced.",
+      "parentUuid": "b98f07aa_40217e83",
+      "revId": "fe73282132ddfa31a58a06ecb2f0b9c4670ca6b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4edad809_eab8351a",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-12-01T04:10:19Z",
+      "side": 1,
+      "message": "I think you can revert this block\u0027s format change.",
+      "revId": "fe73282132ddfa31a58a06ecb2f0b9c4670ca6b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f23467f5_ea82831a",
+        "filename": "ui/file_manager/file_manager/background/js/media_import_handler_unittest.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-12-01T04:10:19Z",
+      "side": 1,
+      "message": "It seems this assertion fails on unittest.",
+      "revId": "fe73282132ddfa31a58a06ecb2f0b9c4670ca6b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7250d6a4_e5c576d6",
+        "filename": "ui/file_manager/file_manager/background/js/media_scanner.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-12-01T04:10:19Z",
+      "side": 1,
+      "message": "Revert the change of this file.\n(It looks a format-only change.)",
+      "revId": "fe73282132ddfa31a58a06ecb2f0b9c4670ca6b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75c13e93_7240ca4d",
+        "filename": "ui/file_manager/file_manager/background/js/mock_drive_sync_handler.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-12-01T04:10:19Z",
+      "side": 1,
+      "message": "this.syncing_ is undefined.",
+      "revId": "fe73282132ddfa31a58a06ecb2f0b9c4670ca6b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
