@@ -19,7 +19,6 @@
 #include "components/content_settings/core/common/pref_names.h"
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/browser_thread.h"
-#include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/test_utils.h"
@@ -135,23 +134,16 @@ class ClientHintsBrowserTest : public InProcessBrowserTest {
     bool is_main_frame_navigation =
         request.GetURL().spec().find(".html") != std::string::npos;
 
-    // When browser side navigation is enabled, dpr headers is not attached to
-    // the main frame request.
+    // Dpr headers are not attached to the main frame request.
     if (!expect_client_hints_on_main_frame_only_) {
       EXPECT_EQ(
-          expect_client_hints_ && (!content::IsBrowserSideNavigationEnabled() ||
-                                   !is_main_frame_navigation),
+          expect_client_hints_ && !is_main_frame_navigation,
           base::ContainsKey(request.headers, "dpr"));
     } else {
-      EXPECT_EQ(expect_client_hints_on_main_frame_only_ &&
-                    is_main_frame_navigation &&
-                    (!content::IsBrowserSideNavigationEnabled() ||
-                     !is_main_frame_navigation),
-                base::ContainsKey(request.headers, "dpr"));
+      EXPECT_FALSE(base::ContainsKey(request.headers, "dpr"));
     }
 
-    // When browser side navigation is enabled, device-memory header is attached
-    // to the main frame request.
+    // The device-memory header is attached to the main frame request.
     if (!expect_client_hints_on_main_frame_only_) {
       EXPECT_EQ(expect_client_hints_,
                 base::ContainsKey(request.headers, "device-memory"));
@@ -245,16 +237,9 @@ IN_PROC_BROWSER_TEST_F(ClientHintsBrowserTest,
   ui_test_utils::NavigateToURL(browser(),
                                without_accept_ch_without_lifetime_local_url());
 
-  if (content::IsBrowserSideNavigationEnabled()) {
-    // When browser side navigation is enabled, two client hints are attached to
-    // the image request, and the device-memory header is attached to the main
-    // frame request.
-    EXPECT_EQ(3u, count_client_hints_headers_seen());
-  } else {
-    // When browser side navigation is not enabled, two client hints are
-    // attached to each of the HTML and the image requests.
-    EXPECT_EQ(4u, count_client_hints_headers_seen());
-  }
+  // Two client hints are attached to the image request, and the device-memory
+  // header is attached to the main frame request.
+  EXPECT_EQ(3u, count_client_hints_headers_seen());
 }
 
 // Loads a webpage that does not request persisting of client hints.
@@ -310,16 +295,9 @@ IN_PROC_BROWSER_TEST_F(ClientHintsBrowserTest,
   ui_test_utils::NavigateToURL(browser(),
                                without_accept_ch_without_lifetime_url());
 
-  if (content::IsBrowserSideNavigationEnabled()) {
-    // When browser side navigation is enabled, two client hints are attached to
-    // the image request, and the device-memory header is attached to the main
-    // frame request.
-    EXPECT_EQ(3u, count_client_hints_headers_seen());
-  } else {
-    // When browser side navigation is not enabled, two client hints are
-    // attached to each of the HTML and the image requests.
-    EXPECT_EQ(4u, count_client_hints_headers_seen());
-  }
+  // Two client hints are attached to the image request, and the device-memory
+  // header is attached to the main frame request.
+  EXPECT_EQ(3u, count_client_hints_headers_seen());
 }
 
 // Ensure that when cookies are blocked, client hint preferences are not
@@ -409,16 +387,9 @@ IN_PROC_BROWSER_TEST_F(ClientHintsBrowserTest,
   SetClientHintExpectations(true);
   ui_test_utils::NavigateToURL(browser(),
                                without_accept_ch_without_lifetime_url());
-  if (content::IsBrowserSideNavigationEnabled()) {
-    // When browser side navigation is enabled, two client hints are attached to
-    // the image request, and the device-memory header is attached to the main
-    // frame request.
-    EXPECT_EQ(3u, count_client_hints_headers_seen());
-  } else {
-    // When browser side navigation is not enabled, two client hints are
-    // attached to each of the HTML and the image requests.
-    EXPECT_EQ(4u, count_client_hints_headers_seen());
-  }
+  // Two client hints are attached to the image request, and the device-memory
+  // header is attached to the main frame request.
+  EXPECT_EQ(3u, count_client_hints_headers_seen());
 
   // Clear settings.
   HostContentSettingsMapFactory::GetForProfile(browser()->profile())
@@ -510,16 +481,9 @@ IN_PROC_BROWSER_TEST_F(ClientHintsBrowserTest,
   SetClientHintExpectations(true);
   ui_test_utils::NavigateToURL(browser(),
                                without_accept_ch_without_lifetime_url());
-  if (content::IsBrowserSideNavigationEnabled()) {
-    // When browser side navigation is enabled, two client hints are attached to
-    // the image request, and the device-memory header is attached to the main
-    // frame request.
-    EXPECT_EQ(3u, count_client_hints_headers_seen());
-  } else {
-    // When browser side navigation is not enabled, two client hints are
-    // attached to each of the HTML and the image requests.
-    EXPECT_EQ(4u, count_client_hints_headers_seen());
-  }
+  // Two client hints are attached to the image request, and the device-memory
+  // header is attached to the main frame request.
+  EXPECT_EQ(3u, count_client_hints_headers_seen());
 
   // Clear settings.
   HostContentSettingsMapFactory::GetForProfile(browser()->profile())

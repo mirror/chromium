@@ -106,7 +106,6 @@
 #include "content/public/browser/ssl_status.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
-#include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/page_state.h"
@@ -3738,9 +3737,6 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, ProceedLinkOverridable) {
 
 // Verifies that an overridable committed interstitial has a proceed link.
 IN_PROC_BROWSER_TEST_P(SSLUITestCommitted, ProceedLinkOverridable) {
-  if (!content::IsBrowserSideNavigationEnabled())
-    return;
-
   ASSERT_TRUE(https_server_expired_.Start());
   WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
   ui_test_utils::NavigateToURL(
@@ -4603,11 +4599,7 @@ IN_PROC_BROWSER_TEST_F(CommonNameMismatchBrowserTest,
       https_server_url.ReplaceComponents(replacements);
 
   WebContents* contents = browser()->tab_strip_model()->GetActiveWebContents();
-  content::TestNavigationObserver observer(
-      contents,
-      // With PlzNavigate, the renderer only sees one navigation (i.e. not the
-      // redirect, since that happens in the browser).
-      content::IsBrowserSideNavigationEnabled() ? 1 : 2);
+  content::TestNavigationObserver observer(contents, 1);
   ui_test_utils::NavigateToURL(browser(), https_server_mismatched_url);
   observer.Wait();
 
@@ -4656,11 +4648,7 @@ IN_PROC_BROWSER_TEST_F(CommonNameMismatchBrowserTest,
       https_server_url.ReplaceComponents(replacements);
 
   WebContents* contents = browser()->tab_strip_model()->GetActiveWebContents();
-  content::TestNavigationObserver observer(
-      contents,
-      // With PlzNavigate, the renderer only sees one navigation (i.e. not the
-      // redirect, since that happens in the browser).
-      content::IsBrowserSideNavigationEnabled() ? 1 : 2);
+  content::TestNavigationObserver observer(contents, 1);
   ui_test_utils::NavigateToURL(browser(), https_server_mismatched_url);
   observer.Wait();
 
@@ -5082,9 +5070,6 @@ IN_PROC_BROWSER_TEST_P(SSLUITestTransientAndCommitted,
 // Disabled since this is a test for bug 738177.
 IN_PROC_BROWSER_TEST_P(SSLUITestTransientAndCommitted,
                        DISABLED_RestoreThenNavigateHasSSLState) {
-  // This race condition only happens with PlzNavigate.
-  if (!content::IsBrowserSideNavigationEnabled())
-    return;
   ASSERT_TRUE(https_server_.Start());
   GURL url1(https_server_.GetURL("/ssl/google.html"));
   GURL url2(https_server_.GetURL("/ssl/page_with_refs.html"));
@@ -5425,9 +5410,6 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, OSReportsCaptivePortal_FeatureDisabled) {
 // Tests that the committed interstitial flag triggers the code path to show an
 // error PageType instead of an interstitial PageType.
 IN_PROC_BROWSER_TEST_P(SSLUITestCommitted, ErrorPage) {
-  if (!content::IsBrowserSideNavigationEnabled())
-    return;
-
   ASSERT_TRUE(https_server_expired_.Start());
   WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
   ui_test_utils::NavigateToURL(
