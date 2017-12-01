@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "edb8ddc3_7c3fd7ae",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-12-01T20:31:07Z",
+      "side": 1,
+      "message": "Let\u0027s discuss the pros and cons of splitting |should_block_response_| into two bools. Right now, as the code is structured, |should_block_response_| can transition to true, and then back to false after sniffing.\n\nIf this value were called is_unsafe_based_on_response_headers_ or something, and the transition back to false was instead instead inverted so that it became a false-\u003etrue transition of sniffed_as_safe_ ... would that be more readable",
+      "revId": "49c6bad7ccc79a18ddf291c531e1f364da678f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e70f7ccc_c373326a",
         "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
         "patchSetId": 20
