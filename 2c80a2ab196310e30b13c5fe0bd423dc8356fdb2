@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "76e585dd_a833e3cd",
+        "filename": "components/storage_monitor/storage_monitor_chromeos.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-01T02:10:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1256c521_95aabdce",
+      "revId": "2c80a2ab196310e30b13c5fe0bd423dc8356fdb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30eeb419_85c75af7",
         "filename": "components/storage_monitor/storage_monitor_chromeos.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "2c80a2ab196310e30b13c5fe0bd423dc8356fdb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "768b9fe9_8532617f",
+        "filename": "components/storage_monitor/storage_monitor_chromeos.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-01T02:10:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30eeb419_85c75af7",
+      "revId": "2c80a2ab196310e30b13c5fe0bd423dc8356fdb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5332e72c_4de4e3e8",
+        "filename": "components/storage_monitor/storage_monitor_chromeos.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-01T02:10:55Z",
+      "side": 1,
+      "message": "No. Added break.",
+      "parentUuid": "275ead99_e0243c43",
+      "revId": "2c80a2ab196310e30b13c5fe0bd423dc8356fdb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f797942_bf014abd",
         "filename": "components/storage_monitor/storage_monitor_chromeos.cc",
         "patchSetId": 8
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-30T23:41:41Z",
       "side": 1,
       "message": "Maybe I need to read the CLs in more detail... Can you explain when these gets called? Isn\u0027t the whole point of a fixed disk to be... fixed? i.e. Does this get called just once on start-up? When does the fixed disk get removed?",
+      "revId": "2c80a2ab196310e30b13c5fe0bd423dc8356fdb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6c1ed84_9a1542a8",
+        "filename": "components/storage_monitor/storage_monitor_chromeos.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-01T02:10:55Z",
+      "side": 1,
+      "message": "Yes. It is called once when DiskMountManager is initialized. DiskMountManager is fetching devices from OS through CrosDisksClient (EnumerateDevices()).\nRemoving is for parity, it could be called on shutdown.",
+      "parentUuid": "0f797942_bf014abd",
       "revId": "2c80a2ab196310e30b13c5fe0bd423dc8356fdb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1820bbf9_4f79baf4",
+        "filename": "components/storage_monitor/storage_monitor_chromeos.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-01T02:10:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94b09654_a9f17d30",
+      "revId": "2c80a2ab196310e30b13c5fe0bd423dc8356fdb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ceb84c7_20624006",
         "filename": "components/storage_monitor/storage_monitor_chromeos.cc",
         "patchSetId": 8
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "e4ad8173_51b1bc64",
+        "filename": "components/storage_monitor/storage_monitor_chromeos.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-01T02:10:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ceb84c7_20624006",
+      "revId": "2c80a2ab196310e30b13c5fe0bd423dc8356fdb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94a7e25a_a8b1b6a9",
         "filename": "components/storage_monitor/storage_monitor_chromeos.h",
         "patchSetId": 8
@@ -118,6 +226,24 @@
       "revId": "2c80a2ab196310e30b13c5fe0bd423dc8356fdb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff7312c3_79d66272",
+        "filename": "components/storage_monitor/storage_monitor_chromeos.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-01T02:10:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94a7e25a_a8b1b6a9",
+      "revId": "2c80a2ab196310e30b13c5fe0bd423dc8356fdb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
