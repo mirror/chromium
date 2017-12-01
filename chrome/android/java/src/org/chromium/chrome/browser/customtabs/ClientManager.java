@@ -407,12 +407,12 @@ class ClientManager {
      * requirement for launch. We also need the web->app verification which will be checked after
      * the Activity has launched async.
      * @param session The session attempting to launch the TrustedWebActivity.
-     * @param origin The origin that will load on the TrustedWebActivity.
+     * @param url The url that will load on the TrustedWebActivity.
      * @return Whether the client for the session passes the initial requirements to launch a
      *         TrustedWebActivity in the given origin.
      */
     public synchronized boolean canSessionLaunchInTrustedWebActivity(
-            CustomTabsSessionToken session, Uri origin) {
+            CustomTabsSessionToken session, Uri url) {
         if (!ChromeFeatureList.isEnabled(ChromeFeatureList.TRUSTED_WEB_ACTIVITY)) return false;
         if (ChromeVersionInfo.isBetaBuild() || ChromeVersionInfo.isStableBuild()) return false;
 
@@ -420,6 +420,8 @@ class ClientManager {
         if (params == null) return false;
         String packageName = params.getPackageName();
         if (TextUtils.isEmpty(packageName)) return false;
+        // Split path from the given Uri to get only the origin.
+        Uri origin = Uri.parse(url.getScheme() + "://" + url.getHost());
         boolean isAppAssociatedWithOrigin = params.mLinkedUrls.contains(origin);
         if (!isAppAssociatedWithOrigin) return false;
         if (OriginVerifier.isValidOrigin(
