@@ -74,11 +74,13 @@ struct EntryChangedDetails {
   int index;
 };
 
+enum class PrunedPosition { BACK, FRONT, INDEX };
+
 // Details sent for NOTIFY_NAV_LIST_PRUNED.
 struct PrunedDetails {
   // If true, count items were removed from the front of the list, otherwise
   // count items were removed from the back of the list.
-  bool from_front;
+  PrunedPosition position;
 
   // Number of items removed.
   int count;
