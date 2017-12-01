@@ -426,6 +426,30 @@
     },
     {
       "key": {
+        "uuid": "8b0ef895_7dcd965a",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-01T20:11:54Z",
+      "side": 1,
+      "message": "I don\u0027t think I actually can test for this type of error - the problem seems to be that NSString is being cast to BOOL during the assignment.  I can check to make sure the the value makes sense, but I can\u0027t make any useful confirmation of the type itself (because it\u0027s always going to be a BOOL).",
+      "parentUuid": "5e9e5b1d_50c9691e",
+      "range": {
+        "startLine": 136,
+        "startChar": 2,
+        "endLine": 136,
+        "endChar": 37
+      },
+      "revId": "936dcf569af093c8680015365053fb7286ee4151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c52c47b_33402cdd",
         "filename": "components/cronet/ios/cronet_metrics.mm",
         "patchSetId": 20
