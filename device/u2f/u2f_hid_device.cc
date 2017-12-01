@@ -133,13 +133,14 @@ void U2fHidDevice::OnAllocateChannel(std::vector<uint8_t> nonce,
                                      std::unique_ptr<U2fMessage> message) {
   if (state_ == State::DEVICE_ERROR)
     return;
-  timeout_callback_.Cancel();
 
   if (!success || !message) {
+    timeout_callback_.Cancel();
     state_ = State::DEVICE_ERROR;
     Transition(nullptr, std::move(callback));
     return;
   }
+
   // Channel allocation response is defined as:
   // 0: 8 byte nonce
   // 8: 4 byte channel id
@@ -149,19 +150,19 @@ void U2fHidDevice::OnAllocateChannel(std::vector<uint8_t> nonce,
   // 15: Build device version
   // 16: Capabilities
   std::vector<uint8_t> payload = message->GetMessagePayload();
-  if (payload.size() != 17) {
-    state_ = State::DEVICE_ERROR;
-    Transition(nullptr, std::move(callback));
+  if (payload.size() != 17 ||
+      !std::equal(nonce.begin(), nonce.end(), payload.begin(),
+                  payload.begin() + 8)) {
+    // This is the shared broadcast channel, so we may read responses to channel
+    // allocation requests other than our own. Keep reading until we get the
+    // correct one (or time out).
+    ReadMessage(base::BindOnce(&U2fHidDevice::OnAllocateChannel,
+                               weak_factory_.GetWeakPtr(), nonce,
+                               std::move(command), std::move(callback)));
     return;
   }
 
-  std::vector<uint8_t> received_nonce(std::begin(payload),
-                                      std::begin(payload) + 8);
-  if (nonce != received_nonce) {
-    state_ = State::DEVICE_ERROR;
-    Transition(nullptr, std::move(callback));
-    return;
-  }
+  timeout_callback_.Cancel();
 
   size_t index = 8;
   channel_id_ = payload[index++] << 24;
