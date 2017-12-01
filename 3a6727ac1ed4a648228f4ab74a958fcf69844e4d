@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9d31b729_5836253b",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-01T18:19:09Z",
+      "side": 1,
+      "message": "I think you need to tell it the class name of the processor. E.g.:\nhttps://cs.chromium.org/chromium/src/third_party/robolectric/BUILD.gn?rcl\u003dbad146345f66f968a42f8bd75d9654914d3b336b\u0026l\u003d359",
+      "revId": "3a6727ac1ed4a648228f4ab74a958fcf69844e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "84718cb2_03709555",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
         "patchSetId": 1
