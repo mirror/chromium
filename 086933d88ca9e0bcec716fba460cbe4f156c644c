@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "54b6ab55_e667fd66",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-01T07:02:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c64c412_54b0d8c7",
+      "range": {
+        "startLine": 10,
+        "startChar": 49,
+        "endLine": 10,
+        "endChar": 64
+      },
+      "revId": "086933d88ca9e0bcec716fba460cbe4f156c644c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb14fc15_5080241c",
         "filename": "/COMMIT_MSG",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "26af855e_ce24a987",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-01T07:02:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb14fc15_5080241c",
+      "range": {
+        "startLine": 11,
+        "startChar": 50,
+        "endLine": 11,
+        "endChar": 57
+      },
+      "revId": "086933d88ca9e0bcec716fba460cbe4f156c644c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84a46394_8ffee3d8",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 9
@@ -68,6 +116,30 @@
       "revId": "086933d88ca9e0bcec716fba460cbe4f156c644c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2341519_a4601ffd",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-01T07:02:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84a46394_8ffee3d8",
+      "range": {
+        "startLine": 214,
+        "startChar": 2,
+        "endLine": 214,
+        "endChar": 45
+      },
+      "revId": "086933d88ca9e0bcec716fba460cbe4f156c644c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "7e7e1ac9_468c8b31",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-01T07:02:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aa1f2b4_be841357",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 93,
+        "endChar": 32
+      },
+      "revId": "086933d88ca9e0bcec716fba460cbe4f156c644c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2b7309e_958d53b0",
         "filename": "content/browser/webauth/cbor/cbor_values.h",
         "patchSetId": 9
@@ -161,6 +257,30 @@
       "revId": "086933d88ca9e0bcec716fba460cbe4f156c644c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52450a71_c740a98e",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-01T07:02:34Z",
+      "side": 1,
+      "message": "Changed integer representation to int64_t and deleted CBORValue::IntegerType from the constructor. Also added unit test to check out of range errors as well as max range support.",
+      "parentUuid": "e6c370a1_c9f5d9d4",
+      "range": {
+        "startLine": 78,
+        "startChar": 11,
+        "endLine": 79,
+        "endChar": 58
+      },
+      "revId": "086933d88ca9e0bcec716fba460cbe4f156c644c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
