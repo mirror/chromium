@@ -12,6 +12,7 @@
 #include "media/base/audio_decoder.h"
 #include "media/base/cdm_factory.h"
 #include "media/base/video_decoder.h"
+#include "media/cdm/cdm_proxy.h"
 #include "media/gpu/features.h"
 #include "media/gpu/ipc/service/media_gpu_channel_manager.h"
 
@@ -148,5 +149,12 @@ std::unique_ptr<CdmFactory> GpuMojoMediaClient::CreateCdmFactory(
   return nullptr;
 #endif  // defined(OS_ANDROID)
 }
+
+#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
+std::unique_ptr<CdmProxy> GpuMojoMediaClient::CreateCdmProxy() {
+  // TODO(rkuroiwa): Create the CdmProxy here.
+  return nullptr;
+}
+#endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)
 
 }  // namespace media
