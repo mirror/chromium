@@ -19,6 +19,8 @@
 #include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h"
 #include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager_test_utils.h"
 #include "chrome/browser/image_decoder.h"
+#include "chrome/browser/ui/ash/test_wallpaper_controller.h"
+#include "chrome/browser/ui/ash/wallpaper_controller_client.h"
 #include "chrome/test/base/testing_browser_process.h"
 #include "chrome/test/base/testing_profile.h"
 #include "chromeos/cryptohome/system_salt_getter.h"
@@ -82,8 +84,12 @@ class ArcWallpaperServiceTest : public ash::AshTestBase {
     user_manager_->LoginUser(user_manager::StubAccountId());
     ASSERT_TRUE(user_manager_->GetPrimaryUser());
 
-    // Wallpaper maanger
+    // Wallpaper manager
     chromeos::WallpaperManager::Initialize();
+    wallpaper_controller_client_ =
+        std::make_unique<WallpaperControllerClient>();
+    wallpaper_controller_client_->InitForTesting(
+        test_wallpaper_controller_.CreateInterfacePtr());
 
     // Arc services
     wallpaper_instance_ = std::make_unique<arc::FakeWallpaperInstance>();
@@ -110,6 +116,8 @@ class ArcWallpaperServiceTest : public ash::AshTestBase {
   std::unique_ptr<arc::FakeWallpaperInstance> wallpaper_instance_ = nullptr;
 
  private:
+  std::unique_ptr<WallpaperControllerClient> wallpaper_controller_client_;
+  TestWallpaperController test_wallpaper_controller_;
   chromeos::FakeChromeUserManager* const user_manager_ = nullptr;
   user_manager::ScopedUserManager user_manager_enabler_;
   arc::ArcServiceManager arc_service_manager_;
