@@ -446,7 +446,8 @@ bool IsInternalURL(const GURL& url) {
   info.setting = CONTENT_SETTING_ALLOW;
   cookiesView_ = [self
       addInspectLinkToView:siteSettingsSectionView
-               sectionIcon:PageInfoUI::GetPermissionIcon(info).ToNSImage()
+               sectionIcon:gfx::Image(PageInfoUI::GetPermissionIcon(info))
+                               .ToNSImage()
               sectionTitle:l10n_util::GetStringUTF16(IDS_PAGE_INFO_COOKIES)
                   linkText:l10n_util::GetPluralNSStringF(
                                IDS_PAGE_INFO_NUM_COOKIES, 0)];
@@ -1088,7 +1089,8 @@ bool IsInternalURL(const GURL& url) {
       PageInfoUI::PermissionTypeToUIString(permissionInfo.type);
   bool isRTL = base::i18n::IsRTL();
   base::scoped_nsobject<NSImage> image(
-      [PageInfoUI::GetPermissionIcon(permissionInfo).ToNSImage() retain]);
+      [gfx::Image(PageInfoUI::GetPermissionIcon(permissionInfo))
+              .ToNSImage() retain]);
 
   NSPoint position;
   NSImageView* imageView;
@@ -1234,7 +1236,8 @@ bool IsInternalURL(const GURL& url) {
       PageInfoUI::ChosenObjectToUIString(*objectInfo));
   bool isRTL = base::i18n::IsRTL();
   base::scoped_nsobject<NSImage> image(
-      [PageInfoUI::GetChosenObjectIcon(*objectInfo, false).ToNSImage() retain]);
+      [gfx::Image(PageInfoUI::GetChosenObjectIcon(*objectInfo, false))
+              .ToNSImage() retain]);
 
   NSPoint position;
   NSImageView* imageView;
