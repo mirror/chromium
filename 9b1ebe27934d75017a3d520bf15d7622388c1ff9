@@ -197,6 +197,30 @@
     },
     {
       "key": {
+        "uuid": "649af5b8_8c4d1ce6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/path/property/d-interpolation-001.svg",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-12-01T22:26:48Z",
+      "side": 1,
+      "message": "https://chromium-review.googlesource.com/c/chromium/src/+/804275\nThe h:script test correctly fails the assert.\nThe xlink:href test should fail but doesn\u0027t.",
+      "parentUuid": "2c877ab8_c31fbb21",
+      "range": {
+        "startLine": 13,
+        "startChar": 3,
+        "endLine": 13,
+        "endChar": 43
+      },
+      "revId": "9b1ebe27934d75017a3d520bf15d7622388c1ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33bc1080_f38b2239",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/path/property/getComputedStyle.svg",
         "patchSetId": 3
