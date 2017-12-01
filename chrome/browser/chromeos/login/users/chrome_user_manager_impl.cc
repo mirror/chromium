@@ -64,7 +64,6 @@
 #include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_switches.h"
-#include "chrome/common/crash_keys.h"
 #include "chrome/common/pref_names.h"
 #include "chromeos/chromeos_switches.h"
 #include "chromeos/cryptohome/async_method_caller.h"
@@ -72,6 +71,7 @@
 #include "chromeos/settings/cros_settings_names.h"
 #include "chromeos/timezone/timezone_resolver.h"
 #include "components/arc/arc_util.h"
+#include "components/crash/core/common/crash_key.h"
 #include "components/policy/policy_constants.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
@@ -1283,9 +1283,8 @@ void ChromeUserManagerImpl::UpdateNumberOfUsers() {
       ash::MultiProfileUMA::RecordUserCount(users);
   }
 
-  base::debug::SetCrashKeyValue(
-      crash_keys::kNumberOfUsers,
-      base::StringPrintf("%" PRIuS, GetLoggedInUsers().size()));
+  static crash_reporter::CrashKeyString<64> crash_key("num-users");
+  crash_key.Set(base::StringPrintf("%" PRIuS, GetLoggedInUsers().size()));
 }
 
 void ChromeUserManagerImpl::UpdateUserTimeZoneRefresher(Profile* profile) {

@@ -54,10 +54,6 @@ const char kInputEventFilterSendFailure[] = "input-event-filter-send-failure";
 
 const char kPrinterInfo[] = "prn-info-%" PRIuS;
 
-#if defined(OS_CHROMEOS)
-const char kNumberOfUsers[] = "num-users";
-#endif
-
 #if defined(OS_MACOSX)
 namespace mac {
 
@@ -144,9 +140,6 @@ size_t RegisterChromeCrashKeys() {
     {kIsEnterpriseManaged, kSmallSize},
 #endif
     {kInputEventFilterSendFailure, kSmallSize},
-#if defined(OS_CHROMEOS)
-    {kNumberOfUsers, kSmallSize},
-#endif
 #if defined(OS_MACOSX)
     {mac::kFirstNSException, kMediumSize},
     {mac::kFirstNSExceptionTrace, kMediumSize},
