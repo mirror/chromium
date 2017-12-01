@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f430fce_65fa3e60",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-api.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-01T00:33:16Z",
+      "side": 1,
+      "message": "Is this still necessary?",
+      "revId": "68defcc6e6aa419ad18f47553b8841c666eb9ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e32875d_cb8f0790",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-audits-content-script.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-01T00:33:16Z",
+      "side": 1,
+      "message": "Same here -- we evaluate a mix of page-side and extension-side code, this is becoming unmanageable.\n\nActually, perhaps we can nuke the tests altogether -- Will is about to nuke the Audits altogether.",
+      "revId": "68defcc6e6aa419ad18f47553b8841c666eb9ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd2a7b36_64650f0a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-audits.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-01T00:33:16Z",
+      "side": 1,
+      "message": "This is an extension-side code, why would we evaluate it in the inspected page?",
+      "revId": "68defcc6e6aa419ad18f47553b8841c666eb9ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

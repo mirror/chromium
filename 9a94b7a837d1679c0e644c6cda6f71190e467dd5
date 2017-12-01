@@ -1,0 +1,310 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83b882d1_ee9755ab",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-api.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-01T00:33:16Z",
+      "side": 1,
+      "message": "This is so much better now!",
+      "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46d2ad8e_db8d678e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-api.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-01T00:33:16Z",
+      "side": 1,
+      "message": "This would have even better if we started making them async instead of passing nextTest(), but we can as well do it as a separate step.",
+      "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8b5f841_04d4fd25",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-audits-api.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-01T00:33:16Z",
+      "side": 1,
+      "message": "Let\u0027s nuke this as well.",
+      "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "798a8ee3_862209f9",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-audits-content-script.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-01T00:33:16Z",
+      "side": 1,
+      "message": "This looks fishy! But let\u0027s nuke the entire test anyway :-)",
+      "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42fca3de_2bc24994",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-audits.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-01T00:33:16Z",
+      "side": 1,
+      "message": "You can hopefully nuke that altogether: https://chromium-review.googlesource.com/c/chromium/src/+/798633",
+      "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96e29890_99b16416",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-events.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-01T00:33:16Z",
+      "side": 1,
+      "message": "We should be able to fix this now -- let\u0027s just await UI.viewManager.revealView(sidebar), it now returns a promise.",
+      "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67ab31ea_e84ffca1",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-events.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-01T00:33:16Z",
+      "side": 1,
+      "message": "Let\u0027s inline!",
+      "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2f48dbe_288938cc",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-events.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-01T00:33:16Z",
+      "side": 1,
+      "message": "This is not a test, is it?",
+      "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a1ac967_5de6890b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-network.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-01T00:33:16Z",
+      "side": 1,
+      "message": "This may flake now, let\u0027s make sure we wait for load even or network idle.",
+      "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a189033c_34f15fd4",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-network.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-01T00:33:16Z",
+      "side": 1,
+      "message": "... and this can be incorporated into the above html then.",
+      "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c517099d_d37108f2",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-panel-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-01T00:33:16Z",
+      "side": 1,
+      "message": "I can haz some html shown instead?",
+      "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76f88a56_37e020a6",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-panel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-01T00:33:16Z",
+      "side": 1,
+      "message": "oops!",
+      "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "789069db_7f2201d9",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-resources.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-01T00:33:16Z",
+      "side": 1,
+      "message": "I wonder who\u0027s done that originally? There must be a better way of doing this :(",
+      "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e4a6785_48672371",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-resources.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-01T00:33:16Z",
+      "side": 1,
+      "message": "nit: indent",
+      "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fc933dc_1993fd51",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-sidebar-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-01T00:33:16Z",
+      "side": 1,
+      "message": "Weird. Any idea why this changed?",
+      "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1b42fc0_5674d047",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-sidebar.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-01T00:33:16Z",
+      "side": 1,
+      "message": "I\u0027ve seen this somewhere. Extract into ExtensionsTestRunner?",
+      "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "854e26d9_550cb066",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-sidebar.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-01T00:33:16Z",
+      "side": 1,
+      "message": "indent",
+      "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d87ce6c_4c8b6999",
+        "filename": "third_party/WebKit/Source/devtools/front_end/extensions_test_runner/ExtensionsTestRunner.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-01T00:33:16Z",
+      "side": 1,
+      "message": "you can probably always assume the first case.",
+      "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
