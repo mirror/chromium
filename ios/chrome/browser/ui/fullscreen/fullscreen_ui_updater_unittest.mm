@@ -81,7 +81,7 @@ TEST_F(FullscreenUIUpdaterTest, EnabledDisabled) {
 TEST_F(FullscreenUIUpdaterTest, ScrollEnd) {
   ASSERT_FALSE(element().animator);
   FullscreenScrollEndAnimator* const kAnimator =
-      [[FullscreenScrollEndAnimator alloc] init];
+      [[FullscreenScrollEndAnimator alloc] initWithStartProgress:0.0];
   observer()->FullscreenScrollEventEnded(nullptr, kAnimator);
   EXPECT_EQ(element().animator, kAnimator);
 }
