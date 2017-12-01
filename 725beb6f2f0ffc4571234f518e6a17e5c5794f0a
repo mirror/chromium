@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22aaa991_c9e5f5b6",
+        "filename": "chrome/browser/extensions/api/input_ime/input_ime_api_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003013
+      },
+      "writtenOn": "2017-12-01T14:14:24Z",
+      "side": 1,
+      "message": "Better naming: g_unloaded_component_extension_id",
+      "range": {
+        "startLine": 55,
+        "startChar": 12,
+        "endLine": 55,
+        "endChar": 38
+      },
+      "revId": "725beb6f2f0ffc4571234f518e6a17e5c5794f0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9add602b_006a1661",
+        "filename": "chrome/browser/extensions/api/input_ime/input_ime_api_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1003013
+      },
+      "writtenOn": "2017-12-01T14:14:24Z",
+      "side": 1,
+      "message": "Unnecessary to check this because we only record the g_unloaded_component_extension_id for the 1st-party IME extension.",
+      "range": {
+        "startLine": 639,
+        "startChar": 8,
+        "endLine": 639,
+        "endChar": 69
+      },
+      "revId": "725beb6f2f0ffc4571234f518e6a17e5c5794f0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46583752_51eb2daf",
+        "filename": "chrome/browser/extensions/api/input_ime/input_ime_api_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1003013
+      },
+      "writtenOn": "2017-12-01T14:14:24Z",
+      "side": 1,
+      "message": "Please explain why to reactivate the engine.\n\nSuggest: After the 1st-party IME extension being unloaded unexpectedly, we don\u0027t unregister the IME entries so after the extension being reloaded we should reactivate the engine so that the IME extension can receive the onActivate event to recover itself upon the unexpected unload.",
+      "range": {
+        "startLine": 640,
+        "startChar": 6,
+        "endLine": 640,
+        "endChar": 54
+      },
+      "revId": "725beb6f2f0ffc4571234f518e6a17e5c5794f0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0ed2d7b_f5dd84e9",
+        "filename": "chrome/browser/extensions/api/input_ime/input_ime_api_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1003013
+      },
+      "writtenOn": "2017-12-01T14:14:24Z",
+      "side": 1,
+      "message": "This seems fragile. Because here may receive the 3rd-party extension load event before receiving the 1st-party extension load event.\n\nI think you should move this into the if-block above.",
+      "range": {
+        "startLine": 648,
+        "startChar": 4,
+        "endLine": 648,
+        "endChar": 30
+      },
+      "revId": "725beb6f2f0ffc4571234f518e6a17e5c5794f0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94a38d6c_38c4ebe7",
+        "filename": "chrome/browser/extensions/api/input_ime/input_ime_api_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1003013
+      },
+      "writtenOn": "2017-12-01T14:14:24Z",
+      "side": 1,
+      "message": "nit: suggest to early return here for better readability on indents.\n\nif (!event_router)\n  return;",
+      "range": {
+        "startLine": 661,
+        "startChar": 2,
+        "endLine": 661,
+        "endChar": 21
+      },
+      "revId": "725beb6f2f0ffc4571234f518e6a17e5c5794f0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57ae090f_06cc9175",
+        "filename": "chrome/browser/extensions/api/input_ime/input_ime_api_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1003013
+      },
+      "writtenOn": "2017-12-01T14:14:24Z",
+      "side": 1,
+      "message": "Please explain why no need to unregister, and put the bug id (if any) here.",
+      "range": {
+        "startLine": 668,
+        "startChar": 6,
+        "endLine": 669,
+        "endChar": 37
+      },
+      "revId": "725beb6f2f0ffc4571234f518e6a17e5c5794f0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8385478_d8fdc4b2",
+        "filename": "chrome/browser/extensions/api/input_ime/input_ime_api_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1003013
+      },
+      "writtenOn": "2017-12-01T14:14:24Z",
+      "side": 1,
+      "message": "Please explain why you need to set the override url as the empty url.",
+      "range": {
+        "startLine": 673,
+        "startChar": 8,
+        "endLine": 674,
+        "endChar": 49
+      },
+      "revId": "725beb6f2f0ffc4571234f518e6a17e5c5794f0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
