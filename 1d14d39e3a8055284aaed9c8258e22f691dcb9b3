@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2108595_d678a642",
+        "filename": "content/browser/browser_plugin/browser_plugin_guest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-01T03:03:28Z",
+      "side": 1,
+      "message": "I think just checking !switches::IsMusHostingViz() enough here?",
+      "revId": "1d14d39e3a8055284aaed9c8258e22f691dcb9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2671396d_c9ca9e7d",
+        "filename": "content/browser/browser_plugin/browser_plugin_guest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-01T03:03:28Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "1d14d39e3a8055284aaed9c8258e22f691dcb9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
