@@ -500,7 +500,6 @@ void LabelButton::SetTextInternal(const base::string16& text) {
 void LabelButton::ChildPreferredSizeChanged(View* child) {
   ResetCachedPreferredSize();
   PreferredSizeChanged();
-  Layout();
 }
 
 ui::NativeTheme::Part LabelButton::GetThemePart() const {
