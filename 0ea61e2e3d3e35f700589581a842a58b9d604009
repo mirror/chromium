@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3231c98_ddfd331e",
+        "filename": "chrome/browser/chromeos/accessibility/select_to_speak_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-01T22:54:51Z",
+      "side": 1,
+      "message": "Rather than three urls in the same test, I\u0027d prefer\nmaking a helper function like LoadUrlAndTriggerSpeech(),\nthen write three separate concise tests, like:\n\nIN_PROC_BROWSER_TEST_F(SelectToSpeakTest, SmoothlyReadsInlineURL) {\n  LoadUrlAndTriggerSpeech(\n    \"data:text/html,...\");\n  EXPECT_TRUE(\n        base::MatchPattern(...));\n}\n\nThe way you have it right now, if one url fails but the others\nsucceed, it will take some extra investigation to figure out\nwhich one. Even worse if one of them causes flakiness!\n\nIn general favor more tests, but use lots of helper functions\nto keep each one as concise as possible.",
+      "revId": "0ea61e2e3d3e35f700589581a842a58b9d604009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56afe1af_0d3e3e1c",
+        "filename": "chrome/browser/chromeos/accessibility/select_to_speak_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-01T22:54:51Z",
+      "side": 1,
+      "message": "Make this a helper",
+      "revId": "0ea61e2e3d3e35f700589581a842a58b9d604009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
