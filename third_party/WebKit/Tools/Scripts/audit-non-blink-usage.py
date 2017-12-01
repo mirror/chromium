@@ -117,6 +117,13 @@ _CONFIG = [
         'allowed': ['gpu::gles2::GLES2Interface'],
     },
     {
+        'paths': ['third_party/WebKit/Source/modules/vr/'],
+        'allowed': [
+            'gfx::GpuMemoryBufferHandle',
+            'gpu::MailboxHolder',
+        ],
+    },
+    {
         'paths': [
             'third_party/WebKit/Source/platform/',
         ],
