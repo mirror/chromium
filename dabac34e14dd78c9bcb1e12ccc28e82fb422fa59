@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9d8fbab_611b4e99",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/cpu_time_budget_pool.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-12-01T17:50:25Z",
+      "side": 1,
+      "message": "Because this function is added to two .cc files this breaks jumbo builds. Any thoughts on how to best avoid this? The usual solutions are to use a different name or to define the function such that it can be shared instead of duplicated.",
+      "revId": "dabac34e14dd78c9bcb1e12ccc28e82fb422fa59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
