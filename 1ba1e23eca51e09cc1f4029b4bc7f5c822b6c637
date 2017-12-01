@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4f6888d_83acea60",
+        "filename": "content/browser/accessibility/accessibility_win_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2118,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-12-01T15:05:56Z",
+      "side": 1,
+      "message": "nit: maybe add a comment to answer why .4. and .6.",
+      "range": {
+        "startLine": 2118,
+        "startChar": 42,
+        "endLine": 2118,
+        "endChar": 52
+      },
+      "revId": "1ba1e23eca51e09cc1f4029b4bc7f5c822b6c637",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8305fefa_6acb2bd5",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1374,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-12-01T15:05:56Z",
+      "side": 1,
+      "message": "I thought that this was going to be in screen coords.  The docs aren\u0027t helpful at all :( . If we go this way, you\u0027ll wanna update the scrolling ax platform node tests we have.",
+      "range": {
+        "startLine": 1374,
+        "startChar": 24,
+        "endLine": 1374,
+        "endChar": 0
+      },
+      "revId": "1ba1e23eca51e09cc1f4029b4bc7f5c822b6c637",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
