@@ -16,6 +16,24 @@
       "revId": "26b23c3b06e5a0f6bc858be42a38ef6c23e87b04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0b106d6_c0b30742",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1998,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-01T22:20:11Z",
+      "side": 1,
+      "message": "It\u0027s mainly used for checking if the cached default wallpaper and the new default wallpaper have the same file paths, in |WallpaperManager::DoSetDefaultWallpaper| (I think basically it\u0027s checking if they are the same image, in order to decide if we can directly reuse the cache.)\n\nAlso, thanks for review.",
+      "parentUuid": "c93b1882_d25c9274",
+      "revId": "26b23c3b06e5a0f6bc858be42a38ef6c23e87b04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
