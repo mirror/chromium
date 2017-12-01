@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ead25df_03dad84c",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-01T16:25:24Z",
+      "side": 1,
+      "message": "nit: \"\u003d base::FilePath()\" not needed, sorry I missed that before",
+      "revId": "ced91cff33cba9fe88942023b4d624f3af9414cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4050cfc_d21ab1f8",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-01T16:25:24Z",
+      "side": 1,
+      "message": "nit: Can you also say something like \"happens here instead of in ash because chrome owns the concept of the user data directory\"? The why is more important than the what.",
+      "revId": "ced91cff33cba9fe88942023b4d624f3af9414cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
