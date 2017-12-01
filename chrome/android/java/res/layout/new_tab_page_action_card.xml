@@ -14,13 +14,20 @@
     android:padding="8dp"
     android:background="@drawable/card_single">
 
-    <Button
-        style="@style/SuggestionCardAction"
-        android:id="@+id/action_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:text="@string/more" />
+    <!-- We wrap the button in a LinearLayout so that it is aligned to the right when in RTL
+         locales. -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <Button
+            style="@style/SuggestionCardAction"
+            android:id="@+id/action_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/more" />
+    </LinearLayout>
 
     <org.chromium.chrome.browser.ntp.cards.ProgressIndicatorView
         android:id="@+id/progress_indicator"
