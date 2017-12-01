@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "08b5db5a_f0d8f8b6",
+        "filename": "media/capture/video/video_capture_device_unittest.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-01T14:16:03Z",
+      "side": 1,
+      "message": "Yeah, STDMETHOD(x) expands to sth like [1]\n virtual HRESULT calltype x()\nso the mock should be, if anything:\n MOCK_METHOD2(QueryInterface, HRESULT(REFIID, void**));\nbecause MOCK_METHODn is essentially an override operation.\n\n\n[1] https://msdn.microsoft.com/en-us/library/ms693342(VS.85).aspx",
+      "parentUuid": "e06214cc_55b70394",
+      "range": {
+        "startLine": 142,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 80
+      },
+      "revId": "ae8e19d17a97c9edc05e5e5e280160129444e422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "816f6302_33e9c0cd",
         "filename": "media/capture/video/video_capture_device_unittest.cc",
         "patchSetId": 34
@@ -260,6 +284,30 @@
       "side": 1,
       "message": "In the photo context, GetFormatFromMediaType() is used to retrieve |pixel_format| AND the |frame_size|. If I remove this \"hijack\" from FormatFromGuid(), it would return false, therefore I can\u0027t use GetFormatFromMediaType() anymore in photo context and have to duplicate code to build a photo VideoCaptureFormat.\nIs that what you expect?",
       "parentUuid": "324824db_76978e1f",
+      "range": {
+        "startLine": 346,
+        "startChar": 0,
+        "endLine": 346,
+        "endChar": 53
+      },
+      "revId": "ae8e19d17a97c9edc05e5e5e280160129444e422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f8b4df11_50c748bf",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-01T14:16:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0b8ace82_a8002b6e",
       "range": {
         "startLine": 346,
         "startChar": 0,

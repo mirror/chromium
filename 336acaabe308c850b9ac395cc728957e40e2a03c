@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a06c1b70_e3073936",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-01T14:16:03Z",
+      "side": 1,
+      "message": "Suggest:\n\n  for (const CapabilityWin\u0026 capability : capabilities) {\n    const int height \u003d capability.supported_format.frame_size.height();\n    const int width \u003d capability.supported_format.frame_size.width();\n    const int best_height \u003d best_match-\u003esupported_format.frame_size.height();\n    const int best_width \u003d best_match-\u003esupported_format.frame_size.width();\n    if (std::abs(height - requested_height) \u003c\u003d std::abs(height - best_height) \u0026\u0026\n        std::abs(width - requested_width) \u003c\u003d std::abs(width - best_width)) {\n      best_match \u003d \u0026capability;\n    }\n  }",
+      "range": {
+        "startLine": 199,
+        "startChar": 0,
+        "endLine": 209,
+        "endChar": 3
+      },
+      "revId": "336acaabe308c850b9ac395cc728957e40e2a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2c18ce2_171c453d",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-01T14:16:03Z",
+      "side": 1,
+      "message": "In one operation? \n  retry_count++ \u003c 200",
+      "range": {
+        "startLine": 228,
+        "startChar": 40,
+        "endLine": 228,
+        "endChar": 74
+      },
+      "revId": "336acaabe308c850b9ac395cc728957e40e2a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c41a1336_abb79787",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-01T14:16:03Z",
+      "side": 1,
+      "message": "\u003d 0;",
+      "range": {
+        "startLine": 299,
+        "startChar": 27,
+        "endLine": 299,
+        "endChar": 28
+      },
+      "revId": "336acaabe308c850b9ac395cc728957e40e2a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a9f9e93_308d10a5",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-01T14:16:03Z",
+      "side": 1,
+      "message": "\u003d 0; ?",
+      "range": {
+        "startLine": 589,
+        "startChar": 28,
+        "endLine": 589,
+        "endChar": 29
+      },
+      "revId": "336acaabe308c850b9ac395cc728957e40e2a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75ed6ed0_a393802e",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-01T14:16:03Z",
+      "side": 1,
+      "message": "No need for .Get()\nAlso, sometimes you compare/dcheck with Get() (e.g. l.425, l.376)\nand sometimes without. I\u0027d use without throughout.",
+      "range": {
+        "startLine": 606,
+        "startChar": 14,
+        "endLine": 606,
+        "endChar": 20
+      },
+      "revId": "336acaabe308c850b9ac395cc728957e40e2a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e3336af_c618e01d",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-01T14:16:03Z",
+      "side": 1,
+      "message": "Suggest:\n\n  gfx::Size min_size \u003d current_size;\n  gfx::Size max_size \u003d current_size;\n  for (const CapabilityWin\u0026 capability : capabilities) {\n    min_size.SetToMin(capability.supported_format.frame_size);\n    max_size.SetToMax(capability.supported_format.frame_size);\n  }\n\n  photo_capabilities-\u003eheight \u003d mojom::Range::New(\n      max_size.height(), min_size.height(), current_size.height(), 1);\n  photo_capabilities-\u003ewidth \u003d mojom::Range::New(\n      max_size.width(), min_size.width(), current_size.width(), 1);",
+      "range": {
+        "startLine": 643,
+        "startChar": 0,
+        "endLine": 663,
+        "endChar": 0
+      },
+      "revId": "336acaabe308c850b9ac395cc728957e40e2a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3c28c35_dbfad425",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-01T14:16:03Z",
+      "side": 1,
+      "message": "s/photo_callback_factory/create_mf_photo_callback/\n\nmutators and accessors follow the name of the members\nthey touch.",
+      "range": {
+        "startLine": 75,
+        "startChar": 11,
+        "endLine": 75,
+        "endChar": 33
+      },
+      "revId": "336acaabe308c850b9ac395cc728957e40e2a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
