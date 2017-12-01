@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d87e9158_067735a8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ExportWarningDialogFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-01T20:50:05Z",
+      "side": 1,
+      "message": "The gotcha with DialogFragments is that they are restored if you leave Chrome while they\u0027re showing, chrome gets killed, and then you come back (via recents).  You can try this by turning on \"Don\u0027t keep activities\" in Android developer settings.\n\nBasically, most places in our code end up adding:\n\n    @Override\n    public void onCreate(Bundle savedInstanceState) {\n        super.onCreate(savedInstanceState);\n        // If there is savedInstanceState, then the dialog is being recreated by android\n        // and will lack the necessary callbacks.  Dismiss immediately as the tab will\n        // need to be recreated anyway.\n        if (savedInstanceState !\u003d null) {\n            dismiss();\n            return;\n        }\n    }\n\nThen it will autodismiss itself if it is attempted to be recreated.",
+      "revId": "95c496159c474c573fb2631329e3f865b5a1d44d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57bf36eb_ed2e46e5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-01T20:50:05Z",
+      "side": 1,
+      "message": "hopefully don\u0027t need this after moving to a setter for the listener",
+      "range": {
+        "startLine": 74,
+        "startChar": 31,
+        "endLine": 74,
+        "endChar": 60
+      },
+      "revId": "95c496159c474c573fb2631329e3f865b5a1d44d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8756777b_f7ba7726",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-01T20:50:05Z",
+      "side": 1,
+      "message": "no need to keep this, it\u0027s small enough and happens infrequently enough that recreating the click listener is ok.",
+      "range": {
+        "startLine": 143,
+        "startChar": 39,
+        "endLine": 143,
+        "endChar": 60
+      },
+      "revId": "95c496159c474c573fb2631329e3f865b5a1d44d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e0e016c_f0210116",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-01T20:50:05Z",
+      "side": 1,
+      "message": "Instead of having a getter on this class, just have a setter on ExportWarningDialogFragment to pass it in.  I would also inline the class definition or make it a lambda as the fully qualified class is a bit overkill imo.",
+      "revId": "95c496159c474c573fb2631329e3f865b5a1d44d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
