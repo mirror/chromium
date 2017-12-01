@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8a746e2_0fc46129",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 811,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-12-01T17:21:41Z",
+      "side": 1,
+      "message": "Since you only need |tmp_source| in !found case, you can move this line inside the |if| statement.",
+      "range": {
+        "startLine": 811,
+        "startChar": 41,
+        "endLine": 811,
+        "endChar": 51
+      },
+      "revId": "43e397d6c0e62e3b0cd94ad3edbc6738ca915350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a59157e7_b338462a",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 995,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-12-01T17:21:41Z",
+      "side": 1,
+      "message": "These are already handled by |ExecuteWindowCommand|.",
+      "range": {
+        "startLine": 991,
+        "startChar": 0,
+        "endLine": 995,
+        "endChar": 0
+      },
+      "revId": "43e397d6c0e62e3b0cd94ad3edbc6738ca915350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c926b37_0714ba51",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1129,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-12-01T17:21:41Z",
+      "side": 1,
+      "message": "subtype",
+      "range": {
+        "startLine": 1129,
+        "startChar": 44,
+        "endLine": 1129,
+        "endChar": 48
+      },
+      "revId": "43e397d6c0e62e3b0cd94ad3edbc6738ca915350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5ce66f9_197b275a",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1165,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-12-01T17:21:41Z",
+      "side": 1,
+      "message": "Why is this necessary? It won\u0027t work on mobile devices",
+      "range": {
+        "startLine": 1165,
+        "startChar": 17,
+        "endLine": 1165,
+        "endChar": 68
+      },
+      "revId": "43e397d6c0e62e3b0cd94ad3edbc6738ca915350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0ea5a45_7977d037",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1220,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-12-01T17:21:41Z",
+      "side": 1,
+      "message": "Did you mean \u003d\u003d?",
+      "range": {
+        "startLine": 1220,
+        "startChar": 20,
+        "endLine": 1220,
+        "endChar": 22
+      },
+      "revId": "43e397d6c0e62e3b0cd94ad3edbc6738ca915350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a5cbf5a_4069099f",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 14
+      },
+      "lineNbr": 4256,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-12-01T17:21:41Z",
+      "side": 1,
+      "message": "What is the difference between \"type\" and \"pointerType\"? Some description would be useful.",
+      "range": {
+        "startLine": 4256,
+        "startChar": 1,
+        "endLine": 4256,
+        "endChar": 74
+      },
+      "revId": "43e397d6c0e62e3b0cd94ad3edbc6738ca915350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
