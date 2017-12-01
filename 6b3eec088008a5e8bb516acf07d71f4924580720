@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a356af3_b98731b4",
+        "filename": "chrome/android/java/res/layout/new_tab_page_action_card.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-12-01T11:11:32Z",
+      "side": 0,
+      "message": "nesting layouts is bad for performance... making gravity\u003d\"center_vertical|start\" doesn\u0027t fix it?\n\nIf not maybe replace the outer frame layout with something else? RelativeLayout maybe?",
+      "range": {
+        "startLine": 22,
+        "startChar": 32,
+        "endLine": 22,
+        "endChar": 47
+      },
+      "revId": "6b3eec088008a5e8bb516acf07d71f4924580720",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
