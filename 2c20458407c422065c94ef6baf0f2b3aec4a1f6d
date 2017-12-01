@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b21c3b4c_52867b58",
+        "filename": "chrome/browser/vr/elements/text.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T22:10:58Z",
+      "side": 1,
+      "message": "this is the left corner?",
+      "range": {
+        "startLine": 36,
+        "startChar": 5,
+        "endLine": 36,
+        "endChar": 11
+      },
+      "revId": "2c20458407c422065c94ef6baf0f2b3aec4a1f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c773cf31_b788118c",
+        "filename": "chrome/browser/vr/elements/text_input.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T22:10:58Z",
+      "side": 1,
+      "message": "My patch removes this, so either you\u0027ll have to move this to TextInput::UpdateText from my patch, or I\u0027ll have to do it :) https://chromium-review.googlesource.com/c/chromium/src/+/786302/8/chrome/browser/vr/elements/text_input.cc",
+      "range": {
+        "startLine": 62,
+        "startChar": 16,
+        "endLine": 62,
+        "endChar": 23
+      },
+      "revId": "2c20458407c422065c94ef6baf0f2b3aec4a1f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20fbd20f_7be6d0d4",
+        "filename": "chrome/browser/vr/elements/text_input.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T22:10:58Z",
+      "side": 1,
+      "message": "how come you don\u0027t need to do this for the cursor element?",
+      "range": {
+        "startLine": 101,
+        "startChar": 15,
+        "endLine": 101,
+        "endChar": 16
+      },
+      "revId": "2c20458407c422065c94ef6baf0f2b3aec4a1f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d66c07eb_11a54c12",
+        "filename": "chrome/browser/vr/elements/text_input.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T22:10:58Z",
+      "side": 1,
+      "message": "I\u0027m assuming we have these because some tests fail otherwise?",
+      "range": {
+        "startLine": 104,
+        "startChar": 16,
+        "endLine": 104,
+        "endChar": 25
+      },
+      "revId": "2c20458407c422065c94ef6baf0f2b3aec4a1f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
