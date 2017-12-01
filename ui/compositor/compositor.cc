@@ -240,11 +240,12 @@ Compositor::~Compositor() {
   if (context_factory_private_) {
     auto* host_frame_sink_manager =
         context_factory_private_->GetHostFrameSinkManager();
-    for (auto& client : child_frame_sinks_) {
-      DCHECK(client.is_valid());
-      host_frame_sink_manager->UnregisterFrameSinkHierarchy(frame_sink_id_,
-                                                            client);
-    }
+
+    // Copy the set here so we don't invalidate the iterator as we're changing
+    // the set.
+    base::flat_set<viz::FrameSinkId> child_frame_sinks(child_frame_sinks_);
+    for (auto& client : child_frame_sinks)
+      RemoveFrameSink(client);
     host_frame_sink_manager->InvalidateFrameSinkId(frame_sink_id_);
   }
 }
@@ -266,7 +267,8 @@ void Compositor::RemoveFrameSink(const viz::FrameSinkId& frame_sink_id) {
   if (!context_factory_private_)
     return;
   auto it = child_frame_sinks_.find(frame_sink_id);
-  DCHECK(it != child_frame_sinks_.end());
+  if (it == child_frame_sinks_.end())
+    return;
   DCHECK(it->is_valid());
   context_factory_private_->GetHostFrameSinkManager()
       ->UnregisterFrameSinkHierarchy(frame_sink_id_, *it);
