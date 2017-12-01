@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90d2a4a8_319d4949",
+        "filename": "net/quic/chromium/quic_chromium_client_session_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-01T16:22:53Z",
+      "side": 1,
+      "message": "This test actually reveals a surprising behaviour that I\u0027m not sure is correct. I\u0027m unclear from the original implementation whether this is simply maintaining a pre-existing behaviour, but the other fields in the SSLInfo (for SSLClientSocket and for QUIC) represent \u0027point in time\u0027 statements, generally related to connection establishment. By computing this on the fly, we end up in a position where mutations might happen - the very thing you\u0027re testing.\n\nI would think we only set this state when we compute the proof details (or when we verify the certificate). \n\nIt looked like the old code would set it in the SSLErrorNavigationThrottle (thus computing it at that time), but I found that slightly more easier to reason about, because that would only be called once for the connection.\n\nEmily, I think you\u0027ve got a lot of mental state on the error handling - what\u0027s your take on what the behaviour would/should be?",
+      "revId": "26003f59539428e2a1fc197b9c894eced99a5742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
