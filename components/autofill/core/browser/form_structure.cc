@@ -648,7 +648,12 @@ bool FormStructure::ShouldBeParsed() const {
   // Rule out http(s)://*/search?...
   //  e.g. http://www.google.com/search?q=...
   //       http://search.yahoo.com/search?p=...
-  if (target_url_.path_piece() == "/search") {
+  constexpr char kSearchPath[] = "/search";
+  constexpr size_t kSearchPathLen = arraysize(kSearchPath) - 1;
+  const auto& path = target_url_.path_piece();
+  if (base::StartsWith(path, kSearchPath,
+                       base::CompareCase::INSENSITIVE_ASCII) &&
+      (path.length() == kSearchPathLen || path[kSearchPathLen] == '/')) {
     return false;
   }
 
