@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ddb7c01e_ae5fb891",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-12-01T20:01:53Z",
+      "side": 1,
+      "message": "RenderProcessGone() is public for WebStateObserver. Since TabUsageRecorder implements WebStateObserver, I would consider RenderProcessGone() as \"fair game\". However, this point is moot.",
+      "parentUuid": "287811c9_30f73c2e",
+      "revId": "2aa7aebdec0dbb42815c56eb62aeb8653a13845b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b154d6f_9b8fc572",
         "filename": "ios/chrome/browser/metrics/tab_usage_recorder_unittest.mm",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "50e33e33_1e2f77fa",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-12-01T20:01:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b154d6f_9b8fc572",
+      "range": {
+        "startLine": 5,
+        "startChar": 23,
+        "endLine": 5,
+        "endChar": 0
+      },
+      "revId": "2aa7aebdec0dbb42815c56eb62aeb8653a13845b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9640c993_6ff41b24",
         "filename": "ios/chrome/browser/metrics/tab_usage_recorder_unittest.mm",
         "patchSetId": 4
@@ -53,6 +95,30 @@
       "writtenOn": "2017-12-01T04:50:06Z",
       "side": 1,
       "message": "Can we use TestWebState::OnRenderProcessGone? This will require changing InsertTestWebState, but it is better if test does not assume that TabUsageRecorder implements observer protocol (which is sort of implementation detail). |RenderProcessGone| is not a part of TabUsageRecorder public API.",
+      "range": {
+        "startLine": 321,
+        "startChar": 22,
+        "endLine": 321,
+        "endChar": 39
+      },
+      "revId": "2aa7aebdec0dbb42815c56eb62aeb8653a13845b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68dbe298_3fa3a051",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-12-01T20:01:53Z",
+      "side": 1,
+      "message": "Done. But I do need to re-cast WebState back to TestWebState. What do you think? Is there a different way to do that?",
+      "parentUuid": "9640c993_6ff41b24",
       "range": {
         "startLine": 321,
         "startChar": 22,
