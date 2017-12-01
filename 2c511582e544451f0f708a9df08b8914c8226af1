@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5021b0a7_90b29c89",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-12-01T13:50:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cef6473b_24dee4f6",
+      "revId": "2c511582e544451f0f708a9df08b8914c8226af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ae731ba_78ac716e",
         "filename": "/COMMIT_MSG",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "2c511582e544451f0f708a9df08b8914c8226af1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "874abfa0_9c1d3998",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-12-01T13:50:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ae731ba_78ac716e",
+      "revId": "2c511582e544451f0f708a9df08b8914c8226af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "15cd2b0e_75dcd515",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-12-01T13:50:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54aa1683_ebca549c",
+      "revId": "2c511582e544451f0f708a9df08b8914c8226af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b21ad469_cc3ba159",
         "filename": "ui/ozone/platform/x11/x11_window_ozone_unittest.cc",
         "patchSetId": 11
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "5496067a_f4003490",
+        "filename": "ui/ozone/platform/x11/x11_window_ozone_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-12-01T13:50:39Z",
+      "side": 1,
+      "message": "Because of the ozone_platform include.\n\n\"You added one or more #includes that violate checkdeps rules.\n  ui/platform_window/x11/x11_window_ozone_unittest.cc\n      Illegal include: \"ui/ozone/public/ozone_platform.h\"\n    Because of \"-ui\" from ui\u0027s include_rules.\"\n\nI thought about moving the x11_window_ozone to ui/ozone. For example, wayland is located there.",
+      "parentUuid": "b21ad469_cc3ba159",
+      "revId": "2c511582e544451f0f708a9df08b8914c8226af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1a23b8e_e782b460",
         "filename": "ui/ozone/platform/x11/x11_window_ozone_unittest.cc",
         "patchSetId": 11
@@ -81,6 +153,24 @@
       "writtenOn": "2017-11-30T23:29:07Z",
       "side": 1,
       "message": "some parts of Chrome refuse to use gmock. Do we think that ui/ozone/ can? I say sure.",
+      "revId": "2c511582e544451f0f708a9df08b8914c8226af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b407fd6_69784313",
+        "filename": "ui/ozone/platform/x11/x11_window_ozone_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-12-01T13:50:39Z",
+      "side": 1,
+      "message": "Why? What do they use instead? And what should I use instead of gmock then? ui/ozone already uses gmock in the fake_server.cc",
+      "parentUuid": "f1a23b8e_e782b460",
       "revId": "2c511582e544451f0f708a9df08b8914c8226af1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "cee3831a_45b1cb97",
+        "filename": "ui/ozone/platform/x11/x11_window_ozone_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-12-01T13:50:39Z",
+      "side": 1,
+      "message": "Do you mean the space before _? removed.",
+      "parentUuid": "6d247470_686df791",
+      "revId": "2c511582e544451f0f708a9df08b8914c8226af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b788fcf_7cdecbc0",
         "filename": "ui/platform_window/x11/x11_window_ozone.cc",
         "patchSetId": 11
@@ -115,6 +223,24 @@
       "writtenOn": "2017-11-30T23:29:07Z",
       "side": 1,
       "message": "is this being done at the right layer? Should higher-level code in mus address this?",
+      "revId": "2c511582e544451f0f708a9df08b8914c8226af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8eb10d7_986eedf7",
+        "filename": "ui/platform_window/x11/x11_window_ozone.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-12-01T13:50:39Z",
+      "side": 1,
+      "message": "Well, we mimic the DesktopWindowTreeHostX11 behavior. https://cs.chromium.org/chromium/src/ui/views/widget/desktop_aura/desktop_window_tree_host_x11.cc?sq\u003dpackage:chromium\u0026l\u003d1735",
+      "parentUuid": "7b788fcf_7cdecbc0",
       "revId": "2c511582e544451f0f708a9df08b8914c8226af1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
