@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f49519c7_ed5da943",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/resources/send-dragged-file-form-helper.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-12-01T01:23:51Z",
+      "side": 1,
+      "message": "This check looks a bit unnecessary given the fairly straightforward construction of fileToDrop above.",
+      "revId": "ebd617880520730b77cdea16d2fd7fcb3349c834",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
