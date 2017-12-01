@@ -115,6 +115,31 @@ const net::NetworkTrafficAnnotationTag kNavigationUrlLoaderTrafficAnnotation =
         "combination of both) limits the scope of these requests."
       )");
 
+// TODO(arthursonzogni): IsDownload can't be determined only by the response's
+// headers's. The response's body might contains information to guess it.
+// See MimeSniffingResourceHandler.
+bool IsDownload(const ResourceResponse& response) {
+  if (response.head.headers) {
+    std::string disposition;
+    if (response.head.headers->GetNormalizedHeader("content-disposition",
+                                                   &disposition) &&
+        !disposition.empty() &&
+        net::HttpContentDisposition(disposition, std::string())
+            .is_attachment()) {
+      return true;
+    }
+    // TODO(qinmin): Check whether this is special-case user script that needs
+    // to be downloaded.
+  }
+
+  if (blink::IsSupportedMimeType(response.head.mime_type))
+    return false;
+
+  // TODO(qinmin): Check whether there is a plugin handler.
+  return (!response.head.headers ||
+          response.head.headers->response_code() / 100 == 2);
+}
+
 }  // namespace
 
 // Kept around during the lifetime of the navigation request, and is
@@ -356,16 +381,6 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
     Restart();
   }
 
-  // Navigation is intercepted, transfer the |resource_request_|, |url_loader_|
-  // and the |status_| to the new owner. The new owner is responsible for
-  // handling all the mojom::URLLoaderClient callbacks from now on.
-  void InterceptNavigation(
-      NavigationURLLoader::NavigationInterceptionCB callback) {
-    std::move(callback).Run(std::move(resource_request_),
-                            std::move(url_loader_), std::move(url_chain_),
-                            std::move(status_));
-  }
-
   base::Optional<SubresourceLoaderParams> TakeSubresourceLoaderParams() {
     return std::move(subresource_loader_params_);
   }
@@ -382,6 +397,16 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
     // for the response. e.g. AppCache.
     if (MaybeCreateLoaderForResponse(head))
       return;
+
+    mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints;
+    if (url_loader_) {
+      url_loader_client_endpoints = url_loader_->UnBind();
+    } else {
+      url_loader_client_endpoints = mojom::URLLoaderClientEndpoints::New(
+          response_url_loader_.PassInterface(),
+          response_loader_binding_.Unbind());
+    }
+
     scoped_refptr<ResourceResponse> response(new ResourceResponse());
     response->head = head;
 
@@ -394,7 +419,8 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
         base::BindOnce(&NavigationURLLoaderNetworkService::OnReceiveResponse,
-                       owner_, response->DeepCopy(), ssl_info,
+                       owner_, std::move(url_loader_client_endpoints),
+                       response->DeepCopy(), ssl_info,
                        base::Passed(&downloaded_file)));
   }
 
@@ -434,11 +460,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
 
   void OnStartLoadingResponseBody(
       mojo::ScopedDataPipeConsumerHandle body) override {
-    BrowserThread::PostTask(
-        BrowserThread::UI, FROM_HERE,
-        base::BindOnce(
-            &NavigationURLLoaderNetworkService::OnStartLoadingResponseBody,
-            owner_, base::Passed(&body)));
+    NOTREACHED();
   }
 
   void OnComplete(const network::URLLoaderCompletionStatus& status) override {
@@ -666,25 +688,32 @@ void NavigationURLLoaderNetworkService::FollowRedirect() {
 
 void NavigationURLLoaderNetworkService::ProceedWithResponse() {}
 
-void NavigationURLLoaderNetworkService::InterceptNavigation(
-    NavigationURLLoader::NavigationInterceptionCB callback) {
-  BrowserThread::PostTask(
-      BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&URLLoaderRequestController::InterceptNavigation,
-                     base::Unretained(request_controller_.get()),
-                     std::move(callback)));
-}
-
 void NavigationURLLoaderNetworkService::OnReceiveResponse(
+    mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
     scoped_refptr<ResourceResponse> response,
-    const base::Optional<net::SSLInfo>& ssl_info,
+    const base::Optional<net::SSLInfo>& maybe_ssl_info,
     mojom::DownloadedTempFilePtr downloaded_file) {
+  TRACE_EVENT_ASYNC_END2("navigation", "Navigation timeToResponseStarted", this,
+                         "&NavigationURLLoaderNetworkService", this, "success",
+                         true);
+
   // TODO(scottmg): This needs to do more of what
-  // NavigationResourceHandler::OnResponseStarted() does. Or maybe in
-  // OnStartLoadingResponseBody().
-  response_ = std::move(response);
-  if (ssl_info.has_value())
-    ssl_info_ = ssl_info.value();
+  // NavigationResourceHandler::OnResponseStarted() does.
+  net::SSLInfo ssl_info;
+  if (maybe_ssl_info.has_value())
+    ssl_info = maybe_ssl_info.value();
+
+  // TODO(arthursonzogni): In NavigationMojoResponse, this is false. The info
+  // coming from the MimeSniffingResourceHandler must be used.
+  DCHECK(response);
+  bool is_download = allow_download_ && IsDownload(*response.get());
+
+  delegate_->OnResponseStarted(
+      std::move(response), std::move(url_loader_client_endpoints), nullptr,
+      std::move(ssl_info), std::unique_ptr<NavigationData>(),
+      GlobalRequestID(-1, g_next_request_id), is_download,
+      false /* is_stream */,
+      request_controller_->TakeSubresourceLoaderParams());
 }
 
 void NavigationURLLoaderNetworkService::OnReceiveRedirect(
@@ -692,24 +721,6 @@ void NavigationURLLoaderNetworkService::OnReceiveRedirect(
     scoped_refptr<ResourceResponse> response) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   delegate_->OnRequestRedirected(redirect_info, std::move(response));
-}
-
-void NavigationURLLoaderNetworkService::OnStartLoadingResponseBody(
-    mojo::ScopedDataPipeConsumerHandle body) {
-  DCHECK(response_);
-
-  TRACE_EVENT_ASYNC_END2("navigation", "Navigation timeToResponseStarted", this,
-                         "&NavigationURLLoaderNetworkService", this, "success",
-                         true);
-
-  // Temporarily, we pass both a stream (null) and the data pipe to the
-  // delegate until PlzNavigate has shipped and we can be comfortable fully
-  // switching to the data pipe.
-  delegate_->OnResponseStarted(
-      response_, nullptr, std::move(body), ssl_info_,
-      std::unique_ptr<NavigationData>(), GlobalRequestID(-1, g_next_request_id),
-      IsDownload(), false /* is_stream */,
-      request_controller_->TakeSubresourceLoaderParams());
 }
 
 void NavigationURLLoaderNetworkService::OnComplete(
@@ -726,34 +737,6 @@ void NavigationURLLoaderNetworkService::OnComplete(
   bool should_ssl_errors_be_fatal = true;
   delegate_->OnRequestFailed(status.exists_in_cache, status.error_code,
                              status.ssl_info, should_ssl_errors_be_fatal);
-}
-
-bool NavigationURLLoaderNetworkService::IsDownload() const {
-  DCHECK(response_);
-
-  if (!allow_download_)
-    return false;
-
-  if (response_->head.headers) {
-    std::string disposition;
-    if (response_->head.headers->GetNormalizedHeader("content-disposition",
-                                                     &disposition) &&
-        !disposition.empty() &&
-        net::HttpContentDisposition(disposition, std::string())
-            .is_attachment()) {
-      return true;
-    }
-    // TODO(qinmin): Check whether this is special-case user script that needs
-    // to be downloaded.
-  }
-
-  if (blink::IsSupportedMimeType(response_->head.mime_type))
-    return false;
-
-  // TODO(qinmin): Check whether there is a plugin handler.
-
-  return (!response_->head.headers ||
-          response_->head.headers->response_code() / 100 == 2);
 }
 
 void NavigationURLLoaderNetworkService::BindNonNetworkURLLoaderFactoryRequest(
