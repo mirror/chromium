@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15c0c57e_fcb057de",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-01T16:36:59Z",
+      "side": 1,
+      "message": "This comment still mentions positive scale. It should say how negative and nearly-zero scales avoid this DCHECK too now.",
+      "revId": "7cf940991e624981efcb9604e734c0c77f42843d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4041c31_a86996a0",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1141,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-01T16:36:59Z",
+      "side": 1,
+      "message": "Thanks for the test! Can we also verify the negative scale case?",
+      "revId": "7cf940991e624981efcb9604e734c0c77f42843d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3997fd4_7f0a89f2",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1180,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-01T16:36:59Z",
+      "side": 1,
+      "message": "Can you show that it\u0027s not invertible with an EXPECT statement too?",
+      "revId": "7cf940991e624981efcb9604e734c0c77f42843d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "273d9d51_f13d222a",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1203,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-01T16:36:59Z",
+      "side": 1,
+      "message": "This one is |epsilon_scale| ?",
+      "revId": "7cf940991e624981efcb9604e734c0c77f42843d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de201377_cd37de3f",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1226,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-01T16:36:59Z",
+      "side": 1,
+      "message": "and |larger_epsilon_scale| ?",
+      "revId": "7cf940991e624981efcb9604e734c0c77f42843d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
