@@ -2956,9 +2956,9 @@ bool LayoutObject::HitTest(HitTestResult& result,
                          kHitTestForeground);
 
     // Test floats next.
-    if (!inside)
-      inside = NodeAtPoint(result, location_in_container, accumulated_offset,
-                           kHitTestFloat);
+    // if (!inside)
+    //  inside = NodeAtPoint(result, location_in_container, accumulated_offset,
+    //                       kHitTestFloat);
 
     // Finally test to see if the mouse is in the background (within a child
     // block's background).
