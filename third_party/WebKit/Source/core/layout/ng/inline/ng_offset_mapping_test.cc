@@ -126,6 +126,7 @@ TEST_P(ParameterizedNGOffsetMappingTest, OneTextNode) {
   const Node* foo_node = layout_object_->GetNode();
   const NGOffsetMapping& result = GetOffsetMapping();
 
+  EXPECT_EQ(layout_block_flow_, &result.GetContext());
   EXPECT_EQ("foo", result.GetText());
 
   ASSERT_EQ(1u, result.GetUnits().size());
