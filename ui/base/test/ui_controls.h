@@ -121,6 +121,9 @@ void InstallUIControlsAura(UIControlsAura* instance);
 // to traverse to the desired item; because the application is configured to
 // traverse more elements for accessibility reasons.
 bool IsFullKeyboardAccessEnabled();
+
+// Returns true if there were some pressed modifiers.
+bool ResetPressedModifiers();
 #endif
 
 }  // namespace ui_controls

@@ -4,12 +4,15 @@
 
 #include "ui/base/test/ui_controls.h"
 
+#import <Carbon/Carbon.h>
 #import <Cocoa/Cocoa.h>
+#include <tuple>
 #include <vector>
 
 #include "base/bind.h"
 #include "base/callback.h"
 #import "base/mac/foundation_util.h"
+#import "base/mac/scoped_cftyperef.h"
 #import "base/mac/scoped_objc_class_swizzler.h"
 #include "base/message_loop/message_loop.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -178,6 +181,18 @@ NSWindow* WindowAtCurrentMouseLocation() {
   // uses those, it will need to handle that itself.
   return nil;
 }
+
+NSUInteger GetCurrentModifierFlags() {
+  return
+      [NSEvent modifierFlags] & NSEventModifierFlagDeviceIndependentFlagsMask;
+}
+
+std::tuple<NSUInteger, int, const char*> kModifierFlagToKeyCodeMap[] = {
+    {NSEventModifierFlagCommand, kVK_Command, "Cmd"},
+    {NSEventModifierFlagShift, kVK_Shift, "Shift"},
+    {NSEventModifierFlagOption, kVK_Option, "Option"},
+    // Expand as needed.
+};
 
 }  // namespace
 
@@ -414,6 +429,21 @@ void RunClosureAfterAllPendingUIEvents(const base::Closure& closure) {
 
 bool IsFullKeyboardAccessEnabled() {
   return [NSApp isFullKeyboardAccessEnabled];
+}
+
+bool ResetPressedModifiers() {
+  bool had_modifiers = false;
+  const NSUInteger active_modifiers = GetCurrentModifierFlags();
+  for (auto flag_key_code : kModifierFlagToKeyCodeMap) {
+    if (active_modifiers & std::get<0>(flag_key_code)) {
+      had_modifiers = true;
+      LOG(ERROR) << "Modifier is hanging: " << std::get<2>(flag_key_code);
+      CGEventPost(kCGSessionEventTap,
+                  base::ScopedCFTypeRef<CGEventRef>(CGEventCreateKeyboardEvent(
+                      nullptr, std::get<1>(flag_key_code), false)));
+    }
+  }
+  return had_modifiers;
 }
 
 }  // namespace ui_controls
