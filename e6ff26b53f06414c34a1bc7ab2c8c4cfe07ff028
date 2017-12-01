@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a1491569_ae145d56",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/ChromeMediaRouterDialogController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-12-01T23:29:17Z",
+      "side": 1,
+      "message": "I think Mounir means smth like:\n\nif (isShowingDialog()) return;\n\nMediaSource source \u003d null;\nfor (String sourceUrn: sourceUrns) {\n  source \u003d CastMediaSource.from(sourceUrn);\n\n  if (source \u003d\u003d null) source \u003d RemotingMediaSource.from(sourceUrn);\n\n  if (source !\u003d null) break;\n}\n\n// This part could be extracted from the method below?\nMediaRouteSelector routeSelector \u003d source \u003d\u003d null ? null : source.buildRouteSelector();\nif (routeSelector \u003d\u003d null) {\n  native...\n  return;\n}\n\nmDialogMgr \u003d new MRCDlgMgr(source.getSourceId(), routeSelector, this);",
+      "parentUuid": "6a4fa537_b7d2bf38",
+      "range": {
+        "startLine": 52,
+        "startChar": 24,
+        "endLine": 52,
+        "endChar": 30
+      },
+      "revId": "e6ff26b53f06414c34a1bc7ab2c8c4cfe07ff028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c40ec23b_6345d93a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/ChromeMediaRouterDialogController.java",
         "patchSetId": 6
