@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "28cd214e_a2f95291",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_controller_observer_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-12-01T03:29:56Z",
+      "side": 1,
+      "message": "FullscreenModel and its observer are a private classes; access to the fullscreen feature is exclusively through FullscreenController and its observer API.  This is done because conceptually, the management of the property animator is not part of the FullscreenModel.  I wanted to keep the model class strictly model code.  An option I considered was just having FullscreenController manage its own observers.  However, since FullscreenModel is an internal class, I didn\u0027t want to have FullscreenController directly be a FullscreenModelObserver, as this would entail including private headers in fullscreen_controller.h.  The answer I ended up with was to have an intermediary object that handled intercepting model changes, managing the property animator, and notifying FullscreenControllerObservers.",
+      "parentUuid": "3e0b549d_5f3fecd1",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 41
+      },
+      "revId": "088bfde8caeed54d2db3fb75be9ca8bac6bd7832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9eea388_41e4eeea",
         "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_controller_observer_manager.mm",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "dd7e601f_c1275af0",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_controller_observer_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-12-01T03:29:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9eea388_41e4eeea",
+      "range": {
+        "startLine": 65,
+        "startChar": 54,
+        "endLine": 65,
+        "endChar": 77
+      },
+      "revId": "088bfde8caeed54d2db3fb75be9ca8bac6bd7832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef8e2369_beb564f1",
         "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_scroll_end_animation_controller.h",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-29T14:24:40Z",
       "side": 1,
       "message": "\"AnimationController\" really sounds like a peer to a view controller or a presentation controller, so it\u0027s surprising to see this as a C++ class.",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 44
+      },
+      "revId": "088bfde8caeed54d2db3fb75be9ca8bac6bd7832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f35c97e2_5db67ab6",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_scroll_end_animation_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-12-01T03:29:56Z",
+      "side": 1,
+      "message": "I\u0027ve removed this object and moves its functionality into the observer manager.  With the current implementation, there isn\u0027t enough of a justification for this to live in a separate object.",
+      "parentUuid": "ef8e2369_beb564f1",
       "range": {
         "startLine": 15,
         "startChar": 6,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "f584ed14_f020aca3",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_scroll_end_animation_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-12-01T03:29:56Z",
+      "side": 1,
+      "message": "I had planned to experiment with using interruptible property animators and driving the animations through updating its |fractionComplete| property.  If those experiments are successful and we don\u0027t run into any WKWebView rendering issues, then it\u0027ll probably make sense to have a separate object like this that can own, reset, and drive the property animator.  For now though, this object doesn\u0027t have much utility, so I\u0027m moving this into the observer manager.",
+      "parentUuid": "c2d768bd_3748748f",
+      "range": {
+        "startLine": 27,
+        "startChar": 7,
+        "endLine": 27,
+        "endChar": 21
+      },
+      "revId": "088bfde8caeed54d2db3fb75be9ca8bac6bd7832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fec30449_af18bf56",
         "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_scroll_end_animation_controller.mm",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2017-11-29T14:24:40Z",
       "side": 1,
       "message": "This is confusing. StopAnimation is called by the completion block, which is run when the animation stops. I understand that passing YES here will not re-induce a call to the completion block, but I don\u0027t understand from reading the code why this is being done.\n\nCan you add more comments to describe what\u0027s going on here?",
+      "range": {
+        "startLine": 51,
+        "startChar": 12,
+        "endLine": 51,
+        "endChar": 25
+      },
+      "revId": "088bfde8caeed54d2db3fb75be9ca8bac6bd7832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0be3959_24ae3477",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_scroll_end_animation_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-12-01T03:29:56Z",
+      "side": 1,
+      "message": "This is called both in the completion block of the animator and also in the observer manager\u0027s model observer functions in order to stop the animation when a new scroll event begins.  To clarify this, I separated this into two separate functions in the observer manager: one for stopping an in-progress animation and one for cleaning up the animation state.",
+      "parentUuid": "fec30449_af18bf56",
       "range": {
         "startLine": 51,
         "startChar": 12,
