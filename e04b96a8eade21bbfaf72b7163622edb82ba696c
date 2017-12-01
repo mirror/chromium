@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e1fb0e4a_0d9404e8",
+        "filename": "components/cronet/native/cronet.idl",
+        "patchSetId": 44
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-01T03:09:25Z",
+      "side": 1,
+      "message": "Can we map int to uint64 values?  I feel like this new API should be a superset (i.e. uint64).",
+      "parentUuid": "046428a0_ae53798b",
+      "range": {
+        "startLine": 19,
+        "startChar": 18,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "e04b96a8eade21bbfaf72b7163622edb82ba696c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6272b66c_639a7104",
         "filename": "components/cronet/native/cronet.idl",
         "patchSetId": 44
@@ -260,6 +284,30 @@
       "side": 1,
       "message": "Hrm, we don\u0027t mention it in Java API, but sgtm. Done.",
       "parentUuid": "4025bf3d_cc689034",
+      "range": {
+        "startLine": 632,
+        "startChar": 66,
+        "endLine": 632,
+        "endChar": 0
+      },
+      "revId": "e04b96a8eade21bbfaf72b7163622edb82ba696c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5266a151_692fac82",
+        "filename": "components/cronet/native/cronet.idl",
+        "patchSetId": 44
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-01T03:09:25Z",
+      "side": 1,
+      "message": "Java is garbage collected, so ownership is murky as if it\u0027s reference counted.  In our C/C++ API we can keep the ownership well defined.",
+      "parentUuid": "1d3c6225_3d830afe",
       "range": {
         "startLine": 632,
         "startChar": 66,
