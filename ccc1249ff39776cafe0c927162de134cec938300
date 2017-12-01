@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3945d555_8db92cc2",
+        "filename": "chrome/browser/extensions/crx_installer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-01T23:52:38Z",
+      "side": 1,
+      "message": "nit1: I don\u0027t think the name is very clear here.  What about something like InitializeCreationFlagsForUpdate() (if nit2 is satisfied) or else GetCreationFlagsForUpdate()?\n\nnit2: why make this a static function that returns a value, rather than just setting creation_flags_ directly?  Then we would just call something like InitializeCreationFlagsForUpdate() on the CRX installer.",
+      "revId": "ccc1249ff39776cafe0c927162de134cec938300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7b93ba4_c1852b23",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-01T23:52:38Z",
+      "side": 1,
+      "message": "It seems like this could crash - what guarantee do we have that extension is non-null?",
+      "revId": "ccc1249ff39776cafe0c927162de134cec938300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
