@@ -53,6 +53,7 @@
 #include "content/browser/keyboard_lock/keyboard_lock_service_impl.h"
 #include "content/browser/loader/resource_dispatcher_host_impl.h"
 #include "content/browser/loader/resource_scheduler_filter.h"
+#include "content/browser/loader/webpackage_prefetch_service_impl.h"
 #include "content/browser/media/media_interface_proxy.h"
 #include "content/browser/media/session/media_session_service_impl.h"
 #include "content/browser/payments/payment_app_context_impl.h"
@@ -147,6 +148,7 @@
 #include "third_party/WebKit/common/feature_policy/feature_policy.h"
 #include "third_party/WebKit/common/frame_policy.h"
 #include "third_party/WebKit/common/page/page_visibility_state.mojom.h"
+#include "third_party/WebKit/public/platform/modules/webpackage/webpackage_prefetch_service.mojom.h"
 #include "ui/accessibility/ax_tree.h"
 #include "ui/accessibility/ax_tree_id_registry.h"
 #include "ui/accessibility/ax_tree_update.h"
@@ -3165,6 +3167,15 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
     registry_->AddInterface(base::BindRepeating(
         &media::VideoDecodeStatsRecorder::Create, video_perf_history));
   }
+
+  registry_->AddInterface(
+      base::Bind(
+          &WebPackagePrefetchServiceImpl::CreateMojoService,
+          static_cast<StoragePartitionImpl*>(
+              BrowserContext::GetStoragePartition(
+                  GetSiteInstance()->GetBrowserContext(), GetSiteInstance()))
+              ->url_loader_factory_getter()),
+      BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
 }
 
 void RenderFrameHostImpl::ResetWaitingState() {

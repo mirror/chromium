@@ -117,6 +117,7 @@ void WebPackageResponseHandler::AddCallbacks(
 void WebPackageResponseHandler::OnDataReceived(const void* data, size_t size) {
   size_t consumed = 0;
   LOG(ERROR) << "[" << request_url_ << "] OnDataReceived:" << size;
+
   if (producer_handle_.is_valid()) {
     uint32_t available = 0;
     scoped_refptr<network::NetToMojoPendingBuffer> pending_write;
@@ -156,12 +157,14 @@ void WebPackageResponseHandler::OnNotifyFinished(int error_code) {
   if (error_code_ == net::OK)
     error_code_ = error_code;
   data_receive_finished_ = true;
+  if (read_buffers_.empty() && !source_stream_may_have_data_)
+    data_write_finished_ = true;
   MaybeCompleteAndNotify();
 }
 
 void WebPackageResponseHandler::GetCurrentReadBuffer(const char** buf,
                                                      size_t* size) {
-  DCHECK(current_read_pointer_);
+  DCHECK(current_read_pointer_ || current_read_size_ == 0);
   *buf = current_read_pointer_;
   *size = current_read_size_;
 }
@@ -170,12 +173,17 @@ void WebPackageResponseHandler::UpdateConsumedReadSize(size_t size) {
   consumed_read_size_ = size;
 }
 
-void WebPackageResponseHandler::OnPipeWritable(MojoResult unused) {
-  LOG(ERROR) << "[" << request_url_ << "] OnPipeWritable";
-  DCHECK_EQ(unused, MOJO_RESULT_OK);
+void WebPackageResponseHandler::OnPipeWritable(MojoResult mojo_result) {
+  if (mojo_result == MOJO_RESULT_FAILED_PRECONDITION) {
+    LOG(ERROR) << "Canceled? " << request_url_;
+    OnNotifyFinished(net::ERR_ABORTED);
+    return;
+  }
+
+  DCHECK_EQ(mojo_result, MOJO_RESULT_OK) << request_url_;
   DCHECK(producer_handle_.is_valid());
   DCHECK(!data_write_finished_);
-  if (read_buffers_.empty())
+  if (read_buffers_.empty() && !source_stream_may_have_data_)
     return;
 
   uint32_t available = 0;
@@ -187,22 +195,46 @@ void WebPackageResponseHandler::OnPipeWritable(MojoResult unused) {
 
   size_t dest_offset = 0;
   size_t dest_size = base::checked_cast<size_t>(available);
-  while (!read_buffers_.empty()) {
+  while (!read_buffers_.empty() && dest_size > 0) {
     auto& src = read_buffers_.front();
     size_t src_size = base::checked_cast<size_t>(src->BytesRemaining());
-    WriteToPipe(pending_write.get(), dest_offset, &dest_size, src->data(),
-                &src_size);
+    int ret = WriteToPipe(pending_write.get(), dest_offset, &dest_size,
+                          src->data(), &src_size);
+    if (ret != net::OK) {
+      LOG(ERROR) << "WriteToPipe error " << ret << "  " << request_url_;
+      OnNotifyFinished(ret);
+      return;
+    }
     src->DidConsume(src_size);
+
     dest_offset += dest_size;
-    LOG(ERROR) << "- consumed " << src_size;
+    dest_size = base::checked_cast<size_t>(available) - dest_size;
     if (src->BytesRemaining() > 0)
       break;
     read_buffers_.pop_front();
   }
 
+  if (read_buffers_.empty() && dest_size > 0 && source_stream_may_have_data_) {
+    size_t src_size = 0;
+    int ret = WriteToPipe(pending_write.get(), dest_offset, &dest_size, nullptr,
+                          &src_size);
+    if (ret != net::OK) {
+      LOG(ERROR) << "WriteToPipe error " << ret << "  " << request_url_;
+      OnNotifyFinished(ret);
+      return;
+    }
+    if (dest_size == 0) {
+      source_stream_may_have_data_ = false;
+    }
+
+    dest_offset += dest_size;
+    dest_size = base::checked_cast<size_t>(available) - dest_size;
+  }
+
   producer_handle_ = pending_write->Complete(dest_offset);
 
-  if (read_buffers_.empty() && data_receive_finished_) {
+  if (read_buffers_.empty() && data_receive_finished_ &&
+      !source_stream_may_have_data_) {
     data_write_finished_ = true;
     MaybeCompleteAndNotify();
     return;
@@ -225,6 +257,7 @@ MojoResult WebPackageResponseHandler::BeginWriteToPipe(
     writable_handle_watcher_->Cancel();
     producer_handle_.reset();
     error_code_ = net::ERR_FAILED;
+    LOG(ERROR) << "ERR_FAILED";
     MaybeCompleteAndNotify();
   }
   return result;
@@ -244,7 +277,8 @@ int WebPackageResponseHandler::WriteToPipe(
   size_t dest_size = *dest_size_inout;
   size_t src_size = *src_size_inout;
   size_t read = 0, written = 0;
-  while (dest_size > written && src_size > read) {
+  while (dest_size > written &&
+         (src_size > read || (source_stream_may_have_data_ && src_size == 0))) {
     current_read_pointer_ = static_cast<const char*>(src) + read;
     current_read_size_ = *src_size_inout;
     consumed_read_size_ = 0;
@@ -254,11 +288,14 @@ int WebPackageResponseHandler::WriteToPipe(
                                   base::checked_cast<int>(dest_size - written),
                                   net::CompletionCallback());
     current_read_pointer_ = nullptr;
-    DCHECK(rv > 0) << rv;
+    DCHECK(rv >= 0) << rv;
     if (rv < 0)
       return rv;
-    if (rv == net::OK)
+    if (rv == net::OK) {
+      source_stream_may_have_data_ = false;
       break;
+    }
+    source_stream_may_have_data_ = true;
     read += consumed_read_size_;
     written += rv;
     dest_offset += rv;
