@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7eca3c20_df5ca25f",
+        "filename": "chrome/browser/command_updater.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-01T21:53:34Z",
+      "side": 1,
+      "message": "I think this has the potential to go very wrong. In particular things like adding/removing an observer would do the wrong thing if called at different times. I could see doing something like this if CommandUpdater wasn\u0027t exposed, but it is. I think it far safer to introduce another state in BrowserCommandController that knows about this and explicitly disables commands.",
+      "range": {
+        "startLine": 82,
+        "startChar": 2,
+        "endLine": 82,
+        "endChar": 34
+      },
+      "revId": "ec1643328dad5f0e1dac03fa21198261c2de3117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
