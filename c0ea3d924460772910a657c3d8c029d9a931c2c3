@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5935ac01_b8a30245",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webexposed/non-secure/README.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-12-01T23:13:45Z",
+      "side": 1,
+      "message": "LayoutTests/http/tests/webexposed seems a bit inconsistent with LayoutTests/virtual/stable/webexposed (stable missing). Is there a danger that an API owner would incorrectly think that the former covers interfaces under the experimental flag and skim instead of review?\n\nI\u0027m not an API ONWER, so I can\u0027t assess this, but I figured it\u0027s worth asking the question. If it turns out to be an issue, perhaps LayoutTests/http/tests/webexposed-stable would make this problem go away.",
+      "revId": "c0ea3d924460772910a657c3d8c029d9a931c2c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cca43830_3cbca524",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webexposed/non-secure/README.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-12-01T23:13:45Z",
+      "side": 1,
+      "message": "nit: in a secure context?",
+      "revId": "c0ea3d924460772910a657c3d8c029d9a931c2c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78821457_a1727014",
+        "filename": "third_party/WebKit/LayoutTests/resources/global-interface-listing-worker.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-12-01T23:13:45Z",
+      "side": 1,
+      "message": "I suspect this doesn\u0027t work, based on test results.\nhttps://storage.googleapis.com/chromium-layout-test-archives/mac_chromium_rel_ng/603072/layout-test-results/http/tests/serviceworker/webexposed/global-interface-listing-service-worker-actual.txt\n\nDid you mean \u0027/js-test.js\u0027, or are full relative paths actually needed here?",
+      "revId": "c0ea3d924460772910a657c3d8c029d9a931c2c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14376b06_abd89efc",
+        "filename": "third_party/WebKit/LayoutTests/resources/global-interface-listing.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-12-01T23:13:45Z",
+      "side": 1,
+      "message": "This seems like a reasonable change, but it seems orthogonal to the CL description. Is it intentional?",
+      "revId": "c0ea3d924460772910a657c3d8c029d9a931c2c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
