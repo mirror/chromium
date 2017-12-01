@@ -417,8 +417,6 @@ class CORE_EXPORT LayoutBoxModelObject : public LayoutObject {
       const LayoutBoxModelObject* ancestor_to_stop_at,
       LayoutGeometryMap&) const override;
 
-  void SetSelectionState(SelectionState) override;
-
   void ContentChanged(ContentChangeType);
   bool HasAcceleratedCompositing() const;
 
