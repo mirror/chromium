@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "caadfe1e_f9befc13",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-01T02:14:03Z",
+      "side": 1,
+      "message": "Can we declare STACK_ONLY for NGOffsetMapping? I\u0027m afraid to store\nreference to layout object in heap.",
+      "range": {
+        "startLine": 94,
+        "startChar": 18,
+        "endLine": 94,
+        "endChar": 34
+      },
+      "revId": "a21d65ce8d85b33f9000f49db5ba33b451c55867",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "325a224f_b37f3361",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-01T02:14:03Z",
+      "side": 1,
+      "message": "Can we detect changes of NGInlineNodeData?\n\nShould we have version number in NGInlnieNodeData and increment it\neach esetNGInlineNodeData()?",
+      "revId": "a21d65ce8d85b33f9000f49db5ba33b451c55867",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
