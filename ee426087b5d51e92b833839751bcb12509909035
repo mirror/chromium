@@ -69,6 +69,24 @@
       "revId": "ee426087b5d51e92b833839751bcb12509909035",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45527fd3_4769c9e5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/datareduction/DataReductionUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-01T23:36:37Z",
+      "side": 1,
+      "message": "Wait really, TTS *translates* the word byte into other languages? That\u0027s a\nsurprise to me. Can you try it and confirm?\n\nI looked through the TTS code and I see a lot of logic to handle things\nlike kilo, mega, etc., for example:\n\nhttps://cs.corp.google.com/piper///depot/google3/speech/tts/languages/textnorm/grammars/classify/universal/measure.grm\n\nhttps://cs.corp.google.com/piper///depot/google3/speech/tts/languages/textnorm/grammars/verbalize/en/measure.grm\n\nSo I\u0027m pretty sure that you\u0027re supposed to just pass it some number of bytes\nand it will automatically use \"kilobytes\", \"megabytes\", etc. Did you try it with\nsomething other than 1000? What about something like 900000? I\u0027d expect it would\nsay something involving kilobytes then.\n\nFinally, keep in mind that just because the TTS engine pronounces things\ncorrectly for KB and MB in English now, that doesn\u0027t mean it does it correctly\nin all languages! Better to just use the MeasureSpan all the time unless there\u0027s\na really good reason not to.",
+      "parentUuid": "fb227b3d_11ac9fcc",
+      "revId": "ee426087b5d51e92b833839751bcb12509909035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
