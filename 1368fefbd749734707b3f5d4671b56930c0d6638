@@ -124,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "001f8e22_6afdb87e",
+        "filename": "ash/shell.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1138,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-01T17:49:19Z",
+      "side": 1,
+      "message": "I still think that touch hud could be mushed into a touch*controller (just to encapsulate semi-related concepts), but maybe that\u0027s not good design. Keeping this in Shell (or ShellPortMash?) seems fine for now.",
+      "parentUuid": "b13f7e3c_cb96c6e8",
+      "revId": "1368fefbd749734707b3f5d4671b56930c0d6638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7faebf0e_d5dad082",
         "filename": "ash/touch/touch_observer_hud_unittest.cc",
         "patchSetId": 2
@@ -188,6 +206,24 @@
       "side": 1,
       "message": "Whoops. I thought it didn\u0027t do that anymore, but I guess it still does if you flip the flag and hit Ctrl-Alt-I. Clarified the text.",
       "parentUuid": "687ccf56_cf7e3b0e",
+      "revId": "1368fefbd749734707b3f5d4671b56930c0d6638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7905b102_de0469fd",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2614,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-01T17:49:19Z",
+      "side": 1,
+      "message": "Ctrl-Alt-I? Is that another accelerator to flagify? I wonder if it makes sense to have one flag with multiple values here? --touch-hud\u003d\u003ctaps,points,hud\u003e? It\u0027s okay to go ahead with this CL as-is and leave additional cleanup for later.",
+      "parentUuid": "d5e50466_b1169dbd",
       "revId": "1368fefbd749734707b3f5d4671b56930c0d6638",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
