@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c406e777_288b6d6b",
+        "filename": "extensions/browser/extension_protocols.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-12-01T23:28:38Z",
+      "side": 1,
+      "message": "Ken: I\u0027m not sure what to do to satisfy this comment. At present all the ContentVerifier tests pass.",
+      "revId": "09bf2d12224fb26179bc2e9ccfa3e81b51cd5e5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
