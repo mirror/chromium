@@ -797,7 +797,8 @@ TEST_P(ResourceProviderTest, TransferGLResources) {
   EXPECT_FALSE(child_resource_provider_->InUseByConsumer(id3));
 
   {
-    child_resource_provider_->WaitSyncToken(id1);
+    // ScopedWriteLockGL will wait for the sync token, which is convenient since
+    // |child_resource_provider_| doesn't expose that.
     ResourceProvider::ScopedWriteLockGL lock(child_resource_provider_.get(),
                                              id1);
     ASSERT_NE(0U, lock.GetTexture());
@@ -805,7 +806,7 @@ TEST_P(ResourceProviderTest, TransferGLResources) {
   // Ensure copying to resource doesn't fail.
   child_resource_provider_->CopyToResource(id2, data2, size);
   {
-    child_resource_provider_->WaitSyncToken(id2);
+    // ScopedWriteLockGL will wait for the sync token.
     ResourceProvider::ScopedWriteLockGL lock(child_resource_provider_.get(),
                                              id2);
     ASSERT_NE(0U, lock.GetTexture());
@@ -913,11 +914,15 @@ TEST_P(ResourceProviderTest, OverlayPromotionHint) {
       resource_provider_->GetChildToParentMap(child_id);
   viz::ResourceId mapped_id1 = resource_map[list[0].id];
   viz::ResourceId mapped_id2 = resource_map[list[1].id];
+
+  // The promotion hints should not be recorded until after we wait.
+  EXPECT_EQ(0u, resource_provider_->CountPromotionHintRequestsForTesting());
   {
     resource_provider_->WaitSyncToken(mapped_id1);
     DisplayResourceProvider::ScopedReadLockGL lock(resource_provider_.get(),
                                                    mapped_id1);
   }
+  EXPECT_EQ(1u, resource_provider_->CountPromotionHintRequestsForTesting());
 
   EXPECT_EQ(list[0].mailbox_holder.sync_token,
             context3d_->last_waited_sync_token());
@@ -1177,7 +1182,8 @@ TEST_P(ResourceProviderTest, ReadLockCountStopsReturnToChildOrDelete) {
   EXPECT_EQ(1u, returned_to_child.size());
   child_resource_provider_->ReceiveReturnsFromParent(returned_to_child);
 
-  child_resource_provider_->WaitSyncToken(id1);
+  // No need to wait for the sync token here -- it will be returned to the
+  // client on delete.
   EXPECT_EQ(1u, child_resource_provider_->num_resources());
   child_resource_provider_->DeleteResource(id1);
   EXPECT_EQ(0u, child_resource_provider_->num_resources());
