@@ -24,6 +24,7 @@ goog.require('__crWeb.message');
    * @private
    */
   var formActivity_ = function(evt) {
+ debugger;
     var srcElement = evt.srcElement;
     var value = srcElement.value || '';
     var fieldType = srcElement.type || '';
