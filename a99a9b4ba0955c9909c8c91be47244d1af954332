@@ -22,6 +22,30 @@
       "revId": "a99a9b4ba0955c9909c8c91be47244d1af954332",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc69af26_4ec83b38",
+        "filename": "content/common/appcache_messages.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-12-01T00:29:05Z",
+      "side": 1,
+      "message": "It doesn\u0027t compile, due to the use below in the IPC_STRUCT_TRAITS.",
+      "parentUuid": "3d69e1c4_484dbbd4",
+      "range": {
+        "startLine": 23,
+        "startChar": 35,
+        "endLine": 23,
+        "endChar": 54
+      },
+      "revId": "a99a9b4ba0955c9909c8c91be47244d1af954332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
