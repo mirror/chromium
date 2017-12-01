@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a135d6e_96f88a0e",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-01T07:00:55Z",
+      "side": 1,
+      "message": "Given the order of magnitude of times being reported by  OfflinePages.Model.ConstructionToLoadedEventTime I think we should consider increasing this value.\n\nTo help with that we could also run a few custom manual tests with extra logs to investigate how often we\u0027re actually using this DB. I can help with that tomorrow.",
+      "range": {
+        "startLine": 24,
+        "startChar": 39,
+        "endLine": 24,
+        "endChar": 40
+      },
+      "revId": "886462422651115145d24d58ca4d222b0281ed0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c014b96_ec0547a3",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_test_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-01T07:00:55Z",
+      "side": 1,
+      "message": "Nice to know about this one!",
+      "range": {
+        "startLine": 33,
+        "startChar": 24,
+        "endLine": 33,
+        "endChar": 46
+      },
+      "revId": "886462422651115145d24d58ca4d222b0281ed0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

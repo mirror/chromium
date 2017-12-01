@@ -34,6 +34,24 @@
       "revId": "f430f8fdec9a1931117906727fab1887613fe7b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9d71d9fb_34a15664",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-01T07:00:55Z",
+      "side": 1,
+      "message": "That is neat but hard to follow. A call to reset() would make it easier to understand what\u0027s going on.\n\nAnd why moving the db_ pointer out of the instance member already at CloseInternal? Why not just leave it in place until this call happens and reset() it here?",
+      "parentUuid": "500c52c1_3a77136b",
+      "revId": "f430f8fdec9a1931117906727fab1887613fe7b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
