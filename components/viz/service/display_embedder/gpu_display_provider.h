@@ -27,6 +27,7 @@ namespace viz {
 class CompositingModeReporterImpl;
 class Display;
 class OutputDeviceBacking;
+class ServerSharedBitmapManager;
 class SoftwareOutputDevice;
 
 // In-process implementation of DisplayProvider.
@@ -36,6 +37,7 @@ class VIZ_SERVICE_EXPORT GpuDisplayProvider : public DisplayProvider {
       uint32_t restart_id,
       scoped_refptr<gpu::InProcessCommandBuffer::Service> gpu_service,
       gpu::GpuChannelManager* gpu_channel_manager,
+      ServerSharedBitmapManager* server_shared_bitmap_manager,
       CompositingModeReporterImpl* compositing_mode_reporter);
   ~GpuDisplayProvider() override;
 
@@ -56,6 +58,7 @@ class VIZ_SERVICE_EXPORT GpuDisplayProvider : public DisplayProvider {
   scoped_refptr<gpu::InProcessCommandBuffer::Service> gpu_service_;
   std::unique_ptr<gpu::GpuMemoryBufferManager> gpu_memory_buffer_manager_;
   gpu::ImageFactory* const image_factory_;
+  ServerSharedBitmapManager* const server_shared_bitmap_manager_;
   CompositingModeReporterImpl* const compositing_mode_reporter_;
 
 #if defined(OS_WIN)
