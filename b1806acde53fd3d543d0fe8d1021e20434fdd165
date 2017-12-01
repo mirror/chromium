@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5ae700e1_7ea247f2",
+        "filename": "chrome/browser/printing/print_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-01T01:30:23Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "8ad06070_ee2f96ac",
+      "revId": "b1806acde53fd3d543d0fe8d1021e20434fdd165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c23762b8_544a3bed",
         "filename": "headless/lib/browser/headless_print_manager.cc",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "ae50179d_573d2ddd",
+        "filename": "headless/lib/browser/headless_print_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-01T01:30:23Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "c23762b8_544a3bed",
+      "range": {
+        "startLine": 319,
+        "startChar": 17,
+        "endLine": 319,
+        "endChar": 47
+      },
+      "revId": "b1806acde53fd3d543d0fe8d1021e20434fdd165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd4298e1_9208f98f",
         "filename": "headless/lib/browser/headless_print_manager.cc",
         "patchSetId": 2
@@ -62,6 +104,30 @@
       "revId": "b1806acde53fd3d543d0fe8d1021e20434fdd165",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a5a0f73_ac059ea3",
+        "filename": "headless/lib/browser/headless_print_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-01T01:30:23Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "fd4298e1_9208f98f",
+      "range": {
+        "startLine": 324,
+        "startChar": 8,
+        "endLine": 324,
+        "endChar": 21
+      },
+      "revId": "b1806acde53fd3d543d0fe8d1021e20434fdd165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

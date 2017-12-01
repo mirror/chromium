@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "140b55b3_8049e617",
+        "filename": "chrome/browser/printing/print_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-01T01:30:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cebe17c_a4fb5fd1",
+      "revId": "e3c117c9a32423001d9ede8eed93a2b2ffc8a473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c636bb4_0bdee776",
         "filename": "chrome/browser/printing/print_view_manager_base.cc",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "9a60b31d_94dbea9d",
+        "filename": "chrome/browser/printing/print_view_manager_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-01T01:30:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c636bb4_0bdee776",
+      "range": {
+        "startLine": 194,
+        "startChar": 45,
+        "endLine": 194,
+        "endChar": 48
+      },
+      "revId": "e3c117c9a32423001d9ede8eed93a2b2ffc8a473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "179d0fb8_b13fff15",
         "filename": "chrome/browser/printing/print_view_manager_base.h",
         "patchSetId": 2
@@ -56,6 +98,24 @@
       "revId": "e3c117c9a32423001d9ede8eed93a2b2ffc8a473",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5728c2e0_af219e9c",
+        "filename": "chrome/browser/printing/print_view_manager_base.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-01T01:30:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "179d0fb8_b13fff15",
+      "revId": "e3c117c9a32423001d9ede8eed93a2b2ffc8a473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +147,24 @@
       "writtenOn": "2017-12-01T00:28:06Z",
       "side": 1,
       "message": "Are we setting |page_size_in_dpi| / |content_area_in_dpi| repeatedly now? Is the value always the same?",
+      "revId": "e3c117c9a32423001d9ede8eed93a2b2ffc8a473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6926f4e3_73e6d0ca",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1684,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-01T01:30:23Z",
+      "side": 1,
+      "message": "Yes, because the page size and content are based on the media size and margins, which do not vary from page to page. Changed to not set repeatedly.",
+      "parentUuid": "e56b8867_34c4bd91",
       "revId": "e3c117c9a32423001d9ede8eed93a2b2ffc8a473",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
