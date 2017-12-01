@@ -7,6 +7,7 @@
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "content/browser/loader/webpackage_loader_manager.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/common/url_loader_factory.mojom.h"
@@ -14,6 +15,7 @@
 namespace content {
 
 class StoragePartitionImpl;
+class WebPackageLoaderManager;
 
 // Holds on to URLLoaderFactory for a given StoragePartition and allows code
 // running on the IO thread to access them. Note these are the factories used by
@@ -47,6 +49,9 @@ class URLLoaderFactoryGetter
     return &network_factory_;
   }
 
+  // Called on the IO thread to get the WebPackageLoaderManager.
+  WebPackageLoaderManager* GetWebPackageLoaderManager();
+
  private:
   friend class base::DeleteHelper<URLLoaderFactoryGetter>;
   friend struct BrowserThread::DeleteOnThread<BrowserThread::IO>;
@@ -60,6 +65,7 @@ class URLLoaderFactoryGetter
   mojom::URLLoaderFactoryPtr network_factory_;
   mojom::URLLoaderFactoryPtr blob_factory_;
   mojom::URLLoaderFactory* test_factory_ = nullptr;
+  std::unique_ptr<WebPackageLoaderManager> webpackage_loader_manager_;
 
   DISALLOW_COPY_AND_ASSIGN(URLLoaderFactoryGetter);
 };
