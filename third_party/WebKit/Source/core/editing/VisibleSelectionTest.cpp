@@ -698,4 +698,14 @@ TEST_F(VisibleSelectionTest, updateIfNeededWithShadowHost) {
   EXPECT_EQ(Position(sample->firstChild(), 0), selection.Start());
 }
 
+// This is for crbug.com/775701, creating VS should not hang
+TEST_F(VisibleSelectionTest, createCrossingInputShouldNotHang) {
+  const SelectionInDOMTree& selection = SetSelectionTextToBody(
+      "<div contenteditable>|<input value=foo /></div>^bar");
+  const SelectionInFlatTree& flat = ConvertToSelectionInFlatTree(selection);
+  // This should not hang.
+  const VisibleSelectionInFlatTree& vs_flat = CreateVisibleSelection(flat);
+  EXPECT_FALSE(vs_flat.IsNone());
+}
+
 }  // namespace blink

@@ -503,23 +503,71 @@ class EditingBoundaryAdjuster final {
  public:
   template <typename Strategy>
   static SelectionTemplate<Strategy> AdjustSelection(
-      const SelectionTemplate<Strategy>& shadow_adjusted_selection) {
-    // TODO(editing-dev): Refactor w/o EphemeralRange.
-    const EphemeralRangeTemplate<Strategy> shadow_adjusted_range(
-        shadow_adjusted_selection.ComputeStartPosition(),
-        shadow_adjusted_selection.ComputeEndPosition());
-    const EphemeralRangeTemplate<Strategy> editing_adjusted_range =
-        AdjustSelectionToAvoidCrossingEditingBoundaries(
-            shadow_adjusted_range, shadow_adjusted_selection.Base());
+      const SelectionTemplate<Strategy>& selection) {
+    Node* const base_root = SameEditableRoot(selection.Base());
+    Node* const extent_root = SameEditableRoot(selection.Extent());
+    DCHECK(base_root);
+    DCHECK(extent_root);
+    // The start and end are in the same region. No adjustment necessary.
+    if (base_root == extent_root)
+      return selection;
+    // If |base| is inside contenteditable=false, selection should be inside the
+    // element.
+    // If not, selection should be inside the highest CE element.
+    const bool extent_is_decendant_of_base =
+        Strategy::IsDescendantOf(*extent_root, *base_root);
     typename SelectionTemplate<Strategy>::Builder builder;
+    if (selection.IsBaseFirst()) {
+      const PositionTemplate<Strategy>& before_editing_boundary =
+          extent_is_decendant_of_base
+              ? PositionTemplate<Strategy>::BeforeNode(*extent_root)
+              : PositionTemplate<Strategy>::LastPositionInNode(*base_root);
+      DCHECK_EQ(base_root, SameEditableRoot(before_editing_boundary));
+      const EphemeralRangeTemplate<Strategy> editing_adjusted_range(
+          selection.Base(), before_editing_boundary);
+      if (editing_adjusted_range.IsCollapsed())
+        return builder.Collapse(editing_adjusted_range.StartPosition()).Build();
+      return builder.SetAsForwardSelection(editing_adjusted_range).Build();
+    }
+    const PositionTemplate<Strategy>& after_editing_boundary =
+        extent_is_decendant_of_base
+            ? PositionTemplate<Strategy>::AfterNode(*extent_root)
+            : PositionTemplate<Strategy>::FirstPositionInNode(*base_root);
+    DCHECK_EQ(base_root, SameEditableRoot(after_editing_boundary));
+    const EphemeralRangeTemplate<Strategy> editing_adjusted_range(
+        after_editing_boundary, selection.Base());
     if (editing_adjusted_range.IsCollapsed())
       return builder.Collapse(editing_adjusted_range.StartPosition()).Build();
-    return shadow_adjusted_selection.IsBaseFirst()
-               ? builder.SetAsForwardSelection(editing_adjusted_range).Build()
-               : builder.SetAsBackwardSelection(editing_adjusted_range).Build();
+    return builder.SetAsBackwardSelection(editing_adjusted_range).Build();
   }
 
  private:
+  // This returns the highest element that have same editability of |position|.
+  // "highest" does mean differnt between editablity of |position|:
+  // - true: the element has editablity and heighet in a tree.
+  // - false: the element is the highet node that has only CE=false decendants
+  // including |position|.
+  template <typename Strategy>
+  static Node* SameEditableRoot(const PositionTemplate<Strategy>& position) {
+    Node* const container_node = position.ComputeContainerNode();
+    DCHECK(container_node);
+    const bool leaf_editable = HasEditableStyle(*container_node);
+    Node* last_same_editable = container_node;
+    for (Node* node = node = Strategy::Parent(*container_node); node;
+         node = Strategy::Parent(*node)) {
+      if (leaf_editable) {
+        if (HasEditableStyle(*node))
+          last_same_editable = node;
+        continue;
+      }
+      if (HasEditableStyle(*node))
+        return last_same_editable;
+      last_same_editable = node;
+    }
+    return last_same_editable;
+  }
+
+  // TODO(editing-dev): Remove following unused functions.
   static Element* LowestEditableAncestor(Node* node) {
     while (node) {
       if (HasEditableStyle(*node))
