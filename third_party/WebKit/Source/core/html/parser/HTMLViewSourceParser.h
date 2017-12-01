@@ -62,7 +62,7 @@ class CORE_EXPORT HTMLViewSourceParser final
   void PumpTokenizer();
   void UpdateTokenizerState();
 
-  HTMLInputStream input_;
+  HTMLInputStream<true> input_;
   HTMLToken token_;
   HTMLSourceTracker source_tracker_;
   std::unique_ptr<HTMLTokenizer> tokenizer_;

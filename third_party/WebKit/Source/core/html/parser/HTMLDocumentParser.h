@@ -180,7 +180,16 @@ class CORE_EXPORT HTMLDocumentParser : public ScriptableDocumentParser,
 
   // HTMLParserScriptRunnerHost
   void NotifyScriptLoaded(PendingScript*) final;
-  HTMLInputStream& InputStream() final { return input_; }
+  HTMLInputStreamBase* InputStream() final {
+    if (input_) {
+      if (input_->Supports16Bit())
+        return &input_16_bit_;
+      return &input_8_bit_;
+    }
+    return nullptr;
+  }
+  void InsertionPointRecordCreated() { insertion_points_++; }
+  void InsertionPointRecordDestroyed() { insertion_points_--; }
   bool HasPreloadScanner() const final {
     return preload_scanner_.get() && !ShouldUseThreading();
   }
@@ -198,6 +207,8 @@ class CORE_EXPORT HTMLDocumentParser : public ScriptableDocumentParser,
   void PumpPendingSpeculations();
 
   bool CanTakeNextToken();
+  template <bool supports16bit>
+  void PumpTokenizer();
   void PumpTokenizer();
   void PumpTokenizerIfPossible();
   void ConstructTreeFromHTMLToken();
@@ -232,9 +243,12 @@ class CORE_EXPORT HTMLDocumentParser : public ScriptableDocumentParser,
   HTMLToken& Token() { return *token_; }
 
   HTMLParserOptions options_;
-  HTMLInputStream input_;
+  union {
+    HTMLInputStream<false> input_8_bit_;
+    HTMLInputStream<true> input_16_bit_;
+  };
+  HTMLInputStreamBase* input_ = nullptr;
   scoped_refptr<HTMLParserReentryPermit> reentry_permit_;
-
   std::unique_ptr<HTMLToken> token_;
   std::unique_ptr<HTMLTokenizer> tokenizer_;
   TraceWrapperMember<HTMLParserScriptRunner> script_runner_;
@@ -281,6 +295,7 @@ class CORE_EXPORT HTMLDocumentParser : public ScriptableDocumentParser,
   bool tasks_were_paused_;
   unsigned pump_session_nesting_level_;
   unsigned pump_speculations_session_nesting_level_;
+  unsigned insertion_points_;
   bool is_parsing_at_line_number_;
   bool tried_loading_link_headers_;
   bool added_pending_stylesheet_in_body_;

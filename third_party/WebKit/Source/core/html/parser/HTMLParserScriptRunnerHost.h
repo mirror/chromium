@@ -31,7 +31,7 @@
 
 namespace blink {
 
-class HTMLInputStream;
+class HTMLInputStreamBase;
 class PendingScript;
 
 class CORE_EXPORT HTMLParserScriptRunnerHost : public GarbageCollectedMixin {
@@ -40,7 +40,9 @@ class CORE_EXPORT HTMLParserScriptRunnerHost : public GarbageCollectedMixin {
   void Trace(blink::Visitor* visitor) override {}
 
   virtual void NotifyScriptLoaded(PendingScript*) = 0;
-  virtual HTMLInputStream& InputStream() = 0;
+  virtual HTMLInputStreamBase* InputStream() = 0;
+  virtual void InsertionPointRecordCreated() = 0;
+  virtual void InsertionPointRecordDestroyed() = 0;
 
   virtual bool HasPreloadScanner() const = 0;
   virtual void AppendCurrentInputStreamToPreloadScannerAndScan() = 0;
