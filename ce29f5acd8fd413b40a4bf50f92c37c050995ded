@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "64416e05_6ef3b115",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMath.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2017-12-01T08:58:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3538ff2c_c7c97444",
+      "revId": "ce29f5acd8fd413b40a4bf50f92c37c050995ded",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55fab4a1_2398fd02",
         "filename": "third_party/WebKit/Source/platform/audio/VectorMath.cpp",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "ce29f5acd8fd413b40a4bf50f92c37c050995ded",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51499c85_5a23cc58",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMath.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2017-12-01T08:58:11Z",
+      "side": 1,
+      "message": "\u003e Maybe we can wrap the entire for loop with #if DCHECK_IS_ON()?\n\nLet\u0027s do that to be on the safe side.",
+      "parentUuid": "55fab4a1_2398fd02",
+      "revId": "ce29f5acd8fd413b40a4bf50f92c37c050995ded",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
