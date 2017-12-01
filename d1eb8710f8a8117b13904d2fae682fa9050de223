@@ -46,6 +46,30 @@
       "revId": "d1eb8710f8a8117b13904d2fae682fa9050de223",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb1021c4_94558fcb",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-12-01T01:02:25Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s common for us to use protected and access it from same package. Could you change this to public?",
+      "parentUuid": "2f4fe0de_80971ca1",
+      "range": {
+        "startLine": 677,
+        "startChar": 4,
+        "endLine": 677,
+        "endChar": 13
+      },
+      "revId": "d1eb8710f8a8117b13904d2fae682fa9050de223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
