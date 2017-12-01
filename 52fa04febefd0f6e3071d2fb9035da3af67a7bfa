@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "4c421408_aa1803e9",
+        "filename": "chrome/browser/page_load_metrics/observers/previews_ukm_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-01T20:53:18Z",
+      "side": 1,
+      "message": "NOSCRIPT bit will be cleared from PreviewsState if LitePage active. \nAlso, this GetMainFramePreviewsType() helper also will not return NoScript if LitePage is set.\nIdeally, we clean up the checks in this method in a couple weeks with the decided PreviewsType in PreviewsUserInfo but this is fine for now.",
+      "parentUuid": "ed840f24_cc661040",
+      "revId": "52fa04febefd0f6e3071d2fb9035da3af67a7bfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ce74ff2_3806a25b",
         "filename": "chrome/browser/page_load_metrics/observers/previews_ukm_observer.cc",
         "patchSetId": 3
