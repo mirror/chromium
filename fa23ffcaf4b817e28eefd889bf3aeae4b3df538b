@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "165ff4d0_8efd4c62",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2149,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-01T02:03:46Z",
+      "side": 1,
+      "message": "I think checking element \u003d\u003d nullptr or adding DCHECK(element) is enough.\nHandling TextControl and Editable are questionable at all.",
+      "revId": "fa23ffcaf4b817e28eefd889bf3aeae4b3df538b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8515f669_180527c7",
         "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
         "patchSetId": 1
@@ -13,6 +30,47 @@
       "writtenOn": "2017-12-01T01:48:32Z",
       "side": 1,
       "message": "I\u0027m not sure \"If the selection was cleared\" means\nselection is visibly none or logically none.\nThis matter causes when js author set selection on display:none element.\nCould you confirm it?",
+      "revId": "fa23ffcaf4b817e28eefd889bf3aeae4b3df538b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93e3f094_84dc686a",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2150,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-01T02:03:46Z",
+      "side": 1,
+      "message": "For selection in \u003cdiv contenteditable style\u003d\"display:none\"\u003e, selection\nwill be DIV@0 but before this patch, selection is as same as before.",
+      "parentUuid": "8515f669_180527c7",
+      "revId": "fa23ffcaf4b817e28eefd889bf3aeae4b3df538b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8e7a307_90f2bfc6",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2165,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-01T02:03:46Z",
+      "side": 1,
+      "message": "Except for TextControl handling this code fragment is in question.\nCan we do them in Element::UpdateFocusApperance()?\n\nWe should avoid calling FrameSelection::SetSelection().\nI think it is bad changing selection to select all then collapse to start.\nWe should keep selection as is.",
+      "range": {
+        "startLine": 2148,
+        "startChar": 0,
+        "endLine": 2165,
+        "endChar": 7
+      },
       "revId": "fa23ffcaf4b817e28eefd889bf3aeae4b3df538b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
