@@ -22,6 +22,30 @@
       "revId": "8ad5283dbdb025db6905f3ea1b7bb0d0fe1ca3ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26be300c_08c9161e",
+        "filename": "base/bind_internal.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-12-01T07:35:05Z",
+      "side": 1,
+      "message": "After rerunning clang-format again, it adds the space to another specialization below...\nI think clang-format fails to parse this part.",
+      "parentUuid": "f78f433d_d9715f1f",
+      "range": {
+        "startLine": 53,
+        "startChar": 45,
+        "endLine": 53,
+        "endChar": 46
+      },
+      "revId": "8ad5283dbdb025db6905f3ea1b7bb0d0fe1ca3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

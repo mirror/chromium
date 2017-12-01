@@ -46,6 +46,30 @@
       "revId": "7fda30d180b359c9d8f07080ebf294d0814895ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bb5049b_e8a90de0",
+        "filename": "base/bind.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-12-01T07:35:05Z",
+      "side": 1,
+      "message": "Ok, I moved it to base/test/bind_test_util.h.",
+      "parentUuid": "f521bd0e_392f6e61",
+      "range": {
+        "startLine": 266,
+        "startChar": 0,
+        "endLine": 266,
+        "endChar": 4
+      },
+      "revId": "7fda30d180b359c9d8f07080ebf294d0814895ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
