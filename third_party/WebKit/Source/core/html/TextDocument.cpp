@@ -39,7 +39,7 @@ TextDocument::TextDocument(const DocumentInit& initializer)
 }
 
 DocumentParser* TextDocument::CreateParser() {
-  return TextDocumentParser::Create(*this, GetParserSynchronizationPolicy());
+  return TextDocumentParser::Create(*this);
 }
 
 }  // namespace blink

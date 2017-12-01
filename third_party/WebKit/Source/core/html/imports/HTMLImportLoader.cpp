@@ -104,8 +104,7 @@ HTMLImportLoader::State HTMLImportLoader::StartWritingAndParsing(
   document_ = HTMLDocument::Create(
       DocumentInit::CreateWithImportsController(controller_)
           .WithURL(response.Url()));
-  document_->OpenForNavigation(kAllowAsynchronousParsing, response.MimeType(),
-                               "UTF-8");
+  document_->OpenForNavigation(response.MimeType(), "UTF-8");
 
   DocumentParser* parser = document_->Parser();
   DCHECK(parser);

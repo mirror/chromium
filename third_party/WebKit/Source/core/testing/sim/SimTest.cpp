@@ -16,7 +16,6 @@
 namespace blink {
 
 SimTest::SimTest() : web_view_client_(compositor_), web_frame_client_(*this) {
-  Document::SetThreadedParsingEnabledForTesting(false);
   // Use the mock theme to get more predictable code paths, this also avoids
   // the OS callbacks in ScrollAnimatorMac which can schedule frames
   // unpredictably since the OS will randomly call into blink for
@@ -31,7 +30,6 @@ SimTest::~SimTest() {
   // Pump the message loop to process the load event.
   testing::RunPendingTasks();
 
-  Document::SetThreadedParsingEnabledForTesting(true);
   LayoutTestSupport::SetMockThemeEnabledForTest(false);
   ScrollbarTheme::SetMockScrollbarsEnabled(false);
   WebCache::Clear();

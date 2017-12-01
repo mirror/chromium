@@ -18,29 +18,10 @@ using namespace HTMLNames;
 
 class HTMLDocumentParserSimTest : public SimTest {
  protected:
-  HTMLDocumentParserSimTest() {
-    Document::SetThreadedParsingEnabledForTesting(true);
-  }
   HistogramTester histogram_;
 };
 
-class HTMLDocumentParserLoadingTest
-    : public HTMLDocumentParserSimTest,
-      public ::testing::WithParamInterface<bool> {
- protected:
-  HTMLDocumentParserLoadingTest() {
-    Document::SetThreadedParsingEnabledForTesting(GetParam());
-  }
-};
-
-INSTANTIATE_TEST_CASE_P(Threaded,
-                        HTMLDocumentParserLoadingTest,
-                        ::testing::Values(true));
-INSTANTIATE_TEST_CASE_P(NotThreaded,
-                        HTMLDocumentParserLoadingTest,
-                        ::testing::Values(false));
-
-TEST_P(HTMLDocumentParserLoadingTest,
+TEST_F(HTMLDocumentParserSimTest,
        ShouldNotPauseParsingForExternalStylesheetsInHead) {
   SimRequest main_resource("https://example.com/test.html", "text/html");
   SimRequest css_head_resource("https://example.com/testHead.css", "text/css");
@@ -63,7 +44,7 @@ TEST_P(HTMLDocumentParserLoadingTest,
   EXPECT_TRUE(GetDocument().getElementById("bodyDiv"));
 }
 
-TEST_P(HTMLDocumentParserLoadingTest,
+TEST_F(HTMLDocumentParserSimTest,
        ShouldNotPauseParsingForExternalStylesheetsImportedInHead) {
   SimRequest main_resource("https://example.com/test.html", "text/html");
   SimRequest css_head_resource("https://example.com/testHead.css", "text/css");
@@ -88,7 +69,7 @@ TEST_P(HTMLDocumentParserLoadingTest,
   EXPECT_TRUE(GetDocument().getElementById("bodyDiv"));
 }
 
-TEST_P(HTMLDocumentParserLoadingTest,
+TEST_F(HTMLDocumentParserSimTest,
        ShouldPauseParsingForExternalStylesheetsInBody) {
   SimRequest main_resource("https://example.com/test.html", "text/html");
   SimRequest css_head_resource("https://example.com/testHead.css", "text/css");
@@ -125,7 +106,7 @@ TEST_P(HTMLDocumentParserLoadingTest,
   EXPECT_TRUE(GetDocument().getElementById("after"));
 }
 
-TEST_P(HTMLDocumentParserLoadingTest,
+TEST_F(HTMLDocumentParserSimTest,
        ShouldPauseParsingForExternalStylesheetsInBodyIncremental) {
   SimRequest main_resource("https://example.com/test.html", "text/html");
   SimRequest css_head_resource("https://example.com/testHead.css", "text/css");
@@ -212,7 +193,7 @@ TEST_P(HTMLDocumentParserLoadingTest,
   EXPECT_TRUE(GetDocument().getElementById("after3"));
 }
 
-TEST_P(HTMLDocumentParserLoadingTest,
+TEST_F(HTMLDocumentParserSimTest,
        ShouldNotPauseParsingForExternalNonMatchingStylesheetsInBody) {
   SimRequest main_resource("https://example.com/test.html", "text/html");
   SimRequest css_head_resource("https://example.com/testHead.css", "text/css");
@@ -238,7 +219,7 @@ TEST_P(HTMLDocumentParserLoadingTest,
   css_head_resource.Complete("");
 }
 
-TEST_P(HTMLDocumentParserLoadingTest,
+TEST_F(HTMLDocumentParserSimTest,
        ShouldPauseParsingForExternalStylesheetsImportedInBody) {
   SimRequest main_resource("https://example.com/test.html", "text/html");
   SimRequest css_head_resource("https://example.com/testHead.css", "text/css");
@@ -277,7 +258,7 @@ TEST_P(HTMLDocumentParserLoadingTest,
   EXPECT_TRUE(GetDocument().getElementById("after"));
 }
 
-TEST_P(HTMLDocumentParserLoadingTest,
+TEST_F(HTMLDocumentParserSimTest,
        ShouldPauseParsingForExternalStylesheetsWrittenInBody) {
   SimRequest main_resource("https://example.com/test.html", "text/html");
   SimRequest css_head_resource("https://example.com/testHead.css", "text/css");
@@ -316,7 +297,7 @@ TEST_P(HTMLDocumentParserLoadingTest,
   EXPECT_TRUE(GetDocument().getElementById("after"));
 }
 
-TEST_P(HTMLDocumentParserLoadingTest,
+TEST_F(HTMLDocumentParserSimTest,
        PendingHeadStylesheetShouldNotBlockParserForBodyInlineStyle) {
   SimRequest main_resource("https://example.com/test.html", "text/html");
   SimRequest css_head_resource("https://example.com/testHead.css", "text/css");
@@ -341,7 +322,7 @@ TEST_P(HTMLDocumentParserLoadingTest,
   css_head_resource.Complete("");
 }
 
-TEST_P(HTMLDocumentParserLoadingTest,
+TEST_F(HTMLDocumentParserSimTest,
        PendingHeadStylesheetShouldNotBlockParserForBodyShadowDom) {
   SimRequest main_resource("https://example.com/test.html", "text/html");
   SimRequest css_head_resource("https://example.com/testHead.css", "text/css");
@@ -366,7 +347,7 @@ TEST_P(HTMLDocumentParserLoadingTest,
   css_head_resource.Complete("");
 }
 
-TEST_P(HTMLDocumentParserLoadingTest,
+TEST_F(HTMLDocumentParserSimTest,
        ShouldNotPauseParsingForExternalStylesheetsAttachedInBody) {
   SimRequest main_resource("https://example.com/test.html", "text/html");
   SimRequest css_async_resource("https://example.com/testAsync.css",

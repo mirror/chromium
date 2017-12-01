@@ -120,8 +120,7 @@ ImageDocument& ImageDocumentTest::GetDocument() const {
 }
 
 void ImageDocumentTest::LoadImage() {
-  DocumentParser* parser = GetDocument().ImplicitOpen(
-      ParserSynchronizationPolicy::kForceSynchronousParsing);
+  DocumentParser* parser = GetDocument().ImplicitOpen();
   const Vector<unsigned char>& data = JpegImage();
   parser->AppendBytes(reinterpret_cast<const char*>(data.data()), data.size());
   parser->Finish();

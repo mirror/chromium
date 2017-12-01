@@ -798,7 +798,7 @@ TEST_F(DocumentTest, ValidationMessageCleanup) {
   GetPage().SetValidationMessageClient(mock_client);
   // ImplicitOpen()-CancelParsing() makes Document.loadEventFinished()
   // true. It's necessary to kick unload process.
-  GetDocument().ImplicitOpen(kForceSynchronousParsing);
+  GetDocument().ImplicitOpen();
   GetDocument().CancelParsing();
   GetDocument().AppendChild(GetDocument().createElement("html"));
   SetHtmlInnerHTML("<body><input required></body>");

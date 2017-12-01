@@ -36,8 +36,7 @@ class HTMLDocumentParserTest : public ::testing::Test {
   }
 
   HTMLDocumentParser* CreateParser(HTMLDocument& document) {
-    HTMLDocumentParser* parser =
-        HTMLDocumentParser::Create(document, kForceSynchronousParsing);
+    HTMLDocumentParser* parser = HTMLDocumentParser::Create(document);
     std::unique_ptr<TextResourceDecoder> decoder(
         BuildTextResourceDecoderFor(&document, "text/html", g_null_atom));
     parser->SetDecoder(std::move(decoder));

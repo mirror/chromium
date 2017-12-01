@@ -495,8 +495,6 @@ static bool AcceptsEditingFocus(const Element& element) {
 
 uint64_t Document::global_tree_version_ = 0;
 
-static bool g_threaded_parsing_enabled_for_testing = true;
-
 // This doesn't work with non-Document ExecutionContext.
 static void RunAutofocusTask(ExecutionContext* context) {
   // Document lifecycle check is done in Element::focus()
@@ -653,7 +651,6 @@ Document::Document(const DocumentInit& initializer,
           &Document::DidAssociateFormControlsTimerFired),
       timers_(GetTaskRunner(TaskType::kJavascriptTimer)),
       has_viewport_units_(false),
-      parser_sync_policy_(kAllowAsynchronousParsing),
       node_count_(0),
       would_load_reason_(WouldLoadReason::kInvalid),
       password_count_(0),
@@ -2873,8 +2870,7 @@ CanvasFontCache* Document::GetCanvasFontCache() {
 
 DocumentParser* Document::CreateParser() {
   if (IsHTMLDocument())
-    return HTMLDocumentParser::Create(ToHTMLDocument(*this),
-                                      parser_sync_policy_);
+    return HTMLDocumentParser::Create(ToHTMLDocument(*this));
   // FIXME: this should probably pass the frame instead
   return XMLDocumentParser::Create(*this, View());
 }
@@ -2964,7 +2960,7 @@ void Document::open() {
   ResetTreeScope();
   if (frame_)
     frame_->Selection().Clear();
-  ImplicitOpen(kForceSynchronousParsing);
+  ImplicitOpen();
   if (ScriptableDocumentParser* parser = GetScriptableDocumentParser())
     parser->SetWasCreatedByScript(true);
 
@@ -2988,32 +2984,21 @@ void Document::CancelParsing() {
 }
 
 DocumentParser* Document::OpenForNavigation(
-    ParserSynchronizationPolicy parser_sync_policy,
     const AtomicString& mime_type,
     const AtomicString& encoding) {
-  DocumentParser* parser = ImplicitOpen(parser_sync_policy);
+  DocumentParser* parser = ImplicitOpen();
   if (parser->NeedsDecoder())
     parser->SetDecoder(BuildTextResourceDecoderFor(this, mime_type, encoding));
   return parser;
 }
 
-DocumentParser* Document::ImplicitOpen(
-    ParserSynchronizationPolicy parser_sync_policy) {
+DocumentParser* Document::ImplicitOpen() {
   RemoveChildren();
   DCHECK(!focused_element_);
 
   SetCompatibilityMode(kNoQuirksMode);
 
-  if (!ThreadedParsingEnabledForTesting()) {
-    parser_sync_policy = kForceSynchronousParsing;
-  } else if (parser_sync_policy == kAllowAsynchronousParsing &&
-             IsPrefetchOnly()) {
-    // Prefetch must be synchronous.
-    parser_sync_policy = kForceSynchronousParsing;
-  }
-
   DetachParser();
-  parser_sync_policy_ = parser_sync_policy;
   parser_ = CreateParser();
   DocumentParserTiming::From(*this).MarkParserStart();
   SetParsingState(kParsing);
@@ -6383,17 +6368,11 @@ void Document::AddConsoleMessage(ConsoleMessage* console_message) {
 
   if (console_message->Location()->IsUnknown()) {
     // TODO(dgozman): capture correct location at call places instead.
-    unsigned line_number = 0;
-    if (!IsInDocumentWrite() && GetScriptableDocumentParser()) {
-      ScriptableDocumentParser* parser = GetScriptableDocumentParser();
-      if (parser->IsParsingAtLineNumber())
-        line_number = parser->LineNumber().OneBasedInt();
-    }
     Vector<DOMNodeId> nodes(console_message->Nodes());
     console_message = ConsoleMessage::Create(
         console_message->Source(), console_message->Level(),
         console_message->Message(),
-        SourceLocation::Create(Url().GetString(), line_number, 0, nullptr));
+        SourceLocation::Create(Url().GetString(), 0, 0, nullptr));
     console_message->SetNodes(frame_, std::move(nodes));
   }
   frame_->Console().AddMessage(console_message);
@@ -6402,8 +6381,6 @@ void Document::AddConsoleMessage(ConsoleMessage* console_message) {
 void Document::TasksWerePaused() {
   GetScriptRunner()->Suspend();
 
-  if (parser_)
-    parser_->PauseScheduledTasks();
   if (scripted_animation_controller_)
     scripted_animation_controller_->Pause();
 }
@@ -6411,8 +6388,6 @@ void Document::TasksWerePaused() {
 void Document::TasksWereUnpaused() {
   GetScriptRunner()->Resume();
 
-  if (parser_)
-    parser_->UnpauseScheduledTasks();
   if (scripted_animation_controller_)
     scripted_animation_controller_->Unpause();
 
@@ -6686,14 +6661,6 @@ void Document::AdjustFloatRectForScrollAndAbsoluteZoom(
   rect.Move(-FloatSize(visible_content_rect.X().ToFloat(),
                        visible_content_rect.Y().ToFloat()));
   AdjustForAbsoluteZoom::AdjustFloatRect(rect, layout_object);
-}
-
-void Document::SetThreadedParsingEnabledForTesting(bool enabled) {
-  g_threaded_parsing_enabled_for_testing = enabled;
-}
-
-bool Document::ThreadedParsingEnabledForTesting() {
-  return g_threaded_parsing_enabled_for_testing;
 }
 
 SnapCoordinator* Document::GetSnapCoordinator() {
