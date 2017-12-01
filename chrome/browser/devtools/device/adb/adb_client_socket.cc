@@ -19,6 +19,7 @@
 #include "net/base/net_errors.h"
 #include "net/log/net_log_source.h"
 #include "net/socket/tcp_client_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace {
 
@@ -196,12 +197,12 @@ void AdbClientSocket::SendCommand(const std::string& command,
                                   const CommandCallback& callback) {
   scoped_refptr<net::StringIOBuffer> request_buffer =
       new net::StringIOBuffer(EncodeMessage(command));
-  int result = socket_->Write(request_buffer.get(),
-                              request_buffer->size(),
-                              base::Bind(&AdbClientSocket::ReadResponse,
-                                         base::Unretained(this),
-                                         callback,
-                                         is_void));
+  // TODO(rhalavati): Add proper network traffic annotation.
+  int result =
+      socket_->Write(request_buffer.get(), request_buffer->size(),
+                     base::Bind(&AdbClientSocket::ReadResponse,
+                                base::Unretained(this), callback, is_void),
+                     NO_TRAFFIC_ANNOTATION_YET);
   if (result != net::ERR_IO_PENDING)
     ReadResponse(callback, is_void, result);
 }
