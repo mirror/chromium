@@ -26,6 +26,7 @@
 #include "modules/webaudio/OfflineAudioDestinationNode.h"
 
 #include <algorithm>
+#include "core/origin_trials/origin_trials.h"
 #include "modules/webaudio/AudioNodeInput.h"
 #include "modules/webaudio/AudioNodeOutput.h"
 #include "modules/webaudio/AudioWorklet.h"

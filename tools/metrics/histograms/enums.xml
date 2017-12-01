@@ -17110,6 +17110,9 @@ Called by update_net_error_codes.py.-->
   <int value="2257" label="LocalCSSFileExtensionRejected"/>
   <int value="2258" label="UserMediaDisableHardwareNoiseSuppression"/>
   <int value="2259" label="CertificateTransparencyRequiredErrorOnResourceLoad"/>
+  <int value="2260" label="AudioWorkletGlobalScopeRegisterProcessor"/>
+  <int value="2261" label="AudioWorkletNodeConstructor"/>
+  <int value="2262" label="AudioWorkletProcessorConstructor"/>
 </enum>
 
 <enum name="FeedbackSource">
