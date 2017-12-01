@@ -281,6 +281,7 @@ bool File::DeleteOnClose(bool delete_on_close) {
 
 // Static.
 File::Error File::OSErrorToFileError(DWORD last_error) {
+  DCHECK_NE(static_cast<DWORD>(ERROR_SUCCESS), last_error);
   switch (last_error) {
     case ERROR_SHARING_VIOLATION:
       return FILE_ERROR_IN_USE;

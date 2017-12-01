@@ -354,6 +354,7 @@ bool CreateTemporaryFileInDir(const FilePath& dir, FilePath* temp_file) {
 
   // Although it is nearly impossible to get a duplicate name with GUID, we
   // still use a loop here in case it happens.
+  DWORD last_create_error = ERROR_SUCCESS;
   for (int i = 0; i < 100; ++i) {
     temp_name = dir.Append(ASCIIToUTF16(base::GenerateGUID()) + L".tmp");
     File file(temp_name,
@@ -362,12 +363,18 @@ bool CreateTemporaryFileInDir(const FilePath& dir, FilePath* temp_file) {
       file.Close();
       create_file_success = true;
       break;
+    } else {
+      // Save/restore the last error because according to MSDN "because some
+      // functions call SetLastError with a zero when they succeed, wiping out
+      // the error code set by the most recently failed function"
+      last_create_error = ::GetLastError();
     }
   }
 
   if (!create_file_success) {
     DPLOG(WARNING) << "Failed to get temporary file name in "
                    << UTF16ToUTF8(dir.value());
+    ::SetLastError(last_create_error);
     return false;
   }
 
