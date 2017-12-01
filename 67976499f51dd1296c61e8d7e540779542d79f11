@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3edd6a73_9b8cc33b",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-12-01T23:42:53Z",
+      "side": 1,
+      "message": "doing the following would remove any risk of referring to the wrong variable:\n\n  data \u003d copy.deepcopy(date)",
+      "revId": "67976499f51dd1296c61e8d7e540779542d79f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87e7b773_f7f47df6",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-12-01T23:42:53Z",
+      "side": 1,
+      "message": "the deepcopy here is not needed",
+      "revId": "67976499f51dd1296c61e8d7e540779542d79f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
