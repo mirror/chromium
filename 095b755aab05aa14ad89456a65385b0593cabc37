@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a9d1ca4_f2cab903",
+        "filename": "content/browser/file_url_loader_factory.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-01T13:36:30Z",
+      "side": 1,
+      "message": "Why do we need to do this?",
+      "revId": "095b755aab05aa14ad89456a65385b0593cabc37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8350b4c_3f416cb0",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-01T13:36:30Z",
+      "side": 1,
+      "message": "nit: Is this include still needed?",
+      "revId": "095b755aab05aa14ad89456a65385b0593cabc37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b45d0bdd_9f539be7",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-01T13:36:30Z",
+      "side": 1,
+      "message": "If this is a PlzNavigate only navigation test, make it a BrowserSideNavigationBrowserTest.",
+      "revId": "095b755aab05aa14ad89456a65385b0593cabc37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "610febbe_15a342a0",
+        "filename": "content/browser/loader/navigation_url_loader_delegate.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-01T13:36:30Z",
+      "side": 1,
+      "message": "nit: s/|url_loader| ... pair/ |url_loader_client_endpoints|",
+      "revId": "095b755aab05aa14ad89456a65385b0593cabc37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c12c81d_53634c95",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 37
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-01T13:36:30Z",
+      "side": 1,
+      "message": "s/may also be empty when/will be empty iff",
+      "revId": "095b755aab05aa14ad89456a65385b0593cabc37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9fa7082_639b2ded",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 37
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-01T13:36:30Z",
+      "side": 1,
+      "message": "s/the navigation doesn\u0027t require the current document to change/the navigation URL wasn\u0027t handled by the network stack\ns/i.e./e.g.",
+      "revId": "095b755aab05aa14ad89456a65385b0593cabc37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc8be35c_d35ce407",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 37
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-01T13:36:30Z",
+      "side": 1,
+      "message": "s/javascript-url .. navigations/ JavaScript URLs, renderer debug URLs, same document navigations, about:/blank, ...).",
+      "revId": "095b755aab05aa14ad89456a65385b0593cabc37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c532c545_2a917d74",
+        "filename": "content/public/common/url_loader.mojom",
+        "patchSetId": 37
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-01T13:36:30Z",
+      "side": 1,
+      "message": "s/Convenient struct. It/Convenience struct that",
+      "revId": "095b755aab05aa14ad89456a65385b0593cabc37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed33d617_ee73d286",
+        "filename": "content/public/test/browser_test_utils.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-01T13:36:30Z",
+      "side": 1,
+      "message": "nit: s/Return/Returns",
+      "revId": "095b755aab05aa14ad89456a65385b0593cabc37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b524449f_f26645af",
+        "filename": "content/renderer/loader/resource_dispatcher.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-01T13:36:30Z",
+      "side": 1,
+      "message": "Could you add a TODO(clamy) to move the replaying of redirects from WebURLLoaderImpl to here?",
+      "revId": "095b755aab05aa14ad89456a65385b0593cabc37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbe215dc_c5d38a8b",
+        "filename": "content/renderer/loader/url_loader_client_impl.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-01T13:36:30Z",
+      "side": 1,
+      "message": "nit: and network service?",
+      "revId": "095b755aab05aa14ad89456a65385b0593cabc37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "682563af_58c17fb8",
+        "filename": "content/renderer/loader/web_url_loader_impl.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-01T13:36:30Z",
+      "side": 1,
+      "message": "nit: s/is used/is used instead",
+      "revId": "095b755aab05aa14ad89456a65385b0593cabc37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
