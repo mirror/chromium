@@ -7,6 +7,7 @@
 
 #include <string>
 
+#include "base/command_line.h"
 #include "extensions/browser/extension_function.h"
 
 namespace extensions {
@@ -37,7 +38,7 @@ class TerminalPrivateOpenTerminalProcessFunction
                                 const std::string& user_id_hash);
   void RespondOnUIThread(int terminal_id);
 
-  std::string command_;
+  std::vector<std::string> arguments_;
 };
 
 // Send input to the terminal process specified by the terminal ID, which is set
