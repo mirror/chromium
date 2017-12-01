@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "69be6226_f04c0c65",
+        "filename": "chrome/browser/resources/md_extensions/item.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-01T01:25:33Z",
+      "side": 1,
+      "message": "Ah, whoops, this was from an earlier version. No longer needed. Removed.",
+      "parentUuid": "fbfaaa5f_1d78ba28",
+      "revId": "4c049aa3225470ad72acc5531c993cd8eca9f57b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7850636_b4dbb6a5",
         "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
         "patchSetId": 4
@@ -39,6 +57,30 @@
       "revId": "4c049aa3225470ad72acc5531c993cd8eca9f57b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ca117f0_0866fa8f",
+        "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-01T01:25:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7850636_b4dbb6a5",
+      "range": {
+        "startLine": 26,
+        "startChar": 39,
+        "endLine": 26,
+        "endChar": 63
+      },
+      "revId": "4c049aa3225470ad72acc5531c993cd8eca9f57b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
