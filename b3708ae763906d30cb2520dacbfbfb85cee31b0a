@@ -22,6 +22,30 @@
       "revId": "b3708ae763906d30cb2520dacbfbfb85cee31b0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24ca54bb_ee47bf44",
+        "filename": "components/os_crypt/key_storage_config_linux.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-12-01T15:34:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "335a640a_15825500",
+      "range": {
+        "startLine": 36,
+        "startChar": 8,
+        "endLine": 36,
+        "endChar": 10
+      },
+      "revId": "b3708ae763906d30cb2520dacbfbfb85cee31b0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
