@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "053b3abd_a57f6202",
+        "filename": "cc/trees/layer_tree_frame_sink.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-01T22:55:59Z",
+      "side": 1,
+      "message": "\u003e I considered passing in the task runner, but chose to use ThreadTaskRunnerHandle because:\n\u003e 1. This is a thread affine API. We\u0027re binding both the client and the current thread (see the \n\u003e call to BindToCurrentThread).\n\nThat\u0027s true, though I guess that doesn\u0027t mean that ThreadTaskRunnerHandle is the right task runner.\n\n\u003e 2. Passing in the task runner means changing subclasses and their call-sites (either ctor or \n\u003e BindToClient).\n\nYeah, there are 5 (4 legit) subclasses, but Idk if that\u0027s a big problem.. I guess the thought is if we use this other task runner here, than the tasks will not neccessarily run in order with other compositor thread tasks posted by the compositor itself, since they don\u0027t go to this task runner? What kind of things may happen as a result if this happened during a resize for example? How shall we prevent other things in the future from using this TaskRunner incorrectly?",
+      "parentUuid": "74950c64_a9e61ac2",
+      "revId": "34400c0db70fe0a37c1a14d9cce5c92facc6b278",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40e2b0d1_c65c9f6a",
         "filename": "cc/trees/layer_tree_frame_sink.cc",
         "patchSetId": 4
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "You mean a ContextLostObserver(task_runner, callback)? I could also always forward the context lost as a task (extra callback for compositor context loss).\n\nTBH though I find this pattern more readable :)",
       "parentUuid": "26cecddc_49ae957d",
+      "revId": "34400c0db70fe0a37c1a14d9cce5c92facc6b278",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1217d24a_b8b2cbc2",
+        "filename": "cc/trees/layer_tree_frame_sink.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-01T22:55:59Z",
+      "side": 1,
+      "message": "Yeah that\u0027s what I mean.\n\nAlways forward would be okay too if that doesn\u0027t break (make harder) our existing tests.\n\nTo me what I don\u0027t like is that in the renderer it would make a new stack frame, but in the ui compositor it won\u0027t. This makes writing unit tests a lot harder in my experience, and makes it easy to write code that is wrong, but you didn\u0027t manage to cover that case in tests.",
+      "parentUuid": "2e7d490a_c4f826da",
       "revId": "34400c0db70fe0a37c1a14d9cce5c92facc6b278",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
