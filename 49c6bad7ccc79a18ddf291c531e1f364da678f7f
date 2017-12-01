@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "d74d24e7_e0d754d4",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-12-01T22:57:40Z",
+      "side": 1,
+      "message": "I\u0027m not convinced this size-one buffer complexity is worth its carrying cost. We don\u0027t really need to minimize the memory footprint in this rare case; size-one allocations (or really, a buffer smaller than kMaxBytesToSniff) could turn out to be a pathological case for other resource handlers.\n\nI think it\u0027s better to just proceed with local_buffer_ allocation as with the sniffing case, and bypass the sniffing step in OnReadCompleted.",
+      "revId": "49c6bad7ccc79a18ddf291c531e1f364da678f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e70f7ccc_c373326a",
         "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
         "patchSetId": 20
