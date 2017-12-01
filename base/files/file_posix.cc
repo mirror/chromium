@@ -393,6 +393,7 @@ File File::Duplicate() const {
 
 // Static.
 File::Error File::OSErrorToFileError(int saved_errno) {
+  DCHECK_NE(0, saved_errno);
   switch (saved_errno) {
     case EACCES:
     case EISDIR:
