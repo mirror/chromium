@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ed9c229_31e59ee7",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 2045,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-12-01T17:40:21Z",
+      "side": 1,
+      "message": "Does it make sense to move these lines into viewDidLoad, at the point where we create the typing shield?",
+      "range": {
+        "startLine": 2043,
+        "startChar": 0,
+        "endLine": 2045,
+        "endChar": 74
+      },
+      "revId": "18f9a465cd9e4b40bab9c9151ff592d8a66abbcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "155aa7fc_1dbafda4",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-12-01T17:40:21Z",
+      "side": 1,
+      "message": "Could you add a comment explaining why this block exists?  I\u0027m not sure what it\u0027s meant to do.",
+      "revId": "18f9a465cd9e4b40bab9c9151ff592d8a66abbcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d03239ed_1b0efd08",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-12-01T17:40:21Z",
+      "side": 1,
+      "message": "What does \"mob\" mean?",
+      "range": {
+        "startLine": 705,
+        "startChar": 11,
+        "endLine": 705,
+        "endChar": 19
+      },
+      "revId": "18f9a465cd9e4b40bab9c9151ff592d8a66abbcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
