@@ -42,10 +42,15 @@ class TestingUserActivityLoggerDelegate : public UserActivityLoggerDelegate {
   void LogActivity(const UserActivityEvent& event) override {
     events_.push_back(event);
   }
-  void UpdateOpenTabsURLs() override {}
+  void UpdateOpenTabsURLs() override { ++update_open_tab_urls_called_times_; }
+
+  int UpdateOpenTabsURLsCalledTimes() {
+    return update_open_tab_urls_called_times_;
+  }
 
  private:
   std::vector<UserActivityEvent> events_;
+  int update_open_tab_urls_called_times_ = 0;
 
   DISALLOW_COPY_AND_ASSIGN(TestingUserActivityLoggerDelegate);
 };
@@ -117,6 +122,10 @@ class UserActivityLoggerTest : public testing::Test {
 
   const scoped_refptr<base::TestMockTimeTaskRunner>& GetTaskRunner() {
     return task_runner_;
+  }
+
+  int GetLoggerCalledTimes() {
+    return delegate_.UpdateOpenTabsURLsCalledTimes();
   }
 
  private:
@@ -336,6 +345,15 @@ TEST_F(UserActivityLoggerTest, FeatureExtraction) {
   EXPECT_EQ(UserActivityEvent::Features::CLAMSHELL, features.device_mode());
   EXPECT_EQ(23.0f, features.battery_percent());
   EXPECT_DOUBLE_EQ(false, features.on_battery());
+}
+
+TEST_F(UserActivityLoggerTest, UpdateOpenTabsURLsCalledTimes) {
+  ReportIdleEvent({});
+  ReportUserActivity(nullptr);
+  ReportIdleEvent({});
+  ReportUserActivity(nullptr);
+
+  EXPECT_EQ(2, GetLoggerCalledTimes());
 }
 
 }  // namespace ml
