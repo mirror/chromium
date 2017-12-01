@@ -65,6 +65,24 @@
     },
     {
       "key": {
+        "uuid": "5fac76c2_31714cc8",
+        "filename": "chrome/browser/process_singleton.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-12-01T19:03:13Z",
+      "side": 1,
+      "message": "I\u0027d like to, but I can\u0027t think of a reasonable way to sense it outside of swizzling/mach overriding something. Any ideas?",
+      "parentUuid": "c87a865f_fb99e7b5",
+      "revId": "b31a7ffac72448ab98112be5e4d970544bebaeaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7837ed70_a61417ee",
         "filename": "chrome/browser/process_singleton_mac.mm",
         "patchSetId": 2
