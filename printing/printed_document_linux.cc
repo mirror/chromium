@@ -16,24 +16,14 @@
 
 namespace printing {
 
-void PrintedDocument::RenderPrintedPage(
-    const PrintedPage& page, PrintingContext* context) const {
-#ifndef NDEBUG
-  {
-    // Make sure the page is from our list.
-    base::AutoLock lock(lock_);
-    DCHECK(&page == mutable_.pages_.find(page.page_number() - 1)->second.get());
-  }
-#endif
-
+void PrintedDocument::Render(PrintingContext* context) {
   DCHECK(context);
 
   {
     base::AutoLock lock(lock_);
-    if (page.page_number() - 1 == mutable_.first_page) {
-      static_cast<PrintingContextLinux*>(context)
-          ->PrintDocument(*page.metafile());
-    }
+    const MetafilePlayer* metafile = GetMetafile();
+    DCHECK(metafile);
+    static_cast<PrintingContextLinux*>(context)->PrintDocument(*metafile);
   }
 }
 
