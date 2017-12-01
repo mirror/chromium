@@ -25,11 +25,11 @@ const CSSValue* WebkitTextFillColor::ParseSingleValue(
 const blink::Color WebkitTextFillColor::ColorIncludingFallback(
     bool visited_link,
     const ComputedStyle& style) const {
-  StyleColor result =
-      visited_link ? style.VisitedLinkTextFillColor() : style.TextFillColor();
+  StyleColor result = visited_link ? style.TextFillColorIgnoringUnvisited()
+                                   : style.TextFillColorIgnoringVisited();
   if (!result.IsCurrentColor())
     return result.GetColor();
-  return visited_link ? style.VisitedLinkColor() : style.GetColor();
+  return visited_link ? style.VisitedLinkColor() : style.ColorIgnoringVisited();
 }
 
 const CSSValue* WebkitTextFillColor::CSSValueFromComputedStyle(
@@ -37,8 +37,8 @@ const CSSValue* WebkitTextFillColor::CSSValueFromComputedStyle(
     const LayoutObject* layout_object,
     Node* styled_node,
     bool allow_visited_style) const {
-  return ComputedStyleUtils::CurrentColorOrValidColor(style,
-                                                      style.TextFillColor());
+  return ComputedStyleUtils::CurrentColorOrValidColor(
+      style, style.TextFillColorIgnoringVisited());
 }
 
 }  // namespace CSSLonghand

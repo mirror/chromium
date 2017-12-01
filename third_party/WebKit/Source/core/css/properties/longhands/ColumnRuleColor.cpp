@@ -23,11 +23,11 @@ const CSSValue* ColumnRuleColor::ParseSingleValue(
 const blink::Color ColumnRuleColor::ColorIncludingFallback(
     bool visited_link,
     const ComputedStyle& style) const {
-  StyleColor result = visited_link ? style.VisitedLinkColumnRuleColor()
-                                   : style.ColumnRuleColor();
+  StyleColor result = visited_link ? style.ColumnRuleColorIgnoringUnvisited()
+                                   : style.ColumnRuleColorIgnoringVisited();
   if (!result.IsCurrentColor())
     return result.GetColor();
-  return visited_link ? style.VisitedLinkColor() : style.GetColor();
+  return visited_link ? style.VisitedLinkColor() : style.ColorIgnoringVisited();
 }
 
 const CSSValue* ColumnRuleColor::CSSValueFromComputedStyle(
@@ -35,10 +35,11 @@ const CSSValue* ColumnRuleColor::CSSValueFromComputedStyle(
     const LayoutObject* layout_object,
     Node* styled_node,
     bool allow_visited_style) const {
-  return allow_visited_style ? cssvalue::CSSColorValue::Create(
-                                   style.VisitedDependentColor(*this).Rgb())
-                             : ComputedStyleUtils::CurrentColorOrValidColor(
-                                   style, style.ColumnRuleColor());
+  return allow_visited_style
+             ? cssvalue::CSSColorValue::Create(
+                   style.VisitedDependentColor(*this).Rgb())
+             : ComputedStyleUtils::CurrentColorOrValidColor(
+                   style, style.ColumnRuleColorIgnoringVisited());
 }
 
 }  // namespace CSSLonghand

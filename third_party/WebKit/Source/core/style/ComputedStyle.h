@@ -81,35 +81,12 @@ class StyleDifference;
 class StyleImage;
 class StyleInheritedVariables;
 class StylePath;
-class StyleResolver;
 class StyleSelfAlignmentData;
 class TransformationMatrix;
 
 class ContentData;
 
 typedef Vector<scoped_refptr<ComputedStyle>, 4> PseudoStyleCache;
-
-namespace CSSLonghand {
-
-class BackgroundColor;
-class BorderBottomColor;
-class BorderLeftColor;
-class BorderRightColor;
-class BorderTopColor;
-class CaretColor;
-class Color;
-class ColumnRuleColor;
-class FloodColor;
-class LightingColor;
-class OutlineColor;
-class StopColor;
-class TextDecorationColor;
-class WebkitTapHighlightColor;
-class WebkitTextEmphasisColor;
-class WebkitTextFillColor;
-class WebkitTextStrokeColor;
-
-}  // namespace CSSLonghand
 
 // ComputedStyle stores the computed value [1] for every CSS property on an
 // element and provides the interface between the style engine and the rest of
@@ -170,40 +147,7 @@ class ComputedStyle : public ComputedStyleBase,
   // Needed to allow access to private/protected getters of fields to allow diff
   // generation
   friend class ComputedStyleBase;
-  // Used by Web Animations CSS. Sets the color styles.
-  friend class AnimatedStyleBuilder;
-  // Used by Web Animations CSS. Gets visited and unvisited colors separately.
-  friend class CSSAnimatableValueFactory;
-  // Used by CSS animations. We can't allow them to animate based off visited
-  // colors.
-  friend class CSSPropertyEquality;
 
-  // Accesses GetColor().
-  friend class ComputedStyleUtils;
-  // These get visited and unvisited colors separately.
-  friend class CSSLonghand::BackgroundColor;
-  friend class CSSLonghand::BorderBottomColor;
-  friend class CSSLonghand::BorderLeftColor;
-  friend class CSSLonghand::BorderRightColor;
-  friend class CSSLonghand::BorderTopColor;
-  friend class CSSLonghand::CaretColor;
-  friend class CSSLonghand::Color;
-  friend class CSSLonghand::ColumnRuleColor;
-  friend class CSSLonghand::FloodColor;
-  friend class CSSLonghand::LightingColor;
-  friend class CSSLonghand::OutlineColor;
-  friend class CSSLonghand::StopColor;
-  friend class CSSLonghand::TextDecorationColor;
-  friend class CSSLonghand::WebkitTapHighlightColor;
-  friend class CSSLonghand::WebkitTextEmphasisColor;
-  friend class CSSLonghand::WebkitTextFillColor;
-  friend class CSSLonghand::WebkitTextStrokeColor;
-  // Editing has to only reveal unvisited info.
-  friend class ApplyStyleCommand;
-  // Editing has to only reveal unvisited info.
-  friend class EditingStyle;
-  // Needs to be able to see visited and unvisited colors for devtools.
-  friend class ComputedStyleCSSValueMapping;
   // Sets color styles
   friend class StyleBuilderFunctions;
   // Saves Border/Background information for later comparison.
@@ -212,14 +156,6 @@ class ComputedStyle : public ComputedStyleBase,
   friend class ColorPropertyFunctions;
   // Edits the background for media controls.
   friend class StyleAdjuster;
-
-  // FIXME: When we stop resolving currentColor at style time, these can be
-  // removed.
-  friend class CSSToStyleMap;
-  friend class FilterOperationResolver;
-  friend class StyleBuilderConverter;
-  friend class StyleResolverState;
-  friend class StyleResolver;
 
  protected:
   // list of associated pseudo styles
@@ -377,6 +313,14 @@ class ComputedStyle : public ComputedStyleBase,
     return static_cast<EFillBox>(BackgroundInternal().Clip());
   }
 
+  // background-color
+  StyleColor BackgroundColorIgnoringVisited() const {
+    return BackgroundColor();
+  }
+  StyleColor BackgroundColorIgnoringUnvisited() const {
+    return VisitedLinkBackgroundColor();
+  }
+
   // Border properties.
   // border-image-slice
   const LengthBox& BorderImageSlices() const {
@@ -457,7 +401,14 @@ class ComputedStyle : public ComputedStyleBase,
   }
 
   // Border color properties.
+
   // border-left-color
+  StyleColor BorderLeftColorIgnoringVisited() const {
+    return BorderLeftColor();
+  }
+  StyleColor BorderLeftColorIgnoringUnvisited() const {
+    return VisitedLinkBorderLeftColor();
+  }
   void SetBorderLeftColor(const StyleColor& color) {
     if (BorderLeftColor() != color) {
       SetBorderLeftColorInternal(color.Resolve(Color()));
@@ -466,6 +417,12 @@ class ComputedStyle : public ComputedStyleBase,
   }
 
   // border-right-color
+  StyleColor BorderRightColorIgnoringVisited() const {
+    return BorderRightColor();
+  }
+  StyleColor BorderRightColorIgnoringUnvisited() const {
+    return VisitedLinkBorderRightColor();
+  }
   void SetBorderRightColor(const StyleColor& color) {
     if (BorderRightColor() != color) {
       SetBorderRightColorInternal(color.Resolve(Color()));
@@ -474,6 +431,10 @@ class ComputedStyle : public ComputedStyleBase,
   }
 
   // border-top-color
+  StyleColor BorderTopColorIgnoringVisited() const { return BorderTopColor(); }
+  StyleColor BorderTopColorIgnoringUnvisited() const {
+    return VisitedLinkBorderTopColor();
+  }
   void SetBorderTopColor(const StyleColor& color) {
     if (BorderTopColor() != color) {
       SetBorderTopColorInternal(color.Resolve(Color()));
@@ -482,6 +443,12 @@ class ComputedStyle : public ComputedStyleBase,
   }
 
   // border-bottom-color
+  StyleColor BorderBottomColorIgnoringVisited() const {
+    return BorderBottomColor();
+  }
+  StyleColor BorderBottomColorIgnoringUnvisited() const {
+    return VisitedLinkBorderBottomColor();
+  }
   void SetBorderBottomColor(const StyleColor& color) {
     if (BorderBottomColor() != color) {
       SetBorderBottomColorInternal(color.Resolve(Color()));
@@ -503,6 +470,9 @@ class ComputedStyle : public ComputedStyleBase,
     SetHasAutoClipInternal(true);
     SetClipInternal(ComputedStyleInitialValues::InitialClip());
   }
+
+  // color
+  Color ColorIgnoringVisited() const { return GetColor(); }
 
   // Column properties.
   // column-count (aka -webkit-column-count)
@@ -526,6 +496,12 @@ class ComputedStyle : public ComputedStyleBase,
   }
 
   // column-rule-color (aka -webkit-column-rule-color)
+  StyleColor ColumnRuleColorIgnoringVisited() const {
+    return ColumnRuleColor();
+  }
+  StyleColor ColumnRuleColorIgnoringUnvisited() const {
+    return VisitedLinkColumnRuleColor();
+  }
   void SetColumnRuleColor(const StyleColor& c) {
     if (ColumnRuleColor() != c) {
       SetColumnRuleColorInternal(c.Resolve(Color()));
@@ -610,6 +586,10 @@ class ComputedStyle : public ComputedStyleBase,
   }
 
   // outline-color
+  StyleColor OutlineColorIgnoringVisited() const { return OutlineColor(); }
+  StyleColor OutlineColorIgnoringUnvisited() const {
+    return VisitedLinkOutlineColor();
+  }
   void SetOutlineColor(const StyleColor& v) {
     if (OutlineColor() != v) {
       SetOutlineColorInternal(v.Resolve(Color()));
@@ -870,6 +850,11 @@ class ComputedStyle : public ComputedStyleBase,
   // text-shadow
   bool TextShadowDataEquivalent(const ComputedStyle&) const;
 
+  // text-decoration-color
+  StyleColor TextDecorationColorIgnoringUnvisited() const {
+    return VisitedLinkTextDecorationColor();
+  }
+
   // Text emphasis properties.
   TextEmphasisMark GetTextEmphasisMark() const;
   void SetTextEmphasisMark(TextEmphasisMark mark) {
@@ -878,24 +863,44 @@ class ComputedStyle : public ComputedStyleBase,
   const AtomicString& TextEmphasisMarkString() const;
 
   // -webkit-text-emphasis-color (aka -epub-text-emphasis-color)
+  StyleColor TextEmphasisColorIgnoringVisited() const {
+    return TextEmphasisColor();
+  }
+  StyleColor TextEmphasisColorIgnoringUnvisited() const {
+    return VisitedLinkTextEmphasisColor();
+  }
   void SetTextEmphasisColor(const StyleColor& color) {
     SetTextEmphasisColorInternal(color.Resolve(Color()));
     SetTextEmphasisColorIsCurrentColorInternal(color.IsCurrentColor());
   }
 
   // -webkit-text-fill-color
+  StyleColor TextFillColorIgnoringVisited() const { return TextFillColor(); }
+  StyleColor TextFillColorIgnoringUnvisited() const {
+    return VisitedLinkTextFillColor();
+  }
   void SetTextFillColor(const StyleColor& color) {
     SetTextFillColorInternal(color.Resolve(Color()));
     SetTextFillColorIsCurrentColorInternal(color.IsCurrentColor());
   }
 
   // -webkit-text-stroke-color
+  StyleColor TextStrokeColorIgnoringVisited() const {
+    return TextStrokeColor();
+  }
+  StyleColor TextStrokeColorIgnoringUnvisited() const {
+    return VisitedLinkTextStrokeColor();
+  }
   void SetTextStrokeColor(const StyleColor& color) {
     SetTextStrokeColorInternal(color.Resolve(Color()));
     SetTextStrokeColorIsCurrentColorInternal(color.IsCurrentColor());
   }
 
   // caret-color
+  StyleAutoColor CaretColorIgnoringVisited() const { return CaretColor(); }
+  StyleAutoColor CaretColorIgnoringUnvisited() const {
+    return VisitedLinkCaretColor();
+  }
   void SetCaretColor(const StyleAutoColor& color) {
     SetCaretColorInternal(color.Resolve(Color()));
     SetCaretColorIsCurrentColorInternal(color.IsCurrentColor());
@@ -990,12 +995,15 @@ class ComputedStyle : public ComputedStyleBase,
   Color FillPaintColor() const { return SvgStyle().FillPaintColor(); }
 
   // stop-color
+  Color StopColorIgnoringVisited() const { return StopColor(); }
   void SetStopColor(const Color& c) { AccessSVGStyle().SetStopColor(c); }
 
   // flood-color
+  Color FloodColorIgnoringVisited() const { return FloodColor(); }
   void SetFloodColor(const Color& c) { AccessSVGStyle().SetFloodColor(c); }
 
   // lighting-color
+  Color LightingColorIgnoringVisited() const { return LightingColor(); }
   void SetLightingColor(const Color& c) {
     AccessSVGStyle().SetLightingColor(c);
   }
@@ -2428,9 +2436,6 @@ class ComputedStyle : public ComputedStyleBase,
                ? StyleColor::CurrentColor()
                : StyleColor(VisitedLinkTextStrokeColorInternal());
   }
-
-  StyleColor DecorationColorIncludingFallback(bool visited_link) const;
-
   Color StopColor() const { return SvgStyle().StopColor(); }
   Color FloodColor() const { return SvgStyle().FloodColor(); }
   Color LightingColor() const { return SvgStyle().LightingColor(); }

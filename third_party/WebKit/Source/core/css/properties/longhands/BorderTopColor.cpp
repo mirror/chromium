@@ -27,8 +27,8 @@ const CSSValue* BorderTopColor::ParseSingleValue(
 const blink::Color BorderTopColor::ColorIncludingFallback(
     bool visited_link,
     const ComputedStyle& style) const {
-  StyleColor result =
-      visited_link ? style.VisitedLinkBorderTopColor() : style.BorderTopColor();
+  StyleColor result = visited_link ? style.BorderTopColorIgnoringUnvisited()
+                                   : style.BorderTopColorIgnoringVisited();
   EBorderStyle border_style = style.BorderTopStyle();
   return ComputedStyleUtils::BorderSideColor(style, result, border_style,
                                              visited_link);
@@ -43,7 +43,7 @@ const CSSValue* BorderTopColor::CSSValueFromComputedStyle(
              ? cssvalue::CSSColorValue::Create(
                    style.VisitedDependentColor(*this).Rgb())
              : ComputedStyleUtils::ComputedStyleUtils::CurrentColorOrValidColor(
-                   style, style.BorderTopColor());
+                   style, style.BorderTopColorIgnoringVisited());
 }
 
 }  // namespace CSSLonghand
