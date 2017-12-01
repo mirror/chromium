@@ -16,6 +16,24 @@
       "revId": "fab2d5c638dc323a8772f31d060f1325986c3304",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "809d3d47_cc8597a0",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1161469
+      },
+      "writtenOn": "2017-12-01T21:48:09Z",
+      "side": 1,
+      "message": "We could do something like this:\n\n+#if defined(OS_CHROMEOS)\n+       CHECK(capabilities.texture_format_bgra8888);\n+       GLenum format \u003d GL_BGRA_EXT;\n+#else\n+       GLenum format \u003d GL_RGB;\n+#endif\n\nif we want to make it ChromeOS specific. Otherwise, just\n\n+       GLenum format \u003d capabilities.texture_format_bgra8888 ? GL_BGRA_EXT : GL_RGB;\n\nThis change shouldn\u0027t need to be ChromeOS specific though.  The intended functional difference is that we start writing a well-defined (1.0f) alpha channel for the framebuffer. If that has unintended side effects, we need fix that for all platforms, not just ChromeOS.  I would prefer to minimize variation between platforms.",
+      "parentUuid": "54fb0fb1_7bab8aa7",
+      "revId": "fab2d5c638dc323a8772f31d060f1325986c3304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
