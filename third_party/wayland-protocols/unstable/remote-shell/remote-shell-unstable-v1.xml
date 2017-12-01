@@ -52,6 +52,7 @@
       </description>
       <entry name="default" value="1" summary="default container"/>
       <entry name="overlay" value="2" summary="system modal container"/>
+      <entry name="ime_window" value="3" summary="IME window container"/>
     </enum>
 
     <enum name="state_type">

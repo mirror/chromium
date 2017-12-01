@@ -4,4 +4,7 @@ include_rules = [
   "+ui/events",
   "+ui/gfx/geometry",
   "+ui/keyboard",
+  "+chrome/browser/chromeos",
+  "+chrome/browser/profiles",
+  "+components/crx_file",
 ]

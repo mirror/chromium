@@ -365,6 +365,13 @@ void surface_set_input_region(wl_client* client,
   SkRegion region = region_resource ? *GetUserDataAs<SkRegion>(region_resource)
                                     : SkRegion(SkIRect::MakeLargest());
   GetUserDataAs<Surface>(resource)->SetInputRegion(cc::Region(region));
+  auto surface = GetUserDataAs<Surface>(resource);
+  auto window = surface->window();
+  VLOG(1) << "@@@@@ surface_set_input_region:"
+          << " surface.window.(name=" << window->GetName()
+          << " title=" << window->GetTitle() << ")"
+          << " region=" << region.toString()
+          << (region_resource ? "" : " (largest)");
 }
 
 void surface_commit(wl_client* client, wl_resource* resource) {
@@ -2250,6 +2257,8 @@ int RemoteSurfaceContainer(uint32_t container) {
       return ash::kShellWindowId_DefaultContainer;
     case ZCR_REMOTE_SHELL_V1_CONTAINER_OVERLAY:
       return ash::kShellWindowId_SystemModalContainer;
+    case ZCR_REMOTE_SHELL_V1_CONTAINER_IME_WINDOW:
+      return ash::kShellWindowId_ImeWindowParentContainer;
     default:
       DLOG(WARNING) << "Unsupported container: " << container;
       return ash::kShellWindowId_DefaultContainer;
@@ -2317,6 +2326,9 @@ void remote_shell_get_remote_surface(wl_client* client,
                                      uint32_t id,
                                      wl_resource* surface,
                                      uint32_t container) {
+  VLOG(1) << "@@@@@ remote_shell_get_remote_surface:"
+          << " id=" << id << " container=" << container
+          << " ShellWindowId=" << RemoteSurfaceContainer(container);
   WaylandRemoteShell* shell = GetUserDataAs<WaylandRemoteShell>(resource);
   double default_scale_factor = wl_resource_get_version(resource) >= 8
                                     ? GetDefaultDeviceScaleFactor()

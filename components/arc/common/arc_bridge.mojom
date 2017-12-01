@@ -43,7 +43,7 @@ import "wallpaper.mojom";
 
 // Next MinVersion: 34
 // Deprecated method IDs: 101, 105
-// Next method ID: 139
+// Next method ID: 140
 interface ArcBridgeHost {
   // Keep the entries alphabetical. In order to do so without breaking
   // compatibility with the ARC instance, explicitly assign each interface a
@@ -97,6 +97,9 @@ interface ArcBridgeHost {
 
   // Notifies Chrome that the ImeInstance interface is ready.
   [MinVersion=3] OnImeInstanceReady@110(ImeInstance instance_ptr);
+
+  // Notifies Chrome that the ImeManagerInstance interface is ready.
+  [MinVersion=30] OnImeManagerInstanceReady@139(ImeManagerInstance instance_ptr);
 
   // Notifies Chrome that the IntentHelperInstance interface is ready.
   [MinVersion=4] OnIntentHelperInstanceReady@111(

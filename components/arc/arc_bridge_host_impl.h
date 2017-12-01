@@ -95,6 +95,8 @@ class ArcBridgeHostImpl : public mojom::ArcBridgeHost {
       mojom::VolumeMounterInstancePtr volume_mounter_ptr) override;
   void OnWallpaperInstanceReady(
       mojom::WallpaperInstancePtr wallpaper_ptr) override;
+  void OnImeManagerInstanceReady(
+      mojom::ImeManagerInstancePtr ime_manager_ptr) override;
 
  private:
   // Called when the bridge channel is closed. This typically only happens when

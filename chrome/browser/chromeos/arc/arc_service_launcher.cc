@@ -45,6 +45,7 @@
 #include "components/arc/audio/arc_audio_bridge.h"
 #include "components/arc/clipboard/arc_clipboard_bridge.h"
 #include "components/arc/crash_collector/arc_crash_collector_bridge.h"
+#include "components/arc/ime/arc_ime_manager_bridge.h"
 #include "components/arc/ime/arc_ime_service.h"
 #include "components/arc/intent_helper/arc_intent_helper_bridge.h"
 #include "components/arc/lock_screen/arc_lock_screen_bridge.h"
@@ -168,6 +169,7 @@ void ArcServiceLauncher::OnPrimaryUserProfilePrepared(Profile* profile) {
   ArcVoiceInteractionFrameworkService::GetForBrowserContext(profile);
   ArcVolumeMounterBridge::GetForBrowserContext(profile);
   ArcWallpaperService::GetForBrowserContext(profile);
+  ArcImeManagerBridge::GetForBrowserContext(profile);
   GpuArcVideoServiceHost::GetForBrowserContext(profile);
 
   arc_session_manager_->Initialize();

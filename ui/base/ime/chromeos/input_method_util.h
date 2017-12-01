@@ -155,6 +155,9 @@ class UI_BASE_IME_EXPORT InputMethodUtil {
   // Appends the additional list of component extension IMEs.
   void AppendInputMethods(const InputMethodDescriptors& imes);
 
+  // Removes the additional list of component extension IMEs.
+  void RemoveInputMethods(const InputMethodDescriptors& imes);
+
   // Initializes the extension based xkb IMEs for testing.
   void InitXkbInputMethodsForTesting(const InputMethodDescriptors& imes);
 

@@ -91,3 +91,36 @@ interface ImeInstance {
   // before and after selection or caret.
   [MinVersion=4] ExtendSelectionAndDelete@5(uint64 before, uint64 after);
 };
+
+[MinVersion=6]
+struct ImeSubtypeInfo {
+  string imeSubtypeId;
+  string displayName;
+  string locale;
+  bool enabled;
+};
+
+[MinVersion=6]
+struct ImeInfo {
+  string imeId;
+  string displayName;
+  bool enabled;
+  array<ImeSubtypeInfo> locales;
+};
+
+// Next method ID: 2
+[MinVersion=6]
+interface ImeManagerHost {
+  [MinVersion=6] NotifyDefaultImeChanged@0(string imeId, string imeSubtypeId);
+
+  [MinVersion=6] NotifyImeInfos@1(array<ImeInfo> imeInfos);
+};
+
+// Next method ID: 3
+[MinVersion=6]
+interface ImeManagerInstance {
+  [MinVersion=6] Init@0(ImeManagerHost host_ptr);
+
+  [MinVersion=6] SwitchImeTo@1(string imeId, string imeSubtypeId);
+  [MinVersion=6] EnableIme@2(string imeId, string imeSubtypeId, bool enable);
+};

@@ -509,6 +509,14 @@ void PopulateInputMethodListFromDescriptors(
       input_method.enabled.reset(new bool(true));
     if (descriptor.options_page_url().is_valid())
       input_method.has_options_page.reset(new bool(true));
+    std::string codes_str;
+    for (const auto& code : input_method.language_codes) {
+      if (!codes_str.empty())
+        codes_str += ",";
+      codes_str += code;
+    }
+    VLOG(1) << "@@@@@ InputMethodListsFunction: "
+            << " id=" << input_method.id << " codes=" << codes_str;
     input_methods->push_back(std::move(input_method));
   }
 }

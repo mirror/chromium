@@ -781,8 +781,50 @@ bool InputMethodUtil::IsLoginKeyboard(const std::string& input_method_id)
   return ime ? ime->is_login_keyboard() : false;
 }
 
-void InputMethodUtil::AppendInputMethods(const InputMethodDescriptors& imes) {
+namespace {
+std::string ToString(const InputMethodDescriptor& input_method) {
+  std::string langs;
+  for (const auto& lang : input_method.language_codes()) {
+    if (!langs.empty())
+      langs += "|";
+    langs += lang;
+  }
+  std::string layouts;
+  for (const auto& layout : input_method.keyboard_layouts()) {
+    if (!layouts.empty())
+      layouts += "|";
+    layouts += layout;
+  }
+  return "id=" + input_method.id() + " name=" + input_method.name() +
+         " lang=" + langs + " layouts=" + layouts;
+}
+}  // namespace
+
+void InputMethodUtil::RemoveInputMethods(const InputMethodDescriptors& imes) {
+  VLOG(1) << "@@@@@ RemoveInputMethods: size=" << imes.size();
   for (size_t i = 0; i < imes.size(); ++i) {
+    VLOG(1) << "@@@@@     " << ToString(imes[i]);
+    const InputMethodDescriptor& input_method = imes[i];
+    DCHECK(!input_method.language_codes().empty());
+    id_to_descriptor_.erase(input_method.id());
+
+    for (auto it = language_code_to_ids_.begin();
+         it != language_code_to_ids_.end();) {
+      if (it->second == input_method.id()) {
+        VLOG(1) << "@@@@@       remove: lang=" << it->first
+                << " id=" << input_method.id();
+        it = language_code_to_ids_.erase(it);
+      } else {
+        ++it;
+      }
+    }
+  }
+}
+
+void InputMethodUtil::AppendInputMethods(const InputMethodDescriptors& imes) {
+  VLOG(1) << "@@@@@ AppendInputMethods: size=" << imes.size();
+  for (size_t i = 0; i < imes.size(); ++i) {
+    VLOG(1) << "@@@@@     " << ToString(imes[i]);
     const InputMethodDescriptor& input_method = imes[i];
     DCHECK(!input_method.language_codes().empty());
     const std::vector<std::string>& language_codes =
@@ -798,9 +840,12 @@ void InputMethodUtil::AppendInputMethods(const InputMethodDescriptors& imes) {
         if (it->second == input_method.id())
           break;
       }
-      if (it == range.second)
+      if (it == range.second) {
+        VLOG(1) << "@@@@@       insert: lang=" << language_codes[j]
+                << " id=" << input_method.id();
         language_code_to_ids_.insert(
             std::make_pair(language_codes[j], input_method.id()));
+      }
     }
   }
 }

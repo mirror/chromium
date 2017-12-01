@@ -276,6 +276,12 @@ void ArcBridgeHostImpl::OnWallpaperInstanceReady(
   OnInstanceReady(arc_bridge_service_->wallpaper(), std::move(wallpaper_ptr));
 }
 
+void ArcBridgeHostImpl::OnImeManagerInstanceReady(
+    mojom::ImeManagerInstancePtr ime_manager_ptr) {
+  OnInstanceReady(arc_bridge_service_->ime_manager(),
+                  std::move(ime_manager_ptr));
+}
+
 void ArcBridgeHostImpl::OnClosed() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   VLOG(1) << "Mojo connection lost";
