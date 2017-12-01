@@ -1,0 +1,395 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cc16b7e_cdbd47f3",
+        "filename": "chrome/browser/chromeos/login/signin_partition_manager.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-01T02:15:16Z",
+      "side": 1,
+      "message": "nit: const content::StoragePartition*?",
+      "revId": "2e3526edda18b35b5b46b43812ebb81baf84d7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1211186a_a8dd4e49",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-01T02:15:16Z",
+      "side": 1,
+      "message": "nit: Maybe s/const char*/std::string/? It\u0027s more natural IMHO, and it\u0027s anyway not losing anything in terms of optimization as PrefChangeRegistrar::Add() accepts std::string.",
+      "revId": "2e3526edda18b35b5b46b43812ebb81baf84d7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "548dd8d2_728b58a6",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-01T02:15:16Z",
+      "side": 1,
+      "message": "nit: Please make it private.",
+      "revId": "2e3526edda18b35b5b46b43812ebb81baf84d7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "471b860e_9f2b7c88",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-01T02:15:16Z",
+      "side": 1,
+      "message": "nit: This initialization can be done in the class definition.",
+      "revId": "2e3526edda18b35b5b46b43812ebb81baf84d7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99eb85ab_dc2f8da8",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-01T02:15:16Z",
+      "side": 1,
+      "message": "nit: This may be private as well.",
+      "revId": "2e3526edda18b35b5b46b43812ebb81baf84d7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3611a0d9_fdb2ceae",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-01T02:15:16Z",
+      "side": 1,
+      "message": "nit (optional): \" \u003d base::MakeUnique\u003c...\u003e()\"  is arguably a fancier way to do this.",
+      "revId": "2e3526edda18b35b5b46b43812ebb81baf84d7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da52f943_66c56376",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-01T02:15:16Z",
+      "side": 1,
+      "message": "nit: Can this be omitted with the help of BrowserThread::PostTaskAndReply() instead of PostTask()?",
+      "revId": "2e3526edda18b35b5b46b43812ebb81baf84d7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04109735_9e90b268",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-01T02:15:16Z",
+      "side": 1,
+      "message": "nit: Duplicate comment.",
+      "revId": "2e3526edda18b35b5b46b43812ebb81baf84d7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d1d1396_b3b805d6",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-01T02:15:16Z",
+      "side": 1,
+      "message": "nit: Can\u0027t you just pass |autoselect_pattern| to the add_() function?",
+      "revId": "2e3526edda18b35b5b46b43812ebb81baf84d7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bcec680_331d1282",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-01T02:15:16Z",
+      "side": 1,
+      "message": "nit: Is this needed? The default signing key should have been enabled in the constructor.",
+      "revId": "2e3526edda18b35b5b46b43812ebb81baf84d7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5959b2b7_e4b90112",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-01T02:15:16Z",
+      "side": 1,
+      "message": "nit: const.\n(ditto for other constant local variables)",
+      "revId": "2e3526edda18b35b5b46b43812ebb81baf84d7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47cecc2e_13b88539",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-01T02:15:16Z",
+      "side": 1,
+      "message": "nit: It\u0027s unfortunate to have these 10+ lines duplicated with the previous method. Could you add a helper method for reducing copy-pasting (at least partially)?",
+      "revId": "2e3526edda18b35b5b46b43812ebb81baf84d7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b60a330b_aaa9afc7",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-01T02:15:16Z",
+      "side": 1,
+      "message": "nit: Make it private. (Or even kill this function.)",
+      "revId": "2e3526edda18b35b5b46b43812ebb81baf84d7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3771f6f_098e01db",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-01T02:15:16Z",
+      "side": 1,
+      "message": "nit: Please add a comment that it\u0027s an unowned pointer (optionally - with mentioning who owns it).",
+      "revId": "2e3526edda18b35b5b46b43812ebb81baf84d7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d23541cb_9beb6119",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-01T02:15:16Z",
+      "side": 1,
+      "message": "nit (optional): Maybe use raw string literals for simplifying these patterns?",
+      "revId": "2e3526edda18b35b5b46b43812ebb81baf84d7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b8ae5bd_2f53af82",
+        "filename": "chrome/browser/chromeos/policy/login_profile_policy_provider.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-01T02:15:16Z",
+      "side": 1,
+      "message": "Note: The pref will be copied not only into the sign-in profile, but also into the lock screen apps profile. Probably it\u0027s not a problem as no certs should be available for the lock screen app. But wanted, at least, to call attention to this.",
+      "revId": "2e3526edda18b35b5b46b43812ebb81baf84d7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fc06cab_d8d1504c",
+        "filename": "chrome/browser/profiles/profile_io_data.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-01T02:15:16Z",
+      "side": 1,
+      "message": "nit: Maybe reorganize the comment to make it shorter and to put the most important information in the beginning? I think the main point here is that the client certs are enabled for the sign-in frame in the sign-in profile as long as it\u0027s not suppressed by the flag. Reference to the implementation details may be useful, but IMHO only secondarily.",
+      "revId": "2e3526edda18b35b5b46b43812ebb81baf84d7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf8e0d4b_f1f6d639",
+        "filename": "chrome/browser/profiles/profile_io_data.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-01T02:15:16Z",
+      "side": 1,
+      "message": "nit: This initialization can be moved to the struct definition.",
+      "revId": "2e3526edda18b35b5b46b43812ebb81baf84d7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ccfba07_5c77b99d",
+        "filename": "chrome/browser/profiles/profile_io_data.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-01T02:15:16Z",
+      "side": 1,
+      "message": "nit: Ditto - moving to the class definition would allow to remove the #if from here.",
+      "revId": "2e3526edda18b35b5b46b43812ebb81baf84d7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad821ae6_5460f392",
+        "filename": "chrome/browser/profiles/profile_io_data.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1153,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-01T02:15:16Z",
+      "side": 1,
+      "message": "nit: It took me some time to understand what this condition really states. Maybe inverting it would help?\n\n  DCHECK(!(username_hash_.empty() \u0026\u0026\n           system_key_slot_use_type_ \u003d\u003d\n               SystemKeySlotUseType::USE_FOR_CLIENT_AUTH_AND_CERT_MANAGEMENT));\n\nAt least to me this would look easier to read.",
+      "revId": "2e3526edda18b35b5b46b43812ebb81baf84d7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f59b55ee_dfb15d1b",
+        "filename": "chrome/browser/profiles/profile_io_data.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-01T02:15:16Z",
+      "side": 1,
+      "message": "nit: The style guide recommends using constant-style naming for new code:\nhttps://google.github.io/styleguide/cppguide.html#Enumerator_Names\n(and this file didn\u0027t contain any other macro-style named enums.)",
+      "revId": "2e3526edda18b35b5b46b43812ebb81baf84d7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05128ab9_a966df7d",
+        "filename": "chromeos/chromeos_switches.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-01T02:15:16Z",
+      "side": 1,
+      "message": "nit: Please add a documenting comment for the flag.\n\nAnd the flag, IIUC, is only a temporary solution for the first few releases in case there are some critical issues? Then probably makes sense to leave a TODO right away with the promise to delete the flag in some schedule.",
+      "revId": "2e3526edda18b35b5b46b43812ebb81baf84d7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ae9673b_31ca6267",
+        "filename": "chromeos/chromeos_switches.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-01T02:15:16Z",
+      "side": 1,
+      "message": "nit: Obsolete name.",
+      "revId": "2e3526edda18b35b5b46b43812ebb81baf84d7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
