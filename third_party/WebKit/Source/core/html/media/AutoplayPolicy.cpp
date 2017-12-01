@@ -104,6 +104,7 @@ AutoplayPolicy::Type AutoplayPolicy::GetAutoplayPolicyForDocument(
 
 // static
 bool AutoplayPolicy::IsDocumentAllowedToPlay(const Document& document) {
+  LOG(ERROR) << "IsDocumentAllowedToPlay";
   if (!document.GetFrame())
     return false;
 
