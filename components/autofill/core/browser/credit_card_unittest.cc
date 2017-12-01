@@ -1271,7 +1271,14 @@ INSTANTIATE_TEST_CASE_P(
 
 // Test that credit card last used date suggestion can be generated correctly
 // in different variations.
-TEST(CreditCardTest, GetLastUsedDateForDisplay) {
+
+// Fails consistently on Android.  https://crbug.com/791067.
+#if defined(OS_ANDROID)
+#define MAYBE_GetLastUsedDateForDisplay DISABLED_GetLastUsedDateForDisplay
+#else
+#define MAYBE_GetLastUsedDateForDisplay GetLastUsedDateForDisplay
+#endif
+TEST(CreditCardTest, MAYBE_GetLastUsedDateForDisplay) {
   const base::Time::Exploded kTestDateTimeExploded = {
       2016, 12, 6, 10,  // Sat, Dec 10, 2016
       15,   42, 7, 0    // 15:42:07.000
