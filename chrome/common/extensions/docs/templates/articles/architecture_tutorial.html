@@ -1,0 +1,424 @@
+<h1>Extension Architecture</h1>
+
+<p>
+  Extension architecture is built upon the manifest file
+  and can include background scripts, content scripts, an options page,
+  UI elements and various logic files.
+  An extensions architecture will depend on its functionality
+  and may not need every element.
+</p>
+<p>
+  This tutorial will build an extension that demonstrates
+  architecture by allowing the user change the background color of any page
+  on <a href="https://developer.chrome.com/">https://developer.chrome.com/</a>.
+  <!-- TODO add file for download -->
+  Create a new directory for the extension or download the files here.
+</p>
+
+<h2 id="manifest">Manifest</h2>
+<p>
+  Extensions start with their manifest, housed within a manifest.json file.
+  The manifest only needs the following to get started.
+    <!-- This Architecture Example extension will include a background script,
+    content script, a popup, and an options page. -->
+</p>
+<pre data-filename="manifest.json">
+  {
+    "name": "Architecture Example",
+    "version": "1.0",
+    "description": "Shows Architecture of Extensions",
+    "manifest_version": 2
+  }
+</pre>
+<p>
+  The directory holding the manifest file
+  can be added as an extension in developer mode as is.
+  Click on the three-dot menu icon in the upper right-hand side of the browser,
+  hover over "More Tools" then selected "Extensions",
+  or navigate in the omini box to
+  <a href="chrome://extensions/">chrome://extensions/</a>.
+  Check the box next to "Developer mode",
+  then click the "Load unpacked extension..." button.
+</p>
+<img src="{{static}}/images/architecture_tutorial/load_extension.png"
+  height="200"
+  alt="Load Extension" />
+<p>
+  Select the directory the manifest file is stored in.
+  Ta-da!
+  The extension has been successfuly installed.
+  A generic tool bar icon will be created for the extension,
+  since no images were included and specified in the manifest.
+</p>
+<h2 id="background">Background Script</h2>
+<p>
+  Now that the extension has been installed,
+  it needs soemthing to do.
+  Start by including the file <code>background.js</code>
+  in the extension directory.
+  This extension will need information from a global variable,
+  therefore, a value is set in global storage under the
+  <a href="/runtime#event-onInstalled"><code>runtime.onInstalled</code></a>
+  listener event in the background script.
+</p>
+
+<pre data-filename="background.js">
+  chrome.runtime.onInstalled.addListener(function() {
+    chrome.storage.sync.set({color: "#3aa757"}, function(){
+      console.log("The color is green.")
+    })
+  });
+</pre>
+
+<p>
+  The background script is then registered in the manifest.
+  The manifest must also be granted the
+  <a href="/storage">storage</a> permission to give the extension
+  access to that API.
+</p>
+<pre data-filename="manifest.json">
+  {
+    "name": "Architecture Example",
+    "version": "1.0",
+    "description": "Shows Architecture of Extensions",
+    <b>"permissions": ["storage"],
+    "background": {
+      "scripts": ["background.js"],
+      "persistent": false
+    },</b>
+    "manifest_version": 2
+  }
+</pre>
+<p>
+  Navigate back to the extension management page and click the "Reload" link.
+  Once the extension reloads, there will be a new field "Inspect views:"
+  with a blue link "background page".
+</p>
+<img src="{{static}}/images/architecture_tutorial/view_background.png"
+  height="200"
+  alt="Inspect Views" />
+<p>
+  Click the link to view the background scripts console log,
+  "<code>The color is green.</code>"
+
+<h2 id="user_interface">User Interface</h2>
+<p>
+  The extension now needs a way to interact with the user.
+  The <code>popup.html</code> file will be this extensions first UI page.
+  This extension will use two buttons,
+  one to change the background color and a second to reset it.
+</p>
+<pre data-filename="popup.html">
+  &lt;!DOCTYPE html&gt;
+  &lt;html&gt;
+    &lt;head&gt;
+      &lt;style&gt;
+        button {
+          height: 30px;
+          width: 30px;
+          outline: none;
+        }
+      &lt;/style&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+      <b>&lt;button id="displayNew"&gt;&lt;/button&gt;
+      &lt;br&gt;
+      &lt;button id="displayDefault"&gt;X&lt;/button&gt;</b>
+      &lt;script src="popup.js"&gt;&lt;/script&gt;
+    &lt;/body&gt;
+  &lt;/html&gt;
+</pre>
+<p>
+  Now that a popup exsists, it will need to be registered in the manifest
+  under <a href="#"><code>page_action</code></a>.
+  This is also where the toolbar icons are declared.
+  Download the images folder here and place it in the extensions directory.
+  Register images under the <code>icons</code> feild to display them
+  on the extensions management page,
+  permission warnings,
+  and favicon.
+</p>
+<pre data-filename="manifest.json">
+  {
+    "name": "Architecture Example",
+    "version": "1.0",
+    "description": "Shows Architecture of Extensions",
+    "permissions": ["storage"],
+    "background": {
+      "scripts": ["background.js"],
+      "persistent": false
+    },
+    <b>"page_action": {
+      "default_popup": "popup.html",
+      "default_icon": {
+        "16": "images/extension_architecture16.png",
+        "32": "images/extension_architecture32.png",
+        "48": "images/extension_architecture48.png",
+        "128": "images/extension_architecture128.png"
+      }
+    },
+    "icons": {
+      "16": "images/extension_architecture16.png",
+      "32": "images/extension_architecture32.png",
+      "48": "images/extension_architecture48.png",
+      "128": "images/extension_architecture128.png"
+    },</b>
+    "manifest_version": 2
+  }
+</pre>
+<p>
+  If the extension is reloaded at this stage, it will appear the same.
+  Because <code>page_action</code> is declared in the manifest,
+  it is up to the extension to tell the browser when the user can interact
+  with <code>popup.html</code>.
+  For this extension, rules can be declared using the
+  <a href="#"><code>declarativeContent</code></a> API within the
+  <code>runtime.onInstalled</code> listener event in the background script,
+</p>
+<pre data-filename="background.js">
+  chrome.runtime.onInstalled.addListener(function() {
+    chrome.storage.sync.set({color: "#3aa757"}, function(){
+      console.log("The color is green.")
+    });
+    <b>chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
+      chrome.declarativeContent.onPageChanged.addRules([
+        {
+          conditions: [
+            new chrome.declarativeContent.PageStateMatcher({
+              pageUrl: { urlContains: 'developer.chrome.com' },
+            })
+          ],
+          actions: [ new chrome.declarativeContent.ShowPageAction() ]
+        }
+      ]);
+    });</b>
+  });
+</pre>
+<p>
+  The extension will need permission to access the
+  <a href="#"><code>declarativeContent</code></a>
+  in its manifest.
+</p>
+<pre data-filenam e="manifest.json">
+  {
+    "name": "Architecture Example",
+  ...
+    "permissions": [<b>"declarativeContent"</b>, "storage"],
+  ...
+  }
+</pre>
+<img src="{{static}}/images/architecture_tutorial/popup_grey.png"
+  align="right"
+  style="margin-left:3px; margin-right:3px"
+  alt="Popup" />
+<p>
+  The browser will now show a full color page action icon in the browser
+  toolbar when users navigate to a URL that contains
+  <code>"developer.chrome.com"</code>.
+  When the icon is full color, users can click it to view popup.html.
+</p>
+
+
+<h3 id="functionality">Functionality</h3>
+<p>
+  Now that a popup is registered and clickable, functionality can be added.
+  Start by creating <code>popup.js</code> in the extension directory,
+  then adding the following code,
+</p>
+<pre data-filename="popup.js">
+  let displayNew = document.getElementById('displayNew')
+  chrome.storage.sync.get('color', function(data) {
+    displayNew.style.backgroundColor = data.color;
+    displayNew.setAttribute('value', data.color);
+  })
+
+  displayNew.onclick = function(element) {
+    let color = element.target.value
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, {color: color}, function(response) {
+        console.log(response.done);
+      });
+    });
+  }
+
+  let displayDefault = document.getElementById('displayDefault')
+  displayDefault.onclick = function(element) {
+    chrome.storage.sync.get('pageColor', function(data) {
+      chrome.tabs.query({active: true,
+         currentWindow: true}, function(tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, {color: data.pageColor}, function(response) {
+          console.log(response.done);
+        });
+      })
+    });
+  }
+</pre>
+<p>
+  In the first block, the script grabs the color change button element from
+  <code>popup.html</code>, then requests the color value from storage.
+  It takes the color value and applies it to the background color
+  of the button. Reload the extension and the button will now be green.
+</p>
+<p>
+  The second code block add an onclick event listener.
+  Because what good is a button if it is unclickable?
+  This onlcick event generates a message that can be sent to other
+  components of the extension.
+</p>
+<p>
+  At this time, the last block will not work since no value has been
+  sent to storage under the key <code>"pageColor"</code>.
+  This piece relies on the content script,
+  as it is the only component of an extension
+  that can read directly from the DOM of an active web page.
+</p>
+
+<h2 id="content_script">Content Script</h2>
+<p>
+  If the extension is passing messages to itself it will need to listen
+  for them in appropriate places.
+  Create a file called <code>content_script.js</code>
+  and include it in the extension directory with the following code.
+</p>
+<pre data-filename="content_script.js">
+  chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    document.body.style.backgroundColor = request.color;
+    sendResponse({done: "background color is " + request.color});
+  });
+
+  function findBackgroundColor() {
+   let backgroundColor = document.head.style.backgroundColor
+   chrome.storage.sync.set({pageColor: backgroundColor});
+ };
+
+ findBackgroundColor();
+</pre>
+<p>
+  Because the extension should only be availabe for
+  <a href="https://developer.chrome.com/">https://developer.chrome.com/</a>,
+  the matches are limited when registering the content script in the manifest.
+  The <code>activeTab</code> permission will need to be granted,
+  as message passing between the extension and content script need to know
+  the id of which tab to work under.
+</p>
+<pre data-filename="manifest.json">
+  {
+    "name": "Architecture Example",
+    "version": "1.0",
+    "description": "Shows Architecture of Extensions",
+    "permissions": [<b>"activeTab"</b>, "declarativeContent", "storage"],
+    "page_action": {
+      "default_popup": "popup.html"
+    },
+    "background": {
+      "scripts": ["background.js"],
+      "persistent": false
+    },
+    <b>"content_scripts": [
+     {
+       "matches": ["https://developer.chrome.com/*"],
+       "js": ["content_script.js"]
+     }
+   ],</b>
+    "manifest_version": 2
+  }
+</pre>
+<p>
+  The extension is now fully functional!
+  Reload it and refresh this page to turn it green.
+  However, some users may want to change the background to a different color.
+</p>
+<h2 id="options">Options</h2>
+<p>
+  The extension only allows users to change the background to green,
+  but intergrating an options page users can have more
+  control over the extension functionality.
+  Create a file in the directory called <code>options.html</code>
+  and include the following code,
+</p>
+<pre data-filename="options.html">
+  &lt;!DOCTYPE html&gt;
+  &lt;html&gt;
+    &lt;head&gt;
+      &lt;style&gt;
+        button {
+          height: 30px;
+          width: 30px;
+          outline: none;
+          margin: 10px;
+        }
+      &lt;/style&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+      &lt;div id="buttonDiv"&gt;
+      &lt;/div&gt;
+    &lt;/body&gt;
+    &lt;script src="options.js"&gt;&lt;/script&gt;
+  &lt;/html&gt;
+</pre>
+<p>
+  Then register the options page in the manifest,
+</p>
+<pre data-filename="manifest.json">
+  {
+    "name": "Architecture Example",
+    "version": "1.0",
+    "description": "Shows Architecture of Extensions",
+    <b>"options_page": "options.html",</b>
+    "permissions": ["activeTab", "storage", "declarativeContent"],
+    "page_action": {
+      "default_popup": "popup.html"
+    },
+    "background": {
+      "scripts": ["background.js"],
+      "persistent": false
+    },
+    "content_scripts": [
+     {
+       "matches": ["https://developer.chrome.com/*"],
+       "js": ["content_script.js"],
+       "run_at": "document_start"
+     }
+   ],
+    "manifest_version": 2
+  }
+</pre>
+<p>
+  Reload the extension then select the new options link to view the page,
+  although it will be blank.
+</p>
+<img src="{{static}}/images/architecture_tutorial/options.png"
+  height="200"
+  alt="Inspect Views" />
+<p>
+ Last step is to add the logic for our options.
+ Create a file called <code>options.js</code> in the extension directory
+ with the following code,
+</p>
+<pre data-filename="options.js">
+  const kButtonColors = ['#3aa757', '#e8453c', '#f9bb2d', '#4688f1']
+  function constructOptions(kButtonColors) {
+    let page = document.getElementById('buttonDiv');
+    for (let item of kButtonColors) {
+     let button = document.createElement('button');
+     button.style.backgroundColor = item;
+     button.setAttribute('id', item);
+     button.addEventListener('click', function() {
+        console.log(button.id)
+        chrome.storage.sync.set({color: button.id}, function(){
+          console.log("color is " + button.id)
+        })
+     });
+     page.appendChild(button)
+    }
+  }
+  constructOptions(kButtonColors)
+</pre>
+<p>
+  Four color options are provided then generated as buttons on
+  the options page with onclick event listeners.
+  When the user clicks a button,
+  it updates the color value in the extension's global storage.
+  Since all the extension pulls the color information from global storage
+  no other values need to be updated.
+</p>
