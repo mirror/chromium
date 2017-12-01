@@ -25,6 +25,7 @@
 #include "net/socket/next_proto.h"
 #include "net/socket/stream_socket.h"
 #include "net/ssl/ssl_config_service.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "url/gurl.h"
 
 namespace net {
@@ -56,9 +57,11 @@ class ProxyResolvingClientSocket : public net::StreamSocket {
   int Read(net::IOBuffer* buf,
            int buf_len,
            const net::CompletionCallback& callback) override;
-  int Write(net::IOBuffer* buf,
-            int buf_len,
-            const net::CompletionCallback& callback) override;
+  int Write(
+      net::IOBuffer* buf,
+      int buf_len,
+      const net::CompletionCallback& callback,
+      const net::NetworkTrafficAnnotationTag& traffic_annotation) override;
   int SetReceiveBufferSize(int32_t size) override;
   int SetSendBufferSize(int32_t size) override;
   int Connect(const net::CompletionCallback& callback) override;

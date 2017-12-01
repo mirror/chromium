@@ -68,7 +68,8 @@ class RemoteTestServerProxyTest : public testing::Test {
     *write_buffer->data() = test_message;
     TestCompletionCallback write_callback;
     int write_result =
-        socket1->Write(write_buffer.get(), 1, write_callback.callback());
+        socket1->Write(write_buffer.get(), 1, write_callback.callback(),
+                       TRAFFIC_ANNOTATION_FOR_TESTS);
 
     scoped_refptr<IOBufferWithSize> read_buffer(new IOBufferWithSize(1024));
     TestCompletionCallback read_callback;

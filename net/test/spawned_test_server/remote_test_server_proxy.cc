@@ -17,6 +17,7 @@
 #include "net/socket/stream_socket.h"
 #include "net/socket/tcp_client_socket.h"
 #include "net/socket/tcp_server_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 
 namespace net {
 
@@ -70,7 +71,8 @@ class SocketDataPump {
 
     int result = to_socket_->Write(
         write_buffer_.get(), write_buffer_->BytesRemaining(),
-        base::Bind(&SocketDataPump::HandleWriteResult, base::Unretained(this)));
+        base::Bind(&SocketDataPump::HandleWriteResult, base::Unretained(this)),
+        TRAFFIC_ANNOTATION_FOR_TESTS);
     if (result != ERR_IO_PENDING)
       HandleWriteResult(result);
   }

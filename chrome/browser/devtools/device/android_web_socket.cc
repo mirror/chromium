@@ -16,6 +16,7 @@
 #include "net/base/net_errors.h"
 #include "net/server/web_socket_encoder.h"
 #include "net/socket/stream_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 using content::BrowserThread;
 using net::WebSocket;
@@ -133,9 +134,11 @@ class AndroidDeviceManager::AndroidWebSocket::WebSocketImpl {
 
     scoped_refptr<net::StringIOBuffer> buffer =
         new net::StringIOBuffer(request_buffer_);
+    // TODO(rhalavati): Add proper network traffic annotation.
     result = socket_->Write(buffer.get(), buffer->size(),
                             base::Bind(&WebSocketImpl::SendPendingRequests,
-                                       weak_factory_.GetWeakPtr()));
+                                       weak_factory_.GetWeakPtr()),
+                            NO_TRAFFIC_ANNOTATION_YET);
     if (result != net::ERR_IO_PENDING)
       SendPendingRequests(result);
   }
