@@ -260,6 +260,9 @@ void ProxyMain::BeginMainFrame(
     current_pipeline_stage_ = NO_PIPELINE_STAGE;
     layer_tree_host_->CommitComplete();
     layer_tree_host_->DidBeginMainFrame();
+    // When we stop deferring commits, we should resume any previously requested
+    // pipeline stages.
+    max_requested_pipeline_stage_ = final_pipeline_stage_;
     return;
   }
 
