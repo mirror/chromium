@@ -21,6 +21,7 @@
 #include "net/socket/client_socket_handle.h"
 #include "net/socket/transport_client_socket_pool.h"
 #include "net/spdy/chromium/spdy_session.h"
+#include "net/spdy/chromium/spdy_session_peer.h"
 #include "net/spdy/chromium/spdy_stream_test_util.h"
 #include "net/spdy/chromium/spdy_test_util_common.h"
 #include "net/test/cert_test_util.h"
@@ -777,8 +778,8 @@ TEST_F(SpdySessionPoolTest, IPAddressChanged) {
   EXPECT_TRUE(sessionB->IsDraining());
   EXPECT_TRUE(sessionC->IsDraining());
 
-  EXPECT_EQ(1u,
-            sessionA->num_active_streams());  // Active stream is still active.
+  // Active stream is still active.
+  EXPECT_EQ(1u, SpdySessionPeer::num_active_streams(sessionA.get()));
   EXPECT_FALSE(delegateA.StreamIsClosed());
 
   EXPECT_TRUE(delegateB.StreamIsClosed());  // Created stream was closed.
