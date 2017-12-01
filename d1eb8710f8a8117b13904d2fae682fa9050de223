@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "283d70e9_a707db5c",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-12-01T00:24:28Z",
+      "side": 1,
+      "message": "public? How does this work?",
+      "range": {
+        "startLine": 677,
+        "startChar": 4,
+        "endLine": 677,
+        "endChar": 13
+      },
+      "revId": "d1eb8710f8a8117b13904d2fae682fa9050de223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
