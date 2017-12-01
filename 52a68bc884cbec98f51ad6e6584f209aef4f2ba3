@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "589f9c74_bd94a585",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-01T08:25:56Z",
+      "side": 1,
+      "message": "Please avoid to use |ComputeEditingOffset()|. It calls infamous function editingIgnoreContents().",
+      "range": {
+        "startLine": 390,
+        "startChar": 86,
+        "endLine": 390,
+        "endChar": 106
+      },
+      "revId": "52a68bc884cbec98f51ad6e6584f209aef4f2ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
