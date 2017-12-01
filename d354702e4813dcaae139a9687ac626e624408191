@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "053119dc_0d0f20d7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-12-01T03:51:46Z",
+      "side": 1,
+      "message": "I think that the current design is future proof. Matt, let me know if you see something which can be improved.\n\nThe share target in the proto sent to the server is a repeated field. https://cs.chromium.org/chromium/src/chrome/browser/android/webapk/webapk.proto?rcl\u003d4a7469f71620aa241876bed601f931fcdbbec87e\u0026l\u003d92\nThe WebAPK AndroidManifest format scales to multiple share targets. https://cs.chromium.org/chromium/src/chrome/android/webapk/shell_apk/AndroidManifest.xml?rcl\u003d62acf2e5e95be89098a3f7e9a136d9d2f2b6c24e\u0026l\u003d40",
+      "parentUuid": "d88c51ec_599f6aa2",
+      "range": {
+        "startLine": 42,
+        "startChar": 12,
+        "endLine": 42,
+        "endChar": 15
+      },
+      "revId": "d354702e4813dcaae139a9687ac626e624408191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dbc310fd_22a990b0",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/webapps/WebApkInfoTest.java",
         "patchSetId": 1
