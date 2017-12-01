@@ -479,6 +479,9 @@ public class ChromeFullscreenManager
         controlsResizeView &= !VrShellDelegate.isInVr();
         mControlsResizeView = controlsResizeView;
         Tab tab = getTab();
+        android.util.Log.d("webapp",
+                "cf: " + controlsResizeView + " tab: " + tab + " t: " + topContentOffset
+                        + " b: " + bottomControlOffset + " gb: " + getBottomControlsHeight());
         if (tab == null) return;
         tab.setTopControlsHeight(getTopControlsHeight(), controlsResizeView);
         tab.setBottomControlsHeight(getBottomControlsHeight());

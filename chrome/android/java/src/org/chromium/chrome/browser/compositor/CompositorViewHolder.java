@@ -933,6 +933,7 @@ public class CompositorViewHolder extends FrameLayout
 
         View view = tab.getContentView();
         if (view == null || (tab.isNativePage() && view == tab.getView())) return;
+        android.util.Log.d("webapp", "cv: " + controlsResizeView());
         tab.setTopControlsHeight(getTopControlsHeightPixels(), controlsResizeView());
         tab.setBottomControlsHeight(getBottomControlsHeightPixels());
         setSize(tab.getWebContents(), view, getWidth(), getHeight());

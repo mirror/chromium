@@ -510,6 +510,9 @@ public class TabWebContentsDelegateAndroid extends WebContentsDelegateAndroid {
 
     @Override
     public int getTopControlsHeight() {
+        android.util.Log.d("webapp",
+                "bc: " + mTab.controlsResizeView() + "," + mTab.getTopControlsHeight() + ", "
+                        + mTab.getBottomControlsHeight());
         return mTab.getTopControlsHeight();
     }
 
