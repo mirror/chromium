@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "7e8658e0_d01561ad",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-12-01T19:42:15Z",
+      "side": 1,
+      "message": "Fair enough. The only way I can think of to do it here is to add a method on NavigationManagerDelegate (and also WebStateImpl and CRWWebController) to remove WKWebView. So it still leaks the knowledge about web view a little bit at the NavigationManager level. Still SGTY?",
+      "parentUuid": "c232fcae_3cd31154",
+      "range": {
+        "startLine": 370,
+        "startChar": 36,
+        "endLine": 370,
+        "endChar": 43
+      },
+      "revId": "7a50a0e801122555a92f765c5766c122b0faa29d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5896f46_a7af14e9",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 2
