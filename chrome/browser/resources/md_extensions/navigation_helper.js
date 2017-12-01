@@ -143,15 +143,24 @@ cr.define('extensions', function() {
         return;
       }
 
-      this.updateHistory(newPage);
+      this.updateHistory(newPage, false /* replaceState */);
+      this.notifyRouteChanged_(newPage);
+    }
+
+    /**
+     * @param {!PageState} newPage the page to replace the current page with.
+     */
+    replaceWith(newPage) {
+      this.updateHistory(newPage, true /* replaceState */);
       this.notifyRouteChanged_(newPage);
     }
 
     /**
      * Called when a page changes, and pushes state to history to reflect it.
      * @param {!PageState} entry
+     * @param {boolean} replaceState
      */
-    updateHistory(entry) {
+    updateHistory(entry, replaceState) {
       let path;
       switch (entry.page) {
         case Page.LIST:
@@ -181,7 +190,7 @@ cr.define('extensions', function() {
       // a dialog. As such, we replace state rather than pushing a new state
       // on the stack so that hitting the back button doesn't just toggle the
       // dialog.
-      if (isDialogNavigation)
+      if (replaceState || isDialogNavigation)
         history.replaceState(state, '', path);
       else
         history.pushState(state, '', path);

@@ -377,8 +377,8 @@ cr.define('extensions', function() {
       if ((this.currentPage_.page == Page.DETAILS ||
            this.currentPage_.page == Page.ERRORS) &&
           this.currentPage_.extensionId == itemId) {
-        // Leave the details page (the 'list' page is a fine choice).
-        extensions.navigation.navigateTo({page: Page.LIST});
+        // Leave the details page (back to the prior page is a fine choice).
+        history.back();
       }
     },
 
@@ -422,7 +422,7 @@ cr.define('extensions', function() {
         data = this.getData_(newPage.extensionId);
         if (!data) {
           // Attempting to view an invalid (removed?) app or extension ID.
-          extensions.navigation.navigateTo({page: Page.LIST});
+          extensions.navigation.replaceWith({page: Page.LIST});
           return;
         }
       }
