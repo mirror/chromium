@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ba6877b_4ff85a87",
+        "filename": "net/cert/ev_root_ca_metadata.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-12-01T21:53:55Z",
+      "side": 1,
+      "message": "Length()",
+      "range": {
+        "startLine": 840,
+        "startChar": 53,
+        "endLine": 840,
+        "endChar": 57
+      },
+      "revId": "d950a8cccb11435d1383de12d071ccddd3d02491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
