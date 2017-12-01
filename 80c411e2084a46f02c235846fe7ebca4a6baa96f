@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dea82499_3bd1e5d9",
+        "filename": "extensions/browser/api/web_request/web_request_api.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-01T23:44:16Z",
+      "side": 1,
+      "message": "Can we sprinkle liberal consts throughout here?  It doesn\u0027t seem like any of these methods should be modifying the request info once it\u0027s created, right?",
+      "revId": "80c411e2084a46f02c235846fe7ebca4a6baa96f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12dc30c2_c1839f3e",
+        "filename": "extensions/browser/api/web_request/web_request_info.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-01T23:44:16Z",
+      "side": 1,
+      "message": "this is handled up above, right?",
+      "revId": "80c411e2084a46f02c235846fe7ebca4a6baa96f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46920e81_0144938d",
+        "filename": "extensions/browser/api/web_request/web_request_info.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-01T23:44:16Z",
+      "side": 1,
+      "message": "Is browser_client ever null?  If it\u0027s just in tests, can we just update those tests?  Or are there too many?",
+      "revId": "80c411e2084a46f02c235846fe7ebca4a6baa96f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
