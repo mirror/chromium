@@ -157,7 +157,7 @@ std::unique_ptr<net::CookieStore> CreateCookieStore(
     if (!background_task_runner.get()) {
       background_task_runner = base::CreateSequencedTaskRunnerWithTraits(
           {base::MayBlock(), base::TaskPriority::BACKGROUND,
-           base::TaskShutdownBehavior::BLOCK_SHUTDOWN});
+           base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN});
     }
 
     scoped_refptr<net::SQLitePersistentCookieStore> sqlite_store(
