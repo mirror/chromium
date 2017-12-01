@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1753b845_c0ebae34",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 10
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-01T22:55:31Z",
+      "side": 1,
+      "message": "Do you know why it fails?",
+      "revId": "57b4458b7d87432c7697ebc7209a1de93d446aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb19170c_9779f745",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-01T22:55:31Z",
+      "side": 1,
+      "message": "\"because otherwise we will clip out the border, since LayoutEmbeddedObject\ndoes not obey the paint phases of normal boxes.\"",
+      "revId": "57b4458b7d87432c7697ebc7209a1de93d446aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45dc2e9c_0825ef97",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-01T22:55:31Z",
+      "side": 1,
+      "message": "paint_layer_.GetLayoutObject() works also, and is more uniform with other sites below.",
+      "revId": "57b4458b7d87432c7697ebc7209a1de93d446aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a83f6afa_6c91049e",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1507,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-01T22:55:31Z",
+      "side": 1,
+      "message": "But this is the child containment layer. The border of the LayoutEmbeddedContent should\npaint into graphics_layer_ instead, no?",
+      "revId": "57b4458b7d87432c7697ebc7209a1de93d446aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f55ab01_84cc350a",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingRequirementsUpdater.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-01T22:55:31Z",
+      "side": 1,
+      "message": "Instead of this, I think it suffices to write this:\n\nbool contains_composited_iframe \u003d layer-\u003eGetLayoutObject().IsLayoutEmbeddedContent() \u0026\u0026\nToLayoutEmbeddedContent(layer-\u003eGetLayoutObject()).RequiresAcceleratedCompositing());\n\nand change line 526 to:\n\nlayer-\u003eSetHasCompositingDescendant(\n      child_recursion_data.subtree_is_compositing_ || contains_composited_iframe);",
+      "revId": "57b4458b7d87432c7697ebc7209a1de93d446aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
