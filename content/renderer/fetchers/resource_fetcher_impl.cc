@@ -263,6 +263,7 @@ ResourceFetcherImpl::~ResourceFetcherImpl() {
 void ResourceFetcherImpl::SetMethod(const std::string& method) {
   DCHECK(!client_);
   request_.method = method;
+  request_.fetch_request_mode = network::mojom::FetchRequestMode::kCORS;
 }
 
 void ResourceFetcherImpl::SetBody(const std::string& body) {
