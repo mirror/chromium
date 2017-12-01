@@ -167,6 +167,8 @@ class SystemBubbleWrapper {
   void InitView(TrayBackgroundView* tray,
                 views::View* anchor,
                 const gfx::Insets& anchor_insets,
+                const std::vector<ash::SystemTrayItem*>& items,
+                SystemTrayView::SystemTrayType system_tray_type,
                 TrayBubbleView::InitParams* init_params,
                 bool is_persistent) {
     DCHECK(anchor);
@@ -175,18 +177,20 @@ class SystemBubbleWrapper {
 
     const LoginStatus login_status =
         Shell::Get()->session_controller()->login_status();
-    bubble_->InitView(anchor, login_status, init_params);
+    bubble_->InitView(anchor, items, system_tray_type, login_status,
+                      init_params);
     bubble_->bubble_view()->set_anchor_view_insets(anchor_insets);
     bubble_wrapper_ = std::make_unique<TrayBubbleWrapper>(
         tray, bubble_->bubble_view(), is_persistent);
   }
 
   // Convenience accessors:
-  SystemTrayBubble* bubble() const { return bubble_.get(); }
+  SystemTrayBubble* bubble() { return bubble_.get(); }
+  SystemTrayView* system_tray_view() { return bubble_->system_tray_view(); }
   SystemTrayView::SystemTrayType system_tray_type() const {
     return bubble_->system_tray_view()->system_tray_type();
   }
-  TrayBubbleView* bubble_view() const { return bubble_->bubble_view(); }
+  TrayBubbleView* bubble_view() { return bubble_->bubble_view(); }
   bool is_persistent() const { return is_persistent_; }
 
  private:
@@ -211,7 +215,6 @@ SystemTray::SystemTray(Shelf* shelf) : TrayBackgroundView(shelf) {
 SystemTray::~SystemTray() {
   // Destroy any child views that might have back pointers before ~View().
   system_bubble_.reset();
-  system_tray_view_.reset();
   for (const auto& item : items_)
     item->OnTrayViewDestroyed();
 }
@@ -463,15 +466,11 @@ void SystemTray::ShowItems(const std::vector<SystemTrayItem*>& items,
     } else {
       init_params.bg_color = kHeaderBackgroundColor;
     }
-    system_tray_view_ =
-        std::make_unique<SystemTrayView>(system_tray_type, items);
-    system_tray_view_->set_owned_by_client();
 
-    SystemTrayBubble* bubble =
-        new SystemTrayBubble(this, system_tray_view_.get());
+    SystemTrayBubble* bubble = new SystemTrayBubble(this);
     system_bubble_ = std::make_unique<SystemBubbleWrapper>(bubble);
     system_bubble_->InitView(this, GetBubbleAnchor(), GetBubbleAnchorInsets(),
-                             &init_params, persistent);
+                             items, system_tray_type, &init_params, persistent);
 
     // Record metrics for the system menu when the default view is invoked.
     if (!detailed)
@@ -598,7 +597,6 @@ views::TrayBubbleView* SystemTray::GetBubbleView() {
 
 void SystemTray::BubbleViewDestroyed() {
   if (system_bubble_) {
-    system_tray_view_->DestroyItemViews();
     system_bubble_->bubble()->BubbleViewDestroyed();
   }
 }
@@ -649,9 +647,9 @@ void SystemTray::ActivateBubble() {
 }
 
 void SystemTray::CloseSystemBubbleAndDeactivateSystemTray() {
+  if (system_bubble_->system_tray_view())
+    system_bubble_->system_tray_view()->DestroyItemViews();
   system_bubble_.reset();
-  if (system_tray_view_)
-    system_tray_view_->DestroyItemViews();
   // When closing a system bubble with the alternate shelf layout, we need to
   // turn off the active tinting of the shelf.
   if (full_system_tray_menu_) {
@@ -662,9 +660,9 @@ void SystemTray::CloseSystemBubbleAndDeactivateSystemTray() {
 
 void SystemTray::RecordSystemMenuMetrics() {
   DCHECK(system_bubble_);
-  DCHECK(system_tray_view_);
+  DCHECK(system_bubble_->system_tray_view());
 
-  system_tray_view_->RecordVisibleRowMetrics();
+  system_bubble_->system_tray_view()->RecordVisibleRowMetrics();
 
   TrayBubbleView* bubble_view = system_bubble_->bubble_view();
   int num_rows = 0;
