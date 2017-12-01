@@ -213,6 +213,24 @@
       "revId": "84a7528c96c481997dbd90cd913330a462507ca7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ff2c00c_bab76010",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-01T16:20:52Z",
+      "side": 1,
+      "message": "I was thinking that kUnthrottled should be limited to exceptional tasks that should really not be throttled (realtime tasks etc).\n\nWhat\u0027s a guideline for kUnthrottled vs. kUnspecedTimer for internal tasks?",
+      "parentUuid": "92e555ba_998ece3f",
+      "revId": "84a7528c96c481997dbd90cd913330a462507ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
