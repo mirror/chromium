@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d7b78134_4b300722",
+        "filename": "chrome/app/theme/default_200_percent/common/turn_on_sync_illustration.png",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-01T00:14:53Z",
+      "side": 1,
+      "message": "Yeah - I think it\u0027s OK. So long as they are crushed with tools/resources/optimize-png-files.sh .  It would also be good to swap out the placeholder before branch (which is likely now ~8 weeks away). You\u0027ll need a chrome/app OWNER as well.",
+      "parentUuid": "567ba35d_60e157c0",
+      "revId": "5deb26b89e8bc55aeed16bb92f497b57002eecbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74deba6f_425e6ce7",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 4

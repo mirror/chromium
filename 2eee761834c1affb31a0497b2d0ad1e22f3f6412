@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8517eeb_68598f4a",
+        "filename": "chrome/app/theme/theme_resources.grd",
+        "patchSetId": 6
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-01T00:14:53Z",
+      "side": 1,
+      "message": "nit: perhaps IDR_SYNC_TURN_ON_ILLUSTRATION? Or IDR_PROFILES_TURN_ON_SYNC_ILLUSTRATION\n\nThis allows it to sort next to related things more easily.\n\nNote this line number is actually correct for IDR_SY* whereas the IDR_TU* or ISD_PROFILES* should go elsewhere in the file. (ignore the IDR_CLOSE stuff below -- it was probably IDR_TAB_CLOSE at some point and got renamed).",
+      "revId": "2eee761834c1affb31a0497b2d0ad1e22f3f6412",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e252d258_860694be",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-01T00:14:53Z",
+      "side": 1,
+      "message": "note for future (probably fine now) - calls to signin::IsDiceEnabledForProfile are getting common in this file. It might be worthwhile to put a `const bool is_dice_` data member or similar or make better use of subclassing (e.g. override ProfileChooserViewDice::CreateCurrentProfileView() )",
+      "revId": "2eee761834c1affb31a0497b2d0ad1e22f3f6412",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd29ecbe_de62bb8b",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-01T00:14:53Z",
+      "side": 1,
+      "message": "If you rebase, there will be another kFixedMenuWidth to rename around this line otherwise you\u0027ll get a compile error.",
+      "revId": "2eee761834c1affb31a0497b2d0ad1e22f3f6412",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d92dea09_09de50fd",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-01T00:14:53Z",
+      "side": 1,
+      "message": "-\u003e \"promo, which includes a button\" or \", promo text and a button\".",
+      "range": {
+        "startLine": 948,
+        "startChar": 53,
+        "endLine": 948,
+        "endChar": 72
+      },
+      "revId": "2eee761834c1affb31a0497b2d0ad1e22f3f6412",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8151c230_150bdadb",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 951,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-01T00:14:53Z",
+      "side": 1,
+      "message": "you probably don\u0027t need the `Note:` -- otherwise you need to remember to delete it when replacing the .png :)",
+      "range": {
+        "startLine": 951,
+        "startChar": 34,
+        "endLine": 951,
+        "endChar": 39
+      },
+      "revId": "2eee761834c1affb31a0497b2d0ad1e22f3f6412",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acde4153_7c85e45e",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 956,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-01T00:14:53Z",
+      "side": 1,
+      "message": "sending a negative to BoxLayout for |between_child_spacing| feels chancy.. it was never intended to take a negative value. If you intend to rely on this, you should add a simple test to box_layout_unittest.cc . Otherwise, you could do a manual layout. I think after this change you have a nesting of LayoutManagers 5 layers deep which is starting to put stress on the layout system, and will make it very hard to diagnose layout issues in future. So a manual layout of the three views here would be OK in my opinion.",
+      "revId": "2eee761834c1affb31a0497b2d0ad1e22f3f6412",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc91c08e_1ca3b598",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 971,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-01T00:14:53Z",
+      "side": 1,
+      "message": "this multi-line label may trigger the same layout woes I was diagnosing in http://crbug.com/789118 . More reason to use a manual layout. You could also set an explicit width to the multiline label to provide a hint to the layout system similar to what I did in https://chromium-review.googlesource.com/c/chromium/src/+/799614 . There\u0027s a deeper issue why the layout system is confounded by this, but I haven\u0027t had time to look -- profile menu seems to be the only thing triggering it right now. You may need to keep an eye on the performance and address this in future.",
+      "revId": "2eee761834c1affb31a0497b2d0ad1e22f3f6412",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
