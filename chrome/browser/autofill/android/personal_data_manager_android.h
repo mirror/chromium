@@ -18,8 +18,6 @@
 
 namespace autofill {
 
-class AddressNormalizer;
-
 // Android wrapper of the PersonalDataManager which provides access from the
 // Java layer. Note that on Android, there's only a single profile, and
 // therefore a single instance of this wrapper.
@@ -379,9 +377,6 @@ class PersonalDataManagerAndroid : public PersonalDataManagerObserver {
 
   // Pointer to the PersonalDataManager for the main profile.
   PersonalDataManager* personal_data_manager_;
-
-  // The address validator used to normalize addresses.
-  AddressNormalizer* address_normalizer_;
 
   // Used for subkey request.
   SubKeyRequester subkey_requester_;
