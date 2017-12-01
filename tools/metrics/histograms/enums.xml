@@ -3121,6 +3121,40 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="3" label="LE with random address"/>
 </enum>
 
+<enum name="BookmarkAppNavigationResult">
+  <int value="0"
+      label="Keep in same context: Navigation started from context menu"/>
+  <int value="1" label="Keep in same context: Navigation was from typed URL"/>
+  <int value="2"
+      label="Keep in same context: Navigation was automatic from Bookmark"/>
+  <int value="3"
+      label="Keep in same context: Navigation was automatic in Subframe"/>
+  <int value="4"
+      label="Keep in same context: Navigation was manual in Subframe"/>
+  <int value="5"
+      label="Keep in same context: Navigation was from generated entry"/>
+  <int value="6"
+      label="Keep in same context Navigation was automatic in Top Level"/>
+  <int value="7" label="Keep in same context: Navigation was reload"/>
+  <int value="8"
+      label="Keep in same context: Navigation was from replaceable keyword"/>
+  <int value="9"
+      label="Keep in same context: Navigation was generated for keyword"/>
+  <int value="10"
+      label="Keep in same context: Navigation was from forward/back"/>
+  <int value="11"
+      label="Keep in same context: Navigation was from address bar"/>
+  <int value="12"
+      label="Move from app window to Chrome: Out-of-scope launch navigation"/>
+  <int value="13" label="Keep in app: same-scope navigation"/>
+  <int value="14" label="Keep in browser: form submission"/>
+  <int value="15" label="Keep in browser: same-scope navigation"/>
+  <int value="16" label="Cancel prerender link"/>
+  <int value="17" label="Open app and close empty tab"/>
+  <int value="18" label="Open app"/>
+  <int value="19" label="Open new tab from app: out-of-scope navigation"/>
+</enum>
+
 <enum name="BookmarkLaunchLocation">
   <int value="0" label="Attached bookmark bar"/>
   <int value="1" label="Detached (floating) bookmark bar"/>
