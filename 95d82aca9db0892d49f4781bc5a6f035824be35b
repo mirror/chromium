@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "f6427a1a_e733b4e8",
+        "filename": "ui/gfx/presentation_feedback.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-01T18:54:23Z",
+      "side": 1,
+      "message": "define an operator!\u003d in terms of this operator too please",
+      "revId": "95d82aca9db0892d49f4781bc5a6f035824be35b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "64fc8cc9_01e20481",
         "filename": "ui/ozone/platform/drm/gpu/crtc_controller.cc",
         "patchSetId": 6
