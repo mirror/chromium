@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "fb42a969_94448beb",
+        "filename": "components/cronet/native/cronet.idl",
+        "patchSetId": 44
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-01T15:52:21Z",
+      "side": 1,
+      "message": "Done (in followup CL).",
+      "parentUuid": "e1fb0e4a_0d9404e8",
+      "range": {
+        "startLine": 19,
+        "startChar": 18,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "e04b96a8eade21bbfaf72b7163622edb82ba696c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6272b66c_639a7104",
         "filename": "components/cronet/native/cronet.idl",
         "patchSetId": 44
@@ -308,6 +332,30 @@
       "side": 1,
       "message": "Java is garbage collected, so ownership is murky as if it\u0027s reference counted.  In our C/C++ API we can keep the ownership well defined.",
       "parentUuid": "1d3c6225_3d830afe",
+      "range": {
+        "startLine": 632,
+        "startChar": 66,
+        "endLine": 632,
+        "endChar": 0
+      },
+      "revId": "e04b96a8eade21bbfaf72b7163622edb82ba696c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be51cae2_81a6aa76",
+        "filename": "components/cronet/native/cronet.idl",
+        "patchSetId": 44
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-01T15:52:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5266a151_692fac82",
       "range": {
         "startLine": 632,
         "startChar": 66,
