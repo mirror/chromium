@@ -59,7 +59,7 @@ class VideoCaptureDeviceMac;
   float frameRate_;
 
   base::Lock lock_;  // Protects concurrent setting and using |frameReceiver_|.
-  media::VideoCaptureDeviceMac* frameReceiver_;  // weak.
+  VideoCaptureDeviceMac* frameReceiver_;  // weak.
 
   base::scoped_nsobject<AVCaptureSession> captureSession_;
 
@@ -80,15 +80,15 @@ class VideoCaptureDeviceMac;
 + (NSDictionary*)deviceNames;
 
 // Retrieve the capture supported formats for a given device |descriptor|.
-+ (void)getDevice:(const media::VideoCaptureDeviceDescriptor&)descriptor
-    supportedFormats:(media::VideoCaptureFormats*)formats;
++ (void)getDevice:(const VideoCaptureDeviceDescriptor&)descriptor
+    supportedFormats:(VideoCaptureFormats*)formats;
 
 // Initializes the instance and the underlying capture session and registers the
 // frame receiver.
-- (id)initWithFrameReceiver:(media::VideoCaptureDeviceMac*)frameReceiver;
+- (id)initWithFrameReceiver:(VideoCaptureDeviceMac*)frameReceiver;
 
 // Sets the frame receiver.
-- (void)setFrameReceiver:(media::VideoCaptureDeviceMac*)frameReceiver;
+- (void)setFrameReceiver:(VideoCaptureDeviceMac*)frameReceiver;
 
 // Sets which capture device to use by name, retrieved via |deviceNames|. Once
 // the deviceId is known, the library objects are created if needed and

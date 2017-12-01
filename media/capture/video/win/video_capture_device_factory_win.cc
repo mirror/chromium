@@ -23,8 +23,8 @@
 #include "media/capture/video/win/video_capture_device_mf_win.h"
 #include "media/capture/video/win/video_capture_device_win.h"
 
-using Descriptor = media::VideoCaptureDeviceDescriptor;
-using Descriptors = media::VideoCaptureDeviceDescriptors;
+using Descriptor = VideoCaptureDeviceDescriptor;
+using Descriptors = VideoCaptureDeviceDescriptors;
 using Microsoft::WRL::ComPtr;
 using base::win::ScopedCoMem;
 using base::win::ScopedVariant;

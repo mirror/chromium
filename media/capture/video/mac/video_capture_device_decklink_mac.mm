@@ -47,11 +47,10 @@ class DeckLinkCaptureDelegate
     : public IDeckLinkInputCallback,
       public base::RefCountedThreadSafe<DeckLinkCaptureDelegate> {
  public:
-  DeckLinkCaptureDelegate(
-      const media::VideoCaptureDeviceDescriptor& device_descriptor,
-      media::VideoCaptureDeviceDeckLinkMac* frame_receiver);
+  DeckLinkCaptureDelegate(const VideoCaptureDeviceDescriptor& device_descriptor,
+                          VideoCaptureDeviceDeckLinkMac* frame_receiver);
 
-  void AllocateAndStart(const media::VideoCaptureParams& params);
+  void AllocateAndStart(const VideoCaptureParams& params);
   void StopAndDeAllocate();
 
   // Remove the VideoCaptureDeviceDeckLinkMac's weak reference.
@@ -79,14 +78,14 @@ class DeckLinkCaptureDelegate
   // Forwarder to VideoCaptureDeviceDeckLinkMac::SendLogString().
   void SendLogString(const std::string& message);
 
-  const media::VideoCaptureDeviceDescriptor device_descriptor_;
+  const VideoCaptureDeviceDescriptor device_descriptor_;
 
   // Protects concurrent setting and using of |frame_receiver_|.
   base::Lock lock_;
   // Weak reference to the captured frames client, used also for error messages
   // and logging. Initialized on construction and used until cleared by calling
   // ResetVideoCaptureDeviceReference().
-  media::VideoCaptureDeviceDeckLinkMac* frame_receiver_;
+  VideoCaptureDeviceDeckLinkMac* frame_receiver_;
 
   // This is used to control the video capturing device input interface.
   ScopedDeckLinkPtr<IDeckLinkInput> decklink_input_;
@@ -124,15 +123,15 @@ static float GetDisplayModeFrameRate(
 }
 
 DeckLinkCaptureDelegate::DeckLinkCaptureDelegate(
-    const media::VideoCaptureDeviceDescriptor& device_descriptor,
-    media::VideoCaptureDeviceDeckLinkMac* frame_receiver)
+    const VideoCaptureDeviceDescriptor& device_descriptor,
+    VideoCaptureDeviceDeckLinkMac* frame_receiver)
     : device_descriptor_(device_descriptor), frame_receiver_(frame_receiver) {}
 
 DeckLinkCaptureDelegate::~DeckLinkCaptureDelegate() {
 }
 
 void DeckLinkCaptureDelegate::AllocateAndStart(
-    const media::VideoCaptureParams& params) {
+    const VideoCaptureParams& params) {
   DCHECK(thread_checker_.CalledOnValidThread());
   scoped_refptr<IDeckLinkIterator> decklink_iter(
       CreateDeckLinkIteratorInstance());
@@ -190,7 +189,7 @@ void DeckLinkCaptureDelegate::AllocateAndStart(
   }
 #if !defined(NDEBUG)
   DVLOG(1) << "Requested format: "
-           << media::VideoCaptureFormat::ToString(params.requested_format);
+           << VideoCaptureFormat::ToString(params.requested_format);
   CFStringRef format_name = NULL;
   if (chosen_display_mode->GetName(&format_name) == S_OK)
     DVLOG(1) << "Chosen format: " << base::SysCFStringRefToUTF8(format_name);
@@ -244,21 +243,20 @@ HRESULT DeckLinkCaptureDelegate::VideoInputFrameArrived(
   uint8_t* video_data = NULL;
   video_frame->GetBytes(reinterpret_cast<void**>(&video_data));
 
-  media::VideoPixelFormat pixel_format =
-      media::PIXEL_FORMAT_UNKNOWN;
+  VideoPixelFormat pixel_format = PIXEL_FORMAT_UNKNOWN;
   switch (video_frame->GetPixelFormat()) {
     case bmdFormat8BitYUV:  // A.k.a. '2vuy';
-      pixel_format = media::PIXEL_FORMAT_UYVY;
+      pixel_format = PIXEL_FORMAT_UYVY;
       break;
     case bmdFormat8BitARGB:
-      pixel_format = media::PIXEL_FORMAT_ARGB;
+      pixel_format = PIXEL_FORMAT_ARGB;
       break;
     default:
       SendErrorString(FROM_HERE, "Unsupported pixel format");
       break;
   }
 
-  const media::VideoCaptureFormat capture_format(
+  const VideoCaptureFormat capture_format(
       gfx::Size(video_frame->GetWidth(), video_frame->GetHeight()),
       0.0f,  // Frame rate is not needed for captured data callback.
       pixel_format);
@@ -444,10 +442,9 @@ void VideoCaptureDeviceDeckLinkMac::EnumerateDeviceCapabilities(
 
       // IDeckLinkDisplayMode does not have information on pixel format, this
       // is only available on capture.
-      const media::VideoCaptureFormat format(
+      const VideoCaptureFormat format(
           gfx::Size(display_mode->GetWidth(), display_mode->GetHeight()),
-          GetDisplayModeFrameRate(display_mode),
-          PIXEL_FORMAT_UNKNOWN);
+          GetDisplayModeFrameRate(display_mode), PIXEL_FORMAT_UNKNOWN);
       supported_formats->push_back(format);
       DVLOG(2) << device.display_name << " "
                << VideoCaptureFormat::ToString(format);

@@ -99,16 +99,16 @@ void MaybeWriteUma(int number_of_devices, int number_of_suspended_devices) {
 
 // This function translates Mac Core Video pixel formats to Chromium pixel
 // formats.
-media::VideoPixelFormat FourCCToChromiumPixelFormat(FourCharCode code) {
+VideoPixelFormat FourCCToChromiumPixelFormat(FourCharCode code) {
   switch (code) {
     case kCVPixelFormatType_422YpCbCr8:
-      return media::PIXEL_FORMAT_UYVY;
+      return PIXEL_FORMAT_UYVY;
     case kCMPixelFormat_422YpCbCr8_yuvs:
-      return media::PIXEL_FORMAT_YUY2;
+      return PIXEL_FORMAT_YUY2;
     case kCMVideoCodecType_JPEG_OpenDML:
-      return media::PIXEL_FORMAT_MJPEG;
+      return PIXEL_FORMAT_MJPEG;
     default:
-      return media::PIXEL_FORMAT_UNKNOWN;
+      return PIXEL_FORMAT_UNKNOWN;
   }
 }
 
@@ -165,8 +165,8 @@ void ExtractBaseAddressAndLength(char** base_address,
   return deviceNames;
 }
 
-+ (void)getDevice:(const media::VideoCaptureDeviceDescriptor&)descriptor
-    supportedFormats:(media::VideoCaptureFormats*)formats {
++ (void)getDevice:(const VideoCaptureDeviceDescriptor&)descriptor
+    supportedFormats:(VideoCaptureFormats*)formats {
   NSArray* devices = [AVCaptureDevice devices];
   AVCaptureDevice* device = nil;
   for (device in devices) {
@@ -178,7 +178,7 @@ void ExtractBaseAddressAndLength(char** base_address,
   for (AVCaptureDeviceFormat* format in device.formats) {
     // MediaSubType is a CMPixelFormatType but can be used as CVPixelFormatType
     // as well according to CMFormatDescription.h
-    const media::VideoPixelFormat pixelFormat = FourCCToChromiumPixelFormat(
+    const VideoPixelFormat pixelFormat = FourCCToChromiumPixelFormat(
         CMFormatDescriptionGetMediaSubType([format formatDescription]));
 
     CMVideoDimensions dimensions =
@@ -186,19 +186,18 @@ void ExtractBaseAddressAndLength(char** base_address,
 
     for (AVFrameRateRange* frameRate in
          [format videoSupportedFrameRateRanges]) {
-      media::VideoCaptureFormat format(
-          gfx::Size(dimensions.width, dimensions.height),
-          frameRate.maxFrameRate, pixelFormat);
+      VideoCaptureFormat format(gfx::Size(dimensions.width, dimensions.height),
+                                frameRate.maxFrameRate, pixelFormat);
       formats->push_back(format);
       DVLOG(2) << descriptor.display_name << " "
-               << media::VideoCaptureFormat::ToString(format);
+               << VideoCaptureFormat::ToString(format);
     }
   }
 }
 
 #pragma mark Public methods
 
-- (id)initWithFrameReceiver:(media::VideoCaptureDeviceMac*)frameReceiver {
+- (id)initWithFrameReceiver:(VideoCaptureDeviceMac*)frameReceiver {
   if ((self = [super init])) {
     DCHECK(main_thread_checker_.CalledOnValidThread());
     DCHECK(frameReceiver);
@@ -213,7 +212,7 @@ void ExtractBaseAddressAndLength(char** base_address,
   [super dealloc];
 }
 
-- (void)setFrameReceiver:(media::VideoCaptureDeviceMac*)frameReceiver {
+- (void)setFrameReceiver:(VideoCaptureDeviceMac*)frameReceiver {
   base::AutoLock lock(lock_);
   frameReceiver_ = frameReceiver;
 }
@@ -307,7 +306,7 @@ void ExtractBaseAddressAndLength(char** base_address,
     }
 
     // Compare according to Chromium preference.
-    if (media::VideoCaptureFormat::ComparePixelFormatPreference(
+    if (VideoCaptureFormat::ComparePixelFormatPreference(
             FourCCToChromiumPixelFormat(fourcc),
             FourCCToChromiumPixelFormat(best_fourcc))) {
       best_fourcc = fourcc;
@@ -342,17 +341,17 @@ void ExtractBaseAddressAndLength(char** base_address,
           respondsToSelector:@selector(isVideoMinFrameDurationSupported)] &&
       [captureConnection isVideoMinFrameDurationSupported]) {
     [captureConnection
-        setVideoMinFrameDuration:CMTimeMake(media::kFrameRatePrecision,
-                                            (int)(frameRate *
-                                                  media::kFrameRatePrecision))];
+        setVideoMinFrameDuration:CMTimeMake(
+                                     kFrameRatePrecision,
+                                     (int)(frameRate * kFrameRatePrecision))];
   }
   if ([captureConnection
           respondsToSelector:@selector(isVideoMaxFrameDurationSupported)] &&
       [captureConnection isVideoMaxFrameDurationSupported]) {
     [captureConnection
-        setVideoMaxFrameDuration:CMTimeMake(media::kFrameRatePrecision,
-                                            (int)(frameRate *
-                                                  media::kFrameRatePrecision))];
+        setVideoMaxFrameDuration:CMTimeMake(
+                                     kFrameRatePrecision,
+                                     (int)(frameRate * kFrameRatePrecision))];
   }
   return YES;
 }
@@ -436,7 +435,7 @@ void ExtractBaseAddressAndLength(char** base_address,
       CMFormatDescriptionGetMediaSubType(formatDescription);
   const CMVideoDimensions dimensions =
       CMVideoFormatDescriptionGetDimensions(formatDescription);
-  const media::VideoCaptureFormat captureFormat(
+  const VideoCaptureFormat captureFormat(
       gfx::Size(dimensions.width, dimensions.height), frameRate_,
       FourCCToChromiumPixelFormat(fourcc));
 
@@ -467,7 +466,7 @@ void ExtractBaseAddressAndLength(char** base_address,
             ? base::TimeDelta::FromMicroseconds(
                   cm_timestamp.value * base::TimeTicks::kMicrosecondsPerSecond /
                   cm_timestamp.timescale)
-            : media::kNoTimestamp;
+            : kNoTimestamp;
 
     if (frameReceiver_ && baseAddress) {
       frameReceiver_->ReceiveFrame(reinterpret_cast<uint8_t*>(baseAddress),
