@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "544d5f43_282e50e6",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutListItem.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1230334
+      },
+      "writtenOn": "2017-12-01T08:57:48Z",
+      "side": 1,
+      "message": "AlignMarkerInBlockDirection() don\u0027t use the following local variables. It\u0027s safe to move up to here.",
+      "revId": "f19fb24f49f4331ea500b84ad52ba6373541f749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5d5bd30_d928ac8b",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutListItem.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1230334
+      },
+      "writtenOn": "2017-12-01T08:57:48Z",
+      "side": 1,
+      "message": "\"Line_top\" is only workable for pagination_strut situation. We should use \"marker_inline_box-\u003eLogicalTop()\" here.",
+      "revId": "f19fb24f49f4331ea500b84ad52ba6373541f749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
