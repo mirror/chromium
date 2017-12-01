@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "629963b7_891ef78d",
+        "filename": "net/reporting/reporting_endpoint_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-12-01T16:31:37Z",
+      "side": 1,
+      "message": "The way to do this I\u0027ve seen is instead of using base::RandInt directly in the ReportingEndpointManager, use a net::RandIntCallback and set it to base::RandInt for production and something deterministic for testing.",
+      "revId": "01ba18930e43fe2b3721c248c58485b4fb56223e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5777b2b_aba02f70",
         "filename": "net/reporting/reporting_header_parser.cc",
         "patchSetId": 2
@@ -42,6 +59,23 @@
         "endLine": 60,
         "endChar": 0
       },
+      "revId": "01ba18930e43fe2b3721c248c58485b4fb56223e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff766df5_12d212cc",
+        "filename": "net/reporting/reporting_persister.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-12-01T16:31:37Z",
+      "side": 1,
+      "message": "Why aren\u0027t priority and weight persisted?",
       "revId": "01ba18930e43fe2b3721c248c58485b4fb56223e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
