@@ -590,6 +590,69 @@ TEST_F(WKBasedNavigationManagerTest, RestoreSessionWithHistory) {
       session_json);
 }
 
+// Tests that restoring session replaces existing history in navigation manager.
+TEST_F(WKBasedNavigationManagerTest, RestoreSessionResetsHistory) {
+  EXPECT_EQ(-1, manager_->GetPendingItemIndex());
+  EXPECT_EQ(-1, manager_->GetPreviousItemIndex());
+  EXPECT_EQ(-1, manager_->GetLastCommittedItemIndex());
+
+  // Sets up the navigation history with 2 entries, and a pending back-forward
+  // navigation so that last_committed_item_index is 1, pending_item_index is 0,
+  // and previous_item_index is 0. Basically, none of them is -1.
+  manager_->AddPendingItem(
+      GURL("http://www.url.com/0"), Referrer(), ui::PAGE_TRANSITION_TYPED,
+      web::NavigationInitiationType::USER_INITIATED,
+      web::NavigationManager::UserAgentOverrideOption::INHERIT);
+  [mock_wk_list_ setCurrentURL:@"http://www.url.com/0"];
+  manager_->CommitPendingItem();
+
+  manager_->AddPendingItem(
+      GURL("http://www.url.com/1"), Referrer(), ui::PAGE_TRANSITION_TYPED,
+      web::NavigationInitiationType::USER_INITIATED,
+      web::NavigationManager::UserAgentOverrideOption::INHERIT);
+  [mock_wk_list_ setCurrentURL:@"http://www.url.com/1"
+                  backListURLs:@[ @"http://www.url.com/0" ]
+               forwardListURLs:nil];
+  manager_->CommitPendingItem();
+
+  [mock_wk_list_ moveCurrentToIndex:0];
+  OCMStub([mock_web_view_ URL])
+      .andReturn([NSURL URLWithString:@"http://www.url.com/0"]);
+  manager_->AddPendingItem(
+      GURL("http://www.url.com/0"), Referrer(), ui::PAGE_TRANSITION_TYPED,
+      web::NavigationInitiationType::USER_INITIATED,
+      web::NavigationManager::UserAgentOverrideOption::INHERIT);
+
+  EXPECT_EQ(1, manager_->GetLastCommittedItemIndex());
+  EXPECT_EQ(0, manager_->GetPreviousItemIndex());
+  EXPECT_EQ(0, manager_->GetPendingItemIndex());
+  EXPECT_TRUE(manager_->GetPendingItem() != nullptr);
+
+  // Clears WKWebView and restores a fake session.
+  mock_wk_list_.currentItem = nil;
+  mock_wk_list_.backList = nil;
+  mock_wk_list_.forwardList = nil;
+  std::vector<std::unique_ptr<NavigationItem>> items;
+  items.push_back(base::MakeUnique<NavigationItemImpl>());
+  manager_->Restore(0 /* last_committed_item_index */, std::move(items));
+
+  // Check that last_committed_index, previous_item_index and pending_item_index
+  // are all reset to -1. Note that last_committed_item_index will change to the
+  // value in the restored session (i.e. 0) once restore_session.html finishes
+  // loading in the web view. This is not tested here because this test doesn't
+  // use real WKWebView.
+  EXPECT_EQ(-1, manager_->GetLastCommittedItemIndex());
+  EXPECT_EQ(-1, manager_->GetPreviousItemIndex());
+  EXPECT_EQ(-1, manager_->GetPendingItemIndex());
+
+  // Check that the only pending item is restore_session.html.
+  NavigationItem* pending_item = manager_->GetPendingItem();
+  ASSERT_TRUE(pending_item != nullptr);
+  GURL pending_url = pending_item->GetURL();
+  EXPECT_TRUE(pending_url.SchemeIsFile());
+  EXPECT_EQ("restore_session.html", pending_url.ExtractFileName());
+}
+
 // Tests that Restore() accepts empty session history and performs no-op.
 TEST_F(WKBasedNavigationManagerTest, RestoreSessionWithEmptyHistory) {
   EXPECT_CALL(delegate_, WillLoadCurrentItemWithUrl(testing::_)).Times(0);
