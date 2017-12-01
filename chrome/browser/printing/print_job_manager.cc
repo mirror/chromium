@@ -4,6 +4,7 @@
 
 #include "chrome/browser/printing/print_job_manager.h"
 
+#include "build/build_config.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/printing/print_job.h"
 #include "chrome/browser/printing/printer_query.h"
@@ -139,7 +140,9 @@ void PrintJobManager::OnPrintJobEvent(
     case JobEventDetails::USER_INIT_CANCELED:
     case JobEventDetails::DEFAULT_INIT_DONE:
     case JobEventDetails::NEW_PAGE:
+#if defined(OS_WIN)
     case JobEventDetails::PAGE_DONE:
+#endif
     case JobEventDetails::DOC_DONE:
     case JobEventDetails::ALL_PAGES_REQUESTED: {
       // Don't care.

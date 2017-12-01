@@ -364,7 +364,9 @@ void PrintViewManagerBase::OnNotifyPrintJobEvent(
     }
     case JobEventDetails::NEW_DOC:
     case JobEventDetails::NEW_PAGE:
+#if defined(OS_WIN)
     case JobEventDetails::PAGE_DONE:
+#endif
     case JobEventDetails::DOC_DONE: {
       // Don't care about the actual printing process.
       break;

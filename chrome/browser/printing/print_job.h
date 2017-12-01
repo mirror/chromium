@@ -189,9 +189,6 @@ class JobEventDetails : public base::RefCountedThreadSafe<JobEventDetails> {
     // A new page started printing.
     NEW_PAGE,
 
-    // A page is done printing.
-    PAGE_DONE,
-
     // A document is done printing. The worker thread is still alive. Warning:
     // not a good moment to release the handle to PrintJob.
     DOC_DONE,
@@ -205,6 +202,11 @@ class JobEventDetails : public base::RefCountedThreadSafe<JobEventDetails> {
 
     // An error occured. Printing is canceled.
     FAILED,
+
+#if defined(OS_WIN)
+    // A page is done printing. Only used on Windows.
+    PAGE_DONE,
+#endif
   };
 
   JobEventDetails(Type type,
