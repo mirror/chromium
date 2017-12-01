@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9c231046_b2311c67",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-12-01T06:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f08a501_13738fa3",
+      "range": {
+        "startLine": 15,
+        "startChar": 52,
+        "endLine": 15,
+        "endChar": 53
+      },
+      "revId": "38d42bb8b92d06ca6c71182aab60a703358d6e3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbfcb694_d3ef0b65",
         "filename": "ui/file_manager/file_manager/foreground/js/import_controller.js",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "38d42bb8b92d06ca6c71182aab60a703358d6e3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66a4ab28_f9e9564c",
+        "filename": "ui/file_manager/file_manager/foreground/js/import_controller.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 1088,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-12-01T06:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbfcb694_d3ef0b65",
+      "range": {
+        "startLine": 1088,
+        "startChar": 60,
+        "endLine": 1088,
+        "endChar": 61
+      },
+      "revId": "38d42bb8b92d06ca6c71182aab60a703358d6e3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
