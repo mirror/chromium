@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3329aea8_f326d73e",
+        "filename": "sandbox/linux/syscall_broker/broker_command.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-01T21:14:02Z",
+      "side": 1,
+      "message": "Optional suggestion: this could potentially be cleaner with a bitset. Could add a LAST_COMMAND entry to BrokerCommand and then provide:\n\nusing BrokerCommandMask \u003d std::bitset\u003cLAST_COMMAND\u003e;\n\n... and pass that bitset around rather than a uint32_t. It has the benefit of not needing to define all these constants, and std::bitset\u003cT\u003e::test() is a bit cleaner to work with.",
+      "revId": "e721d292a52b84587d64aa28485606d9f9360323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "749b0009_a88bec9a",
+        "filename": "sandbox/linux/syscall_broker/broker_command.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-01T21:14:02Z",
+      "side": 1,
+      "message": "\" (client or process) of a broker IPC command.\"",
+      "range": {
+        "startLine": 51,
+        "startChar": 71,
+        "endLine": 51,
+        "endChar": 72
+      },
+      "revId": "e721d292a52b84587d64aa28485606d9f9360323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
