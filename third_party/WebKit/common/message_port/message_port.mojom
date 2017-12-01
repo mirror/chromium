@@ -28,6 +28,8 @@ struct TransferableMessage {
   CloneableMessage message;
   // Any ports being transfered as part of this message.
   array<handle<message_pipe>> ports;
+  // Stack trace captured by sender.
+  StackTraceId sender_stack_trace_id;
 };
 
 // Struct wrapping a Blob interface pointer.
@@ -39,4 +41,12 @@ struct SerializedBlob {
   string content_type;
   uint64 size;
   Blob blob;
+};
+
+// Struct represents captured stack trace id.
+// For more details see v8_inspector::V8StackTraceId.
+struct StackTraceId {
+  uint64 id;
+  int64 debugger_id_first;
+  int64 debugger_id_second;
 };

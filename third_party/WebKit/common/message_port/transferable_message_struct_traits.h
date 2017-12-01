@@ -24,6 +24,14 @@ struct BLINK_COMMON_EXPORT
     return blink::MessagePortChannel::ReleaseHandles(input.ports);
   }
 
+  static blink::mojom::StackTraceIdPtr sender_stack_trace_id(
+      blink::TransferableMessage& input) {
+    return blink::mojom::StackTraceId::New(
+        input.sender_stack_trace_id.id,
+        input.sender_stack_trace_id.debugger_id.first,
+        input.sender_stack_trace_id.debugger_id.second);
+  }
+
   static bool Read(blink::mojom::TransferableMessage::DataView data,
                    blink::TransferableMessage* out);
 };

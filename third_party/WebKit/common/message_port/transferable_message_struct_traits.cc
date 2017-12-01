@@ -20,6 +20,16 @@ bool StructTraits<blink::mojom::TransferableMessage::DataView,
   }
 
   out->ports = blink::MessagePortChannel::CreateFromHandles(std::move(ports));
+
+  blink::mojom::StackTraceIdDataView stack_trace_id_data_view;
+  data.GetSenderStackTraceIdDataView(&stack_trace_id_data_view);
+  if (stack_trace_id_data_view.is_null())
+    return false;
+  out->sender_stack_trace_id = v8_inspector::V8StackTraceId(
+      reinterpret_cast<uintptr_t>(stack_trace_id_data_view.id()),
+      std::make_pair(stack_trace_id_data_view.debugger_id_first(),
+                     stack_trace_id_data_view.debugger_id_second()));
+
   return true;
 }
 
