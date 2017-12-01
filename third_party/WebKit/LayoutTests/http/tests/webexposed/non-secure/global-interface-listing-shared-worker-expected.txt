@@ -1,9 +1,9 @@
-This test documents all interface attributes and methods on DedicatedWorkerGlobalScope.
+This test documents all interface attributes and methods on SharedWorkerGlobalScope.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
 
-Starting worker: ../resources/global-interface-listing-worker.js
+Starting worker: /js-test-resources/global-interface-listing-worker.js
 [Worker] [INTERFACES]
 [Worker] interface BackgroundFetchFetch
 [Worker]     attribute @@toStringTag
@@ -97,7 +97,6 @@ Starting worker: ../resources/global-interface-listing-worker.js
 [Worker]     method size
 [Worker] interface Crypto
 [Worker]     attribute @@toStringTag
-[Worker]     getter subtle
 [Worker]     method constructor
 [Worker]     method getRandomValues
 [Worker] interface CryptoKey
@@ -332,11 +331,6 @@ Starting worker: ../resources/global-interface-listing-worker.js
 [Worker]     method setUint16
 [Worker]     method setUint32
 [Worker]     method setUint8
-[Worker] interface DedicatedWorkerGlobalScope : WorkerGlobalScope
-[Worker]     attribute @@toStringTag
-[Worker]     attribute PERSISTENT
-[Worker]     attribute TEMPORARY
-[Worker]     method constructor
 [Worker] interface Event
 [Worker]     attribute @@toStringTag
 [Worker]     attribute AT_TARGET
@@ -720,13 +714,6 @@ Starting worker: ../resources/global-interface-listing-worker.js
 [Worker]     attribute @@toStringTag
 [Worker]     method cancel
 [Worker]     method constructor
-[Worker] interface NavigationPreloadManager
-[Worker]     attribute @@toStringTag
-[Worker]     method constructor
-[Worker]     method disable
-[Worker]     method enable
-[Worker]     method getState
-[Worker]     method setHeaderValue
 [Worker] interface NetworkInformation : EventTarget
 [Worker]     attribute @@toStringTag
 [Worker]     getter downlink
@@ -1048,6 +1035,11 @@ Starting worker: ../resources/global-interface-listing-worker.js
 [Worker]     getter byteLength
 [Worker]     method constructor
 [Worker]     method slice
+[Worker] interface SharedWorkerGlobalScope : WorkerGlobalScope
+[Worker]     attribute @@toStringTag
+[Worker]     attribute PERSISTENT
+[Worker]     attribute TEMPORARY
+[Worker]     method constructor
 [Worker] interface StorageManager
 [Worker]     attribute @@toStringTag
 [Worker]     method constructor
@@ -2461,7 +2453,6 @@ Starting worker: ../resources/global-interface-listing-worker.js
 [Worker]     getter permissions
 [Worker]     getter platform
 [Worker]     getter product
-[Worker]     getter storage
 [Worker]     getter userAgent
 [Worker]     method constructor
 [Worker] interface WritableStream
@@ -2524,17 +2515,15 @@ Starting worker: ../resources/global-interface-listing-worker.js
 [Worker]     attribute Atomics
 [Worker]     attribute console
 [Worker]     attribute internals
-[Worker]     getter onmessage
-[Worker]     getter onmessageerror
+[Worker]     getter name
+[Worker]     getter onconnect
 [Worker]     method close
 [Worker]     method gc
-[Worker]     method postMessage
 [Worker]     method webkitRequestFileSystem
 [Worker]     method webkitRequestFileSystemSync
 [Worker]     method webkitResolveLocalFileSystemSyncURL
 [Worker]     method webkitResolveLocalFileSystemURL
-[Worker]     setter onmessage
-[Worker]     setter onmessageerror
+[Worker]     setter onconnect
 PASS successfullyParsed is true
 
 TEST COMPLETE
