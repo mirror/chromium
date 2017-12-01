@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "f9bd241d_55bbee25",
+        "filename": "tools/grit/grit/node/misc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-01T18:10:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94c36ee8_01a0d1e1",
+      "revId": "582fed6e1d0d5487d8dfec81ba7bd9eda9c0a518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45b737a8_7eb80221",
         "filename": "tools/grit/grit/node/misc.py",
         "patchSetId": 1
