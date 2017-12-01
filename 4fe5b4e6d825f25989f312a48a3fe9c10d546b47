@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c7f97299_ae10243d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-12-01T18:46:26Z",
+      "side": 1,
+      "message": "No, its ok for that line to be missing if there isn\u0027t a bug. However, I\u0027m surprised that there isn\u0027t a bug in this case.\n\nHow was this issue found in the first place?  There should probably be a bug filed first reporting how/why chrome crashes, under what circumstances, how to reproduce, etc.",
+      "parentUuid": "4bdd7842_004b25a9",
+      "revId": "4fe5b4e6d825f25989f312a48a3fe9c10d546b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d79bcf91_f1d4b213",
         "filename": "ipc/ipc_listener.h",
         "patchSetId": 2
@@ -154,6 +172,30 @@
       "side": 1,
       "message": "I could change it like this\n\n  if (data.empty()) {\n    delegate_-\u003eOnBrokenDataReceived();\n    return;\n  }\n  Message message(reinterpret_cast\u003cconst char*\u003e(data.data()),\n                  static_cast\u003cuint32_t\u003e(data.size()));\n  if (!message.IsValid()) {\n    delegate_-\u003eOnBrokenDataReceived();\n    return;\n  }\n\nDo you prefer this way?",
       "parentUuid": "ec1203ef_e23690fa",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 97,
+        "endChar": 0
+      },
+      "revId": "4fe5b4e6d825f25989f312a48a3fe9c10d546b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59e32b86_c8a1fedd",
+        "filename": "ipc/ipc_message_pipe_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-12-01T18:46:26Z",
+      "side": 1,
+      "message": "Yes, its a bit longer, but I think its clearer this way.",
+      "parentUuid": "70f3e2ca_b011b7b7",
       "range": {
         "startLine": 90,
         "startChar": 2,
