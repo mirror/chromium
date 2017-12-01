@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6e72bbb_2e5f3092",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/ChromeMediaRouterDialogController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-01T11:01:10Z",
+      "side": 1,
+      "message": "Could we move this `source` outside of the `for` like for `routeSelector`? Actually it would allow us to not have to keep track of the `routeSelector` and just pass it to the chooser when needed.",
+      "range": {
+        "startLine": 52,
+        "startChar": 24,
+        "endLine": 52,
+        "endChar": 30
+      },
+      "revId": "e6ff26b53f06414c34a1bc7ab2c8c4cfe07ff028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c40ec23b_6345d93a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/ChromeMediaRouterDialogController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-01T11:01:10Z",
+      "side": 1,
+      "message": "As above, we probably don\u0027t need this variable anymore.",
+      "range": {
+        "startLine": 87,
+        "startChar": 12,
+        "endLine": 87,
+        "endChar": 25
+      },
+      "revId": "e6ff26b53f06414c34a1bc7ab2c8c4cfe07ff028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0321feb_5ad573d2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingMediaRouteProvider.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-01T11:01:10Z",
+      "side": 1,
+      "message": "Sounds like you could revert the change on this file.",
+      "revId": "e6ff26b53f06414c34a1bc7ab2c8c4cfe07ff028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
