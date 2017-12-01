@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abf210d4_2b39a21f",
+        "filename": "ash/wm/overview/window_selector_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-01T17:05:34Z",
+      "side": 1,
+      "message": "I think we should use the transient parent if exists. (try bookmark bubble as an example)",
+      "revId": "d91524ba6a70089b0af731369ba364b59bf829da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
