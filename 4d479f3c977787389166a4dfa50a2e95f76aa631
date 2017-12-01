@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcc2ef23_9a395578",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 20
+      },
+      "lineNbr": 3262,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-01T01:28:07Z",
+      "side": 1,
+      "message": "instantiation-error-*.html in the current patchset passes even just after this CL (might be failing flakily though), because I relaxed the test expectations.",
+      "revId": "4d479f3c977787389166a4dfa50a2e95f76aa631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67746fdb_ff2d914a",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 20
+      },
+      "lineNbr": 3268,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-01T01:28:07Z",
+      "side": 1,
+      "message": "These three tests (Lines 3268-3270) fails just after this CL, and will pass once neis@\u0027s v8-side CL is landed.",
+      "revId": "4d479f3c977787389166a4dfa50a2e95f76aa631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d97676f_8a58491e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/module/instantiation-error-1.html",
+        "patchSetId": 20
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-01T01:28:07Z",
+      "side": 1,
+      "message": "neis@, should we also check that each exception object are distinct? i.e.\nassert_not_equals(log[1], log[3]) etc.\nProbably ditto for instantiation-error-{2,3,4}.html",
+      "revId": "4d479f3c977787389166a4dfa50a2e95f76aa631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72eff9c6_5a5a8a9c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/module/instantiation-error-5.html",
+        "patchSetId": 20
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-01T01:28:07Z",
+      "side": 1,
+      "message": "In this case we can/should assert the errors are different object, because they are different instantiation errors caused by different module scripts IIUC.",
+      "revId": "4d479f3c977787389166a4dfa50a2e95f76aa631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c258b5eb_a0621df0",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptModuleTest.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-01T01:28:07Z",
+      "side": 1,
+      "message": "I confirmed that this test passes if neis@\u0027s v8-side CL is applied.",
+      "revId": "4d479f3c977787389166a4dfa50a2e95f76aa631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17e45c95_3421a2b6",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-01T01:28:07Z",
+      "side": 1,
+      "message": "Previously, ModulePendingScriptTreeClient::NotifyModuleTreeLoadFinished() has an assertion to check that the returned module script is ready for evaluation, or has an error.\nAfter this CL (and the spec update), the concept of \"is ready for evaluation\" (instantiated successfully, evaluated successfully, or has evaluation error) cannot be checked from Blink/HTML-spec side.\nHow can, or should we keep the assertion?",
+      "revId": "4d479f3c977787389166a4dfa50a2e95f76aa631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c0720e7_33fa5068",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinkerTest.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-01T01:28:07Z",
+      "side": 1,
+      "message": "I changed this to a parse error (from instantiation error), because MTL is basically no longer affected by instantiation errors.",
+      "revId": "4d479f3c977787389166a4dfa50a2e95f76aa631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

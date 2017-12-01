@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc3ff316_bdff0a3a",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptModuleTest.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-01T01:28:07Z",
+      "side": 0,
+      "message": "I removed this because we check Evaluate()\u0027s result is empty (i.e. no evaluation error).",
+      "revId": "0d0b4325ffea6e0ef1f49f936380413984893ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e93572d3_1497d62c",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptModuleTest.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-01T01:28:07Z",
+      "side": 0,
+      "message": "Replaces this Status() check with an explicit check of Evaluate() result in Line 312.",
+      "revId": "0d0b4325ffea6e0ef1f49f936380413984893ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ee8110c_bd3ba859",
+        "filename": "third_party/WebKit/Source/core/dom/ModulePendingScript.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-01T01:28:07Z",
+      "side": 0,
+      "message": "See comments in ModuleTreeLinker::AdvanceState().",
+      "revId": "0d0b4325ffea6e0ef1f49f936380413984893ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a993851b_3885e8a2",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinkerTest.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-01T01:28:07Z",
+      "side": 0,
+      "message": "Can we remove this test (and thus Lines 243--258 on the right), as we no longer assumes something about MTL with a module script graph that experienced previous instantiation error, because we no longer remember instantiation errors.\n(Strictly speaking, we expect that instantiation errors are not remembered, but if we want to test it probably we should add a new test where the not-remembering instantiation error affects observable changes)",
+      "revId": "0d0b4325ffea6e0ef1f49f936380413984893ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
