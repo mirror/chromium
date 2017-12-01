@@ -74,9 +74,7 @@ class WebPackageLoader : public mojom::URLLoader,
                          public mojom::URLLoaderClient,
                          public WebPackageReaderAdapterClient {
  public:
-  WebPackageLoader(WebPackageRequestHandler* request_handler,
-                   LoaderCallback loader_callback,
-                   const ResourceRequest& resource_request,
+  WebPackageLoader(const ResourceRequest& resource_request,
                    URLLoaderFactoryGetter* url_loader_factory_getter);
   ~WebPackageLoader() override;
 
@@ -85,8 +83,13 @@ class WebPackageLoader : public mojom::URLLoader,
 
   void DetachFromRequestHandler();
 
+  void AttachToRequestHandler(WebPackageRequestHandler* request_handler,
+                              LoaderCallback loader_callback);
+
  private:
   void MaybeDestruct();
+
+  void MaybeRunLoaderCallback();
 
   // TODO(kinuko): Remove this indirection and fix ownership.
   // WebPackageReaderAdapterClient:

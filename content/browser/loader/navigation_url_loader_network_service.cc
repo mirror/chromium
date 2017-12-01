@@ -21,6 +21,7 @@
 #include "content/browser/loader/navigation_resource_throttle.h"
 #include "content/browser/loader/navigation_url_loader_delegate.h"
 #include "content/browser/loader/url_loader_request_handler.h"
+#include "content/browser/loader/webpackage_loader_manager.h"
 #include "content/browser/resource_context_impl.h"
 #include "content/browser/service_worker/service_worker_navigation_handle.h"
 #include "content/browser/service_worker/service_worker_navigation_handle_core.h"
