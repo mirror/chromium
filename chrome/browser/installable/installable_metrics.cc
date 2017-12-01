@@ -7,8 +7,13 @@
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 
-namespace {
+// static
+void InstallableMetrics::TrackInstallSource(WebAppInstallSource source) {
+  UMA_HISTOGRAM_ENUMERATION("Webapp.Install.InstallSource", source,
+                            WebAppInstallSource::COUNT);
+}
 
+namespace {
 void WriteMenuOpenHistogram(InstallabilityCheckStatus status, int count) {
   for (int i = 0; i < count; ++i) {
     UMA_HISTOGRAM_ENUMERATION("Webapp.InstallabilityCheckStatus.MenuOpen",
