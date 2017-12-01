@@ -70,6 +70,30 @@
       "revId": "166d81dbeda118eb4c874b98de1a190b940f1361",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bf0fb42_7a50c25f",
+        "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-01T12:10:57Z",
+      "side": 1,
+      "message": "Yes I thought your original comments about the load methods used in the NEON code too, where you remarked that there were issues with code and a compiler\u0027s freedom to assume alignment (time-bomb).\n\nI agree that memcpy() can\u0027t make any assumptions about buffer alignment, and nor can __builtin_memcpy() under the conditions you mentioned. \n\nloadchunk() loads 16 bytes into an SIMD register, and maybe does with it a single vld1q_u8 or _mm_loadu_si128.  storechunk() could use V_STORE_128 I note, but does not, preferring __builtin_memcpy() perhaps due to the reasonable expectation that the compiler will emit a single unaligned 16-byte store. \n\nAs far as the alignment patterns you have experienced: in the alder32_simd patch on Intel, we didn\u0027t care about initial alignment small step (we measured it and found no different on modern Intel CPU).  We did pre-align on the ARM port though, after noting that the ARM7/8 documentation said there would be a penalty for unaligned access:\n\n  - DDI0487B: ARMv8-A ARM Architecture Reference Manual\n  Section B2.4.3 Unaligned data access restrictions \n  Unaligned accesses typically takes a number of additional cycles to\n  complete compared to a naturally-aligned access.\n\n  - DDI0406C: ARMV7-A ARMv7-R ARM Architecture Reference Manual\n  Section A3.2.3 Unaligned data access restrictions in ARMv7 and ARMv6\n  Unaligned accesses typically take a number of additional cycles to\n  complete compared to a naturally aligned transfer. The real-time\n  implications must be analyzed carefully and key data structures might\n  need to have their alignment adjusted for optimum performance.\n  Unaligned access operations must not be used for accessing memory-\n  mapped registers in a Device or Strongly-ordered memory region.\n\n\nThis is interesting and all, but I wasn\u0027t changing the behavior of the load/storechunk in this patch :). It there was a FIXME you had in mind to add about them here, let me know.",
+      "parentUuid": "e68971dc_f82a8503",
+      "range": {
+        "startLine": 61,
+        "startChar": 39,
+        "endLine": 61,
+        "endChar": 54
+      },
+      "revId": "166d81dbeda118eb4c874b98de1a190b940f1361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
