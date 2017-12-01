@@ -36,6 +36,7 @@ class BrokerServices;
 class ProcessState;
 class TargetPolicy;
 class TargetServices;
+class AppContainerProfile;
 
 // BrokerServices exposes all the broker API.
 // The basic use is to start the target(s) and wait for them to end.
@@ -62,6 +63,12 @@ class BrokerServices {
   // interface to specify the sandbox policy for new processes created by
   // SpawnTarget()
   virtual scoped_refptr<TargetPolicy> CreatePolicy() = 0;
+
+  // Returns the interface pointer to a new, app container profile. Use this
+  // interface to specify the sandbox policy for new processes created by
+  // SpawnTarget().
+  virtual scoped_refptr<TargetPolicy> CreatePolicy(
+      AppContainerProfile* profile) = 0;
 
   // Creates a new target (child process) in a suspended state.
   // Parameters:
