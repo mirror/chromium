@@ -7,7 +7,6 @@
 #include <sys/stat.h>
 #include <algorithm>
 
-#include "base/debug/crash_logging.h"
 #include "base/mac/bundle_locations.h"
 #include "base/mac/foundation_util.h"
 #include "base/mac/mac_util.h"
@@ -54,10 +53,10 @@
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/toolbar/app_menu_icon_controller.h"
 #include "chrome/browser/ui/toolbar/app_menu_model.h"
-#include "chrome/common/crash_keys.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
+#include "components/crash/core/common/crash_key.h"
 #include "components/omnibox/browser/autocomplete_classifier.h"
 #include "components/omnibox/browser/autocomplete_match.h"
 #include "components/omnibox/browser/omnibox_edit_model.h"
@@ -268,12 +267,12 @@ class NotificationBridge : public AppMenuIconController::Delegate {
   while (closestPath && stat(closestPath.fileSystemRepresentation, &sb) != 0) {
     closestPath = [closestPath stringByDeletingLastPathComponent];
   }
-  base::debug::ScopedCrashKey nibCrashKey {
-    crash_keys::mac::kToolbarNibInfo,
-        [NSString stringWithFormat:@"errno: %d nib: %@ closest: %@", nibErrno,
-                                   nibPath, closestPath]
-            .UTF8String
-  };
+
+  static crash_reporter::CrashKeyString<256> nibCrashKey("toolbar-nib-info");
+  crash_reporter::ScopedCrashKeyString scopedKey(
+      &nibCrashKey, base::SysNSStringToUTF8([NSString
+                        stringWithFormat:@"errno: %d nib: %@ closest: %@",
+                                         nibErrno, nibPath, closestPath]));
 
   // When linking and running on 10.10+, both -awakeFromNib and -viewDidLoad may
   // be called, don't initialize twice.
