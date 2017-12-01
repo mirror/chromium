@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0139fa82_cbf1f4c7",
+        "filename": "media/mojo/services/gpu_mojo_media_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-01T22:57:12Z",
+      "side": 1,
+      "message": "rkuroiwa: Here\u0027s the point for you to create your CdmProxy.",
+      "revId": "42a25c8afe3ab2a31b813d596be1c19f7ee1b961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
