@@ -16,6 +16,24 @@
       "revId": "1012321752f99a49f486debf9b0d39d19825da37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "474b33b3_d0ba4ba2",
+        "filename": "printing/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-12-01T00:04:55Z",
+      "side": 1,
+      "message": "Yes. My understanding is that name-based filters are considered harmful, so we are not going to add it for Fuchsia (and longer term they may be removed for other platforms as well).",
+      "parentUuid": "9e0511a3_edc42f9c",
+      "revId": "1012321752f99a49f486debf9b0d39d19825da37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
