@@ -462,6 +462,72 @@ String HintingName(SkPaint::Hinting hinting) {
   };
 }
 
+String BlendModeName(SkBlendMode blend_mode) {
+  switch (blend_mode) {
+    case SkBlendMode::kClear:
+      return "Clear";
+    case SkBlendMode::kSrc:
+      return "Src";
+    case SkBlendMode::kDst:
+      return "Dst";
+    case SkBlendMode::kSrcOver:
+      return "SrcOver";
+    case SkBlendMode::kDstOver:
+      return "DstOver";
+    case SkBlendMode::kSrcIn:
+      return "SrcIn";
+    case SkBlendMode::kDstIn:
+      return "DstIn";
+    case SkBlendMode::kSrcOut:
+      return "SrcOut";
+    case SkBlendMode::kDstOut:
+      return "DstOut";
+    case SkBlendMode::kSrcATop:
+      return "SrcATop";
+    case SkBlendMode::kDstATop:
+      return "DstATop";
+    case SkBlendMode::kXor:
+      return "Xor";
+    case SkBlendMode::kPlus:
+      return "Plus";
+    case SkBlendMode::kModulate:
+      return "Modulate";
+    case SkBlendMode::kScreen:
+      return "Screen";
+    case SkBlendMode::kOverlay:
+      return "Overlay";
+    case SkBlendMode::kDarken:
+      return "Darken";
+    case SkBlendMode::kLighten:
+      return "Lighten";
+    case SkBlendMode::kColorDodge:
+      return "ColorDodge";
+    case SkBlendMode::kColorBurn:
+      return "ColorBurn";
+    case SkBlendMode::kHardLight:
+      return "HardLight";
+    case SkBlendMode::kSoftLight:
+      return "SoftLight";
+    case SkBlendMode::kDifference:
+      return "Difference";
+    case SkBlendMode::kExclusion:
+      return "Exclusion";
+    case SkBlendMode::kMultiply:
+      return "Multiply";
+    case SkBlendMode::kHue:
+      return "Hue";
+    case SkBlendMode::kSaturation:
+      return "Saturation";
+    case SkBlendMode::kColor:
+      return "Color";
+    case SkBlendMode::kLuminosity:
+      return "Luminosity";
+    default:
+      NOTREACHED();
+      return "?";
+  }
+}
+
 std::unique_ptr<JSONObject> ObjectForSkPaint(const SkPaint& paint) {
   std::unique_ptr<JSONObject> paint_item = JSONObject::Create();
   paint_item->SetDouble("textSize", paint.getTextSize());
@@ -482,6 +548,7 @@ std::unique_ptr<JSONObject> ObjectForSkPaint(const SkPaint& paint) {
   paint_item->SetString("textEncoding",
                         TextEncodingName(paint.getTextEncoding()));
   paint_item->SetString("hinting", HintingName(paint.getHinting()));
+  paint_item->SetString("blendMode", BlendModeName(paint.getBlendMode()));
   return paint_item;
 }
 
