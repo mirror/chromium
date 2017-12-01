@@ -52,6 +52,24 @@
       "revId": "fab2d5c638dc323a8772f31d060f1325986c3304",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "339b0a31_251e2b38",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-01T22:10:30Z",
+      "side": 1,
+      "message": "Yes, I\u0027d rather not hard-code platform details (that may not be true forever) in client code. Makes it harder to test too.",
+      "parentUuid": "58f246a0_c21438af",
+      "revId": "fab2d5c638dc323a8772f31d060f1325986c3304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
