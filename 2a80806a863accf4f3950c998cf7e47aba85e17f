@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "c3ce5e39_cea85a71",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-01T16:45:17Z",
+      "side": 1,
+      "message": "nit: newline after for symmetry with L75",
+      "range": {
+        "startLine": 43,
+        "startChar": 10,
+        "endLine": 43,
+        "endChar": 11
+      },
+      "revId": "2a80806a863accf4f3950c998cf7e47aba85e17f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81d78a38_398b74e2",
         "filename": "components/arc/common/video_decode_accelerator.mojom",
         "patchSetId": 26
@@ -18,6 +41,29 @@
         "startChar": 21,
         "endLine": 39,
         "endChar": 22
+      },
+      "revId": "2a80806a863accf4f3950c998cf7e47aba85e17f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dafd6fc4_63c4abdf",
+        "filename": "components/arc/video_accelerator/video_accelerator.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-01T16:45:17Z",
+      "side": 1,
+      "message": "IWYU: Remove this (and move it where it is actually being used).",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 0
       },
       "revId": "2a80806a863accf4f3950c998cf7e47aba85e17f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
