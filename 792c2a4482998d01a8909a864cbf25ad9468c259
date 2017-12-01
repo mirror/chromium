@@ -2,6 +2,143 @@
   "comments": [
     {
       "key": {
+        "uuid": "52ab4cb6_9916180b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-01T02:55:37Z",
+      "side": 1,
+      "message": "This is a sign your mojom is in the wrong place. //content/public isn\u0027t allowed to depend on non-public //content; otherwise, implementation details leak out.\n\nThe ColorSuggestion struct belongs in //content/public/common, while the chooser interfaces belong in //content/common.",
+      "revId": "792c2a4482998d01a8909a864cbf25ad9468c259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaac6383_05fe8d8b",
+        "filename": "components/web_contents_delegate_android/color_chooser_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-01T02:55:37Z",
+      "side": 1,
+      "message": "const auto\u0026 suggestion \u003d *suggestions[i];",
+      "revId": "792c2a4482998d01a8909a864cbf25ad9468c259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d842aa4d_e65e1642",
+        "filename": "components/web_contents_delegate_android/color_chooser_android.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-01T02:55:37Z",
+      "side": 1,
+      "message": "Just include the mojom.h file.",
+      "revId": "792c2a4482998d01a8909a864cbf25ad9468c259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f4d0138_599d8118",
+        "filename": "content/common/color_chooser.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-01T02:55:37Z",
+      "side": 1,
+      "message": "is?",
+      "range": {
+        "startLine": 7,
+        "startChar": 16,
+        "endLine": 7,
+        "endChar": 18
+      },
+      "revId": "792c2a4482998d01a8909a864cbf25ad9468c259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54c214f1_62ba5cd4",
+        "filename": "content/common/color_chooser.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-01T02:55:37Z",
+      "side": 1,
+      "message": "Why associated?",
+      "range": {
+        "startLine": 12,
+        "startChar": 6,
+        "endLine": 12,
+        "endChar": 16
+      },
+      "revId": "792c2a4482998d01a8909a864cbf25ad9468c259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0b2df04_d6239726",
+        "filename": "content/common/color_chooser.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-01T02:55:37Z",
+      "side": 1,
+      "message": "This shouldn\u0027t need to send any IDs across the wire. Use another interface to represent the per-colour-chooser connection from the renderer to the browser. Then this interface becomes just a factory interface:\n\ninterface ColorChooserFactory {\n  OpenColorChooser(\n      ColorChooser\u0026 chooser,\n      ColorChooserClient client,\n      uint32 color,\n      array\u003cColorSuggestion\u003e suggestions);\n};\n\ninterface ColorChooser {\n  SetSelectedColor(uint32 color);\n};\n\ninterface ColorChooserClient {\n  // Notifies the renderer that the user selected a color.\n  DidChooseColor(uint32 color);\n};\n\nClosing the per-chooser pipe informs the other end that the chooser was closed or should be closed depending on the direction.",
+      "range": {
+        "startLine": 13,
+        "startChar": 13,
+        "endLine": 13,
+        "endChar": 15
+      },
+      "revId": "792c2a4482998d01a8909a864cbf25ad9468c259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43fe76b9_bb2e0ce9",
+        "filename": "content/public/browser/web_contents_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-01T02:55:37Z",
+      "side": 1,
+      "message": "Again, just include the mojom.",
+      "revId": "792c2a4482998d01a8909a864cbf25ad9468c259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebafdb03_2afcd77b",
         "filename": "content/renderer/renderer_webcolorchooser_impl.cc",
         "patchSetId": 3
