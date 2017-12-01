@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c514ac78_599839b8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/UIString.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-01T01:38:10Z",
+      "side": 1,
+      "message": "function(strings, ...values)",
+      "revId": "3144f5963cca7e7083ebd01e6880f5ed3507bc3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
