@@ -2852,11 +2852,11 @@ TEST_F(RenderFrameHostManagerTest, CanCommitOrigin) {
 }
 
 // RenderFrameHostManagerTest extension for PlzNavigate enabled tests.
+// TODO(clamy): Make those regular RenderFrameHostManagerTests.
 class RenderFrameHostManagerTestWithBrowserSideNavigation
     : public RenderFrameHostManagerTest {
  public:
   void SetUp() override {
-    EnableBrowserSideNavigation();
     RenderFrameHostManagerTest::SetUp();
   }
 };

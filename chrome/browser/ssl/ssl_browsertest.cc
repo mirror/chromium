@@ -833,13 +833,8 @@ class SSLUITestTransientAndCommitted
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     SSLUITest::SetUpCommandLine(command_line);
-    if (IsCommittedInterstitialTest()) {
+    if (IsCommittedInterstitialTest())
       command_line->AppendSwitch(switches::kCommittedInterstitials);
-      // Forcing PlzNavigate means we run tests with PlzNavigate on the
-      // renderer_side_navigation bots, but it prevents us from having to add an
-      // early return check to every individual test.
-      command_line->AppendSwitch(switches::kEnableBrowserSideNavigation);
-    }
   }
 
   // SSLUITest:

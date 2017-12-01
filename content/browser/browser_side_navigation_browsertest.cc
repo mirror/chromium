@@ -38,15 +38,12 @@
 
 namespace content {
 
+// TODO(clamy): Rename those NavigationBrowserTests.
 class BrowserSideNavigationBrowserTest : public ContentBrowserTest {
  public:
   BrowserSideNavigationBrowserTest() {}
 
  protected:
-  void SetUpCommandLine(base::CommandLine* command_line) override {
-    command_line->AppendSwitch(switches::kEnableBrowserSideNavigation);
-  }
-
   void SetUpOnMainThread() override {
     host_resolver()->AddRule("*", "127.0.0.1");
     ASSERT_TRUE(embedded_test_server()->Start());
