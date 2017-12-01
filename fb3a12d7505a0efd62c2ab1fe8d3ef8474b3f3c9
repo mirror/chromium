@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a560d58_88429e01",
+        "filename": "components/signin/ios/browser/delay_callback_helper.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-01T07:43:15Z",
+      "side": 1,
+      "message": "nit: I would make the comment just about the class\u0027 purpose, not about who its clients are.\n\n\"Class that manages the invoking of callbacks when the network is available.\"",
+      "revId": "fb3a12d7505a0efd62c2ab1fe8d3ef8474b3f3c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9f83c53_f72f91b3",
+        "filename": "components/signin/ios/browser/delay_callback_helper_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-01T07:43:15Z",
+      "side": 1,
+      "message": "nit: It would be nice to test behavior when there are multiple deferred callbacks, e.g. by having a |num_callbacks_invoked_| ivar rather than |callback_was_called_|.",
+      "revId": "fb3a12d7505a0efd62c2ab1fe8d3ef8474b3f3c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
