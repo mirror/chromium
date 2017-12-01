@@ -22,6 +22,30 @@
       "revId": "9403b815950a8b9eaf4ce182679400ae52e6f370",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be862bb6_4f1f3f69",
+        "filename": "chrome/test/data/webui/print_preview/settings_section_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-01T02:33:58Z",
+      "side": 1,
+      "message": "I don\u0027t really use it, just remembered seeing somewhere that if a condition failure won\u0027t lead to crashes further down the test, it should be expect* not assert*, which is why I converted everything. Would be fine with converting back to assert.",
+      "parentUuid": "ec8df636_e92569bb",
+      "range": {
+        "startLine": 133,
+        "startChar": 8,
+        "endLine": 133,
+        "endChar": 20
+      },
+      "revId": "9403b815950a8b9eaf4ce182679400ae52e6f370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
