@@ -219,7 +219,7 @@ void FrameGenerator::DrawWindow(viz::RenderPass* pass) {
                bounds_at_origin /* visible_rect */, true /* needs_blending*/,
                window_manager_surface_info_.id(),
                window_manager_surface_info_.id(),
-               SK_ColorWHITE /* default_background_color */,
+               SK_ColorWHITE /* default_background_color */, base::nullopt,
                false /* stretch_content_to_fill_bounds */);
 }
 
