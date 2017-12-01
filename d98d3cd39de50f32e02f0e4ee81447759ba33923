@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa8720f_bd3c9541",
+        "filename": "components/sync/user_events/trial_recorder.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-01T18:02:56Z",
+      "side": 1,
+      "message": "Nit: Worth a comment to explain what this is.",
+      "range": {
+        "startLine": 27,
+        "startChar": 38,
+        "endLine": 27,
+        "endChar": 0
+      },
+      "revId": "d98d3cd39de50f32e02f0e4ee81447759ba33923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd963cc1_1720cfad",
+        "filename": "components/sync/user_events/trial_recorder.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-01T18:02:56Z",
+      "side": 1,
+      "message": "Nit: base::TimeDelta::FromDays(1).InSeconds() - so it\u0027s more readable.",
+      "range": {
+        "startLine": 30,
+        "startChar": 6,
+        "endLine": 30,
+        "endChar": 8
+      },
+      "revId": "d98d3cd39de50f32e02f0e4ee81447759ba33923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a83acdc8_fd2e5af2",
+        "filename": "components/sync/user_events/user_event_service_impl_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-01T18:02:56Z",
+      "side": 1,
+      "message": "Nit: Remove this since it only saves base:: on line 104.",
+      "range": {
+        "startLine": 20,
+        "startChar": 27,
+        "endLine": 20,
+        "endChar": 0
+      },
+      "revId": "d98d3cd39de50f32e02f0e4ee81447759ba33923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b18f77fc_b84d20d0",
+        "filename": "components/sync/user_events/user_event_service_impl_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-01T18:02:56Z",
+      "side": 1,
+      "message": "Nit: Can you also check the value? i.e. 123",
+      "range": {
+        "startLine": 224,
+        "startChar": 51,
+        "endLine": 224,
+        "endChar": 0
+      },
+      "revId": "d98d3cd39de50f32e02f0e4ee81447759ba33923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8297a4f7_d58fdd34",
+        "filename": "components/variations/variations_id_collection.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-01T18:02:56Z",
+      "side": 1,
+      "message": "Nit: No {}",
+      "range": {
+        "startLine": 43,
+        "startChar": 39,
+        "endLine": 43,
+        "endChar": 0
+      },
+      "revId": "d98d3cd39de50f32e02f0e4ee81447759ba33923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d91d2648_a3a5a4ee",
+        "filename": "components/variations/variations_id_collection.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-01T18:02:56Z",
+      "side": 1,
+      "message": "Nit: const",
+      "range": {
+        "startLine": 42,
+        "startChar": 18,
+        "endLine": 42,
+        "endChar": 33
+      },
+      "revId": "d98d3cd39de50f32e02f0e4ee81447759ba33923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f7b705b_3271ec90",
+        "filename": "components/variations/variations_id_collection.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-01T18:02:56Z",
+      "side": 1,
+      "message": "Nit: const",
+      "range": {
+        "startLine": 45,
+        "startChar": 26,
+        "endLine": 45,
+        "endChar": 30
+      },
+      "revId": "d98d3cd39de50f32e02f0e4ee81447759ba33923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96e11db5_e6628120",
+        "filename": "components/variations/variations_id_collection_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-01T18:02:56Z",
+      "side": 1,
+      "message": "Nit: \"should be gracefully handled\"",
+      "range": {
+        "startLine": 114,
+        "startChar": 36,
+        "endLine": 114,
+        "endChar": 37
+      },
+      "revId": "d98d3cd39de50f32e02f0e4ee81447759ba33923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
