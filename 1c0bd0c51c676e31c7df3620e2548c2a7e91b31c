@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "efea506d_98957697",
+        "filename": "ash/public/cpp/window_pin_type.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-01T17:39:11Z",
+      "side": 1,
+      "message": "I\u0027ve done a refactor in another CL, using the new function now.",
+      "parentUuid": "de362011_20b6bf10",
+      "revId": "1c0bd0c51c676e31c7df3620e2548c2a7e91b31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "226bc762_3123d91e",
         "filename": "chrome/browser/ui/browser_command_controller.cc",
         "patchSetId": 1
@@ -87,6 +105,24 @@
       "revId": "1c0bd0c51c676e31c7df3620e2548c2a7e91b31c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cb61ee4_103c8b81",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-01T17:39:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ce41356_71462795",
+      "revId": "1c0bd0c51c676e31c7df3620e2548c2a7e91b31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
