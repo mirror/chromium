@@ -107,6 +107,9 @@ public class ContextualSearchRankerLoggerImpl implements ContextualSearchRankerL
         mIsLoggingReadyForPage = true;
         mBasePageWebContents = basePageWebContents;
         mHasInferenceOccurred = false;
+        if (isEnabled() && mBasePageWebContents != null) {
+            nativeSetupLoggingAndRanker(mNativePointer, mBasePageWebContents);
+        }
     }
 
     @Override
@@ -134,13 +137,15 @@ public class ContextualSearchRankerLoggerImpl implements ContextualSearchRankerL
         mHasInferenceOccurred = true;
         if (isEnabled() && mBasePageWebContents != null && mFeaturesToLog != null
                 && !mFeaturesToLog.isEmpty()) {
-            nativeSetupLoggingAndRanker(mNativePointer, mBasePageWebContents);
+            System.out.println("ctxs features: " + mFeaturesToLog.size());
             for (Map.Entry<Feature, Object> entry : mFeaturesToLog.entrySet()) {
                 logObject(entry.getKey(), entry.getValue());
             }
             mFeaturesLoggedForTesting = mFeaturesToLog;
             mFeaturesToLog = new HashMap<Feature, Object>();
             mAssistRankerPrediction = nativeRunInference(mNativePointer);
+        } else {
+            System.out.println("ctxs can't run prediction!!!!!");
         }
         return mAssistRankerPrediction;
     }
@@ -166,12 +171,15 @@ public class ContextualSearchRankerLoggerImpl implements ContextualSearchRankerL
                     && !mFeaturesToLog.isEmpty()) {
                 assert mIsLoggingReadyForPage;
                 assert mHasInferenceOccurred;
+                System.out.println("ctxs outcomes: " + mFeaturesToLog.size());
                 // Only the outcomes will be present, since we logged inference features at
                 // inference time.
                 for (Map.Entry<Feature, Object> entry : mFeaturesToLog.entrySet()) {
                     logObject(entry.getKey(), entry.getValue());
                 }
                 mFeaturesLoggedForTesting = mFeaturesToLog;
+            } else {
+                System.out.println("ctxs No outcomes!");
             }
             nativeWriteLogAndReset(mNativePointer);
         }
