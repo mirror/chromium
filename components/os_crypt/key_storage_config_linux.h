@@ -33,6 +33,9 @@ struct Config {
   bool should_use_preference;
   // Preferences are stored in a separate file in the user data directory.
   base::FilePath user_data_path;
+  // If we communicate with the backend via dbus, that needs to happen on a
+  // specific thread. Currently, only Kwallet needs this.
+  scoped_refptr<base::SequencedTaskRunner> dbus_task_runner;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(Config);
