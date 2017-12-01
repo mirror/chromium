@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43f9ebe0_65d6eff2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/serviceWorkersView.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-01T19:04:18Z",
+      "side": 1,
+      "message": "Let\u0027s use aria instead of hidden controls for this.",
+      "revId": "cd36f743a041f4a5feea041e7436c4bdc9bba881",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
