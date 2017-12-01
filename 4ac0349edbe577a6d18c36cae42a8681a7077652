@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1fc96ca_c14258e2",
+        "filename": "chrome/browser/ui/cocoa/location_bar/content_setting_decoration.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-01T05:58:17Z",
+      "side": 1,
+      "message": "nit: comment here like\n\n// The Framebust bubble only has a toolkit-views implementation.\n\n\n(hopefully this entire file gets deleted soon, but in the meantime this `if` condition might get manipulated and you don\u0027t want your bubble forgotten).",
+      "revId": "4ac0349edbe577a6d18c36cae42a8681a7077652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a5d7a26_f3c7e449",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 15
+      },
+      "lineNbr": 1312,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-01T05:58:17Z",
+      "side": 1,
+      "message": "It would be good to add a test case to this file as well -- this will allow it to easily be summoned for visual testing. Please do this in a follow-up.",
+      "revId": "4ac0349edbe577a6d18c36cae42a8681a7077652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
