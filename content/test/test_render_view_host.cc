@@ -119,7 +119,6 @@ bool TestRenderWidgetHostView::HasFocus() const {
 
 void TestRenderWidgetHostView::Show() {
   is_showing_ = true;
-  is_occluded_ = false;
 }
 
 void TestRenderWidgetHostView::Hide() {
@@ -134,12 +133,8 @@ void TestRenderWidgetHostView::CaptureStateChanged() {
   ++num_capture_state_changed_;
 }
 
-void TestRenderWidgetHostView::WasUnOccluded() {
-  is_occluded_ = false;
-}
-
-void TestRenderWidgetHostView::WasOccluded() {
-  is_occluded_ = true;
+void TestRenderWidgetHostView::CaptureStateChanged() {
+  ++num_capture_state_changed_;
 }
 
 void TestRenderWidgetHostView::RenderProcessGone(base::TerminationStatus status,
