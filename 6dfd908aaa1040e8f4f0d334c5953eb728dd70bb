@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "35b9d034_5a97c7b8",
+        "filename": "chrome/browser/vr/elements/text.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-01T16:33:12Z",
+      "side": 1,
+      "message": "I think that\u0027s a good idea.  Will move it out.",
+      "parentUuid": "048a67a3_0e14412b",
+      "revId": "6dfd908aaa1040e8f4f0d334c5953eb728dd70bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb9eb3c5_df7c56a3",
         "filename": "chrome/browser/vr/elements/text.cc",
         "patchSetId": 2
