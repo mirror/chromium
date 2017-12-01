@@ -1147,8 +1147,7 @@ bool LayoutBlock::HitTestChildren(HitTestResult& result,
        child = child->PreviousSiblingBox()) {
     LayoutPoint child_point =
         FlipForWritingModeForChild(child, scrolled_offset);
-    if (!child->HasSelfPaintingLayer() && !child->IsFloating() &&
-        !child->IsColumnSpanAll() &&
+    if (!child->HasSelfPaintingLayer() && !child->IsColumnSpanAll() &&
         child->NodeAtPoint(result, location_in_container, child_point,
                            child_hit_test)) {
       UpdateHitTestResult(
