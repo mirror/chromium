@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebc8fc3e_84811d96",
+        "filename": "components/arc/connection_holder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-01T16:06:06Z",
+      "side": 1,
+      "message": "VLOG or DVLOG maybe?",
+      "revId": "9fc57ad952fc7babf48fa8abd0d1bb6672e49fd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95be3d59_85d7070f",
+        "filename": "components/arc/connection_holder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-01T16:06:06Z",
+      "side": 1,
+      "message": "same",
+      "revId": "9fc57ad952fc7babf48fa8abd0d1bb6672e49fd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
