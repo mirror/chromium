@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "fd162c12_64c78b7a",
+        "filename": "third_party/WebKit/Source/core/inspector/ThreadDebugger.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-01T06:53:36Z",
+      "side": 1,
+      "message": "Perhaps--if that\u0027s all you need, it\u0027s likely better in terms of binary size. It\u0027s not super important though.",
+      "parentUuid": "84f123b3_c1adf101",
+      "revId": "ff50962f2e7bb7387b6f4a214e59a92052645640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f9d34045_fe0d1019",
         "filename": "third_party/WebKit/common/message_port/message_port.mojom",
         "patchSetId": 4
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "I added a little more details. This array contains binary representation of v8_inspector::V8StackTraceId. I am not sure what is the right way to pass this structure, I prefer not to expose this structure as mojom structure since it is probably only one place where I need it so I just pass it as array of bytes (struct contains uinptr_t and two int64_t). Could you suggest better way?",
       "parentUuid": "f9d34045_fe0d1019",
+      "revId": "ff50962f2e7bb7387b6f4a214e59a92052645640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72d1c244_e05a4e00",
+        "filename": "third_party/WebKit/common/message_port/message_port.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-01T06:53:36Z",
+      "side": 1,
+      "message": "I think it would be better to just explicitly define a struct, even if it\u0027s only used by one place. You could typemap it if you wanted, so the non-Mojo code could just keep using v8StackTraceId.\n\nMemcpying this has potential dangers down the road, if the struct has internal padding, this could lead to infoleaks, et cetera.",
+      "parentUuid": "af05eb9e_d3955aa9",
       "revId": "ff50962f2e7bb7387b6f4a214e59a92052645640",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
