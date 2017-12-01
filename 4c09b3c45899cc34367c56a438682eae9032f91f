@@ -16,6 +16,24 @@
       "revId": "4c09b3c45899cc34367c56a438682eae9032f91f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3df0e07_460e9c95",
+        "filename": "media/base/ipc/media_param_traits_macros.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1230862
+      },
+      "writtenOn": "2017-12-01T19:56:07Z",
+      "side": 1,
+      "message": "These values are are used in this CL: https://chromium-review.googlesource.com/c/chromium/src/+/756443\n\nThe Color Space info is only used in a switch case while the hdr_metadata values is put into a bytebuffer and passed to the android system.",
+      "parentUuid": "733ede88_846bd9d4",
+      "revId": "4c09b3c45899cc34367c56a438682eae9032f91f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
