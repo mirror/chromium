@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "074f1298_36b2e5a7",
+        "filename": "components/cronet/ios/cronet_metrics.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-01T18:03:59Z",
+      "side": 1,
+      "message": "I think you\u0027re right.  I\u0027ve moved this into CronetMetricsDelegate, and also added it to the anonymous namespace in cronet_metrics.mm, which based on https://google.github.io/styleguide/cppguide.html#Namespaces I think should be okay because it\u0027s internal-only and isn\u0027t polluting the global namespace.",
+      "parentUuid": "0b0f879c_974cee11",
+      "range": {
+        "startLine": 56,
+        "startChar": 6,
+        "endLine": 56,
+        "endChar": 13
+      },
+      "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6e4927c_8b63b004",
         "filename": "components/cronet/ios/cronet_metrics.h",
         "patchSetId": 25
@@ -45,6 +69,30 @@
       "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bf87254_9629c813",
+        "filename": "components/cronet/ios/cronet_metrics.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-01T18:03:59Z",
+      "side": 1,
+      "message": "Added comment.  Objective C interfaces don\u0027t seem to be able to go into C++ namespaces, per the error I get when I try.\n\n(\"Objective-C declarations may only appear in global scope\" is the precise text of the error.)",
+      "parentUuid": "f6e4927c_8b63b004",
+      "range": {
+        "startLine": 81,
+        "startChar": 1,
+        "endLine": 81,
+        "endChar": 10
+      },
+      "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "20c7951e_e4837ef1",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 25
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-01T18:03:59Z",
+      "side": 1,
+      "message": "Good catch!  It\u0027d be really nice if they could use some shared function to reduce code duplication, but I don\u0027t know how much that\u0027s possible.\n\nThe comments are also almost-identical, so I consolidated into one and tried to make it clear that it\u0027s talking about both inits.",
+      "parentUuid": "facbef28_069e4804",
+      "range": {
+        "startLine": 32,
+        "startChar": 16,
+        "endLine": 32,
+        "endChar": 20
+      },
+      "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a337316f_29d001a8",
         "filename": "components/cronet/ios/cronet_metrics.mm",
         "patchSetId": 25
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "3546537d_c8979c8d",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 25
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-01T18:03:59Z",
+      "side": 1,
+      "message": "|git cl format| has actually been doing some extremely weird things to the formatting of the objective c interfaces/implementations.  Do you know what\u0027s causing that/if it can be fixed?",
+      "parentUuid": "a337316f_29d001a8",
+      "range": {
+        "startLine": 124,
+        "startChar": 68,
+        "endLine": 124,
+        "endChar": 69
+      },
+      "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eff2e729_5227a5aa",
         "filename": "components/cronet/ios/cronet_metrics.mm",
         "patchSetId": 25
@@ -108,6 +204,24 @@
       "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5320202_fb11e219",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 25
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-01T18:03:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eff2e729_5227a5aa",
+      "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "c13e3952_8fe40e87",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 25
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-01T18:03:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83afc0d7_8f8a9a3a",
+      "range": {
+        "startLine": 158,
+        "startChar": 42,
+        "endLine": 158,
+        "endChar": 46
+      },
+      "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a53a3d6b_218ed65e",
         "filename": "components/cronet/ios/cronet_metrics.mm",
         "patchSetId": 25
@@ -177,6 +315,30 @@
       "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d5c9368_0b20f38f",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 25
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-01T18:03:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a53a3d6b_218ed65e",
+      "range": {
+        "startLine": 159,
+        "startChar": 49,
+        "endLine": 159,
+        "endChar": 50
+      },
+      "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +388,30 @@
     },
     {
       "key": {
+        "uuid": "da440e20_f903cadf",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 25
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-01T18:03:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d091703_91187a44",
+      "range": {
+        "startLine": 228,
+        "startChar": 2,
+        "endLine": 228,
+        "endChar": 7
+      },
+      "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "210ce8b6_804bc9ed",
         "filename": "components/cronet/ios/cronet_metrics.mm",
         "patchSetId": 25
@@ -237,6 +423,30 @@
       "writtenOn": "2017-11-30T23:26:24Z",
       "side": 1,
       "message": "Can we do this check in initWithDelegate and remember the outcome?",
+      "range": {
+        "startLine": 233,
+        "startChar": 7,
+        "endLine": 233,
+        "endChar": 16
+      },
+      "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "756a912b_8d1e8fbc",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 25
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-01T18:03:59Z",
+      "side": 1,
+      "message": "\"Yes,\" but then we\u0027ll have the wrong behavior if the client decides to modify what selectors the delegate responds to at runtime (I think swizzling would let them do that).\n\nI\u0027m not sure how much we care about that usecase, though.",
+      "parentUuid": "210ce8b6_804bc9ed",
       "range": {
         "startLine": 233,
         "startChar": 7,
@@ -272,6 +482,30 @@
     },
     {
       "key": {
+        "uuid": "c129aeec_127a9535",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 25
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-01T18:03:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a51549e_d4cd1708",
+      "range": {
+        "startLine": 190,
+        "startChar": 46,
+        "endLine": 190,
+        "endChar": 60
+      },
+      "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d03f6a33_f8897065",
         "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
         "patchSetId": 25
@@ -286,6 +520,24 @@
       "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdb44de4_124599a7",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 25
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-01T18:03:59Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "d03f6a33_f8897065",
+      "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -312,6 +564,30 @@
     },
     {
       "key": {
+        "uuid": "29dd6027_3966a66f",
+        "filename": "components/cronet/ios/test/cronet_test_base.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-01T18:03:59Z",
+      "side": 1,
+      "message": "Rephrased to be more consistent with comments for other properties.",
+      "parentUuid": "76949872_03b21fcf",
+      "range": {
+        "startLine": 45,
+        "startChar": 36,
+        "endLine": 45,
+        "endChar": 37
+      },
+      "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cbab6d1_c9c5a490",
         "filename": "ios/net/crn_http_protocol_handler.h",
         "patchSetId": 25
@@ -332,6 +608,30 @@
       "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1596b05_fb6a4288",
+        "filename": "ios/net/crn_http_protocol_handler.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-01T18:03:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cbab6d1_c9c5a490",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 2
+      },
+      "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
