@@ -21,6 +21,7 @@
 #include "net/socket/client_socket_handle.h"
 #include "net/socket/ssl_client_socket.h"
 #include "net/socket/tcp_client_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "third_party/webrtc/media/base/rtputils.h"
@@ -408,9 +409,11 @@ void P2PSocketHostTcpBase::WriteOrQueue(SendBuffer& send_buffer) {
 void P2PSocketHostTcpBase::DoWrite() {
   while (write_buffer_.buffer.get() && state_ == STATE_OPEN &&
          !write_pending_) {
+    // TODO(rhalavati): Add proper network traffic annotation.
     int result = socket_->Write(
         write_buffer_.buffer.get(), write_buffer_.buffer->BytesRemaining(),
-        base::Bind(&P2PSocketHostTcp::OnWritten, base::Unretained(this)));
+        base::Bind(&P2PSocketHostTcp::OnWritten, base::Unretained(this)),
+        NO_TRAFFIC_ANNOTATION_YET);
     HandleWriteResult(result);
   }
 }

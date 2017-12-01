@@ -29,6 +29,7 @@
 #include "net/log/net_log_source.h"
 #include "net/socket/stream_socket.h"
 #include "net/socket/tcp_server_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 using content::BrowserThread;
 
@@ -342,10 +343,11 @@ void SimpleHttpServer::Connection::WriteData() {
   CHECK_GE(output_buffer_->capacity(),
            output_buffer_->offset() + bytes_to_write_) << "Overflow";
 
+  // TODO(rhalavati): Add proper network traffic annotation.
   int write_result = socket_->Write(
-      output_buffer_.get(),
-      bytes_to_write_,
-      base::Bind(&Connection::OnDataWritten, base::Unretained(this)));
+      output_buffer_.get(), bytes_to_write_,
+      base::Bind(&Connection::OnDataWritten, base::Unretained(this)),
+      NO_TRAFFIC_ANNOTATION_YET);
 
   if (write_result != net::ERR_IO_PENDING)
     OnDataWritten(write_result);

@@ -24,6 +24,7 @@
 #include "net/socket/client_socket_handle.h"
 #include "net/socket/ssl_client_socket.h"
 #include "net/ssl/token_binding.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "url/url_canon.h"
 
 namespace net {
@@ -455,8 +456,9 @@ int HttpStreamParser::DoSendHeaders() {
     response_->request_time = base::Time::Now();
 
   io_state_ = STATE_SEND_HEADERS_COMPLETE;
-  return connection_->socket()
-      ->Write(request_headers_.get(), bytes_remaining, io_callback_);
+  // TODO(rhalavati): Add proper network traffic annotation.
+  return connection_->socket()->Write(request_headers_.get(), bytes_remaining,
+                                      io_callback_, NO_TRAFFIC_ANNOTATION_YET);
 }
 
 int HttpStreamParser::DoSendHeadersComplete(int result) {
@@ -503,10 +505,10 @@ int HttpStreamParser::DoSendHeadersComplete(int result) {
 int HttpStreamParser::DoSendBody() {
   if (request_body_send_buf_->BytesRemaining() > 0) {
     io_state_ = STATE_SEND_BODY_COMPLETE;
-    return connection_->socket()
-        ->Write(request_body_send_buf_.get(),
-                request_body_send_buf_->BytesRemaining(),
-                io_callback_);
+    // TODO(rhalavati): Add proper network traffic annotation.
+    return connection_->socket()->Write(
+        request_body_send_buf_.get(), request_body_send_buf_->BytesRemaining(),
+        io_callback_, NO_TRAFFIC_ANNOTATION_YET);
   }
 
   if (request_->upload_data_stream->is_chunked() && sent_last_chunk_) {

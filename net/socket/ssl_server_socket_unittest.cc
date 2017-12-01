@@ -66,6 +66,7 @@
 #include "net/test/cert_test_util.h"
 #include "net/test/gtest_util.h"
 #include "net/test/test_data_directory.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/platform_test.h"
@@ -234,7 +235,8 @@ class FakeSocket : public StreamSocket {
 
   int Write(IOBuffer* buf,
             int buf_len,
-            const CompletionCallback& callback) override {
+            const CompletionCallback& callback,
+            const NetworkTrafficAnnotationTag& traffic_annotation) override {
     // Write random number of bytes.
     buf_len = rand() % buf_len + 1;
     return outgoing_->Write(buf, buf_len, callback);
@@ -317,7 +319,8 @@ TEST(FakeSocketTest, DataTransfer) {
 
   // Write then read.
   int written =
-      server.Write(write_buf.get(), kTestDataSize, CompletionCallback());
+      server.Write(write_buf.get(), kTestDataSize, CompletionCallback(),
+                   TRAFFIC_ANNOTATION_FOR_TESTS);
   EXPECT_GT(written, 0);
   EXPECT_LE(written, kTestDataSize);
 
@@ -331,7 +334,8 @@ TEST(FakeSocketTest, DataTransfer) {
   EXPECT_EQ(ERR_IO_PENDING,
             server.Read(read_buf.get(), kReadBufSize, callback.callback()));
 
-  written = client.Write(write_buf.get(), kTestDataSize, CompletionCallback());
+  written = client.Write(write_buf.get(), kTestDataSize, CompletionCallback(),
+                         TRAFFIC_ANNOTATION_FOR_TESTS);
   EXPECT_GT(written, 0);
   EXPECT_LE(written, kTestDataSize);
 
@@ -903,7 +907,8 @@ TEST_F(SSLServerSocketTest, DataTransfer) {
   TestCompletionCallback write_callback;
   TestCompletionCallback read_callback;
   server_ret = server_socket_->Write(write_buf.get(), write_buf->size(),
-                                     write_callback.callback());
+                                     write_callback.callback(),
+                                     TRAFFIC_ANNOTATION_FOR_TESTS);
   EXPECT_TRUE(server_ret > 0 || server_ret == ERR_IO_PENDING);
   client_ret = client_socket_->Read(
       read_buf.get(), read_buf->BytesRemaining(), read_callback.callback());
@@ -933,7 +938,8 @@ TEST_F(SSLServerSocketTest, DataTransfer) {
       read_buf.get(), read_buf->BytesRemaining(), read_callback.callback());
   EXPECT_TRUE(server_ret > 0 || server_ret == ERR_IO_PENDING);
   client_ret = client_socket_->Write(write_buf.get(), write_buf->size(),
-                                     write_callback.callback());
+                                     write_callback.callback(),
+                                     TRAFFIC_ANNOTATION_FOR_TESTS);
   EXPECT_TRUE(client_ret > 0 || client_ret == ERR_IO_PENDING);
 
   server_ret = read_callback.GetResult(server_ret);
@@ -985,7 +991,8 @@ TEST_F(SSLServerSocketTest, ClientWriteAfterServerClose) {
   // will call Read() on the transport socket again.
   TestCompletionCallback write_callback;
   server_ret = server_socket_->Write(write_buf.get(), write_buf->size(),
-                                     write_callback.callback());
+                                     write_callback.callback(),
+                                     TRAFFIC_ANNOTATION_FOR_TESTS);
   EXPECT_TRUE(server_ret > 0 || server_ret == ERR_IO_PENDING);
 
   server_ret = write_callback.GetResult(server_ret);
@@ -995,7 +1002,8 @@ TEST_F(SSLServerSocketTest, ClientWriteAfterServerClose) {
 
   // The client writes some data. This should not cause an infinite loop.
   client_ret = client_socket_->Write(write_buf.get(), write_buf->size(),
-                                     write_callback.callback());
+                                     write_callback.callback(),
+                                     TRAFFIC_ANNOTATION_FOR_TESTS);
   EXPECT_TRUE(client_ret > 0 || client_ret == ERR_IO_PENDING);
 
   client_ret = write_callback.GetResult(client_ret);
