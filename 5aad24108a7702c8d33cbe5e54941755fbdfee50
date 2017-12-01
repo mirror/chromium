@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f6bf6038_3d09b236",
+        "filename": "cc/resources/resource_provider_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 918,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-12-01T20:59:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd8a51c1_68fd6490",
+      "revId": "5aad24108a7702c8d33cbe5e54941755fbdfee50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebf49625_5cc38c83",
         "filename": "cc/resources/resource_provider_unittest.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "5aad24108a7702c8d33cbe5e54941755fbdfee50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da0cb8b7_acefe2dd",
+        "filename": "cc/resources/resource_provider_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 949,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-12-01T20:59:51Z",
+      "side": 1,
+      "message": "yeah, i noticed it not too long after i pressed send.  deleted.",
+      "parentUuid": "ebf49625_5cc38c83",
+      "revId": "5aad24108a7702c8d33cbe5e54941755fbdfee50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
