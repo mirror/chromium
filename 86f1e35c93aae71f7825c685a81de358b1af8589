@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6949beec_79834b73",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-12-01T05:37:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5362dbc_b9954e51",
+      "range": {
+        "startLine": 63,
+        "startChar": 2,
+        "endLine": 63,
+        "endChar": 28
+      },
+      "revId": "86f1e35c93aae71f7825c685a81de358b1af8589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2738fa2c_8469a4b9",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "86f1e35c93aae71f7825c685a81de358b1af8589",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "916f5333_0fa7b2c0",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 3124,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-12-01T05:37:40Z",
+      "side": 1,
+      "message": "Changed according to what we discussed this morning. Let me know what you think!",
+      "parentUuid": "2738fa2c_8469a4b9",
+      "range": {
+        "startLine": 3124,
+        "startChar": 12,
+        "endLine": 3124,
+        "endChar": 46
+      },
+      "revId": "86f1e35c93aae71f7825c685a81de358b1af8589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4ac78d4e_9c195192",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 3142,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-12-01T05:37:40Z",
+      "side": 1,
+      "message": "Changed the wording a bit.\n\nSome context: This has to do with canceling links that are being prerendered. We inherited this code from apps, but I think the logic was that since we are going to open a new app window, prerendering the link will be pointless. In practice, this will never happen because we deprecated type\u003d\"prerender\"[1] but is included for completeness.\n\n[1] https://groups.google.com/a/chromium.org/forum/#!searchin/blink-dev/prerender%7Csort:date/blink-dev/0nSxuuv9bBw/J37UMBOaBgAJ",
+      "parentUuid": "79931966_23981c6d",
+      "range": {
+        "startLine": 3142,
+        "startChar": 33,
+        "endLine": 3142,
+        "endChar": 51
+      },
+      "revId": "86f1e35c93aae71f7825c685a81de358b1af8589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d05e60c9_459669f3",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "ab1c31f6_2b6a0c5f",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 3148,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-12-01T05:37:40Z",
+      "side": 1,
+      "message": "Since we removed the implementation concepts, no need to add \"Defer\" here.",
+      "parentUuid": "d05e60c9_459669f3",
+      "range": {
+        "startLine": 3148,
+        "startChar": 25,
+        "endLine": 3148,
+        "endChar": 29
+      },
+      "revId": "86f1e35c93aae71f7825c685a81de358b1af8589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f29fc45b_9e371799",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -114,6 +210,30 @@
       "revId": "86f1e35c93aae71f7825c685a81de358b1af8589",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8442e48d_423b6d8a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 22224,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-12-01T05:37:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f29fc45b_9e371799",
+      "range": {
+        "startLine": 22224,
+        "startChar": 32,
+        "endLine": 22224,
+        "endChar": 34
+      },
+      "revId": "86f1e35c93aae71f7825c685a81de358b1af8589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
