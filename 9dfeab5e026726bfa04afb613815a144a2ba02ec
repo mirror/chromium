@@ -591,6 +591,42 @@
     },
     {
       "key": {
+        "uuid": "67f7f4e3_d1bb6190",
+        "filename": "chrome/browser/vr/elements/text_input.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T22:30:09Z",
+      "side": 1,
+      "message": "s/DCHECK/focus\n\nOops.",
+      "parentUuid": "c5d3dc99_c3c40895",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72dcdcd6_a759c24a",
+        "filename": "chrome/browser/vr/elements/text_input.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T22:30:09Z",
+      "side": 1,
+      "message": "s/DCHECK/focus\n\nOops.",
+      "parentUuid": "c5d3dc99_c3c40895",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6db6598a_1760a871",
         "filename": "chrome/browser/vr/elements/text_input.cc",
         "patchSetId": 6
@@ -608,6 +644,24 @@
     },
     {
       "key": {
+        "uuid": "72d55f54_51021771",
+        "filename": "chrome/browser/vr/elements/text_input.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T22:30:09Z",
+      "side": 1,
+      "message": "Yes, and we can add functionality here as needed.",
+      "parentUuid": "6db6598a_1760a871",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "501e56e5_4fe18805",
         "filename": "chrome/browser/vr/elements/text_input.cc",
         "patchSetId": 6
@@ -619,6 +673,24 @@
       "writtenOn": "2017-11-24T16:29:28Z",
       "side": 1,
       "message": "Why are we calling back to the delegate here?  I thought that was only going to happen if the text field needs to change the value, such as on a future cursor-moving click.",
+      "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd0aab7e_0a44d344",
+        "filename": "chrome/browser/vr/elements/text_input.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-01T22:30:09Z",
+      "side": 1,
+      "message": "Ian and I discussed this after you left I think. So we\u0027re treating what we get from the keyboard as the \"source of truth\", which is what should update the model. This happens through \"OnInputUpdated\" above. This gets called in response to the model changes, which then tells the keyboard, \"this is the text we\u0027re currently editing\". So for the case where the user hits a key, the flow is that KB tells us \"hey a key happened\", we tell the model to update, the model changes triggers the UpdateInput callback and we tell the kb \"key this is actually what happened\". If we\u0027re not showing autocomplete suggestions for e.g., this would do nothing and we\u0027d just ack back.",
+      "parentUuid": "501e56e5_4fe18805",
       "revId": "9dfeab5e026726bfa04afb613815a144a2ba02ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
