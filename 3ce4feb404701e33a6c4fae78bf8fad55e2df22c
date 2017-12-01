@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9896074c_ff61d825",
+        "filename": "chrome_elf/whitelist/whitelist_file.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-12-01T23:29:54Z",
+      "side": 1,
+      "message": "That\u0027s what I had originally... then I thought it looked cleaner to use a ref... now I\u0027ve reverted back. :)",
+      "parentUuid": "2b56bab7_e79d2684",
+      "revId": "3ce4feb404701e33a6c4fae78bf8fad55e2df22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c92a2aab_d5b69eb0",
         "filename": "chrome_elf/whitelist/whitelist_file.cc",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "3ce4feb404701e33a6c4fae78bf8fad55e2df22c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26ab4cb0_3f92401b",
+        "filename": "chrome_elf/whitelist/whitelist_file.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-12-01T23:29:54Z",
+      "side": 1,
+      "message": "Same.  Done.",
+      "parentUuid": "c92a2aab_d5b69eb0",
+      "range": {
+        "startLine": 135,
+        "startChar": 40,
+        "endLine": 135,
+        "endChar": 47
+      },
+      "revId": "3ce4feb404701e33a6c4fae78bf8fad55e2df22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "f044ebbc_b73b6ac4",
+        "filename": "chrome_elf/whitelist/whitelist_file.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-12-01T23:29:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fee7c0bf_899d1100",
+      "range": {
+        "startLine": 137,
+        "startChar": 28,
+        "endLine": 137,
+        "endChar": 29
+      },
+      "revId": "3ce4feb404701e33a6c4fae78bf8fad55e2df22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62ebc0a0_b4af4f58",
         "filename": "chrome_elf/whitelist/whitelist_file.cc",
         "patchSetId": 3
@@ -85,6 +151,30 @@
       "revId": "3ce4feb404701e33a6c4fae78bf8fad55e2df22c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22c62c5f_a82a9acc",
+        "filename": "chrome_elf/whitelist/whitelist_file.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-12-01T23:29:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62ebc0a0_b4af4f58",
+      "range": {
+        "startLine": 144,
+        "startChar": 21,
+        "endLine": 144,
+        "endChar": 22
+      },
+      "revId": "3ce4feb404701e33a6c4fae78bf8fad55e2df22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "b9bcca9a_1421f63a",
+        "filename": "chrome_elf/whitelist/whitelist_file.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-12-01T23:29:54Z",
+      "side": 1,
+      "message": "No, it\u0027ll always be a one-time read on init.  I\u0027m hesitant to trigger any over-achieving cache behaviour for these two small reads.  It might be a net minus.",
+      "parentUuid": "4f9b5700_7acdd28a",
+      "range": {
+        "startLine": 151,
+        "startChar": 44,
+        "endLine": 151,
+        "endChar": 65
+      },
+      "revId": "3ce4feb404701e33a6c4fae78bf8fad55e2df22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b15c2b7_996c618a",
         "filename": "chrome_elf/whitelist/whitelist_file.cc",
         "patchSetId": 3
@@ -125,6 +239,24 @@
       "revId": "3ce4feb404701e33a6c4fae78bf8fad55e2df22c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf745903_da58b2ab",
+        "filename": "chrome_elf/whitelist/whitelist_file.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-12-01T23:29:54Z",
+      "side": 1,
+      "message": "good one, thanks.",
+      "parentUuid": "5b15c2b7_996c618a",
+      "revId": "3ce4feb404701e33a6c4fae78bf8fad55e2df22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -151,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "c7ba033e_401c3886",
+        "filename": "chrome_elf/whitelist/whitelist_file.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-12-01T23:29:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62337591_97205c09",
+      "range": {
+        "startLine": 217,
+        "startChar": 6,
+        "endLine": 217,
+        "endChar": 7
+      },
+      "revId": "3ce4feb404701e33a6c4fae78bf8fad55e2df22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcb1b7b7_dea4db71",
         "filename": "chrome_elf/whitelist/whitelist_file.cc",
         "patchSetId": 3
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "460b45e7_587adc51",
+        "filename": "chrome_elf/whitelist/whitelist_file.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-12-01T23:29:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcb1b7b7_dea4db71",
+      "range": {
+        "startLine": 232,
+        "startChar": 6,
+        "endLine": 232,
+        "endChar": 7
+      },
+      "revId": "3ce4feb404701e33a6c4fae78bf8fad55e2df22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f6cfe86_e47a8a96",
         "filename": "chrome_elf/whitelist/whitelist_file.cc",
         "patchSetId": 3
@@ -188,6 +368,24 @@
       "revId": "3ce4feb404701e33a6c4fae78bf8fad55e2df22c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54275c4d_ae1cfc49",
+        "filename": "chrome_elf/whitelist/whitelist_file.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-12-01T23:29:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f6cfe86_e47a8a96",
+      "revId": "3ce4feb404701e33a6c4fae78bf8fad55e2df22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -208,6 +406,24 @@
     },
     {
       "key": {
+        "uuid": "8176fd51_87573fb7",
+        "filename": "chrome_elf/whitelist/whitelist_file_format.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-12-01T23:29:54Z",
+      "side": 1,
+      "message": "This .h file is the single place for shared definitions between ELF code and the higher-level component update code in main chrome.  It needs to be defined here for both modules to have it.",
+      "parentUuid": "a5f4cb9b_d73e6332",
+      "revId": "3ce4feb404701e33a6c4fae78bf8fad55e2df22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c07efc31_db8a2d9e",
         "filename": "chrome_elf/whitelist/whitelist_file_format.h",
         "patchSetId": 3
@@ -225,6 +441,24 @@
     },
     {
       "key": {
+        "uuid": "52c6d0fa_ab72f8d1",
+        "filename": "chrome_elf/whitelist/whitelist_file_format.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-12-01T23:29:54Z",
+      "side": 1,
+      "message": "This value is used and managed by the whitelist management code up in the higher-level chrome code.\n\nThat external code will update these timestamps, and handle flushing out entries that are no longer needed locally.  Chrome_elf doesn\u0027t touch them at all at this point.",
+      "parentUuid": "c07efc31_db8a2d9e",
+      "revId": "3ce4feb404701e33a6c4fae78bf8fad55e2df22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66395575_caa48485",
         "filename": "chrome_elf/whitelist/whitelist_file_unittest.cc",
         "patchSetId": 3
@@ -239,6 +473,24 @@
       "revId": "3ce4feb404701e33a6c4fae78bf8fad55e2df22c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c621ca3d_3dab4ba9",
+        "filename": "chrome_elf/whitelist/whitelist_file_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-12-01T23:29:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66395575_caa48485",
+      "revId": "3ce4feb404701e33a6c4fae78bf8fad55e2df22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
