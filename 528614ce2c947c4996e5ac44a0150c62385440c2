@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0270124f_ecd672d5",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-01T00:27:45Z",
+      "side": 1,
+      "message": "I am not sure if this is correct. Imagine the following scenario\n\n1) Open a new tab (chrome://newtab)\n2) Navigate to an existing extensions detail view directly, for example chrome://extensions/?id\u003dmgfcgmhnmllbmgpkaheljfofegalkjma\n3) Delete the extension\n\nExpected: Forwarded back to the main view of chrome://extensions\nActual (I think, but did not try): Forwarded back to chrome://newtab\n\nIs my understanding accurate here?",
+      "revId": "528614ce2c947c4996e5ac44a0150c62385440c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83bf8a2c_bbe39634",
+        "filename": "chrome/browser/resources/md_extensions/navigation_helper.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-01T00:27:45Z",
+      "side": 1,
+      "message": "The comment is less obvious now, since \"isDialogNavigation\" does not exist anymore as a variable. How about reverting lines 187-189 and simply changing line 194 to\n\nif (replaceState || isDialogNavigation) {\n...\nelse\n...",
+      "range": {
+        "startLine": 194,
+        "startChar": 10,
+        "endLine": 194,
+        "endChar": 22
+      },
+      "revId": "528614ce2c947c4996e5ac44a0150c62385440c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
