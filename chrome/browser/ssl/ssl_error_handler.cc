@@ -206,6 +206,10 @@ class ConfigSingleton {
   const std::string MatchKnownMITMSoftware(
       const scoped_refptr<net::X509Certificate> cert);
 
+  // Returns an UrgentInterstitial object if the certificates in |ssl_info|
+  // matches any of urgent interstitials. Returns null if there is no match.
+  UrgentInterstitial* MatchUrgentInterstitial(const net::SSLInfo& ssl_info);
+
   // Testing methods:
   void ResetForTesting();
   void SetInterstitialDelayForTesting(const base::TimeDelta& delay);
@@ -381,6 +385,11 @@ const std::string ConfigSingleton::MatchKnownMITMSoftware(
   return ssl_error_assistant_->MatchKnownMITMSoftware(cert);
 }
 
+UrgentInterstitial* ConfigSingleton::MatchUrgentInterstitial(
+    const net::SSLInfo& ssl_info) {
+  return ssl_error_assistant_->MatchUrgentInterstitial(ssl_info);
+}
+
 class SSLErrorHandlerDelegateImpl : public SSLErrorHandler::Delegate {
  public:
   SSLErrorHandlerDelegateImpl(
@@ -422,6 +431,8 @@ class SSLErrorHandlerDelegateImpl : public SSLErrorHandler::Delegate {
   void ShowMITMSoftwareInterstitial(const std::string& mitm_software_name,
                                     bool is_enterprise_managed) override;
   void ShowSSLInterstitial() override;
+  void ShowUrgentSSLInterstitial(const GURL& support_url,
+                                 int cert_error) override;
   void ShowBadClockInterstitial(const base::Time& now,
                                 ssl_errors::ClockState clock_state) override;
 
@@ -521,8 +532,21 @@ void SSLErrorHandlerDelegateImpl::ShowSSLInterstitial() {
   // Show SSL blocking page. The interstitial owns the blocking page.
   OnBlockingPageReady(SSLBlockingPage::Create(
       web_contents_, cert_error_, ssl_info_, request_url_, options_mask_,
-      base::Time::NowFromSystemTime(), std::move(ssl_cert_reporter_),
+      base::Time::NowFromSystemTime(), GURL(), std::move(ssl_cert_reporter_),
       is_superfish_, decision_callback_));
+}
+
+void SSLErrorHandlerDelegateImpl::ShowUrgentSSLInterstitial(
+    const GURL& support_url,
+    int cert_error) {
+  int options_mask = options_mask_ |
+                     security_interstitials::SSLErrorUI::HARD_OVERRIDE_DISABLED;
+
+  // Show SSL blocking page. The interstitial owns the blocking page.
+  OnBlockingPageReady(SSLBlockingPage::Create(
+      web_contents_, cert_error, ssl_info_, request_url_, options_mask,
+      base::Time::NowFromSystemTime(), support_url,
+      std::move(ssl_cert_reporter_), is_superfish_, decision_callback_));
 }
 
 void SSLErrorHandlerDelegateImpl::ShowBadClockInterstitial(
@@ -711,6 +735,13 @@ void SSLErrorHandler::StartHandlingError() {
     return;
   }
 
+  UrgentInterstitial* urgent_interstitial =
+      g_config.Pointer()->MatchUrgentInterstitial(ssl_info_);
+  if (urgent_interstitial) {
+    ShowUrgentInterstitial(urgent_interstitial);
+    return;
+  }
+
   // Ideally, a captive portal interstitial should only be displayed if the only
   // SSL error is a name mismatch error. However, captive portal detector always
   // opens a new tab if it detects a portal ignoring the types of SSL errors. To
@@ -858,6 +889,25 @@ void SSLErrorHandler::ShowBadClockInterstitial(
   // Once an interstitial is displayed, no need to keep the handler around.
   // This is the equivalent of "delete this".
   web_contents_->RemoveUserData(UserDataKey());
+}
+
+void SSLErrorHandler::ShowUrgentInterstitial(
+    UrgentInterstitial* urgent_interstitial) {
+  switch (urgent_interstitial->interstitial_type()) {
+    case UrgentInterstitialPageType::NONE:
+      NOTREACHED();
+    case UrgentInterstitialPageType::SSL:
+      delegate_->ShowUrgentSSLInterstitial(urgent_interstitial->support_url(),
+                                           urgent_interstitial->cert_error());
+      return;
+    case UrgentInterstitialPageType::CAPTIVE_PORTAL:
+      delegate_->ShowCaptivePortalInterstitial(GURL());
+      return;
+    case UrgentInterstitialPageType::MITM_SOFTWARE:
+      // TODO(spqchan): Implement support for MitM urgent interstitials.
+      NOTREACHED();
+      return;
+  }
 }
 
 void SSLErrorHandler::CommonNameMismatchHandlerCallback(
