@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4dc7ce60_9a288f6d",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/root-layer-scrolls/platform/linux/paint/invalidation/svg/window-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-12-01T17:04:14Z",
+      "side": 1,
+      "message": "Yeah.\n\nIn the diff-against-non-rls patch (https://chromium-review.googlesource.com/c/chromium/src/+/797619) these diffs are not present. They are just bad baselines we had in the root layer scrolling expectations, but are not different between the new results and the current non-rls expectations.",
+      "parentUuid": "7f7164ff_874010a1",
+      "revId": "e0ee3de512891c0a42bfbc7e62bb97ecfce3bdaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e91ed1d_a6816283",
         "filename": "third_party/WebKit/LayoutTests/flag-specific/root-layer-scrolls/platform/mac/paint/invalidation/svg/window-expected.txt",
         "patchSetId": 2
