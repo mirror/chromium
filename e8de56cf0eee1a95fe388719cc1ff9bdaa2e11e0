@@ -16,6 +16,24 @@
       "revId": "e8de56cf0eee1a95fe388719cc1ff9bdaa2e11e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f7d36ac_7ebee3ba",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/RemoteObject.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-12-01T22:38:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e569883e_280fd36f",
+      "revId": "e8de56cf0eee1a95fe388719cc1ff9bdaa2e11e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
