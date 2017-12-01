@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47870595_7516ae3a",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/custom/V8DevToolsHostCustom.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-12-01T12:18:05Z",
+      "side": 0,
+      "message": "This check is incomplete and more fragile than V8T::ToImplWithTypeCheck.  If the internal field had accidentally the same value of \u0026V8T::wrapperTypeInfo, then the check passes.\n\nV8T::ToImplWithTypeCheck internally uses v8::FunctionTemplate::HasInstance, which is more secure.",
+      "revId": "95ad36000cdb9f28d228590f771b694f5a56a1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bd081e0_ba50c420",
+        "filename": "third_party/WebKit/Source/bindings/modules/v8/wasm/WasmResponseExtensions.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-12-01T12:18:05Z",
+      "side": 0,
+      "message": "This is just super redundant.  As we have an ExceptionToRejectPromiseScope on line 130, we\u0027d better rely on it.",
+      "revId": "95ad36000cdb9f28d228590f771b694f5a56a1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afcac038_5d00a8cb",
+        "filename": "third_party/WebKit/Source/bindings/modules/v8/wasm/WasmResponseExtensions.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-12-01T12:18:05Z",
+      "side": 0,
+      "message": "V8T::hasInstance on line 139 + V8T::ToImpl on line 151 is equivalent to V8T::ToImplWithTypeCheck, and ToImplWithTypeCheck is more preferred to separate calls to hasInstance + ToImpl.",
+      "revId": "95ad36000cdb9f28d228590f771b694f5a56a1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
