@@ -47,7 +47,8 @@ class CHROMEOS_EXPORT ProcessProxyRegistry {
 
   // Starts new ProcessProxy (which starts new process).
   // Returns ID used for the created process. Returns -1 on failure.
-  int OpenProcess(const std::string& command, const OutputCallback& callback);
+  int OpenProcess(const base::CommandLine& cmdline,
+                  const OutputCallback& callback);
   // Sends data to the process identified by |id|.
   bool SendInput(int id, const std::string& data);
   // Stops the process identified by |id|.

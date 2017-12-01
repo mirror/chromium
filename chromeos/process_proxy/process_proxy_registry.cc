@@ -79,7 +79,7 @@ scoped_refptr<base::SequencedTaskRunner> ProcessProxyRegistry::GetTaskRunner() {
   return task_runner.Get();
 }
 
-int ProcessProxyRegistry::OpenProcess(const std::string& command,
+int ProcessProxyRegistry::OpenProcess(const base::CommandLine& cmdline,
                                       const OutputCallback& output_callback) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
@@ -89,7 +89,7 @@ int ProcessProxyRegistry::OpenProcess(const std::string& command,
   // Create and open new proxy.
   scoped_refptr<ProcessProxy> proxy(new ProcessProxy());
   // TODO(tbarzic): Use a random int as an id here instead of process pid.
-  int terminal_id = proxy->Open(command);
+  int terminal_id = proxy->Open(cmdline);
   if (terminal_id < 0)
     return -1;
 

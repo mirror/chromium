@@ -61,6 +61,11 @@ std::string GetProcessCommandForName(const std::string& name) {
     return std::string();
 }
 
+// Whether the program accepts arbitrary command line arguments.
+bool CommandSupportsArguments(const std::string& name) {
+  return false;
+}
+
 void NotifyProcessOutput(content::BrowserContext* browser_context,
                          const std::string& extension_id,
                          int tab_id,
@@ -119,9 +124,17 @@ TerminalPrivateOpenTerminalProcessFunction::Run() {
       OpenTerminalProcess::Params::Create(*args_));
   EXTENSION_FUNCTION_VALIDATE(params.get());
 
-  command_ = GetProcessCommandForName(params->process_name);
-  if (command_.empty())
+  const std::string command = GetProcessCommandForName(params->process_name);
+  if (command.empty())
     return RespondNow(Error("Invalid process name."));
+
+  arguments_.clear();
+  arguments_.push_back(command);
+  for (const std::string& arg : *params->args)
+    arguments_.push_back(arg);
+
+  if (arguments_.size() > 1 && !CommandSupportsArguments(params->process_name))
+    return RespondNow(Error("Specified command does not support arguments."));
 
   content::WebContents* caller_contents = GetSenderWebContents();
   if (!caller_contents)
@@ -158,12 +171,13 @@ TerminalPrivateOpenTerminalProcessFunction::Run() {
 void TerminalPrivateOpenTerminalProcessFunction::OpenOnRegistryTaskRunner(
     const ProcessOutputCallback& output_callback,
     const OpenProcessCallback& callback) {
-  DCHECK(!command_.empty());
-
   chromeos::ProcessProxyRegistry* registry =
       chromeos::ProcessProxyRegistry::Get();
+  DCHECK(!arguments_.empty());
 
-  int terminal_id = registry->OpenProcess(command_.c_str(), output_callback);
+  const base::CommandLine cmdline{arguments_};
+
+  int terminal_id = registry->OpenProcess(cmdline, output_callback);
 
   content::BrowserThread::PostTask(content::BrowserThread::UI, FROM_HERE,
                                    base::BindOnce(callback, terminal_id));
