@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc613e69_0a332f66",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-12-01T19:32:56Z",
+      "side": 1,
+      "message": "bitwise \u0026 can\u0027t overflow here given sizeof(size_t) \u003d\u003d sizeof(uintptr_t) (e.g. not a brain-dead segmented architecture).  Though if we wanted to be strictly correct, pre_slack and friends should probably be uintptr_t\u0027s.\n\nWhen thinking about these, I like to imagine a platform where size_t is 16bits (e.g. can\u0027t index big arrays), but uintptr_t is 32 bits (4G address space).  We might want to allocate pages on a 1MB boundary due to some hardware issue, so that won\u0027t fit in a size_t.  But for now, I\u0027m not going to worry about this situation when analyzing overflows.",
+      "range": {
+        "startLine": 179,
+        "startChar": 1,
+        "endLine": 179,
+        "endChar": 72
+      },
+      "revId": "503ac2a1f5c4bf5dd629cb49f58e42d12e8daab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7670f930_1c726107",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-12-01T19:32:56Z",
+      "side": 1,
+      "message": "Similarly, this can\u0027t underflow, since align \u003e pre-slack as a result of the \u0026 above, unless align was 0. So what we need initially is an ASSERT(align) at that start of the routine, if we want to be paranoid rather than using safe variables here.",
+      "range": {
+        "startLine": 180,
+        "startChar": 2,
+        "endLine": 182,
+        "endChar": 27
+      },
+      "revId": "503ac2a1f5c4bf5dd629cb49f58e42d12e8daab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a69fa58d_f00510ea",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-12-01T19:32:56Z",
+      "side": 1,
+      "message": "Now, this might underflow, I think.  I\u0027m wondering if we can make a stronger assert up top to clarify.  In the worst case, we throw away align - 1 bytes, so base_length \u003e\u003d align + trim.  The assert would catch this irrespective of the particular alignment of base, so there wouldn\u0027t be this special case lurking that we\u0027ll never trip until we hit some weird base ptr input.",
+      "range": {
+        "startLine": 184,
+        "startChar": 2,
+        "endLine": 186,
+        "endChar": 28
+      },
+      "revId": "503ac2a1f5c4bf5dd629cb49f58e42d12e8daab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13104528_a2d8edeb",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-12-01T19:32:56Z",
+      "side": 1,
+      "message": "there\u0027s an assumption here that base is actually mapped for base_length bytes, and if so, then base + slack can\u0027t overflow given the assert in the previous comment.",
+      "range": {
+        "startLine": 197,
+        "startChar": 4,
+        "endLine": 197,
+        "endChar": 49
+      },
+      "revId": "503ac2a1f5c4bf5dd629cb49f58e42d12e8daab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "664545d4_cc00c6ce",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-12-01T19:32:56Z",
+      "side": 1,
+      "message": "ditto.",
+      "range": {
+        "startLine": 201,
+        "startChar": 0,
+        "endLine": 201,
+        "endChar": 79
+      },
+      "revId": "503ac2a1f5c4bf5dd629cb49f58e42d12e8daab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff748bcc_e28bbca3",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-12-01T19:32:56Z",
+      "side": 1,
+      "message": "we need to be sure this isn\u0027t vulnerable to wrap, rather than defending ourselves.  ret must be 0 if address + length wraps.",
+      "range": {
+        "startLine": 241,
+        "startChar": 15,
+        "endLine": 241,
+        "endChar": 33
+      },
+      "revId": "503ac2a1f5c4bf5dd629cb49f58e42d12e8daab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d2ba786_54d94fdc",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-12-01T19:32:56Z",
+      "side": 1,
+      "message": "then these become redundant.",
+      "range": {
+        "startLine": 249,
+        "startChar": 1,
+        "endLine": 249,
+        "endChar": 68
+      },
+      "revId": "503ac2a1f5c4bf5dd629cb49f58e42d12e8daab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04ef9c94_8c611481",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-12-01T19:32:56Z",
+      "side": 1,
+      "message": "this one does feel like trouble.  Hmm.",
+      "range": {
+        "startLine": 271,
+        "startChar": 2,
+        "endLine": 273,
+        "endChar": 12
+      },
+      "revId": "503ac2a1f5c4bf5dd629cb49f58e42d12e8daab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
