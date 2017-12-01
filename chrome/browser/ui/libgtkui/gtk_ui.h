@@ -42,7 +42,9 @@ class GtkUi : public views::LinuxUI {
   void SetWindowButtonOrdering(
       const std::vector<views::FrameButton>& leading_buttons,
       const std::vector<views::FrameButton>& trailing_buttons);
-  void SetNonClientMiddleClickAction(NonClientMiddleClickAction action);
+  void SetNonClientWindowFrameAction(
+      NonClientWindowFrameActionSourceType source,
+      NonClientWindowFrameAction action);
 
   // Called when gtk style changes
   void ResetStyle();
@@ -97,7 +99,8 @@ class GtkUi : public views::LinuxUI {
       views::WindowButtonOrderObserver* observer) override;
   void RemoveWindowButtonOrderObserver(
       views::WindowButtonOrderObserver* observer) override;
-  NonClientMiddleClickAction GetNonClientMiddleClickAction() override;
+  NonClientWindowFrameAction GetNonClientWindowFrameAction(
+      NonClientWindowFrameActionSourceType source) override;
   void NotifyWindowManagerStartupComplete() override;
   void UpdateDeviceScaleFactor() override;
   float GetDeviceScaleFactor() const override;
@@ -192,9 +195,9 @@ class GtkUi : public views::LinuxUI {
   base::ObserverList<views::DeviceScaleFactorObserver>
       device_scale_factor_observer_list_;
 
-  // Whether we should lower the window on a middle click to the non client
-  // area.
-  NonClientMiddleClickAction middle_click_action_;
+  // The action to take when middle, double, or right clicking the titlebar.
+  NonClientWindowFrameAction
+      window_frame_actions_[WINDOW_FRAME_ACTION_SOURCE_LAST];
 
   // Used to override the native theme for a window. If no override is provided
   // or the callback returns nullptr, GtkUi will default to a NativeThemeGtk2

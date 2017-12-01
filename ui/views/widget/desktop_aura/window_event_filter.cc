@@ -58,25 +58,29 @@ void WindowEventFilter::OnClickedCaption(ui::MouseEvent* event,
   aura::Window* target = static_cast<aura::Window*>(event->target());
 
   if (event->IsMiddleMouseButton()) {
-    LinuxUI::NonClientMiddleClickAction action =
-        LinuxUI::MIDDLE_CLICK_ACTION_LOWER;
+    LinuxUI::NonClientWindowFrameAction action =
+        LinuxUI::WINDOW_FRAME_ACTION_LOWER;
     LinuxUI* linux_ui = LinuxUI::instance();
     if (linux_ui)
-      action = linux_ui->GetNonClientMiddleClickAction();
+      action = linux_ui->GetNonClientWindowFrameAction(
+          LinuxUI::WINDOW_FRAME_ACTION_SOURCE_MIDDLE_CLICK);
 
     switch (action) {
-      case LinuxUI::MIDDLE_CLICK_ACTION_NONE:
+      case LinuxUI::WINDOW_FRAME_ACTION_NONE:
         break;
-      case LinuxUI::MIDDLE_CLICK_ACTION_LOWER:
+      case LinuxUI::WINDOW_FRAME_ACTION_LOWER:
         LowerWindow();
         break;
-      case LinuxUI::MIDDLE_CLICK_ACTION_MINIMIZE:
+      case LinuxUI::WINDOW_FRAME_ACTION_MINIMIZE:
         window_tree_host_->Minimize();
         break;
-      case LinuxUI::MIDDLE_CLICK_ACTION_TOGGLE_MAXIMIZE:
+      case LinuxUI::WINDOW_FRAME_ACTION_TOGGLE_MAXIMIZE:
         if (target->GetProperty(aura::client::kResizeBehaviorKey) &
             ui::mojom::kResizeBehaviorCanMaximize)
           ToggleMaximizedState();
+        break;
+      case LinuxUI::WINDOW_FRAME_ACTION_MENU:
+        NOTREACHED();  // TODO
         break;
     }
 

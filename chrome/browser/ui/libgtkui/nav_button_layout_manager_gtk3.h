@@ -24,6 +24,8 @@ class NavButtonLayoutManagerGtk3 : public NavButtonLayoutManager {
   ~NavButtonLayoutManagerGtk3() override;
 
  private:
+  class SignalContext {};  // TODO
+
   void SetWindowButtonOrderingFromGtkLayout(const std::string& gtk_layout);
 
   CHROMEG_CALLBACK_1(NavButtonLayoutManagerGtk3,
@@ -40,15 +42,31 @@ class NavButtonLayoutManagerGtk3 : public NavButtonLayoutManager {
 
   CHROMEG_CALLBACK_1(NavButtonLayoutManagerGtk3,
                      void,
+                     OnDoubleClickActionChanged,
+                     GtkSettings*,
+                     GParamSpec*);
+
+  CHROMEG_CALLBACK_1(NavButtonLayoutManagerGtk3,
+                     void,
+                     OnRightClickActionChanged,
+                     GtkSettings*,
+                     GParamSpec*);
+
+  CHROMEG_CALLBACK_1(NavButtonLayoutManagerGtk3,
+                     void,
                      OnThemeChanged,
                      GtkSettings*,
                      GParamSpec*);
 
   GtkUi* delegate_;
 
-  unsigned long signal_id_;
+  unsigned long signal_id_decoration_layout_;
 
   unsigned long signal_id_middle_click_;
+
+  unsigned long signal_id_double_click_;
+
+  unsigned long signal_id_right_click_;
 
   DISALLOW_COPY_AND_ASSIGN(NavButtonLayoutManagerGtk3);
 };

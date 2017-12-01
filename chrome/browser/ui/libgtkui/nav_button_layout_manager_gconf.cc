@@ -140,28 +140,29 @@ void NavButtonLayoutManagerGconf::ParseAndStoreButtonValue(
 
 void NavButtonLayoutManagerGconf::ParseAndStoreMiddleClickValue(
     GConfValue* gconf_value) {
-  GtkUi::NonClientMiddleClickAction action =
-      views::LinuxUI::MIDDLE_CLICK_ACTION_LOWER;
+  GtkUi::NonClientWindowFrameAction action =
+      views::LinuxUI::WINDOW_FRAME_ACTION_LOWER;
   if (gconf_value) {
     const char* value = gconf_value_get_string(gconf_value);
 
     if (strcmp(value, "none") == 0) {
-      action = views::LinuxUI::MIDDLE_CLICK_ACTION_NONE;
+      action = views::LinuxUI::WINDOW_FRAME_ACTION_NONE;
     } else if (strcmp(value, "lower") == 0) {
-      action = views::LinuxUI::MIDDLE_CLICK_ACTION_LOWER;
+      action = views::LinuxUI::WINDOW_FRAME_ACTION_LOWER;
     } else if (strcmp(value, "minimize") == 0) {
-      action = views::LinuxUI::MIDDLE_CLICK_ACTION_MINIMIZE;
+      action = views::LinuxUI::WINDOW_FRAME_ACTION_MINIMIZE;
     } else if (strcmp(value, "toggle-maximize") == 0) {
-      action = views::LinuxUI::MIDDLE_CLICK_ACTION_TOGGLE_MAXIMIZE;
+      action = views::LinuxUI::WINDOW_FRAME_ACTION_TOGGLE_MAXIMIZE;
     } else {
       // While we want to have the default state be lower if there isn't a
       // value, we want to default to no action if the user has explicitly
       // chose an action that we don't implement.
-      action = views::LinuxUI::MIDDLE_CLICK_ACTION_NONE;
+      action = views::LinuxUI::WINDOW_FRAME_ACTION_NONE;
     }
   }
 
-  delegate_->SetNonClientMiddleClickAction(action);
+  delegate_->SetNonClientWindowFrameAction(
+      views::LinuxUI::WINDOW_FRAME_ACTION_SOURCE_MIDDLE_CLICK, action);
 }
 
 }  // namespace libgtkui

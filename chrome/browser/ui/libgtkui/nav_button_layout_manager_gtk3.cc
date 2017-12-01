@@ -41,17 +41,35 @@ std::string GetDecorationLayoutFromGtkWindow() {
   return layout;
 }
 
+void ParseActionString(const std::string& value,
+                       GtkUi::NonClientWindowFrameAction* action) {
+  if (value == "none")
+    *action = views::LinuxUI::WINDOW_FRAME_ACTION_NONE;
+  else if (value == "lower")
+    *action = views::LinuxUI::WINDOW_FRAME_ACTION_LOWER;
+  else if (value == "minimize")
+    *action = views::LinuxUI::WINDOW_FRAME_ACTION_MINIMIZE;
+  else if (value == "toggle-maximize")
+    *action = views::LinuxUI::WINDOW_FRAME_ACTION_TOGGLE_MAXIMIZE;
+  else if (value == "menu")
+    *action = views::LinuxUI::WINDOW_FRAME_ACTION_MENU;
+}
+
 }  // namespace
 
 NavButtonLayoutManagerGtk3::NavButtonLayoutManagerGtk3(GtkUi* delegate)
-    : delegate_(delegate), signal_id_(0), signal_id_middle_click_(0) {
+    : delegate_(delegate),
+      signal_id_decoration_layout_(0),
+      signal_id_middle_click_(0),
+      signal_id_double_click_(0),
+      signal_id_right_click_(0) {
   DCHECK(delegate_);
   GtkSettings* settings = gtk_settings_get_default();
   if (GtkVersionCheck(3, 14)) {
-    signal_id_ = g_signal_connect(
+    signal_id_decoration_layout_ = g_signal_connect(
         settings, "notify::gtk-decoration-layout",
         G_CALLBACK(OnDecorationButtonLayoutChangedThunk), this);
-    DCHECK(signal_id_);
+    DCHECK(signal_id_decoration_layout_);
     OnDecorationButtonLayoutChanged(settings, nullptr);
 
     signal_id_middle_click_ =
@@ -59,10 +77,23 @@ NavButtonLayoutManagerGtk3::NavButtonLayoutManagerGtk3(GtkUi* delegate)
                          G_CALLBACK(OnMiddleClickActionChangedThunk), this);
     DCHECK(signal_id_middle_click_);
     OnMiddleClickActionChanged(settings, nullptr);
+
+    signal_id_double_click_ =
+        g_signal_connect(settings, "notify::gtk-titlebar-double-click",
+                         G_CALLBACK(OnDoubleClickActionChangedThunk), this);
+    DCHECK(signal_id_double_click_);
+    OnDoubleClickActionChanged(settings, nullptr);
+
+    signal_id_right_click_ =
+        g_signal_connect(settings, "notify::gtk-titlebar-right-click",
+                         G_CALLBACK(OnRightClickActionChangedThunk), this);
+    DCHECK(signal_id_right_click_);
+    OnRightClickActionChanged(settings, nullptr);
   } else if (GtkVersionCheck(3, 10, 3)) {
-    signal_id_ = g_signal_connect_after(settings, "notify::gtk-theme-name",
-                                        G_CALLBACK(OnThemeChangedThunk), this);
-    DCHECK(signal_id_);
+    signal_id_decoration_layout_ =
+        g_signal_connect_after(settings, "notify::gtk-theme-name",
+                               G_CALLBACK(OnThemeChangedThunk), this);
+    DCHECK(signal_id_decoration_layout_);
     OnThemeChanged(settings, nullptr);
   } else {
     // On versions older than 3.10.3, the layout was hardcoded.
@@ -71,11 +102,22 @@ NavButtonLayoutManagerGtk3::NavButtonLayoutManagerGtk3(GtkUi* delegate)
 }
 
 NavButtonLayoutManagerGtk3::~NavButtonLayoutManagerGtk3() {
-  if (signal_id_)
-    g_signal_handler_disconnect(gtk_settings_get_default(), signal_id_);
-  if (signal_id_middle_click_)
+  if (signal_id_decoration_layout_) {
+    g_signal_handler_disconnect(gtk_settings_get_default(),
+                                signal_id_decoration_layout_);
+  }
+  if (signal_id_middle_click_) {
     g_signal_handler_disconnect(gtk_settings_get_default(),
                                 signal_id_middle_click_);
+  }
+  if (signal_id_double_click_) {
+    g_signal_handler_disconnect(gtk_settings_get_default(),
+                                signal_id_double_click_);
+  }
+  if (signal_id_right_click_) {
+    g_signal_handler_disconnect(gtk_settings_get_default(),
+                                signal_id_right_click_);
+  }
 }
 
 void NavButtonLayoutManagerGtk3::SetWindowButtonOrderingFromGtkLayout(
@@ -98,21 +140,35 @@ void NavButtonLayoutManagerGtk3::OnMiddleClickActionChanged(
     GParamSpec* param) {
   std::string value =
       GetGtkSettingsStringProperty(settings, "gtk-titlebar-middle-click");
-  GtkUi::NonClientMiddleClickAction action;
-  if (value == "none") {
-    action = views::LinuxUI::MIDDLE_CLICK_ACTION_NONE;
-  } else if (value == "lower") {
-    action = views::LinuxUI::MIDDLE_CLICK_ACTION_LOWER;
-  } else if (value == "minimize") {
-    action = views::LinuxUI::MIDDLE_CLICK_ACTION_MINIMIZE;
-  } else if (value == "toggle-maximize") {
-    action = views::LinuxUI::MIDDLE_CLICK_ACTION_TOGGLE_MAXIMIZE;
-  } else {
-    // Default to no action if the user has explicitly
-    // chosen an action that we don't implement.
-    action = views::LinuxUI::MIDDLE_CLICK_ACTION_NONE;
-  }
-  delegate_->SetNonClientMiddleClickAction(action);
+  GtkUi::NonClientWindowFrameAction action =
+      views::LinuxUI::WINDOW_FRAME_ACTION_NONE;
+  ParseActionString(value, &action);
+  delegate_->SetNonClientWindowFrameAction(
+      views::LinuxUI::WINDOW_FRAME_ACTION_SOURCE_MIDDLE_CLICK, action);
+}
+
+void NavButtonLayoutManagerGtk3::OnDoubleClickActionChanged(
+    GtkSettings* settings,
+    GParamSpec* param) {
+  std::string value =
+      GetGtkSettingsStringProperty(settings, "gtk-titlebar-double-click");
+  GtkUi::NonClientWindowFrameAction action =
+      views::LinuxUI::WINDOW_FRAME_ACTION_TOGGLE_MAXIMIZE;
+  ParseActionString(value, &action);
+  delegate_->SetNonClientWindowFrameAction(
+      views::LinuxUI::WINDOW_FRAME_ACTION_SOURCE_DOUBLE_CLICK, action);
+}
+
+void NavButtonLayoutManagerGtk3::OnRightClickActionChanged(
+    GtkSettings* settings,
+    GParamSpec* param) {
+  std::string value =
+      GetGtkSettingsStringProperty(settings, "gtk-titlebar-right-click");
+  GtkUi::NonClientWindowFrameAction action =
+      views::LinuxUI::WINDOW_FRAME_ACTION_MENU;
+  ParseActionString(value, &action);
+  delegate_->SetNonClientWindowFrameAction(
+      views::LinuxUI::WINDOW_FRAME_ACTION_SOURCE_RIGHT_CLICK, action);
 }
 
 void NavButtonLayoutManagerGtk3::OnThemeChanged(GtkSettings* settings,

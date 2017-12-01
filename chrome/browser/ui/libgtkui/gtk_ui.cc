@@ -334,7 +334,7 @@ gfx::FontRenderParams GetGtkFontRenderParams() {
   return params;
 }
 
-views::LinuxUI::NonClientMiddleClickAction GetDefaultMiddleClickAction() {
+views::LinuxUI::NonClientWindowFrameAction GetDefaultMiddleClickAction() {
   std::unique_ptr<base::Environment> env(base::Environment::Create());
   switch (base::nix::GetDesktopEnvironment(env.get())) {
     case base::nix::DESKTOP_ENVIRONMENT_KDE4:
@@ -343,9 +343,9 @@ views::LinuxUI::NonClientMiddleClickAction GetDefaultMiddleClickAction() {
       // middle mouse button to create tab groups. We don't support that in
       // Chrome, but at least avoid lowering windows in response to middle
       // clicks to avoid surprising users who expect the KDE behavior.
-      return views::LinuxUI::MIDDLE_CLICK_ACTION_NONE;
+      return views::LinuxUI::WINDOW_FRAME_ACTION_NONE;
     default:
-      return views::LinuxUI::MIDDLE_CLICK_ACTION_LOWER;
+      return views::LinuxUI::WINDOW_FRAME_ACTION_LOWER;
   }
 }
 
@@ -404,7 +404,13 @@ SkColor GetToolbarTopSeparatorColor(SkColor header_fg,
 
 }  // namespace
 
-GtkUi::GtkUi() : middle_click_action_(GetDefaultMiddleClickAction()) {
+GtkUi::GtkUi() {
+  window_frame_actions_[WINDOW_FRAME_ACTION_SOURCE_DOUBLE_CLICK] =
+      views::LinuxUI::WINDOW_FRAME_ACTION_TOGGLE_MAXIMIZE;
+  window_frame_actions_[WINDOW_FRAME_ACTION_SOURCE_MIDDLE_CLICK] =
+      GetDefaultMiddleClickAction();
+  window_frame_actions_[WINDOW_FRAME_ACTION_SOURCE_RIGHT_CLICK] =
+      views::LinuxUI::WINDOW_FRAME_ACTION_MENU;
 #if GTK_MAJOR_VERSION > 2
   // Force Gtk to use Xwayland if it would have used wayland.  libgtkui assumes
   // the use of X11 (eg. X11InputMethodContextImplGtk) and will crash under
@@ -743,8 +749,10 @@ void GtkUi::SetWindowButtonOrdering(
   }
 }
 
-void GtkUi::SetNonClientMiddleClickAction(NonClientMiddleClickAction action) {
-  middle_click_action_ = action;
+void GtkUi::SetNonClientWindowFrameAction(
+    NonClientWindowFrameActionSourceType source,
+    NonClientWindowFrameAction action) {
+  window_frame_actions_[source] = action;
 }
 
 std::unique_ptr<ui::LinuxInputMethodContext> GtkUi::CreateInputMethodContext(
@@ -777,9 +785,9 @@ ui::SelectFileDialog* GtkUi::CreateSelectFileDialog(
   return SelectFileDialogImpl::Create(listener, std::move(policy));
 }
 
-views::LinuxUI::NonClientMiddleClickAction
-GtkUi::GetNonClientMiddleClickAction() {
-  return middle_click_action_;
+views::LinuxUI::NonClientWindowFrameAction GtkUi::GetNonClientWindowFrameAction(
+    NonClientWindowFrameActionSourceType source) {
+  return window_frame_actions_[source];
 }
 
 void GtkUi::NotifyWindowManagerStartupComplete() {
