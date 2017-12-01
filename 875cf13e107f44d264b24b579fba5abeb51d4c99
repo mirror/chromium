@@ -57,6 +57,24 @@
       "revId": "875cf13e107f44d264b24b579fba5abeb51d4c99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfbd19e5_27408f35",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1949,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-01T16:51:20Z",
+      "side": 0,
+      "message": "Oops, I didn\u0027t find it. Sorry for false alarm.",
+      "parentUuid": "fb01c9ca_fad057fc",
+      "revId": "875cf13e107f44d264b24b579fba5abeb51d4c99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
