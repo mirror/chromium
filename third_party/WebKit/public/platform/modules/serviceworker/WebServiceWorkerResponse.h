@@ -91,9 +91,6 @@ class BLINK_PLATFORM_EXPORT WebServiceWorkerResponse {
   void SetCacheStorageCacheName(const WebString&);
   const WebString& CacheStorageCacheName() const;
 
-  void SetCorsExposedHeaderNames(const WebVector<WebString>&);
-  const WebVector<WebString>& CorsExposedHeaderNames() const;
-
 #if INSIDE_BLINK
   const HTTPHeaderMap& Headers() const;
 

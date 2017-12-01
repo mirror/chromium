@@ -432,9 +432,7 @@ class CacheStorageManagerTest : public testing::Test {
         request.url.spec().size(), blob_handle,
         blink::mojom::ServiceWorkerResponseError::kUnknown, base::Time(),
         false /* is_in_cache_storage */,
-        std::string() /* cache_storage_cache_name */,
-        std::make_unique<
-            ServiceWorkerHeaderList>() /* cors_exposed_header_names */);
+        std::string() /* cache_storage_cache_name */);
 
     CacheStorageBatchOperation operation;
     operation.operation_type = CACHE_STORAGE_CACHE_OPERATION_TYPE_PUT;

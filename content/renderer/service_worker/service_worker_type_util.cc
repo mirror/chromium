@@ -53,15 +53,6 @@ std::unique_ptr<ServiceWorkerHeaderMap> GetHeaderMap(
   return result;
 }
 
-std::unique_ptr<ServiceWorkerHeaderList> GetHeaderList(
-    const blink::WebVector<blink::WebString>& web_headers) {
-  std::unique_ptr<ServiceWorkerHeaderList> result =
-      std::make_unique<ServiceWorkerHeaderList>(web_headers.size());
-  std::transform(web_headers.begin(), web_headers.end(), result->begin(),
-                 [](const blink::WebString& s) { return s.Latin1(); });
-  return result;
-}
-
 std::unique_ptr<std::vector<GURL>> GetURLList(
     const blink::WebVector<blink::WebURL>& web_url_list) {
   std::unique_ptr<std::vector<GURL>> result =
@@ -99,8 +90,7 @@ ServiceWorkerResponse GetServiceWorkerResponseFromWebResponse(
       web_response.BlobSize(), std::move(blob), web_response.GetError(),
       web_response.ResponseTime(),
       !web_response.CacheStorageCacheName().IsNull(),
-      web_response.CacheStorageCacheName().Utf8(),
-      GetHeaderList(web_response.CorsExposedHeaderNames()));
+      web_response.CacheStorageCacheName().Utf8());
   if (!web_response.SideDataBlobSize())
     return response;
   response.side_data_blob_uuid = web_response.SideDataBlobUUID().Utf8();

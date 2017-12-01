@@ -76,10 +76,7 @@ FetchResponseData* CreateFetchResponseDataFromWebResponse(
       response = response->CreateBasicFilteredResponse();
       break;
     case network::mojom::FetchResponseType::kCORS: {
-      WebHTTPHeaderSet header_names;
-      for (const auto& header : web_response.CorsExposedHeaderNames())
-        header_names.insert(header.Ascii().data());
-      response = response->CreateCORSFilteredResponse(header_names);
+      response = response->CreateCORSFilteredResponse();
       break;
     }
     case network::mojom::FetchResponseType::kOpaque:

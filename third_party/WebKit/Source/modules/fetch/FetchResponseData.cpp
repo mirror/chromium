@@ -17,20 +17,6 @@ using Type = network::mojom::FetchResponseType;
 
 namespace blink {
 
-namespace {
-
-WebVector<WebString> HeaderSetToWebVector(const WebHTTPHeaderSet& headers) {
-  // Can't just pass *headers to the WebVector constructor because HashSet
-  // iterators are not stl iterator compatible.
-  WebVector<WebString> result(static_cast<size_t>(headers.size()));
-  int idx = 0;
-  for (const auto& header : headers)
-    result[idx++] = WebString::FromASCII(header);
-  return result;
-}
-
-}  // namespace
-
 FetchResponseData* FetchResponseData::Create() {
   // "Unless stated otherwise, a response's url is null, status is 200, status
   // message is `OK`, header list is an empty header list, and body is null."
@@ -239,8 +225,6 @@ void FetchResponseData::PopulateWebServiceWorkerResponse(
   if (internal_response_) {
     internal_response_->PopulateWebServiceWorkerResponse(response);
     response.SetResponseType(type_);
-    response.SetCorsExposedHeaderNames(
-        HeaderSetToWebVector(cors_exposed_header_names_));
     return;
   }
   response.SetURLList(url_list_);
@@ -249,8 +233,6 @@ void FetchResponseData::PopulateWebServiceWorkerResponse(
   response.SetResponseType(type_);
   response.SetResponseTime(ResponseTime());
   response.SetCacheStorageCacheName(CacheStorageCacheName());
-  response.SetCorsExposedHeaderNames(
-      HeaderSetToWebVector(cors_exposed_header_names_));
   for (const auto& header : HeaderList()->List()) {
     response.AppendHeader(header.first, header.second);
   }

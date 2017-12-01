@@ -496,9 +496,7 @@ class DelayHelper : public EmbeddedWorkerTestHelper {
             nullptr /* blob */,
             blink::mojom::ServiceWorkerResponseError::kUnknown, base::Time(),
             false /* response_is_in_cache_storage */,
-            std::string() /* response_cache_storage_cache_name */,
-            std::make_unique<
-                ServiceWorkerHeaderList>() /* cors_exposed_header_names */),
+            std::string() /* response_cache_storage_cache_name */),
         base::Time::Now());
     std::move(finish_callback_)
         .Run(blink::mojom::ServiceWorkerEventStatus::COMPLETED,
@@ -743,9 +741,7 @@ class ProviderDeleteHelper : public EmbeddedWorkerTestHelper {
             nullptr /* blob */,
             blink::mojom::ServiceWorkerResponseError::kUnknown, base::Time(),
             false /* response_is_in_cache_storage */,
-            std::string() /* response_cache_storage_cache_name */,
-            std::make_unique<
-                ServiceWorkerHeaderList>() /* cors_exposed_header_names */),
+            std::string() /* response_cache_storage_cache_name */),
         base::Time::Now());
     std::move(finish_callback)
         .Run(blink::mojom::ServiceWorkerEventStatus::COMPLETED,
@@ -831,9 +827,7 @@ class BlobResponder : public EmbeddedWorkerTestHelper {
             blob_uuid_, blob_size_, nullptr /* blob */,
             blink::mojom::ServiceWorkerResponseError::kUnknown, base::Time(),
             false /* response_is_in_cache_storage */,
-            std::string() /* response_cache_storage_cache_name */,
-            std::make_unique<
-                ServiceWorkerHeaderList>() /* cors_exposed_header_names */),
+            std::string() /* response_cache_storage_cache_name */),
         base::Time::Now());
     std::move(finish_callback)
         .Run(blink::mojom::ServiceWorkerEventStatus::COMPLETED,
@@ -933,9 +927,7 @@ class StreamResponder : public EmbeddedWorkerTestHelper {
             nullptr /* blob */,
             blink::mojom::ServiceWorkerResponseError::kUnknown, base::Time(),
             false /* response_is_in_cache_storage */,
-            std::string() /* response_cache_storage_cache_name */,
-            std::make_unique<
-                ServiceWorkerHeaderList>() /* cors_exposed_header_names */),
+            std::string() /* response_cache_storage_cache_name */),
         std::move(stream_handle_), base::Time::Now());
     std::move(finish_callback)
         .Run(blink::mojom::ServiceWorkerEventStatus::COMPLETED,
@@ -1417,9 +1409,7 @@ class EarlyResponseHelper : public EmbeddedWorkerTestHelper {
             nullptr /* blob */,
             blink::mojom::ServiceWorkerResponseError::kUnknown, base::Time(),
             false /* response_is_in_cache_storage */,
-            std::string() /* response_cache_storage_cache_name */,
-            std::make_unique<
-                ServiceWorkerHeaderList>() /* cors_exposed_header_names */),
+            std::string() /* response_cache_storage_cache_name */),
         base::Time::Now());
   }
 

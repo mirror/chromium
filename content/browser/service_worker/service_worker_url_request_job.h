@@ -321,8 +321,6 @@ class CONTENT_EXPORT ServiceWorkerURLRequestJob : public net::URLRequestJob {
   bool response_is_in_cache_storage_ = false;
   std::string response_cache_storage_cache_name_;
 
-  ServiceWorkerHeaderList cors_exposed_header_names_;
-
   std::unique_ptr<FileSizeResolver> file_size_resolver_;
 
   base::WeakPtrFactory<ServiceWorkerURLRequestJob> weak_factory_;
