@@ -1106,7 +1106,13 @@ void NGBlockLayoutAlgorithm::FinalizeForFragmentation() {
          "block_size for this fragment smaller than zero.";
 
   LayoutUnit space_left = FragmentainerSpaceAvailable();
-  DCHECK_GE(space_left, LayoutUnit());
+
+  if (space_left <= LayoutUnit()) {
+    // Need a break before this block, because no part of it fits in the current
+    // fragmentainer. Due to potential margin collapsing with children, this is
+    // something that we cannot always detect prior to layout.
+    return;
+  }
 
   if (container_builder_.DidBreak()) {
     // One of our children broke. Even if we fit within the remaining space we
@@ -1152,7 +1158,9 @@ bool NGBlockLayoutAlgorithm::BreakBeforeChild(
 
   // The remaining part of the fragmentainer (the unusable space for child
   // content, due to the break) should still be occupied by this container.
-  intrinsic_block_size_ = FragmentainerSpaceAvailable();
+  // TODO(mstensho): Figure out if we really need to <0 here. It doesn't seem
+  // right to have negative available space.
+  intrinsic_block_size_ = FragmentainerSpaceAvailable().ClampNegativeToZero();
   // Drop the fragment on the floor and retry at the start of the next
   // fragmentainer.
   container_builder_.AddBreakBeforeChild(child);
@@ -1164,17 +1172,27 @@ bool NGBlockLayoutAlgorithm::ShouldBreakBeforeChild(
     NGLayoutInputNode child,
     const NGPhysicalFragment& physical_fragment,
     LayoutUnit block_offset) const {
-  const auto* token = physical_fragment.BreakToken();
-  if (!token || token->IsFinished())
+  if (!container_builder_.BfcOffset().has_value())
     return false;
-  // TODO(mstensho): There are other break-inside values to consider here.
-  if (child.Style().BreakInside() != EBreakInside::kAvoid)
-    return false;
+
   // If we haven't used any space at all in the fragmentainer yet, we cannot
   // break, or there'd be no progress. We'd end up creating an infinite number
   // of fragmentainers without putting any content into them.
   auto space_left = FragmentainerSpaceAvailable() - block_offset;
   if (space_left >= ConstraintSpace().FragmentainerBlockSize())
+    return false;
+
+  // TODO(mstensho): The inline check here shouldn't be necessary, but
+  // it's needed as long as we don't support breaking between line
+  // boxes.
+  if (space_left <= LayoutUnit() && !child.IsInline())
+    return true;
+
+  const auto* token = physical_fragment.BreakToken();
+  if (!token || token->IsFinished())
+    return false;
+  // TODO(mstensho): There are other break-inside values to consider here.
+  if (child.Style().BreakInside() != EBreakInside::kAvoid)
     return false;
 
   // The child broke, and we're not at the start of a fragmentainer, and we're
