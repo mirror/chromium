@@ -16,6 +16,24 @@
       "revId": "1c728bef0ea58bcf6734031ff48fbffc25d06d9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7afefd14_277207f4",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1161469
+      },
+      "writtenOn": "2017-12-01T19:52:45Z",
+      "side": 1,
+      "message": "I forget what the dummy plane is for... it comes from here:\n\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d464085\n\nSeems like we could\u0027ve fixed the kernel driver instead of patching over it in ozone. Either way, yes, doesn\u0027t seem necessary.",
+      "parentUuid": "99ec3298_cc736ab5",
+      "revId": "1c728bef0ea58bcf6734031ff48fbffc25d06d9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
