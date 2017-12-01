@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "a0c90d16_088aaf5d",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-12-01T22:52:14Z",
+      "side": 1,
+      "message": "I\u0027m referring to the fact that each individual TEST_F() does not know that the mock_tab_* objects are not real WebState*. It\u0027s hard for TEST_F() to exploit that knowledge without explicit casting. The moment InsertTestTabState() returns a TestWebState, that \"encapsultion\" is gone. \n\nThe casting TestWebState -\u003e WebState -\u003e TestWebState limits the \"implementation secret\" to the unit tests setup/teardown.\n\n(If this doesn\u0027t convince you, I\u0027m willing to let this go.)",
+      "parentUuid": "72691b99_e151a9c5",
+      "revId": "6b17eed635a15d88530061a544812181d5867bf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99d458b2_31317599",
         "filename": "ios/chrome/browser/metrics/tab_usage_recorder_unittest.mm",
         "patchSetId": 5
@@ -161,6 +179,30 @@
       "side": 1,
       "message": "It is true. But also it is not very readable and does not follow recommendations from C++ Style Guide (see Function Argument Comments from here: https://google.github.io/styleguide/cppguide.html#Implementation_Comments)",
       "parentUuid": "10a9c639_9daf635b",
+      "range": {
+        "startLine": 379,
+        "startChar": 55,
+        "endLine": 379,
+        "endChar": 59
+      },
+      "revId": "6b17eed635a15d88530061a544812181d5867bf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb5ccb5e_ca6fc75f",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-12-01T22:52:14Z",
+      "side": 1,
+      "message": "Thanks for the reference. I don\u0027t want to muddle up this CL with general cleanup that\u0027s not related to the main goal. Maybe as a separate CL?",
+      "parentUuid": "3ab88795_0f887276",
       "range": {
         "startLine": 379,
         "startChar": 55,
