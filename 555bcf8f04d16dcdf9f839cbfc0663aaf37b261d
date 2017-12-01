@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4c20561_dadc1d4a",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-12-01T05:27:49Z",
+      "side": 1,
+      "message": "Let\u0027s be more specific:\n\n// Returns a FakePeripheral that corresponds to a simulated pre-connected device\n// called Health Thermometer\u0027. The device has two known serviceUUIDs: \u0027generic_access\u0027\n// and \u0027health_thermometer\u0027.",
+      "revId": "555bcf8f04d16dcdf9f839cbfc0663aaf37b261d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2acdd631_e397c306",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-12-01T05:27:49Z",
+      "side": 1,
+      "message": "I think it would be better if we changed this to only set up a connectable device and set the GATT discovery response in getHealthThermometerDeviceWithServicesDiscovered() instead. The other two instances of this function only connect to the device, so we will end up with a dangling discovery response. Ideally, at the end of a test all responses should have been dispatched.",
+      "revId": "555bcf8f04d16dcdf9f839cbfc0663aaf37b261d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "314828e2_e624c89e",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-12-01T05:27:49Z",
+      "side": 1,
+      "message": "Call this after populateHealthThermometerFakes(). The flow should always be:\n\n1. Set connection response\n2. Add GATT Attributes\n3. Set GATT discovery response.",
+      "revId": "555bcf8f04d16dcdf9f839cbfc0663aaf37b261d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf2dee2c_b7b2c901",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-12-01T05:27:49Z",
+      "side": 1,
+      "message": "Note that all these functions return promises, which means they are async functions. Because we don\u0027t block on the first two calls\u0027 promises, there is no guarantee that they will be finished by the time the third promise resolves. Please chain these calls i.e. \n\n.then(fake_peripheral \u003d\u003e {\n  return fake_peripheral.setNextGATTConnectionResponse(...)\n    .then(() \u003d\u003e fake_peripheral.setNext...())\n    .then(() \u003d\u003e ...);\n});\n\nAlso consider saving peripheral in a variable like other functions do. That way you don\u0027t need nested promises.\n\n(There would be two options here:\n\n 1. Chain the calls so that each call runs after the other finishes.\n 2. Use Promise.all() to wait until all calls run.\n\nPromise.all() would mean that functions run in parallel, but the framework makes no guarantees that it can handle parallel calls, so we chain the calls instead.)",
+      "revId": "555bcf8f04d16dcdf9f839cbfc0663aaf37b261d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
