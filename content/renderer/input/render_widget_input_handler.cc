@@ -33,6 +33,7 @@
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/WebKit/public/web/WebNode.h"
 #include "ui/events/blink/web_input_event_traits.h"
+#include "ui/gfx/geometry/dip_util.h"
 #include "ui/gfx/geometry/point_conversions.h"
 #include "ui/latency/latency_info.h"
 
@@ -159,9 +160,13 @@ RenderWidgetInputHandler::~RenderWidgetInputHandler() {}
 
 int RenderWidgetInputHandler::GetWidgetRoutingIdAtPoint(
     const gfx::Point& point) {
+  gfx::PointF transformed_point =
+      gfx::ConvertPointToPixel(widget_->GetOriginalDeviceScaleFactor(),
+                               gfx::PointF(point.x(), point.y()));
   blink::WebNode result_node =
       widget_->GetWebWidget()
-          ->HitTestResultAt(blink::WebPoint(point.x(), point.y()))
+          ->HitTestResultAt(
+              blink::WebPoint(transformed_point.x(), transformed_point.y()))
           .GetNode();
 
   blink::WebFrame* result_frame =
