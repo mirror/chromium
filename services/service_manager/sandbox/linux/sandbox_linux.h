@@ -209,6 +209,7 @@ class SERVICE_MANAGER_SANDBOX_EXPORT SandboxLinux {
   // vital to the process.
   void StartBrokerProcess(
       BPFBasePolicy* client_sandbox_policy,
+      uint32_t allowed_command_mask,
       std::vector<sandbox::syscall_broker::BrokerFilePermission> permissions,
       PreSandboxHook broker_side_hook,
       const Options& options);

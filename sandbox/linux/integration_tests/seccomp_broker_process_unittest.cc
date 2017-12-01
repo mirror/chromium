@@ -20,6 +20,7 @@
 #include "sandbox/linux/bpf_dsl/seccomp_macros.h"
 #include "sandbox/linux/seccomp-bpf/bpf_tests.h"
 #include "sandbox/linux/seccomp-bpf/sandbox_bpf.h"
+#include "sandbox/linux/syscall_broker/broker_command.h"
 #include "sandbox/linux/syscall_broker/broker_file_permission.h"
 #include "sandbox/linux/syscall_broker/broker_process.h"
 #include "sandbox/linux/system_headers/linux_syscalls.h"
@@ -48,22 +49,21 @@ class InitializedOpenBroker {
         syscall_broker::BrokerFilePermission::ReadOnly("/proc/allowed"));
     permissions.push_back(
         syscall_broker::BrokerFilePermission::ReadOnly("/proc/cpuinfo"));
-
-    broker_process_.reset(
-        new syscall_broker::BrokerProcess(EPERM, permissions));
-    BPF_ASSERT(broker_process() != NULL);
+    broker_process_ = std::make_unique<syscall_broker::BrokerProcess>(
+        EPERM, syscall_broker::kBrokerCommandAllMask, permissions);
     BPF_ASSERT(broker_process_->Init(base::Bind(&NoOpCallback)));
-
     initialized_ = true;
   }
-  bool initialized() { return initialized_; }
-  class syscall_broker::BrokerProcess* broker_process() {
+
+  bool initialized() const { return initialized_; }
+
+  syscall_broker::BrokerProcess* broker_process() const {
     return broker_process_.get();
   }
 
  private:
   bool initialized_;
-  std::unique_ptr<class syscall_broker::BrokerProcess> broker_process_;
+  std::unique_ptr<syscall_broker::BrokerProcess> broker_process_;
   DISALLOW_COPY_AND_ASSIGN(InitializedOpenBroker);
 };
 
