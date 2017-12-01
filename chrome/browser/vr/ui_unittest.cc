@@ -46,6 +46,7 @@ const std::set<UiElementName> kHitTestableElements = {
     kFloor,
     kCeiling,
     kBackplane,
+    kKeyboard,
     kContentQuad,
     kAudioCaptureIndicator,
     kVideoCaptureIndicator,

@@ -14,6 +14,7 @@
 #include "base/values.h"
 #include "chrome/browser/vr/databinding/binding_base.h"
 #include "chrome/browser/vr/elements/draw_phase.h"
+#include "chrome/browser/vr/elements/keyboard.h"
 #include "chrome/browser/vr/elements/reticle.h"
 #include "chrome/browser/vr/elements/ui_element.h"
 #include "ui/gfx/transform.h"
@@ -48,11 +49,8 @@ void UiScene::AddUiElement(UiElementName parent,
   CHECK_GE(element->id(), 0);
   CHECK_EQ(GetUiElementById(element->id()), nullptr);
   CHECK_GE(element->draw_phase(), 0);
-  if (gl_initialized_) {
-    for (auto& child : *element) {
-      child.Initialize(provider_);
-    }
-  }
+  if (gl_initialized_)
+    element->Initialize(provider_);
   GetUiElementByName(parent)->AddChild(std::move(element));
   is_dirty_ = true;
 }
@@ -235,6 +233,14 @@ UiScene::Elements UiScene::GetVisibleControllerElements() const {
       });
 }
 
+UiScene::Elements UiScene::GetVisibleKeyboardElements() const {
+  return GetVisibleElements(GetUiElementByName(kKeyboard),
+                            GetUiElementByName(kReticle),
+                            [](UiElement* element) {
+                              return element->draw_phase() == kPhaseForeground;
+                            });
+}
+
 UiScene::UiScene() {
   root_element_ = base::MakeUnique<UiElement>();
   root_element_->set_name(kRoot);
@@ -248,9 +254,8 @@ UiScene::~UiScene() = default;
 void UiScene::OnGlInitialized(SkiaSurfaceProvider* provider) {
   gl_initialized_ = true;
   provider_ = provider;
-
   for (auto& element : *root_element_)
-    element.Initialize(provider);
+    element.Initialize(provider_);
 }
 
 }  // namespace vr

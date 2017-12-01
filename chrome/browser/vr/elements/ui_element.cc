@@ -10,6 +10,7 @@
 #include "base/numerics/ranges.h"
 #include "base/stl_util.h"
 #include "base/time/time.h"
+#include "chrome/browser/vr/model/camera_model.h"
 #include "third_party/WebKit/public/platform/WebGestureEvent.h"
 #include "third_party/skia/include/core/SkRRect.h"
 #include "third_party/skia/include/core/SkRect.h"
@@ -127,6 +128,18 @@ void UiElement::OnScrollUpdate(std::unique_ptr<blink::WebGestureEvent> gesture,
 void UiElement::OnScrollEnd(std::unique_ptr<blink::WebGestureEvent> gesture,
                             const gfx::PointF& position) {}
 
+void UiElement::OnFocusChanged(bool focused) {
+  NOTREACHED();
+}
+
+void UiElement::OnInputEdited(const TextInputInfo& info) {
+  NOTREACHED();
+}
+
+void UiElement::OnInputCommitted(const TextInputInfo& info) {
+  NOTREACHED();
+}
+
 bool UiElement::PrepareToDraw() {
   return false;
 }
@@ -154,6 +167,10 @@ bool UiElement::OnBeginFrame(const base::TimeTicks& time,
 
 bool UiElement::IsHitTestable() const {
   return IsVisible() && hit_testable_;
+}
+
+bool UiElement::IsEditable() {
+  return false;
 }
 
 void UiElement::SetSize(float width, float height) {

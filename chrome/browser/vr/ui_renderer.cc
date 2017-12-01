@@ -29,6 +29,7 @@ void UiRenderer::Draw2dBrowsing(const RenderInfo& render_info) {
   const auto& elements = scene_->GetVisible2dBrowsingElements();
   const auto& elements_overlay = scene_->GetVisible2dBrowsingOverlayElements();
   const auto& controller_elements = scene_->GetVisibleControllerElements();
+  const auto& keyboard_elements = scene_->GetVisibleKeyboardElements();
   if (elements.empty() && elements_overlay.empty())
     return;
 
@@ -39,8 +40,12 @@ void UiRenderer::Draw2dBrowsing(const RenderInfo& render_info) {
     DrawUiView(render_info, elements);
   }
 
-  if (elements_overlay.empty() && controller_elements.empty())
+  if (elements_overlay.empty() && controller_elements.empty() &&
+      keyboard_elements.empty())
     return;
+
+  // Draw the keyboard.
+  DrawUiView(render_info, keyboard_elements);
 
   // The overlays do not make use of depth testing.
   glDisable(GL_CULL_FACE);
