@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ac1b357_8508f07c",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsLayer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1316,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-01T21:10:16Z",
+      "side": 1,
+      "message": "I\u0027m just now learning about this LayerState::offset. Why is it used? It appears to\nbe offsetFromLayoutObject + PaintOffset of the first chunk of the PaintLayer.\nI don\u0027t get why the second half is needed.",
+      "revId": "bcc62fc10ba1cad02259fb778f89b3e58ad08bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
