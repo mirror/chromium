@@ -15,7 +15,6 @@ namespace vr {
 namespace {
 
 static constexpr int kCursorBlinkHalfPeriodMs = 600;
-
 }
 
 TextInput::TextInput(int texture_width_pixels, float font_height_meters) {

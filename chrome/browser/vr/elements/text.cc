@@ -18,7 +18,6 @@ namespace vr {
 namespace {
 
 constexpr float kCursorWidthRatio = 0.07f;
-
 }
 
 Text::Text(int maximum_width_pixels, float font_height_meters)
