@@ -554,7 +554,8 @@ TEST_F(WebRtcEventLogManagerTest,
   ASSERT_EQ(file_path_2, expected_path_2);
 }
 
-TEST_F(WebRtcEventLogManagerTest, LocalLogMayNotBeStartedTwice) {
+// Disabled for crbug.com/787809.
+TEST_F(WebRtcEventLogManagerTest, DISABLED_LocalLogMayNotBeStartedTwice) {
   const base::FilePath file_path = LocalWebRtcEventLogStart(
       kRenderProcessId, kLocalPeerConnectionId, base_path_, kMaxFileSizeBytes);
   ASSERT_FALSE(file_path.empty());
