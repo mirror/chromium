@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb2469c6_b56600db",
+        "filename": "chrome/browser/ui/autofill/chrome_autofill_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-01T21:30:34Z",
+      "side": 1,
+      "message": "now included in .h",
+      "revId": "e2017dc45ddaa54eda7f1f604b6c1dc7df2fcbab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

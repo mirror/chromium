@@ -84,6 +84,23 @@
       "revId": "e5a7eaec01bdf49d9ccb27cf0dfd32473a330d03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f3809787_4c147f90",
+        "filename": "components/test/data/payments/credit_card_upload_done.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-01T21:30:34Z",
+      "side": 1,
+      "message": "These test files should probably live in components/test/data/autofill",
+      "revId": "e5a7eaec01bdf49d9ccb27cf0dfd32473a330d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
