@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "744a3560_039d8b72",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 4208,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-01T02:41:49Z",
+      "side": 1,
+      "message": "Active",
+      "range": {
+        "startLine": 4208,
+        "startChar": 92,
+        "endLine": 4208,
+        "endChar": 98
+      },
+      "revId": "c152714a9ce869972fbe326a891a9bb94fbff0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cef12971_04bab34a",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 4215,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-01T02:41:49Z",
+      "side": 1,
+      "message": "Do these need to be comma-separated without a space?",
+      "range": {
+        "startLine": 4215,
+        "startChar": 31,
+        "endLine": 4215,
+        "endChar": 40
+      },
+      "revId": "c152714a9ce869972fbe326a891a9bb94fbff0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "224e0270_ae609680",
         "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.html",
         "patchSetId": 2
@@ -53,6 +99,29 @@
     },
     {
       "key": {
+        "uuid": "ec5f957a_71592423",
+        "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-01T02:41:49Z",
+      "side": 1,
+      "message": "nit: 2-space indent. Only use 4-space indent for wrapped lines",
+      "range": {
+        "startLine": 73,
+        "startChar": 6,
+        "endLine": 73,
+        "endChar": 10
+      },
+      "revId": "c152714a9ce869972fbe326a891a9bb94fbff0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "604139b9_fdff5692",
         "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.html",
         "patchSetId": 2
@@ -87,6 +156,24 @@
     },
     {
       "key": {
+        "uuid": "35db2458_bdad4845",
+        "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-01T02:41:49Z",
+      "side": 1,
+      "message": "but that would be \u003e80 characters, in this case -- if it\u0027s possible to break somewhere before 80 chars, we should",
+      "parentUuid": "9170b3ea_435fc6b5",
+      "revId": "c152714a9ce869972fbe326a891a9bb94fbff0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b728cfd_d5a6c333",
         "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.html",
         "patchSetId": 2
@@ -98,6 +185,92 @@
       "writtenOn": "2017-12-01T02:21:44Z",
       "side": 1,
       "message": "Ditto.",
+      "revId": "c152714a9ce869972fbe326a891a9bb94fbff0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d925415_a564b24d",
+        "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-01T02:41:49Z",
+      "side": 1,
+      "message": "This is causing a Closure error; check out the closure trybot below for details. The problem is that the target that defines I18nBehavior is not being included in compiled_resources2.gyp. i18n_behavior needs to be added for this target, the same way it\u0027s in the dependency list for \u0027oobe_change_picture\u0027.\n\nYou can test this locally so you don\u0027t have to wait for the bot:\n  $ third_party/closure_compiler/run_compiler\n\nSee https://chromium.googlesource.com/chromium/src/+/master/docs/closure_compilation.md for more details.",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 28
+      },
+      "revId": "c152714a9ce869972fbe326a891a9bb94fbff0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e4bbec0_4fce0d02",
+        "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-01T02:41:49Z",
+      "side": 1,
+      "message": "here and below, add the description to the closure comment instead of mixing comments:\n\n/** @private Used for the \"More options\" dialog. */\n\nor, if closure complains because it expects a {type} there, use a separate line:\n\n/**\n * Used for the \"More options\" dialog.\n * @private\n */",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 36
+      },
+      "revId": "c152714a9ce869972fbe326a891a9bb94fbff0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab784312_468e74af",
+        "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-01T02:41:49Z",
+      "side": 1,
+      "message": "all: /** @private */",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 149,
+        "endChar": 23
+      },
+      "revId": "c152714a9ce869972fbe326a891a9bb94fbff0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6c49ccf_db4cbc4c",
+        "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-01T02:41:49Z",
+      "side": 1,
+      "message": "nit: remove blank line",
       "revId": "c152714a9ce869972fbe326a891a9bb94fbff0b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
