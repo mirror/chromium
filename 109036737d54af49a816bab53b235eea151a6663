@@ -619,6 +619,30 @@
     },
     {
       "key": {
+        "uuid": "ec2115db_91f8ac81",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-01T21:02:49Z",
+      "side": 1,
+      "message": "Leaving this per discussion unless something comes up in the future.",
+      "parentUuid": "cbbfd0f4_26c74b9c",
+      "range": {
+        "startLine": 122,
+        "startChar": 25,
+        "endLine": 122,
+        "endChar": 49
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c527a8f_693fce79",
         "filename": "components/cronet/ios/cronet_metrics.mm",
         "patchSetId": 22
