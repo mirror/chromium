@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88b93911_f0ae9f66",
+        "filename": "chrome/browser/ui/app_list/app_list_view_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-01T20:55:25Z",
+      "side": 1,
+      "message": "nit: since we have mutliple bool args now, it would nice to document them.\ne.g.\n  ..., false /* is_voice_query */, false /* initiated_by_user */);\n\nor use const\n  const bool kIsVoiceQuery \u003d false;\n  const bool kInitiatedByUser \u003d false;\n  ..., kIsVoiceQuery, kInitiatedByUser);",
+      "range": {
+        "startLine": 185,
+        "startChar": 56,
+        "endLine": 185,
+        "endChar": 61
+      },
+      "revId": "caf0c969a936cc12b7da899734b976d4e26e4bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51f9c236_b453eafa",
+        "filename": "chrome/browser/ui/app_list/app_list_view_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-01T20:55:25Z",
+      "side": 1,
+      "message": "ditto, document the bools",
+      "revId": "caf0c969a936cc12b7da899734b976d4e26e4bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
