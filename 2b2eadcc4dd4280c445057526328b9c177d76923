@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8d2d2fe_ed509698",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-01T01:07:18Z",
+      "side": 1,
+      "message": "Wow, thanks for tracking these down and fixing. It seems this description about ignore-certificate-errors-spki-list is outdated now though in the latest patchset?",
+      "revId": "2b2eadcc4dd4280c445057526328b9c177d76923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be5920fd_4604b5c6",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-01T01:07:18Z",
+      "side": 1,
+      "message": "nit: I slightly prefer annotations like base::nullopt /* ssl_info */, nullptr /* downloaded_file */",
+      "revId": "2b2eadcc4dd4280c445057526328b9c177d76923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
