@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af25ea47_b314a6b6",
+        "filename": "build/secondary/third_party/android_platform/development/scripts/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-01T03:39:39Z",
+      "side": 1,
+      "message": "do we still need these other tools?",
+      "revId": "7e39d81fd117bb891e220d98cfd05b186a7ea37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27d2bf67_fb1da862",
+        "filename": "tools/python/llvm_symbolizer.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-01T03:39:39Z",
+      "side": 1,
+      "message": "nit: prefix these with _ (guessing they\u0027re not used outside of this module)",
+      "revId": "7e39d81fd117bb891e220d98cfd05b186a7ea37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cc0e0e6_60feaa42",
+        "filename": "tools/python/llvm_symbolizer.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-01T03:39:39Z",
+      "side": 1,
+      "message": "nit: 4 space indent",
+      "revId": "7e39d81fd117bb891e220d98cfd05b186a7ea37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efc9d3bd_da24e575",
+        "filename": "tools/python/llvm_symbolizer.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-01T03:39:39Z",
+      "side": 1,
+      "message": "nit: include the path you looked for it here?",
+      "revId": "7e39d81fd117bb891e220d98cfd05b186a7ea37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55dc6fc5_2c10b8b8",
+        "filename": "tools/python/llvm_symbolizer.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-01T03:39:39Z",
+      "side": 1,
+      "message": "not sure there\u0027s a point to closing stdin/stdout if it\u0027s just going to be killed anyway.",
+      "revId": "7e39d81fd117bb891e220d98cfd05b186a7ea37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39efd7a4_2896b825",
+        "filename": "tools/python/llvm_symbolizer.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-01T03:39:39Z",
+      "side": 1,
+      "message": "Why wait?",
+      "revId": "7e39d81fd117bb891e220d98cfd05b186a7ea37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64180625_ed4396bd",
+        "filename": "tools/python/llvm_symbolizer.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-01T03:39:39Z",
+      "side": 1,
+      "message": "nit: add a .flush() next?",
+      "revId": "7e39d81fd117bb891e220d98cfd05b186a7ea37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8721b39_3aad430f",
+        "filename": "tools/python/llvm_symbolizer.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-01T03:39:39Z",
+      "side": 1,
+      "message": "nit: a bit sneaky to put an IO operation as a parameter. Better to do:\n\nline_numbers \u003d self._llvm_symbolizer_subprocess.stdout.readline()[:-1]\nresult.append(...)",
+      "revId": "7e39d81fd117bb891e220d98cfd05b186a7ea37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
