@@ -525,7 +525,9 @@ class CONTENT_EXPORT RenderFrameImpl
       const RequestNavigationParams& request_params,
       mojo::ScopedDataPipeConsumerHandle body_data,
       base::Optional<URLLoaderFactoryBundle> subresource_loaders,
-      const base::UnguessableToken& devtools_navigation_token) override;
+      const base::UnguessableToken& devtools_navigation_token,
+      mojom::WebPackageSubresourceManagerRequest webpackage_subresource_manager_request)
+          override;
 
   // mojom::HostZoom implementation:
   void SetHostZoomLevel(const GURL& url, double zoom_level) override;
@@ -1105,6 +1107,7 @@ class CONTENT_EXPORT RenderFrameImpl
       const RequestNavigationParams& request_params,
       std::unique_ptr<StreamOverrideParameters> stream_params,
       base::Optional<URLLoaderFactoryBundle> subresource_loader_factories,
+      mojom::WebPackageSubresourceManagerRequest webpackage_subresource_manager_request,
       const base::UnguessableToken& devtools_navigation_token);
 
   // Returns a URLLoaderFactoryBundle which can be used to request subresources

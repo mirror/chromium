@@ -11,12 +11,14 @@ SubresourceLoaderParams::~SubresourceLoaderParams() = default;
 
 SubresourceLoaderParams::SubresourceLoaderParams(
     SubresourceLoaderParams&& other) {
-  loader_factory_info = std::move(other.loader_factory_info);
+  *this = std::move(other);
 }
 
 SubresourceLoaderParams& SubresourceLoaderParams::operator=(
     SubresourceLoaderParams&& other) {
   loader_factory_info = std::move(other.loader_factory_info);
+  webpackage_subresource_manager_request = std::move(
+      other.webpackage_subresource_manager_request);
   return *this;
 }
 
