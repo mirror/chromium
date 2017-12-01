@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1812036d_e0562d52",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipper.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-12-01T19:11:51Z",
+      "side": 1,
+      "message": "Could we instead plumb the paint phase in to here and avoid setting the clip when it\u0027s not needed? Or is this method called once for all phases?",
+      "range": {
+        "startLine": 612,
+        "startChar": 1,
+        "endLine": 615,
+        "endChar": 12
+      },
+      "revId": "7e3e79d738bf4de0103e86ba5c3a3982935e52b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
