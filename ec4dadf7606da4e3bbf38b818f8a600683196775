@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "80ca28e7_3a3334a1",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-01T17:38:48Z",
+      "side": 1,
+      "message": "\u003e Done.  I feel like it duplicates a lot of the effort in the PRW tests, so let me know if you think it can be done simpler or if it adds value anyway.\n\nI like more focused tests, but if it\u0027s complex to do this and ends up being duplicated, then don\u0027t bother. So, no unittest then.",
+      "parentUuid": "7903a46e_60bae261",
+      "range": {
+        "startLine": 240,
+        "startChar": 13,
+        "endLine": 240,
+        "endChar": 41
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dafbd563_484939a5",
         "filename": "chrome/browser/ui/views/media_router/presentation_receiver_window_view.h",
         "patchSetId": 12
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "Can you point me to that?  It seems like a waste for such a small and specific class and there seems to be precedent for it.",
       "parentUuid": "3e2ded0b_48eb522c",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 4
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "192d0730_2bd550dc",
+        "filename": "chrome/browser/ui/views/media_router/presentation_receiver_window_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-01T17:38:48Z",
+      "side": 1,
+      "message": "From https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md \" Prefer putting delegate classes in their own header files. Implementors of the delegate interface will often be included elsewhere, which will often cause more coupling with the header of the main class.\"",
+      "parentUuid": "f2088a9e_bcc1f3eb",
       "range": {
         "startLine": 29,
         "startChar": 2,
@@ -425,6 +473,30 @@
     },
     {
       "key": {
+        "uuid": "1516c087_cd7f496e",
+        "filename": "chrome/browser/ui/views/media_router/presentation_receiver_window_views.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-01T17:38:48Z",
+      "side": 1,
+      "message": "I recommend structuring the code as follows:\n. What is PresentationReceiverWindow is renamed to PresentationReceiverWindowController and moves to c/b/ui/media_router.\n. PresentationReceiverWindow moves to c/b/ui/media_router as well and in addition to the functions you have now, it gets all the ones you are calling from what is PresentationReceiverWindow in this patch (for example, UpdateLocationBar). The functions added are pure virtual. It might make sense for PresentationReceiverWindow to extend ui::BaseWindow (which would result in you needing to expose fewer methods, but I leave that to you).\n. PresentationReceiverWindow has a static Create function.\n. PresentationReceiverWindowViews is added to c/b/ui/views/media_router and wires up the appropriate view::Widget and WebContentsView classes that you have now in PresentationReceiverWindowFrame and PresentationReceiverWindowView.\n. What is in PresentationReceiverWindowView::Controller would move to PresentationReceiverWindow::Controller.\n\nThen end result will be a clear separation of what is expected to be implemented by the platform specific ui layer (PresentationReceiverWindow) and the controller logic is shared across platforms. The code that is in c/b/ui/media_router will have no views specific code. This is the same pattern we have in other places in the code, for example, Browser and BrowserWindow.",
+      "parentUuid": "27516907_35381929",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 38
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4073f2f5_e09d8271",
         "filename": "chrome/test/media_router/presentation_receiver_window_browsertest.cc",
         "patchSetId": 12
@@ -460,6 +532,30 @@
       "side": 1,
       "message": "I put it here because two tests use a script that is shared with other browser tests in this directory.  I could split them up if you prefer.",
       "parentUuid": "4073f2f5_e09d8271",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 60
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd34ae32_fec8766e",
+        "filename": "chrome/test/media_router/presentation_receiver_window_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-01T17:38:48Z",
+      "side": 1,
+      "message": "Does the script necessitate the test lives here too? I would prefer the test to live close to the code (as we have else where in chrome).",
+      "parentUuid": "7f9e6c86_0afb178a",
       "range": {
         "startLine": 1,
         "startChar": 0,
