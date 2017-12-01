@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ed840f24_cc661040",
+        "filename": "chrome/browser/page_load_metrics/observers/previews_ukm_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-12-01T20:44:41Z",
+      "side": 1,
+      "message": "i think that\u0027s the plan - i\u0027ll let doug resolve though.",
+      "parentUuid": "a5db67fe_e1ccc8fa",
+      "revId": "52fa04febefd0f6e3071d2fb9035da3af67a7bfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ce74ff2_3806a25b",
         "filename": "chrome/browser/page_load_metrics/observers/previews_ukm_observer.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "52fa04febefd0f6e3071d2fb9035da3af67a7bfa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f485394_75fbeeba",
+        "filename": "chrome/browser/page_load_metrics/observers/previews_ukm_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-12-01T20:44:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ce74ff2_3806a25b",
+      "revId": "52fa04febefd0f6e3071d2fb9035da3af67a7bfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
