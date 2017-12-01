@@ -22,6 +22,30 @@
       "revId": "c3aaa57e3d96ddf47bc4f19525ee3883600cb536",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8872f2ee_be2ce5d7",
+        "filename": "chrome/android/webapk/libs/runtime_library/src/org/chromium/webapk/lib/runtime_library/WebApkServiceImpl.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-12-01T19:38:02Z",
+      "side": 1,
+      "message": "Thanks Anita for all the suggestions. Your understanding is correct, and the only reason that we choose a channel based on the origin is because it prevents creating a channel by using a new rule. If the notification team are ok of introducing a new \"WebAPK\" channel, perhaps Chrome could create a channel with id \u003d \"default_channel_id\" and name \"webapks\" under Chrome\u0027s \"General\" notification category. What do you think?",
+      "parentUuid": "6dec1508_c3c696b1",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 99
+      },
+      "revId": "c3aaa57e3d96ddf47bc4f19525ee3883600cb536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
