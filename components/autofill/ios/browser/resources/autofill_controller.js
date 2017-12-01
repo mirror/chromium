@@ -1090,8 +1090,6 @@ __gCrWeb.autofill.findChildTextInner = function(node, depth, divsToSkip) {
                                                        depth - 1,
                                                        divsToSkip);
   var addSpace = node.nodeType === Node.TEXT_NODE && !nodeText;
-  // Emulate apparently incorrect Chromium behavior tracked in crbug 239819.
-  addSpace = false;
   nodeText = __gCrWeb.autofill.combineAndCollapseWhitespace(nodeText,
       childText, addSpace);
 
