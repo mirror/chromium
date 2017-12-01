@@ -34,6 +34,24 @@
       "revId": "1012321752f99a49f486debf9b0d39d19825da37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68289014_d2fa15f4",
+        "filename": "printing/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-01T00:09:41Z",
+      "side": 1,
+      "message": "Yes, that\u0027s my understanding as well. Removing sources_assignment_filter will take a long time, of course.",
+      "parentUuid": "474b33b3_d0ba4ba2",
+      "revId": "1012321752f99a49f486debf9b0d39d19825da37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
