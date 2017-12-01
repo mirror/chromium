@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a4d1928_8c23d137",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-12-01T02:55:14Z",
+      "side": 1,
+      "message": "// If GetAppForWindow returned nullptr, we are already in the browser, so don\u0027t open a new tab.",
+      "revId": "0fa992c05bb394f83b6aa3e1e294223ed5d3ccf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
