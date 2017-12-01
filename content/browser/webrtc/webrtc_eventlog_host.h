@@ -1,3 +1,4 @@
+#if 0  // TODO: !!!
 // Copyright 2016 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -86,3 +87,5 @@ class CONTENT_EXPORT WebRTCEventLogHost {
 }  // namespace content
 
 #endif  // CONTENT_BROWSER_WEBRTC_WEBRTC_EVENTLOG_HOST_H_
+#endif
+
