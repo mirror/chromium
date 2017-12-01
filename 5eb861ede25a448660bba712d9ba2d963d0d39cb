@@ -197,6 +197,24 @@
     },
     {
       "key": {
+        "uuid": "908ca4d2_ba3b45f7",
+        "filename": "components/viz/common/resources/scoped_local_resource.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-01T10:29:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98616971_3341eb95",
+      "revId": "5eb861ede25a448660bba712d9ba2d963d0d39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "541bceb0_39a3a57a",
         "filename": "components/viz/common/resources/scoped_local_resource.cc",
         "patchSetId": 18
