@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "1288b089_0177c918",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1625,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-12-01T21:47:20Z",
+      "side": 1,
+      "message": "We always load the native library [1] before we call AwContents.loadDataWithBaseUrl [2]. Sounds like we can remove `RecordHistogram.initialize`.\n\n[1] https://cs.chromium.org/chromium/src/android_webview/glue/java/src/com/android/webview/chromium/WebViewChromiumFactoryProvider.java?type\u003dcs\u0026q\u003df:android_webview/glue/+startYourEngines\u0026sq\u003dpackage:chromium\u0026l\u003d407\n[2] https://cs.chromium.org/chromium/src/android_webview/glue/java/src/com/android/webview/chromium/WebViewChromium.java?q\u003df:android_webview/glue+loaddatawithbaseurl\u0026sq\u003dpackage:chromium\u0026l\u003d572",
+      "parentUuid": "68bb87b8_d3648f99",
+      "range": {
+        "startLine": 1625,
+        "startChar": 37,
+        "endLine": 1625,
+        "endChar": 0
+      },
+      "revId": "abc434ac4bc4ff6ee18d2179cfa9761b134e8f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c577d481_1fb3ce04",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 2
