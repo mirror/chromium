@@ -57,10 +57,15 @@ class MockCrOSComponentInstallerPolicy : public CrOSComponentInstallerPolicy {
 void load_callback(const std::string& result) {}
 
 TEST_F(CrOSComponentInstallerTest, BPPPCompatibleCrOSComponent) {
+  const std::string kComponent = "a";
   BrowserProcessPlatformPart bppp;
-  ASSERT_EQ(bppp.IsCompatibleCrOSComponent("a"), false);
-  bppp.AddCompatibleCrOSComponent("a");
-  ASSERT_EQ(bppp.IsCompatibleCrOSComponent("a"), true);
+  EXPECT_FALSE(bppp.IsCompatibleCrosComponent(kComponent));
+  EXPECT_EQ(bppp.GetCompatibleCrosComponentPath(kComponent).value(), "");
+
+  const base::FilePath kPath("/component/path/v0");
+  bppp.AddCompatibleCrosComponent(kComponent, kPath);
+  EXPECT_TRUE(bppp.IsCompatibleCrosComponent(kComponent));
+  EXPECT_EQ(bppp.GetCompatibleCrosComponentPath("a"), kPath);
 }
 
 TEST_F(CrOSComponentInstallerTest, ComponentReadyCorrectManifest) {

@@ -193,14 +193,25 @@ void BrowserProcessPlatformPart::DestroySystemClock() {
   system_clock_.reset();
 }
 
-void BrowserProcessPlatformPart::AddCompatibleCrOSComponent(
-    const std::string& name) {
-  compatible_cros_components_.insert(name);
+void BrowserProcessPlatformPart::AddCompatibleCrosComponent(
+    const std::string& name,
+    const base::FilePath& path) {
+  compatible_cros_components_[name] = path;
 }
 
-bool BrowserProcessPlatformPart::IsCompatibleCrOSComponent(
-    const std::string& name) {
+bool BrowserProcessPlatformPart::IsCompatibleCrosComponent(
+    const std::string& name) const {
   return compatible_cros_components_.count(name) > 0;
+}
+
+base::FilePath BrowserProcessPlatformPart::GetCompatibleCrosComponentPath(
+    const std::string& name) const {
+  const auto it = compatible_cros_components_.find(name);
+  if (it == compatible_cros_components_.end()) {
+    return base::FilePath();
+  } else {
+    return it->second;
+  }
 }
 
 ui::InputDeviceControllerClient*
