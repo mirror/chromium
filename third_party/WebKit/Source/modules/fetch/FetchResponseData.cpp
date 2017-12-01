@@ -17,20 +17,6 @@ using Type = network::mojom::FetchResponseType;
 
 namespace blink {
 
-namespace {
-
-WebVector<WebString> HeaderSetToWebVector(const WebHTTPHeaderSet& headers) {
-  // Can't just pass *headers to the WebVector constructor because HashSet
-  // iterators are not stl iterator compatible.
-  WebVector<WebString> result(static_cast<size_t>(headers.size()));
-  int idx = 0;
-  for (const auto& header : headers)
-    result[idx++] = WebString::FromASCII(header);
-  return result;
-}
-
-}  // namespace
-
 FetchResponseData* FetchResponseData::Create() {
   // "Unless stated otherwise, a response's url is null, status is 200, status
   // message is `OK`, header list is an empty header list, and body is null."
@@ -102,10 +88,6 @@ FetchResponseData* FetchResponseData::CreateCORSFilteredResponse(
     if (WebCORS::IsOnAccessControlResponseHeaderWhitelist(name) ||
         (explicitly_exposed &&
          !FetchUtils::IsForbiddenResponseHeaderName(name))) {
-      if (explicitly_exposed) {
-        response->cors_exposed_header_names_.emplace(name.Ascii().data(),
-                                                     name.Ascii().length());
-      }
       response->header_list_->Append(name, header.second);
     }
   }
@@ -194,7 +176,6 @@ FetchResponseData* FetchResponseData::Clone(ScriptState* script_state) {
   new_response->mime_type_ = mime_type_;
   new_response->response_time_ = response_time_;
   new_response->cache_storage_cache_name_ = cache_storage_cache_name_;
-  new_response->cors_exposed_header_names_ = cors_exposed_header_names_;
 
   switch (type_) {
     case Type::kBasic:
@@ -239,8 +220,6 @@ void FetchResponseData::PopulateWebServiceWorkerResponse(
   if (internal_response_) {
     internal_response_->PopulateWebServiceWorkerResponse(response);
     response.SetResponseType(type_);
-    response.SetCorsExposedHeaderNames(
-        HeaderSetToWebVector(cors_exposed_header_names_));
     return;
   }
   response.SetURLList(url_list_);
@@ -249,8 +228,6 @@ void FetchResponseData::PopulateWebServiceWorkerResponse(
   response.SetResponseType(type_);
   response.SetResponseTime(ResponseTime());
   response.SetCacheStorageCacheName(CacheStorageCacheName());
-  response.SetCorsExposedHeaderNames(
-      HeaderSetToWebVector(cors_exposed_header_names_));
   for (const auto& header : HeaderList()->List()) {
     response.AppendHeader(header.first, header.second);
   }

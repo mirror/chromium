@@ -321,17 +321,6 @@ void WebURLResponse::SetCacheStorageCacheName(
   resource_response_->SetCacheStorageCacheName(cache_storage_cache_name);
 }
 
-WebVector<WebString> WebURLResponse::CorsExposedHeaderNames() const {
-  return resource_response_->CorsExposedHeaderNames();
-}
-
-void WebURLResponse::SetCorsExposedHeaderNames(
-    const WebVector<WebString>& header_names) {
-  Vector<String> exposed_header_names;
-  exposed_header_names.Append(header_names.Data(), header_names.size());
-  resource_response_->SetCorsExposedHeaderNames(exposed_header_names);
-}
-
 void WebURLResponse::SetDidServiceWorkerNavigationPreload(bool value) {
   resource_response_->SetDidServiceWorkerNavigationPreload(value);
 }

@@ -113,20 +113,18 @@ struct CONTENT_EXPORT ServiceWorkerFetchRequest {
 // Represents a response to a fetch.
 struct CONTENT_EXPORT ServiceWorkerResponse {
   ServiceWorkerResponse();
-  ServiceWorkerResponse(
-      std::unique_ptr<std::vector<GURL>> url_list,
-      int status_code,
-      const std::string& status_text,
-      network::mojom::FetchResponseType response_type,
-      std::unique_ptr<ServiceWorkerHeaderMap> headers,
-      const std::string& blob_uuid,
-      uint64_t blob_size,
-      scoped_refptr<storage::BlobHandle> blob,
-      blink::mojom::ServiceWorkerResponseError error,
-      base::Time response_time,
-      bool is_in_cache_storage,
-      const std::string& cache_storage_cache_name,
-      std::unique_ptr<ServiceWorkerHeaderList> cors_exposed_header_names);
+  ServiceWorkerResponse(std::unique_ptr<std::vector<GURL>> url_list,
+                        int status_code,
+                        const std::string& status_text,
+                        network::mojom::FetchResponseType response_type,
+                        std::unique_ptr<ServiceWorkerHeaderMap> headers,
+                        const std::string& blob_uuid,
+                        uint64_t blob_size,
+                        scoped_refptr<storage::BlobHandle> blob,
+                        blink::mojom::ServiceWorkerResponseError error,
+                        base::Time response_time,
+                        bool is_in_cache_storage,
+                        const std::string& cache_storage_cache_name);
   ServiceWorkerResponse(const ServiceWorkerResponse& other);
   ServiceWorkerResponse& operator=(const ServiceWorkerResponse& other);
   ~ServiceWorkerResponse();
@@ -149,7 +147,6 @@ struct CONTENT_EXPORT ServiceWorkerResponse {
   base::Time response_time;
   bool is_in_cache_storage = false;
   std::string cache_storage_cache_name;
-  ServiceWorkerHeaderList cors_exposed_header_names;
 
   // Side data is used to pass the metadata of the response (eg: V8 code cache).
   std::string side_data_blob_uuid;

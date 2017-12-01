@@ -81,7 +81,6 @@ void ServiceWorkerLoaderHelpers::SaveResponseInfo(
   out_head->response_type_via_service_worker = response.response_type;
   out_head->is_in_cache_storage = response.is_in_cache_storage;
   out_head->cache_storage_cache_name = response.cache_storage_cache_name;
-  out_head->cors_exposed_header_names = response.cors_exposed_header_names;
   out_head->did_service_worker_navigation_preload = false;
 }
 

@@ -70,16 +70,13 @@ void OnFetchEventCommon(
     mojom::ServiceWorkerEventDispatcher::DispatchFetchEventCallback
         finish_callback) {
   response_callback->OnResponse(
-      ServiceWorkerResponse(
-          std::make_unique<std::vector<GURL>>(), 200, "OK",
-          network::mojom::FetchResponseType::kDefault,
-          std::make_unique<ServiceWorkerHeaderMap>(), std::string(), 0,
-          nullptr /* blob */,
-          blink::mojom::ServiceWorkerResponseError::kUnknown, base::Time(),
-          false /* is_in_cache_storage */,
-          std::string() /* cache_storage_cache_name */,
-          std::make_unique<
-              ServiceWorkerHeaderList>() /* cors_exposed_header_names */),
+      ServiceWorkerResponse(std::make_unique<std::vector<GURL>>(), 200, "OK",
+                            network::mojom::FetchResponseType::kDefault,
+                            std::make_unique<ServiceWorkerHeaderMap>(),
+                            std::string(), 0, nullptr /* blob */,
+                            blink::mojom::ServiceWorkerResponseError::kUnknown,
+                            base::Time(), false /* is_in_cache_storage */,
+                            std::string() /* cache_storage_cache_name */),
       base::Time::Now());
   std::move(finish_callback)
       .Run(blink::mojom::ServiceWorkerEventStatus::COMPLETED,

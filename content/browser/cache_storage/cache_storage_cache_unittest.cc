@@ -250,11 +250,6 @@ bool ResponseMetadataEqual(const ServiceWorkerResponse& expected,
   if (expected.cache_storage_cache_name != actual.cache_storage_cache_name)
     return false;
 
-  EXPECT_EQ(expected.cors_exposed_header_names,
-            actual.cors_exposed_header_names);
-  if (expected.cors_exposed_header_names != actual.cors_exposed_header_names)
-    return false;
-
   return true;
 }
 
@@ -443,25 +438,19 @@ class CacheStorageCacheTest : public testing::Test {
       blob = base::MakeRefCounted<storage::BlobHandle>(std::move(blob_ptr));
     }
 
-    body_response_ = CreateResponse(
-        "http://example.com/body.html",
-        std::make_unique<ServiceWorkerHeaderMap>(headers), blob_handle_->uuid(),
-        expected_blob_data_.size(), blob,
-        std::make_unique<
-            ServiceWorkerHeaderList>() /* cors_exposed_header_names */);
+    body_response_ =
+        CreateResponse("http://example.com/body.html",
+                       std::make_unique<ServiceWorkerHeaderMap>(headers),
+                       blob_handle_->uuid(), expected_blob_data_.size(), blob);
 
     body_response_with_query_ =
         CreateResponse("http://example.com/body.html?query=test",
                        std::make_unique<ServiceWorkerHeaderMap>(headers),
-                       blob_handle_->uuid(), expected_blob_data_.size(), blob,
-                       std::make_unique<ServiceWorkerHeaderList>(
-                           1, "a") /* cors_exposed_header_names */);
+                       blob_handle_->uuid(), expected_blob_data_.size(), blob);
 
     no_body_response_ = CreateResponse(
         "http://example.com/no_body.html",
-        std::make_unique<ServiceWorkerHeaderMap>(headers), "", 0, nullptr,
-        std::make_unique<
-            ServiceWorkerHeaderList>() /* cors_exposed_header_names */);
+        std::make_unique<ServiceWorkerHeaderMap>(headers), "", 0, nullptr);
   }
 
   static ServiceWorkerResponse CreateResponse(
@@ -469,16 +458,14 @@ class CacheStorageCacheTest : public testing::Test {
       std::unique_ptr<ServiceWorkerHeaderMap> headers,
       const std::string& blob_uuid,
       uint64_t blob_size,
-      scoped_refptr<storage::BlobHandle> blob_handle,
-      std::unique_ptr<ServiceWorkerHeaderList> cors_exposed_header_names) {
+      scoped_refptr<storage::BlobHandle> blob_handle) {
     return ServiceWorkerResponse(
         std::make_unique<std::vector<GURL>>(1, GURL(url)), 200, "OK",
         network::mojom::FetchResponseType::kDefault, std::move(headers),
         blob_uuid, blob_size, std::move(blob_handle),
         blink::mojom::ServiceWorkerResponseError::kUnknown, base::Time::Now(),
         false /* is_in_cache_storage */,
-        std::string() /* cache_storage_cache_name */,
-        std::move(cors_exposed_header_names));
+        std::string() /* cache_storage_cache_name */);
   }
 
   std::unique_ptr<storage::BlobDataHandle> BuildBlobHandle(
@@ -1673,9 +1660,7 @@ TEST_F(CacheStorageCacheTest, CaselessServiceWorkerResponseHeaders) {
       std::make_unique<ServiceWorkerHeaderMap>(), "", 0, nullptr /* blob */,
       blink::mojom::ServiceWorkerResponseError::kUnknown, base::Time(),
       false /* is_in_cache_storage */,
-      std::string() /* cache_storage_cache_name */,
-      std::make_unique<
-          ServiceWorkerHeaderList>() /* cors_exposed_header_names */);
+      std::string() /* cache_storage_cache_name */);
   response.headers["content-type"] = "foo";
   response.headers["Content-Type"] = "bar";
   EXPECT_EQ("bar", response.headers["content-type"]);

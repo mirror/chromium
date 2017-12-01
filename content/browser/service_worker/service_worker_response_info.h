@@ -43,7 +43,6 @@ class CONTENT_EXPORT ServiceWorkerResponseInfo
       base::TimeTicks service_worker_ready_time,
       bool response_is_in_cache_storage,
       const std::string& response_cache_storage_cache_name,
-      const ServiceWorkerHeaderList& cors_exposed_header_names,
       bool did_navigation_preload);
   void ResetData();
 
@@ -104,7 +103,6 @@ class CONTENT_EXPORT ServiceWorkerResponseInfo
   base::TimeTicks service_worker_ready_time_;
   bool response_is_in_cache_storage_ = false;
   std::string response_cache_storage_cache_name_;
-  ServiceWorkerHeaderList cors_exposed_header_names_;
   bool did_navigation_preload_ = false;
 
   static int user_data_key_;  // Only address is used.
