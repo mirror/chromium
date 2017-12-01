@@ -19,7 +19,6 @@
 #include "chrome/browser/android/resource_mapper.h"
 #include "chrome/browser/autofill/address_normalizer_factory.h"
 #include "chrome/browser/autofill/personal_data_manager_factory.h"
-#include "chrome/browser/autofill/validation_rules_storage_factory.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
@@ -42,8 +41,6 @@
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/web_contents.h"
 #include "jni/PersonalDataManager_jni.h"
-#include "third_party/libaddressinput/chromium/chrome_metadata_source.h"
-#include "third_party/libaddressinput/chromium/chrome_storage_impl.h"
 #include "ui/base/l10n/l10n_util.h"
 
 namespace autofill {
@@ -314,7 +311,6 @@ PersonalDataManagerAndroid::PersonalDataManagerAndroid(JNIEnv* env, jobject obj)
     : weak_java_obj_(env, obj),
       personal_data_manager_(PersonalDataManagerFactory::GetForProfile(
           ProfileManager::GetActiveUserProfile())),
-      address_normalizer_(AddressNormalizerFactory::GetInstance()),
       subkey_requester_(base::MakeUnique<ChromeMetadataSource>(
                             I18N_ADDRESS_VALIDATION_DATA_URL,
                             g_browser_process->system_request_context()),
@@ -695,8 +691,8 @@ void PersonalDataManagerAndroid::LoadRulesForAddressNormalization(
     JNIEnv* env,
     const base::android::JavaParamRef<jobject>& unused_obj,
     const base::android::JavaParamRef<jstring>& jregion_code) {
-  address_normalizer_->LoadRulesForRegion(
-      ConvertJavaStringToUTF8(env, jregion_code));
+  AddressNormalizer* normalizer = AddressNormalizerFactory::GetInstance();
+  normalizer->LoadRulesForRegion(ConvertJavaStringToUTF8(env, jregion_code));
 }
 
 void PersonalDataManagerAndroid::LoadRulesForSubKeys(
@@ -717,7 +713,8 @@ void PersonalDataManagerAndroid::StartAddressNormalization(
   PopulateNativeProfileFromJava(jprofile, env, &profile);
 
   // Start the normalization.
-  address_normalizer_->NormalizeAddressAsync(
+  AddressNormalizer* normalizer = AddressNormalizerFactory::GetInstance();
+  normalizer->NormalizeAddressAsync(
       profile, jtimeout_seconds,
       base::BindOnce(&OnAddressNormalized,
                      ScopedJavaGlobalRef<jobject>(jdelegate)));
