@@ -90,9 +90,6 @@ class SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT ClientProcessImpl
   mojo::Binding<mojom::ClientProcess> binding_;
   const mojom::ProcessType process_type_;
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
-
-  // TODO(ssid): This should be moved to coordinator instead of clients once we
-  // have the whole chrome dumps sent via mojo, crbug.com/728199.
   std::unique_ptr<TracingObserver> tracing_observer_;
 
   DISALLOW_COPY_AND_ASSIGN(ClientProcessImpl);

@@ -12,6 +12,7 @@
 #include "base/trace_event/memory_dump_request_args.h"
 #include "services/resource_coordinator/memory_instrumentation/coordinator_impl.h"
 #include "services/resource_coordinator/memory_instrumentation/queued_request.h"
+#include "services/resource_coordinator/memory_instrumentation/tracing_insertion_helper.h"
 
 namespace memory_instrumentation {
 
@@ -50,9 +51,9 @@ class QueuedRequestDispatcher {
 
   // Finalizes the queued |request| by collating all responses recieved and
   // dispatching to the appropriate callback. Also adds to tracing using
-  // |tracing_observer| if the |request| requires it.
+  // |tracing_helper| if the |request| requires it.
   static void Finalize(QueuedRequest* request,
-                       TracingObserver* tracing_observer);
+                       TracingInsertionHelper* tracing_helper);
 };
 
 }  // namespace memory_instrumentation

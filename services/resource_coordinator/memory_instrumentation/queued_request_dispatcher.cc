@@ -175,7 +175,7 @@ void QueuedRequestDispatcher::SetUpAndDispatch(
 }
 
 void QueuedRequestDispatcher::Finalize(QueuedRequest* request,
-                                       TracingObserver* tracing_observer) {
+                                       TracingInsertionHelper* tracing_helper) {
   DCHECK(request->dump_in_progress);
   DCHECK(request->pending_responses.empty());
 
@@ -267,7 +267,7 @@ void QueuedRequestDispatcher::Finalize(QueuedRequest* request,
     mojom::OSMemDumpPtr os_dump = CreatePublicOSDump(*raw_os_dump);
     os_dump->shared_footprint_kb = shared_footprints[pid] / 1024;
     if (request->add_to_trace) {
-      tracing_observer->AddOsDumpToTraceIfEnabled(
+      tracing_helper->AddOsDumpToTraceIfEnabled(
           request->args, pid, os_dump.get(), &raw_os_dump->memory_maps);
     }
 

@@ -18,8 +18,8 @@
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "services/resource_coordinator/memory_instrumentation/process_map.h"
 #include "services/resource_coordinator/memory_instrumentation/queued_request.h"
+#include "services/resource_coordinator/memory_instrumentation/tracing_insertion_helper.h"
 #include "services/resource_coordinator/public/cpp/memory_instrumentation/coordinator.h"
-#include "services/resource_coordinator/public/cpp/memory_instrumentation/tracing_observer.h"
 #include "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom.h"
 #include "services/service_manager/public/cpp/identity.h"
 
@@ -126,7 +126,7 @@ class CoordinatorImpl : public Coordinator, public mojom::Coordinator {
   // Maintains a map of service_manager::Identity -> pid for registered clients.
   std::unique_ptr<ProcessMap> process_map_;
   uint64_t next_dump_id_;
-  std::unique_ptr<TracingObserver> tracing_observer_;
+  std::unique_ptr<TracingInsertionHelper> tracing_helper_;
 
   THREAD_CHECKER(thread_checker_);
   DISALLOW_COPY_AND_ASSIGN(CoordinatorImpl);

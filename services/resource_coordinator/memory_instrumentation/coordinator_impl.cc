@@ -55,8 +55,8 @@ CoordinatorImpl::CoordinatorImpl(service_manager::Connector* connector)
   base::trace_event::MemoryDumpManager::GetInstance()->set_tracing_process_id(
       mojom::kServiceTracingProcessId);
 
-  tracing_observer_ = std::make_unique<TracingObserver>(
-      base::trace_event::TraceLog::GetInstance(), nullptr);
+  tracing_helper_ = std::make_unique<TracingInsertionHelper>(
+      base::trace_event::TraceLog::GetInstance());
 }
 
 CoordinatorImpl::~CoordinatorImpl() {
@@ -259,7 +259,7 @@ void CoordinatorImpl::OnChromeMemoryDumpResponse(
   // Only add to trace if requested.
   auto* response = &request->responses[client];
   if (chrome_memory_dump && request->add_to_trace) {
-    bool added_to_trace = tracing_observer_->AddChromeDumpToTraceIfEnabled(
+    bool added_to_trace = tracing_helper_->AddChromeDumpToTraceIfEnabled(
         request->args, response->process_id, chrome_memory_dump.get());
     success = success && added_to_trace;
   }
@@ -326,7 +326,7 @@ void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
   if (!request->dump_in_progress || request->pending_responses.size() > 0)
     return;
 
-  QueuedRequestDispatcher::Finalize(request, tracing_observer_.get());
+  QueuedRequestDispatcher::Finalize(request, tracing_helper_.get());
 
   queued_memory_dump_requests_.pop_front();
   request = nullptr;

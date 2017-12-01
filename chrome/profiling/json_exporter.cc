@@ -13,7 +13,7 @@
 #include "base/macros.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
-#include "services/resource_coordinator/public/cpp/memory_instrumentation/tracing_observer.h"
+#include "services/resource_coordinator/public/cpp/memory_instrumentation/os_metrics.h"
 
 namespace profiling {
 
@@ -225,7 +225,7 @@ void WriteHeapsV2Footer(std::ostream& out) {
 
 void WriteMemoryMaps(const ExportParams& params, std::ostream& out) {
   base::trace_event::TracedValue traced_value;
-  memory_instrumentation::TracingObserver::MemoryMapsAsValueInto(
+  memory_instrumentation::OSMetrics::MemoryMapsAsValueInto(
       params.maps, &traced_value, params.is_argument_filtering_enabled);
   out << "\"process_mmaps\":" << traced_value.ToString();
 }
