@@ -123,9 +123,9 @@ class TestHttpClient {
  private:
   void Write() {
     int result = socket_->Write(
-        write_buffer_.get(),
-        write_buffer_->BytesRemaining(),
-        base::Bind(&TestHttpClient::OnWrite, base::Unretained(this)));
+        write_buffer_.get(), write_buffer_->BytesRemaining(),
+        base::Bind(&TestHttpClient::OnWrite, base::Unretained(this)),
+        TRAFFIC_ANNOTATION_FOR_TESTS);
     if (result != ERR_IO_PENDING)
       OnWrite(result);
   }
@@ -602,7 +602,8 @@ class MockStreamSocket : public StreamSocket {
   }
   int Write(IOBuffer* buf,
             int buf_len,
-            const CompletionCallback& callback) override {
+            const CompletionCallback& callback,
+            const NetworkTrafficAnnotationTag& traffic_annotation) override {
     return ERR_NOT_IMPLEMENTED;
   }
   int SetReceiveBufferSize(int32_t size) override {
