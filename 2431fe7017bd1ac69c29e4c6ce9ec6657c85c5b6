@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d6ba6f3_ae0b36f6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-12-01T15:51:40Z",
+      "side": 1,
+      "message": "Drive by: Should you be stripping the port number from the URL if there is one?\n\nIf you don\u0027t want to strip the port number, Uri.Builder might be helpful.",
+      "revId": "2431fe7017bd1ac69c29e4c6ce9ec6657c85c5b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
