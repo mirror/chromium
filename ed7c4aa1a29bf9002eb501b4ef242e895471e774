@@ -69,6 +69,24 @@
       "revId": "ed7c4aa1a29bf9002eb501b4ef242e895471e774",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c678c99_deb2ac99",
+        "filename": "chrome/browser/autocomplete/autocomplete_classifier_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-01T04:18:54Z",
+      "side": 1,
+      "message": "Not sure what the problem was; it compiles for me.\n\nTrying this at https://chromium-review.googlesource.com/c/chromium/src/+/802975 .",
+      "parentUuid": "f324f0e0_eadc07bf",
+      "revId": "ed7c4aa1a29bf9002eb501b4ef242e895471e774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
