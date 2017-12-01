@@ -548,8 +548,7 @@ TestControllerEnvironment.prototype.isGoogleDriveMounted =
 };
 
 /** @override */
-TestControllerEnvironment.prototype.getFreeStorageSpace =
-    function() {
+TestControllerEnvironment.prototype.getFreeStorageSpace = function(volumeType) {
   return Promise.resolve(this.freeStorageSpace);
 };
 
