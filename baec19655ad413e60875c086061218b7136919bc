@@ -52,6 +52,24 @@
       "revId": "baec19655ad413e60875c086061218b7136919bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdb5f291_74fe917c",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1527,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-01T22:28:52Z",
+      "side": 1,
+      "message": "Oh I see. I will uncomment this when I am able to call the constructor but I don\u0027t have the things it needs in --enable-viz yet. So it\u0027s null and will give null to the VizProcessTransportFactory if it asked for it. Right now VizPTF has a null client SBM pointer too, I\u0027ll make it get this one instead. I could remove that owning pointer here if you want? It won\u0027t stick around.",
+      "parentUuid": "50bee325_521c042c",
+      "revId": "baec19655ad413e60875c086061218b7136919bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
