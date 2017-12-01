@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "91a2dd26_47b1189a",
+        "filename": "net/nqe/network_id.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-01T19:23:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7eeb073f_94c0304f",
+      "range": {
+        "startLine": 40,
+        "startChar": 34,
+        "endLine": 40,
+        "endChar": 35
+      },
+      "revId": "6701630bb1e9af0151e6e1481f7f501e3acdb4af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53537044_fb6a1f73",
         "filename": "net/nqe/network_id.h",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "6701630bb1e9af0151e6e1481f7f501e3acdb4af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f00de8a0_1217ef93",
+        "filename": "net/nqe/network_id.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-01T19:23:18Z",
+      "side": 1,
+      "message": "Done. Copied mostly from https://developer.android.com/reference/android/telephony/SignalStrength.html#getLevel()",
+      "parentUuid": "53537044_fb6a1f73",
+      "range": {
+        "startLine": 58,
+        "startChar": 10,
+        "endLine": 58,
+        "endChar": 25
+      },
+      "revId": "6701630bb1e9af0151e6e1481f7f501e3acdb4af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "53fdcc45_89eba2c6",
+        "filename": "net/nqe/network_quality_estimator.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-01T19:23:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a283f28_cf5aed01",
+      "range": {
+        "startLine": 349,
+        "startChar": 33,
+        "endLine": 349,
+        "endChar": 48
+      },
+      "revId": "6701630bb1e9af0151e6e1481f7f501e3acdb4af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae7772c0_0902bf4e",
         "filename": "net/nqe/proto/network_id_proto.proto",
         "patchSetId": 12
@@ -91,6 +163,30 @@
       "revId": "6701630bb1e9af0151e6e1481f7f501e3acdb4af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59d31a65_67a2d550",
+        "filename": "net/nqe/proto/network_id_proto.proto",
+        "patchSetId": 12
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-01T19:23:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae7772c0_0902bf4e",
+      "range": {
+        "startLine": 21,
+        "startChar": 5,
+        "endLine": 21,
+        "endChar": 20
+      },
+      "revId": "6701630bb1e9af0151e6e1481f7f501e3acdb4af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
