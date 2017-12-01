@@ -276,3 +276,17 @@ mitm_software {
   name: "Zscaler",
   issuer_organization_regex: "Zscaler Inc\."
 }
+
+urgent_interstitial {
+  sha256_hash: "sha256/JtLVGK+etA+g0JcMthPOyF/Mxh+8cWrIfK/QnPh9pZY=",
+  cert_error: 1,
+  interstitial_type: 1,
+  support_url: "https://wikipedia.com"
+}
+
+urgent_interstitial {
+  sha256_hash: "sha256/9SLklscvzMYj8f+52lp5ze/hY0CFHyLSPQzSpYYIBm8=",
+  cert_error: 1,
+  interstitial_type: 1,
+  support_url: "https://wikipedia.com"
+}

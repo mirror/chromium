@@ -459,8 +459,8 @@ void TopSitesImpl::DiffMostVisited(const MostVisitedURLList& old_list,
       added.rank = rank;
       delta->added.push_back(added);
     } else {
-      DCHECK(found->second != kAlreadyFoundMarker)
-          << "Same URL appears twice in the new list.";
+      /*      DCHECK(found->second != kAlreadyFoundMarker)
+                << "Same URL appears twice in the new list.";*/
       int old_rank = found->second >= num_old_forced ?
           found->second - num_old_forced : -1;
       if (old_rank != rank ||
