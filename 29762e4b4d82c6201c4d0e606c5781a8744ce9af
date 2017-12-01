@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83b852be_7a518ea2",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1170,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-01T10:48:57Z",
+      "side": 1,
+      "message": "DCHECK for the new-fullscreen-controller flag? Or are you confident that there\u0027s no code path to here otherwise?",
+      "range": {
+        "startLine": 1170,
+        "startChar": 6,
+        "endLine": 1170,
+        "endChar": 19
+      },
+      "revId": "29762e4b4d82c6201c4d0e606c5781a8744ce9af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b44a66a7_ee5a3319",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1176,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-01T10:48:57Z",
+      "side": 1,
+      "message": "Is this expected to happen under some circumstance? If so, add a comment explaining what it is; Otherwise, DCHECK instead.",
+      "range": {
+        "startLine": 1176,
+        "startChar": 4,
+        "endLine": 1176,
+        "endChar": 10
+      },
+      "revId": "29762e4b4d82c6201c4d0e606c5781a8744ce9af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
