@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7ac48889_8091a510",
+        "filename": "components/signin/ios/browser/delay_callback_helper.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-12-01T19:07:20Z",
+      "side": 1,
+      "message": "Good point. I removed the reference to SigninClient and added more info on what this does.",
+      "parentUuid": "1a560d58_88429e01",
+      "revId": "fb3a12d7505a0efd62c2ab1fe8d3ef8474b3f3c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9f83c53_f72f91b3",
         "filename": "components/signin/ios/browser/delay_callback_helper_unittest.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "fb3a12d7505a0efd62c2ab1fe8d3ef8474b3f3c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35dada90_30a0283e",
+        "filename": "components/signin/ios/browser/delay_callback_helper_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-12-01T19:07:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9f83c53_f72f91b3",
+      "revId": "fb3a12d7505a0efd62c2ab1fe8d3ef8474b3f3c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
