@@ -16,6 +16,24 @@
       "revId": "ee35bcb29a7a61b49da8b97df26e0e100cdaacb4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aa6d53b_4f678963",
+        "filename": "chrome/renderer/resources/extensions/media_router_bindings.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 1385,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-12-01T19:38:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c8729a0_4002bc09",
+      "revId": "ee35bcb29a7a61b49da8b97df26e0e100cdaacb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
