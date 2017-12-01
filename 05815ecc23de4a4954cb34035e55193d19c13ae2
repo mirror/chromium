@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1e96fa7_95abd741",
+        "filename": "components/arc/test/connection_holder_util.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-01T18:49:59Z",
+      "side": 1,
+      "message": "nit: remove?",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 11
+      },
+      "revId": "05815ecc23de4a4954cb34035e55193d19c13ae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
