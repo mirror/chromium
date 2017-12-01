@@ -64,7 +64,45 @@ void CompositingLayerPropertyUpdater::Update(const LayoutObject& object) {
         rare_paint_data->PreEffectProperties(),
         snapped_paint_offset + mapping->SquashingLayerOffsetFromLayoutObject());
   }
-  // TODO(trchen): Complete for all drawable layers.
+
+  if (auto* child_clipping_mask_layer = mapping->ChildClippingMaskLayer()) {
+    child_clipping_mask_layer->SetLayerState(
+        rare_paint_data->PreEffectProperties(),
+        snapped_paint_offset +
+            child_clipping_mask_layer->OffsetFromLayoutObject());
+  }
+
+  if (auto* ancestor_clipping_mask_layer =
+          mapping->AncestorClippingMaskLayer()) {
+    // AncestorClippingMaskLayer's state is in |clip_inheritance_ancestor|.
+    const auto* compositing_container =
+        mapping->OwningLayer().EnclosingLayerWithCompositedLayerMapping(
+            kExcludeSelf);
+    const auto* clip_inheritance_ancestor =
+        mapping->ClipInheritanceAncestor(compositing_container);
+    DCHECK(clip_inheritance_ancestor);
+    const auto* clip_inheritance_ancestor_graphics_layer =
+        clip_inheritance_ancestor->GraphicsLayerBacking();
+    DCHECK(clip_inheritance_ancestor_graphics_layer);
+
+    // Also calculate the the layer's offset from |clip_inheritance_ancestor|.
+    IntPoint offset_from_clip_ancestor;
+    for (const auto* parent = mapping->AncestorClippingLayer();
+         parent != clip_inheritance_ancestor_graphics_layer;
+         parent = parent->Parent()) {
+      DCHECK(parent);
+      // TODO(wangxianzhu): What about subpixel positions?
+      offset_from_clip_ancestor.MoveBy(RoundedIntPoint(parent->GetPosition()));
+    }
+
+    ancestor_clipping_mask_layer->SetLayerState(
+        PropertyTreeState(*clip_inheritance_ancestor->GetLayoutObject()
+                               .FirstFragment()
+                               .LocalBorderBoxProperties()),
+        offset_from_clip_ancestor);
+  }
+
+  // TODO(crbug.com/790548): Complete for all drawable layers.
 }
 
 void CompositingLayerPropertyUpdater::Update(const LocalFrameView& frame_view) {
@@ -84,7 +122,6 @@ void CompositingLayerPropertyUpdater::Update(const LocalFrameView& frame_view) {
   SetOverflowControlLayerState(frame_view.LayerForHorizontalScrollbar());
   SetOverflowControlLayerState(frame_view.LayerForVerticalScrollbar());
   SetOverflowControlLayerState(frame_view.LayerForScrollCorner());
-  // TODO(trchen): Complete for all drawable layers.
 }
 
 }  // namespace blink
