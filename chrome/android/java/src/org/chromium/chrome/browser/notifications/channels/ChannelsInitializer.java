@@ -10,8 +10,10 @@ import android.app.NotificationChannelGroup;
 import android.app.NotificationManager;
 import android.content.res.Resources;
 import android.os.Build;
+import android.text.TextUtils;
 
 import org.chromium.chrome.browser.notifications.NotificationManagerProxy;
+import org.chromium.chrome.browser.webapps.WebApkServiceClient;
 
 /**
  * Initializes our notification channels.
@@ -51,6 +53,8 @@ public class ChannelsInitializer {
      * Ensures the given channel has been created on the notification manager so a notification
      * can be safely posted to it. This should only be used for channel ids with an entry in
      * {@link ChannelDefinitions.PredefinedChannels}, or that start with a known prefix.
+     * An exception: if the channel matches {@link WebApkServiceClient#CHANNEL_ID_WEBAPKS}, we don't
+     * create a new channel, since the channel will be created in WebAPKs.
      *
      * Calling this is a (potentially lengthy) no-op if the channel has already been created.
      *
@@ -80,6 +84,9 @@ public class ChannelsInitializer {
         ChannelDefinitions.PredefinedChannel predefinedChannel =
                 ChannelDefinitions.getChannelFromId(channelId);
         if (predefinedChannel == null) {
+            // if the channel ID matches {@link WebApkServiceClient#CHANNEL_ID_WEBAPKS}, we don't
+            // create a new channel, since the channel will be created in WebAPKs.
+            if (TextUtils.equals(channelId, WebApkServiceClient.CHANNEL_ID_WEBAPKS)) return;
             throw new IllegalStateException("Could not initialize channel: " + channelId);
         }
         // Channel group must be created before the channel.
