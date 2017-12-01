@@ -14,14 +14,6 @@
 namespace blink {
 namespace scheduler {
 
-namespace {
-
-double TimeDeltaToMilliseconds(const base::TimeDelta& value) {
-  return value.InMillisecondsF();
-}
-
-}  // namespace
-
 CPUTimeBudgetPool::CPUTimeBudgetPool(
     const char* name,
     BudgetPoolController* budget_pool_controller,
@@ -30,7 +22,9 @@ CPUTimeBudgetPool::CPUTimeBudgetPool(
       current_budget_level_(base::TimeDelta(),
                             "RendererScheduler.BackgroundBudgetMs",
                             budget_pool_controller,
-                            TimeDeltaToMilliseconds),
+                            [](const base::TimeDelta& value) -> double {
+                              return value.InMillisecondsF();
+                            }),
       last_checkpoint_(now),
       cpu_percentage_(1) {}
 
