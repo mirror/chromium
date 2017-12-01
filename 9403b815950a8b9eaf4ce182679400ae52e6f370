@@ -46,6 +46,30 @@
       "revId": "9403b815950a8b9eaf4ce182679400ae52e6f370",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30005881_432f813f",
+        "filename": "chrome/test/data/webui/print_preview/settings_section_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-01T03:12:19Z",
+      "side": 1,
+      "message": "Ok. I\u0027ve actually found them confusing in some cases where I added console.log() for debugging and was expecting the test to fail and terminate right after that, but it kept going, showing me the stacktrace at the end, and misleading me about where the failure actually happened.\n\nWe can convert back to assert as a separate CL for all of PP, not a high priority. FWIW, expect*() implementation can be traced starting from [1]. There is a lot of code to keep track of |errors| and re-surface them later.\n\n[1] https://cs.chromium.org/chromium/src/chrome/test/data/webui/test_api.js?q\u003dtest_api.js\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d1016",
+      "parentUuid": "be862bb6_4f1f3f69",
+      "range": {
+        "startLine": 133,
+        "startChar": 8,
+        "endLine": 133,
+        "endChar": 20
+      },
+      "revId": "9403b815950a8b9eaf4ce182679400ae52e6f370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
