@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "b5b92f72_d46e35bf",
+        "filename": "ios/chrome/test/app/ios_chrome_scoped_testing_block_popups_pref.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-01T21:02:51Z",
+      "side": 1,
+      "message": "Then how about initializing browser_state_first? The order of initialization can be controlled by ordering data members in the header.",
+      "parentUuid": "b0277f33_704ca509",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 19
+      },
+      "revId": "f142d5c0965d03f0200c98440b3de9d1a15e1ba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "956ed6fc_f3ecd39d",
         "filename": "ios/chrome/test/app/ios_chrome_scoped_testing_block_popups_pref.mm",
         "patchSetId": 3
