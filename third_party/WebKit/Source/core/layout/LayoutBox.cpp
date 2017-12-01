@@ -1105,10 +1105,16 @@ IntSize LayoutBox::CalculateAutoscrollDirection(
   if (!frame_view)
     return IntSize();
 
-  IntRect box(AbsoluteBoundingBoxRect());
+  LayoutRect box(AbsoluteBoundingBoxRect());
+  // TODO(bokan): This is wrong. Subtracting the scroll offset would get you to
+  // frame coordinates (pre-RLS) but *adding* the scroll offset to an absolute
+  // location never makes sense (and we assume below it's in content
+  // coordinates).
   box.Move(View()->GetFrameView()->ScrollOffsetInt());
-  IntRect window_box = View()->GetFrameView()->ContentsToRootFrame(box);
+  ExcludeScrollbars(box, kExcludeOverlayScrollbarSizeForHitTesting);
 
+  IntRect window_box =
+      View()->GetFrameView()->ContentsToRootFrame(PixelSnappedIntRect(box));
   IntPoint window_autoscroll_point = point_in_root_frame;
 
   if (window_autoscroll_point.X() < window_box.X() + kAutoscrollBeltSize)
