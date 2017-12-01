@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3a0c6ca6_ae31b6dc",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngineTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-01T12:23:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc05ce97_6513ee6a",
+      "revId": "49ecd6ec1307a4d1c4e33f8a47048bc164018bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba144f89_ef132939",
         "filename": "third_party/WebKit/Source/core/css/properties/ReneesParserStuff.h",
         "patchSetId": 15
@@ -69,6 +87,24 @@
       "revId": "49ecd6ec1307a4d1c4e33f8a47048bc164018bc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82db6ac2_ac39e97a",
+        "filename": "third_party/WebKit/Source/core/css/properties/ReneesParserStuff.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-01T12:23:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10414e8c_f08c3539",
+      "revId": "49ecd6ec1307a4d1c4e33f8a47048bc164018bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -107,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "2e764455_71120f1a",
+        "filename": "third_party/WebKit/Source/core/css/properties/longhands/BackgroundColor.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-01T12:23:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bea93fab_e15e4ae2",
+      "revId": "49ecd6ec1307a4d1c4e33f8a47048bc164018bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c799bd7e_b3277cb9",
         "filename": "third_party/WebKit/Source/core/css/properties/longhands/BorderLeftColor.cpp",
         "patchSetId": 15
@@ -142,6 +196,24 @@
     },
     {
       "key": {
+        "uuid": "7332b330_46a3ffa1",
+        "filename": "third_party/WebKit/Source/core/css/properties/longhands/BorderLeftColor.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-01T12:23:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b5b201b_57e1d6b3",
+      "revId": "49ecd6ec1307a4d1c4e33f8a47048bc164018bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a57d71b6_9b78c11e",
         "filename": "third_party/WebKit/Source/core/css/properties/longhands/BorderRightColor.cpp",
         "patchSetId": 15
@@ -156,6 +228,24 @@
       "revId": "49ecd6ec1307a4d1c4e33f8a47048bc164018bc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "282a722e_2c0522c1",
+        "filename": "third_party/WebKit/Source/core/css/properties/longhands/BorderRightColor.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-01T12:23:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a57d71b6_9b78c11e",
+      "revId": "49ecd6ec1307a4d1c4e33f8a47048bc164018bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
