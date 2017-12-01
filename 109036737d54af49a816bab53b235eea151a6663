@@ -215,6 +215,30 @@
     },
     {
       "key": {
+        "uuid": "870c8d03_2f216719",
+        "filename": "components/cronet/ios/cronet_metrics.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-01T19:06:45Z",
+      "side": 1,
+      "message": "I am going to remove const then, if it\u0027s unnecessary, it\u0027s just adding extra potentially confusing code.",
+      "parentUuid": "a508ee2c_e854c315",
+      "range": {
+        "startLine": 67,
+        "startChar": 54,
+        "endLine": 67,
+        "endChar": 70
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6bb6958_d19ce771",
         "filename": "components/cronet/ios/cronet_metrics.h",
         "patchSetId": 22
@@ -473,6 +497,30 @@
       "revId": "109036737d54af49a816bab53b235eea151a6663",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d5c1fe0_fcff22d2",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-01T19:06:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f24e1d9_063b90c2",
+      "range": {
+        "startLine": 121,
+        "startChar": 5,
+        "endLine": 121,
+        "endChar": 24
+      },
+      "revId": "109036737d54af49a816bab53b235eea151a6663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

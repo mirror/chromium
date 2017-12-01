@@ -248,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "80e49e36_c0b5430e",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 25
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-01T19:06:45Z",
+      "side": 1,
+      "message": "Done; and per Andrei\u0027s suggestion, changing this to an NSObject",
+      "parentUuid": "19c7c8e0_602a638e",
+      "range": {
+        "startLine": 152,
+        "startChar": 10,
+        "endLine": 152,
+        "endChar": 29
+      },
+      "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83afc0d7_8f8a9a3a",
         "filename": "components/cronet/ios/cronet_metrics.mm",
         "patchSetId": 25
@@ -365,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "f67c8c1f_ab9efa2f",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 25
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-01T19:06:45Z",
+      "side": 1,
+      "message": "Per offline discussion, this should be URLSessionDelegate because the client is not guaranteed to pass a TaskDelegate.",
+      "parentUuid": "b8e73b25_55d0ffaf",
+      "range": {
+        "startLine": 199,
+        "startChar": 5,
+        "endLine": 199,
+        "endChar": 25
+      },
+      "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d091703_91187a44",
         "filename": "components/cronet/ios/cronet_metrics.mm",
         "patchSetId": 25
@@ -456,6 +504,30 @@
       "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01d1c24f_cfc45224",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 25
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-01T19:06:45Z",
+      "side": 1,
+      "message": "Per offline discussion, we don\u0027t.",
+      "parentUuid": "756a912b_8d1e8fbc",
+      "range": {
+        "startLine": 233,
+        "startChar": 7,
+        "endLine": 233,
+        "endChar": 16
+      },
+      "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -655,6 +727,30 @@
       "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ea940c2_99afd359",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 25
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-01T19:06:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af367e6a_7a38d0e4",
+      "range": {
+        "startLine": 739,
+        "startChar": 19,
+        "endLine": 740,
+        "endChar": 38
+      },
+      "revId": "e724fca5b2cb415d2299751e217fa4bb58a38560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

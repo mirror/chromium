@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "51c811db_1f2a5b8e",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-01T19:06:45Z",
+      "side": 1,
+      "message": "Per discussion, leaving it while cronet_metrics.h is still private.  It will need to be moved if that changes.",
+      "parentUuid": "fabedc6d_874922d0",
+      "range": {
+        "startLine": 346,
+        "startChar": 4,
+        "endLine": 346,
+        "endChar": 50
+      },
+      "revId": "936dcf569af093c8680015365053fb7286ee4151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd52d321_782d5195",
         "filename": "components/cronet/ios/cronet_metrics.h",
         "patchSetId": 20
@@ -140,6 +164,30 @@
       "revId": "936dcf569af093c8680015365053fb7286ee4151",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50496729_446e7a60",
+        "filename": "components/cronet/ios/cronet_metrics.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-01T19:06:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bbdf01f_13a911cc",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 4
+      },
+      "revId": "936dcf569af093c8680015365053fb7286ee4151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -425,6 +473,30 @@
     },
     {
       "key": {
+        "uuid": "45523b9c_b6ec9b64",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-01T19:06:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72c9102f_a0564ea0",
+      "range": {
+        "startLine": 138,
+        "startChar": 25,
+        "endLine": 138,
+        "endChar": 44
+      },
+      "revId": "936dcf569af093c8680015365053fb7286ee4151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4c038b9_f8933fb6",
         "filename": "components/cronet/ios/cronet_metrics.mm",
         "patchSetId": 20
@@ -704,6 +776,30 @@
       "revId": "936dcf569af093c8680015365053fb7286ee4151",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "794a47d6_57cb9db2",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-01T19:06:45Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "8f6a9d90_15ff48fb",
+      "range": {
+        "startLine": 167,
+        "startChar": 4,
+        "endLine": 167,
+        "endChar": 11
+      },
+      "revId": "936dcf569af093c8680015365053fb7286ee4151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

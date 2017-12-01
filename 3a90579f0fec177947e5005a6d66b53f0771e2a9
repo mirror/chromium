@@ -426,6 +426,30 @@
     },
     {
       "key": {
+        "uuid": "a558ecfc_7eab5455",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-01T19:06:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77ae5b7a_8d371fe9",
+      "range": {
+        "startLine": 38,
+        "startChar": 5,
+        "endLine": 38,
+        "endChar": 39
+      },
+      "revId": "3a90579f0fec177947e5005a6d66b53f0771e2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef7b1334_1a8bbf0f",
         "filename": "components/cronet/ios/cronet_metrics.mm",
         "patchSetId": 18
@@ -611,6 +635,30 @@
       "revId": "3a90579f0fec177947e5005a6d66b53f0771e2a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c5587ad_4ad46422",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-01T19:06:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6c0ccd8_8d4f9723",
+      "range": {
+        "startLine": 96,
+        "startChar": 51,
+        "endLine": 96,
+        "endChar": 52
+      },
+      "revId": "3a90579f0fec177947e5005a6d66b53f0771e2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -1107,6 +1155,30 @@
     },
     {
       "key": {
+        "uuid": "7b84e5fd_bce59397",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-01T19:06:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f01378f_d3677d4a",
+      "range": {
+        "startLine": 164,
+        "startChar": 7,
+        "endLine": 164,
+        "endChar": 18
+      },
+      "revId": "3a90579f0fec177947e5005a6d66b53f0771e2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fa57c1a_6eb835d6",
         "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
         "patchSetId": 18
@@ -1130,6 +1202,30 @@
     },
     {
       "key": {
+        "uuid": "b599a072_94cf913c",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-01T19:06:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fa57c1a_6eb835d6",
+      "range": {
+        "startLine": 167,
+        "startChar": 11,
+        "endLine": 167,
+        "endChar": 0
+      },
+      "revId": "3a90579f0fec177947e5005a6d66b53f0771e2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4e14dde_8751bcfa",
         "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
         "patchSetId": 18
@@ -1150,6 +1246,30 @@
       "revId": "3a90579f0fec177947e5005a6d66b53f0771e2a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dde7f1dc_f7e5bf2f",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-01T19:06:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4e14dde_8751bcfa",
+      "range": {
+        "startLine": 168,
+        "startChar": 12,
+        "endLine": 168,
+        "endChar": 20
+      },
+      "revId": "3a90579f0fec177947e5005a6d66b53f0771e2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
