@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a9ab585_4829b3fc",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1146,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-01T15:14:01Z",
+      "side": 1,
+      "message": "beautiful :)",
+      "revId": "ed9e6c6b5be26cbd4a3662ca3340b623da225253",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a4876ae_3af826a2",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/UserData.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-01T15:14:01Z",
+      "side": 1,
+      "message": "register/unregister calls should be in this class. And can this be a generic as well to get compile time type safety? I don\u0027t know if \"class Foo implements UserData\u003cFoo\u003e\" actually works or not.. it does in c++",
+      "revId": "ed9e6c6b5be26cbd4a3662ca3340b623da225253",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7a9f28e_bd3dc909",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/UserDataMap.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-01T15:14:01Z",
+      "side": 1,
+      "message": "why is this here? I think user data pattern is created lazily on first use",
+      "revId": "ed9e6c6b5be26cbd4a3662ca3340b623da225253",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "268c5a6d_d2063e5c",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/UserDataMap.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-01T15:14:01Z",
+      "side": 1,
+      "message": "is it possible to this and get generics, so that the Class and user type matches",
+      "range": {
+        "startLine": 31,
+        "startChar": 16,
+        "endLine": 31,
+        "endChar": 27
+      },
+      "revId": "ed9e6c6b5be26cbd4a3662ca3340b623da225253",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
