@@ -34,6 +34,24 @@
       "revId": "d91524ba6a70089b0af731369ba364b59bf829da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcb418cf_821e7a3f",
+        "filename": "ash/wm/overview/window_selector_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-01T17:57:19Z",
+      "side": 1,
+      "message": "Sorry missed a case in previous comment (active window is an item in overview window grid), I meant:\naura::Window* left_window \u003d split_view_controller-\u003eleft_window();\naura::Window* right_window \u003d split_view_controller-\u003eright_window();\nif (left_window \u0026\u0026 wm::IsActiveWindow(left_window))\n  active_window \u003d left_window;\nelse if (right_window \u0026\u0026 wm::IsActiveWindow(right_window))\n  active_window \u003d right_window;\nelse\n  active_window \u003d split_view_controller-\u003eGetDefaultSnappedWindow();",
+      "parentUuid": "2bf1f6e3_de2aae43",
+      "revId": "d91524ba6a70089b0af731369ba364b59bf829da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
