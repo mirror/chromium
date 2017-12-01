@@ -113,9 +113,7 @@ class InstantService : public KeyedService,
   void NotifyAboutMostVisitedItems();
   void NotifyAboutThemeInfo();
 
-#if !defined(OS_ANDROID)
   void BuildThemeInfo();
-#endif
 
   Profile* const profile_;
 
