@@ -51,7 +51,8 @@ ui::AXTreeUpdate
 void BrowserAccessibilityManagerAuraLinux::FireFocusEvent(
     BrowserAccessibility* node) {
   BrowserAccessibilityManager::FireFocusEvent(node);
-  // Need to implement.
+  ToBrowserAccessibilityAuraLinux(node)->GetNode()->NotifyAccessibilityEvent(
+      ui::AX_EVENT_FOCUS);
 }
 
 void BrowserAccessibilityManagerAuraLinux::FireBlinkEvent(
