@@ -23,7 +23,7 @@ function openWindowAndExpectResult(windowURL, scriptURL, type, expectation) {
 // runContentSecurityPolicyTests("paint");
 function runContentSecurityPolicyTests(workletType) {
   const worklet = get_worklet(workletType);
-
+/*
   promise_test(t => {
     const kWindowURL =
         'resources/addmodule-window.html?pipe=header(' +
@@ -85,4 +85,34 @@ function runContentSecurityPolicyTests(workletType) {
   }, 'Importing a remote-origin worklet script should not be blocked by ' +
      'the worker-src directive because worklets obey the script-src ' +
      'directive.');
+*/
+  promise_test(t => {
+    const stashKey = token();
+    const kAggregatorURL = get_host_info().HTTPS_ORIGIN +
+                           '/worklets/resources/csp-report-aggregator.py';
+    const kWindowURL =
+        'resources/addmodule-window.html?pipe=header(' +
+        'Content-Security-Policy, script-src \'self\'; ' +
+        'report-uri '+kAggregatorURL+'?key='+stashKey+')';
+    const kScriptURL = 'eval-worklet-script.js';
+    return openWindowAndExpectResult(
+        kWindowURL, kScriptURL, workletType, 'RESOLVED')
+        .then(() => fetch(kAggregatorURL + '?key=' + stashKey))
+        .then(response => response.text())
+        .then(text => console.log(text));
+  }, 'Importing a worklet script that calls eval() should be blocked because ' +
+     'the script-src unsafe-eval directive is not specified.');
+
+  promise_test(t => {
+    const kWindowURL =
+        'resources/addmodule-window.html?pipe=header(' +
+        'Content-Security-Policy, script-src \'self\' \'unsafe-inline\' ' +
+        '\'unsafe-eval\')';
+    const kScriptURL = 'eval-worklet-script.js';
+    return openWindowAndExpectResult(
+        kWindowURL, kScriptURL, workletType, 'RESOLVED');
+  }, 'Importing a worklet script that calls eval() should not be blocked ' +
+     'because the script-src unsafe-eval directive allows it.');
+
+  promise_test(() => assert_true(false));
 }

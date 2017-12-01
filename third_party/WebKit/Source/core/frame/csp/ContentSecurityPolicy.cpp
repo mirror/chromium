@@ -48,7 +48,7 @@
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/PingLoader.h"
 #include "core/probe/CoreProbes.h"
-#include "core/workers/WorkerGlobalScope.h"
+#include "core/workers/WorkerOrWorkletGlobalScope.h"
 #include "platform/json/JSONValues.h"
 #include "platform/loader/fetch/IntegrityMetadata.h"
 #include "platform/loader/fetch/ResourceRequest.h"
@@ -1391,8 +1391,8 @@ void ContentSecurityPolicy::DispatchViolationEvents(
       event->SetTarget(element);
     else
       event->SetTarget(document);
-  } else if (execution_context_->IsWorkerGlobalScope()) {
-    event->SetTarget(ToWorkerGlobalScope(execution_context_));
+  } else if (execution_context_->IsWorkerOrWorkletGlobalScope()) {
+    event->SetTarget(ToWorkerOrWorkletGlobalScope(execution_context_));
   }
   queue->EnqueueEvent(BLINK_FROM_HERE, event);
 }
