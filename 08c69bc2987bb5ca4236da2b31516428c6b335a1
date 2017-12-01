@@ -16,6 +16,24 @@
       "revId": "08c69bc2987bb5ca4236da2b31516428c6b335a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "011402f8_f8716190",
+        "filename": "ash/wm/overview/window_selector_item.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-12-01T20:59:44Z",
+      "side": 0,
+      "message": "The message will get cut off and have a trailing  ...",
+      "parentUuid": "2b90f9ca_eb3ee81f",
+      "revId": "08c69bc2987bb5ca4236da2b31516428c6b335a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
