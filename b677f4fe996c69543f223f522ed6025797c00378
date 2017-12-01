@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9168a4b_0e0fe2a7",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 28
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-01T19:20:44Z",
+      "side": 1,
+      "message": "On closer reader, it seems like HttpResponseInfo::response_time and LoadTimingInfo::receive_headers_end are actually referring to (about) the same time.\n\nIf this is the case, then certainly response_time is the wrong value for responseEndDate, and at the very least [NSDate date] (\u003d \"now\") is later in time than all of the other time values.",
+      "range": {
+        "startLine": 114,
+        "startChar": 40,
+        "endLine": 115,
+        "endChar": 0
+      },
+      "revId": "b677f4fe996c69543f223f522ed6025797c00378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
