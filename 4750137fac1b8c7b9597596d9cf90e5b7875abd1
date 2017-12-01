@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6729d03_5d98342e",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-01T04:17:15Z",
+      "side": 1,
+      "message": "nit: add comments?",
+      "revId": "4750137fac1b8c7b9597596d9cf90e5b7875abd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fda0a294_e4b27fc5",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-01T04:17:15Z",
+      "side": 1,
+      "message": "nit: prefer operator[], unless there\u0027s specific reasons?",
+      "revId": "4750137fac1b8c7b9597596d9cf90e5b7875abd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59579f77_f317fc71",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-01T04:17:15Z",
+      "side": 1,
+      "message": "nit: style guide prefers \"!\" instead of \"\u003d\u003d 0\".",
+      "revId": "4750137fac1b8c7b9597596d9cf90e5b7875abd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c24fc869_aba78243",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-01T04:17:15Z",
+      "side": 1,
+      "message": "I think this is fine, if the line box has an empty inline container, it should create an empty box fragment, so the line box isn\u0027t empty.",
+      "revId": "4750137fac1b8c7b9597596d9cf90e5b7875abd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f889ee78_b399d392",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-01T04:17:15Z",
+      "side": 1,
+      "message": "A box fragment may contain text or another box as children, so you may want to look into them recursively?\n\nex.\n\u003cspan style\u003d\"border: 1px solid black\"\u003e\n  \u003cspan style\u003d\"position: relative\"\u003e\n     text\n  \u003c/span\u003e\n\u003c/span\u003e",
+      "revId": "4750137fac1b8c7b9597596d9cf90e5b7875abd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35287504_97ec4f22",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-01T04:17:15Z",
+      "side": 1,
+      "message": "nit: why doesn\u0027t this use range loop?",
+      "revId": "4750137fac1b8c7b9597596d9cf90e5b7875abd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb5e49a5_4571df5e",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-01T04:17:15Z",
+      "side": 1,
+      "message": "So, this loop tries to reorder start_fragment and end_fragment in the logical order? Great if you could clarify the what this is trying to achieve in the comment above.\n\nAssuming so, hmm, this doesn\u0027t work when bidi reordered text, because bidi reorder is not driven by the Direction() value.\nex:\n\u003cdiv dir\u003drtl\u003e12 34 56\u003c/div\u003e\n\n...or maybe you\u0027re not trying to compute the logical order?\n\nI haven\u0027t really understood the computation in NGOutOfFlowLayoutPart::GetContainingBlockInfo yet, but if all what you need is bounding box, it\u0027s probably better to compute box here and unite them.",
+      "revId": "4750137fac1b8c7b9597596d9cf90e5b7875abd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5209c5fc_af662891",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-01T04:17:15Z",
+      "side": 1,
+      "message": "nit: can add comments what each field means?",
+      "revId": "4750137fac1b8c7b9597596d9cf90e5b7875abd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0afa49e3_041d0e0a",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-01T04:17:15Z",
+      "side": 1,
+      "message": "If this is a temporary object used only for return values, can you add STACK_ALLOCATED() to clarify that?\n\nIf this object is to be used for persistent usages in heap, don\u0027t we need to use scoped_refptr for ComputedStyle?",
+      "revId": "4750137fac1b8c7b9597596d9cf90e5b7875abd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e0c58b2_2c755804",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-01T04:17:15Z",
+      "side": 1,
+      "message": "If this can never be nullptr, IIUC we prefer \"\u0026\" (though it changed a few times, ignore if I seem to be wrong)",
+      "revId": "4750137fac1b8c7b9597596d9cf90e5b7875abd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
