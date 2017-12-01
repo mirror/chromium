@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e7d3bc6_6374f9db",
+        "filename": "chrome/browser/extensions/extension_context_menu_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-12-01T03:10:10Z",
+      "side": 1,
+      "message": "this already accounts for scale factor (if you were wondering), tried with --force-device-scale-factor\u003d2",
+      "range": {
+        "startLine": 310,
+        "startChar": 34,
+        "endLine": 310,
+        "endChar": 35
+      },
+      "revId": "d6588099e5c402b64f856abfaff3eb482035be4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
