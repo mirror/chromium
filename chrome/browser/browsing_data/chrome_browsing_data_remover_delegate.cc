@@ -19,6 +19,7 @@
 #include "chrome/browser/bookmarks/bookmark_model_factory.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/browsing_data/browsing_data_helper.h"
+#include "chrome/browser/browsing_data/navigation_entry_remover.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/domain_reliability/service_factory.h"
@@ -580,7 +581,7 @@ void ChromeBrowsingDataRemoverDelegate::RemoveEmbedderData(
 
     // If the caller is removing history for all hosts, then clear ancillary
     // historical information.
-    if (filter_builder.IsEmptyBlacklist()) {
+    if (filter_builder.GetMode() == BrowsingDataFilterBuilder::BLACKLIST) {
       // We also delete the list of recently closed tabs. Since these expire,
       // they can't be more than a day old, so we can simply clear them all.
       sessions::TabRestoreService* tab_service =
@@ -589,6 +590,8 @@ void ChromeBrowsingDataRemoverDelegate::RemoveEmbedderData(
         tab_service->ClearEntries();
         tab_service->DeleteLastSession();
       }
+
+      browsing_data::RemoveNavigationEntries(profile_);
 
 #if BUILDFLAG(ENABLE_SESSION_SERVICE)
       // We also delete the last session when we delete the history.
