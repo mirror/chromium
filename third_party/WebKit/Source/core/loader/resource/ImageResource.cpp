@@ -30,6 +30,7 @@
 #include "core/loader/resource/ImageResourceContent.h"
 #include "core/loader/resource/ImageResourceInfo.h"
 #include "platform/Histogram.h"
+#include "platform/InstanceCounters.h"
 #include "platform/SharedBuffer.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/loader/fetch/MemoryCache.h"
@@ -240,6 +241,9 @@ ImageResource::ImageResource(const ResourceRequest& resource_request,
 
 ImageResource::~ImageResource() {
   RESOURCE_LOADING_DVLOG(1) << "~ImageResource " << this;
+
+  if (is_ua_css_resource_)
+    InstanceCounters::DecrementCounter(InstanceCounters::kUACSSResourceCounter);
 }
 
 void ImageResource::Trace(blink::Visitor* visitor) {
@@ -709,6 +713,14 @@ void ImageResource::UpdateImage(
     //    (b) after returning ImageResource::updateImage().
     DecodeError(all_data_received);
   }
+}
+
+void ImageResource::FlagAsUserAgentResource() {
+  if (is_ua_css_resource_)
+    return;
+
+  InstanceCounters::IncrementCounter(InstanceCounters::kUACSSResourceCounter);
+  is_ua_css_resource_ = true;
 }
 
 }  // namespace blink

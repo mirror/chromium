@@ -16,6 +16,8 @@
 #include "platform/graphics/BitmapImage.h"
 #include "platform/graphics/PlaceholderImage.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
+#include "platform/loader/fetch/FetchParameters.h"
+#include "platform/loader/fetch/fetch_initiator_type_names.h"
 #include "platform/wtf/StdLibExtras.h"
 #include "platform/wtf/Vector.h"
 #include "v8/include/v8.h"
@@ -91,6 +93,12 @@ ImageResourceContent* ImageResourceContent::Fetch(FetchParameters& params,
   ImageResource* resource = ImageResource::Fetch(params, fetcher);
   if (!resource)
     return nullptr;
+
+  // If the fetch originated from user agent CSS we should mark it as a user
+  // agent resource.
+  if (params.Options().initiator_info.name == FetchInitiatorTypeNames::uacss)
+    resource->FlagAsUserAgentResource();
+
   return resource->GetContent();
 }
 
