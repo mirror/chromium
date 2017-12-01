@@ -222,7 +222,7 @@ TEST(ScriptModuleTest, instantiateWithDeps) {
   EXPECT_EQ("b", resolver->Specifiers()[1]);
 }
 
-TEST(ScriptModuleTest, instantiateError) {
+TEST(ScriptModuleTest, EvaluationErrrorIsRemembered) {
   V8TestingScope scope;
 
   auto modulator = new ScriptModuleTestModulator();
@@ -235,14 +235,10 @@ TEST(ScriptModuleTest, instantiateError) {
       ScriptFetchOptions(), kSharableCrossOrigin,
       TextPosition::MinimumPosition(), ASSERT_NO_EXCEPTION);
   ASSERT_FALSE(module_failure.IsNull());
-  module_failure.Instantiate(scope.GetScriptState());
-  ASSERT_EQ(ScriptModuleState::kInstantiated,
-            module_failure.Status(scope.GetScriptState()));
-  EXPECT_FALSE(module_failure.Evaluate(scope.GetScriptState()).IsEmpty());
-  ASSERT_EQ(ScriptModuleState::kErrored,
-            module_failure.Status(scope.GetScriptState()));
-  v8::Local<v8::Value> error =
-      module_failure.ErrorCompletion(scope.GetScriptState());
+  ASSERT_TRUE(module_failure.Instantiate(scope.GetScriptState()).IsEmpty());
+  ScriptValue evaluation_error =
+      module_failure.Evaluate(scope.GetScriptState());
+  EXPECT_FALSE(evaluation_error.IsEmpty());
 
   resolver->PushScriptModule(module_failure);
 
@@ -251,13 +247,11 @@ TEST(ScriptModuleTest, instantiateError) {
       ScriptFetchOptions(), kSharableCrossOrigin,
       TextPosition::MinimumPosition(), scope.GetExceptionState());
   ASSERT_FALSE(module.IsNull());
-  ScriptValue exception = module.Instantiate(scope.GetScriptState());
-  EXPECT_FALSE(exception.IsEmpty());
-  ASSERT_EQ(ScriptModuleState::kErrored, module.Status(scope.GetScriptState()));
-  v8::Local<v8::Value> error2 = module.ErrorCompletion(scope.GetScriptState());
+  ASSERT_TRUE(module.Instantiate(scope.GetScriptState()).IsEmpty());
+  ScriptValue evaluation_error2 = module.Evaluate(scope.GetScriptState());
+  EXPECT_FALSE(evaluation_error2.IsEmpty());
 
-  EXPECT_EQ(error, error2);
-  EXPECT_EQ(error, exception.V8Value());
+  EXPECT_EQ(evaluation_error, evaluation_error2);
 
   ASSERT_EQ(1u, resolver->ResolveCount());
   EXPECT_EQ("failure", resolver->Specifiers()[0]);
@@ -284,8 +278,6 @@ TEST(ScriptModuleTest, Evaluate) {
                                        ScriptSourceCode("window.foo"));
   ASSERT_TRUE(value->IsString());
   EXPECT_EQ("bar", ToCoreString(v8::Local<v8::String>::Cast(value)));
-  EXPECT_EQ(ScriptModuleState::kEvaluated,
-            module.Status(scope.GetScriptState()));
 
   v8::Local<v8::Object> module_namespace =
       v8::Local<v8::Object>::Cast(module.V8Namespace(scope.GetIsolate()));
@@ -312,9 +304,9 @@ TEST(ScriptModuleTest, EvaluateCaptureError) {
   ASSERT_TRUE(exception.IsEmpty());
 
   ScriptValue error = module.Evaluate(scope.GetScriptState());
+  ASSERT_FALSE(error.IsEmpty());
   ASSERT_TRUE(error.V8Value()->IsString());
   EXPECT_EQ("bar", ToCoreString(v8::Local<v8::String>::Cast(error.V8Value())));
-  EXPECT_EQ(ScriptModuleState::kErrored, module.Status(scope.GetScriptState()));
 }
 
 }  // namespace
