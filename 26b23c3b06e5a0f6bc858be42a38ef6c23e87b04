@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "27e90144_2c6f329a",
+        "filename": "ash/wallpaper/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-01T22:50:31Z",
+      "side": 1,
+      "message": "Done. Thanks.",
+      "parentUuid": "3262f84c_ed1c08ba",
+      "revId": "26b23c3b06e5a0f6bc858be42a38ef6c23e87b04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c93b1882_d25c9274",
         "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
         "patchSetId": 3
