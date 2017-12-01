@@ -131,7 +131,8 @@ class CORE_EXPORT HTMLTokenizer {
   // This function returns true if it emits a token. Otherwise, callers
   // must provide the same (in progress) token on the next call (unless
   // they call reset() first).
-  bool NextToken(SegmentedString&, HTMLToken&);
+  template <bool supports16bit>
+  bool NextToken(SegmentedStringImpl<supports16bit>&, HTMLToken&);
 
   // Returns a copy of any characters buffered internally by the tokenizer.
   // The tokenizer buffers characters when searching for the </script> token
@@ -200,7 +201,8 @@ class CORE_EXPORT HTMLTokenizer {
  private:
   explicit HTMLTokenizer(const HTMLParserOptions&);
 
-  inline bool ProcessEntity(SegmentedString&);
+  template <bool supports16bit>
+  inline bool ProcessEntity(SegmentedStringImpl<supports16bit>&);
 
   inline void ParseError();
 
@@ -210,20 +212,25 @@ class CORE_EXPORT HTMLTokenizer {
     token_->AppendToCharacter(character);
   }
 
-  inline bool EmitAndResumeIn(SegmentedString& source, State state) {
+  template <bool supports16bit>
+  inline bool EmitAndResumeIn(SegmentedStringImpl<supports16bit>& source,
+                              State state) {
     SaveEndTagNameIfNeeded();
     state_ = state;
     source.AdvanceAndUpdateLineNumber();
     return true;
   }
 
-  inline bool EmitAndReconsumeIn(SegmentedString&, State state) {
+  template <bool supports16bit>
+  inline bool EmitAndReconsumeIn(SegmentedStringImpl<supports16bit>&,
+                                 State state) {
     SaveEndTagNameIfNeeded();
     state_ = state;
     return true;
   }
 
-  inline bool EmitEndOfFile(SegmentedString& source) {
+  template <bool supports16bit>
+  inline bool EmitEndOfFile(SegmentedStringImpl<supports16bit>& source) {
     if (HaveBufferedCharacterToken())
       return true;
     state_ = HTMLTokenizer::kDataState;
@@ -233,11 +240,13 @@ class CORE_EXPORT HTMLTokenizer {
     return true;
   }
 
-  inline bool FlushEmitAndResumeIn(SegmentedString&, State);
+  template <bool supports16bit>
+  inline bool FlushEmitAndResumeIn(SegmentedStringImpl<supports16bit>&, State);
 
   // Return whether we need to emit a character token before dealing with
   // the buffered end tag.
-  inline bool FlushBufferedEndTag(SegmentedString&);
+  template <bool supports16bit>
+  inline bool FlushBufferedEndTag(SegmentedStringImpl<supports16bit>&);
   inline bool TemporaryBufferIs(const String&);
 
   // Sometimes we speculatively consume input characters and we don't
