@@ -16,6 +16,24 @@
       "revId": "2e1083769db1b296fe78036d4262bb479c39cff2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "160521f3_80de8e94",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 5
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1001939
+      },
+      "writtenOn": "2017-12-01T02:47:59Z",
+      "side": 1,
+      "message": "we\u0027d like to rename from GomaCanaryiOS to ios-device_goma_canary_clobber to make it explicitly show it is based on ios-device for goma_canary/clobber.\n\nbetter to be ios-device-goma-canary-clobber ?\nor ios-device_goma-canary-clobber ?",
+      "parentUuid": "03d3b383_e82d116a",
+      "revId": "2e1083769db1b296fe78036d4262bb479c39cff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
