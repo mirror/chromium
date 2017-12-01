@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24c059f3_6a923f7a",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-01T16:16:27Z",
+      "side": 1,
+      "message": "This is getting to be quite a bit of bindings-y code. Maybe it would be nice to put it in a separate file to mix it less with the animations-y code? It might even be that it should be in bindings/core/v8/, though that would be easier if it were more common code (and the web anim spec relied on WebIDL or similar things, instead of specifying everything at the ECMAScript level).",
+      "revId": "0d2478bb02d613bf712fa22ba30c3cadb45bfc4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6127278e_14c0ac43",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-01T16:16:27Z",
+      "side": 1,
+      "message": "We usually discourage DCHECKing that an argument is non-null. You could remove this, and optionally (for consistency with GetDoubleOrNullArray) just take a reference as an argument.",
+      "revId": "0d2478bb02d613bf712fa22ba30c3cadb45bfc4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "002f0ce8_def1043e",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-01T16:16:27Z",
+      "side": 1,
+      "message": "NumberValue is normally used when you want to do coercion to number. Here you\u0027ve already checked that it is a number, so this is more efficient:\n\nif (v8_value-\u003eIsNumber()) {\n  *output \u003d v8_value.As\u003cv8::Number\u003e()-\u003eValue();\n  return true;\n}\n\nBut I\u0027m not sure that this is what you want. For instance, my reading of the spec indicates that, per https://heycam.github.io/webidl/#es-union, you should be able to pass, say, a string here (which is not a number), and have it coerced (i.e. {offset: \u00274.0\u0027} should be legal).\n\nIs there a reason you didn\u0027t declare BasePropertyIndexedKeyframe and BaseKeyframe as a WebIDL dictionary in Blink, and let the generator handle this overload resolution for you? (That seems to be what you\u0027re trying to do here.) Similarly, you can use the generated IDL union stuff to do a conversion from (double? or sequence\u003cdouble?\u003e) without writing it by hand. If we have a strong performance reason to do it by hand, we can do that, but it may be painful as this is subtle.",
+      "revId": "0d2478bb02d613bf712fa22ba30c3cadb45bfc4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "928d2471_8503d54d",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-01T16:16:27Z",
+      "side": 1,
+      "message": "Why? The spec says I can use any sequence (i.e. anything with a compliant @@iterator property), not just an array.",
+      "revId": "0d2478bb02d613bf712fa22ba30c3cadb45bfc4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afff3795_c724da78",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-01T16:16:27Z",
+      "side": 1,
+      "message": "This is 3 accesses to the \"easing\" property, which is script-visible. (Applies here and elsewhere.) The property should be read exactly once, and then converted.",
+      "revId": "0d2478bb02d613bf712fa22ba30c3cadb45bfc4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84256b71_4de633d0",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-01T16:16:27Z",
+      "side": 1,
+      "message": "Ends up using WTF::FloatHash\u003cdouble\u003e, which considers two doubles equal (for the purposes of hashing and comparison) iff the have identical representations (e.g. -0 and 0 are different, different NaNs are different).",
+      "revId": "0d2478bb02d613bf712fa22ba30c3cadb45bfc4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8030e5a_ebedf6cd",
+        "filename": "third_party/WebKit/Source/core/animation/Keyframe.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-01T16:16:27Z",
+      "side": 1,
+      "message": "Aside: this helper is really weird. Why do we have \"blink::IsNull\" and \"blink::NullValue\" having generic names and sitting in the broad \"blink\" namespace? Why are they both static and defined in headers? Why is (q)NaN called \"null\"?",
+      "revId": "0d2478bb02d613bf712fa22ba30c3cadb45bfc4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
