@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "299a61de_de4d20a1",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-12-01T15:08:24Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is efficient. What is efficient is constructing from a vector [1]. So in this case:\n*field_data_short_tokens \u003d base::flat_set\u003cbase::string16\u003e(short_tokens);\n\nThen again, the creation of the new map may cost us some time spend on allocating memory.\n\nIt could be worth creating a simple unittest employing this code many times with what we expect to be commonly used data, and measure the speed.\n\n\n[1] Look for std::vector in https://chromium.googlesource.com/chromium/src/+/master/base/containers/flat_map.h",
+      "range": {
+        "startLine": 86,
+        "startChar": 5,
+        "endLine": 86,
+        "endChar": 70
+      },
+      "revId": "30a47bdc9f010711614ce9590c775fbd6137ae21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
