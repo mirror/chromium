@@ -22,6 +22,30 @@
       "revId": "30a47bdc9f010711614ce9590c775fbd6137ae21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf310982_38c96982",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-01T16:19:22Z",
+      "side": 1,
+      "message": "\u003e I\u0027m not sure this is efficient. What is efficient is constructing from a vector [1]. So in this case:\n\u003e *field_data_short_tokens \u003d base::flat_set\u003cbase::string16\u003e(short_tokens);\n\ntrue, but we have to append new elements to the exiting map. \n\n\u003e \n\u003e Then again, the creation of the new map may cost us some time spend on allocating memory.\n\u003e \n\u003e It could be worth creating a simple unittest employing this code many times with what we expect to be commonly used data, and measure the speed.\n\nI think it is hard to guess what is more efficient. Let\u0027s avoid that. I have an idea to run a profiler, find hot spots in our code, fix and measure the difference.",
+      "parentUuid": "299a61de_de4d20a1",
+      "range": {
+        "startLine": 86,
+        "startChar": 5,
+        "endLine": 86,
+        "endChar": 70
+      },
+      "revId": "30a47bdc9f010711614ce9590c775fbd6137ae21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
