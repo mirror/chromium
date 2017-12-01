@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "048a67a3_0e14412b",
+        "filename": "chrome/browser/vr/elements/text.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-12-01T15:56:31Z",
+      "side": 1,
+      "message": "Both this and the following function for test only needs to access the texture. I am wondering if it make sense to move the TextTexture class to header file or a seperate class. Then we could have an accessor to TextTexture in the Text element. So we don\u0027t need the test method. WDYT?",
+      "revId": "6dfd908aaa1040e8f4f0d334c5953eb728dd70bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb9eb3c5_df7c56a3",
+        "filename": "chrome/browser/vr/elements/text.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-12-01T15:56:31Z",
+      "side": 1,
+      "message": "nit: move comment to where this function is declared.",
+      "revId": "6dfd908aaa1040e8f4f0d334c5953eb728dd70bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
