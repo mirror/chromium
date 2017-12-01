@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "99a834df_a12633ea",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1363,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-12-01T21:45:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d309ae8_ae41d42e",
+      "revId": "5d10d06664330d53e1d5fc4bf767ea41053543c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2f9e92a_59e989ba",
         "filename": "cc/trees/property_tree.cc",
         "patchSetId": 7
@@ -30,6 +48,30 @@
       "writtenOn": "2017-12-01T20:28:31Z",
       "side": 1,
       "message": "What about if !property_trees()-\u003eis_active? Is that ever true? Do we then need to compare against the pending base?",
+      "range": {
+        "startLine": 1364,
+        "startChar": 49,
+        "endLine": 1364,
+        "endChar": 59
+      },
+      "revId": "5d10d06664330d53e1d5fc4bf767ea41053543c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "156d5bdc_f7600897",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1364,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-12-01T21:45:58Z",
+      "side": 1,
+      "message": "This is a bit complicated.\n1. In the case that the property_tree is an active tree: After executing line 1369, the active_delta_ must be an integer due to https://cs.chromium.org/chromium/src/cc/base/synced_property.h?sq\u003dpackage:chromium\u0026l\u003d45.\nthe delta we are returning here is the PendingDelta() which equals to active_delta_ - reflected_delta_in_pending_tree_ where the latter has been reset to 0 during PushPendingToActive(). So the delta is an integer.\n2. In the case that the property_tree is a pending tree: personally I don\u0027t think it makes any sense. PullDeltaForMain() happens right before the commit and is supposed to return the latest active tree delta. Therefore calling it on a pending tree doesn\u0027t make sense. On further investigation, I found that it was originally introduced to the code base 2 years ago https://codereview.chromium.org/1236173003/diff/1/cc/layers/layer_impl.cc. In that patch we replaced the generic function call of getting delta from either a pending tree or an active tree with an explicit assignment by doing things like \"delta \u003d is_active_tree ? A : B\" which incorrectly implied that the current property tree could be a pending tree. \nMaybe I should add a DCHECK here. WDYT?",
+      "parentUuid": "f2f9e92a_59e989ba",
       "range": {
         "startLine": 1364,
         "startChar": 49,
