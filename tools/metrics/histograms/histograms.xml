@@ -227,6 +227,20 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Accessibility.CrosSelectToSpeak.SpeechRate"
+    enum="CrosSelectToSpeakSpeechRate">
+  <owner>katie@chromium.org</owner>
+  <summary>The speech rate setting when Select-to-Speak was activated.</summary>
+</histogram>
+
+<histogram name="Accessibility.CrosSelectToSpeak.WordHighlighting"
+    enum="BooleanEnabled">
+  <owner>katie@chromium.org</owner>
+  <summary>
+    Whether Select-to-Speak had per-word highlighting enabled when activated.
+  </summary>
+</histogram>
+
 <histogram name="Accessibility.CrosSpokenFeedback" enum="BooleanEnabled">
   <owner>dmazzoni@chromium.org</owner>
   <owner>kenjibaheux@google.com</owner>
