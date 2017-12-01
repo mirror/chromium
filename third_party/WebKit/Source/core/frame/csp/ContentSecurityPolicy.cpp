@@ -109,8 +109,11 @@ bool ContentSecurityPolicy::IsNonceableElement(const Element* element) {
   //
   // See http://blog.innerht.ml/csp-2015/#danglingmarkupinjection for an example
   // of the kind of attack this is aimed at mitigating.
-  if (element->HasDuplicateAttribute())
+  if (element->HasDuplicateAttribute() &&
+      RuntimeEnabledFeatures::
+          ExperimentalContentSecurityPolicyFeaturesEnabled()) {
     nonceable = false;
+  }
 
   if (nonceable) {
     static const char kScriptString[] = "<SCRIPT";
