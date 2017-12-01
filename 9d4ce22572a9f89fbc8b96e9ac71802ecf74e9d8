@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f45804f8_7d421df8",
+        "filename": "ui/views/controls/button/label_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-01T17:07:55Z",
+      "side": 1,
+      "message": "Should these be invalidating the layout instead?",
+      "revId": "9d4ce22572a9f89fbc8b96e9ac71802ecf74e9d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "872a1c18_e8d69209",
+        "filename": "ui/views/controls/button/label_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-01T17:07:55Z",
+      "side": 1,
+      "message": "ditto: maybe these should still invalidate the layout, so at least we\u0027re guaranteed that Layout will be run at some point later on?",
+      "revId": "9d4ce22572a9f89fbc8b96e9ac71802ecf74e9d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb919065_deb1b467",
+        "filename": "ui/views/view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-01T17:07:55Z",
+      "side": 1,
+      "message": "Hmm, I wonder if any clients (one-off layout code if not LayoutManagers) rely on element sizing before being added to a parent... I think a lot of Views now rely on being added to a widget for theme-provider info, so perhaps this isn\u0027t a big deal, or at least the right path going forward (but maybe prone to some initial quirks)",
+      "revId": "9d4ce22572a9f89fbc8b96e9ac71802ecf74e9d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
