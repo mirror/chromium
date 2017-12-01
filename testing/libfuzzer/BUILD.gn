@@ -29,6 +29,7 @@ source_set("libfuzzer_main") {
 config("fuzzer_test_config") {
   if (use_libfuzzer && is_mac) {
     ldflags = [
+      "-Wl,-U,_LLVMFuzzerCustomCrossOver",
       "-Wl,-U,_LLVMFuzzerCustomMutator",
       "-Wl,-U,_LLVMFuzzerInitialize",
     ]

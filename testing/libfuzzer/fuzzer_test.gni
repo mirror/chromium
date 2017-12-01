@@ -137,9 +137,9 @@ template("fuzzer_test") {
         configs -= invoker.suppressed_configs
       }
 
-      if (is_mac) {
-        sources += [ "//testing/libfuzzer/libfuzzer_exports.h" ]
-      }
+#      if (is_mac) {
+#        sources += [ "//testing/libfuzzer/libfuzzer_exports.h" ]
+#      }
     }
   } else {
     # noop on unsupported platforms.
