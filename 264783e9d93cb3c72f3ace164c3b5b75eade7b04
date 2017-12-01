@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e6989fe_05e37108",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-01T20:48:31Z",
+      "side": 1,
+      "message": "nit: |expected_output_data_size|. Or, as discussed offline, just |output_data_size|, and add a comment/example why it\u0027s needed.",
+      "revId": "264783e9d93cb3c72f3ace164c3b5b75eade7b04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffce73bf_50459b0c",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-01T20:48:31Z",
+      "side": 1,
+      "message": "nit: |output_data|",
+      "range": {
+        "startLine": 89,
+        "startChar": 47,
+        "endLine": 89,
+        "endChar": 58
+      },
+      "revId": "264783e9d93cb3c72f3ace164c3b5b75eade7b04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
