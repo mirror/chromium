@@ -7,6 +7,13 @@
 #include <stddef.h>
 #include <algorithm>
 
+#include "build/build_config.h"
+
+#if defined(OS_MACOSX)
+#include "base/strings/string16.h"
+#include "cc/paint/paint_font_loader_mac_in_process_only.h"
+#endif
+
 #include "cc/paint/paint_flags.h"
 #include "cc/paint/paint_op_buffer.h"
 #include "cc/paint/paint_shader.h"
@@ -21,6 +28,9 @@ namespace {
 uint32_t kMaxTypefacesCount = 128;
 size_t kMaxFilenameSize = 1024;
 size_t kMaxFamilyNameSize = 128;
+#if defined(OS_MACOSX)
+size_t kMaxAxisSize = 128;
+#endif
 
 // If we have more than this many colors, abort deserialization.
 const size_t kMaxShaderColorsSupported = 10000;
@@ -325,6 +335,41 @@ void PaintOpReader::Read(std::vector<PaintTypeface>* typefaces) {
         ReadSimple(&slant);
         typeface = PaintTypeface::FromFamilyNameAndFontStyle(
             family_name, SkFontStyle(weight, width, slant));
+        break;
+      }
+      case PaintTypeface::Type::MAC: {
+#if defined(OS_MACOSX)
+        size_t buffer_size;
+        ReadSimple(&buffer_size);
+        if (!valid_ || buffer_size > kMaxFamilyNameSize) {
+          valid_ = false;
+          return;
+        }
+
+        std::unique_ptr<base::string16::value_type[]> buffer(
+            new base::string16::value_type[buffer_size]);
+        ReadData(buffer_size * sizeof(base::string16::value_type),
+                 buffer.get());
+        base::string16 font_name(buffer.get(), buffer_size);
+
+        float font_size = 0.f;
+        float requested_size = 0.f;
+        ReadSimple(&font_size);
+        ReadSimple(&requested_size);
+
+        ReadSimple(&buffer_size);
+        if (!valid_ || buffer_size > kMaxAxisSize) {
+          valid_ = false;
+          return;
+        }
+
+        std::vector<SkFontArguments::Axis> axes(buffer_size);
+        ReadData(buffer_size * sizeof(SkFontArguments::Axis), axes.data());
+
+        typeface = PaintTypeface::FromMAC(font_name, font_size, requested_size,
+                                          std::move(axes),
+                                          PaintFontLoaderMac_InProcessOnly());
+#endif  // defined(OS_MACOSX)
         break;
       }
     }

@@ -4,6 +4,7 @@
 
 #include "cc/paint/paint_op_writer.h"
 
+#include "build/build_config.h"
 #include "cc/paint/paint_flags.h"
 #include "cc/paint/paint_shader.h"
 #include "third_party/skia/include/core/SkFlattenableSerialization.h"
@@ -150,6 +151,19 @@ void PaintOpWriter::Write(const std::vector<PaintTypeface>& typefaces) {
         WriteSimple(typeface.font_style().weight());
         WriteSimple(typeface.font_style().width());
         WriteSimple(typeface.font_style().slant());
+        break;
+      case PaintTypeface::Type::MAC:
+#if defined(OS_MACOSX)
+        WriteSimple(typeface.font_name().size());
+        WriteData(
+            typeface.font_name().size() * sizeof(base::string16::value_type),
+            typeface.font_name().data());
+        WriteSimple(typeface.font_size());
+        WriteSimple(typeface.requested_size());
+        WriteSimple(typeface.axes().size());
+        WriteData(typeface.axes().size() * sizeof(SkFontArguments::Axis),
+                  typeface.axes().data());
+#endif  // defined(OS_MACOSX)
         break;
     }
 #if DCHECK_IS_ON()

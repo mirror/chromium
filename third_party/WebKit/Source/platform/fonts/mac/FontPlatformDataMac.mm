@@ -29,6 +29,7 @@
 #import "platform/fonts/Font.h"
 #import "platform/fonts/opentype/FontSettings.h"
 #import "platform/fonts/shaping/HarfBuzzFace.h"
+#import "platform/graphics/PaintFont.h"
 #import "platform/graphics/skia/SkiaUtils.h"
 #import "platform/wtf/RetainPtr.h"
 #import "platform/wtf/text/WTFString.h"
@@ -38,7 +39,7 @@
 
 namespace blink {
 
-static bool CanLoadInProcess(NSFont* ns_font) {
+bool CanLoadInProcess(NSFont* ns_font) {
   RetainPtr<CGFontRef> cg_font(kAdoptCF,
                                CTFontCopyGraphicsFont(toCTFontRef(ns_font), 0));
   // Toll-free bridged types CFStringRef and NSString*.
@@ -48,7 +49,7 @@ static bool CanLoadInProcess(NSFont* ns_font) {
   return ![font_name.Get() isEqualToString:@"LastResort"];
 }
 
-static CTFontDescriptorRef CascadeToLastResortFontDescriptor() {
+CTFontDescriptorRef CascadeToLastResortFontDescriptor() {
   static CTFontDescriptorRef descriptor;
   if (descriptor)
     return descriptor;
@@ -57,16 +58,15 @@ static CTFontDescriptorRef CascadeToLastResortFontDescriptor() {
       kAdoptCF, CTFontDescriptorCreateWithNameAndSize(CFSTR("LastResort"), 0));
   const void* descriptors[] = {last_resort.Get()};
   RetainPtr<CFArrayRef> values_array(
-      kAdoptCF,
-      CFArrayCreate(kCFAllocatorDefault, descriptors,
-                    WTF_ARRAY_LENGTH(descriptors), &kCFTypeArrayCallBacks));
+      kAdoptCF, CFArrayCreate(kCFAllocatorDefault, descriptors,
+                              arraysize(descriptors), &kCFTypeArrayCallBacks));
 
   const void* keys[] = {kCTFontCascadeListAttribute};
   const void* values[] = {values_array.Get()};
   RetainPtr<CFDictionaryRef> attributes(
       kAdoptCF,
-      CFDictionaryCreate(kCFAllocatorDefault, keys, values,
-                         WTF_ARRAY_LENGTH(keys), &kCFTypeDictionaryKeyCallBacks,
+      CFDictionaryCreate(kCFAllocatorDefault, keys, values, arraysize(keys),
+                         &kCFTypeDictionaryKeyCallBacks,
                          &kCFTypeDictionaryValueCallBacks));
 
   descriptor = CTFontDescriptorCreateWithAttributes(attributes.Get());
@@ -74,8 +74,7 @@ static CTFontDescriptorRef CascadeToLastResortFontDescriptor() {
   return descriptor;
 }
 
-static sk_sp<SkTypeface> LoadFromBrowserProcess(NSFont* ns_font,
-                                                float text_size) {
+sk_sp<SkTypeface> LoadFromBrowserProcess(NSFont* ns_font, float text_size) {
   // Send cross-process request to load font.
   WebSandboxSupport* sandbox_support = Platform::Current()->GetSandboxSupport();
   if (!sandbox_support) {
@@ -111,6 +110,19 @@ static sk_sp<SkTypeface> LoadFromBrowserProcess(NSFont* ns_font,
         << [[ns_font familyName] UTF8String] << "\".";
   return return_font;
 }
+
+class PaintFontLoaderMacImpl : public cc::PaintFontLoaderMac {
+ public:
+  sk_sp<SkTypeface> LoadFont(NSFont* ns_font, float text_size) const override {
+    if (CanLoadInProcess(ns_font))
+      return sk_sp<SkTypeface>(
+          SkCreateTypefaceFromCTFont(toCTFontRef(ns_font)));
+    // In process loading fails for cases where third party font manager
+    // software registers fonts in non system locations such as /Library/Fonts
+    // and ~/Library Fonts, see crbug.com/72727 or crbug.com/108645.
+    return LoadFromBrowserProcess(ns_font, text_size);
+  }
+};
 
 void FontPlatformData::SetupPaintFont(PaintFont* paint_font,
                                       float,
@@ -173,32 +185,17 @@ FontPlatformData::FontPlatformData(NSFont* ns_font,
       orientation_(orientation),
       is_hash_table_deleted_value_(false) {
   DCHECK(ns_font);
-  sk_sp<SkTypeface> typeface;
-  if (CanLoadInProcess(ns_font)) {
-    typeface.reset(SkCreateTypefaceFromCTFont(toCTFontRef(ns_font)));
-  } else {
-    // In process loading fails for cases where third party font manager
-    // software registers fonts in non system locations such as /Library/Fonts
-    // and ~/Library Fonts, see crbug.com/72727 or crbug.com/108645.
-    typeface = LoadFromBrowserProcess(ns_font, size);
-  }
-
+  std::vector<SkFontArguments::Axis> axes;
   if (variation_settings && variation_settings->size() < UINT16_MAX) {
-    SkFontArguments::Axis axes[variation_settings->size()];
+    axes.reserve(variation_settings->size());
     for (size_t i = 0; i < variation_settings->size(); ++i) {
       AtomicString feature_tag = variation_settings->at(i).Tag();
-      axes[i] = {AtomicStringToFourByteTag(feature_tag),
-                 SkFloatToScalar(variation_settings->at(i).Value())};
+      axes.push_back({AtomicStringToFourByteTag(feature_tag),
+                      SkFloatToScalar(variation_settings->at(i).Value())});
     }
-    sk_sp<SkFontMgr> fm(SkFontMgr::RefDefault());
-    // TODO crbug.com/670246: Refactor this to a future Skia API that acccepts
-    // axis parameters on system fonts directly.
-    typeface = fm->makeFromStream(
-        typeface->openStream(nullptr)->duplicate(),
-        SkFontArguments().setAxes(axes, variation_settings->size()));
   }
-  // TODO(vmpstr): Save the creation parameters in PaintTypeface instead.
-  paint_typeface_ = PaintTypeface::FromSkTypeface(typeface);
+  paint_typeface_ = PaintTypeface::FromMAC(ns_font, size, std::move(axes),
+                                           PaintFontLoaderMacImpl());
 }
 
 }  // namespace blink

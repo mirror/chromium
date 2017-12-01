@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 #include "cc/paint/paint_typeface.h"
-#include "build/build_config.h"
 #include "third_party/skia/include/ports/SkFontConfigInterface.h"
 #include "third_party/skia/include/ports/SkFontMgr.h"
 
@@ -27,7 +26,14 @@ PaintTypeface PaintTypeface::FromSkTypeface(const sk_sp<SkTypeface>& tf) {
   return typeface;
 }
 
-// static
+PaintTypeface::PaintTypeface() = default;
+PaintTypeface::PaintTypeface(const PaintTypeface& other) = default;
+PaintTypeface::PaintTypeface(PaintTypeface&& other) = default;
+PaintTypeface::~PaintTypeface() = default;
+
+PaintTypeface& PaintTypeface::operator=(const PaintTypeface& other) = default;
+PaintTypeface& PaintTypeface::operator=(PaintTypeface&& other) = default;
+
 PaintTypeface PaintTypeface::FromFontConfigInterfaceIdAndTtcIndex(
     int config_id,
     int ttc_index) {
@@ -63,17 +69,11 @@ PaintTypeface PaintTypeface::FromFamilyNameAndFontStyle(
   return typeface;
 }
 
-PaintTypeface::PaintTypeface() = default;
-PaintTypeface::PaintTypeface(const PaintTypeface& other) = default;
-PaintTypeface::PaintTypeface(PaintTypeface&& other) = default;
-PaintTypeface::~PaintTypeface() = default;
-
-PaintTypeface& PaintTypeface::operator=(const PaintTypeface& other) = default;
-PaintTypeface& PaintTypeface::operator=(PaintTypeface&& other) = default;
-
-void PaintTypeface::CreateSkTypeface() {
-// MacOS doesn't support this type of creation and relies on NSFonts instead.
+// The rest of the functions are implemented separately for MacOS, hence the
+// guard. See cc/paint/paint_typeface.cc.
 #if !defined(OS_MACOSX)
+// static
+void PaintTypeface::CreateSkTypeface() {
   switch (type_) {
     case Type::kTestTypeface:
       // Nothing to do here.
@@ -106,9 +106,13 @@ void PaintTypeface::CreateSkTypeface() {
       sk_typeface_ = fm->legacyMakeTypeface(family_name_.c_str(), font_style_);
       break;
     }
+    case Type::MAC:
+      // This should be handled in cc/paint/paint_typeface_mac.cc
+      NOTREACHED();
+      break;
   }
-#endif  // !defined(OS_MACOSX)
   sk_id_ = sk_typeface_ ? sk_typeface_->uniqueID() : 0;
 }
+#endif  // !defined(OS_MACOSX)
 
 }  // namespace cc

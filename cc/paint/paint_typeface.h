@@ -5,9 +5,27 @@
 #ifndef CC_PAINT_PAINT_TYPEFACE_H_
 #define CC_PAINT_PAINT_TYPEFACE_H_
 
+#include <vector>
+
 #include "base/logging.h"
+#include "base/strings/string16.h"
+#include "build/build_config.h"
 #include "cc/paint/paint_export.h"
+#include "third_party/skia/include/core/SkFontArguments.h"
 #include "third_party/skia/include/core/SkTypeface.h"
+
+#if defined(OS_MACOSX)
+
+#include "cc/paint/paint_font_loader_mac.h"
+
+#if __OBJC__
+@class NSFont;
+#else
+class NSFont;
+#endif  // __OBJC__
+
+class PaintFontLoaderMac;
+#endif  // defined(OS_MACOSX)
 
 namespace cc {
 
@@ -18,7 +36,8 @@ class CC_PAINT_EXPORT PaintTypeface {
     kSkTypeface,
     kFontConfigInterfaceIdAndTtcIndex,
     kFilenameAndTtcIndex,
-    kFamilyNameAndFontStyle
+    kFamilyNameAndFontStyle,
+    MAC
   };
 
   static PaintTypeface TestTypeface();
@@ -31,6 +50,19 @@ class CC_PAINT_EXPORT PaintTypeface {
       const std::string& family_name,
       const SkFontStyle& font_style);
   // TODO(vmpstr): Need to add FromWebFont?
+
+#if defined(OS_MACOSX)
+  static PaintTypeface FromMAC(NSFont* ns_font,
+                               float requested_size,
+                               std::vector<SkFontArguments::Axis> axes,
+                               const PaintFontLoaderMac& loader);
+
+  static PaintTypeface FromMAC(const base::string16& font_name,
+                               float font_size,
+                               float requested_size,
+                               std::vector<SkFontArguments::Axis> axes,
+                               const PaintFontLoaderMac& loader);
+#endif
 
   PaintTypeface();
   PaintTypeface(const PaintTypeface& other);
@@ -55,8 +87,18 @@ class CC_PAINT_EXPORT PaintTypeface {
   const std::string& family_name() const { return family_name_; }
   const SkFontStyle font_style() const { return font_style_; }
 
+  const base::string16& font_name() const { return font_name_; }
+  float font_size() const { return font_size_; }
+  float requested_size() const { return requested_size_; }
+  const std::vector<SkFontArguments::Axis> axes() const { return axes_; }
+
  private:
+#if defined(OS_MACOSX)
+  void CreateSkTypeface(NSFont* ns_font = nullptr,
+                        const PaintFontLoaderMac* loader = nullptr);
+#else
   void CreateSkTypeface();
+#endif
 
   // This is the font ID that should be used by this PaintTypeface, regardless
   // of the sk_typeface_ on the deserialized end. This value is initialized but
@@ -70,6 +112,11 @@ class CC_PAINT_EXPORT PaintTypeface {
   std::string filename_;
   std::string family_name_;
   SkFontStyle font_style_;
+
+  base::string16 font_name_;
+  float font_size_ = 0.f;
+  float requested_size_ = 0.f;
+  std::vector<SkFontArguments::Axis> axes_;
 };
 
 }  // namespace cc

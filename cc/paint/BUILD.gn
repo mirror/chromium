@@ -76,6 +76,20 @@ cc_component("paint") {
     "transfer_cache_entry.h",
   ]
 
+  if (is_mac) {
+    sources += [
+      "paint_font_loader_mac.h",
+      "paint_font_loader_mac_in_process_only.h",
+      "paint_font_loader_mac_in_process_only.mm",
+      "paint_typeface_mac.mm",
+    ]
+
+    libs = [
+      "AppKit.framework",
+      "Foundation.framework",
+    ]
+  }
+
   defines = [ "CC_PAINT_IMPLEMENTATION=1" ]
 
   # cc/paint is intended to be a separate component from cc that can be
