@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e58237f0_eefc44e5",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-truncate-long-messages.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-12-01T21:06:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bc37a52_261296e6",
+      "revId": "a6ca0058d4214fd20704038d80e45eb144cfb228",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "304447df_dce35ad1",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0ea5518e_96f7b944",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 1304,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-12-01T21:06:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "304447df_dce35ad1",
+      "revId": "a6ca0058d4214fd20704038d80e45eb144cfb228",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec1dc2f5_2e5274f0",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
         "patchSetId": 7
@@ -50,6 +86,24 @@
       "revId": "a6ca0058d4214fd20704038d80e45eb144cfb228",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02573304_0a8c22ba",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 1338,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-12-01T21:06:02Z",
+      "side": 1,
+      "message": "Done.  I\u0027ve moved the text into a pseudo element\u0027s content so it doesn\u0027t show up in test/copying.",
+      "parentUuid": "ec1dc2f5_2e5274f0",
+      "revId": "a6ca0058d4214fd20704038d80e45eb144cfb228",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
