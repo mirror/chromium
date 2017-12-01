@@ -1,0 +1,237 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1487a0f_8b2d8c2e",
+        "filename": "content/browser/renderer_host/input/fling_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-01T16:29:17Z",
+      "side": 1,
+      "message": "These really should be constexpr TimeDeltas",
+      "revId": "7a85324fe030ba6e3e9a5e6d2f67458f2ce16b1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5245b7b2_9f67bed3",
+        "filename": "content/browser/renderer_host/input/fling_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-01T16:29:17Z",
+      "side": 1,
+      "message": "Please use TimeTicks for time calculations",
+      "revId": "7a85324fe030ba6e3e9a5e6d2f67458f2ce16b1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5548ce75_f97f6a7c",
+        "filename": "content/browser/renderer_host/input/fling_controller.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-01T16:29:17Z",
+      "side": 1,
+      "message": "Looks like fling_booster can be forward declared (other than fling_boosted_for_testing method but that doesn\u0027t need to be inline)",
+      "revId": "7a85324fe030ba6e3e9a5e6d2f67458f2ce16b1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e7540f5_54a7ecee",
+        "filename": "content/browser/renderer_host/input/fling_controller.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-01T16:29:17Z",
+      "side": 1,
+      "message": "You should use TimeTicks instead (the WebInputEvents are getting converted)",
+      "revId": "7a85324fe030ba6e3e9a5e6d2f67458f2ce16b1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bcc42fd_1237fe32",
+        "filename": "content/browser/renderer_host/input/gesture_event_queue.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-01T16:29:17Z",
+      "side": 1,
+      "message": "We shoudln\u0027t query the feature list on every event. Store the value please (see allow_multiple_in_flight_events_)",
+      "revId": "7a85324fe030ba6e3e9a5e6d2f67458f2ce16b1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ead7bd1_fd068815",
+        "filename": "content/browser/renderer_host/input/gesture_event_queue.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-01T16:29:17Z",
+      "side": 1,
+      "message": "The GFS is processed by the controller if it is a touchpad event. Do we ever get GFC for non touchpad events?",
+      "revId": "7a85324fe030ba6e3e9a5e6d2f67458f2ce16b1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5c39f75_e2a557ea",
+        "filename": "content/browser/renderer_host/input/input_router_client.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-01T16:29:17Z",
+      "side": 1,
+      "message": "I find this comment confusing. In that as a reader I have no idea who owns the fling controller. Probably should be written in terms of the input router doing something. Can we call it something similar to the ForwardGestureEventWithLatencyInfo to indicate it essentially does the same thing?",
+      "revId": "7a85324fe030ba6e3e9a5e6d2f67458f2ce16b1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cae6cf6_0d874fc0",
+        "filename": "content/browser/renderer_host/input/mock_input_router_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-01T16:29:17Z",
+      "side": 1,
+      "message": "Should this not do something similar to what the ForwardGestureEventWithLatencyInfo does?",
+      "revId": "7a85324fe030ba6e3e9a5e6d2f67458f2ce16b1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d79a760d_59bc0264",
+        "filename": "content/browser/renderer_host/overscroll_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-01T16:29:17Z",
+      "side": 1,
+      "message": "Reading the feature list for every event is not desired.",
+      "revId": "7a85324fe030ba6e3e9a5e6d2f67458f2ce16b1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ece67223_97310918",
+        "filename": "content/browser/renderer_host/overscroll_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-01T16:29:17Z",
+      "side": 1,
+      "message": "These both seem like bug fixes in the current latching behavior. Shouldn\u0027t these be in a separate change if they are fixing current bugs?",
+      "revId": "7a85324fe030ba6e3e9a5e6d2f67458f2ce16b1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cb5457c_6687b110",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2045,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-01T16:29:17Z",
+      "side": 1,
+      "message": "Just assert that events size is 0.",
+      "range": {
+        "startLine": 2045,
+        "startChar": 16,
+        "endLine": 2045,
+        "endChar": 31
+      },
+      "revId": "7a85324fe030ba6e3e9a5e6d2f67458f2ce16b1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8bc66a9_823cf54a",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 4429,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-01T16:29:17Z",
+      "side": 1,
+      "message": "Making GFS be handled on the browser side dynamically makes this hard to reason about. Why are we tying moving gesture fling generation to latching? Seems independent to me.",
+      "range": {
+        "startLine": 4429,
+        "startChar": 4,
+        "endLine": 4429,
+        "endChar": 13
+      },
+      "revId": "7a85324fe030ba6e3e9a5e6d2f67458f2ce16b1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c010dd29_ceaf9118",
+        "filename": "third_party/WebKit/public/platform/WebGestureCurve.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-01T16:29:17Z",
+      "side": 1,
+      "message": "I\u0027d prefer if these methods actually were clear in their implementation. I\u0027m not certain which one I should call and I\u0027d need to look at the implementation to know what they do. I should be able to know from the header file.\n\nI\u0027d prefer if Apply was something like \n\nAdvanceAndApplyToCurve(....)\n\nand Progress was:\nAdvance(...);\n\nThen AdvanceAndApplyToCurve can be written in terms of it calling Advance and it doesn\u0027t need to be virtual.",
+      "revId": "7a85324fe030ba6e3e9a5e6d2f67458f2ce16b1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

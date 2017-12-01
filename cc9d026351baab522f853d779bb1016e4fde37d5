@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1c4c46d_3aa26c07",
+        "filename": "content/browser/renderer_host/input/mouse_wheel_event_queue.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-01T16:29:17Z",
+      "side": 0,
+      "message": "So is GFS even hitting the mouse wheel event queue? I thought it probably wouldn\u0027t. Cause if it does it is setting the scrolling_device_ to be uninitialized which seems incorrect no?",
+      "revId": "cc9d026351baab522f853d779bb1016e4fde37d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
