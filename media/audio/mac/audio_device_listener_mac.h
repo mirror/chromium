@@ -21,18 +21,40 @@ class MEDIA_EXPORT AudioDeviceListenerMac {
   // |listener_cb| will be called when a device change occurs; it's a permanent
   // callback and must outlive AudioDeviceListenerMac.  Note that |listener_cb|
   // might not be executed on the same thread as construction.
-  explicit AudioDeviceListenerMac(const base::Closure& listener_cb);
+  explicit AudioDeviceListenerMac(const base::Closure& listener_cb,
+                                  bool monitor_default_output = true,
+                                  bool monitor_default_input = false,
+                                  bool monitor_addition_removal = false);
   ~AudioDeviceListenerMac();
 
  private:
   friend class AudioDeviceListenerMacTest;
-  static const AudioObjectPropertyAddress kDeviceChangePropertyAddress;
+  static const AudioObjectPropertyAddress
+      kDefaultOutputDeviceChangePropertyAddress;
+  static const AudioObjectPropertyAddress
+      kDefaultInputDeviceChangePropertyAddress;
+  static const AudioObjectPropertyAddress kDevicesPropertyAddress;
 
-  static OSStatus OnDefaultDeviceChanged(
-      AudioObjectID object, UInt32 num_addresses,
-      const AudioObjectPropertyAddress addresses[], void* context);
+  static OSStatus OnDefaultOutputDeviceChanged(
+      AudioObjectID object,
+      UInt32 num_addresses,
+      const AudioObjectPropertyAddress addresses[],
+      void* context);
+  static OSStatus OnDefaultInputDeviceChanged(
+      AudioObjectID object,
+      UInt32 num_addresses,
+      const AudioObjectPropertyAddress addresses[],
+      void* context);
+  static OSStatus OnDevicesAddedOrRemoved(
+      AudioObjectID object,
+      UInt32 num_addresses,
+      const AudioObjectPropertyAddress addresses[],
+      void* context);
 
   base::Closure listener_cb_;
+  bool monitor_default_output_;
+  bool monitor_default_input_;
+  bool monitor_addition_removal_;
 
   // AudioDeviceListenerMac must be constructed and destructed on the same
   // thread.
