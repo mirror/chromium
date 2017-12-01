@@ -12,6 +12,10 @@
 #include "base/macros.h"
 #include "ui/gfx/geometry/point.h"
 
+namespace ui {
+class Layer;
+}  // namespace ui
+
 namespace views {
 class Widget;
 }  // namespace views
@@ -24,6 +28,10 @@ enum class IndicatorType { NONE, DRAG_AREA, CANNOT_SNAP };
 // enter splitview.
 class ASH_EXPORT SplitViewOverviewOverlay {
  public:
+  // Animate |layer|'s opacity from 0 -> 1 if we are showing the layer, and
+  // 1 -> 0 if we are hiding the layer.
+  static void AnimateOpacity(ui::Layer* layer, bool visible);
+
   SplitViewOverviewOverlay();
   ~SplitViewOverviewOverlay();
 

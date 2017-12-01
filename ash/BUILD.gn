@@ -886,6 +886,7 @@ component("ash") {
     "wm/session_state_animator.h",
     "wm/session_state_animator_impl.cc",
     "wm/session_state_animator_impl.h",
+    "wm/splitview/split_view_constants.h",
     "wm/splitview/split_view_controller.cc",
     "wm/splitview/split_view_controller.h",
     "wm/splitview/split_view_divider.cc",
