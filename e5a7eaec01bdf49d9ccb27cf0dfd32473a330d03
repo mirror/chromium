@@ -101,6 +101,24 @@
       "revId": "e5a7eaec01bdf49d9ccb27cf0dfd32473a330d03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "455ab02b_0152729d",
+        "filename": "components/test/data/payments/credit_card_upload_done.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-01T22:34:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3809787_4c147f90",
+      "revId": "e5a7eaec01bdf49d9ccb27cf0dfd32473a330d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

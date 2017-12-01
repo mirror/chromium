@@ -16,6 +16,24 @@
       "revId": "d093aa150b102a718b47a0f5073cc43c1babb6af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f98b8f1_3a229f46",
+        "filename": "chrome/browser/ui/autofill/chrome_autofill_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-01T22:34:20Z",
+      "side": 1,
+      "message": "Done: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d791155",
+      "parentUuid": "95ddd347_ba972b16",
+      "revId": "d093aa150b102a718b47a0f5073cc43c1babb6af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
