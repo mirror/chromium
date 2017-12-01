@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59058a65_6bdf04d4",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/cpu_time_budget_pool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-12-01T11:53:52Z",
+      "side": 1,
+      "message": "I think that if we override operator +, we\u0027ll be able to get rid of this .get() call.",
+      "range": {
+        "startLine": 105,
+        "startChar": 34,
+        "endLine": 105,
+        "endChar": 40
+      },
+      "revId": "617e69d64c2c99a594c37d61e4d68411764f347d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea79e7e4_0fb4d70e",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/cpu_time_budget_pool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-12-01T11:53:52Z",
+      "side": 1,
+      "message": "Same for operator /.",
+      "range": {
+        "startLine": 122,
+        "startChar": 52,
+        "endLine": 122,
+        "endChar": 58
+      },
+      "revId": "617e69d64c2c99a594c37d61e4d68411764f347d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
