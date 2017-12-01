@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ddba7dc_076e76e9",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1109,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-12-01T22:06:27Z",
+      "side": 1,
+      "message": "I have a patch in-progress that fixes this but it\u0027s an existing bug so it\u0027s not RLS specific and needs a new test so I split it off to a separate patch.",
+      "range": {
+        "startLine": 1109,
+        "startChar": 5,
+        "endLine": 1109,
+        "endChar": 9
+      },
+      "revId": "629277bddb84c6ff598f075666090a2a830f2b68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
