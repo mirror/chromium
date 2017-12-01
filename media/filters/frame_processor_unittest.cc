@@ -1321,6 +1321,112 @@ TEST_P(FrameProcessorTest,
   CheckExpectedRangesByTimestamp(audio_.get(), "{ [0,1) [3,4) [6,6) [10,11) }");
 }
 
+TEST_P(FrameProcessorTest,
+       BufferingByPts_ContinuousDts_SapType2_and_PtsJumpForward_1) {
+  if (range_api_ == ChunkDemuxerStream::RangeApi::kLegacyByDts) {
+    DVLOG(1) << "Skipping kLegacyByDts versions of this test";
+    return;
+  }
+
+  InSequence s;
+  AddTestTracks(HAS_VIDEO);
+  frame_processor_->SetSequenceMode(use_sequence_mode_);
+
+  // Make the sequence mode buffering appear just like segments mode to simplify
+  // this test case.
+  if (use_sequence_mode_)
+    SetTimestampOffset(Milliseconds(1060));
+
+  EXPECT_CALL(callbacks_,
+              OnParseWarning(
+                  SourceBufferParseWarning::kKeyframeTimeGreaterThanDependant));
+  EXPECT_MEDIA_LOG(KeyframeTimeGreaterThanDependant("1.06", "1"));
+  EXPECT_CALL(callbacks_, PossibleDurationIncrease(Milliseconds(1070)));
+  EXPECT_TRUE(ProcessFrames(
+      "", "1060|0K 1000|10 1050|20 1010|30 1040|40 1020|50 1030|60"));
+  EXPECT_EQ(Milliseconds(0), timestamp_offset_);
+
+  // Note that the PTS of GOP non-keyframes earlier that the keyframe doesn't
+  // modify the GOP start of the buffered range here. This may change if we
+  // decide to improve spec for SAP Type 2 GOPs that begin a coded frame group.
+  CheckExpectedRangesByTimestamp(video_.get(), "{ [1060,1070) }");
+
+  // Process just the keyframe of the next SAP Type 2 GOP in decode continuity
+  // with the previous one.
+  EXPECT_CALL(callbacks_, PossibleDurationIncrease(Milliseconds(1140)));
+  EXPECT_TRUE(ProcessFrames("", "1130|70K"));
+  EXPECT_EQ(Milliseconds(0), timestamp_offset_);
+
+  // Note that the second GOP is buffered continuous with the first because
+  // there was no decode discontinuity detected. This results in inclusion of
+  // the significant PTS jump forward in the same continuous range.
+  CheckExpectedRangesByTimestamp(video_.get(), "{ [1060,1140) }");
+
+  // Process the remainder of the second GOP.
+  EXPECT_CALL(callbacks_, PossibleDurationIncrease(Milliseconds(1140)));
+  EXPECT_TRUE(
+      ProcessFrames("", "1070|80 1120|90 1080|100 1110|110 1090|120 1100|130"));
+  EXPECT_EQ(Milliseconds(0), timestamp_offset_);
+  CheckExpectedRangesByTimestamp(video_.get(), "{ [1060,1140) }");
+
+  // TODO(wolenetz): Here, [1060,1140) should demux continuously without read
+  // stall in the middle. See https://crbug.com/791095.
+  SeekStream(video_.get(), Milliseconds(1060));
+  CheckReadsThenReadStalls(video_.get(), "1060 1000 1050 1010 1040 1020 1030");
+  SeekStream(video_.get(), Milliseconds(1070));
+  CheckReadsThenReadStalls(video_.get(), "1130 1070 1120 1080 1110 1090 1100");
+}
+
+TEST_P(FrameProcessorTest,
+       BufferingByPts_ContinuousDts_SapType2_and_PtsJumpForward_2) {
+  // Similar to _1 version, incrementally append buffers of each of the two
+  // GOPs.
+  // BIG TODO: Does this repro the benign DCHECK which nest.com was hitting in
+  // UpdateLastAppendStateForRemove prior to that DCHECK's removal?
+  // BIG TODO
+}
+
+TEST_P(FrameProcessorTest,
+       BufferingByPts_ContinuousDts_NewGopEndOverlapsLastGop_1) {
+  // SAP-Type-1 GOPs, new GOP overlaps nonkeyframe(s) of last GOP
+  // BIG TODO: note that this behavior was observed on at least twitch.com
+  // streams at h264 midstream config changes.
+  // BIG TODO
+}
+
+TEST_P(FrameProcessorTest,
+       BufferingByPts_ContinuousDts_NewGopEndOverlapsLastGop_2) {
+  // SAP-Type 1 GOPs, new GOP overlaps keyframe of last GOP.
+  // BIG TODO
+}
+
+TEST_P(FrameProcessorTest,
+       BufferingByPts_ContinuousDts_NewSap2GOPEndOverlapsLastGop_1) {
+  // SAP-Type 2 GOPs, new GOP overlaps nonkeyframe(s) of last GOP.
+  // BIG TODO
+}
+
+TEST_P(FrameProcessorTest,
+       BufferingByPts_ContinuousDts_NewSap2GOPEndOverlapsLastGop_2) {
+  // SAP-Type 2 GOPs, new GOP overlaps keyframe of last GOP.
+  // BIG TODO
+}
+
+TEST_P(FrameProcessorTest, BufferingByPts_ContinuousDts_GopPtsOrder_2_1_3) {
+  // White-box test, demonstrating expected behavior for a specially crafted
+  // sequence that "should" be unusual, but gracefully handled:
+  // SAP-Type 1 GOPs for simplicity of test. First appended GOP is highest in
+  // timeline. Second appended GOP is earliest in timeline. Third appended GOP
+  // is continuous in time with highest end time of first appended GOP. The
+  // result should be a single continuous range containing just the second and
+  // third appended GOPs (since the first-appended GOP was overlap-removed from
+  // the timeline due to being in the gap between the second and third appended
+  // GOPs). Note that MseTrackBuffer::ResetHighestPresentationTimestamp() done
+  // at the beginning of the second appended GOP is the key to gracefully
+  // handling the third appended GOP.
+  // BIG TODO
+}
+
 INSTANTIATE_TEST_CASE_P(SequenceModeLegacyByDts,
                         FrameProcessorTest,
                         Values(FrameProcessorTestParams(
