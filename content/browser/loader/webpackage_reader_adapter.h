@@ -82,6 +82,7 @@ class WebPackageResponseHandler {
   int error_code_ = net::OK;
 
   std::unique_ptr<net::SourceStream> source_stream_;
+  bool source_stream_may_have_data_ = false;
 
   // Accessed only during srouce_stream_->Read() via
   // GetCurrentReadBuffer() and UpdateConsumedReadSize().
