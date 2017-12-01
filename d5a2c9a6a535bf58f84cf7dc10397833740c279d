@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5c617138_767753e5",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-01T18:12:45Z",
+      "side": 1,
+      "message": "I think we spoke about it: This will not have to happen for content:// because we never attempt a URL replacement...\n\nIf we wanted to relate it to the item we know to make assertion whether it has been modified or not in OIB, we could still do the digest verification, but I don\u0027t expect you to do it here.\n\nWe can talk about it thou.",
+      "parentUuid": "9593aa39_a630ac14",
+      "range": {
+        "startLine": 317,
+        "startChar": 50,
+        "endLine": 317,
+        "endChar": 59
+      },
+      "revId": "d5a2c9a6a535bf58f84cf7dc10397833740c279d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35542d3a_0c801240",
         "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
         "patchSetId": 2
@@ -84,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "e2de8c99_f58cdb28",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-01T18:12:45Z",
+      "side": 1,
+      "message": "Trusted means:\n* temporary (therefore stored internally) OR\n* permanent, with matching digest if stored externally, OR\n* permanent stored internally (old item, not upgraded yet).\n\nCan you make it work?",
+      "parentUuid": "61fc7e67_ef4f99a6",
+      "revId": "d5a2c9a6a535bf58f84cf7dc10397833740c279d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48dfdb40_70e2eca3",
         "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
         "patchSetId": 2
@@ -113,6 +155,24 @@
       "side": 1,
       "message": "This is only used to serve trusted offline pages.",
       "parentUuid": "48dfdb40_70e2eca3",
+      "revId": "d5a2c9a6a535bf58f84cf7dc10397833740c279d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b5033e3_aa93babf",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-01T18:12:45Z",
+      "side": 1,
+      "message": "We can have more than 1 like that, therefore my question.\nIf we give only one to the interceptor, say a publicly stored permanent page (downloaded by the user earlier) and it fails digest, we will not redirect, even thou there might be a last_n, or prefetched copy in OPM.\n\nThis is the case I am thinking off.\n\nUntil now there was no problem, because every page is considered trusted, and we are changing that.",
+      "parentUuid": "2f964eaa_d6998110",
       "revId": "d5a2c9a6a535bf58f84cf7dc10397833740c279d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
