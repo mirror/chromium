@@ -30,6 +30,17 @@ class WallpaperControllerClient : public ash::mojom::WallpaperControllerClient {
 
   static WallpaperControllerClient* Get();
 
+  // TODO(crbug.com/776464): Move this to anonymous namesapce.
+  // Returns true if wallpaper files id can be returned successfully.
+  bool CanGetWallpaperFilesId() const;
+
+  // Returns files identifier for the |account_id|.
+  wallpaper::WallpaperFilesId GetFilesId(const AccountId& account_id) const;
+
+  // TODO(crbug.com/776464): This should only be called internally.
+  // Retrieves paths of wallpaper directories and calls |SetFilePaths|.
+  void InitializeFilePaths() const;
+
   // Wrappers around the ash::mojom::WallpaperController interface.
   void SetCustomWallpaper(const AccountId& account_id,
                           const wallpaper::WallpaperFilesId& wallpaper_files_id,
