@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7028845_9d4e13c1",
+        "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-01T17:19:31Z",
+      "side": 1,
+      "message": "not your fault, but let\u0027s use USER_VISIBLE priority since UI might actually wait to show Gaia.",
+      "range": {
+        "startLine": 311,
+        "startChar": 56,
+        "endLine": 311,
+        "endChar": 66
+      },
+      "revId": "5aba0932dd53db0b42cb953d3698397fa70795ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
