@@ -41,6 +41,11 @@ _log = logging.getLogger()
 _log.level = logging.DEBUG
 _log.addHandler(logging.StreamHandler(sys.stderr))
 
+FAKE_ALL_PASS = """This is a testharness.js-based test.
+PASS woohoo
+Harness: the test ran to completion.
+"""
+
 
 class BaselineOptimizerTest(unittest.TestCase):
 
@@ -293,6 +298,53 @@ class BaselineOptimizerTest(unittest.TestCase):
             },
             {
                 'virtual/gpu/fast/canvas': '1',
+            },
+            baseline_dirname='virtual/gpu/fast/canvas')
+
+    def test_all_pass_testharness_at_root(self):
+        self._assert_optimization(
+            {'': FAKE_ALL_PASS},
+            {'': None})
+
+    def test_all_pass_testharness_at_linux(self):
+        self._assert_optimization(
+            {'platform/linux': FAKE_ALL_PASS},
+            {'platform/linux': None})
+
+    def test_all_pass_testharness_at_virtual_root(self):
+        self._assert_optimization(
+            {'virtual/gpu/fast/canvas': FAKE_ALL_PASS},
+            {'virtual/gpu/fast/canvas': None},
+            baseline_dirname='virtual/gpu/fast/canvas')
+
+    def test_all_pass_testharness_at_virtual_linux(self):
+        self._assert_optimization(
+            {'platform/linux/virtual/gpu/fast/canvas': FAKE_ALL_PASS},
+            {'platform/linux/virtual/gpu/fast/canvas': None},
+            baseline_dirname='virtual/gpu/fast/canvas')
+
+    def test_all_pass_testharness_falls_back_to_non_pass(self):
+        # The all-PASS baseline needs to be preserved in this case.
+        self._assert_optimization(
+            {
+                'platform/linux': FAKE_ALL_PASS,
+                '': '1'
+            },
+            {
+                'platform/linux': FAKE_ALL_PASS,
+                '': '1'
+            })
+
+    def test_virtual_all_pass_testharness_falls_back_to_base(self):
+        # The all-PASS baseline needs to be preserved in this case.
+        self._assert_optimization(
+            {
+                'virtual/gpu/fast/canvas': FAKE_ALL_PASS,
+                'platform/linux/fast/canvas': '1',
+            },
+            {
+                'virtual/gpu/fast/canvas': FAKE_ALL_PASS,
+                'platform/linux/fast/canvas': '1',
             },
             baseline_dirname='virtual/gpu/fast/canvas')
 
