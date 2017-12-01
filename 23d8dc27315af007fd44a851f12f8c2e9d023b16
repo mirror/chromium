@@ -16,6 +16,24 @@
       "revId": "23d8dc27315af007fd44a851f12f8c2e9d023b16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5507d866_85886905",
+        "filename": "content/browser/renderer_host/media/audio_input_stream_handle_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-12-01T14:49:19Z",
+      "side": 1,
+      "message": "Changed to |message_loop_|.",
+      "parentUuid": "41521ff5_e14b82b0",
+      "revId": "23d8dc27315af007fd44a851f12f8c2e9d023b16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
