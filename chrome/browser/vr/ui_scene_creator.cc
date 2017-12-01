@@ -1064,13 +1064,16 @@ void UiSceneCreator::CreateOmnibox() {
 
   float width = kOmniboxContainerWidth - 2 * kOmniboxTextMargin;
   auto omnibox_text_field =
-      base::MakeUnique<TextInput>(1024, kOmniboxTextHeight, width);
+      base::MakeUnique<TextInput>(1024, kOmniboxTextHeight);
   omnibox_text_field->SetSize(width, 0);
   omnibox_text_field->set_name(kOmniboxTextField);
-  omnibox_text_field->set_draw_phase(kPhaseForeground);
   omnibox_text_field->set_x_anchoring(LEFT);
   omnibox_text_field->set_x_centering(LEFT);
   omnibox_text_field->SetTranslate(kOmniboxTextMargin, 0, 0);
+  BindColor(model_, omnibox_text_field.get(), &ColorScheme::omnibox_text,
+            &TextInput::SetTextColor);
+  BindColor(model_, omnibox_text_field.get(), &ColorScheme::cursor,
+            &TextInput::SetCursorColor);
 
   omnibox_text_field->SetTextChangedCallback(base::Bind(
       &UiBrowserInterface::StartAutocomplete, base::Unretained(browser_)));

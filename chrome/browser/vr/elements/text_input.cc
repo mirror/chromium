@@ -5,122 +5,131 @@
 #include "chrome/browser/vr/elements/text_input.h"
 
 #include "base/memory/ptr_util.h"
-#include "cc/paint/skia_paint_canvas.h"
+#include "chrome/browser/vr/elements/rect.h"
+#include "chrome/browser/vr/elements/text.h"
 #include "chrome/browser/vr/elements/ui_texture.h"
-#include "ui/gfx/canvas.h"
-#include "ui/gfx/font_list.h"
 #include "ui/gfx/geometry/rect.h"
-#include "ui/gfx/geometry/rect_f.h"
-#include "ui/gfx/render_text.h"
 
 namespace vr {
 
-class TextInputTexture : public UiTexture {
- public:
-  TextInputTexture(float font_height, float text_width)
-      : font_height_(font_height), text_width_(text_width) {}
-  ~TextInputTexture() override {}
+namespace {
 
-  void SetText(const base::string16& text) { SetAndDirty(&text_, text); }
+static constexpr float kCursorWidthRatio = 0.1f;
+static constexpr int kCursorBlinkHalfPeriodMs = 600;
+}  // namespace
 
-  void SetCursorPosition(int position) {
-    SetAndDirty(&cursor_position_, position);
-  }
+TextInput::TextInput(int texture_width_pixels, float font_height_meters) {
+  auto text = base::MakeUnique<Text>(texture_width_pixels, font_height_meters);
+  text->set_type(kTypeTextInputHint);
+  text->set_draw_phase(kPhaseForeground);
+  text->set_hit_testable(false);
+  text->set_x_anchoring(LEFT);
+  text->set_x_centering(LEFT);
+  text->SetSize(1, 1);
+  text->SetMultiLine(false);
+  text->SetTextAlignment(UiTexture::kTextAlignmentLeft);
+  hint_element_ = text.get();
+  this->AddChild(std::move(text));
 
-  void SetColor(SkColor color) { SetAndDirty(&color_, color); }
+  text = base::MakeUnique<Text>(texture_width_pixels, font_height_meters);
+  text->set_type(kTypeTextInputText);
+  text->set_draw_phase(kPhaseForeground);
+  text->set_hit_testable(false);
+  text->set_x_anchoring(LEFT);
+  text->set_x_centering(LEFT);
+  text->SetSize(1, 1);
+  text->SetMultiLine(false);
+  text->SetTextAlignment(UiTexture::kTextAlignmentLeft);
+  text->SetCursorEnabled(true);
+  text_element_ = text.get();
+  this->AddChild(std::move(text));
 
-  void SetCursorVisible(bool visible) {
-    SetAndDirty(&cursor_visible_, visible);
-  }
+  auto cursor = base::MakeUnique<Rect>();
+  cursor->set_type(kTypeTextInputCursor);
+  cursor->set_draw_phase(kPhaseForeground);
+  cursor->set_hit_testable(false);
+  cursor->set_x_anchoring(LEFT);
+  cursor->set_y_anchoring(BOTTOM);
+  cursor->SetColor(SK_ColorBLUE);
+  cursor_element_ = cursor.get();
+  text_element_->AddChild(std::move(cursor));
 
-  void Draw(SkCanvas* sk_canvas, const gfx::Size& texture_size) override {
-    cc::SkiaPaintCanvas paint_canvas(sk_canvas);
-    gfx::Canvas gfx_canvas(&paint_canvas, 1.0f);
-    gfx::Canvas* canvas = &gfx_canvas;
-
-    gfx::FontList font_list;
-    float pixels_per_meter = texture_size.width() / text_width_;
-    int pixel_font_height = static_cast<int>(font_height_ * pixels_per_meter);
-    GetDefaultFontList(pixel_font_height, text_, &font_list);
-    gfx::Rect text_bounds(texture_size.width(), pixel_font_height);
-    size_ = gfx::SizeF(text_bounds.size());
-
-    std::unique_ptr<gfx::RenderText> render_text(CreateRenderText());
-    render_text->SetText(text_);
-    render_text->SetFontList(font_list);
-    render_text->SetColor(color_);
-    render_text->SetHorizontalAlignment(gfx::ALIGN_LEFT);
-    render_text->SetDisplayRect(text_bounds);
-    if (cursor_visible_) {
-      render_text->SetCursorEnabled(true);
-      render_text->SetCursorPosition(cursor_position_);
-    }
-    render_text->Draw(canvas);
-
-    if (cursor_visible_) {
-      auto bounds = render_text->GetUpdatedCursorBounds();
-      canvas->DrawRect(gfx::RectF(bounds), 0xFF000080);
-    }
-  }
-
- private:
-  gfx::Size GetPreferredTextureSize(int width) const override {
-    return gfx::Size(width, width * font_height_ / text_width_);
-  }
-
-  gfx::SizeF GetDrawnSize() const override { return size_; }
-
-  gfx::SizeF size_;
-  base::string16 text_;
-  int cursor_position_ = 0;
-  float font_height_;
-  float text_width_;
-  SkColor color_ = SK_ColorBLACK;
-  bool cursor_visible_ = false;
-
-  DISALLOW_COPY_AND_ASSIGN(TextInputTexture);
-};
-
-TextInput::TextInput(int maximum_width_pixels,
-                     float font_height_meters,
-                     float text_width_meters)
-    : TexturedElement(maximum_width_pixels),
-      texture_(base::MakeUnique<TextInputTexture>(font_height_meters,
-                                                  text_width_meters)) {
-  SetSize(text_width_meters, font_height_meters);
+  set_bounds_contain_children(true);
 }
+
 TextInput::~TextInput() {}
 
 void TextInput::SetText(const base::string16& text) {
   if (text_ == text)
     return;
   text_ = text;
-  texture_->SetText(text);
+
+  text_element_->SetText(text);
+  hint_element_->SetVisible(text_.empty());
+
   if (text_changed_callback_)
     text_changed_callback_.Run(text);
 }
 
+void TextInput::SetHintText(const base::string16& text) {
+  hint_element_->SetText(text);
+}
+
 void TextInput::SetCursorPosition(int position) {
-  texture_->SetCursorPosition(position);
+  text_element_->SetCursorPosition(position);
 }
 
 void TextInput::SetTextChangedCallback(const TextInputCallback& callback) {
   text_changed_callback_ = callback;
 }
 
-void TextInput::SetColor(SkColor color) {
-  texture_->SetColor(color);
+void TextInput::SetTextColor(SkColor color) {
+  text_element_->SetColor(color);
+}
+
+void TextInput::SetCursorColor(SkColor color) {
+  cursor_element_->SetColor(color);
 }
 
 bool TextInput::OnBeginFrame(const base::TimeTicks& time,
                              const gfx::Vector3dF& look_at) {
-  base::TimeDelta delta = time - base::TimeTicks();
-  texture_->SetCursorVisible(delta.InMilliseconds() / 500 % 2);
-  return false;
+  return SetCursorBlinkState(time);
 }
 
-UiTexture* TextInput::GetTexture() const {
-  return texture_.get();
+void TextInput::OnSetSize(gfx::SizeF size) {
+  hint_element_->SetSize(size.width(), size.height());
+  text_element_->SetSize(size.width(), size.height());
+}
+
+void TextInput::OnSetName() {
+  hint_element_->set_owner_name_for_test(name());
+  text_element_->set_owner_name_for_test(name());
+  cursor_element_->set_owner_name_for_test(name());
+}
+
+void TextInput::LayOutChildren() {
+  // To avoid re-rendering a texture when the cursor blinks, the texture is a
+  // separate element. Once the text has been laid out, we can position the
+  // cursor appropriately relative to the text field. Note that the cursor
+  // bounds always indicate a one-pixel width, which we must adjust to make it
+  // visible in VR.
+  gfx::Rect bounds = text_element_->GetCursorBounds();
+  gfx::Point center = bounds.CenterPoint();
+  float scale =
+      text_element_->size().width() / text_element_->GetTextureSize().width();
+  cursor_element_->SetTranslate(center.x() * scale, center.y() * scale, 0);
+  cursor_element_->SetSize(bounds.height() * scale * kCursorWidthRatio,
+                           bounds.height() * scale);
+}
+
+bool TextInput::SetCursorBlinkState(const base::TimeTicks& time) {
+  base::TimeDelta delta = time - base::TimeTicks();
+  bool visible = delta.InMilliseconds() / kCursorBlinkHalfPeriodMs % 2;
+  if (cursor_visible_ == visible)
+    return false;
+  cursor_visible_ = visible;
+  cursor_element_->SetVisible(visible);
+  return true;
 }
 
 }  // namespace vr
