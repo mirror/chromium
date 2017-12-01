@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9e0c0ce_83feabb2",
+        "filename": "chrome/browser/android/webapk/webapk_metrics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-01T00:54:03Z",
+      "side": 1,
+      "message": "This isn\u0027t quite correct on Android since webapk::TrackInstallSource doesn\u0027t distinguish between calls from the automatically triggered banner and calls from BeforeInstallPrompt.prompt() - they\u0027ll both be in the same INSTALL_SOURCE_BANNER bucket. We\u0027ll need plumb that information through WebApkInstallService::InstallAsync (possibly by adding the additional value to the webapk::InstallSource enum).",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 20
+      },
+      "revId": "3a2826377797b81ad9ded8bbe10e38f048dced0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05957fec_82dda324",
+        "filename": "chrome/browser/installable/installable_metrics.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-01T00:54:03Z",
+      "side": 1,
+      "message": "Let\u0027s call this AUTOMATIC_BANNER or AUTOMATIC_PROMPT.",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 8
+      },
+      "revId": "3a2826377797b81ad9ded8bbe10e38f048dced0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7989e6a1_e71c2f3b",
+        "filename": "chrome/browser/installable/installable_metrics.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-01T00:54:03Z",
+      "side": 1,
+      "message": "Perhaps this should be a static method in InstallableMetrics?c",
+      "range": {
+        "startLine": 43,
+        "startChar": 5,
+        "endLine": 43,
+        "endChar": 23
+      },
+      "revId": "3a2826377797b81ad9ded8bbe10e38f048dced0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3bf4728_a982a0c0",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 43448,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-01T00:54:03Z",
+      "side": 1,
+      "message": "Clarify that this is the automatically triggered app install banner",
+      "range": {
+        "startLine": 43448,
+        "startChar": 50,
+        "endLine": 43448,
+        "endChar": 57
+      },
+      "revId": "3a2826377797b81ad9ded8bbe10e38f048dced0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
