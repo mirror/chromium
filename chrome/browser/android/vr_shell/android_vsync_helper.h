@@ -24,6 +24,8 @@ class AndroidVSyncHelper {
 
   void RequestVSync(const base::Callback<void(base::TimeTicks)>& callback);
   void CancelVSyncRequest();
+  // The last interval may be a multiple of the actual refresh interval, use
+  // with care. See also VrShellImpl's getRefreshRate().
   base::TimeDelta LastVSyncInterval() { return last_interval_; }
 
  private:

@@ -152,9 +152,14 @@ VrShell::VrShell(JNIEnv* env,
   // content resolution and DPR.
   compositor_->SetDeferCommits(true);
 
+  float refresh_rate = Java_VrShellImpl_getRefreshRate(env, j_vr_shell_);
+  base::TimeDelta display_vsync_interval =
+      base::TimeDelta::FromSecondsD(1.0 / refresh_rate);
+
   gl_thread_ = base::MakeUnique<VrGLThread>(
       weak_ptr_factory_.GetWeakPtr(), main_thread_task_runner_, gvr_api,
-      ui_initial_state, reprojected_rendering_, HasDaydreamSupport(env));
+      ui_initial_state, reprojected_rendering_, HasDaydreamSupport(env),
+      display_vsync_interval);
   ui_ = gl_thread_.get();
   toolbar_ = base::MakeUnique<vr::ToolbarHelper>(ui_, this);
   autocomplete_controller_ = base::MakeUnique<AutocompleteController>(ui_);
