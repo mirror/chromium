@@ -8,6 +8,8 @@
 #include "core/dom/Document.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/WebLocalFrameImpl.h"
+#include "modules/animationworklet/AnimationWorkletThread.h"
+#include "platform/WaitableEvent.h"
 
 namespace blink {
 
@@ -24,31 +26,62 @@ void AnimationWorkletProxyClientImpl::Trace(blink::Visitor* visitor) {
 
 void AnimationWorkletProxyClientImpl::SetGlobalScope(
     WorkletGlobalScope* global_scope) {
-  DCHECK(global_scope->IsContextThread());
   DCHECK(global_scope);
+  DCHECK(global_scope->IsContextThread());
   global_scope_ = static_cast<AnimationWorkletGlobalScope*>(global_scope);
+  task_runner_ =
+      global_scope_->GetThread()->GetTaskRunner(TaskType::kMiscPlatformAPI);
   mutator_->RegisterCompositorAnimator(this);
 }
 
 void AnimationWorkletProxyClientImpl::Dispose() {
-  DCHECK(global_scope_->IsContextThread());
+  CrossThreadPersistent<AnimationWorkletGlobalScope> global_scope =
+      global_scope_.Get();
+  if (!global_scope)
+    return;
+
+  DCHECK(global_scope->IsContextThread());
   // At worklet scope termination break the reference cycle between
-  // CompositorMutatorImpl and AnimationProxyClientImpl and also the cycle
-  // between AnimationWorkletGlobalScope and AnimationWorkletProxyClientImpl.
-  mutator_->UnregisterCompositorAnimator(this);
+  // CompositorMutatorImpl and AnimationProxyClientImpl.
   global_scope_ = nullptr;
+  mutator_->UnregisterCompositorAnimator(this);
+}
+
+void AnimationWorkletProxyClientImpl::MutateWithEvent(
+    const CompositorMutatorInputState* input_state,
+    WaitableEvent* is_done) {
+  CrossThreadPersistent<AnimationWorkletGlobalScope> global_scope =
+      global_scope_.Get();
+  if (!global_scope)
+    return;
+
+  if (global_scope) {
+    DCHECK(global_scope->IsContextThread());
+    mutator_->SetMutationUpdate(global_scope->Mutate(*input_state));
+  }
+  is_done->Signal();
 }
 
 void AnimationWorkletProxyClientImpl::Mutate(
     const CompositorMutatorInputState& state) {
-  DCHECK(global_scope_->IsContextThread());
+  DCHECK(Platform::Current()->CompositorThread()->IsCurrentThread());
 
-  std::unique_ptr<CompositorMutatorOutputState> output = nullptr;
+  CrossThreadPersistent<AnimationWorkletGlobalScope> global_scope =
+      global_scope_.Get();
+  if (!global_scope)
+    return;
 
-  if (global_scope_)
-    output = global_scope_->Mutate(state);
-
-  mutator_->SetMutationUpdate(std::move(output));
+  // TODO(petermayo) Schedule a pending mutation rather than block on
+  // the mutation to complete. (Or ensure a mutation is pending).
+  // crbug.com/767210
+  WaitableEvent is_done;
+  task_runner_->PostTask(
+      BLINK_FROM_HERE,
+      CrossThreadBind(&AnimationWorkletProxyClientImpl::MutateWithEvent,
+                      WrapCrossThreadPersistent(this),
+                      CrossThreadUnretained(&state),
+                      CrossThreadUnretained(&is_done)));
+  is_done.Wait();
 }
 
 // static

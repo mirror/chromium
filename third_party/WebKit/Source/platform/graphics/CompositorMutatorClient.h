@@ -28,11 +28,13 @@ class PLATFORM_EXPORT CompositorMutatorClient
   // TODO(majidvp): Remove this when CC knows about timeline input.
   bool HasAnimators() override;
 
-  CompositorMutator* Mutator() { return mutator_.Get(); }
+  CompositorMutator* Mutator() { return mutator_; }
+
+  base::WeakPtrFactory<CompositorMutatorClient> weak_ptr_factory_;
 
  private:
   // Accessed by main and compositor threads.
-  CrossThreadPersistent<CompositorMutator> mutator_;
+  CompositorMutator* mutator_;
   cc::LayerTreeMutatorClient* client_;
 };
 

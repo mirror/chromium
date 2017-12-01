@@ -15,7 +15,7 @@
 namespace blink {
 
 CompositorMutatorClient::CompositorMutatorClient(CompositorMutator* mutator)
-    : mutator_(mutator) {
+    : weak_ptr_factory_(this), mutator_(mutator) {
   TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("cc"),
                "CompositorMutatorClient::CompositorMutatorClient");
 }
