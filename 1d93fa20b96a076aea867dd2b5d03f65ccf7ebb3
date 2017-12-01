@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "436fc4f0_c5520367",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-01T16:46:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "065a3bab_0d196558",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 4
+      },
+      "revId": "1d93fa20b96a076aea867dd2b5d03f65ccf7ebb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45cbb4c2_84aedb0f",
         "filename": "chrome/browser/prerender/prerender_nostate_prefetch_browsertest.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "1d93fa20b96a076aea867dd2b5d03f65ccf7ebb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edc36d11_35f3c008",
+        "filename": "chrome/browser/prerender/prerender_nostate_prefetch_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-01T16:46:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45cbb4c2_84aedb0f",
+      "range": {
+        "startLine": 243,
+        "startChar": 7,
+        "endLine": 243,
+        "endChar": 22
+      },
+      "revId": "1d93fa20b96a076aea867dd2b5d03f65ccf7ebb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c6174d89_58810c97",
+        "filename": "chrome/browser/prerender/prerender_nostate_prefetch_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-01T16:46:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "000a946f_84450352",
+      "range": {
+        "startLine": 249,
+        "startChar": 44,
+        "endLine": 249,
+        "endChar": 64
+      },
+      "revId": "1d93fa20b96a076aea867dd2b5d03f65ccf7ebb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e7901f0_7b88c07d",
         "filename": "chrome/browser/prerender/prerender_nostate_prefetch_browsertest.cc",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-12-01T16:27:55Z",
       "side": 1,
       "message": "Not asking to do in this change, just a feature request for URLLoaderInterceptor\n\ncan this be a enum class instead of a boolean with a default value? It would simplify the reading for folks unfamiliar with the order of the booleans in the constructor (also worth mentioning that they have defaults, which is IMO more confusing than explicit initialization for this case).",
+      "range": {
+        "startLine": 431,
+        "startChar": 46,
+        "endLine": 431,
+        "endChar": 51
+      },
+      "revId": "1d93fa20b96a076aea867dd2b5d03f65ccf7ebb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67eba2e3_5a235fff",
+        "filename": "chrome/browser/prerender/prerender_nostate_prefetch_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-01T16:46:40Z",
+      "side": 1,
+      "message": "yeah I struggled with whether to use bools or enums. I realize that some prefer enums cause they\u0027re explicit. I just thought it\u0027d be a lot of typing especially with the namespace.\n\nPerhaps it\u0027ll be clearer if I just make the default values false,false.",
+      "parentUuid": "3e7901f0_7b88c07d",
       "range": {
         "startLine": 431,
         "startChar": 46,

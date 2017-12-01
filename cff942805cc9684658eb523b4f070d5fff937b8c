@@ -22,6 +22,30 @@
       "revId": "cff942805cc9684658eb523b4f070d5fff937b8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1608e571_9c22476e",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1990,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-01T16:46:40Z",
+      "side": 1,
+      "message": "Correct. That was always done in the renderer, but then for plznavigate the requests are initiated in the browser so r440645 added the call in the throttle as well.",
+      "parentUuid": "67fee36f_e304a62e",
+      "range": {
+        "startLine": 1990,
+        "startChar": 26,
+        "endLine": 1990,
+        "endChar": 44
+      },
+      "revId": "cff942805cc9684658eb523b4f070d5fff937b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
