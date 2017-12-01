@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e7cfeb5f_d250cdf5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1133,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-12-01T20:10:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1b282908_17c24310",
+      "range": {
+        "startLine": 1133,
+        "startChar": 36,
+        "endLine": 1133,
+        "endChar": 44
+      },
+      "revId": "1c4038b8260e5b7f501215de9912dd8c2d19fd4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4884138b_ab26b4ab",
         "filename": "chrome/browser/about_flags.cc",
         "patchSetId": 3
@@ -69,6 +93,30 @@
       "revId": "1c4038b8260e5b7f501215de9912dd8c2d19fd4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "307289ca_a57807b7",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3122,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-12-01T20:10:28Z",
+      "side": 1,
+      "message": "I am not familiar with the iOS code, so I will leave the change in src/ios/chrome/browser/about_flags.mm for a future CL.",
+      "parentUuid": "88566413_ec836489",
+      "range": {
+        "startLine": 3122,
+        "startChar": 70,
+        "endLine": 3122,
+        "endChar": 76
+      },
+      "revId": "1c4038b8260e5b7f501215de9912dd8c2d19fd4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
