@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88a8de66_a4450251",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-01T22:34:40Z",
+      "side": 1,
+      "message": "Question: Will this be left for a follow up CL? The closed-until-reopened-time metric would help us data-drive the timeout decision.",
+      "range": {
+        "startLine": 671,
+        "startChar": 27,
+        "endLine": 671,
+        "endChar": 30
+      },
+      "revId": "6a081f9be9feba862387766131ac9abbc02783ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9321ca26_e888db6d",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-01T22:34:40Z",
+      "side": 1,
+      "message": "Should make this a constexpr as this is a class level static and of class type.",
+      "range": {
+        "startLine": 76,
+        "startChar": 9,
+        "endLine": 76,
+        "endChar": 14
+      },
+      "revId": "6a081f9be9feba862387766131ac9abbc02783ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc347e44_8ec94199",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1157,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-01T22:34:40Z",
+      "side": 1,
+      "message": "Could you add a new test or extend this one so to confirm we can actually reopen the store?",
+      "revId": "6a081f9be9feba862387766131ac9abbc02783ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -70,6 +70,24 @@
       "revId": "f430f8fdec9a1931117906727fab1887613fe7b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "22ba5fa6_77f72737",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-01T22:34:40Z",
+      "side": 1,
+      "message": "Thanks and Ack.",
+      "parentUuid": "81bfdab0_24744445",
+      "revId": "f430f8fdec9a1931117906727fab1887613fe7b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
