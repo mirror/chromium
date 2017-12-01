@@ -65,6 +65,7 @@
 @synthesize buttonFactory = _buttonFactory;
 @synthesize buttonUpdater = _buttonUpdater;
 @synthesize dispatcher = _dispatcher;
+@synthesize expanded = _expanded;
 @synthesize locationBarView = _locationBarView;
 @synthesize stackView = _stackView;
 @synthesize loading = _loading;
@@ -113,6 +114,7 @@
     [self setUpToolbarButtons];
     [self setUpLocationBarContainer];
     [self setUpProgressBar];
+    _expanded = NO;
   }
   return self;
 }
@@ -123,6 +125,7 @@
   [animator addAnimations:^{
     [self.view layoutIfNeeded];
   }];
+  self.expanded = YES;
 }
 
 - (void)addToolbarContractionAnimations:(UIViewPropertyAnimator*)animator {
@@ -131,6 +134,7 @@
   [animator addAnimations:^{
     [self.view layoutIfNeeded];
   }];
+  self.expanded = NO;
 }
 
 - (void)updateForSideSwipeSnapshotOnNTP:(BOOL)onNTP {
