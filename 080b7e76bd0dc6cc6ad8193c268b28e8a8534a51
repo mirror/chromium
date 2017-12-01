@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccce0890_1f81fec4",
+        "filename": "components/password_manager/core/browser/password_store_factory_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-01T17:00:02Z",
+      "side": 1,
+      "message": "Note that this has become safe only recently,  see:\n\nhttps://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Static-variables",
+      "revId": "080b7e76bd0dc6cc6ad8193c268b28e8a8534a51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
