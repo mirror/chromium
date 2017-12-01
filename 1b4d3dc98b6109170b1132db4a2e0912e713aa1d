@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11791af4_7de6d9a8",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-01T22:53:37Z",
+      "side": 1,
+      "message": "Out of curiosity, why the change in centering?",
+      "revId": "1b4d3dc98b6109170b1132db4a2e0912e713aa1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
