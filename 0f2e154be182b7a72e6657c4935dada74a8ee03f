@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81f24508_f5aed5cf",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1240,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-01T20:29:02Z",
+      "side": 1,
+      "message": "\"to\"",
+      "revId": "0f2e154be182b7a72e6657c4935dada74a8ee03f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "509bc53a_048cb921",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1265,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-01T20:29:02Z",
+      "side": 1,
+      "message": "Can you check a negative Z scale too (independently from x and y), cuz thats not invertible but would it map to empty? Let\u0027s check each axis separately?",
+      "revId": "0f2e154be182b7a72e6657c4935dada74a8ee03f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
