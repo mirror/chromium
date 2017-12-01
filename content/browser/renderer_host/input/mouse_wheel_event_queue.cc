@@ -220,9 +220,10 @@ void MouseWheelEventQueue::ProcessMouseWheelAck(
       // because the events generated will be a GSB (non-synthetic) and GSE
       // (non-synthetic). This situation arises when OSX generates double
       // phase end information.
-      bool empty_sequence = !needs_update &&
-                            needs_scroll_begin_when_scroll_latching_disabled_ &&
-                            current_phase_ended;
+      bool empty_sequence =
+          !needs_update && needs_scroll_begin_when_scroll_latching_disabled_ &&
+          current_phase_ended &&
+          !event_sent_for_gesture_ack_->event.has_synthetic_phase;
       if (needs_update || !empty_sequence) {
         if (needs_scroll_begin_when_scroll_latching_disabled_) {
           // If no GSB has been sent, it will be a non-synthetic GSB.
@@ -273,8 +274,6 @@ void MouseWheelEventQueue::OnGestureScrollEvent(
               gesture_event.event.GetType() ==
                   blink::WebInputEvent::kGestureFlingStart)) {
     scrolling_device_ = blink::kWebGestureDeviceUninitialized;
-    if (enable_scroll_latching_)
-      scroll_in_progress_ = false;
   }
 }
 

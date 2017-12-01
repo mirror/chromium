@@ -37,6 +37,9 @@ class WebGestureCurveImpl : public blink::WebGestureCurve {
 
   // WebGestureCurve implementation.
   bool Apply(double time, blink::WebGestureCurveTarget* target) override;
+  bool Progress(double time,
+                gfx::Vector2dF& out_current_velocity,
+                gfx::Vector2dF& out_delta_to_scroll) override;
 
  private:
   enum class ThreadType {
