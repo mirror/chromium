@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7b477b24_039a3945",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-12-01T00:02:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7750b18b_ddae8c33",
+      "revId": "d8642549c928b9274f11b1c9597042275515222c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eebc9cad_ab8ac403",
         "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3fd54f48_89b8f49f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-12-01T00:02:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eebc9cad_ab8ac403",
+      "revId": "d8642549c928b9274f11b1c9597042275515222c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71684f97_165f8620",
         "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
         "patchSetId": 8
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-30T23:43:37Z",
       "side": 1,
       "message": "this._contrastInfo.bgColor() is null here.",
+      "revId": "d8642549c928b9274f11b1c9597042275515222c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0edca651_1d828c78",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-12-01T00:02:46Z",
+      "side": 1,
+      "message": "This line was removed in the next change.",
+      "parentUuid": "71684f97_165f8620",
       "revId": "d8642549c928b9274f11b1c9597042275515222c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
