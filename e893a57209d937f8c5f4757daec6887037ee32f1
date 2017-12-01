@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45b3a5e5_0118015f",
+        "filename": "base/files/file.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-01T15:32:13Z",
+      "side": 1,
+      "message": "nit: Put conditional includes below the non-conditional ones. In most Chromium code, this supersedes the system header style rule.",
+      "revId": "e893a57209d937f8c5f4757daec6887037ee32f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
