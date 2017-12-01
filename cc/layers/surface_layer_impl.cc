@@ -58,6 +58,15 @@ void SurfaceLayerImpl::SetDefaultBackgroundColor(SkColor background_color) {
   NoteLayerPropertyChanged();
 }
 
+void SurfaceLayerImpl::SetGutterColorOverride(
+    base::Optional<SkColor> gutter_color_override) {
+  if (gutter_color_override_ == gutter_color_override)
+    return;
+
+  gutter_color_override_ = gutter_color_override;
+  NoteLayerPropertyChanged();
+}
+
 void SurfaceLayerImpl::PushPropertiesTo(LayerImpl* layer) {
   LayerImpl::PushPropertiesTo(layer);
   SurfaceLayerImpl* layer_impl = static_cast<SurfaceLayerImpl*>(layer);
@@ -65,6 +74,7 @@ void SurfaceLayerImpl::PushPropertiesTo(LayerImpl* layer) {
   layer_impl->SetFallbackSurfaceId(fallback_surface_id_);
   layer_impl->SetStretchContentToFillBounds(stretch_content_to_fill_bounds_);
   layer_impl->SetDefaultBackgroundColor(default_background_color_);
+  layer_impl->SetGutterColorOverride(gutter_color_override_);
 }
 
 void SurfaceLayerImpl::AppendQuads(viz::RenderPass* render_pass,
@@ -121,7 +131,7 @@ viz::SurfaceDrawQuad* SurfaceLayerImpl::CreateSurfaceDrawQuad(
       render_pass->CreateAndAppendDrawQuad<viz::SurfaceDrawQuad>();
   surface_draw_quad->SetNew(shared_quad_state, quad_rect, visible_quad_rect,
                             primary_surface_id, fallback_surface_id,
-                            default_background_color_,
+                            default_background_color_, gutter_color_override_,
                             stretch_content_to_fill_bounds_);
 
   return surface_draw_quad;

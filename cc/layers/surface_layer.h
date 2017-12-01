@@ -33,6 +33,11 @@ class CC_EXPORT SurfaceLayer : public Layer {
   // specified, and a fallback surface is unavailable.
   void SetDefaultBackgroundColor(SkColor background_color);
 
+  // Specifies an optional |background_color| to use to override the default
+  // gutter color used by the compositor in the event that the fallback
+  // surface is used in place of the primary surface.
+  void SetGutterColorOverride(base::Optional<SkColor> gutter_color_override);
+
   // Layer overrides.
   std::unique_ptr<LayerImpl> CreateLayerImpl(LayerTreeImpl* tree_impl) override;
   void SetLayerTreeHost(LayerTreeHost* host) override;
@@ -67,6 +72,7 @@ class CC_EXPORT SurfaceLayer : public Layer {
   scoped_refptr<viz::SurfaceReferenceFactory> ref_factory_;
   bool stretch_content_to_fill_bounds_ = false;
   SkColor default_background_color_ = SK_ColorWHITE;
+  base::Optional<SkColor> gutter_color_override_;
 
   DISALLOW_COPY_AND_ASSIGN(SurfaceLayer);
 };
