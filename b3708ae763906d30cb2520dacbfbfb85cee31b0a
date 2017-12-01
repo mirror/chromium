@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "335a640a_15825500",
+        "filename": "components/os_crypt/key_storage_config_linux.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-12-01T13:34:42Z",
+      "side": 1,
+      "message": "optional nit: go/avoidwe\n// Communication with the backend via dbus needs to happen on a specific thread. Currently, only KWallet needs to used dbus.",
+      "range": {
+        "startLine": 36,
+        "startChar": 8,
+        "endLine": 36,
+        "endChar": 10
+      },
+      "revId": "b3708ae763906d30cb2520dacbfbfb85cee31b0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
