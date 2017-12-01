@@ -34,6 +34,24 @@
       "revId": "fab2d5c638dc323a8772f31d060f1325986c3304",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58f246a0_c21438af",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-01T22:03:27Z",
+      "side": 1,
+      "message": "\u003e +#if defined(OS_CHROMEOS)\n\u003e +       CHECK(capabilities.texture_format_bgra8888);\n\nWould that always be true? How do we know?\n\n\u003e +       GLenum format \u003d GL_BGRA_EXT;\n\u003e +#else\n\u003e +       GLenum format \u003d GL_RGB;\n\u003e +#endif\n\n\u003e +       GLenum format \u003d capabilities.texture_format_bgra8888 ? GL_BGRA_EXT : GL_RGB;\n\nI think that this is better. TBH I\u0027m not really 100% sure. +piman",
+      "parentUuid": "809d3d47_cc8597a0",
+      "revId": "fab2d5c638dc323a8772f31d060f1325986c3304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
