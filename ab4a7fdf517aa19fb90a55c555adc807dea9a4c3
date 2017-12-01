@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a879ae0b_88896f27",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/baseline_optimizer.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-12-01T22:50:08Z",
+      "side": 1,
+      "message": "This matches the behaviour of run-webkit-tests but for testharness tests, which are the only test type that has the special \"empty means all-PASS\" rule.\n\nCould there be any unexpected behavior if this is used for non-testharness-tests? If not, would it work to use implicit_all_pass \u003d True all of the time?",
+      "range": {
+        "startLine": 333,
+        "startChar": 31,
+        "endLine": 335,
+        "endChar": 46
+      },
+      "revId": "ab4a7fdf517aa19fb90a55c555adc807dea9a4c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a54b7a74_4c8afa0c",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/baseline_optimizer.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-12-01T22:50:08Z",
+      "side": 1,
+      "message": "Small typo",
+      "range": {
+        "startLine": 488,
+        "startChar": 34,
+        "endLine": 488,
+        "endChar": 45
+      },
+      "revId": "ab4a7fdf517aa19fb90a55c555adc807dea9a4c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bcec573_78f05b69",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/baseline_optimizer_unittest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-12-01T22:50:08Z",
+      "side": 1,
+      "message": "Other possible names may include: ALL_PASS_RESULT, or ALL_PASS_TESTHARNESS_RESULT\n\nThis could also potentially be an attribute of BaselineOptimizerTest, although I\u0027m not sure if that\u0027s any better.",
+      "revId": "ab4a7fdf517aa19fb90a55c555adc807dea9a4c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
