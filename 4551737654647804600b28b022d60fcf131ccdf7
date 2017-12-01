@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f78a36fc_6fe902ec",
+        "filename": "third_party/WebKit/LayoutTests/editing/pasteboard/no-clipboard-event-to-hidden-selection.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-01T09:40:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f19550b4_8c971a63",
+      "range": {
+        "startLine": 11,
+        "startChar": 30,
+        "endLine": 11,
+        "endChar": 40
+      },
+      "revId": "4551737654647804600b28b022d60fcf131ccdf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d4896ba_683b8903",
         "filename": "third_party/WebKit/LayoutTests/editing/pasteboard/no-clipboard-event-to-hidden-selection.html",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "4551737654647804600b28b022d60fcf131ccdf7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba6f3db8_2127caaf",
+        "filename": "third_party/WebKit/LayoutTests/editing/pasteboard/no-clipboard-event-to-hidden-selection.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-01T09:40:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d4896ba_683b8903",
+      "revId": "4551737654647804600b28b022d60fcf131ccdf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "a53f66a4_7f4bfd50",
+        "filename": "third_party/WebKit/LayoutTests/editing/pasteboard/no-clipboard-event-to-hidden-selection.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-01T09:40:02Z",
+      "side": 1,
+      "message": "When I replaced testRunner.execCommand with document.execCommand I got assert failures when running:\n\n  $ python third_party/WebKit/Tools/Scripts/run-webkit-tests -t Default LayoutTests/editing/pasteboard\n\nInterestingly, I got no assert failures when running the failing test isolated:\n\n  $ python third_party/WebKit/Tools/Scripts/run-webkit-tests -t Default LayoutTests/editing/pasteboard/no-clipboard-event-to-hidden-selection.html\n\nI guess testRunner is safer to use during automated testing?",
+      "parentUuid": "90542659_53bea2f8",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 24
+      },
+      "revId": "4551737654647804600b28b022d60fcf131ccdf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f452999_e19f49dc",
         "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
         "patchSetId": 3
@@ -79,6 +145,24 @@
       "revId": "4551737654647804600b28b022d60fcf131ccdf7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d05b563_e40354bf",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-01T09:40:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f452999_e19f49dc",
+      "revId": "4551737654647804600b28b022d60fcf131ccdf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
