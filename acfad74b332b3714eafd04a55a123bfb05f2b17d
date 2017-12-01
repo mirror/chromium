@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a96a065_34c9101a",
+        "filename": "ash/app_list/model/app_list_model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-01T21:28:33Z",
+      "side": 1,
+      "message": "Sorry that I was not clear in previous comments. This one should stay with constructor in cc file. Only simple initializers such as null, false, 0 and kEnum should be put in header.",
+      "revId": "acfad74b332b3714eafd04a55a123bfb05f2b17d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00dfa883_f8a751b9",
+        "filename": "ash/app_list/model/search/search_model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-01T21:28:33Z",
+      "side": 1,
+      "message": "Same here. Move this back to cc file.",
+      "revId": "acfad74b332b3714eafd04a55a123bfb05f2b17d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5718d1b4_e2a4736c",
+        "filename": "ash/app_list/model/search/search_model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-01T21:28:33Z",
+      "side": 1,
+      "message": "and this",
+      "revId": "acfad74b332b3714eafd04a55a123bfb05f2b17d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9579f717_26018d79",
+        "filename": "ui/app_list/test/app_list_test_view_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-01T21:28:33Z",
+      "side": 1,
+      "message": "move back to constructor",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 79
+      },
+      "revId": "acfad74b332b3714eafd04a55a123bfb05f2b17d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
