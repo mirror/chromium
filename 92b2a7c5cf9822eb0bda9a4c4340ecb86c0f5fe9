@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a38168cf_92b6c586",
+        "filename": "chrome/browser/extensions/extension_apitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-01T18:45:09Z",
+      "side": 0,
+      "message": "We need to remove uses of this in the api tests and also from the JSON schema.  I think the only API test file to use it is [1], and the schema is [2].\n\n[1] https://cs.chromium.org/chromium/src/chrome/test/data/extensions/api_test/webrequest/framework.js?q\u003dbrowsersidenavigationenabled+file:js\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d56\n[2] https://cs.chromium.org/chromium/src/extensions/common/api/test.json?q\u003dbrowsersidenavigationenabled+file:js\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d64",
+      "revId": "92b2a7c5cf9822eb0bda9a4c4340ecb86c0f5fe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41b8feac_c79407ed",
         "filename": "chrome/browser/prerender/prerender_browsertest.cc",
         "patchSetId": 1

@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "8bc1c95f_d7a86733",
+        "filename": "chrome/browser/extensions/extension_resource_request_policy_apitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-01T18:45:09Z",
+      "side": 1,
+      "message": "Update comment?",
+      "range": {
+        "startLine": 255,
+        "startChar": 10,
+        "endLine": 255,
+        "endChar": 21
+      },
+      "revId": "d1dde143a8a03cb279cb5a81167507ab42def51c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "86455fdf_4d623f9d",
         "filename": "chrome/browser/ui/browser_command_controller_interactive_browsertest.cc",
         "patchSetId": 1
