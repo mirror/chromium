@@ -4,6 +4,7 @@
 
 // See https://w3c.github.io/ServiceWorker/#cachestorage-interface
 [
+    SecureContext,
     Exposed=(Window,Worker)
 ] interface CacheStorage {
   [CallWith=ScriptState, RaisesException] Promise<any> match(RequestInfo request, optional CacheQueryOptions options);
