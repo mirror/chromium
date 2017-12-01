@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "caf0379d_0f8cd51c",
+        "filename": "components/variations/variations_id_collection.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-01T17:30:19Z",
+      "side": 1,
+      "message": "Ugh, sorry, done.",
+      "parentUuid": "bef3811f_f4092458",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 14
+      },
+      "revId": "7d3247194c25d0d58fcb1902870e176a59b990ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8a8322e_2742802f",
         "filename": "components/variations/variations_id_collection.cc",
         "patchSetId": 14
@@ -45,6 +69,30 @@
       "revId": "7d3247194c25d0d58fcb1902870e176a59b990ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc742530_b012cf47",
+        "filename": "components/variations/variations_id_collection.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-01T17:30:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8a8322e_2742802f",
+      "range": {
+        "startLine": 25,
+        "startChar": 58,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "7d3247194c25d0d58fcb1902870e176a59b990ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e9e36b05_46566857",
+        "filename": "components/variations/variations_id_collection.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-01T17:30:19Z",
+      "side": 1,
+      "message": "Yes, the idea is that upon initialization we\u0027ll possibly find multiple ids and it makes sense, at least to me, to allow our caller to batch them. This is also the approach that VariationsHttpHeaderProvider took. This is documented in the class comment in variations_id_collection.h, but I\u0027ll add some more comments making this more clear.",
+      "parentUuid": "cae32a46_1486a89a",
+      "range": {
+        "startLine": 29,
+        "startChar": 37,
+        "endLine": 29,
+        "endChar": 0
+      },
+      "revId": "7d3247194c25d0d58fcb1902870e176a59b990ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "421d4dac_d68b07bd",
         "filename": "components/variations/variations_id_collection.h",
         "patchSetId": 14
@@ -91,6 +163,30 @@
       "revId": "7d3247194c25d0d58fcb1902870e176a59b990ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb2d570e_a7d4bd12",
+        "filename": "components/variations/variations_id_collection.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-01T17:30:19Z",
+      "side": 1,
+      "message": "Added implementation comment. I\u0027d prefer to keep it as public: so I can call from unittests without friending the test cases. Doesn\u0027t seem like this class needs to make assumptions about how often it\u0027s told about group finalization.",
+      "parentUuid": "421d4dac_d68b07bd",
+      "range": {
+        "startLine": 29,
+        "startChar": 7,
+        "endLine": 29,
+        "endChar": 33
+      },
+      "revId": "7d3247194c25d0d58fcb1902870e176a59b990ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "b0c04840_15d53f41",
+        "filename": "components/variations/variations_id_collection.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-01T17:30:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "776164bb_ff04daca",
+      "range": {
+        "startLine": 32,
+        "startChar": 52,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "7d3247194c25d0d58fcb1902870e176a59b990ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89f576b6_f943eb04",
         "filename": "components/variations/variations_id_collection.h",
         "patchSetId": 14
@@ -137,6 +257,30 @@
       "revId": "7d3247194c25d0d58fcb1902870e176a59b990ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e632724_e33ff398",
+        "filename": "components/variations/variations_id_collection.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-01T17:30:19Z",
+      "side": 1,
+      "message": "Removed method.",
+      "parentUuid": "89f576b6_f943eb04",
+      "range": {
+        "startLine": 35,
+        "startChar": 7,
+        "endLine": 35,
+        "endChar": 24
+      },
+      "revId": "7d3247194c25d0d58fcb1902870e176a59b990ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "a6ca0524_ac226714",
+        "filename": "components/variations/variations_id_collection.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-01T17:30:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ec8dcec_4bd4d41a",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 0
+      },
+      "revId": "7d3247194c25d0d58fcb1902870e176a59b990ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41c39aed_116f65a6",
         "filename": "components/variations/variations_id_collection_unittest.cc",
         "patchSetId": 14
@@ -183,6 +351,30 @@
       "revId": "7d3247194c25d0d58fcb1902870e176a59b990ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4a3eaba_058022f4",
+        "filename": "components/variations/variations_id_collection_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-01T17:30:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41c39aed_116f65a6",
+      "range": {
+        "startLine": 130,
+        "startChar": 15,
+        "endLine": 130,
+        "endChar": 0
+      },
+      "revId": "7d3247194c25d0d58fcb1902870e176a59b990ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
