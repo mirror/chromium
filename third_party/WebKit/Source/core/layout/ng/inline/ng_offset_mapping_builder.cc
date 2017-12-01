@@ -137,10 +137,10 @@ void NGOffsetMappingBuilder::Composite(const NGOffsetMappingBuilder& other) {
     mapping_[i] = other.mapping_[mapping_[i]];
 }
 
-void NGOffsetMappingBuilder::SetDestinationString(String string) {
-  if (RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled())
-    DCHECK_EQ(mapping_.back(), string.length());
-  destination_string_ = string;
+void NGOffsetMappingBuilder::SetContext(const LayoutBlockFlow& context) {
+  DCHECK(context.IsLayoutNGMixin());
+  DCHECK(context.ChildrenInline());
+  context_ = context;
 }
 
 NGOffsetMapping NGOffsetMappingBuilder::Build() {
@@ -224,8 +224,8 @@ NGOffsetMapping NGOffsetMappingBuilder::Build() {
     unit_start = unit_end;
   }
 
-  return NGOffsetMapping(std::move(units), std::move(ranges),
-                         destination_string_);
+  DCHECK(context_);
+  return NGOffsetMapping(std::move(units), std::move(ranges), *context_);
 }
 
 void NGOffsetMappingBuilder::EnterInline(const LayoutObject& node) {

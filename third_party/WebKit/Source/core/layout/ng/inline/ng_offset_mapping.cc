@@ -151,14 +151,18 @@ const NGOffsetMapping* NGOffsetMapping::GetFor(
 NGOffsetMapping::NGOffsetMapping(NGOffsetMapping&& other)
     : NGOffsetMapping(std::move(other.units_),
                       std::move(other.ranges_),
-                      other.text_) {}
+                      other.context_) {}
 
 NGOffsetMapping::NGOffsetMapping(UnitVector&& units,
                                  RangeMap&& ranges,
-                                 String text)
-    : units_(units), ranges_(ranges), text_(text) {}
+                                 const LayoutBlockFlow& context)
+    : units_(units), ranges_(ranges), context_(context) {}
 
 NGOffsetMapping::~NGOffsetMapping() = default;
+
+const String& NGOffsetMapping::GetText() const {
+  return NGInlineNode(const_cast<LayoutBlockFlow*>(&context_)).Text();
+}
 
 const NGOffsetMappingUnit* NGOffsetMapping::GetMappingUnitForPosition(
     const Position& position) const {
@@ -322,7 +326,7 @@ Optional<UChar> NGOffsetMapping::GetCharacterBefore(
   Optional<unsigned> text_content_offset = GetTextContentOffset(position);
   if (!text_content_offset || !*text_content_offset)
     return WTF::nullopt;
-  return text_[*text_content_offset - 1];
+  return GetText()[*text_content_offset - 1];
 }
 
 Position NGOffsetMapping::GetFirstPosition(unsigned offset) const {

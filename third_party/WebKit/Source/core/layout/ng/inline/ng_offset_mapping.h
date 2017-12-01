@@ -16,6 +16,7 @@
 
 namespace blink {
 
+class LayoutBlockFlow;
 class LayoutObject;
 class Node;
 
@@ -97,12 +98,13 @@ class CORE_EXPORT NGOffsetMapping {
       HashMap<Persistent<const Node>, std::pair<unsigned, unsigned>>;
 
   NGOffsetMapping(NGOffsetMapping&&);
-  NGOffsetMapping(UnitVector&&, RangeMap&&, String);
+  NGOffsetMapping(UnitVector&&, RangeMap&&, const LayoutBlockFlow&);
   ~NGOffsetMapping();
 
   const UnitVector& GetUnits() const { return units_; }
   const RangeMap& GetRanges() const { return ranges_; }
-  const String& GetText() const { return text_; }
+  const LayoutBlockFlow& GetContext() const { return context_; }
+  const String& GetText() const;
 
   // ------ Mapping APIs from DOM to text content ------
 
@@ -177,9 +179,8 @@ class CORE_EXPORT NGOffsetMapping {
   // Stores the unit range for each node in inline formatting context.
   RangeMap ranges_;
 
-  // The text content string of the inline formatting context. Same string as
-  // |NGInlineNodeData::text_content_|.
-  String text_;
+  // The inline formatting context of this mapping.
+  const LayoutBlockFlow& context_;
 
   DISALLOW_COPY_AND_ASSIGN(NGOffsetMapping);
 };
