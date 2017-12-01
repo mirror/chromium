@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d50b4632_79492284",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-01T14:35:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "98ad6cf2_cb914f7c",
+      "range": {
+        "startLine": 29,
+        "startChar": 7,
+        "endLine": 29,
+        "endChar": 24
+      },
+      "revId": "15d2a5d9468ba6c9962083694c87b713217d0584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c309bf6_9c22b265",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 14
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "e43449f9_c541a1ed",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-01T14:35:37Z",
+      "side": 1,
+      "message": "\u003e Sounds reasonable. Did you consult https://chromium.googlesource.com/chromium/src/+/master/base/containers/README.md for the best choice of set?\n\nChanged to flat_set. It uses less memory, but access time is the same.",
+      "parentUuid": "9dd8236d_55ace971",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 10
+      },
+      "revId": "15d2a5d9468ba6c9962083694c87b713217d0584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9edf4773_ead2f07c",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 14
@@ -131,6 +179,30 @@
       "side": 1,
       "message": "Looks reasonable.",
       "parentUuid": "9edf4773_ead2f07c",
+      "range": {
+        "startLine": 82,
+        "startChar": 2,
+        "endLine": 82,
+        "endChar": 17
+      },
+      "revId": "15d2a5d9468ba6c9962083694c87b713217d0584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7edd9db_97edbb3e",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-01T14:35:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7d289047_1eef1d4e",
       "range": {
         "startLine": 82,
         "startChar": 2,
