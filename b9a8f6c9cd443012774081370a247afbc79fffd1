@@ -22,6 +22,30 @@
       "revId": "b9a8f6c9cd443012774081370a247afbc79fffd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "264320e0_f845f382",
+        "filename": "chrome/browser/apps/guest_view/web_view_interactive_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1578,
+      "author": {
+        "id": 1213235
+      },
+      "writtenOn": "2017-12-01T00:12:54Z",
+      "side": 1,
+      "message": "Changed this to route through the embedder\u0027s web contents. The problem now is that the long-press is not resulting in selecting the word. I don\u0027t even think the long-press is being routed to the guest. I copied the positioning of the long-press from:\nhttps://cs.chromium.org/chromium/src/chrome/browser/apps/guest_view/web_view_browsertest.cc?type\u003dcs\u0026q\u003ds%5C(%5C)-%3EGetContainerBounds%5C(%5C);\u0026l\u003d4459\nso I think it should be correct.",
+      "parentUuid": "e9e4748f_96d870e7",
+      "range": {
+        "startLine": 1578,
+        "startChar": 32,
+        "endLine": 1578,
+        "endChar": 50
+      },
+      "revId": "b9a8f6c9cd443012774081370a247afbc79fffd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
