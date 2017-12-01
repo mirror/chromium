@@ -111,7 +111,8 @@ class QuickUnlockPrivateUnitTest : public ExtensionApiUnittest {
     // Setup a primary user.
     auto test_account = AccountId::FromUserEmail(kTestUserEmail);
     fake_user_manager_->AddUser(test_account);
-    fake_user_manager_->UserLoggedIn(test_account, kTestUserEmailHash, false);
+    fake_user_manager_->UserLoggedIn(test_account, kTestUserEmailHash, false,
+                                     false);
 
     // Ensure that quick unlock is turned off.
     SetModes(QuickUnlockModeList{}, CredentialList{});
