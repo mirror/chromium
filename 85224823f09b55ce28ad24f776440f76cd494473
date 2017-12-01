@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c569923a_59aa056b",
+        "filename": "chrome/browser/signin/account_consistency_manager.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-12-01T11:16:13Z",
+      "side": 1,
+      "message": "Done. I called it: GetMethodForProfile()",
+      "parentUuid": "3fd16493_cd287323",
+      "range": {
+        "startLine": 33,
+        "startChar": 42,
+        "endLine": 33,
+        "endChar": 79
+      },
+      "revId": "85224823f09b55ce28ad24f776440f76cd494473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "842e85f6_f6048004",
         "filename": "chrome/browser/signin/account_reconcilor_factory.cc",
         "patchSetId": 15
@@ -45,6 +69,30 @@
       "revId": "85224823f09b55ce28ad24f776440f76cd494473",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7ad3c74_19b7d1ae",
+        "filename": "chrome/browser/signin/account_reconcilor_factory.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-12-01T11:16:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "842e85f6_f6048004",
+      "range": {
+        "startLine": 80,
+        "startChar": 36,
+        "endLine": 80,
+        "endChar": 37
+      },
+      "revId": "85224823f09b55ce28ad24f776440f76cd494473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "6b917ca6_084ad637",
+        "filename": "chrome/browser/signin/chrome_signin_client_factory.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-12-01T11:16:13Z",
+      "side": 1,
+      "message": "This is still needed unfortunately.\n\nOne way to avoid this would be to have two functions:\n\nstatic SigninClient* GetForProfile(Profile*);\nstatic ChromeSigninClient* GetChromeSigninClientForProfile(Profile*);",
+      "parentUuid": "879aca57_2b06cc25",
+      "range": {
+        "startLine": 21,
+        "startChar": 9,
+        "endLine": 21,
+        "endChar": 27
+      },
+      "revId": "85224823f09b55ce28ad24f776440f76cd494473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c01d7ed_be42f98d",
         "filename": "components/signin/core/browser/signin_manager.h",
         "patchSetId": 15
@@ -114,6 +186,30 @@
       "revId": "85224823f09b55ce28ad24f776440f76cd494473",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e141707e_c70962a3",
+        "filename": "components/signin/core/browser/signin_manager.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-12-01T11:16:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c01d7ed_be42f98d",
+      "range": {
+        "startLine": 70,
+        "startChar": 21,
+        "endLine": 70,
+        "endChar": 36
+      },
+      "revId": "85224823f09b55ce28ad24f776440f76cd494473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
