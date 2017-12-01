@@ -32,8 +32,8 @@ class MEDIA_GPU_EXPORT AcceleratedVideoDecoder {
   // Stop (pause) decoding, discarding all remaining inputs and outputs,
   // but do not flush decoder state, so that playback can be resumed later,
   // possibly from a different location.
-  // To be called during decoding.
-  virtual void Reset() = 0;
+  // To be called during decoding.  Returns false on failure.
+  virtual bool Reset() = 0;
 
   enum DecodeResult {
     kDecodeError,  // Error while decoding.
@@ -46,6 +46,7 @@ class MEDIA_GPU_EXPORT AcceleratedVideoDecoder {
     kRanOutOfSurfaces,     // Waiting for the client to free up output surfaces.
     kNeedContextUpdate,    // Waiting for the client to update decoding context
                            // with data acquired from the accelerator.
+    kTryAgain,             // Resource temporarily unavailable.  Try later.
   };
 
   // Try to decode more of the stream, returning decoded frames asynchronously.
