@@ -70,8 +70,6 @@ public class ServiceWorkerPaymentAppBridge implements PaymentAppFactory.PaymentA
     @Override
     public void create(WebContents webContents, Map<String, PaymentMethodData> methodData,
             PaymentAppFactory.PaymentAppCreatedCallback callback) {
-        ThreadUtils.assertOnUiThread();
-
         nativeGetAllPaymentApps(webContents,
                 methodData.values().toArray(new PaymentMethodData[methodData.size()]), callback);
     }
@@ -134,15 +132,8 @@ public class ServiceWorkerPaymentAppBridge implements PaymentAppFactory.PaymentA
     public static void canMakePayment(WebContents webContents, long registrationId, String origin,
             String iframeOrigin, Set<PaymentMethodData> methodData,
             Set<PaymentDetailsModifier> modifiers, CanMakePaymentCallback callback) {
-        ThreadUtils.assertOnUiThread();
-
         if (sCanMakePaymentForTesting) {
-            ThreadUtils.postOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    callback.onCanMakePaymentResponse(true);
-                }
-            });
+            callback.onCanMakePaymentResponse(true);
             return;
         }
         nativeCanMakePayment(webContents, registrationId, origin, iframeOrigin,
@@ -179,8 +170,6 @@ public class ServiceWorkerPaymentAppBridge implements PaymentAppFactory.PaymentA
             String iframeOrigin, String paymentRequestId, Set<PaymentMethodData> methodData,
             PaymentItem total, Set<PaymentDetailsModifier> modifiers,
             PaymentInstrument.InstrumentDetailsCallback callback) {
-        ThreadUtils.assertOnUiThread();
-
         nativeInvokePaymentApp(webContents, registrationId, origin, iframeOrigin, paymentRequestId,
                 methodData.toArray(new PaymentMethodData[0]), total,
                 modifiers.toArray(new PaymentDetailsModifier[0]), callback);
@@ -195,8 +184,6 @@ public class ServiceWorkerPaymentAppBridge implements PaymentAppFactory.PaymentA
      */
     public static void abortPaymentApp(WebContents webContents, long registrationId,
             PaymentInstrument.AbortCallback callback) {
-        ThreadUtils.assertOnUiThread();
-
         nativeAbortPaymentApp(webContents, registrationId, callback);
     }
 
@@ -268,8 +255,6 @@ public class ServiceWorkerPaymentAppBridge implements PaymentAppFactory.PaymentA
             @Nullable String sublabel, @Nullable String tertiarylabel, @Nullable Bitmap icon,
             String[] methodNameArray, Object[] capabilities, String[] preferredRelatedApplications,
             WebContents webContents, Object callback) {
-        ThreadUtils.assertOnUiThread();
-
         Context context = ChromeActivity.fromWebContents(webContents);
         if (context == null) return;
         URI scopeUri = UriUtils.parseUriFromString(scope);
@@ -287,16 +272,12 @@ public class ServiceWorkerPaymentAppBridge implements PaymentAppFactory.PaymentA
 
     @CalledByNative
     private static void onAllPaymentAppsCreated(Object callback) {
-        ThreadUtils.assertOnUiThread();
-
         ((PaymentAppFactory.PaymentAppCreatedCallback) callback).onAllPaymentAppsCreated();
     }
 
     @CalledByNative
     private static void onHasServiceWorkerPaymentApps(
             HasServiceWorkerPaymentAppsCallback callback, boolean hasPaymentApps) {
-        ThreadUtils.assertOnUiThread();
-
         callback.onHasServiceWorkerPaymentAppsResponse(hasPaymentApps);
     }
 
@@ -314,16 +295,12 @@ public class ServiceWorkerPaymentAppBridge implements PaymentAppFactory.PaymentA
     @CalledByNative
     private static void onGetServiceWorkerPaymentAppsInfo(
             GetServiceWorkerPaymentAppsInfoCallback callback, Object appsInfo) {
-        ThreadUtils.assertOnUiThread();
-
         callback.onGetServiceWorkerPaymentAppsInfo(((Map<String, Pair<String, Bitmap>>) appsInfo));
     }
 
     @CalledByNative
     private static void onPaymentAppInvoked(
             Object callback, String methodName, String stringifiedDetails) {
-        ThreadUtils.assertOnUiThread();
-
         if (TextUtils.isEmpty(methodName) || TextUtils.isEmpty(stringifiedDetails)) {
             ((PaymentInstrument.InstrumentDetailsCallback) callback).onInstrumentDetailsError();
         } else {
@@ -334,16 +311,12 @@ public class ServiceWorkerPaymentAppBridge implements PaymentAppFactory.PaymentA
 
     @CalledByNative
     private static void onPaymentAppAborted(Object callback, boolean result) {
-        ThreadUtils.assertOnUiThread();
-
         ((PaymentInstrument.AbortCallback) callback).onInstrumentAbortResult(result);
     }
 
     @CalledByNative
     private static void onCanMakePayment(Object callback, boolean canMakePayment) {
-        ThreadUtils.assertOnUiThread();
         assert callback instanceof CanMakePaymentCallback;
-
         ((CanMakePaymentCallback) callback).onCanMakePaymentResponse(canMakePayment);
     }
 
