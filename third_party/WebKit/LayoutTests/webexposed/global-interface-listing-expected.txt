@@ -4893,6 +4893,7 @@ interface PerformanceLongTaskTiming : PerformanceEntry
     attribute @@toStringTag
     getter attribution
     method constructor
+    method toJSON
 interface PerformanceMark : PerformanceEntry
     attribute @@toStringTag
     method constructor
@@ -4958,6 +4959,7 @@ interface PerformanceResourceTiming : PerformanceEntry
     getter transferSize
     getter workerStart
     method constructor
+    method toJSON
 interface PerformanceServerTiming
     attribute @@toStringTag
     getter description
@@ -6830,6 +6832,7 @@ interface TaskAttributionTiming : PerformanceEntry
     getter containerSrc
     getter containerType
     method constructor
+    method toJSON
 interface Text : CharacterData
     attribute @@toStringTag
     getter assignedSlot
