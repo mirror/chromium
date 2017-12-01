@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42c7f9f9_55d9b512",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunnerTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-01T15:31:53Z",
+      "side": 1,
+      "message": "nit: this might be more readable with a quick extraction of \"source_code.CacheHandler()\" to a variable:\n\nauto* cache \u003d source_code.CacheHandler();\nEXPECT_FALSE(cache-\u003eGetCachedMetadata(TagForParserCache(cache)));\n\n(here and above)",
+      "revId": "d66967fc65a90eb02b18fdeac2d729cd6a4e4983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ab5a24a_75b9d821",
+        "filename": "third_party/WebKit/Source/core/inspector/DevToolsHost.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-01T15:31:53Z",
+      "side": 1,
+      "message": "Why the change to AtomicString? We don\u0027t seem to do anything that benefits from being in the atomic string table.",
+      "revId": "d66967fc65a90eb02b18fdeac2d729cd6a4e4983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
