@@ -22,6 +22,30 @@
       "revId": "a0837521974e3f3db90f9706978b9631b755b02a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deef5871_bd74a3b5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/AutocompleteController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-12-01T20:45:39Z",
+      "side": 1,
+      "message": "Sent a CL to fix this. Thanks for pointing it out :)",
+      "parentUuid": "0c4557df_66728c52",
+      "range": {
+        "startLine": 150,
+        "startChar": 14,
+        "endLine": 150,
+        "endChar": 17
+      },
+      "revId": "a0837521974e3f3db90f9706978b9631b755b02a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
