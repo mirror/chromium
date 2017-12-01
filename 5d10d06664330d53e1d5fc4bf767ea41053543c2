@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d309ae8_ae41d42e",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1363,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-12-01T20:28:31Z",
+      "side": 1,
+      "message": "This is much more nuanced. We calculate the difference from the rounded active base to represent the integer delta that the main thread should know about.",
+      "revId": "5d10d06664330d53e1d5fc4bf767ea41053543c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2f9e92a_59e989ba",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1364,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-12-01T20:28:31Z",
+      "side": 1,
+      "message": "What about if !property_trees()-\u003eis_active? Is that ever true? Do we then need to compare against the pending base?",
+      "range": {
+        "startLine": 1364,
+        "startChar": 49,
+        "endLine": 1364,
+        "endChar": 59
+      },
+      "revId": "5d10d06664330d53e1d5fc4bf767ea41053543c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
