@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11fcad7a_e9e40b88",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/toolbar.css",
+        "patchSetId": 12
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-12-01T01:12:15Z",
+      "side": 1,
+      "message": "Hovering over these toggle buttons should not get a weird light background color.  Only SSP has toggled-gray from setToggledGray(), and it is the only client that this was intended for.",
+      "range": {
+        "startLine": 113,
+        "startChar": 0,
+        "endLine": 113,
+        "endChar": 147
+      },
+      "revId": "d4b461e7c1ebb0b392af8cf9400ba86b4685e3c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
