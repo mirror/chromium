@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "574da2f1_0757c733",
+        "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-01T13:53:05Z",
+      "side": 1,
+      "message": "Help the reader, done.",
+      "parentUuid": "8a9189a4_8f030227",
+      "revId": "1df1c40f96f147387a098f670ac79c515626ac1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82fca41b_9e2d60db",
         "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
         "patchSetId": 13
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8369b8b6_80054675",
+        "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-01T13:53:05Z",
+      "side": 1,
+      "message": "Yes possible. Wasn\u0027t changing this code though, so added a FIXME note.",
+      "parentUuid": "82fca41b_9e2d60db",
+      "revId": "1df1c40f96f147387a098f670ac79c515626ac1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3607311_ee7de53e",
         "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
         "patchSetId": 13
@@ -50,6 +86,24 @@
       "revId": "1df1c40f96f147387a098f670ac79c515626ac1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02565251_79a06a76",
+        "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-01T13:53:05Z",
+      "side": 1,
+      "message": "Yeap, did the NEON first, then the SSE for less noise.  I\u0027d defer to a future patch for investigating and re-measuring perf for static inline functions.",
+      "parentUuid": "b3607311_ee7de53e",
+      "revId": "1df1c40f96f147387a098f670ac79c515626ac1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "06cb410f_b14074fb",
+        "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-01T13:53:05Z",
+      "side": 1,
+      "message": "\u003e vld1q_dup_u64() takes a uint64_t*, not a void*.  So I think GCC\u0027s right to assume 8 byte alignment here, and further, Clang could very well start doing the same at any time.\n\nAgree.  The (void*) thing was being used to try coerce the compilers this was tested on to nix the alignment hint, just reading the comments.\n\n\u003e I suspect that to play strictly by alignment rules, we really need to use only vld...u8() methods to load.  This alternate impl. here looks fine to me.\n\nAdded:\n\n * FIXME: maybe use this alternate impl below everywhere to avoid the :64\n * alignment issue.",
+      "parentUuid": "af3b538a_d0d0e848",
+      "range": {
+        "startLine": 174,
+        "startChar": 3,
+        "endLine": 175,
+        "endChar": 23
+      },
+      "revId": "1df1c40f96f147387a098f670ac79c515626ac1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a054633f_dff899ce",
         "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
         "patchSetId": 13
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "750d05d3_cbb875e0",
+        "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-01T13:53:05Z",
+      "side": 1,
+      "message": "I believe so, added FIXME.\n\n---\n\nMy bet is the following would work and have no alignment problems.\n\n#define V_LOAD32_DUP(src, vec) { \\\n  int32_t i32; \\\n  Z_BUILTIN_MEMCPY(\u0026i32, (src), sizeof(i32)); \\\n  (vec) \u003d vreinterpretq_u8_s32(vld1q_s32(\u0026i32)); \\\n}\n\nI used that pattern in the SSE2 Intel code, and Clang 5.0 on Intel spots this case fine: it does not emit a call to __builtin_memcpy.  My bet is Clang 5.0 on ARM would do the same.",
+      "parentUuid": "a054633f_dff899ce",
+      "range": {
+        "startLine": 195,
+        "startChar": 31,
+        "endLine": 195,
+        "endChar": 52
+      },
+      "revId": "1df1c40f96f147387a098f670ac79c515626ac1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "183d509e_ea7d1738",
         "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
         "patchSetId": 13
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "fe558396_2586e819",
+        "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-01T13:53:05Z",
+      "side": 1,
+      "message": "Ditto, added FIXME. \n\n---\n\nagain, a\n\n#define V_LOAD16_DUP(src, vec) { \\\n  int16_t i16; \\\n  Z_BUILTIN_MEMCPY(\u0026i16, (src), sizeof(i16)); \\\n  (vec) \u003d vreinterpretq_u8_s16(vld1q_s16(\u0026i16));\n}\n\nmight do the trick.",
+      "parentUuid": "183d509e_ea7d1738",
+      "revId": "1df1c40f96f147387a098f670ac79c515626ac1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3769c9e_9b3de798",
         "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
         "patchSetId": 13
@@ -130,6 +250,24 @@
       "revId": "1df1c40f96f147387a098f670ac79c515626ac1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72dc36bc_613d74f1",
+        "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-01T13:53:05Z",
+      "side": 1,
+      "message": "Since my |vec| is an SIMD type, I\u0027m leaning toward using the intrinsics here for now.",
+      "parentUuid": "a3769c9e_9b3de798",
+      "revId": "1df1c40f96f147387a098f670ac79c515626ac1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
