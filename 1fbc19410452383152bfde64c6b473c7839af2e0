@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a56cf84_58be0081",
+        "filename": "third_party/WebKit/public/platform/WebInputEvent.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-01T20:55:25Z",
+      "side": 1,
+      "message": "Let\u0027s add a TODO to remove this.",
+      "revId": "1fbc19410452383152bfde64c6b473c7839af2e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
