@@ -26,9 +26,13 @@ class TextTexture : public UiTexture {
   void SetColor(SkColor color);
   void SetAlignment(TextAlignment alignment);
   void SetMultiLine(bool multiline);
+  void SetCursorEnabled(bool enabled);
+  void SetCursorPosition(int position);
   void SetTextWidth(float width);
 
   gfx::SizeF GetDrawnSize() const override;
+
+  gfx::Rect get_cursor_bounds() { return cursor_bounds_; }
 
   // This method does all text preparation for the element other than drawing to
   // the texture. This allows for deeper unit testing of the Text element
@@ -49,6 +53,9 @@ class TextTexture : public UiTexture {
   TextAlignment alignment_ = kTextAlignmentCenter;
   bool multiline_ = true;
   SkColor color_ = SK_ColorBLACK;
+  bool cursor_enabled_ = false;
+  int cursor_position_ = 0;
+  gfx::Rect cursor_bounds_;
 
   DISALLOW_COPY_AND_ASSIGN(TextTexture);
 };
