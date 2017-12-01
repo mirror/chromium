@@ -1005,6 +1005,10 @@
       status: "test",
     },
     {
+      name: "StopInBackgroundExperimental",
+      status: "test",
+    },
+    {
       name: "Suborigins",
       status: "experimental",
     },
