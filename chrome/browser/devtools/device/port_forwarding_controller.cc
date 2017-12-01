@@ -29,6 +29,7 @@
 #include "net/log/net_log_source.h"
 #include "net/log/net_log_with_source.h"
 #include "net/socket/tcp_client_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "third_party/WebKit/public/public_features.h"
 
 using content::BrowserThread;
@@ -128,13 +129,11 @@ class SocketTunnel {
         new net::DrainableIOBuffer(buffer.get(), total);
 
     ++pending_writes_;
-    result = to->Write(drainable.get(),
-                       total,
+    // TODO(rhalavati): Add proper network traffic annotation.
+    result = to->Write(drainable.get(), total,
                        base::Bind(&SocketTunnel::OnWritten,
-                                  base::Unretained(this),
-                                  drainable,
-                                  from,
-                                  to));
+                                  base::Unretained(this), drainable, from, to),
+                       NO_TRAFFIC_ANNOTATION_YET);
     if (result != net::ERR_IO_PENDING)
       OnWritten(drainable, from, to, result);
   }
@@ -152,13 +151,12 @@ class SocketTunnel {
     drainable->DidConsume(result);
     if (drainable->BytesRemaining() > 0) {
       ++pending_writes_;
-      result = to->Write(drainable.get(),
-                         drainable->BytesRemaining(),
-                         base::Bind(&SocketTunnel::OnWritten,
-                                    base::Unretained(this),
-                                    drainable,
-                                    from,
-                                    to));
+      // TODO(rhalavati): Add proper network traffic annotation.
+      result =
+          to->Write(drainable.get(), drainable->BytesRemaining(),
+                    base::Bind(&SocketTunnel::OnWritten, base::Unretained(this),
+                               drainable, from, to),
+                    NO_TRAFFIC_ANNOTATION_YET);
       if (result != net::ERR_IO_PENDING)
         OnWritten(drainable, from, to, result);
       return;

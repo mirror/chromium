@@ -13,6 +13,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "net/base/io_buffer.h"
 #include "net/log/net_log_source_type.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -91,7 +92,8 @@ int FuzzedSocket::Read(IOBuffer* buf,
 
 int FuzzedSocket::Write(IOBuffer* buf,
                         int buf_len,
-                        const CompletionCallback& callback) {
+                        const CompletionCallback& callback,
+                        const NetworkTrafficAnnotationTag& traffic_annotation) {
   DCHECK(!connect_pending_);
   DCHECK(!write_pending_);
 

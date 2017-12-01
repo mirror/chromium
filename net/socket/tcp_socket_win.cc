@@ -519,7 +519,9 @@ int TCPSocketWin::ReadIfReady(IOBuffer* buf,
 
 int TCPSocketWin::Write(IOBuffer* buf,
                         int buf_len,
-                        const CompletionCallback& callback) {
+                        const CompletionCallback& callback,
+                        const NetworkTrafficAnnotationTag& traffic_annotation) {
+  // TODO(rhalavati): Plumb the traffic annotation to lower layers.
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK_NE(socket_, INVALID_SOCKET);
   DCHECK(!waiting_write_);

@@ -18,7 +18,11 @@ class MockTCPClientSocket : public net::TCPClientSocket {
   virtual ~MockTCPClientSocket();
 
   MOCK_METHOD3(Read, int(net::IOBuffer*, int, const net::CompletionCallback&));
-  MOCK_METHOD3(Write, int(net::IOBuffer*, int, const net::CompletionCallback&));
+  MOCK_METHOD4(Write,
+               int(net::IOBuffer*,
+                   int,
+                   const net::CompletionCallback&,
+                   const net::NetworkTrafficAnnotationTag&));
   MOCK_METHOD1(SetReceiveBufferSize, int(int32_t));
   MOCK_METHOD1(SetSendBufferSize, int(int32_t));
   MOCK_METHOD1(Connect, int(const net::CompletionCallback&));
