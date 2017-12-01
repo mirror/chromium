@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "287811c9_30f73c2e",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-01T04:50:06Z",
+      "side": 1,
+      "message": "No need to repeat the comment, because this way comments more likely will rot. Also, could you please move this method back to \"web::WebStateObserver implementation.\" section. From Unit testing best practices: \"Test code using real APIs - don’t define back doors only for tests.\"\n\nhttp://go/unit-test-practices#public-apis\n\nIn my next comment I will suggest how to call this method without exposing it to public.",
+      "revId": "2aa7aebdec0dbb42815c56eb62aeb8653a13845b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b154d6f_9b8fc572",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-01T04:50:06Z",
+      "side": 1,
+      "message": "Include order with line-breaks:\n\n#include \"ios/chrome/browser/metrics/tab_usage_recorder.h\"\n\n#import \u003cUIKit/UIKit.h\u003e\n\n#include \u003cmemory\u003e\n\n.... other includes....\n\nhttp://go/objc-style#Order_of_Includes",
+      "range": {
+        "startLine": 5,
+        "startChar": 23,
+        "endLine": 5,
+        "endChar": 0
+      },
+      "revId": "2aa7aebdec0dbb42815c56eb62aeb8653a13845b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9640c993_6ff41b24",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-01T04:50:06Z",
+      "side": 1,
+      "message": "Can we use TestWebState::OnRenderProcessGone? This will require changing InsertTestWebState, but it is better if test does not assume that TabUsageRecorder implements observer protocol (which is sort of implementation detail). |RenderProcessGone| is not a part of TabUsageRecorder public API.",
+      "range": {
+        "startLine": 321,
+        "startChar": 22,
+        "endLine": 321,
+        "endChar": 39
+      },
+      "revId": "2aa7aebdec0dbb42815c56eb62aeb8653a13845b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
