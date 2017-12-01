@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38c09058_2fef8678",
+        "filename": "chrome/browser/process_singleton.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-01T18:14:11Z",
+      "side": 1,
+      "message": "naming suggestion: WaitForAndForwardOpenURLEvent (waiting is usually something of significance in Chrome)",
+      "range": {
+        "startLine": 233,
+        "startChar": 7,
+        "endLine": 233,
+        "endChar": 26
+      },
+      "revId": "b31a7ffac72448ab98112be5e4d970544bebaeaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "435c4f6b_47abcd22",
+        "filename": "chrome/browser/process_singleton.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-01T18:14:11Z",
+      "side": 1,
+      "message": "naming suggestion: event_destination_pid\n\n(Just \"forwarding\" makes it unclear if it\u0027s the sender or receiver\")",
+      "range": {
+        "startLine": 233,
+        "startChar": 33,
+        "endLine": 233,
+        "endChar": 47
+      },
+      "revId": "b31a7ffac72448ab98112be5e4d970544bebaeaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c87a865f_fb99e7b5",
+        "filename": "chrome/browser/process_singleton.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-01T18:14:11Z",
+      "side": 1,
+      "message": "Is it possible to write a test for this? I don\u0027t think we need to necessairly test multi-process mode, but could we test redispatching the event to the same process and verify the params ?",
+      "revId": "b31a7ffac72448ab98112be5e4d970544bebaeaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7837ed70_a61417ee",
+        "filename": "chrome/browser/process_singleton_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-01T18:14:11Z",
+      "side": 1,
+      "message": "nit: under_scores in C++",
+      "range": {
+        "startLine": 15,
+        "startChar": 40,
+        "endLine": 15,
+        "endChar": 53
+      },
+      "revId": "b31a7ffac72448ab98112be5e4d970544bebaeaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef7780bb_95cf025c",
+        "filename": "chrome/browser/process_singleton_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-01T18:14:11Z",
+      "side": 1,
+      "message": "Should this be uninstalled at the end of the routine? Otherwise, I worry about the pid address going out of scope and being an invalid deref for the handler.",
+      "revId": "b31a7ffac72448ab98112be5e4d970544bebaeaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4be9807_b91a1dce",
+        "filename": "chrome/browser/process_singleton_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-01T18:14:11Z",
+      "side": 1,
+      "message": "naming: event_ref",
+      "range": {
+        "startLine": 50,
+        "startChar": 11,
+        "endLine": 50,
+        "endChar": 19
+      },
+      "revId": "b31a7ffac72448ab98112be5e4d970544bebaeaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
