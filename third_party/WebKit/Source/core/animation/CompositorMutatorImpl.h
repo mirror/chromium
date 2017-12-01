@@ -5,7 +5,9 @@
 #ifndef CompositorMutatorImpl_h
 #define CompositorMutatorImpl_h
 
+#include <algorithm>
 #include <memory>
+#include <vector>
 
 #include "base/macros.h"
 #include "core/animation/CompositorAnimator.h"
@@ -16,6 +18,7 @@
 namespace blink {
 
 class CompositorMutatorClient;
+class WaitableEvent;
 
 // Fans out requests from the compositor to all of the registered
 // CompositorAnimators which can then mutate layers through their respective
@@ -23,32 +26,43 @@ class CompositorMutatorClient;
 // CompositorAnimators and sent to the compositor to generate a new compositor
 // frame.
 //
-// Owned by the control thread (unless threaded compositing is disabled).
-// Should be accessed only on the compositor thread.
+// Unless otherwise noted, this should be accessed only on the compositor
+// thread.
 class CORE_EXPORT CompositorMutatorImpl final : public CompositorMutator {
  public:
-  static std::unique_ptr<CompositorMutatorClient> CreateClient();
-  static CompositorMutatorImpl* Create();
+  static std::unique_ptr<CompositorMutatorImpl> Create();
+  std::unique_ptr<CompositorMutatorClient> CreateClient();
 
   // CompositorMutator implementation.
   void Mutate(std::unique_ptr<CompositorMutatorInputState>) override;
   // TODO(majidvp): Remove when timeline inputs are known.
-  bool HasAnimators() override;
+  bool HasAnimators() override { return has_animators_; }
 
+  // Interface for use by the AnimationWorklet Thread(s)
   void RegisterCompositorAnimator(CompositorAnimator*);
   void UnregisterCompositorAnimator(CompositorAnimator*);
-
   void SetMutationUpdate(std::unique_ptr<CompositorMutatorOutputState>);
-  void SetClient(CompositorMutatorClient* client) { client_ = client; }
+
+  void SetClient(CompositorMutatorClient*);
 
  private:
   CompositorMutatorImpl();
 
+  void RegisterCompositorAnimatorInternal(CompositorAnimator*);
+  void UnregisterCompositorAnimatorInternal(CompositorAnimator*);
+
+  void MutateWithEvent(const CompositorMutatorInputState*,
+                       CompositorMutatorOutputState*,
+                       WaitableEvent*);
+
   using CompositorAnimators =
       HashSet<CrossThreadPersistent<CompositorAnimator>>;
   CompositorAnimators animators_;
+  bool has_animators_;
 
   CompositorMutatorClient* client_;
+  std::vector<std::unique_ptr<CompositorMutatorOutputState>> outputs_;
+
   DISALLOW_COPY_AND_ASSIGN(CompositorMutatorImpl);
 };
 

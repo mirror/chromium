@@ -496,13 +496,13 @@ CompositorMutatorImpl& WebFrameWidgetImpl::Mutator() {
 
 CompositorMutatorImpl* WebFrameWidgetImpl::CompositorMutator() {
   if (!mutator_) {
-    std::unique_ptr<CompositorMutatorClient> mutator_client =
-        CompositorMutatorImpl::CreateClient();
-    mutator_ = static_cast<CompositorMutatorImpl*>(mutator_client->Mutator());
-    layer_tree_view_->SetMutatorClient(std::move(mutator_client));
+    std::unique_ptr<CompositorMutatorImpl> mutator(
+        CompositorMutatorImpl::Create());
+    layer_tree_view_->SetMutatorClient(mutator->CreateClient());
+    mutator_ = std::move(mutator);
   }
 
-  return mutator_;
+  return mutator_.get();
 }
 
 void WebFrameWidgetImpl::ApplyViewportDeltas(
