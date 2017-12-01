@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "033f7edf_b1537f34",
+        "filename": "chrome/browser/captive_portal/captive_portal_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2735,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-01T20:54:18Z",
+      "side": 1,
+      "message": "Nit: Rewrap",
+      "revId": "44a5d8f6c1e18c04feabbe328d787dfd0370c0e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb4fc827_3012d473",
+        "filename": "chrome/browser/ui/browser_navigator_params.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-01T20:54:18Z",
+      "side": 1,
+      "message": "This could maybe be converted to a utility function on the above struct, with the prototype FillFromOpenURLParams(const content::OpenURLParams\u0026 params);.  This will prevent it from just sitting in the global namespace.",
+      "revId": "44a5d8f6c1e18c04feabbe328d787dfd0370c0e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
