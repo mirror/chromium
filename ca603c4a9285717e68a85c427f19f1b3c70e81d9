@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84f306cf_d6aa25e0",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-01T15:43:26Z",
+      "side": 1,
+      "message": "This DCHECK doesn\u0027t seem relevant anymore.",
+      "range": {
+        "startLine": 164,
+        "startChar": 2,
+        "endLine": 164,
+        "endChar": 45
+      },
+      "revId": "ca603c4a9285717e68a85c427f19f1b3c70e81d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a80cdddd_ba5f4c99",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-01T15:43:26Z",
+      "side": 1,
+      "message": "Shouldn\u0027t you be using GetWidget()-\u003eGetNativeView()?",
+      "range": {
+        "startLine": 165,
+        "startChar": 25,
+        "endLine": 165,
+        "endChar": 38
+      },
+      "revId": "ca603c4a9285717e68a85c427f19f1b3c70e81d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
