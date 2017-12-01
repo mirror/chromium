@@ -26,6 +26,7 @@
 #include "content/public/browser/resource_context.h"
 #include "content/public/browser/resource_dispatcher_host_delegate.h"
 #include "content/public/browser/stream_handle.h"
+#include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/resource_response.h"
 #include "content/public/test/test_browser_context.h"
@@ -140,6 +141,8 @@ class NavigationURLLoaderTest : public testing::Test {
         switches::kEnableBrowserSideNavigation);
   }
 
+  ~NavigationURLLoaderTest() override { base::RunLoop().RunUntilIdle(); }
+
   std::unique_ptr<NavigationURLLoader> MakeTestLoader(
       const GURL& url,
       NavigationURLLoaderDelegate* delegate) {
@@ -208,9 +211,15 @@ TEST_F(NavigationURLLoaderTest, Basic) {
   EXPECT_EQ("text/html", delegate.response()->head.mime_type);
   EXPECT_EQ(200, delegate.response()->head.headers->response_code());
 
-  // Check the body is correct.
-  EXPECT_EQ(net::URLRequestTestJob::test_data_1(),
-            FetchURL(delegate.body()->GetURL()));
+  // NavigationMojoResponse uses a Mojo DataPipe instead of a StreamHandle.
+  // TODO(arthursonzogni): Write similar expectations when
+  // NavigationMojoResponse is enabled.
+  if (!IsNavigationMojoResponseEnabled()) {
+    // Check the body is correct.
+    EXPECT_TRUE(delegate.body());
+    EXPECT_EQ(net::URLRequestTestJob::test_data_1(),
+              FetchURL(delegate.body()->GetURL()));
+  }
 
   EXPECT_EQ(1, delegate.on_request_handled_counter());
 }
@@ -315,10 +324,14 @@ TEST_F(NavigationURLLoaderTest, RequestRedirected) {
   EXPECT_EQ("text/html", delegate.response()->head.mime_type);
   EXPECT_EQ(200, delegate.response()->head.headers->response_code());
 
-  // Release the body and check it is correct.
-  EXPECT_TRUE(net::URLRequestTestJob::ProcessOnePendingMessage());
-  EXPECT_EQ(net::URLRequestTestJob::test_data_2(),
-            FetchURL(delegate.body()->GetURL()));
+  // TODO(arthursonzogni): Write similar expectations when
+  // NavigationMojoResponse is enabled.
+  if (!IsNavigationMojoResponseEnabled()) {
+    // Release the body and check it is correct.
+    EXPECT_TRUE(net::URLRequestTestJob::ProcessOnePendingMessage());
+    EXPECT_EQ(net::URLRequestTestJob::test_data_2(),
+              FetchURL(delegate.body()->GetURL()));
+  }
 
   EXPECT_EQ(1, delegate.on_request_handled_counter());
 }
@@ -356,11 +369,15 @@ TEST_F(NavigationURLLoaderTest, CancelResponseRace) {
   loader->FollowRedirect();
   loader.reset();
 
-  // Verify the URLRequestTestJob no longer has anything paused and that no
-  // response body was received.
-  base::RunLoop().RunUntilIdle();
-  EXPECT_FALSE(net::URLRequestTestJob::ProcessOnePendingMessage());
-  EXPECT_FALSE(delegate.body());
+  // TODO(arthursonzogni): Write similar expectations when
+  // NavigationMojoResponse is enabled.
+  if (!IsNavigationMojoResponseEnabled()) {
+    // Verify the URLRequestTestJob no longer has anything paused and that no
+    // response body was received.
+    base::RunLoop().RunUntilIdle();
+    EXPECT_FALSE(net::URLRequestTestJob::ProcessOnePendingMessage());
+    EXPECT_FALSE(delegate.body());
+  }
 }
 
 // Tests that the loader may be canceled by context.
@@ -422,10 +439,14 @@ TEST_F(NavigationURLLoaderTest, LoaderDetached) {
   loader.reset();
   base::RunLoop().RunUntilIdle();
 
-  // Check the body can still be fetched through the StreamHandle.
-  EXPECT_TRUE(net::URLRequestTestJob::ProcessOnePendingMessage());
-  EXPECT_EQ(net::URLRequestTestJob::test_data_2(),
-            FetchURL(delegate.body()->GetURL()));
+  // TODO(arthursonzogni): Write similar expectations when
+  // NavigationMojoResponse is enabled.
+  if (!IsNavigationMojoResponseEnabled()) {
+    // Check the body can still be fetched through the StreamHandle.
+    EXPECT_TRUE(net::URLRequestTestJob::ProcessOnePendingMessage());
+    EXPECT_EQ(net::URLRequestTestJob::test_data_2(),
+              FetchURL(delegate.body()->GetURL()));
+  }
 }
 
 // Tests that the request is owned by the body StreamHandle.
