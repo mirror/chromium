@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e85f13d1_91f48d95",
+        "filename": "content/browser/quota_dispatcher_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-01T08:23:22Z",
+      "side": 1,
+      "message": "returning -\u003e return",
+      "revId": "819caa79497bfb1bfada6b116b202c2c26c65a2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd3566ec_7af912d1",
+        "filename": "content/browser/quota_dispatcher_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-01T08:23:22Z",
+      "side": 1,
+      "message": "nit: spaced before this line.\n\nchange \"// Now we\u0027re allowed to set the new quota.\" -\u003e  \"// Otherwise, return the new quota.\"",
+      "revId": "819caa79497bfb1bfada6b116b202c2c26c65a2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
