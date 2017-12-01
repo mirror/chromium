@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fa6002a_f21561d9",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-01T21:22:32Z",
+      "side": 1,
+      "message": "Please document that these values are persisted to logs, and should therefore never be renumbered nor reused.",
+      "range": {
+        "startLine": 139,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 5
+      },
+      "revId": "abc434ac4bc4ff6ee18d2179cfa9761b134e8f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68bb87b8_d3648f99",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1625,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-01T21:22:32Z",
+      "side": 1,
+      "message": "Hmm, I don\u0027t think that it\u0027s appropriate to call this here.  IIUC, initialization can only happen once the native library is loaded; and happens quite promptly once it is.  If this code is reachable before then, then you likely want to use CachedMetrics.  Otherwise, you should be able to safely omit this call.\n\nPlease let me know if I\u0027m misunderstanding something!",
+      "range": {
+        "startLine": 1625,
+        "startChar": 37,
+        "endLine": 1625,
+        "endChar": 0
+      },
+      "revId": "abc434ac4bc4ff6ee18d2179cfa9761b134e8f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c577d481_1fb3ce04",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 20828,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-01T21:22:32Z",
+      "side": 1,
+      "message": "nit: Perhaps \"HistoryUrlType\"?",
+      "range": {
+        "startLine": 20828,
+        "startChar": 12,
+        "endLine": 20828,
+        "endChar": 26
+      },
+      "revId": "abc434ac4bc4ff6ee18d2179cfa9761b134e8f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b657c50e_087f4c7e",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 20831,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-01T21:22:32Z",
+      "side": 1,
+      "message": "nit: \"Unique\" sounds like a stronger claim than what I think is meant, which is \"Different from baseUrl\".  Am I understanding the intent correctly?",
+      "range": {
+        "startLine": 20831,
+        "startChar": 24,
+        "endLine": 20831,
+        "endChar": 30
+      },
+      "revId": "abc434ac4bc4ff6ee18d2179cfa9761b134e8f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85c8ea78_23c6b295",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 97555,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-01T21:22:32Z",
+      "side": 1,
+      "message": "Please include a \u003csummary\u003e describing what this histogram records/measures.",
+      "range": {
+        "startLine": 97555,
+        "startChar": 12,
+        "endLine": 97555,
+        "endChar": 0
+      },
+      "revId": "abc434ac4bc4ff6ee18d2179cfa9761b134e8f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
