@@ -520,13 +520,6 @@ interface CharacterData : Node
     method replaceWith
     method substringData
     setter data
-interface Clipboard : EventTarget
-    attribute @@toStringTag
-    method constructor
-    method read
-    method readText
-    method write
-    method writeText
 interface ClipboardEvent : Event
     attribute @@toStringTag
     getter clipboardData
@@ -559,21 +552,8 @@ interface ConvolverNode : AudioNode
 interface CountQueuingStrategy
     method constructor
     method size
-interface Credential
-    attribute @@toStringTag
-    getter id
-    getter type
-    method constructor
-interface CredentialsContainer
-    attribute @@toStringTag
-    method constructor
-    method create
-    method get
-    method preventSilentAccess
-    method store
 interface Crypto
     attribute @@toStringTag
-    getter subtle
     method constructor
     method getRandomValues
 interface CryptoKey
@@ -1412,13 +1392,6 @@ interface EventTarget
     method constructor
     method dispatchEvent
     method removeEventListener
-interface FederatedCredential : Credential
-    attribute @@toStringTag
-    getter iconURL
-    getter name
-    getter protocol
-    getter provider
-    method constructor
 interface File : Blob
     attribute @@toStringTag
     getter lastModified
@@ -2485,7 +2458,6 @@ interface HTMLMediaElement : HTMLElement
     method load
     method pause
     method play
-    method setMediaKeys
     method setSinkId
     setter autoplay
     setter controls
@@ -3455,11 +3427,6 @@ interface MediaKeySystemAccess
     method constructor
     method createMediaKeys
     method getConfiguration
-interface MediaKeys
-    attribute @@toStringTag
-    method constructor
-    method createSession
-    method setServerCertificate
 interface MediaList
     attribute @@toStringTag
     getter length
@@ -3702,13 +3669,6 @@ interface NamedNodeMap
     method removeNamedItemNS
     method setNamedItem
     method setNamedItemNS
-interface NavigationPreloadManager
-    attribute @@toStringTag
-    method constructor
-    method disable
-    method enable
-    method getState
-    method setHeaderValue
 interface Navigator
     attribute @@toStringTag
     getter appCodeName
@@ -3717,8 +3677,6 @@ interface Navigator
     getter budget
     getter connection
     getter cookieEnabled
-    getter credentials
-    getter deviceMemory
     getter doNotTrack
     getter geolocation
     getter hardwareConcurrency
@@ -3735,8 +3693,6 @@ interface Navigator
     getter product
     getter productSub
     getter serviceWorker
-    getter storage
-    getter usb
     getter userAgent
     getter vendor
     getter vendorSub
@@ -3749,7 +3705,6 @@ interface Navigator
     method javaEnabled
     method registerProtocolHandler
     method requestMIDIAccess
-    method requestMediaKeySystemAccess
     method sendBeacon
     method unregisterProtocolHandler
     method vibrate
@@ -3938,12 +3893,6 @@ interface PannerNode : AudioNode
     setter panningModel
     setter refDistance
     setter rolloffFactor
-interface PasswordCredential : Credential
-    attribute @@toStringTag
-    getter iconURL
-    getter name
-    getter password
-    method constructor
 interface Path2D
     attribute @@toStringTag
     method arc

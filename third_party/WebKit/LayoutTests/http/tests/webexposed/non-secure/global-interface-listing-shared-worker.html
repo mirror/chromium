@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<script src="/resources/get-host-info.js"></script>
+<script src="/js-test-resources/js-test.js"></script>
+<script>
+var jsTestIsAsync = true;
+if (location.origin != get_host_info().UNAUTHENTICATED_ORIGIN) {
+  location = get_host_info().UNAUTHENTICATED_ORIGIN + location.pathname;
+} else {
+  description("This test documents all interface attributes and methods on SharedWorkerGlobalScope.");
+  worker = startWorker("/js-test-resources/global-interface-listing-worker.js", "shared");
+}
+</script>
