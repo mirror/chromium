@@ -378,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "d91c615a_27a39990",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-01T12:23:20Z",
+      "side": 1,
+      "message": "If you remove it, you will break at compilation time if a new position is added.\nIf you keep it, you will break at runtime, and only in debug.\nTry to remove it: you will be able to compile. Then add a new position in the enum: the compilation should fail.",
+      "parentUuid": "ef3cb05f_bb92dd75",
+      "range": {
+        "startLine": 189,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 30
+      },
+      "revId": "0274d1f78143b580d506785414d64b171f50c1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6372ede6_a3ad92e1",
         "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm",
         "patchSetId": 2
@@ -577,6 +601,30 @@
       "side": 1,
       "message": "I will keep this as is by now.\nI just filed bug crbug.com/789945 to create a super class for all bottom toolbars.\nThen all the spacing/font/dimensions will be moved to one place.",
       "parentUuid": "1fc85175_e43e66a9",
+      "range": {
+        "startLine": 454,
+        "startChar": 28,
+        "endLine": 454,
+        "endChar": 55
+      },
+      "revId": "0274d1f78143b580d506785414d64b171f50c1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d95cb6f8_eede5313",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-01T12:23:20Z",
+      "side": 1,
+      "message": "Can\u0027t we add a property to the button to know which font they are using?",
+      "parentUuid": "f83e5c7d_59e56c51",
       "range": {
         "startLine": 454,
         "startChar": 28,

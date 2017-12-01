@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3a3a652_649ce2e2",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar_button.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-01T12:23:20Z",
+      "side": 1,
+      "message": "Do you need this? Shouldn\u0027t it be in the implementation file?",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 46
+      },
+      "revId": "11e9eeb337ffd1fc19a0f2efe1ca7bab3d974572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23d22e93_2bd5e694",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar_button.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-01T12:23:20Z",
+      "side": 1,
+      "message": "This should probably be a private method (in the implementation file).",
+      "range": {
+        "startLine": 28,
+        "startChar": 13,
+        "endLine": 28,
+        "endChar": 27
+      },
+      "revId": "11e9eeb337ffd1fc19a0f2efe1ca7bab3d974572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
