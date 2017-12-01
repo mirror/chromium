@@ -13,7 +13,6 @@
 #include "base/sequenced_task_runner.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/utf_string_conversions.h"
-#include "base/threading/thread_task_runner_handle.h"
 #include "components/offline_pages/core/offline_page_item.h"
 #include "components/offline_pages/core/offline_store_utils.h"
 #include "sql/connection.h"
@@ -21,6 +20,8 @@
 #include "sql/transaction.h"
 
 namespace offline_pages {
+// TODO(fgorski): Derive appropriate values in a more scientific means.
+const int64_t kClosingDelayInSeconds = 3;
 
 namespace {
 
@@ -360,6 +361,15 @@ bool InitDatabase(sql::Connection* db,
   return CreateSchema(db);
 }
 
+void CloseDatabaseSync(
+    sql::Connection* db,
+    scoped_refptr<base::SingleThreadTaskRunner> callback_runner,
+    base::OnceClosure callback) {
+  if (db)
+    db->Close();
+  callback_runner->PostTask(FROM_HERE, std::move(callback));
+}
+
 void RecordLoadResult(OfflinePageMetadataStore::LoadStatus status,
                       int32_t page_count) {
   UMA_HISTOGRAM_ENUMERATION("OfflinePages.LoadStatus", status,
@@ -533,7 +543,8 @@ OfflinePageMetadataStoreSQL::OfflinePageMetadataStoreSQL(
     : background_task_runner_(std::move(background_task_runner)),
       in_memory_(true),
       state_(StoreState::NOT_LOADED),
-      weak_ptr_factory_(this) {}
+      weak_ptr_factory_(this),
+      closing_weak_ptr_factory_(this) {}
 
 OfflinePageMetadataStoreSQL::OfflinePageMetadataStoreSQL(
     scoped_refptr<base::SequencedTaskRunner> background_task_runner,
@@ -542,7 +553,8 @@ OfflinePageMetadataStoreSQL::OfflinePageMetadataStoreSQL(
       in_memory_(false),
       db_file_path_(path.AppendASCII("OfflinePages.db")),
       state_(StoreState::NOT_LOADED),
-      weak_ptr_factory_(this) {}
+      weak_ptr_factory_(this),
+      closing_weak_ptr_factory_(this) {}
 
 OfflinePageMetadataStoreSQL::~OfflinePageMetadataStoreSQL() {
   if (db_.get() &&
@@ -628,12 +640,32 @@ void OfflinePageMetadataStoreSQL::OnInitializeInternalDone(
   // TODO(fgorski): DCHECK initialization is in progress, once we have a
   // relevant value for the store state.
   state_ = success ? StoreState::LOADED : StoreState::FAILED_LOADING;
+  if (state_ != StoreState::LOADED)
+    db_.reset();
 
   CHECK(!pending_command.is_null());
   std::move(pending_command).Run();
 
   if (state_ == StoreState::FAILED_LOADING)
     state_ = StoreState::NOT_LOADED;
+}
+
+void OfflinePageMetadataStoreSQL::CloseInternal() {
+  if (state_ != StoreState::LOADED)
+    return;
+
+  background_task_runner_->PostTask(
+      FROM_HERE,
+      base::BindOnce(
+          &CloseDatabaseSync, db_.get(), base::ThreadTaskRunnerHandle::Get(),
+          base::BindOnce(&OfflinePageMetadataStoreSQL::CloseInternalDone,
+                         weak_ptr_factory_.GetWeakPtr(), std::move(db_))));
+}
+
+void OfflinePageMetadataStoreSQL::CloseInternalDone(
+    std::unique_ptr<sql::Connection> db) {
+  // TODO(fgorski): Report UMA.
+  // |db| will be reset with this once callback.
 }
 
 }  // namespace offline_pages

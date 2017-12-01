@@ -15,6 +15,7 @@
 #include "base/location.h"
 #include "base/memory/weak_ptr.h"
 #include "base/task_runner_util.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "components/offline_pages/core/offline_page_metadata_store.h"
 
 namespace base {
@@ -26,6 +27,8 @@ class Connection;
 }
 
 namespace offline_pages {
+// Defines inactivity time of DB after which it is going to be closed.
+extern const int64_t kClosingDelayInSeconds;
 
 // OfflinePageMetadataStoreSQL is an instance of OfflinePageMetadataStore
 // which is implemented using a SQLite database.
@@ -117,12 +120,17 @@ class OfflinePageMetadataStoreSQL : public OfflinePageMetadataStore {
       return;
     }
 
+    // Ensure that any scheduled close operations are canceled.
+    closing_weak_ptr_factory_.InvalidateWeakPtrs();
+
     sql::Connection* db = state_ == StoreState::LOADED ? db_.get() : nullptr;
 
     base::PostTaskAndReplyWithResult(
         background_task_runner_.get(), FROM_HERE,
         base::BindOnce(std::move(run_callback), db),
-        std::move(result_callback));
+        base::BindOnce(&OfflinePageMetadataStoreSQL::RescheduleClosing<T>,
+                       weak_ptr_factory_.GetWeakPtr(),
+                       std::move(result_callback)));
   }
 
   // Helper function used to force incorrect state for testing purposes.
@@ -135,6 +143,26 @@ class OfflinePageMetadataStoreSQL : public OfflinePageMetadataStore {
   // Used to conclude opening/resetting DB connection.
   void OnInitializeInternalDone(base::OnceClosure pending_command,
                                 bool success);
+
+  // Timed closing.
+  // Reschedules the closing with a delay. Ensures that |result_callback| is
+  // called.
+  template <typename T>
+  void RescheduleClosing(ResultCallback<T> result_callback, T result) {
+    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+        FROM_HERE,
+        base::BindOnce(&OfflinePageMetadataStoreSQL::CloseInternal,
+                       closing_weak_ptr_factory_.GetWeakPtr()),
+        base::TimeDelta::FromSeconds(kClosingDelayInSeconds));
+
+    std::move(result_callback).Run(std::move(result));
+  }
+
+  // Internal function initiating the closing.
+  void CloseInternal();
+
+  // Completes the closing. Main purpose is to destroy the db pointer.
+  void CloseInternalDone(std::unique_ptr<sql::Connection> db);
 
   // Background thread where all SQL access should be run.
   scoped_refptr<base::SequencedTaskRunner> background_task_runner_;
@@ -152,6 +180,7 @@ class OfflinePageMetadataStoreSQL : public OfflinePageMetadataStore {
   StoreState state_;
 
   base::WeakPtrFactory<OfflinePageMetadataStoreSQL> weak_ptr_factory_;
+  base::WeakPtrFactory<OfflinePageMetadataStoreSQL> closing_weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(OfflinePageMetadataStoreSQL);
 };
