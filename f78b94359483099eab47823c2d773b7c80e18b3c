@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "80228c3a_8bc7f521",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-12-01T08:37:56Z",
+      "side": 1,
+      "message": "I think so. Because imagine that we want to run e.g. the JPEG decoder test on X11. With the previous code,\n\n  va_display_ \u003d vaGetDisplay(gfx::GetXDisplay()); \n\nwill be picked. We want to have the same here.\n\nHowever the underlying platform is now not chosen at compile time, but runtime. So when we get kGLImplementationNone we have no idea which platform we should use. My reasoning is that if X is running, this is what we want (because a DRM display won\u0027t be available in that case), and GetXDisplay() will return a valid display only in that case. So when this fails, or X11 support is not compiled in, we can fall back to DRM safely.",
+      "parentUuid": "9351716a_44240ba3",
+      "revId": "f78b94359483099eab47823c2d773b7c80e18b3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4cccb67_b7964ace",
         "filename": "media/gpu/vaapi_wrapper.cc",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-12-01T08:14:00Z",
       "side": 1,
       "message": "Is this path always video decode? If not, let\u0027s make the comment more generic. Same for line 251.",
+      "range": {
+        "startLine": 266,
+        "startChar": 32,
+        "endLine": 266,
+        "endChar": 38
+      },
+      "revId": "f78b94359483099eab47823c2d773b7c80e18b3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b4de025e_b0f7832a",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-12-01T08:37:56Z",
+      "side": 1,
+      "message": "Correct. Please let me submit a different CL for this though as this is a different change.",
+      "parentUuid": "c4cccb67_b7964ace",
       "range": {
         "startLine": 266,
         "startChar": 32,
