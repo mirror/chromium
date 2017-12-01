@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c232fcae_3cd31154",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-01T19:17:55Z",
+      "side": 1,
+      "message": "NavigationManager interface does not know about web view concept. Also WebState does not have a good way to reset web view (except SetWebUsageEnabled(false), which is UIWebView cruft and should be removed).\n\nI believe it would be better to reset web view here.",
+      "parentUuid": "a61cf593_37d93936",
+      "range": {
+        "startLine": 370,
+        "startChar": 36,
+        "endLine": 370,
+        "endChar": 43
+      },
+      "revId": "7a50a0e801122555a92f765c5766c122b0faa29d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5896f46_a7af14e9",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 2
