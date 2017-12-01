@@ -1,0 +1,325 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5f06bf5_ad83438f",
+        "filename": "chrome/android/java/res/values/dimens.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-01T01:47:05Z",
+      "side": 1,
+      "message": "Instead of _padding and _padding_large, can these be more descriptive of what the padding is used for?",
+      "range": {
+        "startLine": 465,
+        "startChar": 17,
+        "endLine": 465,
+        "endChar": 45
+      },
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eb8206a_9b6f22ef",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageItem.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-01T01:47:05Z",
+      "side": 1,
+      "message": "style nit: single space instead of double",
+      "range": {
+        "startLine": 21,
+        "startChar": 18,
+        "endLine": 21,
+        "endChar": 20
+      },
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18ed8562_a14a6969",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageItem.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-01T01:47:05Z",
+      "side": 1,
+      "message": "style nit: single space instead of double",
+      "range": {
+        "startLine": 24,
+        "startChar": 30,
+        "endLine": 24,
+        "endChar": 32
+      },
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92678c38_6db36fe9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListBaseAdapter.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-01T01:47:05Z",
+      "side": 1,
+      "message": "nit: in the/at the",
+      "range": {
+        "startLine": 75,
+        "startChar": 39,
+        "endLine": 75,
+        "endChar": 41
+      },
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a140e71_e09dd9db",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-01T01:47:05Z",
+      "side": 1,
+      "message": "Please add an assert mLauncher !\u003d null at the top of this method",
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bafb754_9cbfdad9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-01T01:47:05Z",
+      "side": 1,
+      "message": "In what scenarios is this method called more than once?",
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a161c48_15512de2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-01T01:47:05Z",
+      "side": 1,
+      "message": "Does \u0027announced\u0027 mean announced by TalkBack?",
+      "range": {
+        "startLine": 111,
+        "startChar": 49,
+        "endLine": 111,
+        "endChar": 58
+      },
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d56d6046_70f4c0fa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageSelectionFragment.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-01T01:47:05Z",
+      "side": 1,
+      "message": "nit: This JavaDoc should talk about the functionality the fragment provides as well e.g. \"... of languages that the user may add to their accept languages.\"",
+      "range": {
+        "startLine": 30,
+        "startChar": 51,
+        "endLine": 30,
+        "endChar": 71
+      },
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faef0370_8e6e16c3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageSelectionFragment.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-01T01:47:05Z",
+      "side": 1,
+      "message": "Can we call this AddLanguageFragment so that it\u0027s more specific to the functionality the fragment supports?",
+      "range": {
+        "startLine": 32,
+        "startChar": 13,
+        "endLine": 32,
+        "endChar": 38
+      },
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8953915_b43308e5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageSelectionFragment.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-01T01:47:05Z",
+      "side": 1,
+      "message": "A comment I made on a previous patch appears to have gotten left behind..\nShould we also search in getNativeDisplayName() and/or getCode()?",
+      "range": {
+        "startLine": 65,
+        "startChar": 25,
+        "endLine": 65,
+        "endChar": 39
+      },
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "861824d9_cf444233",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageSelectionFragment.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-01T01:47:05Z",
+      "side": 1,
+      "message": "nit: initialize in onCreate() or onCreateView() rather than here",
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fabc8fd_82dd42ff",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguagesManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-01T01:47:05Z",
+      "side": 1,
+      "message": "nit: This can be simplified to:\n\nif (mLanguagesMap.containsKey(item)) results.add(item)",
+      "range": {
+        "startLine": 70,
+        "startChar": 12,
+        "endLine": 71,
+        "endChar": 48
+      },
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee8a16a9_a7026603",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguagesManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-01T01:47:05Z",
+      "side": 1,
+      "message": "nit: if it exists",
+      "range": {
+        "startLine": 112,
+        "startChar": 58,
+        "endLine": 112,
+        "endChar": 67
+      },
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6fbbe7c_773ed7b6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguagesPreferences.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-01T01:47:05Z",
+      "side": 1,
+      "message": "nit: combine into one if statement",
+      "range": {
+        "startLine": 73,
+        "startChar": 8,
+        "endLine": 74,
+        "endChar": 56
+      },
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f47567c7_4bb313f0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguagesPreferences.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-01T01:47:05Z",
+      "side": 1,
+      "message": "Typo in Selection",
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
