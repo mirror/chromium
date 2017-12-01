@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3262f84c_ed1c08ba",
+        "filename": "ash/wallpaper/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-01T22:30:57Z",
+      "side": 1,
+      "message": "Please just use \"+services/data_decoder/public\" - no need to be more specific",
+      "revId": "26b23c3b06e5a0f6bc858be42a38ef6c23e87b04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c93b1882_d25c9274",
         "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
         "patchSetId": 3
