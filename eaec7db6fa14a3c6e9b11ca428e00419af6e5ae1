@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aa8099d5_b6359f9e",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-01T00:44:39Z",
+      "side": 1,
+      "message": "I see. This is replaced by a mojo IPC that set the actual paths.",
+      "parentUuid": "a43e184e_80d15274",
+      "revId": "eaec7db6fa14a3c6e9b11ca428e00419af6e5ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aeefd950_5e9930df",
         "filename": "ash/wallpaper/wallpaper_controller.cc",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "eaec7db6fa14a3c6e9b11ca428e00419af6e5ae1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fea58c2f_6416c3da",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-01T00:44:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aeefd950_5e9930df",
+      "revId": "eaec7db6fa14a3c6e9b11ca428e00419af6e5ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b96184d0_a964a587",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-01T00:44:39Z",
+      "side": 1,
+      "message": "Done. Changed to std::string for other similar functions as well.",
+      "parentUuid": "3809b1ed_a8804773",
+      "revId": "eaec7db6fa14a3c6e9b11ca428e00419af6e5ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58db3ec0_d699f450",
         "filename": "chrome/browser/ui/ash/wallpaper_controller_client.h",
         "patchSetId": 13
@@ -67,6 +121,24 @@
       "revId": "eaec7db6fa14a3c6e9b11ca428e00419af6e5ae1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aabc8342_9c4c226d",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-01T00:44:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58db3ec0_d699f450",
+      "revId": "eaec7db6fa14a3c6e9b11ca428e00419af6e5ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

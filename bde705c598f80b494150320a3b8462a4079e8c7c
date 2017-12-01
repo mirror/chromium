@@ -16,6 +16,24 @@
       "revId": "bde705c598f80b494150320a3b8462a4079e8c7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a734cfa0_2cf4fe6f",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-01T00:44:39Z",
+      "side": 0,
+      "message": "Yes.. this part was simply copied and pasted from //components..",
+      "parentUuid": "57cc5f4d_f8b6f443",
+      "revId": "bde705c598f80b494150320a3b8462a4079e8c7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

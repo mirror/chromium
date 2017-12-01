@@ -229,6 +229,24 @@
       "revId": "ede460b20bc83ab4fc22c792c5cef19b551ecd92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a51924f5_d6efa894",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-01T00:44:39Z",
+      "side": 1,
+      "message": "I see. Thanks for the explanation! This part is changed to setting the actual paths.",
+      "parentUuid": "1aa371b5_acf51c03",
+      "revId": "ede460b20bc83ab4fc22c792c5cef19b551ecd92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
