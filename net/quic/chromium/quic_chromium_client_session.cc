@@ -1070,6 +1070,10 @@ bool QuicChromiumClientSession::GetSSLInfo(SSLInfo* ssl_info) const {
   ssl_info->security_bits = security_bits;
   ssl_info->handshake_type = SSLInfo::HANDSHAKE_FULL;
   ssl_info->pinning_failure_log = pinning_failure_log_;
+  ssl_info->is_fatal_cert_error =
+      IsCertStatusError(ssl_info->cert_status) &&
+      !IsCertStatusMinorError(ssl_info->cert_status) &&
+      transport_security_state_->ShouldSSLErrorsBeFatal(server_id_.host());
 
   ssl_info->UpdateCertificateTransparencyInfo(*ct_verify_result_);
 
