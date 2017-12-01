@@ -47,14 +47,18 @@ class CORE_EXPORT ScriptSourceCode final {
 
  public:
   ScriptSourceCode();
-  // We lose the encoding information from ScriptResource.
-  // Not sure if that matters.
-  explicit ScriptSourceCode(ScriptResource*);
+
+  // For inline scripts.
   ScriptSourceCode(
       const String& source,
       ScriptSourceLocationType = ScriptSourceLocationType::kUnknown,
       const KURL& = KURL(),
       const TextPosition& start_position = TextPosition::MinimumPosition());
+
+  // For external scripts.
+  //
+  // We lose the encoding information from ScriptResource.
+  // Not sure if that matters.
   ScriptSourceCode(ScriptStreamer*, ScriptResource*);
 
   ~ScriptSourceCode();
