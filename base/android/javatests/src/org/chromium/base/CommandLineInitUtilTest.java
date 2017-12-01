@@ -22,9 +22,9 @@ import org.chromium.base.test.util.Feature;
 public class CommandLineInitUtilTest {
     @Before
     public void setUp() throws Exception {
-        CommandLineInitUtil.initCommandLine(
-                InstrumentationRegistry.getInstrumentation().getTargetContext(),
-                "content-shell-command-line");
+        ContextUtils.initApplicationContext(
+                InstrumentationRegistry.getInstrumentation().getTargetContext());
+        CommandLineInitUtil.initCommandLine("content-shell-command-line");
     }
 
     /**

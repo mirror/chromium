@@ -43,7 +43,6 @@ import org.chromium.chrome.browser.tabmodel.document.DocumentTabModelImpl;
 import org.chromium.chrome.browser.webapps.ActivityAssigner;
 import org.chromium.chrome.browser.webapps.ChromeWebApkHost;
 import org.chromium.components.crash.browser.CrashDumpManager;
-import org.chromium.content.app.ContentApplication;
 import org.chromium.content.browser.BrowserStartupController;
 import org.chromium.content.browser.DeviceUtils;
 import org.chromium.content.browser.SpeechRecognition;
@@ -211,7 +210,6 @@ public class ChromeBrowserInitializer {
         // Ensure critical files are available, so they aren't blocked on the file-system
         // behind long-running accesses in next phase.
         // Don't do any large file access here!
-        ContentApplication.initCommandLine(mApplication);
         ChromeStrictMode.configureStrictMode();
         ChromeWebApkHost.init();
 
@@ -348,7 +346,6 @@ public class ChromeBrowserInitializer {
         try {
             TraceEvent.begin("ChromeBrowserInitializer.startChromeBrowserProcessesSync");
             ThreadUtils.assertOnUiThread();
-            mApplication.initCommandLine();
             LibraryLoader libraryLoader = LibraryLoader.get(LibraryProcessType.PROCESS_BROWSER);
             StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskReads();
             libraryLoader.ensureInitialized();

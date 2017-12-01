@@ -47,14 +47,16 @@ public class ChromeApplication extends ContentApplication {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         ContextUtils.initApplicationContext(this);
-        BuildHooksAndroid.initCustomResources(this);
-        Boolean isIsolatedProcess = PureJavaExceptionReporter.detectIsIsolatedProcess();
-        if (isIsolatedProcess != null && !isIsolatedProcess.booleanValue()) {
+        if (!ContextUtils.isIsolatedProcess()) {
             PureJavaExceptionHandler.installHandler();
             if (BuildHooksConfig.REPORT_JAVA_ASSERT) {
                 BuildHooks.setReportAssertionCallback(
-                        exception -> { PureJavaExceptionReporter.reportJavaException(exception); });
+                        PureJavaExceptionReporter::reportJavaException);
             }
+            BuildHooksAndroid.initCustomResources(this);
+            // Command-line is needed by content providers, so initialize it in attacheBaseContext()
+            // rather than onCreate().
+            initCommandLine();
         }
     }
 
@@ -66,7 +68,6 @@ public class ChromeApplication extends ContentApplication {
     @Override
     public void onCreate() {
         UmaUtils.recordMainEntryPointTime();
-        initCommandLine();
         TraceEvent.maybeEnableEarlyTracing();
         TraceEvent.begin("ChromeApplication.onCreate");
 
@@ -100,7 +101,7 @@ public class ChromeApplication extends ContentApplication {
 
     @Override
     public void initCommandLine() {
-        CommandLineInitUtil.initCommandLine(this, COMMAND_LINE_FILE);
+        CommandLineInitUtil.initCommandLine(COMMAND_LINE_FILE);
     }
 
     /**

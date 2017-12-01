@@ -29,7 +29,6 @@ import android.widget.RemoteViews;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import org.chromium.base.BaseChromiumApplication;
 import org.chromium.base.CommandLine;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
@@ -217,8 +216,6 @@ public class CustomTabsConnection {
     public CustomTabsConnection() {
         super();
         mContext = ContextUtils.getApplicationContext();
-        // Command line switch values are used below.
-        BaseChromiumApplication.initCommandLine(mContext);
         mClientManager = new ClientManager(mContext);
         mLogRequests = CommandLine.getInstance().hasSwitch(LOG_SERVICE_REQUESTS);
     }
