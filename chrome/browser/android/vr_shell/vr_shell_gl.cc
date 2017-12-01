@@ -29,6 +29,7 @@
 #include "chrome/browser/vr/model/camera_model.h"
 #include "chrome/browser/vr/model/model.h"
 #include "chrome/browser/vr/pose_util.h"
+#include "chrome/browser/vr/sliding_average.h"
 #include "chrome/browser/vr/ui.h"
 #include "chrome/browser/vr/ui_element_renderer.h"
 #include "chrome/browser/vr/ui_scene.h"
@@ -218,7 +219,8 @@ VrShellGl::VrShellGl(GlBrowserInterface* browser_interface,
                      gvr_context* gvr_api,
                      bool reprojected_rendering,
                      bool daydream_support,
-                     bool start_in_web_vr_mode)
+                     bool start_in_web_vr_mode,
+                     base::TimeDelta display_vsync_interval)
     : ui_(std::move(ui)),
       web_vr_mode_(start_in_web_vr_mode),
       surfaceless_rendering_(reprojected_rendering),
@@ -227,10 +229,13 @@ VrShellGl::VrShellGl(GlBrowserInterface* browser_interface,
       binding_(this),
       browser_(browser_interface),
       fps_meter_(new vr::FPSMeter()),
-      webvr_js_time_(new vr::SlidingAverage(kWebVRSlidingAverageSize)),
-      webvr_render_time_(new vr::SlidingAverage(kWebVRSlidingAverageSize)),
+      webvr_js_time_(new vr::SlidingTimeDeltaAverage(kWebVRSlidingAverageSize)),
+      webvr_render_time_(
+          new vr::SlidingTimeDeltaAverage(kWebVRSlidingAverageSize)),
+      display_vsync_interval_(display_vsync_interval),
       weak_ptr_factory_(this) {
   GvrInit(gvr_api);
+  DVLOG(1) << "display_vsync_interval_=" << display_vsync_interval_;
 }
 
 VrShellGl::~VrShellGl() {
@@ -1160,12 +1165,8 @@ void VrShellGl::DrawFrameSubmitNow(int16_t frame_index,
         webvr_time_pose_[frame_index % kPoseRingBufferSize];
     base::TimeTicks js_submit_time =
         webvr_time_js_submit_[frame_index % kPoseRingBufferSize];
-    int64_t pose_to_js_submit_us =
-        (js_submit_time - pose_time).InMicroseconds();
-    webvr_js_time_->AddSample(pose_to_js_submit_us);
-    int64_t js_submit_to_gvr_submit_us =
-        (now - js_submit_time).InMicroseconds();
-    webvr_render_time_->AddSample(js_submit_to_gvr_submit_us);
+    webvr_js_time_->AddSample(js_submit_time - pose_time);
+    webvr_render_time_->AddSample(now - js_submit_time);
   }
 
   // After saving the timestamp, fps will be available via GetFPS().
@@ -1364,22 +1365,22 @@ void VrShellGl::UpdateLayerBounds(int16_t frame_index,
   }
 }
 
-int64_t VrShellGl::GetPredictedFrameTimeNanos() {
-  int64_t frame_time_micros =
-      vsync_helper_.LastVSyncInterval().InMicroseconds();
+base::TimeDelta VrShellGl::GetPredictedFrameTime() {
+  base::TimeDelta frame_interval = display_vsync_interval_;
   // If we aim to submit at vsync, that frame will start scanning out
   // one vsync later. Add a half frame to split the difference between
   // left and right eye.
-  int64_t js_micros = webvr_js_time_->GetAverageOrDefault(frame_time_micros);
-  int64_t render_micros =
-      webvr_render_time_->GetAverageOrDefault(frame_time_micros);
-  int64_t overhead_micros = frame_time_micros * 3 / 2;
-  int64_t expected_frame_micros = js_micros + render_micros + overhead_micros;
+  base::TimeDelta js_time = webvr_js_time_->GetAverageOrDefault(frame_interval);
+  base::TimeDelta render_time =
+      webvr_render_time_->GetAverageOrDefault(frame_interval);
+  base::TimeDelta overhead_time = frame_interval * 3 / 2;
+  base::TimeDelta expected_frame_time = js_time + render_time + overhead_time;
   TRACE_COUNTER2("gpu", "WebVR frame time (ms)", "javascript",
-                 js_micros / 1000.0, "rendering", render_micros / 1000.0);
+                 js_time.InMilliseconds(), "rendering",
+                 render_time.InMilliseconds());
   TRACE_COUNTER1("gpu", "WebVR pose prediction (ms)",
-                 expected_frame_micros / 1000.0);
-  return expected_frame_micros * 1000;
+                 expected_frame_time.InMilliseconds());
+  return expected_frame_time;
 }
 
 void VrShellGl::SendVSync(base::TimeTicks time, GetVSyncCallback callback) {
@@ -1387,7 +1388,7 @@ void VrShellGl::SendVSync(base::TimeTicks time, GetVSyncCallback callback) {
 
   TRACE_EVENT1("input", "VrShellGl::SendVSync", "frame", frame_index);
 
-  int64_t prediction_nanos = GetPredictedFrameTimeNanos();
+  int64_t prediction_nanos = GetPredictedFrameTime().InMicroseconds() * 1000;
 
   gfx::Transform head_mat;
   device::mojom::VRPosePtr pose =

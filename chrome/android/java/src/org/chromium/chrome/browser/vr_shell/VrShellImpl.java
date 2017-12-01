@@ -5,6 +5,7 @@
 package org.chromium.chrome.browser.vr_shell;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.os.StrictMode;
@@ -16,6 +17,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewTreeObserver.OnPreDrawListener;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import com.google.vr.ndk.base.AndroidCompat;
@@ -801,6 +803,12 @@ public class VrShellImpl
         mCanGoBack = canGoBack;
         mCanGoForward = canGoForward;
         nativeSetHistoryButtonsEnabled(mNativeVrShell, mCanGoBack, mCanGoForward);
+    }
+
+    @CalledByNative
+    private float getRefreshRate() {
+        WindowManager wm = (WindowManager) (mActivity.getSystemService(Context.WINDOW_SERVICE));
+        return wm.getDefaultDisplay().getRefreshRate();
     }
 
     @CalledByNative

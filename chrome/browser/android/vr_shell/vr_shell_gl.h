@@ -47,7 +47,7 @@ struct MailboxHolder;
 namespace vr {
 class BrowserUiInterface;
 class FPSMeter;
-class SlidingAverage;
+class SlidingTimeDeltaAverage;
 class Ui;
 }  // namespace vr
 
@@ -77,7 +77,8 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
             gvr_context* gvr_api,
             bool reprojected_rendering,
             bool daydream_support,
-            bool start_in_web_vr_mode);
+            bool start_in_web_vr_mode,
+            base::TimeDelta display_vsync_interval);
   ~VrShellGl() override;
 
   void Initialize();
@@ -151,7 +152,7 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
   void OnWebVrTimeoutImminent();
   void OnWebVrFrameTimedOut();
 
-  int64_t GetPredictedFrameTimeNanos();
+  base::TimeDelta GetPredictedFrameTime();
 
   void OnVSync(base::TimeTicks frame_time);
 
@@ -249,8 +250,9 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
 
   std::unique_ptr<vr::FPSMeter> fps_meter_;
 
-  std::unique_ptr<vr::SlidingAverage> webvr_js_time_;
-  std::unique_ptr<vr::SlidingAverage> webvr_render_time_;
+  std::unique_ptr<vr::SlidingTimeDeltaAverage> webvr_js_time_;
+  std::unique_ptr<vr::SlidingTimeDeltaAverage> webvr_render_time_;
+  base::TimeDelta display_vsync_interval_;
 
   gfx::Point3F pointer_start_;
 
