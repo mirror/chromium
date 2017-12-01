@@ -105,6 +105,24 @@
       "revId": "0694618bafd0c4832a1155be5d5b343d339d9a39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7db0c1bd_ca224867",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-12-01T13:07:24Z",
+      "side": 1,
+      "message": "We can include it, since it solves a grid specific issue. But perhaps we can add a TODO comment indicating that the logic we are avoiding because of the early return may not be completely defined in the La LayoutGrid class.",
+      "parentUuid": "d1bd069d_e5527437",
+      "revId": "0694618bafd0c4832a1155be5d5b343d339d9a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
