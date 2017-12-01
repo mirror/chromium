@@ -118,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "2791d102_47b2eb39",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-01T09:37:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2711b60d_23abbeb1",
+      "range": {
+        "startLine": 154,
+        "startChar": 25,
+        "endLine": 154,
+        "endChar": 44
+      },
+      "revId": "b1f7266be9994b91412d31a4b8e40651b3093856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe505c38_c2a2899c",
         "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
         "patchSetId": 6
@@ -141,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "7e42bc91_20e3ce7d",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-01T09:37:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe505c38_c2a2899c",
+      "range": {
+        "startLine": 178,
+        "startChar": 2,
+        "endLine": 178,
+        "endChar": 11
+      },
+      "revId": "b1f7266be9994b91412d31a4b8e40651b3093856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "baebfee1_b40baaa1",
         "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
         "patchSetId": 6
@@ -161,6 +209,30 @@
       "revId": "b1f7266be9994b91412d31a4b8e40651b3093856",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11318dd4_d8c5c41d",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-01T09:37:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baebfee1_b40baaa1",
+      "range": {
+        "startLine": 426,
+        "startChar": 49,
+        "endLine": 426,
+        "endChar": 68
+      },
+      "revId": "b1f7266be9994b91412d31a4b8e40651b3093856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -210,6 +282,54 @@
     },
     {
       "key": {
+        "uuid": "675ba15e_0d510ef9",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-01T09:37:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b8baba1_ab9b2b81",
+      "range": {
+        "startLine": 439,
+        "startChar": 42,
+        "endLine": 439,
+        "endChar": 45
+      },
+      "revId": "b1f7266be9994b91412d31a4b8e40651b3093856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e96c89af_cca42c08",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-01T09:37:12Z",
+      "side": 1,
+      "message": "Since we are sorting in order defined by CTAP, I think we should sort by key/length/byte-wise lexical order. \n\nFrom section 6 of CTAP 2 spec: \n\nThe keys in every map must be sorted lowest value to highest. Sorting is performed on the bytes of the representation of the key data items without paying attention to the 3/5 bit splitting for major types. The sorting rules are:\n -If the major types are different, the one with the lower value in numerical order sorts earlier.\n -If two keys have different lengths, the shorter one sorts earlier;\n -If two keys have the same length, the one with the lower value in (byte-wise) lexical order sorts earlier.\n\nPlease let me know if I\u0027m missing something!",
+      "parentUuid": "b2aec802_c528c3f9",
+      "range": {
+        "startLine": 439,
+        "startChar": 55,
+        "endLine": 439,
+        "endChar": 58
+      },
+      "revId": "b1f7266be9994b91412d31a4b8e40651b3093856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ec86622_1a7d94b6",
         "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
         "patchSetId": 6
@@ -230,6 +350,30 @@
       "revId": "b1f7266be9994b91412d31a4b8e40651b3093856",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67bc4cee_e49558b5",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-01T09:37:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ec86622_1a7d94b6",
+      "range": {
+        "startLine": 453,
+        "startChar": 7,
+        "endLine": 453,
+        "endChar": 11
+      },
+      "revId": "b1f7266be9994b91412d31a4b8e40651b3093856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -256,6 +400,30 @@
     },
     {
       "key": {
+        "uuid": "450de074_49c0368e",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-01T09:37:12Z",
+      "side": 1,
+      "message": "Updated in CL 777807.",
+      "parentUuid": "eaf7e7e0_b6aacfb5",
+      "range": {
+        "startLine": 454,
+        "startChar": 4,
+        "endLine": 456,
+        "endChar": 32
+      },
+      "revId": "b1f7266be9994b91412d31a4b8e40651b3093856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb389baa_c480472d",
         "filename": "content/browser/webauth/cbor/cbor_values.cc",
         "patchSetId": 6
@@ -276,6 +444,30 @@
       "revId": "b1f7266be9994b91412d31a4b8e40651b3093856",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b887fb4_ff14907b",
+        "filename": "content/browser/webauth/cbor/cbor_values.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-01T09:37:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb389baa_c480472d",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 53
+      },
+      "revId": "b1f7266be9994b91412d31a4b8e40651b3093856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -302,6 +494,30 @@
     },
     {
       "key": {
+        "uuid": "45f0cd2e_0c801046",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-01T09:37:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a323c08_ca832e5c",
+      "range": {
+        "startLine": 24,
+        "startChar": 33,
+        "endLine": 24,
+        "endChar": 36
+      },
+      "revId": "b1f7266be9994b91412d31a4b8e40651b3093856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88edb85a_d3dff0d9",
         "filename": "content/browser/webauth/cbor/cbor_values.h",
         "patchSetId": 6
@@ -322,6 +538,30 @@
       "revId": "b1f7266be9994b91412d31a4b8e40651b3093856",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1671d99d_319d24df",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-01T09:37:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88edb85a_d3dff0d9",
+      "range": {
+        "startLine": 27,
+        "startChar": 9,
+        "endLine": 27,
+        "endChar": 17
+      },
+      "revId": "b1f7266be9994b91412d31a4b8e40651b3093856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -348,6 +588,30 @@
     },
     {
       "key": {
+        "uuid": "e50aba0d_c0849dfe",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-01T09:37:12Z",
+      "side": 1,
+      "message": "Deleted.",
+      "parentUuid": "1791fcf4_373ff74a",
+      "range": {
+        "startLine": 40,
+        "startChar": 7,
+        "endLine": 40,
+        "endChar": 59
+      },
+      "revId": "b1f7266be9994b91412d31a4b8e40651b3093856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "690fc746_460b1be4",
         "filename": "content/browser/webauth/cbor/cbor_values.h",
         "patchSetId": 6
@@ -368,6 +632,30 @@
       "revId": "b1f7266be9994b91412d31a4b8e40651b3093856",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4da86eb1_6bfef4ea",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-01T09:37:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "690fc746_460b1be4",
+      "range": {
+        "startLine": 42,
+        "startChar": 6,
+        "endLine": 42,
+        "endChar": 68
+      },
+      "revId": "b1f7266be9994b91412d31a4b8e40651b3093856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -394,6 +682,30 @@
     },
     {
       "key": {
+        "uuid": "cb04dad2_921eb886",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-01T09:37:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1bc4956_3f6e803b",
+      "range": {
+        "startLine": 44,
+        "startChar": 19,
+        "endLine": 44,
+        "endChar": 74
+      },
+      "revId": "b1f7266be9994b91412d31a4b8e40651b3093856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9031e09f_76fadc8b",
         "filename": "content/browser/webauth/cbor/cbor_values.h",
         "patchSetId": 6
@@ -405,6 +717,30 @@
       "writtenOn": "2017-11-30T22:24:35Z",
       "side": 1,
       "message": "There\u0027s no need to avoid copying a uint64_t.",
+      "range": {
+        "startLine": 104,
+        "startChar": 2,
+        "endLine": 104,
+        "endChar": 18
+      },
+      "revId": "b1f7266be9994b91412d31a4b8e40651b3093856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa4e74d0_9f76c18b",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-01T09:37:12Z",
+      "side": 1,
+      "message": "This was done to maintain consistency with below accessor functions. Please let me know if you think this is unnecessary! :)",
+      "parentUuid": "9031e09f_76fadc8b",
       "range": {
         "startLine": 104,
         "startChar": 2,
@@ -440,6 +776,30 @@
     },
     {
       "key": {
+        "uuid": "aa4008a6_9ff24929",
+        "filename": "content/browser/webauth/cbor/cbor_values_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-01T09:37:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94da8bba_3ed2868d",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 11
+      },
+      "revId": "b1f7266be9994b91412d31a4b8e40651b3093856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "136f6693_3043da13",
         "filename": "content/browser/webauth/cbor/cbor_values_unittest.cc",
         "patchSetId": 6
@@ -456,6 +816,76 @@
         "startChar": 6,
         "endLine": 101,
         "endChar": 22
+      },
+      "revId": "b1f7266be9994b91412d31a4b8e40651b3093856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc05c068_daf0405f",
+        "filename": "content/browser/webauth/cbor/cbor_values_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-01T09:37:12Z",
+      "side": 1,
+      "message": "Hmm,this creates a compile time error. I think it\u0027s because copy/assign is disallowed for CBOR Value objects..",
+      "parentUuid": "136f6693_3043da13",
+      "range": {
+        "startLine": 101,
+        "startChar": 6,
+        "endLine": 101,
+        "endChar": 22
+      },
+      "revId": "b1f7266be9994b91412d31a4b8e40651b3093856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "008c0376_7c6e6a2d",
+        "filename": "content/browser/webauth/ec_public_key.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-01T09:37:12Z",
+      "side": 1,
+      "message": "This is the only edited code. Changed keys from string to CBORvalue.",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 46
+      },
+      "revId": "b1f7266be9994b91412d31a4b8e40651b3093856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "693275dd_0aac62c6",
+        "filename": "content/browser/webauth/fido_attestation_statement.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-01T09:37:12Z",
+      "side": 1,
+      "message": "Same as above.",
+      "range": {
+        "startLine": 89,
+        "startChar": 10,
+        "endLine": 91,
+        "endChar": 0
       },
       "revId": "b1f7266be9994b91412d31a4b8e40651b3093856",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
