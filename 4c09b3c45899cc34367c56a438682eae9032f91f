@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "733ede88_846bd9d4",
+        "filename": "media/base/ipc/media_param_traits_macros.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-01T19:17:20Z",
+      "side": 1,
+      "message": "Does anything need to validate that these are acceptable values for the colorspace in which they occur? It\u0027s not immediately clear to me from this CL what the trust direction is here.",
+      "revId": "4c09b3c45899cc34367c56a438682eae9032f91f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
