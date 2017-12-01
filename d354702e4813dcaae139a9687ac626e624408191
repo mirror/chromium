@@ -215,6 +215,29 @@
     },
     {
       "key": {
+        "uuid": "ca622506_0208a09b",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/webapps/WebApkUpdateManagerUnitTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-01T04:13:12Z",
+      "side": 1,
+      "message": "This test could be retained right, with the small change of shareUrlTemplates.clear() -\u003e shareUrlTemplate \u003d ?",
+      "range": {
+        "startLine": 837,
+        "startChar": 0,
+        "endLine": 854,
+        "endChar": 5
+      },
+      "revId": "d354702e4813dcaae139a9687ac626e624408191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c38a17b6_2b7ffed2",
         "filename": "chrome/browser/android/shortcut_info.h",
         "patchSetId": 1

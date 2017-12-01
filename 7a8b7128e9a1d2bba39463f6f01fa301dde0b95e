@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a1c1326_081a193b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateDataFetcher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-01T04:13:12Z",
+      "side": 1,
+      "message": "Nit: perhaps put this after shortName?",
+      "range": {
+        "startLine": 102,
+        "startChar": 68,
+        "endLine": 102,
+        "endChar": 91
+      },
+      "revId": "7a8b7128e9a1d2bba39463f6f01fa301dde0b95e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ecb9c15_c8a15c46",
+        "filename": "chrome/android/webapk/test/src/org/chromium/webapk/test/WebApkTestHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-01T04:13:12Z",
+      "side": 1,
+      "message": "Nit: call this createPackageInfo since \"new\" is an important word.",
+      "range": {
+        "startLine": 46,
+        "startChar": 31,
+        "endLine": 46,
+        "endChar": 45
+      },
+      "revId": "7a8b7128e9a1d2bba39463f6f01fa301dde0b95e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
