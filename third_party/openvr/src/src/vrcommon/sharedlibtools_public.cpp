@@ -13,6 +13,7 @@
 SharedLibHandle SharedLib_Load( const char *pchPath )
 {
 #if defined( _WIN32)
+  fprintf(stderr, pchPath);
 	return (SharedLibHandle)LoadLibraryEx( pchPath, NULL, LOAD_WITH_ALTERED_SEARCH_PATH );
 #elif defined(POSIX)
 	return (SharedLibHandle)dlopen(pchPath, RTLD_LOCAL|RTLD_NOW);

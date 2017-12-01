@@ -330,65 +330,83 @@ std::string CVRPathRegistry_Public::GetLogPath() const
 // ---------------------------------------------------------------------------
 bool CVRPathRegistry_Public::GetPaths( std::string *psRuntimePath, std::string *psConfigPath, std::string *psLogPath, const char *pchConfigPathOverride, const char *pchLogPathOverride, std::vector<std::string> *pvecExternalDrivers )
 {
+	VRLog("ASDF GetPaths");
 	CVRPathRegistry_Public pathReg;
 	bool bLoadedRegistry = pathReg.BLoadFromFile();
 	int nCountEnvironmentVariables = 0;
 
+	VRLog("ASDF before psRuntimePath check\n");
 	if( psRuntimePath )
 	{
+		VRLog("ASDF in psRuntimePath check\n");
 		if ( GetEnvironmentVariable( k_pchRuntimeOverrideVar ).length() != 0 )
 		{
+			VRLog("ASDF runtime path var set\n");
 			*psRuntimePath = GetEnvironmentVariable( k_pchRuntimeOverrideVar );
 			nCountEnvironmentVariables++;
 		}
 		else if( !pathReg.GetRuntimePath().empty() )
 		{
+			VRLog("ASDF runtime path registry set\n");
 			*psRuntimePath = pathReg.GetRuntimePath();
 		}
 		else
 		{
+			VRLog("ASDF setting runtime path to empty\n");
 			*psRuntimePath = "";
 		}
 	}
 
+	VRLog("ASDF before psConfigPath check\n");
 	if( psConfigPath )
 	{
+		VRLog("ASDF in psConfigPath check\n");
 		if ( GetEnvironmentVariable( k_pchConfigOverrideVar ).length() != 0 )
 		{
+			VRLog("ASDF config path var set\n");
 			*psConfigPath = GetEnvironmentVariable( k_pchConfigOverrideVar );
 			nCountEnvironmentVariables++;
 		}
 		else if( pchConfigPathOverride )
 		{
+			VRLog("ASDF config path override set\n");
 			*psConfigPath = pchConfigPathOverride;
 		}
 		else if( !pathReg.GetConfigPath().empty() )
 		{
+			VRLog("ASDF config path registry set\n");
 			*psConfigPath = pathReg.GetConfigPath();
 		}
 		else
 		{
+			VRLog("ASDF setting config path to empty\n");
 			*psConfigPath = "";
 		}
 	}
 
+	VRLog("ASDF before psLogPath check\n");
 	if( psLogPath )
 	{
+		VRLog("ASDF in psLogPath check\n");
 		if ( GetEnvironmentVariable( k_pchLogOverrideVar ).length() != 0 )
 		{
+			VRLog("ASDF log path var set\n");
 			*psLogPath = GetEnvironmentVariable( k_pchLogOverrideVar );
 			nCountEnvironmentVariables++;
 		}
 		else if( pchLogPathOverride )
 		{
+			VRLog("ASDF log path override set\n");
 			*psLogPath = pchLogPathOverride;
 		}
 		else if( !pathReg.GetLogPath().empty() )
 		{
+			VRLog("ASDF log path registry set\n");
 			*psLogPath = pathReg.GetLogPath();
 		}
 		else
 		{
+			VRLog("ASDF log path set to empty");
 			*psLogPath = "";
 		}
 	}
@@ -400,6 +418,7 @@ bool CVRPathRegistry_Public::GetPaths( std::string *psRuntimePath, std::string *
 
 	if ( nCountEnvironmentVariables == 3 )
 	{
+		VRLog("Used all three environment variables, returning true\n");
 		// all three environment variables where set, so we don't need the physical file
 		return true;
 	}
