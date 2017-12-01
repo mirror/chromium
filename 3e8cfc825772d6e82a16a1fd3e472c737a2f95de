@@ -16,6 +16,24 @@
       "revId": "3e8cfc825772d6e82a16a1fd3e472c737a2f95de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8552d9e_66bd528c",
+        "filename": "chrome/browser/safe_browsing/download_protection/download_protection_service_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2093,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-12-01T23:44:21Z",
+      "side": 1,
+      "message": "thanks, unfortunately that was reverted (chrome/installer/mac/third_party/bsdiff directly uses base/sha1.cc without including the rest of base, sighhhhh)",
+      "parentUuid": "dbb4fcba_3166da1c",
+      "revId": "3e8cfc825772d6e82a16a1fd3e472c737a2f95de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
