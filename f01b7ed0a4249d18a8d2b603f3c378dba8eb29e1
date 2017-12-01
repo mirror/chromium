@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "de306698_8adb4fc3",
+        "filename": "chrome/android/java/res/values/dimens.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-01T18:31:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "91a3de97_75aa4877",
+      "range": {
+        "startLine": 465,
+        "startChar": 17,
+        "endLine": 465,
+        "endChar": 45
+      },
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2eb8206a_9b6f22ef",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageItem.java",
         "patchSetId": 10
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Interesting, I thought \"cl format\" will handle that. Will take care next time.",
       "parentUuid": "2eb8206a_9b6f22ef",
+      "range": {
+        "startLine": 21,
+        "startChar": 18,
+        "endLine": 21,
+        "endChar": 20
+      },
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b9fe2d7a_23307933",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageItem.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-01T18:31:50Z",
+      "side": 1,
+      "message": "git cl format isn\u0027t perfect (especially for Java code), unfortunately.",
+      "parentUuid": "5ac1dcb1_d7361328",
       "range": {
         "startLine": 21,
         "startChar": 18,
@@ -260,6 +308,24 @@
     },
     {
       "key": {
+        "uuid": "0b84fa18_e8f4798f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-01T18:31:50Z",
+      "side": 1,
+      "message": "I think this is fine (the code is a no-op if it\u0027s never run), but you should be understand the code your write even if it\u0027s copied from somewhere else in the Chromium code base.\n\nIt looks like we only do this check for a few preferences: SpinnerPreference, TextScalePreference, ClearBrowsingDataCheckBoxPreference. Doing a quick search, there are numerous Stack Overflow articles related to onCreateView() being called multiple times for fragments, so perhaps it\u0027s related to that.",
+      "parentUuid": "1fda3474_bfea5664",
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a161c48_15512de2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
         "patchSetId": 10
@@ -304,6 +370,30 @@
       "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "112af93c_abc7617c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-01T18:31:50Z",
+      "side": 1,
+      "message": "A view being bound multiple times makes sense to me. \"Announced\" is ambiguous, so I\u0027m asking if you mean \"announced by TalkBack when accessibility mode is enabled\" or something else?\n\nBased on the comment you copied, this does mean TalkBack or other screen readers. Will you please update the comment e.g. \"...to be announced by screen readers every time...\"",
+      "parentUuid": "256730a0_d89465bb",
+      "range": {
+        "startLine": 111,
+        "startChar": 49,
+        "endLine": 111,
+        "endChar": 58
+      },
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -436,6 +526,30 @@
       "side": 1,
       "message": "Sorry for the missing that comment, I did see it and considered that for a while but haven\u0027t got an easily good solution for native names searching yet, and that\u0027s why I forgot to reply. \n\nIt\u0027s easy for code searching, but difficult for native names.\nThe complexity is how to figure out what kind of characters the user are typing, as the display name searching logic, a locale is needed when we convert the chars to lower case. \n\nSo for native names, either we simply compare the strings without toLowerCase or we need to introduce some library to detect string\u0027s possible locale codes.  WDYT?",
       "parentUuid": "a8953915_b43308e5",
+      "range": {
+        "startLine": 65,
+        "startChar": 25,
+        "endLine": 65,
+        "endChar": 39
+      },
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64dcc10d_16691409",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageSelectionFragment.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-01T18:31:50Z",
+      "side": 1,
+      "message": "Since the keyboard locale can be changed independent of the device locale I think you have this issue anyway. I think it\u0027s fine to leave as a TODO and discuss with your PM/UX about refining in the future.",
+      "parentUuid": "2786d325_d08e2fc5",
       "range": {
         "startLine": 65,
         "startChar": 25,
@@ -656,6 +770,24 @@
       "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "712f98c0_a56c020a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguagesPreferences.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-01T18:31:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e145c9df_d8379aa6",
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
