@@ -1273,6 +1273,9 @@ class CONTENT_EXPORT RenderFrameImpl
     return custom_url_loader_factory_.get();
   }
 
+  std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
+  BuildDidCommitProvisionalLoadParams(blink::WebHistoryCommitType commit_type);
+
   // Stores the WebLocalFrame we are associated with.  This is null from the
   // constructor until BindToFrame() is called, and it is null after
   // FrameDetached() is called until destruction (which is asynchronous in the
