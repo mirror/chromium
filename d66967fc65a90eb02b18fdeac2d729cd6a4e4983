@@ -33,6 +33,24 @@
       "revId": "d66967fc65a90eb02b18fdeac2d729cd6a4e4983",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02a2faf2_48aba388",
+        "filename": "third_party/WebKit/Source/core/inspector/DevToolsHost.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-01T18:30:25Z",
+      "side": 1,
+      "message": "Because EvaluateScript() in the current codebase uses V8AtomicString().\n\n1. String\u0026 expression \u003d\u003e V8AtomicString(isolate, expression.Utf8().data())\n   (Convert String into byte array and then reconstruct V8 string with \"atomic\")\n2. String\u0026 expression \u003d\u003e V8String(isolate, expression)\n3. AtomicString\u0026 expression \u003d\u003e V8String(isolate, expression)\n\nThe current code \u003d\u003e 1.\nUsing String\u0026 here \u003d\u003e 2.\nThe current patchset of this CL \u003d\u003e 3.\n\nProbably we can keep this String\u0026 (\u003d\u003e 2.), but not so sure.\n\npfeldman@, you introduced V8AtomicString() in EvaluateScript() in\nhttps://codereview.chromium.org/1577153002.\nCan we simply change the behavior from 1. to 2.,\nor is there some background for requiring atomic strings?",
+      "parentUuid": "6ab5a24a_75b9d821",
+      "revId": "d66967fc65a90eb02b18fdeac2d729cd6a4e4983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
