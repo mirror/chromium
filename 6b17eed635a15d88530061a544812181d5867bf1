@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6fbbbb49_2dc535e7",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-12-01T21:29:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcda6560_0e9e8cca",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 9
+      },
+      "revId": "6b17eed635a15d88530061a544812181d5867bf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32360122_341ffe29",
         "filename": "ios/chrome/browser/metrics/tab_usage_recorder_unittest.mm",
         "patchSetId": 5
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "4b8531ee_5082b36a",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-12-01T21:29:56Z",
+      "side": 1,
+      "message": "I think returning web::WebState* from InsertTestWebState() is slightly better in encapsulation and we limit this cast to just one place.",
+      "parentUuid": "32360122_341ffe29",
+      "revId": "6b17eed635a15d88530061a544812181d5867bf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99d458b2_31317599",
         "filename": "ios/chrome/browser/metrics/tab_usage_recorder_unittest.mm",
         "patchSetId": 5
@@ -53,6 +95,30 @@
       "writtenOn": "2017-12-01T21:16:15Z",
       "side": 1,
       "message": "nit: /*in_memory\u003d*/true",
+      "range": {
+        "startLine": 379,
+        "startChar": 55,
+        "endLine": 379,
+        "endChar": 59
+      },
+      "revId": "6b17eed635a15d88530061a544812181d5867bf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10a9c639_9daf635b",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-12-01T21:29:56Z",
+      "side": 1,
+      "message": "But we don\u0027t do this anywhere else?",
+      "parentUuid": "99d458b2_31317599",
       "range": {
         "startLine": 379,
         "startChar": 55,
