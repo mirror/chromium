@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a06f398d_1f440f31",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_settings_service_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-01T07:20:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1cca3bf_06373619",
+      "revId": "9fd8b6a386d7e615f729889fb1abb9aa40524e7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e55207ef_d9c014b8",
         "filename": "chrome/browser/chromeos/arc/user_session/arc_user_session_service_browsertest.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "9fd8b6a386d7e615f729889fb1abb9aa40524e7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb5d8dcd_af874cab",
+        "filename": "chrome/browser/chromeos/arc/user_session/arc_user_session_service_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-01T07:20:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e55207ef_d9c014b8",
+      "revId": "9fd8b6a386d7e615f729889fb1abb9aa40524e7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "bab33411_bf412f94",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-01T07:20:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f85a556_d2337170",
+      "revId": "9fd8b6a386d7e615f729889fb1abb9aa40524e7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fb912cf_5453d281",
         "filename": "components/arc/test/connection_holder_util.h",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "9fd8b6a386d7e615f729889fb1abb9aa40524e7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aab1c747_a38a2a0e",
+        "filename": "components/arc/test/connection_holder_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-01T07:20:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fb912cf_5453d281",
+      "revId": "9fd8b6a386d7e615f729889fb1abb9aa40524e7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
