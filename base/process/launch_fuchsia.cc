@@ -193,4 +193,8 @@ bool GetAppOutputWithExitCode(const CommandLine& cl,
   return GetAppOutputInternal(cl, false, output, exit_code);
 }
 
+void RaiseProcessToHighPriority() {
+  // There is at present no way to implement this.
+}
+
 }  // namespace base
