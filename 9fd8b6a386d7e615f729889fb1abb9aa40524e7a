@@ -192,6 +192,24 @@
       "revId": "9fd8b6a386d7e615f729889fb1abb9aa40524e7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2276e04d_1ca3219b",
+        "filename": "components/arc/test/fake_app_instance.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-01T18:36:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5662879f_4ed988a8",
+      "revId": "9fd8b6a386d7e615f729889fb1abb9aa40524e7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
