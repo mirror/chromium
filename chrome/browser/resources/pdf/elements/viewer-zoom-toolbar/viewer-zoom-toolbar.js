@@ -38,7 +38,7 @@ Polymer({
     this.fireFitToChangedEvent_(
         this.$['fit-button'].activeIndex == FIT_TO_WIDTH_BUTTON_STATE ?
             FittingType.FIT_TO_WIDTH :
-            FittingType.FIT_TO_PAGE);
+            FittingType.FIT_TO_PAGE, true);
   },
 
   /**
@@ -60,7 +60,7 @@ Polymer({
    * @param {FittingType} fittingType Page fitting type to force.
    */
   forceFit: function(fittingType) {
-    this.fireFitToChangedEvent_(fittingType);
+    this.fireFitToChangedEvent_(fittingType, false);
 
     // Set the button state since there was no mouse click.
     var nextButtonState =
@@ -74,8 +74,10 @@ Polymer({
    * Fire a 'fit-to-changed' {CustomEvent} with the given FittingType as detail.
    * @param {FittingType} fittingType to include as payload.
    */
-  fireFitToChangedEvent_: function(fittingType) {
-    this.fire('fit-to-changed', fittingType);
+  fireFitToChangedEvent_: function(fittingType, userInitiated) {
+    this.fire(
+        'fit-to-changed',
+        {fittingType: fittingType, userInitiated: userInitiated});
   },
 
   /**
