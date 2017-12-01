@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28790358_a594b582",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-01T05:30:14Z",
+      "side": 1,
+      "message": "This is a bit unusual in /chrome. I\u0027d suggest removing the /* and */ and making the variable name consistent with the header (\"unused\" is okay if you want the documentation to remain)",
+      "range": {
+        "startLine": 464,
+        "startChar": 42,
+        "endLine": 464,
+        "endChar": 52
+      },
+      "revId": "04376348b64dc25c843e678546baaa933893fdec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eb9e25b_23906141",
+        "filename": "chrome/browser/engagement/site_engagement_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-01T05:30:14Z",
+      "side": 1,
+      "message": "Perhaps:\n\n  // Update the last time |url| was opened from an installed shortcut (hosted\n  // in |web_contents|) to be clock_-\u003eNow().\n\n?",
+      "range": {
+        "startLine": 160,
+        "startChar": 0,
+        "endLine": 161,
+        "endChar": 77
+      },
+      "revId": "04376348b64dc25c843e678546baaa933893fdec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d72ce0ca_a71e358e",
+        "filename": "chrome/browser/engagement/site_engagement_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-01T05:30:14Z",
+      "side": 1,
+      "message": "You\u0027ll have to update the Android callsite at chrome/browser/android/metrics/launch_metrics.cc. Since it\u0027s just an API update you can probably TBR.",
+      "range": {
+        "startLine": 162,
+        "startChar": 7,
+        "endLine": 162,
+        "endChar": 32
+      },
+      "revId": "04376348b64dc25c843e678546baaa933893fdec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a03eafa8_b95ef620",
+        "filename": "chrome/browser/engagement/site_engagement_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1468,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-01T05:30:14Z",
+      "side": 1,
+      "message": "Can you add one more block here which calls SetLastShortcutLaunchTime() and verifies that the observer is called?",
+      "range": {
+        "startLine": 1468,
+        "startChar": 2,
+        "endLine": 1468,
+        "endChar": 3
+      },
+      "revId": "04376348b64dc25c843e678546baaa933893fdec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
