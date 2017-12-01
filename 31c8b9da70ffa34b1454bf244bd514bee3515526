@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "da58bbf2_e6d147da",
+        "filename": "services/shape_detection/detection_utils_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-01T13:16:42Z",
+      "side": 1,
+      "message": "This is outdated advice from a time when Google Test\u0027s EXPECT_EQ and ASSERT_EQ (not Chromium\u0027s DCHECK_EQ) used that actual/expected style. It no longer does, so we now prefer to be consistent with our general style of \"if (foo \u003d\u003d 5)\" rather than \"if (5 \u003d\u003d foo)\".",
+      "parentUuid": "21148f9b_cdc4cb65",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 50
+      },
+      "revId": "31c8b9da70ffa34b1454bf244bd514bee3515526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbfcbfd3_26224df3",
         "filename": "services/shape_detection/detection_utils_win.h",
         "patchSetId": 6
