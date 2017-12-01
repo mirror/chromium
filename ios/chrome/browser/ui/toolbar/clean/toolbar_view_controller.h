@@ -24,32 +24,39 @@
                        BubbleViewAnchorPointProvider,
                        ToolbarConsumer>
 
-- (instancetype)initWithDispatcher:
-                    (id<ApplicationCommands, BrowserCommands>)dispatcher
-                     buttonFactory:(ToolbarButtonFactory*)buttonFactory
-                     buttonUpdater:(ToolbarButtonUpdater*)buttonUpdater
+- (nullable instancetype)
+initWithDispatcher:(nullable id<ApplicationCommands, BrowserCommands>)dispatcher
+     buttonFactory:(nonnull ToolbarButtonFactory*)buttonFactory
+     buttonUpdater:(nullable ToolbarButtonUpdater*)buttonUpdater
     NS_DESIGNATED_INITIALIZER;
 
-- (instancetype)init NS_UNAVAILABLE;
-- (instancetype)initWithCoder:(NSCoder*)aDecoder NS_UNAVAILABLE;
-- (instancetype)initWithNibName:(NSString*)nibNameOrNil
-                         bundle:(NSBundle*)nibBundleOrNil NS_UNAVAILABLE;
+- (nullable instancetype)init NS_UNAVAILABLE;
+- (nullable instancetype)initWithCoder:(nullable NSCoder*)aDecoder
+    NS_UNAVAILABLE;
+- (nonnull instancetype)initWithNibName:(nullable NSString*)nibNameOrNil
+                                 bundle:(nullable NSBundle*)nibBundleOrNil
+    NS_UNAVAILABLE;
 
 // The dispatcher for this view controller.
-@property(nonatomic, weak) id<ApplicationCommands, BrowserCommands> dispatcher;
+@property(nonatomic, weak, nullable) id<ApplicationCommands, BrowserCommands>
+    dispatcher;
 // The location bar view, containing the omnibox.
-@property(nonatomic, strong) UIView* locationBarView;
+@property(nonatomic, strong, nullable) UIView* locationBarView;
 // The ToolsMenu button.
-@property(nonatomic, strong, readonly) ToolbarToolsMenuButton* toolsMenuButton;
+@property(nonatomic, strong, readonly, nullable)
+    ToolbarToolsMenuButton* toolsMenuButton;
 // Whether the toolbar is in the expanded state or not.
 @property(nonatomic, assign) BOOL expanded;
 
 // Adds the toolbar expanded state animations to |animator|, and changes the
-// toolbar constraints in preparation for the animation.
-- (void)addToolbarExpansionAnimations:(UIViewPropertyAnimator*)animator;
+// toolbar constraints in preparation for the animation. If |animator| is nil,
+// it only updates the constraints, without animations.
+- (void)addToolbarExpansionAnimations:
+    (nullable UIViewPropertyAnimator*)animator;
 // Adds the toolbar contracted state animations to |animator|, and changes the
 // toolbar constraints in preparation for the animation.
-- (void)addToolbarContractionAnimations:(UIViewPropertyAnimator*)animator;
+- (void)addToolbarContractionAnimations:
+    (nonnull UIViewPropertyAnimator*)animator;
 // Updates the view so a snapshot can be taken. It needs to be adapted,
 // depending on if it is a snapshot displayed |onNTP| or not.
 - (void)updateForSideSwipeSnapshotOnNTP:(BOOL)onNTP;
