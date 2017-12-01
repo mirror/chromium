@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7808f0cc_cf06d128",
+        "filename": "chrome/browser/android/vr_shell/android_vsync_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-01T00:57:26Z",
+      "side": 1,
+      "message": "Done. Thanks for the ContextUtils tip, that does make things easier.\n\nFor bonus annoyance, Choreographer has a public long getFrameIntervalNanos() method, but it\u0027s not public in our API level and marked @hide in the current version :-/\n\n https://android.googlesource.com/platform/frameworks/base/+/0e40462e11d27eb859b829b112cecb8c6f0d7afb/core/java/android/view/Choreographer.java#260",
+      "parentUuid": "30a95281_69f6816d",
+      "range": {
+        "startLine": 18,
+        "startChar": 33,
+        "endLine": 18,
+        "endChar": 62
+      },
+      "revId": "e2e5e5c2ae752c45d5a519c97d15d4c92a1af7e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "936e6b7d_8da3f91a",
         "filename": "chrome/browser/android/vr_shell/android_vsync_helper.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "e2e5e5c2ae752c45d5a519c97d15d4c92a1af7e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9f378a1_7305ac80",
+        "filename": "chrome/browser/android/vr_shell/android_vsync_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-01T00:57:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "936e6b7d_8da3f91a",
+      "range": {
+        "startLine": 32,
+        "startChar": 23,
+        "endLine": 32,
+        "endChar": 26
+      },
+      "revId": "e2e5e5c2ae752c45d5a519c97d15d4c92a1af7e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f38ffe28_7bc00a02",
+        "filename": "chrome/browser/vr/fps_meter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-01T00:57:26Z",
+      "side": 1,
+      "message": "I\u0027ve ditched this approach in favor of using Display.getRefreshRate().\n\nFWIW, it\u0027s fairly robust due to being based on a sliding average, the test example intentionally started with slow frames and settled on the expected value after just 4 successive 1x-multiplier frames. We can always revive it in the future if it turns out that the Java method gets inappropriate values.",
+      "parentUuid": "c2c63a36_4875667e",
+      "range": {
+        "startLine": 114,
+        "startChar": 2,
+        "endLine": 123,
+        "endChar": 3
+      },
+      "revId": "e2e5e5c2ae752c45d5a519c97d15d4c92a1af7e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ca7fc45_58e57d44",
         "filename": "chrome/browser/vr/fps_meter.h",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "e2e5e5c2ae752c45d5a519c97d15d4c92a1af7e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "707eac94_12ea055f",
+        "filename": "chrome/browser/vr/fps_meter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-01T00:57:26Z",
+      "side": 1,
+      "message": "Done, I created sample_queue.{h,cc} for the shared base implementation and moved Sliding{,TimeDelta}Average to sliding_average.{h,cc}.",
+      "parentUuid": "0ca7fc45_58e57d44",
+      "range": {
+        "startLine": 58,
+        "startChar": 6,
+        "endLine": 58,
+        "endChar": 20
+      },
+      "revId": "e2e5e5c2ae752c45d5a519c97d15d4c92a1af7e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
