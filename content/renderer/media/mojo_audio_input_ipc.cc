@@ -14,7 +14,8 @@ namespace content {
 
 MojoAudioInputIPC::MojoAudioInputIPC(StreamCreatorCB stream_creator)
     : stream_creator_(std::move(stream_creator)),
-      client_binding_(this),
+      stream_client_binding_(this),
+      factory_client_binding_(this),
       weak_factory_(this) {}
 
 MojoAudioInputIPC::~MojoAudioInputIPC() = default;
@@ -30,20 +31,13 @@ void MojoAudioInputIPC::CreateStream(media::AudioInputIPCDelegate* delegate,
 
   delegate_ = delegate;
 
-  media::mojom::AudioInputStreamClientPtr client;
-  client_binding_.Bind(mojo::MakeRequest(&client));
-  client_binding_.set_connection_error_handler(base::BindOnce(
+  mojom::RendererAudioInputStreamFactoryClientPtr client;
+  factory_client_binding_.Bind(mojo::MakeRequest(&client));
+  factory_client_binding_.set_connection_error_handler(base::BindOnce(
       &media::AudioInputIPCDelegate::OnError, base::Unretained(delegate_)));
 
-  stream_creator_.Run(mojo::MakeRequest(&stream_), session_id, params,
-                      automatic_gain_control, total_segments, std::move(client),
-                      base::BindOnce(&MojoAudioInputIPC::StreamCreated,
-                                     weak_factory_.GetWeakPtr()));
-
-  // Unretained is safe since |delegate_| is required to remain valid until
-  // CloseStream is called, which closes the binding.
-  stream_.set_connection_error_handler(base::BindOnce(
-      &media::AudioInputIPCDelegate::OnError, base::Unretained(delegate_)));
+  stream_creator_.Run(std::move(client), session_id, params,
+                      automatic_gain_control, total_segments);
 }
 
 void MojoAudioInputIPC::RecordStream() {
@@ -60,12 +54,17 @@ void MojoAudioInputIPC::SetVolume(double volume) {
 
 void MojoAudioInputIPC::CloseStream() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  client_binding_.Close();
   stream_.reset();
+  if (stream_client_binding_.is_bound())
+    stream_client_binding_.Unbind();
+  if (factory_client_binding_.is_bound())
+    factory_client_binding_.Unbind();
   delegate_ = nullptr;
 }
 
 void MojoAudioInputIPC::StreamCreated(
+    media::mojom::AudioInputStreamPtr stream,
+    media::mojom::AudioInputStreamClientRequest stream_client_request,
     mojo::ScopedSharedBufferHandle shared_memory,
     mojo::ScopedHandle socket,
     bool initially_muted) {
@@ -73,6 +72,10 @@ void MojoAudioInputIPC::StreamCreated(
   DCHECK(delegate_);
   DCHECK(socket.is_valid());
   DCHECK(shared_memory.is_valid());
+  DCHECK(!stream_);
+  DCHECK(!stream_client_binding_.is_bound());
+  stream_ = std::move(stream);
+  stream_client_binding_.Bind(std::move(stream_client_request));
 
   base::PlatformFile socket_handle;
   auto result = mojo::UnwrapPlatformFile(std::move(socket), &socket_handle);
