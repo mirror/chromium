@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa77c036_a6bb0f5b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-multicol/multicol-br-inside-avoidcolumn-001.xht",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-12-01T13:11:31Z",
+      "side": 1,
+      "message": "It would be a bit more work, but if you\u0027re feeling adventurous this test could probably be made to use css/reference/ref-filled-green-200px-square.html as the ref instead.",
+      "range": {
+        "startLine": 8,
+        "startChar": 36,
+        "endLine": 8,
+        "endChar": 42
+      },
+      "revId": "b87ab6a6e72913029f6c24674aa734a3e5aebfcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
