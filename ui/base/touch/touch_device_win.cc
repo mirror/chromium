@@ -58,11 +58,9 @@ int GetAvailableHoverTypes() {
     return HOVER_TYPE_NONE;
 
   int available_hover_types;
-  if (GetSystemMetrics(SM_MOUSEPRESENT) != 0) {
+  if (GetSystemMetrics(SM_MOUSEPRESENT) != 0)
     available_hover_types = HOVER_TYPE_HOVER;
-    if (IsTouchDevicePresent())
-      available_hover_types |= HOVER_TYPE_NONE;
-  } else
+  else
     available_hover_types = HOVER_TYPE_NONE;
 
   return available_hover_types;
