@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5433225f_4f48191e",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-01T03:32:14Z",
+      "side": 1,
+      "message": "It can be made stack-allocated. It\u0027s owned by NGInlineNodeData via a unique_ptr.\n\nSince LayoutBlockFlow owns NGInlineNodeData, and NGInlineNodeData owns NGOffsetMapping, it\u0027s safe for NGOffsetMapping to store a back ptr to LayoutBlockFlow which indirectly owns it.",
+      "parentUuid": "caadfe1e_f9befc13",
+      "range": {
+        "startLine": 94,
+        "startChar": 18,
+        "endLine": 94,
+        "endChar": 34
+      },
+      "revId": "a21d65ce8d85b33f9000f49db5ba33b451c55867",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "325a224f_b37f3361",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping.h",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2017-12-01T02:14:03Z",
       "side": 1,
       "message": "Can we detect changes of NGInlineNodeData?\n\nShould we have version number in NGInlnieNodeData and increment it\neach esetNGInlineNodeData()?",
+      "revId": "a21d65ce8d85b33f9000f49db5ba33b451c55867",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c9ec452_fb1f69e8",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-01T03:32:14Z",
+      "side": 1,
+      "message": "There\u0027s no lifecycle issue since we allow access to NGOffsetMapping only when layout clean.\n\nNGInlineNodeData is reset during layout recalc, so version number doesn\u0027t quite apply to it. And the entire NGInlineNodeData is reset during layout recalculation so we are fine.",
+      "parentUuid": "325a224f_b37f3361",
       "revId": "a21d65ce8d85b33f9000f49db5ba33b451c55867",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
