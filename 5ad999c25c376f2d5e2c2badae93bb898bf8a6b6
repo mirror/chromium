@@ -155,6 +155,24 @@
     },
     {
       "key": {
+        "uuid": "e82c2d78_daff8029",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerProvider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-01T07:13:58Z",
+      "side": 1,
+      "message": "OK as we found out offline it\u0027s hard to use the blink::mojom::RegistrationOptions type here since this class is inherited by //content. Maybe there\u0027s a way to get it to work the mojom-shared.h but it\u0027s not worth the trouble now, as we\u0027re doing Onion Soup soon and this should all live in Blink. So let\u0027s keep as in your patch and add a TODO that we should use the blink::mojom::RegistrationOptions type after Onion Soup.",
+      "parentUuid": "7544a864_63678def",
+      "revId": "5ad999c25c376f2d5e2c2badae93bb898bf8a6b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6de5c126_9a08486f",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
         "patchSetId": 4
