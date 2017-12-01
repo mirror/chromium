@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1d955b3b_1143647f",
+        "filename": "build/secondary/third_party/android_platform/development/scripts/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-12-01T19:18:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af25ea47_b314a6b6",
+      "revId": "7e39d81fd117bb891e220d98cfd05b186a7ea37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27d2bf67_fb1da862",
         "filename": "tools/python/llvm_symbolizer.py",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "7e39d81fd117bb891e220d98cfd05b186a7ea37e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc2f1463_c1c12cd3",
+        "filename": "tools/python/llvm_symbolizer.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-12-01T19:18:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27d2bf67_fb1da862",
+      "revId": "7e39d81fd117bb891e220d98cfd05b186a7ea37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4c14e3a8_473ecbeb",
+        "filename": "tools/python/llvm_symbolizer.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-12-01T19:18:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cc0e0e6_60feaa42",
+      "revId": "7e39d81fd117bb891e220d98cfd05b186a7ea37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efc9d3bd_da24e575",
         "filename": "tools/python/llvm_symbolizer.py",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "7e39d81fd117bb891e220d98cfd05b186a7ea37e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38abd183_26fc5791",
+        "filename": "tools/python/llvm_symbolizer.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-12-01T19:18:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efc9d3bd_da24e575",
+      "revId": "7e39d81fd117bb891e220d98cfd05b186a7ea37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "27d3fde3_65e667f6",
+        "filename": "tools/python/llvm_symbolizer.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-12-01T19:18:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55dc6fc5_2c10b8b8",
+      "revId": "7e39d81fd117bb891e220d98cfd05b186a7ea37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39efd7a4_2896b825",
         "filename": "tools/python/llvm_symbolizer.py",
         "patchSetId": 7
@@ -101,6 +191,24 @@
       "revId": "7e39d81fd117bb891e220d98cfd05b186a7ea37e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f33ccb2e_5bf79c6a",
+        "filename": "tools/python/llvm_symbolizer.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-12-01T19:18:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39efd7a4_2896b825",
+      "revId": "7e39d81fd117bb891e220d98cfd05b186a7ea37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "992adb8a_af45fd1a",
+        "filename": "tools/python/llvm_symbolizer.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-12-01T19:18:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64180625_ed4396bd",
+      "revId": "7e39d81fd117bb891e220d98cfd05b186a7ea37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8721b39_3aad430f",
         "filename": "tools/python/llvm_symbolizer.py",
         "patchSetId": 7
@@ -135,6 +261,24 @@
       "revId": "7e39d81fd117bb891e220d98cfd05b186a7ea37e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9220ad08_d1f90ea0",
+        "filename": "tools/python/llvm_symbolizer.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-12-01T19:18:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8721b39_3aad430f",
+      "revId": "7e39d81fd117bb891e220d98cfd05b186a7ea37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
