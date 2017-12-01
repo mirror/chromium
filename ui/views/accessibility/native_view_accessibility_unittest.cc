@@ -55,6 +55,8 @@ class NativeViewAccessibilityTest : public ViewsTestBase {
   }
 
   void TearDown() override {
+    label_accessibility_.reset();
+    button_accessibility_.reset();
     if (!widget_->IsClosed())
       widget_->Close();
     ViewsTestBase::TearDown();

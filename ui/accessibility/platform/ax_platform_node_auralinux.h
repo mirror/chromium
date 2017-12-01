@@ -112,6 +112,10 @@ class AXPlatformNodeAuraLinux : public AXPlatformNodeBase {
   // top-level windows.
   static AXPlatformNode* application_;
 
+  // Keep a weak reference to the parent, to avoid calling GetParent
+  // on destructor.
+  GWeakRef parent_;
+
   DISALLOW_COPY_AND_ASSIGN(AXPlatformNodeAuraLinux);
 };
 
