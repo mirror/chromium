@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39d53da5_9fc553bc",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-12-01T18:46:46Z",
+      "side": 1,
+      "message": "nit: this is already in the header file",
+      "revId": "614f02d0914c8351f514cdfc3f865be69b71f593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6664d47b_32b09ebf",
+        "filename": "content/browser/download/resource_downloader.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-12-01T18:46:46Z",
+      "side": 1,
+      "message": "I think you can remove this function now, this is introduced to catch the URLLoaderCompletionStatus change when checking the storage permission on UI thread after interception.",
+      "revId": "614f02d0914c8351f514cdfc3f865be69b71f593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
