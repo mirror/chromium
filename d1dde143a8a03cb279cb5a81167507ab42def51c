@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86455fdf_4d623f9d",
+        "filename": "chrome/browser/ui/browser_command_controller_interactive_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-01T17:58:44Z",
+      "side": 1,
+      "message": "optional: you could actually remove this as OS_CHROMEOS always sets OS_LINUX, but it does correspond nicely with the comments, so I leave the decision to you.",
+      "range": {
+        "startLine": 554,
+        "startChar": 4,
+        "endLine": 554,
+        "endChar": 24
+      },
+      "revId": "d1dde143a8a03cb279cb5a81167507ab42def51c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d25a328_e829e731",
+        "filename": "chrome/browser/ui/sync/one_click_signin_sync_observer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-01T17:58:44Z",
+      "side": 1,
+      "message": "nullptr",
+      "range": {
+        "startLine": 195,
+        "startChar": 14,
+        "endLine": 195,
+        "endChar": 18
+      },
+      "revId": "d1dde143a8a03cb279cb5a81167507ab42def51c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
