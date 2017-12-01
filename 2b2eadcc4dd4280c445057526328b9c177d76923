@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "159421dd_435b4d51",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-01T01:17:21Z",
+      "side": 1,
+      "message": "Oops, yes, updated!",
+      "parentUuid": "b8d2d2fe_ed509698",
+      "revId": "2b2eadcc4dd4280c445057526328b9c177d76923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be5920fd_4604b5c6",
         "filename": "content/browser/service_worker/service_worker_script_url_loader_unittest.cc",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "2b2eadcc4dd4280c445057526328b9c177d76923",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "967b0d72_928014a7",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-01T01:17:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be5920fd_4604b5c6",
+      "revId": "2b2eadcc4dd4280c445057526328b9c177d76923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
