@@ -397,8 +397,12 @@ config("cfi_icall_generalize_pointers") {
 
 config("coverage_flags") {
   cflags = []
+  ldflags = []
 
-  if (use_sanitizer_coverage) {
+  if (use_fuzzing_engine) {
+    cflags += [ "-fsanitize=fuzzer-no-link" ]
+    ldflags += [ "-fsanitize=fuzzer-no-link" ]
+  } else if (use_sanitizer_coverage) {
     cflags += [
       "-fsanitize-coverage=$sanitizer_coverage_flags",
       "-mllvm",
