@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f93a9f10_187187fb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 34
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-01T01:39:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f14f81e_3b8d832e",
+      "range": {
+        "startLine": 7,
+        "startChar": 48,
+        "endLine": 7,
+        "endChar": 58
+      },
+      "revId": "345287247db43c052bdaa4a1b437e64d5a907f2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf593f61_091db68b",
         "filename": "chrome/browser/chromeos/file_manager/volume_manager_unittest.cc",
         "patchSetId": 34
@@ -39,6 +63,24 @@
       "revId": "345287247db43c052bdaa4a1b437e64d5a907f2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a937086d_4211ac47",
+        "filename": "chrome/browser/chromeos/file_manager/volume_manager_unittest.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-01T01:39:59Z",
+      "side": 1,
+      "message": "Ack. Will keep size() for consistency.",
+      "parentUuid": "bf593f61_091db68b",
+      "revId": "345287247db43c052bdaa4a1b437e64d5a907f2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "d5ecd306_52dcaf91",
+        "filename": "chromeos/disks/disk_mount_manager.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 911,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-01T01:39:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1752f811_a960e1e4",
+      "range": {
+        "startLine": 911,
+        "startChar": 26,
+        "endLine": 911,
+        "endChar": 40
+      },
+      "revId": "345287247db43c052bdaa4a1b437e64d5a907f2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d645a16_42b34783",
         "filename": "chromeos/disks/disk_mount_manager.h",
         "patchSetId": 34
@@ -85,6 +151,30 @@
       "revId": "345287247db43c052bdaa4a1b437e64d5a907f2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30206e29_9e534049",
+        "filename": "chromeos/disks/disk_mount_manager.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-01T01:39:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d645a16_42b34783",
+      "range": {
+        "startLine": 57,
+        "startChar": 72,
+        "endLine": 57,
+        "endChar": 75
+      },
+      "revId": "345287247db43c052bdaa4a1b437e64d5a907f2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "1168e729_ea518d71",
+        "filename": "chromeos/disks/disk_mount_manager.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-01T01:39:59Z",
+      "side": 1,
+      "message": "Agreed. This is better convention for function. Done.",
+      "parentUuid": "332a3c56_68ea4ac1",
+      "range": {
+        "startLine": 58,
+        "startChar": 38,
+        "endLine": 58,
+        "endChar": 55
+      },
+      "revId": "345287247db43c052bdaa4a1b437e64d5a907f2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3aeb31f1_287e830d",
         "filename": "chromeos/disks/disk_mount_manager.h",
         "patchSetId": 34
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "4581ae36_148f93ad",
+        "filename": "chromeos/disks/disk_mount_manager.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-01T01:39:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3aeb31f1_287e830d",
+      "range": {
+        "startLine": 255,
+        "startChar": 19,
+        "endLine": 255,
+        "endChar": 33
+      },
+      "revId": "345287247db43c052bdaa4a1b437e64d5a907f2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a49db0e_6457c401",
         "filename": "chromeos/disks/disk_mount_manager.h",
         "patchSetId": 34
@@ -151,6 +289,24 @@
     },
     {
       "key": {
+        "uuid": "cf72f05e_942abcec",
+        "filename": "chromeos/disks/disk_mount_manager.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-01T01:39:59Z",
+      "side": 1,
+      "message": "Agreed. Added TODO for now.",
+      "parentUuid": "3a49db0e_6457c401",
+      "revId": "345287247db43c052bdaa4a1b437e64d5a907f2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e1ac6c9_426a3fe6",
         "filename": "chromeos/disks/disk_mount_manager.h",
         "patchSetId": 34
@@ -165,6 +321,24 @@
       "revId": "345287247db43c052bdaa4a1b437e64d5a907f2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "639e4043_f5eff951",
+        "filename": "chromeos/disks/disk_mount_manager.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-01T01:39:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e1ac6c9_426a3fe6",
+      "revId": "345287247db43c052bdaa4a1b437e64d5a907f2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "de379b6e_ba981bbf",
+        "filename": "chromeos/disks/disk_mount_manager_unittest.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-01T01:39:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6195250_70d4b2d9",
+      "range": {
+        "startLine": 221,
+        "startChar": 13,
+        "endLine": 221,
+        "endChar": 53
+      },
+      "revId": "345287247db43c052bdaa4a1b437e64d5a907f2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f2b53b2_c3f3d30b",
         "filename": "chromeos/disks/disk_mount_manager_unittest.cc",
         "patchSetId": 34
@@ -205,6 +403,24 @@
       "revId": "345287247db43c052bdaa4a1b437e64d5a907f2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4ef1d0a_9918e0d3",
+        "filename": "chromeos/disks/disk_mount_manager_unittest.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-01T01:39:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f2b53b2_c3f3d30b",
+      "revId": "345287247db43c052bdaa4a1b437e64d5a907f2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -228,6 +444,30 @@
       "revId": "345287247db43c052bdaa4a1b437e64d5a907f2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36d0abfa_4fc21848",
+        "filename": "chromeos/disks/disk_mount_manager_unittest.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-01T01:39:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84f85073_339c211c",
+      "range": {
+        "startLine": 251,
+        "startChar": 12,
+        "endLine": 251,
+        "endChar": 15
+      },
+      "revId": "345287247db43c052bdaa4a1b437e64d5a907f2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
