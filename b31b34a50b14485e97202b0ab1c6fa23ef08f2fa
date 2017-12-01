@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4eb19247_20cb126b",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-12-01T22:20:20Z",
+      "side": 1,
+      "message": "Right, the animation doesn\u0027t happen instantaneously. But this feels to hacky.\n\nLets get rid of the duration variable as you did here and add instead:\n\n  if(!animated){\n    [animator stopAnimation:NO];\n    [animator finishAnimationAtPosition:UIViewAnimatingPositionEnd];\n  }\n\nCurrently the omnibox animations are not using constraints, thats why you might see the cancel button slide in, but that should be fixed later on.",
+      "revId": "b31b34a50b14485e97202b0ab1c6fa23ef08f2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4f0a887_38e65490",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-12-01T22:20:20Z",
+      "side": 1,
+      "message": "All these nullability annotations, won\u0027t be needed anymore!\nThough we should think of adding these to new classes, specially VC\u0027s. Lets follow up with Mark and co.",
+      "revId": "b31b34a50b14485e97202b0ab1c6fa23ef08f2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
