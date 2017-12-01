@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6cc85f7a_5ed34138",
+        "filename": "ash/accelerators/accelerator_commands_classic.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-01T01:38:00Z",
+      "side": 1,
+      "message": "Clarified comment.",
+      "parentUuid": "c2f1bee4_42e4989b",
+      "revId": "1368fefbd749734707b3f5d4671b56930c0d6638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0034832e_7b7497de",
         "filename": "ash/accelerators/accelerator_controller_delegate_mash.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "1368fefbd749734707b3f5d4671b56930c0d6638",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fcbcc01_8e133ca9",
+        "filename": "ash/accelerators/accelerator_controller_delegate_mash.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-01T01:38:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0034832e_7b7497de",
+      "revId": "1368fefbd749734707b3f5d4671b56930c0d6638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "b13f7e3c_cb96c6e8",
+        "filename": "ash/shell.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1138,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-01T01:38:00Z",
+      "side": 1,
+      "message": "TouchDevicesController doesn\u0027t do anything with touch HUD after this CL, so I\u0027m not sure that\u0027s the best place. I could put this in RootWindowController, since that\u0027s where we handle the non-mash case, but that\u0027s a bit weird since there are multiple root windows and only one touch_hud app. I could launch it in chrome at the same time we launch quick_launch, but that\u0027s also pretty distant and requires mojo manifest changes. I could stick it in the mash-only bits of WindowManager startup. Or I could leave it here. Lemme know what you prefer.",
+      "parentUuid": "c79e477e_0b3639fa",
+      "revId": "1368fefbd749734707b3f5d4671b56930c0d6638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7faebf0e_d5dad082",
         "filename": "ash/touch/touch_observer_hud_unittest.cc",
         "patchSetId": 2
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "40b42534_e0bc4974",
+        "filename": "ash/touch/touch_observer_hud_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-01T01:38:00Z",
+      "side": 1,
+      "message": "No, it\u0027s not tested anywhere. :-( In ash_unittests --mash this test code happened to work, but it was putting the \"touch hud projection\" code into a state we don\u0027t use in production --mash.",
+      "parentUuid": "7faebf0e_d5dad082",
+      "revId": "1368fefbd749734707b3f5d4671b56930c0d6638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "687ccf56_cf7e3b0e",
         "filename": "chrome/browser/flag_descriptions.cc",
         "patchSetId": 2
@@ -98,6 +170,24 @@
       "writtenOn": "2017-11-30T23:53:54Z",
       "side": 1,
       "message": "q: Would it still be useful to describe the top-left HUD listing touch points?",
+      "revId": "1368fefbd749734707b3f5d4671b56930c0d6638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5e50466_b1169dbd",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2614,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-01T01:38:00Z",
+      "side": 1,
+      "message": "Whoops. I thought it didn\u0027t do that anymore, but I guess it still does if you flip the flag and hit Ctrl-Alt-I. Clarified the text.",
+      "parentUuid": "687ccf56_cf7e3b0e",
       "revId": "1368fefbd749734707b3f5d4671b56930c0d6638",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
