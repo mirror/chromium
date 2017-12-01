@@ -4,11 +4,22 @@
 
 #include <windows.h>
 
-#include "base/strings/string16.h"
+#include <memory>
+#include <string>
+#include <vector>
+
+#include "base/rand_util.h"
+#include "base/strings/stringprintf.h"
 #include "base/win/scoped_handle.h"
+#include "base/win/scoped_process_information.h"
 #include "base/win/windows_version.h"
+#include "sandbox/win/src/app_container_profile.h"
 #include "sandbox/win/src/sync_policy_test.h"
+#include "sandbox/win/tests/common/controller.h"
+#include "sandbox/win/tests/common/test_utils.h"
 #include "testing/gtest/include/gtest/gtest.h"
+
+namespace sandbox {
 
 namespace {
 
@@ -16,12 +27,132 @@ const wchar_t kAppContainerSid[] =
     L"S-1-15-2-3251537155-1984446955-2931258699-841473695-1938553385-"
     L"924012148-2839372144";
 
+std::wstring GenerateRandomPackageName() {
+  return base::StringPrintf(L"%016lX%016lX", base::RandUint64(),
+                            base::RandUint64());
+}
+
+const char* TokenTypeToName(TOKEN_TYPE token_type) {
+  return token_type == ::TokenPrimary ? "Primary Token" : "Impersonation Token";
+}
+
+void CheckToken(HANDLE token,
+                TOKEN_TYPE token_type,
+                PSECURITY_CAPABILITIES security_capabilities,
+                bool restricted) {
+  ASSERT_EQ(restricted, ::IsTokenRestricted(token))
+      << TokenTypeToName(token_type);
+
+  DWORD appcontainer;
+  DWORD return_length;
+  ASSERT_TRUE(::GetTokenInformation(token, ::TokenIsAppContainer, &appcontainer,
+                                    sizeof(appcontainer), &return_length))
+      << TokenTypeToName(token_type);
+  ASSERT_TRUE(appcontainer) << TokenTypeToName(token_type);
+  TOKEN_TYPE token_type_real;
+  ASSERT_TRUE(::GetTokenInformation(token, ::TokenType, &token_type_real,
+                                    sizeof(token_type_real), &return_length))
+      << TokenTypeToName(token_type);
+  ASSERT_EQ(token_type_real, token_type) << TokenTypeToName(token_type);
+  if (token_type == ::TokenImpersonation) {
+    SECURITY_IMPERSONATION_LEVEL imp_level;
+    ASSERT_TRUE(::GetTokenInformation(token, ::TokenImpersonationLevel,
+                                      &imp_level, sizeof(imp_level),
+                                      &return_length))
+        << TokenTypeToName(token_type);
+    ASSERT_EQ(imp_level, ::SecurityImpersonation)
+        << TokenTypeToName(token_type);
+  }
+
+  std::unique_ptr<Sid> package_sid;
+  ASSERT_TRUE(GetTokenAppContainerSid(token, &package_sid))
+      << TokenTypeToName(token_type);
+  EXPECT_TRUE(::EqualSid(security_capabilities->AppContainerSid,
+                         package_sid->GetPSID()))
+      << TokenTypeToName(token_type);
+
+  std::vector<SidAndAttributes> capabilities;
+  ASSERT_TRUE(GetTokenGroups(token, ::TokenCapabilities, &capabilities))
+      << TokenTypeToName(token_type);
+
+  ASSERT_EQ(capabilities.size(), security_capabilities->CapabilityCount)
+      << TokenTypeToName(token_type);
+  for (size_t index = 0; index < capabilities.size(); ++index) {
+    EXPECT_EQ(capabilities[index].GetAttributes(),
+              security_capabilities->Capabilities[index].Attributes)
+        << TokenTypeToName(token_type);
+    EXPECT_TRUE(::EqualSid(capabilities[index].GetPSID(),
+                           security_capabilities->Capabilities[index].Sid))
+        << TokenTypeToName(token_type);
+  }
+}
+
+void CheckProcessToken(HANDLE process,
+                       PSECURITY_CAPABILITIES security_capabilities,
+                       bool restricted) {
+  HANDLE token_handle;
+  ASSERT_TRUE(::OpenProcessToken(process, TOKEN_ALL_ACCESS, &token_handle));
+  base::win::ScopedHandle token(token_handle);
+  CheckToken(token_handle, ::TokenPrimary, security_capabilities, restricted);
+}
+
+void CheckThreadToken(HANDLE thread,
+                      PSECURITY_CAPABILITIES security_capabilities,
+                      bool restricted) {
+  HANDLE token_handle;
+  ASSERT_TRUE(::OpenThreadToken(thread, TOKEN_ALL_ACCESS, TRUE, &token_handle));
+  base::win::ScopedHandle token(token_handle);
+  CheckToken(token_handle, ::TokenImpersonation, security_capabilities,
+             restricted);
+}
+
+class AppContainerProfileTest : public ::testing::Test {
+ public:
+  void SetUp() override {
+    if (base::win::GetVersion() < base::win::VERSION_WIN8)
+      return;
+    package_name_ = GenerateRandomPackageName();
+    broker_services_ = GetBroker();
+    profile_ = AppContainerProfile::Create(package_name_.c_str(), L"Name",
+                                           L"Description");
+    policy_ = broker_services_->CreatePolicy(profile_.get());
+  }
+
+  void TearDown() override {
+    if (scoped_process_info_.IsValid())
+      ::TerminateProcess(scoped_process_info_.process_handle(), 0);
+    if (profile_)
+      AppContainerProfile::Delete(package_name_.c_str());
+  }
+
+ protected:
+  void CreateProcess() {
+    // Get the path to the sandboxed app.
+    wchar_t prog_name[MAX_PATH] = {};
+    ASSERT_NE(DWORD{0}, ::GetModuleFileNameW(nullptr, prog_name, MAX_PATH));
+
+    PROCESS_INFORMATION process_info = {};
+    ResultCode last_warning = SBOX_ALL_OK;
+    DWORD last_error = 0;
+    ResultCode result = broker_services_->SpawnTarget(
+        prog_name, prog_name, policy_, &last_warning, &last_error,
+        &process_info);
+    ASSERT_EQ(SBOX_ALL_OK, result) << "Last Error: " << last_error;
+    scoped_process_info_.Set(process_info);
+  }
+
+  std::wstring package_name_;
+  BrokerServices* broker_services_;
+  scoped_refptr<AppContainerProfile> profile_;
+  scoped_refptr<TargetPolicy> policy_;
+  base::win::ScopedProcessInformation scoped_process_info_;
+};
+
 }  // namespace
 
-namespace sandbox {
 
 TEST(AppContainerTest, DenyOpenEventForLowBox) {
-  if (base::win::OSInfo::GetInstance()->version() < base::win::VERSION_WIN8)
+  if (base::win::GetVersion() < base::win::VERSION_WIN8)
     return;
 
   TestRunner runner(JOB_UNPROTECTED, USER_UNPROTECTED, USER_UNPROTECTED);
@@ -30,7 +161,7 @@ TEST(AppContainerTest, DenyOpenEventForLowBox) {
   // Run test once, this ensures the app container directory exists, we
   // ignore the result.
   runner.RunTest(L"Event_Open f test");
-  base::string16 event_name = L"AppContainerNamedObjects\\";
+  std::wstring event_name = L"AppContainerNamedObjects\\";
   event_name += kAppContainerSid;
   event_name += L"\\test";
 
@@ -41,7 +172,102 @@ TEST(AppContainerTest, DenyOpenEventForLowBox) {
   EXPECT_EQ(SBOX_TEST_DENIED, runner.RunTest(L"Event_Open f test"));
 }
 
-// TODO(shrikant): Please add some tests to prove usage of lowbox token like
-// socket connection to local server in lock down mode.
+TEST_F(AppContainerProfileTest, CheckIncompatibleOptions) {
+  if (!profile_)
+    return;
+  EXPECT_EQ(DWORD{SBOX_ERROR_BAD_PARAMS},
+            policy_->SetIntegrityLevel(INTEGRITY_LEVEL_UNTRUSTED));
+  EXPECT_EQ(DWORD{SBOX_ERROR_BAD_PARAMS}, policy_->SetLowBox(kAppContainerSid));
+}
+
+TEST_F(AppContainerProfileTest, NoCapabilities) {
+  if (!profile_)
+    return;
+
+  policy_->SetTokenLevel(USER_UNPROTECTED, USER_UNPROTECTED);
+  policy_->SetJobLevel(JOB_NONE, 0);
+
+  CreateProcess();
+  auto security_capabilities = profile_->GetSecurityCapabilities();
+
+  CheckProcessToken(scoped_process_info_.process_handle(),
+                    security_capabilities.get(), false);
+  CheckThreadToken(scoped_process_info_.thread_handle(),
+                   security_capabilities.get(), false);
+}
+
+TEST_F(AppContainerProfileTest, NoCapabilitiesRestricted) {
+  if (!profile_)
+    return;
+
+  policy_->SetTokenLevel(USER_LOCKDOWN, USER_RESTRICTED_SAME_ACCESS);
+  policy_->SetJobLevel(JOB_NONE, 0);
+
+  CreateProcess();
+  auto security_capabilities = profile_->GetSecurityCapabilities();
+
+  CheckProcessToken(scoped_process_info_.process_handle(),
+                    security_capabilities.get(), true);
+  CheckThreadToken(scoped_process_info_.thread_handle(),
+                   security_capabilities.get(), true);
+}
+
+TEST_F(AppContainerProfileTest, WithCapabilities) {
+  if (!profile_)
+    return;
+
+  profile_->AddCapability(kInternetClient);
+  profile_->AddCapability(kInternetClientServer);
+  policy_->SetTokenLevel(USER_UNPROTECTED, USER_UNPROTECTED);
+  policy_->SetJobLevel(JOB_NONE, 0);
+
+  CreateProcess();
+  auto security_capabilities = profile_->GetSecurityCapabilities();
+
+  CheckProcessToken(scoped_process_info_.process_handle(),
+                    security_capabilities.get(), false);
+  CheckThreadToken(scoped_process_info_.thread_handle(),
+                   security_capabilities.get(), false);
+}
+
+TEST_F(AppContainerProfileTest, WithCapabilitiesRestricted) {
+  if (!profile_)
+    return;
+
+  profile_->AddCapability(kInternetClient);
+  profile_->AddCapability(kInternetClientServer);
+  policy_->SetTokenLevel(USER_UNPROTECTED, USER_UNPROTECTED);
+  policy_->SetJobLevel(JOB_NONE, 0);
+
+  CreateProcess();
+  auto security_capabilities = profile_->GetSecurityCapabilities();
+
+  CheckProcessToken(scoped_process_info_.process_handle(),
+                    security_capabilities.get(), false);
+  CheckThreadToken(scoped_process_info_.thread_handle(),
+                   security_capabilities.get(), false);
+}
+
+TEST_F(AppContainerProfileTest, WithImpersonationCapabilities) {
+  if (!profile_)
+    return;
+
+  profile_->AddCapability(kInternetClient);
+  profile_->AddCapability(kInternetClientServer);
+  profile_->AddImpersonationCapability(kPrivateNetworkClientServer);
+  profile_->AddImpersonationCapability(kPicturesLibrary);
+  policy_->SetTokenLevel(USER_UNPROTECTED, USER_UNPROTECTED);
+  policy_->SetJobLevel(JOB_NONE, 0);
+
+  CreateProcess();
+  auto security_capabilities = profile_->GetSecurityCapabilities();
+
+  CheckProcessToken(scoped_process_info_.process_handle(),
+                    security_capabilities.get(), false);
+  SecurityCapabilities impersonation_security_capabilities(
+      profile_->GetPackageSid(), profile_->GetImpersonationCapabilities());
+  CheckThreadToken(scoped_process_info_.thread_handle(),
+                   &impersonation_security_capabilities, false);
+}
 
 }  // namespace sandbox

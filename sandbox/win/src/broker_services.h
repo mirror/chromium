@@ -47,6 +47,8 @@ class BrokerServicesBase final : public BrokerServices,
   // BrokerServices interface.
   ResultCode Init() override;
   scoped_refptr<TargetPolicy> CreatePolicy() override;
+  scoped_refptr<TargetPolicy> CreatePolicy(
+      AppContainerProfile* profile) override;
   ResultCode SpawnTarget(const wchar_t* exe_path,
                          const wchar_t* command_line,
                          scoped_refptr<TargetPolicy> policy,

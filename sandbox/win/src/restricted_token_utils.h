@@ -8,6 +8,9 @@
 #include <accctrl.h>
 #include <windows.h>
 
+#include <memory>
+#include <vector>
+
 #include "base/win/scoped_handle.h"
 #include "sandbox/win/src/restricted_token.h"
 #include "sandbox/win/src/security_level.h"

@@ -11,6 +11,7 @@
 #include <stdint.h>
 
 #include <memory>
+#include <vector>
 
 #include "base/macros.h"
 #include "base/memory/free_deleter.h"
@@ -18,6 +19,7 @@
 #include "base/win/scoped_process_information.h"
 #include "sandbox/win/src/crosscall_server.h"
 #include "sandbox/win/src/sandbox_types.h"
+#include "sandbox/win/src/sid.h"
 
 namespace base {
 namespace win {
@@ -36,12 +38,12 @@ class ThreadProvider;
 // class are owned by the Policy used to create them.
 class TargetProcess {
  public:
-  // The constructor takes ownership of |initial_token|, |lockdown_token|
-  // and |lowbox_token|.
+  // The constructor takes ownership of |initial_token| and |lockdown_token|
   TargetProcess(base::win::ScopedHandle initial_token,
                 base::win::ScopedHandle lockdown_token,
                 HANDLE job,
-                ThreadProvider* thread_pool);
+                ThreadProvider* thread_pool,
+                const std::vector<Sid>& impersonation_capabilities);
   ~TargetProcess();
 
   // TODO(cpu): Currently there does not seem to be a reason to implement
@@ -120,6 +122,8 @@ class TargetProcess {
   void* base_address_;
   // Full name of the target executable.
   std::unique_ptr<wchar_t, base::FreeDeleter> exe_name_;
+  /// List of capability sids for use when impersonating in an AC process.
+  std::vector<Sid> impersonation_capabilities_;
 
   // Function used for testing.
   friend TargetProcess* MakeTestTargetProcess(HANDLE process,

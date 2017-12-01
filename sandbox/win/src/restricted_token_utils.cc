@@ -397,4 +397,25 @@ DWORD CreateLowBoxObjectDirectory(PSID lowbox_sid,
   return ERROR_SUCCESS;
 }
 
+bool GetTokenAppContainerSid(HANDLE token_handle,
+                             std::unique_ptr<Sid>* app_container_sid) {
+  std::vector<char> app_container_info(sizeof(TOKEN_APPCONTAINER_INFORMATION) +
+                                       SECURITY_MAX_SID_SIZE);
+  DWORD return_length;
+
+  if (!::GetTokenInformation(token_handle, TokenAppContainerSid,
+                             app_container_info.data(),
+                             app_container_info.size(), &return_length)) {
+    return false;
+  }
+
+  PTOKEN_APPCONTAINER_INFORMATION info =
+      reinterpret_cast<PTOKEN_APPCONTAINER_INFORMATION>(
+          app_container_info.data());
+  if (!info->TokenAppContainer)
+    return false;
+  *app_container_sid = std::unique_ptr<Sid>(new Sid(info->TokenAppContainer));
+  return true;
+}
+
 }  // namespace sandbox
