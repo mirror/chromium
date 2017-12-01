@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0199cea9_622eb83e",
+        "filename": "chrome/app/theme/theme_resources.grd",
+        "patchSetId": 6
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-01T09:53:08Z",
+      "side": 1,
+      "message": "This should probably be IDR_PROFILES_TURN_ON_SYNC_ILLUSTRATION",
+      "parentUuid": "d8517eeb_68598f4a",
+      "revId": "2eee761834c1affb31a0497b2d0ad1e22f3f6412",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e252d258_860694be",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 6
