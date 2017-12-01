@@ -6,6 +6,7 @@
 #define CHROMEOS_DBUS_FAKE_EASY_UNLOCK_CLIENT_H_
 
 #include <string>
+#include <utility>
 
 #include "base/macros.h"
 #include "chromeos/dbus/easy_unlock_client.h"
@@ -25,19 +26,19 @@ class CHROMEOS_EXPORT FakeEasyUnlockClient : public EasyUnlockClient {
 
   // EasyUnlockClient overrides
   void Init(dbus::Bus* bus) override;
-  void GenerateEcP256KeyPair(const KeyPairCallback& callback) override;
+  void GenerateEcP256KeyPair(KeyPairCallback callback) override;
   void WrapPublicKey(const std::string& key_algorithm,
                      const std::string& public_key,
-                     const DataCallback& callback) override;
+                     DataCallback callback) override;
   void PerformECDHKeyAgreement(const std::string& private_key,
                                const std::string& public_key,
-                               const DataCallback& callback) override;
+                               DataCallback callback) override;
   void CreateSecureMessage(const std::string& payload,
                            const CreateSecureMessageOptions& options,
-                           const DataCallback& callback) override;
+                           DataCallback callback) override;
   void UnwrapSecureMessage(const std::string& message,
                            const UnwrapSecureMessageOptions& options,
-                           const DataCallback& callback) override;
+                           DataCallback callback) override;
 
  private:
   int generated_keys_count_;
