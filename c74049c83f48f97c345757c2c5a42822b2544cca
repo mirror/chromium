@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ed84a95c_4093956e",
+        "filename": "extensions/renderer/bindings/event_emitter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-01T18:52:20Z",
+      "side": 1,
+      "message": "Yep!  Rebased in the latest patch set.",
+      "parentUuid": "1e7a7999_a07eeef6",
+      "revId": "c74049c83f48f97c345757c2c5a42822b2544cca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc765272_bc101cb6",
         "filename": "extensions/renderer/bindings/event_emitter.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "c74049c83f48f97c345757c2c5a42822b2544cca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25e256b9_eda14370",
+        "filename": "extensions/renderer/bindings/event_emitter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-01T18:52:20Z",
+      "side": 1,
+      "message": "Good to know!  I was going back and forth on this, but figured that allocation cost of a TryCatch was going to be very similar to the Reset() cost, and thought this was clearer than needing to Reset() in certain circumstances.  But I didn\u0027t know there was any additional cost associated with setting it up.  Hoisted to outside the loop.  Thanks!",
+      "parentUuid": "cc765272_bc101cb6",
+      "revId": "c74049c83f48f97c345757c2c5a42822b2544cca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e1e06161_f5036d61",
+        "filename": "extensions/renderer/bindings/event_emitter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-01T18:52:20Z",
+      "side": 1,
+      "message": "Thanks! Updated TODO, but for now keeping the graceful handling.",
+      "parentUuid": "bb5046a8_a5935304",
+      "revId": "c74049c83f48f97c345757c2c5a42822b2544cca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f77afcff_6b3e0fe0",
         "filename": "extensions/renderer/bindings/event_emitter.cc",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-30T20:03:52Z",
       "side": 1,
       "message": "Not sure how I feel about this. It seems like it\u0027s hacking around the fact that we don\u0027t provide an API to run C++ code when suspension ends. We\u0027re constructing JS data but not really for use by script.\n\nI wonder if what we would rather have is something like:\n\n  // WebLocalFrame\n  virtual void InvokeWhenNotPaused(base::OnceClosure closure);\n\n(where OnceClosure might be replaced by a virtual interface depending on where we are on the discussion about allowing base::Callback in the Blink public API; that\u0027s an ongoing area of development)\n\nThen you could bind the stuff you want in the usual way, rather than having to build a V8 object, stash some data in EventEmitter, etc.",
+      "revId": "c74049c83f48f97c345757c2c5a42822b2544cca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab44b63e_cde198b8",
+        "filename": "extensions/renderer/bindings/event_emitter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-01T18:52:20Z",
+      "side": 1,
+      "message": "When I previously raised this, there was some hesitation to expose that type of API on WebLocalFrame (though admittedly, we *are* just hacking around that here).  That would certainly be preferable, though.\n\nHow would you feel about going with this approach for now, and I\u0027ll write up a CL to introduce a method on WebLocalFrame to do that separately, and we can continue the discussion there?  If you\u0027re vehemently against this, I understand, and we can explore that first (rather than landing this and then updating if a InvokeWhenNotPaused() is added).",
+      "parentUuid": "f77afcff_6b3e0fe0",
       "revId": "c74049c83f48f97c345757c2c5a42822b2544cca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "c74049c83f48f97c345757c2c5a42822b2544cca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c9e91d0_c9a17a87",
+        "filename": "extensions/renderer/bindings/event_emitter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-01T18:52:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2334ca83_dfddbc99",
+      "revId": "c74049c83f48f97c345757c2c5a42822b2544cca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
