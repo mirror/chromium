@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b753c86_a9fd7081",
+        "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-01T07:11:36Z",
+      "side": 1,
+      "message": "Best practice seems to indicate that there should be a web ui message to indicate that initialization is complete, and just call AllowJavascript() once from there: https://cs.chromium.org/chromium/src/content/public/browser/web_ui_message_handler.h?rcl\u003d30daff6502d23b98a544c110e598f42c477a390c\u0026l\u003d61",
+      "revId": "3fbae32374bbb9a6712a38a8bf8e0e33eb1c443c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
