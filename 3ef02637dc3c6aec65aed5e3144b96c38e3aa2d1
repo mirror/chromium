@@ -34,6 +34,24 @@
       "revId": "3ef02637dc3c6aec65aed5e3144b96c38e3aa2d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dd6f36a1_0f5373d1",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/CacheStorage.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-12-01T23:23:52Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "47b1524b_f3fd5d61",
+      "revId": "3ef02637dc3c6aec65aed5e3144b96c38e3aa2d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
