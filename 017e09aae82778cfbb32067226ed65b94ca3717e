@@ -16,6 +16,24 @@
       "revId": "017e09aae82778cfbb32067226ed65b94ca3717e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a51696b_eb4ed2cb",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-01T02:35:07Z",
+      "side": 0,
+      "message": "Once this is in-place, only change is component updater loads the original copy instead of the one in imageloader. Any subsequent updates won\u0027t create additional copies. The old copies made by imageloader stays until next device reset. From space perspective, printer drivers sizes are negligible. And this does not affect any other components (flash, etc.).\n\nNo, original copy in component updater is located in user data directory root (decided by a chrome parameter) shared among all users.",
+      "parentUuid": "6c98ad1f_909e32a8",
+      "revId": "017e09aae82778cfbb32067226ed65b94ca3717e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

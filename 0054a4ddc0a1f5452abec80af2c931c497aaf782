@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "11c609d2_c8c2538c",
+        "filename": "chrome/browser/browser_process_platform_part_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-01T02:35:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa43da3e_3cf98544",
+      "revId": "0054a4ddc0a1f5452abec80af2c931c497aaf782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "810c3c72_68e3ca3e",
         "filename": "chrome/browser/browser_process_platform_part_chromeos.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "53a311ec_b2bc6ce3",
+        "filename": "chrome/browser/browser_process_platform_part_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-01T02:35:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "810c3c72_68e3ca3e",
+      "revId": "0054a4ddc0a1f5452abec80af2c931c497aaf782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf889512_6de7f16b",
         "filename": "chrome/browser/browser_process_platform_part_chromeos.cc",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-30T22:17:08Z",
       "side": 1,
       "message": "you\u0027re inserting entries here when invalid names are passed. that doesn\u0027t seem desirable. do you need some way to return failure instead?",
+      "revId": "0054a4ddc0a1f5452abec80af2c931c497aaf782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c974744c_56ccbccb",
+        "filename": "chrome/browser/browser_process_platform_part_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-01T02:35:07Z",
+      "side": 1,
+      "message": "so i check IsCompatibleCrOSComponent first. if it\u0027s not compatible, construct an empty FilePath and return it.",
+      "parentUuid": "bf889512_6de7f16b",
       "revId": "0054a4ddc0a1f5452abec80af2c931c497aaf782",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "07d54fba_03c64960",
+        "filename": "chrome/browser/browser_process_platform_part_chromeos.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-01T02:35:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab5b5bbd_96b945c8",
+      "revId": "0054a4ddc0a1f5452abec80af2c931c497aaf782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34130db1_4608e982",
         "filename": "chrome/browser/browser_process_platform_part_chromeos.h",
         "patchSetId": 4
@@ -84,6 +156,24 @@
       "revId": "0054a4ddc0a1f5452abec80af2c931c497aaf782",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd7e3b73_7cd43268",
+        "filename": "chrome/browser/browser_process_platform_part_chromeos.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-01T02:35:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34130db1_4608e982",
+      "revId": "0054a4ddc0a1f5452abec80af2c931c497aaf782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "7b222a46_90302a36",
+        "filename": "chrome/browser/browser_process_platform_part_chromeos.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-01T02:35:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06a6bfec_c3077312",
+      "revId": "0054a4ddc0a1f5452abec80af2c931c497aaf782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac41a46d_4c85a453",
         "filename": "chrome/browser/browser_process_platform_part_chromeos.h",
         "patchSetId": 4
@@ -118,6 +226,24 @@
       "revId": "0054a4ddc0a1f5452abec80af2c931c497aaf782",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "095c62d8_63c061d1",
+        "filename": "chrome/browser/browser_process_platform_part_chromeos.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-01T02:35:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac41a46d_4c85a453",
+      "revId": "0054a4ddc0a1f5452abec80af2c931c497aaf782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "d9a6c997_63b78cf5",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-01T02:35:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41abfc7e_a88bbb65",
+      "revId": "0054a4ddc0a1f5452abec80af2c931c497aaf782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e397dd53_b905dd3b",
         "filename": "chrome/browser/component_updater/cros_component_installer_unittest.cc",
         "patchSetId": 4
@@ -152,6 +296,24 @@
       "revId": "0054a4ddc0a1f5452abec80af2c931c497aaf782",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28a2d920_cb95da24",
+        "filename": "chrome/browser/component_updater/cros_component_installer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-01T02:35:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e397dd53_b905dd3b",
+      "revId": "0054a4ddc0a1f5452abec80af2c931c497aaf782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "227fa1a0_3878928e",
+        "filename": "chrome/browser/component_updater/cros_component_installer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-01T02:35:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57cad5d9_8ccb5051",
+      "revId": "0054a4ddc0a1f5452abec80af2c931c497aaf782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b646e15d_749bec9f",
         "filename": "chromeos/dbus/fake_image_loader_client.h",
         "patchSetId": 4
@@ -186,6 +366,24 @@
       "revId": "0054a4ddc0a1f5452abec80af2c931c497aaf782",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e8f380d_0098be04",
+        "filename": "chromeos/dbus/fake_image_loader_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-01T02:35:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b646e15d_749bec9f",
+      "revId": "0054a4ddc0a1f5452abec80af2c931c497aaf782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "5a708077_a1b57cb3",
+        "filename": "chromeos/dbus/image_loader_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-01T02:35:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57c1325f_cf38f250",
+      "revId": "0054a4ddc0a1f5452abec80af2c931c497aaf782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c5e39ce_91687838",
         "filename": "chromeos/dbus/image_loader_client.h",
         "patchSetId": 4
@@ -220,6 +436,24 @@
       "revId": "0054a4ddc0a1f5452abec80af2c931c497aaf782",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b277818_a5433abd",
+        "filename": "chromeos/dbus/image_loader_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-01T02:35:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c5e39ce_91687838",
+      "revId": "0054a4ddc0a1f5452abec80af2c931c497aaf782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
