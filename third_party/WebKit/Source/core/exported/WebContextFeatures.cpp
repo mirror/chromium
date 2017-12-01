@@ -13,6 +13,7 @@ namespace blink {
 // static
 void WebContextFeatures::EnableMojoJS(v8::Local<v8::Context> context,
                                       bool enable) {
+  LOG(ERROR) << "BDG: Enabling Mojo JS!";
   ScriptState* script_state = ScriptState::From(context);
   DCHECK(script_state->World().IsMainWorld());
   ContextFeatureSettings::From(

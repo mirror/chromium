@@ -6,7 +6,10 @@ test_system_app_dir = "$root_out_dir/resources/test_system_app"
 
 copy("test_system_app") {
   sources = [
+    "app.js",
     "manifest.json",
+    "mojo_bindings.js",
+    "test_system_app.mojom.js",
     "app.html",
   ]
 
