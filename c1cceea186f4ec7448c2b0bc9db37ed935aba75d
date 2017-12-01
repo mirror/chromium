@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51443094_26f2a92d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorViewHolder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-01T11:58:07Z",
+      "side": 0,
+      "message": "No |ContentView.onSizeChanged()| event had been occurring here before https://crrev.com/c/752963, but the CL added this line with an intention to have the browser controls size change get reflected in content layer. It turns out that ChromeFullscreenManager momentarily had |conrolsResizeView| set to true, top control size set to non-zero value at this point. It was harmless since the info got immediately updated to the correct state, but the CL calling |setSize()| inadvertently asked content layer to trigger resizing, which in turn picks up the wrong size (view height smaller by the top control size) for Webapp/CCT activity. \n\n\nIt doesn\u0027t explain why the bug is shown on news.google.com but not on other site though. I chose a simple remedy of removing this line. This is as good as reverting to the way it had worked before the CL in terms of resize triggering. I verified this change fixes the bug.",
+      "revId": "c1cceea186f4ec7448c2b0bc9db37ed935aba75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
