@@ -8,16 +8,22 @@
 #include <string>
 
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
 #include "components/os_crypt/key_storage_linux.h"
+
+namespace base {
+class SequencedTaskRunner;
+}
 
 // Specialisation of KeyStorageLinux that uses Libsecret.
 class KeyStorageLibsecret : public KeyStorageLinux {
  public:
-  KeyStorageLibsecret() = default;
-  ~KeyStorageLibsecret() override = default;
+  KeyStorageLibsecret();
+  ~KeyStorageLibsecret() override;
 
  protected:
   // KeyStorageLinux
+  base::SequencedTaskRunner* GetTaskRunner() override;
   bool Init() override;
   std::string GetKeyImpl() override;
 
@@ -29,6 +35,10 @@ class KeyStorageLibsecret : public KeyStorageLinux {
   // them to the new schema. Returns the migrated password or an empty string if
   // none we migrated.
   std::string Migrate();
+
+  // Clients of libsecret need to use the same TaskRunner to avoid race
+  // conditions.
+  scoped_refptr<base::SequencedTaskRunner> task_runner_;
 
   DISALLOW_COPY_AND_ASSIGN(KeyStorageLibsecret);
 };
