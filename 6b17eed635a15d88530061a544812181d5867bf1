@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "72691b99_e151a9c5",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-01T21:41:09Z",
+      "side": 1,
+      "message": "Every test relies on the fact that web_state is TestWebState, so I\u0027m not sure if I understand \"encapsulation\" argument.\n\nEvery test casts 2 times:\n1.) TestWebState -\u003e WebState\n2.) WebState -\u003e TestWebState\nwhich is confusing.\n\nAlso casting requires a helper function which adds another layer of complexity.",
+      "parentUuid": "4b8531ee_5082b36a",
+      "revId": "6b17eed635a15d88530061a544812181d5867bf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99d458b2_31317599",
         "filename": "ios/chrome/browser/metrics/tab_usage_recorder_unittest.mm",
         "patchSetId": 5
@@ -119,6 +137,30 @@
       "side": 1,
       "message": "But we don\u0027t do this anywhere else?",
       "parentUuid": "99d458b2_31317599",
+      "range": {
+        "startLine": 379,
+        "startChar": 55,
+        "endLine": 379,
+        "endChar": 59
+      },
+      "revId": "6b17eed635a15d88530061a544812181d5867bf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ab88795_0f887276",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-01T21:41:09Z",
+      "side": 1,
+      "message": "It is true. But also it is not very readable and does not follow recommendations from C++ Style Guide (see Function Argument Comments from here: https://google.github.io/styleguide/cppguide.html#Implementation_Comments)",
+      "parentUuid": "10a9c639_9daf635b",
       "range": {
         "startLine": 379,
         "startChar": 55,
