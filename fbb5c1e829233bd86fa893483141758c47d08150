@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6275f939_86a39387",
+        "filename": "ui/file_manager/file_manager/foreground/js/import_controller.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-12-01T06:40:55Z",
+      "side": 1,
+      "message": "Test \"availableSpace[1] !\u003d\u003d -1\" first to avoid comparing sizeBytes and invalid size.",
+      "revId": "fbb5c1e829233bd86fa893483141758c47d08150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c1d64ea_a587a646",
+        "filename": "ui/file_manager/file_manager/foreground/js/import_controller.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 1088,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-12-01T06:40:55Z",
+      "side": 1,
+      "message": "Since we changed the method signature, https://codesearch.chromium.org/chromium/src/ui/file_manager/file_manager/foreground/js/import_controller_unittest.js?type\u003dcs\u0026q\u003dgetFreeStorageSpace\u0026sq\u003dpackage:chromium\u0026l\u003d551 needs to be updated, too.",
+      "revId": "fbb5c1e829233bd86fa893483141758c47d08150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
