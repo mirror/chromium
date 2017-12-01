@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03d3b383_e82d116a",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 5
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1003211
+      },
+      "writtenOn": "2017-12-01T02:11:07Z",
+      "side": 1,
+      "message": "This name is inconsistent with everything. Why mix dashes and underscores? Why not make it similar to GomaCanaryiOS?",
+      "revId": "2e1083769db1b296fe78036d4262bb479c39cff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
