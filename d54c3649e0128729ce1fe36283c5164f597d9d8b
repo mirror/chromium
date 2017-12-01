@@ -16,6 +16,24 @@
       "revId": "d54c3649e0128729ce1fe36283c5164f597d9d8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eb49d6f_e9aa5c91",
+        "filename": "third_party/WebKit/Source/core/paint/InlineFlowBoxPainter.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-12-01T12:24:44Z",
+      "side": 1,
+      "message": "\u003e What was the root of the problem the code here fixes? That the visual overflow did\n\u003e not intersect the cull rect because it\u0027s empty?\n\nYes that was the idea of the first patch.\n\n\u003e If so, why is it that the visual overflow of these lines don\u0027t get a chance to include\n\u003e the new line in the way others do, via computation of visual overflow rects?\n\nI\u0027ve been checking this, there were different reasons:\n1) Newlines were marked as InlineBox::KnownToHaveNoOverflow().\n2) Also newlines were skipped in InlineFlowBox::ComputeOverflow().\n3) Even if we don\u0027t skip them the LogicalWidth() is 0px, so the overflow created\n   from that has 0px width.\n\nFor example, I was checking LogicalWidth() of different InlineBox:\n* \"bar\": LogicalWidth() returns 30px\n* \"bar\\n\": LogicalWidth() returns 36px\n* \"\\n\": LogicalWidth() returns 0px\n\nChanging LogicalWidth() of newlines doesn\u0027t seem like a good idea,\nso I\u0027ve upload a new patch that modifies InlineFlowBox::ComputeOverflow()\nfor the case of newlines extending the overflow rect.\nWith that no changes in the painting code are needed.",
+      "parentUuid": "bdde045b_8beee4ea",
+      "revId": "d54c3649e0128729ce1fe36283c5164f597d9d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
