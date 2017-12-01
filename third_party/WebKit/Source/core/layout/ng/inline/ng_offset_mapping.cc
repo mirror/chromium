@@ -125,6 +125,8 @@ const NGOffsetMapping* NGOffsetMapping::GetFor(const Position& position) {
   const auto node_offset_pair = ToNodeOffsetPair(position);
   const LayoutObject* layout_object =
       AssociatedLayoutObjectOf(node_offset_pair.first, node_offset_pair.second);
+  if (layout_object->IsInline() && layout_object->IsAtomicInlineLevel())
+    layout_object = layout_object->Parent();
   return GetFor(layout_object);
 }
 
@@ -133,12 +135,11 @@ const NGOffsetMapping* NGOffsetMapping::GetFor(
     const LayoutObject* layout_object) {
   if (!RuntimeEnabledFeatures::LayoutNGEnabled())
     return nullptr;
-  if (!layout_object || !layout_object->IsInline())
+  if (!layout_object)
     return nullptr;
   LayoutBlockFlow* block_flow = layout_object->EnclosingNGBlockFlow();
-  if (!block_flow)
+  if (!block_flow || !block_flow->ChildrenInline())
     return nullptr;
-  DCHECK(block_flow->ChildrenInline());
   NGBlockNode block_node = NGBlockNode(block_flow);
   if (!block_node.CanUseNewLayout())
     return nullptr;
