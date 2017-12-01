@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db452038_72e64c82",
+        "filename": "components/url_formatter/url_formatter_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-01T20:40:06Z",
+      "side": 1,
+      "message": "Nit: \"has changed\" will make less sense years from now; maybe \"At one point the skeleton of \u0027w\u0027 was \"vv\"; ensure that it\u0027s treated as \u0027w\u0027.\"?",
+      "revId": "8f382bb51712aea9c687136e39d7ac59693b60b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
