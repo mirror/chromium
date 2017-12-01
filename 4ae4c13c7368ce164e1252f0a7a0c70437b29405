@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a94f058c_1656a543",
+        "filename": "chrome/browser/vr/model/color_scheme.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-01T16:42:52Z",
+      "side": 1,
+      "message": "What would be the benefit?",
+      "parentUuid": "157d7673_ac90d22b",
+      "revId": "4ae4c13c7368ce164e1252f0a7a0c70437b29405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26ca1687_c20df569",
         "filename": "chrome/browser/vr/ui_scene_constants.h",
         "patchSetId": 2
@@ -47,6 +65,24 @@
       "writtenOn": "2017-12-01T16:21:36Z",
       "side": 1,
       "message": "Is it possible to encapsulate the above scene creation in suggestion element? This can be in a separate CL if you agree.",
+      "revId": "4ae4c13c7368ce164e1252f0a7a0c70437b29405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51534945_bd12c9b2",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-01T16:42:52Z",
+      "side": 1,
+      "message": "Yep, that would be easy I think.  There is already a Suggestion element anyway, but it was only created to work around a binding limitation.  Might as well use it for something better!\n\nI agree this should be a separate CL though.",
+      "parentUuid": "e5ebb40f_b1e0360b",
       "revId": "4ae4c13c7368ce164e1252f0a7a0c70437b29405",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
