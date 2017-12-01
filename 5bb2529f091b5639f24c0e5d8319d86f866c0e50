@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5118cce_4ce5e610",
+        "filename": "components/arc/common/metrics.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-01T16:35:12Z",
+      "side": 1,
+      "message": "4",
+      "range": {
+        "startLine": 4,
+        "startChar": 20,
+        "endLine": 4,
+        "endChar": 21
+      },
+      "revId": "5bb2529f091b5639f24c0e5d8319d86f866c0e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdf10edb_1ccb1650",
+        "filename": "components/arc/common/metrics.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-01T16:35:12Z",
+      "side": 1,
+      "message": "Can you add some docs?",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 6
+      },
+      "revId": "5bb2529f091b5639f24c0e5d8319d86f866c0e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc8d0f51_9afdc5c3",
+        "filename": "components/arc/common/metrics.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-01T16:35:12Z",
+      "side": 1,
+      "message": "3",
+      "range": {
+        "startLine": 58,
+        "startChar": 14,
+        "endLine": 58,
+        "endChar": 15
+      },
+      "revId": "5bb2529f091b5639f24c0e5d8319d86f866c0e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
