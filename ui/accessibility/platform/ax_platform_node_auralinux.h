@@ -72,6 +72,9 @@ class AXPlatformNodeAuraLinux : public AXPlatformNodeBase {
   // Misc helpers
   void GetFloatAttributeInGValue(AXFloatAttribute attr, GValue* value);
 
+  // Event helpers
+  void OnFocused();
+
   // AXPlatformNode overrides.
   gfx::NativeViewAccessible GetNativeViewAccessible() override;
   void NotifyAccessibilityEvent(ui::AXEvent event_type) override;
@@ -111,6 +114,10 @@ class AXPlatformNodeAuraLinux : public AXPlatformNodeBase {
   // The root-level Application object that's the parent of all
   // top-level windows.
   static AXPlatformNode* application_;
+
+  // The last AtkObject with keyboard focus. Tracking this is required
+  // to emit the ATK_STATE_FOCUSED change to false.
+  static AtkObject* current_focused_;
 
   // Keep a weak reference to the parent, to avoid calling GetParent
   // on destructor.
