@@ -4,6 +4,7 @@
 
 package org.chromium.chrome.browser.webapps;
 
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -11,6 +12,7 @@ import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.text.TextUtils;
 
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
@@ -44,6 +46,12 @@ public class WebApkServiceClient {
             }
         }
     }
+
+    /**
+     * Keeps this value consistent with {@link
+     * org.chromium.webapk.shell_apk.WebApkServiceImplWrapper#DEFAULT_NOTIFICATION_CHANNEL_ID}.
+     */
+    public static final String CHANNEL_ID_WEBAPKS = "default_channel_id";
 
     private static final String CATEGORY_WEBAPK_API = "android.intent.category.WEBAPK_API";
     private static final String TAG = "cr_WebApk";
@@ -93,7 +101,14 @@ public class WebApkServiceClient {
                 }
                 boolean notificationPermissionEnabled = api.notificationPermissionEnabled();
                 if (notificationPermissionEnabled) {
-                    api.notifyNotification(platformTag, platformID, notificationBuilder.build());
+                    String channelName = null;
+                    if (webApkTargetsAtLeastO(webApkPackage)) {
+                        notificationBuilder.setChannelId(CHANNEL_ID_WEBAPKS);
+                        channelName = ContextUtils.getApplicationContext().getString(
+                                org.chromium.chrome.R.string.webapk_notification_channel_name);
+                    }
+                    api.notifyNotificationWithChannel(
+                            platformTag, platformID, notificationBuilder.build(), channelName);
                 }
                 WebApkUma.recordNotificationPermissionStatus(notificationPermissionEnabled);
             }
@@ -133,5 +148,20 @@ public class WebApkServiceClient {
         } catch (PackageManager.NameNotFoundException e) {
             return null;
         }
+    }
+
+    /** Returns whether the WebAPK targets SDK 26+. */
+    private boolean webApkTargetsAtLeastO(String webApkPackage) {
+        if (TextUtils.isEmpty(webApkPackage)) return false;
+
+        try {
+            ApplicationInfo info =
+                    ContextUtils.getApplicationContext().getPackageManager().getApplicationInfo(
+                            webApkPackage, 0);
+            return info.targetSdkVersion >= Build.VERSION_CODES.O;
+        } catch (PackageManager.NameNotFoundException e) {
+        }
+
+        return false;
     }
 }
