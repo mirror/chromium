@@ -22,6 +22,30 @@
       "revId": "1a1c0014002d7580a770c4b240735a1df952a256",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18848198_fd41ef27",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-01T01:46:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59292de3_33c29d1b",
+      "range": {
+        "startLine": 87,
+        "startChar": 6,
+        "endLine": 87,
+        "endChar": 26
+      },
+      "revId": "1a1c0014002d7580a770c4b240735a1df952a256",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
