@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26f60ed7_bd211d65",
+        "filename": "tools/battor_agent/battor_connection_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-12-01T21:09:16Z",
+      "side": 1,
+      "message": "Even though this is more concise, I think I\u0027d prefer to explicitly list out START || END || ESCAPE so that people less familiar with the ordering of the enums don\u0027t have to think hard about what\u0027s \"less than\" the escape byte",
+      "revId": "5306cc688bcaa3eb0ee38459d8bee96f56e7c3d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba0137cc_3bb5135d",
+        "filename": "tools/battor_agent/battor_connection_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-12-01T21:09:16Z",
+      "side": 1,
+      "message": "Would you mind adding a separate unit test for the escape case? I should have done that for the START and END escape cases, but relying on a unit test for one behavior to incidentally test another behavior probably isn\u0027t a good idea. If, for some reason, we no longer want to test that init sends the correct bytes (the battor stops requiring an init message, for example), than we\u0027ll inadvertently lose test coverage for escaping escape bytes",
+      "range": {
+        "startLine": 318,
+        "startChar": 0,
+        "endLine": 332,
+        "endChar": 4
+      },
+      "revId": "5306cc688bcaa3eb0ee38459d8bee96f56e7c3d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
