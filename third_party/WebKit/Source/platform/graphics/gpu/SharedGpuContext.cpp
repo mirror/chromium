@@ -97,7 +97,7 @@ void SharedGpuContext::CreateContextProviderIfNeeded(
   if (context_provider_factory_) {
     // This path should only be used in unit tests.
     auto context_provider =
-        context_provider_factory_.Run(&is_gpu_compositing_disabled_);
+        std::move(context_provider_factory_).Run(&is_gpu_compositing_disabled_);
     if (context_provider) {
       context_provider_wrapper_ =
           std::make_unique<WebGraphicsContext3DProviderWrapper>(
