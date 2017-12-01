@@ -16,6 +16,24 @@
       "revId": "42095441d4d184a771ad49a3799299311def2856",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de15d8b0_2c9b8bc1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-01T23:01:43Z",
+      "side": 1,
+      "message": "This is at 80 cols. Is there any reason why Gerrit is at 72? Strange.",
+      "parentUuid": "674302e6_3751009f",
+      "revId": "42095441d4d184a771ad49a3799299311def2856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
