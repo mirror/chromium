@@ -84,6 +84,24 @@
       "revId": "9fd8b6a386d7e615f729889fb1abb9aa40524e7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8883170_8b5605d4",
+        "filename": "components/arc/test/fake_app_instance.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-01T07:15:00Z",
+      "side": 1,
+      "message": "This was the bulk of the fix for the other CL\u0027s failures: If we don\u0027t keep it, the binding closes, and a connection closure gets delivered.",
+      "parentUuid": "9ec89c65_65c4277e",
+      "revId": "9fd8b6a386d7e615f729889fb1abb9aa40524e7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

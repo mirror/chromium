@@ -39,6 +39,24 @@
       "revId": "875cf13e107f44d264b24b579fba5abeb51d4c99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb01c9ca_fad057fc",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1949,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-01T07:15:00Z",
+      "side": 0,
+      "message": "Ah the comment got lost in PS1:\n\n\u003e now that we\u0027re running the runloop always before this runs, this app has already been launched, since the default apps have already been resolved. so removing to avoid test failure.",
+      "parentUuid": "636ed398_4641fab3",
+      "revId": "875cf13e107f44d264b24b579fba5abeb51d4c99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
