@@ -3451,7 +3451,8 @@ void RenderFrameHostImpl::CommitNavigation(
         ResourceResponseHead(), GURL(), common_params, request_params,
         mojo::ScopedDataPipeConsumerHandle(),
         /*subresource_loader_factories=*/base::nullopt,
-        devtools_navigation_token);
+        devtools_navigation_token,
+        /*webpackage_subresource_manager_request*/nullptr);
     return;
   }
 
@@ -3564,6 +3565,13 @@ void RenderFrameHostImpl::CommitNavigation(
     }
   }
 
+  mojom::WebPackageSubresourceManagerRequest webpackage_subresource_manager_request;
+  if (base::FeatureList::IsEnabled(features::kNetworkService) &&
+      subresource_loader_params) {
+    webpackage_subresource_manager_request = std::move(
+        subresource_loader_params->webpackage_subresource_manager_request);
+  }
+
   // It is imperative that cross-document navigations always provide a set of
   // subresource ULFs when the Network Service is enabled.
   DCHECK(!base::FeatureList::IsEnabled(features::kNetworkService) ||
@@ -3572,7 +3580,8 @@ void RenderFrameHostImpl::CommitNavigation(
 
   GetNavigationControl()->CommitNavigation(
       head, body_url, common_params, request_params, std::move(handle),
-      std::move(subresource_loader_factories), devtools_navigation_token);
+      std::move(subresource_loader_factories), devtools_navigation_token,
+      std::move(webpackage_subresource_manager_request));
 
   // If a network request was made, update the Previews state.
   if (IsURLHandledByNetworkStack(common_params.url) &&
