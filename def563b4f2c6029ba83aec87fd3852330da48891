@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a6551a6d_2dba5ca9",
+        "filename": "chrome/browser/resources/md_extensions/sidebar.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-12-01T12:37:50Z",
+      "side": 1,
+      "message": "This is needed because a combination of two things:\n- \u003ca\u003e is inline by default\n- I removed the display: flex on the parent.\n\nSo now without display:block, the \u003ca\u003es will be next to each other instead of stacked.\n\nI think if it\u0027s solely for stacking items vertically, display:block on the individual item is more concise than adding flex rules on the parent.",
+      "parentUuid": "8e930f71_342b135b",
+      "revId": "def563b4f2c6029ba83aec87fd3852330da48891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e8033a1_b989c160",
         "filename": "chrome/browser/resources/md_extensions/sidebar.html",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "def563b4f2c6029ba83aec87fd3852330da48891",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7baa766d_02416902",
+        "filename": "chrome/browser/resources/md_extensions/sidebar.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-12-01T12:37:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e8033a1_b989c160",
+      "revId": "def563b4f2c6029ba83aec87fd3852330da48891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
