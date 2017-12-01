@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17940337_361719ca",
+        "filename": "net/ssl/client_cert_store_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-12-01T22:14:41Z",
+      "side": 1,
+      "message": "a |sec_identity|",
+      "range": {
+        "startLine": 254,
+        "startChar": 8,
+        "endLine": 254,
+        "endChar": 22
+      },
+      "revId": "aa3b78ca6908dbdb2cafd27ac1a31248c46dc1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c5f0041_00c473c7",
+        "filename": "net/ssl/client_cert_store_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-12-01T22:14:41Z",
+      "side": 1,
+      "message": "regular_identities",
+      "range": {
+        "startLine": 255,
+        "startChar": 15,
+        "endLine": 255,
+        "endChar": 28
+      },
+      "revId": "aa3b78ca6908dbdb2cafd27ac1a31248c46dc1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "120bdbdf_e05124f3",
+        "filename": "net/ssl/client_cert_store_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-12-01T22:14:41Z",
+      "side": 1,
+      "message": "preferred_identity",
+      "range": {
+        "startLine": 255,
+        "startChar": 48,
+        "endLine": 255,
+        "endChar": 62
+      },
+      "revId": "aa3b78ca6908dbdb2cafd27ac1a31248c46dc1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c10a538_eca0facb",
+        "filename": "net/ssl/client_cert_store_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-12-01T22:14:41Z",
+      "side": 1,
+      "message": "sec_identity",
+      "range": {
+        "startLine": 256,
+        "startChar": 4,
+        "endLine": 256,
+        "endChar": 12
+      },
+      "revId": "aa3b78ca6908dbdb2cafd27ac1a31248c46dc1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91dd1e5f_629157e2",
+        "filename": "net/ssl/client_cert_store_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-12-01T22:14:41Z",
+      "side": 1,
+      "message": "preferred_sec_identity",
+      "range": {
+        "startLine": 256,
+        "startChar": 27,
+        "endLine": 256,
+        "endChar": 45
+      },
+      "revId": "aa3b78ca6908dbdb2cafd27ac1a31248c46dc1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5650302b_9bec1747",
+        "filename": "net/ssl/client_cert_store_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-12-01T22:14:41Z",
+      "side": 1,
+      "message": "nit: I guess this could be {}",
+      "range": {
+        "startLine": 277,
+        "startChar": 29,
+        "endLine": 277,
+        "endChar": 61
+      },
+      "revId": "aa3b78ca6908dbdb2cafd27ac1a31248c46dc1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a12f6b7_d4115bf3",
+        "filename": "net/ssl/client_cert_store_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-12-01T22:14:41Z",
+      "side": 1,
+      "message": "preferred_sec_identity",
+      "range": {
+        "startLine": 281,
+        "startChar": 36,
+        "endLine": 281,
+        "endChar": 54
+      },
+      "revId": "aa3b78ca6908dbdb2cafd27ac1a31248c46dc1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9be4922a_5b411744",
+        "filename": "net/ssl/client_cert_store_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-12-01T22:14:41Z",
+      "side": 1,
+      "message": "preferred_sec_identity",
+      "range": {
+        "startLine": 281,
+        "startChar": 6,
+        "endLine": 281,
+        "endChar": 24
+      },
+      "revId": "aa3b78ca6908dbdb2cafd27ac1a31248c46dc1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
