@@ -34,6 +34,24 @@
       "revId": "26003f59539428e2a1fc197b9c894eced99a5742",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3007864b_25176f5b",
+        "filename": "net/quic/chromium/quic_chromium_client_session_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-01T16:50:21Z",
+      "side": 1,
+      "message": "Yup, exactly where I was thinking if we wanted to precompute - whenever we validate a cert (and populate the cert_status) is when we should populate the fatal error bit.",
+      "parentUuid": "db67d496_56e2dbb2",
+      "revId": "26003f59539428e2a1fc197b9c894eced99a5742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
