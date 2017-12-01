@@ -16,6 +16,24 @@
       "revId": "34f66d7a4919fabb49e83fbbddaab0e0298227f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21a62d6e_e51a3e6d",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-01T20:44:11Z",
+      "side": 1,
+      "message": "Good point, I\u0027ve added WebviewClientCertsLoginTest.SigninFrameCertNotAutoSelected.\nIn the prototype phase, a user selection dialog appears when no cert is auto-selected, and this dialog is hard to control from the test, so I\u0027ve added a command-line flag kDisableSigninFrameClientCertUserSelection to disable the user selection dialog (matching the target behavior after prototyping). It is passed by this test. This corresponds to the behavior after we remove the user selection as soon as the policy is implemented on the server side.",
+      "parentUuid": "cf0808c7_93433c44",
+      "revId": "34f66d7a4919fabb49e83fbbddaab0e0298227f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
