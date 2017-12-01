@@ -60,6 +60,11 @@ class CONTENT_EXPORT InputRouterClient {
   virtual void ForwardGestureEventWithLatencyInfo(
       const blink::WebGestureEvent& gesture_event,
       const ui::LatencyInfo& latency_info) = 0;
+
+  // Called when the fling controller handles touchpad fling on the browser side
+  // and sends wheel events to the renderer to progress the fling.
+  virtual void SendGeneratedWheelEvent(
+      const MouseWheelEventWithLatencyInfo& wheel_event) = 0;
 };
 
 } // namespace content

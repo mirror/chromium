@@ -736,6 +736,8 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   void DidStopFlinging() override;
   void OnSetWhiteListedTouchAction(
       cc::TouchAction white_listed_touch_action) override {}
+  void SendGeneratedWheelEvent(
+      const MouseWheelEventWithLatencyInfo& wheel_event) override;
 
   // Dispatch input events with latency information
   void DispatchInputEventWithLatencyInfo(const blink::WebInputEvent& event,
