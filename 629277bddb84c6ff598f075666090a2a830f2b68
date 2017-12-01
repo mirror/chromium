@@ -39,6 +39,24 @@
       "revId": "629277bddb84c6ff598f075666090a2a830f2b68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85ec7752_54dbe64c",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1114,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-12-01T23:39:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1e60140_a5cc9d14",
+      "revId": "629277bddb84c6ff598f075666090a2a830f2b68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
