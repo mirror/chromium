@@ -319,7 +319,7 @@ void SearchBoxView::ClearSearch() {
   view_delegate_->AutoLaunchCanceled();
   // Updates model and fires query changed manually because SetText() above
   // does not generate ContentsChanged() notification.
-  UpdateModel();
+  UpdateModel(false);
   NotifyQueryChanged();
   app_list_view_->SetStateFromSearchBoxView(search_box_->text().empty());
 }
@@ -730,10 +730,10 @@ void SearchBoxView::SetSelected(bool selected) {
   SchedulePaint();
 }
 
-void SearchBoxView::UpdateModel() {
+void SearchBoxView::UpdateModel(bool initiated_by_user) {
   // Temporarily remove from observer to ignore notifications caused by us.
   model_->search_box()->RemoveObserver(this);
-  model_->search_box()->Update(search_box_->text(), false);
+  model_->search_box()->Update(search_box_->text(), false, initiated_by_user);
   model_->search_box()->SetSelectionModel(search_box_->GetSelectionModel());
   model_->search_box()->AddObserver(this);
 }
@@ -749,7 +749,7 @@ void SearchBoxView::ContentsChanged(views::Textfield* sender,
     // Set search box focused when query changes.
     search_box_->RequestFocus();
   }
-  UpdateModel();
+  UpdateModel(true);
   view_delegate_->AutoLaunchCanceled();
   NotifyQueryChanged();
   SetSearchBoxActive(true);

@@ -182,7 +182,8 @@ void AppListViewDelegate::SetProfile(Profile* new_profile) {
   OnTemplateURLServiceChanged();
 
   // Clear search query.
-  model_->search_box()->Update(base::string16(), false);
+  model_->search_box()->Update(base::string16(), false /* is_voice_query */,
+                               false /* initiated_by_user */);
 }
 
 void AppListViewDelegate::OnGetWallpaperColorsCallback(
@@ -321,7 +322,8 @@ void AppListViewDelegate::OnSpeechResult(const base::string16& result,
   if (is_final) {
     auto_launch_timeout_ =
         base::TimeDelta::FromMilliseconds(kAutoLaunchDefaultTimeoutMilliSec);
-    model_->search_box()->Update(result, true);
+    model_->search_box()->Update(result, true /* is_voice_query */,
+                                 true /* initiated_by_user */);
   }
 }
 
