@@ -56,7 +56,7 @@ TEST(CBORReaderTest, TestUintEncodedWithNonMinimumByteLength) {
 
   int test_case_index = 0;
   CBORReader::CBORDecoderError error_code;
-  for (const auto non_minimal_uint : non_minimal_uint_encodings) {
+  for (const auto& non_minimal_uint : non_minimal_uint_encodings) {
     testing::Message scope_message;
     scope_message << "testing element at index " << test_case_index++;
     SCOPED_TRACE(scope_message);
@@ -135,7 +135,7 @@ TEST(CBORReaderTest, TestReadArray) {
 
   base::Optional<CBORValue> cbor = CBORReader::Read(kArrayTestCaseCbor);
   ASSERT_TRUE(cbor.has_value());
-  CBORValue cbor_array = std::move(cbor.value());
+  const CBORValue cbor_array = std::move(cbor.value());
   ASSERT_EQ(cbor_array.type(), CBORValue::Type::ARRAY);
   ASSERT_THAT(cbor_array.GetArray(), testing::SizeIs(25));
 
@@ -154,7 +154,10 @@ TEST(CBORReaderTest, TestReadArray) {
 TEST(CBORReaderTest, TestReadMapWithMapValue) {
   static const std::vector<uint8_t> kMapTestCaseCbor = {
       // clang-format off
-      0xa3,  // map of 3 pairs:
+      0xa4,  // map of 4 pairs:
+        0x18, 0x18,  // 24
+        0x63, 0x61, 0x62, 0x63, // "abc"
+
         0x60,  // ""
         0x61, 0x2e,  // "."
 
@@ -168,23 +171,33 @@ TEST(CBORReaderTest, TestReadMapWithMapValue) {
 
   base::Optional<CBORValue> cbor = CBORReader::Read(kMapTestCaseCbor);
   ASSERT_TRUE(cbor.has_value());
-  CBORValue cbor_val = std::move(cbor.value());
+  const CBORValue cbor_val = std::move(cbor.value());
   ASSERT_EQ(cbor_val.type(), CBORValue::Type::MAP);
-  ASSERT_EQ(cbor_val.GetMap().size(), 3u);
+  ASSERT_EQ(cbor_val.GetMap().size(), 4u);
 
-  ASSERT_EQ(cbor_val.GetMap().count(""), 1u);
-  ASSERT_EQ(cbor_val.GetMap().find("")->second.type(), CBORValue::Type::STRING);
-  EXPECT_EQ(cbor_val.GetMap().find("")->second.GetString(), ".");
-
-  ASSERT_EQ(cbor_val.GetMap().count("b"), 1u);
-  ASSERT_EQ(cbor_val.GetMap().find("b")->second.type(),
+  const CBORValue key_uint(24);
+  ASSERT_EQ(cbor_val.GetMap().count(key_uint), 1u);
+  ASSERT_EQ(cbor_val.GetMap().find(key_uint)->second.type(),
             CBORValue::Type::STRING);
-  EXPECT_EQ(cbor_val.GetMap().find("b")->second.GetString(), "B");
+  EXPECT_EQ(cbor_val.GetMap().find(key_uint)->second.GetString(), "abc");
 
-  ASSERT_EQ(cbor_val.GetMap().count("aa"), 1u);
-  ASSERT_EQ(cbor_val.GetMap().find("aa")->second.type(),
+  const CBORValue key_empty_string("");
+  ASSERT_EQ(cbor_val.GetMap().count(key_empty_string), 1u);
+  ASSERT_EQ(cbor_val.GetMap().find(key_empty_string)->second.type(),
             CBORValue::Type::STRING);
-  EXPECT_EQ(cbor_val.GetMap().find("aa")->second.GetString(), "AA");
+  EXPECT_EQ(cbor_val.GetMap().find(key_empty_string)->second.GetString(), ".");
+
+  const CBORValue key_b("b");
+  ASSERT_EQ(cbor_val.GetMap().count(key_b), 1u);
+  ASSERT_EQ(cbor_val.GetMap().find(key_b)->second.type(),
+            CBORValue::Type::STRING);
+  EXPECT_EQ(cbor_val.GetMap().find(key_b)->second.GetString(), "B");
+
+  const CBORValue key_aa("aa");
+  ASSERT_EQ(cbor_val.GetMap().count(key_aa), 1u);
+  ASSERT_EQ(cbor_val.GetMap().find(key_aa)->second.type(),
+            CBORValue::Type::STRING);
+  EXPECT_EQ(cbor_val.GetMap().find(key_aa)->second.GetString(), "AA");
 }
 
 TEST(CBORReaderTest, TestReadMapWithArray) {
@@ -203,19 +216,22 @@ TEST(CBORReaderTest, TestReadMapWithArray) {
 
   base::Optional<CBORValue> cbor = CBORReader::Read(kMapArrayTestCaseCbor);
   ASSERT_TRUE(cbor.has_value());
-  CBORValue cbor_val = std::move(cbor.value());
+  const CBORValue cbor_val = std::move(cbor.value());
   ASSERT_EQ(cbor_val.type(), CBORValue::Type::MAP);
   ASSERT_EQ(cbor_val.GetMap().size(), 2u);
 
-  ASSERT_EQ(cbor_val.GetMap().count("a"), 1u);
-  ASSERT_EQ(cbor_val.GetMap().find("a")->second.type(),
+  const CBORValue key_a("a");
+  ASSERT_EQ(cbor_val.GetMap().count(key_a), 1u);
+  ASSERT_EQ(cbor_val.GetMap().find(key_a)->second.type(),
             CBORValue::Type::UNSIGNED);
-  EXPECT_EQ(cbor_val.GetMap().find("a")->second.GetUnsigned(), 1u);
+  EXPECT_EQ(cbor_val.GetMap().find(key_a)->second.GetUnsigned(), 1u);
 
-  ASSERT_EQ(cbor_val.GetMap().count("b"), 1u);
-  ASSERT_EQ(cbor_val.GetMap().find("b")->second.type(), CBORValue::Type::ARRAY);
+  const CBORValue key_b("b");
+  ASSERT_EQ(cbor_val.GetMap().count(key_b), 1u);
+  ASSERT_EQ(cbor_val.GetMap().find(key_b)->second.type(),
+            CBORValue::Type::ARRAY);
 
-  CBORValue nested_array = cbor_val.GetMap().find("b")->second.Clone();
+  const CBORValue nested_array = cbor_val.GetMap().find(key_b)->second.Clone();
   ASSERT_EQ(nested_array.GetArray().size(), 2u);
   for (int i = 0; i < 2; i++) {
     ASSERT_THAT(nested_array.GetArray()[i].type(), CBORValue::Type::UNSIGNED);
@@ -243,28 +259,33 @@ TEST(CBORReaderTest, TestReadNestedMap) {
 
   base::Optional<CBORValue> cbor = CBORReader::Read(kNestedMapTestCase);
   ASSERT_TRUE(cbor.has_value());
-  CBORValue cbor_val = std::move(cbor.value());
+  const CBORValue cbor_val = std::move(cbor.value());
   ASSERT_EQ(cbor_val.type(), CBORValue::Type::MAP);
   ASSERT_EQ(cbor_val.GetMap().size(), 2u);
-  ASSERT_EQ(cbor_val.GetMap().count("a"), 1u);
-  ASSERT_EQ(cbor_val.GetMap().find("a")->second.type(),
-            CBORValue::Type::UNSIGNED);
-  EXPECT_EQ(cbor_val.GetMap().find("a")->second.GetUnsigned(), 1u);
 
-  ASSERT_EQ(cbor_val.GetMap().count("b"), 1u);
-  CBORValue nested_map = cbor_val.GetMap().find("b")->second.Clone();
+  const CBORValue key_a("a");
+  ASSERT_EQ(cbor_val.GetMap().count(key_a), 1u);
+  ASSERT_EQ(cbor_val.GetMap().find(key_a)->second.type(),
+            CBORValue::Type::UNSIGNED);
+  EXPECT_EQ(cbor_val.GetMap().find(key_a)->second.GetUnsigned(), 1u);
+
+  const CBORValue key_b("b");
+  ASSERT_EQ(cbor_val.GetMap().count(key_b), 1u);
+  const CBORValue nested_map = cbor_val.GetMap().find(key_b)->second.Clone();
   ASSERT_EQ(nested_map.type(), CBORValue::Type::MAP);
   ASSERT_EQ(nested_map.GetMap().size(), 2u);
 
-  ASSERT_EQ(nested_map.GetMap().count("c"), 1u);
-  ASSERT_EQ(nested_map.GetMap().find("c")->second.type(),
+  const CBORValue key_c("c");
+  ASSERT_EQ(nested_map.GetMap().count(key_c), 1u);
+  ASSERT_EQ(nested_map.GetMap().find(key_c)->second.type(),
             CBORValue::Type::UNSIGNED);
-  EXPECT_EQ(nested_map.GetMap().find("c")->second.GetUnsigned(), 2u);
+  EXPECT_EQ(nested_map.GetMap().find(key_c)->second.GetUnsigned(), 2u);
 
-  ASSERT_EQ(nested_map.GetMap().count("d"), 1u);
-  ASSERT_EQ(nested_map.GetMap().find("d")->second.type(),
+  const CBORValue key_d("d");
+  ASSERT_EQ(nested_map.GetMap().count(key_d), 1u);
+  ASSERT_EQ(nested_map.GetMap().find(key_d)->second.type(),
             CBORValue::Type::UNSIGNED);
-  EXPECT_EQ(nested_map.GetMap().find("d")->second.GetUnsigned(), 3u);
+  EXPECT_EQ(nested_map.GetMap().find(key_d)->second.GetUnsigned(), 3u);
 }
 
 TEST(CBORReaderTest, TestIncompleteCBORDataError) {
@@ -285,7 +306,7 @@ TEST(CBORReaderTest, TestIncompleteCBORDataError) {
   };
 
   int test_element_index = 0;
-  for (auto incomplete_data : incomplete_cbor_list) {
+  for (const auto& incomplete_data : incomplete_cbor_list) {
     testing::Message scope_message;
     scope_message << "testing incomplete data at index : "
                   << test_element_index++;
@@ -300,14 +321,14 @@ TEST(CBORReaderTest, TestIncompleteCBORDataError) {
 }
 
 // While RFC 7049 allows CBOR map keys with all types, current decoder only
-// supports string type for CBOR map keys. Checks for error when decoding CBOR
-// map with key other than UTF-8 string.
+// supports unsigned integer and string keys.
 TEST(CBORReaderTest, TestUnsupportedMapKeyFormatError) {
   static const std::vector<uint8_t> kMapWithUintKey = {
       // clang-format off
       0xa2,        // map of 2 pairs
-        0x01,      // key : 1
-        0x02,      // value : 2
+
+        0x82, 0x01, 0x02,  // invalid key : [1, 2]
+        0x02,              // value : 2
 
         0x61, 0x64,  // key : "d"
         0x03,        // value : 3
@@ -333,7 +354,7 @@ TEST(CBORReaderTest, TestUnknownAdditionalInfoError) {
       {0x7F, 0xe6, 0xb0, 0xb4}};
 
   int test_element_index = 0;
-  for (auto incorrect_cbor : kUnknownAdditionalInfoList) {
+  for (const auto& incorrect_cbor : kUnknownAdditionalInfoList) {
     testing::Message scope_message;
     scope_message << "testing data : " << test_element_index++;
     SCOPED_TRACE(scope_message);
@@ -361,7 +382,7 @@ TEST(CBORReaderTest, TestTooMuchNestingError) {
   };
 
   int test_element_index = 0;
-  for (auto zero_depth_data : kZeroDepthCBORList) {
+  for (const auto& zero_depth_data : kZeroDepthCBORList) {
     testing::Message scope_message;
     scope_message << "testing zero nested data : " << test_element_index++;
     SCOPED_TRACE(scope_message);
@@ -402,35 +423,43 @@ TEST(CBORReaderTest, TestTooMuchNestingError) {
 }
 
 TEST(CBORReaderTest, TestOutOfOrderKeyError) {
-  static const std::vector<uint8_t> kMapWithUnsortedKey = {
+  static const std::vector<std::vector<uint8_t>> kMapsWithUnsortedKeys = {
       // clang-format off
-      0xa6,  // map of 6 pairs:
-        0x60,  // ""
-        0x61, 0x2e,  // "."
+      {0xa2,  // map with 2 keys with same major type and length
+         0x61, 0x62,  // key "b"
+         0x61, 0x42,  // value :"B"
 
-        0x61, 0x62,  // "b"
-        0x61, 0x42,  // "B"
+         0x61, 0x61,  // key "a" (out of order byte-wise lexically)
+         0x61, 0x45   // value "E"
+      },
+      {0xa2,  // map with 2 keys with different major type
+         0x61, 0x62,        // key "b"
+         0x02,               // value 2
 
-        0x61, 0x63,  // "c"
-        0x61, 0x43,  // "C"
+         0x19, 0x03, 0xe8,   // key 1000 (out of order key)
+         0x61, 0x61,        // value a
+      },
+      {0xa2,  // map with 2 keys with same major type
+         0x19, 0x03, 0xe8,  // key 1000  (out of order due to longer length)
+         0x61, 0x61,        //value "a"
 
-        0x61, 0x64,  // "d"
-        0x61, 0x44,  // "D"
-
-        0x61, 0x61,  // "a" (Out of order key)
-        0x61, 0x45,  // "E"
-
-        0x62, 0x61, 0x61,  // "aa"
-        0x62, 0x41, 0x41,  // "AA"
-      // clang-format on
+         0x0a,              // key 10
+         0x61, 0x62},       // value "b"
+      //clang-format on
   };
 
+  int test_element_index = 0;
   CBORReader::CBORDecoderError error_code;
+  for (const auto& unsorted_map : kMapsWithUnsortedKeys) {
+    testing::Message scope_message;
+    scope_message << "testing unsorted map : " << test_element_index++;
+    SCOPED_TRACE(scope_message);
 
-  base::Optional<CBORValue> cbor =
-      CBORReader::Read(kMapWithUnsortedKey, &error_code);
-  EXPECT_FALSE(cbor.has_value());
-  EXPECT_EQ(error_code, CBORReader::OUT_OF_ORDER_KEY_ERROR);
+    base::Optional<CBORValue> cbor =
+        CBORReader::Read(unsorted_map, &error_code);
+    EXPECT_FALSE(cbor.has_value());
+    EXPECT_EQ(error_code, CBORReader::OUT_OF_ORDER_KEY_ERROR);
+  }
 }
 
 TEST(CBORReaderTest, TestDuplicateKeyError) {
@@ -479,7 +508,7 @@ TEST(CBORReaderTest, TestIncorrectStringEncodingError) {
 
   int test_element_index = 0;
   CBORReader::CBORDecoderError error_code;
-  for (auto cbor_byte : utf8_character_encodings) {
+  for (const auto& cbor_byte : utf8_character_encodings) {
     testing::Message scope_message;
     scope_message << "testing cbor data utf8 encoding : "
                   << test_element_index++;
@@ -514,7 +543,7 @@ TEST(CBORReaderTest, TestExtraneousCBORDataError) {
   };
 
   int test_element_index = 0;
-  for (auto extraneous_cbor_data : zero_padded_cbor_list) {
+  for (const auto& extraneous_cbor_data : zero_padded_cbor_list) {
     testing::Message scope_message;
     scope_message << "testing cbor extraneous data : " << test_element_index++;
     SCOPED_TRACE(scope_message);
