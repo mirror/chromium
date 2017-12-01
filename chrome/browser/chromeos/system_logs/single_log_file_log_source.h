@@ -79,7 +79,9 @@ class SingleLogFileLogSource : public SystemLogsSource {
   // during a call, ReadFile() stops checking for log file rotation for the
   // remainder of its execution. Any further rotation could result in missed log
   // data.
-  void ReadFile(size_t num_rotations_allowed, SystemLogsResponse* result);
+  void ReadFile(size_t num_rotations_allowed,
+                std::unique_ptr<SystemLogsResponse> result,
+                const SysLogsSourceCallback& callback);
 
   // The source type.
   const SupportedSource source_type_;

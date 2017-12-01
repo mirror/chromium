@@ -9,7 +9,7 @@
 #include "base/bind.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/debug_daemon_client.h"
-#include "components/feedback/anonymizer_tool.h"
+#include "components/feedback/anonymizer.h"
 #include "content/public/browser/browser_thread.h"
 
 namespace system_logs {
@@ -66,11 +66,11 @@ void SingleDebugDaemonLogSource::OnFetchComplete(
   auto response = std::make_unique<SystemLogsResponse>();
   // Return an empty result if the call to GetLog() failed.
   if (result.has_value()) {
-    response->emplace(log_name,
-                      feedback::AnonymizerTool().Anonymize(result.value()));
+    response->emplace(log_name, result.value());
   }
 
-  callback.Run(std::move(response));
+  feedback::Anonymizer anonymizer;
+  anonymizer.Anonymize(std::move(response), callback);
 }
 
 }  // namespace system_logs
