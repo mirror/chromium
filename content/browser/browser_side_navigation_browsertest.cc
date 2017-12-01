@@ -11,6 +11,7 @@
 #include "content/browser/child_process_security_policy_impl.h"
 #include "content/browser/frame_host/navigation_handle_impl.h"
 #include "content/browser/frame_host/navigation_request.h"
+#include "content/browser/loader/resource_dispatcher_host_impl.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/common/frame_messages.h"
 #include "content/common/site_isolation_policy.h"
@@ -23,6 +24,7 @@
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/content_browser_test.h"
 #include "content/public/test/content_browser_test_utils.h"
+#include "content/public/test/controllable_http_response.h"
 #include "content/public/test/navigation_handle_observer.h"
 #include "content/public/test/test_navigation_observer.h"
 #include "content/shell/browser/shell.h"
@@ -49,7 +51,6 @@ class BrowserSideNavigationBrowserTest : public ContentBrowserTest {
 
   void SetUpOnMainThread() override {
     host_resolver()->AddRule("*", "127.0.0.1");
-    ASSERT_TRUE(embedded_test_server()->Start());
   }
 };
 
@@ -57,6 +58,8 @@ class BrowserSideNavigationBrowserTest : public ContentBrowserTest {
 // navigation.
 IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
                        BrowserInitiatedNavigations) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
   // Perform a navigation with no live renderer.
   {
     TestNavigationObserver observer(shell()->web_contents());
@@ -101,6 +104,8 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
 // navigation.
 IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
                        RendererInitiatedSameSiteNavigation) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
   // Perform a navigation with no live renderer.
   {
     TestNavigationObserver observer(shell()->web_contents());
@@ -137,6 +142,8 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
 // navigation.
 IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
                        RendererInitiatedCrossSiteNavigation) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
   // Perform a navigation with no live renderer.
   {
     TestNavigationObserver observer(shell()->web_contents());
@@ -190,6 +197,8 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
 
 // Ensure that browser side navigation handles navigation failures.
 IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest, FailedNavigation) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
   // Perform a navigation with no live renderer.
   {
     TestNavigationObserver observer(shell()->web_contents());
@@ -219,6 +228,8 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest, FailedNavigation) {
 // to view-source URLs.
 IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
                        ViewSourceNavigation_BrowserInitiated) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
   TestNavigationObserver observer(shell()->web_contents());
   GURL url(embedded_test_server()->GetURL("/title1.html"));
   GURL view_source_url(content::kViewSourceScheme + std::string(":") +
@@ -232,6 +243,8 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
 // view-source URLs.
 IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
                        ViewSourceNavigation_RendererInitiated) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
   TestNavigationObserver observer(shell()->web_contents());
   GURL kUrl(embedded_test_server()->GetURL("/simple_links.html"));
   NavigateToURL(shell(), kUrl);
@@ -263,6 +276,8 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
 // if there's an ongoing navigation.
 IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
                        UnloadDuringNavigation) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
   content::WindowedNotificationObserver close_observer(
       content::NOTIFICATION_WEB_CONTENTS_DESTROYED,
       content::Source<content::WebContents>(shell()->web_contents()));
@@ -276,6 +291,8 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
 
 // Ensure that the referrer of a navigation is properly sanitized.
 IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest, SanitizeReferrer) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
   const GURL kInsecureUrl(embedded_test_server()->GetURL("/title1.html"));
   const Referrer kSecureReferrer(
       GURL("https://secure-url.com"),
@@ -309,6 +326,8 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest, SanitizeReferrer) {
 // it hasn't been explicitly granted permissions to is correctly terminated.
 IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
                        PostUploadIllegalFilePath) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
   GURL form_url(
       embedded_test_server()->GetURL("/form_that_posts_to_echoall.html"));
   EXPECT_TRUE(NavigateToURL(shell(), form_url));
@@ -373,6 +392,8 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
 // reload uses the NavigationEntry state to create a navigation and commit it.
 IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
                        VerifyBlockedErrorPageURL_Reload) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
   NavigationControllerImpl& controller = static_cast<NavigationControllerImpl&>(
       shell()->web_contents()->GetController());
 
@@ -425,6 +446,8 @@ class BrowserSideNavigationBrowserDisableWebSecurityTest
 // by default.
 IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserDisableWebSecurityTest,
                        ValidateBaseUrlForDataUrl) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
   GURL start_url(embedded_test_server()->GetURL("/title1.html"));
   EXPECT_TRUE(NavigateToURL(shell(), start_url));
 
@@ -490,6 +513,8 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserDisableWebSecurityTest,
 }
 
 IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest, BackFollowedByReload) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
   // First, make two history entries.
   GURL url1(embedded_test_server()->GetURL("/title1.html"));
   GURL url2(embedded_test_server()->GetURL("/title2.html"));
@@ -505,6 +530,72 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest, BackFollowedByReload) {
   // The reload should have cancelled the back navigation, and the last
   // committed URL should still be the second URL.
   EXPECT_EQ(url2, shell()->web_contents()->GetLastCommittedURL());
+}
+
+// Navigation are started in the browser process. After the headers are
+// received, the URLLoaderClient is transfered from the browser process to the
+// renderer process. This test ensures that when the the URLLoader is deleted
+// (in the browser process), the URLLoaderClient (in the renderer process) stops
+// properly.
+IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
+                       CancelRequestAfterReadyToCommit) {
+  // This test cancels the request using the ResourceDispatchHost. With the
+  // NetworkService, it is not used so the request is not canceled.
+  // TODO(arthursonzogni): Find a way to cancel a request from the browser
+  // with the NetworkService.
+  if (base::FeatureList::IsEnabled(features::kNetworkService))
+    return;
+
+  ControllableHttpResponse response(embedded_test_server(), "/main_document");
+  EXPECT_TRUE(embedded_test_server()->Start());
+
+  // 1) Load a new document. It reaches the ReadyToCommit stage and then is slow
+  //    to load.
+  GURL url(embedded_test_server()->GetURL("/main_document"));
+  TestNavigationManager navigation_manager(shell()->web_contents(), url);
+  shell()->LoadURL(url);
+
+  // Let the navigation starts.
+  EXPECT_TRUE(navigation_manager.WaitForRequestStart());
+  navigation_manager.ResumeNavigation();
+
+  // The server sends the first part of the response and waits.
+  response.WaitForRequest();
+  response.Send(
+      "HTTP/1.1 200 OK\r\n"
+      "Content-Type: text/html; charset=utf-8\r\n"
+      "\r\n"
+      "<html>"
+      "  <body>"
+      "    <script>"
+      "      domAutomationController.send('First part received')"
+      "    </script>");
+
+  EXPECT_TRUE(navigation_manager.WaitForResponse());
+  RenderFrameHostImpl* main_rfh = static_cast<RenderFrameHostImpl*>(
+      shell()->web_contents()->GetMainFrame());
+  DOMMessageQueue dom_message_queue(WebContents::FromRenderFrameHost(main_rfh));
+  NavigationHandle* handle(navigation_manager.GetNavigationHandle());
+  DCHECK(handle);
+  GlobalRequestID global_id = handle->GetGlobalRequestID();
+  navigation_manager.ResumeNavigation();
+
+  // Wait for the renderer to load the first part of the response.
+  std::string first_part_received;
+  EXPECT_TRUE(dom_message_queue.WaitForMessage(&first_part_received));
+  EXPECT_EQ("\"First part received\"", first_part_received);
+
+  // 2) The ResourceDispatcherHost cancels the request.
+  auto cancel_request = [](GlobalRequestID global_id) {
+    ResourceDispatcherHostImpl* rdh =
+        static_cast<ResourceDispatcherHostImpl*>(ResourceDispatcherHost::Get());
+    rdh->CancelRequest(global_id.child_id, global_id.request_id);
+  };
+  BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
+                          base::BindOnce(cancel_request, global_id));
+
+  // 3) Check that the load stops.
+  EXPECT_TRUE(WaitForLoadStop(shell()->web_contents()));
 }
 
 }  // namespace content
