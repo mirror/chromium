@@ -87,6 +87,24 @@
     },
     {
       "key": {
+        "uuid": "1af62a9d_5f238e05",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-12-01T20:34:30Z",
+      "side": 1,
+      "message": "Do you mean VisibleSelectionInDOMTree?\n\nGetSelectionOffsets() computes the EphemeralRange by doing:\n\n  EphemeralRange range \u003d FirstEphemeralRangeOf(\n      frame-\u003eSelection().ComputeVisibleSelectionInDOMTreeDeprecated());",
+      "parentUuid": "b4d4ffa8_fdd20f03",
+      "revId": "6233734e4a044e8f4fbbb049689f50d7b9367bdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd5efc54_1d0cc0fe",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 1
