@@ -440,17 +440,17 @@ void ResourceDispatcherHostImpl::CancelRequestsForContext(
       ++i;
       continue;
     }
-    ResourceRequestInfoImpl* info = loaders->front()->GetRequestInfo();
+    ResourceRequestInfoImpl* info = loaders->front().first->GetRequestInfo();
     if (info->GetContext() == context) {
       std::unique_ptr<BlockedLoadersList> deleter(std::move(i->second));
       blocked_loaders_map_.erase(i++);
       for (auto& loader : *loaders) {
-        info = loader->GetRequestInfo();
+        info = loader.first->GetRequestInfo();
         // We make the assumption that all requests on the list have the same
         // ResourceContext.
         DCHECK_EQ(context, info->GetContext());
         IncrementOutstandingRequestsMemory(-1, *info);
-        loaders_to_cancel.push_back(std::move(loader));
+        loaders_to_cancel.push_back(std::move(loader.first));
       }
     } else {
       ++i;
@@ -865,7 +865,7 @@ bool ResourceDispatcherHostImpl::IsRequestIDInUse(
     return true;
   for (const auto& blocked_loaders : blocked_loaders_map_) {
     for (const auto& loader : *blocked_loaders.second.get()) {
-      ResourceRequestInfoImpl* info = loader->GetRequestInfo();
+      ResourceRequestInfoImpl* info = loader.first->GetRequestInfo();
       if (info->GetGlobalRequestID() == id)
         return true;
     }
@@ -2276,7 +2276,7 @@ void ResourceDispatcherHostImpl::BeginRequestInternal(
   BlockedLoadersMap::const_iterator iter = blocked_loaders_map_.find(id);
   if (iter != blocked_loaders_map_.end()) {
     // The request should be blocked.
-    iter->second->push_back(std::move(loader));
+    iter->second->push_back(std::make_pair(std::move(loader), true));
     return;
   }
 
@@ -2512,6 +2512,26 @@ void ResourceDispatcherHostImpl::BlockRequestsForRoute(
       std::make_unique<BlockedLoadersList>();
 }
 
+bool ResourceDispatcherHostImpl::ShouldResumeRequestForRoute(
+    net::URLRequest* request) {
+  ResourceRequestInfoImpl* info = ResourceRequestInfoImpl::ForRequest(request);
+  GlobalFrameRoutingId id(info->GetChildID(), info->GetRenderFrameID());
+  GlobalRequestID grid = info->GetGlobalRequestID();
+
+  BlockedLoadersMap::const_iterator iter = blocked_loaders_map_.find(id);
+
+  if (iter != blocked_loaders_map_.end()) {
+    LoaderMap::iterator loader = pending_loaders_.find(grid);
+    if (loader != pending_loaders_.end()) {
+      // The request should be blocked.
+      iter->second->push_back(std::make_pair(std::move(loader->second), false));
+      pending_loaders_.erase(loader);
+      return false;
+    }
+  }
+  return true;
+}  // namespace content
+
 void ResourceDispatcherHostImpl::ResumeBlockedRequestsForRoute(
     const GlobalFrameRoutingId& global_routing_id) {
   ProcessBlockedRequestsForRoute(global_routing_id, false);
@@ -2539,12 +2559,17 @@ void ResourceDispatcherHostImpl::ProcessBlockedRequestsForRoute(
   // Removing the vector from the map unblocks any subsequent requests.
   blocked_loaders_map_.erase(iter);
 
-  for (std::unique_ptr<ResourceLoader>& loader : *loaders) {
-    ResourceRequestInfoImpl* info = loader->GetRequestInfo();
+  for (std::pair<std::unique_ptr<ResourceLoader>&, bool> loader : *loaders) {
+    ResourceRequestInfoImpl* info = loader.first->GetRequestInfo();
     if (cancel_requests) {
       IncrementOutstandingRequestsMemory(-1, *info);
     } else {
-      StartLoading(info, std::move(loader));
+      if (loader.second) {
+        StartLoading(info, std::move(loader.first));
+      } else {
+        loader.first->Resume(true);
+        pending_loaders_[info->GetGlobalRequestID()] = std::move(loader.first);
+      }
     }
   }
 }

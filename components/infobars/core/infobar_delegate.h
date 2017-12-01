@@ -14,6 +14,7 @@ class ConfirmInfoBarDelegate;
 class HungRendererInfoBarDelegate;
 class InsecureContentInfoBarDelegate;
 class NativeAppInfoBarDelegate;
+class PageLoadCappingInfoBarDelegate;
 class PopupBlockedInfoBarDelegate;
 class RegisterProtocolHandlerInfoBarDelegate;
 class ScreenCaptureInfoBarDelegate;
@@ -226,6 +227,7 @@ class InfoBarDelegate {
   virtual ThemeInstalledInfoBarDelegate* AsThemePreviewInfobarDelegate();
   virtual ThreeDAPIInfoBarDelegate* AsThreeDAPIInfoBarDelegate();
   virtual translate::TranslateInfoBarDelegate* AsTranslateInfoBarDelegate();
+  virtual PageLoadCappingInfoBarDelegate* AsPageLoadCappingInfoBarDelegate();
 #if defined(OS_ANDROID)
   virtual offline_pages::OfflinePageInfoBarDelegate*
   AsOfflinePageInfoBarDelegate();

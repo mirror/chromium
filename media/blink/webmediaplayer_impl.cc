@@ -1855,6 +1855,7 @@ void WebMediaPlayerImpl::OnPlay() {
 
 void WebMediaPlayerImpl::OnPause() {
   Pause();
+  LOG(WARNING) << "WebMediaPlayerImpl::OnPause";
   client_->PlaybackStateChanged();
 }
 

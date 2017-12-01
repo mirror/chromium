@@ -11,19 +11,90 @@
 #include "base/memory/ptr_util.h"
 #include "build/build_config.h"
 #include "chrome/browser/data_use_measurement/chrome_data_use_recorder.h"
+#include "chrome/browser/page_load_capping/page_load_capping_tab_helper.h"
 #include "components/data_use_measurement/content/content_url_request_classifier.h"
 #include "components/data_use_measurement/core/data_use_recorder.h"
 #include "components/data_use_measurement/core/data_use_user_data.h"
 #include "components/data_use_measurement/core/url_request_classifier.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/global_request_id.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/resource_request_info.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "ipc/ipc_message.h"
+#include "net/http/http_request_headers.h"
 #include "net/url_request/url_request.h"
 
 namespace data_use_measurement {
+
+namespace {
+
+int64_t GetVideoRequestKiloBytes(const net::URLRequest& request) {
+  int64_t bytes_received = request.GetTotalReceivedBytes();
+  net::HttpResponseHeaders* headers = request.response_headers();
+  int64_t range_predicteded_bytes, blah1, blah2 = 0;
+  if (headers) {
+    headers->GetContentRangeFor206(&blah1, &blah2, &range_predicteded_bytes);
+  }
+  return (std::max(range_predicteded_bytes, bytes_received) +
+          request.GetTotalSentBytes()) /
+         1024;
+}
+
+void SendInfoToTabHelper(
+    const content::ResourceRequestInfo::WebContentsGetter& wcg,
+    content::GlobalRequestID grid,
+    const int64_t kilo_bytes,
+    bool is_video) {
+  content::WebContents* wc = wcg.Run();
+  if (!wc) {
+    return;
+  }
+
+  PageLoadCappingTabHelper* th = PageLoadCappingTabHelper::FromWebContents(wc);
+  if (th && th->navigation_id() == grid) {
+    th->UpdateInfobar(kilo_bytes, is_video);
+  }
+}
+
+void MaybeSendInformationToTab(const net::URLRequest& request,
+                               ChromeDataUseRecorder* recorder) {
+  if (!recorder)
+    return;
+  const base::Optional<base::Time>& last_ui_update = recorder->last_ui_update();
+
+  const DataUse& data_use = recorder->data_use();
+
+  const content::ResourceRequestInfo* request_info =
+      content::ResourceRequestInfo::ForRequest(&request);
+
+  bool is_video = request_info && request_info->GetResourceType() ==
+                                      content::RESOURCE_TYPE_MEDIA;
+
+  int64_t kilo_bytes = is_video ? GetVideoRequestKiloBytes(request) -
+                                      request.GetTotalReceivedBytes()
+                                : 0;
+  kilo_bytes +=
+      (data_use.total_bytes_sent() + data_use.total_bytes_received()) / 1024;
+  if (kilo_bytes < 1000)
+    return;
+  if (last_ui_update &&
+      (last_ui_update.value() + base::TimeDelta::FromMilliseconds(250) >
+       base::Time::Now()))
+    return;
+  content::GlobalRequestID grid = recorder->main_frame_request_id();
+  if (content::ResourceRequestInfo::ForRequest(&request)) {
+    const content::ResourceRequestInfo::WebContentsGetter& wcg =
+        content::ResourceRequestInfo::ForRequest(&request)
+            ->GetWebContentsGetterForRequest();
+    recorder->set_last_ui_update(base::Time::Now());
+    content::BrowserThread::PostTask(
+        content::BrowserThread::UI, FROM_HERE,
+        base::BindOnce(&SendInfoToTabHelper, wcg, grid, kilo_bytes, false));
+  }
+}
+}  // namespace
 
 // static
 const void* const ChromeDataUseAscriber::DataUseRecorderEntryAsUserData::
@@ -46,6 +117,12 @@ ChromeDataUseAscriber::MainRenderFrameEntry::~MainRenderFrameEntry() {}
 
 ChromeDataUseAscriber::ChromeDataUseAscriber() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+}
+
+void ChromeDataUseAscriber::OnNetworkBytesReceived(net::URLRequest* request,
+                                                   int64_t bytes_received) {
+  DataUseAscriber::OnNetworkBytesReceived(request, bytes_received);
+  MaybeSendInformationToTab(*request, GetOrCreateDataUseRecorder(request));
 }
 
 ChromeDataUseAscriber::~ChromeDataUseAscriber() {
@@ -179,6 +256,9 @@ void ChromeDataUseAscriber::OnUrlRequestCompleted(
     bool started) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
 
+  if (IsDisabledPlatform())
+    return;
+
   ChromeDataUseRecorder* recorder = GetDataUseRecorder(request);
 
   if (!recorder)
@@ -203,6 +283,9 @@ void ChromeDataUseAscriber::OnUrlRequestCompleted(
 
 void ChromeDataUseAscriber::OnUrlRequestDestroyed(net::URLRequest* request) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+
+  if (IsDisabledPlatform())
+    return;
 
   const DataUseRecorderEntry entry = GetDataUseRecorderEntry(request);
 
@@ -236,8 +319,6 @@ void ChromeDataUseAscriber::OnUrlRequestDestroyed(net::URLRequest* request) {
   }
 
   DataUseAscriber::OnUrlRequestDestroyed(request);
-  request->RemoveUserData(
-      DataUseRecorderEntryAsUserData::kDataUseAscriberUserDataKey);
 
   // If all requests are done for |entry| and no more requests can be attributed
   // to it, it is safe to delete.
@@ -252,6 +333,8 @@ void ChromeDataUseAscriber::RenderFrameCreated(int render_process_id,
                                                int main_render_process_id,
                                                int main_render_frame_id) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  if (IsDisabledPlatform())
+    return;
 
   const auto render_frame =
       RenderFrameHostID(render_process_id, render_frame_id);
@@ -281,6 +364,8 @@ void ChromeDataUseAscriber::RenderFrameDeleted(int render_process_id,
                                                int main_render_process_id,
                                                int main_render_frame_id) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  if (IsDisabledPlatform())
+    return;
 
   RenderFrameHostID key(render_process_id, render_frame_id);
 
@@ -312,6 +397,8 @@ void ChromeDataUseAscriber::ReadyToCommitMainFrameNavigation(
     int render_process_id,
     int render_frame_id) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  if (IsDisabledPlatform())
+    return;
 
   main_render_frame_entry_map_
       .find(RenderFrameHostID(render_process_id, render_frame_id))
@@ -326,6 +413,9 @@ void ChromeDataUseAscriber::DidFinishMainFrameNavigation(
     uint32_t page_transition,
     base::TimeTicks time) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+
+  if (IsDisabledPlatform())
+    return;
 
   RenderFrameHostID main_frame(render_process_id, render_frame_id);
 
@@ -397,12 +487,9 @@ void ChromeDataUseAscriber::DidFinishMainFrameNavigation(
     std::vector<net::URLRequest*> pending_url_requests;
     entry->GetPendingURLRequests(&pending_url_requests);
     for (net::URLRequest* request : pending_url_requests) {
-      entry->MovePendingURLRequestTo(&(*old_frame_entry), request);
-      request->RemoveUserData(
-          DataUseRecorderEntryAsUserData::kDataUseAscriberUserDataKey);
       AscribeRecorderWithRequest(request, old_frame_entry);
+      entry->MovePendingURLRequestTo(&(*old_frame_entry), request);
     }
-    DCHECK(entry->IsDataUseComplete());
     data_use_recorders_.erase(entry);
 
     NotifyPageLoadCommit(old_frame_entry);
@@ -431,8 +518,6 @@ void ChromeDataUseAscriber::DidFinishMainFrameNavigation(
           !old_frame_entry->GetPendingURLRequestStartTime(request).is_null());
       if (old_frame_entry->GetPendingURLRequestStartTime(request) > time) {
         old_frame_entry->MovePendingURLRequestTo(&*entry, request);
-        request->RemoveUserData(
-            DataUseRecorderEntryAsUserData::kDataUseAscriberUserDataKey);
         AscribeRecorderWithRequest(request, entry);
       }
     }
@@ -458,7 +543,7 @@ void ChromeDataUseAscriber::NotifyDataUseCompleted(DataUseRecorderEntry entry) {
 
 std::unique_ptr<URLRequestClassifier>
 ChromeDataUseAscriber::CreateURLRequestClassifier() const {
-  return std::make_unique<ContentURLRequestClassifier>();
+  return base::MakeUnique<ContentURLRequestClassifier>();
 }
 
 ChromeDataUseAscriber::DataUseRecorderEntry
@@ -478,13 +563,16 @@ void ChromeDataUseAscriber::AscribeRecorderWithRequest(
   entry->AddPendingURLRequest(request);
   request->SetUserData(
       DataUseRecorderEntryAsUserData::kDataUseAscriberUserDataKey,
-      std::make_unique<DataUseRecorderEntryAsUserData>(entry));
+      base::MakeUnique<DataUseRecorderEntryAsUserData>(entry));
 }
 
 void ChromeDataUseAscriber::WasShownOrHidden(int main_render_process_id,
                                              int main_render_frame_id,
                                              bool visible) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+
+  if (IsDisabledPlatform())
+    return;
 
   auto main_frame_it = main_render_frame_entry_map_.find(
       RenderFrameHostID(main_render_process_id, main_render_frame_id));
@@ -500,6 +588,9 @@ void ChromeDataUseAscriber::RenderFrameHostChanged(int old_render_process_id,
                                                    int new_render_process_id,
                                                    int new_render_frame_id) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+
+  if (IsDisabledPlatform())
+    return;
 
   auto old_frame_iter = main_render_frame_entry_map_.find(
       RenderFrameHostID(old_render_process_id, old_render_frame_id));

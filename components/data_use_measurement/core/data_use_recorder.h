@@ -94,8 +94,9 @@ class DataUseRecorder {
   // Network Delegate methods:
   void OnBeforeUrlRequest(net::URLRequest* request);
   void OnUrlRequestDestroyed(net::URLRequest* request);
-  void OnNetworkBytesSent(net::URLRequest* request, int64_t bytes_sent);
-  void OnNetworkBytesReceived(net::URLRequest* request, int64_t bytes_received);
+  virtual void OnNetworkBytesSent(net::URLRequest* request, int64_t bytes_sent);
+  virtual void OnNetworkBytesReceived(net::URLRequest* request,
+                                      int64_t bytes_received);
 
  private:
   // Updates the network data use for the url request.

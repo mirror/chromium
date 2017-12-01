@@ -111,6 +111,9 @@ class ChromeDataUseAscriber : public DataUseAscriber {
                               int new_render_process_id,
                               int new_render_frame_id);
 
+  void OnNetworkBytesReceived(net::URLRequest* request,
+                              int64_t bytes_received) override;
+
  private:
   friend class ChromeDataUseAscriberTest;
 
@@ -120,6 +123,13 @@ class ChromeDataUseAscriber : public DataUseAscriber {
   // modified.
   typedef std::list<ChromeDataUseRecorder> DataUseRecorderList;
   typedef DataUseRecorderList::iterator DataUseRecorderEntry;
+
+  struct GlobalRequestIDHash {
+   public:
+    std::size_t operator()(const content::GlobalRequestID& x) const {
+      return base::HashInts(x.child_id, x.request_id);
+    }
+  };
 
   class DataUseRecorderEntryAsUserData : public base::SupportsUserData::Data {
    public:

@@ -790,6 +790,9 @@ class WebContents : public PageNavigator,
   // Tells the WebContents whether the context menu is showing.
   virtual void SetShowingContextMenu(bool showing) = 0;
 
+  virtual void BlockRequests() = 0;
+  virtual void ResumeBlockedRequests() = 0;
+
 #if defined(OS_ANDROID)
   CONTENT_EXPORT static WebContents* FromJavaWebContents(
       const base::android::JavaRef<jobject>& jweb_contents_android);

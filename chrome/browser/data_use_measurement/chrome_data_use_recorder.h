@@ -8,6 +8,8 @@
 #include <utility>
 
 #include "base/macros.h"
+#include "base/optional.h"
+#include "components/data_use_measurement/core/data_use.h"
 #include "components/data_use_measurement/core/data_use_recorder.h"
 #include "content/public/browser/global_request_id.h"
 
@@ -34,6 +36,21 @@ class ChromeDataUseRecorder : public DataUseRecorder {
     main_frame_request_id_ = request_id;
   }
 
+  const base::Optional<base::Time>& last_ui_update() const {
+    return last_ui_update_;
+  }
+
+  void set_last_ui_update(base::Time last_update) {
+    last_ui_update_ = last_update;
+  }
+
+  const DataUse& media_data_use() const { return media_data_use_; }
+
+  void OnNetworkBytesSent(net::URLRequest* request,
+                          int64_t bytes_sent) override;
+  void OnNetworkBytesReceived(net::URLRequest* request,
+                              int64_t bytes_received) override;
+
  private:
   // Identifier for the main frame for the page load this recorder is tracking.
   // Only valid if the data use is associated with a page load.
@@ -42,6 +59,10 @@ class ChromeDataUseRecorder : public DataUseRecorder {
   // Identifier for the MAIN_FRAME request for this page load. Only valid if
   // the data use is associated with a page load.
   content::GlobalRequestID main_frame_request_id_;
+
+  base::Optional<base::Time> last_ui_update_;
+
+  DataUse media_data_use_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeDataUseRecorder);
 };

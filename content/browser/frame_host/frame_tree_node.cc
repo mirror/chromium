@@ -607,6 +607,14 @@ bool FrameTreeNode::StopLoading() {
   return true;
 }
 
+void FrameTreeNode::BlockRequests() {
+  render_manager_.BlockRequests();
+}
+
+void FrameTreeNode::ResumeBlockedRequests() {
+  render_manager_.ResumeBlockedRequests();
+}
+
 void FrameTreeNode::DidFocus() {
   last_focus_time_ = base::TimeTicks::Now();
   for (auto& observer : observers_)

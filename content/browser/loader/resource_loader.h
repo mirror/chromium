@@ -60,6 +60,8 @@ class CONTENT_EXPORT ResourceLoader : public net::URLRequest::Delegate,
   // ResourceHandler::Delegate implementation:
   void OutOfBandCancel(int error_code, bool tell_renderer) override;
 
+  void Resume(bool called_from_resource_controller);
+
  private:
   // ResourceController implementation for the ResourceLoader.
   class Controller;
@@ -95,7 +97,6 @@ class CONTENT_EXPORT ResourceLoader : public net::URLRequest::Delegate,
   // ResourceController, in which case |resource_handler_| must not be invoked
   // or destroyed synchronously to avoid re-entrancy issues, and false
   // otherwise.
-  void Resume(bool called_from_resource_controller);
   void Cancel();
   void CancelWithError(int error_code);
 

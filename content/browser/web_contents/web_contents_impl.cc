@@ -6116,4 +6116,12 @@ void WebContentsImpl::SetVisibilityForChildViews(bool visible) {
   GetMainFrame()->SetVisibilityForChildViews(visible);
 }
 
+void WebContentsImpl::BlockRequests() {
+  frame_tree_.root()->BlockRequests();
+}
+
+void WebContentsImpl::ResumeBlockedRequests() {
+  frame_tree_.root()->ResumeBlockedRequests();
+}
+
 }  // namespace content

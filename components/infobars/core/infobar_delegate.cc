@@ -130,6 +130,11 @@ InfoBarDelegate::AsOfflinePageInfoBarDelegate() {
 }
 #endif
 
+PageLoadCappingInfoBarDelegate*
+InfoBarDelegate::AsPageLoadCappingInfoBarDelegate() {
+  return nullptr;
+}
+
 InfoBarDelegate::InfoBarDelegate() : nav_entry_id_(0) {
 }
 

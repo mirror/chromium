@@ -527,8 +527,10 @@ void MediaSessionImpl::OnSuspendInternal(SuspendType suspend_type,
     // SuspendType::CONTENT happens when the suspend action came from
     // the page in which case the player is already paused.
     // Otherwise, the players need to be paused.
-    for (const auto& it : normal_players_)
+    for (const auto& it : normal_players_) {
       it.observer->OnSuspend(it.player_id);
+      LOG(WARNING) << it.player_id;
+    }
   }
 
   for (const auto& it : pepper_players_)

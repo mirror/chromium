@@ -916,6 +916,7 @@ ChromeResourceDispatcherHostDelegate::DeterminePreviewsState(
     net::URLRequest* url_request,
     content::ResourceContext* resource_context,
     content::PreviewsState previews_to_allow) {
+  LOG(WARNING) << "PREVIEWS STATE";
   ProfileIOData* io_data = ProfileIOData::FromResourceContext(resource_context);
   data_reduction_proxy::DataReductionProxyIOData* data_reduction_proxy_io_data =
       io_data->data_reduction_proxy_io_data();

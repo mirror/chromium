@@ -491,6 +491,9 @@ void ResourceLoader::CancelCertificateSelection() {
 void ResourceLoader::Resume(bool called_from_resource_controller) {
   DCHECK(!is_transferring_);
 
+  if (!delegate_->ShouldResumeRequestForRoute(request_.get()))
+    return;
+
   DeferredStage stage = deferred_stage_;
   deferred_stage_ = DEFERRED_NONE;
   switch (stage) {

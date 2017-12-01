@@ -297,6 +297,14 @@ void RenderFrameHostManager::Stop() {
   }
 }
 
+void RenderFrameHostManager::BlockRequests() {
+  render_frame_host_->BlockRequestsForFrame();
+}
+
+void RenderFrameHostManager::ResumeBlockedRequests() {
+  render_frame_host_->ResumeBlockedRequestsForFrame();
+}
+
 void RenderFrameHostManager::SetIsLoading(bool is_loading) {
   render_frame_host_->render_view_host()->GetWidget()->SetIsLoading(is_loading);
   if (pending_render_frame_host_) {

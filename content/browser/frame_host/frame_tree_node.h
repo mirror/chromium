@@ -263,6 +263,10 @@ class CONTENT_EXPORT FrameTreeNode {
     return render_manager_.current_frame_host();
   }
 
+  void BlockRequests();
+
+  void ResumeBlockedRequests();
+
   bool IsDescendantOf(FrameTreeNode* other) const;
 
   // Return the node immediately preceding this node in its parent's
