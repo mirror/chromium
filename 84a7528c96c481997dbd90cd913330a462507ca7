@@ -249,6 +249,24 @@
       "revId": "84a7528c96c481997dbd90cd913330a462507ca7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7bf32479_b44e4dca",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-01T17:52:52Z",
+      "side": 1,
+      "message": "Yeah, got it. +1 to going with kUnthrottled (i.e., take a conservative path) and figuring out the guideline later.",
+      "parentUuid": "5d66ba46_e85c8522",
+      "revId": "84a7528c96c481997dbd90cd913330a462507ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
