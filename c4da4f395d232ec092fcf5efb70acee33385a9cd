@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7e1527d_efcae691",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-01T21:13:00Z",
+      "side": 1,
+      "message": "Please add documentation to this enum that its values are persisted to logs, and should therefore never be renumbered nor reused.",
+      "range": {
+        "startLine": 243,
+        "startChar": 20,
+        "endLine": 243,
+        "endChar": 62
+      },
+      "revId": "c4da4f395d232ec092fcf5efb70acee33385a9cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
