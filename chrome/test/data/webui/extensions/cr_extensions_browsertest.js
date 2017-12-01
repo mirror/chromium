@@ -111,7 +111,6 @@ var CrExtensionsA11yTest = class extends CrExtensionsBrowserTest {
   }
 };
 
-
 var CrExtensionsA11yTestWithMultipleExensions =
     class extends CrExtensionsA11yTest {
   /** @override */
@@ -120,6 +119,14 @@ var CrExtensionsA11yTestWithMultipleExensions =
     GEN('  InstallPackagedApp();');
     GEN('  InstallHostedApp();');
     GEN('  InstallPlatformApp();');
+  }
+};
+
+var CrExtensionsShortcutA11yTestWithMultipleExensions =
+    class extends CrExtensionsA11yTestWithMultipleExensions {
+  /** @override */
+  get browsePreload() {
+    return 'chrome://extensions/shortcuts';
   }
 };
 
@@ -162,6 +169,27 @@ AccessibilityTest.define('CrExtensionsA11yTest', {
 AccessibilityTest.define('CrExtensionsA11yTestWithMultipleExensions', {
   /** @override */
   name: 'WithExtensions',
+
+  /** @override */
+  axeOptions: CrExtensionsA11yTest.axeOptions,
+
+  /** @override */
+  violationFilter: CrExtensionsA11yTest.violationFilter,
+
+  /** @override */
+  tests: {
+    'Accessible with Extensions and Apps': function() {
+      let list =
+          document.querySelector('* /deep/ #viewManager /deep/ #items-list');
+      assertEquals(list.extensions.length, 1);
+      assertEquals(list.apps.length, 3);
+    },
+  },
+});
+
+AccessibilityTest.define('CrExtensionsShortcutA11yTestWithMultipleExensions', {
+  /** @override */
+  name: 'ShortcutsWithExtensions',
 
   /** @override */
   axeOptions: CrExtensionsA11yTest.axeOptions,
