@@ -46,6 +46,29 @@
       "revId": "795c9fa98d1106ef75ce547caba18cb8feed95f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1fbf798f_d1557d9b",
+        "filename": "gpu/config/gpu_test_config.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-12-01T17:41:29Z",
+      "side": 0,
+      "message": "You forgot to remove this.",
+      "range": {
+        "startLine": 87,
+        "startChar": 7,
+        "endLine": 87,
+        "endChar": 31
+      },
+      "revId": "795c9fa98d1106ef75ce547caba18cb8feed95f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
