@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7dd32ca0_fb2397e9",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-01T05:08:01Z",
+      "side": 1,
+      "message": "so... although I *think* these are safe due to ref counting. There\u0027s a scary comment above Image::ToNSImage which says \"The returned result is a weak pointer owned by and scoped to the life of the Image.\". Which in this case is a temporary.\n\nAlso we don\u0027t really need NSImage.\n\nOther places in mac code that deal with vector icons (e.g. LocationBarViewMac::UpdateLocationIcon()) are calling NSImageFromImageSkiaWithColorSpace directly with base::mac::GetSRGBColorSpace()\n\nwe should do that here too. Maybe with a helper function.",
+      "revId": "dbcba4593611c228031269a31ea740b9d1f71f51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
