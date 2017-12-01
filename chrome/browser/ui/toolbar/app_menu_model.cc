@@ -580,11 +580,6 @@ void AppMenuModel::LogMenuMetrics(int command_id) {
   }
 }
 
-void AppMenuModel::LogMenuAction(AppMenuAction action_id) {
-  UMA_HISTOGRAM_ENUMERATION("WrenchMenu.MenuAction", action_id,
-                            LIMIT_MENU_ACTION);
-}
-
 bool AppMenuModel::IsCommandIdChecked(int command_id) const {
   if (command_id == IDC_SHOW_BOOKMARK_BAR) {
     return browser_->profile()->GetPrefs()->GetBoolean(
@@ -752,6 +747,11 @@ void AppMenuModel::Build() {
     AddItemWithStringId(IDC_EXIT, IDS_EXIT);
   }
   uma_action_recorded_ = false;
+}
+
+void AppMenuModel::LogMenuAction(AppMenuAction action_id) {
+  UMA_HISTOGRAM_ENUMERATION("WrenchMenu.MenuAction", action_id,
+                            LIMIT_MENU_ACTION);
 }
 
 void AppMenuModel::CreateActionToolbarOverflowMenu() {

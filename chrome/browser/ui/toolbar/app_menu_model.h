@@ -160,6 +160,9 @@ class AppMenuModel : public ui::SimpleMenuModel,
   // Builds the menu model, adding appropriate menu items.
   virtual void Build();
 
+  // Helper function to record the menu action in a UMA histogram.
+  virtual void LogMenuAction(AppMenuAction action_id);
+
   // Appends everything needed for the clipboard menu: a menu break, the
   // clipboard menu content and the finalizing menu break.
   void CreateCutCopyPasteMenu();
@@ -188,9 +191,6 @@ class AppMenuModel : public ui::SimpleMenuModel,
   // Logs UMA metrics about which command was chosen and how long the user
   // took to select the command.
   void LogMenuMetrics(int command_id);
-
-  // Helper function to record the menu action in a UMA histogram.
-  void LogMenuAction(AppMenuAction action_id);
 
   // Time menu has been open. Used by LogMenuMetrics() to record the time
   // to action when the user selects a menu item.
