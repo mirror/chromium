@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fa857b5_2cb1f086",
+        "filename": "ios/chrome/browser/download/pass_kit_tab_helper.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-12-01T21:25:20Z",
+      "side": 1,
+      "message": "Why not std::make_unique?",
+      "range": {
+        "startLine": 41,
+        "startChar": 42,
+        "endLine": 41,
+        "endChar": 58
+      },
+      "revId": "7d8221e5bbfed4c62a9e178714ff78acff22a3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d575f490_35a5969b",
+        "filename": "ios/chrome/browser/download/pass_kit_tab_helper.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-12-01T21:25:20Z",
+      "side": 1,
+      "message": "What if the init with data fails? \nI see that the delegate can take a nil if a failure occurred. I am wondering if it is possible for an error to be returned, but pass to not be nil (ie. a corrupted pass). Apple documentation does not specify one way or another.\n\nPreviously, we did not call delegate at all if either pass was nil or there was an error.",
+      "revId": "7d8221e5bbfed4c62a9e178714ff78acff22a3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c293a00c_fcb25d67",
+        "filename": "ios/chrome/browser/download/pass_kit_tab_helper_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-12-01T21:25:20Z",
+      "side": 1,
+      "message": "Should this use |create_task|?",
+      "revId": "7d8221e5bbfed4c62a9e178714ff78acff22a3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e1a5926_483cb348",
+        "filename": "ios/chrome/browser/download/pass_kit_tab_helper_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-12-01T21:25:20Z",
+      "side": 1,
+      "message": "|create_task|?",
+      "revId": "7d8221e5bbfed4c62a9e178714ff78acff22a3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c77648e_125bdecf",
+        "filename": "ios/chrome/browser/download/pass_kit_test_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-12-01T21:25:20Z",
+      "side": 1,
+      "message": "Insert: \"a\"",
+      "range": {
+        "startLine": 12,
+        "startChar": 25,
+        "endLine": 12,
+        "endChar": 26
+      },
+      "revId": "7d8221e5bbfed4c62a9e178714ff78acff22a3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e861f59_c972e75b",
+        "filename": "ios/web/public/test/fakes/fake_download_task.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-12-01T21:25:20Z",
+      "side": 1,
+      "message": "go/faq-arc says that all Objc objects declared in C++ header must be declared __strong/__weak explicitly.",
+      "revId": "7d8221e5bbfed4c62a9e178714ff78acff22a3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
