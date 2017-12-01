@@ -51,6 +51,24 @@
       "revId": "d66967fc65a90eb02b18fdeac2d729cd6a4e4983",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8748d8f4_4e3ff55a",
+        "filename": "third_party/WebKit/Source/core/inspector/DevToolsHost.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-01T18:41:07Z",
+      "side": 1,
+      "message": "There is two separate questions here: should the WTF string be atomic, and should the V8 string be internalized?\n\nV8AtomicString, confusingly, isn\u0027t really related to WTF::AtomicString. What it does is create an internalized V8 string (which is analogous to WTF::AtomicString, but has a separate table etc). Since we never do pointer-equality comparison or otherwise rely on the WTF atomic string table, there\u0027s no need for WTF::AtomicString here.\n\nOn the V8 side, I also doubt we want this to be internalized (it seems to me that most of the strings are not likely to be benefit from being in the V8 string table), so V8String is probably the better thing to do. V8AtomicString is mostly intended for things like property names that we expect to exist (or should exist) in the V8 atomic string table.",
+      "parentUuid": "02a2faf2_48aba388",
+      "revId": "d66967fc65a90eb02b18fdeac2d729cd6a4e4983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
