@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "acf5db20_56d53ab4",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-01T13:17:58Z",
+      "side": 1,
+      "message": "Let\u0027s try to avoid introducing platform-specific behaviour for the new notification style for now. We can make these considerations when bringing them to the other desktop platforms. For now we can favor simplicity :).\n\nHow about (1) dropping this #ifdef and always set a clip path for the MD view, and (2) use something like the following to replace the #ifdefs in MessageView?\n\nbool ShouldRoundMessageViewCorners() {\n#if defined(OS_CHROMEOS)\n  return true;\n#else\n  return IsNewStyleNotificationEnabled();\n#endif\n}",
+      "revId": "ccbe767147b4095a8c84216da1defa57c0af3a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
