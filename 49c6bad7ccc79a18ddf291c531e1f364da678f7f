@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "1a0b1e74_816cba32",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-12-01T21:34:24Z",
+      "side": 1,
+      "message": "Instead of plumbing this through the ctor, could you obtain it via:\n\nGetRequestInfo()-\u003eGetResourceType()\n\n?",
+      "revId": "49c6bad7ccc79a18ddf291c531e1f364da678f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "edb8ddc3_7c3fd7ae",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 20
