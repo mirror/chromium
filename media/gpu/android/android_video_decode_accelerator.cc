@@ -427,8 +427,8 @@ void AndroidVideoDecodeAccelerator::StartSurfaceChooser() {
                          config_.overlay_info.surface_id);
   } else if (config_.overlay_info.HasValidRoutingToken() &&
              overlay_factory_cb_) {
-    factory = base::Bind(overlay_factory_cb_, nullptr,
-                         *config_.overlay_info.routing_token);
+    factory =
+        base::Bind(overlay_factory_cb_, *config_.overlay_info.routing_token);
   }
 
   // Notify |surface_chooser_| that we've started.  This guarantees that we'll
@@ -1306,7 +1306,7 @@ void AndroidVideoDecodeAccelerator::SetOverlayInfo(
   if (surface_id != previous_info.surface_id ||
       routing_token != previous_info.routing_token) {
     if (routing_token && overlay_factory_cb_)
-      new_factory = base::Bind(overlay_factory_cb_, nullptr, *routing_token);
+      new_factory = base::Bind(overlay_factory_cb_, *routing_token);
     else if (surface_id != SurfaceManager::kNoSurfaceID)
       new_factory = base::Bind(&ContentVideoViewOverlay::Create, surface_id);
   }

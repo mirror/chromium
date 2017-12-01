@@ -38,7 +38,7 @@ void MediaService::OnStart() {
   ref_factory_.reset(new service_manager::ServiceContextRefFactory(
       base::Bind(&service_manager::ServiceContext::RequestQuit,
                  base::Unretained(context()))));
-  mojo_media_client_->Initialize(context()->connector(), ref_factory_.get());
+  mojo_media_client_->Initialize(context()->connector());
 }
 
 void MediaService::OnBindInterface(
