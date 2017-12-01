@@ -16,6 +16,24 @@
       "revId": "8dc47e3ef57c9816ad99e9fa7813473a19420fe4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7fcc9ee_7065e357",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/UIString.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-01T22:39:26Z",
+      "side": 1,
+      "message": "By doing the same imaginary localization we do today with UIString.\n\nNote that I can convert to old UIString call inside of this function by inserting $n markers into the string and passing an array of values.",
+      "parentUuid": "d296dc23_9bce6a17",
+      "revId": "8dc47e3ef57c9816ad99e9fa7813473a19420fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
