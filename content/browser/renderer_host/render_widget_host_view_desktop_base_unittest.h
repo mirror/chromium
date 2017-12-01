@@ -9,6 +9,7 @@
 
 namespace content {
 
+class MockRenderWidgetHostDelegate;
 class RenderWidgetHostViewDesktopBase;
 
 using SetIsOccludedCallback = base::RepeatingCallback<void(bool is_occluded)>;
@@ -16,8 +17,15 @@ using SetIsOccludedCallback = base::RepeatingCallback<void(bool is_occluded)>;
 // Tests for derived classes of RenderWidgetHostViewDesktopBase.
 void RenderWidgetHostViewDesktopBase_TestShowHide(
     RenderWidgetHostViewDesktopBase* view);
+void RenderWidgetHostViewDesktopBase_TestShowHideAndCapture(
+    RenderWidgetHostViewDesktopBase* view,
+    MockRenderWidgetHostDelegate* delegate);
 void RenderWidgetHostViewDesktopBase_TestOcclusion(
     RenderWidgetHostViewDesktopBase* view,
+    const SetIsOccludedCallback& set_is_occluded);
+void RenderWidgetHostViewDesktopBase_TestOcclusionAndCapture(
+    RenderWidgetHostViewDesktopBase* view,
+    MockRenderWidgetHostDelegate* delegate,
     const SetIsOccludedCallback& set_is_occluded);
 
 }  // namespace content
