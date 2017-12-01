@@ -520,8 +520,12 @@ void TabStripModelExperimental::UpdateWebContentsStateAt(
     TabChangeType change_type) {
   ViewIterator found = FindViewIndex(view_index);
   DCHECK(found != end());
+
+  TabDataExperimental* data = &*found;
+  for (auto& observer : observers())
+    observer.TabChangedAt(data->contents(), view_index, change_type);
   for (auto& observer : exp_observers_)
-    observer.TabChanged(&*found, change_type);
+    observer.TabChanged(data, change_type);
 }
 
 void TabStripModelExperimental::SetTabNeedsAttentionAt(int index,
@@ -545,7 +549,10 @@ void TabStripModelExperimental::CloseAllTabs() {
 }
 
 bool TabStripModelExperimental::TabsAreLoading() const {
-  NOTIMPLEMENTED();
+  for (const auto& data : tabs_) {
+    if (data->contents() && data->contents()->IsLoading())
+      return true;
+  }
   return false;
 }
 
