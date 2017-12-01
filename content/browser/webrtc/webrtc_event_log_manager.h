@@ -6,6 +6,7 @@
 #define CONTENT_BROWSER_WEBRTC_WEBRTC_RTC_EVENT_LOG_MANAGER_H_
 
 #include <map>
+#include <set>
 #include <string>
 
 #include "base/callback.h"
@@ -35,11 +36,25 @@ class CONTENT_EXPORT WebRtcEventLogManager {
 
   static WebRtcEventLogManager* GetInstance();
 
+  // TODO: !!!
   // Currently, we only support manual logs initiated by the user
   // through WebRTCInternals, which are stored locally.
   // TODO(eladalon): Allow starting/stopping an RTC event log
   // that will be uploaded to the server. https://crbug.com/775415
 
+  // TODO: !!!
+  void PeerConnectionAdded(
+      int render_process_id,
+      int lid,  // Renderer-local PeerConnection ID.
+      base::OnceCallback<void(bool)> reply = base::OnceCallback<void(bool)>());
+
+  // TODO: !!!
+  void PeerConnectionRemoved(
+      int render_process_id,
+      int lid,  // Renderer-local PeerConnection ID.
+      base::OnceCallback<void(bool)> reply = base::OnceCallback<void(bool)>());
+
+  // TODO: !!!
   // Starts logging the WebRTC event logs associated with the given renderer's
   // process ID and the PeerConnection local ID, to a file whose path will
   // be derived from |base_path|, and potentially subject to a maximum size.
@@ -53,6 +68,7 @@ class CONTENT_EXPORT WebRtcEventLogManager {
                                 base::OnceCallback<void(base::FilePath)> reply =
                                     base::OnceCallback<void(base::FilePath)>());
 
+  // TODO: !!!
   // Stops an ongoing local WebRTC event log.
   // If |reply| is non-empty, it will be posted back to the UI thread, along
   // with true if there actually was a log to stop, or false otherwise.
@@ -61,6 +77,7 @@ class CONTENT_EXPORT WebRtcEventLogManager {
       int lid,
       base::OnceCallback<void(bool)> reply = base::OnceCallback<void(bool)>());
 
+  // TODO: !!!
   // Called when a new log fragment is sent from the renderer. This will
   // potentially be written to a local WebRTC event log, a log destined for
   // upload, or both.
@@ -90,6 +107,8 @@ class CONTENT_EXPORT WebRtcEventLogManager {
   // For a given Chrome session, this is a unique key for PeerConnections.
   // It's not, however, unique between sessions (after Chrome is restarted).
   struct PeerConnectionKey {
+    PeerConnectionKey(int render_process_id, int lid)
+        : render_process_id(render_process_id), lid(lid) {}
     bool operator<(const PeerConnectionKey& other) const {
       if (render_process_id != other.render_process_id) {
         return render_process_id < other.render_process_id;
@@ -110,6 +129,9 @@ class CONTENT_EXPORT WebRtcEventLogManager {
     size_t file_size_bytes;
   };
 
+  // TODO: !!! Order
+  // TODO: !!! Names (*Internal)
+
   typedef std::map<PeerConnectionKey, LogFile> LocalLogFilesMap;
 
   // Handling of local log files (local-user-initiated; as opposed to logs
@@ -128,12 +150,24 @@ class CONTENT_EXPORT WebRtcEventLogManager {
                            base::OnceCallback<void(bool)> reply);
   void CloseLocalLogFile(LocalLogFilesMap::iterator it);  // Invalidates |it|.
 
+  void PeerConnectionAddedInternal(int render_process_id,
+                                   int lid,
+                                   base::OnceCallback<void(bool)> reply);
+
+  void PeerConnectionRemovedInternal(int render_process_id,
+                                     int lid,
+                                     base::OnceCallback<void(bool)> reply);
+
   // For unit tests only, and specifically for unit tests that verify the
   // filename format (derived from the current time as well as the renderer PID
   // and PeerConnection local ID), we want to make sure that the time and date
   // cannot change between the time the clock is read by the unit under test
   // (namely WebRtcEventLogManager) and the time it's read by the test.
   base::Clock* clock_for_testing_;
+
+  // Currently active peer connections. PeerConnections which have been closed
+  // are not considered active, regardless of whether they have been torn down.
+  std::set<PeerConnectionKey> active_peer_connections_;
 
   // Local log files, stored at the behest of the user (via WebRTCInternals).
   // TODO(eladalon): Add an additional container with logs that will be uploaded
