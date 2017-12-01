@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "224e0270_ae609680",
+        "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-01T02:21:44Z",
+      "side": 1,
+      "message": "Do you need i18nDynamic here? I don\u0027t think offline_ad_login page can dynamically change UI language. Is $i18n{} sufficient here? You may also want to use \"i18n-content\" everywhere in this file, as it is already used (it\u0027s also dynamic, but deprecated).",
+      "revId": "c152714a9ce869972fbe326a891a9bb94fbff0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6789f69_64546cbf",
+        "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-01T02:21:44Z",
+      "side": 1,
+      "message": "nit: one line.",
+      "revId": "c152714a9ce869972fbe326a891a9bb94fbff0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa6db490_f73a5b69",
+        "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-01T02:21:44Z",
+      "side": 1,
+      "message": "Move label to the previous line, or make it one line.",
+      "revId": "c152714a9ce869972fbe326a891a9bb94fbff0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "604139b9_fdff5692",
+        "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-01T02:21:44Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "c152714a9ce869972fbe326a891a9bb94fbff0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9170b3ea_435fc6b5",
+        "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-01T02:21:44Z",
+      "side": 1,
+      "message": "nit: one line.",
+      "revId": "c152714a9ce869972fbe326a891a9bb94fbff0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b728cfd_d5a6c333",
+        "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-01T02:21:44Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "c152714a9ce869972fbe326a891a9bb94fbff0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
