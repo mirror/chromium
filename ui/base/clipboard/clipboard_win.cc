@@ -11,6 +11,7 @@
 #include <shlobj.h>
 
 #include "base/bind.h"
+#include "base/debug/debugger.h"
 #include "base/files/file_path.h"
 #include "base/lazy_instance.h"
 #include "base/logging.h"
@@ -493,7 +494,8 @@ void ClipboardWin::ReadText(ClipboardType type, base::string16* result) const {
   if (!data)
     return;
 
-  result->assign(static_cast<const base::char16*>(::GlobalLock(data)));
+  result->assign(static_cast<const base::char16*>(::GlobalLock(data)),
+                 ::GlobalSize(data) / sizeof(base::char16*));
   ::GlobalUnlock(data);
 }
 
@@ -516,7 +518,8 @@ void ClipboardWin::ReadAsciiText(ClipboardType type,
   if (!data)
     return;
 
-  result->assign(static_cast<const char*>(::GlobalLock(data)));
+  result->assign(static_cast<const char*>(::GlobalLock(data)),
+                 ::GlobalSize(data));
   ::GlobalUnlock(data);
 }
 
@@ -544,7 +547,8 @@ void ClipboardWin::ReadHTML(ClipboardType type,
   if (!data)
     return;
 
-  std::string cf_html(static_cast<const char*>(::GlobalLock(data)));
+  std::string cf_html(static_cast<const char*>(::GlobalLock(data)),
+                      ::GlobalSize(data));
   ::GlobalUnlock(data);
 
   size_t html_start = std::string::npos;
@@ -697,7 +701,8 @@ void ClipboardWin::ReadBookmark(base::string16* title, std::string* url) const {
   if (!data)
     return;
 
-  base::string16 bookmark(static_cast<const base::char16*>(::GlobalLock(data)));
+  base::string16 bookmark(static_cast<const base::char16*>(::GlobalLock(data)),
+                          ::GlobalSize(data) / sizeof(base::char16*));
   ::GlobalUnlock(data);
 
   ParseBookmarkClipboardFormat(bookmark, title, url);
