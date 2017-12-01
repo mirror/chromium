@@ -53,7 +53,7 @@ using ::testing::StrictMock;
 namespace {
 class EmulatingRGBImageStub : public gl::GLImageStub {
  protected:
-  ~EmulatingRGBImageStub() override {}
+  ~EmulatingRGBImageStub() override = default;
   bool EmulatingRGB() const override {
     return true;
   }
@@ -3809,7 +3809,7 @@ TEST_P(GLES2DecoderTest, ReleaseTexImage2DCHROMIUM) {
 
 class MockGLImage : public gl::GLImage {
  public:
-  MockGLImage() {}
+  MockGLImage() = default;
 
   // Overridden from gl::GLImage:
   MOCK_METHOD0(GetSize, gfx::Size());
@@ -3832,7 +3832,7 @@ class MockGLImage : public gl::GLImage {
                     const std::string&));
 
  protected:
-  virtual ~MockGLImage() {}
+  virtual ~MockGLImage() = default;
 };
 
 TEST_P(GLES2DecoderWithShaderTest, CopyTexImage) {
@@ -4198,7 +4198,7 @@ TEST_P(GLES2DecoderManualInitTest, TexImage2DFloatConvertsFormatDesktop) {
 
 class GLES2DecoderCompressedFormatsTest : public GLES2DecoderManualInitTest {
  public:
-  GLES2DecoderCompressedFormatsTest() {}
+  GLES2DecoderCompressedFormatsTest() = default;
 
   static bool ValueInArray(GLint value, GLint* array, GLint count) {
     for (GLint ii = 0; ii < count; ++ii) {
@@ -4393,7 +4393,7 @@ TEST_P(GLES2DecoderManualInitTest, TexStorageInvalidSize) {
 class GLES2DecoderTexStorageFormatAndTypeTest
     : public GLES2DecoderManualInitTest {
  public:
-  GLES2DecoderTexStorageFormatAndTypeTest() {}
+  GLES2DecoderTexStorageFormatAndTypeTest() = default;
 
   void DoTexStorageFormatAndType(const InitState& init,
                                  GLenum format,

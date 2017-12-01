@@ -153,7 +153,7 @@ InProcessCommandBuffer::Service::Service(
   }
 }
 
-InProcessCommandBuffer::Service::~Service() {}
+InProcessCommandBuffer::Service::~Service() = default;
 
 const GpuPreferences& InProcessCommandBuffer::Service::gpu_preferences() {
   return gpu_preferences_;
@@ -1200,6 +1200,6 @@ InProcessCommandBuffer::GpuTask::GpuTask(const base::Closure& callback,
                                          uint32_t order_number)
     : callback(callback), order_number(order_number) {}
 
-InProcessCommandBuffer::GpuTask::~GpuTask() {}
+InProcessCommandBuffer::GpuTask::~GpuTask() = default;
 
 }  // namespace gpu
