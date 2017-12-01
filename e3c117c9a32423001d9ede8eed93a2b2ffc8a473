@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "7cebe17c_a4fb5fd1",
+        "filename": "chrome/browser/printing/print_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-01T00:28:06Z",
+      "side": 1,
+      "message": "Can this be: pdf_page_mapping_ \u003d pages; ?",
+      "revId": "e3c117c9a32423001d9ede8eed93a2b2ffc8a473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c636bb4_0bdee776",
+        "filename": "chrome/browser/printing/print_view_manager_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-01T00:28:06Z",
+      "side": 1,
+      "message": "auto bytes \u003d base::MakeRefCounted\u003c...\u003e(...) while we are here.",
+      "range": {
+        "startLine": 194,
+        "startChar": 45,
+        "endLine": 194,
+        "endChar": 48
+      },
+      "revId": "e3c117c9a32423001d9ede8eed93a2b2ffc8a473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "179d0fb8_b13fff15",
+        "filename": "chrome/browser/printing/print_view_manager_base.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-01T00:28:06Z",
+      "side": 1,
+      "message": "Can we rename this?",
+      "revId": "e3c117c9a32423001d9ede8eed93a2b2ffc8a473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff2ef8de_2bd3e177",
         "filename": "components/printing/common/print_messages.h",
         "patchSetId": 2
@@ -13,6 +70,23 @@
       "writtenOn": "2017-12-01T00:07:22Z",
       "side": 1,
       "message": "Mention this is zero-based?",
+      "revId": "e3c117c9a32423001d9ede8eed93a2b2ffc8a473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e56b8867_34c4bd91",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1684,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-01T00:28:06Z",
+      "side": 1,
+      "message": "Are we setting |page_size_in_dpi| / |content_area_in_dpi| repeatedly now? Is the value always the same?",
       "revId": "e3c117c9a32423001d9ede8eed93a2b2ffc8a473",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
