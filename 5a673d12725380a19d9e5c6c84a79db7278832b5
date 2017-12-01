@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce27515b_e5efbd63",
+        "filename": "chromeos/disks/disk_mount_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 919,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-01T18:00:10Z",
+      "side": 1,
+      "message": "This should be a constant defined at the top of the file. (Please update all constants to use constexpr also).",
+      "revId": "5a673d12725380a19d9e5c6c84a79db7278832b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
