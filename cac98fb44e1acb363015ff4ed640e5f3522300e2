@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "412630b4_3ce9e208",
+        "filename": "ui/ozone/platform/wayland/wayland_touch.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1250943
+      },
+      "writtenOn": "2017-12-01T12:07:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a8bc176_8538d49f",
+      "revId": "cac98fb44e1acb363015ff4ed640e5f3522300e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27112b67_66d9082d",
         "filename": "ui/ozone/platform/wayland/wayland_touch.cc",
         "patchSetId": 1
@@ -108,6 +126,30 @@
     },
     {
       "key": {
+        "uuid": "359cef92_a480838a",
+        "filename": "ui/ozone/platform/wayland/wayland_touch.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1250943
+      },
+      "writtenOn": "2017-12-01T12:07:52Z",
+      "side": 1,
+      "message": "you were right in first comments those TouchEvents doesn\u0027t really need to be saved. \nI misunderstood initially, Anyway I have updated the same in current patch",
+      "parentUuid": "3a53b1f3_dd3fb207",
+      "range": {
+        "startLine": 71,
+        "startChar": 30,
+        "endLine": 71,
+        "endChar": 35
+      },
+      "revId": "cac98fb44e1acb363015ff4ed640e5f3522300e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89b567b9_a65b282b",
         "filename": "ui/ozone/platform/wayland/wayland_touch.cc",
         "patchSetId": 1
@@ -176,6 +218,30 @@
       "revId": "cac98fb44e1acb363015ff4ed640e5f3522300e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b766fc2_c566f688",
+        "filename": "ui/ozone/platform/wayland/wayland_touch.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1250943
+      },
+      "writtenOn": "2017-12-01T12:07:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9740d5d1_731bd2ce",
+      "range": {
+        "startLine": 148,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 40
+      },
+      "revId": "cac98fb44e1acb363015ff4ed640e5f3522300e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
