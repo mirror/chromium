@@ -1,0 +1,68 @@
+<!doctype html>
+<title>A visible but unfocused selection should receive ClipboardEvent</title>
+<link rel="help" href="https://www.w3.org/TR/clipboard-apis/#fire-a-clipboard-event">
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+
+<input type="checkbox" id="checkbox">
+<p contenteditable id="ce">HEY</p>
+
+<script>
+
+resetSelection = function(selectedElement) {
+  selectedElement.innerHTML = "SOMETEXT"
+  let range = document.createRange();
+  range.selectNodeContents(selectedElement);
+  window.getSelection().removeAllRanges();
+  window.getSelection().addRange(range);
+}
+
+testClipboardEvent = function(eventName, selectedElement) {
+  let selection_hit_count = 0;
+  let document_hit_count = 0;
+  let last_target;
+  selectionLog = function(e) {
+    selection_hit_count++;
+    last_target = e.target;
+  }
+  documentLog = function(e) {
+    document_hit_count++;
+    last_target = e.target;
+  }
+  selectedElement.addEventListener(eventName, selectionLog);
+  document.addEventListener(eventName, documentLog);
+
+  selectedElement.focus();
+  resetSelection(selectedElement);
+  testRunner.execCommand(eventName);
+  assert_equals(selection_hit_count, 1, "The selection should receive a " + eventName + "-event.")
+  assert_equals(document_hit_count, 1, "The document should receive a bubbled " + eventName + "-event.")
+  assert_equals(last_target, selectedElement, "The selection should be the " + eventName + "-event's target.")
+  resetSelection(selectedElement);
+
+  checkbox.focus();
+  testRunner.execCommand(eventName);
+  assert_equals(selection_hit_count, 2, "The selection should receive a " + eventName + "-event.")
+  assert_equals(document_hit_count, 2, "The document should receive a bubbled " + eventName + "-event.")
+  assert_equals(last_target, selectedElement, "The selection should be the " + eventName + "-event's target.")
+  resetSelection(selectedElement);
+
+  checkbox.blur();
+  testRunner.execCommand(eventName);
+  assert_equals(selection_hit_count, 3, "The selection should receive a " + eventName + "-event.")
+  assert_equals(document_hit_count, 3, "The document should receive a bubbled " + eventName + "-event.")
+  assert_equals(last_target, selectedElement, "The selection should be the " + eventName + "-event's target.")
+  resetSelection(selectedElement);
+
+  document.body.focus();
+  testRunner.execCommand(eventName);
+  assert_equals(selection_hit_count, 4, "The selection should receive a " + eventName + "-event.")
+  assert_equals(document_hit_count, 4, "The document should receive a bubbled " + eventName + "-event.")
+  assert_equals(last_target, selectedElement, "The selection should be the " + eventName + "-event's target.")
+  resetSelection(selectedElement);
+}
+
+test(() => testClipboardEvent('copy', ce),  'Visible but unfocused selections are targeted by copy-events.');
+test(() => testClipboardEvent('paste', ce), 'Visible but unfocused selections are targeted by paste-events.');
+test(() => testClipboardEvent('cut', ce),   'Visible but unfocused selections are targeted by cut-events.');
+</script>
