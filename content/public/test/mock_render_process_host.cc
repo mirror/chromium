@@ -58,8 +58,7 @@ MockRenderProcessHost::MockRenderProcessHost(BrowserContext* browser_context)
       child_identity_(mojom::kRendererServiceName,
                       BrowserContext::GetServiceUserIdFor(browser_context),
                       base::StringPrintf("%d", id_)),
-      shared_bitmap_allocation_notifier_impl_(
-          viz::ServerSharedBitmapManager::current()),
+      shared_bitmap_allocation_notifier_impl_(&shared_bitmap_manager_),
       weak_ptr_factory_(this) {
   // Child process security operations can't be unit tested unless we add
   // ourselves as an existing child process.
