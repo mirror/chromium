@@ -16,6 +16,24 @@
       "revId": "0fa992c05bb394f83b6aa3e1e294223ed5d3ccf9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42477207_db897d99",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-12-01T05:44:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a4d1928_8c23d137",
+      "revId": "0fa992c05bb394f83b6aa3e1e294223ed5d3ccf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
