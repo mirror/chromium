@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fef465e3_f0bbf630",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-12-01T18:39:21Z",
+      "side": 1,
+      "message": "Instead of defining this here, can it be a member variable on the HostResolverImpl? That\u0027s more like what I\u0027m used to seeing.\n\nWith this change, SetClock() will be okay to inline in the header file (and named set_clock() instead).",
+      "revId": "0627a9a2d730e02a71ebd51185a1afbdf0b6a6cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90a6c74e_d1f2b734",
+        "filename": "net/dns/host_resolver_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1414,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-12-01T18:39:21Z",
+      "side": 1,
+      "message": "You should be able to run the task scheduler until all the tasks are done using NetTestSuite::GetScopedTaskEnvironment(), no need to repeatedly sleep. For this test, since you don\u0027t expect anything running, you can skip the SignalAll() entirely and check that there are no blocked requests.",
+      "revId": "0627a9a2d730e02a71ebd51185a1afbdf0b6a6cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35845dff_549701fb",
+        "filename": "net/dns/host_resolver_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1461,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-12-01T18:39:21Z",
+      "side": 1,
+      "message": "For this test, you can SignalMultiple(2u) at the beginning and not have to signal again.",
+      "revId": "0627a9a2d730e02a71ebd51185a1afbdf0b6a6cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
