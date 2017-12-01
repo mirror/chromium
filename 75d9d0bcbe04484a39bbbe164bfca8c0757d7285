@@ -16,6 +16,24 @@
       "revId": "75d9d0bcbe04484a39bbbe164bfca8c0757d7285",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efb9ff4c_ee9a05d6",
+        "filename": "cc/trees/layer_tree_frame_sink.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-01T02:31:42Z",
+      "side": 1,
+      "message": "No, because we invalidate weak ptrs above. I don\u0027t mind not resetting it, but even if the callback were posted, client_ would be null which we don\u0027t check in OnContextLost.",
+      "parentUuid": "de17ab61_77811305",
+      "revId": "75d9d0bcbe04484a39bbbe164bfca8c0757d7285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
