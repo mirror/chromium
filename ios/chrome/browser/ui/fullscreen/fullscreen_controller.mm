@@ -5,6 +5,7 @@
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_controller.h"
 
 #include "base/memory/ptr_util.h"
+#import "ios/chrome/browser/ui/fullscreen/fullscreen_mediator.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_model.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_web_state_list_observer.h"
 
@@ -13,19 +14,20 @@
 #endif
 
 FullscreenController::FullscreenController()
-    : model_(base::MakeUnique<FullscreenModel>()) {}
+    : model_(base::MakeUnique<FullscreenModel>()),
+      mediator_(base::MakeUnique<FullscreenMediator>(this, model_.get())) {}
 
-FullscreenController::~FullscreenController() {}
+FullscreenController::~FullscreenController() {
+  mediator_->Disconnect();
+}
 
 void FullscreenController::AddObserver(FullscreenControllerObserver* observer) {
-  // TODO(crbug.com/785671): Use FullscreenControllerObserverManager to keep
-  // track of observers.
+  mediator_->AddObserver(observer);
 }
 
 void FullscreenController::RemoveObserver(
     FullscreenControllerObserver* observer) {
-  // TODO(crbug.com/785671): Use FullscreenControllerObserverManager to keep
-  // track of observers.
+  mediator_->RemoveObserver(observer);
 }
 
 bool FullscreenController::IsEnabled() const {

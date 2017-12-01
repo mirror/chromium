@@ -10,6 +10,7 @@
 #include "base/macros.h"
 
 class FullscreenControllerObserver;
+class FullscreenMediator;
 class FullscreenModel;
 class FullscreenWebStateListObserver;
 
@@ -41,6 +42,8 @@ class FullscreenController {
  private:
   // The model used to calculate fullscreen state.
   std::unique_ptr<FullscreenModel> model_;
+  // Object that manages sending signals to FullscreenControllerObservers.
+  std::unique_ptr<FullscreenMediator> mediator_;
   // A WebStateListObserver that updates |model_| for WebStateList changes.
   std::unique_ptr<FullscreenWebStateListObserver> web_state_list_observer_;
 
