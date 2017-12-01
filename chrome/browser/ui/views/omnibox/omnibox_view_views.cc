@@ -725,6 +725,8 @@ void OmniboxViewViews::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   node_data->SetValue(GetText());
   node_data->html_attributes.push_back(std::make_pair("type", "url"));
 
+  node_data->AddStringAttribute(ui::AX_ATTR_AUTO_COMPLETE, "inline");
+
   base::string16::size_type entry_start;
   base::string16::size_type entry_end;
   // Selection information is saved separately when focus is moved off the

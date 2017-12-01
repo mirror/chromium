@@ -159,6 +159,13 @@ Background = function() {
   chrome.accessibilityPrivate.onAccessibilityGesture.addListener(
       this.onAccessibilityGesture_);
 
+  document.addEventListener('copy', this.onClipboardEvent_);
+  document.addEventListener('cut', this.onClipboardEvent_);
+  document.addEventListener('paste', this.onClipboardEvent_);
+
+  /** @private {boolean} */
+  this.preventPaste_ = false;
+
   /**
    * Maps a non-desktop root automation node to a range position suitable for
    *     restoration.
@@ -732,6 +739,36 @@ Background.prototype = {
     var msg = {'message': 'USER_COMMAND', 'command': command};
     cvox.ExtensionBridge.send(msg);
     return true;
+  },
+
+  /**
+   * @param {!Event} evt
+   *@private
+   */
+  onClipboardEvent_: function(evt) {
+    var text = '';
+    if (evt.type == 'paste') {
+      if (this.preventPaste_) {
+        this.preventPaste_ = false;
+        return;
+      }
+      text = evt.clipboardData.getData('text');
+      cvox.ChromeVox.tts.speak(
+          Msgs.getMsg(evt.type, [text]), cvox.QueueMode.QUEUE);
+    } else if (evt.type == 'copy' || evt.type == 'cut') {
+      window.setTimeout(function() {
+        this.preventPaste_ = true;
+        var textarea = document.createElement('textarea');
+        document.body.appendChild(textarea);
+        textarea.focus();
+        document.execCommand('paste');
+        var clipboardContent = textarea.value;
+        textarea.remove();
+        cvox.ChromeVox.tts.speak(
+            Msgs.getMsg(evt.type, [clipboardContent]), cvox.QueueMode.FLUSH);
+        ChromeVoxState.instance.pageSel_ = null;
+      }.bind(this), 20);
+    }
   },
 
   /** @private */
