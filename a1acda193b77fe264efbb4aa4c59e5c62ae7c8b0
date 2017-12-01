@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ab1f8ef_8fe10ea1",
+        "filename": "ui/base/test/ui_controls_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1230445
+      },
+      "writtenOn": "2017-12-01T11:16:55Z",
+      "side": 1,
+      "message": "By the way, would it make sense to wait here until the system handles those CGEventPost?",
+      "revId": "a1acda193b77fe264efbb4aa4c59e5c62ae7c8b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
