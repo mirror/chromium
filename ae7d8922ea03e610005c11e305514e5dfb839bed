@@ -179,6 +179,30 @@
     },
     {
       "key": {
+        "uuid": "484a4a04_26a4672b",
+        "filename": "media/mojo/interfaces/cdm_proxy.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-01T22:48:26Z",
+      "side": 1,
+      "message": "You mean to add these methods in my CL? I am fine with that.\n\nrkuroiwa: WDYT?",
+      "parentUuid": "cd96bca5_3854fd44",
+      "range": {
+        "startLine": 31,
+        "startChar": 1,
+        "endLine": 61,
+        "endChar": 47
+      },
+      "revId": "ae7d8922ea03e610005c11e305514e5dfb839bed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5f79482_de519daa",
         "filename": "media/mojo/interfaces/cdm_proxy.mojom",
         "patchSetId": 15
