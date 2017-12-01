@@ -1,0 +1,215 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79dc9035_db72688f",
+        "filename": "content/browser/media/session/media_session_controllers_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-01T11:40:22Z",
+      "side": 1,
+      "message": "nit: I think this is \"correct\" to use \"anonymous namespace\" (both are used) in the code base. Maybe leave as is? :)",
+      "revId": "2752a404060b730cfe09059aa4d685c79e970bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e57c9da7_41704989",
+        "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-01T11:40:22Z",
+      "side": 1,
+      "message": "These two variables do not seem to be used anymore.",
+      "revId": "2752a404060b730cfe09059aa4d685c79e970bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6181daa_7daa5ec7",
+        "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-01T11:40:22Z",
+      "side": 1,
+      "message": "What about simply adding:\n```\nMockMediaSessionController* mock_media_session_controller() {\n  return mock_media_session_controller_.get();\n}\n```",
+      "range": {
+        "startLine": 65,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 38
+      },
+      "revId": "2752a404060b730cfe09059aa4d685c79e970bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "072c733c_70a800ce",
+        "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-01T11:40:22Z",
+      "side": 1,
+      "message": "What about simply `return \u0026manager_-\u003econtrollers_map_`?",
+      "revId": "2752a404060b730cfe09059aa4d685c79e970bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "714767fe_3953c8a9",
+        "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-01T11:40:22Z",
+      "side": 1,
+      "message": "It isn\u0027t rare to have the members of the class as `private` with accessors.",
+      "range": {
+        "startLine": 97,
+        "startChar": 1,
+        "endLine": 97,
+        "endChar": 10
+      },
+      "revId": "2752a404060b730cfe09059aa4d685c79e970bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4327a5ab_f767e9d2",
+        "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-01T11:40:22Z",
+      "side": 1,
+      "message": "You could drop this if you return the pointer from the manager immediately.",
+      "range": {
+        "startLine": 104,
+        "startChar": 50,
+        "endLine": 104,
+        "endChar": 66
+      },
+      "revId": "2752a404060b730cfe09059aa4d685c79e970bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d43a055b_bfa2867f",
+        "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-01T11:40:22Z",
+      "side": 1,
+      "message": "Probably easier to read with:\n```\nif (!IsMediaSessionEnabled())\n  return;\n```\n\nAnd maybe add a comment why there is nothing to test here.",
+      "revId": "2752a404060b730cfe09059aa4d685c79e970bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2727f814_c3e2ac35",
+        "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-01T11:40:22Z",
+      "side": 1,
+      "message": "To avoid these many () and [], what about `GetControllersMap()-\u003einsert(std::make_pair(media_player_id, std::move(mock_media_session_controller_));`",
+      "revId": "2752a404060b730cfe09059aa4d685c79e970bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4111521_e93d51b0",
+        "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-01T11:40:22Z",
+      "side": 1,
+      "message": "GetControllersMap()",
+      "range": {
+        "startLine": 153,
+        "startChar": 18,
+        "endLine": 153,
+        "endChar": 34
+      },
+      "revId": "2752a404060b730cfe09059aa4d685c79e970bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c6287c8_f1224929",
+        "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-01T11:40:22Z",
+      "side": 1,
+      "message": "Same as above.",
+      "revId": "2752a404060b730cfe09059aa4d685c79e970bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb1a8c9a_da27b1cb",
+        "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-01T11:40:22Z",
+      "side": 1,
+      "message": "Would be good for the reader to add a comment explaining what these ::Bool are for.",
+      "revId": "2752a404060b730cfe09059aa4d685c79e970bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
