@@ -12,6 +12,7 @@
 #include <string>
 #include <vector>
 
+#include "ash/app_list/model/search/search_model.h"
 #include "base/callback_forward.h"
 #include "base/compiler_specific.h"
 #include "base/macros.h"
@@ -52,6 +53,7 @@ class AppListTestViewDelegate : public AppListViewDelegate {
 
   // AppListViewDelegate overrides:
   AppListModel* GetModel() override;
+  SearchModel* GetSearchModel() override;
   SpeechUIModel* GetSpeechUI() override;
   void StartSearch() override {}
   void OpenSearchResult(SearchResult* result,
@@ -91,6 +93,7 @@ class AppListTestViewDelegate : public AppListViewDelegate {
   int next_profile_app_count_;
   std::map<size_t, int> open_search_result_counts_;
   std::unique_ptr<AppListTestModel> model_;
+  std::unique_ptr<SearchModel> search_model_;
   SpeechUIModel speech_ui_;
   std::vector<SkColor> wallpaper_prominent_colors_;
   base::TimeDelta auto_launch_timeout_;

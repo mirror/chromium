@@ -45,6 +45,7 @@ class AppsGridView;
 class HideViewAnimationObserver;
 class PaginationModel;
 class SearchBoxView;
+class SearchModel;
 class SpeechView;
 
 namespace test {
@@ -327,6 +328,7 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
 
   AppListViewDelegate* delegate_;  // Weak. Owned by AppListService.
   AppListModel* const model_;      // Not Owned.
+  SearchModel* const search_model_;  // Not Owned.
 
   AppListMainView* app_list_main_view_ = nullptr;
   SpeechView* speech_view_ = nullptr;

@@ -4,7 +4,7 @@
 
 #include "ui/app_list/views/search_result_answer_card_view.h"
 
-#include "ash/app_list/model/search_result_observer.h"
+#include "ash/app_list/model/search/search_result_observer.h"
 #include "ui/accessibility/ax_node.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/app_list/app_list_constants.h"
@@ -178,7 +178,7 @@ int SearchResultAnswerCardView::GetYSize() {
 
 int SearchResultAnswerCardView::DoUpdate() {
   std::vector<SearchResult*> display_results =
-      AppListModel::FilterSearchResultsByDisplayType(
+      SearchModel::FilterSearchResultsByDisplayType(
           results(), SearchResult::DISPLAY_CARD, 1);
 
   const bool have_result = !display_results.empty();

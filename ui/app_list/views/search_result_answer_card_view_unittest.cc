@@ -37,7 +37,8 @@ class SearchResultAnswerCardViewTest : public views::ViewsTestBase {
 
     result_container_view_ = new SearchResultAnswerCardView(&view_delegate_);
     search_card_view_->AddChildView(result_container_view_);
-    result_container_view_->SetResults(view_delegate_.GetModel()->results());
+    result_container_view_->SetResults(
+        view_delegate_.GetSearchModel()->results());
 
     result_view_ = std::make_unique<views::View>();
     result_view_->set_owned_by_client();
@@ -47,7 +48,7 @@ class SearchResultAnswerCardViewTest : public views::ViewsTestBase {
 
  protected:
   void SetUpSearchResult() {
-    AppListModel::SearchResults* results = GetResults();
+    SearchModel::SearchResults* results = GetResults();
     std::unique_ptr<TestSearchResult> result =
         std::make_unique<TestSearchResult>();
     result->set_display_type(SearchResult::DISPLAY_CARD);
@@ -80,8 +81,8 @@ class SearchResultAnswerCardViewTest : public views::ViewsTestBase {
     return result_container_view_->OnKeyPressed(event);
   }
 
-  AppListModel::SearchResults* GetResults() {
-    return view_delegate_.GetModel()->results();
+  SearchModel::SearchResults* GetResults() {
+    return view_delegate_.GetSearchModel()->results();
   }
 
   views::View* search_card_view() const { return search_card_view_.get(); }

@@ -28,7 +28,7 @@ class SearchResult;
 class APP_LIST_EXPORT SearchController {
  public:
   SearchController(SearchBoxModel* search_box,
-                   AppListModel::SearchResults* results,
+                   SearchModel::SearchResults* results,
                    History* history);
   virtual ~SearchController();
 

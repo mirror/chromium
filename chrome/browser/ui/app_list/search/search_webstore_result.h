@@ -7,7 +7,7 @@
 
 #include <string>
 
-#include "ash/app_list/model/search_result.h"
+#include "ash/app_list/model/search/search_result.h"
 #include "base/macros.h"
 #include "url/gurl.h"
 
