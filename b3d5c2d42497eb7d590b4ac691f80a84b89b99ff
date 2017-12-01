@@ -22,6 +22,30 @@
       "revId": "b3d5c2d42497eb7d590b4ac691f80a84b89b99ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ac8591c_a9691d3f",
+        "filename": "chrome/common/extensions/docs/templates/articles/npapi.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-01T22:16:20Z",
+      "side": 1,
+      "message": "I think it\u0027s probably okay.  Maybe s/maintained/preserved?",
+      "parentUuid": "96a0effd_2194ff48",
+      "range": {
+        "startLine": 4,
+        "startChar": 178,
+        "endLine": 4,
+        "endChar": 218
+      },
+      "revId": "b3d5c2d42497eb7d590b4ac691f80a84b89b99ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
