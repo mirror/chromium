@@ -51,6 +51,8 @@ static const char* kLoremIpsum700Chars =
     "dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. "
     "Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. "
     "Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus";
+static const char* kOutputDirSwitch = "image-output-directory";
+static const char* kBaselineFileSwitch = "baseline-file";
 
 }  // namespace vr
 

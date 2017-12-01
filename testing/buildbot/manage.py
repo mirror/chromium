@@ -135,6 +135,8 @@ SKIP_GN_ISOLATE_MAP_TARGETS = {
   'ui_junit_tests',
   'vrcore_fps_test',
   'vr_common_perftests',
+  # TODO(bsheedy): Remove once actually added to a bot
+  'vr_common_pixeltests',
   'vr_perf_tests',
   'webapk_client_junit_tests',
   'webapk_shell_apk_junit_tests',
