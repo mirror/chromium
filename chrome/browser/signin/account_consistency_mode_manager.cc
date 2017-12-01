@@ -68,6 +68,31 @@ void AccountConsistencyModeManager::RegisterProfilePrefs(
 #endif
 }
 
+signin::AccountConsistencyMethod
+AccountConsistencyModeManager::GetAccountConsistencyMethod() {
+  // The global account consistency method may be tweaked per profile.
+  signin::AccountConsistencyMethod method =
+      signin::GetAccountConsistencyMethod();
+
+  if ((method == signin::AccountConsistencyMethod::kDiceMigration) &&
+      signin::IsDiceEnabledForProfile(profile_->GetPrefs())) {
+    // If the migration is complete, return kDice.
+    return signin::AccountConsistencyMethod::kDice;
+  }
+
+  return method;
+}
+
+// static
+signin::AccountConsistencyMethod
+AccountConsistencyModeManager::GetAccountConsistencyMethodForProfile(
+    BooleanPrefMember* dice_pref_member) {
+  if (signin::IsDiceEnabled(dice_pref_member))
+    return signin::AccountConsistencyMethod::kDice;
+
+  return signin::GetAccountConsistencyMethod();
+}
+
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
 void AccountConsistencyModeManager::SetReadyForDiceMigration(bool is_ready) {
   SetDiceMigrationOnStartup(profile_->GetPrefs(), is_ready);

@@ -70,8 +70,8 @@ WebViewSigninManagerFactory::BuildServiceInstanceFor(
       WebViewSigninClientFactory::GetForBrowserState(browser_state),
       WebViewOAuth2TokenServiceFactory::GetForBrowserState(browser_state),
       WebViewAccountTrackerServiceFactory::GetForBrowserState(browser_state),
-      WebViewGaiaCookieManagerServiceFactory::GetForBrowserState(
-          browser_state)));
+      WebViewGaiaCookieManagerServiceFactory::GetForBrowserState(browser_state),
+      false));
   service->Initialize(ApplicationContext::GetInstance()->GetLocalState());
   return service;
 }
