@@ -26,6 +26,14 @@ namespace autofill {
 // save logic.  Owned by FormDataImporter.
 class CreditCardSaveManager : public payments::PaymentsClientSaveDelegate {
  public:
+  class ObserverForTest {
+   public:
+    virtual void OnOfferLocalSave() = 0;
+    virtual void OnDecideToRequestUploadSave() = 0;
+    virtual void OnDecideToNotRequestUploadSave() = 0;
+    virtual void OnSentUploadCardRequest() = 0;
+  };
+
   // The parameters should outlive the CreditCardSaveManager.
   CreditCardSaveManager(AutofillClient* client,
                         payments::PaymentsClient* payments_client,
@@ -54,7 +62,17 @@ class CreditCardSaveManager : public payments::PaymentsClientSaveDelegate {
   void OnDidUploadCard(AutofillClient::PaymentsRpcResult result,
                        const std::string& server_id) override;
 
+  // For testing.
+  void SetEventObserver(ObserverForTest* observer) {
+    observer_for_testing_ = observer;
+  }
+
+  // May be null.
+  ObserverForTest* observer_for_testing_ = nullptr;
+
  private:
+  friend class SaveCardBubbleViewsBrowserTestBase;
+
   // payments::PaymentsClientSaveDelegate:
   void OnDidGetUploadDetails(
       AutofillClient::PaymentsRpcResult result,

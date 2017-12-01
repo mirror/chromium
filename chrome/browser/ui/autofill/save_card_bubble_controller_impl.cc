@@ -108,6 +108,8 @@ void SaveCardBubbleControllerImpl::HideBubble() {
   if (save_card_bubble_view_) {
     save_card_bubble_view_->Hide();
     save_card_bubble_view_ = nullptr;
+    if (observer_for_testing_)
+      observer_for_testing_->OnBubbleHidden();
   }
 }
 
@@ -190,11 +192,15 @@ void SaveCardBubbleControllerImpl::OnSaveButton(const base::string16& cvc) {
   }
   save_card_callback_.Run();
   save_card_callback_.Reset();
+  if (observer_for_testing_)
+    observer_for_testing_->OnBubbleAccepted();
   AutofillMetrics::LogSaveCardPromptMetric(
       AutofillMetrics::SAVE_CARD_PROMPT_END_ACCEPTED, is_uploading_, is_reshow_,
       pref_service_->GetInteger(
           prefs::kAutofillAcceptSaveCreditCardPromptState));
   if (is_currently_requesting_cvc_) {
+    if (observer_for_testing_)
+      observer_for_testing_->OnCvcRequestViewAccepted();
     AutofillMetrics::LogSaveCardPromptMetric(
         AutofillMetrics::SAVE_CARD_PROMPT_CVC_FIX_FLOW_END_ACCEPTED,
         is_uploading_, is_reshow_,
@@ -207,6 +213,8 @@ void SaveCardBubbleControllerImpl::OnSaveButton(const base::string16& cvc) {
 }
 
 void SaveCardBubbleControllerImpl::OnCancelButton() {
+  if (observer_for_testing_)
+    observer_for_testing_->OnBubbleCancelled();
   save_card_callback_.Reset();
   AutofillMetrics::LogSaveCardPromptMetric(
       AutofillMetrics::SAVE_CARD_PROMPT_END_DENIED, is_uploading_, is_reshow_,
@@ -218,6 +226,8 @@ void SaveCardBubbleControllerImpl::OnCancelButton() {
 }
 
 void SaveCardBubbleControllerImpl::OnLearnMoreClicked() {
+  if (observer_for_testing_)
+    observer_for_testing_->OnLearnMoreLinkClicked();
   OpenUrl(GURL(kHelpURL));
   AutofillMetrics::LogSaveCardPromptMetric(
       AutofillMetrics::SAVE_CARD_PROMPT_DISMISS_CLICK_LEARN_MORE, is_uploading_,
@@ -227,6 +237,8 @@ void SaveCardBubbleControllerImpl::OnLearnMoreClicked() {
 }
 
 void SaveCardBubbleControllerImpl::OnLegalMessageLinkClicked(const GURL& url) {
+  if (observer_for_testing_)
+    observer_for_testing_->OnLegalMessageLinkClicked();
   OpenUrl(url);
   AutofillMetrics::LogSaveCardPromptMetric(
       AutofillMetrics::SAVE_CARD_PROMPT_DISMISS_CLICK_LEGAL_MESSAGE,
@@ -244,8 +256,20 @@ void SaveCardBubbleControllerImpl::OnLegalMessageLinkClicked(const GURL& url) {
 }
 
 void SaveCardBubbleControllerImpl::OnBubbleClosed() {
+  if (observer_for_testing_)
+    observer_for_testing_->OnBubbleClosed();
   save_card_bubble_view_ = nullptr;
   UpdateIcon();
+}
+
+void SaveCardBubbleControllerImpl::OnBubbleFooterShown() {
+  if (observer_for_testing_)
+    observer_for_testing_->OnFooterShown();
+}
+
+void SaveCardBubbleControllerImpl::OnBubbleFooterHidden() {
+  if (observer_for_testing_)
+    observer_for_testing_->OnFooterHidden();
 }
 
 const LegalMessageLines& SaveCardBubbleControllerImpl::GetLegalMessageLines()
@@ -254,6 +278,8 @@ const LegalMessageLines& SaveCardBubbleControllerImpl::GetLegalMessageLines()
 }
 
 void SaveCardBubbleControllerImpl::ContinueToRequestCvcStage() {
+  if (observer_for_testing_)
+    observer_for_testing_->OnCvcRequestViewShown();
   is_currently_requesting_cvc_ = true;
   AutofillMetrics::LogSaveCardPromptMetric(
       AutofillMetrics::SAVE_CARD_PROMPT_CVC_FIX_FLOW_SHOWN, is_uploading_,
@@ -349,6 +375,13 @@ void SaveCardBubbleControllerImpl::ShowBubble() {
   save_card_bubble_view_ = browser->window()->ShowSaveCreditCardBubble(
       web_contents(), this, is_reshow_);
   DCHECK(save_card_bubble_view_);
+
+  if (observer_for_testing_) {
+    if (is_uploading_)
+      observer_for_testing_->OnUploadBubbleShown();
+    else
+      observer_for_testing_->OnLocalBubbleShown();
+  }
 
   // Update icon after creating |save_card_bubble_view_| so that icon will show
   // its "toggled on" state.

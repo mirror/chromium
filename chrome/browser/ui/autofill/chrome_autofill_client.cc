@@ -206,6 +206,8 @@ void ChromeAutofillClient::ConfirmSaveCreditCardLocally(
       web_contents());
   autofill::SaveCardBubbleControllerImpl* controller =
       autofill::SaveCardBubbleControllerImpl::FromWebContents(web_contents());
+  if (save_card_bubble_controller_event_observer_)
+    controller->SetEventObserver(save_card_bubble_controller_event_observer_);
   controller->ShowBubbleForLocalSave(card, callback);
 #endif
 }
@@ -230,6 +232,8 @@ void ChromeAutofillClient::ConfirmSaveCreditCardToCloud(
   autofill::SaveCardBubbleControllerImpl::CreateForWebContents(web_contents());
   autofill::SaveCardBubbleControllerImpl* controller =
       autofill::SaveCardBubbleControllerImpl::FromWebContents(web_contents());
+  if (save_card_bubble_controller_event_observer_)
+    controller->SetEventObserver(save_card_bubble_controller_event_observer_);
   controller->ShowBubbleForUpload(card, std::move(legal_message),
                                   should_cvc_be_requested, callback);
 #endif
@@ -330,6 +334,11 @@ void ChromeAutofillClient::DidAttachInterstitialPage() {
 }
 
 #if !defined(OS_ANDROID)
+void ChromeAutofillClient::SetSaveCardBubbleControllerObserverForTest(
+    SaveCardBubbleController::ObserverForTest* observer) {
+  save_card_bubble_controller_event_observer_ = observer;
+}
+
 void ChromeAutofillClient::OnZoomChanged(
     const zoom::ZoomController::ZoomChangedEventData& data) {
   HideAutofillPopup();

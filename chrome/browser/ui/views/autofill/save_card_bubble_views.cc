@@ -11,6 +11,7 @@
 #include "build/build_config.h"
 #include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/ui/browser_dialogs.h"
+#include "chrome/browser/ui/views/autofill/save_card_bubble_view_ids.h"
 #include "chrome/browser/ui/views/autofill/view_util.h"
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "components/autofill/core/browser/autofill_experiments.h"
@@ -33,6 +34,7 @@
 #include "ui/views/controls/styled_label.h"
 #include "ui/views/controls/textfield/textfield.h"
 #include "ui/views/layout/box_layout.h"
+#include "ui/views/window/dialog_client_view.h"
 
 namespace autofill {
 
@@ -50,6 +52,7 @@ std::unique_ptr<views::StyledLabel> CreateLegalMessageLineLabel(
     label->AddStyleRange(link.range,
                          views::StyledLabel::RangeStyleInfo::CreateForLink());
   }
+  label->set_id(static_cast<int>(DialogViewId::LEGAL_MESSAGE_LINE_LABEL));
   return label;
 }
 
@@ -67,6 +70,7 @@ SaveCardBubbleViews::SaveCardBubbleViews(views::View* anchor_view,
 
 void SaveCardBubbleViews::Show(DisplayReason reason) {
   ShowForReason(reason);
+  AssignIdsToDialogClientView();
 }
 
 void SaveCardBubbleViews::Hide() {
@@ -84,6 +88,7 @@ views::View* SaveCardBubbleViews::CreateExtraView() {
   learn_more_link_ = new views::Link(l10n_util::GetStringUTF16(IDS_LEARN_MORE));
   learn_more_link_->SetUnderline(false);
   learn_more_link_->set_listener(this);
+  learn_more_link_->set_id(static_cast<int>(DialogViewId::LEARN_MORE_LINK));
   return learn_more_link_;
 }
 
@@ -95,6 +100,7 @@ views::View* SaveCardBubbleViews::CreateFootnoteView() {
   footnote_view_ = new View();
   footnote_view_->SetLayoutManager(
       new views::BoxLayout(views::BoxLayout::kVertical));
+  footnote_view_->set_id(static_cast<int>(DialogViewId::FOOTNOTE_VIEW));
 
   // Add a StyledLabel for each line of the legal message.
   for (const LegalMessageLine& line : controller_->GetLegalMessageLines()) {
@@ -104,8 +110,12 @@ views::View* SaveCardBubbleViews::CreateFootnoteView() {
 
   // If on the first step of the 2-step upload flow, hide the footer area until
   // it's time to actually accept the dialog and ToS.
-  if (GetCurrentFlowStep() == UPLOAD_SAVE_CVC_FIX_FLOW_STEP_1_OFFER_UPLOAD)
+  if (GetCurrentFlowStep() == UPLOAD_SAVE_CVC_FIX_FLOW_STEP_1_OFFER_UPLOAD) {
     footnote_view_->SetVisible(false);
+    controller_->OnBubbleFooterHidden();
+  } else {
+    controller_->OnBubbleFooterShown();
+  }
 
   return footnote_view_;
 }
@@ -127,6 +137,7 @@ bool SaveCardBubbleViews::Accept() {
     // Make the legal messaging footer appear:
     DCHECK(footnote_view_);
     footnote_view_->SetVisible(true);
+    controller_->OnBubbleFooterShown();
     // Resize the bubble if it's grown larger:
     SizeToContents();
     return false;
@@ -268,6 +279,10 @@ void SaveCardBubbleViews::ContentsChanged(views::Textfield* sender,
   DialogModelChanged();
 }
 
+views::View* SaveCardBubbleViews::GetFootnoteView() {
+  return footnote_view_;
+}
+
 SaveCardBubbleViews::~SaveCardBubbleViews() {}
 
 SaveCardBubbleViews::CurrentFlowStep SaveCardBubbleViews::GetCurrentFlowStep()
@@ -292,6 +307,7 @@ std::unique_ptr<views::View> SaveCardBubbleViews::CreateMainContentView() {
   view->SetLayoutManager(new views::BoxLayout(
       views::BoxLayout::kVertical, gfx::Insets(),
       provider->GetDistanceMetric(views::DISTANCE_UNRELATED_CONTROL_VERTICAL)));
+  view->set_id(static_cast<int>(DialogViewId::CONTENT_VIEW));
 
   // If applicable, add the upload explanation label.  Appears above the card
   // info when new UI experiment is enabled.
@@ -300,6 +316,8 @@ std::unique_ptr<views::View> SaveCardBubbleViews::CreateMainContentView() {
     views::Label* explanation_label = new views::Label(explanation);
     explanation_label->SetMultiLine(true);
     explanation_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
+    explanation_label->set_id(
+        static_cast<int>(DialogViewId::EXPLANATION_LABEL));
     view->AddChildView(explanation_label);
   }
 
@@ -308,6 +326,7 @@ std::unique_ptr<views::View> SaveCardBubbleViews::CreateMainContentView() {
   description_view->SetLayoutManager(new views::BoxLayout(
       views::BoxLayout::kHorizontal, gfx::Insets(),
       provider->GetDistanceMetric(views::DISTANCE_RELATED_BUTTON_HORIZONTAL)));
+  description_view->set_id(static_cast<int>(DialogViewId::DESCRIPTION_VIEW));
   view->AddChildView(description_view);
 
   const CreditCard& card = controller_->GetCard();
@@ -319,19 +338,29 @@ std::unique_ptr<views::View> SaveCardBubbleViews::CreateMainContentView() {
   card_type_icon->SetTooltipText(card.NetworkForDisplay());
   card_type_icon->SetBorder(
       views::CreateSolidBorder(1, SkColorSetA(SK_ColorBLACK, 10)));
+  card_type_icon->set_id(static_cast<int>(DialogViewId::CARD_TYPE_ICON_IMAGE));
   description_view->AddChildView(card_type_icon);
 
   // Old UI shows last four digits and expiration.  New UI shows network, last
   // four digits, and expiration.
   if (IsAutofillUpstreamShowNewUiExperimentEnabled()) {
-    description_view->AddChildView(
-        new views::Label(card.NetworkAndLastFourDigits()));
+    views::Label* network_and_last_four_digits_label =
+        new views::Label(card.NetworkAndLastFourDigits());
+    network_and_last_four_digits_label->set_id(
+        static_cast<int>(DialogViewId::NETWORK_AND_LAST_FOUR_DIGITS_LABEL));
+    description_view->AddChildView(network_and_last_four_digits_label);
   } else {
-    description_view->AddChildView(new views::Label(
-        base::string16(kMidlineEllipsis) + card.LastFourDigits()));
+    views::Label* last_four_digits_label = new views::Label(
+        base::string16(kMidlineEllipsis) + card.LastFourDigits());
+    last_four_digits_label->set_id(
+        static_cast<int>(DialogViewId::LAST_FOUR_DIGITS_LABEL));
+    description_view->AddChildView(last_four_digits_label);
   }
-  description_view->AddChildView(
-      new views::Label(card.AbbreviatedExpirationDateForDisplay()));
+  views::Label* expiration_date_label =
+      new views::Label(card.AbbreviatedExpirationDateForDisplay());
+  expiration_date_label->set_id(
+      static_cast<int>(DialogViewId::EXPIRATION_DATE_LABEL));
+  description_view->AddChildView(expiration_date_label);
 
   // If applicable, add the upload explanation label.  Appears below the card
   // info when new UI experiment is disabled.
@@ -339,6 +368,8 @@ std::unique_ptr<views::View> SaveCardBubbleViews::CreateMainContentView() {
     views::Label* explanation_label = new views::Label(explanation);
     explanation_label->SetMultiLine(true);
     explanation_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
+    explanation_label->set_id(
+        static_cast<int>(DialogViewId::EXPLANATION_LABEL));
     view->AddChildView(explanation_label);
   }
 
@@ -354,6 +385,7 @@ std::unique_ptr<views::View> SaveCardBubbleViews::CreateRequestCvcView() {
       provider->GetDistanceMetric(views::DISTANCE_UNRELATED_CONTROL_VERTICAL)));
   request_cvc_view->SetBackground(views::CreateThemedSolidBackground(
       request_cvc_view.get(), ui::NativeTheme::kColorId_BubbleBackground));
+  request_cvc_view->set_id(static_cast<int>(DialogViewId::REQUEST_CVC_VIEW));
 
   const CreditCard& card = controller_->GetCard();
   views::Label* explanation_label = new views::Label(l10n_util::GetStringFUTF16(
@@ -361,6 +393,8 @@ std::unique_ptr<views::View> SaveCardBubbleViews::CreateRequestCvcView() {
       card.NetworkAndLastFourDigits()));
   explanation_label->SetMultiLine(true);
   explanation_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
+  explanation_label->set_id(
+      static_cast<int>(DialogViewId::CVC_EXPLANATION_LABEL));
   request_cvc_view->AddChildView(explanation_label);
 
   views::View* cvc_entry_view = new views::View();
@@ -370,20 +404,34 @@ std::unique_ptr<views::View> SaveCardBubbleViews::CreateRequestCvcView() {
   layout->set_cross_axis_alignment(
       views::BoxLayout::CROSS_AXIS_ALIGNMENT_CENTER);
   cvc_entry_view->SetLayoutManager(layout);
+  cvc_entry_view->set_id(static_cast<int>(DialogViewId::CVC_ENTRY_VIEW));
 
   DCHECK(!cvc_textfield_);
   cvc_textfield_ = CreateCvcTextfield();
   cvc_textfield_->set_controller(this);
+  cvc_textfield_->set_id(static_cast<int>(DialogViewId::CVC_TEXTFIELD));
   cvc_entry_view->AddChildView(cvc_textfield_);
 
   views::ImageView* cvc_image = new views::ImageView();
   ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
   cvc_image->SetImage(
       rb.GetImageSkiaNamed(controller_->GetCvcImageResourceId()));
+  cvc_image->set_id(static_cast<int>(DialogViewId::CVC_HINT_IMAGE));
   cvc_entry_view->AddChildView(cvc_image);
 
   request_cvc_view->AddChildView(cvc_entry_view);
   return request_cvc_view;
+}
+
+void SaveCardBubbleViews::AssignIdsToDialogClientView() {
+  GetDialogClientView()->set_id(
+      static_cast<int>(DialogViewId::DIALOG_CLIENT_VIEW));
+  views::LabelButton* ok_button = GetDialogClientView()->ok_button();
+  if (ok_button)
+    ok_button->set_id(static_cast<int>(DialogViewId::OK_BUTTON));
+  views::LabelButton* cancel_button = GetDialogClientView()->cancel_button();
+  if (cancel_button)
+    cancel_button->set_id(static_cast<int>(DialogViewId::CANCEL_BUTTON));
 }
 
 void SaveCardBubbleViews::Init() {

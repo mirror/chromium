@@ -14,12 +14,14 @@
 #include "base/i18n/rtl.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "build/build_config.h"
 #include "components/autofill/core/browser/autofill_client.h"
 #include "components/autofill/core/browser/ui/card_unmask_prompt_controller_impl.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
 
 #if !defined(OS_ANDROID)
+#include "components/autofill/core/browser/ui/save_card_bubble_controller.h"
 #include "components/zoom/zoom_observer.h"
 #endif  // !defined(OS_ANDROID)
 
@@ -103,6 +105,9 @@ class ChromeAutofillClient
   }
 
 #if !defined(OS_ANDROID)
+  void SetSaveCardBubbleControllerObserverForTest(
+      SaveCardBubbleController::ObserverForTest* observer);
+
   // ZoomObserver implementation.
   void OnZoomChanged(
       const zoom::ZoomController::ZoomChangedEventData& data) override;
@@ -119,6 +124,13 @@ class ChromeAutofillClient
 
   // The identity provider, used for Payments integration.
   std::unique_ptr<IdentityProvider> identity_provider_;
+
+#if !defined(OS_ANDROID)
+  // If not null, is passed along to the SaveCardBubbleControllerImpl when it is
+  // created, for testing purposes.
+  SaveCardBubbleController::ObserverForTest*
+      save_card_bubble_controller_event_observer_ = nullptr;
+#endif  // !defined(OS_ANDROID)
 
   DISALLOW_COPY_AND_ASSIGN(ChromeAutofillClient);
 };
