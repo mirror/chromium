@@ -220,10 +220,12 @@ void ExpireHistoryBackend::ExpireHistoryBetween(
     base::Time end_time) {
   if (!main_db_)
     return;
-
   // Find the affected visits and delete them.
   VisitVector visits;
   main_db_->GetAllVisitsInRange(begin_time, end_time, 0, &visits);
+  DeletionTimeRange time_range = restrict_urls.empty()
+                                     ? DeletionTimeRange(begin_time, end_time)
+                                     : DeletionTimeRange::Invalid();
   if (!restrict_urls.empty()) {
     std::set<URLID> url_ids;
     for (std::set<GURL>::const_iterator url = restrict_urls.begin();
@@ -237,7 +239,7 @@ void ExpireHistoryBackend::ExpireHistoryBetween(
         visits.push_back(*visit);
     }
   }
-  ExpireVisitsInternal(visits, DeletionTimeRange(begin_time, end_time));
+  ExpireVisitsInternal(visits, time_range);
 }
 
 void ExpireHistoryBackend::ExpireHistoryForTimes(
