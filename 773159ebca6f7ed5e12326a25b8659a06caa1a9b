@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "25920252_e82df6ea",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-01T20:24:51Z",
+      "side": 1,
+      "message": "Each IN_PROC_BROWSER_TEST_P creates a subclass of HostedAppProcessModelTest, and the tests below use these vars directly.  I could add accessor methods for all of them, but that\u0027s a lot of boilerplace, so I\u0027ve just marked them as protected for now, and let me know if you prefer accessors.",
+      "parentUuid": "8fa1b3ba_d2b44eab",
+      "revId": "773159ebca6f7ed5e12326a25b8659a06caa1a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d54c6d5f_7c8e8db7",
         "filename": "content/browser/frame_host/render_frame_host_manager.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-01T19:02:18Z",
       "side": 1,
       "message": "Shouldn\u0027t we also be looking at the parent, if it isn\u0027t same SiteInstance with the top-level frame? It will help when we have a.com, hosted_app.com, a.com nesting and some of the other cases we discussed offline.",
+      "revId": "773159ebca6f7ed5e12326a25b8659a06caa1a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ddfc30b_4629949a",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1435,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-01T20:24:51Z",
+      "side": 1,
+      "message": "Yes, this might matter if foo.com embeds a hosted app, which further has same-site-non-app subframes.  I suppose this could matter for Drive, where I know some sites can embed spreadsheets or forms, and those might also have google.com subframes (e.g., see example in https://crbug.com/715756).  I originally had used parent here, but went to opener since (1) it was already present for TDI, and (2) it helps deal with cases like app.com/app/(foo.com(app.com/nonapp/)).  I agree that having parent as well would be worthwhile, so I\u0027ve added it.  I think the root should still take precedence over it for TDI.  Also, expanded the comment on why this is necessary.",
+      "parentUuid": "d54c6d5f_7c8e8db7",
       "revId": "773159ebca6f7ed5e12326a25b8659a06caa1a9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "2ddb3be7_773a52d4",
+        "filename": "content/browser/frame_host/render_frame_host_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3256,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-01T20:24:51Z",
+      "side": 1,
+      "message": "Done.  Yes, it\u0027s a good idea to do this, to be sure we\u0027re verifying the site and original URLs in the right situation.  I\u0027ve also expanded the comment to clarify that the final goal is to check the site/original URLs.",
+      "parentUuid": "43c8e218_089d87b2",
+      "range": {
+        "startLine": 3255,
+        "startChar": 60,
+        "endLine": 3256,
+        "endChar": 52
+      },
+      "revId": "773159ebca6f7ed5e12326a25b8659a06caa1a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d61df46_a98e0837",
         "filename": "content/browser/site_instance_impl.h",
         "patchSetId": 6
@@ -70,6 +130,30 @@
       "writtenOn": "2017-12-01T19:02:18Z",
       "side": 1,
       "message": "nit: |site_| here and the rest of the file.",
+      "range": {
+        "startLine": 108,
+        "startChar": 47,
+        "endLine": 108,
+        "endChar": 51
+      },
+      "revId": "773159ebca6f7ed5e12326a25b8659a06caa1a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1be99623_d53264d0",
+        "filename": "content/browser/site_instance_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-01T20:24:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d61df46_a98e0837",
       "range": {
         "startLine": 108,
         "startChar": 47,
