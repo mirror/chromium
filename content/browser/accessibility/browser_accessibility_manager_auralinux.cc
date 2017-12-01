@@ -69,7 +69,38 @@ void BrowserAccessibilityManagerAuraLinux::FireGeneratedEvent(
     AXEventGenerator::Event event_type,
     BrowserAccessibility* node) {
   BrowserAccessibilityManager::FireGeneratedEvent(event_type, node);
-  // Need to implement.
+
+  switch (event_type) {
+    case Event::ROLE_CHANGED:
+    case Event::CHILDREN_CHANGED:
+      // Not needed. These are already handled in
+      // AXPlatformNodeAuraLinux.
+      break;
+    case Event::ACTIVE_DESCENDANT_CHANGED:
+    case Event::ALERT:
+    case Event::DOCUMENT_SELECTION_CHANGED:
+    case Event::CHECKED_STATE_CHANGED:
+    case Event::COLLAPSED:
+    case Event::DESCRIPTION_CHANGED:
+    case Event::DOCUMENT_TITLE_CHANGED:
+    case Event::EXPANDED:
+    case Event::INVALID_STATUS_CHANGED:
+    case Event::LIVE_REGION_CHANGED:
+    case Event::LIVE_REGION_CREATED:
+    case Event::LIVE_REGION_NODE_CHANGED:
+    case Event::LOAD_COMPLETE:
+    case Event::MENU_ITEM_SELECTED:
+    case Event::NAME_CHANGED:
+    case Event::OTHER_ATTRIBUTE_CHANGED:
+    case Event::ROW_COUNT_CHANGED:
+    case Event::SCROLL_POSITION_CHANGED:
+    case Event::SELECTED_CHANGED:
+    case Event::SELECTED_CHILDREN_CHANGED:
+    case Event::STATE_CHANGED:
+    case Event::VALUE_CHANGED:
+      // Not implemented.
+      break;
+  }
 }
 
 }  // namespace content
