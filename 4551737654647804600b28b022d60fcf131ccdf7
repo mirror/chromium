@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "d51d6bdf_bc1d59e4",
+        "filename": "third_party/WebKit/LayoutTests/editing/pasteboard/no-clipboard-event-to-hidden-selection.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-01T19:16:14Z",
+      "side": 1,
+      "message": "I think we should use testRunner.execCommand() here to simulate user-triggered commands.\n\nThe reason is that document.execCommand() doesn\u0027t check whether selection has focus or is hidden. Only user-triggered actions do that.\n\nThat\u0027s also the reason why event target calculation should take CommandSource into consideration, since event target should be consistent with whether the action is effective.",
+      "parentUuid": "a53f66a4_7f4bfd50",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 24
+      },
+      "revId": "4551737654647804600b28b022d60fcf131ccdf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f452999_e19f49dc",
         "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
         "patchSetId": 3
