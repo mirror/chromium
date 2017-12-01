@@ -122,6 +122,24 @@
       "revId": "8aa719565098fbc91ea5396a539df5c1f950262b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0966fb5a_be3f1ebc",
+        "filename": "ui/views/view_constants_aura.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-12-01T14:29:13Z",
+      "side": 1,
+      "message": "Done!\n\nI understand if this change is a little magical but I blame C++\u0027s rules for templates!\n\nSeems good enough for a +1 too?",
+      "parentUuid": "77900826_ed3734f4",
+      "revId": "8aa719565098fbc91ea5396a539df5c1f950262b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
