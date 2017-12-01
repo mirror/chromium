@@ -273,7 +273,7 @@ class RemoteSuggestionsFetcherImplTestBase : public testing::Test {
         test_url_(gurl) {
     UserClassifier::RegisterProfilePrefs(utils_.pref_service()->registry());
     user_classifier_ = base::MakeUnique<UserClassifier>(
-        utils_.pref_service(), base::MakeUnique<base::DefaultClock>());
+        utils_.pref_service(), base::DefaultClock::GetInstance());
     // Increase initial time such that ticks are non-zero.
     mock_task_runner_->FastForwardBy(base::TimeDelta::FromMilliseconds(1234));
     ResetFetcher();

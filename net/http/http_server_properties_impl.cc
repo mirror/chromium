@@ -21,7 +21,7 @@
 namespace net {
 
 HttpServerPropertiesImpl::HttpServerPropertiesImpl(base::TickClock* clock)
-    : broken_alternative_services_(this, clock ? clock : &default_clock_),
+    : broken_alternative_services_(this, clock ? clock : base::DefaultTickClock::GetInstance()),
       quic_server_info_map_(kDefaultMaxQuicServerEntries),
       max_server_configs_stored_in_properties_(kDefaultMaxQuicServerEntries) {
   canonical_suffixes_.push_back(".ggpht.com");
@@ -128,8 +128,6 @@ void HttpServerPropertiesImpl::SetServerNetworkStats(
 
 void HttpServerPropertiesImpl::SetQuicServerInfoMap(
     std::unique_ptr<QuicServerInfoMap> quic_server_info_map) {
-  DCHECK_EQ(quic_server_info_map->max_size(), quic_server_info_map_.max_size());
-
   // Add the entries from persisted data.
   quic_server_info_map_.Swap(*quic_server_info_map);
 

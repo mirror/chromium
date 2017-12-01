@@ -514,14 +514,13 @@ IN_PROC_BROWSER_TEST_F(DefaultMemorySSLHostStateDelegateTest, AfterRestart) {
   content::SSLHostStateDelegate* state = profile->GetSSLHostStateDelegate();
   bool unused_value;
 
-  // chrome_state takes ownership of this clock
-  base::SimpleTestClock* clock = new base::SimpleTestClock();
+  base::SimpleTestClock clock;
   ChromeSSLHostStateDelegate* chrome_state =
       static_cast<ChromeSSLHostStateDelegate*>(state);
-  chrome_state->SetClock(std::unique_ptr<base::Clock>(clock));
+  chrome_state->SetClock(&clock);
 
   // Start the clock at standard system time.
-  clock->SetNow(base::Time::NowFromSystemTime());
+  clock.SetNow(base::Time::NowFromSystemTime());
 
   // This should only pass if the cert was allowed before the test was restart
   // and thus has now been rememebered across browser restarts.
@@ -531,7 +530,7 @@ IN_PROC_BROWSER_TEST_F(DefaultMemorySSLHostStateDelegateTest, AfterRestart) {
 
   // Simulate the clock advancing by one day, which is less than the expiration
   // length.
-  clock->Advance(base::TimeDelta::FromSeconds(kDeltaOneDayInSeconds + 1));
+  clock.Advance(base::TimeDelta::FromSeconds(kDeltaOneDayInSeconds + 1));
 
   // The cert should still be |ALLOWED| because the default expiration length
   // has not passed yet.
@@ -541,8 +540,8 @@ IN_PROC_BROWSER_TEST_F(DefaultMemorySSLHostStateDelegateTest, AfterRestart) {
 
   // Now simulate the clock advancing by one week, which is past the expiration
   // point.
-  clock->Advance(base::TimeDelta::FromSeconds(kDeltaOneWeekInSeconds -
-                                              kDeltaOneDayInSeconds + 1));
+  clock.Advance(base::TimeDelta::FromSeconds(kDeltaOneWeekInSeconds -
+                                             kDeltaOneDayInSeconds + 1));
 
   // The cert should now be |DENIED| because the specified delta has passed.
   EXPECT_EQ(content::SSLHostStateDelegate::DENIED,
@@ -563,15 +562,14 @@ IN_PROC_BROWSER_TEST_F(DefaultMemorySSLHostStateDelegateTest,
   content::SSLHostStateDelegate* state = profile->GetSSLHostStateDelegate();
   bool expired_previous_decision;
 
-  // chrome_state takes ownership of this clock
-  base::SimpleTestClock* clock = new base::SimpleTestClock();
+  base::SimpleTestClock clock;
   ChromeSSLHostStateDelegate* chrome_state =
       static_cast<ChromeSSLHostStateDelegate*>(state);
-  chrome_state->SetClock(std::unique_ptr<base::Clock>(clock));
+  chrome_state->SetClock(&clock);
 
   // Start the clock at standard system time but do not advance at all to
   // emphasize that instant forget works.
-  clock->SetNow(base::Time::NowFromSystemTime());
+  clock.SetNow(base::Time::NowFromSystemTime());
 
   // The certificate has never been seen before, so it should be UNKONWN and
   // should also indicate that it hasn't expired.
@@ -591,7 +589,7 @@ IN_PROC_BROWSER_TEST_F(DefaultMemorySSLHostStateDelegateTest,
   EXPECT_FALSE(expired_previous_decision);
 
   // Simulate the clock advancing by one week, the default expiration time.
-  clock->Advance(base::TimeDelta::FromSeconds(kDeltaOneWeekInSeconds + 1));
+  clock.Advance(base::TimeDelta::FromSeconds(kDeltaOneWeekInSeconds + 1));
 
   // The decision expiration time has come, so it should indicate that the
   // certificate and error are DENIED but also that they expired since the last

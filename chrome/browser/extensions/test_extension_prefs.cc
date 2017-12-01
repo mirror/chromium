@@ -68,7 +68,9 @@ class IncrementalClock : public base::Clock {
 
 TestExtensionPrefs::TestExtensionPrefs(
     const scoped_refptr<base::SequencedTaskRunner>& task_runner)
-    : task_runner_(task_runner), extensions_disabled_(false) {
+    : task_runner_(task_runner),
+      clock_(std::make_unique<IncrementalClock>()),
+      extensions_disabled_(false) {
   EXPECT_TRUE(temp_dir_.CreateUniqueTempDir());
   preferences_file_ = temp_dir_.GetPath().Append(chrome::kPreferencesFilename);
   extensions_dir_ = temp_dir_.GetPath().AppendASCII("Extensions");
@@ -125,7 +127,7 @@ void TestExtensionPrefs::RecreateExtensionPrefs() {
       std::vector<ExtensionPrefsObserver*>(),
       // Guarantee that no two extensions get the same installation time
       // stamp and we can reliably assert the installation order in the tests.
-      std::make_unique<IncrementalClock>()));
+      clock_.get()));
   ExtensionPrefsFactory::GetInstance()->SetInstanceForTesting(&profile_,
                                                               std::move(prefs));
   // Hack: After recreating ExtensionPrefs, the AppSorting also needs to be
