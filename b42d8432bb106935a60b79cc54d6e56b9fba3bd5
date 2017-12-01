@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d22cad30_b293ea18",
+        "filename": "ash/frame/custom_frame_view_ash.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-01T19:33:22Z",
+      "side": 1,
+      "message": "lgtm for now. If we have more problem(s), it may be better to check if the window is in overview list, rather than checking this way.",
+      "revId": "b42d8432bb106935a60b79cc54d6e56b9fba3bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
