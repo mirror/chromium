@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f7164ff_874010a1",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/root-layer-scrolls/platform/linux/paint/invalidation/svg/window-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-12-01T17:01:16Z",
+      "side": 1,
+      "message": "Are these numeric diffs expected?",
+      "revId": "e0ee3de512891c0a42bfbc7e62bb97ecfce3bdaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e91ed1d_a6816283",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/root-layer-scrolls/platform/mac/paint/invalidation/svg/window-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-12-01T17:01:16Z",
+      "side": 1,
+      "message": "Same comment.",
+      "revId": "e0ee3de512891c0a42bfbc7e62bb97ecfce3bdaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "300b22b4_1cf056f3",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/root-layer-scrolls/platform/win/paint/invalidation/svg/window-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-12-01T17:01:16Z",
+      "side": 1,
+      "message": "Same comment.",
+      "revId": "e0ee3de512891c0a42bfbc7e62bb97ecfce3bdaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
