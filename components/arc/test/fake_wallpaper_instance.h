@@ -28,6 +28,8 @@ class FakeWallpaperInstance : public mojom::WallpaperInstance {
  private:
   std::vector<int32_t> changed_ids_;
 
+  mojom::WallpaperHostPtr host_;
+
   DISALLOW_COPY_AND_ASSIGN(FakeWallpaperInstance);
 };
 
