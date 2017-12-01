@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10959922_b3ecb846",
+        "filename": "base/android/java/src/org/chromium/base/CommandLineInitUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-12-01T22:31:42Z",
+      "side": 0,
+      "message": "there were some folks who very much liked this log (I don\u0027t remember who) so please keep one copy of it",
+      "range": {
+        "startLine": 52,
+        "startChar": 56,
+        "endLine": 52,
+        "endChar": 67
+      },
+      "revId": "1db6740622c361d982f8e708ac4f29fe0f7441d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b6966a0_83aaca30",
+        "filename": "base/android/java/src/org/chromium/base/CommandLineInitUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-12-01T22:31:42Z",
+      "side": 0,
+      "message": "waht\u0027s the origin of the \"catch\"? can it safely be removed?",
+      "range": {
+        "startLine": 84,
+        "startChar": 17,
+        "endLine": 84,
+        "endChar": 33
+      },
+      "revId": "1db6740622c361d982f8e708ac4f29fe0f7441d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

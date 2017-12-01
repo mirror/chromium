@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ede6b32_fe88d60c",
+        "filename": "base/android/java/src/org/chromium/base/ContextUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-12-01T22:31:42Z",
+      "side": 1,
+      "message": "do we really not have an errorprone warning about catching exception?",
+      "range": {
+        "startLine": 163,
+        "startChar": 17,
+        "endLine": 163,
+        "endChar": 26
+      },
+      "revId": "e7af1bd22554ff99222c60e02b24dbb1e9019916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "645e27fe_2fd9d66d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-12-01T22:31:42Z",
+      "side": 1,
+      "message": "do render processes init it elsewhere? I would think they need it (or perhaps they don\u0027t in the native layer)",
+      "range": {
+        "startLine": 59,
+        "startChar": 27,
+        "endLine": 59,
+        "endChar": 28
+      },
+      "revId": "e7af1bd22554ff99222c60e02b24dbb1e9019916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ea30795_690f4573",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-12-01T22:31:42Z",
+      "side": 1,
+      "message": "separate change: move all of this to attachBaseContext?",
+      "range": {
+        "startLine": 70,
+        "startChar": 17,
+        "endLine": 70,
+        "endChar": 41
+      },
+      "revId": "e7af1bd22554ff99222c60e02b24dbb1e9019916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
