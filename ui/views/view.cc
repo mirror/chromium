@@ -323,8 +323,8 @@ void View::SetBounds(int x, int y, int width, int height) {
 void View::SetBoundsRect(const gfx::Rect& bounds) {
   if (bounds == bounds_) {
     if (needs_layout_) {
-      needs_layout_ = false;
       Layout();
+      needs_layout_ = false;
     }
     return;
   }
@@ -597,8 +597,6 @@ int View::GetMirroredXWithWidthInView(int x, int w) const {
 // Layout ----------------------------------------------------------------------
 
 void View::Layout() {
-  needs_layout_ = false;
-
   // If we have a layout manager, let it handle the layout for us.
   if (layout_manager_.get())
     layout_manager_->Layout(this);
@@ -613,10 +611,11 @@ void View::Layout() {
   for (auto* child : children_) {
     if (child->needs_layout_ || !layout_manager_.get()) {
       TRACE_EVENT1("views", "View::Layout", "class", child->GetClassName());
-      child->needs_layout_ = false;
       child->Layout();
+      child->needs_layout_ = false;
     }
   }
+  needs_layout_ = false;
 }
 
 void View::InvalidateLayout() {
@@ -2278,8 +2277,8 @@ void View::BoundsChanged(const gfx::Rect& previous_bounds) {
   OnBoundsChanged(previous_bounds);
 
   if (needs_layout_ || previous_bounds.size() != size()) {
-    needs_layout_ = false;
     Layout();
+    needs_layout_ = false;
   }
 
   if (GetNeedsNotificationWhenVisibleBoundsChange())
