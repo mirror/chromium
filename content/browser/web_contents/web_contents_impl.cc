@@ -524,7 +524,6 @@ WebContentsImpl::WebContentsImpl(BrowserContext* browser_context)
       did_first_visually_non_empty_paint_(false),
       capturer_count_(0),
       should_normally_be_visible_(true),
-      should_normally_be_occluded_(false),
       did_first_set_visible_(false),
       is_being_destroyed_(false),
       is_notifying_observers_(false),
@@ -1344,6 +1343,7 @@ const std::string& WebContentsImpl::GetEncoding() const {
 
 void WebContentsImpl::IncrementCapturerCount(const gfx::Size& capture_size) {
   DCHECK(!is_being_destroyed_);
+  const bool was_captured = IsCaptured();
   ++capturer_count_;
   DVLOG(1) << "There are now " << capturer_count_
            << " capturing(s) of WebContentsImpl@" << this;
@@ -1355,8 +1355,10 @@ void WebContentsImpl::IncrementCapturerCount(const gfx::Size& capture_size) {
     OnPreferredSizeChanged(preferred_size_);
   }
 
-  // Ensure that all views are un-occluded before capture begins.
-  DoWasUnOccluded();
+  if (!was_captured) {
+    for (RenderWidgetHostView* view : GetRenderWidgetHostViewsInTree())
+      view->CaptureStateChanged();
+  }
 }
 
 void WebContentsImpl::DecrementCapturerCount() {
@@ -1378,13 +1380,9 @@ void WebContentsImpl::DecrementCapturerCount() {
       WasHidden();
     }
 
-    if (should_normally_be_occluded_)
-      WasOccluded();
+    for (RenderWidgetHostView* view : GetRenderWidgetHostViewsInTree())
+      view->CaptureStateChanged();
   }
-}
-
-bool WebContentsImpl::IsCaptured() const {
-  return capturer_count_ > 0;
 }
 
 bool WebContentsImpl::IsAudioMuted() const {
@@ -1574,28 +1572,6 @@ void WebContentsImpl::SetImportance(ChildProcessImportance importance) {
 
 bool WebContentsImpl::IsVisible() const {
   return should_normally_be_visible_;
-}
-
-void WebContentsImpl::WasOccluded() {
-  if (capturer_count_ == 0) {
-    for (RenderWidgetHostView* view : GetRenderWidgetHostViewsInTree())
-      view->WasOccluded();
-  }
-
-  should_normally_be_occluded_ = true;
-}
-
-void WebContentsImpl::WasUnOccluded() {
-  if (capturer_count_ == 0)
-    DoWasUnOccluded();
-
-  should_normally_be_occluded_ = false;
-}
-
-void WebContentsImpl::DoWasUnOccluded() {
-  // TODO(fdoray): Only call WasUnOccluded on frames in the active viewport.
-  for (RenderWidgetHostView* view : GetRenderWidgetHostViewsInTree())
-    view->WasUnOccluded();
 }
 
 bool WebContentsImpl::NeedToFireBeforeUnload() {
@@ -5734,8 +5710,12 @@ void WebContentsImpl::SetEncoding(const std::string& encoding) {
   canonical_encoding_ = base::GetCanonicalEncodingNameByAliasName(encoding);
 }
 
+bool WebContentsImpl::IsCaptured() const {
+  return capturer_count_ > 0;
+}
+
 bool WebContentsImpl::IsHidden() {
-  return capturer_count_ == 0 && !should_normally_be_visible_;
+  return !IsCaptured() && !should_normally_be_visible_;
 }
 
 int WebContentsImpl::GetOuterDelegateFrameTreeNodeId() {

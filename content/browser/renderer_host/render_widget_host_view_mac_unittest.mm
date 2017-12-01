@@ -9,6 +9,7 @@
 #include <stdint.h>
 #include <tuple>
 
+#include "base/bind.h"
 #include "base/command_line.h"
 #include "base/containers/queue.h"
 #include "base/mac/mac_util.h"
@@ -27,6 +28,7 @@
 #include "content/browser/gpu/compositor_util.h"
 #include "content/browser/renderer_host/mock_render_widget_host_delegate.h"
 #include "content/browser/renderer_host/render_widget_host_delegate.h"
+#include "content/browser/renderer_host/render_widget_host_view_desktop_base_unittest.h"
 #include "content/browser/renderer_host/text_input_manager.h"
 #include "content/common/input_messages.h"
 #include "content/common/text_input_state.h"
@@ -52,6 +54,7 @@
 #include "ui/events/blink/blink_features.h"
 #include "ui/events/blink/web_input_event_traits.h"
 #include "ui/events/test/cocoa_test_event_utils.h"
+#include "ui/gfx/test/ui_cocoa_test_helper.h"
 #import "ui/gfx/test/ui_cocoa_test_helper.h"
 #include "ui/latency/latency_info.h"
 
@@ -448,6 +451,56 @@ class RenderWidgetHostViewMacTest : public RenderViewHostImplTestHarness {
 };
 
 TEST_F(RenderWidgetHostViewMacTest, Basic) {
+}
+
+TEST_F(RenderWidgetHostViewMacTest, ShowHide) {
+  // Hide the native view, because RenderWidgetHostViewDesktopBase_TestShowHide
+  // assumes that it receives a view that was never visible.
+  //
+  // On Mac, if the native view is added to a parent without being hidden first,
+  // it is notified that it became visible. On Aura, a native view is never
+  // visible before Show() is called.
+  [rwhv_cocoa_ setHidden:YES];
+
+  base::scoped_nsobject<CocoaTestHelperWindow> window(
+      [[CocoaTestHelperWindow alloc] init]);
+  [[window contentView] addSubview:rwhv_cocoa_];
+  RenderWidgetHostViewDesktopBase_TestShowHide(rwhv_mac_);
+}
+
+TEST_F(RenderWidgetHostViewMacTest, ShowHideAndCapture) {
+  base::scoped_nsobject<CocoaTestHelperWindow> window(
+      [[CocoaTestHelperWindow alloc] init]);
+  [[window contentView] addSubview:rwhv_cocoa_];
+  RenderWidgetHostViewDesktopBase_TestShowHideAndCapture(rwhv_mac_, &delegate_);
+}
+
+TEST_F(RenderWidgetHostViewMacTest, Occlusion) {
+  base::scoped_nsobject<CocoaTestHelperWindow> window(
+      [[CocoaTestHelperWindow alloc] init]);
+  [[window contentView] addSubview:rwhv_cocoa_];
+  RenderWidgetHostViewDesktopBase_TestOcclusion(
+      rwhv_mac_, base::Bind(
+                     [](base::scoped_nsobject<CocoaTestHelperWindow>* window,
+                        bool view_is_occluded) {
+                       [*window
+                           setPretendIsOccluded:(view_is_occluded ? YES : NO)];
+                     },
+                     base::Unretained(&window)));
+}
+
+TEST_F(RenderWidgetHostViewMacTest, OcclusionAndCapture) {
+  base::scoped_nsobject<CocoaTestHelperWindow> window(
+      [[CocoaTestHelperWindow alloc] init]);
+  [[window contentView] addSubview:rwhv_cocoa_];
+  RenderWidgetHostViewDesktopBase_TestOcclusionAndCapture(
+      rwhv_mac_, &delegate_,
+      base::Bind(
+          [](base::scoped_nsobject<CocoaTestHelperWindow>* window,
+             bool view_is_occluded) {
+            [*window setPretendIsOccluded:(view_is_occluded ? YES : NO)];
+          },
+          base::Unretained(&window)));
 }
 
 TEST_F(RenderWidgetHostViewMacTest, AcceptsFirstResponder) {

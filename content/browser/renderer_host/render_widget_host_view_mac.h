@@ -285,9 +285,7 @@ class CONTENT_EXPORT RenderWidgetHostViewMac
   bool HasFocus() const override;
   void Show() override;
   void Hide() override;
-  bool IsShowing() override;
-  void WasUnOccluded() override;
-  void WasOccluded() override;
+  Visibility GetVisibility() const override;
   gfx::Rect GetViewBounds() const override;
   void SetActive(bool active) override;
   void ShowDefinitionForSelection() override;
@@ -565,6 +563,10 @@ class CONTENT_EXPORT RenderWidgetHostViewMac
   void SendSyntheticWheelEventWithPhaseEnded(
       blink::WebMouseWheelEvent wheel_event,
       bool should_route_event);
+
+  // Overridden from RenderWidgetHostViewDesktopBase:
+  void WasShown() override;
+  void WasHidden() override;
 
   // The associated view. This is weak and is inserted into the view hierarchy
   // to own this RenderWidgetHostViewMac object. Set to nil at the start of the
