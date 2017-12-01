@@ -28,6 +28,7 @@
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
+#include "chrome/grit/theme_resources.h"
 #include "components/prefs/pref_service.h"
 #include "components/vector_icons/vector_icons.h"
 #include "content/public/browser/web_contents.h"
@@ -304,6 +305,8 @@ void ExtensionContextMenuModel::InitMenu(const Extension* extension,
   // mnemonics in the menu.
   base::ReplaceChars(extension_name, "&", "&&", &extension_name);
   AddItem(NAME, base::UTF8ToUTF16(extension_name));
+  ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
+  SetIcon(GetIndexOfCommandId(NAME), rb.GetImageNamed(IDR_WEBSTORE_ICON_16));
   AppendExtensionItems();
   AddSeparator(ui::NORMAL_SEPARATOR);
 
