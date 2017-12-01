@@ -34,6 +34,24 @@
       "revId": "baec19655ad413e60875c086061218b7136919bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50bee325_521c042c",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1527,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-01T22:07:36Z",
+      "side": 1,
+      "message": "I guess I don\u0027t understand... client_shared_bitmap_manager_ is never set anywhere (unless I missed something). This would be the only place.",
+      "parentUuid": "6b0ef38f_de3fda88",
+      "revId": "baec19655ad413e60875c086061218b7136919bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
