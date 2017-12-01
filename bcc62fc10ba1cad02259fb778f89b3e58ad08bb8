@@ -52,6 +52,24 @@
       "revId": "bcc62fc10ba1cad02259fb778f89b3e58ad08bb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d5b0205_a46c9fab",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsLayer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1316,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-01T23:08:35Z",
+      "side": 1,
+      "message": "For some layers OffsetFromLayoutObject is not the offset from GraphicsLayer to painting, e.g. AncestorClippingMaskLayer (https://chromium-review.googlesource.com/c/chromium/src/+/798511) and SquashingLayer. We need more work to verify if we can discard LayerState::offset.",
+      "parentUuid": "03775b15_ff5655ad",
+      "revId": "bcc62fc10ba1cad02259fb778f89b3e58ad08bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
