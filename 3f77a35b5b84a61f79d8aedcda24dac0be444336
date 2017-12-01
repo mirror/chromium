@@ -22,6 +22,40 @@
       "revId": "3f77a35b5b84a61f79d8aedcda24dac0be444336",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55f1d16a_30f5e04f",
+        "filename": "content/common/resource_timing_info.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-01T05:41:36Z",
+      "side": 1,
+      "message": "I wonder if we could just have these under WebKit/common/performance and just use it throughout the code?",
+      "revId": "3f77a35b5b84a61f79d8aedcda24dac0be444336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ca52f2b_d1a0ad2b",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-01T05:41:36Z",
+      "side": 1,
+      "message": "nit: have a link to crbug? (here and above)",
+      "revId": "3f77a35b5b84a61f79d8aedcda24dac0be444336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
