@@ -14,9 +14,7 @@ PrintedPage::PrintedPage(int page_number,
                          const gfx::Rect& page_content_rect)
     : page_number_(page_number),
       metafile_(std::move(metafile)),
-#if defined(OS_WIN)
       shrink_factor_(0.0f),
-#endif  // OS_WIN
       page_size_(page_size),
       page_content_rect_(page_content_rect) {
 }
