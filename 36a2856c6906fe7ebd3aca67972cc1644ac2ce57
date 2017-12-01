@@ -16,6 +16,24 @@
       "revId": "36a2856c6906fe7ebd3aca67972cc1644ac2ce57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d14084a8_8ce94b15",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-01T18:59:03Z",
+      "side": 0,
+      "message": "To net::URLRequest() destructor.",
+      "parentUuid": "62db7e45_1e420d5c",
+      "revId": "36a2856c6906fe7ebd3aca67972cc1644ac2ce57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
