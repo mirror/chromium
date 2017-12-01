@@ -22,6 +22,30 @@
       "revId": "30a52249152dcfd8a88dbdfb44e0de4aeb8fdf9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e55af5f_866e9719",
+        "filename": "chrome/browser/page_load_metrics/observers/previews_ukm_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-01T21:07:25Z",
+      "side": 1,
+      "message": "PreviewsUserData is available here, but I\u0027m not sure if no_script is set within it. That would be the correct approach.",
+      "parentUuid": "e50b345e_f719e47a",
+      "range": {
+        "startLine": 61,
+        "startChar": 34,
+        "endLine": 61,
+        "endChar": 58
+      },
+      "revId": "30a52249152dcfd8a88dbdfb44e0de4aeb8fdf9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
