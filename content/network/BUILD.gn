@@ -90,6 +90,7 @@ source_set("network_sources") {
     "//mojo/public/cpp/bindings",
     "//net",
     "//net:net_browser_services",
+    "//sandbox/linux:sandbox_services",
     "//services/network/public/cpp",
     "//services/proxy_resolver/public/interfaces",
     "//services/service_manager/public/cpp",
