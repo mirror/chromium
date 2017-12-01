@@ -4,6 +4,7 @@
 
 #include "chrome/test/base/chrome_test_launcher.h"
 
+#include "base/environment.h"
 #include "build/build_config.h"
 #include "chrome/test/base/chrome_test_suite.h"
 #include "chrome/test/base/in_process_browser_test.h"
@@ -89,6 +90,15 @@ class InteractiveUITestLauncherDelegate : public ChromeTestLauncherDelegate {
   void PreSharding() override {
     ChromeTestLauncherDelegate::PreSharding();
 #if defined(OS_WIN)
+    // Is it headless?
+    std::string headless;
+    bool has_headless = base::Environment::Create()->GetVar("CHROME_HEADLESS",
+                                                            &headless);
+    if (has_headless)
+      LOG(ERROR) << "CHROME_HEADLESS=" << headless;
+    else
+      LOG(ERROR) << "CHROME_HEADLESS not set";
+
     // Check for any always-on-top windows present before any tests are run.
     // Take a snapshot if any are found and attempt to close any that are system
     // dialogs.
