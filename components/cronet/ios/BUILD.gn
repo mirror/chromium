@@ -53,6 +53,7 @@ _cronet_deps = [
   ":cronet_version_header",
   ":generate_accept_languages",
   "//base:base",
+  "//components/cronet/native:cronet_native_impl",
   "//components/grpc_support",
   "//components/metrics:metrics",
   "//third_party/metrics_proto",
@@ -162,11 +163,13 @@ test("cronet_unittests") {
     ":cronet_sources_with_global_state",
     "//base",
     "//base/test:test_support",
-    "//components/cronet/ios/test:cronet_test",
+    "//components/cronet/native:cronet_native_unittests",
     "//components/metrics",
     "//net",
     "//testing/gtest",
   ]
+
+  bundle_deps = [ "//components/cronet/ios/test:cronet_test" ]
 }
 
 action("generate_accept_languages") {
