@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6a4fa537_b7d2bf38",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/ChromeMediaRouterDialogController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-12-01T22:25:56Z",
+      "side": 1,
+      "message": "As Anton mentioned below, source.buildRouteSelector() can return null. I don\u0027t think I can get rid of the variable without the possibility of having a null |routeSelector| and missing a call to nativeOnMediaSourceNotSupported.\n\nLMK if you had something else in mind.",
+      "parentUuid": "c6e72bbb_2e5f3092",
+      "range": {
+        "startLine": 52,
+        "startChar": 24,
+        "endLine": 52,
+        "endChar": 30
+      },
+      "revId": "e6ff26b53f06414c34a1bc7ab2c8c4cfe07ff028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c40ec23b_6345d93a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/ChromeMediaRouterDialogController.java",
         "patchSetId": 6
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "1719b2d8_7774dade",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/ChromeMediaRouterDialogController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-12-01T22:25:56Z",
+      "side": 1,
+      "message": "RouteSelector() can indeed return null. I would leave things as is unless someone objects.",
+      "parentUuid": "783d5253_2cca021f",
+      "range": {
+        "startLine": 87,
+        "startChar": 12,
+        "endLine": 87,
+        "endChar": 25
+      },
+      "revId": "e6ff26b53f06414c34a1bc7ab2c8c4cfe07ff028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "967c15d1_bc300b18",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/CastMediaSource.java",
         "patchSetId": 6
@@ -83,6 +131,30 @@
       "writtenOn": "2017-12-01T15:05:54Z",
       "side": 1,
       "message": "nit: as a potential P4 TODO: source URN should be replaced with source id throughout the code and comments. URN referred to something like org.chromium.x:cast:cast://APP-ID?params but we never get the full prefix and the C++ MediaRouter framework is using MediaSource::ID everywhere IIRC.",
+      "range": {
+        "startLine": 18,
+        "startChar": 82,
+        "endLine": 18,
+        "endChar": 85
+      },
+      "revId": "e6ff26b53f06414c34a1bc7ab2c8c4cfe07ff028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc9ea062_c5ecc701",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/CastMediaSource.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-12-01T22:25:56Z",
+      "side": 1,
+      "message": "Opened 791145",
+      "parentUuid": "967c15d1_bc300b18",
       "range": {
         "startLine": 18,
         "startChar": 82,
@@ -118,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "3d5f9c89_ed924ece",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/CastMediaSource.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-12-01T22:25:56Z",
+      "side": 1,
+      "message": "Git commit shows MediaSource --\u003e CastMediaSource as copied, and MediaSourceTest --\u003e CastMediaSourceTest as renamed. I think it\u0027s just how gerrit shows things,since git detects ~90% similarity in both cases.",
+      "parentUuid": "754850eb_8731f433",
+      "range": {
+        "startLine": 20,
+        "startChar": 13,
+        "endLine": 20,
+        "endChar": 28
+      },
+      "revId": "e6ff26b53f06414c34a1bc7ab2c8c4cfe07ff028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48f61c9a_b223af12",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/CastMediaSource.java",
         "patchSetId": 6
@@ -138,6 +234,30 @@
       "revId": "e6ff26b53f06414c34a1bc7ab2c8c4cfe07ff028",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "263dd4b0_364dffd0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/CastMediaSource.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-12-01T22:25:56Z",
+      "side": 1,
+      "message": "I have removed getClientId() from the interface, TY!",
+      "parentUuid": "48f61c9a_b223af12",
+      "range": {
+        "startLine": 129,
+        "startChar": 18,
+        "endLine": 129,
+        "endChar": 29
+      },
+      "revId": "e6ff26b53f06414c34a1bc7ab2c8c4cfe07ff028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -187,6 +307,54 @@
     },
     {
       "key": {
+        "uuid": "962cea20_1db3e03b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/MediaSource.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-12-01T22:25:56Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "f6277876_91109de7",
+      "range": {
+        "startLine": 34,
+        "startChar": 18,
+        "endLine": 34,
+        "endChar": 29
+      },
+      "revId": "e6ff26b53f06414c34a1bc7ab2c8c4cfe07ff028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d9f2bc0e_f77e12d7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/MediaSource.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-12-01T22:25:56Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "4b4e506e_24c7b984",
+      "range": {
+        "startLine": 34,
+        "startChar": 11,
+        "endLine": 34,
+        "endChar": 17
+      },
+      "revId": "e6ff26b53f06414c34a1bc7ab2c8c4cfe07ff028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0321feb_5ad573d2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingMediaRouteProvider.java",
         "patchSetId": 6
@@ -201,6 +369,24 @@
       "revId": "e6ff26b53f06414c34a1bc7ab2c8c4cfe07ff028",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3df5c5f_eec17fb4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingMediaRouteProvider.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-12-01T22:25:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0321feb_5ad573d2",
+      "revId": "e6ff26b53f06414c34a1bc7ab2c8c4cfe07ff028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
