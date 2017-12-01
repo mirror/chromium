@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fa3c8a8_41ab4370",
+        "filename": "components/arc/test/connection_holder_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-01T00:20:11Z",
+      "side": 1,
+      "message": "No newline and then sort includes (the format you have here only applies to .cc files).",
+      "revId": "67b5790d42e9e52f40b52daa01ef56309d2fda08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
