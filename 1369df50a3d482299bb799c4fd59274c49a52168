@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d21fe82_8b02966a",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-12-01T00:38:15Z",
+      "side": 1,
+      "message": "r475019 also overrode OnDidStartNavigation(), but I\u0027m skipping that here because I don\u0027t think internal chrome:// pages would ever navigate not from a user gesture. So I think leaving it off is OK? Happy to add it if you disagree though.",
+      "revId": "1369df50a3d482299bb799c4fd59274c49a52168",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
