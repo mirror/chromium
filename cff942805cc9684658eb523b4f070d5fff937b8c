@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67fee36f_e304a62e",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1990,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-01T16:27:55Z",
+      "side": 1,
+      "message": "I see that the tests verify net::LOAD_PREFETCH is set on subresources, but I don\u0027t see where it is set from. Are those inherited from the NavigationRequest::begin_params_-\u003eload_flags?",
+      "range": {
+        "startLine": 1990,
+        "startChar": 26,
+        "endLine": 1990,
+        "endChar": 44
+      },
+      "revId": "cff942805cc9684658eb523b4f070d5fff937b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

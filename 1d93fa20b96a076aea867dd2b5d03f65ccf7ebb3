@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "065a3bab_0d196558",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-01T16:27:55Z",
+      "side": 1,
+      "message": "nit: can you please reflow the commit message with 80 chars limit?\n\nI was not sure it is 80, consulted to this resource:\nhttps://www.chromium.org/developers/contributing-code#TOC-Writing-commit-descriptions",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 4
+      },
+      "revId": "1d93fa20b96a076aea867dd2b5d03f65ccf7ebb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45cbb4c2_84aedb0f",
+        "filename": "chrome/browser/prerender/prerender_nostate_prefetch_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-01T16:27:55Z",
+      "side": 1,
+      "message": "in the other test the naming is clearer: |use_interceptor|. Here intercept subresrources at all times, so it would be more appropriate to call it like |use_interceptor_for_frame_requests|.",
+      "range": {
+        "startLine": 243,
+        "startChar": 7,
+        "endLine": 243,
+        "endChar": 22
+      },
+      "revId": "1d93fa20b96a076aea867dd2b5d03f65ccf7ebb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "000a946f_84450352",
+        "filename": "chrome/browser/prerender/prerender_nostate_prefetch_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-01T16:27:55Z",
+      "side": 1,
+      "message": "nit: please inline the base::Bind to save one lookup when reading",
+      "range": {
+        "startLine": 249,
+        "startChar": 44,
+        "endLine": 249,
+        "endChar": 64
+      },
+      "revId": "1d93fa20b96a076aea867dd2b5d03f65ccf7ebb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e7901f0_7b88c07d",
+        "filename": "chrome/browser/prerender/prerender_nostate_prefetch_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-01T16:27:55Z",
+      "side": 1,
+      "message": "Not asking to do in this change, just a feature request for URLLoaderInterceptor\n\ncan this be a enum class instead of a boolean with a default value? It would simplify the reading for folks unfamiliar with the order of the booleans in the constructor (also worth mentioning that they have defaults, which is IMO more confusing than explicit initialization for this case).",
+      "range": {
+        "startLine": 431,
+        "startChar": 46,
+        "endLine": 431,
+        "endChar": 51
+      },
+      "revId": "1d93fa20b96a076aea867dd2b5d03f65ccf7ebb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
