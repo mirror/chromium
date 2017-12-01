@@ -7,29 +7,43 @@
 
 #include <memory>
 
+#include "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h"
 #include "chrome/browser/chromeos/file_system_provider/provided_file_system_interface.h"
 #include "chrome/browser/chromeos/file_system_provider/provider_interface.h"
+#include "extensions/common/extension_id.h"
 
 class Profile;
+
+namespace extensions {
+class ExtensionRegistry;
+}  // namespace extensions
 
 namespace chromeos {
 namespace file_system_provider {
 
-class ProvidedFileSystemInfo;
-class ProviderId;
-
 class ExtensionProvider : public ProviderInterface {
  public:
-  ExtensionProvider();
   ~ExtensionProvider() override {}
+
+  // Returns a provider instance for the specified extension. If the extension
+  // cannot be a providing extension, returns nullptr.
+  static std::unique_ptr<ProviderInterface> Create(
+      extensions::ExtensionRegistry* registry,
+      const extensions::ExtensionId& extension_id);
 
   // ProviderInterface overrides.
   std::unique_ptr<ProvidedFileSystemInterface> CreateProvidedFileSystem(
       Profile* profile,
       const ProvidedFileSystemInfo& file_system_info) override;
-  bool GetCapabilities(Profile* profile,
-                       const ProviderId& provider_id,
-                       Capabilities& result) override;
+  Capabilities GetCapabilities() override;
+  const ProviderId& GetId() const override;
+
+ private:
+  ExtensionProvider(extensions::ExtensionRegistry* registry,
+                    const extensions::ExtensionId& extension_id);
+
+  extensions::ExtensionRegistry* registry_;  // Not owned.
+  ProviderId provider_id_;
 };
 
 }  // namespace file_system_provider
