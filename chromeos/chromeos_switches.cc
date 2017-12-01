@@ -532,6 +532,13 @@ const char kDisablePerUserTimezone[] = "disable-per-user-timezone";
 const char kDisableFineGrainedTimeZoneDetection[] =
     "disable-fine-grained-time-zone-detection";
 
+// Disables client certificate authentication on the sign-in frame on the Chrome
+// OS sign-in profile.
+// TODO(pmarko): Remove this flag in M-66 if no issues are found
+// (crbug.com/723849).
+const char kDisableSigninFrameClientCerts[] =
+    "disable-signin-frame-client-certs";
+
 bool WakeOnWifiEnabled() {
   return !base::CommandLine::ForCurrentProcess()->HasSwitch(kDisableWakeOnWifi);
 }
@@ -628,6 +635,11 @@ bool IsZipArchiverUnpackerEnabled() {
   // Disabled by default.
   return base::CommandLine::ForCurrentProcess()->HasSwitch(
       kEnableZipArchiverUnpacker);
+}
+
+bool IsSigninFrameClientCertsEnabled() {
+  return !base::CommandLine::ForCurrentProcess()->HasSwitch(
+      kDisableSigninFrameClientCerts);
 }
 
 }  // namespace switches
