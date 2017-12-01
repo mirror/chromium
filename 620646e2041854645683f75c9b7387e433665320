@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "94483339_2273a1ac",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-01T18:07:22Z",
+      "side": 1,
+      "message": "Thanks for updating the code.",
+      "parentUuid": "16d5ecbe_fc177a86",
+      "range": {
+        "startLine": 387,
+        "startChar": 5,
+        "endLine": 387,
+        "endChar": 0
+      },
+      "revId": "620646e2041854645683f75c9b7387e433665320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa8a7892_4bc2d008",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
         "patchSetId": 4
@@ -128,6 +152,30 @@
       "revId": "620646e2041854645683f75c9b7387e433665320",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "094ed5a2_6815e63c",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-01T18:07:22Z",
+      "side": 1,
+      "message": "As we discussed, a new constructor that would forget to set the value to nullptr would cause this to be a crash.",
+      "parentUuid": "874c77f7_3e3c42bc",
+      "range": {
+        "startLine": 464,
+        "startChar": 9,
+        "endLine": 464,
+        "endChar": 23
+      },
+      "revId": "620646e2041854645683f75c9b7387e433665320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

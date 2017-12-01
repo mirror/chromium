@@ -1,0 +1,199 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ff60b25_2c9e4e67",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-01T18:07:22Z",
+      "side": 1,
+      "message": "Now you can rewrtie this to the same structure as PostCheckMetadataConsistencyTask:\n\nif (is_initializing) {\n  // Post self with delay.\n  base::ThreadTaskRunnerHandle::Get()-\u003ePostDelayedTask(\n      FROM_HERE,\n      base::Bind(\u0026OfflinePageModelTaskified::PostClearCachedPagesTask,\n                 weak_ptr_factory_.GetWeakPtr(), false),\n      kClearStorageStartingDelay);\n  return;\n}\n\n// If not enough time has passed, do not post the task.\nif (GetCurrentTime() - last_clear_cached_pages_time_ \u003c\n    kClearStorageInterval) {\n  return;\n}\n\nClearCachedPages();\n\nAnd you don\u0027t need the delay variable.",
+      "range": {
+        "startLine": 382,
+        "startChar": 6,
+        "endLine": 382,
+        "endChar": 21
+      },
+      "revId": "2041425689bb2257aedda8099f2f621c28f63be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fef00db8_d0cc2a18",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-01T18:07:22Z",
+      "side": 1,
+      "message": "remove line",
+      "revId": "2041425689bb2257aedda8099f2f621c28f63be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "787498bf_202c08f3",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-01T18:07:22Z",
+      "side": 1,
+      "message": "Why, is there a good reason?",
+      "range": {
+        "startLine": 417,
+        "startChar": 2,
+        "endLine": 417,
+        "endChar": 77
+      },
+      "revId": "2041425689bb2257aedda8099f2f621c28f63be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "833a4747_2aa7cd5c",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-01T18:07:22Z",
+      "side": 1,
+      "message": "remove line",
+      "range": {
+        "startLine": 419,
+        "startChar": 4,
+        "endLine": 419,
+        "endChar": 9
+      },
+      "revId": "2041425689bb2257aedda8099f2f621c28f63be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1802d54_3d6ce005",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-01T18:07:22Z",
+      "side": 1,
+      "message": "nit: empty line after this.",
+      "range": {
+        "startLine": 426,
+        "startChar": 2,
+        "endLine": 426,
+        "endChar": 3
+      },
+      "revId": "2041425689bb2257aedda8099f2f621c28f63be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97dc7b10_1aeb52a0",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-01T18:07:22Z",
+      "side": 1,
+      "message": "The new constructor problem applies here as well.\nTo ensure clock is initialized, how about we:\nCHECK(clock_);",
+      "range": {
+        "startLine": 464,
+        "startChar": 9,
+        "endLine": 464,
+        "endChar": 15
+      },
+      "revId": "2041425689bb2257aedda8099f2f621c28f63be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74155937_310fcadd",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-01T18:07:22Z",
+      "side": 1,
+      "message": "Let\u0027s open a bug to remove this.\nClock should be injected using\nvoid SetClockForTesting(std::unique_ptr\u003cbase::Clock\u003e clock);",
+      "range": {
+        "startLine": 118,
+        "startChar": 15,
+        "endLine": 118,
+        "endChar": 44
+      },
+      "revId": "2041425689bb2257aedda8099f2f621c28f63be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b9317dc_f80056f6",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1020,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-01T18:07:22Z",
+      "side": 1,
+      "message": "I like what you did below:\nEXPECT_EQ(clock_ptr-\u003eNow(), last_clear_page_time());\n\nThen drop the now variable in 1015 and replace 1016:\nclock_ptr-\u003eSetNow(base::Time::Now());\n\nAlso, it makes me wonder if we can put the clock initialization into BuildModel...",
+      "range": {
+        "startLine": 1020,
+        "startChar": 2,
+        "endLine": 1020,
+        "endChar": 11
+      },
+      "revId": "2041425689bb2257aedda8099f2f621c28f63be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4ea4fdc_41042f70",
+        "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-01T18:07:22Z",
+      "side": 1,
+      "message": "Hey, I appreciate this split. It makes things more readable I think.",
+      "revId": "2041425689bb2257aedda8099f2f621c28f63be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
