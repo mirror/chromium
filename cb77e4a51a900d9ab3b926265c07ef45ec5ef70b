@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "331544eb_ed8add70",
+        "filename": "chromecast/base/chromecast_switches.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-12-01T01:06:55Z",
+      "side": 1,
+      "message": "based",
+      "range": {
+        "startLine": 101,
+        "startChar": 53,
+        "endLine": 101,
+        "endChar": 58
+      },
+      "revId": "cb77e4a51a900d9ab3b926265c07ef45ec5ef70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
