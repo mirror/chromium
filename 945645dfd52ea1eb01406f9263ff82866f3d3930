@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0457ad7_7e81a911",
+        "filename": "components/exo/wayland/protocol/aura-shell.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-01T19:59:09Z",
+      "side": 1,
+      "message": "scale_int and scale_fraction instead of hi and lo?",
+      "revId": "945645dfd52ea1eb01406f9263ff82866f3d3930",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
