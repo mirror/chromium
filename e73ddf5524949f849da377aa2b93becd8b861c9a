@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ffecb13d_7154240e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/bookmarks/BookmarkTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-01T23:47:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ab931f7_5638019e",
+      "revId": "e73ddf5524949f849da377aa2b93becd8b861c9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c262e2a0_46963c1b",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/bookmarks/BookmarkTest.java",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "e73ddf5524949f849da377aa2b93becd8b861c9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "879712f2_dfc583aa",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/bookmarks/BookmarkTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-01T23:47:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c262e2a0_46963c1b",
+      "range": {
+        "startLine": 371,
+        "startChar": 71,
+        "endLine": 371,
+        "endChar": 79
+      },
+      "revId": "e73ddf5524949f849da377aa2b93becd8b861c9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
