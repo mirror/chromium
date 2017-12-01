@@ -46,6 +46,30 @@
       "revId": "c3aaa57e3d96ddf47bc4f19525ee3883600cb536",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8271451b_fdb87982",
+        "filename": "chrome/android/webapk/libs/runtime_library/src/org/chromium/webapk/lib/runtime_library/WebApkServiceImpl.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-12-01T21:30:13Z",
+      "side": 1,
+      "message": "Sorry I misunderstood, so you suggest to do not set any channel in Chrome. That sounds reasonable, I will try to see how it work:)",
+      "parentUuid": "8872f2ee_be2ce5d7",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 99
+      },
+      "revId": "c3aaa57e3d96ddf47bc4f19525ee3883600cb536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
