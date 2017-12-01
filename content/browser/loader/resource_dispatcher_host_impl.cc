@@ -819,6 +819,10 @@ void ResourceDispatcherHostImpl::OnRequestResourceInternal(
     mojom::URLLoaderRequest mojo_request,
     mojom::URLLoaderClientPtr url_loader_client,
     const net::NetworkTrafficAnnotationTag& traffic_annotation) {
+
+  ResourceRequest& temp = const_cast<ResourceRequest&>(request_data);
+  temp.download_to_file = false;
+
   DCHECK(requester_info->IsRenderer() || requester_info->IsNavigationPreload());
   // When logging time-to-network only care about main frame and non-transfer
   // navigations.
