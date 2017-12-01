@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf00b1e8_06ed9dc1",
+        "filename": "tools/grit/grit/node/misc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-12-01T16:53:00Z",
+      "side": 1,
+      "message": "Add a function comment please :-).",
+      "revId": "582fed6e1d0d5487d8dfec81ba7bd9eda9c0a518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94c36ee8_01a0d1e1",
+        "filename": "tools/grit/grit/node/misc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-12-01T16:53:00Z",
+      "side": 1,
+      "message": "nit: 2 space indent https://chromium.googlesource.com/chromium/src/+/master/styleguide/styleguide.md#python",
+      "revId": "582fed6e1d0d5487d8dfec81ba7bd9eda9c0a518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45b737a8_7eb80221",
+        "filename": "tools/grit/grit/node/misc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-12-01T16:53:00Z",
+      "side": 1,
+      "message": "I don\u0027t understand, why would we silently ignore offset and first_id being set but not parseable?",
+      "revId": "582fed6e1d0d5487d8dfec81ba7bd9eda9c0a518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0a5480b_9664d0e3",
+        "filename": "tools/grit/grit/node/misc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-12-01T16:53:00Z",
+      "side": 1,
+      "message": "Not in this CL, but we should store which file:line GroupingNodes came from so that we can point at the source.",
+      "revId": "582fed6e1d0d5487d8dfec81ba7bd9eda9c0a518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a93560d_5b4ece38",
+        "filename": "tools/grit/grit/node/misc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-12-01T16:53:00Z",
+      "side": 1,
+      "message": "I don\u0027t understand, we generate an entry in this map for the base even though it doesn\u0027t emit a resource? Can we not attribute the reason from the base to the 0th resource?",
+      "revId": "582fed6e1d0d5487d8dfec81ba7bd9eda9c0a518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6da66221_ea3de635",
+        "filename": "tools/grit/grit/node/misc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-12-01T16:53:00Z",
+      "side": 1,
+      "message": "to both implies names will be given, but we will list reasons. How about something like \"ID %d was assigned more than once, due to %s and %s.\"?",
+      "range": {
+        "startLine": 178,
+        "startChar": 59,
+        "endLine": 178,
+        "endChar": 66
+      },
+      "revId": "582fed6e1d0d5487d8dfec81ba7bd9eda9c0a518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "752e265b_8cfb2282",
+        "filename": "tools/grit/grit/node/misc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-12-01T16:53:00Z",
+      "side": 1,
+      "message": "between sounds strange for textual ids, these are two text id\u0027s using the same numerical id right? Shouldn\u0027t we say something similar to line 178 but with textual ids instead?",
+      "range": {
+        "startLine": 186,
+        "startChar": 46,
+        "endLine": 186,
+        "endChar": 62
+      },
+      "revId": "582fed6e1d0d5487d8dfec81ba7bd9eda9c0a518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
