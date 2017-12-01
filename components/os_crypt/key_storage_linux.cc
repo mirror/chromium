@@ -107,8 +107,8 @@ std::unique_ptr<KeyStorageLinux> KeyStorageLinux::CreateService(
         selected_backend == os_crypt::SelectedLinuxBackend::KWALLET
             ? base::nix::DESKTOP_ENVIRONMENT_KDE4
             : base::nix::DESKTOP_ENVIRONMENT_KDE5;
-    key_storage.reset(
-        new KeyStorageKWallet(used_desktop_env, config.product_name));
+    key_storage.reset(new KeyStorageKWallet(
+        used_desktop_env, config.product_name, config.dbus_task_runner));
     if (key_storage->WaitForInitOnTaskRunner()) {
       VLOG(1) << "OSCrypt using KWallet as backend.";
       return key_storage;
