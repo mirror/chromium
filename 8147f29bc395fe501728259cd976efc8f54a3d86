@@ -22,6 +22,29 @@
       "revId": "8147f29bc395fe501728259cd976efc8f54a3d86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efac84b4_053111f8",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_impl_win_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-12-01T22:42:00Z",
+      "side": 1,
+      "message": "use a smart pointer?",
+      "range": {
+        "startLine": 771,
+        "startChar": 30,
+        "endLine": 771,
+        "endChar": 31
+      },
+      "revId": "8147f29bc395fe501728259cd976efc8f54a3d86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
