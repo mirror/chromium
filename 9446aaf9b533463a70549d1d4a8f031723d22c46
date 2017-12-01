@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "6bb07120_7676b534",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 10776,
+      "author": {
+        "id": 1234334
+      },
+      "writtenOn": "2017-12-01T15:23:37Z",
+      "side": 1,
+      "message": "+1, AbusiveExperienceEnforce could be interpreted that we\u0027re forcing abusive experiences on people :)",
+      "parentUuid": "aac8d98f_3d0109b7",
+      "range": {
+        "startLine": 10776,
+        "startChar": 39,
+        "endLine": 10776,
+        "endChar": 51
+      },
+      "revId": "9446aaf9b533463a70549d1d4a8f031723d22c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2947e47f_50d22d65",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 9
@@ -105,6 +129,54 @@
       "writtenOn": "2017-11-30T21:52:41Z",
       "side": 1,
       "message": "maybe: ... or should not be used for any sites?",
+      "range": {
+        "startLine": 10778,
+        "startChar": 138,
+        "endLine": 10778,
+        "endChar": 160
+      },
+      "revId": "9446aaf9b533463a70549d1d4a8f031723d22c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64db62f2_d9e1e83d",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 10778,
+      "author": {
+        "id": 1234334
+      },
+      "writtenOn": "2017-12-01T15:23:37Z",
+      "side": 1,
+      "message": "I think we should probably just talk about the behavior, rather than a name. \"Allows you to set whether sites with abusive experiences should be prevented from opening new windows or tabs.\"",
+      "parentUuid": "2947e47f_50d22d65",
+      "range": {
+        "startLine": 10778,
+        "startChar": 43,
+        "endLine": 10778,
+        "endChar": 66
+      },
+      "revId": "9446aaf9b533463a70549d1d4a8f031723d22c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9382ed3a_3ddced75",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 10778,
+      "author": {
+        "id": 1234334
+      },
+      "writtenOn": "2017-12-01T15:23:37Z",
+      "side": 1,
+      "message": "Do we need to provide the description of the false value of the setting? Because if we go with my suggestion above (\"prevent from opening new windows or tabs\") the alternate setting is to allow new windows or tabs... but that gets confusing because the true value is prevent and the false value is allow :\\",
+      "parentUuid": "70103d30_5c9e2aed",
       "range": {
         "startLine": 10778,
         "startChar": 138,
