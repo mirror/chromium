@@ -41,7 +41,7 @@ inline bool ShouldCreateBoxFragment(const NGInlineItem& item,
   const ComputedStyle& style = *item.Style();
   // TODO(kojii): We might need more conditions to create box fragments.
   return style.HasBoxDecorationBackground() || style.HasOutline() ||
-         item_result.needs_box_when_empty;
+         item_result.needs_box_when_empty || true;
 }
 
 }  // namespace
