@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "7af93141_677eafbe",
+        "filename": "components/search_engines/default_search_policy_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-12-01T12:28:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8a54a65_17ce1291",
+      "range": {
+        "startLine": 104,
+        "startChar": 7,
+        "endLine": 104,
+        "endChar": 29
+      },
+      "revId": "880ea7caffc078fe3b3ae9de8f4995874aebb5be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b75e6d8d_44b0d65e",
         "filename": "components/search_engines/default_search_policy_handler_unittest.cc",
         "patchSetId": 2
@@ -63,6 +87,24 @@
       "revId": "880ea7caffc078fe3b3ae9de8f4995874aebb5be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8585b301_f969758d",
+        "filename": "components/search_engines/default_search_policy_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-12-01T12:28:16Z",
+      "side": 1,
+      "message": "Thanks for helping me improve my style! :) I really appreciate that! \n\nI notice that I often use more convoluted ways of saying something that resembles the logic flow of the code rather than the human perspective of that logic.",
+      "parentUuid": "b75e6d8d_44b0d65e",
+      "revId": "880ea7caffc078fe3b3ae9de8f4995874aebb5be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
