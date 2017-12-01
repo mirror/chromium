@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3e49d92d_f25b082d",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-12-01T01:17:40Z",
+      "side": 1,
+      "message": "I agree that would happen. I don\u0027t feel that I\u0027d expect that Expected: result.\nBut I can change it to the desired effect.\n\nTo get on the same page: Here\u0027s another situation (what\u0027s your expectation):\n1. Use the right-click on the extension to manage the extension (opens a new tab with the extension details).\n2. Select remove extension\n3. Confirm the removal\n\nShould it close the tab; or go to chrome://extensions; or still show the details page; or something else",
+      "parentUuid": "0270124f_ecd672d5",
+      "revId": "528614ce2c947c4996e5ac44a0150c62385440c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "83bf8a2c_bbe39634",
         "filename": "chrome/browser/resources/md_extensions/navigation_helper.js",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "528614ce2c947c4996e5ac44a0150c62385440c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cfe34a4_124e2b8d",
+        "filename": "chrome/browser/resources/md_extensions/navigation_helper.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-12-01T01:17:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83bf8a2c_bbe39634",
+      "range": {
+        "startLine": 194,
+        "startChar": 10,
+        "endLine": 194,
+        "endChar": 22
+      },
+      "revId": "528614ce2c947c4996e5ac44a0150c62385440c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
