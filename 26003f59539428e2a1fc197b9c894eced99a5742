@@ -52,6 +52,24 @@
       "revId": "26003f59539428e2a1fc197b9c894eced99a5742",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9328f3e_5f36de05",
+        "filename": "net/quic/chromium/quic_chromium_client_session_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-12-01T23:30:52Z",
+      "side": 1,
+      "message": "Sounds good to me to keep ssl_info more consistent, moved the logic to OnProofVerifyDetailsAvailable and DoVerifyCertComplete now, and changed the tests to match the new behavior.",
+      "parentUuid": "3007864b_25176f5b",
+      "revId": "26003f59539428e2a1fc197b9c894eced99a5742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
