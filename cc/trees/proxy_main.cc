@@ -32,6 +32,7 @@ ProxyMain::ProxyMain(LayerTreeHost* layer_tree_host,
       max_requested_pipeline_stage_(NO_PIPELINE_STAGE),
       current_pipeline_stage_(NO_PIPELINE_STAGE),
       final_pipeline_stage_(NO_PIPELINE_STAGE),
+      deferred_final_pipeline_stage_(NO_PIPELINE_STAGE),
       commit_waits_for_activation_(false),
       started_(false),
       defer_commits_(false),
@@ -134,6 +135,9 @@ void ProxyMain::BeginMainFrame(
   layer_tree_host_->ImageDecodesFinished(
       std::move(begin_main_frame_state->completed_image_decode_requests));
 
+  final_pipeline_stage_ = max_requested_pipeline_stage_;
+  max_requested_pipeline_stage_ = NO_PIPELINE_STAGE;
+
   if (defer_commits_) {
     TRACE_EVENT_INSTANT0("cc", "EarlyOut_DeferCommit",
                          TRACE_EVENT_SCOPE_THREAD);
@@ -144,17 +148,22 @@ void ProxyMain::BeginMainFrame(
                                   CommitEarlyOutReason::ABORTED_DEFERRED_COMMIT,
                                   begin_main_frame_start_time,
                                   base::Passed(&empty_swap_promises)));
+    // When we stop deferring commits, we should resume any previously requested
+    // pipeline stages.
+    deferred_final_pipeline_stage_ =
+        std::max(final_pipeline_stage_, deferred_final_pipeline_stage_);
     return;
   }
+
+  final_pipeline_stage_ =
+      std::max(final_pipeline_stage_, deferred_final_pipeline_stage_);
+  deferred_final_pipeline_stage_ = NO_PIPELINE_STAGE;
 
   // If the commit finishes, LayerTreeHost will transfer its swap promises to
   // LayerTreeImpl. The destructor of ScopedSwapPromiseChecker aborts the
   // remaining swap promises.
   ScopedAbortRemainingSwapPromises swap_promise_checker(
       layer_tree_host_->GetSwapPromiseManager());
-
-  final_pipeline_stage_ = max_requested_pipeline_stage_;
-  max_requested_pipeline_stage_ = NO_PIPELINE_STAGE;
 
   if (!layer_tree_host_->IsVisible()) {
     TRACE_EVENT_INSTANT0("cc", "EarlyOut_NotVisible", TRACE_EVENT_SCOPE_THREAD);
@@ -260,6 +269,9 @@ void ProxyMain::BeginMainFrame(
     current_pipeline_stage_ = NO_PIPELINE_STAGE;
     layer_tree_host_->CommitComplete();
     layer_tree_host_->DidBeginMainFrame();
+    // When we stop deferring commits, we should resume any previously requested
+    // pipeline stages.
+    deferred_final_pipeline_stage_ = final_pipeline_stage_;
     return;
   }
 
