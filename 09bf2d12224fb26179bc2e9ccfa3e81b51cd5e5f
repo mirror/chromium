@@ -16,6 +16,24 @@
       "revId": "09bf2d12224fb26179bc2e9ccfa3e81b51cd5e5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98b7fe55_36203ef6",
+        "filename": "extensions/browser/extension_protocols.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-01T23:32:59Z",
+      "side": 1,
+      "message": "Sorry, wrong bug number. Should have been 782025 there. No need to address it here! :)",
+      "parentUuid": "c406e777_288b6d6b",
+      "revId": "09bf2d12224fb26179bc2e9ccfa3e81b51cd5e5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
