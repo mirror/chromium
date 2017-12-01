@@ -246,6 +246,9 @@ class WebInputEvent {
     // not actual physical movement of the pointer
     kRelativeMotionEvent = 1 << 22,
 
+    // Indication this event was injected by the devtools.
+    kFromDebugger = 1 << 23,
+
     // The set of non-stateful modifiers that specifically change the
     // interpretation of the key being pressed. For example; IsLeft,
     // IsRight, IsComposing don't change the meaning of the key
