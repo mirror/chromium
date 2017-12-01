@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "f6264297_f61d032c",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-01T02:01:54Z",
+      "side": 1,
+      "message": "Are these going to end up as constants or member variables? If member variables, I would use dir_user_data_path_, etc.",
+      "revId": "f056a57199e40f4979135e4a1f4a01dffd753c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ccce5af_c4ac7000",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-01T02:01:54Z",
+      "side": 1,
+      "message": "I think this needs to be a member variable. It goes out of scope at the end of this function but it looks like wallpaper_controller_client_ might still refer to it.",
+      "revId": "f056a57199e40f4979135e4a1f4a01dffd753c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c3f01a0_1b475d87",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-01T02:01:54Z",
+      "side": 1,
+      "message": "This function looks like it could become a static method in WallpaperController. Maybe in a future CL?",
+      "revId": "f056a57199e40f4979135e4a1f4a01dffd753c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3313a14e_f8600648",
         "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
         "patchSetId": 15
@@ -13,6 +64,23 @@
       "writtenOn": "2017-12-01T01:35:07Z",
       "side": 1,
       "message": "Is is better to put this function in WallpaperControllerClient::Init()?",
+      "revId": "f056a57199e40f4979135e4a1f4a01dffd753c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8888fb6_4551b0a6",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-01T02:01:54Z",
+      "side": 1,
+      "message": "I think this should happen in Init() or BindAndSetClient(). Also, it seems like this should only happen once, so I think it would be good to combine this mojo method with the SetClient() mojo method into something like Init() or SetClientAndPaths(). That would save an extra chrome-to-ash IPC on startup.",
       "revId": "f056a57199e40f4979135e4a1f4a01dffd753c00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
