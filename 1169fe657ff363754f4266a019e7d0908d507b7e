@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "134de033_65ac0549",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/StyleBuilder.cpp.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-12-01T04:59:07Z",
+      "side": 1,
+      "message": "Extra bracket.",
+      "revId": "1169fe657ff363754f4266a019e7d0908d507b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
