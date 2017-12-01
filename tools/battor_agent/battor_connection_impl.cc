@@ -150,10 +150,8 @@ void BattOrConnectionImpl::SendBytes(BattOrMessageType type,
   data.push_back(type);
 
   for (size_t i = 0; i < bytes_to_send; i++) {
-    if (bytes[i] == BATTOR_CONTROL_BYTE_START ||
-        bytes[i] == BATTOR_CONTROL_BYTE_END) {
+    if (bytes[i] <= BATTOR_CONTROL_BYTE_ESCAPE)
       data.push_back(BATTOR_CONTROL_BYTE_ESCAPE);
-    }
 
     data.push_back(bytes[i]);
   }

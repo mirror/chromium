@@ -314,20 +314,25 @@ TEST_F(BattOrConnectionImplTest, InitSendsCorrectBytes) {
   OpenConnection();
   AdvanceTickClock(base::TimeDelta::FromMilliseconds(50));
 
-  SendControlMessage(BATTOR_CONTROL_MESSAGE_TYPE_INIT, 0, 0);
+  SendControlMessage(BATTOR_CONTROL_MESSAGE_TYPE_INIT, 0x0100, 0x0302);
 
   const char expected_data[] = {
-      BATTOR_CONTROL_BYTE_START,  BATTOR_MESSAGE_TYPE_CONTROL,
-      BATTOR_CONTROL_BYTE_ESCAPE, BATTOR_CONTROL_MESSAGE_TYPE_INIT,
-      BATTOR_CONTROL_BYTE_ESCAPE, 0x00,
-      BATTOR_CONTROL_BYTE_ESCAPE, 0x00,
-      BATTOR_CONTROL_BYTE_ESCAPE, 0x00,
-      BATTOR_CONTROL_BYTE_ESCAPE, 0x00,
+      BATTOR_CONTROL_BYTE_START,
+      BATTOR_MESSAGE_TYPE_CONTROL,
+      BATTOR_CONTROL_BYTE_ESCAPE,
+      BATTOR_CONTROL_MESSAGE_TYPE_INIT,
+      BATTOR_CONTROL_BYTE_ESCAPE,
+      0x00,
+      BATTOR_CONTROL_BYTE_ESCAPE,
+      0x01,
+      BATTOR_CONTROL_BYTE_ESCAPE,
+      0x02,
+      0x03,
       BATTOR_CONTROL_BYTE_END,
   };
 
   ASSERT_TRUE(GetSendSuccess());
-  ASSERT_EQ(0, std::memcmp(ReadMessageRaw(13)->data(), expected_data, 13));
+  ASSERT_EQ(0, std::memcmp(ReadMessageRaw(12)->data(), expected_data, 12));
 }
 
 TEST_F(BattOrConnectionImplTest, ResetSendsCorrectBytes) {
