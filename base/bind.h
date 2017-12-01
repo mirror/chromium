@@ -260,6 +260,15 @@ Callback<Signature> Bind(Callback<Signature> closure) {
   return closure;
 }
 
+// A variant of Bind() that can bind capturing lambda for testing.
+// This doesn't support extra argument binding as the lambda itself can do.
+template <typename F>
+RepeatingCallback<internal::ExtractCallableRunType<std::decay_t<F>>>
+BindLambdaForTesting(F&& f) {
+  return BindRepeating([](const std::decay_t<F>& f) { return f(); },
+                       std::forward<F>(f));
+}
+
 }  // namespace base
 
 #endif  // BASE_BIND_H_
