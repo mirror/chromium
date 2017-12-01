@@ -52,6 +52,24 @@
       "revId": "75d9d0bcbe04484a39bbbe164bfca8c0757d7285",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1f0d9a0_11c02fff",
+        "filename": "cc/trees/layer_tree_frame_sink.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-01T22:12:53Z",
+      "side": 1,
+      "message": "We call RemoveObserver with the worker context provider\u0027s lock before clearing |task_runner_|. And the worker context provider takes the lock before calling OnContextLost on its ,observers. So we won\u0027t call OnContextLost in your example.",
+      "parentUuid": "8e5f5ddb_568de4a2",
+      "revId": "75d9d0bcbe04484a39bbbe164bfca8c0757d7285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

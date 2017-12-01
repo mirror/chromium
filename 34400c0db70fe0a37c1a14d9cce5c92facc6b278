@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "74950c64_a9e61ac2",
+        "filename": "cc/trees/layer_tree_frame_sink.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-01T22:12:53Z",
+      "side": 1,
+      "message": "I considered passing in the task runner, but chose to use ThreadTaskRunnerHandle because:\n1. This is a thread affine API. We\u0027re binding both the client and the current thread (see the call to BindToCurrentThread).\n2. Passing in the task runner means changing subclasses and their call-sites (either ctor or BindToClient).",
+      "parentUuid": "a0e89fd5_dab73d40",
+      "revId": "34400c0db70fe0a37c1a14d9cce5c92facc6b278",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40e2b0d1_c65c9f6a",
         "filename": "cc/trees/layer_tree_frame_sink.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5f24e288_6694ad49",
+        "filename": "cc/trees/layer_tree_frame_sink.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-01T22:12:53Z",
+      "side": 1,
+      "message": "will do",
+      "parentUuid": "40e2b0d1_c65c9f6a",
+      "revId": "34400c0db70fe0a37c1a14d9cce5c92facc6b278",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26cecddc_49ae957d",
         "filename": "cc/trees/layer_tree_frame_sink.cc",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-01T21:46:32Z",
       "side": 1,
       "message": "Ehh, this infamous if on thread else pattern.. Would it be too annoying to make a composed watcher object for the worker context so we can unconditionally do the right thing in each place?",
+      "revId": "34400c0db70fe0a37c1a14d9cce5c92facc6b278",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e7d490a_c4f826da",
+        "filename": "cc/trees/layer_tree_frame_sink.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-01T22:12:53Z",
+      "side": 1,
+      "message": "You mean a ContextLostObserver(task_runner, callback)? I could also always forward the context lost as a task (extra callback for compositor context loss).\n\nTBH though I find this pattern more readable :)",
+      "parentUuid": "26cecddc_49ae957d",
       "revId": "34400c0db70fe0a37c1a14d9cce5c92facc6b278",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
