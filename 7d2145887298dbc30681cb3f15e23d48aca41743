@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9d7bc54e_7aeaaf33",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_button_factory.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-12-01T18:35:28Z",
+      "side": 1,
+      "message": "NO! Copy-paste leftover, thanks!",
+      "parentUuid": "7fb1ed35_3c5ab887",
+      "range": {
+        "startLine": 238,
+        "startChar": 29,
+        "endLine": 238,
+        "endChar": 58
+      },
+      "revId": "7d2145887298dbc30681cb3f15e23d48aca41743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "023f79ab_51daca63",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4564c160_5d58c9e3",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-12-01T18:35:28Z",
+      "side": 1,
+      "message": "I moved the constraints out of the function. Will move them back to setUpToolbarContainerView function for now. But I\u0027ll work on making this cleaner. \nI don\u0027t think we should be checking for this view to exist, if it hasn\u0027t been setup by the coordinator, we should probably create an empty one.",
+      "parentUuid": "023f79ab_51daca63",
+      "range": {
+        "startLine": 263,
+        "startChar": 5,
+        "endLine": 263,
+        "endChar": 20
+      },
+      "revId": "7d2145887298dbc30681cb3f15e23d48aca41743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "039144cd_e140bc99",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-01T12:52:10Z",
       "side": 1,
       "message": "Is setting the alpha to 0 the same as hiding the button? In particular, are we sure the tap on the button go through? (i.e. if you tap where the contractButton with an alpha of 0 is, is the omnibox focused?)",
+      "range": {
+        "startLine": 429,
+        "startChar": 0,
+        "endLine": 429,
+        "endChar": 32
+      },
+      "revId": "7d2145887298dbc30681cb3f15e23d48aca41743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ee664a5_dd2f7da2",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-12-01T18:35:28Z",
+      "side": 1,
+      "message": "Will hide the button to be safe for now. \nI was thinking of using another stackview here in a followup CL to make things simpler and reduce the number of overall constraints.",
+      "parentUuid": "039144cd_e140bc99",
       "range": {
         "startLine": 429,
         "startChar": 0,
