@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eac3a42a_d40d6a14",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-01T18:37:49Z",
+      "side": 1,
+      "message": "nit: No period here",
+      "range": {
+        "startLine": 7,
+        "startChar": 54,
+        "endLine": 7,
+        "endChar": 55
+      },
+      "revId": "c4a0ff7b2ede2275fae7742f46b92d7d2420bf60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37cc61e1_60e68c5f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-01T18:37:49Z",
+      "side": 1,
+      "message": "nit: Please add a short description after a newline after this summary (see other commits for ideas :) )\n\nE.g. Introduce XX Policy which controls YY.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 10
+      },
+      "revId": "c4a0ff7b2ede2275fae7742f46b92d7d2420bf60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d405840_c554f8e4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-01T18:37:49Z",
+      "side": 1,
+      "message": "nit: please add a TEST\u003d\nline e.g. browser_tests --gtest_filter\u003d...",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 11
+      },
+      "revId": "c4a0ff7b2ede2275fae7742f46b92d7d2420bf60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1201c3a6_6bd92ac4",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-01T18:37:49Z",
+      "side": 1,
+      "message": "nit: Abusive Experience Intervention",
+      "range": {
+        "startLine": 285,
+        "startChar": 13,
+        "endLine": 285,
+        "endChar": 33
+      },
+      "revId": "c4a0ff7b2ede2275fae7742f46b92d7d2420bf60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
