@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c65a4f80_f6f77b11",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/fetch/api/request/request-init-001.sub-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-01T21:16:22Z",
+      "side": 1,
+      "message": "These cases are generated based on test code that assigns to a global `caches` object. When `window.caches` existed that assignment ended up being a no-op. Now that it only appears in secure contexts, `caches` is created as a regular JS object, the assignment works, and these test cases appear.",
+      "revId": "5881eeab63373ac66ff6e58efb5fd4dd77e1d217",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

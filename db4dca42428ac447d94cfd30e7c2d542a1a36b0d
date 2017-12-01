@@ -16,6 +16,24 @@
       "revId": "db4dca42428ac447d94cfd30e7c2d542a1a36b0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6733c392_46a882ec",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/CacheStorage.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-01T21:16:22Z",
+      "side": 1,
+      "message": "Ah yes - that can be removed now. Thanks!",
+      "parentUuid": "fa010840_437c85ae",
+      "revId": "db4dca42428ac447d94cfd30e7c2d542a1a36b0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

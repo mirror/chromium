@@ -16,6 +16,24 @@
       "revId": "3ef02637dc3c6aec65aed5e3144b96c38e3aa2d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47b1524b_f3fd5d61",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/CacheStorage.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-01T21:16:22Z",
+      "side": 0,
+      "message": "`RaisesException` just makes the code generator expect an ExceptionState argument in the C++ side. So it can be removed here.\n\nNo direct relationship with `SecureContext`, except that now that we\u0027re relying on the bindings code to enforce security we don\u0027t need it in the implementation.",
+      "parentUuid": "d277ac4e_a87d17bc",
+      "revId": "3ef02637dc3c6aec65aed5e3144b96c38e3aa2d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
