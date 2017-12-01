@@ -4,6 +4,7 @@
 
 #include "chrome/test/base/chrome_test_launcher.h"
 
+#include "base/environment.h"
 #include "build/build_config.h"
 #include "chrome/test/base/chrome_test_suite.h"
 #include "chrome/test/base/in_process_browser_test.h"
@@ -89,6 +90,20 @@ class InteractiveUITestLauncherDelegate : public ChromeTestLauncherDelegate {
   void PreSharding() override {
     ChromeTestLauncherDelegate::PreSharding();
 #if defined(OS_WIN)
+    // Log the headlessness of the run.
+    static constexpr const char* kEnvVars[] = {
+        "CHROME_HEADLESS", "SWARMING_HEADLESS",
+    };
+    auto environment = base::Environment::Create();
+    for (const auto* env_var : kEnvVars) {
+      std::string value;
+      bool has_value = environment->GetVar(env_var, &value);
+      if (has_value)
+        LOG(ERROR) << env_var << "=" << headless;
+      else
+        LOG(ERROR) << env_var << " not set";
+    }
+
     // Check for any always-on-top windows present before any tests are run.
     // Take a snapshot if any are found and attempt to close any that are system
     // dialogs.
