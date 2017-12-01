@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d850f391_838e4659",
+        "filename": "net/spdy/chromium/http2_push_promise_index.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-12-01T17:00:58Z",
+      "side": 1,
+      "message": "I do not intend this Delegate interface to be temporary.\n\nI am adding a comment above about moving stream management to this class.",
+      "parentUuid": "59bbd596_fa6dfc7b",
+      "revId": "49cf61e3d7f498383f16ac60fe41320a31f429da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2abd14f_eed26fd5",
         "filename": "net/spdy/chromium/http2_push_promise_index.h",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f9d20e99_d1694f22",
+        "filename": "net/spdy/chromium/http2_push_promise_index.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-12-01T17:00:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2abd14f_eed26fd5",
+      "revId": "49cf61e3d7f498383f16ac60fe41320a31f429da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72df2420_fd779a69",
         "filename": "net/spdy/chromium/spdy_session.cc",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "49cf61e3d7f498383f16ac60fe41320a31f429da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "619cc15f_b01e856e",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1365,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-12-01T17:00:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72df2420_fd779a69",
+      "revId": "49cf61e3d7f498383f16ac60fe41320a31f429da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
