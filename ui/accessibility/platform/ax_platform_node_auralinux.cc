@@ -759,6 +759,12 @@ AtkObject* AXPlatformNodeAuraLinux::CreateAtkObject() {
 
   atk_object_initialize(atk_object, this);
 
+  if (GetParent()) {
+    g_signal_emit_by_name(ATK_OBJECT(GetParent()), "children-changed::add",
+                          GetIndexInParent(), atk_object);
+    g_weak_ref_set(&parent_, GetParent());
+  }
+
   return ATK_OBJECT(atk_object);
 }
 
@@ -772,6 +778,13 @@ void AXPlatformNodeAuraLinux::DestroyAtkObjects() {
   if (atk_object_) {
     if (atk_object_ == current_focused_)
       current_focused_ = nullptr;
+    AtkObject* atk_parent = static_cast<AtkObject*>(g_weak_ref_get(&parent_));
+    if (atk_parent) {
+      g_signal_emit_by_name(ATK_OBJECT(atk_parent), "children-changed::remove",
+                            -1, atk_object_);
+      g_object_unref(atk_parent);
+      g_weak_ref_clear(&parent_);
+    }
     ax_platform_node_auralinux_detach(AX_PLATFORM_NODE_AURALINUX(atk_object_));
     g_object_unref(atk_object_);
     atk_object_ = nullptr;
@@ -1015,7 +1028,9 @@ void AXPlatformNodeAuraLinux::GetAtkRelations(AtkRelationSet* atk_relation_set)
 }
 
 AXPlatformNodeAuraLinux::AXPlatformNodeAuraLinux()
-    : interface_mask_(0), atk_object_(nullptr), atk_hyperlink_(nullptr) {}
+    : interface_mask_(0), atk_object_(nullptr), atk_hyperlink_(nullptr) {
+  g_weak_ref_init(&parent_, nullptr);
+}
 
 AXPlatformNodeAuraLinux::~AXPlatformNodeAuraLinux() {
   DestroyAtkObjects();

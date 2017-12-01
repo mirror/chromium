@@ -119,6 +119,10 @@ class AXPlatformNodeAuraLinux : public AXPlatformNodeBase {
   // to emit the ATK_STATE_FOCUSED change to false.
   static AtkObject* current_focused_;
 
+  // Keep a weak reference to the parent, to avoid calling GetParent
+  // on destructor.
+  GWeakRef parent_;
+
   DISALLOW_COPY_AND_ASSIGN(AXPlatformNodeAuraLinux);
 };
 
