@@ -5,6 +5,7 @@
 #include "core/paint/InlineFlowBoxPainter.h"
 
 #include "core/layout/api/LineLayoutAPIShim.h"
+#include "core/layout/line/InlineTextBox.h"
 #include "core/layout/line/RootInlineBox.h"
 #include "core/paint/BackgroundImageGeometry.h"
 #include "core/paint/BoxModelObjectPainter.h"
@@ -28,6 +29,14 @@ void InlineFlowBoxPainter::Paint(const PaintInfo& paint_info,
       inline_flow_box_.VisualOverflowRect(line_top, line_bottom));
   inline_flow_box_.FlipForWritingMode(overflow_rect);
   overflow_rect.MoveBy(paint_offset);
+
+  if (inline_flow_box_.FirstChild() &&
+      inline_flow_box_.FirstChild()->IsInlineTextBox() &&
+      (inline_flow_box_.FirstChild() == inline_flow_box_.LastChild()) &&
+      inline_flow_box_.FirstChild()->IsLineBreak()) {
+    ToInlineTextBox(inline_flow_box_.FirstChild())
+        ->ExtendRectToIncludeNewlineForSelection(overflow_rect);
+  }
 
   if (!paint_info.GetCullRect().IntersectsCullRect(overflow_rect))
     return;
