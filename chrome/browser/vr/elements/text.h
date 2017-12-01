@@ -30,11 +30,18 @@ class Text : public TexturedElement {
   void SetTextAlignment(UiTexture::TextAlignment alignment);
   void SetMultiLine(bool multiline);
 
+  // This text element does not typically feature a cursor, but since the cursor
+  // position is deterined while laying out text, a parent may wish to supply
+  // cursor parameters and determine where the cursor was last drawn.
+  void SetCursorEnabled(bool enabled);
+  void SetCursorPosition(int position);
+  gfx::Rect GetCursorBounds();
+
   void OnSetSize(gfx::SizeF size) override;
 
   std::vector<std::unique_ptr<gfx::RenderText>> LayOutTextForTest(
       const gfx::Size& texture_size);
-  gfx::SizeF GetTextureSizeForTest() const;
+  gfx::SizeF GetTextureSize() const;
 
  private:
   UiTexture* GetTexture() const override;
