@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "271d7a2b_89ffdde4",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 22
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-12-01T23:58:08Z",
+      "side": 1,
+      "message": "It\u0027s defined in https://cs.chromium.org/chromium/src/chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_win.h?l\u003d68",
+      "parentUuid": "c3953020_47eadd01",
+      "range": {
+        "startLine": 7,
+        "startChar": 29,
+        "endLine": 7,
+        "endChar": 64
+      },
+      "revId": "8147f29bc395fe501728259cd976efc8f54a3d86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efac84b4_053111f8",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_impl_win_unittest.cc",
         "patchSetId": 22
@@ -45,6 +69,30 @@
       "revId": "8147f29bc395fe501728259cd976efc8f54a3d86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76627fa1_e20e1815",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_impl_win_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-12-01T23:58:08Z",
+      "side": 1,
+      "message": "This class manages its own lifetime. In tests, we are supposed to call ResetInstanceForTesting() to ensure the object released. Added calls to TearDown().",
+      "parentUuid": "efac84b4_053111f8",
+      "range": {
+        "startLine": 771,
+        "startChar": 30,
+        "endLine": 771,
+        "endChar": 31
+      },
+      "revId": "8147f29bc395fe501728259cd976efc8f54a3d86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
