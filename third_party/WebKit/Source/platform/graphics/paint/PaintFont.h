@@ -6,9 +6,11 @@
 #define PaintFont_h
 
 #include "cc/paint/paint_font.h"
+#include "cc/paint/paint_font_loader_mac.h"
 
 namespace blink {
 using cc::PaintFont;
+using cc::PaintFontLoaderMac;
 }
 
 #endif  // PaintFont_h
