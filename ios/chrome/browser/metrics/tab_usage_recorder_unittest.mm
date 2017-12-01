@@ -2,13 +2,16 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "ios/chrome/browser/metrics/tab_usage_recorder.h"
+
+#import <UIKit/UIKit.h>
+
 #include <memory>
 
 #include "base/metrics/histogram_samples.h"
 #include "base/test/histogram_tester.h"
 #include "base/test/scoped_task_environment.h"
 #import "ios/chrome/browser/metrics/previous_session_info.h"
-#include "ios/chrome/browser/metrics/tab_usage_recorder.h"
 #import "ios/chrome/browser/web_state_list/fake_web_state_list_delegate.h"
 #import "ios/chrome/browser/web_state_list/web_state_list.h"
 #import "ios/chrome/browser/web_state_list/web_state_opener.h"
@@ -16,6 +19,7 @@
 #import "ios/web/public/test/fakes/test_web_state.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/platform_test.h"
+#import "third_party/ocmock/OCMock/OCMock.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -40,7 +44,12 @@ class TabUsageRecorderTest : public PlatformTest {
  protected:
   TabUsageRecorderTest()
       : web_state_list_(&web_state_list_delegate_),
-        tab_usage_recorder_(&web_state_list_, nullptr) {}
+        tab_usage_recorder_(&web_state_list_, nullptr),
+        application_(OCMClassMock([UIApplication class])) {
+    OCMStub([application_ sharedApplication]).andReturn(application_);
+  }
+
+  ~TabUsageRecorderTest() override { [application_ stopMocking]; }
 
   web::WebState* InsertTestWebState(const char* url, bool in_memory) {
     auto test_navigation_manager =
@@ -65,11 +74,16 @@ class TabUsageRecorderTest : public PlatformTest {
     tab_usage_recorder_.termination_timestamps_.push_back(time);
   }
 
+  void SimulateRenderProcessGone(web::WebState* web_state) {
+    static_cast<web::TestWebState*>(web_state)->OnRenderProcessGone();
+  }
+
   base::test::ScopedTaskEnvironment task_environment_;
   FakeWebStateListDelegate web_state_list_delegate_;
   WebStateList web_state_list_;
   base::HistogramTester histogram_tester_;
   TabUsageRecorder tab_usage_recorder_;
+  id application_;
 };
 
 TEST_F(TabUsageRecorderTest, SwitchBetweenInMemoryTabs) {
@@ -261,6 +275,7 @@ TEST_F(TabUsageRecorderTest, TestTimeAfterLastRestore) {
 // Verifies that metrics are recorded correctly when a renderer terminates.
 TEST_F(TabUsageRecorderTest, RendererTerminated) {
   web::WebState* mock_tab_a = InsertTestWebState(kURL, false);
+  OCMStub([application_ applicationState]).andReturn(UIApplicationStateActive);
 
   // Add some extra WebStates that are not considered evicted so that
   // TabUsageRecorder count kAliveTabsCountAtRendererTermination tabs
@@ -282,7 +297,8 @@ TEST_F(TabUsageRecorderTest, RendererTerminated) {
       now - base::TimeDelta::FromSeconds(kSecondsBeforeRendererTermination / 2);
   AddTimeToDequeInTabUsageRecorder(recent_time);
 
-  tab_usage_recorder_.RendererTerminated(mock_tab_a, false, true);
+  mock_tab_a->WasHidden();
+  SimulateRenderProcessGone(mock_tab_a);
 
   NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
   BOOL saw_memory_warning =
@@ -305,8 +321,10 @@ TEST_F(TabUsageRecorderTest, RendererTerminated) {
 TEST_F(TabUsageRecorderTest, SwitchToRendererTerminatedTab) {
   web::WebState* mock_tab_a = InsertTestWebState(kURL, true);
   web::WebState* mock_tab_b = InsertTestWebState(kURL, false);
+  OCMStub([application_ applicationState]).andReturn(UIApplicationStateActive);
 
-  tab_usage_recorder_.RendererTerminated(mock_tab_b, false, true);
+  mock_tab_b->WasHidden();
+  SimulateRenderProcessGone(mock_tab_b);
   tab_usage_recorder_.RecordTabSwitched(mock_tab_a, mock_tab_b);
 
   histogram_tester_.ExpectUniqueSample(
@@ -319,13 +337,16 @@ TEST_F(TabUsageRecorderTest, SwitchToRendererTerminatedTab) {
 TEST_F(TabUsageRecorderTest, StateAtRendererTerminationForeground) {
   web::WebState* mock_tab_a = InsertTestWebState(kURL, true);
   web::WebState* mock_tab_b = InsertTestWebState(kURL, true);
+  OCMStub([application_ applicationState]).andReturn(UIApplicationStateActive);
 
-  tab_usage_recorder_.RendererTerminated(mock_tab_a, true, true);
+  mock_tab_a->WasShown();
+  SimulateRenderProcessGone(mock_tab_a);
   histogram_tester_.ExpectBucketCount(
       kRendererTerminationStateHistogram,
       TabUsageRecorder::FOREGROUND_TAB_FOREGROUND_APP, 1);
 
-  tab_usage_recorder_.RendererTerminated(mock_tab_b, false, true);
+  mock_tab_b->WasHidden();
+  SimulateRenderProcessGone(mock_tab_b);
   histogram_tester_.ExpectBucketCount(
       kRendererTerminationStateHistogram,
       TabUsageRecorder::BACKGROUND_TAB_FOREGROUND_APP, 1);
@@ -336,13 +357,38 @@ TEST_F(TabUsageRecorderTest, StateAtRendererTerminationForeground) {
 TEST_F(TabUsageRecorderTest, StateAtRendererTerminationBackground) {
   web::WebState* mock_tab_a = InsertTestWebState(kURL, true);
   web::WebState* mock_tab_b = InsertTestWebState(kURL, true);
+  OCMStub([application_ applicationState])
+      .andReturn(UIApplicationStateBackground);
 
-  tab_usage_recorder_.RendererTerminated(mock_tab_a, true, false);
+  mock_tab_a->WasShown();
+  SimulateRenderProcessGone(mock_tab_a);
   histogram_tester_.ExpectBucketCount(
       kRendererTerminationStateHistogram,
       TabUsageRecorder::FOREGROUND_TAB_BACKGROUND_APP, 1);
 
-  tab_usage_recorder_.RendererTerminated(mock_tab_b, false, false);
+  mock_tab_b->WasHidden();
+  SimulateRenderProcessGone(mock_tab_b);
+  histogram_tester_.ExpectBucketCount(
+      kRendererTerminationStateHistogram,
+      TabUsageRecorder::BACKGROUND_TAB_BACKGROUND_APP, 1);
+}
+
+// Verifies that Tab.StateAtRendererTermination metric is correctly reported
+// when the application is in the inactive state.
+TEST_F(TabUsageRecorderTest, StateAtRendererTerminationInactive) {
+  web::WebState* mock_tab_a = InsertTestWebState(kURL, true);
+  web::WebState* mock_tab_b = InsertTestWebState(kURL, true);
+  OCMStub([application_ applicationState])
+      .andReturn(UIApplicationStateInactive);
+
+  mock_tab_a->WasShown();
+  SimulateRenderProcessGone(mock_tab_a);
+  histogram_tester_.ExpectBucketCount(
+      kRendererTerminationStateHistogram,
+      TabUsageRecorder::FOREGROUND_TAB_BACKGROUND_APP, 1);
+
+  mock_tab_b->WasHidden();
+  SimulateRenderProcessGone(mock_tab_b);
   histogram_tester_.ExpectBucketCount(
       kRendererTerminationStateHistogram,
       TabUsageRecorder::BACKGROUND_TAB_BACKGROUND_APP, 1);
