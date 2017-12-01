@@ -136,7 +136,7 @@ class ArcPolicyBridgeTest : public testing::Test {
         base::WrapUnique(fake_user_manager));
     const AccountId account_id(
         AccountId::FromUserEmailGaiaId("user@gmail.com", "1111111111"));
-    fake_user_manager->AddUser(account_id);
+    fake_user_manager->AddUserWithAffiliation(account_id, false);
     fake_user_manager->LoginUser(account_id);
     testing_profile_manager_ = std::make_unique<TestingProfileManager>(
         TestingBrowserProcess::GetGlobal());
@@ -428,6 +428,15 @@ TEST_F(ArcPolicyBridgeTest, PolicyInstanceUnmanagedTest) {
 
 TEST_F(ArcPolicyBridgeTest, PolicyInstanceManagedTest) {
   policy_instance()->CallGetPolicies(PolicyStringCallback("{}"));
+}
+
+TEST_F(ArcPolicyBridgeTest, ApkCacheUnaffiliatedUser) {
+  policy_map().Set(
+      policy::key::kArcPolicy, policy::POLICY_LEVEL_MANDATORY,
+      policy::POLICY_SCOPE_USER, policy::POLICY_SOURCE_CLOUD,
+      std::make_unique<base::Value>("{\"apkCacheEnabled\":true}"),
+      nullptr);
+  policy_bridge()->GetPolicies(PolicyStringCallback("{}"));
 }
 
 }  // namespace arc
