@@ -4760,6 +4760,9 @@ class TestNativeTheme : public ui::NativeTheme {
   gfx::Rect GetNinePatchAperture(Part part) const override {
     return gfx::Rect();
   }
+  bool UsesHighContrastColors() const override {
+    return false;
+  }
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TestNativeTheme);
