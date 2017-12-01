@@ -78,13 +78,6 @@ V8PerIsolateData::V8PerIsolateData(
       is_handling_recursion_level_error_(false),
       is_reporting_exception_(false),
       runtime_call_stats_(base::DefaultTickClock::GetInstance()) {
-  // If it fails to load the snapshot file, falls back to kDontUseSnapshot mode.
-  // TODO(peria): Remove this fallback routine.
-  if (v8_context_snapshot_mode_ == V8ContextSnapshotMode::kUseSnapshot &&
-      !startup_data_.data) {
-    v8_context_snapshot_mode_ = V8ContextSnapshotMode::kDontUseSnapshot;
-  }
-
   // FIXME: Remove once all v8::Isolate::GetCurrent() calls are gone.
   GetIsolate()->Enter();
   GetIsolate()->AddBeforeCallEnteredCallback(&BeforeCallEnteredCallback);
