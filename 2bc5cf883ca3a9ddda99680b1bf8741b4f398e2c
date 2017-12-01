@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c41c4243_76176a80",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 2387,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-01T22:59:27Z",
+      "side": 1,
+      "message": "This diagram is a bit unclear to me, move this down one row, so you can use a | in this row to make it more obvious?",
+      "revId": "2bc5cf883ca3a9ddda99680b1bf8741b4f398e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
