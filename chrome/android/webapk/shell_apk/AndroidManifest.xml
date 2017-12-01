@@ -14,6 +14,7 @@
     <uses-sdk
         android:minSdkVersion="16"
         android:targetSdkVersion="26" />
+    <uses-feature android:name="android.hardware.ram.low" android:required="true" />
 
     <application
         android:icon="@mipmap/ic_launcher"
