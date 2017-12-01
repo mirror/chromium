@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "e1d6350b_de55656b",
+        "filename": "components/cronet/ios/cronet_metrics.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-01T19:33:38Z",
+      "side": 1,
+      "message": "nit: this should be // namespace cronet",
+      "range": {
+        "startLine": 79,
+        "startChar": 6,
+        "endLine": 79,
+        "endChar": 15
+      },
+      "revId": "b677f4fe996c69543f223f522ed6025797c00378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf107884_534e193d",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 28
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-01T19:33:38Z",
+      "side": 1,
+      "message": "Not applicable?",
+      "range": {
+        "startLine": 86,
+        "startChar": 19,
+        "endLine": 86,
+        "endChar": 20
+      },
+      "revId": "b677f4fe996c69543f223f522ed6025797c00378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9ed07c9_840f9be5",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 28
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-01T19:33:38Z",
+      "side": 1,
+      "message": "Can this be [task response]?",
+      "range": {
+        "startLine": 88,
+        "startChar": 23,
+        "endLine": 88,
+        "endChar": 34
+      },
+      "revId": "b677f4fe996c69543f223f522ed6025797c00378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a9168a4b_0e0fe2a7",
         "filename": "components/cronet/ios/cronet_metrics.mm",
         "patchSetId": 28
@@ -18,6 +87,87 @@
         "startChar": 40,
         "endLine": 115,
         "endChar": 0
+      },
+      "revId": "b677f4fe996c69543f223f522ed6025797c00378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e91639df_558fc265",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 28
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-01T19:33:38Z",
+      "side": 1,
+      "message": "Hrm, I\u0027d feel more comfortable if we took the time stamp in OnStopNetRequest(). \nThis is getting called later on different thread, so it could introduce \"interesting\" variations.",
+      "parentUuid": "a9168a4b_0e0fe2a7",
+      "range": {
+        "startLine": 114,
+        "startChar": 40,
+        "endLine": 115,
+        "endChar": 0
+      },
+      "revId": "b677f4fe996c69543f223f522ed6025797c00378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87b9cd52_93255786",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 28
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-01T19:33:38Z",
+      "side": 1,
+      "message": "nit: add blank line between functions.",
+      "revId": "b677f4fe996c69543f223f522ed6025797c00378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7348bf29_738c23a7",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 28
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-01T19:33:38Z",
+      "side": 1,
+      "message": "nit: no need for blank line here.",
+      "revId": "b677f4fe996c69543f223f522ed6025797c00378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1e35d44_84a864ef",
+        "filename": "ios/net/crn_http_protocol_handler.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-01T19:33:38Z",
+      "side": 1,
+      "message": "BUG? I think |task| should be scoped_nsobject\u003cNSURLSessionTask*\u003e so we are guaranteed that it doesn\u0027t go away until we delete |this|.",
+      "range": {
+        "startLine": 47,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 20
       },
       "revId": "b677f4fe996c69543f223f522ed6025797c00378",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
