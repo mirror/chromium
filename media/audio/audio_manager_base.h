@@ -151,9 +151,14 @@ class MEDIA_EXPORT AudioManagerBase : public AudioManager {
   // which must initially be empty.
   virtual void GetAudioOutputDeviceNames(AudioDeviceNames* device_names);
 
-  // Returns the ID of the default audio output device.
-  // Implementations that don't yet support this should return an empty string.
+  // These functions return the ID of the default/communications audio
+  // input/output devices respectively.
+  // Implementations that do not support this functionality should return an
+  // empty string.
+  virtual std::string GetDefaultInputDeviceID();
   virtual std::string GetDefaultOutputDeviceID();
+  virtual std::string GetCommunicationsInputDeviceID();
+  virtual std::string GetCommunicationsOutputDeviceID();
 
   virtual std::unique_ptr<AudioDebugRecordingManager>
   CreateAudioDebugRecordingManager(
@@ -177,6 +182,13 @@ class MEDIA_EXPORT AudioManagerBase : public AudioManager {
 
   // AudioManager:
   void InitializeDebugRecording() final;
+
+  void GetAudioDeviceDescriptions(
+      AudioDeviceDescriptions* descriptions,
+      void (AudioManagerBase::*get_device_names)(AudioDeviceNames*),
+      std::string (AudioManagerBase::*get_default_device_id)(),
+      std::string (AudioManagerBase::*get_communications_device_id)(),
+      std::string (AudioManagerBase::*get_group_id)(const std::string&));
 
   // Max number of open output streams, modified by
   // SetMaxOutputStreamsAllowed().
