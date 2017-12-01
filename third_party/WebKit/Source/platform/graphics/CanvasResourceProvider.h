@@ -31,13 +31,6 @@ class GLES2Interface;
 }  // namespace gles2
 }  // namespace gpu
 
-namespace viz {
-
-class SingleReleaseCallback;
-struct TransferableResource;
-
-}  // namespace viz
-
 namespace blink {
 
 class CanvasResource;
@@ -81,14 +74,11 @@ class PLATFORM_EXPORT CanvasResourceProvider {
   void FlushSkia() const;
   const CanvasColorParams& ColorParams() const { return color_params_; }
   scoped_refptr<StaticBitmapImage> Snapshot();
+  virtual scoped_refptr<CanvasResource> ProduceFrame() = 0;
   void SetFilterQuality(SkFilterQuality quality) { filter_quality_ = quality; }
-  bool PrepareTransferableResource(
-      viz::TransferableResource*,
-      std::unique_ptr<viz::SingleReleaseCallback>*);
   const IntSize& Size() const { return size_; }
   virtual bool IsValid() const = 0;
   virtual bool IsAccelerated() const = 0;
-  virtual bool CanPrepareTransferableResource() const = 0;
   uint32_t ContentUniqueID() const;
   void ClearRecycledResources();
   void RecycleResource(scoped_refptr<CanvasResource>);
@@ -103,10 +93,11 @@ class PLATFORM_EXPORT CanvasResourceProvider {
   WeakPtr<WebGraphicsContext3DProviderWrapper> ContextProviderWrapper() {
     return context_provider_wrapper_;
   }
-  GLenum GetGLFilter() const;
-  bool UseNearestNeighbor() const;
-  void ResetSkiaTextureBinding() const;
   scoped_refptr<CanvasResource> NewOrRecycledResource();
+  SkFilterQuality FilterQuality() const { return filter_quality_; }
+  WeakPtr<CanvasResourceProvider> CreateWeakPtr() {
+    return weak_ptr_factory_.CreateWeakPtr();
+  }
 
   // Called by subclasses when the backing resource has changed and resources
   // are not managed by skia, signaling that a new surface needs to be created.
@@ -119,8 +110,6 @@ class PLATFORM_EXPORT CanvasResourceProvider {
  private:
   virtual sk_sp<SkSurface> CreateSkSurface() const = 0;
   virtual scoped_refptr<CanvasResource> CreateResource();
-  virtual scoped_refptr<CanvasResource> DoPrepareTransferableResource(
-      viz::TransferableResource* out_resource) = 0;
 
   WeakPtrFactory<CanvasResourceProvider> weak_ptr_factory_;
   WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper_;

@@ -19,7 +19,16 @@ class GpuMemoryBuffer;
 
 }  // namespace gfx
 
+namespace viz {
+
+class SingleReleaseCallback;
+struct TransferableResource;
+
+}  // namespace viz
+
 namespace blink {
+
+class CanvasResourceProvider;
 
 // Generic resource interface, used for locking (RAII) and recycling pixel
 // buffers of any type.
@@ -30,19 +39,30 @@ class PLATFORM_EXPORT CanvasResource : public WTF::RefCounted<CanvasResource> {
   virtual bool IsRecycleable() const = 0;
   virtual bool IsValid() const = 0;
   virtual GLuint TextureId() const = 0;
-  gpu::gles2::GLES2Interface* ContextGL() const;
+  virtual IntSize Size() const = 0;
+  virtual void PrepareTransferableResource(
+      viz::TransferableResource* out_resource,
+      std::unique_ptr<viz::SingleReleaseCallback>* out_callback);
   const gpu::Mailbox& GpuMailbox();
   bool HasGpuMailbox() const;
   void SetSyncTokenForRelease(const gpu::SyncToken&);
   void WaitSyncTokenBeforeRelease();
 
  protected:
-  CanvasResource(WeakPtr<WebGraphicsContext3DProviderWrapper>);
+  CanvasResource(WeakPtr<WebGraphicsContext3DProviderWrapper>,
+                 WeakPtr<CanvasResourceProvider>,
+                 SkFilterQuality);
+  virtual GLenum TextureTarget() const = 0;
+  virtual bool IsOverlayCandidate() const { return false; }
+  gpu::gles2::GLES2Interface* ContextGL() const;
+  GrContext* GetGrContext() const;
 
   gpu::Mailbox gpu_mailbox_;
   // Sync token that was provided when resource was released
   gpu::SyncToken sync_token_for_release_;
   WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper_;
+  WeakPtr<CanvasResourceProvider> provider_;
+  SkFilterQuality filter_quality_;
 };
 
 // Resource type for skia Bitmaps (RAM and texture backed)
@@ -50,19 +70,29 @@ class PLATFORM_EXPORT CanvasResource_Skia final : public CanvasResource {
  public:
   static scoped_refptr<CanvasResource_Skia> Create(
       sk_sp<SkImage>,
-      WeakPtr<WebGraphicsContext3DProviderWrapper>);
+      WeakPtr<WebGraphicsContext3DProviderWrapper>,
+      WeakPtr<CanvasResourceProvider>,
+      SkFilterQuality);
   virtual ~CanvasResource_Skia() { Abandon(); }
 
   // Not recyclable: Skia handles texture recycling internally and bitmaps are
   // cheap to allocate.
   bool IsRecycleable() const final { return false; }
   bool IsValid() const final;
-  void Abandon() final;
   GLuint TextureId() const final;
+  IntSize Size() const final;
+  void Abandon() final;
+  void PrepareTransferableResource(
+      viz::TransferableResource* out_resource,
+      std::unique_ptr<viz::SingleReleaseCallback>* out_callback) final;
 
  private:
+  GLenum TextureTarget() const final;
+
   CanvasResource_Skia(sk_sp<SkImage>,
-                      WeakPtr<WebGraphicsContext3DProviderWrapper>);
+                      WeakPtr<WebGraphicsContext3DProviderWrapper>,
+                      WeakPtr<CanvasResourceProvider>,
+                      SkFilterQuality);
 
   sk_sp<SkImage> image_;
 };
@@ -74,17 +104,25 @@ class PLATFORM_EXPORT CanvasResource_GpuMemoryBuffer final
   static scoped_refptr<CanvasResource_GpuMemoryBuffer> Create(
       const IntSize&,
       const CanvasColorParams&,
-      WeakPtr<WebGraphicsContext3DProviderWrapper>);
+      WeakPtr<WebGraphicsContext3DProviderWrapper>,
+      WeakPtr<CanvasResourceProvider>,
+      SkFilterQuality);
   virtual ~CanvasResource_GpuMemoryBuffer();
   bool IsRecycleable() const final { return IsValid(); }
   bool IsValid() const { return context_provider_wrapper_ && image_id_; }
-  void Abandon() final;
   GLuint TextureId() const final { return texture_id_; }
+  IntSize Size() const final;
+  void Abandon() final;
 
  private:
+  GLenum TextureTarget() const final;
+  bool IsOverlayCandidate() const final { return false; }
+
   CanvasResource_GpuMemoryBuffer(const IntSize&,
                                  const CanvasColorParams&,
-                                 WeakPtr<WebGraphicsContext3DProviderWrapper>);
+                                 WeakPtr<WebGraphicsContext3DProviderWrapper>,
+                                 WeakPtr<CanvasResourceProvider>,
+                                 SkFilterQuality);
 
   std::unique_ptr<gfx::GpuMemoryBuffer> gpu_memory_buffer_;
   GLuint image_id_ = 0;
