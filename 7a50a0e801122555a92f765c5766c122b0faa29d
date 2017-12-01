@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a61cf593_37d93936",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-12-01T19:09:29Z",
+      "side": 1,
+      "message": "Would you object if we update the API contract (at least for WKBasedNavigationManager)? Without this check, if Restore() is called on an existing WKWebView, then it\u0027ll append the to-be-restored session to the history instead of replacing it.\n\nThe alternative is to reset WKWebView here. But because in practice this function is always called on a new WKWebView (either new tab or after SetWebUsageEnabled(true)), we\u0027d be destroying and recreating WKWebView a second time unnecessarily.",
+      "parentUuid": "c3d2136b_229a3662",
+      "range": {
+        "startLine": 370,
+        "startChar": 36,
+        "endLine": 370,
+        "endChar": 43
+      },
+      "revId": "7a50a0e801122555a92f765c5766c122b0faa29d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5896f46_a7af14e9",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5990682e_4bf6a601",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1316,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-12-01T19:09:29Z",
+      "side": 1,
+      "message": "Good point. I ran into in one of the egtests yesterday but didn\u0027t write down which one... Since it\u0027s not directly related to the fix in WKBasedNavigationManagerImpl, I\u0027ll revert it from this CL and fix it separately once I figure out which egtest it was.",
+      "parentUuid": "d5896f46_a7af14e9",
+      "range": {
+        "startLine": 1316,
+        "startChar": 15,
+        "endLine": 1316,
+        "endChar": 29
+      },
+      "revId": "7a50a0e801122555a92f765c5766c122b0faa29d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "263602ff_36059a82",
         "filename": "ios/web/web_state/web_state_impl.mm",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "7a50a0e801122555a92f765c5766c122b0faa29d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1f1120e_03024bfe",
+        "filename": "ios/web/web_state/web_state_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-12-01T19:09:29Z",
+      "side": 1,
+      "message": "I should probably do this in a separate CL and add test. Reverted from this CL.",
+      "parentUuid": "263602ff_36059a82",
+      "range": {
+        "startLine": 554,
+        "startChar": 18,
+        "endLine": 554,
+        "endChar": 0
+      },
+      "revId": "7a50a0e801122555a92f765c5766c122b0faa29d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
