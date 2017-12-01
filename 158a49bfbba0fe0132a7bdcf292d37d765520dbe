@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "950b613f_099d5f50",
+        "filename": "chrome/browser/autofill/form_structure_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-01T18:33:33Z",
+      "side": 1,
+      "message": "I thought it would move automagically if response is created in this function?",
+      "range": {
+        "startLine": 198,
+        "startChar": 9,
+        "endLine": 198,
+        "endChar": 18
+      },
+      "revId": "158a49bfbba0fe0132a7bdcf292d37d765520dbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a908aa4d_edd4f27e",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-01T18:33:33Z",
+      "side": 1,
+      "message": "can you update the comment above based on this",
+      "range": {
+        "startLine": 656,
+        "startChar": 6,
+        "endLine": 656,
+        "endChar": 72
+      },
+      "revId": "158a49bfbba0fe0132a7bdcf292d37d765520dbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
