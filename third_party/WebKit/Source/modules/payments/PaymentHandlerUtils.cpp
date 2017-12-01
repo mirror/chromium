@@ -6,7 +6,7 @@
 
 #include "core/dom/ExecutionContext.h"
 #include "core/inspector/ConsoleMessage.h"
-#include "public/platform/modules/serviceworker/service_worker_error_type.mojom-shared.h"
+#include "third_party/WebKit/common/service_worker/service_worker_error_type.mojom-shared.h"
 
 using blink::mojom::ServiceWorkerResponseError;
 
