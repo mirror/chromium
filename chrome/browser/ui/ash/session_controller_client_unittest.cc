@@ -65,9 +65,10 @@ class TestChromeUserManager : public FakeChromeUserManager {
   // user_manager::UserManager:
   void UserLoggedIn(const AccountId& account_id,
                     const std::string& user_id_hash,
-                    bool browser_restart) override {
+                    bool browser_restart,
+                    bool is_child) override {
     FakeChromeUserManager::UserLoggedIn(account_id, user_id_hash,
-                                        browser_restart);
+                                        browser_restart, is_child);
     active_user_ = const_cast<user_manager::User*>(FindUser(account_id));
     NotifyOnLogin();
   }
@@ -212,7 +213,7 @@ class SessionControllerClientTest : public testing::Test {
     user_manager()->AddUser(account_id);
     session_manager_.CreateSession(
         account_id,
-        chromeos::ProfileHelper::GetUserIdHashByUserIdForTesting(user));
+        chromeos::ProfileHelper::GetUserIdHashByUserIdForTesting(user), false);
     session_manager_.SetSessionState(SessionState::ACTIVE);
   }
 
@@ -456,8 +457,9 @@ TEST_F(SessionControllerClientTest, SendUserSession) {
   const AccountId account_id(AccountId::FromUserEmail("user@test.com"));
   user_manager()->AddUser(account_id);
   session_manager_.CreateSession(
-      account_id, chromeos::ProfileHelper::GetUserIdHashByUserIdForTesting(
-                      "user@test.com"));
+      account_id,
+      chromeos::ProfileHelper::GetUserIdHashByUserIdForTesting("user@test.com"),
+      false);
   session_manager_.SetSessionState(SessionState::ACTIVE);
   SessionControllerClient::FlushForTesting();
 
@@ -493,8 +495,10 @@ TEST_F(SessionControllerClientTest, SupervisedUser) {
   // Start session. This logs in the user and sends an active user notification.
   // The hash must match the one used by FakeChromeUserManager.
   session_manager_.CreateSession(
-      account_id, chromeos::ProfileHelper::GetUserIdHashByUserIdForTesting(
-                      "child@test.com"));
+      account_id,
+      chromeos::ProfileHelper::GetUserIdHashByUserIdForTesting(
+          "child@test.com"),
+      false);
   session_manager_.SetSessionState(SessionState::ACTIVE);
   SessionControllerClient::FlushForTesting();
 
@@ -545,8 +549,9 @@ TEST_F(SessionControllerClientTest, UserPrefsChange) {
   const AccountId account_id(AccountId::FromUserEmail("user@test.com"));
   const user_manager::User* user = user_manager()->AddUser(account_id);
   session_manager_.CreateSession(
-      account_id, chromeos::ProfileHelper::GetUserIdHashByUserIdForTesting(
-                      "user@test.com"));
+      account_id,
+      chromeos::ProfileHelper::GetUserIdHashByUserIdForTesting("user@test.com"),
+      false);
   session_manager_.SetSessionState(SessionState::ACTIVE);
   SessionControllerClient::FlushForTesting();
 

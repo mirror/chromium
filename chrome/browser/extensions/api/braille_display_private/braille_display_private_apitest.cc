@@ -338,7 +338,7 @@ IN_PROC_BROWSER_TEST_F(BrailleDisplayPrivateAPIUserTest,
   std::unique_ptr<ScreenLockerTester> tester(ScreenLocker::GetTester());
   // Log in.
   session_manager::SessionManager::Get()->CreateSession(
-      AccountId::FromUserEmail(kTestUserName), kTestUserName);
+      AccountId::FromUserEmail(kTestUserName), kTestUserName, false);
   g_browser_process->profile_manager()->GetProfile(
       ProfileHelper::Get()->GetProfilePathByUserIdHash(kTestUserName));
   session_manager::SessionManager::Get()->SessionStarted();
