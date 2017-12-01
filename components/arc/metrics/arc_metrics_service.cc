@@ -82,6 +82,7 @@ ArcMetricsService::ArcMetricsService(content::BrowserContext* context,
                                      ArcBridgeService* bridge_service)
     : arc_bridge_service_(bridge_service),
       process_observer_(this),
+      native_bridge_type_(mojom::NativeBridgeType::NONE),
       weak_ptr_factory_(this) {
   arc_bridge_service_->metrics()->SetHost(this);
   arc_bridge_service_->process()->AddObserver(&process_observer_);
@@ -186,6 +187,12 @@ void ArcMetricsService::ReportBootProgress(
   session_manager_client->GetArcStartTime(base::BindOnce(
       &ArcMetricsService::OnArcStartTimeRetrieved,
       weak_ptr_factory_.GetWeakPtr(), std::move(events), boot_type));
+}
+
+void ArcMetricsService::ReportNativeBridge(
+    mojom::NativeBridgeType native_bridge_type) {
+  VLOG(2) << "Native bridge type is " << native_bridge_type;
+  native_bridge_type_ = native_bridge_type;
 }
 
 ArcMetricsService::ProcessObserver::ProcessObserver(
