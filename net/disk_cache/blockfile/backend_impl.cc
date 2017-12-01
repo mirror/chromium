@@ -1840,7 +1840,11 @@ void BackendImpl::AddStorageSize(int32_t bytes) {
 
 void BackendImpl::SubstractStorageSize(int32_t bytes) {
   data_->header.num_bytes -= bytes;
-  DCHECK_GE(data_->header.num_bytes, 0);
+  if (data_->header.num_bytes < 0) {
+    LOG(ERROR) << "BackendImpl::SubstractStorageSize";
+    LOG(ERROR) << "base::Process::Current().Pid() = " << base::Process::Current().Pid();
+  }
+  CHECK_GE(data_->header.num_bytes, 0);
 }
 
 void BackendImpl::IncreaseNumRefs() {
