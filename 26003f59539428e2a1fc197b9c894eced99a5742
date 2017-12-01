@@ -16,6 +16,24 @@
       "revId": "26003f59539428e2a1fc197b9c894eced99a5742",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db67d496_56e2dbb2",
+        "filename": "net/quic/chromium/quic_chromium_client_session_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-01T16:42:00Z",
+      "side": 1,
+      "message": "Hmm, yes, that is a bit odd. I don\u0027t *think* anything will go terribly wrong from computing it on the fly, but I agree it would be cleaner to compute it once per connection. I think that would mean doing something more like how |pkp_bypassed_| works: have a |is_fatal_cert_error_| member on QuicChromiumClientSession and SSLClientSocketImpl. In the former, set it on OnProofVerifyDetailsAvailable, and in the latter in DoVerifyCertComplete, and then copy it into the SSLInfo in GetSSLInfo(). Does that sound okay to you, Ryan?",
+      "parentUuid": "90d2a4a8_319d4949",
+      "revId": "26003f59539428e2a1fc197b9c894eced99a5742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
