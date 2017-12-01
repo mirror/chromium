@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68c8ca9c_56a8aaa2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-01T22:54:19Z",
+      "side": 1,
+      "message": "Perhaps mention why StringOrdinal is part of this; at first glance, sync doesn\u0027t have much to do with app list.",
+      "revId": "0beba5095c9115c002ae7ff10b815148470e2f37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afd09ccd_f2c5bd10",
+        "filename": "components/sync/mojo/syncer.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-01T22:54:19Z",
+      "side": 1,
+      "message": "sync nodes, maybe?",
+      "range": {
+        "startLine": 11,
+        "startChar": 17,
+        "endLine": 11,
+        "endChar": 22
+      },
+      "revId": "0beba5095c9115c002ae7ff10b815148470e2f37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
