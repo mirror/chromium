@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "506a8d05_bddaa3d4",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-01T01:08:36Z",
+      "side": 1,
+      "message": "Oops, will remove this in the next PS.",
+      "range": {
+        "startLine": 606,
+        "startChar": 0,
+        "endLine": 606,
+        "endChar": 53
+      },
+      "revId": "bd540ef49cce8c3fea731934087942e67af25729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a589d923_17c0ea77",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1429,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-01T01:08:36Z",
+      "side": 1,
+      "message": "It\u0027s interesting that we already had this for TDI, but this is exactly what allows subframe navigations to same-site-but-non-app URLs to come back into the app process (as in the IframeNavigationsInsideHostedApp test).\n\nIIUC, this is a shortcut where normally, we\u0027d return a descriptor for a related SiteInstance, then discover that an existing SI with that site URL (for the root, or opener) exists in the current BI and reuse it.  The reason this breaks the scenario here is because the GetRelatedSiteInstance flow uses effective URLs (e.g., GetSiteForURL in SiteInstanceDescriptor constructor), but this shortcut uses IsCurrentlySameSite, which we\u0027ve changed to not use effective URLs for subframes, so it works. :)\n\nI\u0027m not sure why it was needed for TDI, but I think I agree with Nick\u0027s comment that it should be safe to turn on generally.  Thoughts?\n\nEventually, I think we should refactor GetRelatedSiteInstance to be able to discover existing SiteInstances without considering effective URLs.  That\u0027s a larger change that will affect popups as well though, so seems a bit risky to tackle now.",
+      "range": {
+        "startLine": 1427,
+        "startChar": 69,
+        "endLine": 1429,
+        "endChar": 35
+      },
+      "revId": "bd540ef49cce8c3fea731934087942e67af25729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f1c7cb8_0f75ea62",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1432,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-01T01:08:36Z",
+      "side": 1,
+      "message": "I think checking the root here is essentially a heuristic.  There might be cases like foo.com(app(non-app-but-same-site-with-app)), where the grandchild won\u0027t come back into app\u0027s process, though it\u0027s not clear that |app| should be in an app process to start with (see Charlie\u0027s TODO about that). I think this should work for vast majority of the cases we care about.",
+      "range": {
+        "startLine": 1432,
+        "startChar": 40,
+        "endLine": 1432,
+        "endChar": 46
+      },
+      "revId": "bd540ef49cce8c3fea731934087942e67af25729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aac4eb4_f99dbe70",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1436,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-01T01:08:36Z",
+      "side": 1,
+      "message": "This isn\u0027t really necessary for hosted app fixes, but while we could keep it exclusive for TDI, I think it\u0027s safe in general (see above), and I also think this part should allow us to later handle hopsted app openers correctly, if we also change IsCurrentlySameSite to not use effective URLs (and skip process privilege checks) for main frames in addition to subframes.  It\u0027ll be a bit tricky because we\u0027ll only want to do that in one direction, when navigating from non-app to app, but not the other way.  This is due to https://crbug.com/89272 - when a non-app URL opens a same-site app URL, it should swap into app process, but not the other way around.\n\nI pursued this for a bit on my CL and it seems promising, but I didn\u0027t want to delay landing the rest of this CL on that.",
+      "range": {
+        "startLine": 1436,
+        "startChar": 0,
+        "endLine": 1436,
+        "endChar": 35
+      },
+      "revId": "bd540ef49cce8c3fea731934087942e67af25729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb549dfe_08359989",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1593,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-01T01:08:36Z",
+      "side": 1,
+      "message": "HasWrongProcessForURL/IsSuitableHost checks the following:\n1. BrowsingContext mismatch\n2. WebUI bindings mismatch\n3. Origin locks (can\u0027t stay in a SiteInstance if its process has incompatible lock)\n4. Instant / non-instant process transitions (NTP)\n5. Process privilege levels.\n\n(5) is fundamentally why we have to skip this check.  See also my comment on https://chromium-review.googlesource.com/c/chromium/src/+/792605 for why it\u0027s not enough to skip the effective URL resolution inside it.\n\nPlumbing enough information into IsSuitableHost so that it performs 1-4 but not 5 seemed hard, given where IsSuitableHost is used.\n\nI tightened this up so that we skip HasWrongProcessForURL in fewer cases -  namely, we only skip it if we\u0027re in a subframe *and* either the candidate or dest_url is using an effective URL.  (I think that was Lukasz\u0027s suggestion when we chatted offline.)\n\nThat makes it easier to reason why skipping this is safe.  For example, it won\u0027t be able to cause process reuse races with isolated origins (for case (3)), because isolated origins by definition cannot have an effective URL.  If we transition from isolated origin to a same-site hosted app URL, we\u0027d skip this check, but then this function will still return false - because IsSameWebSite is aware of isolated origins and will compare origins and not sites in that case.\n\nOther cases:\n\nFor (1), navigating to a URL in a different BrowsingContext can happen with a packaged app, but in that case this function has to return false anyway as the URLs won\u0027t match (the extension IDs are different).\n\nFor (2), navigating app \u003c-\u003e WebUI URL should be disallowed in general, and furthermore, this function will have to return false as the URLs won\u0027t be same-site.\n\nFor (4), app \u003c-\u003e NTP URL: I don\u0027t think we should ever navigate a subframe to the NTP URL.  Even if we could, the subframe shouldn\u0027t end up in the NTP process.\n\nThe existing comment here implies that the intention of this check being here is to handle reloading after installing a hosted app that applies to the current URL, but I don\u0027t think this matters for subframes.  (But I think it might cause problems when we go back and fix this for popups as well.)\n\nMaybe eventually we can remove the process privilege level for hosted apps, and then we won\u0027t have this problem.  Probably not doable for this CL though.",
+      "range": {
+        "startLine": 1592,
+        "startChar": 6,
+        "endLine": 1593,
+        "endChar": 67
+      },
+      "revId": "bd540ef49cce8c3fea731934087942e67af25729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15568497_c70a887d",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1604,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-01T01:08:36Z",
+      "side": 1,
+      "message": "See https://chromium-review.googlesource.com/c/chromium/src/+/792605/4/content/browser/frame_host/render_frame_host_manager.cc#1588 for why I added this.",
+      "range": {
+        "startLine": 1604,
+        "startChar": 55,
+        "endLine": 1604,
+        "endChar": 69
+      },
+      "revId": "bd540ef49cce8c3fea731934087942e67af25729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

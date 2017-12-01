@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8341a1f1_40129655",
+        "filename": "chrome/browser/extensions/app_process_apitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-01T01:08:36Z",
+      "side": 0,
+      "message": "Note to self: moved to be part of the FromOutsideHostedApp test.",
+      "range": {
+        "startLine": 625,
+        "startChar": 34,
+        "endLine": 625,
+        "endChar": 52
+      },
+      "revId": "e43f5b416c8bf1019e3d3ff37a7016b8aa8aadae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
