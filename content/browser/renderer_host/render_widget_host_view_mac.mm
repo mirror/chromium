@@ -864,8 +864,14 @@ bool RenderWidgetHostViewMac::IsSurfaceAvailableForCopy() const {
       ->CanCopyFromCompositingSurface();
 }
 
-bool RenderWidgetHostViewMac::IsShowing() {
-  return ![cocoa_view_ isHidden];
+Visibility RenderWidgetHostViewMac::GetVisibility() const {
+  if ([cocoa_view_ isHiddenOrHasHiddenAncestor])
+    return Visibility::HIDDEN;
+  if ([cocoa_view_ window] && !([[cocoa_view_ window] occlusionState] &
+                                NSWindowOcclusionStateVisible)) {
+    return Visibility::OCCLUDED;
+  }
+  return Visibility::VISIBLE;
 }
 
 gfx::Rect RenderWidgetHostViewMac::GetViewBounds() const {
