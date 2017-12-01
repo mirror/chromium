@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "344e81fd_d911435c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-12-01T00:18:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27fb84a7_5018923c",
+      "range": {
+        "startLine": 15,
+        "startChar": 3,
+        "endLine": 15,
+        "endChar": 4
+      },
+      "revId": "67c5196d8bd7b16fa7aad80e23e61271941069db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "530bb837_1c2da450",
         "filename": "third_party/WebKit/Source/core/css/StyleRuleImport.cpp",
         "patchSetId": 5
@@ -39,6 +63,24 @@
       "revId": "67c5196d8bd7b16fa7aad80e23e61271941069db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0371f584_bd4ed446",
+        "filename": "third_party/WebKit/Source/core/css/StyleRuleImport.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-12-01T00:18:31Z",
+      "side": 1,
+      "message": "Interesting. Will keep in mind for the future.",
+      "parentUuid": "530bb837_1c2da450",
+      "revId": "67c5196d8bd7b16fa7aad80e23e61271941069db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -136,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "da6a83f8_39d3b9f7",
+        "filename": "third_party/WebKit/Source/core/html/parser/CSSPreloadScanner.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-12-01T00:18:31Z",
+      "side": 1,
+      "message": "Renamed MaybeClearResource(), since it doesn\u0027t always actually clear.",
+      "parentUuid": "19d56f59_621bc745",
+      "range": {
+        "startLine": 128,
+        "startChar": 7,
+        "endLine": 128,
+        "endChar": 20
+      },
+      "revId": "67c5196d8bd7b16fa7aad80e23e61271941069db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7332b761_528f9983",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorResourceContentLoader.cpp",
         "patchSetId": 5
@@ -153,6 +219,24 @@
     },
     {
       "key": {
+        "uuid": "317e34e9_f179a992",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorResourceContentLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-12-01T00:18:31Z",
+      "side": 1,
+      "message": "Done, though we\u0027ll see whether this or https://chromium-review.googlesource.com/c/chromium/src/+/777782 lands first :)",
+      "parentUuid": "7332b761_528f9983",
+      "revId": "67c5196d8bd7b16fa7aad80e23e61271941069db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b3bfd34_13289734",
         "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
         "patchSetId": 5
@@ -167,6 +251,24 @@
       "revId": "67c5196d8bd7b16fa7aad80e23e61271941069db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5eccc0c_c114c6c5",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-12-01T00:18:31Z",
+      "side": 1,
+      "message": "Good point. Given that main resources have async cache hit, it should be safe to call SetResource() (and therefore AddClient()) earlier. Moved SetResource() to take the result of FetchMainResource().",
+      "parentUuid": "7b3bfd34_13289734",
+      "revId": "67c5196d8bd7b16fa7aad80e23e61271941069db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -222,6 +324,24 @@
     },
     {
       "key": {
+        "uuid": "e07885f9_6448b3f6",
+        "filename": "third_party/WebKit/Source/core/svg/SVGElementProxy.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-12-01T00:18:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "126984ab_fcab0fce",
+      "revId": "67c5196d8bd7b16fa7aad80e23e61271941069db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f63d980b_133a6dc8",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceClient.h",
         "patchSetId": 5
@@ -242,6 +362,30 @@
       "revId": "67c5196d8bd7b16fa7aad80e23e61271941069db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "477fe1ae_ec105591",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceClient.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-12-01T00:18:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f63d980b_133a6dc8",
+      "range": {
+        "startLine": 70,
+        "startChar": 56,
+        "endLine": 70,
+        "endChar": 57
+      },
+      "revId": "67c5196d8bd7b16fa7aad80e23e61271941069db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
