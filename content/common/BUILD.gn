@@ -631,6 +631,7 @@ mojom("mojo_bindings") {
     "//services/viz/public/interfaces",
     "//skia/public/interfaces",
     "//storage/common:mojo_bindings",
+    "//third_party/WebKit/common:mojo_platform_bindings",
     "//third_party/WebKit/public:mojo_bindings",
     "//ui/base/clipboard/mojom:mojo_bindings",
     "//ui/base/mojo:mojo_bindings",
