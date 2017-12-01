@@ -5,23 +5,17 @@
 module content.mojom;
 
 import "mojo/common/string16.mojom";
+import "third_party/WebKit/common/clipboard/clipboard.mojom";
 import "ui/base/clipboard/mojom/clipboard.mojom";
 import "ui/gfx/geometry/mojo/geometry.mojom";
 import "url/mojo/url.mojom";
-
-enum ClipboardFormat {
-  kPlaintext,
-  kHtml,
-  kSmartPaste,
-  kBookmark,
-};
 
 interface ClipboardHost {
   [Sync]
   GetSequenceNumber(ui.mojom.ClipboardType type) => (uint64 result);
 
   [Sync]
-  IsFormatAvailable(ClipboardFormat format,
+  IsFormatAvailable(blink.mojom.ClipboardFormat format,
                     ui.mojom.ClipboardType type) => (bool result);
 
   [Sync]

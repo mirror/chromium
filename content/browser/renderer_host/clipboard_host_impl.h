@@ -17,7 +17,6 @@
 #include "base/memory/shared_memory.h"
 #include "build/build_config.h"
 #include "content/common/clipboard.mojom.h"
-#include "content/common/clipboard_format.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/browser_associated_interface.h"
 #include "content/public/browser/browser_message_filter.h"
@@ -59,7 +58,7 @@ class CONTENT_EXPORT ClipboardHostImpl : public mojom::ClipboardHost {
   // content::mojom::ClipboardHost
   void GetSequenceNumber(ui::ClipboardType type,
                          GetSequenceNumberCallback callback) override;
-  void IsFormatAvailable(content::ClipboardFormat format,
+  void IsFormatAvailable(blink::mojom::ClipboardFormat format,
                          ui::ClipboardType type,
                          IsFormatAvailableCallback callback) override;
   void ReadAvailableTypes(ui::ClipboardType type,

@@ -9,7 +9,6 @@
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
-#include "content/common/clipboard_format.h"
 #include "content/public/common/drop_data.h"
 #include "content/renderer/clipboard_utils.h"
 #include "content/renderer/drop_data_builder.h"
@@ -38,7 +37,8 @@ WebClipboardImpl::WebClipboardImpl(mojom::ClipboardHost& clipboard)
 
 WebClipboardImpl::~WebClipboardImpl() = default;
 
-uint64_t WebClipboardImpl::SequenceNumber(Buffer buffer) {
+uint64_t WebClipboardImpl::SequenceNumber(
+    blink::mojom::ClipboardBuffer buffer) {
   ui::ClipboardType clipboard_type;
   uint64_t result = 0;
   if (!ConvertBufferType(buffer, &clipboard_type))
@@ -48,37 +48,20 @@ uint64_t WebClipboardImpl::SequenceNumber(Buffer buffer) {
   return result;
 }
 
-bool WebClipboardImpl::IsFormatAvailable(Format format, Buffer buffer) {
+bool WebClipboardImpl::IsFormatAvailable(blink::mojom::ClipboardFormat format,
+                                         blink::mojom::ClipboardBuffer buffer) {
   ui::ClipboardType clipboard_type = ui::CLIPBOARD_TYPE_COPY_PASTE;
-  ClipboardFormat clipboard_format = CLIPBOARD_FORMAT_PLAINTEXT;
 
   if (!ConvertBufferType(buffer, &clipboard_type))
     return false;
 
-  switch (format) {
-    case kFormatPlainText:
-      clipboard_format = CLIPBOARD_FORMAT_PLAINTEXT;
-      break;
-    case kFormatHTML:
-      clipboard_format = CLIPBOARD_FORMAT_HTML;
-      break;
-    case kFormatSmartPaste:
-      clipboard_format = CLIPBOARD_FORMAT_SMART_PASTE;
-      break;
-    case kFormatBookmark:
-      clipboard_format = CLIPBOARD_FORMAT_BOOKMARK;
-      break;
-    default:
-      NOTREACHED();
-  }
-
   bool result = false;
-  clipboard_.IsFormatAvailable(clipboard_format, clipboard_type, &result);
+  clipboard_.IsFormatAvailable(format, clipboard_type, &result);
   return result;
 }
 
 WebVector<WebString> WebClipboardImpl::ReadAvailableTypes(
-    Buffer buffer,
+    blink::mojom::ClipboardBuffer buffer,
     bool* contains_filenames) {
   ui::ClipboardType clipboard_type;
   std::vector<base::string16> types;
@@ -92,7 +75,8 @@ WebVector<WebString> WebClipboardImpl::ReadAvailableTypes(
   return web_types;
 }
 
-WebString WebClipboardImpl::ReadPlainText(Buffer buffer) {
+WebString WebClipboardImpl::ReadPlainText(
+    blink::mojom::ClipboardBuffer buffer) {
   ui::ClipboardType clipboard_type;
   if (!ConvertBufferType(buffer, &clipboard_type))
     return WebString();
@@ -102,7 +86,7 @@ WebString WebClipboardImpl::ReadPlainText(Buffer buffer) {
   return WebString::FromUTF16(text);
 }
 
-WebString WebClipboardImpl::ReadHTML(Buffer buffer,
+WebString WebClipboardImpl::ReadHTML(blink::mojom::ClipboardBuffer buffer,
                                      WebURL* source_url,
                                      unsigned* fragment_start,
                                      unsigned* fragment_end) {
@@ -119,7 +103,7 @@ WebString WebClipboardImpl::ReadHTML(Buffer buffer,
   return WebString::FromUTF16(html_stdstr);
 }
 
-WebString WebClipboardImpl::ReadRTF(Buffer buffer) {
+WebString WebClipboardImpl::ReadRTF(blink::mojom::ClipboardBuffer buffer) {
   ui::ClipboardType clipboard_type;
   if (!ConvertBufferType(buffer, &clipboard_type))
     return WebString();
@@ -129,7 +113,7 @@ WebString WebClipboardImpl::ReadRTF(Buffer buffer) {
   return WebString::FromLatin1(rtf);
 }
 
-WebBlobInfo WebClipboardImpl::ReadImage(Buffer buffer) {
+WebBlobInfo WebClipboardImpl::ReadImage(blink::mojom::ClipboardBuffer buffer) {
   ui::ClipboardType clipboard_type;
   if (!ConvertBufferType(buffer, &clipboard_type))
     return WebBlobInfo();
@@ -144,7 +128,7 @@ WebBlobInfo WebClipboardImpl::ReadImage(Buffer buffer) {
                      size);
 }
 
-WebString WebClipboardImpl::ReadCustomData(Buffer buffer,
+WebString WebClipboardImpl::ReadCustomData(blink::mojom::ClipboardBuffer buffer,
                                            const WebString& type) {
   ui::ClipboardType clipboard_type;
   if (!ConvertBufferType(buffer, &clipboard_type))
@@ -220,13 +204,13 @@ void WebClipboardImpl::WriteDataObject(const WebDragData& data) {
   clipboard_.CommitWrite(ui::CLIPBOARD_TYPE_COPY_PASTE);
 }
 
-bool WebClipboardImpl::ConvertBufferType(Buffer buffer,
+bool WebClipboardImpl::ConvertBufferType(blink::mojom::ClipboardBuffer buffer,
                                          ui::ClipboardType* result) {
   *result = ui::CLIPBOARD_TYPE_COPY_PASTE;
   switch (buffer) {
-    case kBufferStandard:
+    case blink::mojom::ClipboardBuffer::kStandard:
       break;
-    case kBufferSelection:
+    case blink::mojom::ClipboardBuffer::kSelection:
 #if defined(USE_X11)
       *result = ui::CLIPBOARD_TYPE_SELECTION;
       break;
@@ -236,9 +220,6 @@ bool WebClipboardImpl::ConvertBufferType(Buffer buffer,
       // TODO: remove the need for this case, see http://crbug.com/361753
       return false;
 #endif
-    default:
-      NOTREACHED();
-      return false;
   }
   return true;
 }

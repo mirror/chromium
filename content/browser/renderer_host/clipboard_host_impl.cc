@@ -84,27 +84,27 @@ void ClipboardHostImpl::ReadAvailableTypes(
   std::move(callback).Run(types, contains_filenames);
 }
 
-void ClipboardHostImpl::IsFormatAvailable(content::ClipboardFormat format,
+void ClipboardHostImpl::IsFormatAvailable(blink::mojom::ClipboardFormat format,
                                           ui::ClipboardType type,
                                           IsFormatAvailableCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   bool result = false;
   switch (format) {
-    case CLIPBOARD_FORMAT_PLAINTEXT:
+    case blink::mojom::ClipboardFormat::kPlaintext:
       result = clipboard_->IsFormatAvailable(
                    ui::Clipboard::GetPlainTextWFormatType(), type) ||
                clipboard_->IsFormatAvailable(
                    ui::Clipboard::GetPlainTextFormatType(), type);
       break;
-    case CLIPBOARD_FORMAT_HTML:
+    case blink::mojom::ClipboardFormat::kHtml:
       result = clipboard_->IsFormatAvailable(ui::Clipboard::GetHtmlFormatType(),
                                              type);
       break;
-    case CLIPBOARD_FORMAT_SMART_PASTE:
+    case blink::mojom::ClipboardFormat::kSmartPaste:
       result = clipboard_->IsFormatAvailable(
           ui::Clipboard::GetWebKitSmartPasteFormatType(), type);
       break;
-    case CLIPBOARD_FORMAT_BOOKMARK:
+    case blink::mojom::ClipboardFormat::kBookmark:
 #if defined(OS_WIN) || defined(OS_MACOSX)
       result = clipboard_->IsFormatAvailable(ui::Clipboard::GetUrlWFormatType(),
                                              type);
