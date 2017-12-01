@@ -12,6 +12,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/timer/timer.h"
 #include "chromeos/components/tether/tether_component.h"
+#include "chromeos/components/tether/tether_host_fetcher.h"
 #include "chromeos/dbus/power_manager_client.h"
 #include "chromeos/network/network_state_handler.h"
 #include "chromeos/network/network_state_handler_observer.h"
@@ -31,6 +32,7 @@ class NotificationPresenter;
 
 namespace cryptauth {
 class CryptAuthService;
+class RemoteDeviceProvider;
 }  // namespace cryptauth
 
 namespace user_prefs {
@@ -39,7 +41,7 @@ class PrefRegistrySyncable;
 
 class TetherService : public KeyedService,
                       public chromeos::PowerManagerClient::Observer,
-                      public cryptauth::CryptAuthDeviceManager::Observer,
+                      public chromeos::tether::TetherHostFetcher::Observer,
                       public device::BluetoothAdapter::Observer,
                       public chromeos::NetworkStateHandlerObserver,
                       public chromeos::tether::TetherComponent::Observer {
@@ -72,10 +74,8 @@ class TetherService : public KeyedService,
   void SuspendImminent(power_manager::SuspendImminent::Reason reason) override;
   void SuspendDone(const base::TimeDelta& sleep_duration) override;
 
-  // cryptauth::CryptAuthDeviceManager::Observer
-  void OnSyncFinished(cryptauth::CryptAuthDeviceManager::SyncResult sync_result,
-                      cryptauth::CryptAuthDeviceManager::DeviceChangeResult
-                          device_change_result) override;
+  // chromeos::tether::TetherHostFetcher::Observer
+  void OnTetherHostsUpdated() override;
 
   // device::BluetoothAdapter::Observer:
   void AdapterPoweredChanged(device::BluetoothAdapter* adapter,
@@ -189,11 +189,11 @@ class TetherService : public KeyedService,
   // Attempt to record the current Tether FeatureState.
   void RecordTetherFeatureStateIfPossible();
 
-  void SetNotificationPresenterForTest(
+  void SetTestDoubles(
+      std::unique_ptr<chromeos::tether::TetherHostFetcher> tether_host_fetcher,
       std::unique_ptr<chromeos::tether::NotificationPresenter>
-          notification_presenter);
-
-  void SetTimerForTest(std::unique_ptr<base::Timer> timer);
+          notification_presenter,
+      std::unique_ptr<base::Timer> timer);
 
   // Whether the service has been shut down.
   bool shut_down_ = false;
@@ -222,6 +222,8 @@ class TetherService : public KeyedService,
   chromeos::NetworkStateHandler* network_state_handler_;
   std::unique_ptr<chromeos::tether::NotificationPresenter>
       notification_presenter_;
+  std::unique_ptr<cryptauth::RemoteDeviceProvider> remote_device_provider_;
+  std::unique_ptr<chromeos::tether::TetherHostFetcher> tether_host_fetcher_;
   std::unique_ptr<chromeos::tether::TetherComponent> tether_component_;
 
   PrefChangeRegistrar registrar_;
