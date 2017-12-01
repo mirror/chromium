@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d3c4132_8a2ab8bf",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/cpu_time_budget_pool.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-01T21:37:14Z",
+      "side": 1,
+      "message": "Is it worth a comment that we\u0027re using a lambda to make jumbo builds work?",
+      "revId": "f673792e58641781710e8b087d83b33186fead13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
