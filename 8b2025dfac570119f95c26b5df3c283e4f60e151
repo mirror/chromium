@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62de5d4c_046584cb",
+        "filename": "net/nqe/network_quality_store_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-01T21:13:21Z",
+      "side": 1,
+      "message": "Comment was a bit hard to follow - so consider if the following is accurate and if might be clearer wording:\n\n// Now with cached entries for signal strengths 1 and 3, verify across the range of strength values\n// that the closest value match will be returned for looking up (2G, \"test1\", signal_strength).",
+      "revId": "8b2025dfac570119f95c26b5df3c283e4f60e151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
