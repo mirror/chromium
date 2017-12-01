@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "133fcdf0_f15ab8a1",
+        "filename": "cc/resources/resource_provider.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-01T23:56:45Z",
+      "side": 1,
+      "message": "Do we need any changes outside of GLRenderer and ScopedRenderPassTexture now? Can we make this CL smaller and not change ResourceProvider?",
+      "revId": "6344e8bb8b49335fe8271f860b14a28b1a0f785d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8d998ff_ff1d8613",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 3635,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-01T23:56:45Z",
+      "side": 1,
+      "message": "I am confused, where is the allocation happening here? If we just move the texture object out of the map, and back in, we changed the size/hint fields but we didn\u0027t make a texture that matches them?",
+      "revId": "6344e8bb8b49335fe8271f860b14a28b1a0f785d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
