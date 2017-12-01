@@ -9,7 +9,7 @@
 
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_controlling.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_provider.h"
-#import "ios/chrome/browser/ui/ntp/google_landing_consumer.h"
+#import "ios/chrome/browser/ui/content_suggestions/ntp_home_consumer.h"
 #import "ios/chrome/browser/ui/toolbar/toolbar_owner.h"
 #import "ios/public/provider/chrome/browser/voice/logo_animation_controller.h"
 
@@ -28,7 +28,7 @@ class ReadingListModel;
 @interface ContentSuggestionsHeaderViewController
     : UIViewController<ContentSuggestionsHeaderControlling,
                        ContentSuggestionsHeaderProvider,
-                       GoogleLandingConsumer,
+                       NTPHomeConsumer,
                        ToolbarOwner,
                        LogoAnimationControllerOwnerOwner>
 
@@ -49,6 +49,9 @@ class ReadingListModel;
 // |YES| if its view is visible.  When set to |NO| various UI updates are
 // ignored.
 @property(nonatomic, assign) BOOL isShowing;
+
+// |YES| if this consumer is has voice search enabled.
+@property(nonatomic, assign) BOOL voiceSearchIsEnabled;
 
 // Return the toolbar view;
 - (UIView*)toolBarView;
