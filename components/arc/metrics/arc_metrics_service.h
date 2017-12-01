@@ -50,6 +50,13 @@ class ArcMetricsService : public KeyedService,
   // MetricsHost overrides.
   void ReportBootProgress(std::vector<mojom::BootProgressEventPtr> events,
                           mojom::BootType boot_type) override;
+  void ReportNativeBridge(mojom::NativeBridgeType native_bridge_type) override;
+
+  // Records native bridge UMA according to value received from the container.
+  // If the value has not been recieved yet record that native bridge is not
+  // used. When analysing, this will only take small portion of data
+  // out of consideration.
+  void RecordNativeBridgeUMA();
 
  private:
   // Adapter to be able to also observe ProcessInstance events.
@@ -82,6 +89,8 @@ class ArcMetricsService : public KeyedService,
 
   ProcessObserver process_observer_;
   base::RepeatingTimer timer_;
+
+  mojom::NativeBridgeType native_bridge_type_;
 
   // Always keep this the last member of this class to make sure it's the
   // first thing to be destructed.
