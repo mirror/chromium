@@ -159,6 +159,24 @@
       "revId": "a21d65ce8d85b33f9000f49db5ba33b451c55867",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eb47be6_d47770ca",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-01T07:49:50Z",
+      "side": 1,
+      "message": "Will do.",
+      "parentUuid": "7f15e953_c6b02894",
+      "revId": "a21d65ce8d85b33f9000f49db5ba33b451c55867",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
