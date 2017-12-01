@@ -506,6 +506,16 @@ class VP9ConfigChangeDetector : public ConfigChangeDetector {
           color_space_.matrix = VideoColorSpace::MatrixID::BT709;
           break;
       }
+
+      gfx::Size new_size(fhdr.frame_width, fhdr.frame_height);
+      if (!size_.IsEmpty()) {
+        config_changed_ = size_ != new_size;
+        if (config_changed_) {
+          DVLOG(1) << "Configuration changed from " << size_.ToString()
+                   << " to " << new_size.ToString();
+        }
+      }
+      size_ = new_size;
     }
     return true;
   }
@@ -519,6 +529,7 @@ class VP9ConfigChangeDetector : public ConfigChangeDetector {
   }
 
  private:
+  gfx::Size size_;
   VideoColorSpace color_space_;
   Vp9Parser parser_;
 };
