@@ -66,6 +66,9 @@ class AXTreeSourceAuraTest : public ash::AshTestBase {
     textfield_->SetText(base::ASCIIToUTF16("Value"));
     content_->AddChildView(textfield_);
     widget_->Show();
+
+    // Focus the textfield so the cursor does not disappear.
+    textfield_->RequestFocus();
   }
 
  protected:
