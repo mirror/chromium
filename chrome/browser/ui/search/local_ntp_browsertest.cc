@@ -13,6 +13,9 @@
 #include "base/test/histogram_tester.h"
 #include "base/test/scoped_feature_list.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/search/instant_service.h"
+#include "chrome/browser/search/instant_service_factory.h"
+#include "chrome/browser/search/instant_service_observer.h"
 #include "chrome/browser/search/search.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_commands.h"
@@ -20,18 +23,25 @@
 #include "chrome/browser/ui/search/local_ntp_test_utils.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/chrome_features.h"
+#include "chrome/common/search/instant_types.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/ui_test_utils.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
+#include "content/public/browser/browser_context.h"
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/browser_test_utils.h"
+#include "content/public/test/download_test_observer.h"
 #include "content/public/test/test_navigation_observer.h"
-#include "testing/gmock/include/gmock/gmock.h"
+#include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/platform/web_feature.mojom.h"
 #include "url/gurl.h"
+
+// In a non-signed-in, fresh profile with no history, there should be two
+// default TopSites tiles (see history::PrepopulatedPage).
+const int kDefaultMostVisitedItemCount = 2;
 
 class LocalNTPTest : public InProcessBrowserTest {
  public:
@@ -213,6 +223,137 @@ IN_PROC_BROWSER_TEST_F(LocalNTPTest, EmbeddedSearchAPIExposesStaticFunctions) {
         base::StringPrintf("var f = %s; f(%s)", test_case.function_name,
                            test_case.args)));
   }
+}
+
+class TestMostVisitedObserver : public InstantServiceObserver {
+ public:
+  explicit TestMostVisitedObserver(InstantService* service)
+      : service_(service), expected_count_(0) {
+    service_->AddObserver(this);
+  }
+
+  ~TestMostVisitedObserver() override { service_->RemoveObserver(this); }
+
+  void WaitForNumberOfItems(size_t count) {
+    DCHECK(!quit_closure_);
+
+    expected_count_ = count;
+
+    if (items_.size() == count) {
+      return;
+    }
+
+    base::RunLoop run_loop;
+    quit_closure_ = run_loop.QuitClosure();
+    run_loop.Run();
+  }
+
+ private:
+  void ThemeInfoChanged(const ThemeBackgroundInfo&) override {}
+
+  void MostVisitedItemsChanged(
+      const std::vector<InstantMostVisitedItem>& items) override {
+    items_ = items;
+
+    if (quit_closure_ && items_.size() == expected_count_) {
+      quit_closure_.Run();
+
+      quit_closure_.Reset();
+    }
+  }
+
+  InstantService* const service_;
+
+  std::vector<InstantMostVisitedItem> items_;
+
+  size_t expected_count_;
+  base::RepeatingClosure quit_closure_;
+};
+
+IN_PROC_BROWSER_TEST_F(LocalNTPTest, EmbeddedSearchAPIEndToEnd) {
+  content::WebContents* active_tab =
+      local_ntp_test_utils::OpenNewTab(browser(), GURL("about:blank"));
+
+  TestMostVisitedObserver observer(
+      InstantServiceFactory::GetForProfile(browser()->profile()));
+
+  // Navigating to an NTP should trigger an update of the MV items.
+  NavigateToNTPAndWaitUntilLoaded();
+  observer.WaitForNumberOfItems(kDefaultMostVisitedItemCount);
+
+  // Make sure the same number of items is available in JS.
+  int most_visited_count = -1;
+  ASSERT_TRUE(instant_test_utils::GetIntFromJS(
+      active_tab, "window.chrome.embeddedSearch.newTabPage.mostVisited.length",
+      &most_visited_count));
+  ASSERT_EQ(kDefaultMostVisitedItemCount, most_visited_count);
+
+  // Get the ID of one item.
+  int most_visited_rid = -1;
+  ASSERT_TRUE(instant_test_utils::GetIntFromJS(
+      active_tab, "window.chrome.embeddedSearch.newTabPage.mostVisited[0].rid",
+      &most_visited_rid));
+
+  // Delete that item. The deletion should arrive on the native side.
+  ASSERT_TRUE(content::ExecuteScript(
+      active_tab,
+      base::StringPrintf(
+          "window.chrome.embeddedSearch.newTabPage.deleteMostVisitedItem(%d)",
+          most_visited_rid)));
+  observer.WaitForNumberOfItems(kDefaultMostVisitedItemCount - 1);
+}
+
+// Regression test for crbug.com/592273.
+IN_PROC_BROWSER_TEST_F(LocalNTPTest, EmbeddedSearchAPIAfterDownload) {
+  // Set up a test server, so we have some URL to download.
+  net::EmbeddedTestServer test_server(net::EmbeddedTestServer::TYPE_HTTPS);
+  test_server.ServeFilesFromSourceDirectory("chrome/test/data");
+  ASSERT_TRUE(test_server.Start());
+  const GURL download_url = test_server.GetURL("/download-test1.lib");
+
+  content::WebContents* active_tab =
+      local_ntp_test_utils::OpenNewTab(browser(), GURL("about:blank"));
+
+  TestMostVisitedObserver observer(
+      InstantServiceFactory::GetForProfile(browser()->profile()));
+
+  // Navigating to an NTP should trigger an update of the MV items.
+  NavigateToNTPAndWaitUntilLoaded();
+  observer.WaitForNumberOfItems(kDefaultMostVisitedItemCount);
+
+  // Download some file.
+  content::DownloadTestObserverTerminal download_observer(
+      content::BrowserContext::GetDownloadManager(browser()->profile()), 1,
+      content::DownloadTestObserver::ON_DANGEROUS_DOWNLOAD_ACCEPT);
+  ui_test_utils::NavigateToURL(browser(), download_url);
+  download_observer.WaitForFinished();
+
+  // This should have changed the visible URL, but not the last committed one.
+  ASSERT_EQ(download_url, active_tab->GetVisibleURL());
+  ASSERT_EQ(GURL(chrome::kChromeUINewTabURL),
+            active_tab->GetLastCommittedURL());
+
+  // Make sure the same number of items is available in JS.
+  int most_visited_count = -1;
+  ASSERT_TRUE(instant_test_utils::GetIntFromJS(
+      active_tab, "window.chrome.embeddedSearch.newTabPage.mostVisited.length",
+      &most_visited_count));
+  ASSERT_EQ(kDefaultMostVisitedItemCount, most_visited_count);
+
+  // Get the ID of one item.
+  int most_visited_rid = -1;
+  ASSERT_TRUE(instant_test_utils::GetIntFromJS(
+      active_tab, "window.chrome.embeddedSearch.newTabPage.mostVisited[0].rid",
+      &most_visited_rid));
+
+  // Since the current page is still an NTP, it should be possible to delete MV
+  // items (as well as anything else that the embeddedSearch API allows).
+  ASSERT_TRUE(content::ExecuteScript(
+      active_tab,
+      base::StringPrintf(
+          "window.chrome.embeddedSearch.newTabPage.deleteMostVisitedItem(%d)",
+          most_visited_rid)));
+  observer.WaitForNumberOfItems(kDefaultMostVisitedItemCount - 1);
 }
 
 IN_PROC_BROWSER_TEST_F(LocalNTPTest, NTPRespectsBrowserLanguageSetting) {
