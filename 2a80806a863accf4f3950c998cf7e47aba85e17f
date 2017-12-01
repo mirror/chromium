@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81d78a38_398b74e2",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 26
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-12-01T01:59:03Z",
+      "side": 1,
+      "message": "The mojom file should be self contained. Please list all the possible values for the pixel_format in an enum in here or video_common.mojom.\n\nAnd also change the type from uint32 to the type of enum.",
+      "range": {
+        "startLine": 39,
+        "startChar": 21,
+        "endLine": 39,
+        "endChar": 22
+      },
+      "revId": "2a80806a863accf4f3950c998cf7e47aba85e17f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
