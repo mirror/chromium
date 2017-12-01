@@ -1,0 +1,193 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70a9d5af_f655e613",
+        "filename": "chrome/browser/browser_process_platform_part_chromeos.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-01T02:49:10Z",
+      "side": 1,
+      "message": "nit: const auto it?",
+      "revId": "207958eb3621248d266dd69706f4bae7e32729c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bd7f848_ea63d767",
+        "filename": "chrome/browser/browser_process_platform_part_chromeos.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-01T02:49:10Z",
+      "side": 1,
+      "message": "nit: Saves",
+      "range": {
+        "startLine": 107,
+        "startChar": 5,
+        "endLine": 107,
+        "endChar": 9
+      },
+      "revId": "207958eb3621248d266dd69706f4bae7e32729c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1c645e6_af0e9860",
+        "filename": "chrome/browser/browser_process_platform_part_chromeos.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-01T02:49:10Z",
+      "side": 1,
+      "message": "nit: Checks",
+      "range": {
+        "startLine": 111,
+        "startChar": 5,
+        "endLine": 111,
+        "endChar": 10
+      },
+      "revId": "207958eb3621248d266dd69706f4bae7e32729c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff12868a_8b261e32",
+        "filename": "chrome/browser/browser_process_platform_part_chromeos.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-01T02:49:10Z",
+      "side": 1,
+      "message": "nit: sets",
+      "range": {
+        "startLine": 112,
+        "startChar": 28,
+        "endLine": 112,
+        "endChar": 31
+      },
+      "revId": "207958eb3621248d266dd69706f4bae7e32729c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3d4a78b_1b480121",
+        "filename": "chrome/browser/browser_process_platform_part_chromeos.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-01T02:49:10Z",
+      "side": 1,
+      "message": "nit: Returns\n\nalso add \"Returns an empty path if the component isn\u0027t compatible.\"",
+      "range": {
+        "startLine": 115,
+        "startChar": 5,
+        "endLine": 115,
+        "endChar": 11
+      },
+      "revId": "207958eb3621248d266dd69706f4bae7e32729c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cba41065_755cc00a",
+        "filename": "chrome/browser/browser_process_platform_part_chromeos.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-01T02:49:10Z",
+      "side": 1,
+      "message": "nit: Maps",
+      "range": {
+        "startLine": 146,
+        "startChar": 5,
+        "endLine": 146,
+        "endChar": 8
+      },
+      "revId": "207958eb3621248d266dd69706f4bae7e32729c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1211acd2_886f5dcd",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-01T02:49:10Z",
+      "side": 1,
+      "message": "you need to handle empty paths here, right? it\u0027d be better to catch this here rather than passing bad data over d-bus.",
+      "revId": "207958eb3621248d266dd69706f4bae7e32729c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d74af59a_3a514e64",
+        "filename": "chrome/browser/component_updater/cros_component_installer_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-01T02:49:10Z",
+      "side": 1,
+      "message": "i\u0027d recommend rewriting this to something like the following:\n\n  const std::string kComponent \u003d \"a\";\n  BrowserProcessPlatformPart bppp;\n  EXPECT_FALSE(bppp.IsCompatibleCrosComponent(kComponent));\n  EXPECT_EQ(bppp.GetCompatibleCrosComponentPath(kComponent).value());\n\n  const base::FilePath kPath(\"/component/path/v0\");\n  bppp.AddCompatibleCrosComponent(kComponent, kPath);\n  EXPECT_TRUE(bppp.IsCompatibleCrosComponent(kPath));\n  EXPECT_EQ(kPath.value(),\n            bppp.GetCompatibleCrosComponentPath(kComponent).value());",
+      "revId": "207958eb3621248d266dd69706f4bae7e32729c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22207e8d_e3d5d2d0",
+        "filename": "chromeos/dbus/image_loader_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-01T02:49:10Z",
+      "side": 1,
+      "message": "nit: returns",
+      "range": {
+        "startLine": 37,
+        "startChar": 71,
+        "endLine": 37,
+        "endChar": 77
+      },
+      "revId": "207958eb3621248d266dd69706f4bae7e32729c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
