@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98b9cdaf_e4c6ae70",
+        "filename": "ui/accessibility/platform/ax_system_caret_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-01T17:03:13Z",
+      "side": 1,
+      "message": "Is it possible this should just be CHILDID_SELF?\n\nMost of the accessible objects we report have OBJID_CLIENT and\na child ID that corresponds to the unique ID. But that\u0027s because\nwe have a whole tree of objects under a single HWND.\n\nFor the caret, there\u0027s just a single object with its own OBJID.\nPerhaps just OBJID_CLIENT with CHILDID_SELF is all we need? We\ncould just skip the unique ID and child ID entirely in this file.",
+      "revId": "c32e7fb5333c4e3f6bbf09d1a996b075634e6f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
