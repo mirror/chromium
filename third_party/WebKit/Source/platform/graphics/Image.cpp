@@ -382,8 +382,17 @@ PaintImageBuilder Image::CreatePaintImageBuilder() {
 bool Image::ApplyShader(PaintFlags& flags, const SkMatrix& local_matrix) {
   // Default shader impl: attempt to build a shader based on the current frame
   // SkImage.
+
+  // For image shaders, Ganesh must be able to upload the image as a texture.
+  // We use a conservative limit which matches ES2 minimum guaranteed texture
+  // upload size.
+  // TODO(fmalita): we could avoid this in most cases by using subset shaders.
+  //                ... or by deferring related power reductions to Skia and
+  //                removing ApplyShader completely.
+  static constexpr int kMaxTextureDimension = 2048;
+
   PaintImage image = PaintImageForCurrentFrame();
-  if (!image)
+  if (!image || std::max(image.width(), image.height()) > kMaxTextureDimension)
     return false;
 
   flags.setShader(PaintShader::MakeImage(image, SkShader::kRepeat_TileMode,
