@@ -1883,7 +1883,7 @@ LayoutRect PaintLayerScrollableArea::ScrollIntoView(
       visible_rect, local_expose_rect, align_x, align_y);
 
   ScrollOffset old_scroll_offset = GetScrollOffset();
-  ScrollOffset new_scroll_offset(ClampScrollOffset(RoundedIntSize(
+  ScrollOffset new_scroll_offset(ClampScrollOffset(FlooredIntSize(
       ToScrollOffset(FloatPoint(r.Location()) + old_scroll_offset))));
   if (is_for_scroll_sequence) {
     DCHECK(scroll_type == kProgrammaticScroll || scroll_type == kUserScroll);
