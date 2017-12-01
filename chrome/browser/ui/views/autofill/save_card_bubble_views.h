@@ -77,7 +77,14 @@ class SaveCardBubbleViews : public SaveCardBubbleView,
   void ContentsChanged(views::Textfield* sender,
                        const base::string16& new_contents) override;
 
+ protected:
+  // Returns the footnote view, so it can be searched for clickable views.
+  // Exists for testing (specifically, browsertests).
+  views::View* GetFootnoteView();
+
  private:
+  friend class SaveCardBubbleViewsBrowserTestBase;
+
   // The current step of the save card flow.  Accounts for:
   //  1) Local save vs. Upload save
   //  2) Upload save can have all information or be missing CVC
@@ -97,6 +104,9 @@ class SaveCardBubbleViews : public SaveCardBubbleView,
   std::unique_ptr<views::View> CreateMainContentView();
   // Create the dialog's content view asking for the user's CVC.
   std::unique_ptr<views::View> CreateRequestCvcView();
+
+  // Attributes IDs to the DialogClientView and its buttons.
+  void AssignIdsToDialogClientView();
 
   // views::BubbleDialogDelegateView:
   void Init() override;

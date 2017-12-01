@@ -46,6 +46,10 @@ class FormDataImporter {
   static bool IsValidLearnableProfile(const AutofillProfile& profile,
                                       const std::string& app_locale);
 
+  CreditCardSaveManager* credit_card_save_manager() {
+    return credit_card_save_manager_.get();
+  }
+
  protected:
   // Exposed for testing.
   void set_credit_card_save_manager(
