@@ -34,6 +34,24 @@
       "revId": "75d9d0bcbe04484a39bbbe164bfca8c0757d7285",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e5f5ddb_568de4a2",
+        "filename": "cc/trees/layer_tree_frame_sink.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-01T22:05:41Z",
+      "side": 1,
+      "message": "The weak ptrs don\u0027t apply to OnContextLost though.\n\nThe data race I\u0027m thinking of is:\n- compositor thread runs DetachFromClient(), writes to |task_runner_|\n- main thread runs OnContextLost(), reads |task_runner_|\n\nCan that happen?",
+      "parentUuid": "efb9ff4c_ee9a05d6",
+      "revId": "75d9d0bcbe04484a39bbbe164bfca8c0757d7285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
