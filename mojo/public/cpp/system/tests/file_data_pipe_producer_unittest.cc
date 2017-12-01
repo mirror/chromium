@@ -138,6 +138,34 @@ class FileDataPipeProducerTest : public testing::Test {
   DISALLOW_COPY_AND_ASSIGN(FileDataPipeProducerTest);
 };
 
+struct DataPipeObserverData {
+  int num_read_errors = 0;
+  size_t bytes_read = 0;
+  int done_called = 0;
+};
+
+class TestObserver : public DataPipeProducerObserver {
+ public:
+  TestObserver(DataPipeObserverData* observer_data)
+      : observer_data_(observer_data) {}
+
+  void OnReadComplete(const void* data,
+                      int bytes_read,
+                      base::File::Error read_result) override {
+    if (read_result == base::File::FILE_OK)
+      observer_data_->bytes_read += bytes_read;
+    else
+      observer_data_->num_read_errors++;
+  }
+
+  void DoneReading() override { observer_data_->done_called++; }
+
+ private:
+  DataPipeObserverData* observer_data_;
+
+  DISALLOW_COPY_AND_ASSIGN(TestObserver);
+};
+
 TEST_F(FileDataPipeProducerTest, WriteFromFile) {
   const std::string kTestStringFragment = "Hello, world!";
   constexpr size_t kNumRepetitions = 1000;
@@ -153,12 +181,18 @@ TEST_F(FileDataPipeProducerTest, WriteFromFile) {
                         loop.QuitClosure());
 
   base::File file(path, base::File::FLAG_OPEN | base::File::FLAG_READ);
+  DataPipeObserverData observer_data;
+  auto observer = std::make_unique<TestObserver>(&observer_data);
   WriteFromFileThenCloseWriter(
-      base::MakeUnique<FileDataPipeProducer>(std::move(pipe.producer_handle)),
+      base::MakeUnique<FileDataPipeProducer>(std::move(pipe.producer_handle),
+                                             std::move(observer)),
       std::move(file));
   loop.Run();
 
   EXPECT_EQ(test_string, reader.data());
+  EXPECT_EQ(0, observer_data.num_read_errors);
+  EXPECT_EQ(test_string.size(), observer_data.bytes_read);
+  EXPECT_EQ(1, observer_data.done_called);
 }
 
 TEST_F(FileDataPipeProducerTest, WriteFromFilePartial) {
@@ -172,12 +206,18 @@ TEST_F(FileDataPipeProducerTest, WriteFromFilePartial) {
                         loop.QuitClosure());
 
   base::File file(path, base::File::FLAG_OPEN | base::File::FLAG_READ);
+  DataPipeObserverData observer_data;
+  auto observer = std::make_unique<TestObserver>(&observer_data);
   WriteFromFileThenCloseWriter(
-      base::MakeUnique<FileDataPipeProducer>(std::move(pipe.producer_handle)),
+      base::MakeUnique<FileDataPipeProducer>(std::move(pipe.producer_handle),
+                                             std::move(observer)),
       std::move(file), kBytesToWrite);
   loop.Run();
 
   EXPECT_EQ(kTestString.substr(0, kBytesToWrite), reader.data());
+  EXPECT_EQ(0, observer_data.num_read_errors);
+  EXPECT_EQ(kBytesToWrite, observer_data.bytes_read);
+  EXPECT_EQ(1, observer_data.done_called);
 }
 
 TEST_F(FileDataPipeProducerTest, WriteFromPath) {
@@ -194,12 +234,18 @@ TEST_F(FileDataPipeProducerTest, WriteFromPath) {
   DataPipeReader reader(std::move(pipe.consumer_handle), 16,
                         loop.QuitClosure());
 
+  DataPipeObserverData observer_data;
+  auto observer = std::make_unique<TestObserver>(&observer_data);
   WriteFromPathThenCloseWriter(
-      base::MakeUnique<FileDataPipeProducer>(std::move(pipe.producer_handle)),
+      base::MakeUnique<FileDataPipeProducer>(std::move(pipe.producer_handle),
+                                             std::move(observer)),
       path);
   loop.Run();
 
   EXPECT_EQ(test_string, reader.data());
+  EXPECT_EQ(0, observer_data.num_read_errors);
+  EXPECT_EQ(test_string.size(), observer_data.bytes_read);
+  EXPECT_EQ(1, observer_data.done_called);
 }
 
 TEST_F(FileDataPipeProducerTest, TinyFile) {
@@ -209,12 +255,18 @@ TEST_F(FileDataPipeProducerTest, TinyFile) {
   DataPipe pipe(16);
   DataPipeReader reader(std::move(pipe.consumer_handle), 16,
                         loop.QuitClosure());
+  DataPipeObserverData observer_data;
+  auto observer = std::make_unique<TestObserver>(&observer_data);
   WriteFromPathThenCloseWriter(
-      base::MakeUnique<FileDataPipeProducer>(std::move(pipe.producer_handle)),
+      base::MakeUnique<FileDataPipeProducer>(std::move(pipe.producer_handle),
+                                             std::move(observer)),
       path);
   loop.Run();
 
   EXPECT_EQ(kTestString, reader.data());
+  EXPECT_EQ(0, observer_data.num_read_errors);
+  EXPECT_EQ(kTestString.size(), observer_data.bytes_read);
+  EXPECT_EQ(1, observer_data.done_called);
 }
 
 TEST_F(FileDataPipeProducerTest, HugeFile) {
@@ -236,12 +288,18 @@ TEST_F(FileDataPipeProducerTest, HugeFile) {
   DataPipeReader reader(std::move(pipe.consumer_handle), kDataPipeSize,
                         loop.QuitClosure());
 
+  DataPipeObserverData observer_data;
+  auto observer = std::make_unique<TestObserver>(&observer_data);
   WriteFromPathThenCloseWriter(
-      base::MakeUnique<FileDataPipeProducer>(std::move(pipe.producer_handle)),
+      base::MakeUnique<FileDataPipeProducer>(std::move(pipe.producer_handle),
+                                             std::move(observer)),
       path);
   loop.Run();
 
   EXPECT_EQ(test_string, reader.data());
+  EXPECT_EQ(0, observer_data.num_read_errors);
+  EXPECT_EQ(kHugeFileSize, observer_data.bytes_read);
+  EXPECT_EQ(1, observer_data.done_called);
 }
 
 }  // namespace
