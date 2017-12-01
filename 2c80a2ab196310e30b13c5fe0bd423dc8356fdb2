@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "a24e10d4_1b916b88",
+        "filename": "components/storage_monitor/storage_monitor_chromeos.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-01T17:41:52Z",
+      "side": 1,
+      "message": "I think that it is good to keep AddFixedStorageDisk() in CheckExistingMountPoints(), because it ensures correct behavior independently form the timing of the events.",
+      "parentUuid": "2ef6845b_65f2d89d",
+      "revId": "2c80a2ab196310e30b13c5fe0bd423dc8356fdb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94b09654_a9f17d30",
         "filename": "components/storage_monitor/storage_monitor_chromeos.cc",
         "patchSetId": 8
