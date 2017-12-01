@@ -9,6 +9,7 @@
 #include <memory>
 
 #include "base/macros.h"
+#include "content/common/speech_recognition_host.mojom.h"
 #include "content/public/common/speech_recognition_result.h"
 #include "content/public/renderer/render_view_observer.h"
 #include "third_party/WebKit/public/web/WebSpeechRecognitionHandle.h"
@@ -60,6 +61,8 @@ class SpeechRecognitionDispatcher : public RenderViewObserver,
 
   // The WebKit client class that we use to send events back to the JS world.
   blink::WebSpeechRecognizerClient* recognizer_client_;
+
+  mojom::SpeechRecognitionHostPtr speech_recognition_host_;
 
   typedef std::map<int, blink::WebSpeechRecognitionHandle> HandleMap;
   HandleMap handle_map_;

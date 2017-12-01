@@ -10,7 +10,10 @@
 
 #include "base/strings/utf_string_conversions.h"
 #include "content/common/speech_recognition_messages.h"
+#include "content/public/common/service_names.mojom.h"
+#include "content/public/renderer/render_thread.h"
 #include "content/renderer/render_view_impl.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "third_party/WebKit/public/platform/WebVector.h"
 #include "third_party/WebKit/public/web/WebSpeechGrammar.h"
@@ -32,13 +35,17 @@ SpeechRecognitionDispatcher::SpeechRecognitionDispatcher(
     RenderViewImpl* render_view)
     : RenderViewObserver(render_view),
       recognizer_client_(nullptr),
-      next_id_(1) {}
+      next_id_(1) {
+  DCHECK(RenderThread::Get());
+  auto request = mojo::MakeRequest(&speech_recognition_host_);
+  RenderThread::Get()->GetConnector()->BindInterface(mojom::kBrowserServiceName,
+                                                     std::move(request));
+}
 
 SpeechRecognitionDispatcher::~SpeechRecognitionDispatcher() {}
 
 void SpeechRecognitionDispatcher::AbortAllRecognitions() {
-  Send(new SpeechRecognitionHostMsg_AbortAllRequests(
-      routing_id()));
+  speech_recognition_host_->AbortAllRequests(routing_id());
 }
 
 bool SpeechRecognitionDispatcher::OnMessageReceived(
@@ -70,22 +77,22 @@ void SpeechRecognitionDispatcher::Start(
   DCHECK(!recognizer_client_ || recognizer_client_ == recognizer_client);
   recognizer_client_ = recognizer_client;
 
-  SpeechRecognitionHostMsg_StartRequest_Params msg_params;
+  auto msg_params = mojom::StartSpeechRecognitionRequestParams::New();
   for (size_t i = 0; i < params.Grammars().size(); ++i) {
     const WebSpeechGrammar& grammar = params.Grammars()[i];
-    msg_params.grammars.push_back(SpeechRecognitionGrammar(
+    msg_params->grammars.push_back(SpeechRecognitionGrammar(
         grammar.Src().GetString().Utf8(), grammar.Weight()));
   }
-  msg_params.language = params.Language().Utf8();
-  msg_params.max_hypotheses = static_cast<uint32_t>(params.MaxAlternatives());
-  msg_params.continuous = params.Continuous();
-  msg_params.interim_results = params.InterimResults();
-  msg_params.origin_url = params.Origin().ToString().Utf8();
-  msg_params.render_view_id = routing_id();
-  msg_params.request_id = GetOrCreateIDForHandle(handle);
+  msg_params->language = params.Language().Utf8();
+  msg_params->max_hypotheses = static_cast<uint32_t>(params.MaxAlternatives());
+  msg_params->continuous = params.Continuous();
+  msg_params->interim_results = params.InterimResults();
+  msg_params->origin_url = params.Origin().ToString().Utf8();
+  msg_params->render_view_id = routing_id();
+  msg_params->request_id = GetOrCreateIDForHandle(handle);
 
   // The handle mapping will be removed in |OnRecognitionEnd|.
-  Send(new SpeechRecognitionHostMsg_StartRequest(msg_params));
+  speech_recognition_host_->StartRequest(std::move(msg_params));
 }
 
 void SpeechRecognitionDispatcher::Stop(
@@ -94,8 +101,8 @@ void SpeechRecognitionDispatcher::Stop(
   // Ignore a |stop| issued without a matching |start|.
   if (recognizer_client_ != recognizer_client || !HandleExists(handle))
     return;
-  Send(new SpeechRecognitionHostMsg_StopCaptureRequest(
-      routing_id(), GetOrCreateIDForHandle(handle)));
+  speech_recognition_host_->StopCaptureRequest(routing_id(),
+                                               GetOrCreateIDForHandle(handle));
 }
 
 void SpeechRecognitionDispatcher::Abort(
@@ -104,8 +111,8 @@ void SpeechRecognitionDispatcher::Abort(
   // Ignore an |abort| issued without a matching |start|.
   if (recognizer_client_ != recognizer_client || !HandleExists(handle))
     return;
-  Send(new SpeechRecognitionHostMsg_AbortRequest(
-      routing_id(), GetOrCreateIDForHandle(handle)));
+  speech_recognition_host_->AbortRequest(routing_id(),
+                                         GetOrCreateIDForHandle(handle));
 }
 
 void SpeechRecognitionDispatcher::OnRecognitionStarted(int request_id) {
