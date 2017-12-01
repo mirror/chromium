@@ -81,8 +81,10 @@ public class SigninPromoUtilTest {
     @Test
     public void whenAllConditionsAreMetShouldReturnTrue() {
         when(mPreferenceManager.getSigninPromoLastShownVersion()).thenReturn(40);
-        Assert.assertTrue(SigninPromoUtil.shouldLaunchSigninPromo(
-                mPreferenceManager, 42, false, false, ImmutableSet.of("test@gmail.com")));
+        when(mPreferenceManager.getSigninPromoLastAccountNames())
+                .thenReturn(ImmutableSet.of("test@gmail.com"));
+        Assert.assertTrue(SigninPromoUtil.shouldLaunchSigninPromo(mPreferenceManager, 42, false,
+                false, ImmutableSet.of("test@gmail.com", "test2@gmail.com")));
     }
 
     @Test
@@ -92,5 +94,14 @@ public class SigninPromoUtilTest {
         when(mPreferenceManager.getSigninPromoLastAccountNames()).thenReturn(accountNames);
         Assert.assertFalse(SigninPromoUtil.shouldLaunchSigninPromo(
                 mPreferenceManager, 42, false, false, accountNames));
+    }
+
+    @Test
+    public void whenNoNewAccountsShouldReturnFalse() {
+        when(mPreferenceManager.getSigninPromoLastShownVersion()).thenReturn(40);
+        when(mPreferenceManager.getSigninPromoLastAccountNames())
+                .thenReturn(ImmutableSet.of("test@gmail.com", "test2@gmail.com"));
+        Assert.assertFalse(SigninPromoUtil.shouldLaunchSigninPromo(
+                mPreferenceManager, 42, false, false, ImmutableSet.of("test2@gmail.com")));
     }
 }
