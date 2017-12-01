@@ -47,6 +47,7 @@
 #include "ui/base/resource/resource_bundle.h"
 
 #if defined(OS_CHROMEOS)
+#include "chrome/browser/extensions/launch_util.h"
 #include "chromeos/chromeos_switches.h"
 #include "components/chrome_apps/grit/chrome_apps_resources.h"
 #include "components/user_manager/user_manager.h"
@@ -120,7 +121,9 @@ bool IsNormalSession() {
 ComponentLoader::ComponentExtensionInfo::ComponentExtensionInfo(
     std::unique_ptr<base::DictionaryValue> manifest_param,
     const base::FilePath& directory)
-    : manifest(std::move(manifest_param)), root_directory(directory) {
+    : manifest(std::move(manifest_param)),
+      root_directory(directory),
+      extra_flags(Extension::NO_FLAGS) {
   if (!root_directory.IsAbsolute()) {
     CHECK(PathService::Get(chrome::DIR_RESOURCES, &root_directory));
     root_directory = root_directory.Append(directory);
@@ -132,7 +135,8 @@ ComponentLoader::ComponentExtensionInfo::ComponentExtensionInfo(
     ComponentExtensionInfo&& other)
     : manifest(std::move(other.manifest)),
       root_directory(std::move(other.root_directory)),
-      extension_id(std::move(other.extension_id)) {}
+      extension_id(std::move(other.extension_id)),
+      extra_flags(Extension::NO_FLAGS) {}
 
 ComponentLoader::ComponentExtensionInfo&
 ComponentLoader::ComponentExtensionInfo::operator=(
@@ -140,6 +144,7 @@ ComponentLoader::ComponentExtensionInfo::operator=(
   manifest = std::move(other.manifest);
   root_directory = std::move(other.root_directory);
   extension_id = std::move(other.extension_id);
+  extra_flags = other.extra_flags;
   return *this;
 }
 
@@ -204,14 +209,16 @@ std::string ComponentLoader::Add(const base::StringPiece& manifest_contents,
   std::unique_ptr<base::DictionaryValue> manifest =
       ParseManifest(manifest_contents);
   if (manifest)
-    return Add(std::move(manifest), root_directory, skip_whitelist);
+    return Add(std::move(manifest), root_directory, skip_whitelist,
+               Extension::NO_FLAGS);
   return std::string();
 }
 
 std::string ComponentLoader::Add(
     std::unique_ptr<base::DictionaryValue> parsed_manifest,
     const base::FilePath& root_directory,
-    bool skip_whitelist) {
+    bool skip_whitelist,
+    int extra_flags) {
   ComponentExtensionInfo info(std::move(parsed_manifest), root_directory);
   if (!ignore_whitelist_for_testing_ &&
       !skip_whitelist &&
@@ -239,7 +246,7 @@ std::string ComponentLoader::AddOrReplace(const base::FilePath& path) {
 
   // We don't check component extensions loaded by path because this is only
   // used by developers for testing.
-  return Add(std::move(manifest), absolute_path, true);
+  return Add(std::move(manifest), absolute_path, true, Extension::NO_FLAGS);
 }
 
 void ComponentLoader::Reload(const std::string& extension_id) {
@@ -386,6 +393,20 @@ void ComponentLoader::AddNetworkSpeechSynthesisExtension() {
       base::FilePath(FILE_PATH_LITERAL("network_speech_synthesis")));
 }
 
+void ComponentLoader::AddTestSystemApp() {
+#if defined(OS_CHROMEOS)
+  base::FilePath resources_path;
+  if (PathService::Get(chrome::DIR_RESOURCES, &resources_path)) {
+    AddComponentFromDirWithFlags(
+        resources_path.Append(extension_misc::kTestSystemAppPath),
+        extension_misc::kTestSystemAppId, Extension::FROM_BOOKMARK,
+        base::Bind(&ComponentLoader::SetOpenAsWindow,
+                   weak_factory_.GetWeakPtr(),
+                   extension_misc::kTestSystemAppId));
+  }
+#endif  // defined(OS_CHROMEOS)
+}
+
 #if defined(OS_CHROMEOS)
 void ComponentLoader::AddChromeOsSpeechSynthesisExtension() {
   AddComponentFromDir(
@@ -418,7 +439,7 @@ void ComponentLoader::AddWithNameAndDescription(
   if (manifest) {
     manifest->SetString(manifest_keys::kName, name_string);
     manifest->SetString(manifest_keys::kDescription, description_string);
-    Add(std::move(manifest), root_directory, true);
+    Add(std::move(manifest), root_directory, true, Extension::NO_FLAGS);
   }
 }
 
@@ -453,7 +474,7 @@ scoped_refptr<const Extension> ComponentLoader::CreateExtension(
     const ComponentExtensionInfo& info, std::string* utf8_error) {
   // TODO(abarth): We should REQUIRE_MODERN_MANIFEST_VERSION once we've updated
   //               our component extensions to the new manifest version.
-  int flags = Extension::REQUIRE_KEY;
+  int flags = Extension::REQUIRE_KEY | info.extra_flags;
   return Extension::Create(
       info.root_directory,
       Manifest::COMPONENT,
@@ -514,6 +535,8 @@ void ComponentLoader::AddDefaultComponentExtensions(
   }
 
   AddKeyboardApp();
+
+  AddTestSystemApp();
 
   AddDefaultComponentExtensionsWithBackgroundPages(skip_session_components);
 
@@ -678,10 +701,25 @@ void ComponentLoader::EnableFileSystemInGuestMode(const std::string& id) {
 #endif
 }
 
+void ComponentLoader::SetOpenAsWindow(const std::string& id) {
+#if defined(OS_CHROMEOS)
+  extensions::SetLaunchType(profile_, id, extensions::LAUNCH_TYPE_WINDOW);
+#endif
+}
+
 #if defined(OS_CHROMEOS)
 void ComponentLoader::AddComponentFromDir(
     const base::FilePath& root_directory,
     const char* extension_id,
+    const base::Closure& done_cb) {
+  AddComponentFromDirWithFlags(root_directory, extension_id,
+                               Extension::NO_FLAGS, done_cb);
+}
+
+void ComponentLoader::AddComponentFromDirWithFlags(
+    const base::FilePath& root_directory,
+    const char* extension_id,
+    int extra_flags,
     const base::Closure& done_cb) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   const base::FilePath::CharType* manifest_filename =
@@ -694,7 +732,7 @@ void ComponentLoader::AddComponentFromDir(
                  true),
       base::Bind(&ComponentLoader::FinishAddComponentFromDir,
                  weak_factory_.GetWeakPtr(), root_directory, extension_id,
-                 base::nullopt, base::nullopt, done_cb));
+                 base::nullopt, base::nullopt, extra_flags, done_cb));
 }
 
 void ComponentLoader::AddWithNameAndDescriptionFromDir(
@@ -709,7 +747,8 @@ void ComponentLoader::AddWithNameAndDescriptionFromDir(
                  extensions::kManifestFilename, false),
       base::Bind(&ComponentLoader::FinishAddComponentFromDir,
                  weak_factory_.GetWeakPtr(), root_directory, extension_id,
-                 name_string, description_string, base::Closure()));
+                 name_string, description_string, Extension::NO_FLAGS,
+                 base::Closure()));
 }
 
 void ComponentLoader::FinishAddComponentFromDir(
@@ -717,6 +756,7 @@ void ComponentLoader::FinishAddComponentFromDir(
     const char* extension_id,
     const base::Optional<std::string>& name_string,
     const base::Optional<std::string>& description_string,
+    int extra_flags,
     const base::Closure& done_cb,
     std::unique_ptr<base::DictionaryValue> manifest) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
@@ -732,7 +772,7 @@ void ComponentLoader::FinishAddComponentFromDir(
   }
 
   std::string actual_extension_id =
-      Add(std::move(manifest), root_directory, false);
+      Add(std::move(manifest), root_directory, false, extra_flags);
   CHECK_EQ(extension_id, actual_extension_id);
   if (!done_cb.is_null())
     done_cb.Run();

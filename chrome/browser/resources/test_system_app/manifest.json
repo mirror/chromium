@@ -1,0 +1,14 @@
+{
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAz6U/a0h3Ml+1MrpUXK+Ld/zwTBDRjVGvQKDsde3S/wz+T6nsrxqhfL5GDrKa7xl/AxqGR7UPL6BOcfKLzrzaxo+Dr3ji5pRIkBxzX6TkLXsQdMmawKdaCThIYZN6gG30DksIjGtgzYVXXml9IiEmKlLZZqqXyjxgXFZdZByL2ctqQYHIn5OQq+5a6y33eqHnxfrQXhjTPeobr54O5cNEpPqa6NmzkWE9EfESGST6RpW3mfuTg1qluGcfz+vMilzj1wAdF4OcKQPw7on6vQltgpGh8KKLSmBxd+aWoLqOceFLECnPW9htqTMh+b/qtMKdV/Ti9bY5W96UvWvjI9cqfQIDAQAB",
+  "name": "Test System App",
+  "version": "0.1",
+  "manifest_version": 2,
+  "description": "Test System App",
+  "app": {
+    "launch": {
+      "local_path": "app.html"
+    }
+  },
+  "display_in_launcher": true,
+  "display_in_new_tab_page": true
+}
