@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99ec3298_cc736ab5",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-01T00:25:27Z",
+      "side": 1,
+      "message": "Is this needed?\nAFAIU this code is never goign to be executed when drm atomic is enabled.",
+      "revId": "1c728bef0ea58bcf6734031ff48fbffc25d06d9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
