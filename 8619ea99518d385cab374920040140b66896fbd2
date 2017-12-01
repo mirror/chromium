@@ -16,6 +16,41 @@
       "revId": "8619ea99518d385cab374920040140b66896fbd2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5f2c023_2df30bfe",
+        "filename": "chromeos/dbus/easy_unlock_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-01T20:53:13Z",
+      "side": 1,
+      "message": "nit: empty strings",
+      "parentUuid": "559b35f7_04786296",
+      "revId": "8619ea99518d385cab374920040140b66896fbd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4847f220_7e2125a7",
+        "filename": "chromeos/dbus/easy_unlock_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-01T20:53:13Z",
+      "side": 1,
+      "message": "nit: calls, strings",
+      "revId": "8619ea99518d385cab374920040140b66896fbd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
