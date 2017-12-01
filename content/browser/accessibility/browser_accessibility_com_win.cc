@@ -310,23 +310,17 @@ STDMETHODIMP BrowserAccessibilityComWin::get_text(LONG start_offset,
   HandleSpecialTextOffset(&end_offset);
 
   // The spec allows the arguments to be reversed.
-  if (start_offset > end_offset) {
-    LONG tmp = start_offset;
-    start_offset = end_offset;
-    end_offset = tmp;
-  }
+  if (start_offset > end_offset)
+    std::swap(start_offset, end_offset);
 
-  // The spec does not allow the start or end offsets to be out or range;
-  // we must return an error if so.
-  LONG len = text_str.length();
-  if (start_offset < 0)
+  LONG len = static_cast<LONG>(text_str.length());
+  if (start_offset < 0 || start_offset > len)
     return E_INVALIDARG;
-  if (end_offset > len)
+  if (end_offset < 0 || end_offset > len)
     return E_INVALIDARG;
 
   base::string16 substr =
       text_str.substr(start_offset, end_offset - start_offset);
-
   if (substr.empty())
     return S_FALSE;
 
@@ -1713,7 +1707,7 @@ void BrowserAccessibilityComWin::ComputeStylesIfNeeded() {
     return;
 
   std::map<int, std::vector<base::string16>> attributes_map;
-  if (owner()->PlatformIsLeaf() || owner()->IsSimpleTextControl()) {
+  if (owner()->PlatformIsLeaf() || owner()->IsPlainTextField()) {
     attributes_map[0] = ComputeTextAttributes();
     const std::map<int, std::vector<base::string16>> spelling_attributes =
         GetSpellingAttributes();
@@ -2135,7 +2129,7 @@ BrowserAccessibilityComWin::GetSpellingAttributes() {
       spelling_attributes[end_offset] = end_attributes;
     }
   }
-  if (owner()->IsSimpleTextControl()) {
+  if (owner()->IsPlainTextField()) {
     int start_offset = 0;
     for (BrowserAccessibility* static_text =
              BrowserAccessibilityManager::NextTextOnlyObject(
