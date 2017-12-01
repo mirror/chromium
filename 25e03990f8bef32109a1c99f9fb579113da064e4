@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c6ae56fd_6a3dfedc",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-01T00:15:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89e9788d_6bb1deb1",
+      "revId": "25e03990f8bef32109a1c99f9fb579113da064e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f5920cd_42dae51d",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
         "patchSetId": 1
@@ -112,6 +130,48 @@
     },
     {
       "key": {
+        "uuid": "6759d475_a38d10d3",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-01T00:15:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfae331c_11b7b6fe",
+      "revId": "25e03990f8bef32109a1c99f9fb579113da064e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e94c164_99d800b8",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-01T00:15:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4be4e68_263b7de5",
+      "range": {
+        "startLine": 31,
+        "startChar": 58,
+        "endLine": 31,
+        "endChar": 60
+      },
+      "revId": "25e03990f8bef32109a1c99f9fb579113da064e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ed78d0e_49f45d68",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
         "patchSetId": 1
@@ -135,6 +195,30 @@
     },
     {
       "key": {
+        "uuid": "bcfbf02e_a30e6f43",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-01T00:15:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ed78d0e_49f45d68",
+      "range": {
+        "startLine": 32,
+        "startChar": 66,
+        "endLine": 32,
+        "endChar": 67
+      },
+      "revId": "25e03990f8bef32109a1c99f9fb579113da064e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88c8c347_beb55504",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
         "patchSetId": 1
@@ -155,6 +239,30 @@
       "revId": "25e03990f8bef32109a1c99f9fb579113da064e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4091169_c3b6733b",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-01T00:15:26Z",
+      "side": 1,
+      "message": "These are only used with the kRendererSideResourceScheduler experiment and tight_limit and limit are pretty meaningful in the scope.",
+      "parentUuid": "88c8c347_beb55504",
+      "range": {
+        "startLine": 34,
+        "startChar": 63,
+        "endLine": 34,
+        "endChar": 68
+      },
+      "revId": "25e03990f8bef32109a1c99f9fb579113da064e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
