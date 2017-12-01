@@ -14,6 +14,7 @@
 #include "base/location.h"
 #include "base/macros.h"
 #include "base/path_service.h"
+#include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/test/test_file_util.h"
@@ -84,6 +85,7 @@
 
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/chromeos/input_method/input_method_configuration.h"
+#include "chrome/browser/chromeos/login/ui/login_display_host.h"
 #include "chrome/test/base/default_ash_event_generator_delegate.h"
 #endif  // defined(OS_CHROMEOS)
 
@@ -597,6 +599,15 @@ void InProcessBrowserTest::PostRunTestOnMainThread() {
   // TODO(jbates) Once crbug.com/134753 is fixed, this can be removed because it
   // will not be possible to post Quit tasks.
   content::RunAllPendingInMessageLoop();
+
+#if defined(OS_CHROMEOS)  // http://crbug.com/789324
+  // If the login screen is still showing, close it.
+  if (chromeos::LoginDisplayHost::default_host()) {
+    base::RunLoop loop;
+    chromeos::LoginDisplayHost::default_host()->Finalize(loop.QuitClosure());
+    loop.Run();
+  }
+#endif
 
   QuitBrowsers();
   // BrowserList should be empty at this point.
