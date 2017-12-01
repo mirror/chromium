@@ -133,6 +133,52 @@
     },
     {
       "key": {
+        "uuid": "a7b120c0_b13bed2d",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-01T09:32:32Z",
+      "side": 1,
+      "message": "Remove or address this todo.",
+      "range": {
+        "startLine": 290,
+        "startChar": 49,
+        "endLine": 290,
+        "endChar": 50
+      },
+      "revId": "84624225c1f16a6fa7842b0afbafe111e8310264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cfc7f6f_df8f735f",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-01T09:32:32Z",
+      "side": 1,
+      "message": "This should be moved inside the case statement.",
+      "range": {
+        "startLine": 59,
+        "startChar": 47,
+        "endLine": 59,
+        "endChar": 64
+      },
+      "revId": "84624225c1f16a6fa7842b0afbafe111e8310264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c2155d18_dce62939",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 10
@@ -195,6 +241,52 @@
       "writtenOn": "2017-11-28T03:48:54Z",
       "side": 1,
       "message": "did you try hover_button-\u003eSetBorder(views::CreateEmptyBorder(gfx::Insets(kMenuEdgeMargin));? (say in a comment why not?)",
+      "revId": "84624225c1f16a6fa7842b0afbafe111e8310264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f0ba151_ffc013de",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-01T09:32:32Z",
+      "side": 1,
+      "message": "Remove this and just pass true to SetTitleStyle.",
+      "range": {
+        "startLine": 862,
+        "startChar": 11,
+        "endLine": 862,
+        "endChar": 12
+      },
+      "revId": "84624225c1f16a6fa7842b0afbafe111e8310264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38823c58_fa5e14f2",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-01T09:32:32Z",
+      "side": 1,
+      "message": "s/bold/true /* bold */",
+      "range": {
+        "startLine": 863,
+        "startChar": 36,
+        "endLine": 863,
+        "endChar": 49
+      },
       "revId": "84624225c1f16a6fa7842b0afbafe111e8310264",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
