@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "712a2739_0b82f58b",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-01T22:18:14Z",
+      "side": 1,
+      "message": "nit: kInitialingTaskDelay\n\n* spells Init in full\n* Dropping the \"Starting\" because Initializing Delay already covers that idea.",
+      "range": {
+        "startLine": 385,
+        "startChar": 8,
+        "endLine": 385,
+        "endChar": 30
+      },
+      "revId": "4c267b7fc0ba6744a76329d52191b7b5f52a85c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b965b5f5_423b3a4b",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-01T22:18:14Z",
+      "side": 1,
+      "message": "nit: empty line.",
+      "range": {
+        "startLine": 386,
+        "startChar": 3,
+        "endLine": 386,
+        "endChar": 0
+      },
+      "revId": "4c267b7fc0ba6744a76329d52191b7b5f52a85c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9503c768_311b828d",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1033,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-01T22:18:14Z",
+      "side": 1,
+      "message": "oh, I didn\u0027t see that. Perhaps the best way to do is to reset result before more actions are taken and verify that it was not called, or that the time is base::TD()",
+      "range": {
+        "startLine": 1033,
+        "startChar": 12,
+        "endLine": 1033,
+        "endChar": 32
+      },
+      "revId": "4c267b7fc0ba6744a76329d52191b7b5f52a85c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

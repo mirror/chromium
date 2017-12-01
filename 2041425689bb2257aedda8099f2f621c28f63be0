@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "e322c4f1_409592dd",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-01T22:18:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fa5d59cd_cbb9bcb0",
+      "range": {
+        "startLine": 417,
+        "startChar": 2,
+        "endLine": 417,
+        "endChar": 77
+      },
+      "revId": "2041425689bb2257aedda8099f2f621c28f63be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "833a4747_2aa7cd5c",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
         "patchSetId": 7
@@ -354,6 +378,30 @@
       "side": 1,
       "message": "Done for the first part.\n\nWe definitely can, but I wouldn\u0027t put clock initialization into BuildModel since for non-time-related tests, we should probably keep the default clock instead of a testing clock which will not advance time by its own. On the other hand, setting clock in the test at the start can explicitly tell whoever going to change this test that it\u0027s using clock. WDYT?",
       "parentUuid": "2b9317dc_f80056f6",
+      "range": {
+        "startLine": 1020,
+        "startChar": 2,
+        "endLine": 1020,
+        "endChar": 11
+      },
+      "revId": "2041425689bb2257aedda8099f2f621c28f63be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c407bb9a_dc8ca0ec",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1020,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-01T22:18:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9f1b6d8d_5753657d",
       "range": {
         "startLine": 1020,
         "startChar": 2,
