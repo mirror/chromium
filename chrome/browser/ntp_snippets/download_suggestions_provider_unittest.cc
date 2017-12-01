@@ -279,19 +279,17 @@ class DownloadSuggestionsProviderTest : public testing::Test {
     EXPECT_CALL(observer_, OnSuggestionInvalidated(_, _)).Times(AnyNumber());
   }
 
-  DownloadSuggestionsProvider* CreateLoadedProvider(
-      bool show_assets,
-      bool show_offline_pages,
-      std::unique_ptr<base::Clock> clock) {
-    CreateProvider(show_assets, show_offline_pages, std::move(clock));
+  DownloadSuggestionsProvider* CreateLoadedProvider(bool show_assets,
+                                                    bool show_offline_pages,
+                                                    base::Clock* clock) {
+    CreateProvider(show_assets, show_offline_pages, clock);
     FireHistoryQueryComplete();
     return provider_.get();
   }
 
-  DownloadSuggestionsProvider* CreateProvider(
-      bool show_assets,
-      bool show_offline_pages,
-      std::unique_ptr<base::Clock> clock) {
+  DownloadSuggestionsProvider* CreateProvider(bool show_assets,
+                                              bool show_offline_pages,
+                                              base::Clock* clock) {
     DCHECK(!provider_);
     DCHECK(show_assets || show_offline_pages);
 
@@ -300,7 +298,7 @@ class DownloadSuggestionsProviderTest : public testing::Test {
     provider_ = base::MakeUnique<DownloadSuggestionsProvider>(
         &observer_, show_offline_pages ? &offline_pages_model_ : nullptr,
         show_assets ? &downloads_manager_ : nullptr, &download_history_,
-        pref_service(), std::move(clock));
+        pref_service(), clock);
     return provider_.get();
   }
 
@@ -404,7 +402,7 @@ TEST_F(DownloadSuggestionsProviderTest,
                                                  /*is_download_asset=*/false,
                                                  FILE_PATH_LITERAL(""), "")))));
   CreateLoadedProvider(/*show_assets=*/true, /*show_offline_pages=*/true,
-                       base::MakeUnique<base::DefaultClock>());
+                       base::DefaultClock::GetInstance());
 }
 
 TEST_F(DownloadSuggestionsProviderTest,
@@ -415,7 +413,7 @@ TEST_F(DownloadSuggestionsProviderTest,
   EXPECT_CALL(*observer(),
               OnNewSuggestions(_, downloads_category(), SizeIs(0)));
   CreateLoadedProvider(/*show_assets=*/true, /*show_offline_pages=*/true,
-                       base::MakeUnique<base::DefaultClock>());
+                       base::DefaultClock::GetInstance());
 
   std::vector<std::unique_ptr<FakeDownloadItem>> asset_downloads =
       CreateDummyAssetDownloads({1, 2});
@@ -457,7 +455,7 @@ TEST_F(DownloadSuggestionsProviderTest, ShouldMixInBothSources) {
                                                 HasUrl("http://dummy.com/1"),
                                                 HasUrl("http://dummy.com/2"))));
   CreateLoadedProvider(/*show_assets=*/true, /*show_offline_pages=*/true,
-                       base::MakeUnique<base::DefaultClock>());
+                       base::DefaultClock::GetInstance());
 
   std::vector<std::unique_ptr<FakeDownloadItem>> asset_downloads =
       CreateDummyAssetDownloads({1, 2});
@@ -496,14 +494,14 @@ TEST_F(DownloadSuggestionsProviderTest, ShouldSortSuggestions) {
 
   *(offline_pages_model()->mutable_items()) = offline_pages;
 
-  auto test_clock = base::MakeUnique<base::SimpleTestClock>();
-  test_clock->SetNow(now);
+  base::SimpleTestClock test_clock;
+  test_clock.SetNow(now);
   EXPECT_CALL(*observer(),
               OnNewSuggestions(_, downloads_category(),
                                ElementsAre(HasUrl("http://dummy.com/1"),
                                            HasUrl("http://dummy.com/0"))));
   CreateLoadedProvider(/*show_assets=*/true, /*show_offline_pages=*/true,
-                       std::move(test_clock));
+                       test_clock);
 
   std::vector<std::unique_ptr<FakeDownloadItem>> asset_downloads =
       CreateDummyAssetDownloads({2, 3});
@@ -1081,10 +1079,10 @@ TEST_F(DownloadSuggestionsProviderTest, ShouldNotShowOutdatedDownloads) {
       OnNewSuggestions(_, downloads_category(),
                        UnorderedElementsAre(HasUrl("http://dummy.com/0"),
                                             HasUrl("http://download.com/0"))));
-  auto test_clock = base::MakeUnique<base::SimpleTestClock>();
-  test_clock->SetNow(now);
+  base::SimpleTestClock test_clock;
+  test_clock.SetNow(now);
   CreateLoadedProvider(/*show_assets=*/true, /*show_offline_pages=*/true,
-                       std::move(test_clock));
+                       test_clock);
 }
 
 TEST_F(DownloadSuggestionsProviderTest,
@@ -1110,10 +1108,10 @@ TEST_F(DownloadSuggestionsProviderTest,
       *observer(),
       OnNewSuggestions(_, downloads_category(),
                        UnorderedElementsAre(HasUrl("http://dummy.com/0"))));
-  auto test_clock = base::MakeUnique<base::SimpleTestClock>();
-  test_clock->SetNow(now);
+  base::SimpleTestClock test_clock;
+  test_clock.SetNow(now);
   CreateProvider(/*show_assets=*/false, /*show_offline_pages=*/true,
-                 std::move(test_clock));
+                 test_clock);
 }
 
 TEST_F(DownloadSuggestionsProviderTest,
@@ -1141,10 +1139,10 @@ TEST_F(DownloadSuggestionsProviderTest,
       *observer(),
       OnNewSuggestions(_, downloads_category(),
                        UnorderedElementsAre(HasUrl("http://download.com/0"))));
-  auto test_clock = base::MakeUnique<base::SimpleTestClock>();
-  test_clock->SetNow(now);
+  base::SimpleTestClock test_clock;
+  test_clock.SetNow(now);
   CreateLoadedProvider(/*show_assets=*/true, /*show_offline_pages=*/false,
-                       std::move(test_clock));
+                       test_clock);
 }
 
 TEST_F(DownloadSuggestionsProviderTest, ShouldIgnoreTransientDownloads) {
@@ -1187,8 +1185,8 @@ TEST_F(DownloadSuggestionsProviderTest, ShouldNotShowSuggestedDownloads) {
       *observer(),
       OnNewSuggestions(_, downloads_category(),
                        UnorderedElementsAre(HasUrl("http://dummy.com/0"))));
-  auto test_clock = base::MakeUnique<base::SimpleTestClock>();
-  test_clock->SetNow(now);
+  base::SimpleTestClock test_clock;
+  test_clock.SetNow(now);
   CreateProvider(/*show_assets=*/false, /*show_offline_pages=*/true,
-                 std::move(test_clock));
+                 test_clock);
 }
