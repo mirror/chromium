@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e571730f_9bb997c5",
+        "filename": "third_party/WebKit/Source/core/events/MouseEvent.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-12-01T17:04:11Z",
+      "side": 1,
+      "message": "Should this be ScrollPosition (for physical coordinates) rather than ScrollOffset (which is relative to ScrollOrigin)?",
+      "range": {
+        "startLine": 54,
+        "startChar": 37,
+        "endLine": 54,
+        "endChar": 52
+      },
+      "revId": "f5464d278a4c0f29555a4533e0ec5c536cbe8c9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57ec75fc_639fb059",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 3725,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-12-01T17:04:11Z",
+      "side": 1,
+      "message": "Maybe s/Offset/Position/ ?",
+      "range": {
+        "startLine": 3725,
+        "startChar": 55,
+        "endLine": 3725,
+        "endChar": 70
+      },
+      "revId": "f5464d278a4c0f29555a4533e0ec5c536cbe8c9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2082bca_491fb011",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 3731,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-12-01T17:04:11Z",
+      "side": 1,
+      "message": "Same comment.",
+      "range": {
+        "startLine": 3731,
+        "startChar": 50,
+        "endLine": 3731,
+        "endChar": 65
+      },
+      "revId": "f5464d278a4c0f29555a4533e0ec5c536cbe8c9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
