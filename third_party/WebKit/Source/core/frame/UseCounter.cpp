@@ -1177,6 +1177,10 @@ void UseCounter::RecordMeasurement(WebFeature feature,
   DCHECK_NE(WebFeature::kOBSOLETE_PageDestruction, feature);
   DCHECK_NE(WebFeature::kPageVisits, feature);
   DCHECK_GE(WebFeature::kNumberOfFeatures, feature);
+  // Drop measurement on view-source pages. This matches the policy of
+  // page_load_metrics.
+  if (source_frame.GetDocument() && source_frame.GetDocument()->IsViewSource())
+    context_ = kDisabledContext;
 
   int feature_id = static_cast<int>(feature);
   if (!features_recorded_.QuickGet(feature_id)) {
@@ -1240,14 +1244,27 @@ void UseCounter::Trace(blink::Visitor* visitor) {
   visitor->Trace(observers_);
 }
 
-void UseCounter::DidCommitLoad(const KURL& url) {
+void UseCounter::DidCommitLoad(const LocalFrame* frame) {
+  // When frame is detatched (i.e. GetDocument() is null), no feature usage
+  // should be measured.
+  if (!frame->GetDocument()) {
+    context_ = kDisabledContext;
+    return;
+  }
+  const KURL url = frame->GetDocument()->Url();
   // Reset state from previous load.
   // Use the protocol of the document being loaded into the main frame to
   // decide whether this page is interesting from a metrics perspective.
+  // Drop usage tracking on view-source pages new-tab-pages. This matches the
+  // policy of page_load_metrics.
   // Note that SVGImage cases always have an about:blank URL
   if (context_ != kSVGImageContext) {
     if (url.ProtocolIs("chrome-extension"))
       context_ = kExtensionContext;
+    else if (frame->GetDocument()->IsViewSource())
+      context_ = kDisabledContext;
+    else if (!frame->Client() || !frame->Client()->ShouldTrackUseCounter(url))
+      context_ = kDisabledContext;
     else if (SchemeRegistry::ShouldTrackUsageMetricsForScheme(url.Protocol()))
       context_ = kDefaultContext;
     else
