@@ -686,8 +686,7 @@ login.createScreen('GaiaSigninScreen', 'gaia-signin', function() {
       this.authCompleted_ = false;
       this.lastBackMessageValue_ = false;
 
-      $('login-header-bar').showCreateSupervisedButton =
-          data.supervisedUsersCanCreate;
+      $('login-header-bar').showCreateSupervisedButton = false;
       $('login-header-bar').showGuestButton = data.guestSignin;
 
       // Reset SAML
