@@ -123,6 +123,24 @@
       "revId": "a21d65ce8d85b33f9000f49db5ba33b451c55867",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3a3d4e1_0bc40aae",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-01T06:10:52Z",
+      "side": 1,
+      "message": "I\u0027m not sure if NGOffsetMapping is reset if layout is dirtied only in some other block... Maybe not, in which case we can\u0027t integrate DisallowTransitionScope into it.",
+      "parentUuid": "3f2fcbfe_9ae7de19",
+      "revId": "a21d65ce8d85b33f9000f49db5ba33b451c55867",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
