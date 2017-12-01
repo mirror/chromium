@@ -43,6 +43,9 @@ const char kCroshCommand[] = "/usr/bin/crosh";
 // We make stubbed crosh just echo back input.
 const char kStubbedCroshCommand[] = "cat";
 
+const char kVmShellName[] = "vmshell";
+const char kVmShellCommand[] = "/usr/bin/vmshell";
+
 std::string GetCroshPath() {
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
   if (command_line->HasSwitch(switches::kCroshCommand))
@@ -54,15 +57,21 @@ std::string GetCroshPath() {
   return std::string(kStubbedCroshCommand);
 }
 
+// Get the program to run based on the openTerminalProcess JS request.
 std::string GetProcessCommandForName(const std::string& name) {
   if (name == kCroshName)
     return GetCroshPath();
+  else if (name == kVmShellName)
+    return kVmShellCommand;
   else
     return std::string();
 }
 
 // Whether the program accepts arbitrary command line arguments.
 bool CommandSupportsArguments(const std::string& name) {
+  if (name == kVmShellName)
+    return true;
+
   return false;
 }
 
