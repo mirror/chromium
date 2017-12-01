@@ -11,6 +11,7 @@
 #include "core/editing/testing/EditingTestBase.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutText.h"
+#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "platform/wtf/Assertions.h"
 
 namespace blink {
@@ -72,6 +73,7 @@ using IsTypeOfSimple = bool(const LayoutObject& layout_object);
 
 USING_LAYOUTOBJECT_FUNC(IsLayoutBlock);
 USING_LAYOUTOBJECT_FUNC(IsLayoutBlockFlow);
+USING_LAYOUTOBJECT_FUNC(IsLayoutNGBlockFlow);
 USING_LAYOUTOBJECT_FUNC(IsLayoutInline);
 USING_LAYOUTOBJECT_FUNC(IsBR);
 USING_LAYOUTOBJECT_FUNC(IsListItem);
@@ -96,6 +98,10 @@ static IsTypeOf IsLayoutTextFragmentOf(const String& text) {
 
 static bool IsSVGTSpan(const LayoutObject& layout_object) {
   return layout_object.GetName() == String("LayoutSVGTSpan");
+}
+
+static bool IsLegacyBlockFlow(const LayoutObject& layout_object) {
+  return layout_object.IsLayoutBlockFlow() && !layout_object.IsLayoutNGMixin();
 }
 
 static bool TestLayoutObject(LayoutObject* object,
@@ -662,6 +668,165 @@ TEST_F(LayoutSelectionTest, Embed) {
   Selection().CommitAppearanceIfNeeded();
   TEST_NEXT(IsLayoutBlock, kContain, NotInvalidate);
   TEST_NEXT(IsLayoutEmbeddedContent, kStartAndEnd, ShouldInvalidate);
+  TEST_NO_NEXT_LAYOUT_OBJECT();
+}
+
+class NGLayoutSelectionTest : public LayoutSelectionTest,
+                              private ScopedLayoutNGForTest,
+                              private ScopedLayoutNGPaintFragmentsForTest,
+                  private ScopedPaintUnderInvalidationCheckingForTest {
+ public:
+  NGLayoutSelectionTest()
+      : ScopedLayoutNGForTest(true),
+        ScopedLayoutNGPaintFragmentsForTest(true),
+    ScopedPaintUnderInvalidationCheckingForTest(true) {}
+};
+
+TEST_F(NGLayoutSelectionTest, SelectOnOneText) {
+#ifndef NDEBUG
+  // This line prohibits compiler optimization removing the debug function.
+  PrintLayoutTreeForDebug();
+#endif
+  const SelectionInDOMTree& selection =
+      SetSelectionTextToBody("foo<span>b^a|r</span>");
+  Selection().SetSelection(selection);
+  Selection().CommitAppearanceIfNeeded();
+  TEST_NEXT(IsLayoutNGBlockFlow, kContain, NotInvalidate);
+  TEST_NEXT("foo", kNone, NotInvalidate);
+  TEST_NEXT(IsLayoutInline, kNone, NotInvalidate);
+  TEST_NEXT("bar", kStartAndEnd, ShouldInvalidate);
+  TEST_NO_NEXT_LAYOUT_OBJECT();
+  EXPECT_EQ(4u, Selection().LayoutSelectionStart());
+  EXPECT_EQ(5u, Selection().LayoutSelectionEnd());
+  UpdateAllLifecyclePhases();
+}
+
+TEST_F(NGLayoutSelectionTest, FirstLetterInAnotherBlockFlow) {
+  const SelectionInDOMTree& selection = SetSelectionTextToBody(
+      "<style>:first-letter { float: right}</style>^fo|o");
+  Selection().SetSelection(selection);
+  Selection().CommitAppearanceIfNeeded();
+  TEST_NEXT(IsLayoutNGBlockFlow, kContain, NotInvalidate);
+  TEST_NEXT(IsLayoutNGBlockFlow, kContain, NotInvalidate);
+  TEST_NEXT(IsLayoutTextFragmentOf("f"), kStart, ShouldInvalidate);
+  TEST_NEXT(IsLayoutTextFragmentOf("oo"), kEnd, ShouldInvalidate);
+  TEST_NO_NEXT_LAYOUT_OBJECT();
+  EXPECT_EQ(0u, Selection().LayoutSelectionStart().value());
+  EXPECT_EQ(2u, Selection().LayoutSelectionEnd().value());
+  UpdateAllLifecyclePhases();
+}
+
+TEST_F(NGLayoutSelectionTest, TwoNGBlockFlows) {
+  const SelectionInDOMTree& selection =
+      SetSelectionTextToBody("<div>f^oo</div><div>ba|r</div>");
+  Selection().SetSelection(selection);
+  Selection().CommitAppearanceIfNeeded();
+  TEST_NEXT(IsLayoutNGBlockFlow, kContain, NotInvalidate);
+  TEST_NEXT(IsLayoutNGBlockFlow, kContain, NotInvalidate);
+  TEST_NEXT("foo", kStart, ShouldInvalidate);
+  TEST_NEXT(IsLayoutNGBlockFlow, kContain, NotInvalidate);
+  TEST_NEXT("bar", kEnd, ShouldInvalidate);
+  TEST_NO_NEXT_LAYOUT_OBJECT();
+  EXPECT_EQ(1u, Selection().LayoutSelectionStart().value());
+  EXPECT_EQ(2u, Selection().LayoutSelectionEnd().value());
+  UpdateAllLifecyclePhases();
+}
+
+TEST_F(NGLayoutSelectionTest, MixedBlockFlowsAsSibling) {
+  const SelectionInDOMTree& selection = SetSelectionTextToBody(
+      "<div>f^oo</div>"
+      "<div contenteditable>ba|r</div>");
+  Selection().SetSelection(selection);
+  Selection().CommitAppearanceIfNeeded();
+  TEST_NEXT(IsLayoutNGBlockFlow, kContain, NotInvalidate);
+  TEST_NEXT(IsLayoutNGBlockFlow, kContain, NotInvalidate);
+  TEST_NEXT("foo", kStart, ShouldInvalidate);
+  TEST_NEXT(IsLegacyBlockFlow, kContain, NotInvalidate);
+  TEST_NEXT("bar", kEnd, ShouldInvalidate);
+  TEST_NO_NEXT_LAYOUT_OBJECT();
+  EXPECT_EQ(1u, Selection().LayoutSelectionStart().value());
+  EXPECT_EQ(2u, Selection().LayoutSelectionEnd().value());
+  UpdateAllLifecyclePhases();
+}
+
+TEST_F(NGLayoutSelectionTest, MixedBlockFlowsAnscestor) {
+  const SelectionInDOMTree& selection = SetSelectionTextToBody(
+      "<div contenteditable>f^oo"
+      "<div contenteditable=false>ba|r</div></div>");
+  Selection().SetSelection(selection);
+  Selection().CommitAppearanceIfNeeded();
+  TEST_NEXT(IsLayoutNGBlockFlow, kContain, NotInvalidate);
+  TEST_NEXT(IsLegacyBlockFlow, kContain, NotInvalidate);
+  TEST_NEXT(IsLayoutNGBlockFlow, kContain, NotInvalidate);
+  TEST_NEXT("foo", kStart, ShouldInvalidate);
+  TEST_NEXT(IsLayoutNGBlockFlow, kContain, NotInvalidate);
+  TEST_NEXT("bar", kEnd, ShouldInvalidate);
+  TEST_NO_NEXT_LAYOUT_OBJECT();
+  EXPECT_EQ(1u, Selection().LayoutSelectionStart().value());
+  EXPECT_EQ(2u, Selection().LayoutSelectionEnd().value());
+  UpdateAllLifecyclePhases();
+}
+
+TEST_F(NGLayoutSelectionTest, MixedBlockFlowsDecendant) {
+  const SelectionInDOMTree& selection = SetSelectionTextToBody(
+      "<div contenteditable=false>f^oo"
+      "<div contenteditable>ba|r</div></div>");
+  Selection().SetSelection(selection);
+  Selection().CommitAppearanceIfNeeded();
+  TEST_NEXT(IsLayoutNGBlockFlow, kContain, NotInvalidate);
+  TEST_NEXT(IsLayoutNGBlockFlow, kContain, NotInvalidate);
+  TEST_NEXT(IsLayoutNGBlockFlow, kContain, NotInvalidate);
+  TEST_NEXT("foo", kStart, ShouldInvalidate);
+  TEST_NEXT(IsLegacyBlockFlow, kContain, NotInvalidate);
+  TEST_NEXT("bar", kEnd, ShouldInvalidate);
+  TEST_NO_NEXT_LAYOUT_OBJECT();
+  EXPECT_EQ(1u, Selection().LayoutSelectionStart().value());
+  EXPECT_EQ(2u, Selection().LayoutSelectionEnd().value());
+  UpdateAllLifecyclePhases();
+}
+
+TEST_F(NGLayoutSelectionTest, Invalidation) {
+  const SelectionInDOMTree& selection =
+    SetSelectionTextToBody("<span>foo</span><span>b^a|r</span>");
+  Selection().SetSelection(selection);
+  Selection().CommitAppearanceIfNeeded();
+  TEST_NEXT(IsLayoutNGBlockFlow, kContain, NotInvalidate);
+  TEST_NEXT(IsLayoutInline, kNone, NotInvalidate);
+  TEST_NEXT("foo", kNone, NotInvalidate);
+  TEST_NEXT(IsLayoutInline, kNone, NotInvalidate);
+  TEST_NEXT("bar", kStartAndEnd, ShouldInvalidate);
+  TEST_NO_NEXT_LAYOUT_OBJECT();
+  EXPECT_EQ(4u, Selection().LayoutSelectionStart());
+  EXPECT_EQ(5u, Selection().LayoutSelectionEnd());
+  UpdateAllLifecyclePhases();
+
+  TEST_NEXT(IsLayoutNGBlockFlow, kContain, NotInvalidate);
+  TEST_NEXT(IsLayoutInline, kNone, NotInvalidate);
+  TEST_NEXT("foo", kNone, NotInvalidate);
+  TEST_NEXT(IsLayoutInline, kNone, NotInvalidate);
+  TEST_NEXT("bar", kStartAndEnd, NotInvalidate);
+  TEST_NO_NEXT_LAYOUT_OBJECT();
+
+  Node* const foo = GetDocument().body()->firstChild()->firstChild();
+  Selection().SetSelection(SelectionInDOMTree::Builder()
+    .SetBaseAndExtent({foo, 1}, {foo, 2})
+  .Build());
+  Selection().CommitAppearanceIfNeeded();
+  TEST_NEXT(IsLayoutNGBlockFlow, kContain, NotInvalidate);
+  TEST_NEXT(IsLayoutInline, kNone, NotInvalidate);
+  TEST_NEXT("foo", kNone, ShouldInvalidate);
+  TEST_NEXT(IsLayoutInline, kNone, NotInvalidate);
+  TEST_NEXT("bar", kStartAndEnd, ShouldInvalidate);
+  TEST_NO_NEXT_LAYOUT_OBJECT();
+  EXPECT_EQ(1u, Selection().LayoutSelectionStart());
+  EXPECT_EQ(2u, Selection().LayoutSelectionEnd());
+  UpdateAllLifecyclePhases();
+
+  TEST_NEXT(IsLayoutNGBlockFlow, kContain, NotInvalidate);
+  TEST_NEXT(IsLayoutInline, kNone, NotInvalidate);
+  TEST_NEXT("foo", kNone, NotInvalidate);
+  TEST_NEXT(IsLayoutInline, kNone, NotInvalidate);
+  TEST_NEXT("bar", kStartAndEnd, NotInvalidate);
   TEST_NO_NEXT_LAYOUT_OBJECT();
 }
 
