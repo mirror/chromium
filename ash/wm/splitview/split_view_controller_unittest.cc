@@ -631,20 +631,39 @@ TEST_F(SplitViewControllerTest, LongPressExitsSplitView) {
   std::unique_ptr<aura::Window> window2(CreateWindow(bounds));
   wm::ActivateWindow(window2.get());
   wm::ActivateWindow(window1.get());
+
+  // Snap |window1| to the left.
   split_view_controller()->SnapWindow(window1.get(), SplitViewController::LEFT);
   ToggleOverview();
   ASSERT_TRUE(split_view_controller()->IsSplitViewModeActive());
 
-  // Verify that by long pressing on the overview button tray with one snapped
-  // window, split view mode gets exited and we are not in overview mode.
+  // Verify that by long pressing on the overview button tray with left snapped
+  // window, split view mode gets exited and the left window (|window1|) is the
+  // current active window.
   LongPressOnOverivewButtonTray();
   EXPECT_FALSE(split_view_controller()->IsSplitViewModeActive());
   EXPECT_FALSE(Shell::Get()->window_selector_controller()->IsSelecting());
+  EXPECT_EQ(window1.get(), wm::GetActiveWindow());
 
-  // Snap two windows.
+  // Snap |window1| to the right.
+  split_view_controller()->SnapWindow(window1.get(),
+                                      SplitViewController::RIGHT);
+  ToggleOverview();
+  ASSERT_TRUE(split_view_controller()->IsSplitViewModeActive());
+
+  // Verify that by long pressing on the overview button tray with right snapped
+  // window, split view mode gets exited and the right window (|window1|) is the
+  // current active window.
+  LongPressOnOverivewButtonTray();
+  EXPECT_FALSE(split_view_controller()->IsSplitViewModeActive());
+  EXPECT_FALSE(Shell::Get()->window_selector_controller()->IsSelecting());
+  EXPECT_EQ(window1.get(), wm::GetActiveWindow());
+
+  // Snap two windows and activate the left window, |window1|.
   split_view_controller()->SnapWindow(window1.get(), SplitViewController::LEFT);
   split_view_controller()->SnapWindow(window2.get(),
                                       SplitViewController::RIGHT);
+  wm::ActivateWindow(window1.get());
   ASSERT_TRUE(split_view_controller()->IsSplitViewModeActive());
 
   // Verify that by long pressing on the overview button tray with two snapped
@@ -652,6 +671,20 @@ TEST_F(SplitViewControllerTest, LongPressExitsSplitView) {
   LongPressOnOverivewButtonTray();
   EXPECT_FALSE(split_view_controller()->IsSplitViewModeActive());
   EXPECT_EQ(window1.get(), wm::GetActiveWindow());
+
+  // Snap two windows and activate the right window, |window2|.
+  split_view_controller()->SnapWindow(window1.get(), SplitViewController::LEFT);
+  split_view_controller()->SnapWindow(window2.get(),
+                                      SplitViewController::RIGHT);
+  wm::ActivateWindow(window2.get());
+  ASSERT_TRUE(split_view_controller()->IsSplitViewModeActive());
+
+  // Verify that by long pressing on the overview button tray with two snapped
+  // windows, split view mode gets exited, and the activated window in splitview
+  // is the current active window.
+  LongPressOnOverivewButtonTray();
+  EXPECT_FALSE(split_view_controller()->IsSplitViewModeActive());
+  EXPECT_EQ(window2.get(), wm::GetActiveWindow());
 }
 
 // Verify that split view mode get activated when long pressing on the overview
