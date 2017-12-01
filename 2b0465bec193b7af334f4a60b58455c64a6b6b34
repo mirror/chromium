@@ -16,6 +16,24 @@
       "revId": "2b0465bec193b7af334f4a60b58455c64a6b6b34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b833bfb3_e5f6a09c",
+        "filename": "content/app/content_main_runner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-01T03:44:18Z",
+      "side": 1,
+      "message": "I don\u0027t think these are needed for that. As long as they are valid URLs, I think that\u0027s all that matters.",
+      "parentUuid": "5767c437_b5d2c37f",
+      "revId": "2b0465bec193b7af334f4a60b58455c64a6b6b34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
