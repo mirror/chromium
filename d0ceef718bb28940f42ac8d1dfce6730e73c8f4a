@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc4afbe2_fa3c81c8",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-01T17:30:40Z",
+      "side": 1,
+      "message": "optional nit: seems like we can remove these DCHECKs (they\u0027re unrelated, or just DCHECKing before dereferencing)",
+      "revId": "d0ceef718bb28940f42ac8d1dfce6730e73c8f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
