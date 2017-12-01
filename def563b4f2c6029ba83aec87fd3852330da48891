@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8e930f71_342b135b",
+        "filename": "chrome/browser/resources/md_extensions/sidebar.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-12-01T01:04:39Z",
+      "side": 1,
+      "message": "nit (wondering): Just eyeballing the code I\u0027d guess that line 38 isn\u0027t needed (is it needed?)",
+      "revId": "def563b4f2c6029ba83aec87fd3852330da48891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e8033a1_b989c160",
         "filename": "chrome/browser/resources/md_extensions/sidebar.html",
         "patchSetId": 5
