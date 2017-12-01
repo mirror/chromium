@@ -22,6 +22,30 @@
       "revId": "f0c2f1e1dd8d3541473ad5d06c190d2c38f54de3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b23492d2_7cae926f",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-01T21:46:01Z",
+      "side": 1,
+      "message": "You are correct in that flow doesn\u0027t reach this case (yet). But the hit testing logic assumes the view rect can be offset from origin, so this |else| case was put to handle such situation, and have the tests pass. I hope this change doesn\u0027t give you any trouble...?",
+      "parentUuid": "106d8d43_cc9d91c4",
+      "range": {
+        "startLine": 480,
+        "startChar": 6,
+        "endLine": 480,
+        "endChar": 51
+      },
+      "revId": "f0c2f1e1dd8d3541473ad5d06c190d2c38f54de3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
