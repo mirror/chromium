@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1611ac6a_bbcf4d5f",
+        "filename": "ash/display/display_move_window_util_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-01T17:14:02Z",
+      "side": 1,
+      "message": "Isn\u0027t this the default layout that \"UpdateDisplay\" does?",
+      "revId": "73cbbaac1fad26635c906f0a49c700f060f9c200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3af8972_ee135e45",
+        "filename": "ash/display/display_move_window_util_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-01T17:14:02Z",
+      "side": 1,
+      "message": "then you don\u0027t have to check this. There are plenty of tests that verify this behavior.",
+      "revId": "73cbbaac1fad26635c906f0a49c700f060f9c200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60de3a6c_34b0a757",
+        "filename": "ash/display/display_move_window_util_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-01T17:14:02Z",
+      "side": 1,
+      "message": "dito",
+      "revId": "73cbbaac1fad26635c906f0a49c700f060f9c200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
