@@ -36,6 +36,17 @@
  */
 Object.observe = function(object, callback) {};
 
+/**
+ * @constructor
+ */
+var ResizeObserver = function(callback) {};
+
+/**
+ * @param {!Array<string>} strings
+ * @param {...*} vararg
+ */
+var s = function(strings, vararg) {};
+
 /** @type {boolean} */
 Event.prototype.isMetaOrCtrlForTest;
 
