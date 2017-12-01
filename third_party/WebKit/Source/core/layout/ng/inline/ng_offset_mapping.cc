@@ -8,7 +8,10 @@
 #include "core/dom/Text.h"
 #include "core/editing/EphemeralRange.h"
 #include "core/editing/Position.h"
+#include "core/layout/ng/ng_physical_fragment.h"
 #include "core/layout/ng/inline/ng_inline_node.h"
+#include "core/layout/ng/inline/ng_physical_text_fragment.h"
+#include "core/layout/ng/inline/ng_inline_fragment_iterator.h"
 
 namespace blink {
 
@@ -364,6 +367,63 @@ Position NGOffsetMapping::GetLastPosition(unsigned offset) const {
   const Node& node = result->GetOwner();
   const unsigned dom_offset = result->ConvertTextContentToLastDOMOffset(offset);
   return CreatePositionForOffsetMapping(node, dom_offset);
+}
+
+// TODO(xiaochengh): Move it to its own file.
+NGInlineFragmentPosition ComputeNGInlineFragmentPosition(const PositionWithAffinity& position) {
+  DCHECK(position.IsNotNull());
+  const LayoutObject* layout_object = position.AnchorNode()->GetLayoutObject();
+  DCHECK(layout_object);
+  DCHECK(layout_object->IsInline());
+  const NGOffsetMapping* mapping = NGOffsetMapping::GetFor(position.GetPosition());
+  DCHECK(mapping);
+  const NGPhysicalBoxFragment* box_fragment = mapping->GetContext()->CurrentFragment();
+  // TODO(kojii): ...
+  if (!box_fragment)
+    return NGInlineFragmentPosition();
+
+  if (layout_object->IsAtomicInlineLevel()) {
+    // TODO(xiaochengh): Handle affinity
+    NGInlineFragmentIterator children(*box_fragment, layout_object);
+    for (const auto& child : children) {
+      if (child.fragment->GetLayoutObject() == layout_object)
+        return {child.fragment, child.offset_to_container_box, position.GetPosition().ComputeEditingOffset()};
+    }
+    NOTREACHED();
+    return NGInlineFragmentPosition();
+  }
+
+  DCHECK(layout_object->IsText());
+  Optional<unsigned> maybe_offset = mapping->GetTextContentOffset(position.GetPosition());
+  if (!maybe_offset.has_value()) {
+    // TODO(xiaochengh): Is this really an expected case?
+    return NGInlineFragmentPosition();
+  }
+  const unsigned offset = maybe_offset.value();
+  TextAffinity affinity = position.Affinity();
+  NGInlineFragmentIterator children(*box_fragment, mapping->GetContext());
+  NGPhysicalFragmentWithOffset candidate;
+  for (const auto& child : children) {
+    if (child.fragment->IsText()) {
+      const NGPhysicalTextFragment* text_fragment = ToNGPhysicalTextFragment(child.fragment);
+      if (offset < text_fragment->StartOffset() || offset > text_fragment->EndOffset()) {
+        // TODO(xiaochengh): This may introduce false negatives.
+        continue;
+      }
+      if ((offset == text_fragment->StartOffset() && affinity == TextAffinity::kDownstream) ||
+          (offset == text_fragment->EndOffset() && affinity == TextAffinity::kUpstream))
+        return {text_fragment, child.offset_to_container_box, offset - text_fragment->StartOffset()};
+      // TODO(xiaochengh): The fallback may not be correct.
+      candidate = child;
+    }
+
+    // TODO(xiaochengh): Handle atomic inlines.
+  }
+
+  if (candidate.fragment && candidate.fragment->IsText())
+    return {candidate.fragment, candidate.offset_to_container_box, offset - ToNGPhysicalTextFragment(candidate.fragment)->StartOffset()};
+  // TODO(xiaochengh): Handle the case where |candidate| is atomic inline
+  return NGInlineFragmentPosition();
 }
 
 }  // namespace blink
