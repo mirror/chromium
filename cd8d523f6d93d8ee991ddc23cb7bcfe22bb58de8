@@ -22,6 +22,30 @@
       "revId": "cd8d523f6d93d8ee991ddc23cb7bcfe22bb58de8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93a838b4_e79a133c",
+        "filename": "content/public/test/download_test_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-12-01T00:57:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd09846d_cec62ab9",
+      "range": {
+        "startLine": 312,
+        "startChar": 1,
+        "endLine": 314,
+        "endChar": 60
+      },
+      "revId": "cd8d523f6d93d8ee991ddc23cb7bcfe22bb58de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
