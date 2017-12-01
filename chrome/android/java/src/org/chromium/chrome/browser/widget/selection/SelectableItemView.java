@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
+import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -35,6 +36,7 @@ public abstract class SelectableItemView<E> extends FrameLayout implements Check
         OnClickListener, OnLongClickListener, SelectionObserver<E> {
     protected final int mDefaultLevel;
     protected final int mSelectedLevel;
+    protected final AnimatedVectorDrawableCompat mCheckDrawable;
 
     protected TintedImageView mIconView;
     protected TextView mTitleView;
@@ -55,6 +57,8 @@ public abstract class SelectableItemView<E> extends FrameLayout implements Check
                 ApiCompatibilityUtils.getColorStateList(getResources(), R.color.white_mode_tint);
         mDefaultLevel = getResources().getInteger(R.integer.list_item_level_default);
         mSelectedLevel = getResources().getInteger(R.integer.list_item_level_selected);
+        mCheckDrawable = AnimatedVectorDrawableCompat.create(
+                getContext(), R.drawable.ic_check_googblue_24dp_animated);
     }
 
     /**
@@ -208,8 +212,9 @@ public abstract class SelectableItemView<E> extends FrameLayout implements Check
 
         if (isChecked()) {
             mIconView.getBackground().setLevel(mSelectedLevel);
-            mIconView.setImageResource(R.drawable.ic_check_googblue_24dp);
+            mIconView.setImageDrawable(mCheckDrawable);
             mIconView.setTint(mIconColorList);
+            mCheckDrawable.start();
         } else {
             mIconView.getBackground().setLevel(mDefaultLevel);
             mIconView.setImageDrawable(mIconDrawable);
