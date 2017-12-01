@@ -27,6 +27,7 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/test/browser_test_utils.h"
+#include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/test/url_request/url_request_mock_http_job.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 
@@ -36,6 +37,14 @@ class ReferrerPolicyTest : public InProcessBrowserTest {
   ~ReferrerPolicyTest() override {}
 
   void SetUpOnMainThread() override {
+    http_test_server_.reset(new net::EmbeddedTestServer());
+    https_test_server_.reset(
+        new net::EmbeddedTestServer(net::EmbeddedTestServer::TYPE_HTTPS));
+    http_test_server_->ServeFilesFromSourceDirectory("chrome/test/data");
+    https_test_server_->ServeFilesFromSourceDirectory("chrome/test/data");
+    ASSERT_TRUE(http_test_server_->Start());
+    ASSERT_TRUE(https_test_server_->Start());
+
     content::BrowserThread::PostTask(
         content::BrowserThread::IO, FROM_HERE,
         base::BindOnce(&chrome_browser_net::SetUrlRequestMocksEnabled, true));
@@ -162,10 +171,9 @@ class ReferrerPolicyTest : public InProcessBrowserTest {
         (button == blink::WebMouseEvent::Button::kNoButton ? "false" : "true") +
         "&target=" + (link_type == LINK_WITH_TARGET_BLANK ? "_blank" : "");
 
-    const GURL start_url =
-        (start_protocol == START_ON_HTTPS)
-            ? net::URLRequestMockHTTPJob::GetMockHttpsUrl(relative_url)
-            : net::URLRequestMockHTTPJob::GetMockUrl(relative_url);
+    const GURL start_url = (start_protocol == START_ON_HTTPS)
+                               ? https_test_server_->GetURL(relative_url)
+                               : http_test_server_->GetURL(relative_url);
 
     ui_test_utils::WindowedTabAddedNotificationObserver tab_added_observer(
         content::NotificationService::AllSources());
@@ -225,6 +233,9 @@ class ReferrerPolicyTest : public InProcessBrowserTest {
                            disposition, button, expected_referrer,
                            referrer_policy);
   }
+
+  std::unique_ptr<net::EmbeddedTestServer> http_test_server_;
+  std::unique_ptr<net::EmbeddedTestServer> https_test_server_;
 };
 
 class ReferrerPolicyWithReduceReferrerGranularityFlagTest
@@ -467,8 +478,8 @@ IN_PROC_BROWSER_TEST_F(ReferrerPolicyTest, History) {
       blink::WebMouseEvent::Button::kLeft, EXPECT_ORIGIN_AS_REFERRER);
 
   // Navigate to C.
-  ui_test_utils::NavigateToURL(
-      browser(), net::URLRequestMockHTTPJob::GetMockUrl(std::string()));
+  ui_test_utils::NavigateToURL(browser(),
+                               http_test_server_->GetURL(std::string("/")));
 
   base::string16 expected_title =
       GetExpectedTitle(start_url, EXPECT_ORIGIN_AS_REFERRER);
@@ -544,8 +555,8 @@ IN_PROC_BROWSER_TEST_F(ReferrerPolicyTest, IFrame) {
 
   // Load a page that loads an iframe.
   ui_test_utils::NavigateToURL(
-      browser(), net::URLRequestMockHTTPJob::GetMockHttpsUrl(std::string(
-                     "referrer_policy/referrer-policy-iframe.html")));
+      browser(), https_test_server_->GetURL(std::string(
+                     "/referrer_policy/referrer-policy-iframe.html")));
   EXPECT_EQ(expected_title, title_watcher->WaitAndGetTitle());
 
   // Verify that the referrer policy was honored and the main page's origin was
@@ -558,8 +569,7 @@ IN_PROC_BROWSER_TEST_F(ReferrerPolicyTest, IFrame) {
       "window.domAutomationController.send(document.title)",
       &title));
   EXPECT_EQ(
-      "Referrer is " +
-          net::URLRequestMockHTTPJob::GetMockHttpsUrl(std::string()).spec(),
+      "Referrer is " + https_test_server_->GetURL(std::string("/")).spec(),
       title);
 
   // Reload the iframe.
@@ -578,10 +588,11 @@ IN_PROC_BROWSER_TEST_F(ReferrerPolicyTest, IFrame) {
       frame,
       "window.domAutomationController.send(document.title)",
       &title));
-  EXPECT_EQ("Referrer is " +
-                net::URLRequestMockHTTPJob::GetMockUrl(
-                    "referrer_policy/referrer-policy-log.html").spec(),
-            title);
+  EXPECT_EQ(
+      "Referrer is " +
+          http_test_server_->GetURL("/referrer_policy/referrer-policy-log.html")
+              .spec(),
+      title);
 }
 
 // Origin When Cross-Origin
