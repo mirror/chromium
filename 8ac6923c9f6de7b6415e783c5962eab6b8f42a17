@@ -22,6 +22,30 @@
       "revId": "8ac6923c9f6de7b6415e783c5962eab6b8f42a17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e589c9da_ac177332",
+        "filename": "chrome/browser/installable/installable_metrics.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-12-01T00:30:01Z",
+      "side": 1,
+      "message": "Sure, that\u0027s better. Let me know if you think the comment should be modified (or the enums.xml description).",
+      "parentUuid": "61a9c7d8_1f9153c3",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 8
+      },
+      "revId": "8ac6923c9f6de7b6415e783c5962eab6b8f42a17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
