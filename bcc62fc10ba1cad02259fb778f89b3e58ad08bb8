@@ -88,6 +88,24 @@
       "revId": "bcc62fc10ba1cad02259fb778f89b3e58ad08bb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "080fd7c4_bc2c5cfa",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsLayer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1316,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-12-01T23:13:55Z",
+      "side": 1,
+      "message": "LayerState::offset defines the layer origin in that transform space, because layer coordinate (0, 0) may not always maps to (0, 0) in that transform space (due to negative overflow, for example). It is similar to cc::Layer::offset_to_transform_parent().\n\nYes it is probably redundant to OffsetFromLayoutObject if every composited layout object has paint translation node.",
+      "parentUuid": "03775b15_ff5655ad",
+      "revId": "bcc62fc10ba1cad02259fb778f89b3e58ad08bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
