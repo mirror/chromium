@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0ec6ead9_309a9e64",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-01T00:42:31Z",
+      "side": 1,
+      "message": "Sorry, where is the early exit? Also, it seems like the documented behavior of \"moves the cursor to the end if the cursor is out of the new text\u0027s range.\" should work for this scenario...",
+      "parentUuid": "e76a9174_3c418835",
+      "revId": "a57369949bda0e072375a1954eee940716102984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c4f11a35_b7319eb7",
         "filename": "ash/login/ui/login_password_view.cc",
         "patchSetId": 4
@@ -72,6 +90,30 @@
       "side": 1,
       "message": "I can call the function InsertNumber? But I believe behavior here is correct - if the user has something highlighted we will replace it. We will insert at cursor location/etc.",
       "parentUuid": "c4f11a35_b7319eb7",
+      "range": {
+        "startLine": 486,
+        "startChar": 14,
+        "endLine": 486,
+        "endChar": 33
+      },
+      "revId": "a57369949bda0e072375a1954eee940716102984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1cd2fb9_1dfca6dc",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-01T00:42:31Z",
+      "side": 1,
+      "message": "It\u0027s not too important, but appending is different than inserting/replacing, it might be worth a rename or at least a comment.",
+      "parentUuid": "6cc49190_db5b093c",
       "range": {
         "startLine": 486,
         "startChar": 14,
