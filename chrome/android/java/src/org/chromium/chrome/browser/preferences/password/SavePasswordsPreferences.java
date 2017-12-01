@@ -4,6 +4,7 @@
 
 package org.chromium.chrome.browser.preferences.password;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
+import android.support.v7.app.AlertDialog;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
@@ -68,6 +70,9 @@ public class SavePasswordsPreferences extends PreferenceFragment
     private static final int ORDER_EXCEPTIONS = 4;
     private static final int ORDER_SAVED_PASSWORDS_NO_TEXT = 5;
 
+    // Key of this fragment's ID for when it is passed to an ExportWarningHandler.
+    public static final String SAVE_PASSWORDS_PREFERENCES_ID = "save_passwords_preferences_id";
+
     private final PasswordUIView mPasswordManagerHandler = new PasswordUIView();
     private boolean mNoPasswords;
     private boolean mNoPasswordExceptions;
@@ -118,9 +123,40 @@ public class SavePasswordsPreferences extends PreferenceFragment
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * This class is used to handling button signals from the ExportWarningDialogFragment. The
+     * handling methods are encapsulated in this class to avoid the need for
+     * SavePasswordsPreferences to inherit DialogInterface.OnClickListener and face issues with
+     * potential method name clashes.
+     */
+    private class ExportWarningHandler implements DialogInterface.OnClickListener {
+        /** On positive button response asks the parent to continue with the export flow. */
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            if (which == AlertDialog.BUTTON_POSITIVE) {
+                exportAfterWarning();
+            }
+        }
+    }
+
+    // Reusable handler for the ExportWarningDialogFragment.
+    private final ExportWarningHandler mExportWarningHandler = new ExportWarningHandler();
+
+    public ExportWarningHandler getExportWarningHandler() {
+        return mExportWarningHandler;
+    }
+
     /** Continues with the password export flow after the user successfully reauthenticated. */
     private void exportAfterReauth() {
-        // TODO(crbug.com/788701): Show the warning, start the export.
+        ExportWarningDialogFragment exportWarningDialogFragment = new ExportWarningDialogFragment();
+        Bundle args = new Bundle();
+        args.putInt(SAVE_PASSWORDS_PREFERENCES_ID, getId());
+        exportWarningDialogFragment.setArguments(args);
+        exportWarningDialogFragment.show(getFragmentManager(), null);
+    }
+
+    private void exportAfterWarning() {
+        // TODO(crbug.com/788701): Start the export.
     }
 
     /**
