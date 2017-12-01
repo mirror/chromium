@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49e83089_c0af5ea1",
+        "filename": "content/browser/quota_dispatcher_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-01T03:06:07Z",
+      "side": 1,
+      "message": "While you\u0027re here, can you change this to std::move(permission_context)?",
+      "range": {
+        "startLine": 46,
+        "startChar": 26,
+        "endLine": 46,
+        "endChar": 44
+      },
+      "revId": "06bd4385e73007166f04ff5899b3768ca9f33a1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93670329_988d6bd0",
+        "filename": "content/browser/quota_dispatcher_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-01T03:06:07Z",
+      "side": 1,
+      "message": "Given this bug has been archived, I\u0027d be tempted to drop these.",
+      "revId": "06bd4385e73007166f04ff5899b3768ca9f33a1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "765b9e57_eaab841a",
+        "filename": "content/browser/quota_dispatcher_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-01T03:06:07Z",
+      "side": 1,
+      "message": "With |permission_context_| being directly accessed, this DCHECK isn\u0027t meaningful anymore. The DCHECK should be in Create() if anywhere.",
+      "revId": "06bd4385e73007166f04ff5899b3768ca9f33a1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
