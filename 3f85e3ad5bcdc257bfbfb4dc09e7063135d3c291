@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "422ac74f_b77fc70c",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-01T01:32:23Z",
+      "side": 1,
+      "message": "Might as well just declare it as an int, then? And in any case, this still allows for seemingly-silly values like 2**31. (Is the value further sanity-checked inside `DecodeCBOR`?)",
+      "revId": "3f85e3ad5bcdc257bfbfb4dc09e7063135d3c291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54aadb4f_df3530bb",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-01T01:32:23Z",
+      "side": 1,
+      "message": "I think the checked_cast will prevent this from ever happening. A size_t value that is too large to fit in a positive int will CHECK before we get to this point.\n\nAnd we\u0027re still allowing 2**31 and other huge values. I think it\u0027s better to set a tighter limit here, if you can.",
+      "revId": "3f85e3ad5bcdc257bfbfb4dc09e7063135d3c291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4d2a986_1ac7f3d8",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-01T01:32:23Z",
+      "side": 1,
+      "message": "The code might be more resilient against future maintenance mistakes if you change this to:\n\n  case CBORValue::Type::NONE:\n    break;\n  default:\n    NOTREACHED();\n    break;\n\nIt has the same effect in production, but it more clearly expresses the intent. Arguably. This is just a nit, feel free to ignore.",
+      "revId": "3f85e3ad5bcdc257bfbfb4dc09e7063135d3c291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4856b662_eb58ac36",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-01T01:32:23Z",
+      "side": 1,
+      "message": "|num_bytes| appears to be the result stored in the out-param of `ReadUnsignedInt`, which is attacker-controlled. So lines 140 (directly) and 141 (indirectly, later) could result in out-of-bounds reads. I think. Right?\n\nI\u0027m not sure, but I *think* a call to `CanConsume(num_bytes)` would avoid this vulnerability. Depending on how `CanConsume` is implemented, which I\u0027ll get to in a moment.",
+      "revId": "3f85e3ad5bcdc257bfbfb4dc09e7063135d3c291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61f1c0f9_84154887",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-01T01:32:23Z",
+      "side": 1,
+      "message": "http://en.cppreference.com/w/cpp/iterator/distance says that the complexity of std::distance is... linear, unless our iterators meet the requirements of RandomAccessIterator. Do they? If it really is O(N), we should do something else.\n\nAlso, apparently the return value can be negative, so checked_cast is warranted. I was going to say \"use checked_cast for the sake of form, and it\u0027ll be compiled away\", but apparently it could actually be necessary as well as good form.",
+      "revId": "3f85e3ad5bcdc257bfbfb4dc09e7063135d3c291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e56c2b68_51187aa3",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-01T01:32:23Z",
+      "side": 1,
+      "message": "API design thought (feel free to ignore): You could just expose simply:\n\n  static const char* const GetErrorMessage(CBORDecoderError e);",
+      "revId": "3f85e3ad5bcdc257bfbfb4dc09e7063135d3c291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fa16ce6_399748d9",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-01T01:32:23Z",
+      "side": 1,
+      "message": "API design thought (feel free to ignore): You could expose:\n\n  using Decoded \u003d std::pair\u003cCBORDecodingError, CBORValue\u003e;\n  static Decoded Read(const std::vector\u003cuint8_t\u003e\u0026 input_data, size_t max_nesting_level \u003d kCBORMaxDepth);",
+      "revId": "3f85e3ad5bcdc257bfbfb4dc09e7063135d3c291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06325201_0a32d5a8",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-01T01:32:23Z",
+      "side": 1,
+      "message": "Ahh, I see, you are doing what I suggested above. To me, this means you don\u0027t need to expose the various `static const char kFoo...[];`s in this .h; they can be implementation details in the .cc.\n\nAlso, you\u0027re incurring a std::string construction even if the caller doesn\u0027t need one. It\u0027s a micro-optimization, but returning `const char* const` enables the caller to choose whether they need a copy or are just going to immediately print it or whatever.\n\nAgain, these are all nits, and not important to security, so feel free to ignore on these things. :)",
+      "revId": "3f85e3ad5bcdc257bfbfb4dc09e7063135d3c291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a355157_dd71856f",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-01T01:32:23Z",
+      "side": 1,
+      "message": "Note: In `Read`, |max_nesting_level| is specified as a size_t. You should consistently choose 1 type.",
+      "revId": "3f85e3ad5bcdc257bfbfb4dc09e7063135d3c291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35960629_d5e96449",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-01T01:32:23Z",
+      "side": 1,
+      "message": "How is this different from `ErrorCodeToString`, above?",
+      "revId": "3f85e3ad5bcdc257bfbfb4dc09e7063135d3c291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
