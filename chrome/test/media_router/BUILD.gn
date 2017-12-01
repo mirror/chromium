@@ -80,6 +80,11 @@ source_set("media_router_browsertests") {
     "test_media_sinks_observer.cc",
     "test_media_sinks_observer.h",
   ]
+
+  if (!is_mac || mac_views_browser) {
+    sources += [ "presentation_receiver_window_browsertest.cc" ]
+  }
+
   deps = [
     ":browser_tests_resource_files",
     "//chrome/browser/media/router:test_support",
