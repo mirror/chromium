@@ -692,6 +692,7 @@ QuicChromiumClientSession::QuicChromiumClientSession(
       transport_security_state_(transport_security_state),
       server_info_(std::move(server_info)),
       pkp_bypassed_(false),
+      is_fatal_cert_error_(false),
       num_total_streams_(0),
       task_runner_(task_runner),
       net_log_(NetLogWithSource::Make(net_log, NetLogSourceType::QUIC_SESSION)),
@@ -1070,6 +1071,7 @@ bool QuicChromiumClientSession::GetSSLInfo(SSLInfo* ssl_info) const {
   ssl_info->security_bits = security_bits;
   ssl_info->handshake_type = SSLInfo::HANDSHAKE_FULL;
   ssl_info->pinning_failure_log = pinning_failure_log_;
+  ssl_info->is_fatal_cert_error = is_fatal_cert_error_;
 
   ssl_info->UpdateCertificateTransparencyInfo(*ct_verify_result_);
 
@@ -1890,6 +1892,10 @@ void QuicChromiumClientSession::OnProofVerifyDetailsAvailable(
   ct_verify_result_ = std::move(ct_verify_result_copy);
   logger_->OnCertificateVerified(*cert_verify_result_);
   pkp_bypassed_ = verify_details_chromium->pkp_bypassed;
+  is_fatal_cert_error_ =
+      IsCertStatusError(cert_verify_result_->cert_status) &&
+      !IsCertStatusMinorError(cert_verify_result_->cert_status) &&
+      transport_security_state_->ShouldSSLErrorsBeFatal(server_id_.host());
 }
 
 void QuicChromiumClientSession::StartReading() {
