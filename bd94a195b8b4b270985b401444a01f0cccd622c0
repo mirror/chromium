@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "006e9630_6090e489",
+        "filename": "components/autofill/core/browser/phone_field_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-12-01T21:12:44Z",
+      "side": 1,
+      "message": "Can you add a test with the old case of 10?",
+      "range": {
+        "startLine": 258,
+        "startChar": 23,
+        "endLine": 258,
+        "endChar": 25
+      },
+      "revId": "bd94a195b8b4b270985b401444a01f0cccd622c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
