@@ -4,6 +4,7 @@
 
 package org.chromium.chrome.browser.compositor.bottombar.contextualsearch;
 
+import android.animation.Animator;
 import android.content.Context;
 import android.view.ViewGroup;
 
@@ -29,6 +30,11 @@ public class ContextualSearchBarBannerControl extends OverlayPanelInflater {
      * Whether the Bar Banner is visible.
      */
     private boolean mIsVisible;
+
+    /**
+     * Whether the Bar Banner is in the process of hiding.
+     */
+    private boolean mIsHiding;
 
     /**
      * The height of the Bar Banner, in pixels.
@@ -111,15 +117,18 @@ public class ContextualSearchBarBannerControl extends OverlayPanelInflater {
     void hide() {
         if (!mIsVisible) return;
 
-        mIsVisible = false;
-        mHeightPx = 0.f;
+        if (mHeightPx == 0.f) {
+            mIsVisible = false;
+        } else {
+            animateDisappearance();
+        }
     }
 
     /**
      * @return The height of the Bar Banner when the Panel is the peeked state.
      */
     float getHeightPeekingPx() {
-        return mIsVisible ? getPaddedHeightPx() : 0.f;
+        return mIsVisible && !mIsHiding ? getPaddedHeightPx() : 0.f;
     }
 
     /** Calculates the padded height of the bar banner if it has not been calculated before.
@@ -204,7 +213,7 @@ public class ContextualSearchBarBannerControl extends OverlayPanelInflater {
      * @param percentage The completion percentage.
      */
     public void onUpdateFromCloseToPeek(float percentage) {
-        if (!isVisible()) return;
+        if (!isVisible() || mIsHiding) return;
 
         mHeightPx = Math.round(getPaddedHeightPx());
     }
@@ -215,7 +224,7 @@ public class ContextualSearchBarBannerControl extends OverlayPanelInflater {
      * @param percentage The completion percentage.
      */
     public void onUpdateFromPeekToExpand(float percentage) {
-        if (!isVisible()) return;
+        if (!isVisible() || mIsHiding) return;
 
         mHeightPx = Math.round(MathUtils.interpolate(getPaddedHeightPx(), 0.f, percentage));
         mTextOpacity = MathUtils.interpolate(1.f, 0.f, percentage);
@@ -227,7 +236,7 @@ public class ContextualSearchBarBannerControl extends OverlayPanelInflater {
      * @param percentage The completion percentage.
      */
     public void onUpdateFromExpandToMaximize(float percentage) {
-        if (!isVisible()) return;
+        if (!isVisible() || mIsHiding) return;
 
         mHeightPx = 0.f;
         mTextOpacity = 0.f;
@@ -260,6 +269,40 @@ public class ContextualSearchBarBannerControl extends OverlayPanelInflater {
         CompositorAnimator appearance =
                 CompositorAnimator.ofFloat(mOverlayPanel.getAnimationHandler(), 0.f, 1.f,
                         OverlayPanelAnimation.BASE_ANIMATION_DURATION_MS, listener);
+        appearance.start();
+    }
+
+    public void animateDisappearance() {
+        mIsHiding = true;
+        CompositorAnimator appearance =
+                CompositorAnimator.ofFloat(mOverlayPanel.getAnimationHandler(), 1.f, 0.f,
+                        OverlayPanelAnimation.BASE_ANIMATION_DURATION_MS, null);
+        appearance.addUpdateListener(new AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(CompositorAnimator animator) {
+                if (isVisible()) {
+                    float percentage = animator.getAnimatedFraction();
+                    mHeightPx = MathUtils.interpolate(getPaddedHeightPx(), 0.f, percentage);
+                }
+            }
+        });
+        appearance.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {}
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                mHeightPx = 0.f;
+                mIsHiding = false;
+                hide();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {}
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {}
+        });
         appearance.start();
     }
 }
