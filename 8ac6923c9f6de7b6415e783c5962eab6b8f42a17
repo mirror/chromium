@@ -70,6 +70,30 @@
       "revId": "8ac6923c9f6de7b6415e783c5962eab6b8f42a17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "407b441c_d9c879b2",
+        "filename": "chrome/browser/installable/installable_metrics.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-12-01T02:46:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "37f5bfac_53950e51",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 8
+      },
+      "revId": "8ac6923c9f6de7b6415e783c5962eab6b8f42a17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
