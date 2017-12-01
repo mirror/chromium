@@ -72384,6 +72384,26 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="SB2.Delay.MainFrame" units="ms">
+  <owner>vakh@chromium.org</owner>
+  <summary>
+    The time that SafeBrowsing actually delayed the browsing experience. It
+    records the difference between the time when Chrome would have started
+    reading the response for a URL and when the SafeBrowsing system completed
+    its check of that URL. Logged for main frame resources only.
+  </summary>
+</histogram>
+
+<histogram name="SB2.Delay.Subresource" units="ms">
+  <owner>vakh@chromium.org</owner>
+  <summary>
+    The time that SafeBrowsing actually delayed the browsing experience. It
+    records the difference between the time when Chrome would have started
+    reading the response for a URL and when the SafeBrowsing system completed
+    its check of that URL. Logged for non-main frame resources only.
+  </summary>
+</histogram>
+
 <histogram name="SB2.DownloadBinhashAddsDeleted">
   <obsolete>
     Deleted in M-34 (February 2014).
