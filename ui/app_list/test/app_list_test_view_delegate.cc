@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "ash/app_list/model/app_list_model.h"
+#include "ash/app_list/model/search/search_model.h"
 #include "base/callback.h"
 #include "base/files/file_path.h"
 #include "ui/app_list/app_list_switches.h"
@@ -22,7 +23,8 @@ AppListTestViewDelegate::AppListTestViewDelegate()
       stop_speech_recognition_count_(0),
       open_search_result_count_(0),
       next_profile_app_count_(0),
-      model_(new AppListTestModel) {
+      model_(new AppListTestModel),
+      search_model_(new SearchModel) {
   model_->SetFoldersEnabled(true);
 }
 
@@ -38,6 +40,10 @@ AppListModel* AppListTestViewDelegate::GetModel() {
   return model_.get();
 }
 
+SearchModel* AppListTestViewDelegate::GetSearchModel() {
+  return search_model_.get();
+}
+
 SpeechUIModel* AppListTestViewDelegate::GetSpeechUI() {
   return &speech_ui_;
 }
@@ -45,7 +51,7 @@ SpeechUIModel* AppListTestViewDelegate::GetSpeechUI() {
 void AppListTestViewDelegate::OpenSearchResult(SearchResult* result,
                                                bool auto_launch,
                                                int event_flags) {
-  const AppListModel::SearchResults* results = model_->results();
+  const SearchModel::SearchResults* results = search_model_->results();
   for (size_t i = 0; i < results->item_count(); ++i) {
     if (results->GetItemAt(i) == result) {
       open_search_result_counts_[i]++;
@@ -87,10 +93,11 @@ bool AppListTestViewDelegate::IsSpeechRecognitionEnabled() {
 void AppListTestViewDelegate::ReplaceTestModel(int item_count) {
   model_.reset(new AppListTestModel);
   model_->PopulateApps(item_count);
+  search_model_.reset(new SearchModel);
 }
 
 void AppListTestViewDelegate::SetSearchEngineIsGoogle(bool is_google) {
-  model_->SetSearchEngineIsGoogle(is_google);
+  search_model_->SetSearchEngineIsGoogle(is_google);
 }
 
 }  // namespace test

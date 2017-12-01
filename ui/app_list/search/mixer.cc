@@ -10,7 +10,7 @@
 #include <string>
 #include <vector>
 
-#include "ash/app_list/model/search_result.h"
+#include "ash/app_list/model/search/search_result.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "ui/app_list/app_list_features.h"
@@ -133,9 +133,8 @@ class Mixer::Group {
   DISALLOW_COPY_AND_ASSIGN(Group);
 };
 
-Mixer::Mixer(AppListModel::SearchResults* ui_results)
-    : ui_results_(ui_results) {
-}
+Mixer::Mixer(SearchModel::SearchResults* ui_results)
+    : ui_results_(ui_results) {}
 Mixer::~Mixer() {
 }
 
@@ -193,7 +192,7 @@ void Mixer::MixAndPublish(bool is_voice_query,
 }
 
 void Mixer::Publish(const SortedResults& new_results,
-                    AppListModel::SearchResults* ui_results) {
+                    SearchModel::SearchResults* ui_results) {
   // The following algorithm is used:
   // 1. Transform the |ui_results| list into an unordered map from result ID
   // to item.

@@ -182,7 +182,7 @@ void SearchResultPageView::SetSelection(bool select) {
 }
 
 void SearchResultPageView::AddSearchResultContainerView(
-    AppListModel::SearchResults* results_model,
+    SearchModel::SearchResults* results_model,
     SearchResultContainerView* result_container) {
   if (!result_container_views_.empty()) {
     HorizontalSeparator* separator = new HorizontalSeparator(bounds().width());

@@ -5,9 +5,9 @@
 #include <stddef.h>
 
 #include "ash/app_list/model/app_list_model.h"
-#include "ash/app_list/model/search_box_model.h"
-#include "ash/app_list/model/search_result.h"
-#include "ash/app_list/model/search_result_observer.h"
+#include "ash/app_list/model/search/search_box_model.h"
+#include "ash/app_list/model/search/search_result.h"
+#include "ash/app_list/model/search/search_result_observer.h"
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/path_service.h"

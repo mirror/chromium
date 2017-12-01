@@ -1162,7 +1162,7 @@ void AppsGridView::UpdateSuggestions() {
     return;
   suggestions_container_->SetResults(contents_view_->app_list_main_view()
                                          ->view_delegate()
-                                         ->GetModel()
+                                         ->GetSearchModel()
                                          ->results());
 }
 

@@ -10,7 +10,7 @@
 
 #include "ash/app_list/model/app_list_model.h"
 #include "ash/app_list/model/app_list_view_state.h"
-#include "ash/app_list/model/search_box_model.h"
+#include "ash/app_list/model/search/search_box_model.h"
 #include "ash/public/interfaces/constants.mojom.h"
 #include "base/command_line.h"
 #include "base/metrics/histogram_macros.h"
@@ -92,6 +92,7 @@ AppListViewDelegate::AppListViewDelegate(AppListControllerDelegate* controller)
     : controller_(controller),
       profile_(nullptr),
       model_(nullptr),
+      search_model_(nullptr),
       template_url_service_observer_(this),
       observer_binding_(this),
       weak_ptr_factory_(this) {
@@ -129,9 +130,10 @@ void AppListViewDelegate::SetProfile(Profile* new_profile) {
 
   if (profile_) {
     DCHECK(model_);
+    DCHECK(search_model_);
     // |search_controller_| will be destroyed on profile switch. Before that,
     // delete |model_|'s search results to clear any dangling pointers.
-    model_->results()->DeleteAll();
+    search_model_->results()->DeleteAll();
 
     // Note: |search_resource_manager_| has a reference to |speech_ui_| so must
     // be destroyed first.
@@ -145,6 +147,7 @@ void AppListViewDelegate::SetProfile(Profile* new_profile) {
       start_page_service->RemoveObserver(this);
     app_sync_ui_state_watcher_.reset();
     model_ = NULL;
+    search_model_ = NULL;
   }
 
   template_url_service_observer_.RemoveAll();
@@ -169,6 +172,9 @@ void AppListViewDelegate::SetProfile(Profile* new_profile) {
 
   model_ = app_list::AppListSyncableServiceFactory::GetForProfile(profile_)
                ->GetModel();
+  search_model_ =
+      app_list::AppListSyncableServiceFactory::GetForProfile(profile_)
+          ->GetSearchModel();
 
   // After |model_| is initialized, make a GetWallpaperColors mojo call to set
   // wallpaper colors for |model_|.
@@ -182,7 +188,7 @@ void AppListViewDelegate::SetProfile(Profile* new_profile) {
   OnTemplateURLServiceChanged();
 
   // Clear search query.
-  model_->search_box()->Update(base::string16(), false);
+  search_model_->search_box()->Update(base::string16(), false);
 }
 
 void AppListViewDelegate::OnGetWallpaperColorsCallback(
@@ -202,9 +208,10 @@ void AppListViewDelegate::SetUpSearchUI() {
                                         false);
 
   search_resource_manager_.reset(new app_list::SearchResourceManager(
-      profile_, model_->search_box(), speech_ui_.get()));
+      profile_, search_model_->search_box(), speech_ui_.get()));
 
-  search_controller_ = CreateSearchController(profile_, model_, controller_);
+  search_controller_ =
+      CreateSearchController(profile_, model_, search_model_, controller_);
 }
 
 void AppListViewDelegate::OnWallpaperColorsChanged(
@@ -219,6 +226,10 @@ void AppListViewDelegate::OnWallpaperColorsChanged(
 
 app_list::AppListModel* AppListViewDelegate::GetModel() {
   return model_;
+}
+
+app_list::SearchModel* AppListViewDelegate::GetSearchModel() {
+  return search_model_;
 }
 
 app_list::SpeechUIModel* AppListViewDelegate::GetSpeechUI() {
@@ -240,7 +251,7 @@ void AppListViewDelegate::OpenSearchResult(app_list::SearchResult* result,
 
   // Record the search metric if the SearchResult is not a suggested app.
   if (result->display_type() != app_list::SearchResult::DISPLAY_RECOMMENDATION)
-    RecordHistogram(model_->tablet_mode(), model_->state_fullscreen());
+    RecordHistogram(search_model_->tablet_mode(), model_->state_fullscreen());
 
   search_controller_->OpenResult(result, event_flags);
 }
@@ -257,7 +268,7 @@ base::TimeDelta AppListViewDelegate::GetAutoLaunchTimeout() {
 }
 
 void AppListViewDelegate::AutoLaunchCanceled() {
-  if (model_ && model_->search_box()->is_voice_query()) {
+  if (search_model_ && search_model_->search_box()->is_voice_query()) {
     base::RecordAction(base::UserMetricsAction("AppList_AutoLaunchCanceled"));
   }
   auto_launch_timeout_ = base::TimeDelta();
@@ -321,7 +332,7 @@ void AppListViewDelegate::OnSpeechResult(const base::string16& result,
   if (is_final) {
     auto_launch_timeout_ =
         base::TimeDelta::FromMilliseconds(kAutoLaunchDefaultTimeoutMilliSec);
-    model_->search_box()->Update(result, true);
+    search_model_->search_box()->Update(result, true);
   }
 }
 
@@ -424,7 +435,7 @@ void AppListViewDelegate::OnTemplateURLServiceChanged() {
       default_provider->GetEngineType(
           template_url_service->search_terms_data()) == SEARCH_ENGINE_GOOGLE;
 
-  model_->SetSearchEngineIsGoogle(is_google);
+  search_model_->SetSearchEngineIsGoogle(is_google);
 
   app_list::StartPageService* start_page_service =
       app_list::StartPageService::Get(profile_);
