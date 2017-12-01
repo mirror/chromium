@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "978c50c6_d88b5411",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1244969
+      },
+      "writtenOn": "2017-12-01T19:10:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d624a84_ba20ae99",
+      "range": {
+        "startLine": 138,
+        "startChar": 4,
+        "endLine": 138,
+        "endChar": 8
+      },
+      "revId": "3210aa6bd82d00e9657a31222a1051c15ea56d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a6a9c69_baf26549",
         "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
         "patchSetId": 1
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "fe2697b8_f1a9f9d8",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1643,
+      "author": {
+        "id": 1244969
+      },
+      "writtenOn": "2017-12-01T19:10:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e64eb06d_1a93ac71",
+      "range": {
+        "startLine": 1643,
+        "startChar": 12,
+        "endLine": 1643,
+        "endChar": 94
+      },
+      "revId": "3210aa6bd82d00e9657a31222a1051c15ea56d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96fc69c9_baf6ab66",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
@@ -116,6 +164,30 @@
       "revId": "3210aa6bd82d00e9657a31222a1051c15ea56d8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f6309aa_668e4540",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 20830,
+      "author": {
+        "id": 1244969
+      },
+      "writtenOn": "2017-12-01T19:10:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96fc69c9_baf6ab66",
+      "range": {
+        "startLine": 20830,
+        "startChar": 24,
+        "endLine": 20830,
+        "endChar": 31
+      },
+      "revId": "3210aa6bd82d00e9657a31222a1051c15ea56d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
