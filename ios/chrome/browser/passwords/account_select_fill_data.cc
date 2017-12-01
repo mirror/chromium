@@ -7,6 +7,8 @@
 #include "base/strings/string_util.h"
 #include "components/autofill/core/common/password_form_fill_data.h"
 
+#include "base/strings/utf_string_conversions.h"
+
 namespace password_manager {
 
 FillData::FillData() = default;
@@ -29,6 +31,7 @@ void AccountSelectFillData::Add(
     const autofill::PasswordFormFillData& form_data) {
   std::pair<base::string16, base::string16> key(form_data.name,
                                                 form_data.username_field.name);
+    LOG(ERROR)<<"**** Add "<<base::UTF16ToASCII(key.first)<<" "<<base::UTF16ToASCII(key.second);
   auto iter_ok = forms_.insert(std::make_pair(key, FormInfo()));
   FormInfo& form_info = iter_ok.first->second;
   form_info.origin = form_data.origin;
@@ -54,6 +57,7 @@ void AccountSelectFillData::Add(
 }
 
 void AccountSelectFillData::Reset() {
+    LOG(ERROR)<<"**** Reset";
   forms_.clear();
   credentials_.clear();
   last_requested_form_ = nullptr;
@@ -114,6 +118,7 @@ const FormInfo* AccountSelectFillData::GetFormInfo(
     const base::string16& field_name) const {
   std::pair<base::string16, base::string16> key(form_name, field_name);
   auto it = forms_.find(key);
+        LOG(ERROR)<<"**** GetFormInfo "<<base::UTF16ToASCII(form_name)<<" "<<base::UTF16ToASCII(field_name)<<" "<<(it == forms_.end());
   return it == forms_.end() ? nullptr : &it->second;
 }
 
