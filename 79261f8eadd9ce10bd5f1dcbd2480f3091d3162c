@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2168a98_ff5dfe2d",
+        "filename": "gpu/config/gpu_driver_bug_list.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1902,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-01T23:50:56Z",
+      "side": 1,
+      "message": "Based on some recent investigation by Victor, I have a feeling that our driver version comparisons may be wrong on Windows. The first number encodes the OS version, which will vary among client machines I assume? Or maybe it refers to the latest OS version the driver targets.\n\nhttps://www.intel.com/content/www/us/en/support/articles/000005654/graphics-drivers.html\n\nAnyway, if you\u0027ve tested this locally it\u0027s just something we should consider for the future.",
+      "revId": "79261f8eadd9ce10bd5f1dcbd2480f3091d3162c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
