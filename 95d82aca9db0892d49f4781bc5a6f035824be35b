@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64fc8cc9_01e20481",
+        "filename": "ui/ozone/platform/drm/gpu/crtc_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1107749
+      },
+      "writtenOn": "2017-12-01T18:01:12Z",
+      "side": 1,
+      "message": "This isn\u0027t correct. It is assuming a refresh rate.\n\nThough I\u0027m not sure if having a valid presentation feedback is correct in this case anyways. This would be a test call to validate if the overlay configuration is valid. The compositor may call this multiple times within a frame without any impact on the actual presentation pipeline.\n\nShould we have an empty presentation feedback?",
+      "range": {
+        "startLine": 113,
+        "startChar": 34,
+        "endLine": 113,
+        "endChar": 70
+      },
+      "revId": "95d82aca9db0892d49f4781bc5a6f035824be35b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07d0c7f2_dfe9ce4c",
+        "filename": "ui/ozone/platform/drm/gpu/crtc_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1107749
+      },
+      "writtenOn": "2017-12-01T18:01:12Z",
+      "side": 1,
+      "message": "You may want to validate the |mode_.vrefresh| value. It could be 0 if the driver is broken or if the controller was just disabled.",
+      "range": {
+        "startLine": 144,
+        "startChar": 64,
+        "endLine": 144,
+        "endChar": 78
+      },
+      "revId": "95d82aca9db0892d49f4781bc5a6f035824be35b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
