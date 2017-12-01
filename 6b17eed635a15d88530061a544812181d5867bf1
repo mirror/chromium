@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcda6560_0e9e8cca",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-01T21:16:15Z",
+      "side": 1,
+      "message": "nit: s/include/import",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 9
+      },
+      "revId": "6b17eed635a15d88530061a544812181d5867bf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32360122_341ffe29",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-01T21:16:15Z",
+      "side": 1,
+      "message": "Can we avoid casting and return TestWebState from InsertTestWebState?",
+      "revId": "6b17eed635a15d88530061a544812181d5867bf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99d458b2_31317599",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-01T21:16:15Z",
+      "side": 1,
+      "message": "nit: /*in_memory\u003d*/true",
+      "range": {
+        "startLine": 379,
+        "startChar": 55,
+        "endLine": 379,
+        "endChar": 59
+      },
+      "revId": "6b17eed635a15d88530061a544812181d5867bf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

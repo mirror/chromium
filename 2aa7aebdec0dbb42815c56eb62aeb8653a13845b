@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "749e48ba_5fbf7fbb",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-01T21:16:15Z",
+      "side": 1,
+      "message": "No client suppose to call TabUsageRecorder::RenderProcessGone(), so it is public for WebStateObserver, but not for TabUsageRecorder.",
+      "parentUuid": "ddb7c01e_ae5fb891",
+      "revId": "2aa7aebdec0dbb42815c56eb62aeb8653a13845b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b154d6f_9b8fc572",
         "filename": "ios/chrome/browser/metrics/tab_usage_recorder_unittest.mm",
         "patchSetId": 4
