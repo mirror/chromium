@@ -42,8 +42,6 @@ const char kHungRendererOutstandingEventType[] = "hung-outstanding-event-type";
 const char kHungRendererLastEventType[] = "hung-last-event-type";
 const char kHungRendererReason[] = "hung-reason";
 
-const char kIsEnterpriseManaged[] = "is-enterprise-managed";
-
 // Registry values used to determine Chrome's update channel; see
 // https://crbug.com/579504.
 const char kApValue[] = "ap";
@@ -141,7 +139,6 @@ size_t RegisterChromeCrashKeys() {
     {kHungRendererOutstandingEventType, kSmallSize},
     {kHungRendererLastEventType, kSmallSize},
     {kHungRendererReason, kSmallSize},
-    {kIsEnterpriseManaged, kSmallSize},
 #endif
     {kInputEventFilterSendFailure, kSmallSize},
 #if defined(OS_CHROMEOS)

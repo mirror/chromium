@@ -81,9 +81,6 @@ extern const char kHungRendererOutstandingEventType[];
 extern const char kHungRendererLastEventType[];
 extern const char kHungRendererReason[];
 
-// Whether the machine is enterprise managed (only sent on Windows).
-extern const char kIsEnterpriseManaged[];
-
 // The "ap" (additional parameters) value in Chrome's ClientState registry key.
 extern const char kApValue[];
 

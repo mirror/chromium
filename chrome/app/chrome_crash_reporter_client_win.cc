@@ -61,8 +61,6 @@ constexpr char kHungRendererReason[] = "hung-reason";
 constexpr char kInputEventFilterSendFailure[] =
     "input-event-filter-send-failure";
 
-constexpr char kIsEnterpriseManaged[] = "is-enterprise-managed";
-
 constexpr char kViewCount[] = "view-count";
 constexpr char kZeroEncodeDetails[] = "zero-encode-details";
 
@@ -109,9 +107,6 @@ size_t RegisterCrashKeysHelper() {
       {gpu::crash_keys::kGPUPixelShaderVersion, kSmallSize},
       {gpu::crash_keys::kGPUVertexShaderVersion, kSmallSize},
       {gpu::crash_keys::kGPUGLContextIsVirtual, kSmallSize},
-
-      // browser/:
-      {kIsEnterpriseManaged, kSmallSize},
 
       // content/:
       {"bad_message_reason", kSmallSize},

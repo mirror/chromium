@@ -471,9 +471,10 @@ void ChromeBrowserMainPartsWin::PreMainMessageLoopStart() {
 int ChromeBrowserMainPartsWin::PreCreateThreads() {
   // Record whether the machine is enterprise managed in a crash key. This will
   // be used to better identify whether crashes are from enterprise users.
-  base::debug::SetCrashKeyValue(
-      crash_keys::kIsEnterpriseManaged,
-      base::win::IsEnterpriseManaged() ? "yes" : "no");
+  static crash_reporter::CrashKeyString<4> is_enterprise_managed_key(
+      "is-enterprise-managed");
+  is_enterprise_managed_key.Set(base::win::IsEnterpriseManaged() ? "yes"
+                                                                 : "no");
 
   // Set crash keys containing the registry values used to determine Chrome's
   // update channel at process startup; see https://crbug.com/579504.
