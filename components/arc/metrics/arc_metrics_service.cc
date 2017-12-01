@@ -65,6 +65,30 @@ class ArcMetricsServiceFactory
   ~ArcMetricsServiceFactory() override = default;
 };
 
+// Note, that we cannot reuse mojo's enum, since it doesn't have entries count.
+// Also metrics should have specific integer values corresponding to histograms.
+enum class MetricsNativeBridgeType {
+  NONE = 0,
+  HOUDINI = 1,
+  NDK_TRANSLATION = 2,
+  COUNT
+};
+
+MetricsNativeBridgeType MojoToMetricsNativeBridgeType(
+    mojom::NativeBridgeType native_bridge_type) {
+  switch (native_bridge_type) {
+    case mojom::NativeBridgeType::NONE:
+      return MetricsNativeBridgeType::NONE;
+    case mojom::NativeBridgeType::HOUDINI:
+      return MetricsNativeBridgeType::HOUDINI;
+    case mojom::NativeBridgeType::NDK_TRANSLATION:
+      return MetricsNativeBridgeType::NDK_TRANSLATION;
+  }
+  LOG(ERROR) << "Unknown native bridge type " << native_bridge_type
+             << ", reporting as not used";
+  return MetricsNativeBridgeType::NONE;
+}
+
 }  // namespace
 
 // static
@@ -78,6 +102,7 @@ ArcMetricsService::ArcMetricsService(content::BrowserContext* context,
     : arc_bridge_service_(bridge_service),
       binding_(this),
       process_observer_(this),
+      native_bridge_type_(mojom::NativeBridgeType::NONE),
       weak_ptr_factory_(this) {
   arc_bridge_service_->metrics()->AddObserver(this);
   arc_bridge_service_->process()->AddObserver(&process_observer_);
@@ -202,6 +227,12 @@ void ArcMetricsService::ReportBootProgress(
                                     kUmaNumBuckets);
     }
   }
+}
+
+void ArcMetricsService::ReportNativeBridge(
+    mojom::NativeBridgeType native_bridge_type) {
+  VLOG(2) << "Native bridge type is " << native_bridge_type;
+  native_bridge_type_ = native_bridge_type;
 }
 
 ArcMetricsService::ProcessObserver::ProcessObserver(

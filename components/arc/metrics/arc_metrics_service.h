@@ -52,6 +52,7 @@ class ArcMetricsService
   // MetricsHost overrides.
   void ReportBootProgress(std::vector<mojom::BootProgressEventPtr> events,
                           mojom::BootType boot_type) override;
+  void ReportNativeBridge(mojom::NativeBridgeType native_bridge_type) override;
 
  private:
   // Adapter to be able to also observe ProcessInstance events.
@@ -87,6 +88,8 @@ class ArcMetricsService
   base::RepeatingTimer timer_;
 
   base::TimeTicks arc_start_time_;
+
+  mojom::NativeBridgeType native_bridge_type_;
 
   // Always keep this the last member of this class to make sure it's the
   // first thing to be destructed.
