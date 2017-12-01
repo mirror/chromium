@@ -263,13 +263,17 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
   void CommitNavigation();
 
   // Check whether a request should be allowed to continue or should be blocked
-  // because it violates a CSP. This method can have two side effects:
-  // - If a CSP is configured to send reports and the request violates the CSP,
-  //   a report will be sent.
-  // - The navigation request may be upgraded from HTTP to HTTPS if a CSP is
-  //   configured to upgrade insecure requests.
-  ContentSecurityPolicyCheckResult CheckContentSecurityPolicyFrameSrc(
-      bool is_redirect);
+  // because it violates a CSP. If a CSP is configured to send reports and the
+  // request violates the CSP, a report will be sent.
+  ContentSecurityPolicyCheckResult CheckContentSecurityPolicy(bool is_redirect);
+  ContentSecurityPolicyCheckResult CheckContentSecurityPolicyDirective(
+      CSPDirective::Name directive,
+      bool is_redirect,
+      bool report_only);
+
+  // May upgrade the request from HTTP to HTTPS if a CSP is configured to
+  // upgrade insecure requests. Returns true if request was upgraded.
+  bool MaybeUpgradeInsecureRequest(bool is_redirect);
 
   // This enum describes the result of the credentialed subresource check for
   // the request.
