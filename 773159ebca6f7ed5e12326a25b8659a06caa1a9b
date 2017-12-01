@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "03caae27_86f42647",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-12-01T21:41:50Z",
+      "side": 1,
+      "message": "Protected is fine and inline with how other tests do it. Accessors are overkill.",
+      "parentUuid": "25920252_e82df6ea",
+      "revId": "773159ebca6f7ed5e12326a25b8659a06caa1a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d54c6d5f_7c8e8db7",
         "filename": "content/browser/frame_host/render_frame_host_manager.cc",
         "patchSetId": 6
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Yes, this might matter if foo.com embeds a hosted app, which further has same-site-non-app subframes.  I suppose this could matter for Drive, where I know some sites can embed spreadsheets or forms, and those might also have google.com subframes (e.g., see example in https://crbug.com/715756).  I originally had used parent here, but went to opener since (1) it was already present for TDI, and (2) it helps deal with cases like app.com/app/(foo.com(app.com/nonapp/)).  I agree that having parent as well would be worthwhile, so I\u0027ve added it.  I think the root should still take precedence over it for TDI.  Also, expanded the comment on why this is necessary.",
       "parentUuid": "d54c6d5f_7c8e8db7",
+      "revId": "773159ebca6f7ed5e12326a25b8659a06caa1a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cce70bb1_5314c0b9",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1435,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-12-01T21:41:50Z",
+      "side": 1,
+      "message": "Top frame taking precedence makes total sense. Thanks!",
+      "parentUuid": "7ddfc30b_4629949a",
       "revId": "773159ebca6f7ed5e12326a25b8659a06caa1a9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
