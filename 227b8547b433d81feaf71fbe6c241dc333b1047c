@@ -22,6 +22,30 @@
       "revId": "227b8547b433d81feaf71fbe6c241dc333b1047c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "784de7c4_36b183f0",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-12-01T17:31:03Z",
+      "side": 1,
+      "message": "Well, we actually need that flag. It seems that some large tests run many jobs, and each of those could run multiple processes. The coverage might work even without that flag, but it needs too much disk space. For instance, I tried to run:\n\n1) cc_unittests: it created ~300 files 55 MB each, took 16 GB in total\n\n2) components_unittests: it runs 56 jobs, multiple processed per each, and single profraw file is about 900MB",
+      "parentUuid": "898fa45f_3865e376",
+      "range": {
+        "startLine": 265,
+        "startChar": 5,
+        "endLine": 265,
+        "endChar": 25
+      },
+      "revId": "227b8547b433d81feaf71fbe6c241dc333b1047c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
