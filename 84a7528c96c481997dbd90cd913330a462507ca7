@@ -231,6 +231,24 @@
       "revId": "84a7528c96c481997dbd90cd913330a462507ca7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d66ba46_e85c8522",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-12-01T16:28:48Z",
+      "side": 1,
+      "message": "At the moment the difference is that we run kUnthrottled tasks during pausing and we do not run kInternalTimers during that period.\n\nWe don\u0027t have a real guidance there and we definitely should come up with something coherent there.",
+      "parentUuid": "7ff2c00c_bab76010",
+      "revId": "84a7528c96c481997dbd90cd913330a462507ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
