@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d60f4184_e2ba36b6",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 877,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-01T06:17:39Z",
+      "side": 1,
+      "message": "The code below actually runs fine in mash, but the overall feature is broken due to mash a11y issues with chrome\u0027s AccessibilityManager, so I left it NOTIMPLEMENTED.",
+      "revId": "cab02671a71faf8a82c88c805f7e5a3f296adc76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
