@@ -56,7 +56,10 @@ class ResourceResponse;
 class ResourceTimingInfo;
 class SecurityOrigin;
 class UserTiming;
+class ScriptState;
+class ScriptValue;
 class SubTaskAttribution;
+class V8ObjectBuilder;
 
 using PerformanceEntryVector = HeapVector<Member<PerformanceEntry>>;
 using PerformanceObservers = HeapLinkedHashSet<Member<PerformanceObserver>>;
@@ -188,6 +191,8 @@ class CORE_EXPORT PerformanceBase : public EventTargetWithInlineData {
                                    const SecurityOrigin&,
                                    ExecutionContext*);
 
+  ScriptValue toJSONForBinding(ScriptState*) const;
+
   virtual void Trace(blink::Visitor*);
 
  private:
@@ -215,6 +220,8 @@ class CORE_EXPORT PerformanceBase : public EventTargetWithInlineData {
   bool HasObserverFor(PerformanceEntry::EntryType) const;
 
   void DeliverObservationsTimerFired(TimerBase*);
+
+  virtual void BuildJSONValue(ScriptState*, V8ObjectBuilder&) const;
 
   PerformanceEntryVector frame_timing_buffer_;
   unsigned frame_timing_buffer_size_;
