@@ -698,6 +698,9 @@ const IDNTestCase idn_cases[] = {
      true},
     // Can start with a RTL and end with AN
     {"xn--mgbjq0r.eg", L"\x062c\x0627\x0631\x0662.eg", true},
+    // The skeleton of 'w' has changed from 'vv' to 'w'. Make sure
+    // domains with 'w' work as intended.
+    {"xn--wnderlist-58a.com", L"w\x00fanderlist.com", false},
 };
 
 struct AdjustOffsetCase {
