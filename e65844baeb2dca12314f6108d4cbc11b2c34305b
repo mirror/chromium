@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "41fb9bd1_7adb7ab0",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_impl_win_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 756,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-12-01T18:31:05Z",
+      "side": 1,
+      "message": "This could use a comment explaining why it expects to become idle. Or rename the method to something with \"ExpectStateChangeToIdle\" or similar in it.",
+      "revId": "e65844baeb2dca12314f6108d4cbc11b2c34305b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8d4a68a_0df2beed",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_impl_win_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-12-01T18:31:05Z",
+      "side": 1,
+      "message": "Why does this not expect a state change?",
+      "revId": "e65844baeb2dca12314f6108d4cbc11b2c34305b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a58011d_eaf2e7e5",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
         "patchSetId": 18
