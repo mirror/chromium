@@ -17,6 +17,7 @@
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "services/device/public/interfaces/wake_lock_context.mojom.h"
 #include "ui/gfx/geometry/size.h"
+// #include "chrome/browser/picture_in_picture/picture_in_picture_window_controller.h"
 
 namespace content {
 
@@ -110,6 +111,8 @@ bool MediaWebContentsObserver::OnMessageReceived(
                         OnMediaPlaying)
     IPC_MESSAGE_HANDLER(MediaPlayerDelegateHostMsg_OnMutedStatusChanged,
                         OnMediaMutedStatusChanged)
+    IPC_MESSAGE_HANDLER(MediaPlayerDelegateHostMsg_OnPictureInPicture,
+                        OnPictureInPicture)
     IPC_MESSAGE_HANDLER(
         MediaPlayerDelegateHostMsg_OnMediaEffectivelyFullscreenChanged,
         OnMediaEffectivelyFullscreenChanged)
@@ -334,6 +337,16 @@ void MediaWebContentsObserver::OnMediaMutedStatusChanged(
     bool muted) {
   const MediaPlayerId id(render_frame_host, delegate_id);
   web_contents_impl()->MediaMutedStatusChanged(id, muted);
+}
+
+void MediaWebContentsObserver::OnPictureInPicture() {
+  LOG(ERROR) << "MediaWebContentsObserver::OnPictureInPicture";
+
+  // WHAT I WANT TO HOOK UP HERE SOMEHOW
+  // PictureInPictureWindowController* window_controller =
+  //     PictureInPictureWindowController::GetOrCreateForWebContents(
+  //         web_contents_impl());
+  // window_controller->Show();
 }
 
 void MediaWebContentsObserver::AddMediaPlayerEntry(

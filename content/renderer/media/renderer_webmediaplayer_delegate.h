@@ -59,6 +59,7 @@ class CONTENT_EXPORT RendererWebMediaPlayerDelegate
   void SetIsEffectivelyFullscreen(int player_id, bool is_fullscreen) override;
   void DidPlayerSizeChange(int delegate_id, const gfx::Size& size) override;
   void DidPlayerMutedStatusChange(int delegate_id, bool muted) override;
+  void PictureInPicture() override;
 
   // content::RenderFrameObserver overrides.
   void WasHidden() override;

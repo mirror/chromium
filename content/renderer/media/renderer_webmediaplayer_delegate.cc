@@ -114,6 +114,12 @@ void RendererWebMediaPlayerDelegate::DidPlayerMutedStatusChange(int delegate_id,
                                                            delegate_id, muted));
 }
 
+void RendererWebMediaPlayerDelegate::PictureInPicture() {
+  LOG(ERROR) << "RendererWebMediaPlayerDelegate::PictureInPicture";
+
+  Send(new MediaPlayerDelegateHostMsg_OnPictureInPicture(routing_id()));
+}
+
 void RendererWebMediaPlayerDelegate::DidPause(int player_id) {
   DVLOG(2) << __func__ << "(" << player_id << ")";
   DCHECK(id_map_.Lookup(player_id));

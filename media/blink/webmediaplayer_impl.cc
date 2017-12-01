@@ -736,6 +736,11 @@ void WebMediaPlayerImpl::SetVolume(double volume) {
   UpdatePlayState();
 }
 
+void WebMediaPlayerImpl::PictureInPicture() {
+  LOG(ERROR) << "WebMediaPlayerImpl::PictureInPicture";
+  delegate_->PictureInPicture();
+}
+
 void WebMediaPlayerImpl::SetSinkId(
     const blink::WebString& sink_id,
     const blink::WebSecurityOrigin& security_origin,
