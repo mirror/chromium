@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "c4c0d12c_55b3e111",
+        "filename": "chrome/browser/vr/service/vr_device_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-01T11:23:21Z",
+      "side": 1,
+      "message": "I also prefer with brackets but I\u0027m afraid the coding style is always right :(",
+      "parentUuid": "e8272315_eb4fde6d",
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23f65226_02a8187f",
         "filename": "device/vr/orientation/orientation_device.cc",
         "patchSetId": 8

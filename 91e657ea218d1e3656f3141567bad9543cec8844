@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "baa86a7a_af3b9f3c",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-01T11:23:21Z",
+      "side": 1,
+      "message": "\u003d default;",
+      "range": {
+        "startLine": 76,
+        "startChar": 40,
+        "endLine": 76,
+        "endChar": 42
+      },
+      "revId": "91e657ea218d1e3656f3141567bad9543cec8844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b3ba83d_e55e8831",
         "filename": "device/vr/orientation/orientation_device.cc",
         "patchSetId": 10
@@ -94,6 +117,40 @@
     },
     {
       "key": {
+        "uuid": "e9008782_aba9f4cb",
+        "filename": "device/vr/orientation/orientation_device_provider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-01T11:23:21Z",
+      "side": 1,
+      "message": "style: you need to leave one empty line between these two includes",
+      "revId": "91e657ea218d1e3656f3141567bad9543cec8844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "687d00aa_894084ab",
+        "filename": "device/vr/orientation/orientation_device_provider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-01T11:23:21Z",
+      "side": 1,
+      "message": "BTW, when I said \"inside the class\" I mean inside the class declaration. Something like:\n```\nclass OrientationProvider {\n public:\n  using GetDeviceCallback \u003d base::OnceCallback\u003cvoid(VRDevice*)\u003e;\n};\n```\n\nThe difference between this and what you had before (`using` instruction outside of the `class` block) is that callers will have to prefix the type like this: `device::OrientatioProvider::GetDeviceCallback`. Basically, the class behaves like a namespace.",
+      "revId": "91e657ea218d1e3656f3141567bad9543cec8844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a5a15b56_25c22944",
         "filename": "device/vr/orientation/orientation_device_provider.cc",
         "patchSetId": 10
@@ -133,6 +190,29 @@
         "startChar": 13,
         "endLine": 40,
         "endChar": 29
+      },
+      "revId": "91e657ea218d1e3656f3141567bad9543cec8844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "044b3537_3535ce8b",
+        "filename": "device/vr/orientation/orientation_device_provider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-01T11:23:21Z",
+      "side": 1,
+      "message": "Would it make sense to do this before the `add_device_callback_` call?\n\nAlso, you might want to make a local copy of the callbacks being run after another callback to avoid a callback interfering with the state of the object.",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 41
       },
       "revId": "91e657ea218d1e3656f3141567bad9543cec8844",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
