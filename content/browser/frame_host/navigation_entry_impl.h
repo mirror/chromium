@@ -65,6 +65,17 @@ class CONTENT_EXPORT NavigationEntryImpl : public NavigationEntry {
         FrameTreeNode* current_frame_tree_node,
         TreeNode* parent_node) const;
 
+    // Searches children of |frame_tree_node| for a frame that matches the given
+    // child of |this|.
+    // This is O(N) in the worst case because we need to look up each frame (and
+    // since we want to avoid a map of unique names, which can be very long).
+    // To partly mitigate this, we add an optimization for the common case that
+    // the two child lists are the same length and are likely in the same order:
+    // we pick the starting offset such that the first test is likely a success.
+    FrameTreeNode* FindMatchingFrameForChild(
+        size_t child_index,
+        FrameTreeNode* frame_tree_node) const;
+
     // The parent of this node.
     TreeNode* parent;
 
@@ -263,6 +274,8 @@ class CONTENT_EXPORT NavigationEntryImpl : public NavigationEntry {
   // |frame_tree_node|.
   void RemoveEntryForFrame(FrameTreeNode* frame_tree_node,
                            bool only_if_different_position);
+
+  void ClearEntriesForMissingChildren(FrameTreeNode* frame_tree_node);
 
   void set_unique_id(int unique_id) {
     unique_id_ = unique_id;

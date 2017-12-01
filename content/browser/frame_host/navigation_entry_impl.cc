@@ -156,6 +156,25 @@ bool NavigationEntryImpl::TreeNode::MatchesFrame(
          frame_tree_node->unique_name() == frame_entry->frame_unique_name();
 }
 
+FrameTreeNode* NavigationEntryImpl::TreeNode::FindMatchingFrameForChild(
+    size_t child_index,
+    FrameTreeNode* frame_tree_node) const {
+  const TreeNode* child = children[child_index].get();
+  size_t ftn_child_count = frame_tree_node->child_count();
+  for (size_t j = 0; j < ftn_child_count; j++) {
+    size_t index = j;
+    // If the two lists of children are the same length, start looking at the
+    // same index as |child|.
+    if (children.size() == ftn_child_count)
+      index = (child_index + j) % ftn_child_count;
+
+    if (frame_tree_node->child_at(index)->unique_name() ==
+        child->frame_entry->frame_unique_name())
+      return frame_tree_node->child_at(index);
+  }
+  return nullptr;
+}
+
 std::unique_ptr<NavigationEntryImpl::TreeNode>
 NavigationEntryImpl::TreeNode::CloneAndReplace(
     FrameNavigationEntry* frame_navigation_entry,
@@ -177,37 +196,17 @@ NavigationEntryImpl::TreeNode::CloneAndReplace(
       const auto& child = children[i];
 
       // Don't check whether it's still in the tree if |current_frame_tree_node|
-      // is null.
+      // is null. Otherwise, make sure the frame is still in the tree before
+      // cloning it.
       if (!current_frame_tree_node) {
         copy->children.push_back(child->CloneAndReplace(
             frame_navigation_entry, clone_children_of_target,
             target_frame_tree_node, nullptr, copy.get()));
-        continue;
-      }
-
-      // Otherwise, make sure the frame is still in the tree before cloning it.
-      // This is O(N^2) in the worst case because we need to look up each frame
-      // (and since we want to avoid a map of unique names, which can be very
-      // long).  To partly mitigate this, we add an optimization for the common
-      // case that the two child lists are the same length and are likely in the
-      // same order: we pick the starting offset of the inner loop to get O(N).
-      size_t ftn_child_count = current_frame_tree_node->child_count();
-      for (size_t j = 0; j < ftn_child_count; j++) {
-        size_t index = j;
-        // If the two lists of children are the same length, start looking at
-        // the same index as |child|.
-        if (children.size() == ftn_child_count)
-          index = (i + j) % ftn_child_count;
-
-        if (current_frame_tree_node->child_at(index)->unique_name() ==
-            child->frame_entry->frame_unique_name()) {
-          // Found |child| in the tree.  Clone it and break out of inner loop.
-          copy->children.push_back(child->CloneAndReplace(
-              frame_navigation_entry, clone_children_of_target,
-              target_frame_tree_node, current_frame_tree_node->child_at(index),
-              copy.get()));
-          break;
-        }
+      } else if (auto* child_ftn =
+                     FindMatchingFrameForChild(i, current_frame_tree_node)) {
+        copy->children.push_back(child->CloneAndReplace(
+            frame_navigation_entry, clone_children_of_target,
+            target_frame_tree_node, child_ftn, copy.get()));
       }
     }
   }
@@ -930,6 +929,19 @@ void NavigationEntryImpl::RemoveEntryForFrame(FrameTreeNode* frame_tree_node,
         });
     CHECK(it != parent_node->children.end());
     parent_node->children.erase(it);
+  }
+}
+
+void NavigationEntryImpl::ClearEntriesForMissingChildren(
+    FrameTreeNode* frame_tree_node) {
+  if (auto* tree_node = GetTreeNode(frame_tree_node)) {
+    size_t child_index = 0;
+    while (child_index < tree_node->children.size()) {
+      if (tree_node->FindMatchingFrameForChild(child_index, frame_tree_node))
+        ++child_index;
+      else
+        tree_node->children.erase(tree_node->children.begin() + child_index);
+    }
   }
 }
 

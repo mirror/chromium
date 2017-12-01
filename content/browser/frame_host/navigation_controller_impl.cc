@@ -1103,8 +1103,7 @@ void NavigationControllerImpl::RendererDidNavigateToNewPage(
         params.method, params.post_id);
 
     new_entry = GetLastCommittedEntry()->CloneAndReplace(
-        frame_entry, true, rfh->frame_tree_node(),
-        delegate_->GetFrameTree()->root());
+        frame_entry, true, rfh->frame_tree_node(), nullptr);
     if (new_entry->GetURL().GetOrigin() != params.url.GetOrigin()) {
       // TODO(jam): we had one report of this with a URL that was redirecting to
       // only tildes. Until we understand that better, don't copy the cert in
@@ -1467,8 +1466,7 @@ void NavigationControllerImpl::RendererDidNavigateNewSubframe(
 
   std::unique_ptr<NavigationEntryImpl> new_entry =
       GetLastCommittedEntry()->CloneAndReplace(
-          frame_entry.get(), is_same_document, rfh->frame_tree_node(),
-          delegate_->GetFrameTree()->root());
+          frame_entry.get(), is_same_document, rfh->frame_tree_node(), nullptr);
 
   // TODO(creis): Update this to add the frame_entry if we can't find the one
   // to replace, which can happen due to a unique name change.  See
@@ -2220,6 +2218,14 @@ void NavigationControllerImpl::DiscardPendingEntry(bool was_failure) {
 void NavigationControllerImpl::SetPendingNavigationSSLError(bool error) {
   if (pending_entry_)
     pending_entry_->set_ssl_error(error);
+}
+
+void NavigationControllerImpl::FrameStoppedLoading(FrameTreeNode* node,
+                                                   bool error_occured) {
+  if (!error_occured) {
+    if (auto* entry = GetLastCommittedEntry())
+      entry->ClearEntriesForMissingChildren(node);
+  }
 }
 
 void NavigationControllerImpl::DiscardTransientEntry() {

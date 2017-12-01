@@ -483,6 +483,7 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
       is_waiting_for_swapout_ack_(false),
       render_frame_created_(false),
       navigations_suspended_(false),
+      current_document_load_failed_(false),
       is_waiting_for_beforeunload_ack_(false),
       unload_ack_is_for_navigation_(false),
       is_loading_(false),
@@ -1516,6 +1517,8 @@ void RenderFrameHostImpl::OnDidFailLoadWithError(
   GURL validated_url(url);
   GetProcess()->FilterURL(false, &validated_url);
 
+  current_document_load_failed_ = true;
+
   frame_tree_node_->navigator()->DidFailLoadWithError(
       this, validated_url, error_code, error_description);
 }
@@ -1648,6 +1651,9 @@ void RenderFrameHostImpl::DidCommitProvisionalLoad(
   } else {
     SetLastCommittedSiteUrl(validated_params->url);
   }
+
+  if (!validated_params->was_within_same_document)
+    current_document_load_failed_ = false;
 
   // PlzNavigate sends searchable form data in the BeginNavigation message
   // while non-PlzNavigate sends it in the DidCommitProvisionalLoad message.
@@ -2736,6 +2742,11 @@ void RenderFrameHostImpl::OnDidStopLoading() {
   // of this RenderFrameHost is being tracked.
   if (is_active())
     frame_tree_node_->DidStopLoading();
+
+  if (IsCurrent()) {
+    frame_tree_node_->navigator()->DidStopLoading(
+        this, current_document_load_failed_);
+  }
 }
 
 void RenderFrameHostImpl::OnDidChangeLoadProgress(double load_progress) {

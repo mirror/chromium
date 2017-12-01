@@ -1144,6 +1144,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // RenderFrameHost.
   bool navigations_suspended_;
 
+  bool current_document_load_failed_;
+
   // Holds the parameters for a suspended navigation. This can only happen while
   // this RFH is the pending RenderFrameHost of a RenderFrameHostManager. There
   // will only ever be one suspended navigation, because RenderFrameHostManager

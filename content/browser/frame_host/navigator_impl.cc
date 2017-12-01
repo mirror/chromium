@@ -682,6 +682,12 @@ void NavigatorImpl::DidNavigate(
   }
 }
 
+void NavigatorImpl::DidStopLoading(RenderFrameHostImpl* render_frame_host,
+                                   bool error_occured) {
+  controller_->FrameStoppedLoading(render_frame_host->frame_tree_node(),
+                                   error_occured);
+}
+
 void NavigatorImpl::RequestOpenURL(
     RenderFrameHostImpl* render_frame_host,
     const GURL& url,

@@ -31,7 +31,8 @@ class URLRequestFailedJob : public URLRequestJob {
   URLRequestFailedJob(URLRequest* request,
                       NetworkDelegate* network_delegate,
                       FailurePhase phase,
-                      int net_error);
+                      int net_error,
+                      std::string response = std::string());
 
   // Same as above, except that the job fails at FailurePhase.START.
   URLRequestFailedJob(URLRequest* request,
@@ -62,6 +63,9 @@ class URLRequestFailedJob : public URLRequestJob {
   // hang.
   static GURL GetMockHttpUrlWithFailurePhase(FailurePhase phase, int net_error);
 
+  static GURL GetMockHttpUrlWithPartialResponse(const std::string& response,
+                                                int net_error);
+
   // Given a net error code and a host name, constructs a mock URL that will
   // return that error asynchronously when started. |net_error| must be a valid
   // net error code other than net::OK. Passing net::ERR_IO_PENDING for
@@ -70,6 +74,14 @@ class URLRequestFailedJob : public URLRequestJob {
                                         const std::string& hostname);
   static GURL GetMockHttpsUrlForHostname(int net_error,
                                          const std::string& hostname);
+
+  // The interceptor can delay or cancel calling ReadRawDataComplete of an
+  // URLRequestFailedJob. The closure passed as the first arg calls
+  // ReadRawDataComplete. The second argument is result code.
+  using ReadRawDataCompleteInterceptor =
+      base::RepeatingCallback<void(base::OnceClosure, int)>;
+  static void SetReadRawDataCompleteInterceptor(
+      ReadRawDataCompleteInterceptor interceptor);
 
  protected:
   ~URLRequestFailedJob() override;
@@ -80,6 +92,7 @@ class URLRequestFailedJob : public URLRequestJob {
   const FailurePhase phase_;
   const int net_error_;
   int64_t total_received_bytes_;
+  std::string response_;
 
   base::WeakPtrFactory<URLRequestFailedJob> weak_factory_;
 

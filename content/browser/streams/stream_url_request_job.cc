@@ -58,6 +58,9 @@ void StreamURLRequestJob::OnDataAvailable(Stream* stream) {
     case Stream::STREAM_COMPLETE:
       // Ensure ReadRawData gives net::OK.
       DCHECK_EQ(net::OK, result);
+      // But the stream could end with an error.
+      if (stream_->GetStatus() < 0)
+        result = stream_->GetStatus();
       break;
     case Stream::STREAM_EMPTY:
       NOTREACHED();

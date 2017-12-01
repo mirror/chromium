@@ -2946,11 +2946,11 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
   EXPECT_EQ(1, controller.GetLastCommittedEntryIndex());
   EXPECT_EQ(entry2, controller.GetLastCommittedEntry());
 
-  // The entry should have both the stale FrameNavigationEntry with the old
-  // name and the new FrameNavigationEntry for the fallback navigation.
-  ASSERT_EQ(2U, entry2->root_node()->children.size());
-  EXPECT_EQ(frame_url_b, entry2->root_node()->children[0]->frame_entry->url());
-  EXPECT_EQ(data_url, entry2->root_node()->children[1]->frame_entry->url());
+  // The entry should have only the new FrameNavigationEntry for the fallback
+  // navigation. The stale FrameNavigationEntry with the old name was deleted
+  // when load stopped.
+  ASSERT_EQ(1U, entry2->root_node()->children.size());
+  EXPECT_EQ(data_url, entry2->root_node()->children[0]->frame_entry->url());
 }
 
 // Allows waiting until an URL with a data scheme commits in any frame.
@@ -3392,7 +3392,7 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
                        FrameNavigationEntry_RemoveRecreatedBlankSubframe) {
   // 1. Start on a page that removes its about:blank iframe during onload.
   GURL main_url(embedded_test_server()->GetURL(
-      "/navigation_controller/remove_blank_iframe_on_load.html"));
+      "/navigation_controller/remove_blank_iframe_on_second_load.html"));
   GURL blank_url(url::kAboutBlankURL);
   EXPECT_TRUE(NavigateToURL(shell(), main_url));
   NavigationControllerImpl& controller = static_cast<NavigationControllerImpl&>(
@@ -3406,8 +3406,7 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
   EXPECT_EQ(0, controller.GetLastCommittedEntryIndex());
   NavigationEntryImpl* entry = controller.GetLastCommittedEntry();
 
-  // The entry should have a FrameNavigationEntry for the blank subframe, even
-  // though it is being removed from the page.
+  // The entry should have a FrameNavigationEntry for the blank subframe.
   ASSERT_EQ(1U, entry->root_node()->children.size());
   EXPECT_EQ(blank_url, entry->root_node()->children[0]->frame_entry->url());
 
@@ -3421,7 +3420,8 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
   EXPECT_EQ(2, controller.GetEntryCount());
   EXPECT_EQ(1, controller.GetLastCommittedEntryIndex());
 
-  // 3. Go back, recreating the iframe (and removing it again).
+  // 3. Go back, recreating the iframe and removing it.
+  // TODO: Maybe check that the frame is added and then removed?
   {
     TestNavigationObserver back_load_observer(shell()->web_contents());
     controller.GoBack();
@@ -3436,9 +3436,8 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
   EXPECT_EQ(0, controller.GetLastCommittedEntryIndex());
   EXPECT_EQ(entry, controller.GetLastCommittedEntry());
 
-  // The entry should have a FrameNavigationEntry for the blank subframe.
-  ASSERT_EQ(1U, entry->root_node()->children.size());
-  EXPECT_EQ(blank_url, entry->root_node()->children[0]->frame_entry->url());
+  // The entry should not have a FrameNavigationEntry for non-existent subframe.
+  EXPECT_EQ(0U, entry->root_node()->children.size());
 }
 
 // Verifies that we clear the children FrameNavigationEntries if a history
@@ -6185,6 +6184,308 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
   EXPECT_TRUE(ExecuteScriptAndExtractString(
       web_contents, "domAutomationController.send(document.origin)", &origin));
   EXPECT_EQ(start_url.GetOrigin().spec(), origin + "/");
+}
+
+IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
+                       FrameNavigationEntriesKeptOnSameDocumentNavigation) {
+  EXPECT_TRUE(NavigateToURL(
+      shell(), embedded_test_server()->GetURL(
+                   "/navigation_controller/pushstate_and_iframe.html")));
+  FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
+                            ->GetFrameTree()
+                            ->root();
+  ASSERT_EQ(1U, root->child_count());
+  ASSERT_NE(nullptr, root->child_at(0));
+  const GURL subframe_new_url = embedded_test_server()->GetURL(
+      "/navigation_controller/simple_page_2.html");
+  NavigateFrameToURL(root->child_at(0), subframe_new_url);
+
+  // Load another page and go back. The child frame should load
+  // simple_page_2.html.
+  EXPECT_TRUE(
+      NavigateToURL(shell(), embedded_test_server()->GetURL("/title1.html")));
+  shell()->web_contents()->GetController().GoBack();
+  EXPECT_TRUE(WaitForLoadStop(shell()->web_contents()));
+  ASSERT_EQ(1U, root->child_count());
+  ASSERT_NE(nullptr, root->child_at(0));
+  EXPECT_EQ(subframe_new_url, root->child_at(0)->current_url());
+}
+
+IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
+                       ClearChildFrameNavigationEntriesOnStopLoading) {
+  EXPECT_TRUE(NavigateToURL(
+      shell(), embedded_test_server()->GetURL(
+                   "/navigation_controller/iframe_loaded_once.html")));
+  EXPECT_TRUE(
+      NavigateToURL(shell(), embedded_test_server()->GetURL("/title1.html")));
+  auto& controller = shell()->web_contents()->GetController();
+  controller.GoBack();
+  EXPECT_TRUE(WaitForLoadStop(shell()->web_contents()));
+  FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
+                            ->GetFrameTree()
+                            ->root();
+  EXPECT_EQ(0U, root->child_count());
+  // After going back, the page has no iframes. Since it stopped loading, the
+  // FrameNavigationEntry for child frame should be cleared.
+  EXPECT_TRUE(
+      static_cast<NavigationEntryImpl*>(controller.GetLastCommittedEntry())
+          ->root_node()
+          ->children.empty());
+}
+
+namespace {
+
+class NavigationControllerBrowserTestWithCustomResponses
+    : public NavigationControllerBrowserTest {
+ public:
+  virtual int GetControllableResponseCount() = 0;
+  virtual std::string GetTestPagePath() = 0;
+
+  void SetUpOnMainThread() override {
+    responses_.reserve(GetControllableResponseCount());
+    for (int i = 0; i < GetControllableResponseCount(); ++i) {
+      responses_.push_back(std::make_unique<ControllableHttpResponse>(
+          embedded_test_server(), GetTestPagePath()));
+    }
+    NavigationControllerBrowserTest::SetUpOnMainThread();
+  }
+
+  ControllableHttpResponse* get_response(int index) {
+    return responses_[index].get();
+  }
+
+ private:
+  std::vector<std::unique_ptr<ControllableHttpResponse>> responses_;
+};
+
+class Test1 : public NavigationControllerBrowserTestWithCustomResponses {
+ public:
+  int GetControllableResponseCount() override { return 2; }
+  std::string GetTestPagePath() override { return "/main.html"; }
+};
+
+// Navigates a frame and waits until it finishes loading, but does not expect
+// that the whole page should stop loading.
+class FrameNavigateHelper : public WebContentsObserver {
+ public:
+  FrameNavigateHelper(WebContents* web_contents,
+                      FrameTreeNode* ftn,
+                      const GURL& url)
+      : WebContentsObserver(web_contents), ftn_(ftn), expected_url_(url) {
+    NavigationController::LoadURLParams params(url);
+    params.transition_type = ui::PAGE_TRANSITION_LINK;
+    params.frame_tree_node_id = ftn->frame_tree_node_id();
+    web_contents->GetController().LoadURLWithParams(params);
+  }
+
+  void Wait() { run_loop_.Run(); }
+
+ private:
+  void DidFinishLoad(RenderFrameHost* render_frame_host,
+                     const GURL& url) override {
+    if (static_cast<RenderFrameHostImpl*>(render_frame_host)
+                ->frame_tree_node() == ftn_ &&
+        url == expected_url_)
+      run_loop_.Quit();
+  }
+
+  FrameTreeNode* ftn_;
+  GURL expected_url_;
+  base::RunLoop run_loop_;
+};
+
+}  // namespace
+
+IN_PROC_BROWSER_TEST_F(Test1,
+                       DontClearChildFrameNavigationEntriesOnSuframeNavigate) {
+  const std::string response_begin(
+      "HTTP/1.1 200 OK\r\n"
+      "Content-Type: text/html; charset=utf-8\r\n"
+      "Cache-Control: no-store\r\n"
+      "\r\n"
+      "<html><body><iframe src=\"title1.html\"></iframe>");
+  const std::string response_end(
+      "<iframe src=\"title1.html\"></iframe></body></html>");
+
+  const GURL page_url = embedded_test_server()->GetURL(GetTestPagePath());
+  {
+    shell()->LoadURL(page_url);
+    auto* response = get_response(0);
+    response->WaitForRequest();
+    response->Send(response_begin);
+    response->Send(response_end);
+    response->Done();
+    EXPECT_TRUE(WaitForLoadStop(shell()->web_contents()));
+  }
+
+  FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
+                            ->GetFrameTree()
+                            ->root();
+  ASSERT_EQ(2U, root->child_count());
+  const GURL subframe_new_url = embedded_test_server()->GetURL("/title2.html");
+  NavigateFrameToURL(root->child_at(0), subframe_new_url);
+  NavigateFrameToURL(root->child_at(1), subframe_new_url);
+
+  EXPECT_TRUE(
+      NavigateToURL(shell(), embedded_test_server()->GetURL("/title1.html")));
+  auto& controller = shell()->web_contents()->GetController();
+  {
+    TestNavigationManager navigation_manager(shell()->web_contents(),
+                                             subframe_new_url);
+    LOG(ERROR) << "begin going back";
+    controller.GoBack();
+    auto* response = get_response(1);
+    response->WaitForRequest();
+    response->Send(response_begin);
+    navigation_manager.WaitForNavigationFinished();
+
+    LOG(ERROR) << "navigate first child away";
+    ASSERT_EQ(1U, root->child_count());
+    FrameNavigateHelper(shell()->web_contents(), root->child_at(0),
+                        embedded_test_server()->GetURL("/title3.html"))
+        .Wait();
+
+    LOG(ERROR) << "finish page load";
+    response->Send(response_end);
+    response->Done();
+    EXPECT_TRUE(WaitForLoadStop(shell()->web_contents()));
+  }
+
+  ASSERT_EQ(2U, root->child_count());
+  EXPECT_EQ(embedded_test_server()->GetURL("/title3.html"),
+            root->child_at(0)->current_url());
+  EXPECT_EQ(subframe_new_url, root->child_at(1)->current_url());
+}
+
+namespace {
+
+class UrlRequestFailedJobControlHelper {
+ public:
+  UrlRequestFailedJobControlHelper() {
+    // |this| is expected to outlive any URLRequests.
+    net::URLRequestFailedJob::SetReadRawDataCompleteInterceptor(
+        base::BindRepeating(
+            &UrlRequestFailedJobControlHelper::ReadRawDataCompleteInterceptor,
+            base::Unretained(this)));
+  }
+  ~UrlRequestFailedJobControlHelper() {
+    net::URLRequestFailedJob::SetReadRawDataCompleteInterceptor(
+        net::URLRequestFailedJob::ReadRawDataCompleteInterceptor());
+  }
+
+  void ResumeJob() {
+    intercept_sending_error_ = false;
+    if (continue_url_request_callback_)
+      std::move(continue_url_request_callback_).Run();
+  }
+
+ private:
+  void ReadRawDataCompleteInterceptor(base::OnceClosure continue_callback,
+                                      int ret_code) {
+    auto wrapped_callback = base::BindOnce(
+        base::IgnoreResult(&base::SequencedTaskRunner::PostTask),
+        base::RetainedRef(base::SequencedTaskRunnerHandle::Get()), FROM_HERE,
+        std::move(continue_callback));
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::BindOnce(
+            &UrlRequestFailedJobControlHelper::ReadRawDataCompleteInterceptorUI,
+            base::Unretained(this), std::move(wrapped_callback), ret_code));
+  }
+
+  void ReadRawDataCompleteInterceptorUI(base::OnceClosure continue_callback,
+                                        int ret_code) {
+    DCHECK_CURRENTLY_ON(BrowserThread::UI);
+    if (ret_code >= 0 || !intercept_sending_error_) {
+      std::move(continue_callback).Run();
+    } else {
+      DCHECK(!continue_url_request_callback_);
+      continue_url_request_callback_ = std::move(continue_callback);
+    }
+  }
+
+  bool intercept_sending_error_ = true;
+  base::OnceClosure continue_url_request_callback_;
+};
+
+class Test2 : public NavigationControllerBrowserTestWithCustomResponses {
+ public:
+  Test2() {
+    page_url_ = net::URLRequestFailedJob::GetMockHttpUrlWithPartialResponse(
+        "<html><body><iframe src=\"title1.html\"></iframe>",
+        net::ERR_INTERNET_DISCONNECTED);
+  }
+
+  void SetUpOnMainThread() override {
+    NavigationControllerBrowserTestWithCustomResponses::SetUpOnMainThread();
+    // Now that the server is started, add its port to the URL.
+    page_url_ = embedded_test_server()->GetURL(page_url_.host(),
+                                               page_url_.PathForRequest());
+  }
+
+  int GetControllableResponseCount() override { return 1; }
+  std::string GetTestPagePath() override { return page_url_.PathForRequest(); }
+
+  GURL page_url_;
+  UrlRequestFailedJobControlHelper urfj_helper_;
+};
+
+}  // namespace
+
+IN_PROC_BROWSER_TEST_F(Test2,
+                       DontClearChildFrameNavigationEntriesOnAbortedLoad) {
+  // Make child frames reside on a host different from the one used by
+  // URLRequestFailedJob to intercept requests.
+  const GURL frame_url = embedded_test_server()->GetURL("/title1.html");
+
+  const std::string response_begin(
+      "HTTP/1.1 200 OK\r\n"
+      "Content-Type: text/html; charset=utf-8\r\n"
+      "Cache-Control: no-store\r\n"
+      "\r\n"
+      "<html><body><iframe src=\"" +
+      frame_url.spec() + "\"></iframe>");
+  const std::string response_end("<iframe src=\"" + frame_url.spec() +
+                                 "\"></iframe></body></html>");
+
+  {
+    shell()->LoadURL(page_url_);
+    auto* response = get_response(0);
+    response->WaitForRequest();
+    response->Send(response_begin);
+    response->Send(response_end);
+    response->Done();
+    EXPECT_TRUE(WaitForLoadStop(shell()->web_contents()));
+  }
+
+  EXPECT_TRUE(
+      NavigateToURL(shell(), embedded_test_server()->GetURL("/title1.html")));
+  auto& controller = shell()->web_contents()->GetController();
+  {
+    BrowserThread::PostTask(
+        BrowserThread::IO, FROM_HERE,
+        base::BindOnce(&net::URLRequestFailedJob::AddUrlHandler));
+    TestNavigationManager nav_manager(shell()->web_contents(), frame_url);
+    controller.GoBack();
+
+    // Wait until the successfully received document part is processed, then
+    // send the net error. Otherwise the received response can be dropped, and
+    // probably this can result in failure before commit.
+    nav_manager.WaitForNavigationFinished();
+    urfj_helper_.ResumeJob();
+    EXPECT_TRUE(WaitForLoadStop(shell()->web_contents()));
+  }
+
+  // There should be two child frame navigation entries even though the page
+  // has not loaded completely and contains only one child frame.
+  FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
+                            ->GetFrameTree()
+                            ->root();
+  EXPECT_EQ(1U, root->child_count());
+  EXPECT_EQ(
+      2U, static_cast<NavigationEntryImpl*>(controller.GetLastCommittedEntry())
+              ->root_node()
+              ->children.size());
 }
 
 // Helper to trigger a history-back navigation in the WebContents after the

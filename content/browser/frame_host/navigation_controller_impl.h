@@ -205,6 +205,12 @@ class CONTENT_EXPORT NavigationControllerImpl : public NavigationController {
   // navigation failed due to an SSL error.
   void SetPendingNavigationSSLError(bool error);
 
+  // If |error_occured| is false, clears FrameNavigationEntries that refer to
+  // child frames of |node| that are not present in the actual frame tree. If
+  // |error_occured| is true, only a part of the page was loaded (so all FNEs
+  // might be useful the next time this entry is loaded).
+  void FrameStoppedLoading(FrameTreeNode* node, bool error_occured);
+
  private:
   friend class RestoreHelper;
 

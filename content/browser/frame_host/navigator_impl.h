@@ -57,6 +57,8 @@ class CONTENT_EXPORT NavigatorImpl : public Navigator {
       RenderFrameHostImpl* render_frame_host,
       const FrameHostMsg_DidCommitProvisionalLoad_Params& params,
       std::unique_ptr<NavigationHandleImpl> navigation_handle) override;
+  void DidStopLoading(RenderFrameHostImpl* render_frame_host,
+                      bool error_occured) override;
   bool NavigateToPendingEntry(FrameTreeNode* frame_tree_node,
                               const FrameNavigationEntry& frame_entry,
                               ReloadType reload_type,
