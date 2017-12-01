@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "5baabe6a_65f1d2df",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-12-01T21:03:02Z",
+      "side": 1,
+      "message": "Are you sure? This is a static method.",
+      "parentUuid": "14894dd1_098327c4",
+      "revId": "6233734e4a044e8f4fbbb049689f50d7b9367bdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "719ba21b_87462336",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 1
@@ -47,6 +65,24 @@
       "writtenOn": "2017-12-01T05:10:30Z",
       "side": 1,
       "message": "We should teak selection_offsets from starting selection.",
+      "revId": "6233734e4a044e8f4fbbb049689f50d7b9367bdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0305555_17eb220f",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-12-01T21:03:02Z",
+      "side": 1,
+      "message": "Same question about being a static method",
+      "parentUuid": "719ba21b_87462336",
       "revId": "6233734e4a044e8f4fbbb049689f50d7b9367bdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -67,6 +103,24 @@
       "revId": "6233734e4a044e8f4fbbb049689f50d7b9367bdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "530644f4_a3e77492",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-12-01T21:03:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bfcbb588_5bac848c",
+      "revId": "6233734e4a044e8f4fbbb049689f50d7b9367bdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -123,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "885ca43d_c826cd6b",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-12-01T21:03:02Z",
+      "side": 1,
+      "message": "Ok, I put up a CL to do this in https://chromium-review.googlesource.com/c/chromium/src/+/804416 and I will stack this one on top.",
+      "parentUuid": "b4d4ffa8_fdd20f03",
+      "revId": "6233734e4a044e8f4fbbb049689f50d7b9367bdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd5efc54_1d0cc0fe",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 1
@@ -140,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "cadfb146_19c5f04a",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-12-01T21:03:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bd5efc54_1d0cc0fe",
+      "revId": "6233734e4a044e8f4fbbb049689f50d7b9367bdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af8e6bf5_092ad816",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 1
@@ -154,6 +244,24 @@
       "revId": "6233734e4a044e8f4fbbb049689f50d7b9367bdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8597e0c8_2c1e80de",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-12-01T21:03:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "af8e6bf5_092ad816",
+      "revId": "6233734e4a044e8f4fbbb049689f50d7b9367bdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
