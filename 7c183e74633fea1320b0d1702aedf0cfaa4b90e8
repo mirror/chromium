@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd776227_ca39a264",
+        "filename": "gpu/config/gpu_info.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-12-01T23:21:42Z",
+      "side": 1,
+      "message": "This is not exactly related to this CL, but it\u0027s a simple change to stop polluting logs",
+      "range": {
+        "startLine": 103,
+        "startChar": 7,
+        "endLine": 103,
+        "endChar": 14
+      },
+      "revId": "7c183e74633fea1320b0d1702aedf0cfaa4b90e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
