@@ -281,6 +281,30 @@
       "revId": "25e03990f8bef32109a1c99f9fb579113da064e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4c24f447_fd0e13cc",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-01T06:04:13Z",
+      "side": 1,
+      "message": "Ah, I see. Variable name explains details instead. LG.",
+      "parentUuid": "c4091169_c3b6733b",
+      "range": {
+        "startLine": 34,
+        "startChar": 63,
+        "endLine": 34,
+        "endChar": 68
+      },
+      "revId": "25e03990f8bef32109a1c99f9fb579113da064e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
