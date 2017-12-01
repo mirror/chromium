@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9368d93a_0bc6be27",
+        "filename": "third_party/WebKit/Source/modules/payments/AbortPaymentRespondWithObserver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-01T03:37:03Z",
+      "side": 1,
+      "message": "I\u0027m not sure why the payments/ stuff is using -shared.h and not -blink.h. Does it work if you change these to -blink.h?",
+      "revId": "bd8c3f401de832178a5f35b83db8df691a6821f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf27a1e4_6a1230dc",
+        "filename": "third_party/WebKit/common/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-01T03:37:03Z",
+      "side": 1,
+      "message": "I don\u0027t know if by default we put something in mojo_platform_bindings or mojo_bindings. Are they all needed in Source/platform?\n\nI trust all these mojoms satisfy the condition that they don\u0027t use types tymapped to Source/code, but I\u0027m not sure if tha implies it should go in mojo_platform_bindings instead of mojo_bindings. Need kinuko@ or another architecture expert\u0027s input. (unless they really are used from Source/platform).",
+      "revId": "bd8c3f401de832178a5f35b83db8df691a6821f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
