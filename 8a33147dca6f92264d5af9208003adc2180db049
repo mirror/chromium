@@ -1,0 +1,305 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0469b530_0eaf5539",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-01T14:39:09Z",
+      "side": 1,
+      "message": "nit: You can just use single quotes to avoid escaping the \"s. Same throughout.",
+      "revId": "8a33147dca6f92264d5af9208003adc2180db049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "311e74a8_44482caf",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-01T14:39:09Z",
+      "side": 1,
+      "message": "Update comment since sniffing is now implemented.",
+      "revId": "8a33147dca6f92264d5af9208003adc2180db049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eca2e23_6ea8f7cd",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-01T14:39:09Z",
+      "side": 1,
+      "message": "DCHECK(should_block_response_);",
+      "revId": "8a33147dca6f92264d5af9208003adc2180db049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fccb9fc_a7611bd2",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-01T14:39:09Z",
+      "side": 1,
+      "message": "GetRequestInfo() is a convenience method for this.",
+      "revId": "8a33147dca6f92264d5af9208003adc2180db049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29357d91_1da5e1b0",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-01T14:39:09Z",
+      "side": 1,
+      "message": "The justification for empty response vs failing better suites the class description IMO.",
+      "range": {
+        "startLine": 70,
+        "startChar": 38,
+        "endLine": 70,
+        "endChar": 77
+      },
+      "revId": "8a33147dca6f92264d5af9208003adc2180db049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb1a8abd_cccfdcd8",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-01T14:39:09Z",
+      "side": 1,
+      "message": "Can you TODO(creis) or a crbug?",
+      "revId": "8a33147dca6f92264d5af9208003adc2180db049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38fba533_07ba30dc",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-01T14:39:09Z",
+      "side": 1,
+      "message": "nit: prefer base::MakeRefCounted\u003cnet::IOBuffer\u003e(...).",
+      "revId": "8a33147dca6f92264d5af9208003adc2180db049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6df15769_bcd1d2f8",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-01T14:39:09Z",
+      "side": 1,
+      "message": "Seems like this could yield some inefficiencies. How often will this data copying occur in practice?",
+      "range": {
+        "startLine": 87,
+        "startChar": 37,
+        "endLine": 87,
+        "endChar": 79
+      },
+      "revId": "8a33147dca6f92264d5af9208003adc2180db049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d736efbc_be208ece",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-01T14:39:09Z",
+      "side": 1,
+      "message": "#include base/logging",
+      "revId": "8a33147dca6f92264d5af9208003adc2180db049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da3d2cc1_4509de22",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-01T14:39:09Z",
+      "side": 1,
+      "message": "base::MakeRefCounted",
+      "revId": "8a33147dca6f92264d5af9208003adc2180db049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6a84feb_bb01e1c4",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-01T14:39:09Z",
+      "side": 1,
+      "message": "need to #include StringPiece.",
+      "revId": "8a33147dca6f92264d5af9208003adc2180db049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6d0c2cc_686c0ae8",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-01T14:39:09Z",
+      "side": 1,
+      "message": "Ouch, this method seems expensive. Origin creation, scheme scanning, IsSameSite, GURL parsing in IsValidCorsHeaderSet, etc. Ideally we could make the first couple checks the fastest / most likely to be hit.\n\nMy top two picks would be CrossSiteDocumentClassifier::IsSameSite(initiator, url) or the mime checking, since the other checks seem like they would rarely fail or are more expensive.",
+      "revId": "8a33147dca6f92264d5af9208003adc2180db049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f55d310_06b24c5e",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-01T14:39:09Z",
+      "side": 1,
+      "message": "Can you comment how this interacts with policy around navigation code?",
+      "revId": "8a33147dca6f92264d5af9208003adc2180db049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bbb54c0_c9d707be",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-01T14:39:09Z",
+      "side": 1,
+      "message": "Maybe link to the design doc?",
+      "revId": "8a33147dca6f92264d5af9208003adc2180db049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8cd15eb_61d43b67",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-01T14:39:09Z",
+      "side": 1,
+      "message": "Can it be const? That would be nice.",
+      "revId": "8a33147dca6f92264d5af9208003adc2180db049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63b412e6_65fb42fd",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-01T14:39:09Z",
+      "side": 1,
+      "message": "Optional: slightly prefer these to be defined in the header with default values, but not strongly.",
+      "revId": "8a33147dca6f92264d5af9208003adc2180db049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc28adc6_f6e9bda5",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-01T14:39:09Z",
+      "side": 1,
+      "message": "Set in OnResponseStarted and should only be read afterwards.",
+      "revId": "8a33147dca6f92264d5af9208003adc2180db049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
