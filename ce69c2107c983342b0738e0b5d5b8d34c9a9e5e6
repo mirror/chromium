@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3be7df5d_3986cce3",
+        "filename": "chrome/browser/ui/views/feature_promos/feature_promo_bubble_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-12-01T21:10:06Z",
+      "side": 1,
+      "message": "Would it be better to call this first and then adjust the returned rectangle as necessary?\nThis means you don\u0027t have to keep |anchor_view_| around.",
+      "range": {
+        "startLine": 120,
+        "startChar": 2,
+        "endLine": 120,
+        "endChar": 53
+      },
+      "revId": "ce69c2107c983342b0738e0b5d5b8d34c9a9e5e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
