@@ -47,6 +47,8 @@ void CompositingLayerPropertyUpdater::Update(const LayoutObject& object) {
   SetContainerLayerState(mapping->LayerForHorizontalScrollbar());
   SetContainerLayerState(mapping->LayerForVerticalScrollbar());
   SetContainerLayerState(mapping->LayerForScrollCorner());
+  SetContainerLayerState(mapping->DecorationOutlineLayer());
+  SetContainerLayerState(mapping->BackgroundLayer());
 
   auto SetContentsLayerState =
       [rare_paint_data, &snapped_paint_offset](GraphicsLayer* graphics_layer) {
@@ -59,10 +61,20 @@ void CompositingLayerPropertyUpdater::Update(const LayoutObject& object) {
   SetContentsLayerState(mapping->ScrollingContentsLayer());
   SetContentsLayerState(mapping->ForegroundLayer());
 
-  if (GraphicsLayer* squashing_layer = mapping->SquashingLayer()) {
+  if (auto* squashing_layer = mapping->SquashingLayer()) {
     squashing_layer->SetLayerState(
         rare_paint_data->PreEffectProperties(),
         snapped_paint_offset + mapping->SquashingLayerOffsetFromLayoutObject());
+  }
+
+  if (auto* mask_layer = mapping->MaskLayer()) {
+    auto state = *rare_paint_data->LocalBorderBoxProperties();
+    const auto* properties = rare_paint_data->PaintProperties();
+    DCHECK(properties && properties->Mask());
+    state.SetEffect(properties->Mask());
+    mask_layer->SetLayerState(
+        std::move(state),
+        snapped_paint_offset + mask_layer->OffsetFromLayoutObject());
   }
 
   if (auto* child_clipping_mask_layer = mapping->ChildClippingMaskLayer()) {
@@ -101,8 +113,6 @@ void CompositingLayerPropertyUpdater::Update(const LayoutObject& object) {
                                .LocalBorderBoxProperties()),
         offset_from_clip_ancestor);
   }
-
-  // TODO(crbug.com/790548): Complete for all drawable layers.
 }
 
 void CompositingLayerPropertyUpdater::Update(const LocalFrameView& frame_view) {
