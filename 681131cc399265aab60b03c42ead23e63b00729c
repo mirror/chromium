@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b77912a4_c4c570bc",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-01T13:26:07Z",
+      "side": 1,
+      "message": "use ClampedNumeric (https://chromium.googlesource.com/chromium/src/+/06d113c7079b7172d241ed698dc7468d7119a3c3/base/numerics/README.md#clampednumeric_in-clamped_math_h) here?",
+      "revId": "681131cc399265aab60b03c42ead23e63b00729c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51e5ced6_2922fd3e",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-01T13:26:07Z",
+      "side": 1,
+      "message": "#include \"base/format_macros.h\"\n\n\"...%\" PRIuS \" samples\"",
+      "range": {
+        "startLine": 38,
+        "startChar": 62,
+        "endLine": 38,
+        "endChar": 64
+      },
+      "revId": "681131cc399265aab60b03c42ead23e63b00729c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f4aee89_6180dab8",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-01T13:26:07Z",
+      "side": 1,
+      "message": "h",
+      "range": {
+        "startLine": 20,
+        "startChar": 57,
+        "endLine": 20,
+        "endChar": 58
+      },
+      "revId": "681131cc399265aab60b03c42ead23e63b00729c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63551029_979fbc0d",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-01T13:26:07Z",
+      "side": 1,
+      "message": "io",
+      "range": {
+        "startLine": 20,
+        "startChar": 50,
+        "endLine": 20,
+        "endChar": 52
+      },
+      "revId": "681131cc399265aab60b03c42ead23e63b00729c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b404436b_c451b285",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-01T13:26:07Z",
+      "side": 1,
+      "message": "nix the \u0027s\u0027: \"Compute foo then determine blah\"",
+      "range": {
+        "startLine": 20,
+        "startChar": 70,
+        "endLine": 20,
+        "endChar": 71
+      },
+      "revId": "681131cc399265aab60b03c42ead23e63b00729c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f77a6cba_636c4b1c",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-01T13:26:07Z",
+      "side": 1,
+      "message": "v -\u003e \"value\"? or \"sample\"? or something? (same for DecideOutlier)",
+      "range": {
+        "startLine": 30,
+        "startChar": 18,
+        "endLine": 30,
+        "endChar": 19
+      },
+      "revId": "681131cc399265aab60b03c42ead23e63b00729c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9bc8ee6_a5113205",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-01T13:26:07Z",
+      "side": 1,
+      "message": "nit: \"after all values/samples/foos have been added.\"",
+      "range": {
+        "startLine": 33,
+        "startChar": 8,
+        "endLine": 33,
+        "endChar": 31
+      },
+      "revId": "681131cc399265aab60b03c42ead23e63b00729c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c38c74f4_fcf2ad9c",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-01T13:26:07Z",
+      "side": 1,
+      "message": "States?",
+      "range": {
+        "startLine": 37,
+        "startChar": 20,
+        "endLine": 37,
+        "endChar": 25
+      },
+      "revId": "681131cc399265aab60b03c42ead23e63b00729c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
