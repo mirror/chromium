@@ -36,7 +36,15 @@ class CachedMetadataHandler
   // This cached metadata can be pruned at any time.
   virtual scoped_refptr<CachedMetadata> GetCachedMetadata(
       uint32_t data_type_id) const = 0;
+
   // Returns the encoding to which the cache is specific.
+  // This returns the encoding at the time of ResponseReceived().
+  // Therefore this does NOT reflect encoding detection from body contents,
+  // but the final encoding after the encoding detection can be determined
+  // uniquely from Encoding(), provided the body content is the same,
+  // as we can assume the encoding detection will results in the same final
+  // encoding.
+  // TODO(hiroshige): Make this semantics cleaner.
   virtual String Encoding() const = 0;
 
   virtual bool IsServedFromCacheStorage() const = 0;
