@@ -94,6 +94,29 @@
     },
     {
       "key": {
+        "uuid": "b08725bf_6fc208f7",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1548,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-01T04:53:32Z",
+      "side": 1,
+      "message": "Actually, I\u0027ve realized that we lose the SiteInstance original URL here, because we convert the dest_url to a site URL when creating |descriptor|, and then pass that site URL here instead of dest_url. (We subsequently will do a redundant GetSiteForURL on it.)  Fix/test coming up soon.",
+      "range": {
+        "startLine": 1548,
+        "startChar": 29,
+        "endLine": 1548,
+        "endChar": 76
+      },
+      "revId": "bd540ef49cce8c3fea731934087942e67af25729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb549dfe_08359989",
         "filename": "content/browser/frame_host/render_frame_host_manager.cc",
         "patchSetId": 5
