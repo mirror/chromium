@@ -45,6 +45,7 @@
 #include "net/ssl/ssl_server_config.h"
 #include "net/test/cert_test_util.h"
 #include "net/test/test_data_directory.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -149,7 +150,11 @@ class MockTCPSocket : public net::TCPClientSocket {
   }
 
   MOCK_METHOD3(Read, int(net::IOBuffer*, int, const net::CompletionCallback&));
-  MOCK_METHOD3(Write, int(net::IOBuffer*, int, const net::CompletionCallback&));
+  MOCK_METHOD4(Write,
+               int(net::IOBuffer*,
+                   int,
+                   const net::CompletionCallback&,
+                   const net::NetworkTrafficAnnotationTag&));
 
   virtual void Disconnect() {
     // Do nothing in tests
@@ -533,7 +538,7 @@ class SslCastSocketTest : public CastSocketTestBase {
       net::TestCompletionCallback write_callback;
       int write_result = write_callback.GetResult(server_socket_->Write(
           draining_buffer.get(), draining_buffer->BytesRemaining(),
-          write_callback.callback()));
+          write_callback.callback(), TRAFFIC_ANNOTATION_FOR_TESTS));
       EXPECT_GT(write_result, 0);
       draining_buffer->DidConsume(write_result);
     }

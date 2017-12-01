@@ -45,6 +45,7 @@
 #include "net/socket/ssl_client_socket.h"
 #include "net/socket/stream_socket.h"
 #include "net/test/gtest_util.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -151,9 +152,11 @@ class MockClientSocket : public StreamSocket {
     return ERR_UNEXPECTED;
   }
 
-  int Write(IOBuffer* /* buf */,
-            int len,
-            const CompletionCallback& /* callback */) override {
+  int Write(
+      IOBuffer* /* buf */,
+      int len,
+      const CompletionCallback& /* callback */,
+      const NetworkTrafficAnnotationTag& /*traffic_annotation*/) override {
     was_used_to_convey_data_ = true;
     return len;
   }
@@ -2290,7 +2293,8 @@ TEST_F(ClientSocketPoolBaseTest, CleanupTimedOutIdleSocketsReuse) {
   ASSERT_THAT(callback.WaitForResult(), IsOk());
 
   // Use and release the socket.
-  EXPECT_EQ(1, handle.socket()->Write(NULL, 1, CompletionCallback()));
+  EXPECT_EQ(1, handle.socket()->Write(NULL, 1, CompletionCallback(),
+                                      TRAFFIC_ANNOTATION_FOR_TESTS));
   TestLoadTimingInfoConnectedNotReused(handle);
   handle.Reset();
 
@@ -2360,7 +2364,8 @@ TEST_F(ClientSocketPoolBaseTest, MAYBE_CleanupTimedOutIdleSocketsNoReuse) {
   handle.Reset();
   ASSERT_THAT(callback2.WaitForResult(), IsOk());
   // Use the socket.
-  EXPECT_EQ(1, handle2.socket()->Write(NULL, 1, CompletionCallback()));
+  EXPECT_EQ(1, handle2.socket()->Write(NULL, 1, CompletionCallback(),
+                                       TRAFFIC_ANNOTATION_FOR_TESTS));
   handle2.Reset();
 
   // We post all of our delayed tasks with a 2ms delay. I.e. they don't
@@ -3066,8 +3071,10 @@ TEST_F(ClientSocketPoolBaseTest, PreferUsedSocketToUnusedSocket) {
   EXPECT_THAT(callback3.WaitForResult(), IsOk());
 
   // Use the socket.
-  EXPECT_EQ(1, handle1.socket()->Write(NULL, 1, CompletionCallback()));
-  EXPECT_EQ(1, handle3.socket()->Write(NULL, 1, CompletionCallback()));
+  EXPECT_EQ(1, handle1.socket()->Write(NULL, 1, CompletionCallback(),
+                                       TRAFFIC_ANNOTATION_FOR_TESTS));
+  EXPECT_EQ(1, handle3.socket()->Write(NULL, 1, CompletionCallback(),
+                                       TRAFFIC_ANNOTATION_FOR_TESTS));
 
   handle1.Reset();
   handle2.Reset();

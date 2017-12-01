@@ -91,9 +91,11 @@ int FakeStreamSocket::Read(const scoped_refptr<net::IOBuffer>& buf,
   }
 }
 
-int FakeStreamSocket::Write(const scoped_refptr<net::IOBuffer>& buf,
-                            int buf_len,
-                            const net::CompletionCallback& callback) {
+int FakeStreamSocket::Write(
+    const scoped_refptr<net::IOBuffer>& buf,
+    int buf_len,
+    const net::CompletionCallback& callback,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation) {
   EXPECT_TRUE(task_runner_->BelongsToCurrentThread());
   EXPECT_FALSE(write_pending_);
 
