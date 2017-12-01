@@ -758,6 +758,7 @@ AtkObject* AXPlatformNodeAuraLinux::CreateAtkObject() {
   AtkObject* atk_object = static_cast<AtkObject*>(g_object_new(type, nullptr));
 
   atk_object_initialize(atk_object, this);
+  atk_role_ = GetAtkRole();
 
   if (GetParent()) {
     g_signal_emit_by_name(ATK_OBJECT(GetParent()), "children-changed::add",
@@ -1028,7 +1029,10 @@ void AXPlatformNodeAuraLinux::GetAtkRelations(AtkRelationSet* atk_relation_set)
 }
 
 AXPlatformNodeAuraLinux::AXPlatformNodeAuraLinux()
-    : interface_mask_(0), atk_object_(nullptr), atk_hyperlink_(nullptr) {
+    : interface_mask_(0),
+      atk_role_(ATK_ROLE_INVALID),
+      atk_object_(nullptr),
+      atk_hyperlink_(nullptr) {
   g_weak_ref_init(&parent_, nullptr);
 }
 
@@ -1053,13 +1057,27 @@ void AXPlatformNodeAuraLinux::DataChanged() {
     // interface mask to change, we need to create a new
     // AtkObject for it.
     int interface_mask = GetGTypeInterfaceMask();
-    if (interface_mask != interface_mask_)
+    if (interface_mask != interface_mask_) {
       DestroyAtkObjects();
+    } else if (atk_role_ != GetAtkRole()) {
+      // If the role has changed, and it does not imply regenerating
+      // the AtkObject, then notify the role change.
+
+      AtkPropertyValues property_values;
+      property_values.property_name = "accessible-role";
+
+      memset(&property_values.new_value, 0, sizeof(GValue));
+      g_value_set_int(g_value_init(&property_values.new_value, G_TYPE_INT),
+                      GetAtkRole());
+
+      g_signal_emit_by_name(ATK_OBJECT(atk_object_),
+                            "property-change::accessible-role",
+                            &property_values);
+    }
   }
 
-  if (!atk_object_) {
+  if (!atk_object_)
     atk_object_ = CreateAtkObject();
-  }
 }
 
 void AXPlatformNodeAuraLinux::AddAccessibilityTreeProperties(
