@@ -394,6 +394,8 @@ File File::Duplicate() const {
 // Static.
 File::Error File::OSErrorToFileError(int saved_errno) {
   switch (saved_errno) {
+    case 0:
+      return FILE_OK;
     case EACCES:
     case EISDIR:
     case EROFS:
