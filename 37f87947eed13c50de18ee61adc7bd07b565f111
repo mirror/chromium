@@ -16,6 +16,24 @@
       "revId": "37f87947eed13c50de18ee61adc7bd07b565f111",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e685303_e54c9091",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-01T23:23:23Z",
+      "side": 1,
+      "message": "That needs to be a format that has a subset of the channels of the format of the actual buffer. GpuSurfacelessBrowserCompositorOutputSurface::GetFramebufferCopyTextureFormat() returns the format that was passed in though, if I\u0027m reading correctly, so it should be good.",
+      "parentUuid": "0fed0a4b_1ca3dcbc",
+      "revId": "37f87947eed13c50de18ee61adc7bd07b565f111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
