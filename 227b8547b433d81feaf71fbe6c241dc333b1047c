@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "898fa45f_3865e376",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-12-01T16:59:04Z",
+      "side": 1,
+      "message": "While we\u0027re waiting for Dirk\u0027s LGTM, I realized that we may not need this anymore. I\u0027ve just checked that on url_unittests running in 3 different configurations:\n\n1) ./url_unittests\n\n2) ./url_unittests --test-launcher-jobs\u003d1\n\n3) ./url_unittests --test-launcher-jobs\u003d1 --single-process-tests\n\nThe coverage results are the same. I\u0027m not 100% sure that it would work for any test, so I\u0027m going to run ~30 different unittests without any special options and see if all of them work.",
+      "range": {
+        "startLine": 265,
+        "startChar": 5,
+        "endLine": 265,
+        "endChar": 25
+      },
+      "revId": "227b8547b433d81feaf71fbe6c241dc333b1047c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
