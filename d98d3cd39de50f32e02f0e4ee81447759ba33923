@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "597354e2_4b5ee348",
+        "filename": "components/sync/user_events/trial_recorder.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-01T18:22:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3aa8720f_bd3c9541",
+      "range": {
+        "startLine": 27,
+        "startChar": 38,
+        "endLine": 27,
+        "endChar": 0
+      },
+      "revId": "d98d3cd39de50f32e02f0e4ee81447759ba33923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd963cc1_1720cfad",
         "filename": "components/sync/user_events/trial_recorder.cc",
         "patchSetId": 16
@@ -45,6 +69,30 @@
       "revId": "d98d3cd39de50f32e02f0e4ee81447759ba33923",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6422141_66427d59",
+        "filename": "components/sync/user_events/trial_recorder.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-01T18:22:37Z",
+      "side": 1,
+      "message": "Ooh, good idea.",
+      "parentUuid": "cd963cc1_1720cfad",
+      "range": {
+        "startLine": 30,
+        "startChar": 6,
+        "endLine": 30,
+        "endChar": 8
+      },
+      "revId": "d98d3cd39de50f32e02f0e4ee81447759ba33923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "353f365f_ce337a17",
+        "filename": "components/sync/user_events/user_event_service_impl_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-01T18:22:37Z",
+      "side": 1,
+      "message": "So harsh on the usings! :) Done",
+      "parentUuid": "a83acdc8_fd2e5af2",
+      "range": {
+        "startLine": 20,
+        "startChar": 27,
+        "endLine": 20,
+        "endChar": 0
+      },
+      "revId": "d98d3cd39de50f32e02f0e4ee81447759ba33923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b18f77fc_b84d20d0",
         "filename": "components/sync/user_events/user_event_service_impl_unittest.cc",
         "patchSetId": 16
@@ -91,6 +163,30 @@
       "revId": "d98d3cd39de50f32e02f0e4ee81447759ba33923",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72ee0390_958796be",
+        "filename": "components/sync/user_events/user_event_service_impl_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-01T18:22:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b18f77fc_b84d20d0",
+      "range": {
+        "startLine": 224,
+        "startChar": 51,
+        "endLine": 224,
+        "endChar": 0
+      },
+      "revId": "d98d3cd39de50f32e02f0e4ee81447759ba33923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "bbd54e65_9300c4b2",
+        "filename": "components/variations/variations_id_collection.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-01T18:22:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8297a4f7_d58fdd34",
+      "range": {
+        "startLine": 43,
+        "startChar": 39,
+        "endLine": 43,
+        "endChar": 0
+      },
+      "revId": "d98d3cd39de50f32e02f0e4ee81447759ba33923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d91d2648_a3a5a4ee",
         "filename": "components/variations/variations_id_collection.h",
         "patchSetId": 16
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "4a00b73b_760c10e1",
+        "filename": "components/variations/variations_id_collection.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-01T18:22:37Z",
+      "side": 1,
+      "message": "Oooh, good idea.",
+      "parentUuid": "d91d2648_a3a5a4ee",
+      "range": {
+        "startLine": 42,
+        "startChar": 18,
+        "endLine": 42,
+        "endChar": 33
+      },
+      "revId": "d98d3cd39de50f32e02f0e4ee81447759ba33923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f7b705b_3271ec90",
         "filename": "components/variations/variations_id_collection.h",
         "patchSetId": 16
@@ -151,6 +295,30 @@
       "writtenOn": "2017-12-01T18:02:56Z",
       "side": 1,
       "message": "Nit: const",
+      "range": {
+        "startLine": 45,
+        "startChar": 26,
+        "endLine": 45,
+        "endChar": 30
+      },
+      "revId": "d98d3cd39de50f32e02f0e4ee81447759ba33923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cec730f_95e2cccc",
+        "filename": "components/variations/variations_id_collection.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-01T18:22:37Z",
+      "side": 1,
+      "message": "Can\u0027t easily be const because I don\u0027t set this as part of the constructor\u0027s initialization list, but in the body of the constructor so I can avoid invoking the callback when handling the trials that were finalized before hand.",
+      "parentUuid": "3f7b705b_3271ec90",
       "range": {
         "startLine": 45,
         "startChar": 26,
@@ -183,6 +351,30 @@
       "revId": "d98d3cd39de50f32e02f0e4ee81447759ba33923",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7530523f_56138706",
+        "filename": "components/variations/variations_id_collection_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-01T18:22:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96e11db5_e6628120",
+      "range": {
+        "startLine": 114,
+        "startChar": 36,
+        "endLine": 114,
+        "endChar": 37
+      },
+      "revId": "d98d3cd39de50f32e02f0e4ee81447759ba33923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
