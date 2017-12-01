@@ -16,6 +16,24 @@
       "revId": "bcc62fc10ba1cad02259fb778f89b3e58ad08bb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "476371af_68d217da",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsLayer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1316,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-01T22:53:58Z",
+      "side": 1,
+      "message": "The second half is because for SPv175 we paint using the paint offset in paint properties https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/paint/AdjustPaintOffsetScope.cpp?rcl\u003d2eaf68bc26c83033fe5ceb48276507a9bb35cd3d\u0026l\u003d29 and https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp?rcl\u003d2eaf68bc26c83033fe5ceb48276507a9bb35cd3d\u0026l\u003d1028.\n\nActually after we forced PaintOffsetTranslation for composited layers, the second half should be useless. We can address this in another CL or leave it as-is.",
+      "parentUuid": "3ac1b357_8508f07c",
+      "revId": "bcc62fc10ba1cad02259fb778f89b3e58ad08bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
