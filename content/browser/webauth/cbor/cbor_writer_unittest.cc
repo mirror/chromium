@@ -60,6 +60,40 @@ TEST(CBORWriterTest, TestWriteBytes) {
   }
 }
 
+TEST(CBORWriterTest, TestWriteTaggedCBOR) {
+  static const uint8_t kTaggedCBORBytes[] = {
+      //clang-format off
+      0xda, 0x00, 0x0f,              // tag:1000000
+      0x42, 0x40, 0x64, 0x49, 0x45,  // "IETF"
+      0x54, 0x46
+      //clang-format on
+  };
+
+  auto cbor = CBORWriter::Write(CBORValue("IETF", 1000000));
+  ASSERT_TRUE(cbor.has_value());
+  EXPECT_THAT(cbor.value(), testing::ElementsAreArray(kTaggedCBORBytes));
+}
+
+TEST(CBORWriterTest, TestWriteNestedTaggedCBOR) {
+  static const uint8_t kNestedTaggedCBORBytes[] = {
+      //clang-format off
+      0xa2,              // Map type with 2 key value pairs.
+      0x61, 0x61,        // Key 'a'
+      0xc0, 0x18,        // Value 100 with tag 0.
+      0x64, 0x61, 0x62,  // Key 'b'
+      0xc1, 0x18,        // Value 200 with tag 1.
+      0xc8
+      //clang-format on
+  };
+
+  CBORValue::MapValue map;
+  map["a"] = CBORValue(100, 0);
+  map["b"] = CBORValue(200, 1);
+  auto cbor = CBORWriter::Write(CBORValue(map));
+  ASSERT_TRUE(cbor.has_value());
+  EXPECT_THAT(cbor.value(), testing::ElementsAreArray(kNestedTaggedCBORBytes));
+}
+
 TEST(CBORWriterTest, TestWriteString) {
   typedef struct {
     const std::string string;

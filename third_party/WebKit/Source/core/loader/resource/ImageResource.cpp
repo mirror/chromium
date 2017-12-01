@@ -321,6 +321,7 @@ scoped_refptr<const SharedBuffer> ImageResource::ResourceBuffer() const {
 }
 
 void ImageResource::AppendData(const char* data, size_t length) {
+  LOG(ERROR) << "** AppendData: " << length;
   v8::Isolate::GetCurrent()->AdjustAmountOfExternalAllocatedMemory(length);
   if (multipart_parser_) {
     multipart_parser_->AppendData(data, length);
@@ -692,7 +693,9 @@ void ImageResource::UpdateImage(
   auto result = GetContent()->UpdateImage(std::move(shared_buffer), GetStatus(),
                                           update_image_option,
                                           all_data_received, is_multipart);
+    LOG(ERROR) << "** UPDATE IMAGE: " << all_data_received;
   if (result == ImageResourceContent::UpdateImageResult::kShouldDecodeError) {
+    LOG(ERROR) << "** Decode error! " << all_data_received;
     // In case of decode error, we call imageNotifyFinished() iff we don't
     // initiate reloading:
     // [(a): when this is in the middle of loading, or (b): otherwise]
