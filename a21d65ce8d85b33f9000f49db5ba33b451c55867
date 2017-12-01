@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "0fab55e2_f27aa77f",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-01T04:34:06Z",
+      "side": 1,
+      "message": "I see. NGOffsetMapping is lasting until NGInlineNodeData alive once it is\ncreated. Since using STACK_ONLY is memory optimization, we will think later.",
+      "parentUuid": "5433225f_4f48191e",
+      "range": {
+        "startLine": 94,
+        "startChar": 18,
+        "endLine": 94,
+        "endChar": 34
+      },
+      "revId": "a21d65ce8d85b33f9000f49db5ba33b451c55867",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "325a224f_b37f3361",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping.h",
         "patchSetId": 3
@@ -78,6 +102,24 @@
       "side": 1,
       "message": "There\u0027s no lifecycle issue since we allow access to NGOffsetMapping only when layout clean.\n\nNGInlineNodeData is reset during layout recalc, so version number doesn\u0027t quite apply to it. And the entire NGInlineNodeData is reset during layout recalculation so we are fine.",
       "parentUuid": "325a224f_b37f3361",
+      "revId": "a21d65ce8d85b33f9000f49db5ba33b451c55867",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f2fcbfe_9ae7de19",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-01T04:34:06Z",
+      "side": 1,
+      "message": "Thanks for explanation.\nLet\u0027s add DCHECK(lifecyle \u003e\u003d LayoutClean) in NGOffsetMapping::GetFor().\nIt seems it is better to integrate DocumentLifeCycle:: DisallowTransitionScope() in NGOffsetMapping.",
+      "parentUuid": "5c9ec452_fb1f69e8",
       "revId": "a21d65ce8d85b33f9000f49db5ba33b451c55867",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
