@@ -16,6 +16,24 @@
       "revId": "b4dc350fe417313241bb05571277798e63260683",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa0bacbb_f1635b70",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/ifAvailable.html",
+        "patchSetId": 32
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-01T01:46:49Z",
+      "side": 1,
+      "message": "Was it confusing for you (the reader) ? \n\nI was going for consistency with the previous test, but obviously \"throwing asynchronously\" is not a real thing.",
+      "parentUuid": "d93674d4_633ab9a9",
+      "revId": "b4dc350fe417313241bb05571277798e63260683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
