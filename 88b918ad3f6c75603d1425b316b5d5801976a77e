@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30fdef85_86ff6108",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1878,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-12-01T13:21:04Z",
+      "side": 1,
+      "message": "I\u0027ve also written some code that reaches up into parentViewController, but I don\u0027t like it.  We should eventually try to find another approach that avoids needing to do this.",
+      "revId": "88b918ad3f6c75603d1425b316b5d5801976a77e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
