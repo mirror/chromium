@@ -321,6 +321,7 @@ scoped_refptr<const SharedBuffer> ImageResource::ResourceBuffer() const {
 }
 
 void ImageResource::AppendData(const char* data, size_t length) {
+  LOG(ERROR) << "** AppendData: " << length;
   v8::Isolate::GetCurrent()->AdjustAmountOfExternalAllocatedMemory(length);
   if (multipart_parser_) {
     multipart_parser_->AppendData(data, length);
