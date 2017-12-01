@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "32bcc493_e966a913",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-12-01T18:20:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4c20561_dadc1d4a",
+      "revId": "555bcf8f04d16dcdf9f839cbfc0663aaf37b261d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2acdd631_e397c306",
         "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "555bcf8f04d16dcdf9f839cbfc0663aaf37b261d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8387b0ba_271bf57a",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-12-01T18:20:53Z",
+      "side": 1,
+      "message": "This is good to know. I changed it so that it only sets up the connection response and renamed the function to setUpHealthThermometerDeviceForConnection.",
+      "parentUuid": "2acdd631_e397c306",
+      "revId": "555bcf8f04d16dcdf9f839cbfc0663aaf37b261d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f37a4b24_eb63b82a",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-12-01T18:20:53Z",
+      "side": 1,
+      "message": "This is also very helpful to know. Thanks!",
+      "parentUuid": "314828e2_e624c89e",
+      "revId": "555bcf8f04d16dcdf9f839cbfc0663aaf37b261d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf2dee2c_b7b2c901",
         "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "555bcf8f04d16dcdf9f839cbfc0663aaf37b261d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bad601a_d56b5d3c",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-12-01T18:20:53Z",
+      "side": 1,
+      "message": "You\u0027re right. I forgot about this fact when I combined these two functions. My thought process was that I could simplify the function by combining it like this. I\u0027ll change it to chaining the calls in order to keep it consistent with the rest of the functions in the file as well.",
+      "parentUuid": "bf2dee2c_b7b2c901",
+      "revId": "555bcf8f04d16dcdf9f839cbfc0663aaf37b261d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
