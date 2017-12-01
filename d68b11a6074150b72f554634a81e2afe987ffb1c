@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a10af78e_180ee898",
+        "filename": "chrome/browser/page_load_metrics/observers/previews_ukm_observer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-01T21:23:15Z",
+      "side": 1,
+      "message": "nit: can you put a comment that DataForNavigationHandle() creates the ChromeNavigationData, so this won\u0027t be null? You can put the comment here or where DataForNavigationHandle is called.",
+      "revId": "d68b11a6074150b72f554634a81e2afe987ffb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
