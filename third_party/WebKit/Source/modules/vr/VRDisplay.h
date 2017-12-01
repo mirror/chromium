@@ -19,6 +19,10 @@
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebGraphicsContext3DProvider.h"
 
+namespace gfx {
+class GpuFence;
+}
+
 namespace gpu {
 namespace gles2 {
 class GLES2Interface;
@@ -106,6 +110,17 @@ class VRDisplay final : public EventTargetWithInlineData,
  protected:
   friend class VRController;
 
+  // Some implementations need to synchronize submitting with the completion of
+  // the previous frame, i.e. the Android surface path needs to wait
+  // BEFORE_SUBMIT to avoid lost frames in the transfer surface, or to avoid
+  // overstuffed buffers. The OpenVR waits NEVER because the platform handles
+  // timing.
+  enum class WaitPrevStrategy {
+    BEFORE_BITMAP,
+    AFTER_BITMAP,
+    NEVER,
+  };
+
   VRDisplay(NavigatorVR*,
             device::mojom::blink::VRMagicWindowProviderPtr,
             device::mojom::blink::VRDisplayHostPtr,
@@ -135,6 +150,7 @@ class VRDisplay final : public EventTargetWithInlineData,
   // VRSubmitFrameClient
   void OnSubmitFrameTransferred(bool success) override;
   void OnSubmitFrameRendered() override;
+  void OnSubmitFramePostRenderFence(const gfx::GpuFenceHandle&) override;
 
   // VRDisplayClient
   void OnChanged(device::mojom::blink::VRDisplayInfoPtr) override;
@@ -159,6 +175,8 @@ class VRDisplay final : public EventTargetWithInlineData,
   ScriptedAnimationController& EnsureScriptedAnimationController(Document*);
   void ProcessScheduledAnimations(double timestamp);
   void ProcessScheduledWindowAnimations(double timestamp);
+
+  WTF::TimeDelta WaitForPreviousRenderPhase(WaitPrevStrategy context);
 
   // In order to help the VR device with scheduling, never request a new VSync
   // until the current frame is either submitted or abandoned. If vrDisplay.rAF
@@ -203,6 +221,11 @@ class VRDisplay final : public EventTargetWithInlineData,
   // Used to keep the image alive until the next frame if using
   // waitForPreviousTransferToFinish.
   scoped_refptr<Image> previous_image_;
+
+  // Backwards compatible default.
+  WaitPrevStrategy wait_for_previous_render_ = WaitPrevStrategy::AFTER_BITMAP;
+
+  std::unique_ptr<gfx::GpuFence> prev_frame_fence_;
 
   TraceWrapperMember<ScriptedAnimationController>
       scripted_animation_controller_;
