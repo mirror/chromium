@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bef3811f_f4092458",
+        "filename": "components/variations/variations_id_collection.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-01T16:51:09Z",
+      "side": 1,
+      "message": "Nit: This is in namespace variations, so please remove any variations:: prefixes within here. Same for .h file.",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 14
+      },
+      "revId": "7d3247194c25d0d58fcb1902870e176a59b990ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8a8322e_2742802f",
+        "filename": "components/variations/variations_id_collection.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-01T16:51:09Z",
+      "side": 1,
+      "message": "Maybe just call OnSetFieldTrialGroupFinalized() and remove the CheckForVariation wrapper?",
+      "range": {
+        "startLine": 25,
+        "startChar": 58,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "7d3247194c25d0d58fcb1902870e176a59b990ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cae32a46_1486a89a",
+        "filename": "components/variations/variations_id_collection.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-01T16:51:09Z",
+      "side": 1,
+      "message": "So the semantics are that the callback is not called for the initial set? Why is that?\n\nPlease also document in the .h.",
+      "range": {
+        "startLine": 29,
+        "startChar": 37,
+        "endLine": 29,
+        "endChar": 0
+      },
+      "revId": "7d3247194c25d0d58fcb1902870e176a59b990ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "421d4dac_d68b07bd",
+        "filename": "components/variations/variations_id_collection.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-01T16:51:09Z",
+      "side": 1,
+      "message": "Nit: Add comment above this:\n// base::FieldTrialList::Observer:\n\nAlso, maybe move to private section.",
+      "range": {
+        "startLine": 29,
+        "startChar": 7,
+        "endLine": 29,
+        "endChar": 33
+      },
+      "revId": "7d3247194c25d0d58fcb1902870e176a59b990ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "776164bb_ff04daca",
+        "filename": "components/variations/variations_id_collection.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-01T16:51:09Z",
+      "side": 1,
+      "message": "Nit: Comment.",
+      "range": {
+        "startLine": 32,
+        "startChar": 52,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "7d3247194c25d0d58fcb1902870e176a59b990ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89f576b6_f943eb04",
+        "filename": "components/variations/variations_id_collection.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-01T16:51:09Z",
+      "side": 1,
+      "message": "Nit: Comment.",
+      "range": {
+        "startLine": 35,
+        "startChar": 7,
+        "endLine": 35,
+        "endChar": 24
+      },
+      "revId": "7d3247194c25d0d58fcb1902870e176a59b990ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ec8dcec_4bd4d41a",
+        "filename": "components/variations/variations_id_collection.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-01T16:51:09Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN()",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 0
+      },
+      "revId": "7d3247194c25d0d58fcb1902870e176a59b990ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41c39aed_116f65a6",
+        "filename": "components/variations/variations_id_collection_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-01T16:51:09Z",
+      "side": 1,
+      "message": "Nit: I think in components/variations, we don\u0027t put anon namespace around the tests themselves - just the helper functions - so for consistency move this to after SetupAndFinalizeTrial.",
+      "range": {
+        "startLine": 130,
+        "startChar": 15,
+        "endLine": 130,
+        "endChar": 0
+      },
+      "revId": "7d3247194c25d0d58fcb1902870e176a59b990ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
