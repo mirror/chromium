@@ -554,5 +554,33 @@ interface is used relatively frequently, connecting once and reusing the
 interface pointer is probably a good idea.
 
 
+## Ensure An Explicit Grant For WebUI Bindings
+
+WebUI renderers sometimes need to call special, powerful IPC endpoints in a
+privileged process. It is important to enforce the constraint that the
+privileged callee previously created and blessed the calling process as a WebUI
+process, and not as a (potentially compromised) web renderer or other
+low-privilege process.
+
+(`MojoWebUIController` creates the powerful
+bindings)[https://cs.chromium.org/chromium/src/chrome/browser/ui/webui/mojo_web_ui_controller.cc?q=chrome/browser/ui/webui/mojo_web_ui_controller.cc&sq=package:chromium&l=22],
+so if you see it, make sure to assert the calling process is properly spawned
+and blessed. Beware of ad hoc checks, such as for special domains/origins,
+special command-line options, and so on. Such checks and constraints can be
+safe, but they require extra care and testing to avoid unintended consequences.
+
+
+## Unshipped Features Should Be Feature-Checked On The Privileged Side
+
+Sometimes, there will be powerful new features that are not yet turned on by
+default, such as behind a flag, Finch trial, or (origin
+trial)[https://www.chromium.org/blink/origin-trials]. It is not safe to check
+for the feature's availability on the renderer side (or in another low-privilege
+process type). Instead, ensure that the check is done in the process that has
+power to actually enact the feature. Otherwise, a compromised renderer could opt
+itself in to the feature! If the feature might not yet be fully developed and
+safe, vulnerabilities could arise.
+
+
 [security-tips-for-ipc]: https://www.chromium.org/Home/chromium-security/education/security-tips-for-ipc
 [NfcTypeConverter.java]: https://chromium.googlesource.com/chromium/src/+/e97442ee6e8c4cf6bcf7f5623c6fb2cc8cce92ac/services/device/nfc/android/java/src/org/chromium/device/nfc/NfcTypeConverter.java
