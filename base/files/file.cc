@@ -2,6 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#if defined(OS_POSIX)
+#include <errno.h>
+#endif
+
 #include "base/files/file.h"
 #include "base/files/file_path.h"
 #include "base/files/file_tracing.h"
@@ -82,6 +86,13 @@ File& File::operator=(File&& other) {
 #if !defined(OS_NACL)
 void File::Initialize(const FilePath& path, uint32_t flags) {
   if (path.ReferencesParent()) {
+#if defined(OS_WIN)
+    ::SetLastError(ERROR_ACCESS_DENIED);
+#elif defined(OS_POSIX)
+    errno = EACCES;
+#else
+#error Unsupported platform
+#endif
     error_details_ = FILE_ERROR_ACCESS_DENIED;
     return;
   }
