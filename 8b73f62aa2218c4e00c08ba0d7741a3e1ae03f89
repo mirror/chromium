@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcd0f02f_1f8a6251",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-01T21:44:34Z",
+      "side": 1,
+      "message": "Is it common to include screenshot links in changes?  I thought there were usually just linked in the bug or comments.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "8b73f62aa2218c4e00c08ba0d7741a3e1ae03f89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9593a471_b3ec9482",
+        "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-01T21:44:34Z",
+      "side": 1,
+      "message": "What sets this extra data?  Do we send it across for all mirroring sessions?\n\nDid we decide on a plan for only showing this when remoting was possible, or for all mirroring sessions?",
+      "range": {
+        "startLine": 379,
+        "startChar": 8,
+        "endLine": 379,
+        "endChar": 41
+      },
+      "revId": "8b73f62aa2218c4e00c08ba0d7741a3e1ae03f89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d9c2a92_630008ad",
+        "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-01T21:44:34Z",
+      "side": 1,
+      "message": "If we are trying to get the smallest thing possible in with the hopes of merging this into 64 then this looks fine for now, but otherwise is there any other reason to not go ahead and create a proper template now?",
+      "range": {
+        "startLine": 382,
+        "startChar": 0,
+        "endLine": 383,
+        "endChar": 77
+      },
+      "revId": "8b73f62aa2218c4e00c08ba0d7741a3e1ae03f89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
