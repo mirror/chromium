@@ -29,7 +29,6 @@
 namespace {
 
 #if defined(OS_CHROMEOS)
-const int kBorderCorderRadius = 2;
 const SkColor kBorderColor = SkColorSetARGB(0x1F, 0x0, 0x0, 0x0);
 #else
 const int kShadowCornerRadius = 0;
@@ -97,8 +96,8 @@ void MessageView::SetIsNested() {
   is_nested_ = true;
 
 #if defined(OS_CHROMEOS)
-  SetBorder(views::CreateRoundedRectBorder(kNotificationBorderThickness,
-                                           kBorderCorderRadius, kBorderColor));
+  SetBorder(views::CreateRoundedRectBorder(
+      kNotificationBorderThickness, kNotificationCornerRadius, kBorderColor));
 #else
   const auto& shadow =
       gfx::ShadowDetails::Get(kShadowElevation, kShadowCornerRadius);
@@ -199,7 +198,7 @@ void MessageView::Layout() {
   // ChromeOS rounds the corners of the message view. TODO(estade): should we do
   // this for all platforms?
   gfx::Path path;
-  constexpr SkScalar kCornerRadius = SkIntToScalar(2);
+  constexpr SkScalar kCornerRadius = SkIntToScalar(kNotificationCornerRadius);
   path.addRoundRect(gfx::RectToSkRect(background_view_->GetLocalBounds()),
                     kCornerRadius, kCornerRadius);
   background_view_->set_clip_path(path);

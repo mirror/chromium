@@ -142,6 +142,12 @@ constexpr int kMarginBetweenPopups = 10;
 // Shadow in the tray.
 const SkColor kShadowColor = SkColorSetARGB(0.3 * 255, 0, 0, 0);
 
+#if defined(OS_CHROMEOS)
+// Radius of the rounded corners of a notification.
+// The corners are only rounded in Chrome OS.
+constexpr int kNotificationCornerRadius = 2;
+#endif
+
 }  // namespace message_center
 
 #endif  // UI_MESSAGE_CENTER_PUBLIC_CPP_MESSAGE_CENTER_CONSTANTS_H_
