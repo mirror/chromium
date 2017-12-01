@@ -55,6 +55,11 @@ crbug.com/765721 [ Linux ] http/tests/navigation/navigation-interrupted-by-fragm
 crbug.com/765721 [ Linux ] virtual/mojo-loading/http/tests/navigation/navigation-interrupted-by-fragment.html  [ Pass Leak ]
 crbug.com/765721 [ Linux ] virtual/stable/http/tests/navigation/navigation-interrupted-by-fragment.html [ Pass Leak ]
 
+# -----------------------------------------------------------------
+# Miscount due to UA CSS resources.
+# -----------------------------------------------------------------
+crbug.com/790979 [ Linux ] virtual/modern-media-controls/media/controls/modern [ Pass Leak ]
+
 ###########################################################################
 # WARNING: Memory leaks must be fixed asap. Sheriff is expected to revert #
 # culprit CLs instead of suppressing the leaks. If you have any question, #
