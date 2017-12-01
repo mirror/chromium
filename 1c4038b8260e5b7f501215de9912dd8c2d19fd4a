@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b282908_17c24310",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1133,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-01T17:57:37Z",
+      "side": 1,
+      "message": "I\u0027d like to put this into the ToolbarDataProvider as I\u0027d really like to get rid of the direct access to Tab.  Looks like there are already places that getTitle() [https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/toolbar/CustomTabToolbar.java?type\u003dcs\u0026q\u003dgetCurrentTab%5C(%5C)\u0026sq\u003dpackage:chromium\u0026l\u003d356], so you\u0027re definitely not the first.\n\nI won\u0027t force you to add it there, but it would be nice or something we should do eventually.",
+      "range": {
+        "startLine": 1133,
+        "startChar": 36,
+        "endLine": 1133,
+        "endChar": 44
+      },
+      "revId": "1c4038b8260e5b7f501215de9912dd8c2d19fd4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4884138b_ab26b4ab",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3122,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-01T17:57:37Z",
+      "side": 1,
+      "message": "Does kOsAll include iOS?",
+      "range": {
+        "startLine": 3122,
+        "startChar": 70,
+        "endLine": 3122,
+        "endChar": 76
+      },
+      "revId": "1c4038b8260e5b7f501215de9912dd8c2d19fd4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
