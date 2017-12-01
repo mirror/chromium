@@ -34,6 +34,7 @@
 #include "ui/keyboard/keyboard_layout_manager.h"
 #include "ui/keyboard/keyboard_ui.h"
 #include "ui/keyboard/keyboard_util.h"
+#include "ui/keyboard/notification_consolidator.h"
 #include "ui/wm/core/window_animations.h"
 
 #if defined(OS_CHROMEOS)
@@ -259,23 +260,43 @@ void KeyboardController::NotifyContentsBoundsChanging(
     const gfx::Rect& new_bounds) {
   current_keyboard_bounds_ = new_bounds;
   if (ui_->HasContentsWindow() && ui_->GetContentsWindow()->IsVisible()) {
-    for (KeyboardControllerObserver& observer : observer_list_) {
-      observer.OnKeyboardAvailabilityChanging(!new_bounds.IsEmpty());
-      observer.OnKeyboardVisibleBoundsChanging(new_bounds);
+    bool is_available = !new_bounds.IsEmpty();
+    bool send_availability_notification =
+        notification_consolidator_.ShouldSendAvailabilityNotification(
+            is_available);
 
-      // TODO(blakeo): reduce redundant successive calls with that have
-      // identical bounds.
-      const gfx::Rect obscured_workspace_region =
-          container_behavior_->BoundsObscureUsableRegion() ? new_bounds
+    bool send_visual_bounds_notification =
+        notification_consolidator_.ShouldSendVisualBoundsNotification(
+            new_bounds);
+
+    const gfx::Rect occluded_region =
+        container_behavior_->BoundsObscureUsableRegion() ? new_bounds
+                                                         : gfx::Rect();
+    bool send_occluded_bounds_notification =
+        notification_consolidator_.ShouldSendOccludedBoundsNotification(
+            occluded_region);
+
+    const gfx::Rect workspace_layout_offset_region =
+        container_behavior_->BoundsAffectWorkspaceLayout() ? new_bounds
                                                            : gfx::Rect();
-      observer.OnKeyboardWorkspaceOccludedBoundsChanging(
-          obscured_workspace_region);
+    bool send_displaced_bounds_notification =
+        notification_consolidator_
+            .ShouldSendWorkspaceDisplacementBoundsNotification(
+                workspace_layout_offset_region);
 
-      const gfx::Rect workspace_layout_offset_region =
-          container_behavior_->BoundsAffectWorkspaceLayout() ? new_bounds
-                                                             : gfx::Rect();
-      observer.OnKeyboardWorkspaceDisplacingBoundsChanging(
-          workspace_layout_offset_region);
+    for (KeyboardControllerObserver& observer : observer_list_) {
+      if (send_availability_notification)
+        observer.OnKeyboardAvailabilityChanging(is_available);
+
+      if (send_visual_bounds_notification)
+        observer.OnKeyboardVisibleBoundsChanging(new_bounds);
+
+      if (send_occluded_bounds_notification)
+        observer.OnKeyboardWorkspaceOccludedBoundsChanging(occluded_region);
+
+      if (send_displaced_bounds_notification)
+        observer.OnKeyboardWorkspaceDisplacingBoundsChanging(
+            workspace_layout_offset_region);
 
       // TODO(blakeo): remove this when all consumers have migrated to one of
       // the notifications above.
