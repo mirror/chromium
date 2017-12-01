@@ -64,6 +64,14 @@ class CommandUpdater {
   // state has not changed.
   void UpdateCommandEnabled(int id, bool state);
 
+  // Saves the current command state. DCHECKs if there was a previously saved
+  // state.
+  void SaveCommandState();
+
+  // Restores the previously saved command state. |saved_commands_| will be
+  // empty after this call.
+  void RestoreSavedCommandState();
+
  private:
   // A piece of data about a command - whether or not it is enabled, and a list
   // of objects that observe the enabled state of this command.
@@ -78,6 +86,9 @@ class CommandUpdater {
 
   // This is a map of command IDs to states and observer lists
   std::unordered_map<int, std::unique_ptr<Command>> commands_;
+
+  // Saved previous commands_.
+  std::unordered_map<int, std::unique_ptr<Command>> saved_commands_;
 
   DISALLOW_COPY_AND_ASSIGN(CommandUpdater);
 };

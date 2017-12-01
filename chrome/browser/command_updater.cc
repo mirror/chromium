@@ -77,6 +77,16 @@ void CommandUpdater::UpdateCommandEnabled(int id, bool enabled) {
     observer.EnabledStateChangedForCommand(id, enabled);
 }
 
+void CommandUpdater::SaveCommandState() {
+  DCHECK(saved_commands_.empty());
+  commands_.swap(saved_commands_);
+}
+
+void CommandUpdater::RestoreSavedCommandState() {
+  commands_.swap(saved_commands_);
+  saved_commands_.clear();
+}
+
 CommandUpdater::Command* CommandUpdater::GetCommand(int id, bool create) {
   bool supported = SupportsCommand(id);
   if (supported)

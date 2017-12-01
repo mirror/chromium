@@ -75,6 +75,11 @@
 #include "chrome/browser/ui/ash/multi_user/multi_user_context_menu.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_window_manager.h"
 #include "chrome/browser/ui/browser_commands_chromeos.h"
+#include "ash/public/cpp/window_pin_type.h"
+
+// #include "ash/public/cpp/window_properties.h"
+// #include "ash/public/interfaces/window_pin_type.mojom.h"
+// #include "ui/aura/window.h"
 #endif
 
 #if defined(OS_LINUX) && !defined(OS_CHROMEOS)
@@ -245,6 +250,12 @@ void BrowserCommandController::ContentRestrictionsChanged() {
 void BrowserCommandController::FullscreenStateChanged() {
   UpdateCommandsForFullscreenMode();
 }
+
+#if defined(OS_CHROMEOS)
+void BrowserCommandController::LockedFullscreenStateChanged() {
+  UpdateCommandsForLockedFullscreenMode();
+}
+#endif
 
 void BrowserCommandController::PrintingStateChanged() {
   UpdatePrintingState();
@@ -1124,6 +1135,28 @@ void BrowserCommandController::UpdateCommandsForFullscreenMode() {
   UpdateCommandsForBookmarkBar();
   UpdateCommandsForIncognitoAvailability();
 }
+
+#if defined(OS_CHROMEOS)
+void BrowserCommandController::UpdateCommandsForLockedFullscreenMode() {
+  // Disable most keyboard shortcuts in locked fullscreen mode (allow a few
+  // whitelisted ones).
+  constexpr int kWhitelistedIds[] = {
+    IDC_CUT, IDC_COPY, IDC_PASTE,
+    IDC_FIND, IDC_FIND_NEXT, IDC_FIND_PREVIOUS,
+    IDC_ZOOM_PLUS, IDC_ZOOM_NORMAL, IDC_ZOOM_MINUS,
+    IDC_TOGGLE_REQUEST_TABLET_SITE,
+  };
+  if (browser_ && browser_->window()) {
+    if (ash::IsWindowTrustedPinned(browser_->window())) {
+      command_updater_.SaveCommandState();
+      for (int id : kWhitelistedIds)
+        command_updater_.UpdateCommandEnabled(id, true);
+    } else {
+      command_updater_.RestoreSavedCommandState();
+    }
+  }
+}
+#endif
 
 void BrowserCommandController::UpdatePrintingState() {
   bool print_enabled = CanPrint(browser_);

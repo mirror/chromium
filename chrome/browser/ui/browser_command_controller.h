@@ -47,6 +47,9 @@ class BrowserCommandController : public CommandUpdaterDelegate,
   void ZoomStateChanged();
   void ContentRestrictionsChanged();
   void FullscreenStateChanged();
+#if defined(OS_CHROMEOS)
+  void LockedFullscreenStateChanged();
+#endif
   void PrintingStateChanged();
   void LoadingStateChanged(bool is_loading, bool force);
   void ExtensionStateChanged();
@@ -126,6 +129,12 @@ class BrowserCommandController : public CommandUpdaterDelegate,
   // Update commands whose state depends on the type of fullscreen mode the
   // window is in.
   void UpdateCommandsForFullscreenMode();
+
+#if defined(OS_CHROMEOS)
+  // Update commands whose state depends on whether the window is in locked
+  // fullscreen mode or not.
+  void UpdateCommandsForLockedFullscreenMode();
+#endif
 
   // Updates the printing command state.
   void UpdatePrintingState();
