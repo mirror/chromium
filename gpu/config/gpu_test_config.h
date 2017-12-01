@@ -89,10 +89,6 @@ class GPU_EXPORT GPUTestConfig {
  protected:
   void ClearGPUVendor();
 
-  // Indicates that the OS has the notion of a numeric GPU vendor and device id
-  // and this data should be validated.
-  bool validate_gpu_info_;
-
  private:
   // operating system.
   int32_t os_;
