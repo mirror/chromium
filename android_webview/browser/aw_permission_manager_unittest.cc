@@ -10,13 +10,11 @@
 #include "android_webview/browser/aw_browser_permission_request_delegate.h"
 #include "base/bind.h"
 #include "base/bind_helpers.h"
-#include "base/memory/ptr_util.h"
 #include "content/public/browser/permission_manager.h"
 #include "content/public/browser/permission_type.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 
-using base::MakeUnique;
 using blink::mojom::PermissionStatus;
 using content::PermissionType;
 
