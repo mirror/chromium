@@ -66,7 +66,7 @@ class ArcUserSessionServiceTest : public InProcessBrowserTest {
     ArcServiceManager::Get()
         ->arc_bridge_service()
         ->intent_helper()
-        ->SetInstance(nullptr);
+        ->CloseInstance(fake_intent_helper_instance_.get());
     fake_intent_helper_instance_.reset(nullptr);
   }
 
