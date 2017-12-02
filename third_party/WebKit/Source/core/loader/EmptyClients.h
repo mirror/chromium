@@ -31,6 +31,7 @@
 
 #include <memory>
 
+#include "base/macros.h"
 #include "core/CoreExport.h"
 #include "core/frame/ContentSettingsClient.h"
 #include "core/frame/LocalFrameClient.h"
@@ -229,11 +230,9 @@ class CORE_EXPORT EmptyChromeClient : public ChromeClient {
 };
 
 class CORE_EXPORT EmptyLocalFrameClient : public LocalFrameClient {
-  WTF_MAKE_NONCOPYABLE(EmptyLocalFrameClient);
-
  public:
   static EmptyLocalFrameClient* Create() { return new EmptyLocalFrameClient; }
-  ~EmptyLocalFrameClient() override {}
+  ~EmptyLocalFrameClient() override = default;
 
   bool HasWebView() const override { return true; }  // mainly for assertions
 
@@ -373,14 +372,16 @@ class CORE_EXPORT EmptyLocalFrameClient : public LocalFrameClient {
   String GetInstrumentationToken() override { return g_empty_string; };
 
  protected:
-  EmptyLocalFrameClient() {}
+  EmptyLocalFrameClient() = default;
 
   ContentSettingsClient content_settings_client_;
   service_manager::InterfaceProvider interface_provider_;
+
+  DISALLOW_COPY_AND_ASSIGN(EmptyLocalFrameClient);
 };
 
 class EmptySpellCheckPanelHostClient : public WebSpellCheckPanelHostClient {
-  WTF_MAKE_NONCOPYABLE(EmptySpellCheckPanelHostClient);
+  DISALLOW_COPY_AND_ASSIGN(EmptySpellCheckPanelHostClient);
   USING_FAST_MALLOC(EmptySpellCheckPanelHostClient);
 
  public:
@@ -392,7 +393,7 @@ class EmptySpellCheckPanelHostClient : public WebSpellCheckPanelHostClient {
 };
 
 class EmptyEditorClient final : public EditorClient {
-  WTF_MAKE_NONCOPYABLE(EmptyEditorClient);
+  DISALLOW_COPY_AND_ASSIGN(EmptyEditorClient);
   USING_FAST_MALLOC(EmptyEditorClient);
 
  public:
@@ -413,7 +414,7 @@ class EmptyEditorClient final : public EditorClient {
 };
 
 class EmptyContextMenuClient final : public ContextMenuClient {
-  WTF_MAKE_NONCOPYABLE(EmptyContextMenuClient);
+  DISALLOW_COPY_AND_ASSIGN(EmptyContextMenuClient);
   USING_FAST_MALLOC(EmptyContextMenuClient);
 
  public:
@@ -424,7 +425,7 @@ class EmptyContextMenuClient final : public ContextMenuClient {
 };
 
 class CORE_EXPORT EmptyRemoteFrameClient : public RemoteFrameClient {
-  WTF_MAKE_NONCOPYABLE(EmptyRemoteFrameClient);
+  DISALLOW_COPY_AND_ASSIGN(EmptyRemoteFrameClient);
 
  public:
   EmptyRemoteFrameClient();
