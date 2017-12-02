@@ -244,7 +244,7 @@ void StackDumpSignalHandler(int signal, siginfo_t* info, void* void_context) {
 
   // Record the fact that we are in the signal handler now, so that the rest
   // of StackTrace can behave in an async-signal-safe manner.
-  in_signal_handler = 1;
+  // in_signal_handler = 1;
 
   if (BeingDebugged())
     BreakDebugger();

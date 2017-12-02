@@ -6110,6 +6110,27 @@ void GLES2Implementation::CompleteLockDiscardableTexureOnContextThread(
   helper_->LockDiscardableTextureCHROMIUM(texture_id);
 }
 
+gpu::TransferCacheEntryId GLES2Implementation::CreateTransferCacheEntry(
+    const cc::ClientTransferCacheEntry& entry) {
+  return share_group()->transfer_cache()->CreateCacheEntry(
+      this, helper_->command_buffer(), entry);
+}
+
+bool GLES2Implementation::ThreadsafeLockTransferCacheEntry(
+    gpu::TransferCacheEntryId id) {
+  return share_group()->transfer_cache()->LockTransferCacheEntry(id);
+}
+
+void GLES2Implementation::UnlockTransferCacheEntry(
+    gpu::TransferCacheEntryId id) {
+  share_group()->transfer_cache()->UnlockTransferCacheEntry(this, id);
+}
+
+void GLES2Implementation::DeleteTransferCacheEntry(
+    gpu::TransferCacheEntryId id) {
+  share_group()->transfer_cache()->DeleteTransferCacheEntry(this, id);
+}
+
 void GLES2Implementation::SetLostContextCallback(
     const base::Closure& callback) {
   lost_context_callback_ = callback;
@@ -7218,6 +7239,7 @@ struct PaintOpSerializer {
 #endif
 
 void GLES2Implementation::RasterCHROMIUM(const cc::DisplayItemList* list,
+                                         cc::ImageProvider* provider,
                                          GLint translate_x,
                                          GLint translate_y,
                                          GLint clip_x,
@@ -7266,7 +7288,7 @@ void GLES2Implementation::RasterCHROMIUM(const cc::DisplayItemList* list,
   PaintOpSerializer op_serializer(free_size, transfer_buffer_, helper_);
   cc::PaintOpBufferSerializer::SerializeCallback serialize_cb = base::Bind(
       &PaintOpSerializer::Serialize, base::Unretained(&op_serializer));
-  cc::PaintOpBufferSerializer serializer(serialize_cb, nullptr);
+  cc::PaintOpBufferSerializer serializer(serialize_cb, provider);
   serializer.Serialize(&list->paint_op_buffer_, &offsets, preamble);
   DCHECK(serializer.valid());
   op_serializer.SendSerializedData();
