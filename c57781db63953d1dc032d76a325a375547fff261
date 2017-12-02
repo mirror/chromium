@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "38c6f031_3f978111",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-02T00:37:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00594a51_11c164a5",
+      "range": {
+        "startLine": 12,
+        "startChar": 17,
+        "endLine": 12,
+        "endChar": 24
+      },
+      "revId": "c57781db63953d1dc032d76a325a375547fff261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "128260a8_03e4afbe",
         "filename": "chrome/browser/resources/settings/internet_page/network_summary.js",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "152cddad_093bc989",
+        "filename": "chrome/browser/resources/settings/internet_page/network_summary.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-02T00:37:57Z",
+      "side": 1,
+      "message": "Yes, it should remove the activeNetworkIds_ entry (line 174) in that case instead of ignoring the error (|state| wil be undefined).\n\nThat won\u0027t remove the UI entry (which is controled by activeNetworkStates_),  it will just prevent further getState requests for that GUID until / unless the entry is updated.",
+      "parentUuid": "128260a8_03e4afbe",
+      "range": {
+        "startLine": 167,
+        "startChar": 8,
+        "endLine": 167,
+        "endChar": 15
+      },
+      "revId": "c57781db63953d1dc032d76a325a375547fff261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6db5f0f3_db594a55",
         "filename": "chrome/browser/resources/settings/internet_page/network_summary.js",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-01T23:13:12Z",
       "side": 1,
       "message": "how does this differ from (idx !\u003d -1)?",
+      "range": {
+        "startLine": 179,
+        "startChar": 8,
+        "endLine": 179,
+        "endChar": 12
+      },
+      "revId": "c57781db63953d1dc032d76a325a375547fff261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e63f513_521109b5",
+        "filename": "chrome/browser/resources/settings/internet_page/network_summary.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-02T00:37:57Z",
+      "side": 1,
+      "message": "Oops. This would never be true. It\u0027s annyoing that Closure doesn\u0027t identify this. Thanks for catching it. (This case really shouldn\u0027t happen, but I prefer to handle it instead of asserting since it\u0027s harmless and there may be an edge case I haven\u0027t thought of).\nFixed.",
+      "parentUuid": "6db5f0f3_db594a55",
       "range": {
         "startLine": 179,
         "startChar": 8,
