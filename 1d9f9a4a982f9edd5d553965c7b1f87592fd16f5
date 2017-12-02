@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c7b498f_57b680e3",
+        "filename": "cc/paint/paint_typeface_mac.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-12-02T00:19:24Z",
+      "side": 1,
+      "message": "This is definitely a little awkward to have this function implemented here.  You\u0027re already storing the font name and size on the PaintTypeface.  Can you make this a different function, like CreateSkTypefaceFromNSFont or something, and then not have CreateSkTypeface have different parameters based on #ifdefs or have multiple implementations.  Just a single #ifdef in the CreateSkTypeface function itself?",
+      "revId": "1d9f9a4a982f9edd5d553965c7b1f87592fd16f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
