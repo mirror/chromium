@@ -8,12 +8,16 @@
 #include "bindings/core/v8/ScriptPromise.h"
 #include "core/CoreExport.h"
 #include "core/dom/ContextLifecycleObserver.h"
+#include "public/platform/modules/permissions/permission.mojom-blink.h"
 #include "public/platform/WebClipboard.h"
 
 namespace blink {
 
 class DataTransfer;
 class ScriptPromiseResolver;
+
+using mojom::blink::PermissionStatus;
+using mojom::blink::PermissionService;
 
 class ClipboardPromise final
     : public GarbageCollectedFinalized<ClipboardPromise>,
@@ -35,16 +39,34 @@ class ClipboardPromise final
   ClipboardPromise(ScriptState*);
 
   scoped_refptr<WebTaskRunner> GetTaskRunner();
+  PermissionService* GetPermissionService();
+  void PermissionServiceConnectionError();
+  bool HasUserGesture(ExecutionContext*);
+
+  void RequestReadPermission(PermissionService::RequestPermissionCallback);
+  void HasWritePermission(PermissionService::HasPermissionCallback);
 
   void HandleRead();
+  void HandleReadWithPermission(PermissionStatus);
+
   void HandleReadText();
+  void HandleReadTextWithPermission(PermissionStatus);
 
   void HandleWrite(DataTransfer*);
+  void HandleWriteWithPermission(PermissionStatus);
+
   void HandleWriteText(const String&);
+  void HandleWriteTextWithPermission(PermissionStatus);
+
+  ScriptState* script_state_;
 
   Member<ScriptPromiseResolver> script_promise_resolver_;
 
+  PermissionServicePtr permission_service_;
+
   WebClipboard::Buffer buffer_;
+
+  WebString write_data_;
 };
 
 }  // namespace blink
