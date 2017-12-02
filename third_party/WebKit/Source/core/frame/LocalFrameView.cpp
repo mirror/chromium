@@ -2449,6 +2449,8 @@ void LocalFrameView::SetBaseBackgroundColor(const Color& background_color) {
     composited_layer_mapping->UpdateContentsOpaque();
     if (composited_layer_mapping->MainGraphicsLayer())
       composited_layer_mapping->MainGraphicsLayer()->SetNeedsDisplay();
+    if (composited_layer_mapping->ScrollingContentsLayer())
+      composited_layer_mapping->ScrollingContentsLayer()->SetNeedsDisplay();
   }
   RecalculateScrollbarOverlayColorTheme(DocumentBackgroundColor());
 
