@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "70b84b5a_16d79007",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/BaseMediaRouteProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1144414
+      },
+      "writtenOn": "2017-12-02T02:50:34Z",
+      "side": 1,
+      "message": "Java lambdas are already supported: https://groups.google.com/a/google.com/forum/#!msg/clank-team/xcA9ZTRea4s/kKSsOrSOBQAJ\nThere are a number of Java lambda uses in Chromium already: https://cs.chromium.org/search/?q\u003d%22()+-%3E+%7B%22+f:chrome\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n\nI think the weak reference shouldn\u0027t matter much for this Runnable. It is posted from `onSinksReceived()` and will soon be executed after that. If anything can cause a GC issue, it should be the object that is referencing this BaseMRP for calling `onSinksReceived()`, not this Runnable.\n\nI don\u0027t have strong opinions BTW, but using lambda could improve the readability. You can do in either way :)",
+      "parentUuid": "07bfa873_bbeff355",
+      "range": {
+        "startLine": 38,
+        "startChar": 27,
+        "endLine": 38,
+        "endChar": 50
+      },
+      "revId": "ed9136ff663a360f06eacc5321946ac1fb24497e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "166dc1e5_73ff4c61",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/BaseMediaRouteProvider.java",
         "patchSetId": 4
