@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8041d064_6da4174c",
+        "filename": "chrome/test/data/webui/extensions/extension_navigation_helper_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-02T01:59:59Z",
+      "side": 1,
+      "message": "Nit: updateHistory() 2nd parameter is not declared as optional. Technically it should be passed everywhere. It works because default value of undefined is equivalent to false, but this would not pass compilation, if we were compiling our tests.",
+      "range": {
+        "startLine": 157,
+        "startChar": 23,
+        "endLine": 157,
+        "endChar": 36
+      },
+      "revId": "ca98cd91945c4c8987c8b44f35df0f8f1d2b9e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
