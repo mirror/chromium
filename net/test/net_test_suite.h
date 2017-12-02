@@ -35,6 +35,12 @@ class NetTestSuite : public base::TestSuite {
   // NetTestSuite.
   static base::test::ScopedTaskEnvironment* GetScopedTaskEnvironment();
 
+  // Sets the global ScopedTaskEnvironment with |scoped_task_environment|.
+  // For example, one might want to use a MOCK_TIME ScopedTaskEnviroment.
+  static void SetScopedTaskEnvironment(
+      std::unique_ptr<base::test::ScopedTaskEnvironment>
+          scoped_task_environment);
+
  protected:
   // Called from within Initialize(), but separate so that derived classes
   // can initialize the NetTestSuite instance only and not
