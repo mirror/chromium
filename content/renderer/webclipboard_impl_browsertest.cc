@@ -6,6 +6,8 @@
 
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
+#include "build/build_config.h"
+#include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/content_browser_test.h"
@@ -39,6 +41,64 @@ IN_PROC_BROWSER_TEST_F(WebClipboardImplTest, PasteRTF) {
   EXPECT_EQ(expected_title, title_watcher.WaitAndGetTitle());
 }
 
+IN_PROC_BROWSER_TEST_F(WebClipboardImplTest, ImageCopy) {
+  BrowserTestClipboardScope clipboard;
+  clipboard.SetText("");
+
+  base::string16 expected_types;
+#if !defined(OS_MACOSX)
+  // See comments in WebClipboardImpl::WriteImage for why the expected types
+  // are platform-specific.
+  expected_types = base::ASCIIToUTF16("file;image/png string;text/html");
+#else
+  expected_types = base::ASCIIToUTF16("file;image/png");
+#endif
+
+  NavigateToURL(shell(), GetTestUrl(".", "image_copy_types.html"));
+  FrameFocusedObserver focus_observer(shell()->web_contents()->GetMainFrame());
+  focus_observer.Wait();
+  NavigateIframeToURL(shell()->web_contents(), "copyme",
+                      GetTestUrl(".", "media/blackwhite.png"));
+
+  // Run script to copy image contents and wait for completion.
+  {
+    // TODO(jsbell): Remove
+    shell()->web_contents()->GetMainFrame()->ExecuteJavaScriptForTests(
+        base::ASCIIToUTF16("setTimeout(()=>document.title='timeout', 200)"));
+
+    shell()
+        ->web_contents()
+        ->GetMainFrame()
+        ->ExecuteJavaScriptWithUserGestureForTests(
+            base::ASCIIToUTF16("var ok = document.getElementById('copyme')"
+                               ".contentWindow.document.execCommand('copy');"
+                               "document.title = ok ? 'copied' : 'failed';"));
+    content::TitleWatcher title_watcher(shell()->web_contents(),
+                                        base::ASCIIToUTF16("copied"));
+    title_watcher.AlsoWaitForTitle(base::ASCIIToUTF16("failed"));
+
+    // TODO(jsbell): Remove
+    title_watcher.AlsoWaitForTitle(base::ASCIIToUTF16("timeout"));
+
+    EXPECT_EQ(base::ASCIIToUTF16("copied"), title_watcher.WaitAndGetTitle());
+  }
+
+  // Paste and check the types.
+  {
+    // TODO(jsbell): Remove
+    shell()->web_contents()->GetMainFrame()->ExecuteJavaScriptForTests(
+        base::ASCIIToUTF16("setTimeout(()=>document.title='timeout2', 200)"));
+
+    shell()->web_contents()->Paste();
+    content::TitleWatcher title_watcher(shell()->web_contents(),
+                                        expected_types);
+
+    // TODO(jsbell): Remove
+    title_watcher.AlsoWaitForTitle(base::ASCIIToUTF16("timeout2"));
+
+    EXPECT_EQ(expected_types, title_watcher.WaitAndGetTitle());
+  }
+}
 }
 
 } // namespace content
