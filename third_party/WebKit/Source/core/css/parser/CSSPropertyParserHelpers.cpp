@@ -546,7 +546,7 @@ static int ClampRGBComponent(const CSSPrimitiveValue& value) {
   // TODO(timloh): Multiply by 2.55 and round instead of floor.
   if (value.IsPercentage())
     result *= 2.56;
-  return clampTo<int>(result, 0, 255);
+  return clampTo<int>(round(result), 0, 255);
 }
 
 static bool ParseRGBParameters(CSSParserTokenRange& range,
@@ -555,7 +555,7 @@ static bool ParseRGBParameters(CSSParserTokenRange& range,
   DCHECK(range.Peek().FunctionId() == CSSValueRgb ||
          range.Peek().FunctionId() == CSSValueRgba);
   CSSParserTokenRange args = ConsumeFunction(range);
-  CSSPrimitiveValue* color_parameter = ConsumeInteger(args);
+  CSSPrimitiveValue* color_parameter = ConsumeNumber(args, kValueRangeAll);
   if (!color_parameter)
     color_parameter = ConsumePercent(args, kValueRangeAll);
   if (!color_parameter)
@@ -567,7 +567,7 @@ static bool ParseRGBParameters(CSSParserTokenRange& range,
     if (!ConsumeCommaIncludingWhitespace(args))
       return false;
     color_parameter = is_percent ? ConsumePercent(args, kValueRangeAll)
-                                 : ConsumeInteger(args);
+                                 : ConsumeNumber(args, kValueRangeAll);
     if (!color_parameter)
       return false;
     color_array[i] = ClampRGBComponent(*color_parameter);
