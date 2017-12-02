@@ -87,6 +87,24 @@
       "revId": "d66967fc65a90eb02b18fdeac2d729cd6a4e4983",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe79ef66_6c42b845",
+        "filename": "third_party/WebKit/Source/core/inspector/DevToolsHost.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-02T00:50:59Z",
+      "side": 1,
+      "message": "haraken@, +1 for using V8String/WTF::String (that is 2. above)?",
+      "parentUuid": "d09fff01_a79040f3",
+      "revId": "d66967fc65a90eb02b18fdeac2d729cd6a4e4983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
