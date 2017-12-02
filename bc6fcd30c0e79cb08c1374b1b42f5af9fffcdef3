@@ -396,6 +396,24 @@
     },
     {
       "key": {
+        "uuid": "0a9ad868_3083f537",
+        "filename": "device/vr/orientation/orientation_device.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-12-02T01:16:05Z",
+      "side": 1,
+      "message": "Oh, I understand. Somehow it didn\u0027t click that whenever the device will be used it will be device::OrientationDevice. I have renamed to VROrientationDevice. \n\nThanks for clarifying Michael.",
+      "parentUuid": "9feb2f5d_958608ed",
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0443e6a0_cc60b44d",
         "filename": "device/vr/orientation/orientation_device.h",
         "patchSetId": 8
