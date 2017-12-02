@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a1b03eb_31bc8df7",
+        "filename": "ios/chrome/browser/ui/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-12-02T01:00:24Z",
+      "side": 1,
+      "message": "After removing the Physical Web Scanner, I get link errors from GoogleCast about missing CoreBluetooth symbols. I\u0027m not sure if this is the right place to pull in the lib (it\u0027s confusing to me how GoogleCast gets included) but this prevents the link errors.",
+      "revId": "d8207a2c553fc9a0514595bf70d480ba1b3d7145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
