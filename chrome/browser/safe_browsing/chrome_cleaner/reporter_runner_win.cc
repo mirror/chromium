@@ -1072,8 +1072,10 @@ void SwReporterInvocationSequence::operator=(
 
 void SwReporterInvocationSequence::NotifySequenceDone(
     SwReporterInvocationResult result) {
-  if (on_sequence_done_)
+  if (on_sequence_done_) {
+    VLOG(1) << "NotifySequenceDone with result: " << static_cast<int>(result);
     std::move(on_sequence_done_).Run(result);
+  }
 }
 
 base::Version SwReporterInvocationSequence::version() const {
