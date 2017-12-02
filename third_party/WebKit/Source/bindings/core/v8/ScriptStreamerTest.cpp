@@ -357,6 +357,7 @@ TEST_F(ScriptStreamingTest, EncodingChanges) {
   // loading it.
   V8TestingScope scope;
   resource_->SetEncodingForTest("windows-1252");
+  ScriptStreamer::SetSmallScriptThresholdForTesting(4);
 
   ScriptStreamer::StartStreaming(
       GetPendingScript(), ScriptStreamer::kParsingBlocking, settings_.get(),
@@ -366,9 +367,15 @@ TEST_F(ScriptStreamingTest, EncodingChanges) {
 
   resource_->SetEncodingForTest("UTF-8");
   // \xec\x92\x81 are the raw bytes for \uc481.
-  AppendData(
-      "function foo() { var foob\xec\x92\x81r = 13; return foob\xec\x92\x81r; "
-      "} foo();");
+  // CARIAN LETTER A2 U+102a7
+
+  for (char c :
+       "function foo() { var foob\xf0\x90\x8a\xa7 = 13; return "
+       "foob\xf0\x90\x8a\xa7; } foo();") {
+    if (c)
+      resource_->AppendData(&c, 1);
+    testing::YieldCurrentThread();
+  }
 
   Finish();
 
@@ -381,12 +388,18 @@ TEST_F(ScriptStreamingTest, EncodingChanges) {
   EXPECT_FALSE(error_occurred);
   EXPECT_TRUE(source_code.Streamer());
   v8::TryCatch try_catch(scope.GetIsolate());
+  try_catch.SetVerbose(true);
   v8::Local<v8::Script> script;
   EXPECT_TRUE(V8ScriptRunner::CompileScript(
                   scope.GetScriptState(), source_code, kSharableCrossOrigin,
                   kV8CacheOptionsDefault, ReferrerScriptInfo())
                   .ToLocal(&script));
   EXPECT_FALSE(try_catch.HasCaught());
+  /*
+    String exception_message =
+          ToCoreStringWithUndefinedOrNullCheck(try_catch.Message()->Get());
+    printf("%s\n", exception_message.Utf8().data());
+  */
 }
 
 TEST_F(ScriptStreamingTest, EncodingFromBOM) {

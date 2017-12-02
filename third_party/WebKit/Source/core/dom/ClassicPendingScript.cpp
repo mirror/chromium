@@ -216,10 +216,13 @@ void ClassicPendingScript::NotifyFinished(Resource* resource) {
 }
 
 void ClassicPendingScript::DataReceived(Resource* resource,
-                                        const char*,
-                                        size_t) {
-  if (streamer_)
-    streamer_->NotifyAppendData(ToScriptResource(resource));
+                                        const char* data,
+                                        size_t length) {
+  if (streamer_) {
+    streamer_->MaybeStartActualStreaming(resource,
+                                         resource->ResourceBuffer()->size());
+    streamer_->NotifyAppendData(resource->ResourceBuffer().get());
+  }
 }
 
 void ClassicPendingScript::Trace(blink::Visitor* visitor) {

@@ -64,6 +64,7 @@ class CORE_EXPORT ScriptResource final : public TextResource {
                     WebProcessMemoryDump*) const override;
 
   void DestroyDecodedDataForFailedRevalidation() override;
+  void NotifyFinished() override;
 
   const String& SourceText();
 

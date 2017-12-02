@@ -18,6 +18,8 @@ namespace blink {
 
 class ClassicPendingScript;
 class Resource;
+class SharedBuffer;
+class TextResourceDecoder;
 class ScriptState;
 class Settings;
 class SourceStream;
@@ -47,10 +49,6 @@ class CORE_EXPORT ScriptStreamer final
                              ScriptState*,
                              scoped_refptr<WebTaskRunner>);
 
-  // Returns false if we cannot stream the given encoding.
-  static bool ConvertEncoding(const char* encoding_name,
-                              v8::ScriptCompiler::StreamedSource::Encoding*);
-
   bool IsFinished() const;           // Has loading & streaming finished?
   bool IsStreamingFinished() const;  // Has streaming finished?
 
@@ -72,7 +70,9 @@ class CORE_EXPORT ScriptStreamer final
   bool StreamingSuppressed() const { return streaming_suppressed_; }
 
   // Called by ClassicPendingScript when data arrives from the network.
-  void NotifyAppendData(Resource*);
+  void MaybeStartActualStreaming(Resource*, size_t length);
+  void NotifyAppendData(const SharedBuffer*);
+  void AppendString(const String&);
   void NotifyFinished();
 
   // Called by ScriptStreamingTask when it has streamed all data to V8 and V8
@@ -112,8 +112,7 @@ class CORE_EXPORT ScriptStreamer final
   std::unique_ptr<v8::ScriptCompiler::StreamedSource> source_;
   bool loading_finished_;  // Whether loading from the network is done.
   bool parsing_finished_;  // Whether the V8 side processing is done.
-  // Whether we have received enough data to start the streaming.
-  bool have_enough_data_for_streaming_;
+  bool streaming_initialized_ = false;
 
   // Whether the script source code should be retrieved from the Resource
   // instead of the ScriptStreamer.
@@ -133,8 +132,8 @@ class CORE_EXPORT ScriptStreamer final
   // Keep the script resource dentifier for event tracing.
   const unsigned long script_resource_identifier_;
 
-  // Encoding of the streamed script. Saved for sanity checking purposes.
-  v8::ScriptCompiler::StreamedSource::Encoding encoding_;
+  std::unique_ptr<TextResourceDecoder> decoder_;
+  size_t queue_tail_position_ = 0;  // Used only by the main thread.
 
   scoped_refptr<WebTaskRunner> loading_task_runner_;
 };
