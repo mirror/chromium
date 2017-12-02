@@ -41,6 +41,13 @@ class {{property_classname}} : public {{property.superclass}} {
   {% for property_method in property.property_methods %}
   {{property_method.return_type}} {{property_method.name}}{{property_method.parameters}} const override;
   {% endfor %}
+  {% if property.unique %}
+  const char* GetPropertyName() const override { return "{{property.name}}"; }
+  const WTF::AtomicString& GetPropertyNameAtomicString() const override {
+    static const WTF::AtomicString& name = WTF::AtomicString("{{property.name}}");
+    return name;
+  }
+  {% endif %}
   {% if property.interpolable %}
   bool IsInterpolable() const override { return true; }
   {% endif %}

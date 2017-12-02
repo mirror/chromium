@@ -492,7 +492,7 @@
     },
     {
       name: "font-kerning",
-      property_class: "Inherited",
+      property_class: true,
       inherited: true,
       font: true,
       name_for_methods: "Kerning",
@@ -623,7 +623,7 @@
     },
     {
       name: "-webkit-font-smoothing",
-      property_class: "Inherited",
+      property_class: true,
       inherited: true,
       font: true,
       type_name: "FontSmoothingMode",
@@ -640,7 +640,7 @@
     },
     {
       name: "text-orientation",
-      property_class: "Inherited",
+      property_class: true,
       inherited: true,
       field_group: "*",
       field_template: "keyword",
@@ -652,7 +652,7 @@
     },
     {
       name: "-webkit-text-orientation",
-      property_class: "Inherited",
+      property_class: true,
       inherited: true,
       type_name: "TextOrientation",
       custom_apply_functions_value: true,
@@ -660,7 +660,7 @@
     },
     {
       name: "writing-mode",
-      property_class: "Inherited",
+      property_class: true,
       inherited: true,
       field_template: "keyword",
       include_paths: ["platform/text/WritingMode.h"],
@@ -672,7 +672,7 @@
     },
     {
       name: "-webkit-writing-mode",
-      property_class: "Inherited",
+      property_class: true,
       inherited: true,
       type_name: "WritingMode",
       custom_apply_functions_value: true,
@@ -680,7 +680,7 @@
     },
     {
       name: "text-rendering",
-      property_class: "Inherited",
+      property_class: true,
       inherited: true,
       font: true,
       type_name: "TextRenderingMode",
@@ -909,7 +909,7 @@
     },
     {
       name: "border-collapse",
-      property_class: "Inherited",
+      property_class: true,
       independent: true,
       inherited: true,
       field_template: "keyword",
@@ -1166,7 +1166,7 @@
     },
     {
       name: "caption-side",
-      property_class: "Inherited",
+      property_class: true,
       independent: true,
       inherited: true,
       field_template: "keyword",
@@ -1222,27 +1222,27 @@
     },
     {
       name: "clip-rule",
-      property_class: "Inherited",
+      property_class: true,
       inherited: true,
       svg: true,
       type_name: "WindRule",
     },
     {
       name: "color-interpolation",
-      property_class: "Inherited",
+      property_class: true,
       inherited: true,
       svg: true,
     },
     {
       name: "color-interpolation-filters",
-      property_class: "Inherited",
+      property_class: true,
       inherited: true,
       svg: true,
       type_name: "EColorInterpolation",
     },
     {
       name: "color-rendering",
-      property_class: "Inherited",
+      property_class: true,
       inherited: true,
       svg: true,
     },
@@ -1349,13 +1349,13 @@
     },
     {
       name: "dominant-baseline",
-      property_class: "Inherited",
+      property_class: true,
       inherited: true,
       svg: true,
     },
     {
       name: "empty-cells",
-      property_class: "Inherited",
+      property_class: true,
       independent: true,
       inherited: true,
       field_template: "keyword",
@@ -1383,7 +1383,7 @@
     },
     {
       name: "fill-rule",
-      property_class: "Inherited",
+      property_class: true,
       inherited: true,
       svg: true,
       type_name: "WindRule",
@@ -1620,7 +1620,7 @@
     },
     {
       name: "image-rendering",
-      property_class: "Inherited",
+      property_class: true,
       inherited: true,
       field_group: "*",
       field_template: "keyword",
@@ -1754,7 +1754,7 @@
     },
     {
       name: "list-style-position",
-      property_class: "Inherited",
+      property_class: true,
       independent: true,
       inherited: true,
       field_template: "keyword",
@@ -1763,7 +1763,7 @@
     },
     {
       name: "list-style-type",
-      property_class: "Inherited",
+      property_class: true,
       inherited: true,
       field_template: "keyword",
       keywords: [
@@ -2105,7 +2105,7 @@
     },
     {
       name: "overflow-wrap",
-      property_class: "Inherited",
+      property_class: true,
       inherited: true,
       field_group: "*",
       field_template: "keyword",
@@ -2205,7 +2205,7 @@
     },
     {
       name: "pointer-events",
-      property_class: "Inherited",
+      property_class: true,
       independent: true,
       inherited: true,
       field_template: "keyword",
@@ -2574,7 +2574,7 @@
     },
     {
       name: "shape-rendering",
-      property_class: "Inherited",
+      property_class: true,
       inherited: true,
       svg: true,
     },
@@ -2586,7 +2586,7 @@
     },
     {
       name: "speak",
-      property_class: "Inherited",
+      property_class: true,
       inherited: true,
       field_group: "*",
       field_template: "keyword",
@@ -2644,7 +2644,7 @@
     },
     {
       name: "stroke-linecap",
-      property_class: "Inherited",
+      property_class: true,
       inherited: true,
       svg: true,
       name_for_methods: "CapStyle",
@@ -2652,7 +2652,7 @@
     },
     {
       name: "stroke-linejoin",
-      property_class: "Inherited",
+      property_class: true,
       inherited: true,
       svg: true,
       name_for_methods: "JoinStyle",
@@ -2709,7 +2709,7 @@
     },
     {
       name: "text-align",
-      property_class: "Inherited",
+      property_class: true,
       independent: false,
       inherited: true,
       field_template: "keyword",
@@ -2723,7 +2723,7 @@
     },
     {
       name: "text-align-last",
-      property_class: "Inherited",
+      property_class: true,
       inherited: true,
       field_group: "*",
       field_template: "keyword",
@@ -2732,13 +2732,13 @@
     },
     {
       name: "text-anchor",
-      property_class: "Inherited",
+      property_class: true,
       inherited: true,
       svg: true,
     },
     {
       name: "text-combine-upright",
-      property_class: "Inherited",
+      property_class: true,
       inherited: true,
       field_group: "*",
       field_template: "keyword",
@@ -2847,7 +2847,7 @@
     },
     {
       name: "text-transform",
-      property_class: "Inherited",
+      property_class: true,
       independent: true,
       inherited: true,
       field_template: "keyword",
@@ -3098,7 +3098,7 @@
     },
     {
       name: "-webkit-box-direction",
-      property_class: "Inherited",
+      property_class: true,
       independent: true,
       inherited: true,
       field_template: "keyword",
@@ -3278,7 +3278,7 @@
     },
     {
       name: "-webkit-line-break",
-      property_class: "Inherited",
+      property_class: true,
       inherited: true,
       field_group: "*",
       field_template: "keyword",
@@ -3288,7 +3288,7 @@
     },
     {
       name: "line-break",
-      property_class: "Inherited",
+      property_class: true,
       inherited: true,
       type_name: "LineBreak",
     },
@@ -3433,7 +3433,7 @@
     },
     {
       name: "-webkit-print-color-adjust",
-      property_class: "Inherited",
+      property_class: true,
       independent: true,
       inherited: true,
       field_template: "keyword",
@@ -3442,7 +3442,7 @@
     },
     {
       name: "-webkit-rtl-ordering",
-      property_class: "Inherited",
+      property_class: true,
       independent: true,
       inherited: true,
       field_template: "keyword",
@@ -3454,7 +3454,7 @@
     },
     {
       name: "-webkit-ruby-position",
-      property_class: "Inherited",
+      property_class: true,
       inherited: true,
       field_group: "*",
       field_template: "keyword",
@@ -3474,7 +3474,7 @@
     },
     {
       name: "-webkit-text-combine",
-      property_class: "Inherited",
+      property_class: true,
       inherited: true,
       name_for_methods: "TextCombine",
     },
@@ -3525,7 +3525,7 @@
     },
     {
       name: "-webkit-text-security",
-      property_class: "Inherited",
+      property_class: true,
       inherited: true,
       field_group: "*",
       field_template: "keyword",
@@ -3587,7 +3587,7 @@
     },
     {
       name: "-webkit-user-modify",
-      property_class: "Inherited",
+      property_class: true,
       inherited: true,
       field_group: "*",
       field_template: "keyword",
@@ -3596,7 +3596,7 @@
     },
     {
       name: "user-select",
-      property_class: "Inherited",
+      property_class: true,
       inherited: true,
       field_group: "*",
       field_template: "keyword",
@@ -3605,7 +3605,7 @@
     },
     {
       name: "white-space",
-      property_class: "Inherited",
+      property_class: true,
       independent: true,
       inherited: true,
       field_template: "keyword",
@@ -3646,7 +3646,7 @@
     },
     {
       name: "word-break",
-      property_class: "Inherited",
+      property_class: true,
       inherited: true,
       field_group: "*",
       field_template: "keyword",
@@ -3666,7 +3666,7 @@
     // property. So using the same handlers.
     {
       name: "word-wrap",
-      property_class: "Inherited",
+      property_class: true,
       inherited: true,
       name_for_methods: "OverflowWrap",
     },
