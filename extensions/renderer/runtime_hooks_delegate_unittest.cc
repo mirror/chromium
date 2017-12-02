@@ -239,6 +239,44 @@ TEST_F(RuntimeHooksDelegateTest, SendMessage) {
   tester.TestSendMessage(
       "{data: 'hello'}, {includeTlsChannelId: true}, function() {}",
       kStandardMessage, self_target, true, SendMessageTester::OPEN);
+  {
+    // Even though we parse the message options separately, we do a conversion
+    // of the object passed into the API. This means that something subtle like
+    // this, which throws on the second access of a property, shouldn't trip us
+    // up.
+    constexpr char kTrickyConnectOptions[] =
+        R"({data: 'hello'},
+           {
+             get includeTlsChannelId() {
+               if (this.checkedOnce)
+                 throw new Error('tricked!');
+               this.checkedOnce = true;
+               return true;
+             }
+           })";
+    tester.TestSendMessage(kTrickyConnectOptions, kStandardMessage, self_target,
+                           true, SendMessageTester::CLOSED);
+  }
+  {
+    LOG(WARNING) << "Hello";
+    v8::Local<v8::Function> mess_with_proto = FunctionFromString(
+        context,
+        "(function() { "
+        "Object.prototype.__defineGetter__('includeTlsChannelId', function() { "
+        "throw new Error('hello'); if (this.checkedOnce) { throw new "
+        "Error('hahaha'); } this.checkedOnce = true; return undefined; }); })");
+    RunFunction(mess_with_proto, context, 0, nullptr);
+    // Even though we parse the message options separately, we do a conversion
+    // of the object passed into the API. This means that something subtle like
+    // this, which throws on the second access of a property, shouldn't trip us
+    // up.
+    constexpr char kTrickyConnectOptions[] =
+        R"({data: 'hello'},
+           {})";
+    tester.TestSendMessage(kTrickyConnectOptions, kStandardMessage, self_target,
+                           false, SendMessageTester::CLOSED);
+    LOG(WARNING) << "Goodbye";
+  }
 
   std::string other_id_str = crx_file::id_util::GenerateId("other");
   const char* other_id = other_id_str.c_str();  // For easy StringPrintf()ing.
@@ -288,6 +326,53 @@ TEST_F(RuntimeHooksDelegateTest, SendMessageErrors) {
   send_message("{data: 'hi'}, {unknownProp: true}");
   send_message("'some id', 'some message', 'some other string'");
   send_message("'some id', 'some message', {}, {}");
+}
+
+TEST_F(RuntimeHooksDelegateTest, SendMessageWithTrickyOptions) {
+  v8::HandleScope handle_scope(isolate());
+  v8::Local<v8::Context> context = MainContext();
+
+  SendMessageTester tester(ipc_message_sender(), script_context(), 0,
+                           "runtime");
+
+  MessageTarget self_target = MessageTarget::ForExtension(extension()->id());
+  constexpr char kStandardMessage[] = R"({"data":"hello"})";
+  {
+    // Even though we parse the message options separately, we do a conversion
+    // of the object passed into the API. This means that something subtle like
+    // this, which throws on the second access of a property, shouldn't trip us
+    // up.
+    constexpr char kTrickyConnectOptions[] =
+        R"({data: 'hello'},
+           {
+             get includeTlsChannelId() {
+               if (this.checkedOnce)
+                 throw new Error('tricked!');
+               this.checkedOnce = true;
+               return true;
+             }
+           })";
+    tester.TestSendMessage(kTrickyConnectOptions, kStandardMessage, self_target,
+                           true, SendMessageTester::CLOSED);
+  }
+  {
+    // A different form of trickiness: the options object doesn't have the
+    // includeTlsChannelId key (which is acceptable, since its optional), but
+    // any attempt to access the key on an object without a value for it results
+    // in an error. Our argument parsing code should protect us from this.
+    constexpr const char kMessWithObjectPrototype[] =
+        R"((function() {
+             Object.prototype.__defineGetter__('includeTlsChannelId',
+                                               function() {
+               throw new Error('tricked!');
+             });
+           }))";
+    v8::Local<v8::Function> mess_with_proto =
+        FunctionFromString(context, kMessWithObjectPrototype);
+    RunFunction(mess_with_proto, context, 0, nullptr);
+    tester.TestSendMessage("{data: 'hello'}, {}", kStandardMessage, self_target,
+                           false, SendMessageTester::CLOSED);
+  }
 }
 
 class RuntimeHooksDelegateNativeMessagingTest

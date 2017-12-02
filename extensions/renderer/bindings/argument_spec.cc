@@ -580,6 +580,9 @@ bool ArgumentSpec::ParseArgumentToObject(
         }
         if (convert_to_v8)
           v8_result.Set(*utf8_key, prop_value);
+      } else if (convert_to_v8) {
+        v8_result.Set(*utf8_key,
+                      v8::Undefined(context->GetIsolate()).As<v8::Value>());
       }
       continue;
     }
@@ -602,9 +605,15 @@ bool ArgumentSpec::ParseArgumentToObject(
 
   for (const auto& pair : properties_) {
     const ArgumentSpec* spec = pair.second.get();
-    if (!spec->optional_ && seen_properties.count(spec) == 0) {
-      *error = api_errors::MissingRequiredProperty(pair.first.c_str());
-      return false;
+    if (seen_properties.count(spec) == 0) {
+      if (!spec->optional_) {
+        *error = api_errors::MissingRequiredProperty(pair.first.c_str());
+        return false;
+      }
+      if (convert_to_v8) {
+        v8_result.Set(pair.first,
+                      v8::Undefined(context->GetIsolate()).As<v8::Value>());
+      }
     }
   }
 
