@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "acf37d76_371a79bb",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/baseline_optimizer.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-12-02T00:36:37Z",
+      "side": 1,
+      "message": "This all-PASS implication is coded in single_test_runner.py. I spent a while reading the code, and I believe if other types of tests miss baselines, the test runner would complain and fail, which also matches my previous experience. So I think it\u0027s safe to always treat missing baselines as all-PASS testharness results in the context of baseline optimizer.\n\nNow, the reason this argument is not always True in this method is because of one special usage in _find_optimal_result_placement below. If we give a non-existent all-PASS result for ports missing baselines, the algorithm would fail to find where to start traversing the search path (an assertion will fail at _find_in_search_path). Of course, we can change _find_in_search_path, but it\u0027d be equally complicated.\n\nYet I think it\u0027s probably better to flip the default value, as the usage mentioned above is the only special one.",
+      "parentUuid": "a879ae0b_88896f27",
+      "range": {
+        "startLine": 333,
+        "startChar": 31,
+        "endLine": 335,
+        "endChar": 46
+      },
+      "revId": "ab4a7fdf517aa19fb90a55c555adc807dea9a4c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a54b7a74_4c8afa0c",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/baseline_optimizer.py",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2caf06d5_3b5ff6f5",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/baseline_optimizer.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-12-02T00:36:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a54b7a74_4c8afa0c",
+      "range": {
+        "startLine": 488,
+        "startChar": 34,
+        "endLine": 488,
+        "endChar": 45
+      },
+      "revId": "ab4a7fdf517aa19fb90a55c555adc807dea9a4c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bcec573_78f05b69",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/baseline_optimizer_unittest.py",
         "patchSetId": 2
@@ -59,6 +107,24 @@
       "writtenOn": "2017-12-01T22:50:08Z",
       "side": 1,
       "message": "Other possible names may include: ALL_PASS_RESULT, or ALL_PASS_TESTHARNESS_RESULT\n\nThis could also potentially be an attribute of BaselineOptimizerTest, although I\u0027m not sure if that\u0027s any better.",
+      "revId": "ab4a7fdf517aa19fb90a55c555adc807dea9a4c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "10feebea_7cfcb5e9",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/baseline_optimizer_unittest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-12-02T00:36:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bcec573_78f05b69",
       "revId": "ab4a7fdf517aa19fb90a55c555adc807dea9a4c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
