@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a1e28e0_b09a6dfb",
+        "filename": "chrome/browser/resources/md_extensions/item.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-02T01:57:34Z",
+      "side": 1,
+      "message": "Why do we need to explicitly set the width of this flex child (#main is display flex)? Wouldn\u0027t flex: 1 allow it to occupy the rest of the space, without having to do any calculations, as follows:\n\nflex: 1;\noverflow: hidden;\n\nThen there would be no need to extract those new CSS variables at the top of this file.",
+      "revId": "15b834762851bc7a6a98bc97b79e6d696618f9cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b6af004_e5f80205",
+        "filename": "chrome/browser/resources/md_extensions/item.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-02T01:57:34Z",
+      "side": 1,
+      "message": "Perhaps eliminate the ID, by using\n#inpsect-views \u003e span {...}",
+      "range": {
+        "startLine": 131,
+        "startChar": 6,
+        "endLine": 131,
+        "endChar": 26
+      },
+      "revId": "15b834762851bc7a6a98bc97b79e6d696618f9cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
