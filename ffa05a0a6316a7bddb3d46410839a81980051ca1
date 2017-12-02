@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4b56abb9_814677cc",
+        "filename": "components/arc/metrics/arc_metrics_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1125664
+      },
+      "writtenOn": "2017-12-02T02:54:44Z",
+      "side": 1,
+      "message": "It did compile, but I\u0027ll check the trybots as well.",
+      "parentUuid": "bd405d08_2f87e200",
+      "range": {
+        "startLine": 208,
+        "startChar": 56,
+        "endLine": 208,
+        "endChar": 74
+      },
+      "revId": "ffa05a0a6316a7bddb3d46410839a81980051ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c44ee08a_4cf78612",
         "filename": "components/arc/metrics/arc_metrics_service.h",
         "patchSetId": 5
@@ -39,6 +63,24 @@
       "revId": "ffa05a0a6316a7bddb3d46410839a81980051ca1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4503aa4_3b534d98",
+        "filename": "components/arc/metrics/arc_metrics_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1125664
+      },
+      "writtenOn": "2017-12-02T02:54:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c44ee08a_4cf78612",
+      "revId": "ffa05a0a6316a7bddb3d46410839a81980051ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "ffa05a0a6316a7bddb3d46410839a81980051ca1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8bb97d8_9dbadb9d",
+        "filename": "components/arc/metrics/arc_metrics_service_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1125664
+      },
+      "writtenOn": "2017-12-02T02:54:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a35c3b1_5175c60f",
+      "range": {
+        "startLine": 228,
+        "startChar": 2,
+        "endLine": 228,
+        "endChar": 8
+      },
+      "revId": "ffa05a0a6316a7bddb3d46410839a81980051ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
