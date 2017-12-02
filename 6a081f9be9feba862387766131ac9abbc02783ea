@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "9c39d2e5_70a13d39",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-02T06:21:23Z",
+      "side": 1,
+      "message": "Solved my linker error.\nApparently you still have to put a line in .cc file, even thou the value is assigned in .h",
+      "parentUuid": "b55138a1_80e2c662",
+      "range": {
+        "startLine": 76,
+        "startChar": 9,
+        "endLine": 76,
+        "endChar": 14
+      },
+      "revId": "6a081f9be9feba862387766131ac9abbc02783ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc347e44_8ec94199",
         "filename": "components/offline_pages/core/offline_page_metadata_store_unittest.cc",
         "patchSetId": 7
