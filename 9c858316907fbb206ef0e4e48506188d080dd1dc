@@ -16,6 +16,24 @@
       "revId": "9c858316907fbb206ef0e4e48506188d080dd1dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cc901f0_a79e1fd7",
+        "filename": "net/http/http_stream_factory_impl_job_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-02T22:44:42Z",
+      "side": 1,
+      "message": "I uploaded: https://chromium-review.googlesource.com/c/chromium/src/+/805354\n\nIf there is a new main job restarted after proxy, and this ResumeMainJob() is posted by the old alt job, we will pass this |!main_job_| check and operate on the new main job instead of the old one.",
+      "parentUuid": "621324d7_ad6a4751",
+      "revId": "9c858316907fbb206ef0e4e48506188d080dd1dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
