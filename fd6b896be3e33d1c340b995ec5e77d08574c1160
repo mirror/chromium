@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fce454d1_6aac52e6",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-12-02T02:08:25Z",
+      "side": 1,
+      "message": "Another option is to have CS explicitly log this from Java, since the prediction result gets passed up to Java.  That would enable tests to check that it got logged... but if Ranker does that we probably don\u0027t need the test.  :-)",
+      "range": {
+        "startLine": 114,
+        "startChar": 14,
+        "endLine": 114,
+        "endChar": 18
+      },
+      "revId": "fd6b896be3e33d1c340b995ec5e77d08574c1160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16b9b012_a61dcfbe",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-12-02T02:08:25Z",
+      "side": 1,
+      "message": "Nit: typo.",
+      "revId": "fd6b896be3e33d1c340b995ec5e77d08574c1160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
