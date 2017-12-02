@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "32f3b507_6e47d6e9",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-02T00:26:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75c997c7_a70b4514",
+      "revId": "0bcccd72e9ff68b087230ec9ae8f0a06b45bc53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16bd9545_44529bbc",
         "filename": "chrome/browser/chromeos/printing/external_printers.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "0bcccd72e9ff68b087230ec9ae8f0a06b45bc53e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75b44f64_7966c0a9",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-02T00:26:06Z",
+      "side": 1,
+      "message": "Because I forgot that non-POD members get initialized automatically?",
+      "parentUuid": "16bd9545_44529bbc",
+      "revId": "0bcccd72e9ff68b087230ec9ae8f0a06b45bc53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f075eb22_be570dfd",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-02T00:26:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dc48130_e507486b",
+      "revId": "0bcccd72e9ff68b087230ec9ae8f0a06b45bc53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e1931e8_a8645509",
         "filename": "chrome/browser/chromeos/printing/external_printers.cc",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-22T19:50:29Z",
       "side": 1,
       "message": "How to make your reviewer nervous:  \n\n1)  leave a comment that says \"How safe is this?\"\n\n:)",
+      "revId": "0bcccd72e9ff68b087230ec9ae8f0a06b45bc53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c75e3a21_2de17a68",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-02T00:26:06Z",
+      "side": 1,
+      "message": "Thanks for the reminder.  Looking at the unittests for this class, we should be able to feed it semi-arbitrary strings without a lot of concern.  Scary TODO has been removed. :)",
+      "parentUuid": "0e1931e8_a8645509",
       "revId": "0bcccd72e9ff68b087230ec9ae8f0a06b45bc53e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "4a2292e0_12cabdf1",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-02T00:26:06Z",
+      "side": 1,
+      "message": "Fixed the list check.\n\nJSONReader doesn\u0027t seem to provide a records limitation.  I will check the number of records.  I\u0027ll set the cap to 20,000 as that should consume about 5MB memory.",
+      "parentUuid": "56c003e4_5530360f",
+      "revId": "0bcccd72e9ff68b087230ec9ae8f0a06b45bc53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4b2cd3d_d6615465",
         "filename": "chrome/browser/chromeos/printing/external_printers.cc",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "0bcccd72e9ff68b087230ec9ae8f0a06b45bc53e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "172aea4b_b9596f08",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-02T00:26:06Z",
+      "side": 1,
+      "message": "I think that rejecting individual entries will be less frustrating for admins in the case of accidental inclusion.",
+      "parentUuid": "c4b2cd3d_d6615465",
+      "revId": "0bcccd72e9ff68b087230ec9ae8f0a06b45bc53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "7db0effa_393894c6",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-02T00:26:06Z",
+      "side": 1,
+      "message": "It\u0027s not.  blacklist_ is a set, not a vector.",
+      "parentUuid": "cf95ac09_37f008eb",
+      "revId": "0bcccd72e9ff68b087230ec9ae8f0a06b45bc53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b10863e9_0a4a1d87",
         "filename": "chrome/browser/chromeos/printing/external_printers.cc",
         "patchSetId": 2
@@ -135,6 +261,24 @@
       "revId": "0bcccd72e9ff68b087230ec9ae8f0a06b45bc53e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f9a9e6e_9344f3da",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-02T00:26:06Z",
+      "side": 1,
+      "message": "No.  It\u0027ll just return an empty set since we always clear printers_ when it\u0027s invalidated.",
+      "parentUuid": "b10863e9_0a4a1d87",
+      "revId": "0bcccd72e9ff68b087230ec9ae8f0a06b45bc53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "a9ad8eef_4e08ce67",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-02T00:26:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0177033_7f6fa4dc",
+      "revId": "0bcccd72e9ff68b087230ec9ae8f0a06b45bc53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "901ace24_c68f2c1b",
         "filename": "chrome/browser/chromeos/printing/external_printers.cc",
         "patchSetId": 2
@@ -166,6 +328,24 @@
       "writtenOn": "2017-09-22T19:50:29Z",
       "side": 1,
       "message": "I\u0027d argue for consolidating IsWhitelistReady, IsBlacklistReady, and the mode_ \u003d\u003d ALL_ACCESS check at 140 into a single IsReady function that switch()es based on the mode.  \n\nIt was nonintuitive for me that we need *one* of the Ready condition functions to be true. \n\nTHis is subjective, though.",
+      "revId": "0bcccd72e9ff68b087230ec9ae8f0a06b45bc53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b77ffa8c_e8db79cf",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-02T00:26:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "901ace24_c68f2c1b",
       "revId": "0bcccd72e9ff68b087230ec9ae8f0a06b45bc53e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -186,6 +366,24 @@
       "revId": "0bcccd72e9ff68b087230ec9ae8f0a06b45bc53e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "120c2385_20410aa7",
+        "filename": "chrome/browser/chromeos/printing/external_printers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-02T00:26:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f907cb1c_2ce4759b",
+      "revId": "0bcccd72e9ff68b087230ec9ae8f0a06b45bc53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -212,6 +410,30 @@
     },
     {
       "key": {
+        "uuid": "a7b5313b_25ae1a35",
+        "filename": "chrome/browser/chromeos/printing/external_printers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-02T00:26:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4d1d7eb_5ec27c3c",
+      "range": {
+        "startLine": 32,
+        "startChar": 12,
+        "endLine": 32,
+        "endChar": 24
+      },
+      "revId": "0bcccd72e9ff68b087230ec9ae8f0a06b45bc53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d32e8f4_d107b68e",
         "filename": "chrome/browser/chromeos/printing/external_printers.h",
         "patchSetId": 2
@@ -235,6 +457,30 @@
     },
     {
       "key": {
+        "uuid": "1fdcdca8_2bf7a264",
+        "filename": "chrome/browser/chromeos/printing/external_printers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-02T00:26:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d32e8f4_d107b68e",
+      "range": {
+        "startLine": 37,
+        "startChar": 20,
+        "endLine": 37,
+        "endChar": 69
+      },
+      "revId": "0bcccd72e9ff68b087230ec9ae8f0a06b45bc53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61b58dea_b49566a8",
         "filename": "chrome/browser/chromeos/printing/external_printers.h",
         "patchSetId": 2
@@ -255,6 +501,30 @@
       "revId": "0bcccd72e9ff68b087230ec9ae8f0a06b45bc53e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3a07a6a_a157cabb",
+        "filename": "chrome/browser/chromeos/printing/external_printers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-02T00:26:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61b58dea_b49566a8",
+      "range": {
+        "startLine": 43,
+        "startChar": 31,
+        "endLine": 43,
+        "endChar": 33
+      },
+      "revId": "0bcccd72e9ff68b087230ec9ae8f0a06b45bc53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
