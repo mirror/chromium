@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "902fcf84_cac0085c",
+        "filename": "third_party/WebKit/Source/core/loader/EmptyClients.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-02T09:30:02Z",
+      "side": 1,
+      "message": "Nit: Shall we move this to the end of the class?\n\nThe same comment for other classes in this CL.",
+      "revId": "7868336a6c297128895a1029da9aea60ef207364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
