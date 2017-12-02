@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8f87321_81b91c5c",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPainter.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-12-02T00:39:57Z",
+      "side": 1,
+      "message": "I feel this should be moved to the caller and replaced with CompositingRecorder, but \"don\u0027t fix it if it ain\u0027t broken\". :/",
+      "revId": "297eb9dd034520f26411090ebb6a97c31863c31f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
