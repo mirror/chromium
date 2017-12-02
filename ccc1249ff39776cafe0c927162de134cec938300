@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e01d371b_bd4ab145",
+        "filename": "chrome/browser/extensions/crx_installer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-12-02T01:12:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3945d555_8db92cc2",
+      "revId": "ccc1249ff39776cafe0c927162de134cec938300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7b93ba4_c1852b23",
         "filename": "chrome/browser/extensions/extension_service.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "ccc1249ff39776cafe0c927162de134cec938300",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bd1f135_47f09003",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-12-02T01:12:03Z",
+      "side": 1,
+      "message": "Because of the condition check at line 576, if both pendinging_extension_info and extension are null, the function exits at line 587. If the code reaches line 623, it means that pending_extension_info is null, thus extension must not be null.",
+      "parentUuid": "d7b93ba4_c1852b23",
+      "revId": "ccc1249ff39776cafe0c927162de134cec938300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
