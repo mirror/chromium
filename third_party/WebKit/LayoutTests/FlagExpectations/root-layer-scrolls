@@ -34,7 +34,7 @@ crbug.com/417782 http/tests/devtools/device-mode/default-background-color.html [
 crbug.com/417782 http/tests/devtools/layers/layer-compositing-reasons.js [ Failure ]
 crbug.com/417782 http/tests/devtools/layers/layer-tree-model.js [ Failure ]
 crbug.com/417782 http/tests/devtools/layers/layers-panel-mouse-events.js [ Crash ]
-crbug.com/417782 http/tests/devtools/tracing/scroll-invalidations.html [ Failure ]
+crbug.com/417782 http/tests/devtools/tracing/scroll-invalidations.js [ Failure ]
 crbug.com/417782 http/tests/devtools/tracing/timeline-paint/layer-tree.js [ Failure ]
 crbug.com/417782 http/tests/devtools/tracing/timeline-paint/timeline-paint-with-layout-invalidations-on-deleted-node.js [ Failure ]
 crbug.com/417782 http/tests/devtools/tracing/timeline-paint/timeline-paint-with-layout-invalidations.js [ Failure ]
@@ -81,7 +81,7 @@ crbug.com/417782 virtual/scroll_customization/fast/events/touch/touch-fractional
 crbug.com/417782 virtual/scroll_customization/fast/events/touch/touch-inside-iframe-scrolled.html [ Failure ]
 crbug.com/417782 virtual/threaded/compositing/visibility/visibility-image-layers-dynamic.html [ Failure ]
 crbug.com/417782 [ Linux Win ] virtual/threaded/fast/scroll-behavior/smooth-scroll/main-thread-scrolling-reason-correctness.html [ Failure ]
-crbug.com/417782 virtual/threaded/http/tests/devtools/tracing/scroll-invalidations.html [ Failure ]
+crbug.com/417782 virtual/threaded/http/tests/devtools/tracing/scroll-invalidations.js [ Failure ]
 crbug.com/417782 virtual/threaded/http/tests/devtools/tracing/timeline-paint/timeline-paint-with-layout-invalidations-on-deleted-node.js [ Failure ]
 crbug.com/417782 virtual/threaded/http/tests/devtools/tracing/timeline-paint/timeline-paint-with-layout-invalidations.js [ Failure ]
 crbug.com/417782 virtual/threaded/http/tests/devtools/tracing/timeline-paint/timeline-paint-with-style-recalc-invalidations.js [ Failure ]
@@ -106,7 +106,7 @@ crbug.com/417782 virtual/mojo-loading/http/tests/devtools/layers/layer-scroll-re
 crbug.com/417782 virtual/mojo-loading/http/tests/devtools/layers/layer-sticky-position-constraint-get.js [ Crash Timeout ]
 crbug.com/417782 virtual/mojo-loading/http/tests/devtools/layers/layers-panel-mouse-events.js [ Crash Timeout ]
 crbug.com/417782 virtual/mojo-loading/http/tests/devtools/layers/no-overlay-layers.js [ Crash Timeout ]
-crbug.com/417782 virtual/mojo-loading/http/tests/devtools/tracing/scroll-invalidations.html [ Crash Failure ]
+crbug.com/417782 virtual/mojo-loading/http/tests/devtools/tracing/scroll-invalidations.js [ Crash Failure ]
 
 # Virtual test suites to skip.
 crbug.com/417782 virtual/spv175 [ Skip ]
