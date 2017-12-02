@@ -101,9 +101,6 @@ void XmlParser::Parse(const std::string& xml, ParseCallback callback) {
   base::Value root_element;
   std::vector<base::Value*> element_stack;
   while (xml_reader.Read()) {
-    if (xml_reader.IsWhiteSpace() || xml_reader.IsComment())
-      continue;
-
     if (xml_reader.IsClosingElement()) {
       if (element_stack.empty()) {
         ReportError(std::move(callback), "Invalid XML: unbalanced elements");
@@ -123,7 +120,7 @@ void XmlParser::Parse(const std::string& xml, ParseCallback callback) {
       new_element = CreateTextNode(text, TextNodeType::kText);
     } else if (xml_reader.GetTextIfCDataElement(&text)) {
       new_element = CreateTextNode(text, TextNodeType::kCData);
-    } else {
+    } else if (xml_reader.IsElement()) {
       // Element node.
       new_element = CreateNewElement(xml_reader.NodeFullName());
       PopulateNamespaces(&new_element, &xml_reader);
@@ -131,6 +128,10 @@ void XmlParser::Parse(const std::string& xml, ParseCallback callback) {
       // Self-closing (empty) element have no close tag (or children); don't
       // push them on the element stack.
       push_new_node_to_stack = !xml_reader.IsEmptyElement();
+    } else {
+      // Ignore or all other node types (space, comments, processing
+      // instructions, DTD...).
+      continue;
     }
 
     base::Value* new_element_ptr;
@@ -139,6 +140,7 @@ void XmlParser::Parse(const std::string& xml, ParseCallback callback) {
           AddChildToElement(current_element, std::move(new_element));
     } else {
       // First element we are parsing, it becomes the root element.
+      DCHECK(xml_reader.IsElement());
       DCHECK(root_element.is_none());
       root_element = std::move(new_element);
       new_element_ptr = &root_element;
