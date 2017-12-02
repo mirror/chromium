@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62d5f741_8781cb93",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-02T21:52:37Z",
+      "side": 1,
+      "message": "document |mirrored| as a parameter:\n\n// |mirrored|: True if mirror mode should be enabled.\n\nSee comment format specification at https://cs.chromium.org/chromium/src/tools/json_schema_compiler/idl_schema.py?type\u003dcs\u0026q\u003dfile:idl_schema%5C.py$+processcomment\u0026l\u003d35",
+      "revId": "a70aaa77a169580463fb253929bb8272bee33933",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4f4eaec_985a3523",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-02T21:52:37Z",
+      "side": 1,
+      "message": "\u003ccode\u003emirroringIds\u003c/code\u003e",
+      "range": {
+        "startLine": 363,
+        "startChar": 43,
+        "endLine": 363,
+        "endChar": 57
+      },
+      "revId": "a70aaa77a169580463fb253929bb8272bee33933",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
