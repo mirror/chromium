@@ -597,4 +597,30 @@ TEST(NameNormalizationTest, TestEverything) {
   EXPECT_EQ(normalized_der, renormalized_der);
 }
 
+TEST(NameNormalizationTest, clusterfuzz_testcase_minimized_4520917387706368) {
+  const unsigned char input_array[] = {0x31, 0x06, 0x30, 0x04,
+                                       0x06, 0x00, 0x3b, 0x00};
+
+  std::string normalized;
+  CertErrors errors;
+  EXPECT_TRUE(NormalizeName(der::Input(input_array), &normalized, &errors));
+
+  std::string re_normalized;
+  EXPECT_TRUE(NormalizeName(der::Input(&normalized), &re_normalized, &errors));
+  EXPECT_EQ(normalized, re_normalized);
+}
+
+TEST(NameNormalizationTest, clusterfuzz_testcase_minimized_5716153770180608) {
+  const unsigned char input_array[] = {0x31, 0x08, 0x30, 0x06, 0x06,
+                                       0x00, 0x75, 0x02, 0x13, 0x13};
+
+  std::string normalized;
+  CertErrors errors;
+  EXPECT_TRUE(NormalizeName(der::Input(input_array), &normalized, &errors));
+
+  std::string re_normalized;
+  EXPECT_TRUE(NormalizeName(der::Input(&normalized), &re_normalized, &errors));
+  EXPECT_EQ(normalized, re_normalized);
+}
+
 }  // namespace net
