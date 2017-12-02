@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "47bbafdc_3df10bde",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-12-02T00:38:12Z",
+      "side": 1,
+      "message": "It\u0027s my fault, I should have checked it after copying and pasting. Thanks.",
+      "parentUuid": "70c306d2_0f6f48e7",
+      "range": {
+        "startLine": 503,
+        "startChar": 10,
+        "endLine": 503,
+        "endChar": 11
+      },
+      "revId": "222653730662f9ef79af3a246fc7ea6778e26c70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4897f92_81534020",
         "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
         "patchSetId": 10
@@ -39,6 +63,24 @@
       "revId": "222653730662f9ef79af3a246fc7ea6778e26c70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc5ed000_c7af5707",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-12-02T00:38:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4897f92_81534020",
+      "revId": "222653730662f9ef79af3a246fc7ea6778e26c70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "80762e95_b3f8befb",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-12-02T00:38:12Z",
+      "side": 1,
+      "message": "That is true. I renamed it to setUpConnectableHealthThermometerDevice to keep it consistent with all the other functions that contain \u0027HealthThermometerDevice\u0027.",
+      "parentUuid": "fdf5d893_1ef3e048",
+      "revId": "222653730662f9ef79af3a246fc7ea6778e26c70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b11e4ba2_09ae1364",
         "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
         "patchSetId": 10
@@ -73,6 +133,24 @@
       "revId": "222653730662f9ef79af3a246fc7ea6778e26c70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b433a19f_696156d9",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-12-02T00:38:12Z",
+      "side": 1,
+      "message": "This is a good point. I think originally I wrote this function with replacing the block of code that was in getHealthThermomterDeviceWithServicesDiscovered in mind, but really I was supposed to be writing it for use in gc-detach.html and detach-gc.html.",
+      "parentUuid": "b11e4ba2_09ae1364",
+      "revId": "222653730662f9ef79af3a246fc7ea6778e26c70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "8290e350_ad1f1cad",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/health-thermometer-iframe.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-12-02T00:38:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bbf8a14_336238dc",
+      "revId": "222653730662f9ef79af3a246fc7ea6778e26c70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59ba6fc5_d3a58713",
         "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/health-thermometer-iframe.html",
         "patchSetId": 10
@@ -107,6 +203,24 @@
       "revId": "222653730662f9ef79af3a246fc7ea6778e26c70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58d1cafe_db940776",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/health-thermometer-iframe.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-12-02T00:38:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59ba6fc5_d3a58713",
+      "revId": "222653730662f9ef79af3a246fc7ea6778e26c70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
