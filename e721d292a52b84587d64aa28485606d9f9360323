@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "58601853_d7bf3c9c",
+        "filename": "sandbox/linux/syscall_broker/broker_command.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001558
+      },
+      "writtenOn": "2017-12-02T00:15:35Z",
+      "side": 1,
+      "message": "(drive-by comment, I didn\u0027t read everything)\n\nYou should probably add comments that this code needs to be async signal safe (since broker_client uses it).",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 4
+      },
+      "revId": "e721d292a52b84587d64aa28485606d9f9360323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3329aea8_f326d73e",
         "filename": "sandbox/linux/syscall_broker/broker_command.h",
         "patchSetId": 8
