@@ -8,7 +8,10 @@
 #include "core/dom/Text.h"
 #include "core/editing/EphemeralRange.h"
 #include "core/editing/Position.h"
+#include "core/layout/ng/inline/ng_inline_fragment_iterator.h"
 #include "core/layout/ng/inline/ng_inline_node.h"
+#include "core/layout/ng/inline/ng_physical_text_fragment.h"
+#include "core/layout/ng/ng_physical_fragment.h"
 
 namespace blink {
 
@@ -40,7 +43,7 @@ std::pair<const Node&, unsigned> ToNodeOffsetPair(const Position& position) {
 }
 
 // TODO(xiaochengh): Expose it properly as a utility function.
-const LayoutObject* NGInlineFormattingContextOf(const Position& position) {
+const LayoutBlockFlow* NGInlineFormattingContextOf(const Position& position) {
   if (!NGOffsetMapping::AcceptsPosition(position))
     return nullptr;
   const auto node_offset_pair = ToNodeOffsetPair(position);
@@ -372,6 +375,123 @@ Position NGOffsetMapping::GetLastPosition(unsigned offset) const {
   const Node& node = result->GetOwner();
   const unsigned dom_offset = result->ConvertTextContentToLastDOMOffset(offset);
   return CreatePositionForOffsetMapping(node, dom_offset);
+}
+
+// static
+NGInlineFragmentPosition NGInlineFragmentPosition::FromTextFragment(
+    const NGPhysicalFragmentWithOffset& fragment_with_offset,
+    unsigned text_offset_in_box) {
+  return {fragment_with_offset.fragment,
+          fragment_with_offset.offset_to_container_box, text_offset_in_box,
+          WTF::nullopt};
+}
+
+// static
+NGInlineFragmentPosition NGInlineFragmentPosition::FromAtomicInline(
+    const NGPhysicalFragmentWithOffset& fragment_with_offset,
+    AnchorType anchor_type) {
+  return {fragment_with_offset.fragment,
+          fragment_with_offset.offset_to_container_box, WTF::nullopt,
+          anchor_type};
+}
+
+// TODO(xiaochengh): Move it to its own file.
+NGInlineFragmentPosition ComputeNGInlineFragmentPosition(
+    const PositionWithAffinity& position) {
+  const NGOffsetMapping* mapping =
+      NGOffsetMapping::GetFor(position.GetPosition());
+  if (!mapping)
+    return NGInlineFragmentPosition();
+
+  Optional<unsigned> maybe_offset =
+      mapping->GetTextContentOffset(position.GetPosition());
+  if (!maybe_offset.has_value()) {
+    // TODO(xiaochengh): Is this really an expected case?
+    return NGInlineFragmentPosition();
+  }
+
+  const unsigned offset = maybe_offset.value();
+  const TextAffinity affinity = position.Affinity();
+
+  // TODO(xiaochengh): Wrap the part below into a function.
+
+  const LayoutBlockFlow* context =
+      NGInlineFormattingContextOf(position.GetPosition());
+  // Non-null |mapping| implies non-null inline formatting context.
+  DCHECK(context) << position;
+  const NGPhysicalBoxFragment* box_fragment = context->CurrentFragment();
+  // TODO(kojii): ...
+  if (!box_fragment)
+    return NGInlineFragmentPosition();
+  NGInlineFragmentIterator children(*box_fragment, nullptr);
+  Vector<NGInlineFragmentPosition> candidates;
+  for (const auto& child : children) {
+    // TODO(xiaochengh): We need to skip fragments that are in a different
+    // inline foramtting contexts, e.g., fragments inside float, OOP,
+    // inline-box, ...
+
+    if (child.fragment->IsText()) {
+      const NGPhysicalTextFragment* text_fragment =
+          ToNGPhysicalTextFragment(child.fragment);
+      if (offset < text_fragment->StartOffset() ||
+          offset > text_fragment->EndOffset()) {
+        // TODO(xiaochengh): This may introduce false negatives.
+        continue;
+      }
+      const unsigned offset_in_box = offset - text_fragment->StartOffset();
+      auto candidate =
+          NGInlineFragmentPosition::FromTextFragment(child, offset_in_box);
+      if ((offset && offset < text_fragment->Length()) ||
+          (!offset && affinity == TextAffinity::kDownstream) ||
+          (offset == text_fragment->Length() &&
+           affinity == TextAffinity::kUpstream))
+        return candidate;
+      candidates.push_back(candidate);
+    }
+
+    // TODO(xiaochengh): Does this mean atomic inline?
+    if (child.fragment->IsBox() && child.fragment->IsInlineBlock()) {
+      // TODO(xiaochengh): Design more straightforward way to get text offset of
+      // atomic inline box.
+      const Node* node = child.fragment->GetNode();
+      if (!node) {
+        // TODO(xiaochengh): Can we have anonymous atomic inline boxes?
+        continue;
+      }
+      Optional<unsigned> maybe_offset_before =
+          mapping->GetTextContentOffset(Position::BeforeNode(*node));
+      if (!maybe_offset_before.has_value()) {
+        // TODO(xiaochengh): This shouldn't be possible. Verify.
+        continue;
+      }
+      const unsigned offset_before = maybe_offset_before.value();
+      const unsigned offset_after = offset_before + 1;
+      if (offset != offset_before && offset != offset_after)
+        continue;
+      if (offset == offset_before) {
+        auto candidate = NGInlineFragmentPosition::FromAtomicInline(
+            child, NGInlineFragmentPosition::AnchorType::kBefore);
+        if (affinity == TextAffinity::kDownstream)
+          return candidate;
+        candidates.push_back(candidate);
+        continue;
+      }
+      auto candidate = NGInlineFragmentPosition::FromAtomicInline(
+          child, NGInlineFragmentPosition::AnchorType::kAfter);
+      if (affinity == TextAffinity::kUpstream)
+        return candidate;
+      candidates.push_back(candidate);
+    }
+
+    // TODO(xiaochengh): What if |offset| is in an empty line box?
+    // For example, foo<br>|<br>bar?
+  }
+
+  if (candidates.IsEmpty())
+    return NGInlineFragmentPosition();
+
+  // TODO(xiaochengh): Choose the correct candidate.
+  return candidates.front();
 }
 
 }  // namespace blink
