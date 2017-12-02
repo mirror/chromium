@@ -51,10 +51,15 @@ struct Command {
 /******** List of Zucchini commands ********/
 
 constexpr Command kCommands[] = {
-    {"gen", "-gen <old_file> <new_file> <patch_file> [-raw]", 3, &MainGen},
+    {"gen",
+     "-gen <old_file> <new_file> <patch_file> [-raw]"
+     " [-impose=#+#=#+#,#+#=#+#,...]",
+     3, &MainGen},
     {"apply", "-apply <old_file> <patch_file> <new_file>", 3, &MainApply},
     {"read", "-read <exe> [-dump]", 1, &MainRead},
-    {"detect", "-detect <archive_file>", 1, &MainDetect},
+    {"detect", "-detect <archive_file> [-dd=format#]", 1, &MainDetect},
+    {"match", "-match <old_file> <new_file> [-impose=#+#=#+#,#+#=#+#,...]", 2,
+     &MainMatch},
     {"crc32", "-crc32 <file>", 1, &MainCrc32},
 };
 

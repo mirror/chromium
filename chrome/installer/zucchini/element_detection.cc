@@ -8,6 +8,8 @@
 
 #include "base/logging.h"
 #include "chrome/installer/zucchini/disassembler.h"
+#include "chrome/installer/zucchini/disassembler_dex.h"
+#include "chrome/installer/zucchini/disassembler_elf.h"
 #include "chrome/installer/zucchini/disassembler_no_op.h"
 #include "chrome/installer/zucchini/disassembler_win32.h"
 
@@ -36,6 +38,26 @@ std::unique_ptr<Disassembler> MakeDisassemblerWithoutFallback(
       return disasm;
   }
 
+  ExecutableType type = QuickDetectElf(image);
+  if (type != kExeTypeUnknown) {
+    std::unique_ptr<Disassembler> disasm;
+    if (type == kExeTypeElfX86)
+      disasm = Disassembler::Make<DisassemblerElfX86>(image);
+    else if (type == kExeTypeElfX64)
+      disasm = Disassembler::Make<DisassemblerElfX64>(image);
+    else if (type == kExeTypeElfArm32)
+      disasm = Disassembler::Make<DisassemblerElfARM32>(image);
+    else if (type == kExeTypeElfAArch64)
+      disasm = Disassembler::Make<DisassemblerElfAArch64>(image);
+    if (disasm && disasm->size() >= kMinProgramSize)
+      return disasm;
+  }
+
+  if (DisassemblerDex::QuickDetect(image)) {
+    auto disasm = Disassembler::Make<DisassemblerDex>(image);
+    if (disasm && disasm->size() >= kMinProgramSize)
+      return disasm;
+  }
   return nullptr;
 }
 
@@ -46,6 +68,16 @@ std::unique_ptr<Disassembler> MakeDisassemblerOfType(ConstBufferView image,
       return Disassembler::Make<DisassemblerWin32X86>(image);
     case kExeTypeWin32X64:
       return Disassembler::Make<DisassemblerWin32X64>(image);
+    case kExeTypeElfX86:
+      return Disassembler::Make<DisassemblerElfX86>(image);
+    case kExeTypeElfX64:
+      return Disassembler::Make<DisassemblerElfX64>(image);
+    case kExeTypeElfArm32:
+      return Disassembler::Make<DisassemblerElfARM32>(image);
+    case kExeTypeElfAArch64:
+      return Disassembler::Make<DisassemblerElfAArch64>(image);
+    case kExeTypeDex:
+      return Disassembler::Make<DisassemblerDex>(image);
     case kExeTypeNoOp:
       return Disassembler::Make<DisassemblerNoOp>(image);
     default:

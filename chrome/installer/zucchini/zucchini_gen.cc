@@ -9,15 +9,19 @@
 
 #include <algorithm>
 #include <memory>
+#include <string>
 #include <utility>
+#include <vector>
 
 #include "base/logging.h"
 #include "chrome/installer/zucchini/disassembler.h"
 #include "chrome/installer/zucchini/element_detection.h"
 #include "chrome/installer/zucchini/encoded_view.h"
+#include "chrome/installer/zucchini/ensemble.h"
 #include "chrome/installer/zucchini/equivalence_map.h"
 #include "chrome/installer/zucchini/image_index.h"
 #include "chrome/installer/zucchini/patch_writer.h"
+#include "chrome/installer/zucchini/reference_bytes_mixer.h"
 #include "chrome/installer/zucchini/suffix_array.h"
 
 namespace zucchini {
@@ -192,8 +196,16 @@ bool GenerateRawDelta(ConstBufferView old_image,
                       ConstBufferView new_image,
                       const EquivalenceMap& equivalence_map,
                       const ImageIndex& new_image_index,
+                      const ReferenceBytesMixer& reference_bytes_mixer,
                       PatchElementWriter* patch_writer) {
+  // Upper bound for reference instructions across all platforms.
+  constexpr int kMaxReferenceInstructionSize = 8;
+
   RawDeltaSink raw_delta_sink;
+
+  uint8_t mixed_ref_bytes[kMaxReferenceInstructionSize];
+  MutableBufferView mixed_ref_region(mixed_ref_bytes,
+                                     kMaxReferenceInstructionSize);
 
   // Visit |equivalence_map| blocks in |new_image| order. Find and emit all
   // bytewise differences.
@@ -202,14 +214,38 @@ bool GenerateRawDelta(ConstBufferView old_image,
     Equivalence equivalence = candidate.eq;
     // For each bytewise delta from |old_image| to |new_image|, compute "copy
     // offset" and pass it along with delta to the sink.
-    for (offset_t i = 0; i < equivalence.length; ++i) {
-      if (new_image_index.IsReference(equivalence.dst_offset + i))
-        continue;  // Skip references since they're handled elsewhere.
+    for (offset_t i = 0; i < equivalence.length;) {
+      if (new_image_index.IsReference(equivalence.dst_offset + i)) {
+        DCHECK(new_image_index.IsToken(equivalence.dst_offset + i));
+        TypeTag type_tag =
+            new_image_index.LookupType(equivalence.dst_offset + i);
 
-      int8_t diff = new_image[equivalence.dst_offset + i] -
-                    old_image[equivalence.src_offset + i];
-      if (diff)
-        raw_delta_sink.PutNext({base_copy_offset + i, diff});
+        // Reference delta has its own flow. On some architectures (e.g., x86)
+        // this does not involve raw delta, so we skip. On other architectures
+        // (e.g., ARM) references are mixed with other bits that may change, so
+        // we need to "mix" data and store some changed bits into raw delta.
+        int num_bytes = reference_bytes_mixer.NumBytes(type_tag.value());
+        if (num_bytes) {
+          reference_bytes_mixer.Mix(
+              type_tag.value(), old_image.begin(), equivalence.src_offset + i,
+              new_image.begin(), equivalence.dst_offset + i,
+              mixed_ref_region.begin());
+          for (int j = 0; j < num_bytes; ++j) {
+            int8_t diff =
+                mixed_ref_bytes[j] - old_image[equivalence.src_offset + i + j];
+            if (diff)
+              raw_delta_sink.PutNext({base_copy_offset + i + j, diff});
+          }
+        }
+        i += new_image_index.GetTraits(type_tag).width;
+        DCHECK_LE(i, equivalence.length);
+      } else {
+        int8_t diff = new_image[equivalence.dst_offset + i] -
+                      old_image[equivalence.src_offset + i];
+        if (diff)
+          raw_delta_sink.PutNext({base_copy_offset + i, diff});
+        ++i;
+      }
     }
     base_copy_offset += equivalence.length;
   }
@@ -295,10 +331,12 @@ bool GenerateRawElement(const std::vector<offset_t>& old_sa,
                      kMinEquivalenceSimilarity);
 
   patch_writer->SetReferenceDeltaSink({});
+
+  ReferenceBytesMixer no_op_bytes_mixer;
   return GenerateEquivalencesAndExtraData(new_image, equivalences,
                                           patch_writer) &&
          GenerateRawDelta(old_image, new_image, equivalences, new_image_index,
-                          patch_writer);
+                          no_op_bytes_mixer, patch_writer);
 }
 
 bool GenerateExecutableElement(ExecutableType exe_type,
@@ -372,10 +410,12 @@ bool GenerateExecutableElement(ExecutableType exe_type,
                                &reference_delta_sink))
     return false;
   patch_writer->SetReferenceDeltaSink(std::move(reference_delta_sink));
+  std::unique_ptr<ReferenceBytesMixer> reference_bytes_mixer =
+      ReferenceBytesMixer::Create(*old_disasm, *new_disasm);
   return GenerateEquivalencesAndExtraData(new_image, equivalences,
                                           patch_writer) &&
          GenerateRawDelta(old_image, new_image, equivalences, *new_image_index,
-                          patch_writer);
+                          *reference_bytes_mixer, patch_writer);
 }
 
 /******** Exported Functions ********/
@@ -383,34 +423,93 @@ bool GenerateExecutableElement(ExecutableType exe_type,
 status::Code GenerateEnsemble(ConstBufferView old_image,
                               ConstBufferView new_image,
                               EnsemblePatchWriter* patch_writer) {
-  patch_writer->SetPatchType(PatchType::kEnsemblePatch);
+  return GenerateEnsembleWithImposedMatches(old_image, new_image, "",
+                                            patch_writer);
+}
 
-  base::Optional<Element> old_element =
-      DetectElementFromDisassembler(old_image);
-  base::Optional<Element> new_element =
-      DetectElementFromDisassembler(new_image);
-
-  // If images do not match known executable formats, or if detected formats
-  // don't match, fall back to generating a raw patch.
-  if (!old_element.has_value() || !new_element.has_value() ||
-      old_element->exe_type != new_element->exe_type) {
-    LOG(WARNING) << "Fall back to raw mode.";
+status::Code GenerateEnsembleWithImposedMatches(
+    ConstBufferView old_image,
+    ConstBufferView new_image,
+    std::string imposed_matches,
+    EnsemblePatchWriter* patch_writer) {
+  // Identify |patch_type| and compute |ensemble_matcher|.
+  PatchType patch_type = PatchType::kRawPatch;
+  EnsembleMatcher ensemble_matcher(nullptr);
+  if (!ensemble_matcher.RunMatch(old_image, new_image, imposed_matches)) {
+    LOG(INFO) << "RunMatch() failed, generating raw patch.";
     return GenerateRaw(old_image, new_image, patch_writer);
+  } else {
+    const std::vector<ElementMatch>& matches = ensemble_matcher.GetMatches();
+    LOG(INFO) << "Matching: Found " << matches.size()
+              << " nontrivial matches and "
+              << ensemble_matcher.GetNumIdentical() << " identical matches.";
+    size_t num_elements = matches.size();
+    if (!num_elements) {
+      LOG(INFO) << "No nontrival matches";
+      return GenerateRaw(old_image, new_image, patch_writer);
+    } else if (num_elements == 1 &&
+               matches[0].old_element.size == old_image.size() &&
+               matches[0].new_element.size == new_image.size()) {
+      // If |old_image| matches |new_image| entirely then we have single patch.
+      LOG(INFO) << "Old and new files are executables: "
+                << "Generating single-file patch.";
+      patch_type = PatchType::kSinglePatch;
+    } else {
+      LOG(INFO) << "Generating ensemble patch.";
+      patch_type = PatchType::kEnsemblePatch;
+    }
   }
+  patch_writer->SetPatchType(patch_type);
 
-  if (old_element->region() != old_image.region() ||
-      new_element->region() != new_image.region()) {
-    LOG(ERROR) << "Ensemble patching is currently unsupported.";
-    return status::kStatusFatal;
+  size_t num_elements = ensemble_matcher.GetMatches().size();
+  size_t num_sep = ensemble_matcher.GetSeparators().size();
+  DCHECK_EQ(num_sep, num_elements + 1);
+
+  // "Separators" are data in "new" image that lie outside of matched file
+  // pairs. These use the entire "old" image as source data, and |old_sa_raw| is
+  // the shared suffix array to compute equivalence maps for separators.
+  // TOOD(huangs): Compute separator PatchElementWriters in a separate loop so
+  // |old_sa_raw| can be freed earlier.
+  ImageIndex old_image_index(old_image);
+  EncodedView old_view_raw(old_image_index);
+  std::vector<offset_t> old_sa_raw =
+      MakeSuffixArray<InducedSuffixSort>(old_view_raw, size_t(256));
+
+  ReferenceBytesMixer no_op_bytes_mixer;
+  // Walk through |new_image| and emit all streams in proper order.
+  for (size_t i = 0; i < std::max(num_elements, num_sep); ++i) {
+    if (i < num_sep) {
+      // Process separators, including possible one at end.
+      ConstBufferView sep = ensemble_matcher.GetSeparators()[i];
+      if (!sep.empty()) {
+        offset_t sep_offset =
+            static_cast<offset_t>(sep.begin() - new_image.begin());
+        LOG(INFO) << "--- Sep   [" << sep_offset << ","
+                  << sep_offset + sep.size() << ")";
+
+        PatchElementWriter patch_element(
+            ElementMatch{{{0, old_image.size()}, kExeTypeNoOp},
+                         {{sep_offset, sep.size()}, kExeTypeNoOp}});
+        if (!GenerateRawElement(old_sa_raw, old_image, sep, &patch_element))
+          return status::kStatusFatal;
+        patch_writer->AddElement(std::move(patch_element));
+      }
+    }
+    if (i < num_elements) {
+      // Process matched elements.
+      ElementMatch match = ensemble_matcher.GetMatches()[i];
+      PatchElementWriter patch_element(match);
+
+      LOG(INFO) << "--- Match [" << match.new_element.lo() << ","
+                << match.new_element.hi() << ")";
+      if (!GenerateExecutableElement(
+              match.old_element.exe_type, old_image[match.old_element.region()],
+              new_image[match.new_element.region()], &patch_element)) {
+        return status::kStatusFatal;
+      }
+      patch_writer->AddElement(std::move(patch_element));
+    }
   }
-
-  PatchElementWriter patch_element(ElementMatch{*old_element, *new_element});
-
-  // TODO(etiennep): Fallback to raw mode with proper logging.
-  if (!GenerateExecutableElement(old_element->exe_type, old_image, new_image,
-                                 &patch_element))
-    return status::kStatusFatal;
-  patch_writer->AddElement(std::move(patch_element));
   return status::kStatusSuccess;
 }
 

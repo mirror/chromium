@@ -10,11 +10,13 @@
 
 #include <vector>
 
+#include "base/numerics/safe_conversions.h"
 #include "base/optional.h"
 #include "chrome/installer/zucchini/address_translator.h"
 #include "chrome/installer/zucchini/buffer_source.h"
 #include "chrome/installer/zucchini/buffer_view.h"
 #include "chrome/installer/zucchini/image_utils.h"
+#include "chrome/installer/zucchini/type_elf.h"
 
 namespace zucchini {
 
@@ -132,6 +134,85 @@ class RelocWriterWin32 : public ReferenceWriter {
   MutableBufferView image_;
   BufferRegion reloc_region_;
   const std::vector<offset_t>& reloc_block_offsets_;
+  AddressTranslator::OffsetToRvaCache target_offset_to_rva_;
+};
+
+// Section dimensions for ELF files, to store relevant dimensions data from
+// Elf32_Shdr and Elf64_Shdr, while reducing code duplication from templates.
+struct SectionDimsElf {
+ public:
+  SectionDimsElf() = default;
+
+  template <class Elf_Shdr>
+  explicit SectionDimsElf(Elf_Shdr* section)
+      : region(BufferRegion{base::checked_cast<size_t>(section->sh_offset),
+                            base::checked_cast<size_t>(section->sh_size)}),
+        entsize(static_cast<offset_t>(section->sh_entsize)) {}
+
+  friend bool operator<(const SectionDimsElf& a, const SectionDimsElf& b) {
+    return a.region.offset < b.region.offset;
+  }
+
+  friend bool operator<(offset_t offset, const SectionDimsElf& section) {
+    return offset < section.region.offset;
+  }
+
+  BufferRegion region;
+  offset_t entsize;
+};
+
+// A Generator to visit all reloc structs located in [|lo|, |hi|) (excluding
+// truncated strct at |lo| but inlcuding truncated struct at |hi|), and emit
+// valid References with |rel_type|. This implements a nested loop unrolled into
+// a generator: the outer loop has |cur_section_dims_| visiting
+// |reloc_section_dims| (sorted by |region.offset|), and the inner loop has
+// |cursor_| visiting successive reloc structs within |cur_section_dims_|.
+class RelocReaderElf : public ReferenceReader {
+ public:
+  RelocReaderElf(ConstBufferView image,
+                 Bitness bitness,
+                 const std::vector<SectionDimsElf>& reloc_section_dims,
+                 uint32_t rel_type,
+                 offset_t lo,
+                 offset_t hi,
+                 const AddressTranslator& translator);
+  ~RelocReaderElf() override;
+
+  // If |rel| contains |r_offset| for |rel_type_|, return the RVA. Otherwise
+  // return |kInvalidRva|. These also handle Elf*_Rela, by using the fact that
+  // Elf*_Rel is a prefix of Elf*_Rela.
+  rva_t RelocTarget(Elf32_Rel rel) const;
+  rva_t RelocTarget(Elf64_Rel rel) const;
+
+  // ReferenceReader:
+  base::Optional<Reference> GetNext() override;
+
+ private:
+  ConstBufferView image_;
+  const Bitness bitness_;
+  const std::vector<SectionDimsElf>& reloc_section_dims_;
+  uint32_t rel_type_;
+  offset_t hi_;
+  std::vector<SectionDimsElf>::const_iterator cur_section_dims_;
+  offset_t cursor_;
+  offset_t cur_section_dims_end_;
+  int cur_entsize_;  // Varies across REL / RELA sections.
+  AddressTranslator::RvaToOffsetCache target_rva_to_offset_;
+};
+
+class RelocWriterElf : public ReferenceWriter {
+ public:
+  RelocWriterElf(MutableBufferView image,
+                 Bitness bitness,
+                 const AddressTranslator& translator);
+  ~RelocWriterElf() override;
+
+  // ReferenceWriter:
+  void PutNext(Reference ref) override;
+
+ private:
+  MutableBufferView image_;
+  const Bitness bitness_;
   AddressTranslator::OffsetToRvaCache target_offset_to_rva_;
 };
 

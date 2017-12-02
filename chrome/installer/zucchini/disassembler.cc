@@ -8,6 +8,14 @@
 
 namespace zucchini {
 
+/******** EmptyReferenceReader ********/
+
+base::Optional<Reference> EmptyReferenceReader::GetNext() {
+  return base::nullopt;
+}
+
+/******** ReferenceGroup ********/
+
 std::unique_ptr<ReferenceReader> ReferenceGroup::GetReader(
     offset_t lower,
     offset_t upper,

@@ -5,6 +5,8 @@
 #ifndef CHROME_INSTALLER_ZUCCHINI_ZUCCHINI_H_
 #define CHROME_INSTALLER_ZUCCHINI_ZUCCHINI_H_
 
+#include <string>
+
 #include "chrome/installer/zucchini/buffer_view.h"
 #include "chrome/installer/zucchini/patch_reader.h"
 #include "chrome/installer/zucchini/patch_writer.h"
@@ -31,11 +33,25 @@ enum Code {
 
 }  // namespace status
 
-// Generates ensemble patch from |old_image| to |new_image|, and writes it to
-// |patch_writer|.
+// The functions below return true on success, and false on failure.
+
+// Generates ensemble patch from |old_image| to |new_image|, and writes the
+// results to |patch_writer|.
 status::Code GenerateEnsemble(ConstBufferView old_image,
                               ConstBufferView new_image,
                               EnsemblePatchWriter* patch_writer);
+
+// GenerateEnsemble() with |imposed_matches|, which encodes a custom element
+// matching to override the default element detection and matching heuristics.
+// |imposed_matches| is formatted as:
+//   "#+#=#+#,#+#=#+#,..."  (e.g., "1+2=3+4", "1+2=3+4,5+6=7+8"),
+// where "#+#=#+#" encodes a match as 4 unsigned integers:
+//   [offset in "old", size in "old", offset in "new", size in "new"].
+status::Code GenerateEnsembleWithImposedMatches(
+    ConstBufferView old_image,
+    ConstBufferView new_image,
+    std::string imposed_matches,
+    EnsemblePatchWriter* patch_writer);
 
 // Generates raw patch from |old_image| to |new_image|, and writes it to
 // |patch_writer|.
