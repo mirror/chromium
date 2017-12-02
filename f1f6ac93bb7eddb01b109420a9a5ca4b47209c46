@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6743223b_d858bd88",
+        "filename": "third_party/android_platform/development/scripts/stack",
+        "patchSetId": 8
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-02T03:07:52Z",
+      "side": 1,
+      "message": "I\u0027d probably call this `symbolizer`, not `llvm`. llvm sounds more like a module or package name than an object name, and indeed you call it `llvm_symbolizer` on the other side of the API.\n\nWhere possible, I tend to prefer matching variable names to argument names, it\u0027s less cognitive overhead.\n\nThough, I wouldn\u0027t actually use `llvm_symbolizer` as the arg name, either, since that conflicts with the module name, and I try to avoid that where I can.",
+      "revId": "f1f6ac93bb7eddb01b109420a9a5ca4b47209c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
