@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a962c876_406eb3c1",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webexposed/non-secure/README.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-02T00:04:13Z",
+      "side": 1,
+      "message": "I\u0027m confused... LayoutTests/http/tests/webexposed *does* cover interfaces under the experimental flag.\n\nWith this CL we end up with:\n\nwebexposed - secure, experimental\nhttp/tests/webexposed/non-secure - non-secure, experimental\n\nvirtual/stable/webexposed - secure, stable\nvirtual/stable/http/tests/webexposed/non-secure - non-secure, stable\n\n(not counting the always-secure SW tests, virtual/stable and normal)",
+      "parentUuid": "5935ac01_b8a30245",
+      "revId": "c0ea3d924460772910a657c3d8c029d9a931c2c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cca43830_3cbca524",
         "filename": "third_party/WebKit/LayoutTests/http/tests/webexposed/non-secure/README.txt",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "c0ea3d924460772910a657c3d8c029d9a931c2c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76fb8316_16c1b06d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webexposed/non-secure/README.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-02T00:04:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cca43830_3cbca524",
+      "revId": "c0ea3d924460772910a657c3d8c029d9a931c2c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8821b475_1467c161",
+        "filename": "third_party/WebKit/LayoutTests/resources/global-interface-listing-worker.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-02T00:04:13Z",
+      "side": 1,
+      "message": "This works - the service worker failure was due to the function signature change.",
+      "parentUuid": "78821457_a1727014",
+      "revId": "c0ea3d924460772910a657c3d8c029d9a931c2c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14376b06_abd89efc",
         "filename": "third_party/WebKit/LayoutTests/resources/global-interface-listing.js",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "c0ea3d924460772910a657c3d8c029d9a931c2c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38b37fb3_42e5998f",
+        "filename": "third_party/WebKit/LayoutTests/resources/global-interface-listing.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-02T00:04:13Z",
+      "side": 1,
+      "message": "I thought I was going to be touching all of the expectation files already due to including the jsTestIsAsync change, which alters altered all of those \u0027webkitURL\u0027 logging lines, so I included this at the same time. I\u0027ve since pulled out the jsTestIsAsync from this file, so undid this (but improved the call sites)",
+      "parentUuid": "14376b06_abd89efc",
+      "revId": "c0ea3d924460772910a657c3d8c029d9a931c2c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
