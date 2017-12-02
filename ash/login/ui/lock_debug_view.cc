@@ -182,14 +182,11 @@ class LockDebugView::DebugDataDispatcherTransformer
     debug_dispatcher_.SetLockScreenNoteState(lock_screen_note_state_);
   }
 
-  void ToggleLockScreenDevChannelInfo() {
-    show_dev_channel_info_ = !show_dev_channel_info_;
-    if (show_dev_channel_info_) {
-      debug_dispatcher_.SetDevChannelInfo(kDebugOsVersion, kDebugEnterpriseInfo,
-                                          kDebugBluetoothName);
-    } else {
-      debug_dispatcher_.SetDevChannelInfo("", "", "");
-    }
+  void AddLockScreenDevChannelInfo(const std::string& os_version,
+                                   const std::string& enterprise_info,
+                                   const std::string& bluetooth_name) {
+    debug_dispatcher_.SetDevChannelInfo(os_version, enterprise_info,
+                                        bluetooth_name);
   }
 
   // LoginDataDispatcher::Observer:
@@ -251,9 +248,6 @@ class LockDebugView::DebugDataDispatcherTransformer
   // The current lock screen note action state.
   mojom::TrayActionState lock_screen_note_state_;
 
-  // If the dev channel info is being shown.
-  bool show_dev_channel_info_ = false;
-
   DISALLOW_COPY_AND_ASSIGN(DebugDataDispatcherTransformer);
 };
 
@@ -284,8 +278,8 @@ LockDebugView::LockDebugView(mojom::TrayActionState initial_note_action_state,
 
   toggle_blur_ = AddButton("Blur");
   toggle_note_action_ = AddButton("Toggle note action");
-  toggle_dev_channel_info_ = AddButton("Toggle dev channel info");
   toggle_caps_lock_ = AddButton("Toggle caps lock");
+  add_dev_channel_info_ = AddButton("Add dev channel info");
   add_user_ = AddButton("Add user");
   remove_user_ = AddButton("Remove user");
   toggle_auth_ = AddButton("Auth (allowed)");
@@ -316,18 +310,37 @@ void LockDebugView::ButtonPressed(views::Button* sender,
     return;
   }
 
-  // Enable or disable dev channel info.
-  if (sender == toggle_dev_channel_info_) {
-    debug_data_dispatcher_->ToggleLockScreenDevChannelInfo();
-    return;
-  }
-
   // Enable or disable caps lock.
   if (sender == toggle_caps_lock_) {
     chromeos::input_method::ImeKeyboard* keyboard =
         chromeos::input_method::InputMethodManager::Get()->GetImeKeyboard();
     keyboard->SetCapsLockEnabled(!keyboard->CapsLockIsEnabled());
     return;
+  }
+
+  // Iteratively adds more info to the dev channel labels and then disables the
+  // button.
+  if (sender == add_dev_channel_info_) {
+    ++num_dev_channel_info_clicks_;
+    switch (num_dev_channel_info_clicks_) {
+      case 1u:
+        debug_data_dispatcher_->AddLockScreenDevChannelInfo(kDebugOsVersion, "",
+                                                            "");
+        return;
+      case 2u:
+        debug_data_dispatcher_->AddLockScreenDevChannelInfo(
+            kDebugOsVersion, kDebugEnterpriseInfo, "");
+        return;
+      case 3u:
+        debug_data_dispatcher_->AddLockScreenDevChannelInfo(
+            kDebugOsVersion, kDebugEnterpriseInfo, kDebugBluetoothName);
+        add_dev_channel_info_->SetEnabled(false);
+        return;
+      default:
+        DCHECK(add_dev_channel_info_->state() == views::Button::STATE_DISABLED);
+        return;
+    }
+    NOTREACHED();
   }
 
   // Add or remove a user.
