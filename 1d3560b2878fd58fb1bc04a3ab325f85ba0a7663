@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13ce99cd_e51039f2",
+        "filename": "components/download/internal/entry.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-12-02T00:43:35Z",
+      "side": 1,
+      "message": "Does it make sense to add sizeof(this) here for primary member fields?\n\nsizeof(stl container) only counts the overhead of the container itself, and EstimateMemoryUsage will add the content in the containers.",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 52
+      },
+      "revId": "1d3560b2878fd58fb1bc04a3ab325f85ba0a7663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
