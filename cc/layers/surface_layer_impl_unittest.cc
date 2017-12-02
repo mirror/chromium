@@ -95,6 +95,7 @@ TEST(SurfaceLayerImplTest, SurfaceLayerImplWithTwoDifferentSurfaces) {
   surface_layer_impl->SetPrimarySurfaceId(surface_id1);
   surface_layer_impl->SetFallbackSurfaceId(surface_id2);
   surface_layer_impl->SetDefaultBackgroundColor(SK_ColorBLUE);
+  surface_layer_impl->SetGutterColorOverride(SK_ColorGREEN);
 
   gfx::Size viewport_size(1000, 1000);
   impl.CalcDrawProps(viewport_size);
@@ -103,31 +104,31 @@ TEST(SurfaceLayerImplTest, SurfaceLayerImplWithTwoDifferentSurfaces) {
   {
     AppendQuadsData data;
     surface_layer_impl->AppendQuads(render_pass.get(), &data);
-    // The the primary viz::SurfaceInfo will be added to
+    // The the primary viz::SurfaceId will be added to
     // activation_dependencies.
     EXPECT_THAT(data.activation_dependencies,
                 UnorderedElementsAre(surface_id1));
   }
 
-  // Update the fallback to an invalid viz::SurfaceInfo. The
+  // Update the fallback to an invalid viz::SurfaceId. The
   // |activation_dependencies| should still contain the primary
-  // viz::SurfaceInfo.
+  // viz::SurfaceId.
   {
     AppendQuadsData data;
     surface_layer_impl->SetFallbackSurfaceId(viz::SurfaceId());
     surface_layer_impl->AppendQuads(render_pass.get(), &data);
-    // The primary viz::SurfaceInfo should not be added to
+    // The primary viz::SurfaceId should not be added to
     // activation_dependencies.
     EXPECT_THAT(data.activation_dependencies,
                 UnorderedElementsAre(surface_id1));
   }
 
-  // Update the fallback viz::SurfaceInfo and re-emit DrawQuads.
+  // Update the fallback viz::SurfaceId and re-emit DrawQuads.
   {
     AppendQuadsData data;
     surface_layer_impl->SetFallbackSurfaceId(surface_id2);
     surface_layer_impl->AppendQuads(render_pass.get(), &data);
-    // The the primary viz::SurfaceInfo will be added to
+    // The the primary viz::SurfaceId will be added to
     // activation_dependencies.
     EXPECT_THAT(data.activation_dependencies,
                 UnorderedElementsAre(surface_id1));
@@ -146,14 +147,17 @@ TEST(SurfaceLayerImplTest, SurfaceLayerImplWithTwoDifferentSurfaces) {
 
   EXPECT_EQ(surface_id1, surface_draw_quad1->primary_surface_id);
   EXPECT_EQ(SK_ColorBLUE, surface_draw_quad1->default_background_color);
+  EXPECT_EQ(SK_ColorGREEN, surface_draw_quad1->gutter_color_override);
   EXPECT_EQ(surface_id2, surface_draw_quad1->fallback_surface_id);
 
   EXPECT_EQ(surface_id1, surface_draw_quad2->primary_surface_id);
   EXPECT_EQ(SK_ColorBLUE, surface_draw_quad2->default_background_color);
+  EXPECT_EQ(SK_ColorGREEN, surface_draw_quad2->gutter_color_override);
   EXPECT_EQ(base::nullopt, surface_draw_quad2->fallback_surface_id);
 
   EXPECT_EQ(surface_id1, surface_draw_quad3->primary_surface_id);
   EXPECT_EQ(SK_ColorBLUE, surface_draw_quad3->default_background_color);
+  EXPECT_EQ(SK_ColorGREEN, surface_draw_quad3->gutter_color_override);
   EXPECT_EQ(surface_id2, surface_draw_quad3->fallback_surface_id);
 }
 
