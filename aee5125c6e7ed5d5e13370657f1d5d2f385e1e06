@@ -16,6 +16,24 @@
       "revId": "aee5125c6e7ed5d5e13370657f1d5d2f385e1e06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e28e2cfb_e591b290",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorLayerTreeAgent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-12-02T01:44:51Z",
+      "side": 1,
+      "message": "No, it\u0027s still used for printing out graphics layer properties.\n\nI think the code might be improved if we detected scrolling layers in the GatherGraphicsLayers recursive call instead of passing this in, but that\u0027s best saved for another patch.",
+      "parentUuid": "fc474ca7_c1b0e5c7",
+      "revId": "aee5125c6e7ed5d5e13370657f1d5d2f385e1e06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
