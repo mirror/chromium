@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "621324d7_ad6a4751",
+        "filename": "net/http/http_stream_factory_impl_job_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-02T16:21:49Z",
+      "side": 1,
+      "message": "Sorry, my Friday was pretty chaotic and I didn\u0027t see this. \nI think this isn\u0027t quite right, we will need to have a mechanism to cancel all posted, delayed ResumeMainJob() when we decide to restart. Let me see if I can repro the case that zhongyi@ mentioned in a unit test.",
+      "revId": "9c858316907fbb206ef0e4e48506188d080dd1dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
