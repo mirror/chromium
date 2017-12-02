@@ -129,12 +129,8 @@ test("device_unittests") {
 
     # Serial is supported in below platforms. See //device/servial/BUILD.gn
     if (is_win || is_linux || is_mac) {
-      sources += [
-        "serial/serial_io_handler_posix_unittest.cc",
-      ]
-      deps += [
-        "//device/serial",
-      ]
+      sources += [ "serial/serial_io_handler_posix_unittest.cc" ]
+      deps += [ "//device/serial" ]
     }
   }
 
@@ -255,6 +251,8 @@ test("device_unittests") {
 
   if (enable_vr && is_android) {
     sources += [
+      "vr/orientation/orientation_device_provider_unittest.cc",
+      "vr/orientation/orientation_device_unittest.cc",
       "vr/vr_device_base_unittest.cc",
       "vr/vr_display_impl_unittest.cc",
     ]
@@ -264,6 +262,7 @@ test("device_unittests") {
       "//device/vr:fakes",
       "//device/vr:java",
       "//device/vr:mojo_bindings",
+      "//services/device/public/cpp/generic_sensor",
     ]
   }
 }
