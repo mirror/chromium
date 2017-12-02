@@ -1,5 +1,12 @@
-<html>
-<head>
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+(async function() {
+  TestRunner.addResult(`Tests the instrumentation of a DecodeImage and ResizeImage events\n`);
+  await TestRunner.loadModule('performance_test_runner');
+  await TestRunner.showPanel('timeline');
+  await TestRunner.loadHTML(`
 <style>
 div {
     display: inline-block;
@@ -23,10 +30,9 @@ div.img-container {
 }
 
 </style>
-<script src="../../inspector/inspector-test.js"></script>
-<script src="../../inspector/timeline-test.js"></script>
-<script>
+`);
 
+await TestRunner.evaluateInPagePromise(`
 var images = [
     ["./resources/test.webp", "25", "25"],
     ["./resources/test.bmp", "25", "25"],
@@ -37,15 +43,13 @@ var images = [
     ["./resources/big.png", "150", "150"]
 ];
 
-function showImages()
+async function showImages()
 {
-    var promise = Promise.resolve();
     for (let image of images) {
-        promise = promise
-            .then(() => addImage(image))
-            .then(() => new Promise((fulfill) => testRunner.layoutAndPaintAsyncThen(fulfill)));
+        await addImage(image);
+        await new Promise(fulfill => testRunner.layoutAndPaintAsyncThen(fulfill));
     }
-    return promise.then(() => generateFrames(3));
+    return generateFrames(3);
 
     function addImage(image)
     {
@@ -74,8 +78,8 @@ function showImages()
         return promise;
     }
 }
+`);
 
-function test() {
   PerformanceTestRunner.invokeWithTracing('showImages', TestRunner.safeWrap(onTracingComplete));
   function onTracingComplete() {
     function isDecodeImageEvent(event) {
@@ -103,14 +107,4 @@ function test() {
     }
     TestRunner.completeTest();
   }
-}
-
-</script>
-</head>
-
-<body onload="runTest()">
-<p>
-Tests the instrumentation of a DecodeImage and ResizeImage events
-</p>
-</body>
-</html>
+})();
