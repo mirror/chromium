@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd405d08_2f87e200",
+        "filename": "components/arc/metrics/arc_metrics_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-02T02:28:25Z",
+      "side": 1,
+      "message": "Did this compile without static_cast\u003cint\u003e()? (I don\u0027t rememver mojo generates enum or enum class.) Can you run try bots to make sure?",
+      "range": {
+        "startLine": 208,
+        "startChar": 56,
+        "endLine": 208,
+        "endChar": 74
+      },
+      "revId": "ffa05a0a6316a7bddb3d46410839a81980051ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c44ee08a_4cf78612",
+        "filename": "components/arc/metrics/arc_metrics_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-02T02:28:25Z",
+      "side": 1,
+      "message": "Can you move this up to L34?\n\nhttps://google.github.io/styleguide/cppguide.html#Declaration_Order",
+      "revId": "ffa05a0a6316a7bddb3d46410839a81980051ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a35c3b1_5175c60f",
+        "filename": "components/arc/metrics/arc_metrics_service_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-02T02:28:25Z",
+      "side": 1,
+      "message": "Please use EXPECT_EQ (here and elsewhere).\n\nhttps://github.com/google/googletest/blob/master/googletest/docs/Primer.md\n\n\"The above uses both ASSERT_* and EXPECT_* assertions. The rule of thumb is to use EXPECT_* when you want the test to continue to reveal more errors after the assertion failure, and use ASSERT_* when continuing after failure doesn\u0027t make sense. For example, the second assertion in the Dequeue test is ASSERT_TRUE(n !\u003d NULL), as we need to dereference the pointer n later, which would lead to a segfault when n is NULL.\" FYI",
+      "range": {
+        "startLine": 228,
+        "startChar": 2,
+        "endLine": 228,
+        "endChar": 8
+      },
+      "revId": "ffa05a0a6316a7bddb3d46410839a81980051ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
