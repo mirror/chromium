@@ -23,8 +23,8 @@ class GLImageIOSurfaceTestDelegate {
     scoped_refptr<GLImageIOSurface> image(GLImageIOSurface::Create(
         size, GLImageIOSurface::GetInternalFormatForTesting(format)));
     IOSurfaceRef surface_ref = gfx::CreateIOSurface(size, format);
-    bool rv =
-        image->Initialize(surface_ref, gfx::GenericSharedMemoryId(1), format);
+    bool rv = image->Initialize(surface_ref, gfx::GenericSharedMemoryId(1),
+                                false /* needs_clear */, format);
     EXPECT_TRUE(rv);
     return image;
   }

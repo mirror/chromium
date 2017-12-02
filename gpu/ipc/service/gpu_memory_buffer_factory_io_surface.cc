@@ -28,8 +28,10 @@ GpuMemoryBufferFactoryIOSurface::CreateGpuMemoryBuffer(
     gfx::BufferUsage usage,
     int client_id,
     SurfaceHandle surface_handle) {
+  // Don't clear anonymous io surfaces.
+  bool should_clear = id.is_valid();
   base::ScopedCFTypeRef<IOSurfaceRef> io_surface(
-      gfx::CreateIOSurface(size, format));
+      gfx::CreateIOSurface(size, format, should_clear));
   if (!io_surface)
     return gfx::GpuMemoryBufferHandle();
 
@@ -83,7 +85,8 @@ GpuMemoryBufferFactoryIOSurface::CreateImageForGpuMemoryBuffer(
 
   scoped_refptr<gl::GLImageIOSurface> image(
       gl::GLImageIOSurface::Create(size, internalformat));
-  if (!image->Initialize(it->second.get(), handle.id, format))
+  if (!image->Initialize(it->second.get(), handle.id, false /* needs_clear */,
+                         format))
     return scoped_refptr<gl::GLImage>();
 
   return image;
@@ -96,9 +99,9 @@ GpuMemoryBufferFactoryIOSurface::CreateAnonymousImage(const gfx::Size& size,
                                                       unsigned internalformat) {
   // Note that the child id doesn't matter since the texture will never be
   // directly exposed to other processes, only via a mailbox.
-  gfx::GpuMemoryBufferHandle handle = CreateGpuMemoryBuffer(
-      gfx::GpuMemoryBufferId(next_service_gmb_id_++), size, format, usage,
-      0 /* client_id */, gpu::kNullSurfaceHandle);
+  gfx::GpuMemoryBufferHandle handle =
+      CreateGpuMemoryBuffer(gfx::GpuMemoryBufferId(), size, format, usage,
+                            0 /* client_id */, gpu::kNullSurfaceHandle);
 
   base::ScopedCFTypeRef<IOSurfaceRef> io_surface;
   io_surface.reset(IOSurfaceLookupFromMachPort(handle.mach_port.get()));
@@ -106,7 +109,8 @@ GpuMemoryBufferFactoryIOSurface::CreateAnonymousImage(const gfx::Size& size,
 
   scoped_refptr<gl::GLImageIOSurface> image(
       gl::GLImageIOSurface::Create(size, internalformat));
-  if (!image->Initialize(io_surface.get(), handle.id, format))
+  if (!image->Initialize(io_surface.get(), handle.id, true /* needs_clear */,
+                         format))
     return scoped_refptr<gl::GLImage>();
 
   return image;

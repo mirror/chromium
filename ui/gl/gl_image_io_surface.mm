@@ -211,6 +211,7 @@ GLImageIOSurface::~GLImageIOSurface() {
 
 bool GLImageIOSurface::Initialize(IOSurfaceRef io_surface,
                                   gfx::GenericSharedMemoryId io_surface_id,
+                                  bool needs_clear,
                                   gfx::BufferFormat format) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(!io_surface_);
@@ -225,6 +226,7 @@ bool GLImageIOSurface::Initialize(IOSurfaceRef io_surface,
     return false;
   }
 
+  needs_clear_ = needs_clear;
   format_ = format;
   io_surface_.reset(io_surface, base::scoped_policy::RETAIN);
   io_surface_id_ = io_surface_id;
@@ -241,7 +243,7 @@ bool GLImageIOSurface::InitializeWithCVPixelBuffer(
     return false;
   }
 
-  if (!Initialize(io_surface, io_surface_id, format))
+  if (!Initialize(io_surface, io_surface_id, false /* needs_clear */, format))
     return false;
 
   cv_pixel_buffer_.reset(cv_pixel_buffer, base::scoped_policy::RETAIN);
@@ -411,6 +413,10 @@ void GLImageIOSurface::OnMemoryDump(base::trace_event::ProcessMemoryDump* pmd,
 
 bool GLImageIOSurface::EmulatingRGB() const {
   return client_internalformat_ == GL_RGB;
+}
+
+bool GLImageIOSurface::NeedsClear() const {
+  return needs_clear_;
 }
 
 bool GLImageIOSurface::CanCheckIOSurfaceIsInUse() const {

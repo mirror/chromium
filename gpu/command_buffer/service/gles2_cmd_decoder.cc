@@ -18026,9 +18026,13 @@ void GLES2DecoderImpl::DoTexStorage2DImageCHROMIUM(GLenum target,
     return;
   }
 
+  gfx::Rect cleared_rect = gfx::Rect(width, height);
+  if (image->NeedsClear())
+    cleared_rect = gfx::Rect();
+
   texture_manager()->SetLevelInfo(
       texture_ref, target, 0, image->GetInternalFormat(), width, height, 1, 0,
-      image->GetInternalFormat(), GL_UNSIGNED_BYTE, gfx::Rect(width, height));
+      image->GetInternalFormat(), GL_UNSIGNED_BYTE, cleared_rect);
   texture_manager()->SetLevelImage(texture_ref, target, 0, image.get(),
                                    Texture::BOUND);
 
