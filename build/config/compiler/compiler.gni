@@ -70,6 +70,8 @@ declare_args() {
 
   # Whether or not we should use position independent code.
   use_pic = true
+
+  gbiv_optimize_for_speed = false
 }
 
 assert(!is_cfi || use_thin_lto, "CFI requires ThinLTO")
@@ -87,7 +89,7 @@ exclude_unwind_tables =
 # Linux & Mac favor speed over size.
 # TODO(brettw) it's weird that Mac and desktop Linux are different. We should
 # explore favoring size over speed in this case as well.
-optimize_for_size = is_android || is_ios
+optimize_for_size = !gbiv_optimize_for_speed && (is_android || is_ios)
 
 # Determine whether to enable or disable frame pointers, based on the platform
 # and build arguments.

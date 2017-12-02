@@ -101,6 +101,11 @@ declare_args() {
 
   # Strip the debug info of symbols file in lib.unstripped to reduce size.
   strip_debug_info = false
+
+  gbiv_use_root_afdo_traces = false
+  gbiv_afdo_profile_location = ""
+  gbiv_afdo_good_profile = false
+  gbiv_optimize_max_disabled = false
 }
 
 declare_args() {
@@ -196,6 +201,25 @@ config("compiler") {
     # Common GCC compiler flags setup.
     # --------------------------------
     cflags += [ "-fno-strict-aliasing" ]  # See http://crbug.com/32204
+
+    if (gbiv_afdo_profile_location == "") {
+      if (gbiv_use_root_afdo_traces) {
+        _gbiv_afdo_profile = rebase_path("//afdo.prof", root_build_dir)
+      } else {
+        _gbiv_afdo_profile = ""
+      }
+    } else {
+      _gbiv_afdo_profile = gbiv_afdo_profile_location
+    }
+
+    if (_gbiv_afdo_profile != "") {
+      _gbiv_add_flags = [ "-fprofile-sample-use=$_gbiv_afdo_profile" ]
+      if (gbiv_afdo_good_profile) {
+         _gbiv_add_flags += [ "-fprofile-sample-accurate" ]
+      }
+      cflags += _gbiv_add_flags
+      ldflags += _gbiv_add_flags
+    }
 
     # Stack protection.
     if (is_mac) {
@@ -1732,42 +1756,76 @@ config("no_optimize") {
 # optimization and link-time code generation which is very expensive and should
 # be used sparingly.
 config("optimize_max") {
-  if (is_nacl && is_nacl_irt) {
-    # The NaCl IRT is a special case and always wants its own config.
-    # Various components do:
-    #   if (!is_debug) {
-    #     configs -= [ "//build/config/compiler:default_optimization" ]
-    #     configs += [ "//build/config/compiler:optimize_max" ]
-    #   }
-    # So this config has to have the selection logic just like
-    # "default_optimization", below.
-    configs = [ "//build/config/nacl:irt_optimize" ]
-  } else {
-    ldflags = common_optimize_on_ldflags
-    if (is_win) {
-      # Favor speed over size, /O2 must be before the common flags. The GYP
-      # build also specifies /Ot, /Oi, and /GF, but these are implied by /O2.
-      cflags = [ "/O2" ] + common_optimize_on_cflags
+  if (!gbiv_optimize_max_disabled) {
+    if (is_nacl && is_nacl_irt) {
+      # The NaCl IRT is a special case and always wants its own config.
+      # Various components do:
+      #   if (!is_debug) {
+      #     configs -= [ "//build/config/compiler:default_optimization" ]
+      #     configs += [ "//build/config/compiler:optimize_max" ]
+      #   }
+      # So this config has to have the selection logic just like
+      # "default_optimization", below.
+      configs = [ "//build/config/nacl:irt_optimize" ]
+    } else {
+      ldflags = common_optimize_on_ldflags
+      if (is_win) {
+        # Favor speed over size, /O2 must be before the common flags. The GYP
+        # build also specifies /Ot, /Oi, and /GF, but these are implied by /O2.
+        cflags = [ "/O2" ] + common_optimize_on_cflags
 
-      if (is_official_build) {
-        if (!is_clang) {
-          cflags += [
-            "/GL",  # Whole program optimization.
+        if (is_official_build) {
+          if (!is_clang) {
+            cflags += [
+              "/GL",  # Whole program optimization.
 
-            # Disable Warning 4702 ("Unreachable code") for the WPO/PGO builds.
-            # Probably anything that this would catch that wouldn't be caught
-            # in a normal build isn't going to actually be a bug, so the
-            # incremental value of C4702 for PGO builds is likely very small.
-            "/wd4702",
-          ]
+              # Disable Warning 4702 ("Unreachable code") for the WPO/PGO builds.
+              # Probably anything that this would catch that wouldn't be caught
+              # in a normal build isn't going to actually be a bug, so the
+              # incremental value of C4702 for PGO builds is likely very small.
+              "/wd4702",
+            ]
+          }
+          # TODO(crbug.com/598772): Enable -flto for Clang.
         }
-        # TODO(crbug.com/598772): Enable -flto for Clang.
+      } else if (optimize_for_fuzzing) {
+        cflags = [ "-O1" ] + common_optimize_on_cflags
+      } else {
+        cflags = [ "-O2" ] + common_optimize_on_cflags
       }
-    } else if (optimize_for_fuzzing) {
-      cflags = [ "-O1" ] + common_optimize_on_cflags
+    }
+  } else {
+    # copypasta from "optimize"
+    if (is_win) {
+      # TODO(thakis): Remove is_clang here, https://crbug.com/598772
+      if (is_official_build && full_wpo_on_official && !is_clang) {
+        common_optimize_on_cflags += [
+          "/GL",  # Whole program optimization.
+
+          # Disable Warning 4702 ("Unreachable code") for the WPO/PGO builds.
+          # Probably anything that this would catch that wouldn't be caught in a
+          # normal build isn't going to actually be a bug, so the incremental
+          # value of C4702 for PGO builds is likely very small.
+          "/wd4702",
+        ]
+      }
+
+      # Favor size over speed, /O1 must be before the common flags. The GYP
+      # build also specifies /Os and /GF but these are implied by /O1.
+      cflags = [ "/O1" ] + common_optimize_on_cflags + [ "/Oi" ]
+    } else if (optimize_for_size && !is_nacl) {
+      # Favor size over speed.
+      # TODO(crbug.com/718650): Fix -Os in PNaCl compiler and remove the is_nacl
+      # guard above.
+      if (is_clang) {
+        cflags = [ "-Oz" ] + common_optimize_on_cflags
+      } else {
+        cflags = [ "-Os" ] + common_optimize_on_cflags
+      }
     } else {
       cflags = [ "-O2" ] + common_optimize_on_cflags
     }
+    ldflags = common_optimize_on_ldflags
   }
 }
 
@@ -1779,26 +1837,48 @@ config("optimize_max") {
 # TODO(crbug.com/621335) - rework how all of these configs are related
 # so that we don't need this disclaimer.
 config("optimize_speed") {
-  if (is_nacl && is_nacl_irt) {
-    # The NaCl IRT is a special case and always wants its own config.
-    # Various components do:
-    #   if (!is_debug) {
-    #     configs -= [ "//build/config/compiler:default_optimization" ]
-    #     configs += [ "//build/config/compiler:optimize_max" ]
-    #   }
-    # So this config has to have the selection logic just like
-    # "default_optimization", below.
-    configs = [ "//build/config/nacl:irt_optimize" ]
-  } else {
-    ldflags = common_optimize_on_ldflags
-    if (is_win) {
-      # Favor speed over size, /O2 must be before the common flags. The GYP
-      # build also specifies /Ot, /Oi, and /GF, but these are implied by /O2.
-      cflags = [ "/O2" ] + common_optimize_on_cflags
+  if (!gbiv_optimize_max_disabled) {
+    if (is_nacl && is_nacl_irt) {
+      # The NaCl IRT is a special case and always wants its own config.
+      # Various components do:
+      #   if (!is_debug) {
+      #     configs -= [ "//build/config/compiler:default_optimization" ]
+      #     configs += [ "//build/config/compiler:optimize_max" ]
+      #   }
+      # So this config has to have the selection logic just like
+      # "default_optimization", below.
+      configs = [ "//build/config/nacl:irt_optimize" ]
+    } else {
+      ldflags = common_optimize_on_ldflags
+      if (is_win) {
+        # Favor speed over size, /O2 must be before the common flags. The GYP
+        # build also specifies /Ot, /Oi, and /GF, but these are implied by /O2.
+        cflags = [ "/O2" ] + common_optimize_on_cflags
 
+        # TODO(thakis): Remove is_clang here, https://crbug.com/598772
+        if (is_official_build && !is_clang) {
+          cflags += [
+            "/GL",  # Whole program optimization.
+
+            # Disable Warning 4702 ("Unreachable code") for the WPO/PGO builds.
+            # Probably anything that this would catch that wouldn't be caught in a
+            # normal build isn't going to actually be a bug, so the incremental
+            # value of C4702 for PGO builds is likely very small.
+            "/wd4702",
+          ]
+        }
+      } else if (optimize_for_fuzzing) {
+        cflags = [ "-O1" ] + common_optimize_on_cflags
+      } else {
+        cflags = [ "-O3" ] + common_optimize_on_cflags
+      }
+    }
+  } else {
+    # copypasta from "optimize"
+    if (is_win) {
       # TODO(thakis): Remove is_clang here, https://crbug.com/598772
-      if (is_official_build && !is_clang) {
-        cflags += [
+      if (is_official_build && full_wpo_on_official && !is_clang) {
+        common_optimize_on_cflags += [
           "/GL",  # Whole program optimization.
 
           # Disable Warning 4702 ("Unreachable code") for the WPO/PGO builds.
@@ -1808,11 +1888,23 @@ config("optimize_speed") {
           "/wd4702",
         ]
       }
-    } else if (optimize_for_fuzzing) {
-      cflags = [ "-O1" ] + common_optimize_on_cflags
+
+      # Favor size over speed, /O1 must be before the common flags. The GYP
+      # build also specifies /Os and /GF but these are implied by /O1.
+      cflags = [ "/O1" ] + common_optimize_on_cflags + [ "/Oi" ]
+    } else if (optimize_for_size && !is_nacl) {
+      # Favor size over speed.
+      # TODO(crbug.com/718650): Fix -Os in PNaCl compiler and remove the is_nacl
+      # guard above.
+      if (is_clang) {
+        cflags = [ "-Oz" ] + common_optimize_on_cflags
+      } else {
+        cflags = [ "-Os" ] + common_optimize_on_cflags
+      }
     } else {
-      cflags = [ "-O3" ] + common_optimize_on_cflags
+      cflags = [ "-O2" ] + common_optimize_on_cflags
     }
+    ldflags = common_optimize_on_ldflags
   }
 }
 
@@ -1856,6 +1948,7 @@ config("afdo") {
     cflags = [ "-fauto-profile=${auto_profile_path}" ]
   }
 }
+
 
 # Symbols ----------------------------------------------------------------------
 
