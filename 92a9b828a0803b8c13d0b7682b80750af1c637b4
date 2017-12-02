@@ -16,6 +16,24 @@
       "revId": "92a9b828a0803b8c13d0b7682b80750af1c637b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74649c7e_6801e30e",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-02T02:32:20Z",
+      "side": 1,
+      "message": "Automatic and discovered printers should always be valid. We\u0027re only worried about the manual printers.",
+      "parentUuid": "5bb2f762_dea353b7",
+      "revId": "92a9b828a0803b8c13d0b7682b80750af1c637b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
