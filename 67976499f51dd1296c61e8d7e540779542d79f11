@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "af261723_63d70e28",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-02T03:22:33Z",
+      "side": 1,
+      "message": "I think this routine is doing too much at once. I\u0027d break it into at least three parts:\n\n1) A part that computes the hashes for a given directory tree (i.e., rewrites the JSON and returns the new JSON + a mapping of old file -\u003e new file)\n2) A part that creates a new directory tree given the results from (1).\n3) A part that uploads the new tree.\n\nThis splits out the part that has computation and interesting logic into a pure function, and then the parts that have side effects and talk to the filesystem and network and can be tested separately.\n\nIf I was really ambitious, I\u0027d actually use the \"host\" abstractions from typ, so that you don\u0027t have to do all of the mocking you\u0027re doing. In fact, I kinda wonder if this should just be added to typ instead since there\u0027s a lot of overlap w/ the code in typ.json_results, and we need to make sure we update typ to stay in sync as well.",
+      "revId": "67976499f51dd1296c61e8d7e540779542d79f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3edd6a73_9b8cc33b",
         "filename": "testing/scripts/upload_test_result_artifacts.py",
         "patchSetId": 14
@@ -19,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "96597c2e_d13b9212",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-02T03:22:33Z",
+      "side": 1,
+      "message": "That\u0027s a fair point, but as a counterpoint: I\u0027m not generally a fan of overwriting input arguments, because I think it can make debugging harder. \n\nA more important third point, though, is that I think this code is wrong, and you probably don\u0027t want to be copying the data at all (see comment below).",
+      "parentUuid": "3edd6a73_9b8cc33b",
+      "revId": "67976499f51dd1296c61e8d7e540779542d79f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87e7b773_f7f47df6",
         "filename": "testing/scripts/upload_test_result_artifacts.py",
         "patchSetId": 14
@@ -30,6 +65,24 @@
       "writtenOn": "2017-12-01T23:42:53Z",
       "side": 1,
       "message": "the deepcopy here is not needed",
+      "revId": "67976499f51dd1296c61e8d7e540779542d79f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "651c3b10_6a82b568",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-02T03:22:33Z",
+      "side": 1,
+      "message": "Per the comment for the flag, doesn\u0027t this need to be the rewritten version of the data, and hence not the original `data` at all? I.e., isn\u0027t copying the data wrong?",
+      "parentUuid": "87e7b773_f7f47df6",
       "revId": "67976499f51dd1296c61e8d7e540779542d79f11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
