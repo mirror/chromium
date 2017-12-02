@@ -24,9 +24,7 @@ bool ClientTransferCache::LockTransferCacheEntry(TransferCacheEntryId id) {
   if (discardable_manager_.LockHandle(id))
     return true;
 
-  // Could not lock. Entry is already deleted service side, just free the
-  // handle.
-  discardable_manager_.FreeHandle(id);
+  // Could not lock. Entry is already deleted service side.
   return false;
 }
 

@@ -4,6 +4,8 @@
 
 #include "cc/paint/paint_op_writer.h"
 
+#include "cc/paint/draw_image.h"
+#include "cc/paint/image_provider.h"
 #include "cc/paint/paint_flags.h"
 #include "cc/paint/paint_shader.h"
 #include "third_party/skia/include/core/SkFlattenableSerialization.h"
@@ -121,9 +123,10 @@ void PaintOpWriter::Write(const PaintFlags& flags) {
   Write(flags.shader_.get());
 }
 
-void PaintOpWriter::Write(const PaintImage& image,
+void PaintOpWriter::Write(const DrawImage& image,
                           ImageProvider* image_provider) {
-  // TODO(enne): implement PaintImage serialization: http://crbug.com/737629
+  auto decoded_image = image_provider->GetDecodedDrawImage(image);
+  Write(decoded_image.decoded_image().transfer_cache_entry_id());
 }
 
 void PaintOpWriter::Write(const sk_sp<SkData>& data) {
