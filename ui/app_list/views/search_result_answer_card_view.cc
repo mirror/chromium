@@ -34,8 +34,7 @@ class SearchResultAnswerCardView::SearchAnswerContainerView
  public:
   explicit SearchAnswerContainerView(AppListViewDelegate* view_delegate)
       : Button(this), view_delegate_(view_delegate) {
-    if (features::IsAppListFocusEnabled())
-      SetFocusBehavior(FocusBehavior::ALWAYS);
+    SetFocusBehavior(FocusBehavior::ALWAYS);
     // Center the card horizontally in the container.
     views::BoxLayout* answer_container_layout =
         new views::BoxLayout(views::BoxLayout::kHorizontal,
@@ -94,16 +93,13 @@ class SearchResultAnswerCardView::SearchAnswerContainerView
   }
 
   void OnBlur() override {
-    if (features::IsAppListFocusEnabled())
-      SetSelected(false);
+    SetSelected(false);
     Button::OnBlur();
   }
 
   void OnFocus() override {
-    if (features::IsAppListFocusEnabled()) {
-      SetSelected(true);
-      NotifyAccessibilityEvent(ui::AX_EVENT_SELECTION, true);
-    }
+    SetSelected(true);
+    NotifyAccessibilityEvent(ui::AX_EVENT_SELECTION, true);
     Button::OnFocus();
   }
 

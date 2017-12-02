@@ -66,8 +66,7 @@ AppListItemView::AppListItemView(AppsGridView* apps_grid_view,
       icon_(new views::ImageView),
       title_(new views::Label),
       progress_bar_(new views::ProgressBar) {
-  if (features::IsAppListFocusEnabled())
-    SetFocusBehavior(FocusBehavior::ALWAYS);
+  SetFocusBehavior(FocusBehavior::ALWAYS);
 
   icon_->set_can_process_events_within_subtree(false);
   icon_->SetVerticalAlignment(views::ImageView::LEADING);
