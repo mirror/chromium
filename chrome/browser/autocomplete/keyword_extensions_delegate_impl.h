@@ -36,6 +36,7 @@ class KeywordExtensionsDelegateImpl : public KeywordExtensionsDelegate,
   // KeywordExtensionsDelegate:
   void DeleteSuggestion(const TemplateURL* template_url,
                         const base::string16& suggestion_text) override;
+  void OnKeywordEntered(const TemplateURL* template_url) override;
 
  private:
   // KeywordExtensionsDelegate:
@@ -45,7 +46,7 @@ class KeywordExtensionsDelegateImpl : public KeywordExtensionsDelegate,
              bool minimal_changes,
              const TemplateURL* template_url,
              const base::string16& remaining_input) override;
-  void EnterExtensionKeywordMode(const std::string& extension_id) override;
+  void OnInputStarted(const std::string& extension_id) override;
   void MaybeEndExtensionKeywordMode() override;
 
   // content::NotificationObserver:
@@ -58,6 +59,9 @@ class KeywordExtensionsDelegateImpl : public KeywordExtensionsDelegate,
     provider_->done_ = done;
   }
 
+  bool ShouldResetOnKeywordEntered(const AutocompleteInput& input,
+                                   const base::string16& remaining_input);
+
   // Notifies the KeywordProvider about asynchronous updates from the extension.
   void OnProviderUpdate(bool updated_matches);
 
@@ -69,6 +73,7 @@ class KeywordExtensionsDelegateImpl : public KeywordExtensionsDelegate,
   // The input state at the time we last asked the extension for suggest
   // results.
   AutocompleteInput extension_suggest_last_input_;
+  base::string16 last_remaining_input_;
 
   // We remember the last suggestions we've received from the extension in case
   // we need to reset our matches without asking the extension again.
@@ -77,6 +82,9 @@ class KeywordExtensionsDelegateImpl : public KeywordExtensionsDelegate,
   // If non-empty, holds the ID of the extension whose keyword is currently in
   // the URL bar while the autocomplete popup is open.
   std::string current_keyword_extension_id_;
+
+  bool on_keyword_entered_;
+  bool ended_keyword_mode_;
 
   Profile* profile_;
 
