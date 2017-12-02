@@ -88,6 +88,24 @@
       "revId": "79261f8eadd9ce10bd5f1dcbd2480f3091d3162c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6afbbc9_55314acc",
+        "filename": "gpu/config/gpu_driver_bug_list.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1902,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-12-02T00:06:07Z",
+      "side": 1,
+      "message": "The one Chrome picks up is the DLL version, so you are doing the right thing here.\n\nThere is another version number, I forgot that\u0027s a public or internal number.",
+      "parentUuid": "003b30fa_e90d07a3",
+      "revId": "79261f8eadd9ce10bd5f1dcbd2480f3091d3162c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
