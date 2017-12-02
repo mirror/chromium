@@ -5492,6 +5492,34 @@
                     ]
                 },
                 {
+                    "name": "deleteObjectStoreEntries",
+                    "parameters": [
+                        {
+                            "name": "securityOrigin",
+                            "type": "string",
+                            "description": "Security origin."
+                        },
+                        {
+                            "name": "databaseName",
+                            "type": "string",
+                            "description": "Database name."
+                        },
+                        {
+                            "name": "objectStoreName",
+                            "type": "string",
+                            "description": "Object store name."
+                        },
+                        {
+                            "name": "keyRange",
+                            "$ref": "KeyRange",
+                            "description": "Range of entry keys to delete."
+                        }
+                    ],
+                    "returns": [
+                    ],
+                    "description": "Deletes a range of entries from an object store."
+                },
+                {
                     "name": "disable",
                     "description": "Disables events from backend."
                 },
