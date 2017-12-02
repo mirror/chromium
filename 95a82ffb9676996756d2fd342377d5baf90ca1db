@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "521c3ed3_9f8999bd",
+        "filename": "device/u2f/u2f_hid_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1178840
+      },
+      "writtenOn": "2017-12-02T01:56:41Z",
+      "side": 1,
+      "message": "This comment is not quite correct. All INIT messages are on the broadcast channel (0xffffffff), but they may be replies to messages sent by other clients talking to the same device.",
+      "range": {
+        "startLine": 154,
+        "startChar": 5,
+        "endLine": 154,
+        "endChar": 46
+      },
+      "revId": "95a82ffb9676996756d2fd342377d5baf90ca1db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8894eb14_c2f835ae",
         "filename": "device/u2f/u2f_hid_device.cc",
         "patchSetId": 4
@@ -46,6 +69,29 @@
       "revId": "95a82ffb9676996756d2fd342377d5baf90ca1db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2bf5774_368eb533",
+        "filename": "device/u2f/u2f_hid_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1178840
+      },
+      "writtenOn": "2017-12-02T01:56:41Z",
+      "side": 1,
+      "message": "I believe this needs to re-arm (or not cancel?) the timeout callback? Otherwise this will be recursing infinitely if the device never send a matching reply.",
+      "range": {
+        "startLine": 156,
+        "startChar": 4,
+        "endLine": 156,
+        "endChar": 15
+      },
+      "revId": "95a82ffb9676996756d2fd342377d5baf90ca1db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
