@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "86deb304_e4896b44",
+        "filename": "media/gpu/d3d11_mocks.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1247467
+      },
+      "writtenOn": "2017-12-02T00:42:31Z",
+      "side": 1,
+      "message": "I couldn\u0027t, I get an error like \"[chromium-style] Complex constructor has an inlined body.\", same for destructor.\n\nI think IUnknown is a pure interface but ID3D11Texture2D and others might have member variables.",
+      "parentUuid": "1b74ff6e_b0cc812f",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 18
+      },
+      "revId": "13371822436a30b1072ca1fe3a7665e552975639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15db21ad_c282ac1f",
         "filename": "media/gpu/intel_csme_cdm_proxy_unittest.cc",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-01T01:50:14Z",
       "side": 1,
       "message": "This looks brittle. Can some of these expectations be replaced with fake impls (that is, simple non-mock methods), or at lease with EXPECT_CALL().WillRepeatedly() so that each place doesn\u0027t need to configure them?",
+      "range": {
+        "startLine": 99,
+        "startChar": 4,
+        "endLine": 99,
+        "endChar": 15
+      },
+      "revId": "13371822436a30b1072ca1fe3a7665e552975639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6f7a2ed_dd1ee49d",
+        "filename": "media/gpu/intel_csme_cdm_proxy_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1247467
+      },
+      "writtenOn": "2017-12-02T00:42:31Z",
+      "side": 1,
+      "message": "All QueryInterfaces() can be WillRepeatedly(). For others e.g. creating D3D11 device, doing it twice seems wrong.\n\nI tried using ON_CALL() in SetUp for QIs but that seems to mess up the ref counting.",
+      "parentUuid": "15db21ad_c282ac1f",
       "range": {
         "startLine": 99,
         "startChar": 4,
