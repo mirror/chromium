@@ -70,6 +70,24 @@
       "revId": "79261f8eadd9ce10bd5f1dcbd2480f3091d3162c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "003b30fa_e90d07a3",
+        "filename": "gpu/config/gpu_driver_bug_list.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1902,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-02T00:04:35Z",
+      "side": 1,
+      "message": "Also seems to be the same version as the nv3dum.dll:\n\nhttps://www.google.com/search?ei\u003dyO0hWpDAE-WXjwSHl5Bg\u0026q\u003d%2213.7576%22+%22nvidia%22+%22dll%22\u0026oq\u003d%2213.7576%22+%22nvidia%22+%22dll%22\u0026gs_l\u003dpsy-ab.3...11580.12573.0.12709.6.6.0.0.0.0.106.457.4j1.5.0....0...1.1.64.psy-ab..1.1.98...33i21k1.0.HB4aHysIVIg",
+      "parentUuid": "9ccd344d_ad745930",
+      "revId": "79261f8eadd9ce10bd5f1dcbd2480f3091d3162c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
