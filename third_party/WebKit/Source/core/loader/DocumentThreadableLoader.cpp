@@ -619,7 +619,7 @@ bool DocumentThreadableLoader::RedirectReceivedBlinkCORS(
     const ResourceRequest& new_request,
     const ResourceResponse& redirect_response) {
   DCHECK(client_);
-  DCHECK_EQ(resource, this->GetResource());
+  DCHECK_EQ(resource, GetResource());
   DCHECK(async_);
 
   suborigin_force_credentials_ = false;
@@ -792,7 +792,7 @@ void DocumentThreadableLoader::DataSent(
     unsigned long long bytes_sent,
     unsigned long long total_bytes_to_be_sent) {
   DCHECK(client_);
-  DCHECK_EQ(resource, this->GetResource());
+  DCHECK_EQ(resource, GetResource());
   DCHECK(async_);
 
   checker_.DataSent();
@@ -802,7 +802,7 @@ void DocumentThreadableLoader::DataSent(
 void DocumentThreadableLoader::DataDownloaded(Resource* resource,
                                               int data_length) {
   DCHECK(client_);
-  DCHECK_EQ(resource, this->GetResource());
+  DCHECK_EQ(resource, GetResource());
   DCHECK(actual_request_.IsNull());
   DCHECK(async_);
 
@@ -814,7 +814,7 @@ void DocumentThreadableLoader::DidReceiveResourceTiming(
     Resource* resource,
     const ResourceTimingInfo& info) {
   DCHECK(client_);
-  DCHECK_EQ(resource, this->GetResource());
+  DCHECK_EQ(resource, GetResource());
   DCHECK(async_);
 
   client_->DidReceiveResourceTiming(info);
@@ -824,7 +824,7 @@ void DocumentThreadableLoader::ResponseReceived(
     Resource* resource,
     const ResourceResponse& response,
     std::unique_ptr<WebDataConsumerHandle> handle) {
-  DCHECK_EQ(resource, this->GetResource());
+  DCHECK_EQ(resource, GetResource());
   DCHECK(async_);
 
   checker_.ResponseReceived();
@@ -1027,7 +1027,7 @@ void DocumentThreadableLoader::SetSerializedCachedMetadata(Resource*,
 void DocumentThreadableLoader::DataReceived(Resource* resource,
                                             const char* data,
                                             size_t data_length) {
-  DCHECK_EQ(resource, this->GetResource());
+  DCHECK_EQ(resource, GetResource());
   DCHECK(async_);
 
   checker_.DataReceived();
@@ -1055,7 +1055,7 @@ void DocumentThreadableLoader::HandleReceivedData(const char* data,
 
 void DocumentThreadableLoader::NotifyFinished(Resource* resource) {
   DCHECK(client_);
-  DCHECK_EQ(resource, this->GetResource());
+  DCHECK_EQ(resource, GetResource());
   DCHECK(async_);
 
   checker_.NotifyFinished(resource);
