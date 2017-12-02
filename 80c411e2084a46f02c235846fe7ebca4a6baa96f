@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "38186f18_71b776c4",
+        "filename": "extensions/browser/api/web_request/web_request_api.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-02T00:09:43Z",
+      "side": 1,
+      "message": "Yeah actually. I had started that at one point and it was a fail for some reason. That was way early in the patch though so stuff probably changed.\n\nOnBeforeRequest does take ownership of request body data though so this method still uses a non-const request.\n\nA future cleanup could resolve this by making pre-processed request body data a separate arg to OnBeforeRequest, but that would require lots of additional noise in this CL to update all the call sites in tests.",
+      "parentUuid": "dea82499_3bd1e5d9",
+      "revId": "80c411e2084a46f02c235846fe7ebca4a6baa96f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12dc30c2_c1839f3e",
         "filename": "extensions/browser/api/web_request/web_request_info.cc",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c2d7c865_a61a0347",
+        "filename": "extensions/browser/api/web_request/web_request_info.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-02T00:09:43Z",
+      "side": 1,
+      "message": "Yikes, yeah just leftover code from a move. Thanks, removed.",
+      "parentUuid": "12dc30c2_c1839f3e",
+      "revId": "80c411e2084a46f02c235846fe7ebca4a6baa96f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46920e81_0144938d",
         "filename": "extensions/browser/api/web_request/web_request_info.cc",
         "patchSetId": 10
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-01T23:44:16Z",
       "side": 1,
       "message": "Is browser_client ever null?  If it\u0027s just in tests, can we just update those tests?  Or are there too many?",
+      "revId": "80c411e2084a46f02c235846fe7ebca4a6baa96f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cef95e25_06fc8493",
+        "filename": "extensions/browser/api/web_request/web_request_info.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-02T00:09:43Z",
+      "side": 1,
+      "message": "IIRC I tried and it was gnarly enough that I decided it was out of scope for this CL. Would like to do it though, yes.",
+      "parentUuid": "46920e81_0144938d",
       "revId": "80c411e2084a46f02c235846fe7ebca4a6baa96f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
