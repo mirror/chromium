@@ -16,6 +16,24 @@
       "revId": "1b4d3dc98b6109170b1132db4a2e0912e713aa1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c2e6d55_26c30a0b",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-02T02:53:03Z",
+      "side": 1,
+      "message": "It makes the vertical offset an edge-to-edge value, instead of an edge to center value (which is tricky to follow because of the mismatched reference points).  The value was adjusted accordingly (as was the \"work in progress\" offset, which also uses this button\u0027s offsets).",
+      "parentUuid": "11791af4_7de6d9a8",
+      "revId": "1b4d3dc98b6109170b1132db4a2e0912e713aa1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
