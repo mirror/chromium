@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6bcc750_ff3b748f",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_picture_list.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-12-02T01:19:10Z",
+      "side": 1,
+      "message": "Is it ok to not focus the delete button on pressing enter on the picture that\u0027s been taken?\nIf we\u0027re ok w/o this behavior should we change the camera logic to work the same way? (Currently pressing enter on the camera will focus the \u0027take picture\u0027 button)",
+      "range": {
+        "startLine": 232,
+        "startChar": 0,
+        "endLine": 235,
+        "endChar": 44
+      },
+      "revId": "bbab7756f25a1fd166d2e7f39bb23a7594bc6e28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
