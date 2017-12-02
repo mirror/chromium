@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9b6ce23d_db4f2e27",
+        "filename": "docs/accessibility/offscreen.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-02T00:50:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17565385_16a6daa8",
+      "revId": "1ae405cbf1887ccf78d7986da2909804e0021b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c9513ef_babbfdd8",
         "filename": "docs/accessibility/offscreen.md",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "1ae405cbf1887ccf78d7986da2909804e0021b6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7df58f28_4cb44ee7",
+        "filename": "docs/accessibility/offscreen.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-02T00:50:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c9513ef_babbfdd8",
+      "revId": "1ae405cbf1887ccf78d7986da2909804e0021b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "619dfa02_3777830e",
+        "filename": "docs/accessibility/offscreen.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-02T00:50:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fbae04c_1ec3a2df",
+      "revId": "1ae405cbf1887ccf78d7986da2909804e0021b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a8f80f5_4d8732ef",
         "filename": "docs/accessibility/offscreen.md",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "1ae405cbf1887ccf78d7986da2909804e0021b6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e499acbb_4d8821bd",
+        "filename": "docs/accessibility/offscreen.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-02T00:50:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a8f80f5_4d8732ef",
+      "revId": "1ae405cbf1887ccf78d7986da2909804e0021b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "02ee4624_3d390e89",
+        "filename": "docs/accessibility/offscreen.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-02T00:50:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "206eb6e0_d0bb91f1",
+      "revId": "1ae405cbf1887ccf78d7986da2909804e0021b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dad8448c_d285ba53",
         "filename": "docs/accessibility/offscreen.md",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "1ae405cbf1887ccf78d7986da2909804e0021b6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80fb476a_7ff8ca0b",
+        "filename": "docs/accessibility/offscreen.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-02T00:50:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dad8448c_d285ba53",
+      "revId": "1ae405cbf1887ccf78d7986da2909804e0021b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "d22e9ffd_3213ddc6",
+        "filename": "docs/accessibility/offscreen.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-02T00:50:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d3ebca3_126e7e99",
+      "revId": "1ae405cbf1887ccf78d7986da2909804e0021b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "337ea688_3c2aaf8c",
         "filename": "docs/accessibility/offscreen.md",
         "patchSetId": 2
@@ -132,6 +258,24 @@
       "writtenOn": "2017-12-01T23:19:58Z",
       "side": 1,
       "message": "It might be helpful to give some examples of this.\n\nI can only think of a contrived example:\n\n\u003cdiv style\u003d\"visibility:hidden\" aria-hidden\u003dfalse\u003e\n  \u003cdiv style\u003d\"visibility:visible\"\u003e\n    Visible text\n  \u003c/div\u003e\n\u003c/div\u003e\n\nThe outer div here has no size, so we use its child for its bounding box.\n\nI think there are some real examples, maybe \u003ctbody\u003e or \u003ctr\u003e, where the layout engine doesn\u0027t give us a bounding box at all.",
+      "revId": "1ae405cbf1887ccf78d7986da2909804e0021b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9113b379_526966b8",
+        "filename": "docs/accessibility/offscreen.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-02T00:50:40Z",
+      "side": 1,
+      "message": "Added the contrived example, maybe we can add more later?",
+      "parentUuid": "337ea688_3c2aaf8c",
       "revId": "1ae405cbf1887ccf78d7986da2909804e0021b6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "16753f87_853891ef",
+        "filename": "docs/accessibility/offscreen.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-02T00:50:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46a30c64_7169992a",
+      "revId": "1ae405cbf1887ccf78d7986da2909804e0021b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d4c8961_97d1913c",
         "filename": "docs/accessibility/offscreen.md",
         "patchSetId": 2
@@ -169,6 +331,24 @@
       "revId": "1ae405cbf1887ccf78d7986da2909804e0021b6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55df9af8_479d4546",
+        "filename": "docs/accessibility/offscreen.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-02T00:50:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d4c8961_97d1913c",
+      "revId": "1ae405cbf1887ccf78d7986da2909804e0021b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
