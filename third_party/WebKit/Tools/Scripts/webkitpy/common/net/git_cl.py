@@ -143,14 +143,11 @@ class GitCL(object):
         url = result_dict['url']
         if url is None:
             return Build(builder_name, None)
-        match = re.match(r'.*/builds/(\d+)/?$', url)
-        if match:
-            build_number = match.group(1)
-            return Build(builder_name, int(build_number))
-        match = re.match(r'.*/task/([0-9a-f]+)/?$', url)
+        match = re.match(r'.*/builds/(\d+)?$', url)
         assert match, '%s did not match expected format' % url
-        task_id = match.group(1)
-        return Build(builder_name, task_id)
+        build_number = match.group(1)
+        assert build_number and build_number.isdigit()
+        return Build(builder_name, int(build_number))
 
     @staticmethod
     def _try_job_status(result_dict):
