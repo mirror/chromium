@@ -1527,7 +1527,6 @@ class CONTENT_EXPORT RenderFrameImpl
   AssociatedInterfaceRegistryImpl associated_interfaces_;
   std::unique_ptr<AssociatedInterfaceProviderImpl>
       remote_associated_interfaces_;
-  mojom::FrameHostAssociatedPtr frame_host_;
 
   // TODO(dcheng): Remove these members.
   bool committed_first_load_ = false;
