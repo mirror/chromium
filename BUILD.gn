@@ -159,12 +159,15 @@ group("gn_all") {
 
   if (!is_ios) {
     deps += [
+      "//cc:cc_unittests",
       "//media:media_unittests",
       "//mojo",
       "//mojo/common:mojo_common_unittests",
       "//mojo/edk/system:mojo_system_unittests",
       "//mojo/edk/test:mojo_public_bindings_unittests",
       "//mojo/edk/test:mojo_public_system_unittests",
+      "//third_party/WebKit/Source/controller:webkit_unit_tests",
+      "//third_party/WebKit/Source/platform/wtf:wtf_unittests",
       "//ui/gl:gl_unittests",
     ]
   }
@@ -178,7 +181,6 @@ group("gn_all") {
 
   if (!is_ios && !is_fuchsia) {
     deps += [
-      "//cc:cc_unittests",
       "//chrome/test:telemetry_perf_unittests",
       "//chrome/test:unit_tests",
       "//components:components_browsertests",
@@ -199,17 +201,10 @@ group("gn_all") {
       "//media/cast:cast_unittests",
       "//media/midi:midi_unittests",
       "//media/mojo:media_mojo_unittests",
-      "//mojo",
-      "//mojo/common:mojo_common_unittests",
-      "//mojo/edk/system:mojo_system_unittests",
-      "//mojo/edk/test:mojo_public_bindings_unittests",
-      "//mojo/edk/test:mojo_public_system_unittests",
       "//net:net_perftests",
       "//storage:storage_unittests",
-      "//third_party/WebKit/Source/controller:webkit_unit_tests",
       "//third_party/WebKit/Source/platform:blink_platform_unittests",
       "//third_party/WebKit/Source/platform/heap:blink_heap_unittests",
-      "//third_party/WebKit/Source/platform/wtf:wtf_unittests",
       "//third_party/angle/src/tests:angle_end2end_tests",
       "//third_party/angle/src/tests:angle_unittests",
       "//third_party/angle/src/tests:angle_white_box_tests",
@@ -263,9 +258,15 @@ group("gn_all") {
     deps += [
       "//ui/ozone",
       "//ui/ozone:ozone_unittests",
-      "//ui/ozone/demo",
-      "//ui/ozone/gl:ozone_gl_unittests",
     ]
+
+    # TODO(crbug.com/766360): These require a working GL implementation.
+    if (!is_fuchsia) {
+      deps += [
+        "//ui/ozone/demo",
+        "//ui/ozone/gl:ozone_gl_unittests",
+      ]
+    }
   }
 
   if (use_x11 || ozone_platform_x11) {
