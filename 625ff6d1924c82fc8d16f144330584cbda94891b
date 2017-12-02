@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02c31152_f017c633",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-02T00:28:45Z",
+      "side": 1,
+      "message": "nit: please indicate the name of the mirrored metrics enum. Something like:\n\"This is a mirror of a likely named metrics enum.\"",
+      "range": {
+        "startLine": 25,
+        "startChar": 3,
+        "endLine": 25,
+        "endChar": 41
+      },
+      "revId": "625ff6d1924c82fc8d16f144330584cbda94891b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67c2fcff_4bb74798",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-02T00:28:45Z",
+      "side": 1,
+      "message": "nit/suggestion: as this is mapped to a UMA enum it\u0027s better to use explicit int values.",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 25
+      },
+      "revId": "625ff6d1924c82fc8d16f144330584cbda94891b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaa893c5_0285ceda",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-02T00:28:45Z",
+      "side": 1,
+      "message": "nit: use Time::is_null() instead.",
+      "range": {
+        "startLine": 642,
+        "startChar": 24,
+        "endLine": 642,
+        "endChar": 40
+      },
+      "revId": "625ff6d1924c82fc8d16f144330584cbda94891b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c72a00f4_0017a27f",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-02T00:28:45Z",
+      "side": 1,
+      "message": "This macro only records values up to 10 seconds [1], too short in this case. The MEDIUM or some other variant should be better.\n\n[1] https://cs.chromium.org/chromium/src/base/metrics/histogram_macros.h?type\u003dcs\u0026q\u003d\"UMA_HISTOGRAM_TIMES\"",
+      "range": {
+        "startLine": 646,
+        "startChar": 4,
+        "endLine": 646,
+        "endChar": 23
+      },
+      "revId": "625ff6d1924c82fc8d16f144330584cbda94891b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "745184a8_8e1d567d",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 30859,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-02T00:28:45Z",
+      "side": 1,
+      "message": "nit: OfflinePagesStoreEvent here but the C++ enum is named OfflinePageStoreEvent (note the missing \"s\"). I think you meant to name them the same, right?",
+      "range": {
+        "startLine": 30859,
+        "startChar": 12,
+        "endLine": 30859,
+        "endChar": 34
+      },
+      "revId": "625ff6d1924c82fc8d16f144330584cbda94891b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dec421c6_6ca14f4b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 54453,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-02T00:28:45Z",
+      "side": 1,
+      "message": "nit: Tracks the time between the store being unloaded from memory and then reloaded.",
+      "range": {
+        "startLine": 54453,
+        "startChar": 4,
+        "endLine": 54453,
+        "endChar": 56
+      },
+      "revId": "625ff6d1924c82fc8d16f144330584cbda94891b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

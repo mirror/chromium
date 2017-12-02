@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "b55138a1_80e2c662",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-02T00:28:45Z",
+      "side": 1,
+      "message": "Generally having both the declaration and definition in the header should be enough but as it\u0027s the linker you might have to play with keywords like \u0027extern\u0027.\n\nI personally don\u0027t think this specific case is really a problem -- very common in our codebase; the class is in fact just a single long -- but it\u0027s the guidelines, and I got a lot of comments about static usage in previous CLs.\n\nThe specific guidelines are (I\u0027m sorry for not linking them before):\n* https://google.github.io/styleguide/cppguide.html#Static_and_Global_Variables\n* https://sites.google.com/a/chromium.org/dev/developers/coding-style/cpp-dos-and-donts#TOC-Static-variables\n\nI personally needed reading and then re-reading to fully understand the first one.",
+      "parentUuid": "b4b1350c_eaea36ca",
+      "range": {
+        "startLine": 76,
+        "startChar": 9,
+        "endLine": 76,
+        "endChar": 14
+      },
+      "revId": "6a081f9be9feba862387766131ac9abbc02783ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc347e44_8ec94199",
         "filename": "components/offline_pages/core/offline_page_metadata_store_unittest.cc",
         "patchSetId": 7
