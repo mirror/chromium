@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b292b8c7_82f5f17f",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/results.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-12-02T01:27:15Z",
+      "side": 1,
+      "message": "Could you give these a large left margin, so that they are not right next to the popup? I feel they are a separate \"toolbar\".\n\nThis is a cleaner GUI, \"display as single line\" was hacky.",
+      "revId": "2ad6c4d619e68fda87d39e2ba84b6a9bc27eab53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b99d4a3_e1d7bf6b",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/results.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 1133,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-12-02T01:27:15Z",
+      "side": 1,
+      "message": "Curious: why are there nested timeouts here?",
+      "revId": "2ad6c4d619e68fda87d39e2ba84b6a9bc27eab53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebd9f4f9_41ab81c3",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/results.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 1151,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-12-02T01:27:15Z",
+      "side": 1,
+      "message": "Nice hack. Too bad we do not have direct clipboard access.",
+      "revId": "2ad6c4d619e68fda87d39e2ba84b6a9bc27eab53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
