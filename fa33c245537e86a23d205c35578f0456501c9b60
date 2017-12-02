@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dce8e66e_acdd1ed3",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_delegate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-02T00:58:24Z",
+      "side": 1,
+      "message": "Yes this is absolutely true. Thanks!",
+      "parentUuid": "641d8115_2b84ef60",
+      "revId": "fa33c245537e86a23d205c35578f0456501c9b60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3174f8bd_015780a6",
         "filename": "chrome/browser/vr/ui_renderer.cc",
         "patchSetId": 8
