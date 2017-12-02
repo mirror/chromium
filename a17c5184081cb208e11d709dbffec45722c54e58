@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73aa0dae_c306500e",
+        "filename": "chrome/common/extensions/docs/examples/extensions/constant_context/background.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-02T01:47:34Z",
+      "side": 1,
+      "message": "Nit: this isn\u0027t calling it, but rather registering it.",
+      "range": {
+        "startLine": 15,
+        "startChar": 3,
+        "endLine": 15,
+        "endChar": 7
+      },
+      "revId": "a17c5184081cb208e11d709dbffec45722c54e58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e68a8a3_f61dab0c",
+        "filename": "chrome/common/extensions/docs/examples/extensions/constant_context/manifest.json",
+        "patchSetId": 12
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-02T01:47:34Z",
+      "side": 1,
+      "message": "Gerrit thinks this line ends in something funny? (tab? extra space?)",
+      "range": {
+        "startLine": 21,
+        "startChar": 4,
+        "endLine": 21,
+        "endChar": 25
+      },
+      "revId": "a17c5184081cb208e11d709dbffec45722c54e58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
