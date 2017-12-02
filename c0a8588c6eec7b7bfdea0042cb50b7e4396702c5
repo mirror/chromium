@@ -34,6 +34,24 @@
       "revId": "c0a8588c6eec7b7bfdea0042cb50b7e4396702c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a39a0c34_08d51f33",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/git_cl.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-12-02T00:25:12Z",
+      "side": 1,
+      "message": "Thanks for the explanation.\n\nI think it\u0027s the uncertainty that worries me a bit here. I don\u0027t know why *some* builds have swarming IDs but no build numbers. It seems this should be fixed somewhere earlier in the pipeline. The ideal solution is either to make sure all builds have build numbers (and include them in the responses), or to filter out builds without build numbers earlier if for some reason they are unavoidable and people never need them.\n\nMeanwhile, I think we can land this CL first, as this piece of code has always been working like this and we are not sure when the switch will be flipped. We can investigate better solutions later.",
+      "parentUuid": "07219204_e7d48596",
+      "revId": "c0a8588c6eec7b7bfdea0042cb50b7e4396702c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
