@@ -16,6 +16,24 @@
       "revId": "92329226aa13dbee68b0898ca1fd21c17fd61652",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87ddbe3c_f6e758d9",
+        "filename": "content/test/gpu/gpu_tests/webgl2_conformance_expectations.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-02T00:02:23Z",
+      "side": 1,
+      "message": "Needs to be propagated to webgl_conformance_expectations.py too.\n\n(The duplication is there because we run these tests in two modes, and some of the failures differ depending on whether they\u0027re run on WebGL 1.0 vs 2.0 contexts.)",
+      "parentUuid": "79487f15_6150f7bc",
+      "revId": "92329226aa13dbee68b0898ca1fd21c17fd61652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
