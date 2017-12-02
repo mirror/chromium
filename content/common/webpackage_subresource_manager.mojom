@@ -1,0 +1,24 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module content.mojom;
+
+import "url/mojo/url.mojom";
+import "content/public/common/url_loader.mojom";
+
+interface WebPackageResponseCompletionCallback {
+  OnComplete(URLLoaderCompletionStatus status);
+};
+
+// This is sent from the browser to the renderer process. The browser
+// process 'push'es the requests and loaders for the responses found in
+// the associated WebPackage.
+interface WebPackageSubresourceManager {
+  OnRequest(url.mojom.Url url, string method);
+  OnResponse(url.mojom.Url url,
+             string method,
+             URLResponseHead response_head,
+             handle<data_pipe_consumer> response_body,
+             WebPackageResponseCompletionCallback& completion_callback);
+};
