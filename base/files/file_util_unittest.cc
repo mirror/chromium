@@ -2054,7 +2054,13 @@ TEST_F(FileUtilTest, CopyAndDeleteDirectoryTest) {
 TEST_F(FileUtilTest, GetTempDirTest) {
   static const TCHAR* kTmpKey = _T("TMP");
   static const TCHAR* kTmpValues[] = {
-    _T(""), _T("C:"), _T("C:\\"), _T("C:\\tmp"), _T("C:\\tmp\\")
+      _T(""),
+      _T("C:"),
+      _T("C:\\"),
+      _T("C:\\tmp"),
+      _T("C:\\tmp\\"),
+      _T("C:\\tmptmptmptmp"),
+      _T("C:\\tmptmptmptmp\\"),
   };
   // Save the original $TMP.
   size_t original_tmp_size;
@@ -2077,6 +2083,7 @@ TEST_F(FileUtilTest, GetTempDirTest) {
   } else {
     ::_tputenv_s(kTmpKey, _T(""));
   }
+  EXPECT_FALSE(true);
 }
 #endif  // OS_WIN
 
