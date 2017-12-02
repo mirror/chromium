@@ -338,26 +338,26 @@ TestResult(CRASH) + TextExpectation(Failure) => [ Failure <b>Crash</b> ]</pre>
 
 // Results loaded from full_results_jsonp.js.
 let globalResults = {};
-let globalTestMap = new Map();  // id => test
+const globalTestMap = new Map();  // id => test
 
 const TestResultInformation = {
-  "CRASH":      { index: 1, text: "Crash", isFailure: true, isSuccess: false },
-  "FAIL":       { index: 2, text: "Failure", isFailure: true, isSuccess: false },
-  "TEXT":       { index: 3, text: "Failure", isFailure: true, isSuccess: false },
-  "IMAGE":      { index: 4, text: "Failure", isFailure: true, isSuccess: false },
-  "IMAGE+TEXT": { index: 5, text: "Failure", isFailure: true, isSuccess: false },
-  "TIMEOUT":    { index: 6, text: "Timeout", isFailure: true, isSuccess: false },
-  "SLOW":       { index: 7, text: "Slow", isFailure: false, isSuccess: true },
-  "SKIP":       { index: 8, text: "Skip", isFailure: false, isSuccess: false },
-  "MISSING":    { index: 9, text: "Missing", isFailure: false, isSuccess: false },
-  "WONTFIX":    { index: 10, text: "WontFix", isFailure: false, isSuccess: false },
-  "NEEDSMANUALREBASELINE": { index: 11, text: "NeedsManualRebaseline", isFailure: false, isSuccess: false },
-  "PASS":       { index: 12, text: "Pass", isFailure: false, isSuccess: true },
-  "NOTRUN":     { index: 13, text: "NOTRUN", isFailure: false, isSuccess: true }
+  "CRASH":      {index: 1, text: "Crash", isFailure: true, isSuccess: false},
+  "FAIL":       {index: 2, text: "Failure", isFailure: true, isSuccess: false},
+  "TEXT":       {index: 3, text: "Failure", isFailure: true, isSuccess: false},
+  "IMAGE":      {index: 4, text: "Failure", isFailure: true, isSuccess: false},
+  "IMAGE+TEXT": {index: 5, text: "Failure", isFailure: true, isSuccess: false},
+  "TIMEOUT":    {index: 6, text: "Timeout", isFailure: true, isSuccess: false},
+  "SLOW":       {index: 7, text: "Slow", isFailure: false, isSuccess: true},
+  "SKIP":       {index: 8, text: "Skip", isFailure: false, isSuccess: false},
+  "MISSING":    {index: 9, text: "Missing", isFailure: false, isSuccess: false},
+  "WONTFIX":    {index: 10, text: "WontFix", isFailure: false, isSuccess: false},
+  "NEEDSMANUALREBASELINE": {index: 11, text: "NeedsManualRebaseline", isFailure: false, isSuccess: false},
+  "PASS":       {index: 12, text: "Pass", isFailure: false, isSuccess: true},
+  "NOTRUN":     {index: 13, text: "NOTRUN", isFailure: false, isSuccess: true},
 };
 
 // Sorted from worst to best.
-const TestResultComparator = function (a, b) {
+const TestResultComparator = function(a, b) {
   if (TestResultInformation[a].index > TestResultInformation[b].index)
     return 1;
   else if (TestResultInformation[a].index == TestResultInformation[b].index)
@@ -399,9 +399,8 @@ class Traversal {
         this.resultCounts[node.actualFinal]++;
         action(node, path, this);
       }
-    }
-    else {
-      for (let p of node.keys())
+    } else {
+      for (const p of node.keys())
         this._helper(node.get(p), path + "/" + p, filter, action);
     }
   }
@@ -409,13 +408,13 @@ class Traversal {
 
 const PathParserGlobals = {
   layout_tests_dir: null,
-  chromium_revision: null
+  chromium_revision: null,
 };
 
 class PathParser {
   constructor(path) {
     this.path = path;
-    let [href, dir, file] = path.match("/(.*)/(.*)");
+    const [href, dir, file] = path.match("/(.*)/(.*)");
     this.dir = dir;
     this.file = file;
     let tmp;
@@ -424,7 +423,7 @@ class PathParser {
   }
 
   static initGlobals(fullResults) {
-    for (let p in PathParserGlobals)
+    for (const p in PathParserGlobals)
       PathParserGlobals[p] = fullResults[p];
   }
 
@@ -443,12 +442,12 @@ class PathParser {
       return window.localStorage.getItem("testLocationOverride");
     } else if (PathParserGlobals.layout_tests_dir) {
       return PathParserGlobals.layout_tests_dir;
-    } else if (location.toString().indexOf('file://') == 0) {
+    } else if (location.toString().indexOf("file://") == 0) {
       // tests were run locally.
       return "../../../third_party/WebKit/LayoutTests";
     } else if (PathParserGlobals.chromium_revision) {
       // Existing crrev list is incorrect:  https://crbug.com/750347
-      let correctedRevision = PathParserGlobals.chromium_revision.replace("refs/heads/master@{#", "").replace("}", "");
+      const correctedRevision = PathParserGlobals.chromium_revision.replace("refs/heads/master@{#", "").replace("}", "");
       return "https://crrev.com/" + correctedRevision + "/third_party/WebKit/LayoutTests";
     } else {
       return "https://chromium.googlesource.com/chromium/src/+/master/third_party/WebKit/LayoutTests";
@@ -460,9 +459,9 @@ class PathParser {
 const Report = {
 
   getDefaultPrinter: () => {
-    let val = document.querySelector("#report_format").value;
+    const val = document.querySelector("#report_format").value;
     window.localStorage.setItem("reportFormat", val);
-    switch(document.querySelector("#report_format").value) {
+    switch (document.querySelector("#report_format").value) {
       case "expectation":
         return {print: Report.printExpectation, render: Report.renderResultList};
       case "crashsite":
@@ -470,7 +469,7 @@ const Report = {
       case "textmismatch":
         return {print: Report.printTextMismatch, render: Report.renderGroupTextMismatch};
       case "plainwrapped":
-        return {print: Report.printPlainTestWrapped, render: Report.renderResultList}
+        return {print: Report.printPlainTestWrapped, render: Report.renderResultList};
       case "plain":
       default:
         return {print: Report.printPlainTest, render: Report.renderResultList};
@@ -482,8 +481,8 @@ const Report = {
   },
 
   printPlainTest: (test, path, traversal) => {
-    let pathParser = new PathParser(path);
-    let html = `
+    const pathParser = new PathParser(path);
+    const html = `
     <div class='expect' tabindex='0' data-id='${test.expectId}'>
       <div class='details'></div>${Report.printFlag(test)}
      ${pathParser.dir}/<a target='test' tabindex='-1' href='${pathParser.testHref}'>${pathParser.file}</a>
@@ -492,8 +491,8 @@ const Report = {
   },
 
   printPlainTestWrapped: (test, path, traversal) => {
-    let pathParser = new PathParser(path);
-    let html = ` ${pathParser.dir}/${pathParser.file}`;
+    const pathParser = new PathParser(path);
+    const html = ` ${pathParser.dir}/${pathParser.file}`;
     traversal.html.push(html);
   },
 
@@ -501,7 +500,7 @@ const Report = {
     // TestExpectations file format is documented at:
     // https://chromium.googlesource.com/chromium/src/+/master/docs/testing/layout_test_expectations.md
 
-    let pathParser = new PathParser(path);
+    const pathParser = new PathParser(path);
     // Print directory header if this test's directory is different from the last.
     if (pathParser.dir != traversal.lastDir) {
       traversal.html.push("<br>");
@@ -509,10 +508,10 @@ const Report = {
       traversal.lastDir = pathParser.dir;
     }
 
-    let statusMap = new Map(test.expectedMap);
+    const statusMap = new Map(test.expectedMap);
     if (statusMap.has("PASS") && statusMap.size == 1)
        statusMap.delete("PASS");
-    for (let s of test.actualMap.keys()) {
+    for (const s of test.actualMap.keys()) {
       let result = s;
       if (result == "TEXT" || result == "IMAGE" || result == "IMAGE+TEXT")
         result = "FAIL";
@@ -521,7 +520,7 @@ const Report = {
       statusMap.set(result, "bold");
     }
     let status = "";
-    for (let key of statusMap.keys()) {
+    for (const key of statusMap.keys()) {
       if (statusMap.get(key) == "bold")
         status += ` <b>${TestResultInformation[key].text}</b>`;
       else
@@ -530,29 +529,31 @@ const Report = {
     let bug = test.actualMap.has("PASS") ? "" : "<span class='warn'>NEEDBUG</span>";
     if (test.bugs && test.bugs.length > 0) {
       bug = "";
-      for (let b of test.bugs) {
+      for (const b of test.bugs) {
         bug += `<a target='crbug' tabindex='-1' href='https://${b}'>${b}</a> `;
       }
     }
-    let html = `
-      <div class='expect' tabindex='0' data-id='${test.expectId}'><div class='details'></div>${Report.printFlag(test)}${bug}
-        ${pathParser.dir}/<a target='test' tabindex='-1' href='${pathParser.testHref}'>${pathParser.file}</a>
+    const html = `
+      <div class='expect' tabindex='0' data-id='${test.expectId}'>
+        <div class='details'></div>
+          ${Report.printFlag(test)}${bug}
+          ${pathParser.dir}/<a target='test' tabindex='-1' href='${pathParser.testHref}'>${pathParser.file}</a>
         [ ${status} ]
-    </div>
+      </div>
     `;
     traversal.html.push(html);
   },
 
   printWithKey: (test, path, traversal, key_title) => {
-    let pathParser = new PathParser(path);
-    let key = test[key_title];
+    const pathParser = new PathParser(path);
+    const key = test[key_title];
     let html = ""
       + `${Report.printFlag(test)}`
       + pathParser.dir + "/"
       + "<a target='test' tabindex='-1' href='" + pathParser.testHref + "'>"
       + pathParser.file + "</a>";
     html = "<div class='expect' tabindex='0' data-id='"+ test.expectId +"'><div class='details'></div>" + html + "</div>";
-    traversal.html.push({key: key, html: html});
+    traversal.html.push({key, html});
   },
 
   printCrashSite: (test, path, traversal) => {
@@ -564,29 +565,29 @@ const Report = {
   },
 
   indicateNone: (report) => {
-    let pre = document.createElement("div");
+    const pre = document.createElement("div");
     pre.innerHTML = "<i>None</i>";
     report.appendChild(pre);
   },
 
   renderResultList: (html) => {
-    let report = document.querySelector("#report");
+    const report = document.querySelector("#report");
     if (report.childNodes.length === 0 && html.length === 0) {
       Report.indicateNone(report);
       return;
     }
 
-    let pre = document.createElement("div");
+    const pre = document.createElement("div");
     pre.innerHTML = html.join("\n");
     report.appendChild(pre);
   },
 
   createContainerForGroup: (report, key, keyed_title, null_title) => {
-    let container = document.createElement("div");
+    const container = document.createElement("div");
     container.setAttribute("key", key);
     container.innerHTML = ""
       + "<br><b>"
-      + (key !== 'null' ? `### ${keyed_title}: ${key}`
+      + (key !== "null" ? `### ${keyed_title}: ${key}`
                         : `### ${null_title}`)
       + "</b>";
 
@@ -599,7 +600,7 @@ const Report = {
       report.childNodes.forEach(sibling => {
         if (inserted)
           return;
-        let siblingKey = sibling.getAttribute("key");
+        const siblingKey = sibling.getAttribute("key");
         if (siblingKey == "null" || siblingKey > key) {
           report.insertBefore(container, sibling);
           inserted = true;
@@ -612,26 +613,26 @@ const Report = {
   },
 
   renderGroup: (html, keyed_title, null_title) => {
-    let report = document.querySelector("#report");
+    const report = document.querySelector("#report");
     if (report.childNodes.length === 0 && html.length === 0) {
       Report.indicateNone(report);
       return;
     }
 
-    let renderMap = {};
+    const renderMap = {};
     html.forEach(result => {
-      let key = result.key || "null";
+      const key = result.key || "null";
       if (!(key in renderMap)) {
-        let container =
+        const container =
             report.querySelector(`div[key="${key}"]`) ||
             Report.createContainerForGroup(report, key, keyed_title, null_title);
-        renderMap[key] = {container: container, html: ""};
+        renderMap[key] = {container, html: ""};
       }
       renderMap[key].html += result.html;
     });
 
-    for (let key in renderMap)
-      renderMap[key].container.insertAdjacentHTML('beforeend', renderMap[key].html);
+    for (const key in renderMap)
+      renderMap[key].container.insertAdjacentHTML("beforeend", renderMap[key].html);
   },
 
   renderGroupCrashSite: (html) => {
@@ -648,11 +649,11 @@ const Report = {
 
    // Returns toolbar DOM
   getResultToolbars: (test) => {
-    let toolbars = [];
-    let pathParser = new PathParser(test.expectPath);
+    const toolbars = [];
+    const pathParser = new PathParser(test.expectPath);
     toolbars.push(new PlainHtmlToolbar().createDom(test.actual));
-    for (let result of test.actualMap.keys()) {
-      switch(result) {
+    for (const result of test.actualMap.keys()) {
+      switch (result) {
         case "PASS":
         case "SLOW":
           if (Filters.unexpectedPass(test))
@@ -699,18 +700,18 @@ const Report = {
     return toolbars;
   },
   getResultsDiv: (test) => {
-    let div = document.createElement("div");
+    const div = document.createElement("div");
     div.classList.add("result-frame");
     div.innerHTML = `
       <ul class="result-menu"></ul>
       <div class="result-output"></div>
     `;
     // Initialize the results.
-    let menu = div.querySelector(".result-menu");
-    for (let toolbar of Report.getResultToolbars(test))
+    const menu = div.querySelector(".result-menu");
+    for (const toolbar of Report.getResultToolbars(test))
       menu.appendChild(toolbar);
     return div;
-  }
+  },
 }; // Report
 
 // Query generates a report for a given query.
@@ -721,7 +722,7 @@ const Query = {
   currentResolve: null,
   currentReject: null,
 
-  createReportPromise: function() {
+  createReportPromise() {
     if (this.currentPromise) {
       this.currentPromise = null;
       this.currentReject();
@@ -733,7 +734,7 @@ const Query = {
     this.currentPromise.catch( _ => {}); // stops uncaught rejection errors.
   },
 
-  completeReportPromise: function(traversal) {
+  completeReportPromise(traversal) {
     if (this.currentResolve)
       this.currentResolve(traversal);
     this.currentPromise = null;
@@ -741,22 +742,22 @@ const Query = {
     this.currentReject = null;
   },
 
-  resetFilters: function() {
+  resetFilters() {
     // Reset all filters.
-    for (let el of Array.from(
+    for (const el of Array.from(
           document.querySelectorAll("#filters > label"))) {
-      el.querySelector('input').checked = true;
+      el.querySelector("input").checked = true;
     }
   },
 
-  updateFilters: function(traversal) {
-    for (let el of Array.from(
+  updateFilters(traversal) {
+    for (const el of Array.from(
           document.querySelectorAll("#filters > label"))) {
-      let count = traversal.resultCounts[el.id.replace("_", "+")];
+      const count = traversal.resultCounts[el.id.replace("_", "+")];
       if (count > 0) {
         el.classList.remove("hidden");
-        el.querySelector('input').checked = true;
-        el.querySelector('span').innerText = count;
+        el.querySelector("input").checked = true;
+        el.querySelector("span").innerText = count;
       } else {
         el.classList.add("hidden");
         el.querySelector("input").checked = false;
@@ -765,43 +766,43 @@ const Query = {
     }
   },
 
-  filterChanged: function(ev) {
+  filterChanged(ev) {
     this.query();
   },
 
-  applyFilters: function(queryFilter) {
-    var filterMap = new Map();
-    for (let el of Array.from(
+  applyFilters(queryFilter) {
+    const filterMap = new Map();
+    for (const el of Array.from(
           document.querySelectorAll("#filters > label"))) {
-        if (el.querySelector('input').checked)
+        if (el.querySelector("input").checked)
           filterMap.set(el.id.replace("_", "+"), true);
     }
-    let searchText = document.querySelector("#text-filter").value;
-    let textFilter = (!searchText || searchText.length < 1)
+    const searchText = document.querySelector("#text-filter").value;
+    const textFilter = (!searchText || searchText.length < 1)
       ? _ => true
       : test => test.expectPath.includes(searchText);
     return test => queryFilter(test) && filterMap.has(test.actualFinal) && textFilter(test);
   },
 
-  query: function(name, queryFilter, reset) {
+  query(name, queryFilter, reset) {
     queryFilter = queryFilter || this.lastQueryFilter;
     if (reset) {
       this.resetFilters();
       this.lastQueryFilter = queryFilter;
-      let savedSearchText = document.querySelector("#text-filter").value;
+      const savedSearchText = document.querySelector("#text-filter").value;
       document.querySelector("#text-filter").value = "";
-      let traversal = new Traversal(globalResults.tests);
+      const traversal = new Traversal(globalResults.tests);
       traversal.traverse(this.applyFilters(queryFilter));
       this.updateFilters(traversal);
       document.querySelector("#text-filter").value = savedSearchText;
     }
-    let composedFilter = this.applyFilters(queryFilter);
+    const composedFilter = this.applyFilters(queryFilter);
     this.generateReport(name, composedFilter);
   },
 
   // generateReport is async, returns promise.
   // promise id fullfilled when traversal completes. Display will continue async.
-  generateReport: function(name, filter, report) {
+  generateReport(name, filter, report) {
     if (this.currentRAF)
       window.cancelAnimationFrame(this.currentRAF);
     report = report || Report.getDefaultPrinter();
@@ -809,18 +810,18 @@ const Query = {
     name = name || this.lastReport.name;
 
     // Store last report to redisplay.
-    this.lastReport = {name: name, filter: filter};
+    this.lastReport = {name, filter};
     this.createReportPromise();
 
     document.querySelector("#report").innerHTML = "";
     document.querySelector("#report_title").innerHTML = name;
     document.querySelector("#progress").style.width = "1%";
-    let traversal = new Traversal(globalResults.tests);
-    let chunkSize = 1000;
+    const traversal = new Traversal(globalResults.tests);
+    const chunkSize = 1000;
     let index = 0;
-    let callback = _ => {
+    const callback = _ => {
       this.currentRAF = null;
-      let html = traversal.html.slice(index, index + chunkSize);
+      const html = traversal.html.slice(index, index + chunkSize);
       report.render(html);
       index += chunkSize;
       document.querySelector("#progress").style.width = Math.min((index / traversal.html.length * 100), 100) + "%";
@@ -834,15 +835,15 @@ const Query = {
       this.currentRAF = window.requestAnimationFrame(callback);
     }, 0);
     return this.currentPromise;
-  }
+  },
 }; // Query
 
 // Test filters for queries.
 const Filters = {
-  containsPass: function (map) {
+  containsPass(map) {
     return map.has("PASS") || map.has("SLOW");
   },
-  containsNoPass: function(map) {
+  containsNoPass(map) {
     return map.has("FAIL")
         || map.has("NEEDSMANUALREBASELINE")
         || map.has("WONTFIX")
@@ -889,12 +890,12 @@ const Filters = {
   wontfix: test => test.expected == "WONTFIX",
   all: _ => true,
   flaky: test => test.actualMap.size > 1,
-  flagged: test => test.flagged
+  flagged: test => test.flagged,
 }; // Filters
 
 // Event handling, initialization.
 const GUI = {
-  initPage: function(results) {
+  initPage(results) {
     results.tests = GUI.convertToMap(results.tests);
     globalResults = results;
     if (window.localStorage.getItem("reportFormat")) {
@@ -908,27 +909,27 @@ const GUI = {
     document.querySelector("#button_unexpected_fail").click();
   },
 
-  convertToMap: function(o) {
+  convertToMap(o) {
     if ("actual" in o)
       return o;
     else {
-      let map = new Map();
-      var keys = Object.keys(o).sort((a, b) => {
-        let a_isTest = "actual" in o[a];
-        let b_isTest = "actual" in o[b];
+      const map = new Map();
+      const keys = Object.keys(o).sort((a, b) => {
+        const a_isTest = "actual" in o[a];
+        const b_isTest = "actual" in o[b];
         if (a_isTest == b_isTest)
           return a < b ? -1 : +(a > b);
         return a_isTest ? -1 : 1;
       });
-      for (let p of keys)
+      for (const p of keys)
         map.set(p, GUI.convertToMap(o[p]));
       return map;
     }
   },
 
-  optimizeResults: function(fullResults) {
+  optimizeResults(fullResults) {
     // Optimizes fullResults for querying.
-    let t = new Traversal(fullResults.tests);
+    const t = new Traversal(fullResults.tests);
     // To all tests add:
     // - test.expectId, a unique id
     // - test.expectPath, full path to test
@@ -944,12 +945,12 @@ const GUI = {
         globalTestMap.set(test.expectId, test);
         test.expectPath = path;
         test.actualMap = new Map();
-        for (let result of test.actual.split(" ")) {
+        for (const result of test.actual.split(" ")) {
           test.actualFinal = result;  // last result count as definite.
           test.actualMap.set(result, true);
         }
         test.expectedMap = new Map();
-        for (let result of test.expected.split(" ")) {
+        for (const result of test.expected.split(" ")) {
           test.expectedMap.set(result, true);
         }
         if (test.actualMap.has("CRASH") && !test["crash_site"]) {
@@ -959,8 +960,8 @@ const GUI = {
     );
   },
 
-  nextExpectation: function(expectation) {
-    let nextSiblingWithKeyedParentSkip = function(el) {
+  nextExpectation(expectation) {
+    const nextSiblingWithKeyedParentSkip = function(el) {
       let sibling = el.nextElementSibling;
       if (sibling == null && el.parentNode.parentNode.id == "report") {
         let nextContainer = el.parentNode.nextElementSibling;
@@ -982,8 +983,8 @@ const GUI = {
     }
   },
 
-  previousExpectation: function(expectation) {
-    let previousSiblingWithKeyedParentSkip = function(el) {
+  previousExpectation(expectation) {
+    const previousSiblingWithKeyedParentSkip = function(el) {
       let sibling = el.previousElementSibling;
       if (sibling == null && el.parentNode.parentNode.id == "report") {
         let previousContainer = el.parentNode.previousElementSibling;
@@ -1005,10 +1006,10 @@ const GUI = {
     }
   },
 
-  showNextExpectation: function(backward) {
+  showNextExpectation(backward) {
     let nextExpectation;
-    let activeExpectation = GUI.activeExpectation();
-    let openExpectation = GUI.openExpectation();
+    const activeExpectation = GUI.activeExpectation();
+    const openExpectation = GUI.openExpectation();
     if (openExpectation)
       GUI.hideResults(openExpectation);
     if (openExpectation && openExpectation == activeExpectation) {
@@ -1028,24 +1029,24 @@ const GUI = {
     }
   },
 
-  openExpectation: function() {
-    let openDetails = document.querySelector(".details.open");
+  openExpectation() {
+    const openDetails = document.querySelector(".details.open");
     return openDetails && GUI.getExpectation(openDetails);
   },
 
-  activeExpectation: function() {
+  activeExpectation() {
     return GUI.getExpectation(document.activeElement) || GUI.openExpectation();
   },
 
-  initEvents: function() {
+  initEvents() {
     document.querySelector("#report").addEventListener("mousedown",
-      (ev) => { if (GUI.isFlag(ev.target)) ev.preventDefault() }
+      (ev) => { if (GUI.isFlag(ev.target)) ev.preventDefault(); }
     );
-    document.querySelector("#report").addEventListener("click", function(ev) {
-      let expectation = GUI.getExpectation(ev.target);
+    document.querySelector("#report").addEventListener("click", (ev) => {
+      const expectation = GUI.getExpectation(ev.target);
       if (ev.target.nodeName == "A" || ev.target.nodeName == "INPUT" ||
           GUI.closest(ev.target, "result-frame")) {
-        ; // Clicks in anchor, input or result-frame should perform default action
+         ; // Clicks in anchor, input or result-frame should perform default action
       } else if (GUI.isFlag(ev.target)) {
         GUI.toggleFlag(ev.target, ev);
       } else if (expectation) {
@@ -1058,12 +1059,12 @@ const GUI = {
       {
         if (ev.target.nodeName == "INPUT")
           return;
-        switch(ev.key) {
+        switch (ev.key) {
           case "Escape": {
               // Close/hide divs.
-              for (let el of Array.from(document.querySelectorAll(".close-on-esc")))
+              for (const el of Array.from(document.querySelectorAll(".close-on-esc")))
                 el.remove();
-              for (let el of Array.from(document.querySelectorAll(".hide-on-esc")))
+              for (const el of Array.from(document.querySelectorAll(".hide-on-esc")))
                 el.classList.add("hidden");
               if (document.activeElement && document.activeElement.classList.contains("expect"))
                 GUI.hideResults(document.activeElement);
@@ -1076,22 +1077,22 @@ const GUI = {
             break;
           case "j":
           case "J": {
-            let current = GUI.activeExpectation();
-            let nextExpectation = current ? GUI.nextExpectation(current) : document.querySelector(".expect");
+            const current = GUI.activeExpectation();
+            const nextExpectation = current ? GUI.nextExpectation(current) : document.querySelector(".expect");
             if (nextExpectation)
               nextExpectation.focus();
             }
             break;
           case "k":
           case "K": {
-            let current = GUI.activeExpectation();
-            let nextExpectation = current ? GUI.previousExpectation(current) : document.querySelector(".expect");
+            const current = GUI.activeExpectation();
+            const nextExpectation = current ? GUI.previousExpectation(current) : document.querySelector(".expect");
             if (nextExpectation)
               nextExpectation.focus();
             }
             break;
           case "Enter":
-            let expectation = GUI.getExpectation(ev.target);
+            const expectation = GUI.getExpectation(ev.target);
             if (expectation)
               GUI.toggleResults(expectation, ev);
             break;
@@ -1104,7 +1105,7 @@ const GUI = {
             break;
           case "f":
           case "F": {
-              let expectation = GUI.getExpectation(ev.target);
+              const expectation = GUI.getExpectation(ev.target);
               if (expectation)
                 GUI.toggleFlag(expectation.querySelector(".flag"), ev);
             }
@@ -1112,44 +1113,44 @@ const GUI = {
         }
       }
     });
-    for (let checkbox of Array.from(document.querySelectorAll("#filters input[type=checkbox]"))) {
+    for (const checkbox of Array.from(document.querySelectorAll("#filters input[type=checkbox]"))) {
       checkbox.addEventListener("change", ev => Query.filterChanged(ev));
     }
   },
 
-  selectText: function(el) {
-    let range = document.createRange();
+  selectText(el) {
+    const range = document.createRange();
     range.setStart(el, 0);
     range.setEnd(el, el.childNodes.length);
-    let selection = document.getSelection();
+    const selection = document.getSelection();
     selection.removeAllRanges();
     selection.addRange(range);
   },
 
-  printSummary: function (fullResults) {
+  printSummary(fullResults) {
     if (fullResults.builder_name)
       document.querySelector("#builder_name").innerText = fullResults.builder_name;
     document.querySelector("#summary_passed").innerText = fullResults.num_passes;
     document.querySelector("#summary_regressions").innerText = fullResults.num_regressions;
-    let failures = fullResults["num_failures_by_type"];
-    var totalFailures = 0;
+    const failures = fullResults["num_failures_by_type"];
+    const totalFailures = 0;
 
     let resultsText = "";
-    for (let p in failures) {
+    for (const p in failures) {
       if (failures[p])
         resultsText += p.toLowerCase() + ": " + failures[p] + " ";
     }
     document.querySelector("#summary_details").innerText = resultsText;
 
     // Initialize query counts.
-    let counts = {
+    const counts = {
       "count_unexpected_pass": 0,
       "count_unexpected_fail": 0,
       "count_testexpectations": 0,
       "count_flaky": 0,
       "count_all": 0,
     };
-    var t = new Traversal(fullResults.tests);
+    const t = new Traversal(fullResults.tests);
     t.traverse( test => {
       counts.count_all++;
       if (Filters.unexpectedPass(test))
@@ -1161,13 +1162,13 @@ const GUI = {
       if (Filters.flaky(test))
         counts.count_flaky++;
     });
-    for (let p in counts)
+    for (const p in counts)
       document.querySelector("#" + p).innerText = counts[p];
 
     document.querySelector("#summary_total").innerText = counts.count_all;
   },
 
-  getExpectation: function(el) {
+  getExpectation(el) {
     let result = GUI.closest(el, "expect");
     if (result)
       return result;
@@ -1175,17 +1176,17 @@ const GUI = {
     return result ? result.previousElementSibling : null;
   },
 
-  isFlag: function(el) {
+  isFlag(el) {
     return el.classList.contains("flag");
   },
 
-  toggleVisibility: function(id) {
+  toggleVisibility(id) {
     document.querySelector("#" + id).classList.toggle("hidden");
   },
 
-  toggleFlag: function(el, ev) {
-    let expectation = GUI.getExpectation(el);
-    let test = Report.getTestById(expectation.getAttribute("data-id"));
+  toggleFlag(el, ev) {
+    const expectation = GUI.getExpectation(el);
+    const test = Report.getTestById(expectation.getAttribute("data-id"));
     if (!test)
       throw "could not find test by id";
     el.classList.toggle("flagged");
@@ -1194,9 +1195,9 @@ const GUI = {
     else
       test.flagged = false;
     if (ev.metaKey) { // apply to all
-      for (let expectation of Array.from(document.querySelectorAll(".expect"))) {
-        let newTest = Report.getTestById(expectation.getAttribute("data-id"));
-        let toggleEl = expectation.querySelector(".flag");
+      for (const expectation of Array.from(document.querySelectorAll(".expect"))) {
+        const newTest = Report.getTestById(expectation.getAttribute("data-id"));
+        const toggleEl = expectation.querySelector(".flag");
         if (test.flagged) {
           toggleEl.classList.add("flagged");
           newTest.flagged = true;
@@ -1208,47 +1209,46 @@ const GUI = {
     }
   },
 
-  toggleResults: function(expectation, event) {
-    let applyToAll = event && event.metaKey;
-    let closeOthers = !applyToAll && event && !event.shiftKey;
-    let details = expectation.querySelector(".details");
-    let isOpen = details.classList.contains("open");
+  toggleResults(expectation, event) {
+    const applyToAll = event && event.metaKey;
+    const closeOthers = !applyToAll && event && !event.shiftKey;
+    const details = expectation.querySelector(".details");
+    const isOpen = details.classList.contains("open");
     if (applyToAll) {
-      let allExpectations = Array.from(document.querySelectorAll(".expect"));
+      const allExpectations = Array.from(document.querySelectorAll(".expect"));
       if (allExpectations.length > 100) {
         console.error("Too many details to be shown at once");
       } else {
-        for (let e of allExpectations)
+        for (const e of allExpectations)
           if (e != expectation)
             isOpen ? GUI.hideResults(e) : GUI.showResults(e, true);
       }
     }
     if (closeOthers) {
-      for (let el of Array.from(document.querySelectorAll(".details.open")))
+      for (const el of Array.from(document.querySelectorAll(".details.open")))
         GUI.hideResults(el.parentNode);
     }
     if (isOpen) {
       GUI.hideResults(expectation);
       expectation.focus();
-    }
-    else {
+    } else {
       GUI.showResults(expectation);
     }
   },
 
-  getResultViewer: function(toolbar) {
-    let output = GUI.closest(toolbar, "result-frame").querySelector(".result-output");
+  getResultViewer(toolbar) {
+    const output = GUI.closest(toolbar, "result-frame").querySelector(".result-output");
     if (output && output.children.length > 0)
       return output.children[0];
   },
 
-  setResultViewer: function(toolbar, viewer) {
-    let output = GUI.closest(toolbar, "result-frame").querySelector(".result-output");
+  setResultViewer(toolbar, viewer) {
+    const output = GUI.closest(toolbar, "result-frame").querySelector(".result-output");
     output.innerHTML = "";
     output.appendChild(viewer);
   },
 
-  closest: function (el, className) {
+  closest(el, className) {
     while (el && el.classList) {
       if (el.classList.contains(className))
         return el;
@@ -1257,19 +1257,19 @@ const GUI = {
     }
   },
 
-  showResults: function(expectation, doNotScroll) {
-    let details = expectation.querySelector(".details");
+  showResults(expectation, doNotScroll) {
+    const details = expectation.querySelector(".details");
     if (details.classList.contains("open"))
       return;
     details.classList.add("open");
-    let testId = parseInt(expectation.getAttribute("data-id"));
-    let test = Report.getTestById(testId);
+    const testId = parseInt(expectation.getAttribute("data-id"));
+    const test = Report.getTestById(testId);
     if (!test)
       console.error("could not find test by id");
-    let results = Report.getResultsDiv(test);
+    const results = Report.getResultsDiv(test);
     results.classList.add("results");
     expectation.parentNode.insertBefore(results, expectation.nextSibling);
-    for (let toolbar of Array.from(results.querySelectorAll(".tx-toolbar"))) {
+    for (const toolbar of Array.from(results.querySelectorAll(".tx-toolbar"))) {
       if (toolbar.showDefault) {
         toolbar.showDefault();
         break;
@@ -1281,20 +1281,20 @@ const GUI = {
     // Scroll result into view, leaving space for image zoom, and
     // test title on top.
     let zoomHeight = window.innerWidth / 3 + 10;
-    let resultHeight = Math.min(window.innerHeight - 80, 630) + 34;
-    let overflow = zoomHeight + resultHeight + expectation.offsetHeight - window.innerHeight;
+    const resultHeight = Math.min(window.innerHeight - 80, 630) + 34;
+    const overflow = zoomHeight + resultHeight + expectation.offsetHeight - window.innerHeight;
     if (overflow > 0)
       zoomHeight = Math.max(0, zoomHeight - overflow);
     window.scrollTo(0, expectation.offsetTop - zoomHeight);
   },
 
-  hideResults: function(expectation) {
-    let details = expectation.querySelector(".details");
+  hideResults(expectation) {
+    const details = expectation.querySelector(".details");
     if (!details.classList.contains("open"))
       return;
     expectation.querySelector(".details").classList.remove("open");
     expectation.nextSibling.remove();
-  }
+  },
 }; // GUI
 
 </script>
@@ -1312,7 +1312,7 @@ class TXToolbar {
   importStyle() {
     if (document.querySelector("#TXToolbarCSS"))
       return;
-    let style = document.createElement("style");
+    const style = document.createElement("style");
     style.setAttribute("type", "text/css");
     style.setAttribute("id", "TXToolbarCSS");
     style.innerText =
@@ -1329,7 +1329,7 @@ class TXToolbar {
   }
 
   getViewer() {
-    let viewer = GUI.getResultViewer(this.toolbar);
+    const viewer = GUI.getResultViewer(this.toolbar);
     return (viewer && viewer.owner == this) ? viewer : null;
   }
 
@@ -1343,7 +1343,7 @@ class TXToolbar {
       toggle = true;
       extendSelection = this.defaultExtendSelection(target);
     }
-    for (let anchor of Array.from(this.toolbar.querySelectorAll("a"))) {
+    for (const anchor of Array.from(this.toolbar.querySelectorAll("a"))) {
       if (anchor == target) {
         if (toggle) {
           if (anchor.hasAttribute("data-selected"))
@@ -1369,12 +1369,12 @@ class ImageResultsToolbar extends TXToolbar {
 
   createDom(test) {
     this.importStyle();
-    let pathParser = new PathParser(test.expectPath);
+    const pathParser = new PathParser(test.expectPath);
     this.toolbar = document.createElement("li");
     this.toolbar.showDefault = _ => this.viewOptionsChangeHandler({target: this.toolbar.querySelector(".view-options")});
     this.toolbar.classList.add("image-toolbar");
     this.toolbar.classList.add("tx-toolbar");
-    let missing = test.actual == "MISSING";
+    const missing = test.actual == "MISSING";
     let html = `
       image:
       <a class="actual" href="${pathParser.resultLink("-actual.png")}" title="Actual result">actual</a>`;
@@ -1399,12 +1399,12 @@ class ImageResultsToolbar extends TXToolbar {
         if (this.animationIntervalId) {
           // Suspend animation to show the clicked view for one second.
           this.animationPaused = true;
-          window.setTimeout(_ => { this.animationPaused = false }, 1000);
+          window.setTimeout(_ => { this.animationPaused = false; }, 1000);
         }
       }
     });
 
-    let viewOptions = this.toolbar.querySelector(".view-options");
+    const viewOptions = this.toolbar.querySelector(".view-options");
     viewOptions.addEventListener("change", this.boundViewOptionsChangeHandler);
     if (window.localStorage.getItem("ImageToolbarView"))
       viewOptions.value = window.localStorage.getItem("ImageToolbarView");
@@ -1414,14 +1414,14 @@ class ImageResultsToolbar extends TXToolbar {
   }
 
   viewOptionsChangeHandler(ev) {
-    let viewOptions = ev.target;
+    const viewOptions = ev.target;
     try {
       window.localStorage.setItem("ImageToolbarView", viewOptions.value);
-    } catch(ex) {}
+    } catch (ex) {}
 
-    switch(viewOptions.value) {
+    switch (viewOptions.value) {
     case "animated": {
-      let selectedAnchors = Array.from(this.toolbar.querySelectorAll("a[data-selected]"));
+      const selectedAnchors = Array.from(this.toolbar.querySelectorAll("a[data-selected]"));
       if (selectedAnchors.length == 0)
         this.selectAnchor(this.toolbar.querySelector("a"));
       this.setAnimation(true);
@@ -1430,7 +1430,7 @@ class ImageResultsToolbar extends TXToolbar {
     case "single": {
       this.setAnimation(false);
       // Make sure only one is selected.
-      let selectedAnchors = Array.from(this.toolbar.querySelectorAll("a[data-selected]"));
+      const selectedAnchors = Array.from(this.toolbar.querySelectorAll("a[data-selected]"));
       if (selectedAnchors.length == 0)
         this.selectAnchor(this.toolbar.querySelector("a"));
       else
@@ -1439,7 +1439,7 @@ class ImageResultsToolbar extends TXToolbar {
       break;
     case "multiple": {
       this.setAnimation(false);
-      for (let anchor of Array.from(this.toolbar.querySelectorAll("a")))
+      for (const anchor of Array.from(this.toolbar.querySelectorAll("a")))
         this.selectAnchor(anchor, true);
       }
       break;
@@ -1454,14 +1454,14 @@ class ImageResultsToolbar extends TXToolbar {
 
   updateViewer(element) {
     // Find currently selected anchor.
-    let selectedAnchors = Array.from(this.toolbar.querySelectorAll("a[data-selected]"));
+    const selectedAnchors = Array.from(this.toolbar.querySelectorAll("a[data-selected]"));
     if (selectedAnchors.length == 0) {
       selectedAnchors.push(this.toolbar.querySelector("a"));
       selectedAnchors[0].setAttribute("data-selected", "");
     }
     let viewer = this.getViewer();
     if (!viewer) {
-      let imgInfo = Array.from(this.toolbar.querySelectorAll("a")).map(
+      const imgInfo = Array.from(this.toolbar.querySelectorAll("a")).map(
         anchor => { return {src: anchor.href, title: anchor.title}; });
       viewer = (new ImageResultsViewer()).createDom(imgInfo, this);
       this.setAnimation(this.toolbar.querySelector(".view-options").value == "animated");
@@ -1483,7 +1483,7 @@ class ImageResultsToolbar extends TXToolbar {
           if (this.animationPaused)
             return;
           // Find next anchor.
-          let allAnchors = Array.from(this.toolbar.querySelectorAll("a"));
+          const allAnchors = Array.from(this.toolbar.querySelectorAll("a"));
           let nextAnchor = allAnchors[0];
           for (let i = 0; i < allAnchors.length; i++) {
             if (allAnchors[i].hasAttribute("data-selected")) {
@@ -1513,7 +1513,7 @@ class ImageResultsViewer {
   importStyle() {
     if (document.querySelector("#ImageViewerCSS"))
       return;
-    let style = document.createElement("style");
+    const style = document.createElement("style");
     style.setAttribute("type", "text/css");
     style.setAttribute("id", "ImageViewerCSS");
     style.innerText =
@@ -1584,8 +1584,8 @@ class ImageResultsViewer {
     this.viewer.addEventListener("click", (ev) => {
       this.toggleZoom({x: ev.offsetX, y: ev.offsetY}, ev.target);
     });
-    for (let info of imgInfo) {
-      let imgTile = document.createElement("div");
+    for (const info of imgInfo) {
+      const imgTile = document.createElement("div");
       imgTile.classList.add("image-viewer-tile");
       imgTile.classList.add("hidden");
       imgTile.innerHTML = `<img src="${info.src}" title="${info.title}">`;
@@ -1593,10 +1593,10 @@ class ImageResultsViewer {
       imgTile.addEventListener("wheel", this.boundWheelHandler);
       this.viewer.appendChild(imgTile);
       if (info.title == "Difference") {
-        let diffImage = new Image();
-        diffImage.addEventListener("load", function(ev) {
+        const diffImage = new Image();
+        diffImage.addEventListener("load", (ev) => {
           this.computeDiffRect(ev.target);
-        }.bind(this), false);
+        }, false);
         diffImage.src = info.src;
       }
     }
@@ -1605,26 +1605,25 @@ class ImageResultsViewer {
 
   // public API
   showImages(sources) {
-    let tiles = Array.from(this.viewer.querySelectorAll(".image-viewer-tile"));
+    const tiles = Array.from(this.viewer.querySelectorAll(".image-viewer-tile"));
     // Newly shown tiles should have the same scroll position as existing tiles.
     let scrollPosition;
-    for (let tile of tiles) {
+    for (const tile of tiles) {
       if (!tile.classList.contains("hidden")) {
         scrollPosition = {top: tile.scrollTop, left: tile.scrollLeft};
         break;
       }
     }
-    for (let tile of tiles) {
-      let tileImage = tile.querySelector("img");
-      let visible = sources.includes(tileImage.src);
+    for (const tile of tiles) {
+      const tileImage = tile.querySelector("img");
+      const visible = sources.includes(tileImage.src);
       if (visible) {
         tile.classList.remove("hidden");
         if (scrollPosition) {
           tile.scrollTop = scrollPosition.top;
           tile.scrollLeft = scrollPosition.left;
         }
-      }
-      else
+      } else
         tile.classList.add("hidden");
     }
   }
@@ -1632,16 +1631,16 @@ class ImageResultsViewer {
   findVisibleImage(preferredImage) {
     if (preferredImage && !preferredImage.parentNode.classList.contains("hidden"))
       return preferredImage;
-    for (let image of Array.from(this.viewer.querySelectorAll("img")))
+    for (const image of Array.from(this.viewer.querySelectorAll("img")))
       if (!image.parentNode.classList.contains("hidden") && image)
         return image;
   }
 
   tileScrollHandler(ev) {
-    let sourceTile = ev.target;
+    const sourceTile = ev.target;
     if (sourceTile.classList.contains("hidden"))
       return;
-    for (let tile of Array.from(this.viewer.querySelectorAll(".image-viewer-tile"))) {
+    for (const tile of Array.from(this.viewer.querySelectorAll(".image-viewer-tile"))) {
       if (tile != sourceTile) {
         tile.scrollTop = sourceTile.scrollTop;
         tile.scrollLeft = sourceTile.scrollLeft;
@@ -1653,9 +1652,9 @@ class ImageResultsViewer {
     // Prevent page back/forward gestures when scrolling inside tiles.
     if (Math.abs(ev.deltaY) > Math.abs(ev.deltaX))
       return;
-    let target = ev.currentTarget;
-    let blockScrollRight = (target.scrollLeft + target.clientWidth) == target.scrollWidth;
-    let blockScrollLeft = target.scrollLeft == 0;
+    const target = ev.currentTarget;
+    const blockScrollRight = (target.scrollLeft + target.clientWidth) == target.scrollWidth;
+    const blockScrollLeft = target.scrollLeft == 0;
     if (blockScrollRight && ev.deltaX > 0) {
       ev.preventDefault();
     }
@@ -1665,17 +1664,17 @@ class ImageResultsViewer {
   }
 
   eventMoveHandler(ev) {
-    let imageRect = this.findVisibleImage(this.zoomTarget).getBoundingClientRect();
-    let zoom = this.viewer.querySelector(".image-viewer-zoom");
+    const imageRect = this.findVisibleImage(this.zoomTarget).getBoundingClientRect();
+    const zoom = this.viewer.querySelector(".image-viewer-zoom");
     if (zoom)
       zoom.showLocation({
-      x: ev.pageX - (imageRect.left +  window.scrollX),
-      y: ev.pageY - (imageRect.top + window.scrollY)
+      x: ev.pageX - (imageRect.left + window.scrollX),
+      y: ev.pageY - (imageRect.top + window.scrollY),
     });
   }
 
   toggleZoom(location, zoomTarget) {
-    let zoom = this.viewer.querySelector(".image-viewer-zoom");
+    const zoom = this.viewer.querySelector(".image-viewer-zoom");
     if (zoom) {
       zoom.remove();
       delete this.zoomTarget;
@@ -1683,7 +1682,7 @@ class ImageResultsViewer {
       this.viewer.removeEventListener("touchmove", this.boundEventMoveHandler);
     } else {
       this.zoomTarget = zoomTarget;
-      let zoomElement = (new ImageViewerZoom()).createDom(this.viewer, this.viewer.querySelectorAll("img"));
+      const zoomElement = (new ImageViewerZoom()).createDom(this.viewer, this.viewer.querySelectorAll("img"));
       this.viewer.addEventListener("mousemove", this.boundEventMoveHandler);
       this.viewer.addEventListener("touchmove", this.boundEventMoveHandler);
       zoomElement.showLocation(location);
@@ -1691,20 +1690,20 @@ class ImageResultsViewer {
   }
 
   computeDiffRect(image) {
-    let canvas = document.createElement("canvas");
+    const canvas = document.createElement("canvas");
     canvas.width = image.naturalWidth;
     canvas.height = image.naturalHeight;
-    let ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d");
     ctx.drawImage(image, 0, 0);
     let top = image.naturalHeight;
     let bottom = 0;
     let left = image.naturalWidth;
     let right = 0;
     try {
-      let imageData = ctx.getImageData(0, 0, image.naturalWidth, image.naturalHeight);
+      const imageData = ctx.getImageData(0, 0, image.naturalWidth, image.naturalHeight);
       for (let x = 0; x < imageData.width; x++)
         for (let y = 0; y < imageData.height; y++) {
-          let offset  = y * imageData.width * 4 + x * 4;
+          const offset = y * imageData.width * 4 + x * 4;
           if (imageData.data[offset] == 255 && imageData.data[offset+1] == 0 && imageData.data[offset+2] == 0) {
             if (x < left) left = x;
             if (x > right) right = x;
@@ -1713,8 +1712,8 @@ class ImageResultsViewer {
           }
         }
       if (bottom != 0 && right != 0)
-        this.animateDiffRect({top: top, left: left, width: Math.max(0, right - left), height: Math.max(0, bottom - top)}, image);
-    } catch(ex) {
+        this.animateDiffRect({top, left, width: Math.max(0, right - left), height: Math.max(0, bottom - top)}, image);
+    } catch (ex) {
       console.error("cannot show error rect on local files because of cross origin taint");
     }
   }
@@ -1726,10 +1725,10 @@ class ImageResultsViewer {
       image.addEventListener("load", _ => this.animateDiffRect(diffRect, image));
       return;
     }
-    let highlight = document.createElement("div");
+    const highlight = document.createElement("div");
     highlight.classList.add("image-viewer-highlight");
     highlight.style.top = image.offsetTop + diffRect.top + "px";
-    highlight.style.left = image.offsetLeft + diffRect.left  + "px";
+    highlight.style.left = image.offsetLeft + diffRect.left + "px";
     highlight.style.width = Math.max(5, diffRect.width) + "px";
     highlight.style.height = Math.max(5, diffRect.height) + "px";
     this.viewer.appendChild(highlight);
@@ -1749,7 +1748,7 @@ class ImageViewerZoom {
   importStyle() {
     if (document.querySelector("#ImageViewerZoomCSS"))
       return;
-    let style = document.createElement("style");
+    const style = document.createElement("style");
     style.setAttribute("type", "text/css");
     style.setAttribute("id", "ImageViewerZoomCSS");
     style.innerText = `
@@ -1809,8 +1808,8 @@ class ImageViewerZoom {
     this.zoomElement.classList.add("close-on-esc");
     container.appendChild(this.zoomElement);
     // Add canvas for each image.
-    for (let img of this.images) {
-      let tile = document.createElement("div");
+    for (const img of this.images) {
+      const tile = document.createElement("div");
       tile.classList.add("image-viewer-zoom-tile");
       tile.innerHTML = `<canvas></canvas><div class="title">${img.title} <span class="image-viewer-zoom-color"></span></div>`;
       this.zoomElement.appendChild(tile);
@@ -1819,10 +1818,10 @@ class ImageViewerZoom {
   }
 
   showLocation(location) {
-    let canvases = Array.from(this.zoomElement.querySelectorAll("canvas"));
+    const canvases = Array.from(this.zoomElement.querySelectorAll("canvas"));
     let naturalSize;
     // Find non-hidden image to determine size.
-    for (let image of this.images) {
+    for (const image of this.images) {
       if (image.complete && !image.classList.contains("hidden")) {
         naturalSize = {width: image.naturalWidth, height: image.naturalHeight};
         break;
@@ -1834,23 +1833,23 @@ class ImageViewerZoom {
     }
     for (let i = 0; i < canvases.length; i++) {
       // Set canvas to right size if window resized.
-      let canvasWidth = canvases[i].clientWidth;
-      let canvasHeight = canvases[i].clientHeight;
+      const canvasWidth = canvases[i].clientWidth;
+      const canvasHeight = canvases[i].clientHeight;
       canvases[i].width = canvasWidth;
       canvases[i].height = canvasHeight;
-      let ctx = canvases[i].getContext("2d");
+      const ctx = canvases[i].getContext("2d");
       ctx.imageSmoothingEnabled = false;
       // Copy over zoomed image.
-      let sWidth = canvasWidth / this.zoomFactor;
-      let sHeight = canvasHeight / this.zoomFactor;
-      let pad = 20;
-      let sx = Math.floor(Math.min(Math.max(-pad, location.x - sWidth / 2), naturalSize.width + pad - sWidth));
-      let sy = Math.floor(Math.min(Math.max(-pad, location.y - sHeight / 2), naturalSize.height + pad - sHeight));
+      const sWidth = canvasWidth / this.zoomFactor;
+      const sHeight = canvasHeight / this.zoomFactor;
+      const pad = 20;
+      const sx = Math.floor(Math.min(Math.max(-pad, location.x - sWidth / 2), naturalSize.width + pad - sWidth));
+      const sy = Math.floor(Math.min(Math.max(-pad, location.y - sHeight / 2), naturalSize.height + pad - sHeight));
 
       ctx.drawImage(this.images[i], sx, sy, sWidth, sHeight, 0, 0, canvasWidth, canvasHeight);
       // Draw grid.
       ctx.strokeStyle = "rgba(0,0,0,0.05)";
-      let pixelSize = canvasWidth / sWidth;
+      const pixelSize = canvasWidth / sWidth;
       ctx.beginPath();
       for (let y = 1; y < sHeight; y++) {
         ctx.moveTo(0, y * pixelSize);
@@ -1866,18 +1865,18 @@ class ImageViewerZoom {
       // Highlight middle pixel whose color is measured.
 
       try { // getImageData throws on local file system.
-        let middleX = Math.floor(sWidth / 2);
-        let middleY = Math.floor(sHeight / 2);
-        let imageData = ctx.getImageData(middleX * pixelSize + 2, middleY * pixelSize + 2, 1, 1);
-        let r = imageData.data[0];
-        let g = imageData.data[1];
-        let b = imageData.data[2];
-        let a = imageData.data[3];
-        let colorSpan = canvases[i].parentNode.querySelector(".image-viewer-zoom-color");
-        let color = `rgba(${r}, ${g}, ${b}, ${a})`;
+        const middleX = Math.floor(sWidth / 2);
+        const middleY = Math.floor(sHeight / 2);
+        const imageData = ctx.getImageData(middleX * pixelSize + 2, middleY * pixelSize + 2, 1, 1);
+        const r = imageData.data[0];
+        const g = imageData.data[1];
+        const b = imageData.data[2];
+        const a = imageData.data[3];
+        const colorSpan = canvases[i].parentNode.querySelector(".image-viewer-zoom-color");
+        const color = `rgba(${r}, ${g}, ${b}, ${a})`;
         colorSpan.innerText = `(${sx + middleX}, ${sy + middleY}) ${color}`;
         colorSpan.style.backgroundColor = color;
-        colorSpan.style.color =  ((r + g + b) > 300 ) ? "black" : "white";
+        colorSpan.style.color = ((r + g + b) > 300 ) ? "black" : "white";
         ctx.beginPath();
         ctx.moveTo(middleX * pixelSize, middleY * pixelSize);
         ctx.lineTo((middleX + 1) * pixelSize, middleY * pixelSize);
@@ -1887,7 +1886,7 @@ class ImageViewerZoom {
         ctx.strokeStyle = "rgba(0,0,0,0.2)";
         ctx.closePath();
         ctx.stroke();
-      } catch(ex) {}
+      } catch (ex) {}
     }
   }
 } // class ImageViewerZoom
@@ -1903,18 +1902,18 @@ class TextResultsToolbar extends TXToolbar {
 
   createDom(test) {
     this.importStyle();
-    let pathParser = new PathParser(test.expectPath);
+    const pathParser = new PathParser(test.expectPath);
     this.toolbar = document.createElement("li");
     this.toolbar.showDefault = (_ => {
       this.selectAnchor(
-        this.toolbar.querySelector("a.pretty")  || this.toolbar.querySelector("a.actual"));
-      let repaintOverlay = this.toolbar.querySelector("a.repaint");
+        this.toolbar.querySelector("a.pretty") || this.toolbar.querySelector("a.actual"));
+      const repaintOverlay = this.toolbar.querySelector("a.repaint");
       if (repaintOverlay)
         this.selectAnchor(repaintOverlay, true);
-    }).bind(this);
+    });
     this.toolbar.classList.add("text-results-toolbar");
     this.toolbar.classList.add("tx-toolbar");
-    let missing = test.actual == "MISSING";
+    const missing = test.actual == "MISSING";
     let html = "text:";
     if (!test.is_testharness_test && !missing)
       html += `<a class="pretty" href="${pathParser.resultLink("-pretty-diff.html")}" title="Pretty difference">pretty</a>`;
@@ -1937,14 +1936,14 @@ class TextResultsToolbar extends TXToolbar {
 
   updateViewer() {
     // Find currently selected anchor.
-    let selectedAnchors = Array.from(this.toolbar.querySelectorAll("a[data-selected]"));
+    const selectedAnchors = Array.from(this.toolbar.querySelectorAll("a[data-selected]"));
     if (selectedAnchors.length == 0) {
       selectedAnchors.push(this.toolbar.querySelector("a"));
       selectedAnchors[0].setAttribute("data-selected", "");
     }
     let viewer = this.getViewer();
     if (!viewer) {
-      let fileInfo = Array.from(this.toolbar.querySelectorAll("a")).map(
+      const fileInfo = Array.from(this.toolbar.querySelectorAll("a")).map(
         anchor => { return {src: anchor.href, title: anchor.title}; });
       viewer = (new TextFileViewer()).createDom(fileInfo, this);
       GUI.setResultViewer(this.toolbar, viewer);
@@ -1957,7 +1956,7 @@ class TextFileViewer {
   importStyle() {
     if (document.querySelector("#TextFileViewerCSS"))
       return;
-    let style = document.createElement("style");
+    const style = document.createElement("style");
     style.setAttribute("type", "text/css");
     style.setAttribute("id", "TextFileViewerCSS");
     style.innerText =
@@ -1993,8 +1992,8 @@ class TextFileViewer {
     this.viewer.showFile = this.showFile.bind(this);
 
     this.viewer.classList.add("text-file-viewer");
-    for (let info of fileInfo) {
-      let iframe = document.createElement("iframe");
+    for (const info of fileInfo) {
+      const iframe = document.createElement("iframe");
       iframe.classList.add("text-file-viewer-iframe");
       iframe.classList.add("hidden");
       iframe.src = info.src;
@@ -2005,9 +2004,9 @@ class TextFileViewer {
   }
 
   showFile(sources) {
-    let iframes = Array.from(this.viewer.querySelectorAll(".text-file-viewer-iframe"));
-    for (let iframe of iframes) {
-      let visible = sources.includes(iframe.src);
+    const iframes = Array.from(this.viewer.querySelectorAll(".text-file-viewer-iframe"));
+    for (const iframe of iframes) {
+      const visible = sources.includes(iframe.src);
       if (visible) {
         iframe.classList.remove("hidden");
       } else {
@@ -2020,7 +2019,7 @@ class TextFileViewer {
 class PlainHtmlToolbar extends TXToolbar {
   createDom(html) {
     super.importStyle();
-    let dom = document.createElement("li");
+    const dom = document.createElement("li");
     dom.classList.add("tx-toolbar");
     dom.innerHTML = html;
     return dom;
@@ -2032,7 +2031,7 @@ class SimpleLinkToolbar extends TXToolbar {
     super.importStyle();
     this.toolbar = document.createElement("li");
     // Toolbar DOM API
-    this.toolbar.showDefault = (_ => {this.selectAnchor(this.toolbar.querySelector("a"));}).bind(this);
+    this.toolbar.showDefault = (_ => { this.selectAnchor(this.toolbar.querySelector("a")); });
 
     this.toolbar.classList.add("tx-toolbar");
     this.toolbar.innerHTML = `<a href="${href}" title="${title}">${text}</a>`;
@@ -2047,15 +2046,15 @@ class SimpleLinkToolbar extends TXToolbar {
 
   updateViewer() {
     // Find currently selected anchor.
-    let selectedAnchors = Array.from(this.toolbar.querySelectorAll("a[data-selected]"));
+    const selectedAnchors = Array.from(this.toolbar.querySelectorAll("a[data-selected]"));
     if (selectedAnchors.length == 0) {
       selectedAnchors.push(this.toolbar.querySelector("a"));
       selectedAnchors[0].setAttribute("data-selected", "");
     }
     let viewer = this.getViewer();
     if (!viewer) {
-      let fileInfo = Array.from(this.toolbar.querySelectorAll("a")).map(
-        anchor => { return {src: anchor.href, title: anchor.title};});
+      const fileInfo = Array.from(this.toolbar.querySelectorAll("a")).map(
+        anchor => { return {src: anchor.href, title: anchor.title}; });
       viewer = (new TextFileViewer()).createDom(fileInfo, this);
       GUI.setResultViewer(this.toolbar, viewer);
     }
