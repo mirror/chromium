@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a58513c_32c59740",
+        "filename": "media/gpu/dxva_video_decode_accelerator_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-12-02T00:20:14Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this is correct for VP9, since I don\u0027t know how flushes are defined for VP9.\n\nFor H.264, configuration changes (SPS activations) always trigger at IDR frames, so we know that there cannot be references to frames from before the change. Thus we can always flush at configuration changes safely. You can see that the H264ConfigChangeDetector actually delays notification until an IDR is seen.\n\nI\u0027d recommend adding a VP9 expert to review the definition for VP9.",
+      "range": {
+        "startLine": 512,
+        "startChar": 8,
+        "endLine": 512,
+        "endChar": 23
+      },
+      "revId": "3f747c124030371f9de0701dfc2e688d5cd05304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
