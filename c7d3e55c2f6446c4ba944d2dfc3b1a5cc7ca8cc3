@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55c36756_44eb7f25",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_physical_fragment.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-12-02T00:44:34Z",
+      "side": 1,
+      "message": "nittiest of nits: inconsistency between is_placed_ here vs IsPlaced at the end of the line",
+      "range": {
+        "startLine": 281,
+        "startChar": 6,
+        "endLine": 281,
+        "endChar": 16
+      },
+      "revId": "c7d3e55c2f6446c4ba944d2dfc3b1a5cc7ca8cc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
