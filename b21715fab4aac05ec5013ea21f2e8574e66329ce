@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b398c7f_d210ab85",
+        "filename": "chrome/common/extensions/docs/templates/articles/hosting.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-02T01:55:55Z",
+      "side": 1,
+      "message": "this is only *mostly* true.  In particular, Linux does not (at this time) have this restriction.  I wonder if that\u0027s worth calling out, and the documentation preserved?  (Though perhaps in a separate, less prominent, article?)",
+      "revId": "b21715fab4aac05ec5013ea21f2e8574e66329ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5d2204e_4e76affe",
+        "filename": "chrome/common/extensions/docs/templates/articles/hosting.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-02T01:55:55Z",
+      "side": 1,
+      "message": "s/the/your?  Maybe?",
+      "range": {
+        "startLine": 17,
+        "startChar": 30,
+        "endLine": 17,
+        "endChar": 33
+      },
+      "revId": "b21715fab4aac05ec5013ea21f2e8574e66329ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be60092a_d4e411d1",
+        "filename": "chrome/common/extensions/docs/templates/articles/hosting.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-02T01:55:55Z",
+      "side": 1,
+      "message": "Is this \u003cp\u003e supposed to close below the \u003ca\u003e?",
+      "revId": "b21715fab4aac05ec5013ea21f2e8574e66329ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73b8eebb_95753a0a",
+        "filename": "chrome/common/extensions/docs/templates/articles/hosting.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-02T01:55:55Z",
+      "side": 1,
+      "message": "in *the* Developer Dashboard?",
+      "revId": "b21715fab4aac05ec5013ea21f2e8574e66329ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ded82474_b3c5412a",
+        "filename": "chrome/common/extensions/docs/templates/public/extensions/redirects.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-02T01:55:55Z",
+      "side": 1,
+      "message": "Gerrit thinks there\u0027s something up with this line?",
+      "range": {
+        "startLine": 16,
+        "startChar": 25,
+        "endLine": 16,
+        "endChar": 26
+      },
+      "revId": "b21715fab4aac05ec5013ea21f2e8574e66329ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
