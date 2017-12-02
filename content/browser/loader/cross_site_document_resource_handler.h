@@ -5,6 +5,7 @@
 #ifndef CONTENT_BROWSER_LOADER_CROSS_SITE_DOCUMENT_RESOURCE_HANDLER_H_
 #define CONTENT_BROWSER_LOADER_CROSS_SITE_DOCUMENT_RESOURCE_HANDLER_H_
 
+#include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "content/browser/loader/layered_resource_handler.h"
 #include "content/common/cross_site_document_classifier.h"
@@ -42,6 +43,9 @@ class CONTENT_EXPORT CrossSiteDocumentResourceHandler
       std::unique_ptr<ResourceController> controller) override;
 
  private:
+  FRIEND_TEST_ALL_PREFIXES(CrossSiteDocumentResourceHandlerTest,
+                           ResponseBlocking);
+
   // Computes whether this response contains a cross-site document that needs to
   // be blocked from the renderer process.
   bool ShouldBlockResponse();
