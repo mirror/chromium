@@ -2146,7 +2146,7 @@ StyleRecalcChange Element::RecalcOwnStyle(StyleRecalcChange change) {
   if (local_change != kNoChange)
     UpdateCallbackSelectors(old_style.get(), new_style.get());
 
-  if (LayoutObject* layout_object = this->GetLayoutObject()) {
+  if (LayoutObject* layout_object = GetLayoutObject()) {
     if (local_change != kNoChange) {
       layout_object->SetStyle(new_style.get());
     } else {

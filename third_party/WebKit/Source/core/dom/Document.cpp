@@ -1939,7 +1939,7 @@ void Document::PropagateStyleToViewport() {
   DCHECK(InStyleRecalc());
   DCHECK(documentElement());
 
-  HTMLElement* body = this->body();
+  HTMLElement* body = body();
 
   const ComputedStyle* body_style =
       body ? body->EnsureComputedStyle() : nullptr;

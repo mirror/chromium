@@ -136,7 +136,7 @@ template <typename Container, typename ContainerMemberType>
 inline size_t
 AttributeCollectionGeneric<Container, ContainerMemberType>::FindIndex(
     const QualifiedName& name) const {
-  iterator end = this->end();
+  iterator end = end();
   unsigned index = 0;
   for (iterator it = begin(); it != end; ++it, ++index) {
     if (it->GetName().Matches(name))
@@ -153,7 +153,7 @@ AttributeCollectionGeneric<Container, ContainerMemberType>::FindIndex(
 
   // Optimize for the case where the attribute exists and its name exactly
   // matches.
-  iterator end = this->end();
+  iterator end = end();
   unsigned index = 0;
   for (iterator it = begin(); it != end; ++it, ++index) {
     // FIXME: Why check the prefix? Namespaces should be all that matter.
@@ -176,7 +176,7 @@ inline typename AttributeCollectionGeneric<Container,
                                            ContainerMemberType>::iterator
 AttributeCollectionGeneric<Container, ContainerMemberType>::Find(
     const QualifiedName& name) const {
-  iterator end = this->end();
+  iterator end = end();
   for (iterator it = begin(); it != end; ++it) {
     if (it->GetName().Matches(name))
       return it;
@@ -189,7 +189,7 @@ size_t AttributeCollectionGeneric<Container, ContainerMemberType>::FindSlowCase(
     const AtomicString& name) const {
   // Continue to checking case-insensitively and/or full namespaced names if
   // necessary:
-  iterator end = this->end();
+  iterator end = end();
   unsigned index = 0;
   for (iterator it = begin(); it != end; ++it, ++index) {
     if (!it->GetName().HasPrefix()) {

@@ -81,7 +81,7 @@ void NodeRareData::FinalizeGarbageCollectedObject() {
   if (is_element_rare_data_)
     static_cast<ElementRareData*>(this)->~ElementRareData();
   else
-    this->~NodeRareData();
+    ~NodeRareData();
 }
 
 void NodeRareData::IncrementConnectedSubframeCount() {

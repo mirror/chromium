@@ -78,15 +78,15 @@ class WeakIdentifierMap final
   }
 
   void Put(T* object, IdentifierType identifier) {
-    DCHECK(object && !this->object_to_identifier_.Contains(object));
-    this->object_to_identifier_.Set(object, identifier);
-    this->identifier_to_object_.Set(identifier, object);
+    DCHECK(object && !object_to_identifier_.Contains(object));
+    object_to_identifier_.Set(object, identifier);
+    identifier_to_object_.Set(identifier, object);
   }
 
   void ObjectDestroyed(T* object) {
-    IdentifierType identifier = this->object_to_identifier_.Take(object);
+    IdentifierType identifier = object_to_identifier_.Take(object);
     if (!WTF::IsHashTraitsEmptyValue<HashTraits<IdentifierType>>(identifier))
-      this->identifier_to_object_.erase(identifier);
+      identifier_to_object_.erase(identifier);
   }
 };
 

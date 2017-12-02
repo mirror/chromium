@@ -111,9 +111,8 @@ MockScriptLoader* MockScriptLoader::SetupForStreaming(
 
 MockScriptLoader* MockScriptLoader::SetupForNonStreaming() {
   EXPECT_CALL(*this, GetPendingScriptIfScriptIsAsync())
-      .WillRepeatedly(Invoke([this]() -> PendingScript* {
-        return this->mock_pending_script_.Get();
-      }));
+      .WillRepeatedly(Invoke(
+          [this]() -> PendingScript* { return mock_pending_script_.Get(); }));
   return this;
 }
 
