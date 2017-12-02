@@ -8,6 +8,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <algorithm>
 #include <type_traits>
 
 #include "base/logging.h"
@@ -31,12 +32,6 @@ struct BufferRegion {
   // Returns |v| clipped to the inclusive range |[lo(), hi()]|.
   size_t InclusiveClamp(size_t v) const {
     return zucchini::InclusiveClamp(v, lo(), hi());
-  }
-  friend bool operator==(const BufferRegion& a, const BufferRegion& b) {
-    return a.offset == b.offset && a.size == b.size;
-  }
-  friend bool operator!=(const BufferRegion& a, const BufferRegion& b) {
-    return !(a == b);
   }
 
   // Region data use size_t to match BufferViewBase::size_type, to make it
@@ -103,6 +98,14 @@ class BufferViewBase {
     return region.FitsIn(size());
   }
 
+  // Returns whether the buffer is large enough to cover an array starting at
+  // |offset| with |num| elements, each taking |elt_size| bytes.
+  bool covers_array(size_t offset, size_t num, size_t elt_size) {
+    DCHECK_GT(elt_size, 0U);
+    // Use subtraction and division to avoid overflow.
+    return offset < size() && (size() - offset) / elt_size >= num;
+  }
+
   // Element access
 
   // Returns the raw value at specified location |pos|.
@@ -132,6 +135,12 @@ class BufferViewBase {
   }
 
   template <class U>
+  U& modify(size_type pos) {
+    CHECK_LE(pos + sizeof(U), size());
+    return *reinterpret_cast<U*>(begin() + pos);
+  }
+
+  template <class U>
   bool can_access(size_type pos) const {
     return pos < size() && size() - pos >= sizeof(U);
   }
@@ -157,6 +166,10 @@ class BufferViewBase {
     DCHECK_GE(pos, begin());
     DCHECK_LE(pos, end());
     first_ = pos;
+  }
+
+  bool equals(BufferViewBase other) const {
+    return size() == other.size() && std::equal(begin(), end(), other.begin());
   }
 
  private:

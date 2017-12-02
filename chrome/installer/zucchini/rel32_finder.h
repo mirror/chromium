@@ -7,11 +7,14 @@
 
 #include <stddef.h>
 
+#include <memory>
 #include <vector>
 
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/optional.h"
+#include "chrome/installer/zucchini/address_translator.h"
+#include "chrome/installer/zucchini/arm_utils.h"
 #include "chrome/installer/zucchini/buffer_view.h"
 #include "chrome/installer/zucchini/image_utils.h"
 
@@ -182,6 +185,81 @@ class Rel32FinderX64 : public Rel32FinderIntel {
   ConstBufferView Scan(ConstBufferView region) override;
 
   DISALLOW_COPY_AND_ASSIGN(Rel32FinderX64);
+};
+
+// ARM32 instructions.
+class Rel32FinderARM32 : public Rel32Finder {
+ public:
+  struct Result {
+    offset_t offset;
+    offset_t target_offset;
+    ARM32Rel32Parser::AddrType type;
+  };
+
+  Rel32FinderARM32(ConstBufferView image, const AddressTranslator& translator);
+  ~Rel32FinderARM32() override;
+
+  // Naively assume that an entire section would either be in ARM mode or all in
+  // THUMB2 mode.
+  void SetIsThumb2(bool is_thumb2) { is_thumb2_ = is_thumb2; }
+
+  // Returns the next available Result, or nullopt if exhausted.
+  base::Optional<Result> GetNext() {
+    return FindNext() ? base::Optional<Result>(rel32_) : base::nullopt;
+  }
+
+ private:
+  // Rel32 extraction, assuming segment is in ARM mode.
+  ConstBufferView ScanA32(ConstBufferView region);
+
+  // Rel32 extraction, assuming segment is in THUMB2 mode.
+  ConstBufferView ScanT32(ConstBufferView region);
+
+  // Rel32Finder:
+  ConstBufferView Scan(ConstBufferView region) override;
+
+  const ConstBufferView image_;
+
+  bool is_thumb2_ = false;
+
+  AddressTranslator::OffsetToRvaCache offset_to_rva_;
+
+  // Cached results.
+  Result rel32_;
+
+  DISALLOW_COPY_AND_ASSIGN(Rel32FinderARM32);
+};
+
+// AArch64 instructions.
+class Rel32FinderAArch64 : public Rel32Finder {
+ public:
+  struct Result {
+    offset_t offset;
+    offset_t target_offset;
+    AArch64Rel32Parser::AddrType type;
+  };
+
+  Rel32FinderAArch64(ConstBufferView image,
+                     const AddressTranslator& translator);
+  ~Rel32FinderAArch64() override;
+
+  // Returns the next available Result, or nullopt if exhausted.
+  base::Optional<Result> GetNext() {
+    return FindNext() ? base::Optional<Result>(rel32_) : base::nullopt;
+  }
+
+ private:
+  // Rel32Finder:
+  ConstBufferView Scan(ConstBufferView region) override;
+
+  const ConstBufferView image_;
+
+  AddressTranslator::OffsetToRvaCache offset_to_rva_;
+
+  // Cached results.
+  Result rel32_;
+
+  DISALLOW_COPY_AND_ASSIGN(Rel32FinderAArch64);
 };
 
 }  // namespace zucchini

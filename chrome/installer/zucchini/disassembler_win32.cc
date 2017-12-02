@@ -165,7 +165,7 @@ template <class Traits>
 std::unique_ptr<ReferenceWriter> DisassemblerWin32<Traits>::MakeWriteAbs32(
     MutableBufferView image) {
   return base::MakeUnique<Abs32WriterWin32>(
-      image, AbsoluteAddress(Traits::kBitness, image_base_), translator_);
+      image, AbsoluteAddress{Traits::kBitness, image_base_}, translator_);
 }
 
 template <class Traits>
@@ -310,9 +310,6 @@ bool DisassemblerWin32<Traits>::ParseAndStoreRelocBlocks() {
                                               &reloc_block_offsets_);
 }
 
-// TODO(huangs): Print warning if too few abs32 references are found.
-// Empirically, file size / # relocs is < 100, so take 200 as the
-// threshold for warning.
 template <class Traits>
 bool DisassemblerWin32<Traits>::ParseAndStoreAbs32() {
   if (has_parsed_abs32_)

@@ -10,12 +10,14 @@
 #include <memory>
 #include <ostream>
 #include <set>
-#include <string>
 
 #include "base/bind.h"
+#include "base/logging.h"
 #include "base/strings/stringprintf.h"
 #include "chrome/installer/zucchini/disassembler.h"
 #include "chrome/installer/zucchini/element_detection.h"
+#include "chrome/installer/zucchini/ensemble.h"
+#include "chrome/installer/zucchini/imposed_match_parser.h"
 #include "chrome/installer/zucchini/io_utils.h"
 
 namespace zucchini {
@@ -110,6 +112,28 @@ status::Code DetectAll(ConstBufferView image,
   out << "Detected " << total_bytes_found << "/" << size << " bytes => ";
   double percent = total_bytes_found * 100.0 / size;
   out << base::StringPrintf("%.2f", percent) << "%." << std::endl;
+
+  return status::kStatusSuccess;
+}
+
+status::Code MatchAll(ConstBufferView old_image,
+                      ConstBufferView new_image,
+                      const std::string& imposed_matches,
+                      std::ostream& out) {
+  EnsembleMatcher ensemble_matcher(&out);
+  if (!ensemble_matcher.RunMatch(old_image, new_image, imposed_matches)) {
+    out << "RunMatch() failed.";
+    return status::kStatusFatal;
+  }
+  out << "Found " << ensemble_matcher.GetMatches().size()
+      << " nontrivial matches and " << ensemble_matcher.GetNumIdentical()
+      << " identical matches." << std::endl;
+  out << "To impose the same matches by command line, use: " << std::endl;
+  out << "  -impose=";
+  PrefixSep sep(",");
+  for (const ElementMatch& match : ensemble_matcher.GetMatches())
+    out << sep << FormatElementMatch(match);
+  out << std::endl;
 
   return status::kStatusSuccess;
 }

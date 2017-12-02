@@ -8,6 +8,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <type_traits>
+
 #include "base/numerics/safe_conversions.h"
 #include "base/optional.h"
 #include "chrome/installer/zucchini/buffer_view.h"
@@ -191,6 +193,63 @@ struct ElementMatch {
   Element old_element;
   Element new_element;
 };
+
+// Extracts a single bit at |pos| from integer |v|.
+template <int pos, typename T>
+T GetBit(T v) {
+  return (v >> pos) & 1;
+}
+
+// Extracts bits in inclusive range [|lo|, |hi|] from integer |v|, and returns
+// the sign-extend result. For example, let the (MSB-first) bits in a 32-bit int
+// |v| be:
+//   xxxxxxxx xxxxxSii iiiiiiii iyyyyyyy,
+//               hi^          lo^       => lo = 7, hi = 18
+// To extract "Sii iiiiiiii i", we'd call
+//   GetSignedBits<7, 18>(v);
+// and obtain the sign-extended result:
+//   SSSSSSSS SSSSSSSS SSSSSiii iiiiiiii.
+template <int lo, int hi, typename T>
+typename std::make_signed<T>::type GetSignedBits(T v) {
+  constexpr int kNumBits = sizeof(T) * 8;
+  using SIGNED_T = typename std::make_signed<T>::type;
+  // Assumes 0 <= |lo| <= |hi| < |kNumBits|.
+  // How this works:
+  // (1) Shift-left by |kNumBits - 1 - hi| to clear "left" bits.
+  // (2) Shift-right by |kNumBits - 1 - hi + lo| to clear "right" bits. The
+  //     input is casted to a signed type to perform sign-extension.
+  return static_cast<SIGNED_T>(v << (kNumBits - 1 - hi)) >>
+         (kNumBits - 1 - hi + lo);
+}
+
+// Similar to GetSignedBits(), but returns the zero-extended result. For the
+// above example, calling
+//   GetUnsignedBits<7, 18>(v);
+// results in:
+//   00000000 00000000 0000Siii iiiiiiii.
+template <int lo, int hi, typename T>
+typename std::make_unsigned<T>::type GetUnsignedBits(T v) {
+  constexpr int kNumBits = sizeof(T) * 8;
+  using UNSIGNED_T = typename std::make_unsigned<T>::type;
+  return static_cast<UNSIGNED_T>(v << (kNumBits - 1 - hi)) >>
+         (kNumBits - 1 - hi + lo);
+}
+
+// Copies bits at |pos| in |v| to all higher bits, and return the result as the
+// same int type as |v|.
+template <int pos, typename T>
+T SignExtend(T v) {
+  constexpr int kNumBits = sizeof(T) * 8;
+  constexpr int kShift = kNumBits - 1 - pos;
+  return static_cast<typename std::make_signed<T>::type>(v << kShift) >> kShift;
+}
+
+// Determines whether |v|, if interpreted as a signed integer, is representable
+// using |digs| bits. We assume |1 <= digs <= sizeof(T)|.
+template <int digs, typename T>
+bool SignedFit(T v) {
+  return v == SignExtend<digs - 1, T>(v);
+}
 
 }  // namespace zucchini
 
