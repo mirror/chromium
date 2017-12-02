@@ -16,6 +16,24 @@
       "revId": "79261f8eadd9ce10bd5f1dcbd2480f3091d3162c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3106c6f3_47973fe0",
+        "filename": "gpu/config/gpu_driver_bug_list.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1902,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-02T00:01:04Z",
+      "side": 1,
+      "message": "Doesn\u0027t seem to be true for the NVIDIA drivers. I extracted the Win7/8 375.76 archive and it also has 21.21.13.7576 as it\u0027s version number. Even if that\u0027s not true I don\u0027t think this functionality can be enabled off Windows 10, so we\u0027re fine either way.",
+      "parentUuid": "e2168a98_ff5dfe2d",
+      "revId": "79261f8eadd9ce10bd5f1dcbd2480f3091d3162c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
