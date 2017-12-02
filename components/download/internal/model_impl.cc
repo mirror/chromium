@@ -8,6 +8,7 @@
 
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
+#include "base/trace_event/memory_usage_estimator.h"
 #include "components/download/internal/entry.h"
 #include "components/download/internal/stats.h"
 
@@ -149,6 +150,15 @@ void ModelImpl::OnRemoveFinished(DownloadClient client,
 
   DCHECK(entries_.find(guid) == entries_.end());
   client_->OnItemRemoved(success, client, guid);
+}
+
+size_t ModelImpl::EstimateMemoryUsage() const {
+  size_t memory_cost = 0;
+
+  // Use the level db category in the tracing tool to track db memory usage.
+  memory_cost += base::trace_event::EstimateMemoryUsage(entries_);
+  LOG(ERROR) << "@@@ mem cost = " << memory_cost;
+  return memory_cost;
 }
 
 }  // namespace download
