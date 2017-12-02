@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00dcc561_e25a67f1",
+        "filename": "components/arc/metrics/arc_metrics_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-02T07:30:07Z",
+      "side": 1,
+      "message": "nit: can you remove this part? mojo-generated operator\u003c\u003c() actually prints the same for you.\n\n(see out/Debug/gen/components/arc/common/metrics.mojom-shared.h)",
+      "range": {
+        "startLine": 208,
+        "startChar": 15,
+        "endLine": 208,
+        "endChar": 52
+      },
+      "revId": "dbcff5c52a0d2d552886d9d74aa6e5cda51213ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

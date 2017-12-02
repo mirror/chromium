@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "8178837e_b81bac03",
+        "filename": "components/arc/metrics/arc_metrics_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-02T07:30:07Z",
+      "side": 1,
+      "message": "Ah yes you\u0027re right. mojo generates both enum class and operator\u003c\u003c() for the class.",
+      "parentUuid": "4b56abb9_814677cc",
+      "range": {
+        "startLine": 208,
+        "startChar": 56,
+        "endLine": 208,
+        "endChar": 74
+      },
+      "revId": "ffa05a0a6316a7bddb3d46410839a81980051ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c44ee08a_4cf78612",
         "filename": "components/arc/metrics/arc_metrics_service.h",
         "patchSetId": 5
