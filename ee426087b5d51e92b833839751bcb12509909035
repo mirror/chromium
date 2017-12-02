@@ -87,6 +87,24 @@
       "revId": "ee426087b5d51e92b833839751bcb12509909035",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "124de843_3fbbdceb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/datareduction/DataReductionUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1241685
+      },
+      "writtenOn": "2017-12-02T02:11:16Z",
+      "side": 1,
+      "message": "For something like \"26022760\" it speaks \"twenty six million twenty two thousand seven hundred sixty bytes\". Its not converting it to Megabytes.\n\nI tried with Russian, swedish, hindi, etc.. it does speak \"byte\" correctly in that language, not just with that accent. How I verified is the sound of \"byte\" for KB and that of B is perfectly matching every time. Used KB as ref as we are currently not adding any span on that.\n\nMakes sense to add spans for KB etc too, but I am wondering where do I stop. It can go KB, MB, GB,TB and so on...as we need to specify the unit.",
+      "parentUuid": "45527fd3_4769c9e5",
+      "revId": "ee426087b5d51e92b833839751bcb12509909035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
