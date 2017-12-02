@@ -52,6 +52,24 @@
       "revId": "4c41f8611da5b49a1ff9f540b827469cd11b8473",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "59d595d6_d62d94d8",
+        "filename": "chrome/browser/resources/cryptotoken/signer.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-02T01:30:05Z",
+      "side": 1,
+      "message": "ddp\u003d\u003d would be vi for \"move this line below the next line and reindent\". (Obviously it\u0027s not critical here, can be cleaned up internally.)",
+      "parentUuid": "ddd6c3da_5ed90ee2",
+      "revId": "4c41f8611da5b49a1ff9f540b827469cd11b8473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
