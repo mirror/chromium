@@ -51,7 +51,7 @@ CSSImageSetValue::CSSImageSetValue(CSSParserMode parser_mode)
 CSSImageSetValue::~CSSImageSetValue() = default;
 
 void CSSImageSetValue::FillImageSet() {
-  size_t length = this->length();
+  size_t length = length();
   size_t i = 0;
   while (i < length) {
     const CSSImageValue& image_value = ToCSSImageValue(Item(i));
@@ -151,7 +151,7 @@ String CSSImageSetValue::CustomCSSText() const {
   StringBuilder result;
   result.Append("-webkit-image-set(");
 
-  size_t length = this->length();
+  size_t length = length();
   size_t i = 0;
   while (i < length) {
     if (i > 0)

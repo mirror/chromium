@@ -270,7 +270,7 @@ bool CSSComputedStyleDeclaration::IsMonospaceFont() const {
   return style->GetFontDescription().IsMonospace();
 }
 const ComputedStyle* CSSComputedStyleDeclaration::ComputeComputedStyle() const {
-  Node* styled_node = this->StyledNode();
+  Node* styled_node = StyledNode();
   DCHECK(styled_node);
   return styled_node->EnsureComputedStyle(styled_node->IsPseudoElement()
                                               ? kPseudoIdNone

@@ -151,7 +151,7 @@ StyleElement::ProcessingResult StyleElement::CreateSheet(Element& element,
   CSSStyleSheet* new_sheet = nullptr;
 
   // If type is empty or CSS, this is a CSS style sheet.
-  const AtomicString& type = this->type();
+  const AtomicString& type = type();
   if (IsCSS(element, type) && passes_content_security_policy_checks) {
     scoped_refptr<MediaQuerySet> media_queries = MediaQuerySet::Create(media());
 
