@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c9d785c4_c2bc0d88",
+        "filename": "cc/resources/resource_provider.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-02T00:58:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "133fcdf0_f15ab8a1",
+      "revId": "6344e8bb8b49335fe8271f860b14a28b1a0f785d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8d998ff_ff1d8613",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 27
