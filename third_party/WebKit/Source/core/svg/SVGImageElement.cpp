@@ -130,7 +130,7 @@ void SVGImageElement::SvgAttributeChanged(const QualifiedName& attr_name) {
       UpdateRelativeLengthsInformation();
     }
 
-    LayoutObject* object = this->GetLayoutObject();
+    LayoutObject* object = GetLayoutObject();
     if (!object)
       return;
 

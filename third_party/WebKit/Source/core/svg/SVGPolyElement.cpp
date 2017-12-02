@@ -63,7 +63,7 @@ void SVGPolyElement::SvgAttributeChanged(const QualifiedName& attr_name) {
   if (attr_name == SVGNames::pointsAttr) {
     SVGElement::InvalidationGuard invalidation_guard(this);
 
-    LayoutSVGShape* layout_object = ToLayoutSVGShape(this->GetLayoutObject());
+    LayoutSVGShape* layout_object = ToLayoutSVGShape(GetLayoutObject());
     if (!layout_object)
       return;
 

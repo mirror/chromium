@@ -131,7 +131,7 @@ void SVGTextPathElement::BuildPendingResource() {
     AddReferenceTo(ToSVGElement(target));
   }
 
-  if (LayoutObject* layout_object = this->GetLayoutObject())
+  if (LayoutObject* layout_object = GetLayoutObject())
     MarkForLayoutAndParentResourceInvalidation(layout_object);
 }
 

@@ -98,7 +98,7 @@ void SVGFEDropShadowElement::SvgAttributeChanged(
 
 FilterEffect* SVGFEDropShadowElement::Build(SVGFilterBuilder* filter_builder,
                                             Filter* filter) {
-  LayoutObject* layout_object = this->GetLayoutObject();
+  LayoutObject* layout_object = GetLayoutObject();
   if (!layout_object)
     return nullptr;
 

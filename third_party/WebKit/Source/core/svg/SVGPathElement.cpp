@@ -47,7 +47,7 @@ Path SVGPathElement::AttributePath() const {
 }
 
 const StylePath* SVGPathElement::GetStylePath() const {
-  if (LayoutObject* layout_object = this->GetLayoutObject()) {
+  if (LayoutObject* layout_object = GetLayoutObject()) {
     const StylePath* style_path = layout_object->StyleRef().SvgStyle().D();
     if (style_path)
       return style_path;
@@ -82,7 +82,7 @@ void SVGPathElement::SvgAttributeChanged(const QualifiedName& attr_name) {
     SetNeedsStyleRecalc(kLocalStyleChange,
                         StyleChangeReasonForTracing::FromAttribute(attr_name));
 
-    if (LayoutSVGShape* layout_path = ToLayoutSVGShape(this->GetLayoutObject()))
+    if (LayoutSVGShape* layout_path = ToLayoutSVGShape(GetLayoutObject()))
       layout_path->SetNeedsShapeUpdate();
 
     InvalidateMPathDependencies();
@@ -108,7 +108,7 @@ void SVGPathElement::CollectStyleForPresentationAttribute(
     MutableCSSPropertyValueSet* style) {
   SVGAnimatedPropertyBase* property = PropertyFromAttribute(name);
   if (property == path_) {
-    SVGAnimatedPath* path = this->GetPath();
+    SVGAnimatedPath* path = GetPath();
     // If this is a <use> instance, return the referenced path to maximize
     // geometry sharing.
     if (const SVGElement* element = CorrespondingElement())

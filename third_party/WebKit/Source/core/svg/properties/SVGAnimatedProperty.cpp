@@ -48,8 +48,8 @@ SVGAnimatedPropertyBase::SVGAnimatedPropertyBase(
       attribute_name_(attribute_name) {
   DCHECK(context_element_);
   DCHECK(attribute_name_ != QualifiedName::Null());
-  DCHECK_EQ(this->GetType(), type);
-  DCHECK_EQ(this->CssPropertyId(), css_property_id);
+  DCHECK_EQ(GetType(), type);
+  DCHECK_EQ(CssPropertyId(), css_property_id);
 }
 
 SVGAnimatedPropertyBase::~SVGAnimatedPropertyBase() {}

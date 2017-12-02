@@ -36,7 +36,7 @@ DEFINE_NODE_FACTORY(SVGFEFloodElement)
 bool SVGFEFloodElement::SetFilterEffectAttribute(
     FilterEffect* effect,
     const QualifiedName& attr_name) {
-  LayoutObject* layout_object = this->GetLayoutObject();
+  LayoutObject* layout_object = GetLayoutObject();
   DCHECK(layout_object);
   const ComputedStyle& style = layout_object->StyleRef();
   FEFlood* flood = static_cast<FEFlood*>(effect);
@@ -51,7 +51,7 @@ bool SVGFEFloodElement::SetFilterEffectAttribute(
 }
 
 FilterEffect* SVGFEFloodElement::Build(SVGFilterBuilder*, Filter* filter) {
-  LayoutObject* layout_object = this->GetLayoutObject();
+  LayoutObject* layout_object = GetLayoutObject();
   if (!layout_object)
     return nullptr;
 

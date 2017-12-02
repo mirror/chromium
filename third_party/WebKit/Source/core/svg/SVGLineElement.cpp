@@ -73,7 +73,7 @@ void SVGLineElement::SvgAttributeChanged(const QualifiedName& attr_name) {
       attr_name == SVGNames::x2Attr || attr_name == SVGNames::y2Attr) {
     UpdateRelativeLengthsInformation();
 
-    LayoutSVGShape* layout_object = ToLayoutSVGShape(this->GetLayoutObject());
+    LayoutSVGShape* layout_object = ToLayoutSVGShape(GetLayoutObject());
     if (!layout_object)
       return;
 
