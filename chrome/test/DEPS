@@ -23,7 +23,6 @@ include_rules = [
   # within content/ and a test within chrome/.
   "+content/public",
 
-  "+gin/public",
   "+media/base",
   "+mojo/edk/embedder",
   "+sandbox/win/tests",
