@@ -40,6 +40,7 @@
 #include "content/renderer/loader/sync_load_context.h"
 #include "content/renderer/loader/sync_load_response.h"
 #include "content/renderer/loader/url_loader_client_impl.h"
+#include "content/renderer/render_frame_impl.h"
 #include "net/base/net_errors.h"
 #include "net/base/request_priority.h"
 #include "net/http/http_response_headers.h"
@@ -181,6 +182,15 @@ void ResourceDispatcher::OnReceivedResponse(
         response_head);
     DCHECK(new_peer);
     request_info->peer = std::move(new_peer);
+  }
+
+  RenderFrameImpl* render_frame =
+      RenderFrameImpl::FromRoutingID(request_info->render_frame_id);
+  if (render_frame) {
+    render_frame->GetFrameHost()->SubresourceResponseStarted(
+        request_info->response_url, request_info->response_referrer,
+        request_info->response_method, request_info->resource_type,
+        response_head.socket_address.host(), response_head.cert_status);
   }
 
   ResourceResponseInfo renderer_response_info;
