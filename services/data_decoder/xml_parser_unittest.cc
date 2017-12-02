@@ -10,6 +10,8 @@
 #include "services/data_decoder/xml_parser.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+#include "base/files/file_util.h"
+
 namespace data_decoder {
 
 namespace {
@@ -127,6 +129,11 @@ TEST_F(XmlParserTest, ParseTextElement) {
                     "children": [{"type": "text", "text": "bonjour"}]} )");
 }
 
+TEST_F(XmlParserTest, ParseBadTextElement) {
+  TestParseXml("<hello>\xed\xa0\x80\xed\xbf\xbf></hello>", "");
+  TestParseXml("<hello>\xc0\x8a</hello>", "");
+}
+
 TEST_F(XmlParserTest, ParseCDataElement) {
   TestParseXml(R"(<hello><![CDATA[This is CData.
     With weird chars [ ] { } <> ; : ' " and
@@ -146,6 +153,9 @@ TEST_F(XmlParserTest, ParseBadCDataElement) {
   TestParseXml("<hello><![CDATA[This is CData.] ]></hello>", "");
   // Space before closing >.
   TestParseXml("<hello><![CDATA[This is CData.]] ></hello>", "");
+  // Invalid UTF-8.
+  TestParseXml("<a><![CDATA[\xc0\x8a]]><d>", "");
+  TestParseXml("<hello><![CDATA[\xed\xa0\x80\xed\xbf\xbf]]></hello>", "");
 }
 
 TEST_F(XmlParserTest, ParseTextWithEntities) {
