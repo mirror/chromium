@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1e3a4fef_ef633b75",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 1268,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-02T01:43:02Z",
+      "side": 1,
+      "message": "Good idea. Done.",
+      "parentUuid": "fcf3332b_871041cf",
+      "revId": "e096eb25199b069764364fab4f84f5021c50dee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "730401d1_3381d747",
         "filename": "third_party/WebKit/Source/platform/graphics/CompositorFilterOperations.cpp",
         "patchSetId": 14
@@ -30,6 +48,30 @@
       "writtenOn": "2017-12-02T01:02:51Z",
       "side": 1,
       "message": "Hmm, I\u0027m not sure we need this DCHECK. Although we currently find it useless for SPv175, but the results is correct nevertheless, right?",
+      "range": {
+        "startLine": 118,
+        "startChar": 56,
+        "endLine": 118,
+        "endChar": 57
+      },
+      "revId": "e096eb25199b069764364fab4f84f5021c50dee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "949aa06f_06e67fbd",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorFilterOperations.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-02T01:43:02Z",
+      "side": 1,
+      "message": "I\u0027m using this DCHECK to remind removal of dead code. It won\u0027t compile when REF::SPV175Enabled is removed, so it will be more effective than a TODO.",
+      "parentUuid": "730401d1_3381d747",
       "range": {
         "startLine": 118,
         "startChar": 56,
