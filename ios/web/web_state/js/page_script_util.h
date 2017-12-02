@@ -20,6 +20,8 @@ NSString* GetPageScript(NSString* script_file_name);
 // the web view as early as possible.
 NSString* GetEarlyPageScript(BrowserState* browser_state);
 
+NSString* GetFramePageScript(BrowserState* browser_state);
+
 }  // namespace web
 
 #endif  // IOS_WEB_WEB_STATE_JS_PAGE_SCRIPT_UTIL_H_

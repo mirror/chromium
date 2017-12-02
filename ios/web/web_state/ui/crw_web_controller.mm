@@ -2313,10 +2313,10 @@ registerLoadRequestForURL:(const GURL&)requestURL
 }
 
 - (BOOL)respondToWKScriptMessage:(WKScriptMessage*)scriptMessage {
-  if (!scriptMessage.frameInfo.mainFrame) {
+  /*if (!scriptMessage.frameInfo.mainFrame) {
     // Messages from iframes are not currently supported.
     return NO;
-  }
+  }*/
 
   std::unique_ptr<base::Value> messageAsValue =
       web::ValueResultFromWKResult(scriptMessage.body);
