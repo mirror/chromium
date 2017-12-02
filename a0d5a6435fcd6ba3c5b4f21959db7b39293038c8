@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "475e2719_11baa8d5",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-12-02T00:49:31Z",
+      "side": 0,
+      "message": "Not exactly sure why this was here, but we should just treat this as another UIView wether it has been set or not from the coordinator. Though maybe I\u0027m missing something.",
+      "range": {
+        "startLine": 215,
+        "startChar": 11,
+        "endLine": 215,
+        "endChar": 26
+      },
+      "revId": "a0d5a6435fcd6ba3c5b4f21959db7b39293038c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
