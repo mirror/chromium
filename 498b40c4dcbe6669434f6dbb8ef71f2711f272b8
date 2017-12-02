@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "96e146ec_ec056fe5",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/elements/styles-2/add-import-rule.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-12-02T03:12:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3aaa8e1f_4cda7b7b",
+      "revId": "498b40c4dcbe6669434f6dbb8ef71f2711f272b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb23f4fe_1e920839",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/elements/styles-3/style-rule-from-imported-stylesheet.js",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-02T02:09:47Z",
       "side": 1,
       "message": "This might have a condition, depending on how selectNodeAndWaitforStyles works.\n\nLook at: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/devtools/front_end/test_runner/TestRunner.js?q\u003dTestRunner.js\u0026sq\u003dpackage:chromium\u0026l\u003d568\n\nYou can test for flakiness: `dtrun test --repeat-each\u003d20`",
+      "revId": "498b40c4dcbe6669434f6dbb8ef71f2711f272b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ad31fa7_ff5ae0b9",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/elements/styles-3/style-rule-from-imported-stylesheet.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-12-02T03:12:32Z",
+      "side": 1,
+      "message": "Good call.  After reading some docs, HTML imports try to load immediately, but also offer an \u0027onload\u0027 event.  I\u0027ll introduce a new TestRunner helper.",
+      "parentUuid": "cb23f4fe_1e920839",
       "revId": "498b40c4dcbe6669434f6dbb8ef71f2711f272b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "498b40c4dcbe6669434f6dbb8ef71f2711f272b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f54e542b_31f6b15f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/elements/styles-4/styles-new-API.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-12-02T03:12:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0dfb8959_9560f535",
+      "revId": "498b40c4dcbe6669434f6dbb8ef71f2711f272b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
