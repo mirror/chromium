@@ -71,6 +71,52 @@
     },
     {
       "key": {
+        "uuid": "ff87003f_49ced8bd",
+        "filename": "chrome/browser/extensions/api/input_ime/input_ime_api_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1003013
+      },
+      "writtenOn": "2017-12-02T03:13:48Z",
+      "side": 1,
+      "message": "Please use event_router-\u003eGetActiveEngine(extension-\u003eid()).",
+      "range": {
+        "startLine": 641,
+        "startChar": 34,
+        "endLine": 641,
+        "endChar": 49
+      },
+      "revId": "725beb6f2f0ffc4571234f518e6a17e5c5794f0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd388dd1_8221e09b",
+        "filename": "chrome/browser/extensions/api/input_ime/input_ime_api_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1003013
+      },
+      "writtenOn": "2017-12-02T03:13:48Z",
+      "side": 1,
+      "message": "Can you please add comment about why the InputImeAPI::OnListenerAdded() cannot do its work and have to call Enable() here again?",
+      "range": {
+        "startLine": 644,
+        "startChar": 8,
+        "endLine": 644,
+        "endChar": 55
+      },
+      "revId": "725beb6f2f0ffc4571234f518e6a17e5c5794f0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0ed2d7b_f5dd84e9",
         "filename": "chrome/browser/extensions/api/input_ime/input_ime_api_chromeos.cc",
         "patchSetId": 1
