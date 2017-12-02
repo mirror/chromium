@@ -52,6 +52,13 @@ base::test::ScopedTaskEnvironment* NetTestSuite::GetScopedTaskEnvironment() {
   return g_current_net_test_suite->scoped_task_environment_.get();
 }
 
+void NetTestSuite::SetScopedTaskEnvironment(
+    std::unique_ptr<base::test::ScopedTaskEnvironment>
+        scoped_task_environment) {
+  g_current_net_test_suite->scoped_task_environment_ =
+      std::move(scoped_task_environment);
+}
+
 void NetTestSuite::InitializeTestThread() {
   network_change_notifier_.reset(net::NetworkChangeNotifier::CreateMock());
 
