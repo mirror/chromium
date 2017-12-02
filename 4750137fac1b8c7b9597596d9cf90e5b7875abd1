@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "ec190f2d_ac630747",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-12-02T00:02:34Z",
+      "side": 1,
+      "message": "Naive: s/border/outline/?",
+      "parentUuid": "7e648e96_10aa8be9",
+      "revId": "4750137fac1b8c7b9597596d9cf90e5b7875abd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35287504_97ec4f22",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
         "patchSetId": 8
