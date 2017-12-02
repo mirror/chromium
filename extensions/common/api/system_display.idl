@@ -351,6 +351,20 @@ namespace system.display {
     // display.
     // |id|: The display's unique identifier.
     static void clearTouchCalibration(DOMString id);
+
+    // Turns on/off the mirror mode for all displays. This automatically picks
+    // the source display and mirrors from it to other destination displays.
+    // NOTE: This is only available to Chrome OS Kiosk apps and Web UI.
+    static void setMirrorMode(boolean mirrored);
+
+    // Configures the mixed mode. In this mode, the displays specified by
+    // |mirroringIds| will be in mirror mode. The display with the highest
+    // resolution will be automatically picked up as the source display. The
+    // connected displays not specified by |mirroringIds| will be in extended
+    // mode. All displays will be in extended mode if |mirroringIds|’s size
+    // smaller than 2 or it involves duplicate or invalid ids. NOTE: This is
+    // only available to Chrome OS Kiosk apps and Web UI.
+    static void setMixedMode(DOMString[] mirroringIds);
   };
 
   interface Events {
