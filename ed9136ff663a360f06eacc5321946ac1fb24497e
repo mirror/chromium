@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdfa845e_c28f7ea6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/BaseMediaRouteProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1144414
+      },
+      "writtenOn": "2017-12-02T01:19:42Z",
+      "side": 1,
+      "message": "Can you just make this an anonymous runnable or lambda? i.e.:\n```\nmHandler.post(new Runnable() {\n  @Override\n  public void run() {\n  }\n});\n```\n\nor,\n\n```\npublic void onSinksReceivedInternal(...) {\n}\n\n...\nmHandler.post(() -\u003e {\n    onSinksReceivedInternal(...);\n  });\n```",
+      "range": {
+        "startLine": 38,
+        "startChar": 27,
+        "endLine": 38,
+        "endChar": 50
+      },
+      "revId": "ed9136ff663a360f06eacc5321946ac1fb24497e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
