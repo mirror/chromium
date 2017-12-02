@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a340bba8_fcf5709a",
+        "filename": "media/mojo/services/mojo_video_decoder_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-12-02T01:24:43Z",
+      "side": 1,
+      "message": "There is such a comment in mojo_video_decoder_service.h (and most of one on Destroy()); I worry that if I have too many copies of that information that it will get out of sync more easily.\n\nDo you have a preferred singular place to document the lifetime?",
+      "parentUuid": "b2ec08c5_83d1ca86",
+      "revId": "4b260cf5905febc10a87a8c2043185ee74e69b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69c65d44_ffb476d5",
         "filename": "media/mojo/services/mojo_video_decoder_service.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "4b260cf5905febc10a87a8c2043185ee74e69b39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "715c7130_69198641",
+        "filename": "media/mojo/services/mojo_video_decoder_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-12-02T01:24:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69c65d44_ffb476d5",
+      "revId": "4b260cf5905febc10a87a8c2043185ee74e69b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8a2ce346_a542f736",
+        "filename": "media/mojo/services/mojo_video_decoder_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-12-02T01:24:43Z",
+      "side": 1,
+      "message": "This would indicate a bug or something malicious, but since the overall behavior of MojoVideoDecoderService also doesn\u0027t yet implement a policy for what to do in such cases, I didn\u0027t try to come up with one for this CL.",
+      "parentUuid": "ad16ac69_d0ee3b51",
+      "revId": "4b260cf5905febc10a87a8c2043185ee74e69b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7d7b8bb_0ffb7176",
         "filename": "media/mojo/services/mojo_video_decoder_service.cc",
         "patchSetId": 9
@@ -64,6 +118,24 @@
       "writtenOn": "2017-12-02T00:11:18Z",
       "side": 1,
       "message": "Is it possible for there to be a connection error, but for subsequent video frames to still be registered here? Would that cause this to be leaked?",
+      "revId": "4b260cf5905febc10a87a8c2043185ee74e69b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd46b9eb_8a84adda",
+        "filename": "media/mojo/services/mojo_video_decoder_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-12-02T01:24:43Z",
+      "side": 1,
+      "message": "Yes, it\u0027s possible up until Destroy() is called. Register() checks |connected_| to ensure that |video_frames_| remains empty in such a case.\n\nI added a comment in Register() to make that more clear.",
+      "parentUuid": "e7d7b8bb_0ffb7176",
       "revId": "4b260cf5905febc10a87a8c2043185ee74e69b39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
