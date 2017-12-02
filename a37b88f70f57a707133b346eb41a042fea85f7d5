@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4a88d73_8326a4a5",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-02T08:16:51Z",
+      "side": 1,
+      "message": "nit: why the line break after \"Timed closing.\"?",
+      "revId": "a37b88f70f57a707133b346eb41a042fea85f7d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
