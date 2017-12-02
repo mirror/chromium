@@ -16,6 +16,24 @@
       "revId": "3fbae32374bbb9a6712a38a8bf8e0e33eb1c443c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d84dcab_96bf60e1",
+        "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-12-02T16:36:05Z",
+      "side": 1,
+      "message": "Hmm...Going through a bunch of web ui subclasses...it looks like the canonical approach is to just call AllowJavascript() at the beginning of any callback:\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/ui/webui/download_internals/download_internals_ui_message_handler.cc?l\u003d81\n\nAnd then DisallowJavascript() is almost never used - pretty much just for tests and a couple of exceptional cases. So I\"ll get rid of the call to DisallowJavascript().",
+      "parentUuid": "8b753c86_a9fd7081",
+      "revId": "3fbae32374bbb9a6712a38a8bf8e0e33eb1c443c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
