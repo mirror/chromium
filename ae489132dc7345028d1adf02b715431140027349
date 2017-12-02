@@ -514,6 +514,24 @@
       "revId": "ae489132dc7345028d1adf02b715431140027349",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3bcb392_1d69b4d6",
+        "filename": "components/arc/metrics/arc_metrics_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1125664
+      },
+      "writtenOn": "2017-12-02T01:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bd24dbc_0dc46013",
+      "revId": "ae489132dc7345028d1adf02b715431140027349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
