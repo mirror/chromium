@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67ee7074_3e7a74d8",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/tracing/timeline-misc/timeline-grouped-invalidations.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-12-02T02:01:50Z",
+      "side": 1,
+      "message": "minor: You can include \u003c!DOCTYPE HTML\u003e here and it shouldn\u0027t churn the case-sensitive class names in the expectation.",
+      "revId": "09a84a11d2f8f9b626e5d739000d01b452b177eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4e6a365_09557164",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/tracing/timeline-misc/timeline-grouped-invalidations.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-12-02T02:01:50Z",
+      "side": 1,
+      "message": "I noticed a lot of timeline tests include a check for window.testRunner - was this done for debugging purposes? IIUC, window.testRunner will always be truthy in our tests.",
+      "revId": "09a84a11d2f8f9b626e5d739000d01b452b177eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccdb2ee6_27f3f4f3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/performance_test_runner/TimelineTestRunner.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-12-02T02:01:50Z",
+      "side": 1,
+      "message": "Might be simpler to just do a startTimelinePromise version like we do in TestRunner.js.\n\nIt\u0027s a bit confusing to have both a callback parameter and return a promise b/c every callee should just use one or the other.\n\nIf you want to keep it like this, I\u0027d leave a comment:\nTODO(alph): migrate all callsites to use promise API and remove callback parameter.\n\nwdyt?",
+      "revId": "09a84a11d2f8f9b626e5d739000d01b452b177eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
