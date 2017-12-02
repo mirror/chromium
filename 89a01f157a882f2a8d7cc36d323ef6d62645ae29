@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84b6ffd0_bc3f800b",
+        "filename": "ui/webui/resources/cr_components/cr_components_resources.grdp",
+        "patchSetId": 9
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-02T01:13:37Z",
+      "side": 1,
+      "message": "FYI, missed adding gzip on this file, which caused https://bugs.chromium.org/p/chromium/issues/detail?id\u003d791195. Sending a CL shortly.",
+      "revId": "89a01f157a882f2a8d7cc36d323ef6d62645ae29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
