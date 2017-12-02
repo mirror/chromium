@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7c75eadb_fab6c453",
+        "filename": "chromeos/components/tether/ble_advertisement_device_queue.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-02T00:21:46Z",
+      "side": 1,
+      "message": "I switched to SetPrioritizedDeviceIds(). I think this looks fine - a PrioritizedDeviceId contains multiple fields, including device ID.",
+      "parentUuid": "c829e0bd_72546335",
+      "range": {
+        "startLine": 57,
+        "startChar": 18,
+        "endLine": 57,
+        "endChar": 31
+      },
+      "revId": "32167ab63daa7d1838719a7f702877da1d2296c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0abe584_7d915411",
         "filename": "chromeos/components/tether/ble_advertisement_device_queue.h",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "00099605_2a2a04e2",
+        "filename": "chromeos/components/tether/ble_advertisement_device_queue.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-02T00:21:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0abe584_7d915411",
+      "range": {
+        "startLine": 44,
+        "startChar": 7,
+        "endLine": 44,
+        "endChar": 17
+      },
+      "revId": "32167ab63daa7d1838719a7f702877da1d2296c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de3a24d2_5ce6d7f9",
         "filename": "chromeos/components/tether/ble_connection_manager.cc",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-01T21:53:49Z",
       "side": 1,
       "message": "Why wasn\u0027t this an issue before this change?",
+      "range": {
+        "startLine": 263,
+        "startChar": 22,
+        "endLine": 263,
+        "endChar": 36
+      },
+      "revId": "32167ab63daa7d1838719a7f702877da1d2296c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d30178a3_157e8b82",
+        "filename": "chromeos/components/tether/ble_connection_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-02T00:21:46Z",
+      "side": 1,
+      "message": "Previously, we\u0027d need to fetch the RemoteDevice before calling UnregisterRemoteDevice(), so it would not be the same instance. Now, we no longer do that.",
+      "parentUuid": "de3a24d2_5ce6d7f9",
       "range": {
         "startLine": 263,
         "startChar": 22,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "af185b75_139ffecc",
+        "filename": "chromeos/components/tether/fake_ble_connection_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-02T00:21:46Z",
+      "side": 1,
+      "message": "There\u0027s no succinct name to use, so it would be something like:\n\ndevice_id_to_status_and_registered_message_types_map_\n\nI tried this rename, but it made the lines in the .cc really long and actually makes readability a lot worse. I\u0027m going to leave this as-is.",
+      "parentUuid": "6bd8340b_18dc391a",
+      "range": {
+        "startLine": 63,
+        "startChar": 57,
+        "endLine": 63,
+        "endChar": 71
+      },
+      "revId": "32167ab63daa7d1838719a7f702877da1d2296c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24065d60_071eeeca",
         "filename": "chromeos/components/tether/message_transfer_operation.cc",
         "patchSetId": 4
@@ -105,6 +201,30 @@
       "writtenOn": "2017-12-01T21:53:49Z",
       "side": 1,
       "message": "Change this map to use device id as well?",
+      "range": {
+        "startLine": 124,
+        "startChar": 28,
+        "endLine": 124,
+        "endChar": 62
+      },
+      "revId": "32167ab63daa7d1838719a7f702877da1d2296c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c16a9dc8_1805f56b",
+        "filename": "chromeos/components/tether/message_transfer_operation.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-02T00:21:46Z",
+      "side": 1,
+      "message": "It\u0027s not necessary to change this map since it is not possible to update a RemoteDevice included in the map. MessageTransferOperation is initialized with a list of devices which is never added to or updated.",
+      "parentUuid": "24065d60_071eeeca",
       "range": {
         "startLine": 124,
         "startChar": 28,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "388b557a_a2abf12f",
+        "filename": "chromeos/components/tether/message_transfer_operation.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-02T00:21:46Z",
+      "side": 1,
+      "message": "Same answer.",
+      "parentUuid": "241c83bd_102df7e7",
+      "range": {
+        "startLine": 170,
+        "startChar": 13,
+        "endLine": 170,
+        "endChar": 25
+      },
+      "revId": "32167ab63daa7d1838719a7f702877da1d2296c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85cfe9c7_2a295805",
         "filename": "components/cryptauth/foreground_eid_generator.cc",
         "patchSetId": 4
@@ -151,6 +295,30 @@
       "writtenOn": "2017-12-01T21:53:49Z",
       "side": 1,
       "message": "any reason not to have a return type of const string\u0026?",
+      "range": {
+        "startLine": 116,
+        "startChar": 5,
+        "endLine": 116,
+        "endChar": 11
+      },
+      "revId": "32167ab63daa7d1838719a7f702877da1d2296c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9b9da87_61c768de",
+        "filename": "components/cryptauth/foreground_eid_generator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-02T00:21:46Z",
+      "side": 1,
+      "message": "In the case where we can\u0027t find anything, we can\u0027t return a \"null\" reference if we go with that approach. We need a value to return for error cases here.",
+      "parentUuid": "85cfe9c7_2a295805",
       "range": {
         "startLine": 116,
         "startChar": 5,
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "f6104822_43ef6f55",
+        "filename": "components/cryptauth/remote_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-02T00:21:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61847481_8ecdcc99",
+      "range": {
+        "startLine": 107,
+        "startChar": 9,
+        "endLine": 107,
+        "endChar": 18
+      },
+      "revId": "32167ab63daa7d1838719a7f702877da1d2296c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccafbca1_7c75af24",
         "filename": "components/cryptauth/remote_device.cc",
         "patchSetId": 4
@@ -206,6 +398,30 @@
       "revId": "32167ab63daa7d1838719a7f702877da1d2296c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f6c1820_12c81ba3",
+        "filename": "components/cryptauth/remote_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-02T00:21:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccafbca1_7c75af24",
+      "range": {
+        "startLine": 112,
+        "startChar": 14,
+        "endLine": 112,
+        "endChar": 23
+      },
+      "revId": "32167ab63daa7d1838719a7f702877da1d2296c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
