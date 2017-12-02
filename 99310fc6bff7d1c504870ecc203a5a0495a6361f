@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a4a034f_c2072d7d",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-12-02T00:44:15Z",
+      "side": 1,
+      "message": "ShouldOfferToSave? Just to match all the other *ShouldNotOfferToSave*\n\nDitto for other places.",
+      "range": {
+        "startLine": 439,
+        "startChar": 16,
+        "endLine": 439,
+        "endChar": 36
+      },
+      "revId": "99310fc6bff7d1c504870ecc203a5a0495a6361f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85cea657_8dd9c6b6",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest_base.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-12-02T00:44:15Z",
+      "side": 1,
+      "message": "Can this be called when we are on credit_card_upload_form_address_and_cc.html? If not, maybe leave a commont?",
+      "range": {
+        "startLine": 341,
+        "startChar": 4,
+        "endLine": 341,
+        "endChar": 40
+      },
+      "revId": "99310fc6bff7d1c504870ecc203a5a0495a6361f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21e58fb7_30d30d65",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest_base.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-12-02T00:44:15Z",
+      "side": 1,
+      "message": "What does this do? Is it required?",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 1
+      },
+      "revId": "99310fc6bff7d1c504870ecc203a5a0495a6361f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d3bbddc_dff3879a",
+        "filename": "components/test/data/autofill/credit_card_upload_form_address_and_cc.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-12-02T00:44:15Z",
+      "side": 1,
+      "message": "I think fill_invalid_cvc is a better name:\n1. match other id names: verb+noun?\n2. clear about what does the button do.",
+      "range": {
+        "startLine": 33,
+        "startChar": 16,
+        "endLine": 33,
+        "endChar": 27
+      },
+      "revId": "99310fc6bff7d1c504870ecc203a5a0495a6361f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
