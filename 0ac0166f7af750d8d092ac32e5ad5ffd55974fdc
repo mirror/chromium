@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f53323e_e04d6771",
+        "filename": "media/mojo/services/gpu_mojo_media_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-02T00:21:35Z",
+      "side": 1,
+      "message": "Should this be inside #if BUILDFLAG(ENABLE_LIBRARY_CDMS)?",
+      "range": {
+        "startLine": 15,
+        "startChar": 9,
+        "endLine": 15,
+        "endChar": 32
+      },
+      "revId": "0ac0166f7af750d8d092ac32e5ad5ffd55974fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd1769e9_7b5ad04c",
+        "filename": "media/mojo/services/interface_factory_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-02T00:21:35Z",
+      "side": 1,
+      "message": "Code that needs this is in #if BUILDFLAG(ENABLE_LIBRARY_CDMS) in the header, separate from BUILDFLAG(ENABLE_MOJO_CDM).",
+      "range": {
+        "startLine": 34,
+        "startChar": 9,
+        "endLine": 34,
+        "endChar": 55
+      },
+      "revId": "0ac0166f7af750d8d092ac32e5ad5ffd55974fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "527865cc_4a4e2129",
+        "filename": "media/mojo/services/mojo_cdm_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-02T00:21:35Z",
+      "side": 1,
+      "message": "Doesn\u0027t this check that |client_| is set?",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 81,
+        "endChar": 18
+      },
+      "revId": "0ac0166f7af750d8d092ac32e5ad5ffd55974fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9f3eaa6_768e61d2",
+        "filename": "media/mojo/services/mojo_cdm_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-02T00:21:35Z",
+      "side": 1,
+      "message": "Should there be a check (here and below) to ensure that Initialize() was called? Otherwise OnProcessed() will be called and blow up.",
+      "revId": "0ac0166f7af750d8d092ac32e5ad5ffd55974fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a330df7f_eb69b961",
+        "filename": "media/mojo/services/mojo_cdm_proxy_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-02T00:21:35Z",
+      "side": 1,
+      "message": "Also need \u003cvector\u003e",
+      "revId": "0ac0166f7af750d8d092ac32e5ad5ffd55974fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f5c4b45_ee9394ab",
+        "filename": "media/mojo/services/mojo_cdm_proxy_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-02T00:21:35Z",
+      "side": 1,
+      "message": "Is this right? This is part of the mojom::CdmProxy interface.",
+      "range": {
+        "startLine": 35,
+        "startChar": 15,
+        "endLine": 35,
+        "endChar": 22
+      },
+      "revId": "0ac0166f7af750d8d092ac32e5ad5ffd55974fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99edda9c_e5dfbb57",
+        "filename": "media/mojo/services/mojo_cdm_proxy_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-02T00:21:35Z",
+      "side": 1,
+      "message": "I don\u0027t see weak ptrs being used in the code.",
+      "range": {
+        "startLine": 54,
+        "startChar": 37,
+        "endLine": 54,
+        "endChar": 47
+      },
+      "revId": "0ac0166f7af750d8d092ac32e5ad5ffd55974fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
