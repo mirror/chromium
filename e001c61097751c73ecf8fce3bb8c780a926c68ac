@@ -22,6 +22,30 @@
       "revId": "e001c61097751c73ecf8fce3bb8c780a926c68ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71968e11_f728c797",
+        "filename": "gpu/config/gpu_info_collector_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-12-02T00:46:58Z",
+      "side": 0,
+      "message": "Once we move info collection from browser process to GPU process, CollectBasicGraphicsInfo should be NOTREACHED on Android and never be called. On Android only context info needs to be collected.",
+      "parentUuid": "a252fe52_d600e84a",
+      "range": {
+        "startLine": 289,
+        "startChar": 9,
+        "endLine": 289,
+        "endChar": 33
+      },
+      "revId": "e001c61097751c73ecf8fce3bb8c780a926c68ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
