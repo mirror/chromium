@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2ec08c5_83d1ca86",
+        "filename": "media/mojo/services/mojo_video_decoder_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-02T00:11:18Z",
+      "side": 1,
+      "message": "A brief comment here to describe the lifetime semantics of this class would be useful.",
+      "revId": "4b260cf5905febc10a87a8c2043185ee74e69b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69c65d44_ffb476d5",
+        "filename": "media/mojo/services/mojo_video_decoder_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-02T00:11:18Z",
+      "side": 1,
+      "message": "Nit: just pass this on line 59 as well and call the two-argument constructor of mojo::Binding",
+      "revId": "4b260cf5905febc10a87a8c2043185ee74e69b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad16ac69_d0ee3b51",
+        "filename": "media/mojo/services/mojo_video_decoder_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-02T00:11:18Z",
+      "side": 1,
+      "message": "Do we expect this to happen in practice? Or is this a bug / something malicious?",
+      "revId": "4b260cf5905febc10a87a8c2043185ee74e69b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7d7b8bb_0ffb7176",
+        "filename": "media/mojo/services/mojo_video_decoder_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-02T00:11:18Z",
+      "side": 1,
+      "message": "Is it possible for there to be a connection error, but for subsequent video frames to still be registered here? Would that cause this to be leaked?",
+      "revId": "4b260cf5905febc10a87a8c2043185ee74e69b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
