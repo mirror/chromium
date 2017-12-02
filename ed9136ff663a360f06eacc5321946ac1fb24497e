@@ -22,6 +22,76 @@
       "revId": "ed9136ff663a360f06eacc5321946ac1fb24497e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07bfa873_bbeff355",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/BaseMediaRouteProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-12-02T02:31:59Z",
+      "side": 1,
+      "message": "IIRC Chrome/Android in general prefers static inner classes for performance reasons.\n\nAlso I can\u0027t recall from https://codereview.chromium.org/1380213003/ but have a feeling that the weak reference to the manager was important.\n\nAlso I doubt Java 8 is enabled yet for Chrome, with its lambdas and functions.",
+      "parentUuid": "bdfa845e_c28f7ea6",
+      "range": {
+        "startLine": 38,
+        "startChar": 27,
+        "endLine": 38,
+        "endChar": 50
+      },
+      "revId": "ed9136ff663a360f06eacc5321946ac1fb24497e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "166dc1e5_73ff4c61",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/BaseMediaRouteProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-12-02T02:31:59Z",
+      "side": 1,
+      "message": "nit: Sounds like supportsSource() from MediaRouteProvider could be implemented using this method right here?\n\nConsider regrouping the members of the new classes a little for easier reading, e.g. this could be next to the protected ctor?\n\nAlso, document protected methods as well as what class/interface the overridden methods are from (e.g. MediaRouteProvider below for the rest of the methods).",
+      "range": {
+        "startLine": 76,
+        "startChar": 35,
+        "endLine": 76,
+        "endChar": 50
+      },
+      "revId": "ed9136ff663a360f06eacc5321946ac1fb24497e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6915ff96_b8d16085",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/BaseMediaRouteProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-12-02T02:31:59Z",
+      "side": 1,
+      "message": "nit: Should these empty methods be abstract?\n\njoinRoute and sendStringMessage are not needed for RemotePlayback so could have default implementation.",
+      "range": {
+        "startLine": 147,
+        "startChar": 65,
+        "endLine": 147,
+        "endChar": 67
+      },
+      "revId": "ed9136ff663a360f06eacc5321946ac1fb24497e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
