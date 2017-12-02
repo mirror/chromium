@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "50752ad4_1c260a73",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1223919
+      },
+      "writtenOn": "2017-12-02T05:53:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74a5e6b7_6123a25f",
+      "revId": "5ad999c25c376f2d5e2c2badae93bb898bf8a6b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e632e63_2e7e9c29",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "5ad999c25c376f2d5e2c2badae93bb898bf8a6b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81c97de5_fe749743",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1223919
+      },
+      "writtenOn": "2017-12-02T05:53:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e632e63_2e7e9c29",
+      "revId": "5ad999c25c376f2d5e2c2badae93bb898bf8a6b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "88262dde_637edf18",
+        "filename": "content/browser/service_worker/service_worker_context_request_handler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1223919
+      },
+      "writtenOn": "2017-12-02T05:53:55Z",
+      "side": 1,
+      "message": "Thanks for letting me know! I\u0027m fixing this particular line. Will change other lines in future patches.",
+      "parentUuid": "c0d61703_4c286dc2",
+      "revId": "5ad999c25c376f2d5e2c2badae93bb898bf8a6b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "032fd9fc_979279d5",
         "filename": "content/browser/service_worker/service_worker_context_unittest.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "5ad999c25c376f2d5e2c2badae93bb898bf8a6b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1b831a4_27bf285a",
+        "filename": "content/browser/service_worker/service_worker_context_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1223919
+      },
+      "writtenOn": "2017-12-02T05:53:55Z",
+      "side": 1,
+      "message": "Actually we need the origin variables later in this function to check Unregister works. I\u0027ll split it into multiple blocks and make it a little bit easier to read.",
+      "parentUuid": "032fd9fc_979279d5",
+      "revId": "5ad999c25c376f2d5e2c2badae93bb898bf8a6b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "7231ae1a_d7a369ef",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1223919
+      },
+      "writtenOn": "2017-12-02T05:53:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b231064_cb1eb1c7",
+      "revId": "5ad999c25c376f2d5e2c2badae93bb898bf8a6b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f242c9a_e271d6bc",
         "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "5ad999c25c376f2d5e2c2badae93bb898bf8a6b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fea230de_069b8748",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1223919
+      },
+      "writtenOn": "2017-12-02T05:53:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f242c9a_e271d6bc",
+      "revId": "5ad999c25c376f2d5e2c2badae93bb898bf8a6b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "7f9effe2_4584f92d",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1223919
+      },
+      "writtenOn": "2017-12-02T05:53:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83620cab_a04d8042",
+      "revId": "5ad999c25c376f2d5e2c2badae93bb898bf8a6b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb56ee96_5dc665e2",
         "filename": "content/public/browser/service_worker_context.h",
         "patchSetId": 4
@@ -135,6 +261,24 @@
       "revId": "5ad999c25c376f2d5e2c2badae93bb898bf8a6b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7968a704_7c61469b",
+        "filename": "content/public/browser/service_worker_context.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1223919
+      },
+      "writtenOn": "2017-12-02T05:53:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb56ee96_5dc665e2",
+      "revId": "5ad999c25c376f2d5e2c2badae93bb898bf8a6b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -173,6 +317,42 @@
     },
     {
       "key": {
+        "uuid": "8f0cf6ca_da6c1295",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerProvider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1223919
+      },
+      "writtenOn": "2017-12-02T05:53:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7544a864_63678def",
+      "revId": "5ad999c25c376f2d5e2c2badae93bb898bf8a6b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "094f879a_17506f10",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerProvider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1223919
+      },
+      "writtenOn": "2017-12-02T05:53:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e82c2d78_daff8029",
+      "revId": "5ad999c25c376f2d5e2c2badae93bb898bf8a6b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6de5c126_9a08486f",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
         "patchSetId": 4
@@ -187,6 +367,24 @@
       "revId": "5ad999c25c376f2d5e2c2badae93bb898bf8a6b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94a027a6_f4c51fc0",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1223919
+      },
+      "writtenOn": "2017-12-02T05:53:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6de5c126_9a08486f",
+      "revId": "5ad999c25c376f2d5e2c2badae93bb898bf8a6b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
