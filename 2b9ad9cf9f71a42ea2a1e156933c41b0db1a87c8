@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b554dc56_c308ecf3",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/indexeddb/delete-entry-expected.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-12-02T01:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a835451_27b838a5",
+      "revId": "2b9ad9cf9f71a42ea2a1e156933c41b0db1a87c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "812c2e75_451ea441",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/indexeddb/delete-entry.html",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "2b9ad9cf9f71a42ea2a1e156933c41b0db1a87c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67caa607_520b61b0",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/indexeddb/delete-entry.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-12-02T01:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "812c2e75_451ea441",
+      "revId": "2b9ad9cf9f71a42ea2a1e156933c41b0db1a87c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2a2bfc5d_fc1883d5",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/indexeddb/delete-entry.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-12-02T01:49:36Z",
+      "side": 1,
+      "message": "I split it into two functions and also modernized a bit - switched to for ... of ... loops and template strings.",
+      "parentUuid": "426045b1_38451013",
+      "revId": "2b9ad9cf9f71a42ea2a1e156933c41b0db1a87c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35694dfc_f2a0e3af",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/indexeddb/delete-entry.html",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "2b9ad9cf9f71a42ea2a1e156933c41b0db1a87c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3320ec64_ab716104",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/indexeddb/delete-entry.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-12-02T01:49:36Z",
+      "side": 1,
+      "message": "I feel like test will be less flaky if we sniff IndexedDB tree updates.",
+      "parentUuid": "35694dfc_f2a0e3af",
+      "revId": "2b9ad9cf9f71a42ea2a1e156933c41b0db1a87c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "0d76681f_d2288879",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/indexeddb/delete-entry.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-12-02T01:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b45943e_d636a286",
+      "revId": "2b9ad9cf9f71a42ea2a1e156933c41b0db1a87c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0908002f_2a0e0458",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/indexeddb/delete-entry.html",
         "patchSetId": 6
@@ -101,6 +191,24 @@
       "revId": "2b9ad9cf9f71a42ea2a1e156933c41b0db1a87c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "771db3a5_ae772cad",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/indexeddb/delete-entry.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-12-02T01:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0908002f_2a0e0458",
+      "revId": "2b9ad9cf9f71a42ea2a1e156933c41b0db1a87c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "d194ab60_5bf33b40",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/indexeddb/delete-entry.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-12-02T01:49:36Z",
+      "side": 1,
+      "message": "IndexedDB currently does not auto-refresh so this method is called several times. There is another CL that paves the way for the auto-refresh, hopefully this hack will not be needed soon.",
+      "parentUuid": "575f079b_bca39300",
+      "revId": "2b9ad9cf9f71a42ea2a1e156933c41b0db1a87c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7715e68b_0cb1a34d",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/indexeddb/delete-entry.html",
         "patchSetId": 6
@@ -135,6 +261,24 @@
       "revId": "2b9ad9cf9f71a42ea2a1e156933c41b0db1a87c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "609184c1_247ef454",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/indexeddb/delete-entry.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-12-02T01:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7715e68b_0cb1a34d",
+      "revId": "2b9ad9cf9f71a42ea2a1e156933c41b0db1a87c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "7db4ba51_c45ef977",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/indexeddb/delete-entry.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-12-02T01:49:36Z",
+      "side": 1,
+      "message": "It operates on the node. There should be no node for the entry that was deleted...",
+      "parentUuid": "689c59be_3cce26f4",
+      "revId": "2b9ad9cf9f71a42ea2a1e156933c41b0db1a87c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d4d7a92_12859725",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/indexeddb/delete-entry.html",
         "patchSetId": 6
@@ -169,6 +331,24 @@
       "revId": "2b9ad9cf9f71a42ea2a1e156933c41b0db1a87c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e27be5fe_fb1a13b9",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/indexeddb/delete-entry.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-12-02T01:49:36Z",
+      "side": 1,
+      "message": "See above.",
+      "parentUuid": "0d4d7a92_12859725",
+      "revId": "2b9ad9cf9f71a42ea2a1e156933c41b0db1a87c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "0340ca22_4342c57f",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 2116,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-12-02T01:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "427b5098_e99bde23",
+      "revId": "2b9ad9cf9f71a42ea2a1e156933c41b0db1a87c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "446ae983_6fab3df2",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/IndexedDBModel.js",
         "patchSetId": 6
@@ -203,6 +401,24 @@
       "revId": "2b9ad9cf9f71a42ea2a1e156933c41b0db1a87c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "319967f1_0fa49415",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/IndexedDBModel.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-12-02T01:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "446ae983_6fab3df2",
+      "revId": "2b9ad9cf9f71a42ea2a1e156933c41b0db1a87c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "e3e09117_8e842399",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/IndexedDBModel.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-12-02T01:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01554065_671e6116",
+      "revId": "2b9ad9cf9f71a42ea2a1e156933c41b0db1a87c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bf0e820_1760dea1",
         "filename": "third_party/WebKit/Source/modules/indexeddb/InspectorIndexedDBAgent.cpp",
         "patchSetId": 6
@@ -237,6 +471,24 @@
       "revId": "2b9ad9cf9f71a42ea2a1e156933c41b0db1a87c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b023bd0d_d8467d71",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/InspectorIndexedDBAgent.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-12-02T01:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bf0e820_1760dea1",
+      "revId": "2b9ad9cf9f71a42ea2a1e156933c41b0db1a87c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
