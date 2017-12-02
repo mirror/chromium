@@ -73,7 +73,7 @@ bool SVGFESpecularLightingElement::SetFilterEffectAttribute(
       static_cast<FESpecularLighting*>(effect);
 
   if (attr_name == SVGNames::lighting_colorAttr) {
-    LayoutObject* layout_object = this->GetLayoutObject();
+    LayoutObject* layout_object = GetLayoutObject();
     DCHECK(layout_object);
     DCHECK(layout_object->Style());
     return specular_lighting->SetLightingColor(
@@ -159,7 +159,7 @@ FilterEffect* SVGFESpecularLightingElement::Build(
       AtomicString(in1_->CurrentValue()->Value()));
   DCHECK(input1);
 
-  LayoutObject* layout_object = this->GetLayoutObject();
+  LayoutObject* layout_object = GetLayoutObject();
   if (!layout_object)
     return nullptr;
 

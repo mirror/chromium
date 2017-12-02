@@ -150,7 +150,7 @@ void SVGSVGElement::UpdateUserTransform() {
 }
 
 bool SVGSVGElement::ZoomAndPanEnabled() const {
-  SVGZoomAndPanType zoom_and_pan = this->zoomAndPan();
+  SVGZoomAndPanType zoom_and_pan = zoomAndPan();
   if (view_spec_)
     zoom_and_pan = view_spec_->zoomAndPan();
   return zoom_and_pan == kSVGZoomAndPanMagnify;
@@ -265,7 +265,7 @@ void SVGSVGElement::SvgAttributeChanged(const QualifiedName& attr_name) {
     // height attributes can affect the replaced size so we need
     // to mark it for updating.
     if (width_or_height_changed) {
-      LayoutObject* layout_object = this->GetLayoutObject();
+      LayoutObject* layout_object = GetLayoutObject();
       // If the element is not attached, we cannot be sure if it is (going to
       // be) an outermost root, so always mark presentation attributes dirty in
       // that case.
@@ -293,7 +293,7 @@ void SVGSVGElement::SvgAttributeChanged(const QualifiedName& attr_name) {
   if (update_relative_lengths_or_view_box ||
       SVGZoomAndPan::IsKnownAttribute(attr_name)) {
     SVGElement::InvalidationGuard invalidation_guard(this);
-    if (auto* layout_object = this->GetLayoutObject())
+    if (auto* layout_object = GetLayoutObject())
       MarkForLayoutAndParentResourceInvalidation(layout_object);
     return;
   }
@@ -462,7 +462,7 @@ AffineTransform SVGSVGElement::LocalCoordinateSpaceTransform(
     transform.Translate(x_->CurrentValue()->Value(length_context),
                         y_->CurrentValue()->Value(length_context));
   } else if (mode == kScreenScope) {
-    if (LayoutObject* layout_object = this->GetLayoutObject()) {
+    if (LayoutObject* layout_object = GetLayoutObject()) {
       TransformationMatrix transform;
       // Adjust for the zoom level factored into CSS coordinates (WK bug
       // #96361).
@@ -696,7 +696,7 @@ void SVGSVGElement::SetViewSpec(SVGViewSpec* view_spec) {
   if (!view_spec_ && !view_spec)
     return;
   view_spec_ = view_spec;
-  if (LayoutObject* layout_object = this->GetLayoutObject())
+  if (LayoutObject* layout_object = GetLayoutObject())
     MarkForLayoutAndParentResourceInvalidation(layout_object);
 }
 

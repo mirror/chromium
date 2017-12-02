@@ -144,7 +144,7 @@ const CSSValue* SVGTransformList::CssValue() const {
   // TODO(fs): Eventually we'd want to support the exact same syntax here as in
   // the property, but there are some issues (crbug.com/577219 for instance)
   // that complicates things.
-  size_t length = this->length();
+  size_t length = length();
   if (!length)
     return CSSIdentifierValue::Create(CSSValueNone);
   CSSValueList* list = CSSValueList::CreateSpaceSeparated();

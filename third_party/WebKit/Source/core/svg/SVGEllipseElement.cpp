@@ -123,7 +123,7 @@ void SVGEllipseElement::SvgAttributeChanged(const QualifiedName& attr_name) {
                         StyleChangeReasonForTracing::FromAttribute(attr_name));
     UpdateRelativeLengthsInformation();
 
-    LayoutSVGShape* layout_object = ToLayoutSVGShape(this->GetLayoutObject());
+    LayoutSVGShape* layout_object = ToLayoutSVGShape(GetLayoutObject());
     if (!layout_object)
       return;
 

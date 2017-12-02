@@ -716,7 +716,7 @@ SMILTime SVGSMILElement::SimpleDuration() const {
 void SVGSMILElement::AddInstanceTime(BeginOrEnd begin_or_end,
                                      SMILTime time,
                                      SMILTimeWithOrigin::Origin origin) {
-  SMILTime elapsed = this->Elapsed();
+  SMILTime elapsed = Elapsed();
   if (elapsed.IsUnresolved())
     return;
   Vector<SMILTimeWithOrigin>& list =
@@ -782,9 +782,9 @@ SMILTime SVGSMILElement::FindInstanceTime(BeginOrEnd begin_or_end,
 SMILTime SVGSMILElement::RepeatingDuration() const {
   // Computing the active duration
   // http://www.w3.org/TR/SMIL2/smil-timing.html#Timing-ComputingActiveDur
-  SMILTime repeat_count = this->RepeatCount();
-  SMILTime repeat_dur = this->RepeatDur();
-  SMILTime simple_duration = this->SimpleDuration();
+  SMILTime repeat_count = RepeatCount();
+  SMILTime repeat_dur = RepeatDur();
+  SMILTime simple_duration = SimpleDuration();
   if (!simple_duration ||
       (repeat_dur.IsUnresolved() && repeat_count.IsUnresolved()))
     return simple_duration;
@@ -809,8 +809,8 @@ SMILTime SVGSMILElement::ResolveActiveEnd(SMILTime resolved_begin,
     preliminary_active_duration =
         std::min(RepeatingDuration(), resolved_end - resolved_begin);
 
-  SMILTime min_value = this->MinValue();
-  SMILTime max_value = this->MaxValue();
+  SMILTime min_value = MinValue();
+  SMILTime max_value = MaxValue();
   if (min_value > max_value) {
     // Ignore both.
     // http://www.w3.org/TR/2001/REC-smil-animation-20010904/#MinMax
@@ -898,7 +898,7 @@ SMILTime SVGSMILElement::NextProgressTime() const {
 void SVGSMILElement::BeginListChanged(SMILTime event_time) {
   if (is_waiting_for_first_interval_) {
     ResolveFirstInterval();
-  } else if (this->GetRestart() != kRestartNever) {
+  } else if (GetRestart() != kRestartNever) {
     SMILTime new_begin = FindInstanceTime(kBegin, event_time, true);
     if (new_begin.IsFinite() &&
         (interval_.end <= event_time || new_begin < interval_.begin)) {
@@ -924,7 +924,7 @@ void SVGSMILElement::BeginListChanged(SMILTime event_time) {
 }
 
 void SVGSMILElement::EndListChanged(SMILTime) {
-  SMILTime elapsed = this->Elapsed();
+  SMILTime elapsed = Elapsed();
   if (is_waiting_for_first_interval_) {
     ResolveFirstInterval();
   } else if (elapsed < interval_.end && interval_.begin.IsFinite()) {
@@ -948,7 +948,7 @@ SVGSMILElement::RestartedInterval SVGSMILElement::MaybeRestartInterval(
   DCHECK(!is_waiting_for_first_interval_);
   DCHECK(elapsed >= interval_.begin);
 
-  Restart restart = this->GetRestart();
+  Restart restart = GetRestart();
   if (restart == kRestartNever)
     return kDidNotRestartInterval;
 
@@ -1012,7 +1012,7 @@ void SVGSMILElement::SeekToIntervalCorrespondingToTime(double elapsed) {
 float SVGSMILElement::CalculateAnimationPercentAndRepeat(
     double elapsed,
     unsigned& repeat) const {
-  SMILTime simple_duration = this->SimpleDuration();
+  SMILTime simple_duration = SimpleDuration();
   repeat = 0;
   if (simple_duration.IsIndefinite()) {
     repeat = 0;
@@ -1025,7 +1025,7 @@ float SVGSMILElement::CalculateAnimationPercentAndRepeat(
   DCHECK(interval_.begin.IsFinite());
   DCHECK(simple_duration.IsFinite());
   double active_time = elapsed - interval_.begin.Value();
-  SMILTime repeating_duration = this->RepeatingDuration();
+  SMILTime repeating_duration = RepeatingDuration();
   if (elapsed >= interval_.end || active_time > repeating_duration) {
     repeat = static_cast<unsigned>(repeating_duration.Value() /
                                    simple_duration.Value());
@@ -1056,7 +1056,7 @@ SMILTime SVGSMILElement::CalculateNextProgressTime(double elapsed) const {
   if (active_state_ == kActive) {
     // If duration is indefinite the value does not actually change over time.
     // Same is true for <set>.
-    SMILTime simple_duration = this->SimpleDuration();
+    SMILTime simple_duration = SimpleDuration();
     if (simple_duration.IsIndefinite() || IsSVGSetElement(*this)) {
       SMILTime repeating_duration_end = interval_.begin + RepeatingDuration();
       // We are supposed to do freeze semantics when repeating ends, even if the
