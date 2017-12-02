@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ca271320_229d9fd6",
+        "filename": "ios/chrome/browser/download/pass_kit_tab_helper.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-02T00:09:42Z",
+      "side": 1,
+      "message": "std::make_unique requires public constructor for PassKitTabHelper.",
+      "parentUuid": "1fa857b5_2cb1f086",
+      "range": {
+        "startLine": 41,
+        "startChar": 42,
+        "endLine": 41,
+        "endChar": 58
+      },
+      "revId": "7d8221e5bbfed4c62a9e178714ff78acff22a3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d575f490_35a5969b",
         "filename": "ios/chrome/browser/download/pass_kit_tab_helper.mm",
         "patchSetId": 4
@@ -36,6 +60,24 @@
       "writtenOn": "2017-12-01T21:25:20Z",
       "side": 1,
       "message": "What if the init with data fails? \nI see that the delegate can take a nil if a failure occurred. I am wondering if it is possible for an error to be returned, but pass to not be nil (ie. a corrupted pass). Apple documentation does not specify one way or another.\n\nPreviously, we did not call delegate at all if either pass was nil or there was an error.",
+      "revId": "7d8221e5bbfed4c62a9e178714ff78acff22a3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e0cdaab_38f6e676",
+        "filename": "ios/chrome/browser/download/pass_kit_tab_helper.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-02T00:09:42Z",
+      "side": 1,
+      "message": "Previously we presented error UI if either pass was nil or there was an error:\nhttps://cs.chromium.org/chromium/src/ios/chrome/browser/ui/browser_view_controller.mm?q\u003dbrowser_view_c\u0026sq\u003dpackage:chromium\u0026pv\u003d1\u0026l\u003d2758\n\nThis code follows the same logic.\n\nAll Objective-C Standard API either return error or result. Never both, so it is save to assume that pass is valid if not nil.",
+      "parentUuid": "d575f490_35a5969b",
       "revId": "7d8221e5bbfed4c62a9e178714ff78acff22a3cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "af7884ee_b2f67ccd",
+        "filename": "ios/chrome/browser/download/pass_kit_tab_helper_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-02T00:09:42Z",
+      "side": 1,
+      "message": "Good catch. I added create_task() to avoid local variables, but I needed task_ptr, so I ended up not using create_task(). Removed create_task() instead.",
+      "parentUuid": "c293a00c_fcb25d67",
+      "revId": "7d8221e5bbfed4c62a9e178714ff78acff22a3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e1a5926_483cb348",
         "filename": "ios/chrome/browser/download/pass_kit_tab_helper_unittest.mm",
         "patchSetId": 4
@@ -73,6 +133,24 @@
       "revId": "7d8221e5bbfed4c62a9e178714ff78acff22a3cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "120f1b49_3fcc44da",
+        "filename": "ios/chrome/browser/download/pass_kit_tab_helper_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-02T00:09:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8e1a5926_483cb348",
+      "revId": "7d8221e5bbfed4c62a9e178714ff78acff22a3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "f7667942_848e2a41",
+        "filename": "ios/chrome/browser/download/pass_kit_test_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-02T00:09:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c77648e_125bdecf",
+      "range": {
+        "startLine": 12,
+        "startChar": 25,
+        "endLine": 12,
+        "endChar": 26
+      },
+      "revId": "7d8221e5bbfed4c62a9e178714ff78acff22a3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e861f59_c972e75b",
         "filename": "ios/web/public/test/fakes/fake_download_task.h",
         "patchSetId": 4
@@ -113,6 +215,24 @@
       "revId": "7d8221e5bbfed4c62a9e178714ff78acff22a3cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bfc2dea_4472e2f2",
+        "filename": "ios/web/public/test/fakes/fake_download_task.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-02T00:09:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e861f59_c972e75b",
+      "revId": "7d8221e5bbfed4c62a9e178714ff78acff22a3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
