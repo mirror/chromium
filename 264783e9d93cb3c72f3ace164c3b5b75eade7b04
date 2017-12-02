@@ -98,6 +98,24 @@
       "revId": "264783e9d93cb3c72f3ace164c3b5b75eade7b04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faffb2a5_769c5aa2",
+        "filename": "media/mojo/interfaces/cdm_proxy.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1247467
+      },
+      "writtenOn": "2017-12-02T01:04:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd2d90f8_4c97e21d",
+      "revId": "264783e9d93cb3c72f3ace164c3b5b75eade7b04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

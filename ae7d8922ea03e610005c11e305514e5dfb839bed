@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "db9fe36d_f9ba0e3a",
+        "filename": "media/cdm/cdm_proxy.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1247467
+      },
+      "writtenOn": "2017-12-02T01:04:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "015d5b73_7837c07c",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 14
+      },
+      "revId": "ae7d8922ea03e610005c11e305514e5dfb839bed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad9a6a5b_bf97f442",
         "filename": "media/mojo/interfaces/cdm_proxy.mojom",
         "patchSetId": 15
@@ -191,6 +215,30 @@
       "side": 1,
       "message": "You mean to add these methods in my CL? I am fine with that.\n\nrkuroiwa: WDYT?",
       "parentUuid": "cd96bca5_3854fd44",
+      "range": {
+        "startLine": 31,
+        "startChar": 1,
+        "endLine": 61,
+        "endChar": 47
+      },
+      "revId": "ae7d8922ea03e610005c11e305514e5dfb839bed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea4d0eda_7bc13e45",
+        "filename": "media/mojo/interfaces/cdm_proxy.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1247467
+      },
+      "writtenOn": "2017-12-02T01:04:07Z",
+      "side": 1,
+      "message": "sure",
+      "parentUuid": "484a4a04_26a4672b",
       "range": {
         "startLine": 31,
         "startChar": 1,
