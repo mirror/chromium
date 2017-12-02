@@ -224,5 +224,20 @@ TEST_F(ArcMetricsServiceTest, ReportBootProgress_InvalidBootType) {
   }
 }
 
+TEST_F(ArcMetricsServiceTest, ReportNativeBridge) {
+  ASSERT_EQ(metrics_service()->native_bridge_type_for_testing(),
+            ArcMetricsService::NativeBridgeType::UNKNOWN);
+  metrics_service()->ReportNativeBridge(mojom::NativeBridgeType::NONE);
+  ASSERT_EQ(metrics_service()->native_bridge_type_for_testing(),
+            ArcMetricsService::NativeBridgeType::NONE);
+  metrics_service()->ReportNativeBridge(mojom::NativeBridgeType::HOUDINI);
+  ASSERT_EQ(metrics_service()->native_bridge_type_for_testing(),
+            ArcMetricsService::NativeBridgeType::HOUDINI);
+  metrics_service()->ReportNativeBridge(
+      mojom::NativeBridgeType::NDK_TRANSLATION);
+  ASSERT_EQ(metrics_service()->native_bridge_type_for_testing(),
+            ArcMetricsService::NativeBridgeType::NDK_TRANSLATION);
+}
+
 }  // namespace
 }  // namespace arc
