@@ -5,6 +5,8 @@
 #ifndef COMPONENTS_UKM_CONTENT_SOURCE_URL_RECORDER_H_
 #define COMPONENTS_UKM_CONTENT_SOURCE_URL_RECORDER_H_
 
+#include "services/metrics/public/cpp/ukm_source_id.h"
+
 namespace content {
 class WebContents;
 }  // namespace content
@@ -14,6 +16,9 @@ namespace ukm {
 // Initializes recording of UKM source URLs for the given WebContents.
 void InitializeSourceUrlRecorderForWebContents(
     content::WebContents* web_contents);
+
+// Get a UKM SourceId for current document of web contents.
+SourceId GetSourceIdForWebContentsDocument(content::WebContents* web_contents);
 
 }  // namespace ukm
 
