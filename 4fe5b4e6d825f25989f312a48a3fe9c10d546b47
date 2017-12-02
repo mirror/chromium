@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "0d5ebb3c_563b9beb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1254135
+      },
+      "writtenOn": "2017-12-02T06:54:09Z",
+      "side": 1,
+      "message": "\u003e How was this issue found in the first place?  There should probably be a bug filed first reporting how/why chrome crashes, under what circumstances, how to reproduce, etc.\n\nWe have several crashes in our browser and a reason of crash is empty data from which IPC::Message is constructed. But we do not know why empty data appears here, we assume the problem is in a render (or other child) process. And because we do not know the real reason of a crash, we cannot reproduce it.\n\nI could attach stack trace of a crash, but I did not found a button \"attach file\" or something else. How can I attach a stack trace?",
+      "parentUuid": "c7f97299_ae10243d",
+      "revId": "4fe5b4e6d825f25989f312a48a3fe9c10d546b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d79bcf91_f1d4b213",
         "filename": "ipc/ipc_listener.h",
         "patchSetId": 2
@@ -196,6 +214,30 @@
       "side": 1,
       "message": "Yes, its a bit longer, but I think its clearer this way.",
       "parentUuid": "70f3e2ca_b011b7b7",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 97,
+        "endChar": 0
+      },
+      "revId": "4fe5b4e6d825f25989f312a48a3fe9c10d546b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16c92094_dafb86e7",
+        "filename": "ipc/ipc_message_pipe_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1254135
+      },
+      "writtenOn": "2017-12-02T06:54:09Z",
+      "side": 1,
+      "message": "\u003e Yes, its a bit longer, but I think its clearer this way.\n\nOk, I will change it.",
+      "parentUuid": "59e32b86_c8a1fedd",
       "range": {
         "startLine": 90,
         "startChar": 2,
