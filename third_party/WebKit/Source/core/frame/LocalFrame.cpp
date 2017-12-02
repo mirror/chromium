@@ -165,7 +165,7 @@ void LocalFrame::CreateView(const IntSize& viewport_size,
   DCHECK(this);
   DCHECK(GetPage());
 
-  bool is_local_root = this->IsLocalRoot();
+  bool is_local_root = IsLocalRoot();
 
   if (is_local_root && View())
     View()->SetParentVisible(false);
@@ -390,7 +390,7 @@ void LocalFrame::DetachChildren() {
   DCHECK(loader_.StateMachine()->CreatingInitialEmptyDocument() ||
          GetDocument());
 
-  if (Document* document = this->GetDocument())
+  if (Document* document = GetDocument())
     ChildFrameDisconnector(*document).Disconnect();
 }
 
@@ -425,8 +425,8 @@ void LocalFrame::SetDOMWindow(LocalDOMWindow* dom_window) {
   if (dom_window)
     GetScriptController().ClearWindowProxy();
 
-  if (this->DomWindow())
-    this->DomWindow()->Reset();
+  if (DomWindow())
+    DomWindow()->Reset();
   dom_window_ = dom_window;
 }
 
@@ -569,11 +569,11 @@ void LocalFrame::SetPageAndTextZoomFactors(float page_zoom_factor,
       text_zoom_factor_ == text_zoom_factor)
     return;
 
-  Page* page = this->GetPage();
+  Page* page = GetPage();
   if (!page)
     return;
 
-  Document* document = this->GetDocument();
+  Document* document = GetDocument();
   if (!document)
     return;
 
@@ -587,7 +587,7 @@ void LocalFrame::SetPageAndTextZoomFactors(float page_zoom_factor,
 
   if (page_zoom_factor_ != page_zoom_factor &&
       !RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
-    if (LocalFrameView* view = this->View()) {
+    if (LocalFrameView* view = View()) {
       // Update the scroll position when doing a full page zoom, so the content
       // stays in relatively the same position.
       ScrollableArea* scrollable_area = view->LayoutViewportScrollableArea();

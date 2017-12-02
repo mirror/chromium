@@ -1317,19 +1317,19 @@ int LocalDOMWindow::webkitRequestAnimationFrame(
   FrameRequestCallbackCollection::V8FrameCallback* frame_callback =
       FrameRequestCallbackCollection::V8FrameCallback::Create(callback);
   frame_callback->SetUseLegacyTimeBase(true);
-  if (Document* document = this->document())
+  if (Document* document = document())
     return document->RequestAnimationFrame(frame_callback);
   return 0;
 }
 
 void LocalDOMWindow::cancelAnimationFrame(int id) {
-  if (Document* document = this->document())
+  if (Document* document = document())
     document->CancelAnimationFrame(id);
 }
 
 int LocalDOMWindow::requestIdleCallback(V8IdleRequestCallback* callback,
                                         const IdleRequestOptions& options) {
-  if (Document* document = this->document()) {
+  if (Document* document = document()) {
     return document->RequestIdleCallback(
         ScriptedIdleTaskController::V8IdleTask::Create(callback), options);
   }
@@ -1337,7 +1337,7 @@ int LocalDOMWindow::requestIdleCallback(V8IdleRequestCallback* callback,
 }
 
 void LocalDOMWindow::cancelIdleCallback(int id) {
-  if (Document* document = this->document())
+  if (Document* document = document())
     document->CancelIdleCallback(id);
 }
 
@@ -1384,7 +1384,7 @@ void LocalDOMWindow::AddedEventListener(
     GetFrame()->GetPage()->GetEventHandlerRegistry().DidAddEventHandler(
         *this, event_type, registered_listener.Options());
 
-  if (Document* document = this->document())
+  if (Document* document = document())
     document->AddListenerTypeIfNeeded(event_type, *this);
 
   for (auto& it : event_listener_observers_) {

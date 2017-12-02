@@ -179,7 +179,7 @@ void ContentSecurityPolicy::ApplyPolicySideEffectsToExecutionContext() {
 
   // Set mixed content checking and sandbox flags, then dump all the parsing
   // error messages, then poke at histograms.
-  Document* document = this->GetDocument();
+  Document* document = GetDocument();
   if (sandbox_mask_ != kSandboxNone) {
     UseCounter::Count(execution_context_, WebFeature::kSandboxViaCSP);
     if (document)
@@ -986,7 +986,7 @@ bool ContentSecurityPolicy::AllowWorkerContextFromSource(
   // CSP 1.1 moves workers from 'script-src' to the new 'child-src'. Measure the
   // impact of this backwards-incompatible change.
   // TODO(mkwst): We reverted this.
-  if (Document* document = this->GetDocument()) {
+  if (Document* document = GetDocument()) {
     UseCounter::Count(*document, WebFeature::kWorkerSubjectToCSP);
     bool is_allowed_worker = true;
     if (!ShouldBypassContentSecurityPolicy(url, execution_context_)) {
@@ -1328,7 +1328,7 @@ void ContentSecurityPolicy::PostViolationReport(
 
     // TODO(mkwst): Support POSTing violation reports from a Worker.
     Document* document =
-        context_frame ? context_frame->GetDocument() : this->GetDocument();
+        context_frame ? context_frame->GetDocument() : GetDocument();
     if (!document)
       return;
 
