@@ -15,6 +15,10 @@ bool GLImage::EmulatingRGB() const {
   return false;
 }
 
+bool GLImage::NeedsClear() const {
+  return false;
+}
+
 GLImage::Type GLImage::GetType() const {
   return Type::NONE;
 }

@@ -33,6 +33,7 @@ class GL_EXPORT GLImageIOSurface : public GLImage {
 
   bool Initialize(IOSurfaceRef io_surface,
                   gfx::GenericSharedMemoryId io_surface_id,
+                  bool needs_clear,
                   gfx::BufferFormat format);
 
   // IOSurfaces coming from video decode are wrapped in a CVPixelBuffer
@@ -65,6 +66,7 @@ class GL_EXPORT GLImageIOSurface : public GLImage {
                     uint64_t process_tracing_id,
                     const std::string& dump_name) override;
   bool EmulatingRGB() const override;
+  bool NeedsClear() const override;
 
   gfx::GenericSharedMemoryId io_surface_id() const { return io_surface_id_; }
   base::ScopedCFTypeRef<IOSurfaceRef> io_surface();
@@ -110,6 +112,8 @@ class GL_EXPORT GLImageIOSurface : public GLImage {
   // Cache the color space, because re-assigning the same value can be
   // expensive.
   gfx::ColorSpace color_space_;
+
+  bool needs_clear_ = true;
 
   base::ThreadChecker thread_checker_;
   // The default value of Rec. 601 is based on historical shader code.
