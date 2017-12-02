@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b8a80d52_a90db354",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/results.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-02T02:04:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b292b8c7_82f5f17f",
+      "revId": "2ad6c4d619e68fda87d39e2ba84b6a9bc27eab53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b99d4a3_e1d7bf6b",
         "filename": "third_party/WebKit/LayoutTests/fast/harness/results.html",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-02T01:27:15Z",
       "side": 1,
       "message": "Curious: why are there nested timeouts here?",
+      "revId": "2ad6c4d619e68fda87d39e2ba84b6a9bc27eab53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5e2e95a_73ccb007",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/results.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 1133,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-02T02:04:06Z",
+      "side": 1,
+      "message": "Added it because sometimes the actual timeout for hiding \"Copied\" seemed very short when the copy command was slow. However I no longer reproduce this just now.\n\nRemoved the outer setTimeout.",
+      "parentUuid": "0b99d4a3_e1d7bf6b",
       "revId": "2ad6c4d619e68fda87d39e2ba84b6a9bc27eab53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
