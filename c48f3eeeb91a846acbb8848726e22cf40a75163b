@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fca9cbfb_2129cfe9",
+        "filename": "build/args/android/sdk/sdk_update_script.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-02T03:29:09Z",
+      "side": 1,
+      "message": "Also, is \u0027$UPDATE_SCRIPT_PATH download --sdk-version\u003dOMR1\u0027 downloading all packages of \u0027OMR1\u0027? Should the packages names be locate-at/hardcoded in the file like :\n  OMR1_PACKAGES \u003d [\n    \u0027build-tools;27.0.1\u0027,\n    \u0027emulator\u0027,\n    \u0027extras\u0027,\n    \u0027platform-tools\u0027,\n    \u0027platforms;android-27\u0027,\n    \u0027tools\u0027\n  ]\n\n, or set these variable in gn files like config.gni?\n\nNote that downloading from \u0027sdkmanager\u0027 will only download packages\u0027 latest version, and we cannot choose each package version. Though some of packages would have name by adding \u0027version\u0027, e.g. \u0027build-tools;27.0.1\u0027, \u0027platforms;android-27\u0027 that we discussed about, but others are simple name.\n\nThat\u0027s why I think should define a OMR1_PACKAGES to list exact package names we want for OMR1.",
+      "revId": "c48f3eeeb91a846acbb8848726e22cf40a75163b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c86e65c_a87007b2",
+        "filename": "build/args/android/sdk/sdk_update_script.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-02T03:29:09Z",
+      "side": 1,
+      "message": "In the doc, there is a function\n  $UPDATE_SCRIPT_PATH download/package --sdk-version\u003dOMR1 \n\nShould it be downloaded-to/package-from a specific named directory, like //third_party/android_sdk/public/OMR1, which contains all the deps:\n  //third_party/android_sdk/public/OMR1/build-tools\n  //third_party/android_sdk/public/OMR1/emulator\n  ...\n\nor just locate at /public and not specify \u0027OMR1\u0027 like\n  //third_party/android_sdk/public/build-tools\n  //third_party/android_sdk/public/emulator\n  ...\n\n?",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 11
+      },
+      "revId": "c48f3eeeb91a846acbb8848726e22cf40a75163b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
