@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "e05e5b89_3c9a9c71",
+        "filename": "chrome/browser/autocomplete/keyword_extensions_delegate_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-12-02T06:13:46Z",
+      "side": 1,
+      "message": "Bug 1: \n\nSome background: KeywordExtensionsDelegateImpl::Start() is called before OnKeywordEntered is triggered (via a space or tab). This is a problem because the calls to OnInputStarted and OnInputChanged are called in Start(). Checks need to be added to predict if OnKeywordEntered will be called, and if so block the started and changed calls in Start().\n\nThe checks on line 92 and line 110 are essentially checking if OnKeywordEntered will be called. If it is, we don\u0027t call OnInputStarted and OnInputChanged. However, it turns out those checks are too aggressive and lead to false positives. For example, consider this flow:\n\n\"ssh\"\n\"ssh \" -\u003e OnKeywordEntered is triggered. Show its suggestion results.\n\"ssh  \" -\u003e Another space is added, so OnInputChanged should show its results. But |remaining_input| is empty so line 110 passes and OnInputChanged is never called because the check on 115 won\u0027t be hit.\n\nMy attempts to fix bug 1 create bug 2, which is detailed in the comment below.",
+      "range": {
+        "startLine": 110,
+        "startChar": 13,
+        "endLine": 110,
+        "endChar": 73
+      },
+      "revId": "223d3ac169e3ea1729888425d700239b390b91f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5438c23b_e5db1930",
         "filename": "components/omnibox/browser/omnibox_edit_model.cc",
         "patchSetId": 12
