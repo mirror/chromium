@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89b8f6b7_9242c07b",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1244,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-12-02T00:28:10Z",
+      "side": 1,
+      "message": "Similar to comment below, I\u0027d rather unify the code between SPv1 and SPv175. Clip masks aren\u0027t really normal paint phase, in the sense that they don\u0027t go to the painters, and the drawings don\u0027t even have proper property tree state to represent them. It feels more correct to completely move them out of PaintFragmentWithPhase().",
+      "revId": "f3ee3012b5d9dd945a0907cc9b01bdff2b61a845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f216b901_e80751f8",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1278,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-12-02T00:28:10Z",
+      "side": 1,
+      "message": "I\u0027d rather copy/move line 995~1013 to here, and unify code for SPv1 and SPv175. The code structure would look like:\n\nDCHECK(!RuntimeEnabledFeatures::SlimmingPaintV2Enabled()); // Clip mask are synthesized by PAC in SPv2.\nClipRecorder clip_recorder(blah, blah, blah); // Applies border radius clip. No-op in SPv175.\nOptional\u003cScopedPaintChunkProperties\u003e scope;\nif (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {\n  // Applies border radius clip as property node.\n  scope.emplace(rare_data-\u003eContentsProperties());\n}\nFillMaskingFragment(blah, blah, blah);",
+      "revId": "f3ee3012b5d9dd945a0907cc9b01bdff2b61a845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74921703_e42d77b4",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingLayerPropertyUpdater.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-12-02T00:28:10Z",
+      "side": 1,
+      "message": "This looks wrong. If we do this then the painted clip masks will be subject to any effects that we have on this layout object. e.g. if we have a blur filter, the clip mask will be blurry.\n\nI think we should use rare_paint_data-\u003eLocalBorderBoxProperties() here. Then at PaintLayerPainter::FillMaskingFragment() assign its DrawingDisplayItem with the clip node that are going to apply to in-flow children.\n\nActually there are a few things going very wrong in SPv1. 1. clip-path shouldn\u0027t be a part of child_clipping_mask_layer, because it applies to the post-effect contents instead of pre-effect contents. 2. Out-of-flow children won\u0027t be able to escape clips that are applied as child_clipping_mask_layer.\n\nI think (1) is relatively easy to fix by moving clip-path to mask_layer. (2) will be impossible to fix without radical change to CLM (which I think will be fun to do as SPv1.875).",
+      "revId": "f3ee3012b5d9dd945a0907cc9b01bdff2b61a845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31e852c9_64161503",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingLayerPropertyUpdater.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-12-02T00:28:10Z",
+      "side": 1,
+      "message": "I wouldn\u0027t worry about subpixel position, as the compositing code only see post-snapping coordinates. Subpixel accumulation will be applied at paint time instead.\n\nI don\u0027t like accumulating position here though. Is it possible to cache it in OffsetFromLayoutObject, and make it a comment somewhere that the referenced layout object is clip_inheritance_ancestor instead of the owning_layer?",
+      "revId": "f3ee3012b5d9dd945a0907cc9b01bdff2b61a845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
