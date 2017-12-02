@@ -47,7 +47,6 @@ include_rules = [
   "+extensions/common",
   "+extensions/features",
   "+extensions/renderer",
-  "+gin",
   "+media/base",
   "+ppapi/c",
   "+ppapi/shared_impl",
