@@ -22,12 +22,17 @@ class CC_PAINT_EXPORT DecodedDrawImage {
                    const SkSize& src_rect_offset,
                    const SkSize& scale_adjustment,
                    SkFilterQuality filter_quality);
+  DecodedDrawImage(uint64_t transfer_cache_entry_id,
+                   const SkSize& src_rect_offset,
+                   const SkSize& scale_adjustment,
+                   SkFilterQuality filter_quality);
   DecodedDrawImage(sk_sp<const SkImage> image, SkFilterQuality filter_quality);
   DecodedDrawImage(const DecodedDrawImage& other);
   DecodedDrawImage();
   ~DecodedDrawImage();
 
   const sk_sp<const SkImage>& image() const { return image_; }
+  uint64_t transfer_cache_entry_id() const { return transfer_cache_entry_id_; }
   const SkSize& src_rect_offset() const { return src_rect_offset_; }
   const SkSize& scale_adjustment() const { return scale_adjustment_; }
   SkFilterQuality filter_quality() const { return filter_quality_; }
@@ -43,6 +48,7 @@ class CC_PAINT_EXPORT DecodedDrawImage {
 
  private:
   sk_sp<const SkImage> image_;
+  uint64_t transfer_cache_entry_id_;
   SkSize src_rect_offset_;
   SkSize scale_adjustment_;
   SkFilterQuality filter_quality_;

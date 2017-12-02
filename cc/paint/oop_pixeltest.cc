@@ -405,5 +405,40 @@ TEST_F(OopPixelTest, DrawRectQueryMiddleOfDisplayList) {
   ExpectEquals(actual, expected);
 }
 
+TEST_F(OopPixelTest, DrawImage) {
+  gfx::Rect rect(10, 10);
+
+  auto display_item_list = base::MakeRefCounted<DisplayItemList>();
+  for (auto& op : input) {
+    display_item_list->StartPaint();
+    display_item_list->push<DrawRectOp>(op.first, op.second);
+    display_item_list->EndPaintOfUnpaired(
+        gfx::ToEnclosingRect(gfx::SkRectToRectF(op.first)));
+  }
+  display_item_list->Finalize();
+
+  auto actual = Raster(std::move(display_item_list), rect.size());
+
+  // Expected colors are 5x5 rects of
+  //  BLUE GREEN
+  //  CYAN  RED
+  std::vector<SkPMColor> expected_pixels(rect.width() * rect.height());
+  for (int h = 0; h < rect.height(); ++h) {
+    auto start = expected_pixels.begin() + h * rect.width();
+    SkPMColor left_color = SkPreMultiplyColor(
+        h < 5 ? input[0].second.getColor() : input[2].second.getColor());
+    SkPMColor right_color = SkPreMultiplyColor(
+        h < 5 ? input[1].second.getColor() : input[3].second.getColor());
+
+    std::fill(start, start + 5, left_color);
+    std::fill(start + 5, start + 10, right_color);
+  }
+  SkBitmap expected;
+  expected.installPixels(
+      SkImageInfo::MakeN32Premul(rect.width(), rect.height()),
+      expected_pixels.data(), rect.width() * sizeof(SkPMColor));
+  ExpectEquals(actual, expected);
+}
+
 }  // namespace
 }  // namespace cc
