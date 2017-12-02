@@ -60,4 +60,23 @@ NSString* GetEarlyPageScript(BrowserState* browser_state) {
       stringWithFormat:kScriptTemplate, web_bundle, embedder_page_script];
 }
 
+NSString* GetFramePageScript(BrowserState* browser_state) {
+  DCHECK(GetWebClient());
+  NSString* embedder_page_script =
+      GetWebClient()->GetEarlyPageScript(browser_state);
+  DCHECK(embedder_page_script);
+
+  // Make sure that script is injected only once. For example, content of
+  // WKUserScript can be injected into the same page multiple times
+  // without notifying WKNavigationDelegate (e.g. after window.document.write
+  // JavaScript call). Injecting the script multiple times invalidates the
+  // __gCrWeb.windowId variable and will break the ability to send messages from
+  // JS to the native code. Wrapping injected script into "if (!injected)" check
+  // prevents multiple injections into the same page.
+  NSString* kScriptTemplate = @"if (typeof __gCrWeb !== 'object') { %@ }";
+
+  NSString* web_bundle = GetPageScript(@"frame_web_bundle");
+  return [NSString stringWithFormat:kScriptTemplate, web_bundle];
+}
+
 }  // namespace web

@@ -12,6 +12,7 @@ goog.require('__crWeb.base');
 /** @typedef {HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement} */
 var FormControlElement;
 
+if (!__gCrWeb['common']) {
 /**
  * Namespace for this file. It depends on |__gCrWeb| having already been
  * injected. String 'common' is used in |__gCrWeb['common']| as it needs to be
@@ -23,65 +24,10 @@ __gCrWeb.common = {};
 // string, so it does not get renamed by closure compiler during the
 // minification.
 __gCrWeb['common'] = __gCrWeb.common;
-
+}
+    
 /* Beginning of anonymous object. */
 (function() {
-
-  /**
-   * JSON safe object to protect against custom implementation of Object.toJSON
-   * in host pages.
-   * @constructor
-   */
-  __gCrWeb.common.JSONSafeObject = function JSONSafeObject() {
-  };
-
-  /**
-   * Protect against custom implementation of Object.toJSON in host pages.
-   */
-  __gCrWeb.common.JSONSafeObject.prototype['toJSON'] = null;
-
-  /**
-   * Retain the original JSON.stringify method where possible to reduce the
-   * impact of sites overriding it
-   */
-  __gCrWeb.common.JSONStringify = JSON.stringify;
-
-  /**
-   * Returns a string that is formatted according to the JSON syntax rules.
-   * This is equivalent to the built-in JSON.stringify() function, but is
-   * less likely to be overridden by the website itself.  Prefer the private
-   * {@code __gcrWeb.common.JSONStringify} whenever possible instead of using
-   * this public function. The |__gCrWeb| object itself does not use it; it uses
-   * its private counterpart instead.
-   */
-  __gCrWeb['stringify'] = function(value) {
-    if (value === null)
-      return 'null';
-    if (value === undefined)
-       return 'undefined';
-    if (typeof(value.toJSON) == 'function') {
-      // Prevents websites from changing stringify's behavior by adding the
-      // method toJSON() by temporarily removing it.
-      var originalToJSON = value.toJSON;
-      value.toJSON = undefined;
-      var stringifiedValue = __gCrWeb.common.JSONStringify(value);
-      value.toJSON = originalToJSON;
-      return stringifiedValue;
-    }
-    return __gCrWeb.common.JSONStringify(value);
-  };
-
-  /**
-   * Prefix used in references to form elements that have no 'id' or 'name'
-   */
-  __gCrWeb.common.kNamelessFormIDPrefix = 'gChrome~form~';
-
-  /**
-   * Prefix used in references to field elements that have no 'id' or 'name' but
-   * are included in a form.
-   */
-  __gCrWeb.common.kNamelessFieldIDPrefix = 'gChrome~field~';
-
   /**
    * Tests an element's visiblity. This test is expensive so should be used
    * sparingly.
@@ -531,70 +477,6 @@ __gCrWeb['common'] = __gCrWeb.common;
     // URL.protocol is used instead.
     return (parsed.origin !== "null" ? parsed.origin : parsed.protocol)
       + parsed.pathname;
-  };
-
-  /**
-   * Returns the form's |name| attribute if non-empty; otherwise the form's |id|
-   * attribute, or the index of the form (with prefix) in document.forms.
-   *
-   * It is partially based on the logic in
-   *     const string16 GetFormIdentifier(const blink::WebFormElement& form)
-   * in chromium/src/components/autofill/renderer/form_autofill_util.h.
-   *
-   * @param {Element} form An element for which the identifier is returned.
-   * @return {string} a string that represents the element's identifier.
-   */
-  __gCrWeb.common.getFormIdentifier = function(form) {
-    if (!form)
-      return '';
-    var name = form.getAttribute('name');
-    if (name && name.length != 0 && document.forms.namedItem(name) === form) {
-      return name;
-    }
-    name = form.getAttribute('id');
-    if (name) {
-      return name;
-    }
-    // A form name must be supplied, because the element will later need to be
-    // identified from the name. A last resort is to take the index number of
-    // the form in document.forms. ids are not supposed to begin with digits (by
-    // HTML 4 spec) so this is unlikely to match a true id.
-    for (var idx = 0; idx != document.forms.length; idx++) {
-      if (document.forms[idx] == form) {
-        return __gCrWeb.common.kNamelessFormIDPrefix + idx;
-      }
-    }
-    return '';
-  };
-
-  /**
-   * Returns the form element from an ID obtained from getFormIdentifier.
-   *
-   * This works on a 'best effort' basis since DOM changes can always change the
-   * actual element that the ID refers to.
-   *
-   * @param {string} name An ID string obtained via getFormIdentifier.
-   * @return {Element} The original form element, if it can be determined.
-   */
-  __gCrWeb.common.getFormElementFromIdentifier = function(name) {
-    // First attempt is from the name / id supplied.
-    var form = document.forms.namedItem(name);
-    if (form) {
-      if (form.nodeType !== Node.ELEMENT_NODE)
-        return null;
-      return /** @type {Element} */(form);
-    }
-    // Second attempt is from the prefixed index position of the form in
-    // document.forms.
-    if (name.indexOf(__gCrWeb.common.kNamelessFormIDPrefix) == 0) {
-      var nameAsInteger = 0 |
-          name.substring(__gCrWeb.common.kNamelessFormIDPrefix.length);
-      if (__gCrWeb.common.kNamelessFormIDPrefix + nameAsInteger == name &&
-          nameAsInteger < document.forms.length) {
-        return document.forms[nameAsInteger];
-      }
-    }
-    return null;
   };
 
   /**

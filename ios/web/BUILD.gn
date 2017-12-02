@@ -582,6 +582,7 @@ js_compile_bundle("web_bundle") {
   closure_entry_point = "__crWeb.webBundle"
 
   sources = [
+    "web_state/js/resources/all_frames_common.js",
     "web_state/js/resources/base.js",
     "web_state/js/resources/common.js",
     "web_state/js/resources/console.js",
@@ -596,6 +597,19 @@ js_compile_bundle("web_bundle") {
   ]
 }
 
+js_compile_bundle("frame_web_bundle") {
+  visibility = [ ":js_resources" ]
+  closure_entry_point = "__crWeb.webBundle"
+
+  sources = [
+    "web_state/js/resources/base.js",
+    "web_state/js/resources/all_frames_common.js",
+    "web_state/js/resources/form.js",
+    "web_state/js/resources/frame_web_bundle.js",
+    "web_state/js/resources/message.js",
+  ]
+}
+
 js_compile_bundle("nav_bundle") {
   visibility = [ ":js_resources" ]
   closure_entry_point = "__crWeb.legacynavigation"
@@ -607,6 +621,7 @@ js_compile_bundle("nav_bundle") {
 
 js_compile_checked("js_resources") {
   public_deps = [
+    ":frame_web_bundle",
     ":nav_bundle",
     ":web_bundle",
     ":web_ui_bundle",

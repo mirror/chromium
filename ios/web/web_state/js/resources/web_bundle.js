@@ -5,6 +5,7 @@
 // Set of scripts required by web layer backed up by WKWebView.
 goog.provide('__crWeb.webBundle');
 
+goog.require('__crWeb.common');
 goog.require('__crWeb.console');
 goog.require('__crWeb.contextMenu');
 goog.require('__crWeb.error');

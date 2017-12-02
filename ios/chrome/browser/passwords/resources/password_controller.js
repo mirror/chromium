@@ -368,6 +368,7 @@ if (__gCrWeb && !__gCrWeb['fillPasswordForm']) {
     var origin = __gCrWeb.common.removeQueryAndReferenceFromURL(
         formElement.ownerDocument.location.href);
 
+      debugger;
     return {
       'action': getCanonicalActionForForm_(formElement),
       'name': __gCrWeb.common.getFormIdentifier(formElement),
