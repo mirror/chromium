@@ -310,9 +310,6 @@ bool AXTree::Unserialize(const AXTreeUpdate& update) {
   for (size_t i = 0; i < update.nodes.size(); ++i)
     update_state.changed_node_ids.insert(update.nodes[i].id);
 
-  if (update.has_tree_data)
-    UpdateData(update.tree_data);
-
   if (update.node_id_to_clear != 0) {
     AXNode* node = GetFromId(update.node_id_to_clear);
     if (!node) {
@@ -393,6 +390,9 @@ bool AXTree::Unserialize(const AXTreeUpdate& update) {
     delegate_->OnAtomicUpdateFinished(
         this, root_->id() != old_root_id, changes);
   }
+
+  if (update.has_tree_data)
+    UpdateData(update.tree_data);
 
   return true;
 }
