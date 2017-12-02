@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b2b5d69_ccfd3af6",
+        "filename": "net/http/http_stream_factory_impl_job_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-12-02T01:48:19Z",
+      "side": 1,
+      "message": "This in general looks good to me, though I wonder under what kind of circumstances we would cancel the main job but still have the JobController sitting around. \n\nIf this method is invoked, usually it means QUIC job couldn\u0027t complete synchronously and we want to resume TCP job. But then TCP job is cancelled by the time we want to resume? I thought if we cancel TCP job in this case, normally it\u0027s probably the request is cancelled and thus cancels everything. *scratch head* Are you able to write a unittest to repro?",
+      "range": {
+        "startLine": 570,
+        "startChar": 41,
+        "endLine": 570,
+        "endChar": 0
+      },
+      "revId": "ef168b21092f1b171f600590f4f52fc07b314e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
