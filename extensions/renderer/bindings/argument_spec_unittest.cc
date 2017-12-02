@@ -904,6 +904,46 @@ TEST_F(ArgumentSpecUnitTest, V8Conversion) {
                     EXPECT_EQ("a string", result);
                   }));
   }
+
+  {
+    std::unique_ptr<ArgumentSpec> prop =
+        ArgumentSpecBuilder(ArgumentType::STRING, "str").MakeOptional().Build();
+    std::unique_ptr<ArgumentSpec> spec =
+        ArgumentSpecBuilder(ArgumentType::OBJECT, "obj")
+            .AddProperty("str", std::move(prop))
+            .Build();
+    // The conversion to a v8 value should also protect set an undefined value
+    // on the result value for any absent optional properties. This protects
+    // against cases where an Object.prototype getter would be invoked when a
+    // handler tried to check the value of an argument.
+    constexpr const char kMessWithObjectPrototype[] =
+        R"((function() {
+             Object.prototype.__defineGetter__('str', function() {
+               throw new Error('tricked!');
+             });
+           }))";
+    v8::HandleScope handle_scope(instance_->isolate());
+    v8::Local<v8::Context> context =
+        v8::Local<v8::Context>::New(instance_->isolate(), context_);
+    v8::Local<v8::Function> mess_with_proto =
+        FunctionFromString(context, kMessWithObjectPrototype);
+    RunFunction(mess_with_proto, context, 0, nullptr);
+    ExpectSuccess(*spec, "({})", base::BindOnce([](v8::Local<v8::Value> value) {
+      ASSERT_TRUE(value->IsObject());
+      v8::Local<v8::Object> object = value.As<v8::Object>();
+      v8::Local<v8::Context> context = object->CreationContext();
+      EXPECT_TRUE(
+          object
+              ->HasOwnProperty(
+                  context, gin::StringToSymbol(context->GetIsolate(), "str"))
+              .ToChecked());
+      gin::Dictionary dict(context->GetIsolate(), object);
+      v8::Local<v8::Value> result;
+      ASSERT_TRUE(dict.Get("str", &result));
+      EXPECT_TRUE(result->IsUndefined());
+    }));
+  }
+
   {
     std::unique_ptr<ArgumentSpec> prop =
         ArgumentSpecBuilder(ArgumentType::STRING, "prop")
