@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "22ee3739_fee43252",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-12-02T00:02:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "712a2739_0b82f58b",
+      "range": {
+        "startLine": 385,
+        "startChar": 8,
+        "endLine": 385,
+        "endChar": 30
+      },
+      "revId": "4c267b7fc0ba6744a76329d52191b7b5f52a85c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b965b5f5_423b3a4b",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a1752491_676633cb",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-12-02T00:02:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b965b5f5_423b3a4b",
+      "range": {
+        "startLine": 386,
+        "startChar": 3,
+        "endLine": 386,
+        "endChar": 0
+      },
+      "revId": "4c267b7fc0ba6744a76329d52191b7b5f52a85c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9503c768_311b828d",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
         "patchSetId": 8
@@ -68,6 +116,30 @@
       "revId": "4c267b7fc0ba6744a76329d52191b7b5f52a85c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad44153d_6e8b2ff7",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1033,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-12-02T00:02:44Z",
+      "side": 1,
+      "message": "i think without modifying the private member of OPMTaskified there\u0027s no way to \u0027reset\u0027 while keeping the last_clear_page_time() to see if \u0027not enough time passed so we\u0027re skipping the clear storage process\u0027. This is probably the best I can do for now.",
+      "parentUuid": "9503c768_311b828d",
+      "range": {
+        "startLine": 1033,
+        "startChar": 12,
+        "endLine": 1033,
+        "endChar": 32
+      },
+      "revId": "4c267b7fc0ba6744a76329d52191b7b5f52a85c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
