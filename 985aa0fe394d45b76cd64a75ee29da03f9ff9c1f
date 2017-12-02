@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3113d39_121c2f91",
+        "filename": "content/browser/renderer_host/compositor_resize_lock.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-02T00:06:52Z",
+      "side": 1,
+      "message": "Do you need to set timed_out_ to false here?",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 18
+      },
+      "revId": "985aa0fe394d45b76cd64a75ee29da03f9ff9c1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65f07b9c_7ff9e02a",
+        "filename": "content/browser/renderer_host/compositor_resize_lock.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-02T00:06:52Z",
+      "side": 1,
+      "message": "DCHECK(!unlocked_)?",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 12
+      },
+      "revId": "985aa0fe394d45b76cd64a75ee29da03f9ff9c1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
