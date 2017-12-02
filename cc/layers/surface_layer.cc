@@ -105,6 +105,14 @@ void SurfaceLayer::SetStretchContentToFillBounds(
   SetNeedsPushProperties();
 }
 
+void SurfaceLayer::SetGutterColorOverride(
+    base::Optional<SkColor> gutter_color_override) {
+  if (gutter_color_override_ == gutter_color_override)
+    return;
+  gutter_color_override_ = gutter_color_override;
+  SetNeedsPushProperties();
+}
+
 std::unique_ptr<LayerImpl> SurfaceLayer::CreateLayerImpl(
     LayerTreeImpl* tree_impl) {
   return SurfaceLayerImpl::Create(tree_impl, id());
@@ -140,6 +148,7 @@ void SurfaceLayer::PushPropertiesTo(LayerImpl* layer) {
   layer_impl->SetFallbackSurfaceId(fallback_surface_id_);
   layer_impl->SetStretchContentToFillBounds(stretch_content_to_fill_bounds_);
   layer_impl->SetDefaultBackgroundColor(default_background_color_);
+  layer_impl->SetGutterColorOverride(gutter_color_override_);
 }
 
 void SurfaceLayer::RemoveReference(base::Closure reference_returner) {

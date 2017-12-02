@@ -48,6 +48,11 @@ class CC_EXPORT SurfaceLayerImpl : public LayerImpl {
   void SetDefaultBackgroundColor(SkColor background_color);
   SkColor default_background_color() const { return default_background_color_; }
 
+  void SetGutterColorOverride(base::Optional<SkColor> gutter_color_override);
+  base::Optional<SkColor> gutter_color_override() const {
+    return gutter_color_override_;
+  }
+
   // LayerImpl overrides.
   std::unique_ptr<LayerImpl> CreateLayerImpl(LayerTreeImpl* tree_impl) override;
   void PushPropertiesTo(LayerImpl* layer) override;
@@ -73,6 +78,7 @@ class CC_EXPORT SurfaceLayerImpl : public LayerImpl {
 
   bool stretch_content_to_fill_bounds_ = false;
   SkColor default_background_color_ = SK_ColorWHITE;
+  base::Optional<SkColor> gutter_color_override_;
 
   DISALLOW_COPY_AND_ASSIGN(SurfaceLayerImpl);
 };
