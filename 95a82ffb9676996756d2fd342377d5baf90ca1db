@@ -92,6 +92,30 @@
       "revId": "95a82ffb9676996756d2fd342377d5baf90ca1db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e39a83c8_b4a164f4",
+        "filename": "device/u2f/u2f_hid_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1175054
+      },
+      "writtenOn": "2017-12-02T03:05:04Z",
+      "side": 1,
+      "message": "We should re-arm it here. The timeouts are to account for devices that hang and never respond (as opposed to being a timer for the transaction itself).",
+      "parentUuid": "b2bf5774_368eb533",
+      "range": {
+        "startLine": 156,
+        "startChar": 4,
+        "endLine": 156,
+        "endChar": 15
+      },
+      "revId": "95a82ffb9676996756d2fd342377d5baf90ca1db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
