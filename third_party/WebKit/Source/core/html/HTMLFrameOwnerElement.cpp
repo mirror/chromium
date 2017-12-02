@@ -286,6 +286,9 @@ bool HTMLFrameOwnerElement::LoadOrRedirectSubframe(
     const KURL& url,
     const AtomicString& frame_name,
     bool replace_current_item) {
+  if (!SubframeLoadingDisabler::CanLoadFrame(*this))
+    return false;
+
   UpdateContainerPolicy();
 
   if (ContentFrame()) {
@@ -294,9 +297,8 @@ bool HTMLFrameOwnerElement::LoadOrRedirectSubframe(
     return true;
   }
 
-  if (!SubframeLoadingDisabler::CanLoadFrame(*this))
-    return false;
-
+  // No content frame exists yet, but the page already reached the max subframe
+  // limit.
   if (GetDocument().GetFrame()->GetPage()->SubframeCount() >=
       Page::kMaxNumberOfFrames)
     return false;
@@ -306,6 +308,12 @@ bool HTMLFrameOwnerElement::LoadOrRedirectSubframe(
   DCHECK_EQ(ContentFrame(), child_frame);
   if (!child_frame)
     return false;
+
+  // If |url| is null, there's no need to explicitly navigate to about:blank,
+  // which confuses the FrameLoaderStateMachine about whether or not a real load
+  // has committed.
+  if (url.IsNull())
+    return true;
 
   ResourceRequest request(url);
   ReferrerPolicy policy = ReferrerPolicyAttribute();
