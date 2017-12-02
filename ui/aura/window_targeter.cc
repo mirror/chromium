@@ -166,6 +166,20 @@ Window* WindowTargeter::FindTargetForLocatedEvent(Window* window,
     Window* target = FindTargetInRootWindow(window, *event);
     if (target) {
       window->ConvertEventToTarget(target, event);
+
+#if defined(OS_CHROMEOS)
+      if (window->IsRootWindow() && event->HasNativeEvent()) {
+        // If window is root, and the target is in a different host, we need to
+        // convert the native event to the target's host as well.
+        ui::LocatedEvent* e =
+            static_cast<ui::LocatedEvent*>(event->native_event());
+        gfx::PointF native_point = e->location_f();
+        aura::Window::ConvertNativePointToTargetHost(window, target,
+                                                     &native_point);
+        e->set_location_f(native_point);
+      }
+#endif
+
       return target;
     }
   }
