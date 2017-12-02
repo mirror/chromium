@@ -559,7 +559,6 @@ void NGLineBreaker::HandleOpenTag(const NGInlineItem& item,
 
   DCHECK(item.Style());
   const ComputedStyle& style = *item.Style();
-  item_result->needs_box_when_empty = false;
   if (style.HasBorder() || style.HasPadding() ||
       (style.HasMargin() && item.HasStartEdge())) {
     NGBoxStrut borders = ComputeBorders(constraint_space_, style);
@@ -585,6 +584,9 @@ void NGLineBreaker::HandleOpenTag(const NGInlineItem& item,
       line_.should_create_line_box |= item_result->needs_box_when_empty;
     }
   }
+  item_result->needs_box_when_empty !=
+          style.CanContainAbsolutePositionObjects() ||
+      style.CanContainFixedPositionObjects();
   SetCurrentStyle(style);
   MoveToNextOf(item);
 }
