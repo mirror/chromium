@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "257e01ba_429a51ec",
+        "filename": "chrome/browser/extensions/crx_installer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-02T02:44:23Z",
+      "side": 1,
+      "message": "Not quite done - still just returns a value rather than directly setting creation_flags_ (which I think would be more clear).  Any reason we need to do that?",
+      "parentUuid": "e01d371b_bd4ab145",
+      "revId": "ccc1249ff39776cafe0c927162de134cec938300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7b93ba4_c1852b23",
         "filename": "chrome/browser/extensions/extension_service.cc",
         "patchSetId": 7
