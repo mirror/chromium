@@ -126,6 +126,20 @@ void Args::AddArgOverrides(const Scope::KeyValueMap& overrides) {
   }
 }
 
+void Args::AddDefaultArgOverride(const char* name, const Value& value) {
+  base::AutoLock lock(lock_);
+
+  overrides_[base::StringPiece(name)] = value;
+}
+
+void Args::AddDefaultArgOverrides(const Scope::KeyValueMap& overrides) {
+  base::AutoLock lock(lock_);
+
+  for (const auto& cur_override : overrides) {
+    overrides_[cur_override.first] = cur_override.second;
+  }
+}
+
 const Value* Args::GetArgOverride(const char* name) const {
   base::AutoLock lock(lock_);
 

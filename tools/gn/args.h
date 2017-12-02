@@ -46,6 +46,11 @@ class Args {
   void AddArgOverride(const char* name, const Value& value);
   void AddArgOverrides(const Scope::KeyValueMap& overrides);
 
+  // Specifies default overrides of the build arguments. THese are normally
+  // specified in the .gn file.
+  void AddDefaultArgOverride(const char* name, const Value& value);
+  void AddDefaultArgOverrides(const Scope::KeyValueMap& overrides);
+
   // Returns the value corresponding to the given argument name, or NULL if no
   // argument is set.
   const Value* GetArgOverride(const char* name) const;
