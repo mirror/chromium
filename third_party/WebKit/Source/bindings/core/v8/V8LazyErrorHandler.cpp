@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 Google Inc. All rights reserved.
+ * Copyright (C) 2017 Google Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -28,7 +28,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "bindings/core/v8/V8ErrorHandler.h"
+#include "bindings/core/v8/V8LazyErrorHandler.h"
 
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/V8BindingForCore.h"
@@ -39,16 +39,31 @@
 
 namespace blink {
 
-V8ErrorHandler::V8ErrorHandler(bool is_inline, ScriptState* script_state)
-    : V8EventListener(is_inline, script_state) {}
+V8LazyErrorHandler::V8LazyErrorHandler(
+    const AtomicString& function_name,
+    const Vector<AtomicString>& event_parameter_names,
+    const String& code,
+    const String source_url,
+    const TextPosition& position,
+    Node* node,
+    v8::Isolate* isolate)
+    : V8LazyEventListener(isolate,
+                          function_name,
+                          event_parameter_names,
+                          code,
+                          source_url,
+                          position,
+                          node) {}
 
-v8::Local<v8::Value> V8ErrorHandler::CallListenerFunction(
+v8::Local<v8::Value> V8LazyErrorHandler::CallListenerFunction(
     ScriptState* script_state,
     v8::Local<v8::Value> js_event,
     Event* event) {
   DCHECK(!js_event.IsEmpty());
-  if (!event->HasInterface(EventNames::ErrorEvent))
-    return V8EventListener::CallListenerFunction(script_state, js_event, event);
+  if (!event->HasInterface(EventNames::ErrorEvent)) {
+    return V8LazyEventListener::CallListenerFunction(script_state, js_event,
+                                                     event);
+  }
 
   ErrorEvent* error_event = static_cast<ErrorEvent*>(event);
   if (error_event->World() && error_event->World() != &World())
@@ -93,44 +108,8 @@ v8::Local<v8::Value> V8ErrorHandler::CallListenerFunction(
   return return_value;
 }
 
-// static
-void V8ErrorHandler::StoreExceptionOnErrorEventWrapper(
-    ScriptState* script_state,
-    ErrorEvent* event,
-    v8::Local<v8::Value> data,
-    v8::Local<v8::Object> creation_context) {
-  v8::Local<v8::Value> wrapped_event =
-      ToV8(event, creation_context, script_state->GetIsolate());
-  if (wrapped_event.IsEmpty())
-    return;
-
-  DCHECK(wrapped_event->IsObject());
-  auto private_error =
-      V8PrivateProperty::GetErrorEventError(script_state->GetIsolate());
-  private_error.Set(wrapped_event.As<v8::Object>(), data);
-}
-
-// static
-v8::Local<v8::Value> V8ErrorHandler::LoadExceptionFromErrorEventWrapper(
-    ScriptState* script_state,
-    ErrorEvent* event,
-    v8::Local<v8::Object> creation_context) {
-  v8::Local<v8::Value> wrapped_event =
-      ToV8(event, creation_context, script_state->GetIsolate());
-  if (wrapped_event.IsEmpty() || !wrapped_event->IsObject())
-    return v8::Local<v8::Value>();
-
-  DCHECK(wrapped_event->IsObject());
-  auto private_error =
-      V8PrivateProperty::GetErrorEventError(script_state->GetIsolate());
-  v8::Local<v8::Value> error =
-      private_error.GetOrUndefined(wrapped_event.As<v8::Object>());
-  if (error->IsUndefined())
-    return v8::Local<v8::Value>();
-  return error;
-}
-
-bool V8ErrorHandler::ShouldPreventDefault(v8::Local<v8::Value> return_value) {
+bool V8LazyErrorHandler::ShouldPreventDefault(
+    v8::Local<v8::Value> return_value) {
   return return_value->IsBoolean() && return_value.As<v8::Boolean>()->Value();
 }
 

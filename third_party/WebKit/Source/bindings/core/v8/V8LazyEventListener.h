@@ -44,17 +44,19 @@ class Node;
 // V8LazyEventListener is a wrapper for a JavaScript code string that is
 // compiled and evaluated when an event is fired.  A V8LazyEventListener is
 // either a HTML or SVG event handler.
-class V8LazyEventListener final : public V8AbstractEventListener {
+class V8LazyEventListener : public V8AbstractEventListener {
  public:
-  static V8LazyEventListener* Create(const AtomicString& function_name,
-                                     const AtomicString& event_parameter_name,
-                                     const String& code,
-                                     const String& source_url,
-                                     const TextPosition& position,
-                                     Node* node,
-                                     v8::Isolate* isolate) {
-    return new V8LazyEventListener(isolate, function_name, event_parameter_name,
-                                   code, source_url, position, node);
+  static V8LazyEventListener* Create(
+      const AtomicString& function_name,
+      const Vector<AtomicString>& event_parameter_names,
+      const String& code,
+      const String& source_url,
+      const TextPosition& position,
+      Node* node,
+      v8::Isolate* isolate) {
+    return new V8LazyEventListener(isolate, function_name,
+                                   event_parameter_names, code, source_url,
+                                   position, node);
   }
 
   virtual void Trace(blink::Visitor* visitor) {
@@ -67,10 +69,10 @@ class V8LazyEventListener final : public V8AbstractEventListener {
  protected:
   v8::Local<v8::Object> GetListenerObjectInternal(ExecutionContext*) override;
 
- private:
+ protected:
   V8LazyEventListener(v8::Isolate*,
                       const AtomicString& function_name,
-                      const AtomicString& event_parameter_name,
+                      const Vector<AtomicString>& event_parameter_names,
                       const String& code,
                       const String source_url,
                       const TextPosition&,
@@ -80,6 +82,7 @@ class V8LazyEventListener final : public V8AbstractEventListener {
                                             v8::Local<v8::Value>,
                                             Event*) override;
 
+ private:
   // Return true, so that event handlers from markup are not cloned twice when
   // building the shadow tree for SVGUseElements.
   bool WasCreatedFromMarkup() const override { return true; }
@@ -92,7 +95,7 @@ class V8LazyEventListener final : public V8AbstractEventListener {
 
   bool was_compilation_failed_;
   AtomicString function_name_;
-  AtomicString event_parameter_name_;
+  const Vector<AtomicString>& event_parameter_names_;
   String code_;
   String source_url_;
   Member<Node> node_;

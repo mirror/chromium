@@ -103,9 +103,7 @@ def attribute_context(interface, attribute, interfaces):
     if is_save_same_object:
         includes.add('platform/bindings/V8PrivateProperty.h')
 
-    if (base_idl_type == 'EventHandler' and
-            interface.name in ['Window', 'WorkerGlobalScope'] and
-            attribute.name == 'onerror'):
+    if base_idl_type == 'OnErrorEventHandler':
         includes.add('bindings/core/v8/V8ErrorHandler.h')
 
     cached_attribute_validation_method = extended_attributes.get('CachedAttribute')
@@ -298,6 +296,7 @@ def getter_context(interface, attribute, context):
     # always use a local variable (for readability and CG simplicity).
     if (idl_type.is_explicit_nullable or
             base_idl_type == 'EventHandler' or
+            base_idl_type == 'OnErrorEventHandler' or
             'CachedAttribute' in extended_attributes or
             'ReflectOnly' in extended_attributes or
             context['is_keep_alive_for_gc'] or
@@ -480,12 +479,12 @@ def setter_expression(interface, attribute, context):
             not attribute.is_static):
         arguments.append('*impl')
     idl_type = attribute.idl_type
-    if idl_type.base_type == 'EventHandler':
+    if idl_type.base_type in ['EventHandler', 'OnErrorEventHandler']:
         getter_name = scoped_name(interface, attribute, cpp_name(attribute))
         context['event_handler_getter_expression'] = '%s(%s)' % (
             getter_name, ', '.join(arguments))
-        if (interface.name in ['Window', 'WorkerGlobalScope'] and
-                attribute.name == 'onerror'):
+        if (idl_type.base_type == 'OnErrorEventHandler' and
+                interface.name in ['Window', 'WorkerGlobalScope', 'HTMLFrameSetElement']):
             includes.add('bindings/core/v8/V8ErrorHandler.h')
             arguments.append(
                 'V8EventListenerHelper::EnsureErrorHandler(' +
