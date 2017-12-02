@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16d2a2a9_a4132e07",
+        "filename": "chrome/browser/resources/md_extensions/navigation_helper.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-02T01:33:57Z",
+      "side": 1,
+      "message": "The function below does not seem to handle null/undefined, so the type for |a| and |b| should !PageState.",
+      "revId": "2de09b79e26d95303262f7b0770d7df4522b7531",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c50c5457_22b766ad",
+        "filename": "chrome/browser/resources/md_extensions/navigation_helper.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-02T01:33:57Z",
+      "side": 1,
+      "message": "Could this function be moved within the cr.define() scope below? It is unnecessarily global here.",
+      "revId": "2de09b79e26d95303262f7b0770d7df4522b7531",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "509ad1cc_cd4de883",
+        "filename": "chrome/browser/resources/md_extensions/navigation_helper.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-02T01:33:57Z",
+      "side": 1,
+      "message": "Could we add a test for replaceWith() similar to the tests at https://cs.chromium.org/chromium/src/chrome/test/data/webui/extensions/extension_navigation_helper_test.js?l\u003d120 for updateHistory()?",
+      "revId": "2de09b79e26d95303262f7b0770d7df4522b7531",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
