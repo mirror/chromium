@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af690106_e6849d69",
+        "filename": "chrome/browser/installable/installable_metrics.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-02T05:12:45Z",
+      "side": 1,
+      "message": "Please follow best practices and do \u003d 0, \u003d 1, \u003d 2 (just not on the COUNT line).\nhttps://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#Enum-Histograms",
+      "revId": "8a2512a5f004b49895d115f8feff8649841bc967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa7d0770_b926c887",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 43503,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-02T05:12:45Z",
+      "side": 1,
+      "message": "optional comment for later: These are long strings and might look strange in the rows on the dashboard.  Depending on how they look, you may want to shorten them.",
+      "revId": "8a2512a5f004b49895d115f8feff8649841bc967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6582987f_86818153",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 93713,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-02T05:12:45Z",
+      "side": 1,
+      "message": "Does it record both successful and failed installations?    Might be nice to clarify.",
+      "revId": "8a2512a5f004b49895d115f8feff8649841bc967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
