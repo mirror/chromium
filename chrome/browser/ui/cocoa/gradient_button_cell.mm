@@ -303,19 +303,6 @@ static const NSTimeInterval kAnimationHideDuration = 0.4;
   return trackingArea_ && isMouseInside_;
 }
 
-- (BOOL)startTrackingAt:(NSPoint)startPoint inView:(NSView *)controlView {
-  if ([self isMaterialDesignButtonType]) {
-    // The user has just clicked down in the button. In Material Design, set the
-    // pulsed (hover) state to off now so that if the user keeps the mouse held
-    // down while dragging it out of the button's bounds, the button will draw
-    // itself in its normal state. This is unrelated to dragging the button
-    // in the button bar, which takes a different path through the code.
-    [self setPulseState:gradient_button_cell::kPulsedOff];
-  }
-
-  return [super startTrackingAt:startPoint inView:controlView];
-}
-
 // Since we have our own drawWithFrame:, we need to also have our own
 // logic for determining when the mouse is inside for honoring this
 // request.
@@ -583,8 +570,9 @@ static const NSTimeInterval kAnimationHideDuration = 0.4;
       [self isMaterialDesignButtonType] &&
       ![self showsBorderOnlyWhileMouseInside] &&
       enabled;
+
   if (([self isBordered] && ![self showsBorderOnlyWhileMouseInside]) ||
-      pressed || [self isMouseInside] || [self isPulseStuckOn] ||
+      pressed || [self isMouseReallyInside] || [self isPulseStuckOn] ||
       hasMaterialHighlight) {
     // When pulsing we want the bookmark to stand out a little more.
     BOOL showClickedGradient = pressed ||
