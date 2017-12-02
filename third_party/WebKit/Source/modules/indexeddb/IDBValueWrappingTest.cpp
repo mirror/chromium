@@ -4,6 +4,7 @@
 
 #include "modules/indexeddb/IDBValueWrapping.h"
 
+#include <algorithm>
 #include <limits>
 #include <memory>
 
@@ -149,6 +150,37 @@ TEST(IDBValueWrapperTest, WriteVarintMultiByteEdgeCases) {
   EXPECT_EQ('\xff', output.data()[2]);
   EXPECT_EQ('\xff', output.data()[3]);
   EXPECT_EQ('\x0f', output.data()[4]);
+  output.clear();
+}
+
+TEST(IDBValueWrapperTest, WriteBytes) {
+  Vector<char> output;
+
+  Vector<uint8_t> empty;
+  IDBValueWrapper::WriteBytes(empty, output);
+  ASSERT_EQ(1U, output.size());
+  EXPECT_EQ('\x00', output.data()[0]);
+  output.clear();
+
+  Vector<uint8_t> one_char;
+  one_char.Append("\x42", 1);
+  IDBValueWrapper::WriteBytes(one_char, output);
+  ASSERT_EQ(2U, output.size());
+  EXPECT_EQ('\x01', output.data()[0]);
+  EXPECT_EQ('\x42', output.data()[1]);
+  output.clear();
+
+  Vector<uint8_t> long_vector;
+  for (int i = 0; i < 256; ++i) {
+    uint8_t character = static_cast<uint8_t>(i);
+    long_vector.Append(&character, 1);
+  }
+  IDBValueWrapper::WriteBytes(long_vector, output);
+  ASSERT_EQ(258U, output.size());
+  EXPECT_EQ('\x80', output.data()[0]);
+  EXPECT_EQ('\x02', output.data()[1]);
+  EXPECT_TRUE(std::equal(long_vector.begin(), long_vector.end(),
+                         reinterpret_cast<const uint8_t*>(output.data() + 2)));
   output.clear();
 }
 
@@ -369,6 +401,7 @@ TEST(IDBValueUnwrapperTest, IsWrapped) {
   IDBValueWrapper wrapper(scope.GetIsolate(), v8_true,
                           SerializedScriptValue::SerializeOptions::kSerialize,
                           non_throwable_exception_state);
+  wrapper.DoneCloning();
   wrapper.WrapIfBiggerThan(0);
   Vector<scoped_refptr<BlobDataHandle>> blob_data_handles;
   wrapper.ExtractBlobDataHandles(&blob_data_handles);
