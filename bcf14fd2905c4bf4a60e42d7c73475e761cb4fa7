@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44eeb8b7_8515251d",
+        "filename": "chrome/common/extensions/docs/examples/api/commands/default_command_override/manifest.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-02T01:49:15Z",
+      "side": 1,
+      "message": "Do we need activeTab?",
+      "revId": "bcf14fd2905c4bf4a60e42d7c73475e761cb4fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
