@@ -110,9 +110,10 @@ bool StructTraits<viz::mojom::SurfaceQuadStateDataView, viz::DrawQuad>::Read(
     viz::mojom::SurfaceQuadStateDataView data,
     viz::DrawQuad* out) {
   viz::SurfaceDrawQuad* quad = static_cast<viz::SurfaceDrawQuad*>(out);
-  quad->default_background_color = data.default_background_color();
   quad->stretch_content_to_fill_bounds = data.stretch_content_to_fill_bounds();
-  return data.ReadPrimarySurfaceId(&quad->primary_surface_id) &&
+  return data.ReadDefaultBackgroundColor(&quad->default_background_color) &&
+         data.ReadGutterColorOverride(&quad->gutter_color_override) &&
+         data.ReadPrimarySurfaceId(&quad->primary_surface_id) &&
          data.ReadFallbackSurfaceId(&quad->fallback_surface_id);
 }
 
