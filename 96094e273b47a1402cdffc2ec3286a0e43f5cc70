@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52df7674_a5bc9d44",
+        "filename": "net/cert/x509_certificate.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-02T00:48:31Z",
+      "side": 1,
+      "message": "This method name and comment is a little confusing since the relationship between CRYPTO_BUFFER and \u0027handle\u0027 is not obvious. I recognize that globally renaming CreateFromHandle might be confusing, but maybe include some of the comment that was deleted above the typedef and reference that in the comment above?",
+      "revId": "96094e273b47a1402cdffc2ec3286a0e43f5cc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
