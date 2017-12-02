@@ -34,6 +34,24 @@
       "revId": "92329226aa13dbee68b0898ca1fd21c17fd61652",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74d22960_bc4f3d23",
+        "filename": "content/test/gpu/gpu_tests/webgl2_conformance_expectations.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1138134
+      },
+      "writtenOn": "2017-12-02T03:22:32Z",
+      "side": 1,
+      "message": "Sorry, we forget to update webgl_conformance_expectations.py. The failure tests rolled-in are not specific for WebGL 2. We should update webgl_conformance_expectations.py too. \n\nI submitted a small patch to fix this issue at https://chromium-review.googlesource.com/c/chromium/src/+/804684, hope the FYI bots can turn green.",
+      "parentUuid": "87ddbe3c_f6e758d9",
+      "revId": "92329226aa13dbee68b0898ca1fd21c17fd61652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
