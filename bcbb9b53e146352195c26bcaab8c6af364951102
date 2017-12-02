@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1874d0f3_7c775192",
+        "filename": "chrome/browser/offline_pages/offline_page_tab_helper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-12-02T01:40:39Z",
+      "side": 1,
+      "message": "We should try not to expose provisional_page since it is for holding intermediate result. How about updating IsShowingOfflinePreview to add this info?",
+      "revId": "bcbb9b53e146352195c26bcaab8c6af364951102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
