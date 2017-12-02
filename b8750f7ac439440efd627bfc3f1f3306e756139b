@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26834372_ebd0c2f2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksFaviconThrottle.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-12-02T00:06:36Z",
+      "side": 1,
+      "message": "This would no longer be used, right? If so, we can remove this case here. Since it is part of UMA, we couldn\u0027t remove the definition, but we can add a comment there saying this is deprecated by the two new enums.",
+      "range": {
+        "startLine": 98,
+        "startChar": 44,
+        "endLine": 98,
+        "endChar": 51
+      },
+      "revId": "b8750f7ac439440efd627bfc3f1f3306e756139b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de2480fb_4c2ca212",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-12-02T00:06:36Z",
+      "side": 1,
+      "message": "This call seems to lead to crash. I haven\u0027t figured out why.",
+      "range": {
+        "startLine": 167,
+        "startChar": 16,
+        "endLine": 167,
+        "endChar": 51
+      },
+      "revId": "b8750f7ac439440efd627bfc3f1f3306e756139b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8689bb9_fa339f40",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-12-02T00:06:36Z",
+      "side": 1,
+      "message": "Good clean up!",
+      "range": {
+        "startLine": 71,
+        "startChar": 5,
+        "endLine": 71,
+        "endChar": 25
+      },
+      "revId": "b8750f7ac439440efd627bfc3f1f3306e756139b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c45fa6ba_3e6a6198",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-12-02T00:06:36Z",
+      "side": 1,
+      "message": "On bad network, we sometimes get FAILURE_SERVER_ERROR even when it should have been FAILURE_CONNECTION_ERROR. We should investigate more to avoid over-throttling.",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 61,
+        "endChar": 24
+      },
+      "revId": "b8750f7ac439440efd627bfc3f1f3306e756139b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
