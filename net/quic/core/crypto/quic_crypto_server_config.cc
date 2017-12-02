@@ -1490,7 +1490,9 @@ void QuicCryptoServerConfig::BuildRejection(
   QuicStringPiece client_cached_cert_hashes;
   if (client_hello.GetStringPiece(kCCRT, &client_cached_cert_hashes)) {
     params->client_cached_cert_hashes = client_cached_cert_hashes.as_string();
-  }
+  } /*else {
+    params->client_cached_cert_hashes.clear();
+  }*/
 
   const string compressed =
       CompressChain(compressed_certs_cache, signed_config.chain,

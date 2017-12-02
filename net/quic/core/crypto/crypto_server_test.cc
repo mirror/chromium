@@ -942,6 +942,54 @@ TEST_P(CryptoServerTest, ProofSourceFailure) {
   ShouldFailMentioning("", msg);
 }
 
+
+// Chromium bug 723604
+TEST_P(CryptoServerTest, TwoRttServerDropCachedCerts) {
+  // Send inchoate CHLO.
+  CryptoHandshakeMessage msg =
+        crypto_test_utils::CreateCHLO({{"PDMD", "X509"},
+                                       {"VER\0", client_version_string_}},
+                                      kClientHelloMinimumSize);
+  ShouldSucceed(msg);
+
+  // Server replies with cert chain. Decompress cert chain to individual certs.
+  QuicStringPiece certs_compressed;
+  ASSERT_TRUE(out_.GetStringPiece(kCertificateTag, &certs_compressed));
+  ASSERT_NE(0u, certs_compressed.size());
+  std::vector<string> certs;
+  ASSERT_TRUE(CertCompressor::DecompressChain(
+      certs_compressed, /*cached_certs=*/{}, /*common_sets=*/nullptr, &certs));
+
+  config_.set_chlo_multiplier(1);
+
+  // Client sends CHLO with bad source-address token and hashes of cached certs.
+  const char kBadSourceAddressToken[] = "";
+  msg.SetStringPiece(kSourceAddressTokenTag, kBadSourceAddressToken);
+  std::vector<uint64_t> hashes(certs.size());
+  for (size_t i = 0; i < certs.size(); ++i) {
+    hashes[i] = QuicUtils::QuicUtils::FNV1a_64_Hash(certs[i]);
+  }
+  msg.SetVector(kCCRT, hashes);
+  ShouldSucceed(msg);
+
+  // Server responds with valid source-address token.
+  QuicStringPiece srct;
+  ASSERT_TRUE(out_.GetStringPiece(kSourceAddressTokenTag, &srct));
+
+  // Client drops cached certs; sends CHLO with updated source-address token.
+  msg.SetStringPiece(kSourceAddressTokenTag, srct);
+  msg.Erase(kCCRT);
+  ShouldSucceed(msg);
+
+  // Server response's cert chain should not contain hashes of cached certs.
+  ASSERT_TRUE(out_.GetStringPiece(kCertificateTag, &certs_compressed));
+  ASSERT_NE(0u, certs_compressed.size());
+  ASSERT_TRUE(CertCompressor::DecompressChain(
+      certs_compressed, /*cached_certs=*/{}, /*common_sets=*/nullptr, &certs));
+}
+
+
+
 class CryptoServerConfigGenerationTest : public QuicTest {};
 
 TEST_F(CryptoServerConfigGenerationTest, Determinism) {
