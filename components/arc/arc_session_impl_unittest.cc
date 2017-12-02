@@ -129,7 +129,8 @@ class ArcSessionImplTest : public testing::Test {
     // Create a user and set it as the primary user.
     const AccountId account_id = AccountId::FromUserEmail(kFakeGmail);
     const user_manager::User* user = GetUserManager()->AddUser(account_id);
-    GetUserManager()->UserLoggedIn(account_id, user->username_hash(), false);
+    GetUserManager()->UserLoggedIn(account_id, user->username_hash(), false,
+                                   false);
   }
 
   ~ArcSessionImplTest() override {

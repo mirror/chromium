@@ -174,7 +174,7 @@ class UserImageManagerTest : public LoginManagerTest,
   // Logs in |account_id|.
   void LogIn(const AccountId& account_id) {
     user_manager::UserManager::Get()->UserLoggedIn(
-        account_id, account_id.GetUserEmail(), false);
+        account_id, account_id.GetUserEmail(), false, false);
   }
 
   // Verifies user image info.

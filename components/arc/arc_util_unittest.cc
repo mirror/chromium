@@ -211,7 +211,7 @@ TEST_F(ArcUtilTest, IsArcAllowedForUser) {
   // ephemeral policy is set.
   fake_user_manager->SetEphemeralUsersEnabled(true);
   fake_user_manager->UserLoggedIn(AccountId::FromUserEmail("test@test.com"),
-                                  "test@test.com-hash", false);
+                                  "test@test.com-hash", false, false);
   const user_manager::User* ephemeral_user = fake_user_manager->GetActiveUser();
   ASSERT_TRUE(ephemeral_user);
   ASSERT_TRUE(fake_user_manager->IsUserCryptohomeDataEphemeral(
