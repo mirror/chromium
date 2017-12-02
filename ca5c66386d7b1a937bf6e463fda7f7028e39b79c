@@ -22,6 +22,30 @@
       "revId": "ca5c66386d7b1a937bf6e463fda7f7028e39b79c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1931b404_0008309a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 6902,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-02T04:11:16Z",
+      "side": 1,
+      "message": "Done.\n\nThanks. I adopted this fix to new other two total metrics descriptions.",
+      "parentUuid": "e74d477b_58c40117",
+      "range": {
+        "startLine": 6901,
+        "startChar": 72,
+        "endLine": 6902,
+        "endChar": 38
+      },
+      "revId": "ca5c66386d7b1a937bf6e463fda7f7028e39b79c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
