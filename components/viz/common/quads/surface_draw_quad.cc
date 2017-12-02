@@ -27,6 +27,7 @@ void SurfaceDrawQuad::SetNew(
     const SurfaceId& primary_surface_id,
     const base::Optional<SurfaceId>& fallback_surface_id,
     SkColor default_background_color,
+    const base::Optional<SkColor>& gutter_color_override,
     bool stretch_content_to_fill_bounds) {
   bool needs_blending = true;
   DrawQuad::SetAll(shared_quad_state, DrawQuad::SURFACE_CONTENT, rect,
@@ -34,6 +35,7 @@ void SurfaceDrawQuad::SetNew(
   this->primary_surface_id = primary_surface_id;
   this->fallback_surface_id = fallback_surface_id;
   this->default_background_color = default_background_color;
+  this->gutter_color_override = gutter_color_override;
   this->stretch_content_to_fill_bounds = stretch_content_to_fill_bounds;
 }
 
@@ -45,12 +47,14 @@ void SurfaceDrawQuad::SetAll(
     const SurfaceId& primary_surface_id,
     const base::Optional<SurfaceId>& fallback_surface_id,
     SkColor default_background_color,
+    const base::Optional<SkColor>& gutter_color_override,
     bool stretch_content_to_fill_bounds) {
   DrawQuad::SetAll(shared_quad_state, DrawQuad::SURFACE_CONTENT, rect,
                    visible_rect, needs_blending);
   this->primary_surface_id = primary_surface_id;
   this->fallback_surface_id = fallback_surface_id;
   this->default_background_color = default_background_color;
+  this->gutter_color_override = gutter_color_override;
   this->stretch_content_to_fill_bounds = stretch_content_to_fill_bounds;
 }
 
