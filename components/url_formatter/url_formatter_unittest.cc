@@ -408,6 +408,25 @@ const IDNTestCase idn_cases[] = {
      L"123.com",
      false},
 
+    {"xn--c1ad2baa8a0g.com",
+      L"\x0442\x0448\x0456\x0442\x0442\x0435\x0433.com",
+      false},  // тшіттег.com
+
+    // еьау.com
+    {"xn--80aj7b8a.com", L"\x0435\x044c\x0430\x0443.com", false},
+    // евау.com
+    {"xn--80adi2d.com", L"\x0435\x0432\x0430\x0443.com", false},
+    // шнатѕарр.com
+    {"xn--80aa1boaj3b9g.com",
+      L"\x0448\x043d\x0430\x0442\x0455\x0430\x0440\x0440.com",
+      false},
+    // щнатѕарр.com
+    {"xn--80aa1boaj0c3f.com",
+      L"\x0449\x043d\x0430\x0442\x0455\x0430\x0440\x0440.com",
+      false},
+    // ടഠ.com
+    {"xn--lwcc.com", L"\x0d1f\x0d20.com", false},
+
     // Mixed digits: the first two will also fail mixed script test
     // Latin + ASCII digit + Deva digit
     {"xn--asc1deva-j0q.co.in", L"asc1deva\x0967.co.in", false},
