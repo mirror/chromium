@@ -44,8 +44,8 @@ void CachedMatchedProperties::Set(const ComputedStyle& style,
   // Note that we don't cache the original ComputedStyle instance. It may be
   // further modified.  The ComputedStyle in the cache is really just a holder
   // for the substructures and never used as-is.
-  this->computed_style = ComputedStyle::Clone(style);
-  this->parent_computed_style = ComputedStyle::Clone(parent_style);
+  computed_style = ComputedStyle::Clone(style);
+  parent_computed_style = ComputedStyle::Clone(parent_style);
 }
 
 void CachedMatchedProperties::Clear() {

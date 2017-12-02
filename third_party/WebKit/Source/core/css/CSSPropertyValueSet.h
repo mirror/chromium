@@ -206,14 +206,14 @@ class CORE_EXPORT ImmutableCSSPropertyValueSet : public CSSPropertyValueSet {
 inline const Member<const CSSValue>* ImmutableCSSPropertyValueSet::ValueArray()
     const {
   return reinterpret_cast<const Member<const CSSValue>*>(
-      const_cast<const void**>(&(this->storage_)));
+      const_cast<const void**>(& storage_)));
 }
 
 inline const CSSPropertyValueMetadata*
 ImmutableCSSPropertyValueSet::MetadataArray() const {
   return reinterpret_cast<const CSSPropertyValueMetadata*>(
       &reinterpret_cast<const char*>(
-          &(this->storage_))[array_size_ * sizeof(Member<CSSValue>)]);
+          & storage_))[array_size_ * sizeof(Member<CSSValue>)]);
 }
 
 DEFINE_TYPE_CASTS(ImmutableCSSPropertyValueSet,

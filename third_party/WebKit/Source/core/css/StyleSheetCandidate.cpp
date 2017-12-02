@@ -79,7 +79,7 @@ bool StyleSheetCandidate::IsEnabledAndLoading() const {
 
 bool StyleSheetCandidate::CanBeActivated(
     const String& current_preferrable_name) const {
-  StyleSheet* sheet = this->Sheet();
+  StyleSheet* sheet = Sheet();
   if (!sheet || sheet->disabled() || !sheet->IsCSSStyleSheet())
     return false;
 
@@ -90,7 +90,7 @@ bool StyleSheetCandidate::CanBeActivated(
       return !IsAlternate();
   }
 
-  const AtomicString& title = this->Title();
+  const AtomicString& title = Title();
   if (!IsEnabledViaScript() && !title.IsEmpty() &&
       title != current_preferrable_name)
     return false;
