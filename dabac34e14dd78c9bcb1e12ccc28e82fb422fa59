@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72fdb512_f523d36b",
+        "filename": "content/browser/web_contents/web_contents_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3476,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-02T00:51:45Z",
+      "side": 0,
+      "message": "Removing this because the bug there was caused by calls from OnDidLoadResourceFromMemoryCache. That call though was removed in r411105",
+      "revId": "dabac34e14dd78c9bcb1e12ccc28e82fb422fa59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
