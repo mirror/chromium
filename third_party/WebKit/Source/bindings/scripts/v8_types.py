@@ -60,6 +60,7 @@ from v8_utilities import extended_attribute_value_contains
 NON_WRAPPER_TYPES = frozenset([
     'Dictionary',
     'EventHandler',
+    'OnErrorEventHandler',
     'EventListener',
     'NodeFilter',
     'SerializedScriptValue',
@@ -123,6 +124,7 @@ CPP_SPECIAL_CONVERSION_RULES = {
     'Date': 'double',
     'Dictionary': 'Dictionary',
     'EventHandler': 'EventListener*',
+    'OnErrorEventHandler': 'EventListener*',
     'EventListener': 'EventListener*',
     'NodeFilter': 'V8NodeFilterCondition*',
     'Promise': 'ScriptPromise',
@@ -376,6 +378,8 @@ INCLUDES_FOR_TYPE = {
     'Dictionary': set(['bindings/core/v8/Dictionary.h']),
     'EventHandler': set(['bindings/core/v8/V8AbstractEventListener.h',
                          'bindings/core/v8/V8EventListenerHelper.h']),
+    'OnErrorEventHandler': set(['bindings/core/v8/V8AbstractEventListener.h',
+                                'bindings/core/v8/V8EventListenerHelper.h']),
     'EventListener': set(['bindings/core/v8/BindingSecurity.h',
                           'bindings/core/v8/V8EventListenerHelper.h',
                           'core/frame/LocalDOMWindow.h']),
@@ -873,6 +877,7 @@ V8_SET_RETURN_VALUE = {
     'FrozenArray': 'V8SetReturnValue(info, {cpp_value})',
     'Date': 'V8SetReturnValue(info, {cpp_value})',
     'EventHandler': 'V8SetReturnValue(info, {cpp_value})',
+    'OnErrorEventHandler': 'V8SetReturnValue(info, {cpp_value})',
     'NodeFilter': 'V8SetReturnValue(info, {cpp_value})',
     'ScriptValue': 'V8SetReturnValue(info, {cpp_value})',
     'SerializedScriptValue': 'V8SetReturnValue(info, {cpp_value})',
@@ -934,7 +939,7 @@ def v8_set_return_value(idl_type, cpp_value, extended_attributes=None, script_wr
     idl_type, cpp_value = preprocess_idl_type_and_value(idl_type, cpp_value, extended_attributes)
     this_v8_conversion_type = idl_type.v8_conversion_type(extended_attributes)
     # SetReturn-specific overrides
-    if this_v8_conversion_type in ('Date', 'EventHandler', 'NodeFilter', 'ScriptValue',
+    if this_v8_conversion_type in ('Date', 'EventHandler', 'OnErrorEventHandler', 'NodeFilter', 'ScriptValue',
                                    'SerializedScriptValue', 'sequence', 'FrozenArray'):
         # Convert value to V8 and then use general V8SetReturnValue
         cpp_value = idl_type.cpp_value_to_v8_value(cpp_value, extended_attributes=extended_attributes)
@@ -976,6 +981,11 @@ CPP_VALUE_TO_V8_VALUE = {
     # Special cases
     'Dictionary': '{cpp_value}.V8Value()',
     'EventHandler': (
+        '{cpp_value} ? ' +
+        'V8AbstractEventListener::Cast({cpp_value})->GetListenerOrNull(' +
+        '{isolate}, impl->GetExecutionContext()) : ' +
+        'v8::Null({isolate}).As<v8::Value>()'),
+    'OnErrorEventHandler': (
         '{cpp_value} ? ' +
         'V8AbstractEventListener::Cast({cpp_value})->GetListenerOrNull(' +
         '{isolate}, impl->GetExecutionContext()) : ' +

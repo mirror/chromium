@@ -1227,9 +1227,9 @@ void HTMLElement::HandleKeypressEvent(KeyboardEvent* event) {
   }
 }
 
-const AtomicString& HTMLElement::EventParameterName() {
-  DEFINE_STATIC_LOCAL(const AtomicString, event_string, ("event"));
-  return event_string;
+const Vector<AtomicString>& HTMLElement::EventParameterName() {
+  DEFINE_STATIC_LOCAL(const Vector<AtomicString>, event_vector, ({"event"}));
+  return event_vector;
 }
 
 int HTMLElement::offsetLeftForBinding() {

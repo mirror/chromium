@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009 Google Inc. All rights reserved.
+ * Copyright (C) 2017 Google Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -28,43 +28,45 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef ScriptEventListener_h
-#define ScriptEventListener_h
+#ifndef V8LazyErrorHandler_h
+#define V8LazyErrorHandler_h
 
-#include "base/memory/scoped_refptr.h"
-#include "bindings/core/v8/ScriptValue.h"
 #include "bindings/core/v8/V8LazyEventListener.h"
 
 namespace blink {
 
-class EventListener;
-class ExecutionContext;
-class LocalFrame;
-class Node;
-class QualifiedName;
-class SourceLocation;
+class ErrorEvent;
 
-V8LazyEventListener* CreateAttributeEventListener(
-    Node*,
-    const QualifiedName&,
-    const AtomicString& value,
-    const Vector<AtomicString>& event_parameter_names);
-V8LazyEventListener* CreateAttributeEventListener(
-    LocalFrame*,
-    const QualifiedName&,
-    const AtomicString& value,
-    const Vector<AtomicString>& event_parameter_names);
-v8::Local<v8::Object> EventListenerHandler(ExecutionContext*, EventListener*);
-v8::Local<v8::Function> EventListenerEffectiveFunction(
-    v8::Isolate*,
-    v8::Local<v8::Object> handler);
-void GetFunctionLocation(v8::Local<v8::Function>,
-                         String& script_id,
-                         int& line_number,
-                         int& column_number);
-std::unique_ptr<SourceLocation> GetFunctionLocation(ExecutionContext*,
-                                                    EventListener*);
+class V8LazyErrorHandler final : public V8LazyEventListener {
+ public:
+  static V8LazyErrorHandler* Create(
+      const AtomicString& function_name,
+      const Vector<AtomicString>& event_parameter_names,
+      const String& code,
+      const String source_url,
+      const TextPosition& position,
+      Node* node,
+      v8::Isolate* isolate) {
+    V8LazyErrorHandler* event_listener =
+        new V8LazyErrorHandler(function_name, event_parameter_names, code,
+                               source_url, position, node, isolate);
+    return event_listener;
+  }
+
+ private:
+  V8LazyErrorHandler(const AtomicString& function_name,
+                     const Vector<AtomicString>& event_parameter_names,
+                     const String& code,
+                     const String source_url,
+                     const TextPosition&,
+                     Node*,
+                     v8::Isolate*);
+  v8::Local<v8::Value> CallListenerFunction(ScriptState*,
+                                            v8::Local<v8::Value>,
+                                            Event*) override;
+  bool ShouldPreventDefault(v8::Local<v8::Value> return_value) override;
+};
 
 }  // namespace blink
 
-#endif  // ScriptEventListener_h
+#endif  // V8LazyErrorHandler_h

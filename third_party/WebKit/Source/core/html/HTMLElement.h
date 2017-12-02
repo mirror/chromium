@@ -107,7 +107,7 @@ class CORE_EXPORT HTMLElement : public Element {
   bool MatchesReadOnlyPseudoClass() const override;
   bool MatchesReadWritePseudoClass() const override;
 
-  static const AtomicString& EventParameterName();
+  static const Vector<AtomicString>& EventParameterName();
 
   virtual String AltText() const { return String(); }
 

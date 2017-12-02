@@ -55,7 +55,7 @@ namespace blink {
 V8LazyEventListener::V8LazyEventListener(
     v8::Isolate* isolate,
     const AtomicString& function_name,
-    const AtomicString& event_parameter_name,
+    const Vector<AtomicString>& event_parameter_names,
     const String& code,
     const String source_url,
     const TextPosition& position,
@@ -63,7 +63,7 @@ V8LazyEventListener::V8LazyEventListener(
     : V8AbstractEventListener(true, DOMWrapperWorld::MainWorld(), isolate),
       was_compilation_failed_(false),
       function_name_(function_name),
-      event_parameter_name_(event_parameter_name),
+      event_parameter_names_(event_parameter_names),
       code_(code),
       source_url_(source_url),
       node_(node),
@@ -168,7 +168,6 @@ void V8LazyEventListener::CompileScript(ScriptState* script_state,
 
   // Nodes other than the document object, when executing inline event
   // handlers push document, form owner, and the target node on the scope chain.
-  // We do this by using 'with' statement.
   // See fast/forms/form-action.html
   //     fast/forms/selected-index-value.html
   //     fast/overflow/onscroll-layer-self-destruct.html
@@ -182,8 +181,17 @@ void V8LazyEventListener::CompileScript(ScriptState* script_state,
   scopes[0] = ToObjectWrapper<Document>(
       node_ ? node_->ownerDocument() : nullptr, script_state);
 
-  v8::Local<v8::String> parameter_name =
-      V8String(GetIsolate(), event_parameter_name_);
+  size_t event_parameter_count = event_parameter_names_.size();
+  DCHECK_LE(event_parameter_count, 5u);
+  v8::Local<v8::String> parameter_names[5];
+  String event_parameter_string = "";
+  for (size_t i = 0; i < event_parameter_count; ++i) {
+    event_parameter_string.append(event_parameter_names_[i].GetString());
+    if (i != event_parameter_count - 1)
+      event_parameter_string.append(", ");
+    parameter_names[i] = V8String(GetIsolate(), event_parameter_names_[i]);
+  }
+
   v8::ScriptOrigin origin(
       V8String(GetIsolate(), source_url_),
       v8::Integer::New(GetIsolate(), position_.line_.ZeroBasedInt()),
@@ -198,8 +206,8 @@ void V8LazyEventListener::CompileScript(ScriptState* script_state,
     // it should be reported as an ErrorEvent.
     v8::TryCatch block(GetIsolate());
     wrapped_function = v8::ScriptCompiler::CompileFunctionInContext(
-        GetIsolate(), &source, script_state->GetContext(), 1, &parameter_name,
-        3, scopes);
+        GetIsolate(), &source, script_state->GetContext(),
+        event_parameter_count, parameter_names, 3, scopes);
     if (block.HasCaught()) {
       was_compilation_failed_ = true;  // Do not compile the same code twice.
       FireErrorEvent(script_state->GetContext(), execution_context,
@@ -223,7 +231,7 @@ void V8LazyEventListener::CompileScript(ScriptState* script_state,
            .ToLocal(&to_string_function))
     return;
   String to_string_string = "function " + function_name_ + "(" +
-                            event_parameter_name_ + ") {\n  " + code_ + "\n}";
+                            event_parameter_string + ") {\n  " + code_ + "\n}";
   V8PrivateProperty::GetLazyEventListenerToString(GetIsolate())
       .Set(wrapped_function, V8String(GetIsolate(), to_string_string));
   if (!V8CallBoolean(wrapped_function->CreateDataProperty(
