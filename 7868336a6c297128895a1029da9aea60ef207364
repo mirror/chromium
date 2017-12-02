@@ -16,6 +16,24 @@
       "revId": "7868336a6c297128895a1029da9aea60ef207364",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a05d26f1_7728ad1e",
+        "filename": "third_party/WebKit/Source/core/loader/EmptyClients.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-12-02T15:41:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "902fcf84_cac0085c",
+      "revId": "7868336a6c297128895a1029da9aea60ef207364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
