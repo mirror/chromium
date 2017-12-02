@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb513ae2_b9a961d3",
+        "filename": "base/test/scoped_task_environment_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-12-02T01:08:04Z",
+      "side": 1,
+      "message": "This PostTask() will be executed asynchronously, without waiting for RunUntilIdle(), below - if you introduce even the tiniest delay here then this test will fail.",
+      "range": {
+        "startLine": 188,
+        "startChar": 0,
+        "endLine": 192,
+        "endChar": 49
+      },
+      "revId": "5e2df665dfce3a3aceb4852d90ad55d31fc36f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
