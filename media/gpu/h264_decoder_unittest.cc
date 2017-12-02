@@ -48,14 +48,15 @@ class MockH264Accelerator : public H264Decoder::H264Accelerator {
   MOCK_METHOD1(SubmitDecode, bool(const scoped_refptr<H264Picture>& pic));
   MOCK_METHOD1(OutputPicture, bool(const scoped_refptr<H264Picture>& pic));
 
-  bool SubmitFrameMetadata(const H264SPS* sps,
-                           const H264PPS* pps,
-                           const H264DPB& dpb,
-                           const H264Picture::Vector& ref_pic_listp0,
-                           const H264Picture::Vector& ref_pic_listb0,
-                           const H264Picture::Vector& ref_pic_listb1,
-                           const scoped_refptr<H264Picture>& pic) override {
-    return true;
+  H264Decoder::Result SubmitFrameMetadata(
+      const H264SPS* sps,
+      const H264PPS* pps,
+      const H264DPB& dpb,
+      const H264Picture::Vector& ref_pic_listp0,
+      const H264Picture::Vector& ref_pic_listb0,
+      const H264Picture::Vector& ref_pic_listb1,
+      const scoped_refptr<H264Picture>& pic) override {
+    return H264Decoder::Result::kOk;
   }
 
   bool SubmitSlice(const H264PPS* pps,
@@ -68,7 +69,7 @@ class MockH264Accelerator : public H264Decoder::H264Accelerator {
     return true;
   }
 
-  void Reset() override {}
+  bool Reset() override { return true; }
 };
 
 // Test H264Decoder by feeding different of h264 frame sequences and make
