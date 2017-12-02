@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "389cd377_1fb5b157",
+        "filename": "media/mojo/services/gpu_mojo_media_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-02T00:55:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f53323e_e04d6771",
+      "range": {
+        "startLine": 15,
+        "startChar": 9,
+        "endLine": 15,
+        "endChar": 32
+      },
+      "revId": "0ac0166f7af750d8d092ac32e5ad5ffd55974fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd1769e9_7b5ad04c",
         "filename": "media/mojo/services/interface_factory_impl.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5c4c9df0_62120a97",
+        "filename": "media/mojo/services/interface_factory_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-02T00:55:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd1769e9_7b5ad04c",
+      "range": {
+        "startLine": 34,
+        "startChar": 9,
+        "endLine": 34,
+        "endChar": 55
+      },
+      "revId": "0ac0166f7af750d8d092ac32e5ad5ffd55974fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "527865cc_4a4e2129",
         "filename": "media/mojo/services/mojo_cdm_proxy.cc",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-02T00:21:35Z",
       "side": 1,
       "message": "Doesn\u0027t this check that |client_| is set?",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 81,
+        "endChar": 18
+      },
+      "revId": "0ac0166f7af750d8d092ac32e5ad5ffd55974fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82ffbc8f_54d7913c",
+        "filename": "media/mojo/services/mojo_cdm_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-02T00:55:41Z",
+      "side": 1,
+      "message": "Typo. Thanks for catching that!",
+      "parentUuid": "527865cc_4a4e2129",
       "range": {
         "startLine": 81,
         "startChar": 2,
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "4ef87afa_d5dae979",
+        "filename": "media/mojo/services/mojo_cdm_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-02T00:55:41Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "c9f3eaa6_768e61d2",
+      "revId": "0ac0166f7af750d8d092ac32e5ad5ffd55974fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a330df7f_eb69b961",
         "filename": "media/mojo/services/mojo_cdm_proxy_service.h",
         "patchSetId": 4
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "06304820_a52795e6",
+        "filename": "media/mojo/services/mojo_cdm_proxy_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-02T00:55:41Z",
+      "side": 1,
+      "message": "Not needed since it\u0027s already included in the base class file.",
+      "parentUuid": "a330df7f_eb69b961",
+      "revId": "0ac0166f7af750d8d092ac32e5ad5ffd55974fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1f5c4b45_ee9394ab",
         "filename": "media/mojo/services/mojo_cdm_proxy_service.h",
         "patchSetId": 4
@@ -116,6 +224,30 @@
       "writtenOn": "2017-12-02T00:21:35Z",
       "side": 1,
       "message": "Is this right? This is part of the mojom::CdmProxy interface.",
+      "range": {
+        "startLine": 35,
+        "startChar": 15,
+        "endLine": 35,
+        "endChar": 22
+      },
+      "revId": "0ac0166f7af750d8d092ac32e5ad5ffd55974fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9d0d983_de8ebe51",
+        "filename": "media/mojo/services/mojo_cdm_proxy_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-02T00:55:41Z",
+      "side": 1,
+      "message": "Yes, this is done by the typemap.",
+      "parentUuid": "1f5c4b45_ee9394ab",
       "range": {
         "startLine": 35,
         "startChar": 15,
@@ -148,6 +280,30 @@
       "revId": "0ac0166f7af750d8d092ac32e5ad5ffd55974fdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7961e02_20252667",
+        "filename": "media/mojo/services/mojo_cdm_proxy_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-02T00:55:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99edda9c_e5dfbb57",
+      "range": {
+        "startLine": 54,
+        "startChar": 37,
+        "endLine": 54,
+        "endChar": 47
+      },
+      "revId": "0ac0166f7af750d8d092ac32e5ad5ffd55974fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
