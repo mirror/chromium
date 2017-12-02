@@ -39,8 +39,8 @@ void NewTabTracker::OnOmniboxNavigation() {
 }
 
 void NewTabTracker::OnOmniboxFocused() {
-  if (ShouldShowPromo())
-    ShowPromo();
+  // if (ShouldShowPromo())
+  ShowPromo();
 }
 
 void NewTabTracker::OnPromoClosed() {
