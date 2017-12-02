@@ -52,6 +52,9 @@ class TestSaveCardBubbleController : public SaveCardBubbleController {
   }
   void OnBubbleClosed() override { on_bubble_closed_was_called_ = true; }
 
+  MOCK_METHOD0(OnBubbleFooterShown, void());
+  MOCK_METHOD0(OnBubbleFooterHidden, void());
+
   const LegalMessageLines& GetLegalMessageLines() const override {
     return lines_;
   }
