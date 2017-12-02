@@ -22,6 +22,30 @@
       "revId": "3f747c124030371f9de0701dfc2e688d5cd05304",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28f4f42d_20277c38",
+        "filename": "media/gpu/dxva_video_decode_accelerator_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-02T00:21:40Z",
+      "side": 1,
+      "message": "+fgalligan, Frank do all VP9 resolution changes happen on key frames?",
+      "parentUuid": "5a58513c_32c59740",
+      "range": {
+        "startLine": 512,
+        "startChar": 8,
+        "endLine": 512,
+        "endChar": 23
+      },
+      "revId": "3f747c124030371f9de0701dfc2e688d5cd05304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
