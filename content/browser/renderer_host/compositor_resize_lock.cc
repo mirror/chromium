@@ -13,9 +13,7 @@ namespace content {
 
 CompositorResizeLock::CompositorResizeLock(CompositorResizeLockClient* client,
                                            const gfx::Size& new_size)
-    : client_(client),
-      expected_size_(new_size),
-      acquisition_time_(base::TimeTicks::Now()) {
+    : client_(client), expected_size_(new_size) {
   TRACE_EVENT_ASYNC_BEGIN2("ui", "CompositorResizeLock", this, "width",
                            expected_size().width(), "height",
                            expected_size().height());
@@ -29,23 +27,28 @@ CompositorResizeLock::~CompositorResizeLock() {
   TRACE_EVENT_ASYNC_END2("ui", "CompositorResizeLock", this, "width",
                          expected_size().width(), "height",
                          expected_size().height());
-
-  UMA_HISTOGRAM_TIMES("UI.CompositorResizeLock.Duration",
-                      base::TimeTicks::Now() - acquisition_time_);
-
-  UMA_HISTOGRAM_BOOLEAN("UI.CompositorResizeLock.TimedOut", timed_out_);
 }
 
 bool CompositorResizeLock::Lock() {
   if (unlocked_ || compositor_lock_)
     return false;
   compositor_lock_ = client_->GetCompositorLock(this);
+  acquisition_time_ = base::TimeTicks::Now();
+  DCHECK(!timed_out_);
   return true;
 }
 
 void CompositorResizeLock::UnlockCompositor() {
+  if (unlocked_)
+    return;
+
   unlocked_ = true;
   compositor_lock_ = nullptr;
+
+  UMA_HISTOGRAM_TIMES("UI.CompositorResizeLock.Duration",
+                      base::TimeTicks::Now() - acquisition_time_);
+
+  UMA_HISTOGRAM_BOOLEAN("UI.CompositorResizeLock.TimedOut", timed_out_);
 }
 
 void CompositorResizeLock::CompositorLockTimedOut() {
