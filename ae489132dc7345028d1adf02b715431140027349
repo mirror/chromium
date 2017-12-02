@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "af100904_c8db2d99",
+        "filename": "components/arc/common/metrics.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1125664
+      },
+      "writtenOn": "2017-12-02T01:06:51Z",
+      "side": 1,
+      "message": "Done, apparently version was incremented while this CL was in progress.",
+      "parentUuid": "724e4c4b_8679046c",
+      "range": {
+        "startLine": 4,
+        "startChar": 20,
+        "endLine": 4,
+        "endChar": 21
+      },
+      "revId": "ae489132dc7345028d1adf02b715431140027349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6b9bf61_210bb724",
         "filename": "components/arc/common/metrics.mojom",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "eb91a5a8_894f8e9d",
+        "filename": "components/arc/common/metrics.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1125664
+      },
+      "writtenOn": "2017-12-02T01:06:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6b9bf61_210bb724",
+      "revId": "ae489132dc7345028d1adf02b715431140027349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8deff2ff_090f074f",
         "filename": "components/arc/common/metrics.mojom",
         "patchSetId": 2
@@ -56,6 +98,24 @@
       "revId": "ae489132dc7345028d1adf02b715431140027349",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77e8586b_4c80aa2b",
+        "filename": "components/arc/common/metrics.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1125664
+      },
+      "writtenOn": "2017-12-02T01:06:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8deff2ff_090f074f",
+      "revId": "ae489132dc7345028d1adf02b715431140027349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "255f0087_3f3cebbb",
+        "filename": "components/arc/common/metrics.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1125664
+      },
+      "writtenOn": "2017-12-02T01:06:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07f484f5_87a3d7f7",
+      "range": {
+        "startLine": 53,
+        "startChar": 5,
+        "endLine": 53,
+        "endChar": 11
+      },
+      "revId": "ae489132dc7345028d1adf02b715431140027349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fa2a6ca_9f8afd0f",
         "filename": "components/arc/common/metrics.mojom",
         "patchSetId": 2
@@ -102,6 +186,30 @@
       "revId": "ae489132dc7345028d1adf02b715431140027349",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49bba1a1_70323d93",
+        "filename": "components/arc/common/metrics.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1125664
+      },
+      "writtenOn": "2017-12-02T01:06:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fa2a6ca_9f8afd0f",
+      "range": {
+        "startLine": 57,
+        "startChar": 5,
+        "endLine": 57,
+        "endChar": 12
+      },
+      "revId": "ae489132dc7345028d1adf02b715431140027349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "52b8852a_4224de76",
+        "filename": "components/arc/common/metrics.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1125664
+      },
+      "writtenOn": "2017-12-02T01:06:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7493f314_1ae76935",
+      "range": {
+        "startLine": 58,
+        "startChar": 14,
+        "endLine": 58,
+        "endChar": 15
+      },
+      "revId": "ae489132dc7345028d1adf02b715431140027349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a115332f_f06511af",
         "filename": "components/arc/metrics/arc_metrics_service.cc",
         "patchSetId": 2
@@ -142,6 +274,24 @@
       "revId": "ae489132dc7345028d1adf02b715431140027349",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ca89079_84ea6736",
+        "filename": "components/arc/metrics/arc_metrics_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1125664
+      },
+      "writtenOn": "2017-12-02T01:06:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a115332f_f06511af",
+      "revId": "ae489132dc7345028d1adf02b715431140027349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -162,6 +312,24 @@
     },
     {
       "key": {
+        "uuid": "3ea3e7b8_400852c8",
+        "filename": "components/arc/metrics/arc_metrics_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1125664
+      },
+      "writtenOn": "2017-12-02T01:06:51Z",
+      "side": 1,
+      "message": "I actually inlined it to ReportNativeBridge",
+      "parentUuid": "b09b4e59_a737c737",
+      "revId": "ae489132dc7345028d1adf02b715431140027349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a48b0b0_99c9e45f",
         "filename": "components/arc/metrics/arc_metrics_service.cc",
         "patchSetId": 2
@@ -176,6 +344,24 @@
       "revId": "ae489132dc7345028d1adf02b715431140027349",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d902999a_3d6f5a59",
+        "filename": "components/arc/metrics/arc_metrics_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1125664
+      },
+      "writtenOn": "2017-12-02T01:06:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5a48b0b0_99c9e45f",
+      "revId": "ae489132dc7345028d1adf02b715431140027349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -202,6 +388,30 @@
     },
     {
       "key": {
+        "uuid": "fd381742_8dc2a8eb",
+        "filename": "components/arc/metrics/arc_metrics_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1125664
+      },
+      "writtenOn": "2017-12-02T01:06:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f1cc53e_cd739d3b",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 12
+      },
+      "revId": "ae489132dc7345028d1adf02b715431140027349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6693bb10_ad2a1bcc",
         "filename": "components/arc/metrics/arc_metrics_service.cc",
         "patchSetId": 2
@@ -213,6 +423,24 @@
       "writtenOn": "2017-12-01T06:10:25Z",
       "side": 1,
       "message": "Not sure if it\u0027s a good idea to initialize this with NONE. How about using base::Optional instead? That way, you can distinguish \u0027no native bridge\u0027 and \u0027the container hasn\u0027t reported native bridge type\u0027.",
+      "revId": "ae489132dc7345028d1adf02b715431140027349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5cddc5d_38ceb164",
+        "filename": "components/arc/metrics/arc_metrics_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1125664
+      },
+      "writtenOn": "2017-12-02T01:06:51Z",
+      "side": 1,
+      "message": "Since it\u0027s already an enum, I just added UNKNOWN value to it. Perhaps, it would be helpful to record UNKNOWN for UMA explicitly (rather than merging it with NONE), so that we can verify our assumption that it should be rare.",
+      "parentUuid": "6693bb10_ad2a1bcc",
       "revId": "ae489132dc7345028d1adf02b715431140027349",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -236,6 +464,24 @@
     },
     {
       "key": {
+        "uuid": "f2e5c680_c8e58222",
+        "filename": "components/arc/metrics/arc_metrics_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1125664
+      },
+      "writtenOn": "2017-12-02T01:06:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64a29807_324a754f",
+      "revId": "ae489132dc7345028d1adf02b715431140027349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5772d40f_fb2cc5f4",
         "filename": "components/arc/metrics/arc_metrics_service.cc",
         "patchSetId": 2
@@ -247,6 +493,24 @@
       "writtenOn": "2017-12-01T06:10:25Z",
       "side": 1,
       "message": "DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);\n\nplease.",
+      "revId": "ae489132dc7345028d1adf02b715431140027349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bd24dbc_0dc46013",
+        "filename": "components/arc/metrics/arc_metrics_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1125664
+      },
+      "writtenOn": "2017-12-02T01:06:51Z",
+      "side": 1,
+      "message": "forgot this: will add in the next patch set",
+      "parentUuid": "5772d40f_fb2cc5f4",
       "revId": "ae489132dc7345028d1adf02b715431140027349",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
