@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a754db8e_7d5e949a",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 3886,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-12-02T00:13:43Z",
+      "side": 1,
+      "message": "This causes an error about gn_isolate_map.pyl not knowing about \"gn_all\", despite there also being no mention of \"all\" in there, despite other rules, above, using \"all\" - perhaps \"all\" has some special handling..?",
+      "range": {
+        "startLine": 3886,
+        "startChar": 6,
+        "endLine": 3886,
+        "endChar": 14
+      },
+      "revId": "ed41d6eb85455db9f8d396b823428a13942eb995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
