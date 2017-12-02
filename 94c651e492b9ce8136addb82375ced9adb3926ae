@@ -510,6 +510,24 @@
     },
     {
       "key": {
+        "uuid": "9d543252_b3704087",
+        "filename": "components/viz/service/display/renderer_pixeltest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 943,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-02T02:50:17Z",
+      "side": 1,
+      "message": "I fixed it. The green quad now shows up. Please take a look. Thanks!",
+      "parentUuid": "3008c941_d016f990",
+      "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be5d5254_97a5cdb3",
         "filename": "components/viz/service/display/renderer_pixeltest.cc",
         "patchSetId": 3
@@ -542,6 +560,24 @@
       "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50f70e74_9d8bb757",
+        "filename": "components/viz/service/display/renderer_pixeltest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-02T02:50:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ab03760_b9f8a59e",
+      "revId": "94c651e492b9ce8136addb82375ced9adb3926ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
