@@ -121,8 +121,10 @@ void HandleServiceWorkerLink(
   TRACE_EVENT_ASYNC_BEGIN2(
       "ServiceWorker", "LinkHeaderResourceThrottle::HandleServiceWorkerLink",
       ++trace_id, "Pattern", scope_url.spec(), "Script URL", script_url.spec());
+  blink::mojom::ServiceWorkerRegistrationOptions options(
+      scope_url, blink::mojom::ServiceWorkerUpdateViaCache::kImports);
   service_worker_context->RegisterServiceWorker(
-      scope_url, script_url,
+      script_url, options,
       base::Bind(&RegisterServiceWorkerFinished, trace_id));
 }
 
