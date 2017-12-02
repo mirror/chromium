@@ -559,18 +559,19 @@ void HttpStreamFactoryImpl::JobController::ResumeMainJobLater(
     const base::TimeDelta& delay) {
   net_log_.AddEvent(NetLogEventType::HTTP_STREAM_JOB_DELAYED,
                     NetLog::Int64Callback("delay", delay.InMilliseconds()));
+  resume_main_job_callback_.Reset(
+      base::BindOnce(&HttpStreamFactoryImpl::JobController::ResumeMainJob,
+                     ptr_factory_.GetWeakPtr()));
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE,
-      base::Bind(&HttpStreamFactoryImpl::JobController::ResumeMainJob,
-                 ptr_factory_.GetWeakPtr()),
-      delay);
+      FROM_HERE, resume_main_job_callback_.callback(), delay);
 }
 
 void HttpStreamFactoryImpl::JobController::ResumeMainJob() {
-  if (main_job_is_resumed_ || !main_job_)
+  DCHECK(main_job_);
+
+  if (main_job_is_resumed_)
     return;
 
-  main_job_is_resumed_ = true;
   main_job_->net_log().AddEvent(
       NetLogEventType::HTTP_STREAM_JOB_RESUMED,
       NetLog::Int64Callback("delay", main_job_wait_time_.InMilliseconds()));
@@ -1316,8 +1317,8 @@ int HttpStreamFactoryImpl::JobController::ReconsiderProxyAfterError(Job* job,
     // Abandon all Jobs and start over.
     job_bound_ = false;
     bound_job_ = nullptr;
-    main_job_is_resumed_ = false;
     main_job_is_blocked_ = false;
+    resume_main_job_callback_.Cancel();
     alternative_job_.reset();
     main_job_.reset();
     next_state_ = STATE_RESOLVE_PROXY_COMPLETE;
