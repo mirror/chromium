@@ -22,6 +22,30 @@
       "revId": "bbab7756f25a1fd166d2e7f39bb23a7594bc6e28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d57ad7a0_3040182f",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_picture_list.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-02T01:59:24Z",
+      "side": 1,
+      "message": "hm, I think we want to keep that behavior for the camera and probably best to move focus to the discard button when enter is pressed on OLD image item too. can you follow up with a change to improve that?",
+      "parentUuid": "c6bcc750_ff3b748f",
+      "range": {
+        "startLine": 232,
+        "startChar": 0,
+        "endLine": 235,
+        "endChar": 44
+      },
+      "revId": "bbab7756f25a1fd166d2e7f39bb23a7594bc6e28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
