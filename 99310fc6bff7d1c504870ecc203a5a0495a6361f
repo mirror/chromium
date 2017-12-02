@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fb6c621d_b9f241cf",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-02T01:14:54Z",
+      "side": 1,
+      "message": "Discussed offline; going to leave this like this for a couple of reasons:\n\n1) Chrome can decide not to save, in which case \"ShouldNotOfferToSave\" is correct.  But Chrome can\u0027t offer to save on its own; it has to ask Payments first.  Even in this test, if Payments said no, then Chrome would *not* offer to save.\n2) Because of the above, CreditCardSaveManager::AttemptToOfferCardUploadSave is the actual function name, so this stays consistent with that.\nhttps://cs.chromium.org/chromium/src/components/autofill/core/browser/credit_card_save_manager.h?l\u003d41\u0026rcl\u003dceb1274b4320080da44b4574744bdf1cc6fedcbf",
+      "parentUuid": "5a4a034f_c2072d7d",
+      "range": {
+        "startLine": 439,
+        "startChar": 16,
+        "endLine": 439,
+        "endChar": 36
+      },
+      "revId": "99310fc6bff7d1c504870ecc203a5a0495a6361f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85cea657_8dd9c6b6",
         "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest_base.cc",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "99310fc6bff7d1c504870ecc203a5a0495a6361f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89592de4_75e5d6f6",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest_base.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-02T01:14:54Z",
+      "side": 1,
+      "message": "Great point; these buttons in the HTML files don\u0027t all exist on every file.  Added a comment for each function for the test file it expects.",
+      "parentUuid": "85cea657_8dd9c6b6",
+      "range": {
+        "startLine": 341,
+        "startChar": 4,
+        "endLine": 341,
+        "endChar": 40
+      },
+      "revId": "99310fc6bff7d1c504870ecc203a5a0495a6361f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2ad09e02_af4aaa41",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest_base.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-02T01:14:54Z",
+      "side": 1,
+      "message": "I\u0027m not super familiar with what it does, but I brought it over from the PaymentRequest browsertests example.  However, removing it...doesn\u0027t seem to have an effect!  I could have sworn it failed before, but oh well.  Removed, thanks!",
+      "parentUuid": "21e58fb7_30d30d65",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 1
+      },
+      "revId": "99310fc6bff7d1c504870ecc203a5a0495a6361f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d3bbddc_dff3879a",
         "filename": "components/test/data/autofill/credit_card_upload_form_address_and_cc.html",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "99310fc6bff7d1c504870ecc203a5a0495a6361f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "721345dd_e9d355a2",
+        "filename": "components/test/data/autofill/credit_card_upload_form_address_and_cc.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-02T01:14:54Z",
+      "side": 1,
+      "message": "Agreed!  Done.",
+      "parentUuid": "2d3bbddc_dff3879a",
+      "range": {
+        "startLine": 33,
+        "startChar": 16,
+        "endLine": 33,
+        "endChar": 27
+      },
+      "revId": "99310fc6bff7d1c504870ecc203a5a0495a6361f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
