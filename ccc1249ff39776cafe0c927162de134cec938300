@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "c8a7dfd4_b5b231f9",
+        "filename": "chrome/browser/extensions/crx_installer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-12-02T04:35:56Z",
+      "side": 1,
+      "message": "Changed the code as you suggested.",
+      "parentUuid": "257e01ba_429a51ec",
+      "revId": "ccc1249ff39776cafe0c927162de134cec938300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7b93ba4_c1852b23",
         "filename": "chrome/browser/extensions/extension_service.cc",
         "patchSetId": 7
