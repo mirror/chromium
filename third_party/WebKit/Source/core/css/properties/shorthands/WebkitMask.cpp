@@ -2,14 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "core/css/properties/shorthands/Background.h"
+#include "core/css/properties/shorthands/WebkitMask.h"
 
 #include "core/css/properties/CSSParsingUtils.h"
 
 namespace blink {
 namespace CSSShorthand {
 
-bool Background::ParseShorthand(
+bool WebkitMask::ParseShorthand(
     bool important,
     CSSParserTokenRange& range,
     const CSSParserContext& context,
