@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "de516728_5cc226e9",
+        "filename": "ui/gfx/ipc/gfx_param_traits_macros.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-12-03T10:03:44Z",
+      "side": 1,
+      "message": "FYI, putting this in const and also not sending it were causing lots of complications, so I\u0027ve left it in.\n\nThis should also make future tests more straightforward.",
+      "parentUuid": "579c0302_cd161321",
+      "revId": "6957eb88ae3bc5369604bd8de5262aa720911734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9896d2f9_162dd9c2",
         "filename": "ui/gfx/ipc/gfx_param_traits_macros.h",
         "patchSetId": 10
