@@ -35,6 +35,7 @@ class CSSPropertyWriter(json5_generator.Writer):
         # Just a set of class names.
         self._shorthand_property_classes = set()
         self._longhand_property_classes = set()
+        self._alias_property_classes = set()
         for property_ in self._css_properties.longhands:
             property_class = self.get_class(property_)
             self._property_classes_by_id.append(property_class)
@@ -43,6 +44,10 @@ class CSSPropertyWriter(json5_generator.Writer):
             property_class = self.get_class(property_)
             self._property_classes_by_id.append(property_class)
             self._shorthand_property_classes.add(property_class.classname)
+        for property_ in self._css_properties.aliases:
+            property_class = self.get_class(property_)
+            self._property_classes_by_id.append(property_class)
+            self._alias_property_classes.add(property_class.classname)
 
         # Sort by enum value.
         self._property_classes_by_id.sort(key=lambda t: t.enum_value)
@@ -96,6 +101,7 @@ class CSSPropertyWriter(json5_generator.Writer):
             'input_files': self._input_files,
             'longhand_property_classnames': self._longhand_property_classes,
             'shorthand_property_classnames': self._shorthand_property_classes,
+            'alias_property_classnames': self._longhand_property_classes,
             'property_classes_by_property_id': self._property_classes_by_id,
             'last_property_id': self._css_properties.last_property_id
         }

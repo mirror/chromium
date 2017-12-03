@@ -136,6 +136,7 @@ class CSSPropertyHeadersWriter(CSSPropertyWriter):
             if property_['font']:
                 includes.append("core/css/resolver/FontBuilder.h")
             elif property_['svg']:
+                includes.append("core/css/CSSPrimitiveValueMappings.h")
                 includes.append("core/style/ComputedStyle.h")
                 includes.append("core/style/SVGComputedStyle.h")
             else:
