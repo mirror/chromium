@@ -35,6 +35,7 @@ namespace chromeos {
 namespace {
 
 const char* kTestUserEmail = "testuser@gmail.com";
+const char* kTestUserGaiaId = "9876543210";
 const char* kTestUserEmailHash = "testuser@gmail.com-hash";
 const char* kValidPassword = "valid";
 const char* kInvalidPassword = "invalid";
@@ -70,7 +71,8 @@ std::unique_ptr<KeyedService> CreateEasyUnlockServiceForTest(
 
 ExtendedAuthenticator* CreateFakeAuthenticator(
     AuthStatusConsumer* auth_status_consumer) {
-  AccountId account_id = AccountId::FromUserEmail(kTestUserEmail);
+  const AccountId account_id =
+      AccountId::FromUserEmailGaiaId(kTestUserEmail, kTestUserGaiaId);
   UserContext expected_context(account_id);
   expected_context.SetKey(Key(kValidPassword));
 
@@ -109,9 +111,11 @@ class QuickUnlockPrivateUnitTest : public ExtensionApiUnittest {
     quick_unlock::EnableForTesting(quick_unlock::PinStorageType::kPrefs);
 
     // Setup a primary user.
-    auto test_account = AccountId::FromUserEmail(kTestUserEmail);
+    auto test_account =
+        AccountId::FromUserEmailGaiaId(kTestUserEmail, kTestUserGaiaId);
     fake_user_manager_->AddUser(test_account);
-    fake_user_manager_->UserLoggedIn(test_account, kTestUserEmailHash, false);
+    fake_user_manager_->UserLoggedIn(test_account, kTestUserEmailHash, false,
+                                     false);
 
     // Ensure that quick unlock is turned off.
     SetModes(QuickUnlockModeList{}, CredentialList{});

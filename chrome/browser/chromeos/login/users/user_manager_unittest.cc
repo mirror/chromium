@@ -141,11 +141,11 @@ class UserManagerTest : public testing::Test {
   }
 
   const AccountId owner_account_id_at_invalid_domain_ =
-      AccountId::FromUserEmail("owner@invalid.domain");
+      AccountId::FromUserEmailGaiaId("owner@invalid.domain", "1234567890");
   const AccountId account_id0_at_invalid_domain_ =
-      AccountId::FromUserEmail("user0@invalid.domain");
+      AccountId::FromUserEmailGaiaId("user0@invalid.domain", "0123456789");
   const AccountId account_id1_at_invalid_domain_ =
-      AccountId::FromUserEmail("user1@invalid.domain");
+      AccountId::FromUserEmailGaiaId("user1@invalid.domain", "9012345678");
 
  protected:
   content::TestBrowserThreadBundle thread_bundle_;
@@ -172,15 +172,15 @@ TEST_F(UserManagerTest, RetrieveTrustedDevicePolicies) {
 TEST_F(UserManagerTest, RemoveAllExceptOwnerFromList) {
   user_manager::UserManager::Get()->UserLoggedIn(
       owner_account_id_at_invalid_domain_,
-      owner_account_id_at_invalid_domain_.GetUserEmail(), false);
+      owner_account_id_at_invalid_domain_.GetUserEmail(), false, false);
   ResetUserManager();
   user_manager::UserManager::Get()->UserLoggedIn(
       account_id0_at_invalid_domain_,
-      owner_account_id_at_invalid_domain_.GetUserEmail(), false);
+      owner_account_id_at_invalid_domain_.GetUserEmail(), false, false);
   ResetUserManager();
   user_manager::UserManager::Get()->UserLoggedIn(
       account_id1_at_invalid_domain_,
-      owner_account_id_at_invalid_domain_.GetUserEmail(), false);
+      owner_account_id_at_invalid_domain_.GetUserEmail(), false, false);
   ResetUserManager();
 
   const user_manager::UserList* users =
@@ -206,11 +206,11 @@ TEST_F(UserManagerTest, RegularUserLoggedInAsEphemeral) {
 
   user_manager::UserManager::Get()->UserLoggedIn(
       owner_account_id_at_invalid_domain_,
-      account_id0_at_invalid_domain_.GetUserEmail(), false);
+      account_id0_at_invalid_domain_.GetUserEmail(), false, false);
   ResetUserManager();
   user_manager::UserManager::Get()->UserLoggedIn(
       account_id0_at_invalid_domain_,
-      account_id0_at_invalid_domain_.GetUserEmail(), false);
+      account_id0_at_invalid_domain_.GetUserEmail(), false, false);
   ResetUserManager();
 
   const user_manager::UserList* users =
@@ -223,7 +223,7 @@ TEST_F(UserManagerTest, ScreenLockAvailability) {
   // Log in the user and create the profile.
   user_manager::UserManager::Get()->UserLoggedIn(
       owner_account_id_at_invalid_domain_,
-      owner_account_id_at_invalid_domain_.GetUserEmail(), false);
+      owner_account_id_at_invalid_domain_.GetUserEmail(), false, false);
   user_manager::User* const user =
       user_manager::UserManager::Get()->GetActiveUser();
   Profile* const profile =
@@ -244,7 +244,7 @@ TEST_F(UserManagerTest, ScreenLockAvailability) {
 TEST_F(UserManagerTest, ProfileInitialized) {
   user_manager::UserManager::Get()->UserLoggedIn(
       owner_account_id_at_invalid_domain_,
-      owner_account_id_at_invalid_domain_.GetUserEmail(), false);
+      owner_account_id_at_invalid_domain_.GetUserEmail(), false, false);
   const user_manager::UserList* users =
       &user_manager::UserManager::Get()->GetUsers();
   ASSERT_EQ(1U, users->size());
@@ -258,7 +258,7 @@ TEST_F(UserManagerTest, ProfileInitialized) {
 TEST_F(UserManagerTest, ProfileInitializedMigration) {
   user_manager::UserManager::Get()->UserLoggedIn(
       owner_account_id_at_invalid_domain_,
-      owner_account_id_at_invalid_domain_.GetUserEmail(), false);
+      owner_account_id_at_invalid_domain_.GetUserEmail(), false, false);
   const user_manager::UserList* users =
       &user_manager::UserManager::Get()->GetUsers();
   ASSERT_EQ(1U, users->size());

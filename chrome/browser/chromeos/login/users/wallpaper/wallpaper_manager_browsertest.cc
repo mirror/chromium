@@ -59,8 +59,10 @@ int kSmallWallpaperWidth = 256;
 int kSmallWallpaperHeight = chromeos::kSmallWallpaperMaxHeight;
 
 const char kTestUser1[] = "test1@domain.com";
+const char kTestUser1GaiaId[] = "0000000001";
 const char kTestUser1Hash[] = "test1@domain.com-hash";
 const char kTestUser2[] = "test2@domain.com";
+const char kTestUser2GaiaId[] = "0000000002";
 const char kTestUser2Hash[] = "test2@domain.com-hash";
 
 }  // namespace
@@ -140,7 +142,7 @@ class WallpaperManagerBrowserTest : public InProcessBrowserTest {
   // Logs in |account_id|.
   void LogIn(const AccountId& account_id, const std::string& user_id_hash) {
     base::ScopedAllowBlockingForTesting allow_blocking;
-    SessionManager::Get()->CreateSession(account_id, user_id_hash);
+    SessionManager::Get()->CreateSession(account_id, user_id_hash, false);
     SessionManager::Get()->SessionStarted();
     // Flush to ensure the created session and ACTIVE state reaches ash.
     SessionControllerClient::FlushForTesting();
@@ -150,11 +152,10 @@ class WallpaperManagerBrowserTest : public InProcessBrowserTest {
   // Logs in |account_id| and sets it as child account.
   void LogInAsChild(const AccountId& account_id,
                     const std::string& user_id_hash) {
-    SessionManager::Get()->CreateSession(account_id, user_id_hash);
-    user_manager::User* user =
-        user_manager::UserManager::Get()->FindUserAndModify(account_id);
-    user_manager::UserManager::Get()->ChangeUserChildStatus(
-        user, true /* is_child */);
+    SessionManager::Get()->CreateSession(account_id, user_id_hash, true);
+    const user_manager::User* user =
+        user_manager::UserManager::Get()->FindUser(account_id);
+    CHECK(user->GetType() == user_manager::USER_TYPE_CHILD);
     // TODO(jamescook): For some reason creating the shelf here (which is what
     // would happen in normal login) causes the child wallpaper tests to fail
     // with the wallpaper having alpha. This looks like the wallpaper is mid-
@@ -194,8 +195,10 @@ class WallpaperManagerBrowserTest : public InProcessBrowserTest {
   // wallpaper images.
   std::unique_ptr<base::ScopedTempDir> wallpaper_dir_;
 
-  const AccountId test_account_id1_ = AccountId::FromUserEmail(kTestUser1);
-  const AccountId test_account_id2_ = AccountId::FromUserEmail(kTestUser2);
+  const AccountId test_account_id1_ =
+      AccountId::FromUserEmailGaiaId(kTestUser1, kTestUser1GaiaId);
+  const AccountId test_account_id2_ =
+      AccountId::FromUserEmailGaiaId(kTestUser2, kTestUser2GaiaId);
 
   const wallpaper::WallpaperFilesId test_account1_wallpaper_files_id_ =
       wallpaper::WallpaperFilesId::FromString(kTestUser1Hash);
@@ -766,7 +769,7 @@ IN_PROC_BROWSER_TEST_F(WallpaperManagerBrowserTest,
 IN_PROC_BROWSER_TEST_F(WallpaperManagerBrowserTest, SmallGuestWallpaper) {
   CreateCmdlineWallpapers();
   SessionManager::Get()->CreateSession(user_manager::GuestAccountId(),
-                                       user_manager::kGuestUserName);
+                                       user_manager::kGuestUserName, false);
   UpdateDisplay("800x600");
   WallpaperManager::Get()->ShowDefaultWallpaperForTesting(
       user_manager::GuestAccountId());
@@ -779,7 +782,7 @@ IN_PROC_BROWSER_TEST_F(WallpaperManagerBrowserTest, SmallGuestWallpaper) {
 IN_PROC_BROWSER_TEST_F(WallpaperManagerBrowserTest, LargeGuestWallpaper) {
   CreateCmdlineWallpapers();
   SessionManager::Get()->CreateSession(user_manager::GuestAccountId(),
-                                       user_manager::kGuestUserName);
+                                       user_manager::kGuestUserName, false);
   UpdateDisplay("1600x1200");
   WallpaperManager::Get()->ShowDefaultWallpaperForTesting(
       user_manager::GuestAccountId());
@@ -817,7 +820,7 @@ IN_PROC_BROWSER_TEST_F(WallpaperManagerBrowserTest,
   UpdateDisplay("640x480");
   CreateCmdlineWallpapers();
   SessionManager::Get()->CreateSession(user_manager::StubAccountId(),
-                                       "test_hash");
+                                       "test_hash", false);
 
   WallpaperManager* wallpaper_manager = WallpaperManager::Get();
   wallpaper_manager->ShowDefaultWallpaperForTesting(
@@ -851,7 +854,7 @@ IN_PROC_BROWSER_TEST_F(WallpaperManagerBrowserTest, IsPendingWallpaper) {
   UpdateDisplay("640x480");
   CreateCmdlineWallpapers();
   SessionManager::Get()->CreateSession(user_manager::StubAccountId(),
-                                       "test_hash");
+                                       "test_hash", false);
 
   WallpaperManager* wallpaper_manager = WallpaperManager::Get();
   wallpaper_manager->ShowDefaultWallpaperForTesting(

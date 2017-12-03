@@ -64,7 +64,9 @@ UserContext CreateUserContext(const std::string& user_id) {
 }  // namespace
 
 const char LoginManagerTest::kEnterpriseUser1[] = "user-1@example.com";
+const char LoginManagerTest::kEnterpriseUser1GaiaId[] = "0000111111";
 const char LoginManagerTest::kEnterpriseUser2[] = "user-2@example.com";
+const char LoginManagerTest::kEnterpriseUser2GaiaId[] = "0000111111";
 
 LoginManagerTest::LoginManagerTest(bool should_launch_browser)
     : should_launch_browser_(should_launch_browser), web_contents_(NULL) {
