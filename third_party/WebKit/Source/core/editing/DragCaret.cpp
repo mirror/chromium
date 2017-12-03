@@ -68,7 +68,7 @@ bool DragCaret::IsContentRichlyEditable() const {
 void DragCaret::SetCaretPosition(const PositionWithAffinity& position) {
   position_ = CreateVisiblePosition(position).ToPositionWithAffinity();
   Document* document = nullptr;
-  if (Node* node = position_.AnchorNode()) {
+  if (const Node* node = position_.AnchorNode()) {
     document = &node->GetDocument();
     SetContext(document);
   }
@@ -77,7 +77,7 @@ void DragCaret::SetCaretPosition(const PositionWithAffinity& position) {
 void DragCaret::NodeChildrenWillBeRemoved(ContainerNode& container) {
   if (!HasCaret() || !container.InActiveDocument())
     return;
-  Node* const anchor_node = position_.GetPosition().AnchorNode();
+  const Node* const anchor_node = position_.GetPosition().AnchorNode();
   if (!anchor_node || anchor_node == container)
     return;
   if (!container.IsShadowIncludingInclusiveAncestorOf(anchor_node))
@@ -88,7 +88,7 @@ void DragCaret::NodeChildrenWillBeRemoved(ContainerNode& container) {
 void DragCaret::NodeWillBeRemoved(Node& node) {
   if (!HasCaret() || !node.InActiveDocument())
     return;
-  Node* const anchor_node = position_.GetPosition().AnchorNode();
+  const Node* const anchor_node = position_.GetPosition().AnchorNode();
   if (!anchor_node)
     return;
   if (!node.IsShadowIncludingInclusiveAncestorOf(anchor_node))

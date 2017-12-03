@@ -344,12 +344,12 @@ VisiblePositionInFlatTree HonorEditingBoundaryAtOrBefore(
     const VisiblePositionInFlatTree&,
     const PositionInFlatTree&);
 
-Position NextRootInlineBoxCandidatePosition(Node*,
+Position NextRootInlineBoxCandidatePosition(const Node*,
                                             const VisiblePosition&,
                                             EditableType);
 
 CORE_EXPORT Position
-PreviousRootInlineBoxCandidatePosition(Node*,
+PreviousRootInlineBoxCandidatePosition(const Node*,
                                        const VisiblePosition&,
                                        EditableType);
 

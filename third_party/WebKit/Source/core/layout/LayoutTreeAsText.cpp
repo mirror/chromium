@@ -103,7 +103,7 @@ static void PrintBorderStyle(TextStream& ts, const EBorderStyle border_style) {
   ts << " ";
 }
 
-static String GetTagName(Node* n) {
+static String GetTagName(const Node* n) {
   if (n->IsDocumentNode())
     return "";
   if (n->getNodeType() == Node::kCommentNode)
@@ -737,12 +737,12 @@ void LayoutTreeAsText::WriteLayers(TextStream& ts,
   }
 }
 
-static String NodePosition(Node* node) {
+static String NodePosition(const Node* node) {
   StringBuilder result;
 
   Element* body = node->GetDocument().body();
-  Node* parent;
-  for (Node* n = node; n; n = parent) {
+  const Node* parent;
+  for (const Node* n = node; n; n = parent) {
     parent = n->ParentOrShadowHostNode();
     if (n != node)
       result.Append(" of ");

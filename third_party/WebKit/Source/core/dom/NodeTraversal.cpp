@@ -105,12 +105,12 @@ Node* NodeTraversal::LastWithin(const ContainerNode& current) {
   return descendant;
 }
 
-Node& NodeTraversal::LastWithinOrSelf(Node& current) {
+Node& NodeTraversal::LastWithinOrSelf(const Node& current) {
   Node* last_descendant =
       current.IsContainerNode()
           ? NodeTraversal::LastWithin(ToContainerNode(current))
           : nullptr;
-  return last_descendant ? *last_descendant : current;
+  return last_descendant ? *last_descendant : const_cast<Node&>(current);
 }
 
 Node* NodeTraversal::Previous(const Node& current, const Node* stay_within) {

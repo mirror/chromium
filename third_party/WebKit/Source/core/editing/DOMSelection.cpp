@@ -53,11 +53,11 @@
 
 namespace blink {
 
-static Node* SelectionShadowAncestor(LocalFrame* frame) {
+static const Node* SelectionShadowAncestor(LocalFrame* frame) {
   Node* node = frame->Selection()
                    .ComputeVisibleSelectionInDOMTreeDeprecated()
                    .Base()
-                   .AnchorNode();
+                   .AnchorNodeMutable();
   if (!node)
     return nullptr;
 
@@ -527,7 +527,7 @@ void DOMSelection::extend(Node* node,
   } else if (old_anchor <= new_focus) {
     // 6. Otherwise, if oldAnchor is before or equal to newFocus, set newRange's
     // start to oldAnchor, then set its end to newFocus.
-    new_range->setStart(old_anchor.AnchorNode(),
+    new_range->setStart(old_anchor.AnchorNodeMutable(),
                         old_anchor.OffsetInContainerNode());
     new_range->setEnd(node, offset);
 
@@ -535,7 +535,7 @@ void DOMSelection::extend(Node* node,
     // 7. Otherwise, set newRange's start to newFocus, then set its end to
     // oldAnchor.
     new_range->setStart(node, offset);
-    new_range->setEnd(old_anchor.AnchorNode(),
+    new_range->setEnd(old_anchor.AnchorNodeMutable(),
                       old_anchor.OffsetInContainerNode());
   }
 
@@ -814,7 +814,7 @@ Node* DOMSelection::ShadowAdjustedNode(const Position& position) const {
     return nullptr;
 
   Node* container_node = position.ComputeContainerNode();
-  Node* adjusted_node = tree_scope_->AncestorInThisScope(container_node);
+  const Node* adjusted_node = tree_scope_->AncestorInThisScope(container_node);
 
   if (!adjusted_node)
     return nullptr;
@@ -831,7 +831,7 @@ unsigned DOMSelection::ShadowAdjustedOffset(const Position& position) const {
     return 0;
 
   Node* container_node = position.ComputeContainerNode();
-  Node* adjusted_node = tree_scope_->AncestorInThisScope(container_node);
+  const Node* adjusted_node = tree_scope_->AncestorInThisScope(container_node);
 
   if (!adjusted_node)
     return 0;

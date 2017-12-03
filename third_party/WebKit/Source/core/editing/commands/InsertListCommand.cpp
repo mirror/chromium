@@ -332,7 +332,7 @@ bool InsertListCommand::DoApplyForSingleParagraph(
   // just before a table and ends inside the first cell,
   // selectionForParagraphIteration should probably be renamed and deployed
   // inside setEndingSelection().
-  Node* selection_node = EndingVisibleSelection().Start().AnchorNode();
+  Node* selection_node = EndingVisibleSelection().Start().AnchorNodeMutable();
   Node* list_child_node = EnclosingListChild(selection_node);
   bool switch_list_type = false;
   if (list_child_node) {
@@ -396,7 +396,7 @@ bool InsertListCommand::DoApplyForSingleParagraph(
       Node* first_child_in_list =
           EnclosingListChild(VisiblePosition::FirstPositionInNode(*list_element)
                                  .DeepEquivalent()
-                                 .AnchorNode(),
+                                 .AnchorNodeMutable(),
                              list_element);
       Element* outer_block =
           first_child_in_list && IsBlockFlowElement(*first_child_in_list)
@@ -483,10 +483,11 @@ void InsertListCommand::UnlistifyParagraph(
     start = StartOfParagraph(original_start, kCanSkipOverEditingBoundary);
     end = EndOfParagraph(start, kCanSkipOverEditingBoundary);
     next_list_child = EnclosingListChild(
-        NextPositionOf(end).DeepEquivalent().AnchorNode(), list_element);
+        NextPositionOf(end).DeepEquivalent().AnchorNodeMutable(), list_element);
     DCHECK_NE(next_list_child, list_child_node);
     previous_list_child = EnclosingListChild(
-        PreviousPositionOf(start).DeepEquivalent().AnchorNode(), list_element);
+        PreviousPositionOf(start).DeepEquivalent().AnchorNodeMutable(),
+        list_element);
     DCHECK_NE(previous_list_child, list_child_node);
   }
 
@@ -642,7 +643,8 @@ void InsertListCommand::ListifyParagraph(const VisiblePosition& original_start,
         Position::InParentBeforeNode(*insertion_pos.ComputeContainerNode());
   }
   // Also avoid the containing list item.
-  Node* const list_child = EnclosingListChild(insertion_pos.AnchorNode());
+  Node* const list_child =
+      EnclosingListChild(insertion_pos.AnchorNodeMutable());
   if (IsHTMLLIElement(list_child))
     insertion_pos = Position::InParentBeforeNode(*list_child);
 

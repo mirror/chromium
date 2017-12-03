@@ -317,7 +317,7 @@ InlineBoxPosition ComputeInlineBoxPositionTemplate(
     TextAffinity affinity,
     TextDirection primary_direction) {
   int caret_offset = position.ComputeEditingOffset();
-  Node* const anchor_node = position.AnchorNode();
+  const Node* const anchor_node = position.AnchorNode();
   LayoutObject* layout_object =
       anchor_node->IsShadowRoot()
           ? ToShadowRoot(anchor_node)->host().GetLayoutObject()

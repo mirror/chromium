@@ -170,10 +170,10 @@ Range* Range::CreateAdjustedToTreeScope(const TreeScope& tree_scope,
   DCHECK(position.IsNotNull());
   // Note: Since |Position::computeContanerNode()| returns |nullptr| if
   // |position| is |BeforeAnchor| or |AfterAnchor|.
-  Node* const anchor_node = position.AnchorNode();
+  Node* const anchor_node = const_cast<Node*>(position.AnchorNode());
   if (anchor_node->GetTreeScope() == tree_scope)
     return Create(tree_scope.GetDocument(), position, position);
-  Node* const shadow_host = tree_scope.AncestorInThisScope(anchor_node);
+  const Node* const shadow_host = tree_scope.AncestorInThisScope(anchor_node);
   return Range::Create(tree_scope.GetDocument(),
                        Position::BeforeNode(*shadow_host),
                        Position::BeforeNode(*shadow_host));

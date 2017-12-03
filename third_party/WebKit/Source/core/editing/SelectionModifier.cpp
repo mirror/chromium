@@ -212,8 +212,9 @@ VisiblePosition SelectionModifier::NextWordPositionForPlatform(
 
 static VisiblePosition AdjustForwardPositionForUserSelectAll(
     const VisiblePosition& position) {
-  Node* const root_user_select_all = EditingStrategy::RootUserSelectAllForNode(
-      position.DeepEquivalent().AnchorNode());
+  const Node* const root_user_select_all =
+      EditingStrategy::RootUserSelectAllForNode(
+          position.DeepEquivalent().AnchorNode());
   if (!root_user_select_all)
     return position;
   return CreateVisiblePosition(MostForwardCaretPosition(
@@ -222,8 +223,9 @@ static VisiblePosition AdjustForwardPositionForUserSelectAll(
 
 static VisiblePosition AdjustBackwardPositionForUserSelectAll(
     const VisiblePosition& position) {
-  Node* const root_user_select_all = EditingStrategy::RootUserSelectAllForNode(
-      position.DeepEquivalent().AnchorNode());
+  const Node* const root_user_select_all =
+      EditingStrategy::RootUserSelectAllForNode(
+          position.DeepEquivalent().AnchorNode());
   if (!root_user_select_all)
     return position;
   return CreateVisiblePosition(MostBackwardCaretPosition(

@@ -56,8 +56,8 @@ class StyledMarkupAccumulator final {
   void AppendEndTag(const Element&);
   void AppendInterchangeNewline();
 
-  void AppendText(Text&);
-  void AppendTextWithInlineStyle(Text&, EditingStyle*);
+  void AppendText(const Text&);
+  void AppendTextWithInlineStyle(const Text&, EditingStyle*);
 
   void WrapWithStyleNode(CSSPropertyValueSet*);
   String TakeResults();
@@ -70,7 +70,7 @@ class StyledMarkupAccumulator final {
   void AppendElementWithInlineStyle(StringBuilder&,
                                     const Element&,
                                     EditingStyle*);
-  void AppendStartMarkup(Node&);
+  void AppendStartMarkup(const Node&);
 
   bool ShouldAnnotate() const;
   bool ShouldConvertBlocksToInlines() const {
@@ -78,7 +78,7 @@ class StyledMarkupAccumulator final {
   }
 
  private:
-  String RenderedText(Text&);
+  String RenderedText(const Text&);
   String StringValueForRange(const Text&);
 
   void AppendEndMarkup(StringBuilder&, const Element&);

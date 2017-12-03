@@ -69,7 +69,7 @@ void StyledMarkupAccumulator::AppendEndTag(const Element& element) {
   AppendEndMarkup(result_, element);
 }
 
-void StyledMarkupAccumulator::AppendStartMarkup(Node& node) {
+void StyledMarkupAccumulator::AppendStartMarkup(const Node& node) {
   formatter_.AppendStartMarkup(result_, node, nullptr);
 }
 
@@ -78,7 +78,7 @@ void StyledMarkupAccumulator::AppendEndMarkup(StringBuilder& result,
   formatter_.AppendEndMarkup(result, element);
 }
 
-void StyledMarkupAccumulator::AppendText(Text& text) {
+void StyledMarkupAccumulator::AppendText(const Text& text) {
   const String& str = text.data();
   unsigned length = str.length();
   unsigned start = 0;
@@ -97,7 +97,7 @@ void StyledMarkupAccumulator::AppendText(Text& text) {
 }
 
 void StyledMarkupAccumulator::AppendTextWithInlineStyle(
-    Text& text,
+    const Text& text,
     EditingStyle* inline_style) {
   if (inline_style) {
     // wrappingStyleForAnnotatedSerialization should have removed
@@ -201,7 +201,7 @@ String StyledMarkupAccumulator::TakeResults() {
   return result.ToString().Replace(0, "");
 }
 
-String StyledMarkupAccumulator::RenderedText(Text& text_node) {
+String StyledMarkupAccumulator::RenderedText(const Text& text_node) {
   int start_offset = 0;
   int end_offset = text_node.length();
   if (start_.GetText() == text_node)

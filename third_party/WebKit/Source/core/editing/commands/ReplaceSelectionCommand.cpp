@@ -520,8 +520,8 @@ bool ReplaceSelectionCommand::ShouldMerge(const VisiblePosition& source,
   if (source.IsNull() || destination.IsNull())
     return false;
 
-  Node* source_node = source.DeepEquivalent().AnchorNode();
-  Node* destination_node = destination.DeepEquivalent().AnchorNode();
+  const Node* source_node = source.DeepEquivalent().AnchorNode();
+  const Node* destination_node = destination.DeepEquivalent().AnchorNode();
   Element* source_block = EnclosingBlock(source_node);
   Element* destination_block = EnclosingBlock(destination_node);
   return source_block &&
@@ -931,9 +931,10 @@ void ReplaceSelectionCommand::MergeEndIfNeeded(EditingState* editing_state) {
   if (EndOfParagraph(start_of_paragraph_to_move).DeepEquivalent() ==
       destination.DeepEquivalent()) {
     HTMLBRElement* placeholder = HTMLBRElement::Create(GetDocument());
-    InsertNodeBefore(placeholder,
-                     start_of_paragraph_to_move.DeepEquivalent().AnchorNode(),
-                     editing_state);
+    InsertNodeBefore(
+        placeholder,
+        start_of_paragraph_to_move.DeepEquivalent().AnchorNodeMutable(),
+        editing_state);
     if (editing_state->IsAborted())
       return;
 
@@ -969,7 +970,7 @@ void ReplaceSelectionCommand::MergeEndIfNeeded(EditingState* editing_state) {
   }
 }
 
-static Node* EnclosingInline(Node* node) {
+static const Node* EnclosingInline(const Node* node) {
   while (ContainerNode* parent = node->parentNode()) {
     if (IsBlockFlowElement(*parent) || IsHTMLBodyElement(*parent))
       return node;
@@ -1189,7 +1190,7 @@ void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
     if (editing_state->IsAborted())
       return;
     // This will leave a br between the split.
-    Node* br = EndingVisibleSelection().Start().AnchorNode();
+    Node* br = EndingVisibleSelection().Start().AnchorNodeMutable();
     DCHECK(IsHTMLBRElement(br)) << br;
     // Insert content between the two blockquotes, but remove the br (since it
     // was just a placeholder).
@@ -1215,7 +1216,7 @@ void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
   // collapsed away, there are positions after the br which map to the same
   // visible position as [br, 0]).
   HTMLBRElement* end_br = ToHTMLBRElementOrNull(
-      *MostForwardCaretPosition(insertion_pos).AnchorNode());
+      *MostForwardCaretPosition(insertion_pos).AnchorNodeMutable());
   VisiblePosition original_vis_pos_before_end_br;
   if (end_br) {
     original_vis_pos_before_end_br =
@@ -1493,7 +1494,7 @@ void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
     // block.
     // We insert a placeholder before the newly inserted content to avoid being
     // merged into the inline.
-    Node* destination_node = destination.DeepEquivalent().AnchorNode();
+    const Node* destination_node = destination.DeepEquivalent().AnchorNode();
     if (should_merge_end_ &&
         destination_node != EnclosingInline(destination_node) &&
         EnclosingInline(destination_node)->nextSibling()) {
@@ -1639,7 +1640,7 @@ void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
 }
 
 bool ReplaceSelectionCommand::ShouldRemoveEndBR(
-    HTMLBRElement* end_br,
+    const HTMLBRElement* end_br,
     const VisiblePosition& original_vis_pos_before_end_br) {
   if (!end_br || !end_br->isConnected())
     return false;
@@ -1945,8 +1946,8 @@ Node* ReplaceSelectionCommand::InsertAsListItems(HTMLElement* list_element,
   if (is_middle) {
     int text_node_offset = insert_pos.OffsetInContainerNode();
     if (insert_pos.AnchorNode()->IsTextNode() && text_node_offset > 0)
-      SplitTextNode(ToText(insert_pos.AnchorNode()), text_node_offset);
-    SplitTreeToNode(insert_pos.AnchorNode(), last_node, true);
+      SplitTextNode(ToText(insert_pos.AnchorNodeMutable()), text_node_offset);
+    SplitTreeToNode(insert_pos.AnchorNodeMutable(), last_node, true);
   }
 
   while (Node* list_item = list_element->firstChild()) {
@@ -1973,15 +1974,15 @@ Node* ReplaceSelectionCommand::InsertAsListItems(HTMLElement* list_element,
   return last_node;
 }
 
-void ReplaceSelectionCommand::UpdateNodesInserted(Node* node) {
+void ReplaceSelectionCommand::UpdateNodesInserted(const Node* node) {
   if (!node)
     return;
 
   if (start_of_inserted_content_.IsNull())
     start_of_inserted_content_ = FirstPositionInOrBeforeNode(*node);
 
-  end_of_inserted_content_ =
-      LastPositionInOrAfterNode(NodeTraversal::LastWithinOrSelf(*node));
+  end_of_inserted_content_ = LastPositionInOrAfterNode(
+      NodeTraversal::LastWithinOrSelf(*const_cast<Node*>(node)));
 }
 
 // During simple pastes, where we're just pasting a text node into a run of
@@ -2013,7 +2014,7 @@ bool ReplaceSelectionCommand::PerformTrivialReplace(
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
 
   Node* node_after_insertion_pos =
-      MostForwardCaretPosition(EndingSelection().End()).AnchorNode();
+      MostForwardCaretPosition(EndingSelection().End()).AnchorNodeMutable();
   Text* text_node = ToText(fragment.FirstChild());
   // Our fragment creation code handles tabs, spaces, and newlines, so we don't
   // have to worry about those here.

@@ -877,7 +877,7 @@ void TypingCommand::DeleteKeyPressed(TextGranularity granularity,
                               SelectionModifyDirection::kBackward, granularity);
     // If the caret is just after a table, select the table and don't delete
     // anything.
-  } else if (Element* table = TableElementJustBefore(visible_start)) {
+  } else if (const Element* table = TableElementJustBefore(visible_start)) {
     const SelectionInDOMTree& selection =
         SelectionInDOMTree::Builder()
             .Collapse(Position::BeforeNode(*table))

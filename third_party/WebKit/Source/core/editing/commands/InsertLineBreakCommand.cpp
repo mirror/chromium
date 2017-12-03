@@ -167,7 +167,7 @@ void InsertLineBreakCommand::DoApply(EditingState* editing_state) {
             .Build()));
   } else if (pos.AnchorNode()->IsTextNode()) {
     // Split a text node
-    Text* text_node = ToText(pos.AnchorNode());
+    Text* text_node = ToText(pos.AnchorNodeMutable());
     SplitTextNode(text_node, pos.ComputeOffsetInContainerNode());
     InsertNodeBefore(node_to_insert, text_node, editing_state);
     if (editing_state->IsAborted())

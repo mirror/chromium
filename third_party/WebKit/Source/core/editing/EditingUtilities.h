@@ -127,9 +127,10 @@ CORE_EXPORT Node* EnclosingNodeOfType(
     EditingBoundaryCrossingRule = kCannotCrossEditingBoundary);
 
 HTMLSpanElement* TabSpanElement(const Node*);
-Element* TableElementJustAfter(const VisiblePosition&);
-CORE_EXPORT Element* TableElementJustBefore(const VisiblePosition&);
-CORE_EXPORT Element* TableElementJustBefore(const VisiblePositionInFlatTree&);
+const Element* TableElementJustAfter(const VisiblePosition&);
+CORE_EXPORT const Element* TableElementJustBefore(const VisiblePosition&);
+CORE_EXPORT const Element* TableElementJustBefore(
+    const VisiblePositionInFlatTree&);
 
 template <typename Strategy>
 ContainerNode* ParentCrossingShadowBoundaries(const Node&);

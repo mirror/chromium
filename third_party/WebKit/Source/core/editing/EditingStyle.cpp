@@ -407,7 +407,7 @@ EditingStyle::EditingStyle(ContainerNode* node,
 
 EditingStyle::EditingStyle(const Position& position,
                            PropertiesToInclude properties_to_include) {
-  Init(position.AnchorNode(), properties_to_include);
+  Init(position.AnchorNodeMutable(), properties_to_include);
 }
 
 EditingStyle::EditingStyle(const CSSPropertyValueSet* style)

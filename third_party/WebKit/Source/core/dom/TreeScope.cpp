@@ -153,7 +153,7 @@ void TreeScope::RemoveElementById(const AtomicString& element_id,
   id_target_observer_registry_->NotifyObservers(element_id);
 }
 
-Node* TreeScope::AncestorInThisScope(Node* node) const {
+const Node* TreeScope::AncestorInThisScope(const Node* node) const {
   while (node) {
     if (node->GetTreeScope() == this)
       return node;
@@ -251,7 +251,7 @@ Element* TreeScope::HitTestPoint(double x,
                                  const HitTestRequest& request) const {
   HitTestResult result =
       HitTestInDocument(&RootNode().GetDocument(), x, y, request);
-  Node* node = result.InnerNode();
+  const Node* node = result.InnerNode();
   if (!node || node->IsDocumentNode())
     return nullptr;
   if (node->IsPseudoElement() || node->IsTextNode())
@@ -260,7 +260,7 @@ Element* TreeScope::HitTestPoint(double x,
   node = AncestorInThisScope(node);
   if (!node || !node->IsElementNode())
     return nullptr;
-  return ToElement(node);
+  return ToElement(const_cast<Node*>(node));
 }
 
 HeapVector<Member<Element>> TreeScope::ElementsFromHitTestResult(
@@ -275,7 +275,7 @@ HeapVector<Member<Element>> TreeScope::ElementsFromHitTestResult(
 
     if (node->IsPseudoElement() || node->IsTextNode())
       node = node->ParentOrShadowHostNode();
-    node = AncestorInThisScope(node);
+    node = const_cast<Node*>(AncestorInThisScope(node));
 
     // Prune duplicate entries. A pseduo ::before content above its parent
     // node should only result in a single entry.

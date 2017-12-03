@@ -169,7 +169,8 @@ bool FrameCaret::CaretPositionIsValidForDocument(
          !CaretPosition().IsOrphan();
 }
 
-static IntRect AbsoluteBoundsForLocalRect(Node* node, const LayoutRect& rect) {
+static IntRect AbsoluteBoundsForLocalRect(const Node* node,
+                                          const LayoutRect& rect) {
   LayoutBlock* caret_painter = CaretDisplayItemClient::CaretLayoutBlock(node);
   if (!caret_painter)
     return IntRect();
@@ -186,7 +187,7 @@ IntRect FrameCaret::AbsoluteCaretBounds() const {
   DocumentLifecycle::DisallowTransitionScope disallow_transition(
       frame_->GetDocument()->Lifecycle());
 
-  Node* const caret_node = CaretPosition().AnchorNode();
+  const Node* const caret_node = CaretPosition().AnchorNode();
   if (!IsActive())
     return AbsoluteBoundsForLocalRect(caret_node, LayoutRect());
   return AbsoluteBoundsForLocalRect(

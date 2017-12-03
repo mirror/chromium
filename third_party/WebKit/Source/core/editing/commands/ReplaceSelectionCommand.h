@@ -106,8 +106,8 @@ class CORE_EXPORT ReplaceSelectionCommand final : public CompositeEditCommand {
                           InsertedNodes&,
                           EditingState*);
 
-  void UpdateNodesInserted(Node*);
-  bool ShouldRemoveEndBR(HTMLBRElement*, const VisiblePosition&);
+  void UpdateNodesInserted(const Node*);
+  bool ShouldRemoveEndBR(const HTMLBRElement*, const VisiblePosition&);
 
   bool ShouldMergeStart(bool, bool, bool);
   bool ShouldMergeEnd(bool selection_end_was_end_of_paragraph);

@@ -81,7 +81,7 @@ class NodeTraversal {
   static Node* FirstWithin(const Node& current) { return current.firstChild(); }
 
   static Node* LastWithin(const ContainerNode&);
-  static Node& LastWithinOrSelf(Node&);
+  static Node& LastWithinOrSelf(const Node&);
 
   // Does a reverse pre-order traversal to find the node that comes before the
   // current one in document order

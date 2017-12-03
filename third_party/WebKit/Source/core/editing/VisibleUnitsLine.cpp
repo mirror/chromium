@@ -151,7 +151,8 @@ Node* PreviousLeafWithSameEditability(const Node& node,
   return nullptr;
 }
 
-Node* NextLeafWithSameEditability(Node* node, EditableType editable_type) {
+Node* NextLeafWithSameEditability(const Node* node,
+                                  EditableType editable_type) {
   if (!node)
     return nullptr;
 
@@ -284,7 +285,7 @@ Node* FindNodeInPreviousLine(const Node& start_node,
 
 // FIXME: consolidate with code in previousLinePosition.
 Position PreviousRootInlineBoxCandidatePosition(
-    Node* node,
+    const Node* node,
     const VisiblePosition& visible_position,
     EditableType editable_type) {
   DCHECK(visible_position.IsValid()) << visible_position;
@@ -308,7 +309,7 @@ Position PreviousRootInlineBoxCandidatePosition(
 }
 
 Position NextRootInlineBoxCandidatePosition(
-    Node* node,
+    const Node* node,
     const VisiblePosition& visible_position,
     EditableType editable_type) {
   DCHECK(visible_position.IsValid()) << visible_position;
@@ -669,7 +670,7 @@ VisiblePosition PreviousLinePosition(const VisiblePosition& visible_position,
   DCHECK(visible_position.IsValid()) << visible_position;
 
   Position p = visible_position.DeepEquivalent();
-  Node* node = p.AnchorNode();
+  const Node* node = p.AnchorNode();
 
   if (!node)
     return VisiblePosition();
@@ -730,7 +731,7 @@ VisiblePosition NextLinePosition(const VisiblePosition& visible_position,
   DCHECK(visible_position.IsValid()) << visible_position;
 
   Position p = visible_position.DeepEquivalent();
-  Node* node = p.AnchorNode();
+  const Node* node = p.AnchorNode();
 
   if (!node)
     return VisiblePosition();
@@ -751,7 +752,7 @@ VisiblePosition NextLinePosition(const VisiblePosition& visible_position,
 
   if (!root) {
     // FIXME: We need do the same in previousLinePosition.
-    Node* child = NodeTraversal::ChildAt(*node, p.ComputeEditingOffset());
+    const Node* child = NodeTraversal::ChildAt(*node, p.ComputeEditingOffset());
     node = child ? child : &NodeTraversal::LastWithinOrSelf(*node);
     Position position = NextRootInlineBoxCandidatePosition(
         node, visible_position, editable_type);

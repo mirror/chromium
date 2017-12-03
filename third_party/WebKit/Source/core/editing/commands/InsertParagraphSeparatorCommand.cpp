@@ -385,7 +385,7 @@ void InsertParagraphSeparatorCommand::DoApply(EditingState* editing_state) {
           *start_block, insertion_position.ComputeEditingOffset());
       DCHECK(ref_node);  // must be true or we'd be in the end of block case
     } else {
-      ref_node = insertion_position.AnchorNode();
+      ref_node = insertion_position.AnchorNodeMutable();
     }
 
     GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
@@ -488,7 +488,7 @@ void InsertParagraphSeparatorCommand::DoApply(EditingState* editing_state) {
   // be turned into a nbsp.
   if (leading_whitespace.IsNotNull() &&
       leading_whitespace.AnchorNode()->IsTextNode()) {
-    Text* text_node = ToText(leading_whitespace.AnchorNode());
+    Text* text_node = ToText(leading_whitespace.AnchorNodeMutable());
     DCHECK(!text_node->GetLayoutObject() ||
            text_node->GetLayoutObject()->Style()->CollapseWhiteSpace())
         << text_node;

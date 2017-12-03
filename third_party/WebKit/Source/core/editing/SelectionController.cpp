@@ -90,7 +90,7 @@ SelectionInFlatTree ExpandSelectionToRespectUserSelectAll(
     const SelectionInFlatTree& selection) {
   if (selection.IsNone())
     return SelectionInFlatTree();
-  Node* const root_user_select_all =
+  const Node* const root_user_select_all =
       EditingInFlatTreeStrategy::RootUserSelectAllForNode(target_node);
   if (!root_user_select_all)
     return selection;

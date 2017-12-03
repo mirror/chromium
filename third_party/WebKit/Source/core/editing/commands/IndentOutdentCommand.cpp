@@ -69,7 +69,7 @@ bool IndentOutdentCommand::TryIndentingAsListItem(const Position& start,
                                                   const Position& end,
                                                   EditingState* editing_state) {
   // If our selection is not inside a list, bail out.
-  Node* last_node_in_selected_paragraph = start.AnchorNode();
+  const Node* last_node_in_selected_paragraph = start.AnchorNode();
   HTMLElement* list_element = EnclosingList(last_node_in_selected_paragraph);
   if (!list_element)
     return false;
@@ -299,11 +299,11 @@ void IndentOutdentCommand::OutdentParagraph(EditingState* editing_state) {
       Node* highest_inline_node = HighestEnclosingNodeOfType(
           visible_start_of_paragraph.DeepEquivalent(), IsInline,
           kCannotCrossEditingBoundary, enclosing_block_flow);
-      SplitElement(
-          enclosing_element,
-          highest_inline_node
-              ? highest_inline_node
-              : visible_start_of_paragraph.DeepEquivalent().AnchorNode());
+      SplitElement(enclosing_element,
+                   highest_inline_node
+                       ? highest_inline_node
+                       : visible_start_of_paragraph.DeepEquivalent()
+                             .AnchorNodeMutable());
     }
 
     GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();

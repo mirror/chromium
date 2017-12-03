@@ -49,7 +49,7 @@ template <typename Strategy>
 PositionTemplate<Strategy> StartOfParagraphAlgorithm(
     const PositionTemplate<Strategy>& position,
     EditingBoundaryCrossingRule boundary_crossing_rule) {
-  Node* const start_node = position.AnchorNode();
+  const Node* const start_node = position.AnchorNode();
 
   if (!start_node)
     return PositionTemplate<Strategy>();
@@ -63,11 +63,11 @@ PositionTemplate<Strategy> StartOfParagraphAlgorithm(
   ContainerNode* const highest_root = HighestEditableRoot(position);
   const bool start_node_is_editable = HasEditableStyle(*start_node);
 
-  Node* candidate_node = start_node;
+  const Node* candidate_node = start_node;
   PositionAnchorType candidate_type = position.AnchorType();
   int candidate_offset = position.ComputeEditingOffset();
 
-  Node* previous_node_iterator = start_node;
+  const Node* previous_node_iterator = start_node;
   while (previous_node_iterator) {
     if (boundary_crossing_rule == kCannotCrossEditingBoundary &&
         !NodeIsUserSelectAll(previous_node_iterator) &&
@@ -157,7 +157,7 @@ template <typename Strategy>
 PositionTemplate<Strategy> EndOfParagraphAlgorithm(
     const PositionTemplate<Strategy>& position,
     EditingBoundaryCrossingRule boundary_crossing_rule) {
-  Node* const start_node = position.AnchorNode();
+  const Node* const start_node = position.AnchorNode();
 
   if (!start_node)
     return PositionTemplate<Strategy>();
@@ -171,11 +171,11 @@ PositionTemplate<Strategy> EndOfParagraphAlgorithm(
   ContainerNode* const highest_root = HighestEditableRoot(position);
   const bool start_node_is_editable = HasEditableStyle(*start_node);
 
-  Node* candidate_node = start_node;
+  const Node* candidate_node = start_node;
   PositionAnchorType candidate_type = position.AnchorType();
   int candidate_offset = position.ComputeEditingOffset();
 
-  Node* next_node_iterator = start_node;
+  const Node* next_node_iterator = start_node;
   while (next_node_iterator) {
     if (boundary_crossing_rule == kCannotCrossEditingBoundary &&
         !NodeIsUserSelectAll(next_node_iterator) &&

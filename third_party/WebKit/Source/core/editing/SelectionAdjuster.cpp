@@ -49,7 +49,7 @@ Node* EnclosingShadowHost(Node* node) {
 
 bool IsEnclosedBy(const PositionInFlatTree& position, const Node& node) {
   DCHECK(position.IsNotNull());
-  Node* anchor_node = position.AnchorNode();
+  const Node* anchor_node = position.AnchorNode();
   if (anchor_node == node)
     return !position.IsAfterAnchor() && !position.IsBeforeAnchor();
 
@@ -108,7 +108,7 @@ Position AdjustPositionForEnd(const Position& current_position,
 
   DCHECK(current_position.ComputeContainerNode()->GetTreeScope() != tree_scope);
 
-  if (Node* ancestor = tree_scope.AncestorInThisScope(
+  if (const Node* ancestor = tree_scope.AncestorInThisScope(
           current_position.ComputeContainerNode())) {
     if (ancestor->contains(start_container_node))
       return Position::AfterNode(*ancestor);
@@ -144,7 +144,7 @@ Position AdjustPositionForStart(const Position& current_position,
 
   DCHECK(current_position.ComputeContainerNode()->GetTreeScope() != tree_scope);
 
-  if (Node* ancestor = tree_scope.AncestorInThisScope(
+  if (const Node* ancestor = tree_scope.AncestorInThisScope(
           current_position.ComputeContainerNode())) {
     if (ancestor->contains(end_container_node))
       return Position::BeforeNode(*ancestor);
@@ -304,7 +304,7 @@ class GranularityAdjuster final {
         // Select the paragraph break (the space from the end of a paragraph
         // to the start of the next one) to match TextEdit.
         const VisiblePositionTemplate<Strategy> end = NextPositionOf(word_end);
-        Element* const table = TableElementJustBefore(end);
+        const Element* const table = TableElementJustBefore(end);
         if (!table) {
           if (end.IsNull())
             return word_end.DeepEquivalent();
@@ -349,7 +349,7 @@ class GranularityAdjuster final {
         const VisiblePositionTemplate<Strategy> end =
             NextPositionOf(visible_paragraph_end);
 
-        Element* const table = TableElementJustBefore(end);
+        const Element* const table = TableElementJustBefore(end);
         if (!table) {
           if (end.IsNull())
             return visible_paragraph_end.DeepEquivalent();
