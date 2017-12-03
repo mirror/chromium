@@ -88,6 +88,24 @@
       "revId": "bc35d04ee839095de1621b8d38a5a2e002eabe43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03e78c5f_c923d43f",
+        "filename": "content/browser/service_worker/service_worker_storage.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1234245
+      },
+      "writtenOn": "2017-12-03T22:50:07Z",
+      "side": 0,
+      "message": "I think I\u0027d like to go with the explicit switch-preamble then.",
+      "parentUuid": "a3c977dc_c6e5aaf3",
+      "revId": "bc35d04ee839095de1621b8d38a5a2e002eabe43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
