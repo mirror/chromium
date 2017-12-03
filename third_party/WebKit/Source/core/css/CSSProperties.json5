@@ -31,6 +31,8 @@
     // that properties with default classnames do not get this flag, and
     // introduce a 'not_implemented' flag instead.
     property_class: {
+      default: false,
+      valid_type: "bool",
     },
 
     // - property_methods: ["method1", "method2"]
@@ -356,7 +358,7 @@
     // Animation Priority properties
     {
       name: "animation-delay",
-      property_class: "Delay",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       custom_apply_functions_all: true,
       priority: "Animation",
@@ -372,7 +374,7 @@
     },
     {
       name: "animation-duration",
-      property_class: "Duration",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       typedom_types: ["Time"],
       separator: ",",
@@ -411,21 +413,21 @@
     },
     {
       name: "animation-timing-function",
-      property_class: "TimingFunction",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       custom_apply_functions_all: true,
       priority: "Animation",
     },
     {
       name: "transition-delay",
-      property_class: "Delay",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       custom_apply_functions_all: true,
       priority: "Animation",
     },
     {
       name: "transition-duration",
-      property_class: "Duration",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       typedom_types: ["Time"],
       separator: ",",
@@ -441,7 +443,7 @@
     },
     {
       name: "transition-timing-function",
-      property_class: "TimingFunction",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       custom_apply_functions_all: true,
       priority: "Animation",
@@ -631,7 +633,7 @@
     },
     {
       name: "-webkit-locale",
-      property_class: "AutoOrString",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       inherited: true,
       font: true,
@@ -701,7 +703,7 @@
     },
     {
       name: "align-content",
-      property_class: "AlignOrJustifyContent",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       field_group: "*",
       field_template: "external",
@@ -773,7 +775,7 @@
     },
     {
       name: "background-clip",
-      property_class: "BackgroundBox",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       custom_apply_functions_all: true,
     },
@@ -792,7 +794,7 @@
     },
     {
       name: "background-image",
-      property_class: "BackgroundOrMaskImage",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       keywords: ["auto", "none"],
@@ -801,20 +803,20 @@
     },
     {
       name: "background-origin",
-      property_class: "BackgroundBox",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       custom_apply_functions_all: true,
     },
     {
       name: "background-position-x",
-      property_class: "PositionX",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       custom_apply_functions_all: true,
     },
     {
       name: "background-position-y",
-      property_class: "PositionY",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       custom_apply_functions_all: true,
@@ -829,7 +831,7 @@
     },
     {
       name: "background-size",
-      property_class: "BackgroundOrMaskSize",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       custom_apply_functions_all: true,
@@ -858,7 +860,7 @@
     },
     {
       name: "border-bottom-left-radius",
-      property_class: "BorderRadiusCorner",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       field_group: "surround",
@@ -870,7 +872,7 @@
     },
     {
       name: "border-bottom-right-radius",
-      property_class: "BorderRadiusCorner",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       field_group: "surround",
@@ -894,7 +896,7 @@
     },
     {
       name: "border-bottom-width",
-      property_class: "BorderWidthSide",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       field_group: "surround",
@@ -938,7 +940,7 @@
     },
     {
       name: "border-image-source",
-      property_class: "ImageSource",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       keywords: ["none"],
@@ -979,7 +981,7 @@
     },
     {
       name: "border-left-width",
-      property_class: "BorderWidthSide",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       field_group: "surround",
@@ -1019,7 +1021,7 @@
     },
     {
       name: "border-right-width",
-      property_class: "BorderWidthSide",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       field_group: "surround",
@@ -1047,7 +1049,7 @@
     },
     {
       name: "border-top-left-radius",
-      property_class: "BorderRadiusCorner",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       field_group: "surround",
@@ -1059,7 +1061,7 @@
     },
     {
       name: "border-top-right-radius",
-      property_class: "BorderRadiusCorner",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       field_group: "surround",
@@ -1083,7 +1085,7 @@
     },
     {
       name: "border-top-width",
-      property_class: "BorderWidthSide",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       field_group: "surround",
@@ -1098,7 +1100,7 @@
     },
     {
       name: "bottom",
-      property_class: "OffsetSide",
+      property_class: true,
       property_methods: ["ParseSingleValue", "IsLayoutDependent"],
       interpolable: true,
       field_group: "surround",
@@ -1313,7 +1315,7 @@
     },
     {
       name: "cx",
-      property_class: "ShapeLength",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       svg: true,
@@ -1321,7 +1323,7 @@
     },
     {
       name: "cy",
-      property_class: "ShapeLength",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       svg: true,
@@ -1364,7 +1366,7 @@
     },
     {
       name: "fill",
-      property_class: "PaintStroke",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       inherited: true,
@@ -1374,7 +1376,7 @@
     },
     {
       name: "fill-opacity",
-      property_class: "FillOrStrokeOpacity",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       inherited: true,
@@ -1422,7 +1424,7 @@
     },
     {
       name: "flex-grow",
-      property_class: "FlexGrowOrShrink",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       field_group: "*",
@@ -1432,7 +1434,7 @@
     },
     {
       name: "flex-shrink",
-      property_class: "FlexGrowOrShrink",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       field_group: "*",
@@ -1465,7 +1467,7 @@
     },
     {
       name: "flood-opacity",
-      property_class: "FloodOrStopOpacity",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       svg: true,
@@ -1473,7 +1475,7 @@
     },
     {
       name: "grid-auto-columns",
-      property_class: "GridAutoLine",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       field_group: "*",
       field_template: "external",
@@ -1496,7 +1498,7 @@
     },
     {
       name: "grid-auto-rows",
-      property_class: "GridAutoLine",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       field_group: "*",
       field_template: "external",
@@ -1507,7 +1509,7 @@
     },
     {
       name: "grid-column-end",
-      property_class: "GridLine",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       field_group: "*",
       field_template: "external",
@@ -1518,7 +1520,7 @@
     },
     {
       name: "grid-column-gap",
-      property_class: "GridRowOrColumnGap",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       field_group: "*",
       field_template: "<length>",
@@ -1527,7 +1529,7 @@
     },
     {
       name: "grid-column-start",
-      property_class: "GridLine",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       field_group: "*",
       field_template: "external",
@@ -1538,7 +1540,7 @@
     },
     {
       name: "grid-row-end",
-      property_class: "GridLine",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       field_group: "*",
       field_template: "external",
@@ -1549,7 +1551,7 @@
     },
     {
       name: "grid-row-gap",
-      property_class: "GridRowOrColumnGap",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       field_group: "*",
       field_template: "<length>",
@@ -1558,7 +1560,7 @@
     },
     {
       name: "grid-row-start",
-      property_class: "GridLine",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       field_group: "*",
       field_template: "external",
@@ -1575,7 +1577,7 @@
     },
     {
       name: "grid-template-columns",
-      property_class: "GridTemplateLine",
+      property_class: true,
       property_methods: ["ParseSingleValue", "IsLayoutDependent"],
       field_group: "*",
       field_template: "external",
@@ -1586,7 +1588,7 @@
     },
     {
       name: "grid-template-rows",
-      property_class: "GridTemplateLine",
+      property_class: true,
       property_methods: ["ParseSingleValue", "IsLayoutDependent"],
       field_group: "*",
       field_template: "external",
@@ -1597,7 +1599,7 @@
     },
     {
       name: "height",
-      property_class: "WidthOrHeight",
+      property_class: true,
       property_methods: ["ParseSingleValue", "IsLayoutDependent"],
       is_descriptor: true,
       interpolable: true,
@@ -1652,7 +1654,7 @@
     },
     {
       name: "justify-content",
-      property_class: "AlignOrJustifyContent",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       field_group: "*",
       field_template: "external",
@@ -1685,7 +1687,7 @@
     },
     {
       name: "left",
-      property_class: "OffsetSide",
+      property_class: true,
       property_methods: ["ParseSingleValue", "IsLayoutDependent"],
       interpolable: true,
       field_group: "surround",
@@ -1697,7 +1699,7 @@
     },
     {
       name: "letter-spacing",
-      property_class: "LetterAndWordSpacing",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       inherited: true,
@@ -1825,7 +1827,7 @@
     },
     {
       name: "marker-end",
-      property_class: "MarkerPoint",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       inherited: true,
       svg: true,
@@ -1834,7 +1836,7 @@
     },
     {
       name: "marker-mid",
-      property_class: "MarkerPoint",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       inherited: true,
       svg: true,
@@ -1843,7 +1845,7 @@
     },
     {
       name: "marker-start",
-      property_class: "MarkerPoint",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       inherited: true,
       svg: true,
@@ -1871,7 +1873,7 @@
     },
     {
       name: "max-height",
-      property_class: "MaxWidthOrHeight",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       is_descriptor: true,
       interpolable: true,
@@ -1882,7 +1884,7 @@
     },
     {
       name: "max-width",
-      property_class: "MaxWidthOrHeight",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       is_descriptor: true,
       interpolable: true,
@@ -1893,7 +1895,7 @@
     },
     {
       name: "min-height",
-      property_class: "MinWidthOrHeight",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       is_descriptor: true,
       interpolable: true,
@@ -1904,7 +1906,7 @@
     },
     {
       name: "min-width",
-      property_class: "MinWidthOrHeight",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       is_descriptor: true,
       interpolable: true,
@@ -2033,7 +2035,7 @@
     },
     {
       name: "orphans",
-      property_class: "OrphansOrWidows",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       inherited: true,
@@ -2248,7 +2250,7 @@
     },
     {
       name: "right",
-      property_class: "OffsetSide",
+      property_class: true,
       property_methods: ["ParseSingleValue", "IsLayoutDependent"],
       interpolable: true,
       field_group: "surround",
@@ -2260,7 +2262,7 @@
     },
     {
       name: "r",
-      property_class: "ShapeLength",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       svg: true,
@@ -2268,7 +2270,7 @@
     },
     {
       name: "rx",
-      property_class: "Radius",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       svg: true,
@@ -2276,7 +2278,7 @@
     },
     {
       name: "ry",
-      property_class: "Radius",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       svg: true,
@@ -2294,7 +2296,7 @@
     },
     {
       name: "overscroll-behavior-x",
-      property_class: "OverscrollBehaviorXOrY",
+      property_class: true,
       runtime_flag: "CSSOverscrollBehavior",
       field_template: "keyword",
       keywords: ["auto", "contain", "none"],
@@ -2303,7 +2305,7 @@
     },
     {
       name: "overscroll-behavior-y",
-      property_class: "OverscrollBehaviorXOrY",
+      property_class: true,
       runtime_flag: "CSSOverscrollBehavior",
       field_template: "keyword",
       keywords: ["auto", "contain", "none"],
@@ -2346,7 +2348,7 @@
     },
     {
       name: "scroll-padding-top",
-      property_class: "ScrollPaddingSide",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       runtime_flag: "CSSScrollSnapPoints",
       field_group: "*",
@@ -2357,7 +2359,7 @@
     },
     {
       name: "scroll-padding-bottom",
-      property_class: "ScrollPaddingSide",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       runtime_flag: "CSSScrollSnapPoints",
       field_group: "*",
@@ -2368,7 +2370,7 @@
     },
     {
       name: "scroll-padding-left",
-      property_class: "ScrollPaddingSide",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       runtime_flag: "CSSScrollSnapPoints",
       field_group: "*",
@@ -2379,7 +2381,7 @@
     },
     {
       name: "scroll-padding-right",
-      property_class: "ScrollPaddingSide",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       runtime_flag: "CSSScrollSnapPoints",
       field_group: "*",
@@ -2446,7 +2448,7 @@
     },
     {
       name: "scroll-snap-margin-top",
-      property_class: "ScrollSnapMarginSide",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       runtime_flag: "CSSScrollSnapPoints",
       field_group: "*",
@@ -2456,7 +2458,7 @@
     },
     {
       name: "scroll-snap-margin-bottom",
-      property_class: "ScrollSnapMarginSide",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       runtime_flag: "CSSScrollSnapPoints",
       field_group: "*",
@@ -2466,7 +2468,7 @@
     },
     {
       name: "scroll-snap-margin-left",
-      property_class: "ScrollSnapMarginSide",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       runtime_flag: "CSSScrollSnapPoints",
       field_group: "*",
@@ -2476,7 +2478,7 @@
     },
     {
       name: "scroll-snap-margin-right",
-      property_class: "ScrollSnapMarginSide",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       runtime_flag: "CSSScrollSnapPoints",
       field_group: "*",
@@ -2606,7 +2608,7 @@
     },
     {
       name: "stop-opacity",
-      property_class: "FloodOrStopOpacity",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       svg: true,
@@ -2614,7 +2616,7 @@
     },
     {
       name: "stroke",
-      property_class: "PaintStroke",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       inherited: true,
@@ -2634,7 +2636,7 @@
     },
     {
       name: "stroke-dashoffset",
-      property_class: "StrokeDashoffsetOrStrokeWidth",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       inherited: true,
@@ -2670,7 +2672,7 @@
     },
     {
       name: "stroke-opacity",
-      property_class: "FillOrStrokeOpacity",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       inherited: true,
@@ -2679,7 +2681,7 @@
     },
     {
       name: "stroke-width",
-      property_class: "StrokeDashoffsetOrStrokeWidth",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       inherited: true,
@@ -2868,7 +2870,7 @@
     },
     {
       name: "top",
-      property_class: "OffsetSide",
+      property_class: true,
       property_methods: ["ParseSingleValue", "IsLayoutDependent"],
       interpolable: true,
       field_group: "surround",
@@ -3016,7 +3018,7 @@
     },
     {
       name: "x",
-      property_class: "ShapeLength",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       svg: true,
@@ -3024,7 +3026,7 @@
     },
     {
       name: "y",
-      property_class: "ShapeLength",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       svg: true,
@@ -3049,7 +3051,7 @@
     },
     {
       name: "-webkit-border-horizontal-spacing",
-      property_class: "WebkitBorderSpacing",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       inherited: true,
@@ -3068,7 +3070,7 @@
     },
     {
       name: "-webkit-border-vertical-spacing",
-      property_class: "WebkitBorderSpacing",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       inherited: true,
@@ -3265,7 +3267,7 @@
     },
     {
       name: "-webkit-hyphenate-character",
-      property_class: "AutoOrString",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       inherited: true,
       field_group: "*",
@@ -3351,7 +3353,7 @@
     },
     {
       name: "-webkit-mask-box-image-source",
-      property_class: "ImageSource",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       custom_apply_functions_value: true,
@@ -3377,7 +3379,7 @@
     },
     {
       name: "-webkit-mask-image",
-      property_class: "BackgroundOrMaskImage",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       custom_apply_functions_all: true,
@@ -3390,14 +3392,14 @@
     },
     {
       name: "-webkit-mask-position-x",
-      property_class: "PositionX",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       custom_apply_functions_all: true,
     },
     {
       name: "-webkit-mask-position-y",
-      property_class: "PositionY",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       custom_apply_functions_all: true,
@@ -3412,21 +3414,21 @@
     },
     {
       name: "-webkit-mask-size",
-      property_class: "BackgroundOrMaskSize",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       custom_apply_functions_all: true,
     },
     {
       name: "-webkit-perspective-origin-x",
-      property_class: "WebkitOriginX",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       converter: "ConvertLength",
     },
     {
       name: "-webkit-perspective-origin-y",
-      property_class: "WebkitOriginY",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       converter: "ConvertLength",
@@ -3559,14 +3561,14 @@
     },
     {
       name: "-webkit-transform-origin-x",
-      property_class: "WebkitOriginX",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       converter: "ConvertLength",
     },
     {
       name: "-webkit-transform-origin-y",
-      property_class: "WebkitOriginY",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       converter: "ConvertLength",
@@ -3616,7 +3618,7 @@
     },
     {
       name: "widows",
-      property_class: "OrphansOrWidows",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       inherited: true,
@@ -3627,7 +3629,7 @@
     },
     {
       name: "width",
-      property_class: "WidthOrHeight",
+      property_class: true,
       property_methods: ["ParseSingleValue", "IsLayoutDependent"],
       is_descriptor: true,
       interpolable: true,
@@ -3656,7 +3658,7 @@
     },
     {
       name: "word-spacing",
-      property_class: "LetterAndWordSpacing",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       interpolable: true,
       inherited: true,
@@ -3686,7 +3688,7 @@
     // CSS logical props
     {
       name: "inline-size",
-      property_class: "InlineSizeOrLogicalWidth",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       direction_aware_options: {
         logical_side: "width",
@@ -3695,7 +3697,7 @@
     },
     {
       name: "block-size",
-      property_class: "BlockSizeOrLogicalHeight",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       direction_aware_options: {
         logical_side: "height",
@@ -3704,7 +3706,7 @@
     },
     {
       name: "min-inline-size",
-      property_class: "MinInlineSizeOrMinLogicalWidth",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       direction_aware_options: {
         logical_side: "width",
@@ -3713,7 +3715,7 @@
     },
     {
       name: "min-block-size",
-      property_class: "MinBlockSizeOrMinLogicalHeight",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       direction_aware_options: {
         logical_side: "height",
@@ -3722,7 +3724,7 @@
     },
     {
       name: "max-inline-size",
-      property_class: "MaxInlineSizeOrMaxLogicalWidth",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       direction_aware_options: {
         logical_side: "width",
@@ -3731,7 +3733,7 @@
     },
     {
       name: "max-block-size",
-      property_class: "MaxBlockSizeOrMaxLogicalHeight",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       direction_aware_options: {
         logical_side: "height",
@@ -3919,7 +3921,7 @@
     },
     {
       name: "-webkit-logical-width",
-      property_class: "InlineSizeOrLogicalWidth",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       direction_aware_options: {
         logical_side: "width",
@@ -3928,7 +3930,7 @@
     },
     {
       name: "-webkit-logical-height",
-      property_class: "BlockSizeOrLogicalHeight",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       direction_aware_options: {
         logical_side: "height",
@@ -3937,7 +3939,7 @@
     },
     {
       name: "-webkit-min-logical-width",
-      property_class: "MinInlineSizeOrMinLogicalWidth",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       direction_aware_options: {
         logical_side: "width",
@@ -3946,7 +3948,7 @@
     },
     {
       name: "-webkit-min-logical-height",
-      property_class: "MinBlockSizeOrMinLogicalHeight",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       direction_aware_options: {
         logical_side: "height",
@@ -3955,7 +3957,7 @@
     },
     {
       name: "-webkit-max-logical-width",
-      property_class: "MaxInlineSizeOrMaxLogicalWidth",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       direction_aware_options: {
         logical_side: "width",
@@ -3964,7 +3966,7 @@
     },
     {
       name: "-webkit-max-logical-height",
-      property_class: "MaxBlockSizeOrMaxLogicalHeight",
+      property_class: true,
       property_methods: ["ParseSingleValue"],
       direction_aware_options: {
         logical_side: "height",
@@ -4010,37 +4012,37 @@
     },
     {
       name: "max-zoom",
-      property_class: "DescriptorOnly",
+      property_class: true,
       is_descriptor: true,
       is_property: false,
     },
     {
       name: "min-zoom",
-      property_class: "DescriptorOnly",
+      property_class: true,
       is_descriptor: true,
       is_property: false,
     },
     {
       name: "orientation",
-      property_class: "DescriptorOnly",
+      property_class: true,
       is_descriptor: true,
       is_property: false,
     },
     {
       name: "src",
-      property_class: "DescriptorOnly",
+      property_class: true,
       is_descriptor: true,
       is_property: false,
     },
     {
       name: "unicode-range",
-      property_class: "DescriptorOnly",
+      property_class: true,
       is_descriptor: true,
       is_property: false,
     },
     {
       name: "user-zoom",
-      property_class: "DescriptorOnly",
+      property_class: true,
       is_descriptor: true,
       is_property: false,
     },
@@ -4064,7 +4066,7 @@
         "background-attachment", "background-origin", "background-clip",
         "background-color"
       ],
-      property_class: "Background",
+      property_class: true,
       property_methods: ["ParseShorthand"],
     },
     {
@@ -4502,7 +4504,7 @@
         "-webkit-mask-position-y", "-webkit-mask-size", "-webkit-mask-repeat-x",
         "-webkit-mask-repeat-y", "-webkit-mask-origin", "-webkit-mask-clip"
       ],
-      property_class: "Background",
+      property_class: true,
       property_methods: ["ParseShorthand"],
     },
     {
