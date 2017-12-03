@@ -77,6 +77,7 @@ const char kTestFileContent[] = "This is some test content.";
 // User account email and directory hash for secondary account for multi-profile
 // sensitive test cases.
 const char kSecondProfileAccount[] = "profile2@test.com";
+const char kSecondProfileGiaId[] = "9876543210";
 const char kSecondProfileHash[] = "fileBrowserApiTestProfile2";
 
 class FakeSelectFileDialog : public ui::SelectFileDialog {
@@ -503,7 +504,9 @@ class MultiProfileDriveFileSystemExtensionApiTest :
     base::FilePath user_data_directory;
     PathService::Get(chrome::DIR_USER_DATA, &user_data_directory);
     session_manager::SessionManager::Get()->CreateSession(
-        AccountId::FromUserEmail(kSecondProfileAccount), kSecondProfileHash);
+        AccountId::FromUserEmailGaiaId(kSecondProfileAccount,
+                                       kSecondProfileGiaId),
+        kSecondProfileHash, false);
     // Set up the secondary profile.
     base::FilePath profile_dir =
         user_data_directory.Append(

@@ -87,7 +87,9 @@ namespace {
 // are definitely not enterprise. This lets us to avoid faking of policy fetch
 // procedure.
 const char kTestUser1[] = "test-user@gmail.com";
+const char kTestUser1GaiaId[] = "1111111111";
 const char kTestUser2[] = "test-user2@gmail.com";
+const char kTestUser2GaiaId[] = "2222222222";
 
 policy::CloudPolicyStore* GetStoreForUser(const user_manager::User* user) {
   Profile* profile = ProfileHelper::Get()->GetProfileByUserUnsafe(user);
@@ -174,7 +176,7 @@ class UserImageManagerTest : public LoginManagerTest,
   // Logs in |account_id|.
   void LogIn(const AccountId& account_id) {
     user_manager::UserManager::Get()->UserLoggedIn(
-        account_id, account_id.GetUserEmail(), false);
+        account_id, account_id.GetUserEmail(), false, false);
   }
 
   // Verifies user image info.
@@ -302,10 +304,12 @@ class UserImageManagerTest : public LoginManagerTest,
 
   std::unique_ptr<base::RunLoop> run_loop_;
 
-  const AccountId test_account_id1_ = AccountId::FromUserEmail(kTestUser1);
-  const AccountId test_account_id2_ = AccountId::FromUserEmail(kTestUser2);
+  const AccountId test_account_id1_ =
+      AccountId::FromUserEmailGaiaId(kTestUser1, kTestUser1GaiaId);
+  const AccountId test_account_id2_ =
+      AccountId::FromUserEmailGaiaId(kTestUser2, kTestUser2GaiaId);
   const AccountId enterprise_account_id_ =
-      AccountId::FromUserEmail(kEnterpriseUser1);
+      AccountId::FromUserEmailGaiaId(kEnterpriseUser1, kEnterpriseUser1GaiaId);
   const cryptohome::Identification cryptohome_id_ =
       cryptohome::Identification(enterprise_account_id_);
 
