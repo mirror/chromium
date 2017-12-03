@@ -147,8 +147,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
   using AXTreeSnapshotCallback =
       base::Callback<void(
           const ui::AXTreeUpdate&)>;
-  using SmartClipCallback = base::Callback<void(const base::string16& text,
-                                                const base::string16& html)>;
 
   // An accessibility reset is only allowed to prevent very rare corner cases
   // or race conditions where the browser and renderer get out of sync. If
@@ -506,7 +504,9 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void UpdateAccessibilityMode();
 
   // Samsung Galaxy Note-specific "smart clip" stylus text getter.
-  void RequestSmartClipExtract(SmartClipCallback callback, gfx::Rect rect);
+  void RequestSmartClipExtract(
+      mojom::Frame::ExtractSmartClipDataCallback callback,
+      gfx::Rect rect);
 
   // Request a one-time snapshot of the accessibility tree without changing
   // the accessibility mode.
@@ -840,9 +840,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void OnAccessibilitySnapshotResponse(
       int callback_id,
       const AXContentTreeUpdate& snapshot);
-  void OnSmartClipDataExtracted(uint32_t id,
-                                base::string16 text,
-                                base::string16 html);
   void OnToggleFullscreen(bool enter_fullscreen);
   void OnSuddenTerminationDisablerChanged(
       bool present,
@@ -1238,9 +1235,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // The mapping from callback id to corresponding callback for pending
   // accessibility tree snapshot calls created by RequestAXTreeSnapshot.
   std::map<int, AXTreeSnapshotCallback> ax_tree_snapshot_callbacks_;
-
-  // Samsung Galaxy Note-specific "smart clip" stylus text getter.
-  std::map<uint32_t, SmartClipCallback> smart_clip_callbacks_;
 
   // Callback when an event is received, for testing.
   base::Callback<void(RenderFrameHostImpl*, ui::AXEvent, int)>
