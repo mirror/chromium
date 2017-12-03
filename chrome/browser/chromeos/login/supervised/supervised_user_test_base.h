@@ -24,7 +24,9 @@
 namespace chromeos {
 
 const char kTestManager[] = "test-manager@gmail.com";
+const char kTestManagerGaiaId[] = "0001110001";
 const char kTestOtherUser[] = "test-user@gmail.com";
+const char kTestOtherUserGaiaId[] = "0002220001";
 
 const char kTestManagerPassword[] = "password";
 const char kTestSupervisedUserDisplayName[] = "John Doe";

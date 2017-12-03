@@ -27,6 +27,7 @@ namespace chromeos {
 namespace {
 
 const char kTestUser1[] = "test-user1@gmail.com";
+const char kTestUser1GaiaId[] = "test-user1@gmail.com";
 
 }  // namespace
 
@@ -61,7 +62,7 @@ class ResetTest : public LoginManagerTest {
   }
 
   void RegisterSomeUser() {
-    RegisterUser(kTestUser1);
+    RegisterUser(AccountId::FromUserEmailGaiaId(kTestUser1, kTestUser1GaiaId));
     StartupUtils::MarkOobeCompleted();
   }
 

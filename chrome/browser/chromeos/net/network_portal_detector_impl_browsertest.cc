@@ -25,6 +25,7 @@
 #include "chromeos/network/portal_detector/network_portal_detector_strategy.h"
 #include "components/captive_portal/captive_portal_testing_utils.h"
 #include "components/prefs/pref_service.h"
+#include "components/signin/core/account_id/account_id.h"
 #include "components/sync_preferences/pref_service_syncable.h"
 #include "content/public/test/test_utils.h"
 #include "dbus/object_path.h"
@@ -51,6 +52,7 @@ const char* const kUserActionMetric =
     NetworkPortalNotificationController::kUserActionMetric;
 
 const char kTestUser[] = "test-user@gmail.com";
+const char kTestUserGaiaId[] = "1234567890";
 const char kWifiServicePath[] = "/service/wifi";
 const char kWifiGuid[] = "wifi";
 
@@ -171,7 +173,7 @@ class NetworkPortalDetectorImplBrowserTest
 
 IN_PROC_BROWSER_TEST_F(NetworkPortalDetectorImplBrowserTest,
                        PRE_InSessionDetection) {
-  RegisterUser(kTestUser);
+  RegisterUser(AccountId::FromUserEmailGaiaId(kTestUser, kTestUserGaiaId));
   StartupUtils::MarkOobeCompleted();
   ASSERT_EQ(PortalDetectorStrategy::STRATEGY_ID_LOGIN_SCREEN, strategy()->Id());
 }
@@ -187,7 +189,7 @@ IN_PROC_BROWSER_TEST_F(NetworkPortalDetectorImplBrowserTest,
   EnumHistogramChecker action_checker(
       kUserActionMetric, Controller::USER_ACTION_METRIC_COUNT, NULL);
 
-  LoginUser(kTestUser);
+  LoginUser(AccountId::FromUserEmailGaiaId(kTestUser, kTestUserGaiaId));
   content::RunAllPendingInMessageLoop();
 
   // User connects to wifi.
@@ -250,7 +252,7 @@ void NetworkPortalDetectorImplBrowserTestIgnoreProxy::TestImpl(
   EnumHistogramChecker action_checker(
       kUserActionMetric, Controller::USER_ACTION_METRIC_COUNT, nullptr);
 
-  LoginUser(kTestUser);
+  LoginUser(AccountId::FromUserEmailGaiaId(kTestUser, kTestUserGaiaId));
   content::RunAllPendingInMessageLoop();
 
   SetIgnoreNoNetworkForTesting();
@@ -292,7 +294,7 @@ void NetworkPortalDetectorImplBrowserTestIgnoreProxy::TestImpl(
 
 IN_PROC_BROWSER_TEST_P(NetworkPortalDetectorImplBrowserTestIgnoreProxy,
                        PRE_TestWithPreference) {
-  RegisterUser(kTestUser);
+  RegisterUser(AccountId::FromUserEmailGaiaId(kTestUser, kTestUserGaiaId));
   StartupUtils::MarkOobeCompleted();
   EXPECT_EQ(PortalDetectorStrategy::STRATEGY_ID_LOGIN_SCREEN, strategy()->Id());
 }
