@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d989a3a3_c4c4aae4",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-03T14:25:53Z",
+      "side": 1,
+      "message": "Is Ian around, or is he off until Jan? Recent Yosin\u0027s patch reminded me that Ian has copied these logic to IsEmptyItem\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/layout/ng/inline/ng_inline_item.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d22\nand changing only one of them can cause problems. Did this patch pass try bots?",
+      "revId": "58b29efa105b35a520f9d8b6ab024dc9d83a987b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
