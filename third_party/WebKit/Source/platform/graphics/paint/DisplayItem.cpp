@@ -43,8 +43,6 @@ static WTF::String PaintPhaseAsDebugString(int paint_phase) {
       return "PaintPhaseTextClip";
     case 10:
       return "PaintPhaseMask";
-    case DisplayItem::kPaintPhaseMax:
-      return "PaintPhaseClippingMask";
     default:
       NOTREACHED();
       return "Unknown";
@@ -70,12 +68,12 @@ static WTF::String SpecialDrawingTypeAsDebugString(DisplayItem::Type type) {
   switch (type) {
     DEBUG_STRING_CASE(BoxDecorationBackground);
     DEBUG_STRING_CASE(Caret);
+    DEBUG_STRING_CASE(ClippingMask);
     DEBUG_STRING_CASE(ColumnRules);
     DEBUG_STRING_CASE(DebugDrawing);
     DEBUG_STRING_CASE(DocumentBackground);
     DEBUG_STRING_CASE(DragImage);
     DEBUG_STRING_CASE(DragCaret);
-    DEBUG_STRING_CASE(SVGImage);
     DEBUG_STRING_CASE(LinkHighlight);
     DEBUG_STRING_CASE(ImageAreaFocusRing);
     DEBUG_STRING_CASE(PageOverlay);
@@ -85,9 +83,11 @@ static WTF::String SpecialDrawingTypeAsDebugString(DisplayItem::Type type) {
     DEBUG_STRING_CASE(PopupListBoxRow);
     DEBUG_STRING_CASE(PrintedContentDestinationLocations);
     DEBUG_STRING_CASE(PrintedContentPDFURLRect);
+    DEBUG_STRING_CASE(ReflectionMask);
     DEBUG_STRING_CASE(Resizer);
     DEBUG_STRING_CASE(SVGClip);
     DEBUG_STRING_CASE(SVGFilter);
+    DEBUG_STRING_CASE(SVGImage);
     DEBUG_STRING_CASE(SVGMask);
     DEBUG_STRING_CASE(ScrollbarBackButtonEnd);
     DEBUG_STRING_CASE(ScrollbarBackButtonStart);
@@ -106,7 +106,6 @@ static WTF::String SpecialDrawingTypeAsDebugString(DisplayItem::Type type) {
     DEBUG_STRING_CASE(VideoBitmap);
     DEBUG_STRING_CASE(WebPlugin);
     DEBUG_STRING_CASE(WebFont);
-    DEBUG_STRING_CASE(ReflectionMask);
 
     DEFAULT_CASE;
   }
@@ -143,6 +142,7 @@ static WTF::String ClipTypeAsDebugString(DisplayItem::Type type) {
     DEBUG_STRING_CASE(ClipFrameToVisibleContentRect);
     DEBUG_STRING_CASE(ClipFrameScrollbars);
     DEBUG_STRING_CASE(ClipLayerBackground);
+    DEBUG_STRING_CASE(ClipLayerClippingMask);
     DEBUG_STRING_CASE(ClipLayerColumnBounds);
     DEBUG_STRING_CASE(ClipLayerFilter);
     DEBUG_STRING_CASE(ClipLayerForeground);

@@ -280,25 +280,4 @@ void BoxPainter::PaintMaskImages(const PaintInfo& paint_info,
     paint_info.context.EndLayer();
 }
 
-void BoxPainter::PaintClippingMask(const PaintInfo& paint_info,
-                                   const LayoutPoint& paint_offset) {
-  DCHECK(paint_info.phase == PaintPhase::kClippingMask);
-
-  if (layout_box_.Style()->Visibility() != EVisibility::kVisible)
-    return;
-
-  if (!layout_box_.Layer() ||
-      layout_box_.Layer()->GetCompositingState() != kPaintsIntoOwnBacking)
-    return;
-
-  if (DrawingRecorder::UseCachedDrawingIfPossible(
-          paint_info.context, layout_box_, paint_info.phase))
-    return;
-
-  IntRect paint_rect =
-      PixelSnappedIntRect(LayoutRect(paint_offset, layout_box_.Size()));
-  DrawingRecorder recorder(paint_info.context, layout_box_, paint_info.phase);
-  paint_info.context.FillRect(paint_rect, Color::kBlack);
-}
-
 }  // namespace blink
