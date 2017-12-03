@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "eb6cd62a_18560e09",
+        "filename": "base/test/scoped_task_environment.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-12-03T16:04:45Z",
+      "side": 1,
+      "message": "N/A on final comment which landed in last PS.",
+      "parentUuid": "5333e213_7afa8cf3",
+      "range": {
+        "startLine": 54,
+        "startChar": 57,
+        "endLine": 54,
+        "endChar": 62
+      },
+      "revId": "89fc221a13c9af647327288249cfe380e4346bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e61847ee_38bf4fff",
+        "filename": "base/test/scoped_task_environment.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-12-03T16:04:45Z",
+      "side": 1,
+      "message": "Francois and I discussed this. The proper public API would be to return something the caller can wait on (in this case that isn\u0027t trivial because the wait is on the CV but that\u0027s problematic because CV requires Wait() inside the Lock which is private). Since this whole class is already an implementation detail of ScopedTaskEnvironment we figured it was fine to make an API that was intricately conceived to solve a caller problem (and documented as such).",
+      "parentUuid": "c7af5a46_cd2c6411",
+      "range": {
+        "startLine": 53,
+        "startChar": 71,
+        "endLine": 54,
+        "endChar": 38
+      },
+      "revId": "89fc221a13c9af647327288249cfe380e4346bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85054ecb_f7864de5",
         "filename": "base/test/scoped_task_environment.cc",
         "patchSetId": 8
