@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "0dd7e1a8_62be4842",
+        "filename": "third_party/WebKit/Source/core/editing/DOMSelection.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-12-03T15:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f368ccc5_ee17bd30",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 56,
+        "endChar": 12
+      },
+      "revId": "9bebb8b5d8007d0ad9600b262721d51f62df065c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e4fbbed_16e0325a",
         "filename": "third_party/WebKit/Source/core/editing/DOMSelection.cpp",
         "patchSetId": 1
@@ -65,6 +89,30 @@
     },
     {
       "key": {
+        "uuid": "9690314a_5a182146",
+        "filename": "third_party/WebKit/Source/core/editing/DOMSelection.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-12-03T15:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e4fbbed_16e0325a",
+      "range": {
+        "startLine": 67,
+        "startChar": 31,
+        "endLine": 67,
+        "endChar": 50
+      },
+      "revId": "9bebb8b5d8007d0ad9600b262721d51f62df065c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ad158a5_909fb8dc",
         "filename": "third_party/WebKit/Source/core/editing/EditingStyle.cpp",
         "patchSetId": 1
@@ -76,6 +124,30 @@
       "writtenOn": "2017-11-29T23:32:00Z",
       "side": 1,
       "message": "Should EditingStyle take |const Node*| instead?\n\nDoes EditingStyle perform any DOM mutation?",
+      "range": {
+        "startLine": 410,
+        "startChar": 7,
+        "endLine": 410,
+        "endChar": 35
+      },
+      "revId": "9bebb8b5d8007d0ad9600b262721d51f62df065c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b73eebe2_187291fb",
+        "filename": "third_party/WebKit/Source/core/editing/EditingStyle.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-12-03T15:54:38Z",
+      "side": 1,
+      "message": "It does few things in Init() function, for example it calls |node-\u003eEnsureComputedStyle()| which actually can change the Node object.",
+      "parentUuid": "9ad158a5_909fb8dc",
       "range": {
         "startLine": 410,
         "startChar": 7,
@@ -120,6 +192,24 @@
       "revId": "9bebb8b5d8007d0ad9600b262721d51f62df065c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa27228c_61405946",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-12-03T15:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65f047e8_20409c18",
+      "revId": "9bebb8b5d8007d0ad9600b262721d51f62df065c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +345,30 @@
     },
     {
       "key": {
+        "uuid": "8933500b_ef9c7e5a",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyBlockElementCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-12-03T15:54:38Z",
+      "side": 1,
+      "message": "Agree. Will make CL with changes like this.",
+      "parentUuid": "5c09b78c_99f3e3cd",
+      "range": {
+        "startLine": 133,
+        "startChar": 2,
+        "endLine": 133,
+        "endChar": 8
+      },
+      "revId": "9bebb8b5d8007d0ad9600b262721d51f62df065c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b414136_75012fbf",
         "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
         "patchSetId": 1
@@ -307,6 +421,24 @@
     },
     {
       "key": {
+        "uuid": "a8c480fa_123e540e",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-12-03T15:54:38Z",
+      "side": 1,
+      "message": "That will be good, but right now I don\u0027t see a way to do it.",
+      "parentUuid": "a8e650ee_47f222ea",
+      "revId": "9bebb8b5d8007d0ad9600b262721d51f62df065c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8fc4849_988ad946",
         "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
         "patchSetId": 1
@@ -350,6 +482,30 @@
       "revId": "9bebb8b5d8007d0ad9600b262721d51f62df065c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deaed8e7_f50ab434",
+        "filename": "third_party/WebKit/Source/core/editing/commands/SplitElementCommand.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-12-03T15:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eda06179_47c68f34",
+      "range": {
+        "startLine": 52,
+        "startChar": 9,
+        "endLine": 52,
+        "endChar": 19
+      },
+      "revId": "9bebb8b5d8007d0ad9600b262721d51f62df065c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
