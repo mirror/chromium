@@ -31,7 +31,7 @@ class PLATFORM_EXPORT DisplayItem {
  public:
   enum {
     // Must be kept in sync with core/paint/PaintPhase.h.
-    kPaintPhaseMax = 11,
+    kPaintPhaseMax = 10,
   };
 
   // A display item type uniquely identifies a display item of a client.
@@ -72,12 +72,12 @@ class PLATFORM_EXPORT DisplayItem {
     kDrawingPaintPhaseLast = kDrawingFirst + kPaintPhaseMax,
     kBoxDecorationBackground,
     kCaret,
+    kClippingMask,
     kColumnRules,
     kDebugDrawing,
     kDocumentBackground,
     kDragImage,
     kDragCaret,
-    kSVGImage,
     kLinkHighlight,
     kImageAreaFocusRing,
     kPageOverlay,
@@ -87,9 +87,11 @@ class PLATFORM_EXPORT DisplayItem {
     kPopupListBoxRow,
     kPrintedContentDestinationLocations,
     kPrintedContentPDFURLRect,
+    kReflectionMask,
     kResizer,
     kSVGClip,
     kSVGFilter,
+    kSVGImage,
     kSVGMask,
     kScrollbarBackButtonEnd,
     kScrollbarBackButtonStart,
@@ -108,8 +110,7 @@ class PLATFORM_EXPORT DisplayItem {
     kVideoBitmap,
     kWebPlugin,
     kWebFont,
-    kReflectionMask,
-    kDrawingLast = kReflectionMask,
+    kDrawingLast = kWebFont,
 
     kForeignLayerFirst,
     kForeignLayerCanvas = kForeignLayerFirst,
@@ -130,6 +131,7 @@ class PLATFORM_EXPORT DisplayItem {
     kClipFrameToVisibleContentRect,
     kClipFrameScrollbars,
     kClipLayerBackground,
+    kClipLayerClippingMask,
     kClipLayerColumnBounds,
     kClipLayerFilter,
     kClipLayerForeground,

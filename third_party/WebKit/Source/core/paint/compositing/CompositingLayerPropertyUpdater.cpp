@@ -77,7 +77,35 @@ void CompositingLayerPropertyUpdater::Update(const LayoutObject& object) {
         snapped_paint_offset + mask_layer->OffsetFromLayoutObject());
   }
 
-  // TODO(crbug.com/790548): Complete for all drawable layers.
+  if (auto* child_clipping_mask_layer = mapping->ChildClippingMaskLayer()) {
+    child_clipping_mask_layer->SetLayerState(
+        rare_paint_data->PreEffectProperties(),
+        snapped_paint_offset +
+            child_clipping_mask_layer->OffsetFromLayoutObject());
+  }
+
+  if (auto* ancestor_clipping_mask_layer =
+          mapping->AncestorClippingMaskLayer()) {
+    // AncestorClippingMaskLayer's clip and transform states (for applying
+    // border radius cliping on descendants) are is in
+    // |clip_inheritance_ancestor|.
+    const auto* clip_inheritance_ancestor = mapping->ClipInheritanceAncestor(
+        mapping->OwningLayer().EnclosingLayerWithCompositedLayerMapping(
+            kExcludeSelf));
+    DCHECK(clip_inheritance_ancestor);
+    auto state = *clip_inheritance_ancestor->GetLayoutObject()
+                      .FirstFragment()
+                      .LocalBorderBoxProperties();
+    state.SetEffect(rare_paint_data->PreEffectProperties().Effect());
+    // Also convert layer offset into |clip_inheritance_ancestor| coordinates.
+    LayoutPoint layer_offset(
+        snapped_paint_offset +
+        ancestor_clipping_mask_layer->OffsetFromLayoutObject());
+    mapping->OwningLayer().ConvertToLayerCoords(clip_inheritance_ancestor,
+                                                layer_offset);
+    ancestor_clipping_mask_layer->SetLayerState(std::move(state),
+                                                RoundedIntPoint(layer_offset));
+  }
 }
 
 void CompositingLayerPropertyUpdater::Update(const LocalFrameView& frame_view) {
