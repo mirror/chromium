@@ -197,15 +197,8 @@ bool IsNodeIdIntListAttribute(AXIntListAttribute attr) {
   return false;
 }
 
-AXNodeData::AXNodeData()
-    : id(-1),
-      role(AX_ROLE_UNKNOWN),
-      state(AX_STATE_NONE),
-      actions(AX_ACTION_NONE),
-      offset_container_id(-1) {}
-
-AXNodeData::~AXNodeData() {
-}
+AXNodeData::AXNodeData() = default;
+AXNodeData::~AXNodeData() = default;
 
 AXNodeData::AXNodeData(const AXNodeData& other) {
   id = other.id;
