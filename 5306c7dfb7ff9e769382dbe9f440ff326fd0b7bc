@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e09ddd80_75c5efc1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-12-03T22:23:32Z",
+      "side": 1,
+      "message": "Also mention the setUp(Connectable)HealthThermometerDevice refactor.",
+      "revId": "5306c7dfb7ff9e769382dbe9f440ff326fd0b7bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25e6855f_14a22d3b",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-12-03T22:23:32Z",
+      "side": 1,
+      "message": "We usually try to keep unrelated changes in separate CLs. They make the tracking down a line\u0027s history harder. No need to revert this but keep it in mind for next time.",
+      "revId": "5306c7dfb7ff9e769382dbe9f440ff326fd0b7bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4694e2f_72c4b3e1",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-12-03T22:23:32Z",
+      "side": 1,
+      "message": "You can also change this to use the new method.",
+      "revId": "5306c7dfb7ff9e769382dbe9f440ff326fd0b7bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9769d7d2_cdb25790",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-12-03T22:23:32Z",
+      "side": 1,
+      "message": "Returns the same fake peripheral as setUpHealthThermometerDevice() except that connecting to the peripheral will succeed.",
+      "revId": "5306c7dfb7ff9e769382dbe9f440ff326fd0b7bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84ad63b1_91f7d681",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-12-03T22:23:32Z",
+      "side": 1,
+      "message": "why do we use a switch instead of if/else?",
+      "revId": "5306c7dfb7ff9e769382dbe9f440ff326fd0b7bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ff25761_ba408d42",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/health-thermometer-iframe.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-12-03T22:23:32Z",
+      "side": 1,
+      "message": "nit: s/gattServer/gatt/ Same below.",
+      "revId": "5306c7dfb7ff9e769382dbe9f440ff326fd0b7bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
