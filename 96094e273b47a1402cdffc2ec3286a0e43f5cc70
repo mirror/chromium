@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8265b01c_74f619d4",
+        "filename": "components/cast_channel/cast_auth_util.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-03T21:08:55Z",
+      "side": 1,
+      "message": "This code is not equivalent. Is DER serialization guaranteed to always succeed with this new API?",
+      "revId": "96094e273b47a1402cdffc2ec3286a0e43f5cc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52df7674_a5bc9d44",
         "filename": "net/cert/x509_certificate.h",
         "patchSetId": 11
