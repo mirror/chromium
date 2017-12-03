@@ -195,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "315b66b9_3d2bef99",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-03T14:19:57Z",
+      "side": 1,
+      "message": "BTW, please have a look at NGInlineFragmentIterator. It still has some TODO, but maybe we can generalize it to use here.",
+      "parentUuid": "ec190f2d_ac630747",
+      "revId": "4750137fac1b8c7b9597596d9cf90e5b7875abd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35287504_97ec4f22",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
         "patchSetId": 8
@@ -259,6 +277,24 @@
       "side": 1,
       "message": "I am not sure if \"logical order\" is the correct term here. I am trying to implement spec from dbaron comment at https://github.com/w3c/csswg-drafts/issues/609\n\n\u003e\u003e\u003e\u003e\n* form a containing block from the block-start and inline-start padding-box edges of the first fragment and the block-end and inline-end padding-box edges of the last fragment\n* If that containing block has a negative width or height, turn each negative width or height into 0 by keeping the edge (in that dimension) that came from the first fragment the same, and changing the edge that came from the last fragment to be equal to the edge from the first fragment\n\u003c\u003c\u003c\u003c\n\nAs you can see, it is not a simple union of rects between first and last fragment.\n\nThe question is how to define first and last fragment. I\u0027ve interpreted it as physically first/physically last. Because inline is always in ltr, when inline-cb is ltr everything works. But in rtl I have to reverse them. I think I can come up with a theoretical example where this does not work, but I\u0027ll need your help to come up with actual DOM to produce this fragment tree.\nI\u0027ve added a TODO.",
       "parentUuid": "bb5e49a5_4571df5e",
+      "revId": "4750137fac1b8c7b9597596d9cf90e5b7875abd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1343a8e5_9aec9fa4",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-03T14:19:57Z",
+      "side": 1,
+      "message": "Sorry, I was too terse when I said \"union\"; I meant union for each line. I think when dbaron said \"first fragment\", it\u0027s not our NGPhysicalFragment, but an inline box fragmented across lines. In other words, I think what \"a fragment\" is a union of NGPhysicalFragment in a line. You then get \"a fragment\" for each line, and \"first\" is in the first line and the \"last\" is in the last line. Trying to compute orders of NGPhysicalFragment within a line doesn\u0027t look correct to me. WDYT?",
+      "parentUuid": "60dea82d_abad843b",
       "revId": "4750137fac1b8c7b9597596d9cf90e5b7875abd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -346,6 +382,24 @@
       "side": 1,
       "message": "I tried before. Got a compile error when putting this into a map. Looks like HashTraits::EmptyValue wants to call default constructor.\n\n../../third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part.cc:20:24: error: call to implicitly-deleted default constructor of \u0027blink::NGOutOfFlowLayoutPart::ContainingBlockInfo\u0027\nNGOutOfFlowLayoutPart::NGOutOfFlowLayoutPart(\n                       ^\n../../third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part.h:62:26: note: default constructor of \u0027ContainingBlockInfo\u0027 is implicitly deleted because field \u0027style2\u0027 of reference type \u0027const blink::ComputedStyle \u0026\u0027 would not be initialized\n    const ComputedStyle\u0026 style2;",
       "parentUuid": "0e0c58b2_2c755804",
+      "revId": "4750137fac1b8c7b9597596d9cf90e5b7875abd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f8fd08eb_b40a4a86",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-03T14:19:57Z",
+      "side": 1,
+      "message": "Ack, right, I forgot that.",
+      "parentUuid": "effb6af5_da3f56af",
       "revId": "4750137fac1b8c7b9597596d9cf90e5b7875abd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
