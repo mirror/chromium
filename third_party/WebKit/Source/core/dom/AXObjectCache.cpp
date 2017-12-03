@@ -50,6 +50,7 @@ void AXObjectCache::Init(AXObjectCacheCreateFunction function) {
 }
 
 AXObjectCache* AXObjectCache::Create(Document& document) {
+  LOG(ERROR) << "AXObjectCache::Create";
   DCHECK(create_function_);
   return create_function_(document);
 }
@@ -66,8 +67,10 @@ std::unique_ptr<ScopedAXObjectCache> ScopedAXObjectCache::Create(
 
 ScopedAXObjectCache::ScopedAXObjectCache(Document& document)
     : document_(&document) {
-  if (!document_->GetOrCreateAXObjectCache())
+  if (!document_->GetOrCreateAXObjectCache()) {
+    LOG(ERROR) << "ScopedAXObjectCache::ScopedAXObjectCache AXObjectCache::Create";
     cache_ = AXObjectCache::Create(*document_);
+  }
 }
 
 ScopedAXObjectCache::~ScopedAXObjectCache() {

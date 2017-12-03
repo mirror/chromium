@@ -52,6 +52,9 @@ void ElementVisibilityObserver::Trace(blink::Visitor* visitor) {
 
 void ElementVisibilityObserver::OnVisibilityChanged(
     const HeapVector<Member<IntersectionObserverEntry>>& entries) {
+  LOG(ERROR) << "ElementVisibilityObserver::OnVisibilityChanged " << static_cast<void*>(this);
+  LOG(ERROR) << "ElementVisibilityObserver::OnVisibilityChanged A " << entries.back()->intersectionRatio();
+  LOG(ERROR) << "ElementVisibilityObserver::OnVisibilityChanged B " << intersection_observer_->thresholds()[0];
   bool is_visible = entries.back()->intersectionRatio() >=
                     intersection_observer_->thresholds()[0];
   callback_.Run(is_visible);

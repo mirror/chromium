@@ -329,12 +329,15 @@ void FontCache::Purge(PurgeSeverity purge_severity) {
 }
 
 void FontCache::AddClient(FontCacheClient* client) {
+  LOG(ERROR) << "FontCache::AddClient " << static_cast<void*>(this) << " client " << static_cast<void*>(client);
   CHECK(client);
   if (!font_cache_clients_) {
     font_cache_clients_ = new HeapHashSet<WeakMember<FontCacheClient>>();
+    LOG(ERROR) << "FontCache::AddClient new font_cache_clients_" << static_cast<void*>(this) << " font_cache_clients_ " << static_cast<void*>(font_cache_clients_.Get());
     font_cache_clients_.RegisterAsStaticReference();
   }
   DCHECK(!font_cache_clients_->Contains(client));
+  LOG(ERROR) << "FontCache::AddClient insert " << static_cast<void*>(this) << " font_cache_clients_ " << static_cast<void*>(font_cache_clients_.Get());
   font_cache_clients_->insert(client);
 }
 

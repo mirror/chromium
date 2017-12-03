@@ -206,6 +206,7 @@ class PersistentBase {
     static_assert(IsGarbageCollectedType<T>::value,
                   "T needs to be a garbage collected object");
     if (weaknessConfiguration == kWeakPersistentConfiguration) {
+      LOG(ERROR) << "PersistentBase::TracePersistent RegisterWeakCallback this " << reinterpret_cast<const void*>(this) << " raw_ " << reinterpret_cast<const void*>(raw_);
       visitor->RegisterWeakCallback(this, HandleWeakPersistent);
     } else {
       visitor->Mark(raw_);
@@ -255,6 +256,11 @@ class PersistentBase {
 #endif
     state->FreePersistentNode(persistent_node_);
     persistent_node_ = nullptr;
+
+    if (weaknessConfiguration == kWeakPersistentConfiguration) {
+      LOG(ERROR) << "PersistentBase::TracePersistent UnregisterWeakCallback this " << reinterpret_cast<const void*>(this) << " raw_ " << reinterpret_cast<const void*>(raw_);
+      visitor->UnregisterWeakCallback(this, HandleWeakPersistent);
+    }
   }
 
   void CheckPointer() const {
@@ -291,6 +297,7 @@ class PersistentBase {
   }
 
   static void HandleWeakPersistent(Visitor* self, void* persistent_pointer) {
+    LOG(ERROR) << "PersistentBase::HandleWeakPersistent persistent_pointer " << reinterpret_cast<const void*>(persistent_pointer);
     using Base =
         PersistentBase<typename std::remove_const<T>::type,
                        weaknessConfiguration, crossThreadnessConfiguration>;

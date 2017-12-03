@@ -28,6 +28,7 @@
 
 #include "modules/accessibility/AXLayoutObject.h"
 
+#include <base/debug/stack_trace.h>
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/CSSPropertyNames.h"
 #include "core/dom/AccessibleNode.h"
@@ -199,6 +200,7 @@ AXLayoutObject::AXLayoutObject(LayoutObject* layout_object,
                                AXObjectCacheImpl& ax_object_cache)
     : AXNodeObject(layout_object->GetNode(), ax_object_cache),
       layout_object_(layout_object) {
+  //LOG(ERROR) << "AXLayoutObject::AXLayoutObject " << static_cast<void*>(this);
 #if DCHECK_IS_ON()
   layout_object_->SetHasAXObject(true);
 #endif
@@ -210,6 +212,7 @@ AXLayoutObject* AXLayoutObject::Create(LayoutObject* layout_object,
 }
 
 AXLayoutObject::~AXLayoutObject() {
+  //LOG(ERROR) << "AXLayoutObject::~AXLayoutObject " << static_cast<void*>(this);
   DCHECK(IsDetached());
 }
 
@@ -308,6 +311,8 @@ void AXLayoutObject::Init() {
 }
 
 void AXLayoutObject::Detach() {
+  //LOG(ERROR) << "AXLayoutObject::Detach " << static_cast<void*>(this);
+  //base::debug::StackTrace().Print();
   AXNodeObject::Detach();
 
   DetachRemoteSVGRoot();

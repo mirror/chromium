@@ -6,6 +6,7 @@
 #define CallbackStack_h
 
 #include "platform/heap/BlinkGC.h"
+#include "platform/heap/HeapPage.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/Threading.h"
@@ -29,10 +30,16 @@ class PLATFORM_EXPORT CallbackStack final {
    public:
     Item() {}
     Item(void* object, VisitorCallback callback)
-        : object_(object), callback_(callback) {}
+        : object_(object), callback_(callback) {
+          // object_ maybe a Persistent so not appropriate to check header
+        }
     void* Object() { return object_; }
     VisitorCallback Callback() { return callback_; }
-    void Call(Visitor* visitor) { callback_(visitor, object_); }
+    void Call(Visitor* visitor) {
+      CHECK(object_);
+      // object_ maybe a Persistent so not appropriate to check header
+      callback_(visitor, object_);
+    }
 
    private:
     void* object_;
@@ -47,6 +54,29 @@ class PLATFORM_EXPORT CallbackStack final {
 
   Item* AllocateEntry();
   Item* Pop();
+  void Register(void* object, VisitorCallback callback) {
+    std::pair<void*, VisitorCallback> p(object, callback);
+    set_.insert(p);
+  }
+  void Unregister(void* object, VisitorCallback callback) {
+    std::pair<void*, VisitorCallback> p(object, callback);
+    auto it = set_.find(p);
+    if (it != set_.end()) {
+      set_.erase(it);
+      for (Block* current = first_; current; current = current->Next()) {
+        for (unsigned i = 0; buffer_ + i < current_; i++) {
+          Item* item = &buffer_[i];
+          if (item->Object() == object && item->Callback == callback) {
+            
+          }
+        }
+      }
+    }
+  }
+  bool Exists(void* object, VisitorCallback callback) {
+    std::pair<void*, VisitorCallback> p(object, callback);
+    return set_.find(p) != set_.end();
+  }
 
   bool IsEmpty() const;
 
@@ -112,6 +142,7 @@ class PLATFORM_EXPORT CallbackStack final {
 
   Block* first_;
   Block* last_;
+  std::set<std::pair<void*, VisitorCallback>> set_;
 };
 
 class CallbackStackMemoryPool final {
@@ -148,10 +179,13 @@ ALWAYS_INLINE CallbackStack::Item* CallbackStack::AllocateEntry() {
 
 ALWAYS_INLINE CallbackStack::Item* CallbackStack::Pop() {
   Item* item = first_->Pop();
-  if (LIKELY(!!item))
-    return item;
-
-  return PopSlow();
+  if (!item)
+    item = PopSlow();
+  if (item) {
+    auto it = set_.find(std::pair<void*, VisitorCallback>(item->Object(), item->Callback()));
+    set_.erase(it);
+  }
+  return item;
 }
 
 }  // namespace blink

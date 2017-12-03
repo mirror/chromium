@@ -25,9 +25,12 @@ IntersectionObserverEntry::IntersectionObserverEntry(
       target_(target),
       is_intersecting_(is_intersecting)
 
-{}
+{
+  LOG(ERROR) << "IntersectionObserverEntry::IntersectionObserverEntry " << static_cast<void*>(this);
+}
 
 void IntersectionObserverEntry::Trace(blink::Visitor* visitor) {
+  LOG(ERROR) << "IntersectionObserverEntry::Trace " << static_cast<void*>(this);
   visitor->Trace(bounding_client_rect_);
   visitor->Trace(root_bounds_);
   visitor->Trace(intersection_rect_);

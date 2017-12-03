@@ -248,6 +248,7 @@ class PLATFORM_EXPORT Visitor {
   // an allocation if the backing store resizes, but these collections know
   // how to remove WeakMember elements safely.
   inline void RegisterWeakCallback(void* closure, WeakCallback);
+  inline void UnregisterWeakCallback(void* closure, WeakCallback);
 
   inline void RegisterWeakTable(const void* closure,
                                 EphemeronCallback iteration_callback,

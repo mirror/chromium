@@ -21,7 +21,7 @@ inline void Visitor::MarkHeader(HeapObjectHeader* header,
   if (header->IsMarked())
     return;
 
-  DCHECK(ThreadState::Current()->IsInGC());
+  //DCHECK(ThreadState::Current()->IsInGC());
   DCHECK(GetMarkingMode() != kWeakProcessing);
 
   // A GC should only mark the objects that belong in its heap.
@@ -95,6 +95,15 @@ inline void Visitor::RegisterWeakCallback(void* closure,
   if (GetMarkingMode() == kSnapshotMarking)
     return;
   Heap().PushWeakCallback(closure, callback);
+}
+
+inline void Visitor::UnregisterWeakCallback(void* closure,
+  WeakCallback callback) {
+  //DCHECK(GetMarkingMode() != kWeakProcessing);
+  //// We don't want to run weak processings when taking a snapshot.
+  //if (GetMarkingMode() == kSnapshotMarking)
+  //return;
+  Heap().RemoveWeakCallback(closure, callback);
 }
 
 inline void Visitor::RegisterBackingStoreReference(void* slot) {

@@ -241,6 +241,8 @@ class PLATFORM_EXPORT ThreadHeap {
     // threads.
     if (!ThreadState::Current())
       return true;
+    if (ThreadState::Current()->IsMarkingInProgress())
+      return true;
     DCHECK(&ThreadState::Current()->Heap() ==
            &PageFromObject(object)->Arena()->GetThreadState()->Heap());
     return ObjectAliveTrait<T>::IsHeapObjectAlive(object);
@@ -262,6 +264,7 @@ class PLATFORM_EXPORT ThreadHeap {
 
   ThreadHeapStats& HeapStats() { return stats_; }
   CallbackStack* MarkingStack() const { return marking_stack_.get(); }
+  void CheckIntegrity();
   CallbackStack* PostMarkingCallbackStack() const {
     return post_marking_callback_stack_.get();
   }
@@ -292,6 +295,8 @@ class PLATFORM_EXPORT ThreadHeap {
     // Page has been swept and it is still alive.
     if (page->HasBeenSwept())
       return false;
+    if (!page->Arena()->GetThreadState()->IsSweepingInProgress())
+      return false;
     DCHECK(page->Arena()->GetThreadState()->IsSweepingInProgress());
 
     // If marked and alive, the object hasn't yet been swept..and won't
@@ -319,6 +324,7 @@ class PLATFORM_EXPORT ThreadHeap {
   // Push a weak callback. The weak callback is called when the object
   // doesn't get marked in the current GC.
   void PushWeakCallback(void*, WeakCallback);
+  void RemoveWeakCallback(void*, WeakCallback);
 
   // Pop the top of a marking stack and call the callback with the visitor
   // and the object.  Returns false when there is nothing more to do.
@@ -328,6 +334,7 @@ class PLATFORM_EXPORT ThreadHeap {
   // the callback with the visitor and the object pointer.  Returns
   // false when there is nothing more to do.
   bool PopAndInvokePostMarkingCallback(Visitor*);
+  void InvokeEphemeronDoneCallback(Visitor*);
 
   // Remove an item from the weak callback work list and call the callback
   // with the visitor and the closure pointer.  Returns false when there is
@@ -494,6 +501,7 @@ class PLATFORM_EXPORT ThreadHeap {
   // free lists. This is called after taking a snapshot and before resuming
   // the executions of mutators.
   void MakeConsistentForMutator();
+  void UnmarkAll();
 
   void Compact();
 
@@ -546,6 +554,7 @@ class PLATFORM_EXPORT ThreadHeap {
   std::unique_ptr<CallbackStack> post_marking_callback_stack_;
   std::unique_ptr<CallbackStack> weak_callback_stack_;
   std::unique_ptr<CallbackStack> ephemeron_stack_;
+  std::unique_ptr<CallbackStack> ephemeron_done_stack_;
   StackFrameDepth stack_frame_depth_;
 
   std::unique_ptr<HeapCompact> compaction_;
@@ -702,12 +711,14 @@ inline Address ThreadHeap::AllocateOnArenaIndex(ThreadState* state,
                                                 int arena_index,
                                                 size_t gc_info_index,
                                                 const char* type_name) {
+  CheckIntegrity();
   DCHECK(state->IsAllocationAllowed());
   DCHECK_NE(arena_index, BlinkGC::kLargeObjectArenaIndex);
   NormalPageArena* arena = static_cast<NormalPageArena*>(Arena(arena_index));
   Address address =
       arena->AllocateObject(AllocationSizeFromSize(size), gc_info_index);
   HeapAllocHooks::AllocationHookIfEnabled(address, size, type_name);
+  CheckIntegrity();
   return address;
 }
 
@@ -734,6 +745,7 @@ Address ThreadHeap::Reallocate(void* previous, size_t size) {
   }
 
   ThreadState* state = ThreadStateFor<ThreadingTrait<T>::kAffinity>::GetState();
+  state->Heap().CheckIntegrity();
   HeapObjectHeader* previous_header = HeapObjectHeader::FromPayload(previous);
   BasePage* page = PageFromObject(previous_header);
   DCHECK(page);
@@ -767,6 +779,7 @@ Address ThreadHeap::Reallocate(void* previous, size_t size) {
   if (copy_size > size)
     copy_size = size;
   memcpy(address, previous, copy_size);
+  state->Heap().CheckIntegrity();
   return address;
 }
 

@@ -61,6 +61,11 @@ class MODULES_EXPORT AXLayoutObject : public AXNodeObject {
   AccessibilityRole DetermineAccessibilityRole() override;
   AccessibilityRole NativeAccessibilityRoleIgnoringAria() const override;
 
+  void Trace(blink::Visitor* visitor) override {
+    //LOG(ERROR) << "AXLayoutObject::Trace " << static_cast<void*>(this);
+    AXNodeObject::Trace(visitor);
+  }
+
  protected:
   LayoutObject* layout_object_;
 

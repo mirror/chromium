@@ -6,6 +6,7 @@
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/StdLibExtras.h"
 #include "platform/wtf/allocator/Partitions.h"
+#include "platform/heap/VisitorImpl.h"
 
 namespace blink {
 
@@ -125,6 +126,7 @@ void CallbackStack::Commit() {
 }
 
 void CallbackStack::Decommit() {
+  set_.clear();
   if (!first_)
     return;
   Block* next;
