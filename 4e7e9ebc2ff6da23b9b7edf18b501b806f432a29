@@ -16,6 +16,24 @@
       "revId": "4e7e9ebc2ff6da23b9b7edf18b501b806f432a29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "634147fc_af37e0f3",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-03T15:13:52Z",
+      "side": 1,
+      "message": "I spoke to Naina and Darren about this. They didn\u0027t think it was a good idea to make the getters public as-is, so we decided to add public copies with scarier names.\n\nApparently generating the public parts won\u0027t just slot into the existing generator - I\u0027d have to do extra work to set it up.",
+      "parentUuid": "7c386056_8a8fe34a",
+      "revId": "4e7e9ebc2ff6da23b9b7edf18b501b806f432a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
