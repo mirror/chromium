@@ -54,6 +54,10 @@ class HoverButton : public views::LabelButton {
   // non-empty subtitle.
   void SetSubtitleElideBehavior(gfx::ElideBehavior elide_behavior);
 
+  void SetTitleTextStyle(views::style::TextStyle text_style);
+
+  void SetSubtitleColor(SkColor color);
+
  protected:
   // views::LabelButton:
   void StateChanged(ButtonState old_state) override;
