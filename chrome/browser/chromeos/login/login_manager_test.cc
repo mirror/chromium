@@ -25,6 +25,7 @@
 #include "chromeos/login/auth/key.h"
 #include "chromeos/login/auth/user_context.h"
 #include "components/prefs/scoped_user_pref_update.h"
+#include "components/signin/core/account_id/account_id.h"
 #include "components/user_manager/user.h"
 #include "components/user_manager/user_manager.h"
 #include "content/public/browser/notification_service.h"
@@ -49,13 +50,12 @@ const char kTestRefreshToken1[] = "fake-refresh-token-1";
 const char kTestUserinfoToken2[] = "fake-userinfo-token-2";
 const char kTestRefreshToken2[] = "fake-refresh-token-2";
 
-UserContext CreateUserContext(const std::string& user_id) {
-  UserContext user_context(AccountId::FromUserEmailGaiaId(
-      user_id, LoginManagerTest::GetGaiaIDForUserID(user_id)));
+UserContext CreateUserContext(const AccountId& account_id) {
+  UserContext user_context(account_id);
   user_context.SetKey(Key("password"));
-  if (user_id == LoginManagerTest::kEnterpriseUser1) {
+  if (account_id.GetUserEmail() == LoginManagerTest::kEnterpriseUser1) {
     user_context.SetRefreshToken(kTestRefreshToken1);
-  } else if (user_id == LoginManagerTest::kEnterpriseUser2) {
+  } else if (account_id.GetUserEmail() == LoginManagerTest::kEnterpriseUser2) {
     user_context.SetRefreshToken(kTestRefreshToken2);
   }
   return user_context;
@@ -64,7 +64,9 @@ UserContext CreateUserContext(const std::string& user_id) {
 }  // namespace
 
 const char LoginManagerTest::kEnterpriseUser1[] = "user-1@example.com";
+const char LoginManagerTest::kEnterpriseUser1GaiaId[] = "0000111111";
 const char LoginManagerTest::kEnterpriseUser2[] = "user-2@example.com";
+const char LoginManagerTest::kEnterpriseUser2GaiaId[] = "0000111111";
 
 LoginManagerTest::LoginManagerTest(bool should_launch_browser)
     : should_launch_browser_(should_launch_browser), web_contents_(NULL) {
@@ -151,9 +153,10 @@ void LoginManagerTest::SetUpOnMainThread() {
   MixinBasedBrowserTest::SetUpOnMainThread();
 }
 
-void LoginManagerTest::RegisterUser(const std::string& user_id) {
+void LoginManagerTest::RegisterUser(const AccountId& account_id) {
   ListPrefUpdate users_pref(g_browser_process->local_state(), "LoggedInUsers");
-  users_pref->AppendIfNotPresent(base::MakeUnique<base::Value>(user_id));
+  users_pref->AppendIfNotPresent(
+      base::MakeUnique<base::Value>(account_id.GetUserEmail()));
 }
 
 void LoginManagerTest::SetExpectedCredentials(const UserContext& user_context) {
@@ -193,20 +196,24 @@ bool LoginManagerTest::AddUserToSession(const UserContext& user_context) {
   return false;
 }
 
-void LoginManagerTest::LoginUser(const std::string& user_id) {
-  const UserContext user_context = CreateUserContext(user_id);
+void LoginManagerTest::LoginUser(const AccountId& account_id) {
+  const UserContext user_context = CreateUserContext(account_id);
   SetExpectedCredentials(user_context);
   EXPECT_TRUE(TryToLogin(user_context));
 }
 
-void LoginManagerTest::AddUser(const std::string& user_id) {
-  const UserContext user_context = CreateUserContext(user_id);
+void LoginManagerTest::AddUser(const AccountId& account_id) {
+  const UserContext user_context = CreateUserContext(account_id);
   SetExpectedCredentials(user_context);
   EXPECT_TRUE(AddUserToSession(user_context));
 }
 
 // static
 std::string LoginManagerTest::GetGaiaIDForUserID(const std::string& user_id) {
+  if (user_id == LoginManagerTest::kEnterpriseUser1)
+    return LoginManagerTest::kEnterpriseUser1GaiaId;
+  if (user_id == LoginManagerTest::kEnterpriseUser2)
+    return LoginManagerTest::kEnterpriseUser2GaiaId;
   return "gaia-id-" + user_id;
 }
 
