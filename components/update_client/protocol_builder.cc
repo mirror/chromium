@@ -8,6 +8,7 @@
 
 #include "base/guid.h"
 #include "base/logging.h"
+#include "base/strings/strcat.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
@@ -389,8 +390,7 @@ std::string BuildEventPingRequest(const Configurator& config,
     base::StringAppendF(&app, " nextversion=\"%s\"",
                         component.next_version().GetString().c_str());
   base::StringAppendF(&app, ">");
-  base::StringAppendF(&app, "%s",
-                      base::JoinString(component.events(), "").c_str());
+  base::StringAppendF(&app, "%s", base::StrCat(component.events()).c_str());
   base::StringAppendF(&app, "</app>");
 
   // The ping request does not include any updater state.
