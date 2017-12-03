@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "d99e266f_3f1a8d3b",
+        "filename": "ui/base/test/ui_controls_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-03T23:47:01Z",
+      "side": 1,
+      "message": "I think a struct would be clearer that a tuple\n\nconstexpr struct {\n  NSUInteger ..;\n  int ..;\n  const char* ..\u0027\n} kModifierFlagToKeyCodeMap[] \u003d {\n  ..\n};  \n\nbut see next comment.",
+      "revId": "a1acda193b77fe264efbb4aa4c59e5c62ae7c8b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ab1f8ef_8fe10ea1",
         "filename": "ui/base/test/ui_controls_mac.mm",
         "patchSetId": 2
@@ -31,6 +48,24 @@
       "side": 1,
       "message": "I\u0027m not familiar enough with the mac side to know what the right thing is. What do we do in other similar cases?",
       "parentUuid": "0ab1f8ef_8fe10ea1",
+      "revId": "a1acda193b77fe264efbb4aa4c59e5c62ae7c8b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27df6cd1_84113769",
+        "filename": "ui/base/test/ui_controls_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-03T23:47:01Z",
+      "side": 1,
+      "message": "\u003e I\u0027m not familiar enough with the mac side to know what the right thing is. What do we do in other similar cases?\n\nThe CGEventCreate* methods will use the current keyboard state for the flags by default. If there\u0027s a test that is flaky because it uses CGEventCreate* then it needs to clear (or set) the flags explicitly using CGEventSetFlags(event, 0) before posting the event. That should make it the flaky test more robust.\n\nSee comments at cocoa_test_event_utils::TestScrollEvent() -- https://cs.chromium.org/chromium/src/ui/events/test/cocoa_test_event_utils.mm?type\u003dcs\u0026q\u003dTestScrollEvent\u0026sq\u003dpackage:chromium\u0026l\u003d169 . Also https://codereview.chromium.org/2193153002\n\n\nI\u0027m not aware of the same flakiness occurring for tests that use the NSEvent test-event initializers, so I suspect you\u0027ve uncovered some flaky test using CGEventCreate.\n\nI don\u0027t think we should LOG(ERROR) here -- it will just get buried and we\u0027ll never really fix the problem. If we keep this, I think we want to #include gtest and call ADD_FAILURE so that we can flush out tests changing global state, and prevent new tests being added that change global state.\n\nBut I would prefer that we just never create test events that care about global keyboard state.",
+      "parentUuid": "e4f57002_f3668590",
       "revId": "a1acda193b77fe264efbb4aa4c59e5c62ae7c8b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
