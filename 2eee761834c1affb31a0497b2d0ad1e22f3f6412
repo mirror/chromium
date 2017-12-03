@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "71dd2950_db4da00a",
+        "filename": "chrome/app/theme/theme_resources.grd",
+        "patchSetId": 6
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-03T22:20:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0199cea9_622eb83e",
+      "revId": "2eee761834c1affb31a0497b2d0ad1e22f3f6412",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e252d258_860694be",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 6
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "c986395c_e0850f35",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-03T22:20:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e252d258_860694be",
+      "revId": "2eee761834c1affb31a0497b2d0ad1e22f3f6412",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd29ecbe_de62bb8b",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 6
@@ -68,6 +104,24 @@
       "revId": "2eee761834c1affb31a0497b2d0ad1e22f3f6412",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f023201c_97691fbe",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-03T22:20:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cd29ecbe_de62bb8b",
+      "revId": "2eee761834c1affb31a0497b2d0ad1e22f3f6412",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +148,30 @@
     },
     {
       "key": {
+        "uuid": "de496e24_c27e9f7c",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-03T22:20:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d92dea09_09de50fd",
+      "range": {
+        "startLine": 948,
+        "startChar": 53,
+        "endLine": 948,
+        "endChar": 72
+      },
+      "revId": "2eee761834c1affb31a0497b2d0ad1e22f3f6412",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8151c230_150bdadb",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 6
@@ -117,6 +195,30 @@
     },
     {
       "key": {
+        "uuid": "c7a7c7b5_423aeca2",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 951,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-03T22:20:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8151c230_150bdadb",
+      "range": {
+        "startLine": 951,
+        "startChar": 34,
+        "endLine": 951,
+        "endChar": 39
+      },
+      "revId": "2eee761834c1affb31a0497b2d0ad1e22f3f6412",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acde4153_7c85e45e",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 6
@@ -128,6 +230,24 @@
       "writtenOn": "2017-12-01T00:14:53Z",
       "side": 1,
       "message": "sending a negative to BoxLayout for |between_child_spacing| feels chancy.. it was never intended to take a negative value. If you intend to rely on this, you should add a simple test to box_layout_unittest.cc . Otherwise, you could do a manual layout. I think after this change you have a nesting of LayoutManagers 5 layers deep which is starting to put stress on the layout system, and will make it very hard to diagnose layout issues in future. So a manual layout of the three views here would be OK in my opinion.",
+      "revId": "2eee761834c1affb31a0497b2d0ad1e22f3f6412",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05340330_b8ca7d98",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 956,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-03T22:20:15Z",
+      "side": 1,
+      "message": "I added a unit test because overall I think the implementation is simpler like this. The pre DICE version of this has basically the same amount of layers, which means this code doesn\u0027t stress the layout system more than before.\n\nBut I\u0027m totally open to refactor this during future iterations if there are performance issues!",
+      "parentUuid": "acde4153_7c85e45e",
       "revId": "2eee761834c1affb31a0497b2d0ad1e22f3f6412",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -148,6 +268,24 @@
       "revId": "2eee761834c1affb31a0497b2d0ad1e22f3f6412",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5438eb11_141de4c6",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 971,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-03T22:20:15Z",
+      "side": 1,
+      "message": "I set an explicit width like you suggested.",
+      "parentUuid": "dc91c08e_1ca3b598",
+      "revId": "2eee761834c1affb31a0497b2d0ad1e22f3f6412",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

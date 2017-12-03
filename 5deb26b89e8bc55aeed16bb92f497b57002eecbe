@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6218701b_c3330b6a",
+        "filename": "chrome/app/theme/default_200_percent/common/turn_on_sync_illustration.png",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-03T22:20:15Z",
+      "side": 1,
+      "message": "I did the optimization and I\u0027ll talk to our designer. We should get the new asset before branch.",
+      "parentUuid": "d7b78134_4b300722",
+      "revId": "5deb26b89e8bc55aeed16bb92f497b57002eecbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74deba6f_425e6ce7",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 4
