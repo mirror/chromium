@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6558c386_c114f1d5",
+        "filename": "ui/views/layout/box_layout_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-03T22:56:29Z",
+      "side": 1,
+      "message": "nit: these extra curlies aren\u0027t needed (the other test has them because they create multiple |layout|s but that\u0027s not done here)",
+      "revId": "9f945aa780f6ba66746b206debe5fa5f7543fc1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06979a17_f2dede59",
+        "filename": "ui/views/layout/box_layout_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-03T22:56:29Z",
+      "side": 1,
+      "message": "please test the layout as well. and the width. It will be something like\n\n\n  EXPECT_EQ(20, layout-\u003eGetPreferredSize(host_.get()).width());\n  host_-\u003eSetBounds(0, 0, 20, 25);\n  host_-\u003eLayout();\n  EXPECT_EQ(gfx::Rect(0, 0, 20, 20), v1-\u003ebounds());\n  EXPECT_EQ(gfx::Rect(0, 10, 20, 15), v2-\u003ebounds());  // 10 pixels overlap.\n\n\n(compare to BoxLayoutTest.AlignmentVertical)",
+      "revId": "9f945aa780f6ba66746b206debe5fa5f7543fc1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
