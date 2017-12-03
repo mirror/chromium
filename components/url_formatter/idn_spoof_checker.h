@@ -8,6 +8,7 @@
 #include <memory>
 #include <string>
 
+#include "base/gtest_prod_util.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_piece.h"
 #include "third_party/icu/source/common/unicode/uniset.h"
@@ -25,6 +26,7 @@ class UnicodeString;
 struct USpoofChecker;
 
 namespace url_formatter {
+FORWARD_DECLARE_TEST(UrlFormatterTest, IDNToUnicode);
 
 // A helper class for IDN Spoof checking, used to ensure that no IDN input is
 // spoofable per Chromium's standard of spoofability. For a more thorough
@@ -70,6 +72,11 @@ class IDNSpoofChecker {
   std::unique_ptr<icu::Transliterator> diacritic_remover_;
   std::unique_ptr<icu::Transliterator> extra_confusable_mapper_;
 
+  // Used for unit tests.
+  static void RestoreTopDomainGraphToDefault();
+  static void SetTopDomainGraph(const unsigned char* domains, size_t length);
+
+  FRIEND_TEST_ALL_PREFIXES(UrlFormatterTest, IDNToUnicode);
   IDNSpoofChecker(const IDNSpoofChecker&) = delete;
   void operator=(const IDNSpoofChecker&) = delete;
 };

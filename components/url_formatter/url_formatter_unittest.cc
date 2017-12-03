@@ -13,6 +13,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "components/url_formatter/idn_spoof_checker.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 
@@ -399,11 +400,10 @@ const IDNTestCase idn_cases[] = {
      false},                                                 // digklmoб8.com
     {"xn--digklmo6-7yr.com", L"digklmo6\x09ea.com", false},  // digklmo6৪.com
 
-    // 'islkpx123.com' is listed for unitest in the top domain list.
+    // 'islkpx123.com' is in the test domain list.
     // 'іѕӏкрх123' can look like 'islkpx123' in some fonts.
     {"xn--123-bed4a4a6hh40i.com",
-     L"\x0456\x0455\x04cf\x043a\x0440\x0445"
-     L"123.com",
+     L"\x0456\x0455\x04cf\x043a\x0440\x0445" L"123.com",
      false},
 
     // wmhtb.com
@@ -778,7 +778,14 @@ void CheckAdjustedOffsets(const std::string& url_string,
                 std::string::npos, formatted_url);
 }
 
+namespace test {
+#include "components/url_formatter/top_domains/test_skeletons-inc.cc"
+}
+
+}  // namespace
+
 TEST(UrlFormatterTest, IDNToUnicode) {
+  IDNSpoofChecker::SetTopDomainGraph(test::kDafsa, sizeof(test::kDafsa));
   for (size_t i = 0; i < arraysize(idn_cases); i++) {
     base::string16 output(IDNToUnicode(idn_cases[i].input));
     base::string16 expected(idn_cases[i].unicode_allowed
@@ -787,6 +794,7 @@ TEST(UrlFormatterTest, IDNToUnicode) {
     EXPECT_EQ(expected, output) << "input # " << i << ": \""
                                 << idn_cases[i].input << "\"";
   }
+  IDNSpoofChecker::RestoreTopDomainGraphToDefault();
 }
 
 TEST(UrlFormatterTest, FormatUrl) {
@@ -1456,7 +1464,5 @@ TEST(UrlFormatterTest, FormatUrlWithOffsets) {
                        net::UnescapeRule::NORMAL,
                        strip_trivial_subdomains_from_idn_offsets);
 }
-
-}  // namespace
 
 }  // namespace url_formatter
