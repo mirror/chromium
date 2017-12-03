@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d0518c01_9aa2563a",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-03T21:48:12Z",
+      "side": 1,
+      "message": "If the block-before margin pushes us past the fragmentainer boundary, this happens. I\u0027ve updated the comment, so that it hopefully explains this better.",
+      "parentUuid": "97cad38c_476cd23f",
+      "revId": "de7a8bcc9783ed210d2e47c219eb4101145acdda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b9d86da_93e2a5cb",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "de7a8bcc9783ed210d2e47c219eb4101145acdda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e6c684b_9450b57a",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1114,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-03T21:48:12Z",
+      "side": 1,
+      "message": "The parent algorithm will eventually detect that there\u0027s no room for fragments generated at this position, and will just drop it on the floor. See NGBlockLayoutAlgorithm::ShouldBreakBeforeChild(), and how BreakBeforeChild() deals with a true return value from that one. Updated the comment, so that it\u0027s hopefully a bit clearer now.",
+      "parentUuid": "8b9d86da_93e2a5cb",
+      "range": {
+        "startLine": 1114,
+        "startChar": 4,
+        "endLine": 1114,
+        "endChar": 10
+      },
+      "revId": "de7a8bcc9783ed210d2e47c219eb4101145acdda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
