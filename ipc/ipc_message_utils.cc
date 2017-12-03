@@ -640,7 +640,12 @@ void ParamTraits<base::SharedMemoryHandle>::Write(base::Pickle* m,
 
   DCHECK(!p.GetGUID().is_empty());
   WriteParam(m, p.GetGUID());
+#if defined(OS_ANDROID)
+  size_t size = p.GetSize() | (p.IsReadOnly() ? 1 : 0);
+  WriteParam(m, static_cast<uint64_t>(size));
+#else
   WriteParam(m, static_cast<uint64_t>(p.GetSize()));
+#endif
 }
 
 bool ParamTraits<base::SharedMemoryHandle>::Read(const base::Pickle* m,
@@ -700,6 +705,8 @@ bool ParamTraits<base::SharedMemoryHandle>::Read(const base::Pickle* m,
   *r = base::SharedMemoryHandle(handle_fuchsia.get_handle(),
                                 static_cast<size_t>(size), guid);
 #elif defined(OS_ANDROID)
+  bool read_only = (size & 1) != 0;
+  size &= ~1U;
   *r = base::SharedMemoryHandle(
       android_subtype,
       base::FileDescriptor(
@@ -707,6 +714,13 @@ bool ParamTraits<base::SharedMemoryHandle>::Read(const base::Pickle* m,
               ->TakePlatformFile(),
           true),
       static_cast<size_t>(size), guid);
+
+  if (read_only) {
+    // Receiving a read-only file descriptor means the corresponding
+    // Ashmem region needs to be set read-only as well.
+    r->SetReadOnly();
+    r->EnforceReadOnlyRegionIfNeeded();
+  }
 #else
   *r = base::SharedMemoryHandle(
       base::FileDescriptor(
@@ -736,6 +750,10 @@ void ParamTraits<base::SharedMemoryHandle>::Log(const param_type& p,
   LogParam(p.GetGUID(), l);
   l->append("size: ");
   LogParam(static_cast<uint64_t>(p.GetSize()), l);
+#if defined(OS_ANDROID)
+  l->append("read_only: ");
+  LogParam(p.IsReadOnly(), l);
+#endif
 }
 
 #if defined(OS_WIN)

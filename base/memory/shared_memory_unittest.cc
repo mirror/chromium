@@ -352,6 +352,11 @@ TEST(SharedMemoryTest, GetReadOnlyHandle) {
                         contents.size()));
   EXPECT_TRUE(readonly_shmem.Unmap());
 
+#if defined(OS_ANDROID)
+  // On Android, once the read-only handle has been mapped, the whole
+  // region becomes read-only.
+  ASSERT_FALSE(writable_shmem.Map(contents.size()));
+#else
   // Make sure the writable instance is still writable.
   ASSERT_TRUE(writable_shmem.Map(contents.size()));
   StringPiece new_contents = "Goodbye";
@@ -359,6 +364,7 @@ TEST(SharedMemoryTest, GetReadOnlyHandle) {
   EXPECT_EQ(new_contents,
             StringPiece(static_cast<const char*>(writable_shmem.memory()),
                         new_contents.size()));
+#endif
 
   // We'd like to check that if we send the read-only segment to another
   // process, then that other process can't reopen it read/write.  (Since that
@@ -370,9 +376,21 @@ TEST(SharedMemoryTest, GetReadOnlyHandle) {
   SharedMemoryHandle handle = readonly_shmem.handle();
 
 #if defined(OS_ANDROID)
-  // The "read-only" handle is still writable on Android:
-  // http://crbug.com/320865
-  (void)handle;
+  // On Android, check that it is no longer possible to map the region
+  // directly with write access. Note that as long as the read-only
+  // handle isn't mapped, or received through IPC, the region will
+  // still be writable. See http://crbug.com/320865
+  int handle_fd = SharedMemory::GetFdFromSharedMemoryHandle(handle);
+
+  errno = 0;
+  void* writable = mmap(nullptr, contents.size(), PROT_READ | PROT_WRITE,
+                        MAP_SHARED, handle_fd, 0);
+  int mmap_errno = errno;
+  EXPECT_EQ(MAP_FAILED, writable)
+      << "It shouldn't be possible to re-mmap the descriptor writable.";
+  EXPECT_EQ(EPERM, mmap_errno) << strerror(mmap_errno);
+  if (writable != MAP_FAILED)
+    EXPECT_EQ(0, munmap(writable, readonly_shmem.mapped_size()));
 #elif defined(OS_FUCHSIA)
   uintptr_t addr;
   EXPECT_NE(ZX_OK, zx_vmar_map(zx_vmar_root_self(), 0, handle.GetHandle(), 0,
