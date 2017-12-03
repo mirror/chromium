@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cef81977_e85272bb",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-03T23:20:39Z",
+      "side": 1,
+      "message": "This isn\u0027t really what set_auto_color_readability_enabled is for. Perhaps the problem is that |title_| needs to be told what its background color is. It defaults to kColorId_DialogBackground, so if you\u0027re setting a text color similar to that then Label will think there is not enough contrast, and try to add some rather than using the text color you specify. Perhaps pass the background color in as an extra argument for SetTitleTextStyle()",
+      "revId": "d74458418ed93a45bd192ecca68e5bf0cbfded44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9049e4c8_296cbbdc",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-03T23:20:39Z",
+      "side": 1,
+      "message": "I think you can just do StyledLabel::SetDefaultTextStyle(title_style)",
+      "revId": "d74458418ed93a45bd192ecca68e5bf0cbfded44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84602ab5_2b8fdd9e",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-03T23:20:39Z",
+      "side": 1,
+      "message": "What about using SetBorder(views::CreateSolidBorder(kMenuEdgeMargin, SK_ColorWHITE))?\n\n(or get the dialog background via a query rather than white).\n\nOr, add an argument to views::SolidBackground so that its Paint() method applies insets from |view|. (It\u0027s also possible that there is no View with a SolidBackground that wants its background do draw over insets)\n\nIf there are simple ways to remove a layer of LayoutManager we should take it, since they are quite complex.\n\nIf you *really really* need a LayoutManager, then you should add an Insets to the views::FillLayout constructor rather than using BoxLayout.",
+      "revId": "d74458418ed93a45bd192ecca68e5bf0cbfded44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
