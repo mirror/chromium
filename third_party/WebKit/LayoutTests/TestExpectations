@@ -2858,7 +2858,6 @@ crbug.com/709227 external/wpt/offscreen-canvas/fill-and-stroke-styles/2d.fillSty
 crbug.com/709227 external/wpt/offscreen-canvas/fill-and-stroke-styles/2d.fillStyle.parse.css-color-4-hsla-7.worker.html [ Failure ]
 crbug.com/709227 external/wpt/offscreen-canvas/fill-and-stroke-styles/2d.fillStyle.parse.css-color-4-hsla-8.worker.html [ Failure ]
 crbug.com/709227 external/wpt/offscreen-canvas/fill-and-stroke-styles/2d.fillStyle.parse.css-color-4-hsla-9.worker.html [ Failure ]
-crbug.com/709227 external/wpt/offscreen-canvas/fill-and-stroke-styles/2d.fillStyle.parse.css-color-4-rgb-1.worker.html [ Failure ]
 crbug.com/709227 external/wpt/offscreen-canvas/fill-and-stroke-styles/2d.fillStyle.parse.css-color-4-rgb-2.worker.html [ Failure ]
 crbug.com/709227 external/wpt/offscreen-canvas/fill-and-stroke-styles/2d.fillStyle.parse.css-color-4-rgb-3.worker.html [ Failure ]
 crbug.com/709227 external/wpt/offscreen-canvas/fill-and-stroke-styles/2d.fillStyle.parse.css-color-4-rgb-4.worker.html [ Failure ]
