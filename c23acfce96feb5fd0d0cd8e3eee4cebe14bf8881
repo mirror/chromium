@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4a885dd_98c046d5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-12-03T22:29:48Z",
+      "side": 1,
+      "message": "Keeping these below 72 characters is a git convention: https://stackoverflow.com/questions/2290016/git-commit-messages-50-72-formatting",
+      "revId": "c23acfce96feb5fd0d0cd8e3eee4cebe14bf8881",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
