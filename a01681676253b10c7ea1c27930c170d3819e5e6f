@@ -67,6 +67,24 @@
       "revId": "a01681676253b10c7ea1c27930c170d3819e5e6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3e2fcb0_b9f0755b",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_localized_strings_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-03T21:01:46Z",
+      "side": 1,
+      "message": "NM, I see the strings were landed earlier.  My comment about the colon still stands though.",
+      "parentUuid": "6eeb9fec_53afa82f",
+      "revId": "a01681676253b10c7ea1c27930c170d3819e5e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
