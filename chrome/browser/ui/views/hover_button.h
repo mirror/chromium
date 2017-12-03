@@ -54,6 +54,13 @@ class HoverButton : public views::LabelButton {
   // non-empty subtitle.
   void SetSubtitleElideBehavior(gfx::ElideBehavior elide_behavior);
 
+  // Sets the text color of the title to |color| and set the font weight to bold
+  // if |bold| is true. When the title should be bold only, the parameter
+  // |color| can be left out.
+  void SetTitleStyle(bool bold, SkColor color = SK_ColorTRANSPARENT);
+
+  void SetSubtitleColor(SkColor color);
+
  protected:
   // views::LabelButton:
   void StateChanged(ButtonState old_state) override;
