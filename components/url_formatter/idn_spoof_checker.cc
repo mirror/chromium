@@ -27,6 +27,8 @@ void OnThreadTermination(void* regex_matcher) {
 #include "components/url_formatter/top_domains/alexa_skeletons-inc.cc"
 // All the domains in the above file have 3 or fewer labels.
 const size_t kNumberOfLabelsToCheck = 3;
+const unsigned char* g_graph = kDafsa;
+size_t g_graph_length = sizeof(kDafsa);
 
 bool LookupMatchInTopDomains(base::StringPiece skeleton) {
   DCHECK_NE(skeleton.back(), '.');
@@ -41,7 +43,7 @@ bool LookupMatchInTopDomains(base::StringPiece skeleton) {
   while (labels.size() > 1) {
     std::string partial_skeleton = base::JoinString(labels, ".");
     if (net::LookupStringInFixedSet(
-            kDafsa, arraysize(kDafsa), partial_skeleton.data(),
+            g_graph, g_graph_length, partial_skeleton.data(),
             partial_skeleton.length()) != net::kDafsaNotFound)
       return true;
     labels.erase(labels.begin());
@@ -369,6 +371,19 @@ void IDNSpoofChecker::SetAllowedUnicodeSet(UErrorCode* status) {
 #endif
 
   uspoof_setAllowedUnicodeSet(checker_, &allowed_set, status);
+}
+
+void IDNSpoofChecker::RestoreTopDomainGraphToDefault() {
+  g_graph = kDafsa;
+  g_graph_length = sizeof(kDafsa);
+}
+
+void IDNSpoofChecker::SetTopDomainGraph(const unsigned char* domains,
+                                        size_t length) {
+  CHECK(domains);
+  CHECK_NE(length, 0u);
+  g_graph = domains;
+  g_graph_length = length;
 }
 
 }  // namespace url_formatter
