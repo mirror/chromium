@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3678cbf_14518797",
+        "filename": "base/test/scoped_task_environment_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-12-03T15:58:26Z",
+      "side": 1,
+      "message": "Let\u0027s not add this sleep. This otherwise results in a redo of the existing ScopedTaskEnvironmentTest.QueuedTasksDoNotRunOutsideOfRunUntilIdle test.\n\nInstead add a comment as to why QUEUED mode is used above, e.g.:\n\n  // Use QUEUED mode to ensure steps below do not execute before their\n  // associated RunUntilIdle()/FastForwardBy().\n  ScopedTaskEnvironment scoped_task_environment(\n      GetParam(), ScopedTaskEnvironment::ExecutionMode::QUEUED);",
+      "revId": "f63253ce95cedeeac95cad6951545b872872e229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
