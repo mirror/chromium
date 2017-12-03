@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<style id="style"></style>
+<script>
+'use strict';
+
+test(() => {
+  var CSSSelectorPseudoWebkitAnyLink = 2260; // From UseCounter.h
+  var style = document.getElementById('style');
+  assert_false(internals.isUseCounted(document, CSSSelectorPseudoWebkitAnyLink));
+  style.textContent = ":-webkit-any-link { color: blue; }";
+  assert_true(internals.isUseCounted(document, CSSSelectorPseudoWebkitAnyLink));
+}, 'webkit-any-link is use counted.');
+</script>
