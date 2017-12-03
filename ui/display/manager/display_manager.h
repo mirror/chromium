@@ -321,6 +321,13 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
     return software_mirroring_display_list_;
   }
 
+  // Used in test to prevent previous mirror mode affecting current mode.
+  void set_previous_mirror_mode_for_test(bool mirrored) {
+    previous_mirror_mode_.reset(new bool(mirrored));
+  }
+
+  bool* previous_mirror_mode() const { return previous_mirror_mode_.get(); }
+
   // Remove mirroring source and destination displays, so that they will be
   // updated when UpdateDisplaysWith() is called.
   void ClearMirroringSourceAndDestination();
@@ -573,6 +580,12 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   // |mirroring_source_id_| and treat the rest of mirroring displays as
   // destination and store their ids in this list.
   DisplayIdList hardware_mirroring_display_id_list_;
+
+  // True if the mirror mode was on in the previous configuration. False if the
+  // mirror mode was off in the previous configuration. Null pointer if no mode
+  // is set for the previous configuration (e.g. single display).This is used to
+  // determine the display mode for current configuration.
+  std::unique_ptr<bool> previous_mirror_mode_ = nullptr;
 
   // Cached mirror mode for metrics changed notification.
   bool mirror_mode_for_metrics_ = false;
