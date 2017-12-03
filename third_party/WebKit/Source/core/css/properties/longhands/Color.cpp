@@ -24,7 +24,7 @@ const blink::Color Color::ColorIncludingFallback(
     bool visited_link,
     const ComputedStyle& style) const {
   StyleColor result =
-      visited_link ? style.VisitedLinkColor() : style.GetColor();
+      visited_link ? style.VisitedLinkColor() : style.ColorIgnoringVisited();
   ;
   return result.GetColor();
 }
@@ -36,7 +36,7 @@ const CSSValue* Color::CSSValueFromComputedStyle(
     bool allow_visited_style) const {
   return cssvalue::CSSColorValue::Create(
       allow_visited_style ? style.VisitedDependentColor(*this).Rgb()
-                          : style.GetColor().Rgb());
+                          : style.ColorIgnoringVisited().Rgb());
 }
 
 }  // namespace CSSLonghand

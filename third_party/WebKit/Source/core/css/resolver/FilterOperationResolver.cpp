@@ -191,7 +191,7 @@ FilterOperations FilterOperationResolver::CreateFilterOperations(
             conversion_data, &state, filter_value->Item(0));
         // TODO(fs): Resolve 'currentcolor' when constructing the filter chain.
         if (shadow.GetColor().IsCurrentColor()) {
-          shadow.OverrideColor(state.Style()->GetColor());
+          shadow.OverrideColor(state.Style()->ColorIgnoringVisited());
         }
         operations.Operations().push_back(
             DropShadowFilterOperation::Create(shadow));
