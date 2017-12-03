@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef650aba_1c845195",
+        "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-03T20:49:03Z",
+      "side": 1,
+      "message": "IMO the font properties belong in a CSS class shared with all text in the controls (including hangouts checkbox and route description).",
+      "revId": "a01681676253b10c7ea1c27930c170d3819e5e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0ccb43c_4a9fd41e",
+        "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-03T20:49:03Z",
+      "side": 1,
+      "message": "Is paper-dropdown-menu not an option here because we\u0027re still on Polymer 1.0?\n\nhttps://www.webcomponents.org/element/PolymerElements/paper-dropdown-menu",
+      "revId": "a01681676253b10c7ea1c27930c170d3819e5e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ee6ebb6_9977f907",
+        "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-03T20:49:03Z",
+      "side": 1,
+      "message": "What is the purpose of the class/id here?  I don\u0027t see styles for them.",
+      "revId": "a01681676253b10c7ea1c27930c170d3819e5e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eeb9fec_53afa82f",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_localized_strings_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-03T20:49:03Z",
+      "side": 1,
+      "message": "Where are the strings for this patch?\n\nNit:\nI feel it\u0027s more common to omit the colon before a dropdown menu.  See, for example, dropdowns in chrome://settings.\n\nPlease check against Chrome UX writing guide if unsure.",
+      "revId": "a01681676253b10c7ea1c27930c170d3819e5e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
