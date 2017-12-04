@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05df5326_c75a2673",
+        "filename": "media/audio/mac/audio_device_listener_mac.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-04T17:38:54Z",
+      "side": 1,
+      "message": "If you create a small inner class with this method which is constructed with listener_cb and the property address, you wouldn\u0027t have to clone this function 3 times.\n\nThe outer listener will just hold 3 unique_ptrs and context will point to the inner class instead of ADLM.",
+      "revId": "a4325aa59bf24ce73368be5b9b04b6f2831dbb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a18b701_d55c0614",
+        "filename": "media/audio/mac/audio_device_listener_mac.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-04T17:38:54Z",
+      "side": 1,
+      "message": "Drop explicit now. Want to remove const\u0026 usage too? Up to you.",
+      "revId": "a4325aa59bf24ce73368be5b9b04b6f2831dbb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aebd37b_dc257d8a",
+        "filename": "media/audio/mac/audio_device_listener_mac.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-04T17:38:54Z",
+      "side": 1,
+      "message": "Monitor default output is always true, worth having a switch for it?",
+      "revId": "a4325aa59bf24ce73368be5b9b04b6f2831dbb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc457aad_2c395d25",
+        "filename": "media/audio/mac/audio_device_listener_mac.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-04T17:38:54Z",
+      "side": 1,
+      "message": "Switch to new THREAD_CHECKER() style if you want.",
+      "revId": "a4325aa59bf24ce73368be5b9b04b6f2831dbb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
