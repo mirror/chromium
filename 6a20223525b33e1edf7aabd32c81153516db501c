@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d6b7a0f7_9643bfe6",
+        "filename": "chrome/browser/notifications/notification_common.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-04T23:19:30Z",
+      "side": 1,
+      "message": "what subpage were you thinking? chrome://settings/content/notifications seems right no matter what the origin.",
+      "range": {
+        "startLine": 33,
+        "startChar": 16,
+        "endLine": 34,
+        "endChar": 38
+      },
+      "revId": "6a20223525b33e1edf7aabd32c81153516db501c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "46fb7270_a8d898b1",
         "filename": "chrome/browser/notifications/notification_common.cc",
         "patchSetId": 4
@@ -42,6 +65,29 @@
         "startChar": 2,
         "endLine": 38,
         "endChar": 16
+      },
+      "revId": "6a20223525b33e1edf7aabd32c81153516db501c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be22e7bf_509c43f9",
+        "filename": "chrome/browser/notifications/notification_common.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-04T23:19:30Z",
+      "side": 1,
+      "message": "I tried to figure out the reason for the difference between Chrome OS and other desktops here, or what the difference even is. Do you know? Could you add a comment?",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 6
       },
       "revId": "6a20223525b33e1edf7aabd32c81153516db501c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
