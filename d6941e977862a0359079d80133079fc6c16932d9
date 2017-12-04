@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18e19c0a_c7d18d3c",
+        "filename": "device/bluetooth/test/bluetooth_test_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-04T18:41:41Z",
+      "side": 1,
+      "message": "In my test I never call InitWithFakeAdapter(), thus |adapter_| remains null and this test becomes necessary (see the failing trybots on Patchset 4).",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 17
+      },
+      "revId": "d6941e977862a0359079d80133079fc6c16932d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfda5b26_1ad6b482",
+        "filename": "device/bluetooth/test/fake_remote_gatt_characteristic.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-04T18:41:41Z",
+      "side": 1,
+      "message": "This codepath is hit as part of the destructor of U2fBleConnection, stacktrace:\n\nbluetooth::FakeRemoteGattCharacteristic::UnsubscribeFromNotifications()\ndevice::BluetoothRemoteGattCharacteristic::ExecuteStopNotifySession()\ndevice::BluetoothRemoteGattCharacteristic::StopNotifySession()\ndevice::BluetoothGattNotifySession::Stop()\ndevice::BluetoothGattNotifySession::~BluetoothGattNotifySession()\ndevice::U2fBleConnection::~U2fBleConnection()\n\nGiven that this is a Fake and there is no state to cleanup turning this in a no-op looked reasonable.",
+      "range": {
+        "startLine": 183,
+        "startChar": 41,
+        "endLine": 183,
+        "endChar": 43
+      },
+      "revId": "d6941e977862a0359079d80133079fc6c16932d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b391a42e_8f9abbc7",
+        "filename": "device/u2f/u2f_ble_connection.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-04T18:41:41Z",
+      "side": 1,
+      "message": "Pairing is tricky, as this is currently only implemented for BlueZ. Other platform implementations (e.g. for macOS) rely on the OS to show a dialog once a protected characteristic is accessed. Also it is not implemented for the mojo based Bluetooth::Adapter API. Are there plans for this as well?",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 39
+      },
+      "revId": "d6941e977862a0359079d80133079fc6c16932d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "464d72ed_db6c7ff0",
+        "filename": "device/u2f/u2f_ble_connection.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-04T18:41:41Z",
+      "side": 1,
+      "message": "Ideally this could be avoided by implementing the respective method in Bluetooth::Adapter. Do you happen to know if this is planned at all?",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 13
+      },
+      "revId": "d6941e977862a0359079d80133079fc6c16932d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1f86bcf_11e64be9",
+        "filename": "device/u2f/u2f_ble_connection_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-04T18:41:41Z",
+      "side": 1,
+      "message": "For this the tests are missing, as the FakeCentral / FakePeriphial abstractions don\u0027t provide APIs to test for notifying characteristics. The only implementation I could find is DBUS specific and is hard coded for a Heart Rate Measurement device: https://codesearch.chromium.org/chromium/src/device/bluetooth/dbus/fake_bluetooth_gatt_characteristic_client.cc?l\u003d269\u0026rcl\u003da029f27a6e98a43e8f1492b85ca18007670d9b28\n\nAlso test cases are currently missing for devices that are added to the adapter after the connection started, as well as devices that change their address. Here again the reason is missing APIs in the Fake* abstractions.\n\nWhat do you suggest I should do here? Implement it with the old API where possible, or add the respective methods to the Fake* based API?",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 29
+      },
+      "revId": "d6941e977862a0359079d80133079fc6c16932d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
