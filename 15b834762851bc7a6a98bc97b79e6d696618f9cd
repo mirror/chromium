@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "74da50fd_64f5e758",
+        "filename": "chrome/browser/resources/md_extensions/item.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-04T21:27:19Z",
+      "side": 1,
+      "message": "Thanks. The code looks much cleaner now, without having to calculate the width manually.\n\nOverflowing of flex children is not very intuitive. Just FYI, a (more confusing?) alternative would be to use min-width: 0, explained at this article https://css-tricks.com/flexbox-truncated-text/#article-header-id-3.",
+      "parentUuid": "1d5076f1_428ca59f",
+      "revId": "15b834762851bc7a6a98bc97b79e6d696618f9cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b6af004_e5f80205",
         "filename": "chrome/browser/resources/md_extensions/item.html",
         "patchSetId": 5
@@ -72,6 +90,30 @@
       "side": 1,
       "message": "Is there a reason?  I think that having a specific id makes this much easier to identify, and id matching is far cheaper for CSS calculation than looking at the children.  Is there a benefit to removing the id?",
       "parentUuid": "0b6af004_e5f80205",
+      "range": {
+        "startLine": 131,
+        "startChar": 6,
+        "endLine": 131,
+        "endChar": 26
+      },
+      "revId": "15b834762851bc7a6a98bc97b79e6d696618f9cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "333bfb16_ac6f8234",
+        "filename": "chrome/browser/resources/md_extensions/item.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-04T21:27:19Z",
+      "side": 1,
+      "message": "You can consider  this suggestion optional.\n\n\u003e Is there a reason?\n\nThere are two extreme approaches regarding this topic:\n1) Give IDs to everything.\n2) Give as few IDs as possible. Use arbitrarily complex CSS selectors to identify elements.\n\nUnfortunately I have not seen much guidance from the CSS styleguide on this topic. There is a tradeoff between too much clutter (case 1), and too much complexity (case 2). My approach is somewhere in the middle of that spectrum, and can be summarized as follows:\n\nGive IDs to semantically important subtrees. Use reasonably simple CSS selectors to identify elements using those subtree IDs as a starting point.\n\n\u003e id matching is far cheaper for CSS calculation than looking at the children\n\nMy expectation is that finding a parent by ID, and looking at direct descendants only (with \"\u003e\") would be equivalently cheap. Curious to hear from a Blink person who might know for a fact the answer.",
+      "parentUuid": "78023bf2_53246010",
       "range": {
         "startLine": 131,
         "startChar": 6,

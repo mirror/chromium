@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f25ce391_23640e97",
+        "filename": "chrome/browser/resources/md_extensions/item.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-04T21:27:19Z",
+      "side": 1,
+      "message": "Nit: Can you merge this with the rule at line 50?",
+      "range": {
+        "startLine": 150,
+        "startChar": 6,
+        "endLine": 150,
+        "endChar": 19
+      },
+      "revId": "f048616aed827caa87e9ae0fb45cdaa844f739e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfce19ce_22ca79a7",
+        "filename": "chrome/browser/resources/md_extensions/item.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-04T21:27:19Z",
+      "side": 1,
+      "message": "Nit; Can you merge this with the CSS rule at line 102?",
+      "range": {
+        "startLine": 197,
+        "startChar": 6,
+        "endLine": 197,
+        "endChar": 15
+      },
+      "revId": "f048616aed827caa87e9ae0fb45cdaa844f739e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
