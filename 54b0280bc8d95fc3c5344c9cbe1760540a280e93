@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "670c089b_9a557c18",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas/canvas-createImageBitmap-colorClamping.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-12-04T20:11:50Z",
+      "side": 1,
+      "message": "nit: There appear to be tab character in this function",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 1
+      },
+      "revId": "54b0280bc8d95fc3c5344c9cbe1760540a280e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
