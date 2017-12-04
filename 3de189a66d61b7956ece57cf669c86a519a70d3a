@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a44f560_c26a1a77",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptSourceCode.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-12-04T22:21:48Z",
+      "side": 1,
+      "message": "!IsEmpty() -\u003e return source_map_url;\n}\n\nreturn response.HttpHeaderField(X_SourceMap);",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 20
+      },
+      "revId": "3de189a66d61b7956ece57cf669c86a519a70d3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
