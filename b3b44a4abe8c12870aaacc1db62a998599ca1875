@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1b6bad37_f4d1c59a",
+        "filename": "third_party/WebKit/Source/core/dom/LayoutTreeBuilder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-12-04T20:21:26Z",
+      "side": 1,
+      "message": "No, it can be anything really.\n\nBlock:\n  \u003cdiv\u003e\u003cspan style\u003d\"display:contents;font-size:50px\"\u003eX\u003c/span\u003e\u003c/div\u003e\n\nInline:\n  \u003cspan\u003e\u003cspan style\u003d\"display:contents;font-size:50px\"\u003eX\u003c/span\u003e\u003c/span\u003e\n\nTable:\n  \u003ctd\u003e\u003cspan style\u003d\"display:contents;font-size:50px\"\u003eX\u003c/span\u003e\u003c/td\u003e\n\netc...\n\nDid you think about anything in particular that wouldn\u0027t work?",
+      "parentUuid": "9be5cd2e_8524c560",
+      "revId": "b3b44a4abe8c12870aaacc1db62a998599ca1875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3cc4c83_2aa48d0b",
         "filename": "third_party/WebKit/Source/core/layout/LayoutObjectTest.cpp",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-04T19:21:44Z",
       "side": 1,
       "message": "Would adding tests with other element types for a parent, e.g. span, add anything here?",
+      "revId": "b3b44a4abe8c12870aaacc1db62a998599ca1875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba52e9e4_26e68268",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObjectTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-12-04T20:21:26Z",
+      "side": 1,
+      "message": "Since display:contents doesn\u0027t generate a box, a div and a span should not be different. Having different display type for the parent of the display:contents element could be done (body is used in all tests here). The interesting ones are probably the ones where you have anonymous wrappers for other reasons like an anonymous block because you have block siblings, table box ancestors, and anonymous flex items.\n\nWhile implementing this I found that such issues are exercised by the display-contents-dynamic-* tests in: https://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/external/wpt/css/css-display/",
+      "parentUuid": "f3cc4c83_2aa48d0b",
       "revId": "b3b44a4abe8c12870aaacc1db62a998599ca1875",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
