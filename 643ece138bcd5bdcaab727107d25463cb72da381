@@ -680,6 +680,23 @@
       "revId": "643ece138bcd5bdcaab727107d25463cb72da381",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea3e68a1_53bd4342",
+        "filename": "components/user_manager/known_user.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-12-04T22:52:33Z",
+      "side": 1,
+      "message": "nit: remove newline",
+      "revId": "643ece138bcd5bdcaab727107d25463cb72da381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
