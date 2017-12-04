@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2caea161_bf4c0485",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar_button.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-12-04T02:05:17Z",
+      "side": 1,
+      "message": "Done.  thx.  moved widthConstraint to private as well.",
+      "parentUuid": "e3a3a652_649ce2e2",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 46
+      },
+      "revId": "11e9eeb337ffd1fc19a0f2efe1ca7bab3d974572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23d22e93_2bd5e694",
         "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar_button.h",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "11e9eeb337ffd1fc19a0f2efe1ca7bab3d974572",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b18f69ff_4ecb815a",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar_button.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-12-04T02:05:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23d22e93_2bd5e694",
+      "range": {
+        "startLine": 28,
+        "startChar": 13,
+        "endLine": 28,
+        "endChar": 27
+      },
+      "revId": "11e9eeb337ffd1fc19a0f2efe1ca7bab3d974572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
