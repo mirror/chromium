@@ -20,6 +20,12 @@ bool AudioDeviceDescription::IsDefaultDevice(const std::string& device_id) {
 }
 
 // static
+bool AudioDeviceDescription::IsCommunicationsDevice(
+    const std::string& device_id) {
+  return device_id == AudioDeviceDescription::kCommunicationsDeviceId;
+}
+
+// static
 bool AudioDeviceDescription::IsLoopbackDevice(const std::string& device_id) {
   return device_id.compare(kLoopbackInputDeviceId) == 0 ||
          device_id.compare(kLoopbackWithMuteDeviceId) == 0;
@@ -50,6 +56,24 @@ std::string AudioDeviceDescription::GetCommunicationsDeviceName() {
   NOTREACHED();
   return "";
 #endif
+}
+
+// static
+std::string AudioDeviceDescription::GetDefaultDeviceName(
+    const std::string& real_device_name) {
+  DCHECK(!real_device_name.empty());
+  // TODO(guidou): Put the names together in a localized manner.
+  // http://crbug.com/788767
+  return GetDefaultDeviceName() + " - " + real_device_name;
+}
+
+// static
+std::string AudioDeviceDescription::GetCommunicationsDeviceName(
+    const std::string& real_device_name) {
+  DCHECK(!real_device_name.empty());
+  // TODO(guidou): Put the names together in a localized manner.
+  // http://crbug.com/788767
+  return GetCommunicationsDeviceName() + " - " + real_device_name;
 }
 
 AudioDeviceDescription::AudioDeviceDescription(const std::string& device_name,
