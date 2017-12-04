@@ -45,6 +45,10 @@ class ContentSettingImageView : public IconLabelBubbleView {
     virtual ContentSettingBubbleModelDelegate*
     GetContentSettingBubbleModelDelegate() = 0;
 
+    // Records the content setting value of a bubble when it is shown.
+    virtual void RecordContentSettingImageBubbleShown(
+        ContentSettingImageModel::ContentSettingImageType type) const = 0;
+
    protected:
     virtual ~Delegate() {}
   };
@@ -61,6 +65,10 @@ class ContentSettingImageView : public IconLabelBubbleView {
   void SetIconColor(SkColor color);
 
   void disable_animation() { can_animate_ = false; }
+
+  ContentSettingImageModel* content_setting_image_model() {
+    return content_setting_image_model_.get();
+  }
 
  private:
   // The total animation time, including open and close as well as an
@@ -98,6 +106,9 @@ class ContentSettingImageView : public IconLabelBubbleView {
   // cannot handle host resizes, the highlight needs to be disabled when the
   // animation is running.
   void AnimateIn();
+
+  // Logs UMA for when the bubble is shown.
+  void RecordBubbleShown();
 
   Delegate* delegate_;  // Weak.
   std::unique_ptr<ContentSettingImageModel> content_setting_image_model_;

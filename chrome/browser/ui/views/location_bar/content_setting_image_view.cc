@@ -156,6 +156,11 @@ bool ContentSettingImageView::IsShrinking() const {
           slide_animator_.GetCurrentValue() > (1.0 - kOpenFraction));
 }
 
+void ContentSettingImageView::RecordBubbleShown() {
+  delegate_->RecordContentSettingImageBubbleShown(
+      content_setting_image_model_->image_type());
+}
+
 bool ContentSettingImageView::ShowBubble(const ui::Event& event) {
   if (slide_animator_.is_animating()) {
     // If the user clicks while we're animating, the bubble arrow will be
@@ -199,6 +204,7 @@ bool ContentSettingImageView::ShowBubble(const ui::Event& event) {
       bubble_view_->SetArrowPaintType(views::BubbleBorder::PAINT_TRANSPARENT);
     }
     bubble_widget->Show();
+    RecordBubbleShown();
   }
 
   return true;

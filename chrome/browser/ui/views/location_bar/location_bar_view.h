@@ -72,6 +72,8 @@ class LocationBarView : public LocationBar,
                         public views::ButtonListener,
                         public ContentSettingImageView::Delegate {
  public:
+  using ContentSettingViews = std::vector<ContentSettingImageView*>;
+
   class Delegate {
    public:
     // Should return the current web contents.
@@ -143,6 +145,11 @@ class LocationBarView : public LocationBar,
 
   // The zoom icon. It may not be visible.
   ZoomView* zoom_view() { return zoom_view_; }
+
+  // The content setting image views.
+  const ContentSettingViews& content_setting_views() {
+    return content_setting_views_;
+  }
 
   // The passwords icon. It may not be visible.
   ManagePasswordsIconViews* manage_passwords_icon_view() {
@@ -242,6 +249,8 @@ class LocationBarView : public LocationBar,
   content::WebContents* GetContentSettingWebContents() override;
   ContentSettingBubbleModelDelegate* GetContentSettingBubbleModelDelegate()
       override;
+  void RecordContentSettingImageBubbleShown(
+      ContentSettingImageModel::ContentSettingImageType type) const override;
 
   // ZoomEventManagerObserver:
   // Updates the view for the zoom icon when default zoom levels change.
@@ -253,8 +262,6 @@ class LocationBarView : public LocationBar,
   static bool IsVirtualKeyboardVisible();
 
  private:
-  using ContentSettingViews = std::vector<ContentSettingImageView*>;
-
   // Helper for GetMinimumWidth().  Calculates the incremental minimum width
   // |view| should add to the trailing width after the omnibox.
   int IncrementalMinimumWidth(views::View* view) const;

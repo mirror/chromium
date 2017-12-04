@@ -10,6 +10,7 @@
 #include "base/feature_list.h"
 #include "base/i18n/rtl.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "chrome/app/chrome_command_ids.h"
@@ -667,6 +668,12 @@ content::WebContents* LocationBarView::GetContentSettingWebContents() {
 ContentSettingBubbleModelDelegate*
 LocationBarView::GetContentSettingBubbleModelDelegate() {
   return delegate_->GetContentSettingBubbleModelDelegate();
+}
+
+void LocationBarView::RecordContentSettingImageBubbleShown(
+    ContentSettingImageModel::ContentSettingImageType type) const {
+  UMA_HISTOGRAM_ENUMERATION("ContentSettings.PageActionPressed", type,
+                            ContentSettingImageModel::NUM_TYPES);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
