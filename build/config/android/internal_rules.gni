@@ -2478,20 +2478,21 @@ if (enable_java_templates) {
       if (_enable_errorprone) {
         deps +=
             [ "//third_party/errorprone:errorprone_java($default_toolchain)" ]
+        # errorprone_plugin_java provides the annotation processor
         deps += [ "//tools/android/errorprone_plugin:errorprone_plugin_java($default_toolchain)" ]
         args += [
           "--use-errorprone-path",
           "bin/errorprone_java",
-          "--processorpath",
-          "lib.java/tools/android/errorprone_plugin/errorprone_plugin_java.jar",
         ]
       }
       foreach(e, _provider_configurations) {
         args += [ "--provider-configuration=" + rebase_path(e, root_build_dir) ]
       }
+      _processor_list = []
       foreach(e, _processors) {
-        args += [ "--processor=" + e ]
+        _processor_list = [ "--processor=" + e ] + _processor_list
       }
+      args += _processor_list
       foreach(e, _processor_args) {
         args += [ "--processor-arg=" + e ]
       }
