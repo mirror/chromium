@@ -185,9 +185,10 @@ class PageInfo : public TabSpecificContentSettings::SiteDataObserver,
   void OnSiteDataAccessed() override;
 
  private:
-  FRIEND_TEST_ALL_PREFIXES(PageInfoTest, NonFactoryDefaultPermissionsShown);
+  FRIEND_TEST_ALL_PREFIXES(
+      PageInfoTest,
+      NonFactoryDefaultAndRecentlyChangedToDefaultPermissionsShown);
   friend class PageInfoBubbleViewBrowserTest;
-
   // Initializes the |PageInfo|.
   void Init(const GURL& url, const security_state::SecurityInfo& security_info);
 

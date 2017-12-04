@@ -140,10 +140,12 @@ bool IsPermissionFactoryDefault(HostContentSettingsMap* content_settings,
 
 // Determines whether to show permission |type| in the Page Info UI. Only
 // applies to permissions listed in |kPermissionType|.
-bool ShouldShowPermission(const PageInfoUI::PermissionInfo& info,
-                          const GURL& site_url,
-                          HostContentSettingsMap* content_settings,
-                          content::WebContents* web_contents) {
+bool ShouldShowPermission(
+    const PageInfoUI::PermissionInfo& info,
+    const GURL& site_url,
+    HostContentSettingsMap* content_settings,
+    content::WebContents* web_contents,
+    TabSpecificContentSettings* tab_specific_content_settings) {
   // Note |CONTENT_SETTINGS_TYPE_ADS| will show up regardless of its default
   // value when it has been activated on the current origin.
   if (info.type == CONTENT_SETTINGS_TYPE_ADS) {
@@ -181,18 +183,22 @@ bool ShouldShowPermission(const PageInfoUI::PermissionInfo& info,
     return true;
 #endif
 
-  // All other content settings only show when they are non-factory-default.
-  if (IsPermissionFactoryDefault(content_settings, info)) {
-    return false;
-  }
-
 #if !defined(OS_ANDROID)
   // Autoplay is Android-only at the moment.
   if (info.type == CONTENT_SETTINGS_TYPE_AUTOPLAY)
     return false;
 #endif
 
-  return true;
+  // Show up if it has been changed by the user since last page load.
+  if (tab_specific_content_settings
+          ->HasUserChangedContentSettingSinceLastNavigation(info.type))
+    return true;
+
+  // Show up when it is a non-default value.
+  if (!IsPermissionFactoryDefault(content_settings, info))
+    return true;
+
+  return false;
 }
 
 void CheckContentStatus(security_state::ContentStatus content_status,
@@ -457,6 +463,9 @@ void PageInfo::OnSitePermissionChanged(ContentSettingsType type,
   // When the sound setting is changed, no reload is necessary.
   if (type != CONTENT_SETTINGS_TYPE_SOUND)
     show_info_bar_ = true;
+
+  tab_specific_content_settings()
+      ->InsertUserChangedContentSettingSinceLastNavigation(type);
 
   // Refresh the UI to reflect the new setting.
   PresentSitePermissions();
@@ -840,7 +849,7 @@ void PageInfo::PresentSitePermissions() {
     }
 
     if (ShouldShowPermission(permission_info, site_url_, content_settings_,
-                             web_contents())) {
+                             web_contents(), tab_specific_content_settings())) {
       permission_info_list.push_back(permission_info);
     }
   }
