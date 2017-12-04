@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87be850a_15b486de",
+        "filename": "chrome/test/data/extensions/api_test/webrequest/test_unload5.js",
+        "patchSetId": 25
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-04T14:07:57Z",
+      "side": 1,
+      "message": "can we modify getServerDomain(initiators.BROWSER_INITIATED, chrome.runtime.id, \u0027extension\u0027) generate this?",
+      "range": {
+        "startLine": 13,
+        "startChar": 22,
+        "endLine": 13,
+        "endChar": 64
+      },
+      "revId": "f5a93d5f7af56920f5280fc908e20b1438a2676d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10515069_3fd13a7c",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-04T14:07:57Z",
+      "side": 1,
+      "message": "Not yet.\nI\u0027ve taken over a task to move blink CORS code to content/renderer, and just decided to move them to browser process at one go-off.\nContent/renderer CORS is partially working behind a flag, but I will move it to browser process without stabilizing it because the final goal is having it in the Network Service.\n\nI think we can merge some logics in the future, but at this point, this CL will be a right direction. Let me invite you to discuss browser side CORS discussion. I will share a design doc soon, maybe in a few days.",
+      "range": {
+        "startLine": 312,
+        "startChar": 30,
+        "endLine": 312,
+        "endChar": 34
+      },
+      "revId": "f5a93d5f7af56920f5280fc908e20b1438a2676d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26ae3bdc_8ae203eb",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-04T14:07:57Z",
+      "side": 1,
+      "message": "I\u0027m still not sure when and why this is needed here.\nMaybe better to handle this in FetchContext::PrepareRequest?\n\nCan you explain an example case? Content scripts of Chrome Extension?",
+      "range": {
+        "startLine": 618,
+        "startChar": 0,
+        "endLine": 618,
+        "endChar": 48
+      },
+      "revId": "f5a93d5f7af56920f5280fc908e20b1438a2676d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
