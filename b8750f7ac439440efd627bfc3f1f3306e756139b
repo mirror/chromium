@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "56a95848_b4c6e263",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksFaviconThrottle.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-12-04T18:14:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26834372_ebd0c2f2",
+      "range": {
+        "startLine": 98,
+        "startChar": 44,
+        "endLine": 98,
+        "endChar": 51
+      },
+      "revId": "b8750f7ac439440efd627bfc3f1f3306e756139b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de2480fb_4c2ca212",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "b8750f7ac439440efd627bfc3f1f3306e756139b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63bcd552_d18f7ec2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-12-04T18:14:58Z",
+      "side": 1,
+      "message": "I was calling nativeDestroy above, moved it to below.",
+      "parentUuid": "de2480fb_4c2ca212",
+      "range": {
+        "startLine": 167,
+        "startChar": 16,
+        "endLine": 167,
+        "endChar": 51
+      },
+      "revId": "b8750f7ac439440efd627bfc3f1f3306e756139b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ecc650a3_5ffdad06",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-12-04T18:14:58Z",
+      "side": 1,
+      "message": ":)",
+      "parentUuid": "c8689bb9_fa339f40",
+      "range": {
+        "startLine": 71,
+        "startChar": 5,
+        "endLine": 71,
+        "endChar": 25
+      },
+      "revId": "b8750f7ac439440efd627bfc3f1f3306e756139b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c45fa6ba_3e6a6198",
         "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.h",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "b8750f7ac439440efd627bfc3f1f3306e756139b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b0b5592_8059a655",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-12-04T18:14:58Z",
+      "side": 1,
+      "message": "Ack, will investigate.",
+      "parentUuid": "c45fa6ba_3e6a6198",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 61,
+        "endChar": 24
+      },
+      "revId": "b8750f7ac439440efd627bfc3f1f3306e756139b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
