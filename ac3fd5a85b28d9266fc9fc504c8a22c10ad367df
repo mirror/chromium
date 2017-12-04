@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a44b67d3_0ad29dc6",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-04T13:35:18Z",
+      "side": 1,
+      "message": "I really don\u0027t like mocks and even more mocks of singletons.\n\nCounter proposal: change TabUsageRecorder to receive a delegate (or a callback) that can be queried for the application state. Then implement a test and production version of the delegate.\n\n  class TabUsageRecorderDelegate {\n   public:\n    TabUsageRecorderDelegate() \u003d default;\n    virtual ~TabUsageRecorderDelegate() \u003d default;\n    virtual bool IsApplicationActive() const \u003d 0;\n\n    TabUsageRecorderDelegate(const TabUsageRecorderDelegate\u0026) \u003d delete;\n    TabUsageRecorderDelegate\u0026 operator\u003d(const TabUsageRecorderDelegate\u0026) \u003d delete;\n  };\n\n  class TabUsageRecorder {\n   public:\n    TabUsageRecorder(WebStateList* web_state_list,\n                     PrerenderService* prerender_service,\n                     std::unique_ptr\u003cTabUsageRecorderDelegate\u003e delegate);\n  };\n\n  void TabUsageRecorder::RenderProcessGone(web::WebState* web_state) {\n    RendererTerminated(\n        web_state, web_state-\u003eIsVisible(), delegate_-\u003eIsApplicationActive());\n  }\n\n  class TestTabUsageRecorderDelegate : public TabUsageRecorderDelegate {\n   public:\n    bool IsApplicationActive() const override {\n      return is_active_;\n    }\n    void set_is_active(bool is_active) {\n      is_active_ \u003d is_active;\n    }\n  };",
+      "range": {
+        "startLine": 53,
+        "startChar": 12,
+        "endLine": 53,
+        "endChar": 44
+      },
+      "revId": "ac3fd5a85b28d9266fc9fc504c8a22c10ad367df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
