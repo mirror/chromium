@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "768260ca_b9c3344e",
+        "filename": "ui/aura/window_targeter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-04T17:01:28Z",
+      "side": 1,
+      "message": "Please document under what conditions this happens.",
+      "range": {
+        "startLine": 172,
+        "startChar": 11,
+        "endLine": 173,
+        "endChar": 65
+      },
+      "revId": "0f19e01cda3c2f56c1947bbaa7e91cc1ffad6142",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
