@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7ff952d0_94be7a4e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-04T05:37:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52ab4cb6_9916180b",
+      "revId": "792c2a4482998d01a8909a864cbf25ad9468c259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eaac6383_05fe8d8b",
         "filename": "components/web_contents_delegate_android/color_chooser_android.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "fc001ddd_79e0d1b5",
+        "filename": "components/web_contents_delegate_android/color_chooser_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-04T05:37:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eaac6383_05fe8d8b",
+      "revId": "792c2a4482998d01a8909a864cbf25ad9468c259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d842aa4d_e65e1642",
         "filename": "components/web_contents_delegate_android/color_chooser_android.h",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "792c2a4482998d01a8909a864cbf25ad9468c259",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d35e3473_2ed9e8ea",
+        "filename": "components/web_contents_delegate_android/color_chooser_android.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-04T05:37:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d842aa4d_e65e1642",
+      "revId": "792c2a4482998d01a8909a864cbf25ad9468c259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "df0bc6e9_48f549cf",
+        "filename": "content/common/color_chooser.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-04T05:37:10Z",
+      "side": 1,
+      "message": "Sorry, I\u0027m not sure what you mean by \u0027is?\u0027.  Probably if I could hear your voice intonation, I could work it out.  I think you are probably saying that my description is wrong.  But I think this is a good description.",
+      "parentUuid": "4f4d0138_599d8118",
+      "range": {
+        "startLine": 7,
+        "startChar": 16,
+        "endLine": 7,
+        "endChar": 18
+      },
+      "revId": "792c2a4482998d01a8909a864cbf25ad9468c259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54c214f1_62ba5cd4",
         "filename": "content/common/color_chooser.mojom",
         "patchSetId": 3
@@ -96,6 +174,30 @@
       "revId": "792c2a4482998d01a8909a864cbf25ad9468c259",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6def658c_e0afe7bf",
+        "filename": "content/common/color_chooser.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-04T05:37:10Z",
+      "side": 1,
+      "message": "I am sure that the interface is not required to be associated.  But the example that I copied from was associated, so it seemed easiest to go with that.  Given that I am using an associated interface for the main connection when it is not needed, I figured I might as well be consistent.",
+      "parentUuid": "54c214f1_62ba5cd4",
+      "range": {
+        "startLine": 12,
+        "startChar": 6,
+        "endLine": 12,
+        "endChar": 16
+      },
+      "revId": "792c2a4482998d01a8909a864cbf25ad9468c259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "fb492717_499ee213",
+        "filename": "content/common/color_chooser.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-04T05:37:10Z",
+      "side": 1,
+      "message": "Thanks for this explanation.  I had suspected that I could do something like this, but I couldn\u0027t find documentation or understand other code examples well enough.",
+      "parentUuid": "f0b2df04_d6239726",
+      "range": {
+        "startLine": 13,
+        "startChar": 13,
+        "endLine": 13,
+        "endChar": 15
+      },
+      "revId": "792c2a4482998d01a8909a864cbf25ad9468c259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43fe76b9_bb2e0ce9",
         "filename": "content/public/browser/web_contents_delegate.h",
         "patchSetId": 3
@@ -136,6 +262,24 @@
       "revId": "792c2a4482998d01a8909a864cbf25ad9468c259",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b304c87_66a3e077",
+        "filename": "content/public/browser/web_contents_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-04T05:37:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43fe76b9_bb2e0ce9",
+      "revId": "792c2a4482998d01a8909a864cbf25ad9468c259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -159,6 +303,30 @@
       "revId": "792c2a4482998d01a8909a864cbf25ad9468c259",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b4c53d5_bb04596a",
+        "filename": "content/renderer/renderer_webcolorchooser_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-04T05:37:10Z",
+      "side": 1,
+      "message": "In testing, it is not possible to have 2 windows open at once in the renderer.  I haven\u0027t been able to explicitly see in the code where this is controlled, but it seems that it is not possible to call Open twice for the same WebColorChooser.\n\nMy guess is that the current use of |identifier| is to resolve issues around the possibilities of race conditions with multiple ColorChooser windows.",
+      "parentUuid": "ebafdb03_2afcd77b",
+      "range": {
+        "startLine": 41,
+        "startChar": 70,
+        "endLine": 41,
+        "endChar": 0
+      },
+      "revId": "792c2a4482998d01a8909a864cbf25ad9468c259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
