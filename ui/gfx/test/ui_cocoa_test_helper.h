@@ -42,8 +42,7 @@
 // Set value to return for -isKeyWindow.
 - (void)setPretendIsKeyWindow:(BOOL)isKeyWindow;
 
-// Set value to return for -occlusionState and posts a
-// NSWindowDidChangeOcclusionStateNotification.
+// Set value to return for -occlusionState.
 - (void)setPretendIsOccluded:(BOOL)isOccluded;
 
 // Whether to use or ignore the default contraints for window sizing and

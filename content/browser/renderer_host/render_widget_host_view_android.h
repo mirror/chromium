@@ -114,7 +114,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   bool HasFocus() const override;
   void Show() override;
   void Hide() override;
-  bool IsShowing() override;
+  Visibility GetVisibility() const override;
   gfx::Rect GetViewBounds() const override;
   gfx::Size GetVisibleViewportSize() const override;
   gfx::Size GetPhysicalBackingSize() const override;
