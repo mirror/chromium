@@ -24,7 +24,7 @@ public class CommandLineInitUtilTest {
     public void setUp() throws Exception {
         CommandLineInitUtil.initCommandLine(
                 InstrumentationRegistry.getInstrumentation().getTargetContext(),
-                "content-shell-command-line");
+                "test-cmdline-file");
     }
 
     /**
