@@ -12,6 +12,14 @@
 namespace mojo {
 
 template <>
+struct EnumTraits<arc::mojom::VideoCodecProfile, media::VideoCodecProfile> {
+  static arc::mojom::VideoCodecProfile ToMojom(media::VideoCodecProfile input);
+
+  static bool FromMojom(arc::mojom::VideoCodecProfile input,
+                        media::VideoCodecProfile* output);
+};
+
+template <>
 struct StructTraits<arc::mojom::VideoFramePlaneDataView, arc::VideoFramePlane> {
   static int32_t offset(const arc::VideoFramePlane& r) {
     DCHECK_GE(r.offset, 0);
