@@ -33,6 +33,7 @@ namespace chromeos {
 namespace {
 
 const char kTestUserName[] = "owner@invalid.domain";
+const char kTestUserGaiaId[] = "9876543210";
 
 void SetMagnifierEnabled(bool enabled) {
   MagnificationManager::Get()->SetMagnifierEnabled(enabled);
@@ -158,7 +159,8 @@ class MagnificationManagerTest : public InProcessBrowserTest {
         ProfileManager::GetActiveUserProfile());
   }
 
-  const AccountId test_account_id_ = AccountId::FromUserEmail(kTestUserName);
+  const AccountId test_account_id_ =
+      AccountId::FromUserEmailGaiaId(kTestUserName, kTestUserGaiaId);
 
   DISALLOW_COPY_AND_ASSIGN(MagnificationManagerTest);
 };
