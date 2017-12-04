@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfdfbf04_b7f4b052",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-04T12:11:21Z",
+      "side": 1,
+      "message": "nit: Value::GetAsBoolean() is deprecated, it\u0027s recommended to use GetBool() instead.\n(and it\u0027s also nicer as there\u0027ll be no risk of uninitialized variable usage when the pref type is wrong somehow)",
+      "revId": "79b496448dcb06256c9f74ee17623657ab2ceb0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce769414_c3ef20e7",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-04T12:11:21Z",
+      "side": 1,
+      "message": "(optional) It may make sense to extend the test to also update the policy value from False to True and check that the popup blocking is on again. That\u0027ll cover the \"\u0027dynamic_refresh\u0027: True\" statement in the policy description.\nBut since we already don\u0027t have such tests for many policies, I\u0027ll not insist on doing that here.",
+      "revId": "79b496448dcb06256c9f74ee17623657ab2ceb0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ac0aba3_161d1446",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 13
+      },
+      "lineNbr": 10780,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-04T12:11:21Z",
+      "side": 1,
+      "message": "Does the abusive experience intervention get disabled when the SafeBrowsingEnabled policy is set to False?\nThen it makes sense to document this in the description of this new policy here.",
+      "revId": "79b496448dcb06256c9f74ee17623657ab2ceb0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
