@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "998bd793_eb91e5e6",
+        "filename": "components/viz/test/compositor_frame_helpers.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-12-04T16:58:45Z",
+      "side": 1,
+      "message": "Could you just use base::Optional?",
+      "revId": "8020548d2b32258659a18f9880e2145a988b8835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
