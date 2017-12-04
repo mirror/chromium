@@ -44,8 +44,6 @@ class ScopedAccountConsistency {
 SCOPED_ACCOUNT_CONSISTENCY_SPECIALIZATION(Disabled);
 // ScopedAccountConsistencyMirror:
 SCOPED_ACCOUNT_CONSISTENCY_SPECIALIZATION(Mirror);
-// ScopedAccountConsistencyDiceFixAuthErrors:
-SCOPED_ACCOUNT_CONSISTENCY_SPECIALIZATION(DiceFixAuthErrors);
 // ScopedAccountConsistencyDicePrepareMigration:
 SCOPED_ACCOUNT_CONSISTENCY_SPECIALIZATION(DicePrepareMigration);
 // ScopedAccountConsistencyDiceMigration:

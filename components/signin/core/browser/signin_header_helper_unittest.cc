@@ -7,7 +7,7 @@
 #include <memory>
 #include <string>
 
-#include "base/command_line.h"
+#include "base/bind.h"
 #include "base/message_loop/message_loop.h"
 #include "base/strings/stringprintf.h"
 #include "components/content_settings/core/browser/cookie_settings.h"
@@ -193,13 +193,10 @@ TEST_F(SigninHeaderHelperTest, TestMirrorRequestGoogleComProfileConsistency) {
       "mode=0,enable_account_consistency=true");
 }
 
-// Mirror is always enabled on Android and iOS, so these tests are only relevant
-// on Desktop.
-#if BUILDFLAG(ENABLE_DICE_SUPPORT)
-
 // Tests that the Mirror request is returned when the target is a Gaia URL, even
 // if account consistency is disabled.
 TEST_F(SigninHeaderHelperTest, TestMirrorRequestGaiaURL) {
+  account_consistency_ = AccountConsistencyMethod::kDisabled;
   CheckMirrorHeaderRequest(GURL("https://accounts.google.com"), "0123456789",
                            "mode=0,enable_account_consistency=false");
   CheckMirrorCookieRequest(
@@ -207,6 +204,7 @@ TEST_F(SigninHeaderHelperTest, TestMirrorRequestGaiaURL) {
       "id=0123456789:mode=0:enable_account_consistency=false");
 }
 
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
 // Tests Dice requests.
 TEST_F(SigninHeaderHelperTest, TestDiceRequest) {
   account_consistency_ = AccountConsistencyMethod::kDice;
