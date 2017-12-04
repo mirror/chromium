@@ -20,8 +20,10 @@ class ContentPreviewsRenderFrameObserver : public content::RenderFrameObserver {
   ContentPreviewsRenderFrameObserver(content::RenderFrame* render_frame);
   ~ContentPreviewsRenderFrameObserver() override;
 
-  static content::PreviewsState GetPreviewsStateFromResponse(
-      content::PreviewsState original_state,
+  // Returns whether |previews_state| is consistent with data reduction
+  // proxy headers found in |web_url_response| with respect to server previews.
+  static bool ValidatePreviewsStateWithResponse(
+      content::PreviewsState previews_state,
       const blink::WebURLResponse& web_url_response);
 
  private:
