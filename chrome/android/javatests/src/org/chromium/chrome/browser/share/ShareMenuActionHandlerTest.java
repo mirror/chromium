@@ -28,6 +28,7 @@ import org.chromium.content_public.browser.JavaScriptCallback;
 import org.chromium.content_public.browser.MessagePort;
 import org.chromium.content_public.browser.NavigationController;
 import org.chromium.content_public.browser.RenderFrameHost;
+import org.chromium.content_public.browser.SupportsUserData.Data;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.browser.WebContentsObserver;
 import org.chromium.services.service_manager.InterfaceProvider;
@@ -406,6 +407,14 @@ public class ShareMenuActionHandlerTest {
 
         @Override
         public void removeJavascriptInterface(String name) {}
+
+        @Override
+        public <T extends Data> void setUserData(Class<T> key, T data) {}
+
+        @Override
+        public <T extends Data> T getUserData(Class<T> key) {
+            return null;
+        }
     }
 
     private static class MockRenderFrameHost implements RenderFrameHost {

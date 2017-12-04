@@ -42,7 +42,7 @@ import java.util.Map;
  * bundle.setClassLoader(WebContents.class.getClassLoader());
  * webContents = bundle.get("WEBCONTENTSKEY");
  */
-public interface WebContents extends Parcelable {
+public interface WebContents extends Parcelable, SupportsUserData {
     /**
      * Interface used to transfer the internal objects (but callers should own) from WebContents.
      */

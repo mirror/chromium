@@ -35,6 +35,7 @@ import org.chromium.content_public.browser.MessagePort;
 import org.chromium.content_public.browser.NavigationController;
 import org.chromium.content_public.browser.RenderFrameHost;
 import org.chromium.content_public.browser.SmartClipCallback;
+import org.chromium.content_public.browser.SupportsUserData.Data;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.browser.WebContentsInternals;
 import org.chromium.content_public.browser.WebContentsObserver;
@@ -168,6 +169,7 @@ public class WebContentsImpl implements WebContents, RenderFrameHostDelegate {
     private static class WebContentsInternalsImpl implements WebContentsInternals {
         public HashSet<Object> retainedObjects;
         public HashMap<String, Pair<Object, Class>> injectedObjects;
+        public UserDataMap userDataMap;
     }
 
     private WebContentsImpl(
@@ -181,6 +183,7 @@ public class WebContentsImpl implements WebContents, RenderFrameHostDelegate {
         WebContentsInternalsImpl internals = new WebContentsInternalsImpl();
         internals.retainedObjects = new HashSet<Object>();
         internals.injectedObjects = new HashMap<String, Pair<Object, Class>>();
+        internals.userDataMap = new UserDataMap(this);
 
         mRenderCoordinates = new RenderCoordinates();
         mRenderCoordinates.reset();
@@ -736,6 +739,24 @@ public class WebContentsImpl implements WebContents, RenderFrameHostDelegate {
      */
     public RenderCoordinates getRenderCoordinates() {
         return mRenderCoordinates;
+    }
+
+    @Override
+    public <T extends Data> void setUserData(Class<T> key, T data) {
+        WebContentsInternals internals = mInternalsHolder.get();
+        UserDataMap userDataMap = ((WebContentsInternalsImpl) internals).userDataMap;
+        if (userDataMap != null) userDataMap.setUserData(key, data);
+    }
+
+    @Override
+    public <T extends Data> T getUserData(Class<T> key) {
+        WebContentsInternals internals = mInternalsHolder.get();
+        if (internals == null) return null;
+        UserDataMap userDataMap = ((WebContentsInternalsImpl) internals).userDataMap;
+
+        @SuppressWarnings("unchecked")
+        T data = (T) (userDataMap != null ? userDataMap.getUserData(key) : null);
+        return data;
     }
 
     // This is static to avoid exposing a public destroy method on the native side of this class.
