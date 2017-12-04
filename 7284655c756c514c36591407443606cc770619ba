@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5ff5399_358adc13",
+        "filename": "third_party/WebKit/Source/core/clipboard/DataObjectItem.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-04T02:12:44Z",
+      "side": 0,
+      "message": "Nit: mis-edit",
+      "revId": "7284655c756c514c36591407443606cc770619ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

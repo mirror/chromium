@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aafd8bc_eb6d0ebe",
+        "filename": "content/common/clipboard.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-04T02:12:44Z",
+      "side": 1,
+      "message": "Just to confirm: Are you planning to move this file to WebKit/common/ in the future, right?",
+      "revId": "da5a3e867af7742dfe58f221151347238121c34d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d826d901_53ad5509",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-04T02:12:44Z",
+      "side": 1,
+      "message": "mojom-blink.h?",
+      "revId": "da5a3e867af7742dfe58f221151347238121c34d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bba7fa02_5209d971",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-04T02:12:44Z",
+      "side": 1,
+      "message": "Use mojom-blink.h in WebKit/Source/.\n\nI think we should have a presubmit check for this.",
+      "revId": "da5a3e867af7742dfe58f221151347238121c34d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8005e50d_acce5941",
+        "filename": "third_party/WebKit/common/clipboard/clipboard.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-04T02:12:44Z",
+      "side": 1,
+      "message": "Nit: Remove an empty line.",
+      "revId": "da5a3e867af7742dfe58f221151347238121c34d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
