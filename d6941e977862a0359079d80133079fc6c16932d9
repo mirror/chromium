@@ -48,6 +48,23 @@
     },
     {
       "key": {
+        "uuid": "f28d78fd_66270461",
+        "filename": "device/u2f/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-12-04T22:20:49Z",
+      "side": 1,
+      "message": "I\u0027m sorry that we did not correctly warn on this component earlier.\nhttps://chromium-review.googlesource.com/c/chromium/src/+/775782 will land soon clarifying this. See device/bluetooth/BUILD.gn\n\nThe source_set(\"mojo\") exists to implement device/bluetooth/public/interfaces:experimental_interfaces\nwhich are not ready for production use yet, see README:\nhttps://cs.chromium.org/chromium/src/device/bluetooth/public/interfaces/README.md\n\nbluetooth owners (ortuno, scheib) desire clients use only the C++ device/bluetooth interfaces until we have developed a mojo service ready for broad use.  The current experimental interfaces have known API designs that we want to refactor away from before taking on multiple clients.",
+      "revId": "d6941e977862a0359079d80133079fc6c16932d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b391a42e_8f9abbc7",
         "filename": "device/u2f/u2f_ble_connection.h",
         "patchSetId": 6
