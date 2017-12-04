@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "36a5600c_060df759",
+        "filename": "net/reporting/reporting_endpoint_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-12-04T18:39:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "629963b7_891ef78d",
+      "revId": "01ba18930e43fe2b3721c248c58485b4fb56223e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5777b2b_aba02f70",
         "filename": "net/reporting/reporting_header_parser.cc",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "01ba18930e43fe2b3721c248c58485b4fb56223e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92159a01_9e47d14d",
+        "filename": "net/reporting/reporting_header_parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-12-04T18:39:22Z",
+      "side": 1,
+      "message": "I haven\u0027t landed the spec change on Github, but there\u0027s a description of the semantics in reporting_client.h.",
+      "parentUuid": "c5777b2b_aba02f70",
+      "range": {
+        "startLine": 117,
+        "startChar": 65,
+        "endLine": 117,
+        "endChar": 0
+      },
+      "revId": "01ba18930e43fe2b3721c248c58485b4fb56223e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "572c2b42_3fdb5fdf",
+        "filename": "net/reporting/reporting_header_parser_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-12-04T18:39:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55e47b4b_d6a360f2",
+      "range": {
+        "startLine": 60,
+        "startChar": 22,
+        "endLine": 60,
+        "endChar": 0
+      },
+      "revId": "01ba18930e43fe2b3721c248c58485b4fb56223e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff766df5_12d212cc",
         "filename": "net/reporting/reporting_persister.cc",
         "patchSetId": 2
@@ -79,6 +145,24 @@
       "revId": "01ba18930e43fe2b3721c248c58485b4fb56223e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "724c49ac_6fa61b1e",
+        "filename": "net/reporting/reporting_persister.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-12-04T18:39:22Z",
+      "side": 1,
+      "message": "Obsolete, since the Persister is gone.",
+      "parentUuid": "ff766df5_12d212cc",
+      "revId": "01ba18930e43fe2b3721c248c58485b4fb56223e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
