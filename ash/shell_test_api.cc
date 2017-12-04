@@ -8,6 +8,7 @@
 
 #include "ash/root_window_controller.h"
 #include "ash/shell.h"
+#include "ash/system/power/display_forced_off_setter.h"
 #include "ash/system/power/power_button_controller.h"
 #include "components/prefs/testing_pref_service.h"
 
@@ -47,7 +48,8 @@ void ShellTestApi::OnLocalStatePrefServiceInitialized(
 }
 
 void ShellTestApi::ResetPowerButtonControllerForTest() {
-  shell_->power_button_controller_ = std::make_unique<PowerButtonController>();
+  shell_->power_button_controller_ = std::make_unique<PowerButtonController>(
+      shell_->display_forced_off_setter_.get());
 }
 
 }  // namespace ash
