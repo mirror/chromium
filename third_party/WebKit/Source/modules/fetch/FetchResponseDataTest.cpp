@@ -100,7 +100,7 @@ TEST_F(FetchResponseDataTest, ToWebServiceWorkerBasicType) {
 TEST_F(FetchResponseDataTest, CORSFilter) {
   FetchResponseData* internal_response = CreateInternalResponse();
   FetchResponseData* cors_response_data =
-      internal_response->CreateCORSFilteredResponse();
+      internal_response->CreateCORSFilteredResponse(WebHTTPHeaderSet());
 
   EXPECT_EQ(internal_response, cors_response_data->InternalResponse());
 
@@ -121,8 +121,9 @@ TEST_F(FetchResponseDataTest,
   internal_response->HeaderList()->Append("access-control-expose-headers",
                                           "set-cookie, bar");
 
+  WebHTTPHeaderSet exposed_headers = {"set-cookie", "bar"};
   FetchResponseData* cors_response_data =
-      internal_response->CreateCORSFilteredResponse();
+      internal_response->CreateCORSFilteredResponse(exposed_headers);
 
   EXPECT_EQ(internal_response, cors_response_data->InternalResponse());
 
@@ -197,7 +198,7 @@ TEST_F(FetchResponseDataTest, ToWebServiceWorkerCORSType) {
   WebServiceWorkerResponse web_response;
   FetchResponseData* internal_response = CreateInternalResponse();
   FetchResponseData* cors_response_data =
-      internal_response->CreateCORSFilteredResponse();
+      internal_response->CreateCORSFilteredResponse(WebHTTPHeaderSet());
 
   cors_response_data->PopulateWebServiceWorkerResponse(web_response);
   EXPECT_EQ(network::mojom::FetchResponseType::kCORS,
