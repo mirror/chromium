@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "1e91a584_cf5d63a9",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFastPaths.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1119169
+      },
+      "writtenOn": "2017-12-04T22:27:43Z",
+      "side": 1,
+      "message": "This part is kind of messy, but I wasn\u0027t sure how to change the implementation to make it cleaner. Basically, since whitespace can now act as a terminator (say for `rgb(0 0 0)`, we need some way to both terminate on that if it\u0027s using the new syntax or on commas if it\u0027s using the legacy syntax (`rgb(0,0,0)`). However, this quickly becomes messy, because a space can\u0027t be qualified as a `char` and we don\u0027t want to parse invalid syntax (e.g. `rgb(0,0 0)`).",
+      "parentUuid": "3ee42aa3_67836f4b",
+      "revId": "9f8a86cb0b329996f0278821a10ed1a62fffef44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4cbb2df_f7520f62",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFastPaths.cpp",
         "patchSetId": 9
