@@ -16,6 +16,24 @@
       "revId": "37cd160be3162fbe83e1346b1cc6962c4f34c6e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc4322fc_9575d177",
+        "filename": "third_party/WebKit/Tools/Scripts/audit-non-blink-usage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-04T21:09:14Z",
+      "side": 1,
+      "message": "I\u0027ve folded it into the previous section and added a comment:\n\n        # These modules need access to GL drawing, cross-process image\n        # transport, and related interfaces.\n\nWhat\u0027s the desired level of granularity for these checks? For example, I have a pending change that wants to use gfx::GpuFence for WebVR, and that would need another edit for this list in addition to a modules/vr/DEPS entry. Would it make sense to use gfx::.+ and gpu::.+ here?",
+      "parentUuid": "da24f28e_5b157766",
+      "revId": "37cd160be3162fbe83e1346b1cc6962c4f34c6e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
