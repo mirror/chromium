@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a0620d7_9f0acdbf",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-12-04T15:56:40Z",
+      "side": 1,
+      "message": "I would actually leave this unchanged (or even make it smaller or 1). Otherwise we end up cutting off content (e.g. on the python page, double tapping on a paragraph of text causes it to get cut off). If I replace this with 1 it actually feels more like Safari.",
+      "range": {
+        "startLine": 189,
+        "startChar": 19,
+        "endLine": 189,
+        "endChar": 51
+      },
+      "revId": "a731fab650fdfb951eca5a5ea8f4e30eeb82e119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
