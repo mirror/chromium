@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cd3bfef_ffbb2cbb",
+        "filename": "chrome/browser/printing/cloud_print/privet_http_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-04T06:10:51Z",
+      "side": 1,
+      "message": "Note: This and the \"!has_foo\" checks above have been added to try to do less work in this loop.",
+      "revId": "01f1d91ce00231ad0041aa375ac32b9511914b2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7ed8937_51298572",
+        "filename": "chrome/browser/printing/cloud_print/privet_url_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-04T06:10:51Z",
+      "side": 1,
+      "message": "The casting is a bit ugly, but it\u0027ll serve as a remainder that OnParsedJson() will need to stop taking a DictionaryValue* someday.",
+      "revId": "01f1d91ce00231ad0041aa375ac32b9511914b2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
