@@ -1040,6 +1040,8 @@ jumbo_source_set("browser") {
     "loader/webpackage_prefetch_service_impl.h",
     "loader/webpackage_reader_adapter.cc",
     "loader/webpackage_reader_adapter.h",
+    "loader/webpackage_subresource_manager_host.cc",
+    "loader/webpackage_subresource_manager_host.h",
     "loader_delegate_impl.cc",
     "loader_delegate_impl.h",
     "mach_broker_mac.h",

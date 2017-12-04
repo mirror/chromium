@@ -9,6 +9,7 @@
 #include "base/optional.h"
 #include "content/browser/loader/url_loader_request_handler.h"
 #include "content/browser/loader/webpackage_reader_adapter.h"
+#include "content/common/webpackage_subresource_manager.mojom.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/system/data_pipe.h"
 #include "services/network/public/cpp/url_loader_completion_status.h"
@@ -17,7 +18,10 @@ namespace content {
 
 class URLLoaderFactoryGetter;
 class WebPackageLoader;
+class WebPackageSubresourceManagerHost;
 struct ResourceRequest;
+
+bool WebPackageStreamResourcesEnabled();
 
 class WebPackageRequestHandler : public URLLoaderRequestHandler {
  public:
@@ -45,8 +49,10 @@ class WebPackageRequestHandler : public URLLoaderRequestHandler {
       scoped_refptr<WebPackageReaderAdapter> reader);
 
   // Callback given back to the navigation loader.
-  void CreateMainResourceLoader(mojom::URLLoaderRequest loader_request,
-                                mojom::URLLoaderClientPtr loader_client);
+  void CreateMainResourceLoader(
+      base::WeakPtr<WebPackageSubresourceManagerHost> subresource_manager_host,
+      mojom::URLLoaderRequest loader_request,
+      mojom::URLLoaderClientPtr loader_client);
 
   ResourceRequest resource_request_;
   scoped_refptr<URLLoaderFactoryGetter> loader_factory_getter_;
@@ -60,6 +66,7 @@ class WebPackageRequestHandler : public URLLoaderRequestHandler {
   // Populated during MaybeCreateLoader (for the second one) and
   // kept until MaybeCreateSubresourceLoaderParams is called.
   mojom::URLLoaderFactoryPtr subresource_loader_factory_;
+  mojom::WebPackageSubresourceManagerRequest subresource_manager_request_;
 
   base::WeakPtrFactory<WebPackageRequestHandler> weak_factory_;
 
@@ -94,7 +101,6 @@ class WebPackageLoader : public mojom::URLLoader,
   // TODO(kinuko): Remove this indirection and fix ownership.
   // WebPackageReaderAdapterClient:
   void OnFoundManifest(const WebPackageManifest& manifest) override;
-  void OnFoundRequest(const ResourceRequest& request) override;
   void OnFinishedPackage() override;
 
   // mojom::URLLoader:

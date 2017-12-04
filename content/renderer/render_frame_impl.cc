@@ -37,6 +37,7 @@
 #include "base/strings/string_piece.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/task_runner_util.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "base/trace_event/trace_event.h"
@@ -115,6 +116,7 @@
 #include "content/renderer/loader/request_extra_data.h"
 #include "content/renderer/loader/web_url_loader_impl.h"
 #include "content/renderer/loader/web_url_request_util.h"
+#include "content/renderer/loader/webpackage_subresource_manager_impl.h"
 #include "content/renderer/loader/weburlresponse_extradata_impl.h"
 #include "content/renderer/manifest/manifest_change_notifier.h"
 #include "content/renderer/manifest/manifest_manager.h"
@@ -1863,6 +1865,7 @@ void RenderFrameImpl::OnNavigate(
   NavigateInternal(common_params, start_params, request_params,
                    std::unique_ptr<StreamOverrideParameters>(),
                    /*subresource_loader_factories=*/base::nullopt,
+                   /*webpackage_subresource_manager_request*/ nullptr,
                    /* non-plznavigate navigations are not traced */
                    base::UnguessableToken::Create());
 }
@@ -3125,7 +3128,9 @@ void RenderFrameImpl::CommitNavigation(
     const RequestNavigationParams& request_params,
     mojo::ScopedDataPipeConsumerHandle body_data,
     base::Optional<URLLoaderFactoryBundle> subresource_loader_factories,
-    const base::UnguessableToken& devtools_navigation_token) {
+    const base::UnguessableToken& devtools_navigation_token,
+    mojom::WebPackageSubresourceManagerRequest
+        webpackage_subresource_manager_request) {
   CHECK(IsBrowserSideNavigationEnabled());
   // If this was a renderer-initiated navigation (nav_entry_id == 0) from this
   // frame, but it was aborted, then ignore it.
@@ -3172,6 +3177,7 @@ void RenderFrameImpl::CommitNavigation(
   NavigateInternal(common_params, StartNavigationParams(), request_params,
                    std::move(stream_override),
                    std::move(subresource_loader_factories),
+                   std::move(webpackage_subresource_manager_request),
                    devtools_navigation_token);
 
   // Don't add code after this since NavigateInternal may have destroyed this
@@ -4670,7 +4676,8 @@ void RenderFrameImpl::WillSendRequest(blink::WebURLRequest& request) {
 
   // TODO(kinuko, yzshen): We need to set up throttles for some worker cases
   // that don't go through here.
-  extra_data->set_url_loader_throttles(std::move(throttles));
+  if (!skip_throttlers_)
+    extra_data->set_url_loader_throttles(std::move(throttles));
 
   request.SetExtraData(extra_data);
 
@@ -6272,6 +6279,8 @@ void RenderFrameImpl::NavigateInternal(
     const RequestNavigationParams& request_params,
     std::unique_ptr<StreamOverrideParameters> stream_params,
     base::Optional<URLLoaderFactoryBundle> subresource_loader_factories,
+    mojom::WebPackageSubresourceManagerRequest
+        webpackage_subresource_manager_request,
     const base::UnguessableToken& devtools_navigation_token) {
   bool browser_side_navigation = IsBrowserSideNavigationEnabled();
 
@@ -6355,8 +6364,40 @@ void RenderFrameImpl::NavigateInternal(
          !base::FeatureList::IsEnabled(features::kNetworkService) ||
          subresource_loader_factories.has_value());
 
-  if (subresource_loader_factories)
+  if (subresource_loader_factories) {
     subresource_loader_factories_ = std::move(subresource_loader_factories);
+
+    if (webpackage_subresource_manager_request.is_pending()) {
+      mojom::URLLoaderFactoryPtr factory_ptr;
+      auto request = mojo::MakeRequest(&factory_ptr);
+      subresource_loader_factories_->SetDefaultFactory(std::move(factory_ptr));
+
+      // XXX: Make this a whitelist of URLs.
+      // We should skip throttles only for the requests that can be
+      // fetched from the package.
+      skip_throttlers_ = true;
+
+      const bool off_main_thread = true;
+      if (off_main_thread) {
+        // Off-main-thread:
+        // (We use IO thread here, creating a new thread with
+        // base::CreateSingleThreadTaskRunnerWithTraits({}) seems
+        // a bit slower)
+        ChildThreadImpl::current()->GetIOTaskRunner()->PostTask(
+            FROM_HERE,
+            base::BindOnce(
+                &WebPackageSubresourceManagerImpl::CreateLoaderFactory,
+                std::move(request),
+                std::move(webpackage_subresource_manager_request),
+                GetDefaultURLLoaderFactoryGetter()->GetClonedInfo()));
+      } else {
+        WebPackageSubresourceManagerImpl::CreateLoaderFactory(
+            std::move(request),
+            std::move(webpackage_subresource_manager_request),
+            GetDefaultURLLoaderFactoryGetter()->GetClonedInfo());
+      }
+    }
+  }
 
   // If the Network Service is enabled, by this point the frame should always
   // have subresource loader factories, even if they're from a previous (but
