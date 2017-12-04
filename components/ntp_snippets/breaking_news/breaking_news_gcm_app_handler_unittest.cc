@@ -32,6 +32,7 @@
 #include "google_apis/gcm/engine/account_mapping.h"
 #include "testing/gmock/include/gmock/gmock.h"
 
+using base::Clock;
 using base::TestMockTimeTaskRunner;
 using base::TickClock;
 using base::TimeTicks;
@@ -252,7 +253,11 @@ class BreakingNewsGCMAppHandlerTest : public testing::Test {
 
   std::unique_ptr<BreakingNewsGCMAppHandler> MakeHandler(
       scoped_refptr<TestMockTimeTaskRunner> timer_mock_task_runner) {
-    tick_clock_ = timer_mock_task_runner->GetMockTickClock();
+    mock_tick_clock_ = timer_mock_task_runner->GetMockTickClock();
+    mock_clock_ = timer_mock_task_runner->GetMockClock();
+
+    base::TickClock* tick_clock = mock_tick_clock_.get();
+    base::Clock* clock = mock_clock_.get();
     message_loop_.SetTaskRunner(timer_mock_task_runner);
 
     // TODO(vitaliii): Initialize MockSubscriptionManager in the constructor, so
@@ -262,18 +267,17 @@ class BreakingNewsGCMAppHandlerTest : public testing::Test {
     mock_subscription_manager_ = wrapped_mock_subscription_manager.get();
 
     auto token_validation_timer =
-        base::MakeUnique<base::OneShotTimer>(tick_clock_.get());
+        base::MakeUnique<base::OneShotTimer>(tick_clock);
     token_validation_timer->SetTaskRunner(timer_mock_task_runner);
 
     auto forced_subscription_timer =
-        base::MakeUnique<base::OneShotTimer>(tick_clock_.get());
+        base::MakeUnique<base::OneShotTimer>(tick_clock);
     forced_subscription_timer->SetTaskRunner(timer_mock_task_runner);
 
     return base::MakeUnique<BreakingNewsGCMAppHandler>(
         mock_gcm_driver_.get(), mock_instance_id_driver_.get(), pref_service(),
         std::move(wrapped_mock_subscription_manager), base::Bind(&ParseJson),
-        timer_mock_task_runner->GetMockClock(),
-        std::move(token_validation_timer),
+        clock, std::move(token_validation_timer),
         std::move(forced_subscription_timer));
   }
 
@@ -309,7 +313,8 @@ class BreakingNewsGCMAppHandlerTest : public testing::Test {
   std::unique_ptr<StrictMock<MockGCMDriver>> mock_gcm_driver_;
   std::unique_ptr<StrictMock<MockInstanceIDDriver>> mock_instance_id_driver_;
   std::unique_ptr<StrictMock<MockInstanceID>> mock_instance_id_;
-  std::unique_ptr<TickClock> tick_clock_;
+  std::unique_ptr<TickClock> mock_tick_clock_;
+  std::unique_ptr<Clock> mock_clock_;
 };
 
 TEST_F(BreakingNewsGCMAppHandlerTest,

@@ -67,9 +67,7 @@ class SubresourceFilterContentSettingsManager
   // This is to maintain the invariant that metadata implies activated.
   void ResetSiteMetadataBasedOnActivation(const GURL& url, bool is_activated);
 
-  void set_clock_for_testing(std::unique_ptr<base::Clock> tick_clock) {
-    clock_ = std::move(tick_clock);
-  }
+  void set_clock_for_testing(base::Clock* tick_clock) { clock_ = tick_clock; }
 
   // Time before showing the UI again on a domain.
   // TODO(csharrison): Consider setting this via a finch param.
@@ -104,7 +102,7 @@ class SubresourceFilterContentSettingsManager
 
   // A clock is injected into this class so tests can set arbitrary timestamps
   // in website settings.
-  std::unique_ptr<base::Clock> clock_;
+  base::Clock* clock_;
 
   // Used internally so the class ignores changes to the settings that are not
   // user initiated through the settings UI.

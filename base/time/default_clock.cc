@@ -20,4 +20,6 @@ DefaultClock* DefaultClock::GetInstance() {
   return instance.Pointer();
 }
 
+DefaultClock::DefaultClock() {}
+
 }  // namespace base

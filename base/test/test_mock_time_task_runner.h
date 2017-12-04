@@ -158,12 +158,11 @@ class TestMockTimeTaskRunner : public SingleThreadTaskRunner,
   TimeTicks NowTicks() const;
 
   // Returns a Clock that uses the virtual time of |this| as its time source.
-  // The returned Clock will hold a reference to |this|.
-  std::unique_ptr<Clock> GetMockClock() const;
+  Clock* GetMockClock() const;
 
   // Returns a TickClock that uses the virtual time ticks of |this| as its tick
-  // source. The returned TickClock will hold a reference to |this|.
-  std::unique_ptr<TickClock> GetMockTickClock() const;
+  // source.
+  TickClock* GetMockTickClock() const;
 
   base::circular_deque<TestPendingTask> TakePendingTasks();
   bool HasPendingTask() const;
@@ -257,6 +256,9 @@ class TestMockTimeTaskRunner : public SingleThreadTaskRunner,
   // Set to true in RunLoop::Delegate::Quit() to signal the topmost
   // RunLoop::Delegate::Run() instance to stop, reset to false when it does.
   bool quit_run_loop_ = false;
+
+  std::unique_ptr<TickClock> mock_tick_clock_;
+  std::unique_ptr<Clock> mock_clock_;
 
   DISALLOW_COPY_AND_ASSIGN(TestMockTimeTaskRunner);
 };
