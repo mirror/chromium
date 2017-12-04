@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83c3faa4_6c313808",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/background.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-04T16:25:24Z",
+      "side": 1,
+      "message": "Could you add documentation here explaining the purpose of this\nand why you\u0027re preventing paste?\nnit: space before @private.",
+      "revId": "8be4d27775b824b1732db9797f2b2f7b69b4be46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
