@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bb3e436c_e0ade20b",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1244,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-04T05:55:38Z",
+      "side": 1,
+      "message": "For now the object painter path is still needed to paint clipping mask in some cases (see BoxPainter::PaintClippingMask()). We could refactor to remove that path, but that could be a separate CL because it might cause SPv1 regressions not discoverable by the current layout tests.",
+      "parentUuid": "89b8f6b7_9242c07b",
+      "revId": "f3ee3012b5d9dd945a0907cc9b01bdff2b61a845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f216b901_e80751f8",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-02T00:28:10Z",
       "side": 1,
       "message": "I\u0027d rather copy/move line 995~1013 to here, and unify code for SPv1 and SPv175. The code structure would look like:\n\nDCHECK(!RuntimeEnabledFeatures::SlimmingPaintV2Enabled()); // Clip mask are synthesized by PAC in SPv2.\nClipRecorder clip_recorder(blah, blah, blah); // Applies border radius clip. No-op in SPv175.\nOptional\u003cScopedPaintChunkProperties\u003e scope;\nif (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {\n  // Applies border radius clip as property node.\n  scope.emplace(rare_data-\u003eContentsProperties());\n}\nFillMaskingFragment(blah, blah, blah);",
+      "revId": "f3ee3012b5d9dd945a0907cc9b01bdff2b61a845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6902c1f_fe9fdc8a",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1278,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-04T05:55:38Z",
+      "side": 1,
+      "message": "Ditto.",
+      "parentUuid": "f216b901_e80751f8",
       "revId": "f3ee3012b5d9dd945a0907cc9b01bdff2b61a845",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c67497fd_9b312674",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingLayerPropertyUpdater.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-04T05:55:38Z",
+      "side": 1,
+      "message": "Done:\n- replacing PreEffectProperties() with LocalBorderBoxProperties() here\n- In PaintLayerPainter::PaintAncestorClippingMask, using paint_layer_\u0027s PreEffectProperties() except the effect node.",
+      "parentUuid": "74921703_e42d77b4",
+      "revId": "f3ee3012b5d9dd945a0907cc9b01bdff2b61a845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31e852c9_64161503",
         "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingLayerPropertyUpdater.cpp",
         "patchSetId": 10
@@ -64,6 +118,24 @@
       "writtenOn": "2017-12-02T00:28:10Z",
       "side": 1,
       "message": "I wouldn\u0027t worry about subpixel position, as the compositing code only see post-snapping coordinates. Subpixel accumulation will be applied at paint time instead.\n\nI don\u0027t like accumulating position here though. Is it possible to cache it in OffsetFromLayoutObject, and make it a comment somewhere that the referenced layout object is clip_inheritance_ancestor instead of the owning_layer?",
+      "revId": "f3ee3012b5d9dd945a0907cc9b01bdff2b61a845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dc059f5_7eb642e3",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingLayerPropertyUpdater.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-04T05:55:38Z",
+      "side": 1,
+      "message": "I tried to change AncestorClippingMaskLayer\u0027s OffsetFromLayoutObject to be relative to ClipInheritanceAncestor but I found that would affect many places assuming different meaning of it. I could manage to make all layout tests pass but I\u0027m afraid that might break something not covered by the current layout tests. So I would like to keep it out of the critical path to SPv175 and SPv2.\n\nI changed the above offset accumuation to \"PaintLayer::ConvertToLayerCoords(clip_inheritance_ancestor, snapped_paint_offset + ancestor_clipping_mask_layer-\u003eOffsetFromLayoutObject()) which may look better.",
+      "parentUuid": "31e852c9_64161503",
       "revId": "f3ee3012b5d9dd945a0907cc9b01bdff2b61a845",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
