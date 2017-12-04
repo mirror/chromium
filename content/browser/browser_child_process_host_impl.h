@@ -90,6 +90,7 @@ class CONTENT_EXPORT BrowserChildProcessHostImpl
   void OnChannelConnected(int32_t peer_pid) override;
   void OnChannelError() override;
   void OnBadMessageReceived(const IPC::Message& message) override;
+  void OnBrokenMessageReceived() override;
 
   // Terminates the process and logs a stack trace after a bad message was
   // received from the child process.

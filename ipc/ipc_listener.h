@@ -35,6 +35,9 @@ class IPC_EXPORT Listener {
   // Called when a message's deserialization failed.
   virtual void OnBadMessageReceived(const Message& message) {}
 
+  // Called when an empty or invalid (with invalid header) message received
+  virtual void OnBrokenMessageReceived() {}
+
   // Called when an associated interface request is received on a Channel and
   // the Channel has no registered handler for it.
   virtual void OnAssociatedInterfaceRequest(

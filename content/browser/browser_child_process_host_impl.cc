@@ -366,6 +366,10 @@ void BrowserChildProcessHostImpl::OnBadMessageReceived(
   TerminateOnBadMessageReceived(log_message);
 }
 
+void BrowserChildProcessHostImpl::OnBrokenMessageReceived() {
+  TerminateOnBadMessageReceived("Empty or broken message received");
+}
+
 void BrowserChildProcessHostImpl::TerminateOnBadMessageReceived(
     const std::string& error) {
   HistogramBadMessageTerminated(static_cast<ProcessType>(data_.process_type));
