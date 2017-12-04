@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3a867019_edebab74",
+        "filename": "ui/gfx/geometry/rect_f.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-04T23:24:49Z",
+      "side": 1,
+      "message": "gotcha. tx.",
+      "parentUuid": "d41cd08e_0785f4c8",
+      "revId": "5746dc82453dc095a364e17e7a6c940bb5f8d871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a203d89_3bd06302",
         "filename": "ui/gfx/geometry/rect_f.cc",
         "patchSetId": 1
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "No, but I made it consistent with the two Contains() methods above. I can fix them all.",
       "parentUuid": "7a203d89_3bd06302",
+      "revId": "5746dc82453dc095a364e17e7a6c940bb5f8d871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39e1c5c1_e853cccf",
+        "filename": "ui/gfx/geometry/rect_f.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-04T23:24:49Z",
+      "side": 1,
+      "message": "Wouldn\u0027t hurt if you\u0027re in here doing clean up anyhow.",
+      "parentUuid": "ddecccdb_96d708b5",
       "revId": "5746dc82453dc095a364e17e7a6c940bb5f8d871",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
