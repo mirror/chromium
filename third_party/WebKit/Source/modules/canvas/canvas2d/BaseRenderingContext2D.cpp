@@ -1126,6 +1126,11 @@ bool ShouldDisableDeferral(CanvasImageSource* image_source,
   return false;
 }
 
+void BaseRenderingContext2D::ClearResolvedFilters() {
+  for (auto& state : state_stack_)
+    state->ClearResolvedFilter();
+}
+
 void BaseRenderingContext2D::drawImage(ScriptState* script_state,
                                        CanvasImageSource* image_source,
                                        double sx,
@@ -1314,6 +1319,11 @@ void BaseRenderingContext2D::drawImage(ScriptState* script_state,
 
   ValidateStateStack();
 
+  if (OriginClean() &&
+      WouldTaintOrigin(image_source, ExecutionContext::From(script_state))) {
+    SetOriginTainted();
+  }
+
   Draw(
       [this, &image_source, &image, &src_rect, dst_rect](
           PaintCanvas* c, const PaintFlags* flags)  // draw lambda
@@ -1346,9 +1356,6 @@ void BaseRenderingContext2D::drawImage(ScriptState* script_state,
       buffer->SetHasExpensiveOp();
   }
 
-  if (OriginClean() &&
-      WouldTaintOrigin(image_source, ExecutionContext::From(script_state)))
-    SetOriginTainted();
 
   timer->Count((WTF::MonotonicallyIncreasingTime() - start_time) *
                WTF::Time::kMicrosecondsPerSecond);
