@@ -115,8 +115,9 @@ void MediaGpuChannel::OnCreateVideoDecoder(
     int32_t decoder_route_id,
     IPC::Message* reply_message) {
   TRACE_EVENT0("gpu", "MediaGpuChannel::OnCreateVideoDecoder");
-  gpu::GpuCommandBufferStub* stub =
-      channel_->LookupCommandBuffer(command_buffer_route_id);
+  // FIXME
+  auto* stub = static_cast<gpu::GLES2CommandBufferStub*>(
+      channel_->LookupCommandBuffer(command_buffer_route_id));
   if (!stub) {
     reply_message->set_reply_error();
     Send(reply_message);
@@ -139,8 +140,9 @@ void MediaGpuChannel::OnCreateVideoEncoder(
     const CreateVideoEncoderParams& params,
     IPC::Message* reply_message) {
   TRACE_EVENT0("gpu", "MediaGpuChannel::OnCreateVideoEncoder");
-  gpu::GpuCommandBufferStub* stub =
-      channel_->LookupCommandBuffer(command_buffer_route_id);
+  // FIXME
+  auto* stub = static_cast<gpu::GLES2CommandBufferStub*>(
+      channel_->LookupCommandBuffer(command_buffer_route_id));
   if (!stub) {
     reply_message->set_reply_error();
     Send(reply_message);
