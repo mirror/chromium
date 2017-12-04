@@ -16,6 +16,24 @@
       "revId": "080b7e76bd0dc6cc6ad8193c268b28e8a8534a51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c43f2b81_be0c8e85",
+        "filename": "components/password_manager/core/browser/password_store_factory_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-04T15:58:10Z",
+      "side": 1,
+      "message": "Ack, thanks for the references!",
+      "parentUuid": "ccce0890_1f81fec4",
+      "revId": "080b7e76bd0dc6cc6ad8193c268b28e8a8534a51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
