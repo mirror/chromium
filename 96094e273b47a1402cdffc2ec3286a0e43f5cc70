@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cae4b408_ae77c033",
+        "filename": "chrome/browser/chromeos/certificate_provider/certificate_provider_service_factory.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-12-04T22:55:27Z",
+      "side": 1,
+      "message": "The X509Certificate class now does less extensive parsing than it used to,  it\u0027s possible that some of the parts that are no longer parsed on X509Certificate creation could be invalid in ways they wouldn\u0027t be before. So it\u0027s important to check for errors when you try to use the cert data.\n\nOf course, it should be important to check for errors even in the past, since NSS doesn\u0027t catch every possible error and whatever parsing you do might not align completely with what NSS allows.\n\nFor the case of certificates passing from chrome into extensions, I think those would generally originate from NSS, right? So there shouldn\u0027t be a change in practice, at the moment? But it is good to keep in mind, I don\u0027t know if the extension docs should also call out anything about that.",
+      "parentUuid": "828f58d2_0ee0ba8d",
+      "revId": "96094e273b47a1402cdffc2ec3286a0e43f5cc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8265b01c_74f619d4",
         "filename": "components/cast_channel/cast_auth_util.cc",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-03T21:08:55Z",
       "side": 1,
       "message": "This code is not equivalent. Is DER serialization guaranteed to always succeed with this new API?",
+      "revId": "96094e273b47a1402cdffc2ec3286a0e43f5cc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f46de219_8d331af2",
+        "filename": "components/cast_channel/cast_auth_util.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-12-04T22:55:27Z",
+      "side": 1,
+      "message": "Yes, this isn\u0027t really serialization. It\u0027s just returning a StringPiece referencing the buffer that already is held by the X509Certificate.",
+      "parentUuid": "8265b01c_74f619d4",
       "revId": "96094e273b47a1402cdffc2ec3286a0e43f5cc70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "3e735d20_802b5d8c",
+        "filename": "components/cronet/android/cert/cert_verifier_cache_serializer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-12-04T22:55:27Z",
+      "side": 1,
+      "message": "Done. (Actually changed it to return the cert_number instead of via an out-param.)",
+      "parentUuid": "e3fcf220_e593a73f",
+      "range": {
+        "startLine": 33,
+        "startChar": 5,
+        "endLine": 33,
+        "endChar": 24
+      },
+      "revId": "96094e273b47a1402cdffc2ec3286a0e43f5cc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "532b89e6_7066bb54",
         "filename": "components/cronet/android/cert/cert_verifier_cache_serializer.cc",
         "patchSetId": 11
@@ -79,6 +139,30 @@
       "revId": "96094e273b47a1402cdffc2ec3286a0e43f5cc70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feba048c_7f534e50",
+        "filename": "components/cronet/android/cert/cert_verifier_cache_serializer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-12-04T22:55:27Z",
+      "side": 1,
+      "message": "Done (actually cascaded through a number of functions in this file.)",
+      "parentUuid": "532b89e6_7066bb54",
+      "range": {
+        "startLine": 50,
+        "startChar": 7,
+        "endLine": 50,
+        "endChar": 26
+      },
+      "revId": "96094e273b47a1402cdffc2ec3286a0e43f5cc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "b8325581_0069b834",
+        "filename": "components/cronet/android/cert/cert_verifier_cache_serializer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-12-04T22:55:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36fcc4c4_c6610901",
+      "range": {
+        "startLine": 56,
+        "startChar": 9,
+        "endLine": 56,
+        "endChar": 28
+      },
+      "revId": "96094e273b47a1402cdffc2ec3286a0e43f5cc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52df7674_a5bc9d44",
         "filename": "net/cert/x509_certificate.h",
         "patchSetId": 11
@@ -116,6 +224,24 @@
       "writtenOn": "2017-12-02T00:48:31Z",
       "side": 1,
       "message": "This method name and comment is a little confusing since the relationship between CRYPTO_BUFFER and \u0027handle\u0027 is not obvious. I recognize that globally renaming CreateFromHandle might be confusing, but maybe include some of the comment that was deleted above the typedef and reference that in the comment above?",
+      "revId": "96094e273b47a1402cdffc2ec3286a0e43f5cc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0b2f8dd_352a3077",
+        "filename": "net/cert/x509_certificate.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-12-04T22:55:27Z",
+      "side": 1,
+      "message": "Good point, I\u0027ve update a few comments that were still talking about os handles or underlying crypto libraries, and changed the method name to CreateFromBuffer. (I think this CL already touches every caller anyway, so might as well change it now.)",
+      "parentUuid": "52df7674_a5bc9d44",
       "revId": "96094e273b47a1402cdffc2ec3286a0e43f5cc70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -136,6 +262,24 @@
       "revId": "96094e273b47a1402cdffc2ec3286a0e43f5cc70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d8ff1d5_a9ef4355",
+        "filename": "net/cert/x509_certificate.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-12-04T22:55:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa7985c3_17271f6e",
+      "revId": "96094e273b47a1402cdffc2ec3286a0e43f5cc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
