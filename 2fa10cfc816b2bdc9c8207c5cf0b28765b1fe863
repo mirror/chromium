@@ -22,6 +22,30 @@
       "revId": "2fa10cfc816b2bdc9c8207c5cf0b28765b1fe863",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a0aa9eea_ac9534b2",
+        "filename": "media/capture/video/win/video_capture_device_factory_win.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-04T13:40:15Z",
+      "side": 1,
+      "message": "This was a correct step.\nchfremer@, what\u0027s the plan to enable testing in bots with MF ?",
+      "parentUuid": "ba734d46_1efa6ece",
+      "range": {
+        "startLine": 88,
+        "startChar": 6,
+        "endLine": 88,
+        "endChar": 73
+      },
+      "revId": "2fa10cfc816b2bdc9c8207c5cf0b28765b1fe863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
