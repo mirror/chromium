@@ -11,7 +11,6 @@
 
 #import "base/mac/scoped_nsobject.h"
 #include "base/timer/timer.h"
-#include "gpu/ipc/service/gpu_command_buffer_stub.h"
 #include "gpu/ipc/service/image_transport_surface.h"
 #include "ui/base/cocoa/remote_layer_api.h"
 #include "ui/gl/gl_surface.h"
