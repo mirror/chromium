@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1475e85b_ce46d4f7",
+        "filename": "components/payments/core/basic_card_response.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-12-04T17:41:26Z",
+      "side": 1,
+      "message": "This is more canonical:\n\nBasicCardResponse::BasicCardResponse() : billing_address(mojom::PaymentAddress::New()) {}",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 1
+      },
+      "revId": "c190b30789df5cde792a146ad391bf329d568131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ef09dbf_d1619486",
+        "filename": "components/payments/core/payment_details.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-12-04T17:41:26Z",
+      "side": 1,
+      "message": "\"const auto\u0026\" ?",
+      "range": {
+        "startLine": 44,
+        "startChar": 7,
+        "endLine": 44,
+        "endChar": 12
+      },
+      "revId": "c190b30789df5cde792a146ad391bf329d568131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adc8a3f4_c819b9e2",
+        "filename": "components/payments/core/payment_details_modifier.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-12-04T17:41:26Z",
+      "side": 1,
+      "message": "\"const auto\u0026\" ?",
+      "range": {
+        "startLine": 39,
+        "startChar": 7,
+        "endLine": 39,
+        "endChar": 13
+      },
+      "revId": "c190b30789df5cde792a146ad391bf329d568131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33e73ea9_9cb75a2a",
+        "filename": "components/payments/core/payment_item.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-12-04T17:41:26Z",
+      "side": 1,
+      "message": ", amount(mojom::PaymentCurrencyAmount::New()) {",
+      "range": {
+        "startLine": 21,
+        "startChar": 44,
+        "endLine": 21,
+        "endChar": 45
+      },
+      "revId": "c190b30789df5cde792a146ad391bf329d568131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9dffea4_e3e58282",
+        "filename": "components/payments/mojom/BUILD.gn",
+        "patchSetId": 16
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-12-04T17:41:26Z",
+      "side": 1,
+      "message": "Need a license header.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 48
+      },
+      "revId": "c190b30789df5cde792a146ad391bf329d568131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0b4d542_a0f0833a",
+        "filename": "ios/chrome/browser/ui/payments/js_payment_request_manager.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-12-04T17:41:26Z",
+      "side": 1,
+      "message": "Please include components/payments/mojom/payment_request_data.mojom.h directly to use payments::mojom::PaymentAddress.\n\nThe payment_address.h file should be included only in files that use the dictionary conversion function, which is not happening in this header file. For example, the js_payment_request_manager.mm should include the payment_address.h file.",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 52
+      },
+      "revId": "c190b30789df5cde792a146ad391bf329d568131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea0c44bb_865813c3",
+        "filename": "ios/chrome/browser/ui/payments/js_payment_request_manager.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-12-04T17:41:26Z",
+      "side": 1,
+      "message": "#include \"components/payments/core/payment_address.h\"",
+      "range": {
+        "startLine": 133,
+        "startChar": 6,
+        "endLine": 133,
+        "endChar": 48
+      },
+      "revId": "c190b30789df5cde792a146ad391bf329d568131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf0d825e_12d3170b",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentRequest.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-12-04T17:41:26Z",
+      "side": 1,
+      "message": "No newline here, AFAIK.",
+      "revId": "c190b30789df5cde792a146ad391bf329d568131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
