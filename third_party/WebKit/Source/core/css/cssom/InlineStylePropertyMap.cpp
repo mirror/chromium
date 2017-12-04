@@ -75,8 +75,7 @@ InlineStylePropertyMap::GetIterationEntries() {
       // actually return them instead of always returning a
       // CSSUnsupportedStyleValue.
       // TODO(779477): Should these return CSSUnparsedValues?
-      value.SetCSSStyleValue(
-          CSSUnsupportedStyleValue::Create(custom_declaration.CustomCSSText()));
+      value.SetCSSStyleValue(CSSUnsupportedStyleValue::Create());
     } else {
       name = getPropertyNameString(property_id);
       CSSStyleValueVector style_value_vector =

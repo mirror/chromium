@@ -15,8 +15,8 @@ namespace blink {
 // for a given CSS Value.
 class CORE_EXPORT CSSUnsupportedStyleValue final : public CSSStyleValue {
  public:
-  static CSSUnsupportedStyleValue* Create(const String& css_text) {
-    return new CSSUnsupportedStyleValue(css_text);
+  static CSSUnsupportedStyleValue* Create() {
+    return new CSSUnsupportedStyleValue();
   }
 
   StyleValueType GetType() const override {
@@ -25,12 +25,10 @@ class CORE_EXPORT CSSUnsupportedStyleValue final : public CSSStyleValue {
   const CSSValue* ToCSSValue(SecureContextMode) const override;
   const CSSValue* ToCSSValueWithProperty(CSSPropertyID,
                                          SecureContextMode) const override;
-  String toString(const ExecutionContext*) const override { return css_text_; }
 
  private:
-  CSSUnsupportedStyleValue(const String& css_text) : css_text_(css_text) {}
+  CSSUnsupportedStyleValue() {}
 
-  String css_text_;
   DISALLOW_COPY_AND_ASSIGN(CSSUnsupportedStyleValue);
 };
 

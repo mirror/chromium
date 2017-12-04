@@ -72,7 +72,11 @@ class CORE_EXPORT CSSStyleValue : public ScriptWrappable {
       SecureContextMode secure_context_mode) const {
     return ToCSSValue(secure_context_mode);
   }
-  virtual String toString(const ExecutionContext*) const;
+  String toString(const ExecutionContext*) const;
+
+  const String& CssText() const { return css_text_; }
+  void SetCSSText(const String css_text) { css_text_ = css_text; }
+  void ClearCSSText() { SetCSSText(""); }
 
  protected:
   static String StyleValueTypeToString(StyleValueType);
@@ -80,6 +84,7 @@ class CORE_EXPORT CSSStyleValue : public ScriptWrappable {
   CSSStyleValue() = default;
 
  private:
+  String css_text_;
   DISALLOW_COPY_AND_ASSIGN(CSSStyleValue);
 };
 

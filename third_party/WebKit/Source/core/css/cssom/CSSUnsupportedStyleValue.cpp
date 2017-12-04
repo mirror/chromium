@@ -18,7 +18,7 @@ const CSSValue* CSSUnsupportedStyleValue::ToCSSValueWithProperty(
     CSSPropertyID property_id,
     SecureContextMode secure_context_mode) const {
   return CSSParser::ParseSingleValue(
-      property_id, css_text_, StrictCSSParserContext(secure_context_mode));
+      property_id, CssText(), StrictCSSParserContext(secure_context_mode));
 }
 
 }  // namespace blink

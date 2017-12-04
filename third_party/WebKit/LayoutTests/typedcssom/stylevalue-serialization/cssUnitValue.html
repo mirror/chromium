@@ -31,24 +31,24 @@ test(() => {
   let result = CSSStyleValue.parse('width', '1px');
   result.value = 3.14;
   assert_equals(result.toString(), '3.14px');
-}, 'CSSKeywordValue from DOMString modified by "value" setter serializes correctly');
+}, 'CSSUnitValue from DOMString modified by "value" setter serializes correctly');
 
 test(() => {
   let result = CSSStyleValue.parse('width', '1px');
   result.unit = 's';
   assert_equals(result.toString(), '1s');
-}, 'CSSKeywordValue from DOMString modified by "unit" setter serializes correctly');
+}, 'CSSUnitValue from DOMString modified by "unit" setter serializes correctly');
 
 test(() => {
   let result = newDivWithStyle('width: 1px').attributeStyleMap.get('width');
   result.value = 3.14;
   assert_equals(result.toString(), '3.14px');
-}, 'CSSKeywordValue from CSSOM modified by "value" setter serializes correctly');
+}, 'CSSUnitValue from CSSOM modified by "value" setter serializes correctly');
 
 test(() => {
   let result = newDivWithStyle('width: 1px').attributeStyleMap.get('width');
   result.unit = 's';
   assert_equals(result.toString(), '1s');
-}, 'CSSKeywordValue from CSSOM modified by "unit" setter serializes correctly');
+}, 'CSSUnitValue from CSSOM modified by "unit" setter serializes correctly');
 
 </script>

@@ -57,10 +57,9 @@ CSSStyleValue* CreateStyleValueWithProperty(CSSPropertyID property_id,
   return CreateStyleValue(value);
 }
 
-CSSStyleValueVector UnsupportedCSSValue(const CSSValue& value) {
+CSSStyleValueVector UnsupportedCSSValue(const CSSValue&) {
   CSSStyleValueVector style_value_vector;
-  style_value_vector.push_back(
-      CSSUnsupportedStyleValue::Create(value.CssText()));
+  style_value_vector.push_back(CSSUnsupportedStyleValue::Create());
   return style_value_vector;
 }
 
@@ -86,6 +85,10 @@ CSSStyleValueVector StyleValueFactory::FromString(
   CSSStyleValueVector style_value_vector =
       StyleValueFactory::CssValueToStyleValueVector(property_id, *css_value);
   DCHECK(!style_value_vector.IsEmpty());
+  // FIXME
+  if (style_value_vector.size() == 1) {
+    style_value_vector[0]->SetCSSText(value);
+  }
   return style_value_vector;
 }
 

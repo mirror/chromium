@@ -22,6 +22,7 @@ CSSKeywordValue* CSSKeywordValue::Create(const String& keyword,
         "CSSKeywordValue does not support empty strings");
     return nullptr;
   }
+
   return new CSSKeywordValue(keyword);
 }
 
@@ -66,6 +67,7 @@ void CSSKeywordValue::setValue(const String& keyword,
     return;
   }
   keyword_value_ = keyword;
+  ClearCSSText();
 }
 
 CSSValueID CSSKeywordValue::KeywordValueID() const {
