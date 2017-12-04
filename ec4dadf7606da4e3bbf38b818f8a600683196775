@@ -238,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "87f10af4_f78711c6",
+        "filename": "chrome/browser/ui/views/media_router/presentation_receiver_window_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-04T17:04:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "192d0730_2bd550dc",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 4
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "691add45_f866e87d",
         "filename": "chrome/browser/ui/views/media_router/presentation_receiver_window_view.h",
         "patchSetId": 12
@@ -379,6 +403,30 @@
     },
     {
       "key": {
+        "uuid": "fa6f1f63_2a2a1ccc",
+        "filename": "chrome/browser/ui/views/media_router/presentation_receiver_window_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-04T17:04:48Z",
+      "side": 1,
+      "message": "This has been rearranged along with the new Views/Controller split.",
+      "parentUuid": "3e2bc629_bb3de9e6",
+      "range": {
+        "startLine": 44,
+        "startChar": 7,
+        "endLine": 44,
+        "endChar": 16
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd85b10f_545d8b80",
         "filename": "chrome/browser/ui/views/media_router/presentation_receiver_window_view.h",
         "patchSetId": 12
@@ -497,6 +545,30 @@
     },
     {
       "key": {
+        "uuid": "9c492666_6b89e84e",
+        "filename": "chrome/browser/ui/views/media_router/presentation_receiver_window_views.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-04T17:04:48Z",
+      "side": 1,
+      "message": "I didn\u0027t quite follow this; maybe some of the class names are wrong or mixed up?  I did something very similar though.",
+      "parentUuid": "1516c087_cd7f496e",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 38
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4073f2f5_e09d8271",
         "filename": "chrome/test/media_router/presentation_receiver_window_browsertest.cc",
         "patchSetId": 12
@@ -565,6 +637,30 @@
       "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4308a4a2_af72141a",
+        "filename": "chrome/test/media_router/presentation_receiver_window_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-04T17:04:48Z",
+      "side": 1,
+      "message": "No, it doesn\u0027t have to.  Moved.",
+      "parentUuid": "fd34ae32_fec8766e",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 60
+      },
+      "revId": "ec4dadf7606da4e3bbf38b818f8a600683196775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
