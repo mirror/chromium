@@ -1,0 +1,169 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1335073a_a78ca470",
+        "filename": "services/network/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-12-04T21:36:27Z",
+      "side": 1,
+      "message": "This is not used.",
+      "revId": "2edd228d45c6e569e3ab3a332791f348a4111c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bb6e8d9_8151933f",
+        "filename": "services/network/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-12-04T21:36:27Z",
+      "side": 1,
+      "message": "style nit: sources is usually above \"deps\". Please see:\nhttps://chromium.googlesource.com/chromium/src/tools/gn/+/HEAD/docs/style_guide.md#ordering-within-a-target",
+      "revId": "2edd228d45c6e569e3ab3a332791f348a4111c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0745919a_cdaa597e",
+        "filename": "services/network/udp_socket_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-12-04T21:36:27Z",
+      "side": 1,
+      "message": "Please consider using std::make_unique.",
+      "range": {
+        "startLine": 149,
+        "startChar": 14,
+        "endLine": 149,
+        "endChar": 34
+      },
+      "revId": "2edd228d45c6e569e3ab3a332791f348a4111c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "756b70c4_2d5f3ed3",
+        "filename": "services/network/udp_socket_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-12-04T21:36:27Z",
+      "side": 1,
+      "message": "nit: no need to assign the result to |binding| because it is not used at all.",
+      "revId": "2edd228d45c6e569e3ab3a332791f348a4111c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "591065a6_69c4732c",
+        "filename": "services/network/udp_socket_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-12-04T21:36:27Z",
+      "side": 1,
+      "message": "Could |receiver| be passed into the constructor of |impl|? That way we don\u0027t have to have |raw_impl_ptr|.",
+      "revId": "2edd228d45c6e569e3ab3a332791f348a4111c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "991a2dfd_e0834338",
+        "filename": "services/network/udp_socket_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-12-04T21:36:27Z",
+      "side": 1,
+      "message": "nit: std::move(data) will save one add-ref/release-ref.",
+      "range": {
+        "startLine": 219,
+        "startChar": 19,
+        "endLine": 219,
+        "endChar": 23
+      },
+      "revId": "2edd228d45c6e569e3ab3a332791f348a4111c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf956a5a_a8034924",
+        "filename": "services/network/udp_socket_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-12-04T21:36:27Z",
+      "side": 1,
+      "message": "We should be able to directly create a span from |recvfrom_buffer_|, right?\nThat way we can reduce one copy.",
+      "revId": "2edd228d45c6e569e3ab3a332791f348a4111c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3df45ac_1ca9a554",
+        "filename": "services/network/udp_socket_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-12-04T21:36:27Z",
+      "side": 1,
+      "message": "My understanding is: if |net_result| \u003c 0, we want to return a base::nullopt, instead of a non-null empty array. Otherwise, there is no point to make this field optional, right?",
+      "revId": "2edd228d45c6e569e3ab3a332791f348a4111c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3420187a_62eade59",
+        "filename": "services/network/udp_socket_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-12-04T21:36:27Z",
+      "side": 1,
+      "message": "Usually the safer pattern is to move the front to a local variable, and pop it out of the queue, and then call DoSendTo(). That way even if DoSendTo() results in any changes to the queue, we won\u0027t corrupt its state.",
+      "revId": "2edd228d45c6e569e3ab3a332791f348a4111c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
