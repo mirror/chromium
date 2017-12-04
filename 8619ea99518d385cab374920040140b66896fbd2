@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a372f657_282cfaf6",
+        "filename": "chromeos/dbus/easy_unlock_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-04T06:46:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5f2c023_2df30bfe",
+      "revId": "8619ea99518d385cab374920040140b66896fbd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4847f220_7e2125a7",
         "filename": "chromeos/dbus/easy_unlock_client.h",
         "patchSetId": 2
@@ -51,6 +69,24 @@
       "revId": "8619ea99518d385cab374920040140b66896fbd2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2d153c4_54e24e9e",
+        "filename": "chromeos/dbus/easy_unlock_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-04T06:46:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4847f220_7e2125a7",
+      "revId": "8619ea99518d385cab374920040140b66896fbd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
