@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67c1bef0_5ec89cc5",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-04T14:36:58Z",
+      "side": 1,
+      "message": "For my own edification, is this always going to be necessary?  It\u0027s already hard to remember what\u0027s necessary to set up different unittesting infrastructure, so the less we can make dependent on specific calls in the SetUp method, the better. :)  Is there any plan to have this automatically work?\n\n(Definitely *not* blocking this CL, though)",
+      "revId": "0913a4ab824ad7ea253a23a62a81fee67db46a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
