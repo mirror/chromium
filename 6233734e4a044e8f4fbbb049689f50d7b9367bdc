@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "b9b48030_925bdc90",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-04T07:39:03Z",
+      "side": 1,
+      "message": "Since AdjustSelectionAfterIncrementalInsertion() is called both static-InsertText() and DoApply(), we should hoist FrameSelection::SetSelection()\n\n\nAdjustSelectionAfterIncrementalInsertion() is called from static-InsetText(const String\u0026, bool, EditingState).\n\nInsetText(const String\u0026, bool, EditingState) is called ffrom\n- static-InserText(Document\u0026, ...)\n- DoApply()\n\nstatic-InserText(Document\u0026, ..., EditngState*, ...) is called from\n- Editor::InsertTextWithouSendingTextEvent()\n- static-InserTText(Document\u0026, ...)\n\nstatic-InserTText(Document\u0026, ...) is called from\n- ExecuteInserText()\n- InsertTextDuringCompositionWithEvents()",
+      "revId": "6233734e4a044e8f4fbbb049689f50d7b9367bdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14894dd1_098327c4",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 1
@@ -54,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "561404a1_833a27b5",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-04T07:39:03Z",
+      "side": 1,
+      "message": "Oops, I thought this function was called from DoApply().",
+      "parentUuid": "5baabe6a_65f1d2df",
+      "revId": "6233734e4a044e8f4fbbb049689f50d7b9367bdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "719ba21b_87462336",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 1
@@ -86,6 +121,24 @@
       "revId": "6233734e4a044e8f4fbbb049689f50d7b9367bdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91e1c23a_50ed53c6",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-04T07:39:03Z",
+      "side": 1,
+      "message": "Sorry for confusion, I thought this was non-static function.\nPlease take offset from selection_for_insertion.\n\nEditor::InsertTextWithoutSendingTextEvent() passes selection other than\nFrameSelection.",
+      "parentUuid": "d0305555_17eb220f",
+      "revId": "6233734e4a044e8f4fbbb049689f50d7b9367bdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -280,6 +333,24 @@
       "revId": "6233734e4a044e8f4fbbb049689f50d7b9367bdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b581897_33078184",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-04T07:39:03Z",
+      "side": 1,
+      "message": "This function, TypingCommand::InserText(const String\u0026, bool, EditnigState*),\nis called both static-InsertText() and DoApply().\nWe should hoist setting selection to static-InserText() function.",
+      "parentUuid": "6a5ecfed_f5b93a05",
+      "revId": "6233734e4a044e8f4fbbb049689f50d7b9367bdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
