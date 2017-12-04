@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "01624f72_80a93518",
+        "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-12-04T21:13:04Z",
+      "side": 1,
+      "message": "I believe the designated initializers we use below to initialize this union would also make all the C++ compilers sound the klaxons if we accidentally tried to treat this as C++.\n\nBut if we\u0027re feeling anxious, I bet it wouldn\u0027t hurt the codegen to just fill a local array with the splatted values and then memcpy them into a non-union 16-byte chunk, e.g.\n\nstatic inline Chunk splat4(const void* src) {\n    int32_t v;\n    memcpy(\u0026v, src, sizeof(v));\n\n    int32_t vs[] \u003d { v,v,v,v };\n    Chunk c;\n    memcpy(\u0026c, vs, sizeof(vs));\n\n    return c;\n}\n\n(Lots of compilers _do_ violate the standard to make this union punning explicitly safe even in C++.  I believe that list includes GCC and MSVC, but I can\u0027t remember about Clang.)",
+      "parentUuid": "64bec967_06e11849",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 14
+      },
+      "revId": "b6b95700c9aa5ad93999e3ddb552483de97f2146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02440736_71b97042",
         "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
         "patchSetId": 20
