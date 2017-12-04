@@ -638,6 +638,24 @@
     },
     {
       "key": {
+        "uuid": "115eacce_112f6c83",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/cross-origin-script-window-onerror.html",
+        "patchSetId": 18
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T08:37:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "004ef6fc_4f4a6a03",
+      "revId": "8a33147dca6f92264d5af9208003adc2180db049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "735e8f20_47feda9b",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
         "patchSetId": 18

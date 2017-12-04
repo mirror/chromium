@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "b55392a7_fd3cb47a",
+        "filename": "chrome/test/data/extensions/api_test/webrequest/test_unload5.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T08:37:07Z",
+      "side": 1,
+      "message": "Sounds like we\u0027ve resolved this.",
+      "parentUuid": "f238b141_4675c3df",
+      "revId": "28dfdc31a52b0a7e022215c8b8b2d554292699df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0903d53_2f051451",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 14
@@ -176,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "d3606fd9_b19cb2a3",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T08:37:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1da34d72_e1cebf7a",
+      "revId": "28dfdc31a52b0a7e022215c8b8b2d554292699df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7391405_ae8ce0b7",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 14
@@ -190,6 +226,24 @@
       "revId": "28dfdc31a52b0a7e022215c8b8b2d554292699df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02dd6231_a7f575a4",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T08:37:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7391405_ae8ce0b7",
+      "revId": "28dfdc31a52b0a7e022215c8b8b2d554292699df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -210,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "cf23026f_4e055ddc",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/cross-origin-script-window-onerror.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T08:37:07Z",
+      "side": 1,
+      "message": "\u003e With XSDB, we don\u0027t get an error from the script tag, since the response is empty instead of an invalid script.  That\u0027s even better in terms of the intention of the test.\n\u003e \n\u003e The old expectations are still valid without XSDB, since onerror happens before onload.  I\u0027ve added a flag-specific expectations file for the --site-per-process case when XSDB is enabled.\n\nRemoved this change and the extra expectation files after sniffing was added (since the file below doesn\u0027t sniff as a response that needs to be blocked).",
+      "parentUuid": "86cf7503_99546db9",
+      "revId": "28dfdc31a52b0a7e022215c8b8b2d554292699df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a8fc156_ee6f43be",
         "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/resources/fetch-access-control.php",
         "patchSetId": 14
@@ -227,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "0195405d_fcd51b25",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/resources/fetch-access-control.php",
+        "patchSetId": 14
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T08:37:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a8fc156_ee6f43be",
+      "revId": "28dfdc31a52b0a7e022215c8b8b2d554292699df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8559067_83c71f55",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
         "patchSetId": 14
@@ -241,6 +331,24 @@
       "revId": "28dfdc31a52b0a7e022215c8b8b2d554292699df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3772d01_54f0e0a7",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T08:37:07Z",
+      "side": 1,
+      "message": "\u003e Devlin/Daniel: This is Nick\u0027s proposed change for updating the initiator Origin for content scripts, isolated worlds, and (as it turns out) HTML imports.  Seems to work, other than making a slightly visible change to the web request API behavior (see test_unload5.js).\n\nDiscussed separately.",
+      "parentUuid": "b8559067_83c71f55",
+      "revId": "28dfdc31a52b0a7e022215c8b8b2d554292699df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

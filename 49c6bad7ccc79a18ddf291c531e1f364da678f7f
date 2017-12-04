@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6e2e589c_9255891d",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T08:37:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a0b1e74_816cba32",
+      "revId": "49c6bad7ccc79a18ddf291c531e1f364da678f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edb8ddc3_7c3fd7ae",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 20
@@ -33,6 +51,24 @@
       "revId": "49c6bad7ccc79a18ddf291c531e1f364da678f7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a65e0254_8a96d916",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T08:37:07Z",
+      "side": 1,
+      "message": "\u003e Let\u0027s discuss the pros and cons of splitting |should_block_response_| into two bools. Right now, as the code is structured, |should_block_response_| can transition to true, and then back to false after sniffing.\n\u003e \n\u003e If this value were called is_unsafe_based_on_response_headers_ or something, and the transition back to false was instead instead inverted so that it became a false-\u003etrue transition of sniffed_as_safe_ ... would that be more readable\n\nYeah, I didn\u0027t like setting it back to false.  I\u0027ve split it into more bools which I hope makes things clearer (?).",
+      "parentUuid": "edb8ddc3_7c3fd7ae",
+      "revId": "49c6bad7ccc79a18ddf291c531e1f364da678f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "621d8169_6521278f",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T08:37:07Z",
+      "side": 1,
+      "message": "\u003e I\u0027m not convinced this size-one buffer complexity is worth its carrying cost. We don\u0027t really need to minimize the memory footprint in this rare case; size-one allocations (or really, a buffer smaller than kMaxBytesToSniff) could turn out to be a pathological case for other resource handlers.\n\u003e \n\u003e I think it\u0027s better to just proceed with local_buffer_ allocation as with the sniffing case, and bypass the sniffing step in OnReadCompleted.\n\nSounds good.  That simplifies things.  Done.",
+      "parentUuid": "d74d24e7_e0d754d4",
+      "revId": "49c6bad7ccc79a18ddf291c531e1f364da678f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e70f7ccc_c373326a",
         "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
         "patchSetId": 20
@@ -67,6 +121,24 @@
       "revId": "49c6bad7ccc79a18ddf291c531e1f364da678f7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42ba83f8_eba2cb36",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T08:37:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e70f7ccc_c373326a",
+      "revId": "49c6bad7ccc79a18ddf291c531e1f364da678f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

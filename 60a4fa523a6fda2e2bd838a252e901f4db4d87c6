@@ -271,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "9b9c9ec0_ca59159d",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T08:37:07Z",
+      "side": 1,
+      "message": "\u003e \u003e You can also unittest this class with a MockResourceLoader above and a TestResourceLoader as the next ResourceHandler.  Tests are a little complicated, but as simple as I could manage.  I recommend setting up unit tests, even for temporary code, because it gives us a lot more flexibility it testing corner cases.\n\u003e \n\u003e Good idea.  I\u0027ll add that in a new patchset.\n\nWith Nick\u0027s help on the test framework, I\u0027ve added a thorough set of unit tests as well using this idea.  That should complement the browser tests and verify a few more details of the implementation.",
+      "parentUuid": "b470b9eb_02497761",
+      "range": {
+        "startLine": 31,
+        "startChar": 39,
+        "endLine": 31,
+        "endChar": 56
+      },
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "298dfdd4_f5783e4b",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 15
@@ -389,6 +413,30 @@
     },
     {
       "key": {
+        "uuid": "57dd8a5c_c3061c75",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T08:37:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8a660d48_0775e28f",
+      "range": {
+        "startLine": 49,
+        "startChar": 25,
+        "endLine": 49,
+        "endChar": 28
+      },
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fcffd6ae_13e2e92a",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 15
@@ -436,6 +484,30 @@
     },
     {
       "key": {
+        "uuid": "f63ea8c6_71c86f50",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T08:37:07Z",
+      "side": 1,
+      "message": "\u003e \u003e The mime sniffer needs a buffer of at least net::kMaxBytesToSniff * 2 (2k)...But if we are blocking the response, why not just fail the request?\n\u003e \n\u003e Yep, this is only done once, when we know it will be blocked.  It\u0027s done so that we can send an empty response instead of failing it, which has consequences for how pages behave (see above).\n\u003e \n\u003e \u003e \n\u003e \u003e Failing that, there\u0027s no reason we need to return a real buffer.  We can just create a junk one and pass it on up.  We\u0027ll still need to call next_handler_-\u003eOnWillRead, but we can throw away the return value.\n\u003e \n\u003e Yep, a separate buffer is worth doing, and something I\u0027m hoping to add to support the content sniffing. I can add the junk buffer first, whether we do the sniffing in this CL or a followup.\n\nI\u0027ve ended up including the sniffer in this CL, since it was necessary to avoid breaking sites that returned scripts labeled as HTML, etc.  I\u0027m using a different buffer for the read now whether the sniffing happens or not.",
+      "parentUuid": "50790ee7_9414feaa",
+      "range": {
+        "startLine": 66,
+        "startChar": 18,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb2e4325_03521339",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 15
@@ -480,6 +552,30 @@
       "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0c85445_2c60a0db",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T08:37:07Z",
+      "side": 1,
+      "message": "\u003e \u003e Why wait for the response to complete?  If we\u0027re blocking the request, and don\u0027t want to bypass all the loader logic, we can just create a constroller subclass, call OnReadCompleted(0), and when the controller is resumed, call OnResponseCompleted with another bogus controller.  When that other bogus controller is resumed, we cancel the request using the real ResourceController, telling it not telling the renderer of completion (Since we just did that).\n\u003e \n\u003e I think the cancel in OnWillRead triggers this without waiting for the response to complete.  I do have an open question about how to trigger it in the Detach() case, and I think I had issues when calling OnResponseCompleted(0) after Detach(), but maybe I can try that again.\n\nMarking this resolved, since we now need OnReadCompleted to do the sniffing.",
+      "parentUuid": "f59e4d1c_3e4f182f",
+      "range": {
+        "startLine": 69,
+        "startChar": 5,
+        "endLine": 69,
+        "endChar": 37
+      },
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -554,6 +650,30 @@
     },
     {
       "key": {
+        "uuid": "68f8ebf4_8e6814cd",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T08:37:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b429a8f8_f328cb36",
+      "range": {
+        "startLine": 77,
+        "startChar": 15,
+        "endLine": 77,
+        "endChar": 17
+      },
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1815cd72_13c9cb20",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 15
@@ -601,6 +721,30 @@
     },
     {
       "key": {
+        "uuid": "e08d6eae_5dc84e1a",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T08:37:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70cc025a_e71147d1",
+      "range": {
+        "startLine": 105,
+        "startChar": 11,
+        "endLine": 105,
+        "endChar": 16
+      },
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a75585f_20b6c10b",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 15
@@ -615,6 +759,24 @@
       "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60217fe4_6ede8441",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T08:37:07Z",
+      "side": 1,
+      "message": "\u003e \"document\" here is not really accurate since our protection extends to JSON as well as HTML and XML.\n\u003e \n\u003e Really we are trying to block response bodies in the case where (a) there exists no mechanism by which this type of resource can be consumed opaquely in the target process, and (b) the request didn\u0027t use CORS.\n\u003e \n\u003e I\u0027m fine with \"cross site document\" since it\u0027s accurate to first approximation, and the term is well-rooted (at least in the parlance of our team) -- but since this is going to be something that ultimately we\u0027re forcing webdevs to think about, we might want to focus group the name some more.\n\nThat\u0027s a fair point-- I think we\u0027ve gotten used to saying \"cross-site document blocking.\"  I\u0027ve tried to elaborate a bit on the concept in the class declaration comment, though I\u0027m leaving the term in place for the time being.  Maybe we can discuss more as we figure out how to communicate it more broadly.",
+      "parentUuid": "0a75585f_20b6c10b",
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -650,6 +812,24 @@
       "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f7eda35_4528855a",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T08:37:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d209c0ab_fc906fd6",
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -767,6 +947,24 @@
       "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83513825_09893904",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T08:37:07Z",
+      "side": 1,
+      "message": "\u003e \u003e We should look into whether or not it would be viable to implement this in terms of net::URLRequestInterceptor. I wasn\u0027t aware of that class before looking at this CL, but the response interception scheme seems like it gives us more control over the response. (however, extending it to sniffing would probably require new capabilities for the interceptor).\n\u003e \n\u003e Thanks, that\u0027s a good thing to consider.  I think (given that sniffing is proving necessary when testing on real sites), I\u0027ll probably stick with a ResourceHandler for now, but maybe that\u0027s still an option for how to improve this.\n\nNick and I agreed that it\u0027s better to stick with the ResourceHandler now that sniffing is needed.",
+      "parentUuid": "3247b10d_ec04d352",
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
