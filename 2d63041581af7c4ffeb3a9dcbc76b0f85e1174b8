@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "163bbede_cd724b56",
+        "filename": "components/spellcheck/test/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-04T17:35:15Z",
+      "side": 1,
+      "message": "Code in components should not depend upon chrome. See components/README for details. I get this is just a test, but it would be better not to have this code pull in chrome. Your change would mean components_unittests now builds chrome were as currently it should not be doing that.",
+      "range": {
+        "startLine": 2,
+        "startChar": 4,
+        "endLine": 2,
+        "endChar": 18
+      },
+      "revId": "2d63041581af7c4ffeb3a9dcbc76b0f85e1174b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
