@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9be5cd2e_8524c560",
+        "filename": "third_party/WebKit/Source/core/dom/LayoutTreeBuilder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115755
+      },
+      "writtenOn": "2017-12-04T19:21:44Z",
+      "side": 1,
+      "message": "Is there anything useful you could assert about layout_object_parent_ either here or when creating the style in CreateInheritedDisplayContentsStyleIfNeeded(). !IsInline() for example?",
+      "revId": "b3b44a4abe8c12870aaacc1db62a998599ca1875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3cc4c83_2aa48d0b",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObjectTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1115755
+      },
+      "writtenOn": "2017-12-04T19:21:44Z",
+      "side": 1,
+      "message": "Would adding tests with other element types for a parent, e.g. span, add anything here?",
+      "revId": "b3b44a4abe8c12870aaacc1db62a998599ca1875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
