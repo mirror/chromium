@@ -1,0 +1,164 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0cfd461_02f3a130",
+        "filename": "ui/ozone/platform/x11/x11_window_ozone_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-04T14:38:57Z",
+      "side": 1,
+      "message": "nit: These can be outside namespace ui.",
+      "revId": "28fef487008233a77621ddcf27bf3f91b88da1ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "049d6761_21bf37d9",
+        "filename": "ui/ozone/platform/x11/x11_window_ozone_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-04T14:38:57Z",
+      "side": 1,
+      "message": "constexpr",
+      "revId": "28fef487008233a77621ddcf27bf3f91b88da1ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03b75ccf_4e156075",
+        "filename": "ui/ozone/platform/x11/x11_window_ozone_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-04T14:38:57Z",
+      "side": 1,
+      "message": "Can you make this variable name more descriptive?",
+      "range": {
+        "startLine": 48,
+        "startChar": 22,
+        "endLine": 48,
+        "endChar": 25
+      },
+      "revId": "28fef487008233a77621ddcf27bf3f91b88da1ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11e04805_c8905207",
+        "filename": "ui/ozone/platform/x11/x11_window_ozone_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-04T14:38:57Z",
+      "side": 1,
+      "message": "Can you make this variable name more descriptive?",
+      "range": {
+        "startLine": 52,
+        "startChar": 21,
+        "endLine": 52,
+        "endChar": 24
+      },
+      "revId": "28fef487008233a77621ddcf27bf3f91b88da1ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f80900ee_c824118a",
+        "filename": "ui/ozone/platform/x11/x11_window_ozone_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-04T14:38:57Z",
+      "side": 1,
+      "message": "Use std::make_unique\u003cScopedTaskEnvironment\u003e.",
+      "range": {
+        "startLine": 61,
+        "startChar": 18,
+        "endLine": 61,
+        "endChar": 55
+      },
+      "revId": "28fef487008233a77621ddcf27bf3f91b88da1ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7578542_3e10e928",
+        "filename": "ui/ozone/platform/x11/x11_window_ozone_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-04T14:38:57Z",
+      "side": 1,
+      "message": "You can pass in an initializer list here.\n\nui::TouchFactory::GetInstance()-\u003eSetPointerDeviceForTest({kPointerDeviceId});",
+      "range": {
+        "startLine": 73,
+        "startChar": 4,
+        "endLine": 73,
+        "endChar": 78
+      },
+      "revId": "28fef487008233a77621ddcf27bf3f91b88da1ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aee667b_fc667977",
+        "filename": "ui/ozone/platform/x11/x11_window_ozone_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-04T14:38:57Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN(X11WindowOzoneTest);",
+      "revId": "28fef487008233a77621ddcf27bf3f91b88da1ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5247580d_672fe8b4",
+        "filename": "ui/ozone/platform/x11/x11_window_ozone_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-04T14:38:57Z",
+      "side": 1,
+      "message": "This should probably be two tests. One test that events are dispatched by the correct window without capture. Another test that capture changes the window an event is dispatched by.",
+      "revId": "28fef487008233a77621ddcf27bf3f91b88da1ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
