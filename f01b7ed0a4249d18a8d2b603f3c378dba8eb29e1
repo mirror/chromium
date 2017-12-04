@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "cdd5352f_bf0affba",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageItem.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-12-04T04:35:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b9fe2d7a_23307933",
+      "range": {
+        "startLine": 21,
+        "startChar": 18,
+        "endLine": 21,
+        "endChar": 20
+      },
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18ed8562_a14a6969",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageItem.java",
         "patchSetId": 10
@@ -326,6 +350,24 @@
     },
     {
       "key": {
+        "uuid": "d2faba64_d94435a7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-12-04T04:35:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0b84fa18_e8f4798f",
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a161c48_15512de2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
         "patchSetId": 10
@@ -394,6 +436,30 @@
       "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93c080e3_b4b019da",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-12-04T04:35:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "112af93c_abc7617c",
+      "range": {
+        "startLine": 111,
+        "startChar": 49,
+        "endLine": 111,
+        "endChar": 58
+      },
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -559,6 +625,30 @@
       "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f487e01a_de120da0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageSelectionFragment.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-12-04T04:35:34Z",
+      "side": 1,
+      "message": "Sorry for the misleading. I believe I was confused by the typing locale with language names\u0027s locale.\n\nNow I think the right way is to convert the typing string to the target\u0027s locale always, regardless of whatever users are typing.\nSo a likely rule is:\n \nFor each LanguageItem\n\n1,  To match display names, query1 \u003d query.toLowerCase(Locale.getDefault()), \n2,  To match codes, query2 \u003d query.toLowerCase(Locale.ENGLISH), \n3,  To match native names, query3 \u003d query.toLowerCase(SomeUtil.getLocaleFromChromeLanguageCode(item.getCode()))\n\n\nAnd I need to create an appropriate utility method to fetch the corresponding Java Locale from the item\u0027s Chrome language code in string format (en, en-AU, es-419...), And I think the Chrome language codes are not strictly following Java standard code format (ISO 639), because we had some special remap in Chrome language util\nhttps://cs.chromium.org/chromium/src/ui/base/l10n/l10n_util.cc?type\u003dcs\u0026q\u003des-419+f:cc$\u0026sq\u003dpackage:chromium\u0026l\u003d337\n\nSo I add TODO here.",
+      "parentUuid": "64dcc10d_16691409",
+      "range": {
+        "startLine": 65,
+        "startChar": 25,
+        "endLine": 65,
+        "endChar": 39
+      },
+      "revId": "f01b7ed0a4249d18a8d2b603f3c378dba8eb29e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
