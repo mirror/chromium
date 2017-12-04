@@ -665,11 +665,12 @@ void RenderWidgetHostViewAndroid::Hide() {
   HideInternal();
 }
 
-bool RenderWidgetHostViewAndroid::IsShowing() {
+Visibility RenderWidgetHostViewAndroid::GetVisibility() const {
   // ContentViewCore represents the native side of the Java
   // ContentViewCore.  It being NULL means that it is not attached
   // to the View system yet, so we treat this RWHVA as hidden.
-  return is_showing_ && content_view_core_;
+  return (is_showing_ && content_view_core_) ? Visibility::VISIBLE
+                                             : Visibility::HIDDEN;
 }
 
 void RenderWidgetHostViewAndroid::OnShowUnhandledTapUIIfNeeded(int x_dip,
