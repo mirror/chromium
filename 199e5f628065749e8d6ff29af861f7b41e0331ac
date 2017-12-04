@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57a1c326_a025bcd7",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/buildbot.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-12-04T18:21:32Z",
+      "side": 1,
+      "message": "A very subjective styling nit: I\u0027d personally prefer not splitting the template string across lines, but it\u0027s up to you.\n\n    return (\u0027https://ci.chromium.org/buildbot/%s/%s/%s\u0027 % \n            (master_name, builder_name, build_number))",
+      "revId": "199e5f628065749e8d6ff29af861f7b41e0331ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
