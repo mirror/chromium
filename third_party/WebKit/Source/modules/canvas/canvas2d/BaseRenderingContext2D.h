@@ -217,6 +217,7 @@ class MODULES_EXPORT BaseRenderingContext2D : public GarbageCollectedMixin,
   String imageSmoothingQuality() const;
   void setImageSmoothingQuality(const String&);
 
+  void ClearResolvedFilters();
   virtual bool OriginClean() const = 0;
   virtual void SetOriginTainted() = 0;
   virtual bool WouldTaintOrigin(CanvasImageSource*, ExecutionContext*) = 0;
