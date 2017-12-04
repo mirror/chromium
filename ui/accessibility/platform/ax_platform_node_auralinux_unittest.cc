@@ -9,10 +9,79 @@
 #include <atk/atk.h>
 
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/accessibility/platform/ax_platform_node_auralinux.h"
 #include "ui/accessibility/platform/ax_platform_node_unittest.h"
 #include "ui/accessibility/platform/test_ax_node_wrapper.h"
+#include "ui/base/glib/glib_signal.h"
 
 namespace ui {
+
+class SignalLogger {
+ public:
+  enum SignalLoggerFlags { PROPERTY_CHANGE = 1 << 0 };
+
+  SignalLogger() {}
+  ~SignalLogger() {
+    for (auto* attached_object : attached_objects_) {
+      AtkObject* atk_object =
+          static_cast<AtkObject*>(g_weak_ref_get(attached_object));
+      if (atk_object) {
+        g_signal_handlers_disconnect_by_data(atk_object, this);
+        g_object_unref(atk_object);
+      }
+      g_weak_ref_clear(attached_object);
+      g_free(attached_object);
+    }
+  }
+  std::string GetLog() const { return log_stream_.str(); }
+  void ResetLog() {
+    log_stream_.str("");
+    log_stream_.clear();
+  }
+  void AttachToAtkObject(AtkObject* atk_object, gint flags) {
+    if (flags == 0)
+      return;
+
+    GWeakRef* weak_ref = g_new(GWeakRef, 1);
+    g_weak_ref_init(weak_ref, atk_object);
+    attached_objects_.push_back(weak_ref);
+
+    if (flags | PROPERTY_CHANGE) {
+      g_signal_connect(atk_object, "property-change",
+                       G_CALLBACK(OnPropertyChangeThunk), this);
+    }
+  }
+
+ private:
+  CHROMEG_CALLBACK_1(SignalLogger,
+                     void,
+                     OnPropertyChange,
+                     AtkObject*,
+                     gpointer);
+  std::string GValueStr(GValue* value) {
+    if (G_VALUE_HOLDS_INT(value)) {
+      return std::to_string(g_value_get_int(value));
+    }
+    return std::string();
+  }
+
+  std::vector<GWeakRef*> attached_objects_;
+  std::ostringstream log_stream_;
+};
+
+void SignalLogger::OnPropertyChange(AtkObject* atk_object, gpointer arg1) {
+  AtkPropertyValues* property_values = static_cast<AtkPropertyValues*>(arg1);
+
+  log_stream_ << "PROPERTY_CHANGE " << property_values->property_name << " - ";
+  if (!g_ascii_strcasecmp(property_values->property_name, "accessible-role") &&
+      G_VALUE_HOLDS_INT(&property_values->new_value)) {
+    log_stream_ << atk_role_get_name(
+        static_cast<AtkRole>(g_value_get_int(&property_values->new_value)));
+  } else {
+    log_stream_ << GValueStr(&property_values->new_value);
+  }
+  log_stream_ << "|";
+}
 
 class AXPlatformNodeAuraLinuxTest : public AXPlatformNodeTest {
  public:
@@ -22,12 +91,17 @@ class AXPlatformNodeAuraLinuxTest : public AXPlatformNodeTest {
   void SetUp() override {}
 
  protected:
-  AtkObject* AtkObjectFromNode(AXNode* node) {
+  AXPlatformNode* PlatformNodeFromNode(AXNode* node) {
     TestAXNodeWrapper* wrapper =
         TestAXNodeWrapper::GetOrCreate(tree_.get(), node);
     if (!wrapper)
       return nullptr;
-    AXPlatformNode* ax_platform_node = wrapper->ax_platform_node();
+    return wrapper->ax_platform_node();
+  }
+  AtkObject* AtkObjectFromNode(AXNode* node) {
+    AXPlatformNode* ax_platform_node = PlatformNodeFromNode(node);
+    if (!ax_platform_node)
+      return nullptr;
     AtkObject* atk_object = ax_platform_node->GetNativeViewAccessible();
     return atk_object;
   }
@@ -134,6 +208,42 @@ TEST_F(AXPlatformNodeAuraLinuxTest, TestAtkObjectRole) {
   g_object_ref(child_obj);
   EXPECT_EQ(ATK_ROLE_CANVAS, atk_object_get_role(child_obj));
   g_object_unref(child_obj);
+}
+
+TEST_F(AXPlatformNodeAuraLinuxTest, TestAtkObjectChangeRole) {
+  SignalLogger signal_logger;
+
+  AXNodeData root;
+  root.id = 1;
+  root.child_ids.push_back(2);
+
+  AXNodeData child;
+  child.id = 2;
+
+  Init(root, child);
+  AXNode* child_node = GetRootNode()->children()[0];
+
+  child.role = AX_ROLE_SCROLL_BAR;
+  child_node->SetData(child);
+  AtkObject* child_obj(AtkObjectFromNode(child_node));
+  ASSERT_TRUE(ATK_IS_OBJECT(child_obj));
+  g_object_ref(child_obj);
+  signal_logger.AttachToAtkObject(child_obj, SignalLogger::PROPERTY_CHANGE);
+  EXPECT_EQ(ATK_ROLE_SCROLL_BAR, atk_object_get_role(child_obj));
+  AXPlatformNodeAuraLinux* platform_node =
+      static_cast<AXPlatformNodeAuraLinux*>(PlatformNodeFromNode(child_node));
+  g_object_unref(child_obj);
+
+  child.role = AX_ROLE_SLIDER;
+  child_node->SetData(child);
+  platform_node->DataChanged();
+  AtkObject* child_obj2 = AtkObjectFromNode(child_node);
+  ASSERT_TRUE(ATK_IS_OBJECT(child_obj2));
+  EXPECT_EQ(ATK_ROLE_SLIDER, atk_object_get_role(child_obj));
+  EXPECT_EQ(child_obj2, child_obj);
+
+  EXPECT_EQ("PROPERTY_CHANGE accessible-role - slider|",
+            signal_logger.GetLog());
 }
 
 TEST_F(AXPlatformNodeAuraLinuxTest, TestAtkObjectState) {
