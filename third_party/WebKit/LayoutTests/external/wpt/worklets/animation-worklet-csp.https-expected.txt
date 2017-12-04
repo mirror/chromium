@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS Importing a remote-origin worklet script should be blocked by the script-src 'self' directive.
+PASS Importing a remote-origin script from a same-origin worklet script should be blocked by the script-src 'self' directive.
+PASS Importing a remote-origin worklet script should not be blocked because the script-src * directive allows it.
+PASS Importing a remote-origin script from a remote-origin worklet script should not be blocked because the script-src * directive allows it.
+PASS Importing a remote-origin worklet script should not be blocked by the worker-src directive because worklets obey the script-src directive.
+FAIL eval() call on the worklet should be blocked because the script-src unsafe-eval directive is not specified. promise_test: Unhandled rejection with value: object "SyntaxError: Unexpected end of JSON input"
+PASS eval() call on the worklet should not be blocked because the script-src unsafe-eval directive allows it.
+Harness: the test ran to completion.
+
