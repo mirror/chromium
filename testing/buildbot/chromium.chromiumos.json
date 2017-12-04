@@ -809,8 +809,7 @@
       },
       {
         "args": [
-          "--mus",
-          "--test-launcher-filter-file=../../testing/buildbot/filters/ash_unittests_mus.filter"
+          "--mus"
         ],
         "name": "ash_unittests-mus",
         "override_isolate_target": "ash_unittests",
@@ -862,8 +861,7 @@
         "args": [
           "--mus",
           "--ozone-platform=headless",
-          "--override-use-software-gl-for-tests",
-          "--test-launcher-filter-file=../../testing/buildbot/filters/mus.browser_tests.filter"
+          "--override-use-software-gl-for-tests"
         ],
         "name": "mus_browser_tests",
         "swarming": {
@@ -937,8 +935,7 @@
       },
       {
         "args": [
-          "--mus",
-          "--test-launcher-filter-file=../../testing/buildbot/filters/mus.content_browsertests.filter"
+          "--mus"
         ],
         "name": "content_browsertests --mus",
         "override_isolate_target": "content_browsertests",
