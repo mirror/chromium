@@ -52,9 +52,6 @@ class NATIVE_THEME_EXPORT NativeThemeWin : public NativeTheme,
     LAST
   };
 
-  // Returns true if a high contrast theme is being used.
-  static bool IsUsingHighContrastTheme();
-
   // Closes cached theme handles so we can unload the DLL or update our UI
   // for a theme change.
   static void CloseHandles();
@@ -83,6 +80,8 @@ class NATIVE_THEME_EXPORT NativeThemeWin : public NativeTheme,
   gfx::Size GetNinePatchCanvasSize(Part part) const override;
   gfx::Rect GetNinePatchAperture(Part part) const override;
 
+  bool UsesHighContrastColors() const override;
+
  protected:
   friend class NativeTheme;
   // Gets our singleton instance.
@@ -92,7 +91,7 @@ class NATIVE_THEME_EXPORT NativeThemeWin : public NativeTheme,
   ~NativeThemeWin() override;
 
  private:
-  bool IsUsingHighContrastThemeInternal();
+  bool IsUsingHighContrastThemeInternal() const;
   void CloseHandlesInternal();
 
   // gfx::SysColorChangeListener implementation:
