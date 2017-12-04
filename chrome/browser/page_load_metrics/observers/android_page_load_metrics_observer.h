@@ -67,6 +67,7 @@ class AndroidPageLoadMetricsObserver
   content::WebContents* web_contents_;
 
   bool did_dispatch_on_main_resource_ = false;
+  int64_t navigation_id_ = -1;
 
   net::NetworkQualityEstimator::NetworkQualityProvider*
       network_quality_provider_ = nullptr;
