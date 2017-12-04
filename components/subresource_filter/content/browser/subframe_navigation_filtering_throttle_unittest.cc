@@ -19,7 +19,6 @@
 #include "components/subresource_filter/core/common/test_ruleset_creator.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/web_contents_observer.h"
-#include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/test/navigation_simulator.h"
 #include "content/public/test/test_renderer_host.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -126,7 +125,6 @@ class SubframeNavigationFilteringThrottleTest
   }
 
   void SimulateCommitErrorPage() {
-    DCHECK(content::IsBrowserSideNavigationEnabled());
     navigation_simulator_->CommitErrorPage();
   }
 
@@ -158,12 +156,9 @@ TEST_F(SubframeNavigationFilteringThrottleTest, FilterOnRedirect) {
                                       main_rfh());
 
   SimulateStartAndExpectResult(content::NavigationThrottle::PROCEED);
-  content::NavigationThrottle::ThrottleAction expected_result =
-      content::IsBrowserSideNavigationEnabled()
-          ? content::NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE
-          : content::NavigationThrottle::CANCEL;
-  SimulateRedirectAndExpectResult(GURL("https://example.test/disallowed.html"),
-                                  expected_result);
+  SimulateRedirectAndExpectResult(
+      GURL("https://example.test/disallowed.html"),
+      content::NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE);
 }
 
 TEST_F(SubframeNavigationFilteringThrottleTest, FilterOnSecondRedirect) {
@@ -174,12 +169,9 @@ TEST_F(SubframeNavigationFilteringThrottleTest, FilterOnSecondRedirect) {
   SimulateStartAndExpectResult(content::NavigationThrottle::PROCEED);
   SimulateRedirectAndExpectResult(GURL("https://example.test/allowed2.html"),
                                   content::NavigationThrottle::PROCEED);
-  content::NavigationThrottle::ThrottleAction expected_result =
-      content::IsBrowserSideNavigationEnabled()
-          ? content::NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE
-          : content::NavigationThrottle::CANCEL;
-  SimulateRedirectAndExpectResult(GURL("https://example.test/disallowed.html"),
-                                  expected_result);
+  SimulateRedirectAndExpectResult(
+      GURL("https://example.test/disallowed.html"),
+      content::NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE);
 }
 
 TEST_F(SubframeNavigationFilteringThrottleTest, NeverFilterNonMatchingRule) {
@@ -216,17 +208,12 @@ TEST_F(SubframeNavigationFilteringThrottleTest, DelayMetrics) {
   InitializeDocumentSubresourceFilter(GURL("https://example.test"));
   CreateTestSubframeAndInitNavigation(GURL("https://example.test/allowed.html"),
                                       main_rfh());
-  if (content::IsBrowserSideNavigationEnabled())
-    navigation_simulator()->SetTransition(ui::PAGE_TRANSITION_MANUAL_SUBFRAME);
+  navigation_simulator()->SetTransition(ui::PAGE_TRANSITION_MANUAL_SUBFRAME);
   SimulateStartAndExpectResult(content::NavigationThrottle::PROCEED);
-  content::NavigationThrottle::ThrottleAction expected_result =
-      content::IsBrowserSideNavigationEnabled()
-          ? content::NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE
-          : content::NavigationThrottle::CANCEL;
-  SimulateRedirectAndExpectResult(GURL("https://example.test/disallowed.html"),
-                                  expected_result);
-  if (content::IsBrowserSideNavigationEnabled())
-    SimulateCommitErrorPage();
+  SimulateRedirectAndExpectResult(
+      GURL("https://example.test/disallowed.html"),
+      content::NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE);
+  SimulateCommitErrorPage();
 
   const char kFilterDelayDisallowed[] =
       "SubresourceFilter.DocumentLoad.SubframeFilteringDelay.Disallowed";
