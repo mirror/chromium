@@ -16,6 +16,24 @@
       "revId": "0913a4ab824ad7ea253a23a62a81fee67db46a3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6f30b74_7530eaad",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-04T16:23:51Z",
+      "side": 1,
+      "message": "Yes I do plan to have a look at it eventually (but waiting on removing more of the old codepath first).",
+      "parentUuid": "67c1bef0_5ec89cc5",
+      "revId": "0913a4ab824ad7ea253a23a62a81fee67db46a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
