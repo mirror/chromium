@@ -22,6 +22,30 @@
       "revId": "1d3560b2878fd58fb1bc04a3ab325f85ba0a7663",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "984e19c3_1c845d7e",
+        "filename": "components/download/internal/entry.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-04T17:25:10Z",
+      "side": 1,
+      "message": "I\u0027m ok without it!",
+      "parentUuid": "13ce99cd_e51039f2",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 52
+      },
+      "revId": "1d3560b2878fd58fb1bc04a3ab325f85ba0a7663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
