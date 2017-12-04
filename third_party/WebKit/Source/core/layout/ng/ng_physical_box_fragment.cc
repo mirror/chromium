@@ -91,6 +91,45 @@ NGPhysicalOffsetRect NGPhysicalBoxFragment::VisualRectWithContents() const {
   return visual_rect;
 }
 
+NGPhysicalOffsetRect NGPhysicalBoxFragment::LocalCaretRect(unsigned caret_offset) const {
+  DCHECK_LE(caret_offset, 1u);
+  // TODO(xiaochengh): Code below is copied from LayoutBox::LocalCaretRect with
+  // modification. Try to de-duplicate.
+
+  // VisiblePositions at offsets inside containers either a) refer to the
+  // positions before/after those containers (tables and select elements) or
+  // b) refer to the position inside an empty block.
+  // They never refer to children.
+  // FIXME: Paint the carets inside empty blocks differently than the carets
+  // before/after elements.
+  LayoutUnit caret_width = GetLayoutObject()->GetFrameView()->CaretWidth();
+  NGPhysicalSize caret_size(caret_width, Size().height);
+  // TODO(xiaochengh): This is wrong for mixed BiDi. Fix it.
+  bool ltr = Style().IsLeftToRightDirection();
+
+  NGPhysicalOffset caret_location;
+  if ((!caret_offset) ^ ltr)
+    caret_location.left = Size().width - caret_width;
+
+  // TODO(xiaochengh): How do we get line height?
+/*
+  if (box) {
+    const RootInlineBox& root_box = box->Root();
+    LayoutUnit top = root_box.LineTop();
+    rect.SetY(top);
+    rect.SetHeight(root_box.LineBottom() - top);
+  }
+*/
+
+  NGPhysicalOffsetRect caret_rect(caret_location, caret_size);
+
+  // TODO(xiaochengh): How do we know writing mode?
+  // if (!IsHorizontalWritingMode())
+  //   return rect.TransposedRect();
+
+  return caret_rect;
+}
+
 scoped_refptr<NGPhysicalFragment> NGPhysicalBoxFragment::CloneWithoutOffset()
     const {
   Vector<scoped_refptr<NGPhysicalFragment>> children_copy(children_);

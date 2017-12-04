@@ -252,6 +252,10 @@ void NGPhysicalFragment::PropagateContentsVisualRect(
   parent_visual_rect->Unite(visual_rect);
 }
 
+NGPhysicalOffsetRect NGPhysicalFragment::LocalCaretRect(unsigned) const {
+  return NGPhysicalOffsetRect();
+}
+
 scoped_refptr<NGPhysicalFragment> NGPhysicalFragment::CloneWithoutOffset()
     const {
   switch (Type()) {
