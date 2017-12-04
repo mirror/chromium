@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8512adb1_e3e11c6f",
+        "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-04T21:07:15Z",
+      "side": 1,
+      "message": "There are several properties that can be shared with everything in the dialog, and I\u0027ve moved them to media_router_common.css.",
+      "parentUuid": "ef650aba_1c845195",
+      "revId": "a01681676253b10c7ea1c27930c170d3819e5e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0ccb43c_4a9fd41e",
         "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.html",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-03T20:49:03Z",
       "side": 1,
       "message": "Is paper-dropdown-menu not an option here because we\u0027re still on Polymer 1.0?\n\nhttps://www.webcomponents.org/element/PolymerElements/paper-dropdown-menu",
+      "revId": "a01681676253b10c7ea1c27930c170d3819e5e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1310d06a_fb6d84e1",
+        "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-04T21:07:15Z",
+      "side": 1,
+      "message": "That\u0027s correct. md-select is used by most if not all WebUI resources that use dropdown menus.",
+      "parentUuid": "d0ccb43c_4a9fd41e",
       "revId": "a01681676253b10c7ea1c27930c170d3819e5e6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "a01681676253b10c7ea1c27930c170d3819e5e6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adc2bc00_0c9322af",
+        "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-04T21:07:15Z",
+      "side": 1,
+      "message": "Removed unused ids.",
+      "parentUuid": "8ee6ebb6_9977f907",
+      "revId": "a01681676253b10c7ea1c27930c170d3819e5e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -85,6 +139,24 @@
       "revId": "a01681676253b10c7ea1c27930c170d3819e5e6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5236f6b4_7df02842",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_localized_strings_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-04T21:07:15Z",
+      "side": 1,
+      "message": "Yeah, no colon will be more consistent. Updated the string.",
+      "parentUuid": "d3e2fcb0_b9f0755b",
+      "revId": "a01681676253b10c7ea1c27930c170d3819e5e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
