@@ -308,8 +308,7 @@ class PrerenderManager : public content::NotificationObserver,
   // testing.
   base::Time GetCurrentTime() const;
   base::TimeTicks GetCurrentTimeTicks() const;
-  void SetTickClockForTesting(
-      std::unique_ptr<base::SimpleTestTickClock> tick_clock);
+  void SetTickClockForTesting(base::SimpleTestTickClock* tick_clock);
 
   void DisablePageLoadMetricsObserverForTesting() {
     page_load_metric_observer_disabled_ = true;
@@ -600,7 +599,7 @@ class PrerenderManager : public content::NotificationObserver,
   using PrerenderProcessSet = std::set<content::RenderProcessHost*>;
   PrerenderProcessSet prerender_process_hosts_;
 
-  std::unique_ptr<base::TickClock> tick_clock_;
+  base::TickClock* tick_clock_;
 
   bool page_load_metric_observer_disabled_;
 
