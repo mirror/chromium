@@ -84,7 +84,7 @@ void PageZoom::Zoom(content::WebContents* web_contents,
   double default_zoom_level = zoom_controller->GetDefaultZoomLevel();
 
   if (zoom == content::PAGE_ZOOM_RESET) {
-    zoom_controller->SetZoomLevel(default_zoom_level);
+    zoom_controller->SetZoomLevelByUser(default_zoom_level);
     web_contents->SetPageScale(1.f);
     base::RecordAction(UserMetricsAction("ZoomNormal"));
     return;
@@ -103,7 +103,7 @@ void PageZoom::Zoom(content::WebContents* web_contents,
       if (content::ZoomValuesEqual(zoom_level, current_zoom_level))
         continue;
       if (zoom_level < current_zoom_level) {
-        zoom_controller->SetZoomLevel(zoom_level);
+        zoom_controller->SetZoomLevelByUser(zoom_level);
         base::RecordAction(UserMetricsAction("ZoomMinus"));
         return;
       }
@@ -118,7 +118,7 @@ void PageZoom::Zoom(content::WebContents* web_contents,
       if (content::ZoomValuesEqual(zoom_level, current_zoom_level))
         continue;
       if (zoom_level > current_zoom_level) {
-        zoom_controller->SetZoomLevel(zoom_level);
+        zoom_controller->SetZoomLevelByUser(zoom_level);
         base::RecordAction(UserMetricsAction("ZoomPlus"));
         return;
       }

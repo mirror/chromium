@@ -1,0 +1,54 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+// DO NOT COMMIT Make internal copy
+syntax = "proto2";
+
+option optimize_for = LITE_RUNTIME;
+
+option java_outer_classname = "ZoomEventProtos";
+option java_package = "org.chromium.components.metrics";
+
+package metrics;
+
+// Stores information about a page zoom performed by a user.
+// This includes information about the zoom action taken by the user (e.g. the
+// zoom factor chosen) and information about the style of the page (e.g. font
+// sizes used) that we consider relevant to the user's choice of zoom.
+// Next tag: 16
+message ZoomEventProto {
+  // The zoom factor chosen by the user.
+  optional float zoom_factor = 1;
+  // The user's default zoom factor from settings.
+  optional float default_zoom_factor = 2;
+
+  // The size of the viewport. Independent of zoom factor.
+  optional uint32 visible_content_width = 3;
+  optional uint32 visible_content_height = 4;
+
+  // The size of the content.
+  optional uint32 contents_width = 5;
+  optional uint32 contents_height = 6;
+
+  // The width needed to display the document without horizontal scrollbars.
+  optional uint32 preferred_width = 7;
+
+  // Map font sizes to percentage of characters of that size found in page.
+  map<uint32, float> font_size_distribution = 8;
+
+  // The size of the largest image, if there are any images.
+  optional uint32 largest_image_width = 9;
+  optional uint32 largest_image_height = 10;
+
+  // The size of the largest object (e.g. video, canvas), if there are any.
+  optional uint32 largest_object_width = 11;
+  optional uint32 largest_object_height = 12;
+
+  // Area of page covered in text content.
+  optional uint32 text_area = 13;
+  // Area of page covered in images.
+  optional uint32 image_area = 14;
+  // Area of page covered in other objects (e.g. video, canvas).
+  optional uint32 object_area = 15;
+}
