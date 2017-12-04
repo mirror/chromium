@@ -25,6 +25,53 @@
     },
     {
       "key": {
+        "uuid": "b9d9dea3_ff6ec8b3",
+        "filename": "chrome/browser/chrome_native_notification_install_helper_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-12-04T07:51:32Z",
+      "side": 1,
+      "message": "I don\u0027t think you need the shortcut related code. If you wants to create a shortcut on start menu for chromium, just build a mini_installer via \"ninja mini_installer\" and then run it.",
+      "parentUuid": "9186d890_7239dc28",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 23
+      },
+      "revId": "cb50e6e07b4e5796d4b2fd56a7ce3768497532c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2baa886f_837ef9aa",
+        "filename": "chrome/browser/chrome_native_notification_install_helper_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-12-04T07:51:32Z",
+      "side": 1,
+      "message": "And I don\u0027t think you need this method neither.",
+      "range": {
+        "startLine": 81,
+        "startChar": 5,
+        "endLine": 81,
+        "endChar": 41
+      },
+      "revId": "cb50e6e07b4e5796d4b2fd56a7ce3768497532c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1948d2d2_16684d34",
         "filename": "chrome/browser/chrome_native_notification_install_helper_win.h",
         "patchSetId": 4
@@ -36,6 +83,24 @@
       "writtenOn": "2017-12-01T14:08:46Z",
       "side": 1,
       "message": "This isn\u0027t really blocking while the feature is behind a flag, but if you have ideas on how to fix this, I\u0027m open to suggestions...",
+      "revId": "cb50e6e07b4e5796d4b2fd56a7ce3768497532c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30c10a22_babf65df",
+        "filename": "chrome/browser/chrome_native_notification_install_helper_win.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-12-04T07:51:32Z",
+      "side": 1,
+      "message": "I am eager to know the answer to this question too.",
+      "parentUuid": "1948d2d2_16684d34",
       "revId": "cb50e6e07b4e5796d4b2fd56a7ce3768497532c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +130,53 @@
     },
     {
       "key": {
+        "uuid": "23dfb33f_eb2c0b88",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-12-04T07:51:32Z",
+      "side": 1,
+      "message": "Agreed.",
+      "parentUuid": "d6dc517e_77a014c6",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 25
+      },
+      "revId": "cb50e6e07b4e5796d4b2fd56a7ce3768497532c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "474c9d30_b6cae625",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-12-04T07:51:32Z",
+      "side": 1,
+      "message": "I once added messagebox(\"...\") inside this method, and found that this API was randomly called. Did you see similar behavior?",
+      "range": {
+        "startLine": 145,
+        "startChar": 2,
+        "endLine": 145,
+        "endChar": 10
+      },
+      "revId": "cb50e6e07b4e5796d4b2fd56a7ce3768497532c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24f8fa45_eedb1b1f",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
         "patchSetId": 4
@@ -81,6 +193,29 @@
         "startChar": 11,
         "endLine": 554,
         "endChar": 30
+      },
+      "revId": "cb50e6e07b4e5796d4b2fd56a7ce3768497532c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "024116ed_e749333d",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-12-04T07:51:32Z",
+      "side": 1,
+      "message": "Again, you don\u0027t need this piece of code. mini_installer can handler it.",
+      "range": {
+        "startLine": 570,
+        "startChar": 2,
+        "endLine": 570,
+        "endChar": 18
       },
       "revId": "cb50e6e07b4e5796d4b2fd56a7ce3768497532c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
