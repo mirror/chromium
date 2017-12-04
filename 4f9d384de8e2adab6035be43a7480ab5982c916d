@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6cba120_eeaf8740",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-04T19:59:59Z",
+      "side": 0,
+      "message": "With the themed bottom nav, these should be white. They are no longer used, so I removed them instead.\n\nIt looks like their use was removed in:\n - https://chromium.googlesource.com/chromium/src/+/81022874e21cac29a6d57ac820ef26f479700fc6 (Feb 2017)\n - https://chromium.googlesource.com/chromium/src/+/f872c9f20b0d823b06e565c6e818b0f071e0fa37 (Feb 2017)",
+      "revId": "4f9d384de8e2adab6035be43a7480ab5982c916d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
