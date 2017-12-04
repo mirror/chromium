@@ -41,6 +41,7 @@
 #include "platform/bindings/V8PerIsolateData.h"
 #include "platform/heap/Heap.h"
 #include "platform/wtf/Assertions.h"
+#include "platform/wtf/Functional.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/WTF.h"
 #include "public/platform/InterfaceRegistry.h"
@@ -72,7 +73,7 @@ static BlinkInitializer& GetBlinkInitializer() {
   return *initializer;
 }
 
-void Initialize(Platform* platform, InterfaceRegistry* registry) {
+void Initialize(Platform* platform, service_manager::BinderRegistry* registry) {
   DCHECK(registry);
   Platform::Initialize(platform);
 
@@ -114,7 +115,8 @@ void Initialize(Platform* platform, InterfaceRegistry* registry) {
   }
 }
 
-void BlinkInitializer::RegisterInterfaces(InterfaceRegistry& registry) {
+void BlinkInitializer::RegisterInterfaces(
+    service_manager::BinderRegistry& registry) {
   ModulesInitializer::RegisterInterfaces(registry);
   WebThread* main_thread = Platform::Current()->MainThread();
   // GetSingleThreadTaskRunner() uses GetWebTaskRunner() internally.
@@ -122,8 +124,9 @@ void BlinkInitializer::RegisterInterfaces(InterfaceRegistry& registry) {
   if (!main_thread || !main_thread->GetWebTaskRunner())
     return;
 
-  registry.AddInterface(CrossThreadBind(&OomInterventionImpl::Create),
-                        main_thread->GetSingleThreadTaskRunner());
+  registry.AddInterface(
+      ConvertToBaseCallback(CrossThreadBind(&OomInterventionImpl::Create)),
+      main_thread->GetSingleThreadTaskRunner());
 }
 
 }  // namespace blink
