@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0692073_efbf1b49",
+        "filename": "ios/chrome/browser/net/cookies_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-12-04T16:53:27Z",
+      "side": 0,
+      "message": "This is the only place we programmatically clear cookies. In history and settings we test the UI.",
+      "revId": "67255bc1360d01590552c3fa97aac58619f2288e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f4a58d1_17bf22bb",
+        "filename": "ios/chrome/browser/net/cookies_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-12-04T16:53:27Z",
+      "side": 0,
+      "message": "This is the only place we programmatically remove cookies.",
+      "revId": "67255bc1360d01590552c3fa97aac58619f2288e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae7b4e73_5de3ccdf",
+        "filename": "ios/chrome/browser/ui/keyboard_commands_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-12-04T16:53:27Z",
+      "side": 0,
+      "message": "This is the only place we wait for the bookmark editor to display.\n\nOther tests that use \"Single Bookmark Editor\" directly interact with it (i.e. don\u0027t wait). I don\u0027t think it\u0027s worth the churn to create a matcher for the hard-coded text, I think it\u0027s outside of the scope of this, and not too terrible for people to have to directly use the string.",
+      "revId": "67255bc1360d01590552c3fa97aac58619f2288e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1452d02_57d9cc41",
+        "filename": "ios/chrome/browser/ui/keyboard_commands_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-12-04T16:53:27Z",
+      "side": 0,
+      "message": "This is the only place we wait for the bookmark editor to display. Other places look for \"Single Bookmark Editor\" (2 tests), and I don\u0027t think it\u0027s worth the churn to create a new matcher for this right now (if we did, it wouldn\u0027t go in this CL, I think).",
+      "revId": "67255bc1360d01590552c3fa97aac58619f2288e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ce1dcd6_8e046c24",
+        "filename": "ios/chrome/browser/ui/settings/settings_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-12-04T16:53:27Z",
+      "side": 0,
+      "message": "Clear cookies is only done in three places.\n- Here with the UI.\n- In history_ui_egtest.mm where it is done once, while clearing all history.\n- In cookies_egtest.mm where things are done programatically.\n\nI think it is fine for this code to live as is. There is already a shared matcher for the UI button to clear cookies.",
+      "revId": "67255bc1360d01590552c3fa97aac58619f2288e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71238423_9e69af0c",
+        "filename": "ios/chrome/browser/ui/settings/settings_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-12-04T16:53:27Z",
+      "side": 0,
+      "message": "This is the only place we just clear cookies via the UI. history_ui_egtest.mm also touches the button, but does it along with clearing the rest of history.",
+      "revId": "67255bc1360d01590552c3fa97aac58619f2288e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
