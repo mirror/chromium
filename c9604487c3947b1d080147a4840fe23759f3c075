@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c92ca7a_a593635a",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-04T22:19:17Z",
+      "side": 1,
+      "message": "why is this variable static?",
+      "range": {
+        "startLine": 356,
+        "startChar": 2,
+        "endLine": 356,
+        "endChar": 8
+      },
+      "revId": "c9604487c3947b1d080147a4840fe23759f3c075",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
