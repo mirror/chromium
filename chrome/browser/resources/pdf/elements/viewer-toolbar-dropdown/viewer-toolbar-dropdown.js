@@ -66,6 +66,7 @@ Polymer({
       this.$.dropdown.style.display = 'block';
       if (!this.maxHeightValid_)
         this.updateMaxHeight();
+      this.fire('dropdown-opened', this.id);
     }
     this.cancelAnimation_();
     this.playAnimation_(this.dropdownOpen);
