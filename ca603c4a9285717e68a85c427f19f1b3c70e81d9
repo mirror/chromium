@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "601f0520_9385c5cf",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-12-04T06:12:36Z",
+      "side": 1,
+      "message": "Done. Removed this DCHECK.",
+      "parentUuid": "84f306cf_d6aa25e0",
+      "range": {
+        "startLine": 164,
+        "startChar": 2,
+        "endLine": 164,
+        "endChar": 45
+      },
+      "revId": "ca603c4a9285717e68a85c427f19f1b3c70e81d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a80cdddd_ba5f4c99",
         "filename": "ui/views/bubble/tray_bubble_view.cc",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-01T15:43:26Z",
       "side": 1,
       "message": "Shouldn\u0027t you be using GetWidget()-\u003eGetNativeView()?",
+      "range": {
+        "startLine": 165,
+        "startChar": 25,
+        "endLine": 165,
+        "endChar": 38
+      },
+      "revId": "ca603c4a9285717e68a85c427f19f1b3c70e81d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "328733c0_b72a5457",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-12-04T06:12:36Z",
+      "side": 1,
+      "message": "This has to check parent of widget of tray bubble view.\n\nI\u0027ve dumped window tree with --ash-debug-shortcuts and Ctrl+Alt+Shift+W.\n\nThe window tree is like\n\n +SettingBubbleContainer\n  +BubbleDialogDelegateView(tray_bubble_view_-\u003eGetWidget()-\u003eGetNativeView())\n  +NetworkStateListDetailedView::InfoBubble\n\nI\u0027ve also confirmed that tray_bubble_view_-\u003eGetWidget()-\u003eGetNativeView()-\u003eparent() \u003d\u003d tray_bubble_view_-\u003eparent_window() with current code.",
+      "parentUuid": "a80cdddd_ba5f4c99",
       "range": {
         "startLine": 165,
         "startChar": 25,
