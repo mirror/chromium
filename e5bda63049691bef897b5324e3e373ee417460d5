@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfb083e3_c6585c02",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericValue.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-12-04T03:59:09Z",
+      "side": 1,
+      "message": "Can this not be a CSSMathSum*? It\u0027s better to use explicit types where it\u0027s not too verbose - it makes the code easier to read and reduces the likelihood of accidentally making copies.\n (https://google.github.io/styleguide/cppguide.html#auto)\n\nActually I think the same could be said for using auto sum \u003d SumValue() above as well - Does it work if you use CSSNumericSumValue as the type there?",
+      "revId": "e5bda63049691bef897b5324e3e373ee417460d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcb496bd_1133a5c4",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericValue.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-12-04T03:59:09Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "e5bda63049691bef897b5324e3e373ee417460d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
