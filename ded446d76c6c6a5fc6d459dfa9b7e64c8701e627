@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0dfb8ede_729081e0",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-04T23:50:56Z",
+      "side": 1,
+      "message": "In practice, how long will these methods wait? I\u0027m wondering how much jank they will introduce to the main thread.",
+      "revId": "ded446d76c6c6a5fc6d459dfa9b7e64c8701e627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
