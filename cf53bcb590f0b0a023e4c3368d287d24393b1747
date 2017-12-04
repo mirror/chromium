@@ -69,6 +69,24 @@
       "revId": "cf53bcb590f0b0a023e4c3368d287d24393b1747",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "72a94921_d54cb9fd",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/health-thermometer-iframe.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-12-04T23:00:44Z",
+      "side": 1,
+      "message": "Yeah, they are new haha. They can be used anytime you need a string. So your proposed changed works too.",
+      "parentUuid": "da45b100_348c3013",
+      "revId": "cf53bcb590f0b0a023e4c3368d287d24393b1747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
