@@ -15,6 +15,7 @@
 #include "ui/views/border.h"
 #include "ui/views/controls/focus_ring.h"
 #include "ui/views/controls/separator.h"
+#include "ui/views/focus/focus_manager.h"
 #include "ui/views/style/platform_style.h"
 #include "ui/views/widget/widget.h"
 
@@ -224,6 +225,7 @@ ScrollView::ScrollView()
 }
 
 ScrollView::~ScrollView() {
+  RemoveFocusChangeListener();
   // The scrollbars may not have been added, delete them to ensure they get
   // deleted.
   delete horiz_sb_;
@@ -814,6 +816,36 @@ bool ScrollView::ScrollsWithLayers() const {
   // Just check for the presence of a layer since it's cheaper than querying the
   // Feature flag each time.
   return contents_viewport_->layer() != nullptr;
+}
+
+void ScrollView::AddedToWidget() {
+  AddFocusChangeListener();
+}
+
+void ScrollView::RemovedFromWidget() {
+  RemoveFocusChangeListener();
+}
+
+void ScrollView::OnWillChangeFocus(View* focused_before, View* focused_now) {}
+
+void ScrollView::OnDidChangeFocus(View* focused_before, View* focused_now) {
+  if (focused_now && contents_ && focused_now != contents_ &&
+      contents_->Contains(focused_now)) {
+    gfx::Point focused_origin;
+    View::ConvertPointToTarget(focused_now, contents_, &focused_origin);
+    gfx::Rect focused_rect(focused_origin, focused_now->size());
+    ScrollContentsRegionToBeVisible(focused_rect);
+  }
+}
+
+void ScrollView::AddFocusChangeListener() {
+  GetFocusManager()->AddFocusChangeListener(this);
+}
+
+void ScrollView::RemoveFocusChangeListener() {
+  FocusManager* focus_manager = GetFocusManager();
+  if (focus_manager)
+    focus_manager->RemoveFocusChangeListener(this);
 }
 
 void ScrollView::EnableViewPortLayer() {
