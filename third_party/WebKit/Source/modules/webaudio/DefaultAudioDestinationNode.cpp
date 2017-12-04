@@ -25,6 +25,7 @@
 
 #include "modules/webaudio/DefaultAudioDestinationNode.h"
 
+#include "core/origin_trials/origin_trials.h"
 #include "bindings/core/v8/ExceptionMessages.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/ExceptionCode.h"
