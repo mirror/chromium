@@ -216,6 +216,7 @@ LayoutTestContentRendererClient::OverrideCreateAudioDevice(
 }
 
 WebClipboard* LayoutTestContentRendererClient::OverrideWebClipboard() {
+  DCHECK(false) << "*** DIE ***";
   if (!clipboard_)
     clipboard_.reset(new MockWebClipboardImpl);
   return clipboard_.get();
