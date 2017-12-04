@@ -16,6 +16,24 @@
       "revId": "6add558fd7aabce005373a4b9e3da88b95a1ea14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bce3dae_c617295b",
+        "filename": "components/autofill/core/browser/address_normalizer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-04T18:21:36Z",
+      "side": 1,
+      "message": "You shouldn\u0027t get this error if you call this function from the main thread of the chrome or browser_tests binary. \n\nTo call this function from the main thread of a unit test, instantiate a base::test::ScopedTaskEnvironment in your test fixture.\n\nTo call this function from a thread pool, you need a sequence. E.g.\n\nauto task_runner \u003d base::CreateSequencedTaskRunnerWithTraits(...);\ntask_runner-\u003ePostTask(FROM_HERE, \u0026CreateAddressNormalizer);\n\nvoid CreateAddressNormalizer() {\n  AddressNormalizerImpl normalizer(...);\n}\n\nAddressNormalizerImpl::AddressNormalizerImpl(...) {\n  // No DCHECK because this runs on a sequence.\n  base::PostTaskWithTraitsAndReplyWithResult(...);\n}",
+      "parentUuid": "5f2b256d_139ec3f9",
+      "revId": "6add558fd7aabce005373a4b9e3da88b95a1ea14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
