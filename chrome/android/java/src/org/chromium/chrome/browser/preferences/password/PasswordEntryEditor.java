@@ -83,7 +83,7 @@ public class PasswordEntryEditor extends Fragment {
     private boolean mException;
 
     @VisibleForTesting
-    public static final String VIEW_PASSWORDS = "view-passwords";
+    public static final String VIEW_PASSWORDS = "ViewPasswords";
 
     private ClipboardManager mClipboard;
     private KeyguardManager mKeyguardManager;
