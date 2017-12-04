@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "6afb4d20_5a3c509f",
+        "filename": "device/geolocation/geolocation_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-12-04T01:33:09Z",
+      "side": 1,
+      "message": "Clients used to consume geolocation via GeolocationProvider::GetInstance()-\u003efunc(). I think that\u0027s why we put many \"public\" interfaces in the geolocation_provider.h.\nNow we are trying to convert clients to consume geolocation via mojo, so I think the geolocation_provider.h will be removed eventually, and the geolocation_provider_impl{.cc|.h} will be the internal part of Device Service.\nThe UserDidOptIntoLocationServices() is moved to geolocation_provider_impl.cc which means it is internal part and is not visible to clients anymore. So I feel maybe we don\u0027t need to remain the moved stuffs here. In future I\u0027ll move all the comments here when deletes this geolocation_provider.h. WDYT? thanks!",
+      "parentUuid": "538ae2ba_679b37fd",
+      "revId": "aabd893ed87cb9965a2ef5623fb385cbc0850906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef465200_3006f869",
         "filename": "device/geolocation/geolocation_provider_impl.cc",
         "patchSetId": 6
@@ -87,6 +105,24 @@
       "writtenOn": "2017-12-01T18:16:19Z",
       "side": 1,
       "message": "\"global\" because there is only once provider instance for the whole browser?",
+      "revId": "aabd893ed87cb9965a2ef5623fb385cbc0850906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8947c78c_a35cf253",
+        "filename": "device/geolocation/public/interfaces/geolocation_control.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-12-04T01:33:09Z",
+      "side": 1,
+      "message": "Yes there is only one device service instance for the whole browser, and in which the geolocation_provider is singleton too.",
+      "parentUuid": "68dbe6b2_e09dab20",
       "revId": "aabd893ed87cb9965a2ef5623fb385cbc0850906",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
