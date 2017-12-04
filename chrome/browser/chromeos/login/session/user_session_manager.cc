@@ -1004,6 +1004,21 @@ void UserSessionManager::StartCrosSession() {
   btl->AddLoginTimeMarker("StartSession-Start", false);
   DBusThreadManager::Get()->GetSessionManagerClient()->StartSession(
       cryptohome::Identification(user_context_.GetAccountId()));
+
+  // Only send the password for enterprise users. See http://crbug/386606.
+  const bool is_enterprise_managed = g_browser_process->platform_part()
+                                         ->browser_policy_connector_chromeos()
+                                         ->IsEnterpriseManaged();
+  const bool should_send_password =
+      is_enterprise_managed &&
+      user_context_.GetPasswordKey()->GetSecret().size() > 0;
+
+  if (should_send_password) {
+    DBusThreadManager::Get()->GetSessionManagerClient()->SaveLoginPassword(
+        user_context_.GetPasswordKey()->GetSecret());
+  }
+
+  user_context_.GetMutablePasswordKey()->ClearSecret();
   btl->AddLoginTimeMarker("StartSession-End", false);
 }
 

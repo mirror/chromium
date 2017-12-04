@@ -655,6 +655,7 @@ void GaiaScreenHandler::HandleCompleteAuthentication(
 
   UserContext user_context(GetAccountId(email, gaia_id, AccountType::GOOGLE));
   user_context.SetKey(Key(password));
+  user_context.SetPasswordKey(Key(password));
   user_context.SetAuthCode(auth_code);
   user_context.SetAuthFlow(using_saml
                                ? UserContext::AUTH_FLOW_GAIA_WITH_SAML
