@@ -95,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "69547096_a368a8d8",
+        "filename": "media/midi/midi_message_queue_fuzzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-12-04T18:59:33Z",
+      "side": 1,
+      "message": "In that case we\u0027ll have to declare and initialize it inside of LLVMFuzzerTestOneInput() function. Otherwise, the crashes will be non reproducible, as we could not reproduce the state of Queue.",
+      "parentUuid": "c2f1e987_97882a7d",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 13
+      },
+      "revId": "a71fee012c66e7ed8c2c20a739bd08e4d4764261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6101db5b_bcdfd31d",
         "filename": "media/midi/midi_message_queue_fuzzer.cc",
         "patchSetId": 3
