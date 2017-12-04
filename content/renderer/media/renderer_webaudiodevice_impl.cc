@@ -74,6 +74,27 @@ int GetOutputBufferSize(const blink::WebAudioLatencyHint& latency_hint,
   return 0;
 }
 
+int GetPreferredWebAudioBufferSize(
+    const blink::WebAudioLatencyHint& latency_hint,
+    int output_buffer_size,
+    int sample_rate) {
+  const int max_webaudio_bufsize = 8192;
+  DCHECK_LE(output_buffer_size, max_webaudio_bufsize);
+
+  int buffer_size = output_buffer_size;
+  if (latency_hint.Category() == WebAudioLatencyHint::kCategoryExact) {
+    const int requested_buffer_size = sample_rate * latency_hint.Seconds();
+    const int rounded_buffer_size =
+        std::round(std::max(requested_buffer_size, 1) /
+                   static_cast<double>(output_buffer_size)) *
+        output_buffer_size;
+    buffer_size = std::min(static_cast<int>(max_webaudio_bufsize),
+                           std::max(rounded_buffer_size, output_buffer_size));
+  }
+
+  return buffer_size;
+}
+
 int FrameIdFromCurrentContext() {
   // Assumption: This method is being invoked within a V8 call stack.  CHECKs
   // will fail in the call to frameForCurrentContext() otherwise.
@@ -142,8 +163,11 @@ RendererWebAudioDeviceImpl::RendererWebAudioDeviceImpl(
       GetOutputBufferSize(latency_hint_, latency, hardware_params);
   DCHECK_NE(0, output_buffer_size);
 
+  const int sink_buffer_size = GetPreferredWebAudioBufferSize(
+      latency_hint, output_buffer_size, hardware_params.sample_rate());
+
   sink_params_.Reset(media::AudioParameters::AUDIO_PCM_LOW_LATENCY, layout,
-                     hardware_params.sample_rate(), 16, output_buffer_size);
+                     hardware_params.sample_rate(), 16, sink_buffer_size);
   // Always set channels, this should be a no-op in all but the discrete case;
   // this call will fail if channels doesn't match the layout in other cases.
   sink_params_.set_channels_for_discrete(channels);
