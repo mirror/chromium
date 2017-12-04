@@ -309,6 +309,7 @@ void ResourceFetcherImpl::Start(
         static_cast<url::Origin>(frame->GetDocument().GetSecurityOrigin());
     SetHeader(kAccessControlAllowOriginHeader,
               blink::WebSecurityOrigin::CreateUnique().ToString().Ascii());
+    request_.fetch_request_mode = network::mojom::FetchRequestMode::kCORS;
   }
   request_.resource_type = WebURLRequestContextToResourceType(request_context);
 
