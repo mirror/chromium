@@ -568,8 +568,7 @@ test("browser_tests") {
       "../browser/metrics/process_memory_metrics_emitter_browsertest.cc",
       "../browser/metrics/startup_metrics_browsertest.cc",
       "../browser/metrics/tab_reactivation_tracker_browsertest.cc",
-      "../browser/metrics/tab_stats_data_store_unittests.cc",
-      "../browser/metrics/tab_stats_tracker_unittests.cc",
+      "../browser/metrics/tab_stats_tracker_browsertest.cc",
       "../browser/metrics/ukm_browsertest.cc",
       "../browser/net/chrome_mojo_proxy_resolver_factory_browsertest.cc",
       "../browser/net/chrome_network_delegate_browsertest.cc",
@@ -1653,9 +1652,7 @@ test("browser_tests") {
         ]
       }
       if (toolkit_views) {
-        sources -= [
-          "../browser/ui/views/select_file_dialog_extension_browsertest.cc",
-        ]
+        sources -= [ "../browser/ui/views/select_file_dialog_extension_browsertest.cc" ]
       }
       if (is_win || is_linux) {
         sources +=
@@ -1911,9 +1908,7 @@ test("browser_tests") {
       }
     }
     if (enable_mdns) {
-      sources += [
-        "../browser/ui/webui/local_discovery/local_discovery_ui_browsertest.cc",
-      ]
+      sources += [ "../browser/ui/webui/local_discovery/local_discovery_ui_browsertest.cc" ]
     }
     if (use_brlapi) {
       deps += [ "//build/linux/libbrlapi" ]
@@ -2743,6 +2738,8 @@ test("unit_tests") {
       "../browser/media_galleries/win/mtp_device_delegate_impl_win_unittest.cc",
       "../browser/media_galleries/win/mtp_device_object_enumerator_unittest.cc",
       "../browser/memory/swap_thrashing_monitor_delegate_win_unittest.cc",
+      "../browser/metrics/tab_stats_data_store_unittests.cc",
+      "../browser/metrics/tab_stats_tracker_unittests.cc",
       "../browser/page_load_metrics/observers/session_restore_page_load_metrics_observer_unittest.cc",
       "../browser/resource_coordinator/background_tab_navigation_throttle_unittest.cc",
       "../browser/resource_coordinator/lifecycle_unit_unittest.cc",
@@ -2979,9 +2976,7 @@ test("unit_tests") {
     }
 
     if (is_win) {
-      sources += [
-        "../browser/notifications/notification_platform_bridge_win_unittest.cc",
-      ]
+      sources += [ "../browser/notifications/notification_platform_bridge_win_unittest.cc" ]
     }
   }
 
@@ -3403,9 +3398,7 @@ test("unit_tests") {
           [ "../browser/extensions/external_registry_loader_win_unittest.cc" ]
     }
     if (is_chromeos) {
-      sources += [
-        "../browser/extensions/api/file_system/consent_provider_unittest.cc",
-      ]
+      sources += [ "../browser/extensions/api/file_system/consent_provider_unittest.cc" ]
     } else {
       sources += [
         "../browser/extensions/api/messaging/native_message_process_host_unittest.cc",
@@ -3635,9 +3628,7 @@ test("unit_tests") {
     ]
 
     if (is_mac && !mac_views_browser) {
-      sources += [
-        "../browser/ui/startup/session_crashed_infobar_delegate_unittest.cc",
-      ]
+      sources += [ "../browser/ui/startup/session_crashed_infobar_delegate_unittest.cc" ]
     }
   }
   if (enable_webrtc) {
@@ -4574,9 +4565,7 @@ if (is_android) {
           "../browser/ui/views/keyboard_access_browsertest.cc",
         ]
         if (!use_ozone) {
-          sources += [
-            "../browser/ui/libgtkui/select_file_dialog_interactive_uitest.cc",
-          ]
+          sources += [ "../browser/ui/libgtkui/select_file_dialog_interactive_uitest.cc" ]
           deps += [ "//build/config/linux/gtk" ]
         }
       }
