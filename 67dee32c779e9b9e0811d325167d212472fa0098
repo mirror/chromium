@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5223e686_20dd9d32",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-04T03:53:43Z",
+      "side": 1,
+      "message": "Could you canonicalized passed selection to keep current behavior?\n\nAs xiaochengh@ mentioned, we may not need to canonicalize but we are not\nsure.\n\nOnce we canonicalize it can keep current behavior.",
+      "range": {
+        "startLine": 107,
+        "startChar": 61,
+        "endLine": 107,
+        "endChar": 70
+      },
+      "revId": "67dee32c779e9b9e0811d325167d212472fa0098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00a269d9_f928e066",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-04T03:53:43Z",
+      "side": 1,
+      "message": "BTW, it seems we may want to have SelectionTemplate::ComputeRange()\nThere are number of use cases, e.g. SelectionAdjuster, VisibleSelection and\nso on, at least three.",
+      "revId": "67dee32c779e9b9e0811d325167d212472fa0098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
