@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5dcc9610_3d3805e4",
+        "filename": "content/browser/renderer_host/input/mouse_latency_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-12-04T13:09:06Z",
+      "side": 1,
+      "message": "Can you add a comment indicating why you need to listen in both the swap buffers and the ack (for events which cause a swap vs those that don\u0027t)?\n\nDoes it make sense to factor this bit out into a separate method, used by both OnGpuSwapBuffersCompletedInternal and OnMouseEventAck?",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 86,
+        "endChar": 5
+      },
+      "revId": "d78211641002c15727568c1c4565766868401723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fe324fa_052457e7",
+        "filename": "content/browser/renderer_host/input/mouse_latency_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-12-04T13:09:06Z",
+      "side": 1,
+      "message": "Should we clear this at some point?",
+      "range": {
+        "startLine": 107,
+        "startChar": 14,
+        "endLine": 107,
+        "endChar": 33
+      },
+      "revId": "d78211641002c15727568c1c4565766868401723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4028fae6_550b7dfd",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-12-04T13:09:06Z",
+      "side": 1,
+      "message": "Is there a missing word here?",
+      "range": {
+        "startLine": 639,
+        "startChar": 34,
+        "endLine": 639,
+        "endChar": 40
+      },
+      "revId": "d78211641002c15727568c1c4565766868401723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
