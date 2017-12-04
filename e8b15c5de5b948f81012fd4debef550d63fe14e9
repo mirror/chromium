@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "993bc68e_a11c52d8",
+        "filename": "net/android/java/src/org/chromium/net/NetworkChangeNotifierAutoDetect.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-04T13:11:36Z",
+      "side": 1,
+      "message": "Done.  I added comments versus moving boolean to |mNetworkCallback| as I think it\u0027s simpler to just have mNetworkCallback be null.  Hmm Actually another option would be to remove mRegisterNetworkCallbackFailed, and make registerNetworkCallbackFailed() return mNetworkCallback \u003d\u003d null.",
+      "parentUuid": "78ae41a5_317c2b15",
+      "revId": "e8b15c5de5b948f81012fd4debef550d63fe14e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cbe739a_59c6e3aa",
         "filename": "net/android/java/src/org/chromium/net/NetworkChangeNotifierAutoDetect.java",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "081c1684_9517745f",
+        "filename": "net/android/java/src/org/chromium/net/NetworkChangeNotifierAutoDetect.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-04T13:11:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cbe739a_59c6e3aa",
+      "revId": "e8b15c5de5b948f81012fd4debef550d63fe14e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eba0e897_7f3cfce7",
         "filename": "net/android/network_change_notifier_delegate_android.cc",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "e8b15c5de5b948f81012fd4debef550d63fe14e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "127fbfb0_a26aa335",
+        "filename": "net/android/network_change_notifier_delegate_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-04T13:11:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eba0e897_7f3cfce7",
+      "revId": "e8b15c5de5b948f81012fd4debef550d63fe14e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
