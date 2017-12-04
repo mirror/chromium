@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b45f7486_7fabd3a0",
+        "filename": "media/cast/cast_environment.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-04T22:54:03Z",
+      "side": 1,
+      "message": "This should be:\n\n  base::TickClock* const clock_;\n\nSince this member must never change.",
+      "range": {
+        "startLine": 76,
+        "startChar": 2,
+        "endLine": 76,
+        "endChar": 26
+      },
+      "revId": "ec5ce6749e3974d00946b29024cf2c3c63318a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
