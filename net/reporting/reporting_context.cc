@@ -6,13 +6,16 @@
 
 #include <utility>
 
+#include "base/bind.h"
 #include "base/observer_list.h"
+#include "base/rand_util.h"
 #include "base/time/clock.h"
 #include "base/time/default_clock.h"
 #include "base/time/default_tick_clock.h"
 #include "base/time/tick_clock.h"
 #include "base/time/time.h"
 #include "net/base/backoff_entry.h"
+#include "net/base/rand_callback.h"
 #include "net/reporting/reporting_cache.h"
 #include "net/reporting/reporting_delegate.h"
 #include "net/reporting/reporting_delivery_agent.h"
@@ -37,6 +40,7 @@ class ReportingContextImpl : public ReportingContext {
       : ReportingContext(policy,
                          std::make_unique<base::DefaultClock>(),
                          std::make_unique<base::DefaultTickClock>(),
+                         base::BindRepeating(&base::RandInt),
                          ReportingUploader::Create(request_context),
                          ReportingDelegate::Create(request_context)) {}
 };
@@ -70,6 +74,7 @@ void ReportingContext::NotifyCacheUpdated() {
 ReportingContext::ReportingContext(const ReportingPolicy& policy,
                                    std::unique_ptr<base::Clock> clock,
                                    std::unique_ptr<base::TickClock> tick_clock,
+                                   const RandIntCallback& rand_callback,
                                    std::unique_ptr<ReportingUploader> uploader,
                                    std::unique_ptr<ReportingDelegate> delegate)
     : policy_(policy),
@@ -78,7 +83,7 @@ ReportingContext::ReportingContext(const ReportingPolicy& policy,
       uploader_(std::move(uploader)),
       delegate_(std::move(delegate)),
       cache_(ReportingCache::Create(this)),
-      endpoint_manager_(ReportingEndpointManager::Create(this)),
+      endpoint_manager_(ReportingEndpointManager::Create(this, rand_callback)),
       delivery_agent_(ReportingDeliveryAgent::Create(this)),
       persister_(ReportingPersister::Create(this)),
       garbage_collector_(ReportingGarbageCollector::Create(this)),

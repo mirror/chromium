@@ -11,6 +11,7 @@
 #include "base/time/time.h"
 #include "net/base/backoff_entry.h"
 #include "net/base/net_export.h"
+#include "net/base/rand_callback.h"
 #include "net/reporting/reporting_policy.h"
 
 namespace base {
@@ -68,6 +69,7 @@ class NET_EXPORT ReportingContext {
   ReportingContext(const ReportingPolicy& policy,
                    std::unique_ptr<base::Clock> clock,
                    std::unique_ptr<base::TickClock> tick_clock,
+                   const RandIntCallback& rand_callback,
                    std::unique_ptr<ReportingUploader> uploader,
                    std::unique_ptr<ReportingDelegate> delegate);
 
