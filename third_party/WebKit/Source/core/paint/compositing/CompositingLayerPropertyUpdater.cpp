@@ -49,6 +49,7 @@ void CompositingLayerPropertyUpdater::Update(const LayoutObject& object) {
   SetContainerLayerState(mapping->LayerForScrollCorner());
   SetContainerLayerState(mapping->DecorationOutlineLayer());
   SetContainerLayerState(mapping->BackgroundLayer());
+  SetContainerLayerState(mapping->ChildClippingMaskLayer());
 
   auto SetContentsLayerState =
       [rare_paint_data, &snapped_paint_offset](GraphicsLayer* graphics_layer) {
@@ -77,7 +78,24 @@ void CompositingLayerPropertyUpdater::Update(const LayoutObject& object) {
         snapped_paint_offset + mask_layer->OffsetFromLayoutObject());
   }
 
-  // TODO(crbug.com/790548): Complete for all drawable layers.
+  if (auto* ancestor_clipping_mask_layer =
+          mapping->AncestorClippingMaskLayer()) {
+    // The layer is in |clip_inheritance_ancestor|'s state.
+    const auto* clip_inheritance_ancestor = mapping->ClipInheritanceAncestor();
+    // Convert layer offset into |clip_inheritance_ancestor| coordinates.
+    LayoutPoint layer_offset(
+        snapped_paint_offset +
+        ancestor_clipping_mask_layer->OffsetFromLayoutObject());
+    mapping->OwningLayer().ConvertToLayerCoords(clip_inheritance_ancestor,
+                                                layer_offset);
+    const auto& fragment =
+        clip_inheritance_ancestor->GetLayoutObject().FirstFragment();
+    // SPv1 compositing forces single fragment for composited elements.
+    DCHECK(!fragment.NextFragment());
+    ancestor_clipping_mask_layer->SetLayerState(
+        PropertyTreeState(*fragment.LocalBorderBoxProperties()),
+        RoundedIntPoint(layer_offset));
+  }
 }
 
 void CompositingLayerPropertyUpdater::Update(const LocalFrameView& frame_view) {
