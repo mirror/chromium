@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76cf2f26_7dd80401",
+        "filename": "cc/paint/paint_op_buffer_fuzzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000770
+      },
+      "writtenOn": "2017-12-04T18:06:10Z",
+      "side": 1,
+      "message": "I\u0027m wondering what the right way to handle this is. The reason this is here is that creating the TestContextProvider indirectly checks whether a command flag has been passed indicating low memory mode. If the process\u0027s base::CommandLine hasn\u0027t been initialized then the query causes a crash. I\u0027m guessing this isn\u0027t the right place to do this but wasn\u0027t sure where might be.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 6
+      },
+      "revId": "04957f3153505ae67153ae9b7ccd382c2df62857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
