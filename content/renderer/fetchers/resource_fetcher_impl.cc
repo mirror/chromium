@@ -309,6 +309,9 @@ void ResourceFetcherImpl::Start(
         static_cast<url::Origin>(frame->GetDocument().GetSecurityOrigin());
     SetHeader(kAccessControlAllowOriginHeader,
               blink::WebSecurityOrigin::CreateUnique().ToString().Ascii());
+    // TODO(creis): Does this work?  Add comment.
+    // Maybe add original check back, but filter it by the request type?
+    request_.fetch_request_mode = network::mojom::FetchRequestMode::kCORS;
   }
   request_.resource_type = WebURLRequestContextToResourceType(request_context);
 
