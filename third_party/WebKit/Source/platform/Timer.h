@@ -52,13 +52,6 @@ class PLATFORM_EXPORT TimerBase {
   void Start(TimeDelta next_fire_interval,
              TimeDelta repeat_interval,
              const WebTraceLocation&);
-  void Start(double next_fire_interval,
-             double repeat_interval,
-             const WebTraceLocation& from_here) {
-    Start(TimeDelta::FromSecondsD(next_fire_interval),
-          TimeDelta::FromSecondsD(repeat_interval), from_here);
-  }
-
   void StartRepeating(TimeDelta repeat_interval,
                       const WebTraceLocation& caller) {
     Start(repeat_interval, repeat_interval, caller);
@@ -89,9 +82,6 @@ class PLATFORM_EXPORT TimerBase {
     TimeTicks now = TimerMonotonicallyIncreasingTime();
     SetNextFireTime(now, std::max(next_fire_time_ - now + delta, TimeDelta()));
     repeat_interval_ += delta;
-  }
-  void AugmentRepeatInterval(double delta) {
-    AugmentRepeatInterval(TimeDelta::FromSecondsD(delta));
   }
 
   void MoveToNewTaskRunner(scoped_refptr<WebTaskRunner>);

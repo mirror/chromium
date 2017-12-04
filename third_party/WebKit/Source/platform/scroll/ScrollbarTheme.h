@@ -168,8 +168,12 @@ class PLATFORM_EXPORT ScrollbarTheme {
     return std::numeric_limits<int>::max();
   }
 
-  virtual double InitialAutoscrollTimerDelay() { return 0.25; }
-  virtual double AutoscrollTimerDelay() { return 0.05; }
+  virtual TimeDelta InitialAutoscrollTimerDelay() {
+    return TimeDelta::FromMilliseconds(250);
+  }
+  virtual TimeDelta AutoscrollTimerDelay() {
+    return TimeDelta::FromMilliseconds(50);
+  }
 
   virtual IntRect ConstrainTrackRectToTrackPieces(const ScrollbarThemeClient&,
                                                   const IntRect& rect) {

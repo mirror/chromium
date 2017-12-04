@@ -454,7 +454,7 @@ TEST_F(TimerTest, AugmentRepeatInterval) {
   EXPECT_FLOAT_EQ(10.0, timer.NextFireInterval());
 
   platform_->AdvanceClockSeconds(2.0);
-  timer.AugmentRepeatInterval(10);
+  timer.AugmentRepeatInterval(TimeDelta::FromSeconds(10));
 
   EXPECT_FLOAT_EQ(20.0, timer.RepeatInterval());
   EXPECT_FLOAT_EQ(18.0, timer.NextFireInterval());
@@ -476,7 +476,7 @@ TEST_F(TimerTest, AugmentRepeatInterval_TimerFireDelayed) {
   EXPECT_FLOAT_EQ(10.0, timer.NextFireInterval());
 
   platform_->AdvanceClockSeconds(123.0);  // Make the timer long overdue.
-  timer.AugmentRepeatInterval(10);
+  timer.AugmentRepeatInterval(TimeDelta::FromSeconds(10));
 
   EXPECT_FLOAT_EQ(20.0, timer.RepeatInterval());
   // The timer is overdue so it should be scheduled to fire immediatly.
