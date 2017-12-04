@@ -203,22 +203,22 @@ void CompactTitleMessageView::OnPaint(gfx::Canvas* canvas) {
 
   const gfx::FontList& font_list = GetTextFontList();
 
-  // Elides title and message. The behavior is based on Android's one.
-  // * If the title is too long, only the title is shown.
-  // * If the message is too long, the full content of the title is shown,
+  // Elides title and message.
+  // * If the message is too long, only the message is shown.
+  // * If the title is too long, the full content of the message is shown,
   //   kCompactTitleMessageViewSpacing is added between them, and the elided
-  //   message is shown.
+  //   title is shown.
   // * If they are short enough, the title is left-aligned and the message is
   //   right-aligned.
-  const int original_title_width =
-      gfx::Canvas::GetStringWidthF(title, font_list);
-  if (original_title_width >= width())
-    message.clear();
-  title = gfx::ElideText(title, font_list, width(), gfx::ELIDE_TAIL);
-  const int title_width = gfx::Canvas::GetStringWidthF(title, font_list);
-  const int message_width =
-      std::max(0, width() - title_width - kCompactTitleMessageViewSpacing);
-  message = gfx::ElideText(message, font_list, message_width, gfx::ELIDE_TAIL);
+  const int original_message_width =
+      gfx::Canvas::GetStringWidthF(message, font_list);
+  if (original_message_width >= width())
+    title.clear();
+  message = gfx::ElideText(message, font_list, width(), gfx::ELIDE_TAIL);
+  const int message_width = gfx::Canvas::GetStringWidthF(message, font_list);
+  const int title_width =
+      std::max(0, width() - message_width - kCompactTitleMessageViewSpacing);
+  title = gfx::ElideText(title, font_list, title_width, gfx::ELIDE_TAIL);
 
   title_view_->SetText(title);
   message_view_->SetText(message);
