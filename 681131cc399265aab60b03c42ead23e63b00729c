@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "52e4e89d_a4e0154b",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-04T11:33:42Z",
+      "side": 1,
+      "message": "i meant to clamp sum_ to its max value rather than having it wrap around? or do doubles not do that? i don\u0027t speak floating point. :-)",
+      "parentUuid": "5425e5b0_52e7dac4",
+      "revId": "681131cc399265aab60b03c42ead23e63b00729c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51e5ced6_2922fd3e",
         "filename": "chrome/installer/zucchini/binary_data_histogram.cc",
         "patchSetId": 3
