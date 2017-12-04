@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "699619dc_7be9c0ca",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-04T20:05:36Z",
+      "side": 1,
+      "message": "I filed a bug and put that in a TODO here. After looking at the code we can probably do it async without much extra work, but I\u0027d rather do it separately because it\u0027s not a trivial change (either way).",
+      "parentUuid": "b0d15b97_e3cbac80",
+      "revId": "aa513bc59b42f8fbb5146ec6111d977892c0f7e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d43bddc_a9104174",
         "filename": "ui/gfx/win/rendering_window_manager.cc",
         "patchSetId": 21
