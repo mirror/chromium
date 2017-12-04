@@ -16,6 +16,7 @@
  @private
   CGFloat frameCount_;
   std::unique_ptr<base::MessagePumpNSRunLoop> message_pump_;
+  bool did_end_animation_;
 }
 
 - (void)runAnimation:(NSAnimation*)animation;
@@ -25,8 +26,10 @@
 @implementation ConstrainedWindowAnimationTestDelegate
 
 - (id)init {
-  if ((self = [super init]))
+  if ((self = [super init])) {
     message_pump_.reset(new base::MessagePumpNSRunLoop);
+    did_end_animation_ = false;
+  }
   return self;
 }
 
@@ -40,6 +43,7 @@
 
 - (void)animationDidEnd:(NSAnimation*)animation {
   EXPECT_EQ(2, frameCount_);
+  did_end_animation_ = true;
   message_pump_->Quit();
 }
 
@@ -49,7 +53,8 @@
   [animation setDuration:600];
   [animation setDelegate:self];
   [animation startAnimation];
-  message_pump_->Run(NULL);
+  if (!did_end_animation)
+    message_pump_->Run(NULL);
 }
 
 @end
