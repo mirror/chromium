@@ -25,6 +25,7 @@
 #define HTMLIFrameElement_h
 
 #include "core/CoreExport.h"
+#include "core/dom/Policy.h"
 #include "core/html/HTMLFrameElementBase.h"
 #include "core/html/HTMLIFrameElementSandbox.h"
 #include "platform/Supplementable.h"
@@ -43,6 +44,8 @@ class CORE_EXPORT HTMLIFrameElement final
   virtual void Trace(blink::Visitor*);
   ~HTMLIFrameElement() override;
   DOMTokenList* sandbox() const;
+  // Support JS introspection of frame policy (e.g. feature policy)
+  Policy* policy();
 
   ParsedFeaturePolicy ConstructContainerPolicy(
       Vector<String>* /* messages */,
@@ -82,6 +85,7 @@ class CORE_EXPORT HTMLIFrameElement final
   bool allow_payment_request_;
   bool collapsed_by_client_;
   Member<HTMLIFrameElementSandbox> sandbox_;
+  Member<Policy> policy_;
 
   ReferrerPolicy referrer_policy_;
 };

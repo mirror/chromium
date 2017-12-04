@@ -7193,7 +7193,7 @@ scoped_refptr<WebTaskRunner> Document::GetTaskRunner(TaskType type) {
 }
 
 Policy* Document::policy() {
-  return Policy::Create(this);
+  return Policy::Create(Policy::Type::DocumentPolicy, this);
 }
 
 void Document::Trace(blink::Visitor* visitor) {
