@@ -179,6 +179,24 @@
     },
     {
       "key": {
+        "uuid": "dbfa68a8_dbec3b4b",
+        "filename": "ipc/ipc_listener.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-04T15:14:33Z",
+      "side": 1,
+      "message": "ok can we change OnBadMessageReceived to first check message.IsValid() before type() ?",
+      "parentUuid": "201e7620_a1845730",
+      "revId": "4fe5b4e6d825f25989f312a48a3fe9c10d546b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec1203ef_e23690fa",
         "filename": "ipc/ipc_message_pipe_reader.cc",
         "patchSetId": 2
