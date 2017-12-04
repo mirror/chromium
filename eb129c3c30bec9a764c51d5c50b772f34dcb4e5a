@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "769899c3_2c71e39e",
+        "filename": "base/memory/shared_memory_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-12-04T16:54:38Z",
+      "side": 1,
+      "message": "Very likely yes",
+      "parentUuid": "f33197a5_c155c9ec",
+      "range": {
+        "startLine": 39,
+        "startChar": 39,
+        "endLine": 39,
+        "endChar": 75
+      },
+      "revId": "eb129c3c30bec9a764c51d5c50b772f34dcb4e5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4de6b84_1c76cc45",
         "filename": "base/memory/shared_memory_android.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-04T16:22:44Z",
       "side": 1,
       "message": "I think this is a bit confusingly worded, since it sounds like the read-only bit is set on the FD.",
+      "range": {
+        "startLine": 50,
+        "startChar": 67,
+        "endLine": 51,
+        "endChar": 16
+      },
+      "revId": "eb129c3c30bec9a764c51d5c50b772f34dcb4e5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a389cb24_3ec2d632",
+        "filename": "base/memory/shared_memory_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-12-04T16:54:38Z",
+      "side": 1,
+      "message": "I agree, I will try to clarify.",
+      "parentUuid": "f4de6b84_1c76cc45",
       "range": {
         "startLine": 50,
         "startChar": 67,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6447d615_8fad7c68",
+        "filename": "base/memory/shared_memory_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-12-04T16:54:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9d25c4d9_a15e94d6",
+      "range": {
+        "startLine": 60,
+        "startChar": 56,
+        "endLine": 60,
+        "endChar": 62
+      },
+      "revId": "eb129c3c30bec9a764c51d5c50b772f34dcb4e5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "746b68ba_8d96e55c",
         "filename": "base/memory/shared_memory_handle_android.cc",
         "patchSetId": 4
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "df6586d0_96324ff1",
+        "filename": "base/memory/shared_memory_handle_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-12-04T16:54:38Z",
+      "side": 1,
+      "message": "Yes, these are here because I\u0027m still relying heavily on printf/log based debugging at that point, they will be removed later.",
+      "parentUuid": "746b68ba_8d96e55c",
+      "revId": "eb129c3c30bec9a764c51d5c50b772f34dcb4e5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4b33db4_2609b36a",
         "filename": "base/memory/shared_memory_posix.cc",
         "patchSetId": 4
@@ -99,6 +189,24 @@
       "writtenOn": "2017-12-04T16:22:44Z",
       "side": 1,
       "message": "Does this mean that the handle still gets transmitted from browser \u003e renderer as RW, but we change the prot at map time?\n\nI worry that just importing the handle to the process as RW could be raced by an attacker-controlled thread looping over the FD table for new descriptors.\n\nCould we instead do it at GetReadOnlyHandle() time?",
+      "revId": "eb129c3c30bec9a764c51d5c50b772f34dcb4e5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4250fee9_c8722ef3",
+        "filename": "base/memory/shared_memory_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-12-04T16:54:38Z",
+      "side": 1,
+      "message": "Yes, there is no way to create a read-only file descriptor for Ashmem regions anyway.\n\nI\u0027ve tried doing this at GetReadOnlyHandle() time, and this crashes a lot of stuff pretty much immediately. That\u0027s why I\u0027m trying the current more-conservative route, but your concern is completely valid. However, once the region has been turned read-only, it can\u0027t be turned back, which is why I try to do that when receiving a read-only handle through IPC.\n\nFrom my recent experimentation, I don\u0027t think this issue can be completely solved without changing a lot of things in the way Chromium manages shared memory regions, and I\u0027ve started a design doc / proposal to do that. But this will take a lot of time, and at the moment I\u0027m trying to find a work-around to the immediate Android-specific issue.",
+      "parentUuid": "e4b33db4_2609b36a",
       "revId": "eb129c3c30bec9a764c51d5c50b772f34dcb4e5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -140,6 +248,24 @@
     },
     {
       "key": {
+        "uuid": "349bbfd6_5fa0c4c4",
+        "filename": "ipc/ipc_message_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-12-04T16:54:38Z",
+      "side": 1,
+      "message": "Thanks John, I agree. A lot of things here are experimental at the moment, but I\u0027ll change this to write a boolean when we get something that actually works :-/",
+      "parentUuid": "962e85a0_a2b24f58",
+      "revId": "eb129c3c30bec9a764c51d5c50b772f34dcb4e5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "809c4b34_307a031c",
         "filename": "services/device/generic_sensor/platform_sensor_and_provider_unittest.cc",
         "patchSetId": 4
@@ -160,6 +286,30 @@
       "revId": "eb129c3c30bec9a764c51d5c50b772f34dcb4e5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75d208ff_a2a461ce",
+        "filename": "services/device/generic_sensor/platform_sensor_and_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-12-04T16:54:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "809c4b34_307a031c",
+      "range": {
+        "startLine": 74,
+        "startChar": 17,
+        "endLine": 74,
+        "endChar": 24
+      },
+      "revId": "eb129c3c30bec9a764c51d5c50b772f34dcb4e5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
