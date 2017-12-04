@@ -22,6 +22,30 @@
       "revId": "ec1643328dad5f0e1dac03fa21198261c2de3117",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42080007_5d23df03",
+        "filename": "chrome/browser/command_updater.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-04T17:07:20Z",
+      "side": 1,
+      "message": "I see now the problem with observers. I\u0027ve kept the idea similar, but changed the implementation a bit. Is it maybe better this way? Or if you want to, I can introduce the state in BrowserCommandController, but in that case please expand a bit on the following as I\u0027m not following you 100%.\n\n\u003e I think it far safer to introduce another state in BrowserCommandController that knows about this and explicitly disables commands.",
+      "parentUuid": "7eca3c20_df5ca25f",
+      "range": {
+        "startLine": 82,
+        "startChar": 2,
+        "endLine": 82,
+        "endChar": 34
+      },
+      "revId": "ec1643328dad5f0e1dac03fa21198261c2de3117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
