@@ -44,6 +44,10 @@ _log = logging.getLogger(__name__)
 
 
 def main(argv, stdout, stderr):
+    argv.extend(['--additional-driver-flag=--vmodule=*/paint/*=3,*/graphics/*=3',
+                 '--iterations=100',
+                 '--exit-after-n-failures=1',
+                 'fast/reflections/reflection-masks-outset.html'])
     options, args = parse_args(argv)
 
     if options.platform and 'test' in options.platform and not 'browser_test' in options.platform:

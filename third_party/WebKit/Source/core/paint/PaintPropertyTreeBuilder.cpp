@@ -1469,6 +1469,14 @@ void FragmentPaintPropertyTreeBuilder::UpdateForSelf() {
   Optional<IntPoint> paint_offset_translation;
   UpdateForObjectLocationAndSize(paint_offset_translation);
 
+  // If there is reference filter (including that for reflection), force paint
+  // property update because the reference box may change because of resize of
+  // not only object_ but also descendants (see PaintLayer::
+  // FilterReferenceBox()).
+  if (object_.HasReflection() ||
+      object_.StyleRef().Filter().HasReferenceFilter())
+    object_.GetMutableForPainting().SetNeedsPaintPropertyUpdate();
+
   if (properties_) {
     // TODO(wangxianzhu): Put these in FindObjectPropertiesNeedingUpdateScope.
     UpdateFragmentClip(*full_context_.painting_layer);
