@@ -1,0 +1,76 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("//build/config/android/rules.gni")
+
+java_prebuilt("dagger_java") {
+  supports_android = true
+  jar_path =
+      "//third_party/android_deps/com.google.dagger/dagger:2.13/dagger-2.13.jar"
+  deps = [
+    ":javax_inject_java",
+  ]
+}
+
+java_prebuilt("dagger_compiler_java") {
+  jar_path = "//third_party/android_deps/com.google.dagger/dagger-compiler:2.13/dagger-compiler-2.13.jar"
+  deps = [
+    ":dagger_java",
+    ":dagger_producers_java",
+    ":google_java_format_java",
+    ":guava_java",
+    ":javapoet_java",
+    ":javax_inject_java",
+    ":jsr250_api_java",
+    ":jsr305_java",
+  ]
+}
+
+java_prebuilt("jsr305_java") {
+  jar_path = "//third_party/android_deps/com.google.code.findbugs/jsr305:3.0.1/jsr305-3.0.1.jar"
+}
+
+java_prebuilt("dagger_producers_java") {
+  jar_path = "//third_party/android_deps/com.google.dagger/dagger-producers:2.13/dagger-producers-2.13.jar"
+  deps = [
+    ":dagger_java",
+    ":guava_java",
+    ":javax_inject_java",
+    ":jsr305_java",
+  ]
+}
+
+java_prebuilt("errorprone_javac_shaded_java") {
+  jar_path = "//third_party/android_deps/com.google.errorprone/javac-shaded:9-dev-r4023-3/javac-shaded-9-dev-r4023-3.jar"
+}
+
+java_prebuilt("google_java_format_java") {
+  jar_path = "//third_party/android_deps/com.google.googlejavaformat/google-java-format:1.4/google-java-format-1.4.jar"
+  deps = [
+    ":errorprone_javac_shaded_java",
+    ":guava_java",
+    ":jsr305_java",
+  ]
+}
+
+java_prebuilt("guava_java") {
+  jar_path =
+      "//third_party/android_deps/com.google.guava/guava:21.0/guava-21.0.jar"
+  deps = [
+    ":jsr305_java",
+  ]
+}
+
+java_prebuilt("javapoet_java") {
+  jar_path = "//third_party/android_deps/com.squareup/javapoet:1.8.0/javapoet-1.8.0.jar"
+}
+
+java_prebuilt("jsr250_api_java") {
+  jar_path = "//third_party/android_deps/javax.annotation/jsr250-api:1.0/jsr250-api-1.0.jar"
+}
+
+java_prebuilt("javax_inject_java") {
+  supports_android = true
+  jar_path = "//third_party/android_deps/javax.inject/javax.inject:1/javax.inject-1.jar"
+}

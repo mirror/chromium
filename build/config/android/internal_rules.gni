@@ -2450,6 +2450,13 @@ if (enable_java_templates) {
         args +=
             [ "--classpath=@FileArg($_rebased_build_config:javac:classpath)" ]
       }
+      # _classPathString = "lib.java/tools/android/errorprone_plugin/errorprone_plugin_java.jar"
+      # if (_enable_interface_jars_javac) {
+      #   _classPathString += ":@FileArg($_rebased_build_config:javac:interface_classpath)"
+      # } else {
+      #   _classPathString += ":@FileArg($_rebased_build_config:javac:classpath)"
+      # }
+      # args += ["--classpath=$_classPathString" ]
       if (_enable_incremental_javac) {
         args += [ "--incremental" ]
         deps += [ "//third_party/jmake($default_toolchain)" ]
@@ -2476,22 +2483,28 @@ if (enable_java_templates) {
         args += [ "--chromium-code=1" ]
       }
       if (_enable_errorprone) {
+
         deps +=
             [ "//third_party/errorprone:errorprone_java($default_toolchain)" ]
+        # errorprone_plugin_java provides the annotation processor
         deps += [ "//tools/android/errorprone_plugin:errorprone_plugin_java($default_toolchain)" ]
         args += [
           "--use-errorprone-path",
           "bin/errorprone_java",
-          "--processorpath",
-          "lib.java/tools/android/errorprone_plugin/errorprone_plugin_java.jar",
         ]
+        # _processors += [
+        #   "com.google.auto.service.processor.AutoServiceProcessor"
+        # ]
+
       }
       foreach(e, _provider_configurations) {
         args += [ "--provider-configuration=" + rebase_path(e, root_build_dir) ]
       }
+      _processor_list = []
       foreach(e, _processors) {
-        args += [ "--processor=" + e ]
+        _processor_list = [ "--processor=" + e ] + _processor_list
       }
+      args += _processor_list
       foreach(e, _processor_args) {
         args += [ "--processor-arg=" + e ]
       }
@@ -2714,6 +2727,20 @@ if (enable_java_templates) {
         } else {
           type = "java_library"
         }
+
+        _enable_errorprone = use_errorprone_java_compiler
+        if (!_chromium_code) {
+          _enable_errorprone = false
+        } else if (defined(invoker.enable_errorprone)) {
+          _enable_errorprone = invoker.enable_errorprone
+        }
+        if (_enable_errorprone) {
+          if (!defined(classpath_deps)) {
+            classpath_deps = []
+          }
+          classpath_deps += ["//tools/android/errorprone_plugin:errorprone_plugin_java($default_toolchain)"]
+        }
+
         possible_config_deps = _accumulated_deps
         supports_android = _supports_android
         requires_android = _requires_android
@@ -2743,7 +2770,6 @@ if (enable_java_templates) {
     if (defined(invoker.classpath_deps)) {
       _accumulated_deps += invoker.classpath_deps
     }
-
     _srcjar_deps = []
     if (defined(invoker.srcjar_deps)) {
       _srcjar_deps = invoker.srcjar_deps
