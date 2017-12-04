@@ -207,7 +207,7 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
   void StartListening(blink::WebPlatformEventType,
                       blink::WebPlatformEventListener*) override;
   void StopListening(blink::WebPlatformEventType) override;
-  void QueryStorageUsageAndQuota(const blink::WebURL& storage_partition,
+  void QueryStorageUsageAndQuota(const url::Origin& storage_partition,
                                  blink::WebStorageQuotaType,
                                  blink::WebStorageQuotaCallbacks) override;
   blink::WebThread* CurrentThread() override;
