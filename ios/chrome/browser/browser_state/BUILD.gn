@@ -93,6 +93,7 @@ source_set("browser_state_impl") {
     "//ios/chrome/browser/language",
     "//ios/chrome/browser/net",
     "//ios/chrome/browser/ntp_snippets",
+    "//ios/chrome/browser/overlays",
     "//ios/chrome/browser/passwords",
     "//ios/chrome/browser/prefs",
     "//ios/chrome/browser/prefs:browser_prefs",
