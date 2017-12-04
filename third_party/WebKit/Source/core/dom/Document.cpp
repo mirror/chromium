@@ -5225,7 +5225,8 @@ const KURL Document::SiteForCookies() const {
   if (top.IsLocalFrame()) {
     top_document_url = ToLocalFrame(top).GetDocument()->Url();
   } else {
-    SecurityOrigin* origin = top.GetSecurityContext()->GetSecurityOrigin();
+    const SecurityOrigin* origin =
+        top.GetSecurityContext()->GetSecurityOrigin();
     // TODO(yhirano): Ideally |origin| should not be null here.
     if (origin)
       top_document_url = KURL(NullURL(), origin->ToString());
@@ -5546,7 +5547,7 @@ KURL Document::OpenSearchDescriptionURL() {
 
     // Count usage; perhaps we can lock this to secure contexts.
     WebFeature osd_disposition;
-    scoped_refptr<SecurityOrigin> target =
+    scoped_refptr<const SecurityOrigin> target =
         SecurityOrigin::Create(link_element->Href());
     if (IsSecureContext()) {
       osd_disposition = target->IsPotentiallyTrustworthy()
@@ -6173,7 +6174,7 @@ void Document::InitContentSecurityPolicy(
 }
 
 bool Document::IsSecureTransitionTo(const KURL& url) const {
-  scoped_refptr<SecurityOrigin> other = SecurityOrigin::Create(url);
+  scoped_refptr<const SecurityOrigin> other = SecurityOrigin::Create(url);
   return GetSecurityOrigin()->CanAccess(other.get());
 }
 
@@ -6245,7 +6246,7 @@ bool Document::AllowInlineEventHandler(Node* node,
 }
 
 void Document::EnforceSandboxFlags(SandboxFlags mask) {
-  scoped_refptr<SecurityOrigin> stand_in_origin = GetSecurityOrigin();
+  scoped_refptr<const SecurityOrigin> stand_in_origin = GetSecurityOrigin();
   bool is_potentially_trustworthy =
       stand_in_origin && stand_in_origin->IsPotentiallyTrustworthy();
   ApplySandboxFlags(mask, is_potentially_trustworthy);
