@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a997a31b_dcf51587",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-04T22:21:27Z",
+      "side": 1,
+      "message": "Indent is off – not sure why presubmit didn\u0027t catch that.",
+      "range": {
+        "startLine": 770,
+        "startChar": 7,
+        "endLine": 770,
+        "endChar": 0
+      },
+      "revId": "4493d10e3e92d3834453c7af5df0063f3e0ff67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65abf4bb_2f8e924d",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasAsyncBlobCreator.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-04T22:21:27Z",
+      "side": 1,
+      "message": "This block of code is identical to that in CanvasAsyncBlobCreator::EncodeImageOnEncoderThread -- is there any code sharing that can occur?",
+      "revId": "4493d10e3e92d3834453c7af5df0063f3e0ff67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b277a577_e9407c9c",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasAsyncBlobCreator.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-04T22:21:27Z",
+      "side": 1,
+      "message": "Should there be any DCHECK on this code path? For example, about data_?",
+      "range": {
+        "startLine": 281,
+        "startChar": 8,
+        "endLine": 281,
+        "endChar": 15
+      },
+      "revId": "4493d10e3e92d3834453c7af5df0063f3e0ff67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "399db916_567b5ef6",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasAsyncBlobCreator.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-04T22:21:27Z",
+      "side": 1,
+      "message": "See above for comment about duplicated block of code.",
+      "range": {
+        "startLine": 487,
+        "startChar": 7,
+        "endLine": 487,
+        "endChar": 26
+      },
+      "revId": "4493d10e3e92d3834453c7af5df0063f3e0ff67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
