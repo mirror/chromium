@@ -199,6 +199,7 @@ void SlotAssignment::ResolveAssignmentNg() {
   for (Member<HTMLSlotElement> slot : Slots())
     slot->ClearAssignedNodes();
 
+  // TODO(kochi): add logic for UA shadow
   for (Node& child : NodeTraversal::ChildrenOf(owner_->host())) {
     if (!child.IsSlotable())
       continue;
@@ -212,6 +213,27 @@ void SlotAssignment::ResolveAssignment() {
 
   for (Member<HTMLSlotElement> slot : Slots())
     slot->SaveAndClearDistribution();
+
+  if (owner_->IsUserAgent()) {
+    HTMLSlotElement* default_slot = FindSlotByName("");
+    if (!default_slot)
+      return;
+    HTMLSlotElement* rest_slot = FindSlotByName("rest");
+
+    for (Node& child : NodeTraversal::ChildrenOf(owner_->host())) {
+      if (!child.IsSlotable()) {
+        child.LazyReattachIfAttached();
+        continue;
+      }
+      if (default_slot->FilteredAppendAssignedNode(child))
+        continue;
+      if (rest_slot)
+        rest_slot->AppendAssignedNode(child);
+      else
+        child.LazyReattachIfAttached();
+    }
+    return;
+  }
 
   for (Node& child : NodeTraversal::ChildrenOf(owner_->host())) {
     if (!child.IsSlotable()) {
