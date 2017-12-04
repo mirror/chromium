@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf4a3f7d_74a9d637",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-04T20:01:49Z",
+      "side": 1,
+      "message": "Suggest either removing the default (so that we should get a compiler warning if more values are added to the enum) or making it a CHECK-fail.",
+      "range": {
+        "startLine": 148,
+        "startChar": 6,
+        "endLine": 148,
+        "endChar": 13
+      },
+      "revId": "40c71406224bf53a3ec42f1168b1248446c8ab97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd681b58_3eb80dac",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-04T20:01:49Z",
+      "side": 1,
+      "message": "Consider adding a sequence check here?",
+      "revId": "40c71406224bf53a3ec42f1168b1248446c8ab97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85fc7586_f8d09462",
+        "filename": "chrome/browser/chromeos/printing/external_printers.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-04T20:01:49Z",
+      "side": 1,
+      "message": "Brief comment on expectations about when the observer is called and sequencing restrictions/requirements?",
+      "revId": "40c71406224bf53a3ec42f1168b1248446c8ab97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88367415_872d1e37",
+        "filename": "chrome/browser/chromeos/printing/external_printers.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-04T20:01:49Z",
+      "side": 1,
+      "message": "It\u0027s not harmful, but I think you don\u0027t need to explicitly define this constructor at all.  The class is abstract, so you can\u0027t call the constructor directly, and your implementation is default.",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 64,
+        "endChar": 18
+      },
+      "revId": "40c71406224bf53a3ec42f1168b1248446c8ab97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "e0c0ba37_79decc88",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-04T20:01:49Z",
+      "side": 1,
+      "message": "I\u0027m not seeing this in the header?",
+      "parentUuid": "f075eb22_be570dfd",
+      "revId": "0bcccd72e9ff68b087230ec9ae8f0a06b45bc53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e1931e8_a8645509",
         "filename": "chrome/browser/chromeos/printing/external_printers.cc",
         "patchSetId": 2
@@ -279,6 +297,24 @@
       "revId": "0bcccd72e9ff68b087230ec9ae8f0a06b45bc53e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "948e7609_73208d87",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-04T20:01:49Z",
+      "side": 1,
+      "message": "Yes, but is that an expected usage of the API?  If so, cool, of not, then I\u0027d rather help the caller figure out that they\u0027ve gone wrong.",
+      "parentUuid": "4f9a9e6e_9344f3da",
+      "revId": "0bcccd72e9ff68b087230ec9ae8f0a06b45bc53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
