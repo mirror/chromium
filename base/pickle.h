@@ -263,6 +263,8 @@ class BASE_EXPORT Pickle {
   }
 
  protected:
+  size_t header_size() const { return header_size_; }
+
   char* mutable_payload() {
     return reinterpret_cast<char*>(header_) + header_size_;
   }
