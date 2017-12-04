@@ -9,7 +9,8 @@
   "incognito": "split",
   "permissions": [
     "<all_urls>",
-    "resourcesPrivate"
+    "resourcesPrivate",
+    "metricsPrivate"
   ],
   "mime_types": [
     "application/pdf"
