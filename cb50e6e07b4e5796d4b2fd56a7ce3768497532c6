@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "75ae46ff_c887629e",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-04T12:57:28Z",
+      "side": 1,
+      "message": "there are cases where this code will run and then the browser will immediately shut down. i think it\u0027s better to post a task to the main message loop to spin up this thread. this way, it will only be created when the main message loop is entered. if it\u0027s important that it happen as early as possible on the main loop, post the task in PostMainMessageLoopStart().\n\nlikewise, i think this thread should stop servicing notifications when the browser shuts down, no? PostMainMessageLoopRun() seems like an okay place to tell the thread to stop.",
+      "revId": "cb50e6e07b4e5796d4b2fd56a7ce3768497532c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8929f0d_5ae631dd",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-04T12:57:28Z",
+      "side": 1,
+      "message": "this thread will be stopped, joined, and destroyed on line 564 when |notification_thread| goes out of scope. don\u0027t you want it to live for the lifetime of the browser?\n\ncan you make this thread an implementation detail of NotificationPlatformBridgeWin or some other class? i imagine ChromeBrowserMainPartsWin having a member holding either an instance of this thing or a unique_ptr\u003c\u003e to one, and the impl of the task i mentioned above being something simple like:\n\nvoid ChromeBrowserMainPartsWin::StartNativeNotificationPlatformBridge() {\n  native_notification_platform_bridge_ \u003d std::make_unique\u003cNotificationPlatformBridgeWin\u003e();\n}\n\nand the ctor for that thing takes care of spinning up the thread. likewise, in shutdown:\n\nvoid ChromeBrowserMainPartsWin::PostMainMessageLoopRun() {\n...\n  // Stop processing native notifications.\n  native_notification_platform_bridge_-\u003eStop();  // (maybe this calls StopSoon on the thread, maybe it just posts a task to turn down the native notification thingie.)\n...\n}\n\ni can imagine making the bg thread non-joinable so that shutdown doesn\u0027t block on joining this thread.",
+      "revId": "cb50e6e07b4e5796d4b2fd56a7ce3768497532c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9186d890_7239dc28",
         "filename": "chrome/browser/chrome_native_notification_install_helper_win.cc",
         "patchSetId": 4
@@ -37,6 +71,30 @@
       "side": 1,
       "message": "I don\u0027t think you need the shortcut related code. If you wants to create a shortcut on start menu for chromium, just build a mini_installer via \"ninja mini_installer\" and then run it.",
       "parentUuid": "9186d890_7239dc28",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 23
+      },
+      "revId": "cb50e6e07b4e5796d4b2fd56a7ce3768497532c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79ed287d_538061b3",
+        "filename": "chrome/browser/chrome_native_notification_install_helper_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-04T12:57:28Z",
+      "side": 1,
+      "message": "if this is eventually going to come out from behind the feature flag, then i\u0027d rather you simply do the proper shortcut work in the installer now rather than hacking together something like this.",
+      "parentUuid": "b9d9dea3_ff6ec8b3",
       "range": {
         "startLine": 21,
         "startChar": 8,
@@ -107,6 +165,24 @@
     },
     {
       "key": {
+        "uuid": "1e8d42f0_fb04e9a2",
+        "filename": "chrome/browser/chrome_native_notification_install_helper_win.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-04T12:57:28Z",
+      "side": 1,
+      "message": "for starters, you will need to stop using __uuidof and instead use the runtime-provided clsid. that might be enough. i think it\u0027s worth getting this right now so that you don\u0027t end up in a hole later (or forget about it).",
+      "parentUuid": "30c10a22_babf65df",
+      "revId": "cb50e6e07b4e5796d4b2fd56a7ce3768497532c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6dc517e_77a014c6",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
         "patchSetId": 4
@@ -171,6 +247,40 @@
         "endLine": 145,
         "endChar": 10
       },
+      "revId": "cb50e6e07b4e5796d4b2fd56a7ce3768497532c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85fcd56b_010142f6",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-04T12:57:28Z",
+      "side": 1,
+      "message": "why is this a global? it seems cleaner for ChromeBrowserMainPartsWin to own the process\u0027s instance. or maybe BrowserProcessImpl if there\u0027s a reason to have a getter for it on g_browser_process.",
+      "revId": "cb50e6e07b4e5796d4b2fd56a7ce3768497532c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d56eca0_86909cd5",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-04T12:57:28Z",
+      "side": 1,
+      "message": "delete nullptr is well-defined, so you can get rid of this check and unconditionally call delete and clear the ptr.",
       "revId": "cb50e6e07b4e5796d4b2fd56a7ce3768497532c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
