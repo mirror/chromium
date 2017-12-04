@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "683e640b_7a6b2796",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/feature-policy/policy_iframes.php",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-12-04T23:03:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a048306b_d9ddc8ac",
+      "revId": "0ef9433fb96930286ce0b4b8debe7f530ef980d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d7e4a87_f4c05b68",
         "filename": "third_party/WebKit/LayoutTests/http/tests/feature-policy/policy_iframes.php",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "0ef9433fb96930286ce0b4b8debe7f530ef980d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c34c7399_5fd946af",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/feature-policy/policy_iframes.php",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-12-04T23:03:19Z",
+      "side": 1,
+      "message": "Is that true though? parent_policy is used to construct inherit policy (which is a bool map) so it will only know if the the document will be allowed on src origin.",
+      "parentUuid": "7d7e4a87_f4c05b68",
+      "revId": "0ef9433fb96930286ce0b4b8debe7f530ef980d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c6abe88d_4d663efb",
+        "filename": "third_party/WebKit/LayoutTests/webexposed/global-interface-listing-expected.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 2765,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-12-04T23:03:19Z",
+      "side": 1,
+      "message": "Probably. I will update if some bots complain.",
+      "parentUuid": "9426a392_d34f0dc9",
+      "revId": "0ef9433fb96930286ce0b4b8debe7f530ef980d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a38f64b_574db700",
         "filename": "third_party/WebKit/Source/core/dom/Policy.cpp",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "0ef9433fb96930286ce0b4b8debe7f530ef980d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af637b5a_bb25461f",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-12-04T23:03:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a38f64b_574db700",
+      "revId": "0ef9433fb96930286ce0b4b8debe7f530ef980d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "59b4d4e7_029f5cb4",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-12-04T23:03:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a9347e8_f1c9aa39",
+      "revId": "0ef9433fb96930286ce0b4b8debe7f530ef980d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04a05f16_75263538",
         "filename": "third_party/WebKit/Source/core/dom/Policy.h",
         "patchSetId": 5
@@ -101,6 +191,24 @@
       "revId": "0ef9433fb96930286ce0b4b8debe7f530ef980d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f71ae10b_15e893f8",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-12-04T23:03:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04a05f16_75263538",
+      "revId": "0ef9433fb96930286ce0b4b8debe7f530ef980d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
