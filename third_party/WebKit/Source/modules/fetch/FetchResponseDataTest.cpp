@@ -134,65 +134,6 @@ TEST_F(FetchResponseDataTest,
   EXPECT_EQ("bar", bar_values[0]);
 }
 
-TEST_F(FetchResponseDataTest, CORSFilterWithEmptyHeaderSet) {
-  FetchResponseData* internal_response = CreateInternalResponse();
-  FetchResponseData* cors_response_data =
-      internal_response->CreateCORSFilteredResponse(WebHTTPHeaderSet());
-
-  EXPECT_EQ(internal_response, cors_response_data->InternalResponse());
-
-  EXPECT_FALSE(cors_response_data->HeaderList()->Has("set-cookie"));
-
-  EXPECT_FALSE(cors_response_data->HeaderList()->Has("bar"));
-
-  Vector<String> cache_control_values;
-  cors_response_data->HeaderList()->GetAll("cache-control",
-                                           cache_control_values);
-  ASSERT_EQ(1U, cache_control_values.size());
-  EXPECT_EQ("no-cache", cache_control_values[0]);
-}
-
-TEST_F(FetchResponseDataTest,
-       CORSFilterWithEmptyHeaderSetOnResponseWithAccessControlExposeHeaders) {
-  FetchResponseData* internal_response = CreateInternalResponse();
-  internal_response->HeaderList()->Append("access-control-expose-headers",
-                                          "set-cookie, bar");
-
-  FetchResponseData* cors_response_data =
-      internal_response->CreateCORSFilteredResponse(WebHTTPHeaderSet());
-
-  EXPECT_EQ(internal_response, cors_response_data->InternalResponse());
-
-  EXPECT_FALSE(cors_response_data->HeaderList()->Has("set-cookie"));
-
-  EXPECT_FALSE(cors_response_data->HeaderList()->Has("bar"));
-
-  Vector<String> cache_control_values;
-  cors_response_data->HeaderList()->GetAll("cache-control",
-                                           cache_control_values);
-  ASSERT_EQ(1U, cache_control_values.size());
-  EXPECT_EQ("no-cache", cache_control_values[0]);
-}
-
-TEST_F(FetchResponseDataTest, CORSFilterWithExplicitHeaderSet) {
-  FetchResponseData* internal_response = CreateInternalResponse();
-  WebHTTPHeaderSet exposed_headers;
-  exposed_headers.insert("set-cookie");
-  exposed_headers.insert("bar");
-
-  FetchResponseData* cors_response_data =
-      internal_response->CreateCORSFilteredResponse(exposed_headers);
-
-  EXPECT_EQ(internal_response, cors_response_data->InternalResponse());
-
-  EXPECT_FALSE(cors_response_data->HeaderList()->Has("set-cookie"));
-
-  Vector<String> bar_values;
-  cors_response_data->HeaderList()->GetAll("bar", bar_values);
-  ASSERT_EQ(1U, bar_values.size());
-  EXPECT_EQ("bar", bar_values[0]);
-}
-
 TEST_F(FetchResponseDataTest, ToWebServiceWorkerCORSType) {
   WebServiceWorkerResponse web_response;
   FetchResponseData* internal_response = CreateInternalResponse();

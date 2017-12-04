@@ -58,19 +58,14 @@ FetchResponseData* FetchResponseData::CreateBasicFilteredResponse() const {
 
 FetchResponseData* FetchResponseData::CreateCORSFilteredResponse() const {
   DCHECK_EQ(type_, Type::kDefault);
-  WebHTTPHeaderSet access_control_expose_header_set;
+  WebHTTPHeaderSet exposed_headers;
   String access_control_expose_headers;
   if (header_list_->Get(HTTPNames::Access_Control_Expose_Headers,
                         access_control_expose_headers)) {
     WebCORS::ParseAccessControlExposeHeadersAllowList(
-        access_control_expose_headers, access_control_expose_header_set);
+        access_control_expose_headers, exposed_headers);
   }
-  return CreateCORSFilteredResponse(access_control_expose_header_set);
-}
 
-FetchResponseData* FetchResponseData::CreateCORSFilteredResponse(
-    const WebHTTPHeaderSet& exposed_headers) const {
-  DCHECK_EQ(type_, Type::kDefault);
   // "A CORS filtered response is a filtered response whose type is |CORS|,
   // header list excludes all headers in internal response's header list,
   // except those whose name is either one of `Cache-Control`,
@@ -83,10 +78,8 @@ FetchResponseData* FetchResponseData::CreateCORSFilteredResponse(
   response->SetURLList(url_list_);
   for (const auto& header : header_list_->List()) {
     const String& name = header.first;
-    const bool explicitly_exposed =
-        exposed_headers.find(name.Ascii().data()) != exposed_headers.end();
     if (WebCORS::IsOnAccessControlResponseHeaderWhitelist(name) ||
-        (explicitly_exposed &&
+        (exposed_headers.find(name.Ascii().data()) != exposed_headers.end() &&
          !FetchUtils::IsForbiddenResponseHeaderName(name))) {
       response->header_list_->Append(name, header.second);
     }
