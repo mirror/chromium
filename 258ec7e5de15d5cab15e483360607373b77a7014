@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9572e093_96ceb852",
+        "filename": "gin/v8_initializer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-04T09:29:29Z",
+      "side": 1,
+      "message": "Would you help me understand when this can happen?\n\nI was thinking that snapshot_blob.bin is gone...?",
+      "revId": "258ec7e5de15d5cab15e483360607373b77a7014",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
