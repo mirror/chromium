@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "1605a455_8026c6c7",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/UserDataMap.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-04T16:49:40Z",
+      "side": 1,
+      "message": "same here, just merge this class into WebContentsImpl. seems overkill right now",
+      "range": {
+        "startLine": 14,
+        "startChar": 26,
+        "endLine": 14,
+        "endChar": 37
+      },
+      "revId": "c1d627c17dca1e0106fa395f5ce6d1c01ff3688a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a23047f2_be32aed2",
         "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
         "patchSetId": 9
@@ -13,6 +36,116 @@
       "writtenOn": "2017-12-04T04:10:16Z",
       "side": 1,
       "message": "Note that there are times types of key / data are different. In this CL, GestureListenerManager for example, the class for key is GestureListenerManager but the userdata is of the type GestureListenerManagerImpl. This should be allowed. Only something like setUserData(GestureListenerManager.clss, new UserData() {}) is rejected at compile time.\n\nNot sure if the same constraint should be imposed on getUserData, since it has only one parameter. I tried the similar to the input/return type, but it gives out a unchecked cast warning due to conversion from Data to T, which I had to suppress with annotation. The casting is safe because I allowed only the subtype of T to be stored in the entry with type T.\n\nLet me know how it looks. I think we can go without it for get case.",
+      "revId": "c1d627c17dca1e0106fa395f5ce6d1c01ff3688a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7834cf6_fff997c7",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-04T16:49:40Z",
+      "side": 1,
+      "message": "\u003e Note that there are times types of key / data are different. In this CL, GestureListenerManager for example, the class for key is GestureListenerManager but the userdata is of the type GestureListenerManagerImpl. This should be allowed. Only something like setUserData(GestureListenerManager.clss, new UserData() {}) is rejected at compile time.\n\nThe rule for content internal classes again, should be to use the Impl class as the key.\n\nMaybe can\u0027t enforce this at compile time, but can we enforce it at run time with asserts? Key and data types must match?\n\n\u003e \n\u003e Not sure if the same constraint should be imposed on getUserData, since it has only one parameter. I tried the similar to the input/return type, but it gives out a unchecked cast warning due to conversion from Data to T, which I had to suppress with annotation. The casting is safe because I allowed only the subtype of T to be stored in the entry with type T.\n\u003e \n\u003e Let me know how it looks. I think we can go without it for get case.",
+      "parentUuid": "a23047f2_be32aed2",
+      "revId": "c1d627c17dca1e0106fa395f5ce6d1c01ff3688a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e57d203_f4c56f0b",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-04T16:49:40Z",
+      "side": 1,
+      "message": "this is probably fine, just have a comment explaining this is downcasting Data to the specific type.",
+      "range": {
+        "startLine": 757,
+        "startChar": 27,
+        "endLine": 757,
+        "endChar": 36
+      },
+      "revId": "c1d627c17dca1e0106fa395f5ce6d1c01ff3688a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3424bc0b_940c173a",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/GestureListenerManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-04T16:49:40Z",
+      "side": 1,
+      "message": "is this cast necessary?",
+      "range": {
+        "startLine": 24,
+        "startChar": 17,
+        "endLine": 24,
+        "endChar": 39
+      },
+      "revId": "c1d627c17dca1e0106fa395f5ce6d1c01ff3688a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3353d87_a63ad7fb",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/SupportsUserData.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-04T16:49:40Z",
+      "side": 1,
+      "message": "We don\u0027t really need this yet. Let\u0027s not make this a generic thing yet. So just merge methods on this class directly into WebContents, then rename Data a separate WebContentsData class",
+      "range": {
+        "startLine": 10,
+        "startChar": 17,
+        "endLine": 10,
+        "endChar": 33
+      },
+      "revId": "c1d627c17dca1e0106fa395f5ce6d1c01ff3688a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9234e0df_03427274",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/SupportsUserData.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-04T16:49:40Z",
+      "side": 1,
+      "message": "so is it possible to make this WebContentsUserData\u003cT\u003e, which mirrors the native type of the same name, and then have the set/get methods called from WebContentsUserData, instead of individual subclasses?\n\nActually if we do that, we don\u0027t even need to make set/getUserData public",
+      "range": {
+        "startLine": 18,
+        "startChar": 14,
+        "endLine": 18,
+        "endChar": 18
+      },
       "revId": "c1d627c17dca1e0106fa395f5ce6d1c01ff3688a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
