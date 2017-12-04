@@ -22,6 +22,30 @@
       "revId": "f1f8f0507dbcc10617f56ca5be9b1c9fa9128d4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeb8a501_1e72de9b",
+        "filename": "chrome/browser/printing/cloud_print/privet_http_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-04T19:46:01Z",
+      "side": 1,
+      "message": "Yes. That\u0027s in a separate CL: https://chromium-review.googlesource.com/c/chromium/src/+/804670/ in the CL chain.",
+      "parentUuid": "e955e4da_ee0c7b98",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 198,
+        "endChar": 30
+      },
+      "revId": "f1f8f0507dbcc10617f56ca5be9b1c9fa9128d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
