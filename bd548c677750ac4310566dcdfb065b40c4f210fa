@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8927ef82_584117f1",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-12-04T15:31:26Z",
+      "side": 1,
+      "message": "Spurious newline.",
+      "revId": "bd548c677750ac4310566dcdfb065b40c4f210fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51c8738c_ddacb338",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-12-04T15:31:26Z",
+      "side": 1,
+      "message": "Can you add a comment here why the TextRun is optional? It looks a bit odd in the unit tests that the first argument is a nullptr.",
+      "revId": "bd548c677750ac4310566dcdfb065b40c4f210fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f85c1422_9d2ce125",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResultInlineHeaders.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-12-04T15:31:26Z",
+      "side": 1,
+      "message": "I don\u0027t understand the semantics of this function very well. I think it\u0027d help to clarify this comment. \n\n\"This function also returns glyphs that would be partially included in the range (if they spawn\nmultiple characters).\" - What do you mean by spawn here? Could you add an example?",
+      "revId": "bd548c677750ac4310566dcdfb065b40c4f210fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

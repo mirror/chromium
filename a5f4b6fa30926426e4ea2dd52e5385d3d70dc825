@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40e9edcc_138dd297",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResultBloberizer.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-12-04T15:31:26Z",
+      "side": 0,
+      "message": "Is ForEachGlyphInRange still needed?",
+      "revId": "a5f4b6fa30926426e4ea2dd52e5385d3d70dc825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
