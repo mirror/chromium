@@ -62,6 +62,11 @@ class NGPaintFragment : public DisplayItemClient, public ImageResourceObserver {
     return {location, VisualRect().Size()};
   }
 
+  void ForEachDescendants(
+      const LayoutObject*,
+      std::function<bool(const NGPaintFragment&, const NGPhysicalOffset&)>,
+      NGPhysicalOffset = {}) const;
+
   // DisplayItemClient methods.
   String DebugName() const override { return "NGPaintFragment"; }
 
