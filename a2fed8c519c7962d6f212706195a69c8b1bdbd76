@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30e42f80_c45e676e",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_header_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-12-04T08:56:25Z",
+      "side": 1,
+      "message": "readonly?",
+      "range": {
+        "startLine": 54,
+        "startChar": 21,
+        "endLine": 54,
+        "endChar": 27
+      },
+      "revId": "a2fed8c519c7962d6f212706195a69c8b1bdbd76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72f667d4_d3089b7b",
+        "filename": "ios/chrome/browser/content_suggestions/ntp_home_mediator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-12-04T08:56:25Z",
+      "side": 1,
+      "message": "nit: we usually don\u0027t allow abbreviations as name.",
+      "range": {
+        "startLine": 136,
+        "startChar": 28,
+        "endLine": 136,
+        "endChar": 31
+      },
+      "revId": "a2fed8c519c7962d6f212706195a69c8b1bdbd76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "491ce3e3_a3027575",
+        "filename": "ios/chrome/browser/content_suggestions/ntp_home_mediator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-12-04T08:56:25Z",
+      "side": 1,
+      "message": "remove observer? \nIs it not needed anymore?",
+      "revId": "a2fed8c519c7962d6f212706195a69c8b1bdbd76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
