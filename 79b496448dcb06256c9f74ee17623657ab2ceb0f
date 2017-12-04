@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b37a10ac_e6651d23",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-12-04T20:52:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfdfbf04_b7f4b052",
+      "revId": "79b496448dcb06256c9f74ee17623657ab2ceb0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce769414_c3ef20e7",
         "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_browsertest.cc",
         "patchSetId": 13
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7cfa51d3_91ed7c89",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-12-04T20:52:31Z",
+      "side": 1,
+      "message": "Added the policy change from false to true in this test. Also removed the enableByPolicy test since that is now being verified here.\n\nSince the SafeBrowsingTriggeredPopupBlockerBrowser is only created once per tab, we would need to open a new tab to reflect the impact of the policy\u0027s \"true\" value here.",
+      "parentUuid": "ce769414_c3ef20e7",
+      "revId": "79b496448dcb06256c9f74ee17623657ab2ceb0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ac0aba3_161d1446",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 13
@@ -50,6 +86,24 @@
       "revId": "79b496448dcb06256c9f74ee17623657ab2ceb0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7476c59d_052584a7",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 13
+      },
+      "lineNbr": 10780,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-12-04T20:52:31Z",
+      "side": 1,
+      "message": "Since the implementation is completely dependent on Safe Browsing to be enabled, this intervention will be disabled when the SafeBrowsingEnabled policy is set to False. Documenting it here.",
+      "parentUuid": "7ac0aba3_161d1446",
+      "revId": "79b496448dcb06256c9f74ee17623657ab2ceb0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
