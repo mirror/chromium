@@ -733,6 +733,7 @@ class CORE_EXPORT CompositedLayerMapping final : public GraphicsLayerClient {
   bool draws_background_onto_content_layer_;
 
   friend class CompositedLayerMappingTest;
+  friend class CompositingLayerPropertyUpdater;
 };
 
 }  // namespace blink
