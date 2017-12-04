@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afc78b67_7e0caef0",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1357,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-12-04T18:36:06Z",
+      "side": 1,
+      "message": "nit: /* is_active_tree */ true",
+      "range": {
+        "startLine": 1357,
+        "startChar": 60,
+        "endLine": 1357,
+        "endChar": 64
+      },
+      "revId": "132e90e260afbee4daaeac98483ab93d00dda081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
