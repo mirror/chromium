@@ -292,6 +292,9 @@ NSError* WKWebViewErrorWithSource(NSError* error, WKWebViewErrorSource source) {
   // Last URL change reported to webWill/DidStartLoadingURL. Used to detect page
   // location changes (client redirects) in practice.
   GURL _lastRegisteredRequestURL;
+  // Last URL change is the result of processing a window.history.pushState or
+  // window.history.replaceState message.
+  BOOL _lastRegisteredRequestURLIsFromHistoryStateMessage;
   // Page loading phase.
   web::LoadPhase _loadPhase;
   // The web::PageDisplayState recorded when the page starts loading.
@@ -711,6 +714,14 @@ typedef void (^ViewportStateCompletion)(const web::PageViewportState*);
                     stateObject:(NSString*)stateObject;
 // Sets _documentURL to newURL, and updates any relevant state information.
 - (void)setDocumentURL:(const GURL&)newURL;
+// Sets _lastRegisteredRequestURL to newURL and records whether the update is
+// triggered by a history state operation. This context is needed to work around
+// a race condition when window.history.pushState message arrives too late after
+// another navigation has started and clobbers _lastRegisteredRequestURL.
+// TODO(crbug.com/788465): remove this hack once pushState and replaceState
+// overrides are removed.
+- (void)setLastRegisteredRequestURL:(const GURL&)newURL
+               isHistoryStateUpdate:(BOOL)isHistoryStateUpdate;
 // Sets last committed NavigationItem's title to the given |title|, which can
 // not be nil.
 - (void)setNavigationItemTitle:(NSString*)title;
@@ -947,6 +958,7 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
            selector:@selector(orientationDidChange)
                name:UIApplicationDidChangeStatusBarOrientationNotification
              object:nil];
+    _lastRegisteredRequestURLIsFromHistoryStateMessage = NO;
   }
   return self;
 }
@@ -1284,6 +1296,12 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
   }
 }
 
+- (void)setLastRegisteredRequestURL:(const GURL&)newURL
+               isHistoryStateUpdate:(BOOL)isHistoryStateUpdate {
+  _lastRegisteredRequestURL = newURL;
+  _lastRegisteredRequestURLIsFromHistoryStateMessage = isHistoryStateUpdate;
+}
+
 - (void)setNavigationItemTitle:(NSString*)title {
   DCHECK(title);
   web::NavigationItem* item =
@@ -1388,7 +1406,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
   }
 
   _loadPhase = web::LOAD_REQUESTED;
-  _lastRegisteredRequestURL = requestURL;
+  [self setLastRegisteredRequestURL:requestURL isHistoryStateUpdate:NO];
 
   if (!redirect) {
     if (!self.nativeController) {
@@ -1563,7 +1581,8 @@ registerLoadRequestForURL:(const GURL&)requestURL
               // TODO(crbug.com/788465): simplify history state handling to
               // avoid this hack.
               && currentItem == self.currentNavItem) {
-            strongSelf->_lastRegisteredRequestURL = URL;
+            [strongSelf setLastRegisteredRequestURL:URL
+                               isHistoryStateUpdate:NO];
           }
         }];
 }
@@ -1989,7 +2008,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
   [self optOutScrollsToTopForSubviews];
 
   DCHECK((currentURL == _lastRegisteredRequestURL) ||  // latest navigation
-         // previous navigation
+                                                       // previous navigation
          ![[_navigationStates lastAddedNavigation] isEqual:navigation] ||
          // invalid URL load
          (!_lastRegisteredRequestURL.is_valid() &&
@@ -1997,15 +2016,21 @@ registerLoadRequestForURL:(const GURL&)requestURL
          // about URL was changed by WebKit (e.g. about:newtab -> about:blank)
          (_lastRegisteredRequestURL.scheme() == url::kAboutScheme &&
           currentURL.spec() == url::kAboutBlankURL) ||
+         // TODO(crbug.com/788465): simplify history state handling to avoid
+         // the next two hacks.
          // In a very unfortunate edge case, window.history.didReplaceState
          // message can arrive between the |webView:didCommitNavigation| and
          // |webView:didFinishNavigation| callbacks of the page that contains
          // the replaceState call. In this case, _lastRegisteredRequestURL and
          // webView.URL are already updated to the replace state URL, but
          // currentURL is still the old URL. See crbug.com/788464.
-         // TODO(crbug.com/788465): simplify history state handling to avoid
-         // this hack.
-         (_lastRegisteredRequestURL == net::GURLWithNSURL(_webView.URL)))
+         (_lastRegisteredRequestURL == net::GURLWithNSURL(_webView.URL)) ||
+         // Yet another unfortunate edge case: window.history.didPushState
+         // message can arrive late after a location.replace navigation already
+         // started and clobber _lastRegisteredRequestURL. There is no way to
+         // tell this apart from an on-time push state message. So ignore both
+         // cases for now.
+         _lastRegisteredRequestURLIsFromHistoryStateMessage)
       << std::endl
       << "currentURL = [" << currentURL << "]" << std::endl
       << "_lastRegisteredRequestURL = [" << _lastRegisteredRequestURL << "]";
@@ -2606,7 +2631,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
     return NO;
   }
   NSString* stateObject = base::SysUTF8ToNSString(stateObjectJSON);
-  _lastRegisteredRequestURL = pushURL;
+  [self setLastRegisteredRequestURL:pushURL isHistoryStateUpdate:YES];
 
   // If the user interacted with the page, categorize it as a link navigation.
   // If not, categorize it is a client redirect as it occurred without user
@@ -2673,7 +2698,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
     return NO;
   }
   NSString* stateObject = base::SysUTF8ToNSString(stateObjectJSON);
-  _lastRegisteredRequestURL = replaceURL;
+  [self setLastRegisteredRequestURL:replaceURL isHistoryStateUpdate:YES];
   [self replaceStateWithPageURL:replaceURL stateObject:stateObject];
   NSString* replaceStateJS = [self javaScriptToReplaceWebViewURL:replaceURL
                                                  stateObjectJSON:stateObject];
@@ -4394,7 +4419,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
         item->SetURL(webViewURL);
       }
 
-      _lastRegisteredRequestURL = webViewURL;
+      [self setLastRegisteredRequestURL:webViewURL isHistoryStateUpdate:NO];
     }
     _webStateImpl->OnNavigationStarted(context);
     return;
@@ -4564,7 +4589,15 @@ registerLoadRequestForURL:(const GURL&)requestURL
   DCHECK(_documentURL == _lastRegisteredRequestURL ||  // latest navigation
          !isLastNavigation ||                          // previous navigation
          (!_lastRegisteredRequestURL.is_valid() &&     // invalid URL load
-          _documentURL.spec() == url::kAboutBlankURL));
+          _documentURL.spec() == url::kAboutBlankURL) ||
+         // Yet another unfortunate edge case: window.history.didPushState
+         // message can arrive late after a location.replace navigation already
+         // started and clobber _lastRegisteredRequestURL. There is no way to
+         // tell this apart from an on-time push state message. So ignore both
+         // cases for now.
+         // TODO(crbug.com/788465): Simplify history state handling and remove
+         // this hack.
+         _lastRegisteredRequestURLIsFromHistoryStateMessage);
 
   // Update HTTP response headers.
   _webStateImpl->UpdateHttpResponseHeaders(_documentURL);
@@ -5285,7 +5318,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
 - (void)injectWebViewContentView:(CRWWebViewContentView*)webViewContentView {
   [self removeWebView];
 
-  _lastRegisteredRequestURL = _defaultURL;
+  [self setLastRegisteredRequestURL:_defaultURL isHistoryStateUpdate:NO];
   [_containerView displayWebViewContentView:webViewContentView];
   [self setWebView:static_cast<WKWebView*>(webViewContentView.webView)];
 }
