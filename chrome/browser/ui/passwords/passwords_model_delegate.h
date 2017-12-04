@@ -113,6 +113,12 @@ class PasswordsModelDelegate {
   // Called from the dialog controller when the dialog is hidden.
   virtual void OnDialogHidden() = 0;
 
+  // Called from the model when re-auth is needed to view passwords. Returns
+  // true iff passwords viewing is allowed.
+  virtual bool AuthenticateUser() = 0;
+
+  virtual bool PasswordIsRevealedByDefault() = 0;
+
  protected:
   virtual ~PasswordsModelDelegate() = default;
 };

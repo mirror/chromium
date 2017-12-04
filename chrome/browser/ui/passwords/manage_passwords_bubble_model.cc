@@ -291,9 +291,10 @@ ManagePasswordsBubbleModel::ManagePasswordsBubbleModel(
         interaction_stats.dismissal_count = stats->dismissal_count;
       }
     }
-    hide_eye_icon_ = delegate_->BubbleIsManualFallbackForSaving()
-                         ? pending_password_.form_has_autofilled_value
-                         : display_reason == USER_ACTION;
+    passwords_viewing_is_locked_ =
+        delegate_->BubbleIsManualFallbackForSaving()
+            ? pending_password_.form_has_autofilled_value
+            : display_reason == USER_ACTION;
     enable_editing_ = delegate_->GetCredentialSource() !=
                       password_manager::metrics_util::CredentialSourceType::
                           kCredentialManagementAPI;
@@ -558,6 +559,15 @@ bool ManagePasswordsBubbleModel::ReplaceToShowPromotionIfNeeded() {
 void ManagePasswordsBubbleModel::SetClockForTesting(
     std::unique_ptr<base::Clock> clock) {
   interaction_keeper_->SetClockForTesting(std::move(clock));
+}
+
+bool ManagePasswordsBubbleModel::TryToViewPasswords() const {
+  return !passwords_viewing_is_locked_ ||
+         (delegate_ && delegate_->AuthenticateUser());
+}
+
+bool ManagePasswordsBubbleModel::PasswordIsRevealedByDefault() {
+  return delegate_ && delegate_->PasswordIsRevealedByDefault();
 }
 
 void ManagePasswordsBubbleModel::UpdatePendingStateTitle() {
