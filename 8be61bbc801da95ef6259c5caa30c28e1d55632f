@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8a787d2_605ab08e",
+        "filename": "components/policy/throttle/policy_blacklist_navigation_throttle.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-04T20:56:06Z",
+      "side": 1,
+      "message": "nit: move these files to components/policy/content, as that\u0027s where the \"content\" part of a layered component lives per  https://www.chromium.org/developers/design-documents/layered-components-design",
+      "revId": "8be61bbc801da95ef6259c5caa30c28e1d55632f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff7607d7_f0d63976",
+        "filename": "components/policy/throttle/policy_blacklist_navigation_throttle.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-04T20:56:06Z",
+      "side": 1,
+      "message": "did you consider passing in this method to the constructor of PolicyBlacklistNavigationThrottle? That way this src/chrome/ specific behavior can remain in src/chrome as before in policy_helpers.cc?",
+      "revId": "8be61bbc801da95ef6259c5caa30c28e1d55632f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
