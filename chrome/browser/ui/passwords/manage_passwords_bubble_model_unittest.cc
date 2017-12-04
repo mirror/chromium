@@ -13,6 +13,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/histogram_tester.h"
 #include "base/test/simple_test_clock.h"
+#include "build/build_config.h"
 #include "chrome/browser/password_manager/password_store_factory.h"
 #include "chrome/browser/sync/profile_sync_service_factory.h"
 #include "chrome/browser/sync/profile_sync_test_util.h"
@@ -627,7 +628,7 @@ TEST_F(ManagePasswordsBubbleModelTest, RecordUKMs) {
   }
 }
 
-TEST_F(ManagePasswordsBubbleModelTest, EyeIcon) {
+TEST_F(ManagePasswordsBubbleModelTest, EyeIcon_PasswordsViewingingIsLocked) {
   for (bool is_manual_fallback_for_saving : {false, true}) {
     for (bool form_has_autofilled_value : {false, true}) {
       for (ManagePasswordsBubbleModel::DisplayReason display_reason :
@@ -664,7 +665,7 @@ TEST_F(ManagePasswordsBubbleModelTest, EyeIcon) {
             is_manual_fallback_for_saving
                 ? form_has_autofilled_value
                 : display_reason == ManagePasswordsBubbleModel::USER_ACTION,
-            model()->hide_eye_icon());
+            model()->passwords_viewing_is_locked());
 
         DestroyModel();
         // Flush async calls on password store.
@@ -674,6 +675,31 @@ TEST_F(ManagePasswordsBubbleModelTest, EyeIcon) {
     }
   }
 }
+
+#if !defined(OS_WIN) && !defined(OS_MACOSX)
+// Real re-auth cannot be mocked, so only platforms without auth included here.
+TEST_F(ManagePasswordsBubbleModelTest, EyeIcon_TryToViewPasswords) {
+  autofill::PasswordForm form = GetPendingPassword();
+  EXPECT_CALL(*controller(), GetPendingPassword()).WillOnce(ReturnRef(form));
+  password_manager::InteractionsStats stats = GetTestStats();
+  EXPECT_CALL(*controller(), GetCurrentInteractionStats())
+      .WillOnce(Return(&stats));
+  EXPECT_CALL(*controller(), BubbleIsManualFallbackForSaving())
+      .WillOnce(Return(false));
+
+  // After submission a user closed and re-opened the bubble. Passwords viewing
+  // is locked.
+  SetUpWithState(password_manager::ui::PENDING_PASSWORD_STATE,
+                 ManagePasswordsBubbleModel::USER_ACTION);
+  ASSERT_TRUE(model()->passwords_viewing_is_locked());
+
+  // Since re-auth are not implemented for tested platforms, viewing is allowed.
+  EXPECT_TRUE(model()->TryToViewPasswords());
+  // Lock is reseted. Viewing is allowed for bubble's lifetime.
+  EXPECT_FALSE(model()->passwords_viewing_is_locked());
+  EXPECT_TRUE(model()->TryToViewPasswords());
+}
+#endif
 
 TEST_F(ManagePasswordsBubbleModelTest, DisableEditing) {
   autofill::PasswordForm form = GetPendingPassword();
