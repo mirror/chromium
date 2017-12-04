@@ -39,7 +39,6 @@
 #include "platform/heap/Handle.h"
 #include "platform/loader/fetch/RawResource.h"
 #include "platform/loader/fetch/ResourceError.h"
-#include "platform/loader/fetch/ResourceOwner.h"
 #include "platform/network/HTTPHeaderMap.h"
 #include "platform/weborigin/Referrer.h"
 #include "platform/wtf/Forward.h"

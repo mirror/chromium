@@ -1198,6 +1198,7 @@ void DocumentThreadableLoader::LoadRequestAsync(
     new_params.SetOriginRestriction(FetchParameters::kNoOriginRestriction);
   }
   DCHECK(!GetResource());
+  checker_.WillAddClient();
 
   ResourceFetcher* fetcher = loading_context_->GetResourceFetcher();
   if (request.GetRequestContext() == WebURLRequest::kRequestContextVideo ||
