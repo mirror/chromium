@@ -1258,6 +1258,13 @@ should be able to be added at any place in this file.
   </description>
 </action>
 
+<action name="Android.ChromeHome.ClosedSurveyInfoBar">
+  <owner>danielpark@chromium.org</owner>
+  <description>
+    User dismissed the survey infobar by tapping on its close button.
+  </description>
+</action>
+
 <action name="Android.ChromeHome.FullState">
   <owner>mdjones@chromium.org</owner>
   <owner>twellington@chromium.org</owner>
