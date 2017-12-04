@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed598de7_33ca3466",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetSwipeDetector.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-04T16:27:01Z",
+      "side": 1,
+      "message": "s/chances/changes",
+      "revId": "fc69b9c5f56ecb8f0160fec5c3f5e7be0e5752b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
