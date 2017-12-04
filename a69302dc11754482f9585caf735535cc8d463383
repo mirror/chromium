@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b78dd5a1_7cfc3390",
+        "filename": "docs/security/mojo.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-04T19:10:26Z",
+      "side": 1,
+      "message": "I agree with the first paragraph, but I\u0027m not sure about the implications of the second. In general, code should be following the pattern used by other WebUI. It\u0027s true that if a CL does an ad-hoc self-creation and self-registration of MojoWebUIController, Chrome Security is going to have a Bad Time.\n\nBut people shouldn\u0027t be doing that--and if they follow the standard pattern, then what process checks do we actually expect people to do? Because hopefully we wrote the central WebUI dispatcher to correctly handle all this already in GetWebUIFactoryFunction...\n\nSimilarly, if people write privileged code that should only be exposed to WebUI--then they should only be accessing it from the context of a MojoWebUIController subclass, and not from outside it. So maybe this should be rephrased to:\n\n- Use the standard pattern for instantiating MojoWebUIController. WebUI methods must only be exposed through a MojoWebUIController subclass.\n- If there is external functionality that the WebUI needs, make sure to route it through the Mojo interfaces implemented by the MojoWebUIController, to avoid circumventing access checks.",
+      "range": {
+        "startLine": 565,
+        "startChar": 0,
+        "endLine": 570,
+        "endChar": 79
+      },
+      "revId": "a69302dc11754482f9585caf735535cc8d463383",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
