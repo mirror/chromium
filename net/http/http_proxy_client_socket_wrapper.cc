@@ -291,6 +291,10 @@ int64_t HttpProxyClientSocketWrapper::GetTotalReceivedBytes() const {
   return transport_socket_->GetTotalReceivedBytes();
 }
 
+void HttpProxyClientSocketWrapper::Tag(const SocketTag& tag) {
+  return transport_socket_->Tag(tag);
+}
+
 int HttpProxyClientSocketWrapper::Read(IOBuffer* buf,
                                        int buf_len,
                                        const CompletionCallback& callback) {
@@ -548,7 +552,7 @@ int HttpProxyClientSocketWrapper::DoHttpProxyConnect() {
 
   // Add a HttpProxy connection on top of the tcp socket.
   transport_socket_.reset(new HttpProxyClientSocket(
-      transport_socket_handle_.release(), user_agent_, endpoint_,
+      std::move(transport_socket_handle_), user_agent_, endpoint_,
       GetDestination().host_port_pair(), http_auth_controller_.get(), tunnel_,
       using_spdy_, negotiated_protocol_, proxy_delegate_,
       ssl_params_.get() != nullptr));

@@ -189,6 +189,11 @@ int64_t SpdyProxyClientSocket::GetTotalReceivedBytes() const {
   return 0;
 }
 
+void SpdyProxyClientSocket::Tag(const SocketTag& tag) {
+  // Underlying SpdySession can be tagged, but |spdy_stream_| cannot.
+  CHECK(false);
+}
+
 int SpdyProxyClientSocket::Read(IOBuffer* buf, int buf_len,
                                 const CompletionCallback& callback) {
   DCHECK(read_callback_.is_null());
