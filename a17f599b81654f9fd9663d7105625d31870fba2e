@@ -34,6 +34,24 @@
       "revId": "a17f599b81654f9fd9663d7105625d31870fba2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25dc0a80_7cabe357",
+        "filename": "ui/gl/gl_image.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-04T21:57:57Z",
+      "side": 1,
+      "message": "They are cleared later using the GPU instead of CPU, right?\n\nWhat I\u0027m asking is if it\u0027s necessary to add a virtual function to GLImage just to pass this state around? Can we just have an ifdef for this in gles_cmd_decoder with a comment explaining that anonymous GLImages need to be cleared using the GPU?",
+      "parentUuid": "b3f6d65e_6f7c2b7e",
+      "revId": "a17f599b81654f9fd9663d7105625d31870fba2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
