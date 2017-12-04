@@ -11,6 +11,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/threading/thread_checker.h"
+#include "content/common/media/peer_connection_tracker.mojom.h"
 #include "content/public/renderer/render_thread_observer.h"
 #include "ipc/ipc_platform_file.h"
 #include "third_party/WebKit/public/platform/WebMediaStream.h"
@@ -219,6 +220,10 @@ class CONTENT_EXPORT PeerConnectionTracker
                                 const std::string& value);
 
   RenderThread* SendTarget();
+  mojom::PeerConnectionTrackerHost* GetPeerConnectionTrackerHost();
+
+  mojom::PeerConnectionTrackerHostAssociatedPtr peer_connecion_tracker_ptr_;
+  mojom::PeerConnectionTrackerHost* peer_connection_tracker_host_;
 
   // This map stores the local ID assigned to each RTCPeerConnectionHandler.
   typedef std::map<RTCPeerConnectionHandler*, int> PeerConnectionIdMap;

@@ -586,6 +586,7 @@ mojom("mojo_bindings") {
     "native_types.mojom",
     "navigation_params.mojom",
     "page_state.mojom",
+    "peer_connection_tracker.mojom",
     "push_messaging.mojom",
     "quota_dispatcher_host.mojom",
     "render_frame_message_filter.mojom",
