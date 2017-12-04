@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84dbe511_169f6359",
+        "filename": "extensions/renderer/runtime_hooks_delegate_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-04T21:13:25Z",
+      "side": 1,
+      "message": "nit: up to you, but __defineGetter__ is a semi-deprecated API (though it\u0027s so used it\u0027ll likely never be dropped). This could also be written:\n\nObject.defineProperty(\n    Object.prototype, \u0027includeTlsChannelId\u0027,\n    { get() { throw new Error(\u0027tricked!\u0027); } });\n\nAside: well-spotted. ;)",
+      "revId": "cdc3b98031f83a4877d6c75f5fe8d53579e968e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
