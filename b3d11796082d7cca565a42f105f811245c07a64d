@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e89692d9_8e37bd3f",
+        "filename": "ui/views/controls/scroll_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-04T20:58:19Z",
+      "side": 1,
+      "message": "You should be able to call focused_now-\u003eScrollRectToVisible(gfx::Rect()) instead of all this.",
+      "range": {
+        "startLine": 833,
+        "startChar": 4,
+        "endLine": 836,
+        "endChar": 50
+      },
+      "revId": "b3d11796082d7cca565a42f105f811245c07a64d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
