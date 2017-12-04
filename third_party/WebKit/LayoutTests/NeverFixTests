@@ -1828,6 +1828,12 @@ external/wpt/css/css-color/t424-hsl-parsing-f.xht [ WontFix ]
 external/wpt/css/css-color/t425-hsla-onscreen-multiple-boxes-c.xht [ WontFix ]
 external/wpt/css/css-color/t425-hsla-parsing-f.xht [ WontFix ]
 
+# Timeouts for CSS variables and transitions. https://crbug.com/791529
+external/wpt/css/css-variables/variable-transitions-from-no-value.html [ WontFix ]
+external/wpt/css/css-variables/variable-transitions-to-no-value.html [ WontFix ]
+external/wpt/css/css-variables/variable-transitions-transition-property-variable-before-value.html [ WontFix ]
+external/wpt/css/css-variables/variable-transitions-value-before-transition-property-variable.html [ WontFix ]
+
 # Requires --use-fake-ui-for-media-stream to run.
 external/wpt/mediacapture-streams/MediaStream-default-feature-policy.https.html [ WontFix ]
 
