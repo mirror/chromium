@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ae0bbc37_8f05fef2",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-12-04T20:06:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5223e686_20dd9d32",
+      "range": {
+        "startLine": 107,
+        "startChar": 61,
+        "endLine": 107,
+        "endChar": 70
+      },
+      "revId": "67dee32c779e9b9e0811d325167d212472fa0098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00a269d9_f928e066",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "67dee32c779e9b9e0811d325167d212472fa0098",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f086364_635a7bfc",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-12-04T20:06:42Z",
+      "side": 1,
+      "message": "https://chromium-review.googlesource.com/c/chromium/src/+/806439",
+      "parentUuid": "00a269d9_f928e066",
+      "revId": "67dee32c779e9b9e0811d325167d212472fa0098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
