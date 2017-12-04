@@ -180,9 +180,7 @@ void FakeRemoteGattCharacteristic::SubscribeToNotifications(
 void FakeRemoteGattCharacteristic::UnsubscribeFromNotifications(
     device::BluetoothRemoteGattDescriptor* ccc_descriptor,
     const base::Closure& callback,
-    const ErrorCallback& error_callback) {
-  NOTREACHED();
-}
+    const ErrorCallback& error_callback) {}
 
 void FakeRemoteGattCharacteristic::DispatchReadResponse(
     const ValueCallback& callback,
