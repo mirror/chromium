@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44c96157_9711549e",
+        "filename": "chrome/browser/chromeos/tether/tether_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1128430
+      },
+      "writtenOn": "2017-12-04T21:50:33Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think this name is very clear about what the function does. \"FalsePositive\" of what? What does handling that potential false positive entail? Even after reading the above comment, I still can\u0027t answer those questions without digging into the implementation.",
+      "range": {
+        "startLine": 193,
+        "startChar": 7,
+        "endLine": 193,
+        "endChar": 41
+      },
+      "revId": "9f2cbc14354fa5872084709e8f38f52914b02655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
