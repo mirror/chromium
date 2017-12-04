@@ -16,6 +16,29 @@
       "revId": "176f3662caf9946b32abf2e3428fb99a987710de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9447cdb4_e171d955",
+        "filename": "ui/message_center/views/message_view_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-04T15:09:05Z",
+      "side": 1,
+      "message": "is this necessary? where\u0027s it called from?",
+      "range": {
+        "startLine": 31,
+        "startChar": 15,
+        "endLine": 31,
+        "endChar": 34
+      },
+      "revId": "176f3662caf9946b32abf2e3428fb99a987710de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
