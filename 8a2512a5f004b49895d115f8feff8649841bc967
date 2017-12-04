@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "94e81de6_dd7f8237",
+        "filename": "chrome/browser/installable/installable_metrics.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-12-04T00:33:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af690106_e6849d69",
+      "revId": "8a2512a5f004b49895d115f8feff8649841bc967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa7d0770_b926c887",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-02T05:12:45Z",
       "side": 1,
       "message": "optional comment for later: These are long strings and might look strange in the rows on the dashboard.  Depending on how they look, you may want to shorten them.",
+      "revId": "8a2512a5f004b49895d115f8feff8649841bc967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c411c369_478e6ee5",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 43503,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-12-04T00:33:10Z",
+      "side": 1,
+      "message": "Shortened; thanks.",
+      "parentUuid": "fa7d0770_b926c887",
       "revId": "8a2512a5f004b49895d115f8feff8649841bc967",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "8a2512a5f004b49895d115f8feff8649841bc967",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e5a9d5b_cb4ec5fb",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 93713,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-12-04T00:33:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6582987f_86818153",
+      "revId": "8a2512a5f004b49895d115f8feff8649841bc967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
