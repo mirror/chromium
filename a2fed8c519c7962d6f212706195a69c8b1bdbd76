@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d9fd1b47_d8db9a3a",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_header_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-04T10:31:57Z",
+      "side": 1,
+      "message": "It is set by the coordinator. Why do you think it should be readonly?",
+      "parentUuid": "30e42f80_c45e676e",
+      "range": {
+        "startLine": 54,
+        "startChar": 21,
+        "endLine": 54,
+        "endChar": 27
+      },
+      "revId": "a2fed8c519c7962d6f212706195a69c8b1bdbd76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72f667d4_d3089b7b",
         "filename": "ios/chrome/browser/content_suggestions/ntp_home_mediator.mm",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5200f0ae_6a457479",
+        "filename": "ios/chrome/browser/content_suggestions/ntp_home_mediator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-04T10:31:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72f667d4_d3089b7b",
+      "range": {
+        "startLine": 136,
+        "startChar": 28,
+        "endLine": 136,
+        "endChar": 31
+      },
+      "revId": "a2fed8c519c7962d6f212706195a69c8b1bdbd76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "491ce3e3_a3027575",
         "filename": "ios/chrome/browser/content_suggestions/ntp_home_mediator.mm",
         "patchSetId": 3
@@ -62,6 +110,24 @@
       "revId": "a2fed8c519c7962d6f212706195a69c8b1bdbd76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bad246f_04053ea9",
+        "filename": "ios/chrome/browser/content_suggestions/ntp_home_mediator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-04T10:31:57Z",
+      "side": 1,
+      "message": "The setter of the web state property removes the observer.",
+      "parentUuid": "491ce3e3_a3027575",
+      "revId": "a2fed8c519c7962d6f212706195a69c8b1bdbd76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
