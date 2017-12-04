@@ -982,6 +982,11 @@ class CONTENT_EXPORT ContentBrowserClient {
   // render MHTML page from http/https URLs.
   virtual bool AllowRenderingMhtmlOverHttp(
       NavigationUIData* navigation_ui_data) const;
+
+  // Called on IO or UI thread to determine whether or not to allow load and
+  // render MHTML page from http/https URLs.
+  virtual bool ShouldForceDownloadResource(const GURL& url,
+                                           const std::string& mime_type) const;
 };
 
 }  // namespace content

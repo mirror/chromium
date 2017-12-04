@@ -3735,6 +3735,17 @@ bool ChromeContentBrowserClient::AllowRenderingMhtmlOverHttp(
 #endif
 }
 
+bool ChromeContentBrowserClient::ShouldForceDownloadResource(
+    const GURL& url,
+    const std::string& mime_type) const {
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  // Special-case user scripts to get downloaded instead of viewed.
+  return extensions::UserScript::IsURLUserScript(url, mime_type);
+#else
+  return false;
+#endif
+}
+
 // Static; handles rewriting Web UI URLs.
 bool ChromeContentBrowserClient::HandleWebUI(
     GURL* url,
