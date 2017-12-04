@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4075a51_685e5607",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-04T16:20:22Z",
+      "side": 1,
+      "message": "*literally",
+      "revId": "9b8f53afad03686877f6a00316f2b192193a24b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99ce6be2_50dc0afb",
+        "filename": "ui/base/touch/touch_device_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-04T16:20:22Z",
+      "side": 1,
+      "message": "Don\u0027t need else. (see styleguide)",
+      "revId": "9b8f53afad03686877f6a00316f2b192193a24b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4994bb89_da071af5",
+        "filename": "ui/base/touch/touch_device_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-04T16:20:22Z",
+      "side": 1,
+      "message": "Just return here too?",
+      "revId": "9b8f53afad03686877f6a00316f2b192193a24b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
