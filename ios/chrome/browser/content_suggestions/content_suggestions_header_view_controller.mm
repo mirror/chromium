@@ -18,12 +18,12 @@
 #import "ios/chrome/browser/ui/content_suggestions/ntp_home_constant.h"
 #import "ios/chrome/browser/ui/ntp/new_tab_page_header_constants.h"
 #import "ios/chrome/browser/ui/ntp/new_tab_page_header_view.h"
-//#import "ios/chrome/browser/ui/toolbar/web_toolbar_controller.h"
 #import "ios/chrome/browser/ui/toolbar/omnibox_focuser.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #import "ios/chrome/browser/ui/url_loader.h"
 #import "ios/chrome/browser/ui/util/constraints_ui_util.h"
 #include "ios/chrome/grit/ios_strings.h"
+#include "ios/public/provider/chrome/browser/ui/logo_vendor.h"
 #include "ui/base/l10n/l10n_util.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -41,9 +41,6 @@ const CGFloat kHintLabelSidePadding = 12;
 
 // |YES| when notifications indicate the omnibox is focused.
 @property(nonatomic, assign, getter=isOmniboxFocused) BOOL omniboxFocused;
-
-// |YES| if this consumer is has voice search enabled.
-@property(nonatomic, assign) BOOL voiceSearchIsEnabled;
 
 // Exposes view and methods to drive the doodle.
 @property(nonatomic, weak) id<LogoVendor> logoVendor;
