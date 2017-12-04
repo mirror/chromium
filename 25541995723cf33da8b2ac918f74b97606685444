@@ -16,6 +16,91 @@
       "revId": "25541995723cf33da8b2ac918f74b97606685444",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c11d6855_b2023244",
+        "filename": "mojo/public/cpp/system/file_data_pipe_producer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-04T22:55:48Z",
+      "side": 1,
+      "message": "I don\u0027t think we should do this in the destructor, rather we should do it in FileSequenceState::Finish",
+      "revId": "25541995723cf33da8b2ac918f74b97606685444",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bea7ca0f_3639f63c",
+        "filename": "mojo/public/cpp/system/file_data_pipe_producer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-04T22:55:48Z",
+      "side": 1,
+      "message": "nit: class comment?",
+      "revId": "25541995723cf33da8b2ac918f74b97606685444",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "801dde70_aee0382d",
+        "filename": "mojo/public/cpp/system/file_data_pipe_producer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-04T22:55:48Z",
+      "side": 1,
+      "message": "minor nit: What if we called the methods OnBytesRead() and OnDoneReading()? Then it\u0027s (a) consistent \"OnFoo\" naming, and we aren\u0027t using two similar verbs (complete and done) for different things?\n\nAlso, let\u0027s use size_t instead of int since we aren\u0027t also propagating error codes through that value.\n\nAlso, what happens if read_result is not OK? Does bytes_read mean anything or should it be ignored?",
+      "revId": "25541995723cf33da8b2ac918f74b97606685444",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41df6ce4_1d660a06",
+        "filename": "mojo/public/cpp/system/file_data_pipe_producer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-04T22:55:48Z",
+      "side": 1,
+      "message": "nit: document that observer may be null",
+      "revId": "25541995723cf33da8b2ac918f74b97606685444",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71dac2c3_1bd5af7e",
+        "filename": "mojo/public/cpp/system/file_data_pipe_producer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-04T22:55:48Z",
+      "side": 1,
+      "message": "nit: Also, we should probably make DataPipeProducerObserver sequence-affine. I think it would be surprising if its methods got called from an arbitrary sequence, or (as is currently the case) even from multiple different sequences.\n\nCan we make it (and document it) so that |observer| methods are always invoked on the calling sequence? FileSequenceState already captures the original calling SequenceTaskRunner so it should be a straightforward change.",
+      "revId": "25541995723cf33da8b2ac918f74b97606685444",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
