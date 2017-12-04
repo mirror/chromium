@@ -858,6 +858,9 @@ void GetFormAndField(autofill::FormData* form,
 
   const std::vector<autofill::FormFieldData>& fields = form.fields;
   for (const auto& fieldData : fields) {
+    if (fieldsData->HasKey(base::UTF16ToUTF8(fieldData.name)) &&
+        fieldData.value.empty())
+      continue;
     fieldsData->SetKey(base::UTF16ToUTF8(fieldData.name),
                        base::Value(fieldData.value));
   }
