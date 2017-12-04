@@ -7,6 +7,7 @@
 
 #include "core/CoreExport.h"
 #include "core/editing/Forward.h"
+#include "core/layout/ng/geometry/ng_physical_offset.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/HashMap.h"
@@ -16,6 +17,7 @@
 
 namespace blink {
 
+class LayoutBlockFlow;
 class LayoutObject;
 class Node;
 
@@ -184,6 +186,15 @@ class CORE_EXPORT NGOffsetMapping {
 
   DISALLOW_COPY_AND_ASSIGN(NGOffsetMapping);
 };
+
+const LayoutBlockFlow* NGInlineFormattingContextOf(const Position&);
+const LayoutBlockFlow* NGInlineFormattingContextOf(const PositionInFlatTree&);
+
+// This function serves as the NG alternative of LayoutObject::LocalCaretRect()
+// TODO(xiaochengh): Documentation.
+struct LocalCaretRect;
+LocalCaretRect ComputeLocalCaretRectNG(const PositionWithAffinity&);
+LocalCaretRect ComputeLocalCaretRectNG(const PositionInFlatTreeWithAffinity&);
 
 }  // namespace blink
 

@@ -132,6 +132,16 @@ class CORE_EXPORT NGPhysicalFragment
   // Unite visual rect to propagate to parent's ContentsVisualRect.
   void PropagateContentsVisualRect(NGPhysicalOffsetRect*) const;
 
+  // TODO(xiaochengh): Documententation
+  enum class CaretPositionType {
+    kBeforeFragment,
+    kAfterFragment,
+    kInEmptyFragment,
+    kAtTextOffset
+  };
+  virtual NGPhysicalOffsetRect LocalCaretRect(CaretPositionType,
+                                              unsigned* text_offset) const;
+
   // Should only be used by the parent fragment's layout.
   void SetOffset(NGPhysicalOffset offset) {
     DCHECK(!is_placed_);

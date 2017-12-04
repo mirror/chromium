@@ -30,7 +30,7 @@ void NGInlineFragmentIterator::CollectInlineFragments(
   for (const auto& child : container.Children()) {
     NGPhysicalOffset child_offset = child->Offset() + offset_to_container_box;
 
-    if (filter == child->GetLayoutObject()) {
+    if (!filter || filter == child->GetLayoutObject()) {
       results->push_back(
           NGPhysicalFragmentWithOffset{child.get(), child_offset});
     }
