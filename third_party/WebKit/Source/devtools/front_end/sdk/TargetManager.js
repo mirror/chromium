@@ -362,7 +362,7 @@ SDK.TargetManager = class extends Common.Object {
     if (wsParam || wssParam) {
       var ws = wsParam ? `ws://${wsParam}` : `wss://${wssParam}`;
       this._mainConnection = new SDK.WebSocketConnection(ws, this._webSocketConnectionLostCallback, params);
-    } else if (InspectorFrontendHost.isHostedMode()) {
+    } else if (InspectorFrontendHost.isHostedMode() && !Host.isUnderTest()) {
       this._mainConnection = new SDK.StubConnection(params);
     } else {
       this._mainConnection = new SDK.MainConnection(params);

@@ -16,6 +16,7 @@
 #include "base/base64.h"
 #include "base/callback.h"
 #include "base/command_line.h"
+#include "base/debug/stack_trace.h"
 #include "base/location.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
@@ -467,10 +468,13 @@ Shell* BlinkTestController::SecondaryWindow() {
 
 void BlinkTestController::LoadDevToolsJSTest() {
   devtools_window_ = main_window_;
-  Shell* secondary = SecondaryWindow();
-  devtools_bindings_ = base::MakeUnique<LayoutTestDevToolsBindings>(
-      devtools_window_->web_contents(), secondary->web_contents(), "",
-      test_url_, true);
+  SecondaryWindow();
+
+  NavigationController::LoadURLParams params(test_url_);
+  params.transition_type = ui::PageTransitionFromInt(
+      ui::PAGE_TRANSITION_TYPED | ui::PAGE_TRANSITION_FROM_ADDRESS_BAR);
+  web_contents()->GetController().LoadURLWithParams(params);
+  web_contents()->Focus();
 }
 
 bool BlinkTestController::ResetAfterLayoutTest() {
@@ -567,6 +571,8 @@ bool BlinkTestController::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_SetPopupBlockingEnabled,
                         OnSetPopupBlockingEnabled)
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_TestFinished, OnTestFinished)
+    IPC_MESSAGE_HANDLER(ShellViewHostMsg_NavigateSecondaryWindow,
+                        OnNavigateSecondaryWindow)
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_ShowDevTools, OnShowDevTools)
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_EvaluateInDevTools,
                         OnEvaluateInDevTools)
@@ -950,6 +956,31 @@ void BlinkTestController::OnOverridePreferences(const WebPreferences& prefs) {
 
 void BlinkTestController::OnSetPopupBlockingEnabled(bool block_popups) {
   LayoutTestContentBrowserClient::Get()->SetPopupBlockingEnabled(block_popups);
+}
+
+void BlinkTestController::OnNavigateSecondaryWindow(const std::string& url) {
+  fprintf(
+      stderr,
+      "******************** BlinkTestController::OnNavigateSecondaryWindow\n");
+  // base::debug::StackTrace().Print();
+  std::string spec = test_url_.spec();
+  std::string test_query_param = "&test=";
+  std::string test_script_url =
+      spec.substr(spec.find(test_query_param) + test_query_param.length());
+  std::string inspected_page_url = test_script_url.replace(
+      test_script_url.find("/devtools/"), std::string::npos,
+      "/devtools/startup/console/resources/console-sample.html");
+  // return GURL(inspected_page_url);
+
+  GURL gurl(inspected_page_url);
+  NavigationController::LoadURLParams params(gurl);
+  params.transition_type = ui::PageTransitionFromInt(
+      ui::PAGE_TRANSITION_TYPED | ui::PAGE_TRANSITION_FROM_ADDRESS_BAR);
+  secondary_window_->web_contents()->GetController().LoadURLWithParams(params);
+  sleep(1);
+  devtools_bindings_ = base::MakeUnique<LayoutTestDevToolsBindings>(
+      devtools_window_->web_contents(), secondary_window_->web_contents(), "",
+      test_url_, true);
 }
 
 void BlinkTestController::OnShowDevTools(const std::string& settings,

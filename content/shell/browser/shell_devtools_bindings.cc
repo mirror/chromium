@@ -135,6 +135,7 @@ ShellDevToolsBindings::~ShellDevToolsBindings() {
 
 void ShellDevToolsBindings::ReadyToCommitNavigation(
     NavigationHandle* navigation_handle) {
+  fprintf(stderr, "*************** ReadyToCommitNavigation = navigation_handle->GetURL(): %s\n", navigation_handle->GetURL().spec().c_str());
 #if !defined(OS_ANDROID)
   content::RenderFrameHost* frame = navigation_handle->GetRenderFrameHost();
   if (navigation_handle->IsInMainFrame()) {

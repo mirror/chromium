@@ -21,16 +21,16 @@
 
 namespace {
 
-GURL GetInspectedPageURL(const GURL& test_url) {
-  std::string spec = test_url.spec();
-  std::string test_query_param = "&test=";
-  std::string test_script_url =
-      spec.substr(spec.find(test_query_param) + test_query_param.length());
-  std::string inspected_page_url = test_script_url.replace(
-      test_script_url.find("/devtools/"), std::string::npos,
-      "/devtools/resources/inspected-page.html");
-  return GURL(inspected_page_url);
-}
+// GURL GetInspectedPageURL(const GURL& test_url) {
+//   std::string spec = test_url.spec();
+//   std::string test_query_param = "&test=";
+//   std::string test_script_url =
+//       spec.substr(spec.find(test_query_param) + test_query_param.length());
+//   std::string inspected_page_url = test_script_url.replace(
+//       test_script_url.find("/devtools/"), std::string::npos,
+//       "/devtools/resources/inspected-page.html");
+//   return GURL(inspected_page_url);
+// }
 
 }  // namespace
 
@@ -45,8 +45,8 @@ class LayoutTestDevToolsBindings::SecondaryObserver
 
   // WebContentsObserver implementation.
   void DocumentAvailableInMainFrame() override {
-    if (bindings_)
-      bindings_->NavigateDevToolsFrontend();
+    // if (bindings_)
+    // bindings_->NavigateDevToolsFrontend();
     bindings_ = nullptr;
   }
 
@@ -123,6 +123,7 @@ void LayoutTestDevToolsBindings::NavigateDevToolsFrontend() {
 
 void LayoutTestDevToolsBindings::EvaluateInFrontend(int call_id,
                                                     const std::string& script) {
+  fprintf(stderr, "***** EVALUATEINFRONTEND: %s\n.", script.c_str());
   if (!ready_for_test_) {
     pending_evaluations_.push_back(std::make_pair(call_id, script));
     return;
@@ -148,21 +149,38 @@ LayoutTestDevToolsBindings::LayoutTestDevToolsBindings(
   SetPreferences(settings);
 
   if (new_harness) {
-    secondary_observer_ = base::MakeUnique<SecondaryObserver>(this);
-    NavigationController::LoadURLParams params(
-        GetInspectedPageURL(frontend_url));
-    params.transition_type = ui::PageTransitionFromInt(
-        ui::PAGE_TRANSITION_TYPED | ui::PAGE_TRANSITION_FROM_ADDRESS_BAR);
-    inspected_contents->GetController().LoadURLWithParams(params);
-  } else {
-    NavigateDevToolsFrontend();
-  }
+    RenderFrameHost* frame = devtools_contents->GetMainFrame();
+    BlinkTestController::Get()->HandleNewRenderFrameHost(frame);
+    frontend_host_.reset(DevToolsFrontendHost::Create(
+        frame,
+        base::Bind(
+            &LayoutTestDevToolsBindings::HandleMessageFromDevToolsFrontend,
+            base::Unretained(this))));
+
+    if (agent_host_)
+      agent_host_->DetachClient(this);
+    agent_host_ = DevToolsAgentHost::GetOrCreateFor(inspected_contents);
+    agent_host_->AttachClient(this);
+
+    // secondary_observer_ = base::MakeUnique<SecondaryObserver>(this);
+    // NavigationController::LoadURLParams params(
+    //     GetInspectedPageURL(frontend_url));
+    // params.transition_type = ui::PageTransitionFromInt(
+    //     ui::PAGE_TRANSITION_TYPED | ui::PAGE_TRANSITION_FROM_ADDRESS_BAR);
+    // inspected_contents->GetController().LoadURLWithParams(params);
+  }  // else {
+     // NavigateDevToolsFrontend();
+  // }
 }
 
 LayoutTestDevToolsBindings::~LayoutTestDevToolsBindings() {}
 
 void LayoutTestDevToolsBindings::HandleMessageFromDevToolsFrontend(
     const std::string& message) {
+  fprintf(stderr,
+          "****************** "
+          "LayoutTestDevToolsBindings::HandleMessageFromDevToolsFrontend=%s\n",
+          message.c_str());
   std::string method;
   base::DictionaryValue* dict = nullptr;
   std::unique_ptr<base::Value> parsed_message = base::JSONReader::Read(message);
