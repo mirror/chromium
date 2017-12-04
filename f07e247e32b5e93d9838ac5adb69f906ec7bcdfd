@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e1753247_d734a3c6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-12-04T19:52:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33d88875_50c5d611",
+      "range": {
+        "startLine": 37,
+        "startChar": 47,
+        "endLine": 37,
+        "endChar": 52
+      },
+      "revId": "f07e247e32b5e93d9838ac5adb69f906ec7bcdfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fec64dea_b84383aa",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManager.java",
         "patchSetId": 11
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0e586701_9d43c0ec",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-12-04T19:52:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fec64dea_b84383aa",
+      "range": {
+        "startLine": 61,
+        "startChar": 12,
+        "endLine": 61,
+        "endChar": 72
+      },
+      "revId": "f07e247e32b5e93d9838ac5adb69f906ec7bcdfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a8dd885_19037873",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
         "patchSetId": 11
@@ -68,6 +116,30 @@
       "revId": "f07e247e32b5e93d9838ac5adb69f906ec7bcdfd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a424b25c_96c9730a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-12-04T19:52:05Z",
+      "side": 1,
+      "message": "Good point! It can indeed get killed while the lock screen is displayed. Done.",
+      "parentUuid": "8a8dd885_19037873",
+      "range": {
+        "startLine": 241,
+        "startChar": 8,
+        "endLine": 244,
+        "endChar": 9
+      },
+      "revId": "f07e247e32b5e93d9838ac5adb69f906ec7bcdfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
