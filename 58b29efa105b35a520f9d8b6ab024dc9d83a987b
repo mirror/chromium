@@ -16,6 +16,24 @@
       "revId": "58b29efa105b35a520f9d8b6ab024dc9d83a987b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d500aef_2dd46fa9",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-12-04T00:38:49Z",
+      "side": 1,
+      "message": "Ian is around. @ikilpatrick, what do you think?\n\nLooking at the diff, I\u0027ve just noticed that I\u0027ve introduced the bug by removing needs_box_when_empty \u003d false;\nNew patch coming up.",
+      "parentUuid": "d989a3a3_c4c4aae4",
+      "revId": "58b29efa105b35a520f9d8b6ab024dc9d83a987b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
