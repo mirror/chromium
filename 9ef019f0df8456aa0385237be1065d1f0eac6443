@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8a634fb9_b55c2d38",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-12-04T20:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12dc27b3_fb4ecae1",
+      "revId": "9ef019f0df8456aa0385237be1065d1f0eac6443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cff7dd8_90f5ac6a",
         "filename": "base/allocator/partition_allocator/partition_alloc.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "9ef019f0df8456aa0385237be1065d1f0eac6443",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b32de8a_9fa144a0",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-12-04T20:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cff7dd8_90f5ac6a",
+      "revId": "9ef019f0df8456aa0385237be1065d1f0eac6443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "9ef019f0df8456aa0385237be1065d1f0eac6443",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14e0d08a_6518e19f",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-12-04T20:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c1bed7f_8c43367e",
+      "range": {
+        "startLine": 566,
+        "startChar": 2,
+        "endLine": 566,
+        "endChar": 11
+      },
+      "revId": "9ef019f0df8456aa0385237be1065d1f0eac6443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -106,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "a18d2b65_899d91f4",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-12-04T20:02:26Z",
+      "side": 1,
+      "message": "Sure, we can also XOR some cookie here. I\u0027m not sure that\u0027s a significant win though if the accessible addresses are already restricted to within the superpage? AFAICS, it\u0027d only complicate things for attackers that have a write primitive, but no read.",
+      "parentUuid": "a9bebd9d_5b88b966",
+      "range": {
+        "startLine": 568,
+        "startChar": 0,
+        "endLine": 575,
+        "endChar": 69
+      },
+      "revId": "9ef019f0df8456aa0385237be1065d1f0eac6443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "052867c1_f86a164a",
         "filename": "base/allocator/partition_allocator/partition_alloc.h",
         "patchSetId": 1
@@ -120,6 +204,24 @@
       "revId": "9ef019f0df8456aa0385237be1065d1f0eac6443",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "978f6c8e_8d76309e",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-12-04T20:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "052867c1_f86a164a",
+      "revId": "9ef019f0df8456aa0385237be1065d1f0eac6443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -146,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "56075ffe_4e239294",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-12-04T20:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3385d90d_63ec960b",
+      "range": {
+        "startLine": 588,
+        "startChar": 12,
+        "endLine": 588,
+        "endChar": 18
+      },
+      "revId": "9ef019f0df8456aa0385237be1065d1f0eac6443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "549d097f_fb58f4af",
         "filename": "base/allocator/partition_allocator/partition_alloc.h",
         "patchSetId": 1
@@ -169,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "d4db9aae_07717355",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-12-04T20:02:26Z",
+      "side": 1,
+      "message": "Uh, this is an artifact from a WIP version of the code that is no longer needed. Removed.",
+      "parentUuid": "549d097f_fb58f4af",
+      "range": {
+        "startLine": 592,
+        "startChar": 12,
+        "endLine": 592,
+        "endChar": 13
+      },
+      "revId": "9ef019f0df8456aa0385237be1065d1f0eac6443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "565aeaa8_4ced0fcd",
         "filename": "base/allocator/partition_allocator/partition_alloc.h",
         "patchSetId": 1
@@ -180,6 +330,24 @@
       "writtenOn": "2017-12-04T19:16:08Z",
       "side": 1,
       "message": "We\u0027re doing a conditional on the masked value...Won\u0027t this be incorrect on big endian?",
+      "revId": "9ef019f0df8456aa0385237be1065d1f0eac6443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a72a0fca_3c9d3883",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-12-04T20:02:26Z",
+      "side": 1,
+      "message": "Correct (also for various other places). We\u0027d have to check against ~0 instead of 0 on big-endian.\n\nLet\u0027s see what the masking discussion brings and then we can decide what we do here (if we abandon the negation operation, we may not need to do special handling here).",
+      "parentUuid": "565aeaa8_4ced0fcd",
       "revId": "9ef019f0df8456aa0385237be1065d1f0eac6443",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -206,6 +374,30 @@
       "revId": "9ef019f0df8456aa0385237be1065d1f0eac6443",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "995c6763_80ab5ac7",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-12-04T20:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19c6d9f3_a7fd4fc3",
+      "range": {
+        "startLine": 831,
+        "startChar": 26,
+        "endLine": 831,
+        "endChar": 35
+      },
+      "revId": "9ef019f0df8456aa0385237be1065d1f0eac6443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -237,6 +429,24 @@
       "writtenOn": "2017-12-04T19:52:01Z",
       "side": 1,
       "message": "Yeah I\u0027d like to see Albert\u0027s change landed first in any case.",
+      "parentUuid": "60741011_da517e77",
+      "revId": "9ef019f0df8456aa0385237be1065d1f0eac6443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9467f727_f5189a18",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-12-04T20:02:26Z",
+      "side": 1,
+      "message": "\u003e So the original code did this weird thing where the PartitionBucket\u0027s freelist_head pointer was Not masked.  This changes that behavior. Is there a reason for that?\n\nYes. The last entry in the chain will carry a zero offset, which will be unmasked to superpage_base. That leads to a situation where we have nullptr vs. superpage_base for the same situation (end of free list). This is not only confusing, but complicates things. If we continue to use nullptr, then we\u0027d have to have the conditional in the unmask path that you found which I don\u0027t want to have there. If we use superpage_base, then we need to test against a specific value in various conditions, which makes the code much harder to read.\n\nAs a conclusion I decided it\u0027d be better to go all in and use the masked version also for freelist_head. I don\u0027t expect it to have much perf impact since it shifts the unmasking step in the alloc path to happen one allocation later. I haven\u0027t measured though.\n\n\u003e \n\u003e Note, I had it on a TODO in an upcoming CL to actually create 2 types.. PartitionEncodedFreelistEntry PartitionFreeListEntry which the mask/unmask functions being member methods that flipped between the two. The idea would be then that PartitionBucket holds PartitionFreeListEntry which contains a PartitionEncodedFreelistEntry member...  Not suggesting that you have to introduce that change in this CL, but if the concern is keeping all \"freelist\" entry pointers consistently masked/unmasked, a fix is coming soon...\n\nSee my comment above - assuming there\u0027s no measurable perf impact, we should probably just use the encoded version everywhere.",
       "parentUuid": "60741011_da517e77",
       "revId": "9ef019f0df8456aa0385237be1065d1f0eac6443",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
