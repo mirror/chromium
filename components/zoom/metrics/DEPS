@@ -1,0 +1,7 @@
+include_rules = [
+  "+components/metrics",
+  "+services/service_manager/public/cpp",
+  "+third_party/WebKit/public/platform/modules/zoom_metrics",
+  "+third_party/metrics_proto",
+  "+ui/gfx/geometry",
+]
