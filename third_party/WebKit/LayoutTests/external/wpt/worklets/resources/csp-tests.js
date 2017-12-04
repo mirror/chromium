@@ -30,8 +30,7 @@ function runContentSecurityPolicyTests(workletType) {
         'Content-Security-Policy, script-src \'self\' \'unsafe-inline\')';
     const kScriptURL =
         get_host_info().HTTPS_REMOTE_ORIGIN +
-        '/worklets/resources/import-empty-worklet-script.js' +
-        '?pipe=header(Access-Control-Allow-Origin, *)';
+        '/worklets/resources/import-empty-worklet-script.js';
     return openWindowAndExpectResult(
         kWindowURL, kScriptURL, workletType, 'REJECTED');
   }, 'Importing a remote-origin worklet script should be blocked by the ' +
@@ -52,8 +51,7 @@ function runContentSecurityPolicyTests(workletType) {
         'resources/addmodule-window.html?pipe=header(' +
         'Content-Security-Policy, script-src * \'unsafe-inline\')';
     const kScriptURL = get_host_info().HTTPS_REMOTE_ORIGIN +
-                       '/worklets/resources/empty-worklet-script.js' +
-                       '?pipe=header(Access-Control-Allow-Origin, *)';
+                       '/worklets/resources/empty-worklet-script.js';
     return openWindowAndExpectResult(
         kWindowURL, kScriptURL, workletType, 'RESOLVED');
   }, 'Importing a remote-origin worklet script should not be blocked ' +
@@ -66,8 +64,7 @@ function runContentSecurityPolicyTests(workletType) {
     // A worklet on HTTPS_REMOTE_ORIGIN will import a child script on
     // HTTPS_REMOTE_ORIGIN.
     const kScriptURL = get_host_info().HTTPS_REMOTE_ORIGIN +
-                       '/worklets/resources/import-empty-worklet-script.js' +
-                       '?pipe=header(Access-Control-Allow-Origin, *)';
+                       '/worklets/resources/import-empty-worklet-script.js';
     return openWindowAndExpectResult(
         kWindowURL, kScriptURL, workletType, 'RESOLVED');
   }, 'Importing a remote-origin script from a remote-origin worklet script '+
@@ -78,8 +75,7 @@ function runContentSecurityPolicyTests(workletType) {
         'resources/addmodule-window.html?pipe=header(' +
         'Content-Security-Policy, worker-src \'self\' \'unsafe-inline\')';
     const kScriptURL = get_host_info().HTTPS_REMOTE_ORIGIN +
-                       '/worklets/resources/empty-worklet-script.js' +
-                       '?pipe=header(Access-Control-Allow-Origin, *)';
+                       '/worklets/resources/empty-worklet-script.js';
     return openWindowAndExpectResult(
         kWindowURL, kScriptURL, workletType, 'RESOLVED');
   }, 'Importing a remote-origin worklet script should not be blocked by ' +
