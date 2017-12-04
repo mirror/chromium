@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c5d9192_a1cfb276",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-12-04T22:59:58Z",
+      "side": 1,
+      "message": "Can you add a comment for why these are sane bounds?  and/or pull them out into a constant with a descriptive name?",
+      "revId": "c30783b9d99506c83ff1b060ee2463f6bf2a2f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf434f3a_2af61fc4",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-12-04T22:59:58Z",
+      "side": 1,
+      "message": "Explain why 30 secs makes sense.",
+      "range": {
+        "startLine": 558,
+        "startChar": 37,
+        "endLine": 558,
+        "endChar": 42
+      },
+      "revId": "c30783b9d99506c83ff1b060ee2463f6bf2a2f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
