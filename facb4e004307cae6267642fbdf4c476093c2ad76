@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "34f2b22a_c0e8bf15",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-04T22:32:38Z",
+      "side": 1,
+      "message": "Also, maybe we should call this mAreHeadersInitialized so that it\u0027s more specific to what the variable is being used for.",
+      "revId": "facb4e004307cae6267642fbdf4c476093c2ad76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3438e5b0_3c7a9746",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryAdapter.java",
         "patchSetId": 1
