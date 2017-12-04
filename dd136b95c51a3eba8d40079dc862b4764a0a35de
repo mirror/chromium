@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11999b04_c73805fb",
+        "filename": "content/browser/service_worker/service_worker_context_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-04T04:49:39Z",
+      "side": 1,
+      "message": "Thanks, looks nicer.",
+      "revId": "dd136b95c51a3eba8d40079dc862b4764a0a35de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
