@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "7ec7057d_55adc829",
+        "filename": "media/cdm/cdm_module.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-04T21:30:23Z",
+      "side": 1,
+      "message": "Argh sorry I somehow thought branch point was _this_ week not last. The good news is that https://chromium-review.googlesource.com/c/chromium/src/+/802274 landed and should fix the problems you raised. I think you could either land this as-is and remove the Initialize call in a follow-up, or remove it now and add it back in the branch merge.",
+      "parentUuid": "751dd7a7_2bc5a00b",
+      "revId": "9d7d4828de56c4293ac6fa03f1bee0702549b01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b761aee0_dffa35aa",
         "filename": "media/cdm/cdm_module.cc",
         "patchSetId": 3
