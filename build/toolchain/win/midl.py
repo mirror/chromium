@@ -170,6 +170,7 @@ def main(arch, outdir, dynamic_guid, tlb, h, dlldata, iid, proxy, idl, *flags):
   # On non-Windows, that's all we can do.
   if sys.platform != 'win32':
     return 0
+  # NOP to force a rebuild.
 
   # On Windows, run midl.exe on the input and check that its outputs are
   # identical to the checked-in outputs (after possibly replacing their main
