@@ -43,6 +43,13 @@ class CSSPropertyWriter(json5_generator.Writer):
             property_class = self.get_class(property_)
             self._property_classes_by_id.append(property_class)
             self._shorthand_property_classes.add(property_class.classname)
+        for property_ in self._css_properties.aliases:
+            property_class = self.get_class(property_)
+            self._property_classes_by_id.append(property_class)
+            if property_['longhands']:
+                self._shorthand_property_classes.add(property_class.classname)
+            else:
+                self._longhand_property_classes.add(property_class.classname)
 
         # Sort by enum value.
         self._property_classes_by_id.sort(key=lambda t: t.enum_value)
