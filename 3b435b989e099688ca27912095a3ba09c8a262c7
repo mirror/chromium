@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "166e9060_49fc46f3",
+        "filename": "components/password_manager/content/common/credential_manager_struct_traits.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-04T15:43:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dced6298_65f5bf7f",
+      "range": {
+        "startLine": 87,
+        "startChar": 58,
+        "endLine": 87,
+        "endChar": 72
+      },
+      "revId": "3b435b989e099688ca27912095a3ba09c8a262c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c57a6b41_ed66ef03",
         "filename": "components/password_manager/content/common/credential_manager_struct_traits.cc",
         "patchSetId": 11
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-04T13:35:58Z",
       "side": 1,
       "message": "nit: maybe simply use |default| here?",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 99,
+        "endChar": 66
+      },
+      "revId": "3b435b989e099688ca27912095a3ba09c8a262c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e40a26a_377a982c",
+        "filename": "components/password_manager/content/common/credential_manager_struct_traits.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-04T15:43:10Z",
+      "side": 1,
+      "message": "I want compiler time checking that all cases are handled, hence the exhaustive enumeration.",
+      "parentUuid": "c57a6b41_ed66ef03",
       "range": {
         "startLine": 94,
         "startChar": 0,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "ef6f3db1_45643fb5",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialManagerProxy.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-04T15:43:10Z",
+      "side": 1,
+      "message": "Renamed here, filed crbug.com/791556 for the rest.",
+      "parentUuid": "f9682e9b_fbd55849",
+      "range": {
+        "startLine": 25,
+        "startChar": 61,
+        "endLine": 26,
+        "endChar": 6
+      },
+      "revId": "3b435b989e099688ca27912095a3ba09c8a262c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a258665_1e0341d8",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
         "patchSetId": 11
@@ -114,6 +186,30 @@
       "revId": "3b435b989e099688ca27912095a3ba09c8a262c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f1c35b3_44182e61",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-04T15:43:10Z",
+      "side": 1,
+      "message": "Ah, thanks, I missed that. Added a reference.",
+      "parentUuid": "6a258665_1e0341d8",
+      "range": {
+        "startLine": 200,
+        "startChar": 0,
+        "endLine": 200,
+        "endChar": 55
+      },
+      "revId": "3b435b989e099688ca27912095a3ba09c8a262c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
