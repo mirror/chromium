@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c16cbda_515dd57b",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-04T18:42:26Z",
+      "side": 1,
+      "message": "It is surprising for these definitions to appear so distant from the structs they describe. To avoid ODR issues, these should be declared in the header that defines SnapAreaData (etc) and defined in a corresponding source file.",
+      "revId": "671c2a50e7944715d5a1e5a09bf90e900bed7030",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4d8d2cd_278d0723",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollSnapData.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-04T18:42:26Z",
+      "side": 1,
+      "message": "I gather this file will be used by other code in platform/?",
+      "revId": "671c2a50e7944715d5a1e5a09bf90e900bed7030",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a5f16f2_6f67bad9",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollSnapData.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-04T18:42:26Z",
+      "side": 1,
+      "message": "The linked document defines \"none\" as another value. If there is a reason for its omission here, explain in a comment?",
+      "revId": "671c2a50e7944715d5a1e5a09bf90e900bed7030",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab19bed5_6eba69ca",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollSnapData.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-04T18:42:26Z",
+      "side": 1,
+      "message": "nit: more descriptive parameter names, please",
+      "revId": "671c2a50e7944715d5a1e5a09bf90e900bed7030",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "752336f3_d9f6459c",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollSnapData.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-04T18:42:26Z",
+      "side": 1,
+      "message": "How is this constant related to SnapAreaData? When should it be used?",
+      "revId": "671c2a50e7944715d5a1e5a09bf90e900bed7030",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c74e1c22_76a16461",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollSnapData.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-04T18:42:26Z",
+      "side": 1,
+      "message": "nit: here and below: I\u0027m not sure comments which say \"The [variable name] of the [class name]\" add value. Perhaps a class comment which explains what a \"SnapContainerData\" is would be more helpful. (I\u0027m not familiar enough with the scroll snapping code to know what a snap container is, and this seems a reasonable place to clarify that, or to refer to an explanation elsewhere.)",
+      "revId": "671c2a50e7944715d5a1e5a09bf90e900bed7030",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
