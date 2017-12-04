@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b88a386_2b3c2b7f",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-04T19:29:28Z",
+      "side": 1,
+      "message": "Nit: I\u0027d suggest it\u0027d be slightly clearer to not assign until we know we\u0027re not going to error out (and DCHECK make_credential_response_callback_.is_null() right before assigning): I\u0027m assuming these two are supposed to be roughly in sync.",
+      "revId": "dcbc839b40fc8d72b63d2f38c6414929dea11d0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
