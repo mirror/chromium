@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d665abcd_59e2e4ba",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/SharedContextRateLimiter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-12-04T18:01:10Z",
+      "side": 1,
+      "message": "This part is just a drive-by code structure fix",
+      "range": {
+        "startLine": 49,
+        "startChar": 6,
+        "endLine": 49,
+        "endChar": 27
+      },
+      "revId": "22a50646ce005244086eae2b201160f5cbe9dca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03b143c9_0534b56f",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/SharedContextRateLimiter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-12-04T18:01:10Z",
+      "side": 1,
+      "message": "this is the real fix",
+      "range": {
+        "startLine": 72,
+        "startChar": 6,
+        "endLine": 72,
+        "endChar": 27
+      },
+      "revId": "22a50646ce005244086eae2b201160f5cbe9dca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
