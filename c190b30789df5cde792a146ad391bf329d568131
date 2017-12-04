@@ -117,6 +117,98 @@
     },
     {
       "key": {
+        "uuid": "abff673b_1e481ddc",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-12-04T19:52:38Z",
+      "side": 1,
+      "message": "please include payment_currency_amount.h",
+      "range": {
+        "startLine": 107,
+        "startChar": 6,
+        "endLine": 107,
+        "endChar": 44
+      },
+      "revId": "c190b30789df5cde792a146ad391bf329d568131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16bf032d_f78b9c52",
+        "filename": "ios/chrome/browser/payments/payment_request_util.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-12-04T19:52:38Z",
+      "side": 1,
+      "message": "Please include payment_address.h",
+      "range": {
+        "startLine": 63,
+        "startChar": 20,
+        "endLine": 63,
+        "endChar": 61
+      },
+      "revId": "c190b30789df5cde792a146ad391bf329d568131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35fb0b87_c75aedde",
+        "filename": "ios/chrome/browser/payments/payment_request_util_unittest.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-12-04T19:52:38Z",
+      "side": 1,
+      "message": "Please include payment_request_data.mojom.h",
+      "range": {
+        "startLine": 106,
+        "startChar": 38,
+        "endLine": 106,
+        "endChar": 74
+      },
+      "revId": "c190b30789df5cde792a146ad391bf329d568131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca7cc79b_7f9cea1d",
+        "filename": "ios/chrome/browser/payments/payment_response_helper.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-12-04T19:52:38Z",
+      "side": 1,
+      "message": "Please include payment_address.h",
+      "range": {
+        "startLine": 77,
+        "startChar": 43,
+        "endLine": 77,
+        "endChar": 79
+      },
+      "revId": "c190b30789df5cde792a146ad391bf329d568131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0b4d542_a0f0833a",
         "filename": "ios/chrome/browser/ui/payments/js_payment_request_manager.h",
         "patchSetId": 16
@@ -128,6 +220,30 @@
       "writtenOn": "2017-12-04T17:41:26Z",
       "side": 1,
       "message": "Please include components/payments/mojom/payment_request_data.mojom.h directly to use payments::mojom::PaymentAddress.\n\nThe payment_address.h file should be included only in files that use the dictionary conversion function, which is not happening in this header file. For example, the js_payment_request_manager.mm should include the payment_address.h file.",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 52
+      },
+      "revId": "c190b30789df5cde792a146ad391bf329d568131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "725c14fb_2f575bce",
+        "filename": "ios/chrome/browser/ui/payments/js_payment_request_manager.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-12-04T19:52:38Z",
+      "side": 1,
+      "message": "I suggest the conversion functions be moved to a single utility file in iOS. It can be done later when everything is converted however.",
+      "parentUuid": "b0b4d542_a0f0833a",
       "range": {
         "startLine": 9,
         "startChar": 10,
@@ -156,6 +272,29 @@
         "startChar": 6,
         "endLine": 133,
         "endChar": 48
+      },
+      "revId": "c190b30789df5cde792a146ad391bf329d568131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "024167e2_d8ee387b",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 1033,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-12-04T19:52:38Z",
+      "side": 1,
+      "message": "Please include payment_request_data.mojom.h",
+      "range": {
+        "startLine": 1033,
+        "startChar": 2,
+        "endLine": 1033,
+        "endChar": 36
       },
       "revId": "c190b30789df5cde792a146ad391bf329d568131",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
