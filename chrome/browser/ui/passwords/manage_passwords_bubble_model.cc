@@ -35,8 +35,6 @@
 #include "chrome/browser/ui/desktop_ios_promotion/desktop_ios_promotion_util.h"
 #endif
 
-namespace metrics_util = password_manager::metrics_util;
-
 namespace {
 
 Profile* GetProfileFromWebContents(content::WebContents* web_contents) {
@@ -291,9 +289,10 @@ ManagePasswordsBubbleModel::ManagePasswordsBubbleModel(
         interaction_stats.dismissal_count = stats->dismissal_count;
       }
     }
-    hide_eye_icon_ = delegate_->BubbleIsManualFallbackForSaving()
-                         ? pending_password_.form_has_autofilled_value
-                         : display_reason == USER_ACTION;
+    passwords_viewing_is_locked_ =
+        delegate_->BubbleIsManualFallbackForSaving()
+            ? pending_password_.form_has_autofilled_value
+            : display_reason == USER_ACTION;
     enable_editing_ = delegate_->GetCredentialSource() !=
                       password_manager::metrics_util::CredentialSourceType::
                           kCredentialManagementAPI;
@@ -558,6 +557,10 @@ bool ManagePasswordsBubbleModel::ReplaceToShowPromotionIfNeeded() {
 void ManagePasswordsBubbleModel::SetClockForTesting(
     std::unique_ptr<base::Clock> clock) {
   interaction_keeper_->SetClockForTesting(std::move(clock));
+}
+
+bool ManagePasswordsBubbleModel::TryToViewPasswords() const {
+  return delegate_ && delegate_->AuthenticateUser();
 }
 
 void ManagePasswordsBubbleModel::UpdatePendingStateTitle() {

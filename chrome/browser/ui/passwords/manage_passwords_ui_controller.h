@@ -128,6 +128,7 @@ class ManagePasswordsUIController
   void NavigateToPasswordManagerSettingsPage() override;
   void NavigateToChromeSignIn() override;
   void OnDialogHidden() override;
+  bool AuthenticateUser() override;
 
  protected:
   explicit ManagePasswordsUIController(
@@ -208,6 +209,9 @@ class ManagePasswordsUIController
   // popup will be shown or the user saved/updated the password with the
   // fallback).
   base::OneShotTimer save_fallback_timer_;
+
+  // Time of the last reauthentication for password show.
+  base::TimeTicks passwords_view_reauth_time_;
 
   // The bubbles of different types can pop up unpredictably superseding each
   // other. However, closing the bubble may affect the state of
