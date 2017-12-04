@@ -49,6 +49,47 @@
     },
     {
       "key": {
+        "uuid": "604a4229_4fec65eb",
+        "filename": "net/http/http_stream_factory_impl_job_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-12-04T18:23:12Z",
+      "side": 1,
+      "message": "nit: one more step forward, you could now get rid of main_job_is_resumed_ as it was used to ensure main_job is not resumed multiple times.",
+      "parentUuid": "c27d65da_20a5fa32",
+      "range": {
+        "startLine": 572,
+        "startChar": 27,
+        "endLine": 572,
+        "endChar": 0
+      },
+      "revId": "f90f7d621c1aaf1f7427090693ccac4a0f506fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eb7ad68_6fbf28c0",
+        "filename": "net/http/http_stream_factory_impl_job_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1323,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-12-04T18:23:12Z",
+      "side": 1,
+      "message": "nit: could you move this to the line below and add comments mentioning why we want to reset the callback?",
+      "revId": "f90f7d621c1aaf1f7427090693ccac4a0f506fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2c2575a_cb613bee",
         "filename": "net/http/http_stream_factory_impl_job_controller_unittest.cc",
         "patchSetId": 4
@@ -84,6 +125,30 @@
       "side": 1,
       "message": "No. The ScopedTaskEnvironment doesn\u0027t allow two instances at the same time. We need to reset the former in order to construct a new global one.",
       "parentUuid": "f2c2575a_cb613bee",
+      "range": {
+        "startLine": 1438,
+        "startChar": 50,
+        "endLine": 1438,
+        "endChar": 0
+      },
+      "revId": "f90f7d621c1aaf1f7427090693ccac4a0f506fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "109029ea_9f7a2969",
+        "filename": "net/http/http_stream_factory_impl_job_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1438,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-12-04T18:23:12Z",
+      "side": 1,
+      "message": "Oh, thanks for the clarification.\n\nnit: I wonder whether NetTestSuit::SetScipedTaskEnvironment() should do the reset as well so that you don\u0027t need explicitly to reset the former one and construct a new global?",
+      "parentUuid": "0cd9f6d6_a0fb2dd2",
       "range": {
         "startLine": 1438,
         "startChar": 50,
@@ -140,6 +205,30 @@
       "revId": "f90f7d621c1aaf1f7427090693ccac4a0f506fa5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f707ce23_2473360f",
+        "filename": "net/http/http_stream_factory_impl_job_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1495,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-12-04T18:23:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c9739134_e0cb1f7d",
+      "range": {
+        "startLine": 1495,
+        "startChar": 67,
+        "endLine": 1495,
+        "endChar": 0
+      },
+      "revId": "f90f7d621c1aaf1f7427090693ccac4a0f506fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
