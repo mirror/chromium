@@ -4,10 +4,13 @@
 
 #include "base/memory/shared_memory.h"
 
+#include <fcntl.h>
 #include <stddef.h>
 #include <sys/mman.h>
 
 #include "base/logging.h"
+#include "base/posix/eintr_wrapper.h"
+#include "base/strings/string_number_conversions.h"
 #include "third_party/ashmem/ashmem.h"
 
 namespace base {
@@ -33,20 +36,40 @@ bool SharedMemory::Create(const SharedMemoryCreateOptions& options) {
     return false;
   }
 
-  int err = ashmem_set_prot_region(shm_.GetHandle(),
-                                   PROT_READ | PROT_WRITE | PROT_EXEC);
+  int flags = PROT_READ | PROT_WRITE | (options.executable ? PROT_EXEC : 0);
+  int err = ashmem_set_prot_region(shm_.GetHandle(), flags);
   if (err < 0) {
     DLOG(ERROR) << "Error " << err << " when setting protection of ashmem";
     return false;
   }
 
-  // Android doesn't appear to have a way to drop write access on an ashmem
-  // segment for a single descriptor.  http://crbug.com/320865
-  readonly_shm_ = shm_.Duplicate();
-  if (!readonly_shm_.IsValid()) {
-    DPLOG(ERROR) << "dup() failed";
+  // TECHNICAL NOTE: Ashmem regions have their own read/write/exec mode
+  // that is used when mmap() is called. The access mode of Ashmem file
+  // descriptors is entirely ignored.
+  //
+  // What we do here is create a secondary file descriptor that has read-only
+  // access mode. Later this is tested by the method
+  // SharedMemoryHandle::EnforceReadOnlyRegionIfNeeded(), which will
+  // set the region's mask to read-only when the handle is read-only.
+
+  // It is not possible to open a new descriptor to the same region with
+  // only read-only access. Also, opening /proc/self/fd/<fd> with O_RDONLY
+  // actually works, but the resulting descriptor returns EINVAL errors
+  // if used for Ashmem operations.
+  //
+  // We route around this by using the following *ugly* tVrick:
+  int ro_fd = HANDLE_EINTR(dup(fd));
+  if (ro_fd < 0) {
+    DPLOG(ERROR) << "When creating read-only handle descriptor";
     return false;
   }
+  readonly_shm_ = SharedMemoryHandle(base::FileDescriptor(ro_fd, true),
+                                     options.size, shm_.GetGUID());
+
+  readonly_shm_.SetReadOnly();
+
+  DCHECK(readonly_shm_.IsReadOnly());
+  DCHECK(!shm_.IsReadOnly());
 
   requested_size_ = options.size;
 

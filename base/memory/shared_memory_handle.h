@@ -174,6 +174,22 @@ class BASE_EXPORT SharedMemoryHandle {
                      size_t size,
                      const base::UnguessableToken& guid);
   AHardwareBuffer* GetMemoryObject() const;
+
+  // Mark the current file descriptor as read-only, for the purpose of
+  // mapping.
+  void SetReadOnly() { read_only_ = true; }
+
+  bool IsReadOnly() const { return read_only_; }
+
+  // Ensure that if this descriptor is read-only, then the region itself
+  // is also read-only. This is necessary because mmap()-ing() Ashmem
+  // regions ignores the file descriptor's access mode, and uses the
+  // region's own read/write/exec mask.
+  //
+  // SharedMemory::GetReadOnlyHandle() returns a read-only file descriptor,
+  // so this method should be called before trying to map a region into
+  // memory, or when receiving a handle from IPC.
+  bool EnforceReadOnlyRegionIfNeeded() const;
 #endif
 
 #if defined(OS_POSIX) && !defined(OS_FUCHSIA)
@@ -218,6 +234,8 @@ class BASE_EXPORT SharedMemoryHandle {
     };
   };
 #elif defined(OS_ANDROID)
+  friend class SharedMemory;
+
   // Each instance of a SharedMemoryHandle is either INVALID, or backed by an
   // ashmem fd, or backed by an AHardwareBuffer. |type_| determines the backing
   // member.
@@ -225,6 +243,7 @@ class BASE_EXPORT SharedMemoryHandle {
   FileDescriptor file_descriptor_;
   AHardwareBuffer* memory_object_ = nullptr;
   bool ownership_passes_to_ipc_ = false;
+  bool read_only_ = false;
 #elif defined(OS_FUCHSIA)
   zx_handle_t handle_ = ZX_HANDLE_INVALID;
   bool ownership_passes_to_ipc_ = false;

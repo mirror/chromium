@@ -6,6 +6,7 @@
 
 #include "base/macros.h"
 #include "base/memory/singleton.h"
+#include "build/build_config.h"
 #include "services/device/device_service_test_base.h"
 #include "services/device/generic_sensor/fake_platform_sensor_and_provider.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -69,6 +70,10 @@ TEST_F(PlatformSensorProviderTest, ResourcesAreNotFreedOnPendingRequest) {
 // filled with default values.
 TEST_F(PlatformSensorProviderTest, SharedBufferCleared) {
   mojo::ScopedSharedBufferHandle handle = provider_->CloneSharedBufferHandle();
+#if !defined(OS_ANDROID)
+  // On Android, calling mapping a read-only shared buffer handle like the
+  // one returned by CloneSharedBufferHandle() will actually render the
+  // whole region read-only, making the CreateSensor() call below fail.
   mojo::ScopedSharedBufferMapping mapping = handle->MapAtOffset(
       sizeof(SensorReadingSharedBuffer),
       SensorReadingSharedBuffer::GetOffset(mojom::SensorType::AMBIENT_LIGHT));
@@ -76,6 +81,7 @@ TEST_F(PlatformSensorProviderTest, SharedBufferCleared) {
   SensorReadingSharedBuffer* buffer =
       static_cast<SensorReadingSharedBuffer*>(mapping.get());
   EXPECT_THAT(buffer->reading.als.value, 0);
+#endif  // !OS_ANDROID
 
   provider_->CreateSensor(
       mojom::SensorType::AMBIENT_LIGHT,
