@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70e02095_107b14ff",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-12-04T05:43:58Z",
+      "side": 1,
+      "message": "Move this back up to the top now, so we don\u0027t have to call it in many places.",
+      "range": {
+        "startLine": 288,
+        "startChar": 46,
+        "endLine": 288,
+        "endChar": 58
+      },
+      "revId": "939363198ecdcaf7b7ee60983a2d8d84a44a0d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25c007e7_f05ea726",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 3126,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-12-04T05:43:58Z",
+      "side": 1,
+      "message": "As discussed, let\u0027s add even more context / information to these labels. We want the reader to be able to vaguely know whether it\u0027s in a tab or app (even though we don\u0027t have direct access to that information).\n\nAdd \"(probably in tab)\" etc, to these, based on what it\u0027s likely to be from.",
+      "range": {
+        "startLine": 3126,
+        "startChar": 13,
+        "endLine": 3126,
+        "endChar": 33
+      },
+      "revId": "939363198ecdcaf7b7ee60983a2d8d84a44a0d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9426b3d7_826d09c9",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 3129,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-12-04T05:43:58Z",
+      "side": 1,
+      "message": "\"(could be either a bookmark in the browser, or app launch from shelf)\" ???",
+      "range": {
+        "startLine": 3129,
+        "startChar": 50,
+        "endLine": 3129,
+        "endChar": 73
+      },
+      "revId": "939363198ecdcaf7b7ee60983a2d8d84a44a0d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
