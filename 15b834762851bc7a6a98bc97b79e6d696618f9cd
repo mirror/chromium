@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1d5076f1_428ca59f",
+        "filename": "chrome/browser/resources/md_extensions/item.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-04T18:30:00Z",
+      "side": 1,
+      "message": "Ah!  Without hidden, #content grew unboundedly (which still violates my understanding of flex parents, where I thought a child would only grow to the bounds of the parent...but apparently not?).  With hidden, this works.  Thanks!",
+      "parentUuid": "5a1e28e0_b09a6dfb",
+      "revId": "15b834762851bc7a6a98bc97b79e6d696618f9cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b6af004_e5f80205",
         "filename": "chrome/browser/resources/md_extensions/item.html",
         "patchSetId": 5
@@ -30,6 +48,30 @@
       "writtenOn": "2017-12-02T01:57:34Z",
       "side": 1,
       "message": "Perhaps eliminate the ID, by using\n#inpsect-views \u003e span {...}",
+      "range": {
+        "startLine": 131,
+        "startChar": 6,
+        "endLine": 131,
+        "endChar": 26
+      },
+      "revId": "15b834762851bc7a6a98bc97b79e6d696618f9cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78023bf2_53246010",
+        "filename": "chrome/browser/resources/md_extensions/item.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-04T18:30:00Z",
+      "side": 1,
+      "message": "Is there a reason?  I think that having a specific id makes this much easier to identify, and id matching is far cheaper for CSS calculation than looking at the children.  Is there a benefit to removing the id?",
+      "parentUuid": "0b6af004_e5f80205",
       "range": {
         "startLine": 131,
         "startChar": 6,
