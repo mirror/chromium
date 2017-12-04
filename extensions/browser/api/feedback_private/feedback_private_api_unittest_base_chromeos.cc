@@ -33,6 +33,8 @@ std::unique_ptr<KeyedService> ApiResourceManagerTestFactory(
   return std::make_unique<ApiResourceManager<LogSourceResource>>(context);
 }
 
+const char kMacAddress[] = "11:22:33:44:55:66";
+
 // A dummy SystemLogsSource that does not require real system logs to be
 // available during testing.
 class TestSingleLogSource : public SystemLogsSource {
@@ -46,12 +48,8 @@ class TestSingleLogSource : public SystemLogsSource {
   // sequence: "a", " bb", "  ccc", until 25 spaces followed by 26 z's. Will
   // never return an empty result.
   void Fetch(const system_logs::SysLogsSourceCallback& callback) override {
-    int count_modulus = call_count_ % kNumCharsToIterate;
-    std::string result =
-        std::string(count_modulus, ' ') +
-        std::string(count_modulus + 1, kInitialChar + count_modulus);
+    std::string result = GetNextLogResult();
     DCHECK_GT(result.size(), 0U);
-    ++call_count_;
 
     auto result_map = std::make_unique<SystemLogsResponse>();
     result_map->emplace("", result);
@@ -64,6 +62,18 @@ class TestSingleLogSource : public SystemLogsSource {
   }
 
  private:
+  std::string GetNextLogResult() {
+    if (call_count_ == kNumCharsToIterate) {
+      call_count_ = 0;
+      return kMacAddress;
+    }
+    std::string result =
+        std::string(call_count_, ' ') +
+        std::string(call_count_ + 1, kInitialChar + call_count_);
+    ++call_count_;
+    return result;
+  }
+
   // Iterate over the whole lowercase alphabet, starting from 'a'.
   const int kNumCharsToIterate = 26;
   const char kInitialChar = 'a';
