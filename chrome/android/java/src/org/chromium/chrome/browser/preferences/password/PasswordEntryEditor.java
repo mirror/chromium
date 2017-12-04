@@ -86,7 +86,7 @@ public class PasswordEntryEditor extends Fragment {
     private boolean mException;
 
     @VisibleForTesting
-    public static final String VIEW_PASSWORDS = "view-passwords";
+    public static final String VIEW_PASSWORDS = "ViewPasswords";
     private static final int VALID_REAUTHENTICATION_TIME_INTERVAL_MILLIS = 60000;
 
     private ClipboardManager mClipboard;
