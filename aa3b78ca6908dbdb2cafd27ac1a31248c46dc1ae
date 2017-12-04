@@ -183,6 +183,30 @@
       "revId": "aa3b78ca6908dbdb2cafd27ac1a31248c46dc1ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abcd1b65_305f3c3f",
+        "filename": "net/ssl/client_cert_store_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-04T19:16:05Z",
+      "side": 1,
+      "message": "Doh! Good spot! I wish it was possible to rationally test this bit :/",
+      "parentUuid": "5a12f6b7_d4115bf3",
+      "range": {
+        "startLine": 281,
+        "startChar": 36,
+        "endLine": 281,
+        "endChar": 54
+      },
+      "revId": "aa3b78ca6908dbdb2cafd27ac1a31248c46dc1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
