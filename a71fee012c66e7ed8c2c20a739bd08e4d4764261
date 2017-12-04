@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33371dd9_41a48494",
+        "filename": "media/midi/midi_message_queue_fuzzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-04T08:10:04Z",
+      "side": 1,
+      "message": "remove \"{\" at line 16 and \"}\" at line 18 below.\nstyle guide discouraged to have them for one-liner.",
+      "range": {
+        "startLine": 16,
+        "startChar": 15,
+        "endLine": 16,
+        "endChar": 16
+      },
+      "revId": "a71fee012c66e7ed8c2c20a739bd08e4d4764261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fc298cd_026bc9e1",
+        "filename": "media/midi/midi_message_queue_fuzzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-04T08:10:04Z",
+      "side": 1,
+      "message": "any chance to have another variant to run it with false?",
+      "range": {
+        "startLine": 17,
+        "startChar": 54,
+        "endLine": 17,
+        "endChar": 58
+      },
+      "revId": "a71fee012c66e7ed8c2c20a739bd08e4d4764261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6101db5b_bcdfd31d",
+        "filename": "media/midi/midi_message_queue_fuzzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-04T08:10:04Z",
+      "side": 1,
+      "message": "ditto, line 25 and 27.",
+      "range": {
+        "startLine": 25,
+        "startChar": 25,
+        "endLine": 25,
+        "endChar": 26
+      },
+      "revId": "a71fee012c66e7ed8c2c20a739bd08e4d4764261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52982a0d_89598942",
+        "filename": "media/midi/midi_webmidi_data_validator_fuzzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-04T08:10:04Z",
+      "side": 1,
+      "message": "remove \"{\" and \"}\" at line 13 and 15.",
+      "range": {
+        "startLine": 13,
+        "startChar": 40,
+        "endLine": 13,
+        "endChar": 41
+      },
+      "revId": "a71fee012c66e7ed8c2c20a739bd08e4d4764261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
