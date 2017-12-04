@@ -70,6 +70,8 @@ class ArcVoiceInteractionFrameworkService
   void SetMetalayerEnabled(bool enabled) override;
   void SetVoiceInteractionState(
       arc::mojom::VoiceInteractionState state) override;
+  void CaptureScreenshot(CaptureScreenshotCallback callback) override;
+  void GetAssistData(GetAssistDataCallback callback) override;
 
   void ShowMetalayer();
   void HideMetalayer();
@@ -181,6 +183,9 @@ class ArcVoiceInteractionFrameworkService
   // quota is 0, but we still get requests from the container side, we assume
   // something malicious is going on.
   int32_t context_request_remaining_count_ = 0;
+
+  // The bound of the last metalayer query, used to get the cropped screenshot.
+  gfx::Rect screenshot_bounds_ = gfx::Rect();
 
   std::unique_ptr<HighlighterControllerClient> highlighter_client_;
 

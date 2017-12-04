@@ -14,6 +14,7 @@
 #include "base/callback_helpers.h"
 #include "base/command_line.h"
 #include "base/containers/flat_set.h"
+#include "base/feature_list.h"
 #include "base/logging.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/singleton.h"
@@ -42,6 +43,7 @@
 #include "components/arc/instance_holder.h"
 #include "components/session_manager/core/session_manager.h"
 #include "content/public/browser/browser_thread.h"
+#include "skia/ext/image_operations.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/window.h"
@@ -57,6 +59,10 @@
 #include "ui/snapshot/snapshot_aura.h"
 #include "ui/wm/core/window_util.h"
 #include "ui/wm/public/activation_client.h"
+
+#if defined(GOOGLE_CHROME_BUILD)
+#include "chrome/browser/chromeos/arc/voice_interaction/internal/assist_data/assist_data_builder.h"
+#endif
 
 namespace mojo {
 
@@ -87,6 +93,9 @@ struct TypeConverter<ash::mojom::VoiceInteractionState,
 namespace arc {
 
 namespace {
+
+const base::Feature kEnableAssistDataEncryptionFeature{
+    "EnableAssistDataEncryption", base::FEATURE_DISABLED_BY_DEFAULT};
 
 using LayerSet = base::flat_set<const ui::Layer*>;
 
@@ -160,6 +169,7 @@ std::unique_ptr<ui::LayerTreeOwner> CreateLayerTreeForSnapshot(
 void EncodeAndReturnImage(
     ArcVoiceInteractionFrameworkService::CaptureFullscreenCallback callback,
     std::unique_ptr<ui::LayerTreeOwner> old_layer_owner,
+    gfx::Rect rect,
     gfx::Image image) {
   old_layer_owner.reset();
   base::PostTaskWithTraitsAndReplyWithResult(
@@ -169,13 +179,60 @@ void EncodeAndReturnImage(
       // shares a single gfx::ImageStorage that's not threadsafe.
       // Alternatively, we could also pass in |image| with std::move().
       base::BindOnce(
-          [](SkBitmap image) -> std::vector<uint8_t> {
+          [](gfx::Rect rect, SkBitmap image) -> std::vector<uint8_t> {
             std::vector<uint8_t> res;
-            gfx::JPEGCodec::Encode(image, 100, &res);
+            // If rect is empty, the whole image will be encoded. Otherwise the
+            // image need to be cropped first.
+            if (rect.IsEmpty()) {
+              gfx::JPEGCodec::Encode(image, 100, &res);
+            } else {
+              SkBitmap cropped_image;
+              SkIRect bound = SkIRect::MakeXYWH(rect.x(), rect.y(),
+                                                rect.width(), rect.height());
+              image.extractSubset(&cropped_image, bound);
+              gfx::JPEGCodec::Encode(cropped_image, 100, &res);
+            }
             return res;
           },
-          image.AsBitmap()),
+          rect, image.AsBitmap()),
       std::move(callback));
+}
+
+void EncryptAndSendAssistData(
+    ArcVoiceInteractionFrameworkService::GetAssistDataCallback callback,
+    std::unique_ptr<ui::LayerTreeOwner> old_layer_owner,
+    const gfx::Rect& rect,
+    gfx::Image image) {
+#if defined(GOOGLE_CHROME_BUILD)
+  old_layer_owner.reset();
+  base::PostTaskWithTraitsAndReplyWithResult(
+      FROM_HERE,
+      base::TaskTraits{base::MayBlock(), base::TaskPriority::USER_BLOCKING},
+      base::BindOnce(
+          [](const gfx::Rect& rect, SkBitmap image) -> std::vector<uint8_t> {
+            std::vector<uint8_t> res;
+            const gfx::Size screen_size =
+                gfx::Size(image.width(), image.height());
+            SkBitmap bitmap = skia::ImageOperations::Resize(
+                image, skia::ImageOperations::RESIZE_BOX, image.width() / 2,
+                image.height() / 2);
+            gfx::JPEGCodec::Encode(bitmap, 80, &res);
+            // Build the AssistData.
+            AssistData data;
+            AssistDataBuilder::BuildAssistDataForMetalayer(&data, rect,
+                                                           screen_size, &res);
+            // Serialize the AssistData.
+            std::vector<uint8_t> serialized_message(data.ByteSize());
+            data.SerializeToArray(serialized_message.data(),
+                                  serialized_message.size());
+
+            return serialized_message;
+          },
+          rect, image.AsBitmap()),
+      std::move(callback));
+#else
+  NOTIMPLEMENTED();
+#endif
 }
 
 template <typename T>
@@ -299,7 +356,8 @@ void ArcVoiceInteractionFrameworkService::CaptureFullscreen(
   ui::GrabLayerSnapshotAsync(
       old_layer_owner->root(), gfx::Rect(window->bounds().size()),
       base::Bind(&EncodeAndReturnImage, base::Passed(std::move(callback)),
-                 base::Passed(std::move(old_layer_owner))));
+                 base::Passed(std::move(old_layer_owner)),
+                 base::Passed(gfx::Rect())));
 }
 
 void ArcVoiceInteractionFrameworkService::SetVoiceInteractionState(
@@ -348,6 +406,72 @@ void ArcVoiceInteractionFrameworkService::SetVoiceInteractionState(
 
   state_ = state;
   voice_interaction_controller_client_->NotifyStatusChanged(state);
+}
+
+void ArcVoiceInteractionFrameworkService::CaptureScreenshot(
+    CaptureScreenshotCallback callback) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  // This method should only be called if AssistData Encryption is enabled.
+  DCHECK(base::FeatureList::IsEnabled(kEnableAssistDataEncryptionFeature));
+
+  if (!ValidateTimeSinceUserInteraction()) {
+    std::move(callback).Run(std::vector<uint8_t>{});
+    return;
+  }
+
+  // Since ARC currently only runs in primary display, we restrict
+  // the screenshot to it.
+  // TODO(crbug.com/757012): Mash support.
+  if (chromeos::GetAshConfig() == ash::Config::MASH) {
+    std::move(callback).Run(std::vector<uint8_t>{});
+    return;
+  }
+  aura::Window* window = ash::Shell::GetPrimaryRootWindow();
+  DCHECK(window);
+
+  // There are no pending metaleyer queries, return.
+  if (screenshot_bounds_.IsEmpty())
+    return;
+
+  auto old_layer_owner = CreateLayerTreeForSnapshot(window);
+  ui::GrabLayerSnapshotAsync(
+      old_layer_owner->root(), gfx::Rect(window->bounds().size()),
+      base::Bind(&EncodeAndReturnImage, base::Passed(std::move(callback)),
+                 base::Passed(std::move(old_layer_owner)),
+                 base::Passed(std::move(screenshot_bounds_))));
+}
+
+void ArcVoiceInteractionFrameworkService::GetAssistData(
+    GetAssistDataCallback callback) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  // This method should only be called if AssistData Encryption is enabled.
+  DCHECK(base::FeatureList::IsEnabled(kEnableAssistDataEncryptionFeature));
+
+  if (!ValidateTimeSinceUserInteraction()) {
+    std::move(callback).Run(std::vector<uint8_t>{});
+    return;
+  }
+
+  // Since ARC currently only runs in primary display, we restrict
+  // the screenshot to it.
+  // TODO(crbug.com/757012): Mash support.
+  if (chromeos::GetAshConfig() == ash::Config::MASH) {
+    std::move(callback).Run(std::vector<uint8_t>{});
+    return;
+  }
+  aura::Window* window = ash::Shell::GetPrimaryRootWindow();
+  DCHECK(window);
+
+  // There are no pending metaleyer queries, return.
+  if (screenshot_bounds_.IsEmpty())
+    return;
+
+  auto old_layer_owner = CreateLayerTreeForSnapshot(window);
+  ui::GrabLayerSnapshotAsync(
+      old_layer_owner->root(), gfx::Rect(window->bounds().size()),
+      base::Bind(&EncryptAndSendAssistData, base::Passed(std::move(callback)),
+                 base::Passed(std::move(old_layer_owner)),
+                 std::move(screenshot_bounds_)));
 }
 
 void ArcVoiceInteractionFrameworkService::OnMetalayerClosed() {
@@ -514,6 +638,7 @@ void ArcVoiceInteractionFrameworkService::StartSessionFromUserInteraction(
     const gfx::Rect& rect) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
+  screenshot_bounds_ = rect;
   if (!InitiateUserInteraction(false /* is_toggle */))
     return;
 
@@ -530,7 +655,8 @@ void ArcVoiceInteractionFrameworkService::StartSessionFromUserInteraction(
             arc_bridge_service_->voice_interaction_framework(),
             StartVoiceInteractionSessionForRegion);
     DCHECK(framework_instance);
-    framework_instance->StartVoiceInteractionSessionForRegion(rect);
+    framework_instance->StartVoiceInteractionSessionForRegion(
+        rect, base::FeatureList::IsEnabled(kEnableAssistDataEncryptionFeature));
   }
   VLOG(1) << "Sent voice interaction request.";
 }
@@ -572,6 +698,7 @@ bool ArcVoiceInteractionFrameworkService::ValidateTimeSinceUserInteraction() {
   if (elapsed > kAllowedTimeSinceUserInteraction) {
     LOG(ERROR) << "Timed out since last user interaction.";
     context_request_remaining_count_ = 0;
+    screenshot_bounds_ = gfx::Rect();
     return false;
   }
 
