@@ -24,6 +24,9 @@ class CORE_EXPORT TextResource : public Resource {
   WTF::TextEncoding Encoding() const override;
 
   void SetEncodingForTest(const String& encoding) { SetEncoding(encoding); }
+  void NotifyFinished() override;
+
+  void DestroyDecodedDataForFailedRevalidation() override;
 
  protected:
   TextResource(const ResourceRequest&,
@@ -36,6 +39,7 @@ class CORE_EXPORT TextResource : public Resource {
 
  private:
   std::unique_ptr<TextResourceDecoder> decoder_;
+  String decoded_text_;
 };
 
 }  // namespace blink

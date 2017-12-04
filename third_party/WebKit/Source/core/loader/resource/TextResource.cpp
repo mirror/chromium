@@ -29,9 +29,32 @@ WTF::TextEncoding TextResource::Encoding() const {
   return decoder_->Encoding();
 }
 
-String TextResource::DecodedText() const {
-  DCHECK(Data());
+void TextResource::NotifyFinished() {
+  if (Data()) {
+    decoded_text_ = DecodedText();
+    SetDecodedSize(decoded_text_.CharactersSizeInBytes());
+  }
 
+  Resource::NotifyFinished();
+
+  // Clear raw bytes as now we have the full decoded sheet text.
+  // We wait for all NotifyFinished() calls to run (at least once)
+  // as SubresourceIntegrity checks require raw bytes.
+  // Note that LinkStyle::NotifyFinished can be called from DidAddClient too,
+  // but is safe as we should have a cached ResourceIntegrityDisposition.
+  ClearData();
+}
+
+void TextResource::DestroyDecodedDataForFailedRevalidation() {
+  decoded_text_ = String();
+  SetDecodedSize(0);
+}
+
+String TextResource::DecodedText() const {
+  if (!decoded_text_.IsNull())
+    return decoded_text_;
+  if (!Data() || Data()->IsEmpty())
+    return String();
   StringBuilder builder;
   const char* segment;
   size_t position = 0;

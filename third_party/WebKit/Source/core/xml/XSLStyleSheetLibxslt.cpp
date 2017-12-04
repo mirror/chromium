@@ -230,13 +230,13 @@ void XSLStyleSheet::LoadChildSheet(const String& href) {
   params.SetOriginRestriction(FetchParameters::kRestrictToSameOrigin);
   XSLStyleSheetResource* resource = XSLStyleSheetResource::FetchSynchronously(
       params, OwnerDocument()->Fetcher());
-  if (!resource || !resource->Sheet())
+  if (!resource || !resource->DecodedText())
     return;
 
   XSLStyleSheet* style_sheet =
       new XSLStyleSheet(this, url_string, resource->GetResponse().Url());
   children_.push_back(style_sheet);
-  style_sheet->ParseString(resource->Sheet());
+  style_sheet->ParseString(resource->DecodedText());
   CheckLoaded();
 }
 

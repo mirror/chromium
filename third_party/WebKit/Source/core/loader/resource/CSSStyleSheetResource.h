@@ -76,7 +76,6 @@ class CORE_EXPORT CSSStyleSheetResource final : public TextResource {
                         const TextResourceDecoderOptions&);
 
   bool CanUseSheet(const CSSParserContext*, MIMETypeCheck) const;
-  void NotifyFinished() override;
 
   void SetParsedStyleSheetCache(StyleSheetContents*);
   void SetDecodedSheetText(const String&);
