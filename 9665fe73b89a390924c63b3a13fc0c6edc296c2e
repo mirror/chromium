@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32d25eb0_86704282",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/results.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-04T23:06:20Z",
+      "side": 1,
+      "message": "This avoids exception when a developer puts an html file just under LayoutTests directory (where I often put quick local layout tests). Without the change results.html shows nothing because of an exception raised here. Because of the case of empty dir, we must include the trailing \u0027/\u0027 in the non-empty dir to prevent resultLink from becoming an absolute path for an empty dir.",
+      "revId": "9665fe73b89a390924c63b3a13fc0c6edc296c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
