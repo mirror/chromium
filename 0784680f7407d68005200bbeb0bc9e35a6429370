@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "952c4652_aff66bb9",
+        "filename": "chrome/browser/extensions/api/image_writer_private/image_writer_utility_client.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-12-04T23:30:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e7f531a_cd0308d0",
+      "revId": "0784680f7407d68005200bbeb0bc9e35a6429370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8e1391d_0a274865",
         "filename": "chrome/browser/extensions/api/image_writer_private/image_writer_utility_client.cc",
         "patchSetId": 12
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d01a7a0f_07836c1d",
+        "filename": "chrome/browser/extensions/api/image_writer_private/image_writer_utility_client.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-12-04T23:30:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8e1391d_0a274865",
+      "revId": "0784680f7407d68005200bbeb0bc9e35a6429370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb60dae6_6bc68ad8",
         "filename": "chrome/browser/extensions/api/image_writer_private/operation.cc",
         "patchSetId": 12
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-04T20:31:02Z",
       "side": 1,
       "message": "nit:\n\n  task_runner_-\u003eDeleteSoon(FROM_HERE, connector_.release());\n\nSo no need for a dedicated helper function.",
+      "revId": "0784680f7407d68005200bbeb0bc9e35a6429370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33351876_69d7f6d4",
+        "filename": "chrome/browser/extensions/api/image_writer_private/operation.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-12-04T23:30:26Z",
+      "side": 1,
+      "message": "Ah! There is even a DeleteSoon that takes a unique ptr, awesome!",
+      "parentUuid": "cb60dae6_6bc68ad8",
       "revId": "0784680f7407d68005200bbeb0bc9e35a6429370",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
