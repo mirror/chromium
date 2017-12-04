@@ -10,6 +10,7 @@
 
 #include "base/files/file_path.h"
 #include "base/memory/weak_ptr.h"
+#include "base/observer_list.h"
 #include "base/scoped_observer.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
@@ -31,6 +32,13 @@ class StateStore : public base::SupportsWeakPtr<StateStore>,
                    public content::NotificationObserver {
  public:
   typedef ValueStoreFrontend::ReadCallback ReadCallback;
+
+  class Observer {
+   public:
+    virtual ~Observer() {}
+    virtual void WillUpdateExtensionValue(const std::string& extension_id,
+                                          const std::string& key) = 0;
+  };
 
   // If |deferred_load| is true, we won't load the database until the first
   // page has been loaded.
@@ -70,6 +78,9 @@ class StateStore : public base::SupportsWeakPtr<StateStore>,
   // Return whether or not the StateStore has initialized itself.
   bool IsInitialized() const;
 
+  void AddObserver(Observer* observer);
+  void RemoveObserver(Observer* observer);
+
  private:
   class DelayedTaskQueue;
 
@@ -106,10 +117,14 @@ class StateStore : public base::SupportsWeakPtr<StateStore>,
   // Keeps track of tasks we have delayed while starting up.
   std::unique_ptr<DelayedTaskQueue> task_queue_;
 
+  base::ObserverList<Observer> observers_;
+
   content::NotificationRegistrar registrar_;
 
   ScopedObserver<ExtensionRegistry, ExtensionRegistryObserver>
       extension_registry_observer_;
+
+  DISALLOW_COPY_AND_ASSIGN(StateStore);
 };
 
 }  // namespace extensions
