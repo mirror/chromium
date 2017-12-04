@@ -180,11 +180,7 @@ class CreatedObserver : public content::DownloadManager::Observer {
 
 class PercentWaiter : public content::DownloadItem::Observer {
  public:
-  explicit PercentWaiter(DownloadItem* item)
-    : item_(item),
-      waiting_(false),
-      error_(false),
-      prev_percent_(0) {
+  explicit PercentWaiter(DownloadItem* item) : item_(item) {
     item_->AddObserver(this);
   }
   ~PercentWaiter() override {
@@ -224,9 +220,9 @@ class PercentWaiter : public content::DownloadItem::Observer {
   }
 
   content::DownloadItem* item_;
-  bool waiting_;
-  bool error_;
-  int prev_percent_;
+  bool waiting_ = false;
+  bool error_ = false;
+  int prev_percent_ = 0;
 
   DISALLOW_COPY_AND_ASSIGN(PercentWaiter);
 };
@@ -352,13 +348,9 @@ bool DownloadTestObserverNotInProgress::IsDownloadInFinalState(
 
 class HistoryObserver : public DownloadHistory::Observer {
  public:
-  typedef base::Callback<bool(const history::DownloadRow&)> FilterCallback;
+  using FilterCallback = base::Callback<bool(const history::DownloadRow&)>;
 
-  explicit HistoryObserver(Profile* profile)
-      : profile_(profile),
-        waiting_(false),
-        seen_stored_(false),
-        minimum_received_bytes_(kNoMinimumReceivedBytes) {
+  explicit HistoryObserver(Profile* profile) : profile_(profile) {
     DownloadCoreServiceFactory::GetForBrowserContext(profile_)
         ->GetDownloadHistory()
         ->AddObserver(this);
@@ -411,9 +403,9 @@ class HistoryObserver : public DownloadHistory::Observer {
  private:
   static const int64_t kNoMinimumReceivedBytes = -1;
   Profile* profile_;
-  bool waiting_;
-  bool seen_stored_;
-  int64_t minimum_received_bytes_;
+  bool waiting_ = false;
+  bool seen_stored_ = false;
+  int64_t minimum_received_bytes_ = kNoMinimumReceivedBytes;
   FilterCallback callback_;
 
   DISALLOW_COPY_AND_ASSIGN(HistoryObserver);
