@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be713842_d0494111",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2543,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-04T20:52:01Z",
+      "side": 1,
+      "message": "no.",
+      "range": {
+        "startLine": 2543,
+        "startChar": 27,
+        "endLine": 2543,
+        "endChar": 30
+      },
+      "revId": "7948b0434a23a99eda5ea57371ce5a0fbb328cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6f66572_52b05a19",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4042,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-04T20:52:01Z",
+      "side": 1,
+      "message": "IDs are int64_t.",
+      "range": {
+        "startLine": 4042,
+        "startChar": 12,
+        "endLine": 4042,
+        "endChar": 15
+      },
+      "revId": "7948b0434a23a99eda5ea57371ce5a0fbb328cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60db2889_1469edb7",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4073,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-04T20:52:01Z",
+      "side": 1,
+      "message": "If you will use the bounds multiple times, please store them as locals like you do with the IDs.\n\nEven better, you can store the infos as locals themselves.",
+      "range": {
+        "startLine": 4073,
+        "startChar": 42,
+        "endLine": 4073,
+        "endChar": 67
+      },
+      "revId": "7948b0434a23a99eda5ea57371ce5a0fbb328cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1f6e99a_ed45edd3",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4084,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-04T20:52:01Z",
+      "side": 1,
+      "message": "a",
+      "range": {
+        "startLine": 4084,
+        "startChar": 15,
+        "endLine": 4084,
+        "endChar": 18
+      },
+      "revId": "7948b0434a23a99eda5ea57371ce5a0fbb328cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d036dcd9_79a2a889",
+        "filename": "ash/display/mirror_window_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-04T20:52:01Z",
+      "side": 1,
+      "message": "Nit (optional - here and above): I would prefer to do it as a sequence of ifs to avoid this nesting of (?:), i.e.:\n\n{\n  if (IsInUnifiedMode())\n    return GetPrimaryDisplay().id();\n\n  if (IsInSoftwareMirrorMode())\n    return mirroring_source_id();\n\n  return kInvalidDisplayId;\n}\n\n(just my personal preference, it\u0027s easier to read).",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 50
+      },
+      "revId": "7948b0434a23a99eda5ea57371ce5a0fbb328cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fea5b89_4581215f",
+        "filename": "ash/display/mirror_window_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-04T20:52:01Z",
+      "side": 1,
+      "message": "Nit: You can use |reflecting_source_id_| here, right?",
+      "range": {
+        "startLine": 160,
+        "startChar": 14,
+        "endLine": 160,
+        "endChar": 52
+      },
+      "revId": "7948b0434a23a99eda5ea57371ce5a0fbb328cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfef4105_28ed0d2b",
+        "filename": "ash/system/screen_layout_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-04T20:52:01Z",
+      "side": 1,
+      "message": "Nit: Before you turn off mirror mode below, can you actually test that mirror mode persisted by checking the status from the display manager?",
+      "range": {
+        "startLine": 569,
+        "startChar": 2,
+        "endLine": 569,
+        "endChar": 52
+      },
+      "revId": "7948b0434a23a99eda5ea57371ce5a0fbb328cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc1a632f_cedcd126",
+        "filename": "ash/system/screen_layout_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-04T20:52:01Z",
+      "side": 1,
+      "message": "Nit: You can store this as |first_display_bounds|.",
+      "range": {
+        "startLine": 594,
+        "startChar": 42,
+        "endLine": 594,
+        "endChar": 67
+      },
+      "revId": "7948b0434a23a99eda5ea57371ce5a0fbb328cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6480c9c8_2f1747f4",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-04T20:52:01Z",
+      "side": 1,
+      "message": "Nit: add space.",
+      "range": {
+        "startLine": 586,
+        "startChar": 65,
+        "endLine": 586,
+        "endChar": 66
+      },
+      "revId": "7948b0434a23a99eda5ea57371ce5a0fbb328cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ac27c7f_5cae7b21",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-04T20:52:01Z",
+      "side": 1,
+      "message": "I\u0027m not a big fan of this unique_ptr\u003cbool\u003e approach. If you need three states, then I think it would be better to use an enum.",
+      "range": {
+        "startLine": 588,
+        "startChar": 2,
+        "endLine": 588,
+        "endChar": 24
+      },
+      "revId": "7948b0434a23a99eda5ea57371ce5a0fbb328cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "856e0ce9_56e82c92",
+        "filename": "ui/display/types/display_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-04T20:52:01Z",
+      "side": 1,
+      "message": "Thanks for adding this.",
+      "range": {
+        "startLine": 24,
+        "startChar": 45,
+        "endLine": 24,
+        "endChar": 80
+      },
+      "revId": "7948b0434a23a99eda5ea57371ce5a0fbb328cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
