@@ -32,6 +32,7 @@ class MockRenderWidgetHostDelegate : public RenderWidgetHostDelegate {
       KeyboardEventProcessingResult result) {
     pre_handle_keyboard_event_result_ = result;
   }
+  void set_is_captured(bool is_captured) { is_captured_ = is_captured; }
 
   // RenderWidgetHostDelegate:
   void ResizeDueToAutoResize(RenderWidgetHostImpl* render_widget_host,
@@ -51,6 +52,7 @@ class MockRenderWidgetHostDelegate : public RenderWidgetHostDelegate {
       RenderWidgetHostImpl* widget_host) override;
   void SendScreenRects() override;
   TextInputManager* GetTextInputManager() override;
+  bool IsCaptured() const override;
   bool IsFullscreenForCurrentTab() const override;
 
  private:
@@ -62,6 +64,7 @@ class MockRenderWidgetHostDelegate : public RenderWidgetHostDelegate {
   double last_device_scale_factor_ = 0.0;
   KeyboardEventProcessingResult pre_handle_keyboard_event_result_ =
       KeyboardEventProcessingResult::NOT_HANDLED;
+  bool is_captured_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(MockRenderWidgetHostDelegate);
 };

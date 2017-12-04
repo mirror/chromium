@@ -110,8 +110,6 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   ui::TextInputClient* GetTextInputClient() override;
   bool IsShowing() final;
   void CaptureStateChanged() override;
-  void WasUnOccluded() override {}
-  void WasOccluded() override {}
   void SetIsInVR(bool is_in_vr) override;
   base::string16 GetSelectedText() override;
   bool IsMouseLocked() override;

@@ -716,46 +716,6 @@ void WebContentsViewMac::CloseTab() {
     [subview setFrame:[self bounds]];
 }
 
-- (void)viewWillMoveToWindow:(NSWindow*)newWindow {
-  NSWindow* oldWindow = [self window];
-
-  NSNotificationCenter* notificationCenter =
-      [NSNotificationCenter defaultCenter];
-
-  // Occlusion is highly undesirable for browser tests, since it will
-  // flakily change test behavior.
-  static bool isDisabled = base::CommandLine::ForCurrentProcess()->HasSwitch(
-      switches::kDisableBackgroundingOccludedWindowsForTesting);
-
-  if (!isDisabled) {
-    if (oldWindow) {
-      [notificationCenter
-          removeObserver:self
-                    name:NSWindowDidChangeOcclusionStateNotification
-                  object:oldWindow];
-    }
-    if (newWindow) {
-      [notificationCenter
-          addObserver:self
-             selector:@selector(windowChangedOcclusionState:)
-                 name:NSWindowDidChangeOcclusionStateNotification
-               object:newWindow];
-    }
-  }
-}
-
-- (void)windowChangedOcclusionState:(NSNotification*)notification {
-  NSWindow* window = [notification object];
-  WebContentsImpl* webContents = [self webContents];
-  if (window && webContents && !webContents->IsBeingDestroyed()) {
-    if ([window occlusionState] & NSWindowOcclusionStateVisible) {
-      webContents->WasUnOccluded();
-    } else {
-      webContents->WasOccluded();
-    }
-  }
-}
-
 - (void)viewDidMoveToWindow {
   [self updateWebContentsVisibility];
 }
