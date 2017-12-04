@@ -23,6 +23,7 @@ import org.chromium.base.ContextUtils;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.ShortcutHelper;
 import org.chromium.chrome.browser.UrlConstants;
@@ -212,7 +213,9 @@ public class AppMenuPropertiesDelegate {
             menu.findItem(R.id.enter_vr_id).setVisible(
                     CommandLine.getInstance().hasSwitch(ChromeSwitches.ENABLE_VR_SHELL_DEV));
 
-            if (FeatureUtilities.isChromeHomeEnabled()) {
+            if (FeatureUtilities.isChromeHomeEnabled() && ChromeFeatureList.isInitialized()
+                    && !ChromeFeatureList.isEnabled(
+                               ChromeFeatureList.CHROME_HOME_MENU_ITEMS_EXPAND_SHEET)) {
                 // History, downloads, and bookmarks are shown in the Chrome Home bottom sheet.
                 menu.findItem(R.id.open_history_menu_id).setVisible(false);
                 menu.findItem(R.id.downloads_menu_id).setVisible(false);

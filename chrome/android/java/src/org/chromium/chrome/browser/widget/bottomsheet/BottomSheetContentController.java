@@ -175,8 +175,12 @@ public class BottomSheetContentController
 
             if (mShouldOpenSheetOnNextContentChange) {
                 mShouldOpenSheetOnNextContentChange = false;
-                if (mBottomSheet.getSheetState() != BottomSheet.SHEET_STATE_FULL) {
-                    mBottomSheet.setSheetState(BottomSheet.SHEET_STATE_FULL, true);
+                @BottomSheet.SheetState
+                int targetState = mShouldOpenSheetToFullOnNextContentChange
+                        ? BottomSheet.SHEET_STATE_FULL
+                        : BottomSheet.SHEET_STATE_HALF;
+                if (mBottomSheet.getSheetState() != targetState) {
+                    mBottomSheet.setSheetState(targetState, true);
                 }
                 return;
             }
@@ -198,6 +202,7 @@ public class BottomSheetContentController
     private int mSelectedItemId;
     private ChromeActivity mActivity;
     private boolean mShouldOpenSheetOnNextContentChange;
+    private boolean mShouldOpenSheetToFullOnNextContentChange;
     private boolean mShouldClearContentsOnNextContentChange;
     private PlaceholderSheetContent mPlaceholderContent;
     private boolean mOmniboxHasFocus;
@@ -397,8 +402,11 @@ public class BottomSheetContentController
     /**
      * Shows the specified {@link BottomSheetContent} and opens the {@link BottomSheet}.
      * @param itemId The menu item id of the {@link BottomSheetContent} to show.
+     * @param openToFullState Whether the sheet should open to its full state. If false, the sheet
+     *                        will only open to the half state.
      */
-    public void showContentAndOpenSheet(int itemId) {
+    public void showContentAndOpenSheet(int itemId, boolean openToFullState) {
+        mShouldOpenSheetToFullOnNextContentChange = openToFullState;
         if (mActivity.isInOverviewMode() && !mBottomSheet.isShowingNewTab()) {
             // Open a new tab to show the content if currently in tab switcher and a new tab is
             // not currently being displayed.

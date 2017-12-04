@@ -1807,11 +1807,16 @@ public class ChromeTabbedActivity
                 getTabCreator(true).launchNTP();
             }
         } else if (id == R.id.all_bookmarks_menu_id) {
-            if (currentTab != null) {
-                getCompositorViewHolder().hideKeyboard(() -> {
-                    StartupMetrics.getInstance().recordOpenedBookmarks();
-                    BookmarkUtils.showBookmarkManager(ChromeTabbedActivity.this);
-                });
+            if (currentTab != null || getBottomSheet() != null) {
+                if (getBottomSheet() != null) {
+                    getBottomSheetContentController().showContentAndOpenSheet(
+                            R.id.action_bookmarks, false);
+                } else {
+                    getCompositorViewHolder().hideKeyboard(() -> {
+                        StartupMetrics.getInstance().recordOpenedBookmarks();
+                        BookmarkUtils.showBookmarkManager(ChromeTabbedActivity.this);
+                    });
+                }
                 if (currentTabIsNtp) {
                     NewTabPageUma.recordAction(NewTabPageUma.ACTION_OPENED_BOOKMARKS_MANAGER);
                 }
@@ -1849,7 +1854,12 @@ public class ChromeTabbedActivity
                 getToolbarManager().setUrlBarFocus(true);
             }
         } else if (id == R.id.downloads_menu_id) {
-            DownloadUtils.showDownloadManager(this, currentTab);
+            if (getBottomSheet() != null) {
+                getBottomSheetContentController().showContentAndOpenSheet(
+                        R.id.action_downloads, false);
+            } else {
+                DownloadUtils.showDownloadManager(this, currentTab);
+            }
             if (currentTabIsNtp) {
                 NewTabPageUma.recordAction(NewTabPageUma.ACTION_OPENED_DOWNLOADS_MANAGER);
             }
