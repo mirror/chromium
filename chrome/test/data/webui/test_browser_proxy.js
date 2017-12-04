@@ -53,7 +53,16 @@ class TestBrowserProxy {
    * @protected
    */
   methodCalled(methodName, opt_arg) {
-    this.getResolver_(methodName).resolve(opt_arg);
+    let resolver = this.getResolver_(methodName);
+    let result = opt_arg || resolver.resolveResult;
+    this.getResolver_(methodName).resolve(result);
+  }
+
+  /**
+   *
+   */
+  setResult(methodName, result) {
+    this.getResolver_(methodName).resolveResult = result;
   }
 
   /**
