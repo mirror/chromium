@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5a8475b6_6c446894",
+        "filename": "third_party/WebKit/Source/platform/weborigin/ReportingServiceProxyPtrHolder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1126101
+      },
+      "writtenOn": "2017-12-04T21:04:53Z",
+      "side": 1,
+      "message": "There seem to be (unrelated) tests that fail without this, that send null messages. I figured it would be easier and safer to have this check in place then to try to change the way these tests work.\n\nI could look at this again, though it should be in a different CL, since this CL did not add that logic.",
+      "parentUuid": "511182f1_bf956778",
+      "range": {
+        "startLine": 29,
+        "startChar": 15,
+        "endLine": 29,
+        "endChar": 22
+      },
+      "revId": "aa44a6e381cc74e7458d952e5eb8a618c40a00cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b07846fd_243c3e83",
         "filename": "third_party/WebKit/public/platform/reporting.mojom",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "aa44a6e381cc74e7458d952e5eb8a618c40a00cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97d4f5bb_636db387",
+        "filename": "third_party/WebKit/public/platform/reporting.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1126101
+      },
+      "writtenOn": "2017-12-04T21:04:53Z",
+      "side": 1,
+      "message": "Okay, changed to using base::Time / WTF::Time.",
+      "parentUuid": "b07846fd_243c3e83",
+      "revId": "aa44a6e381cc74e7458d952e5eb8a618c40a00cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
