@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "909548c6_a648e7e2",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-04T22:45:50Z",
+      "side": 1,
+      "message": "There are TRACE_EVENT_FLOW_BEGIN1/TRACE_EVENT_FLOW_BEGIN2 for string additional values.\n\nI believe the 3rd parameter isn\u0027t actually one of the values, it\u0027s a unique ID for matching BEGIN \u0026 END traces.  Do you want to add another value to the ID?",
+      "parentUuid": "8f12d1d3_186dc5e0",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 150,
+        "endChar": 48
+      },
+      "revId": "51c4c2b855e3d168703e338e85dd62f4241f2588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c217769_b71978e6",
         "filename": "components/viz/common/surfaces/local_surface_id.h",
         "patchSetId": 3
