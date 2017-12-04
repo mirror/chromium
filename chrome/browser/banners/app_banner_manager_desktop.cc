@@ -82,7 +82,9 @@ bool AppBannerManagerDesktop::IsWebAppConsideredInstalled(
       web_contents->GetBrowserContext(), start_url);
 }
 
-void AppBannerManagerDesktop::ShowBannerUi() {
+void AppBannerManagerDesktop::ShowBannerUi(WebAppInstallSource install_source) {
+  // TODO(mcgreevy): log install_source to Webapp.Install.InstallSource
+  // histogram.
   content::WebContents* contents = web_contents();
   DCHECK(contents && !manifest_.IsEmpty());
 
@@ -97,6 +99,7 @@ void AppBannerManagerDesktop::ShowBannerUi() {
     TrackDisplayEvent(DISPLAY_EVENT_WEB_APP_BANNER_CREATED);
     TrackUserResponse(USER_RESPONSE_WEB_APP_ACCEPTED);
     ReportStatus(SHOWING_APP_INSTALLATION_DIALOG);
+    InstallableMetrics::TrackInstallSource(WebAppInstallSource::API);
     bookmark_app_helper_->Create(base::Bind(
         &AppBannerManager::DidFinishCreatingBookmarkApp, GetWeakPtr()));
     return;

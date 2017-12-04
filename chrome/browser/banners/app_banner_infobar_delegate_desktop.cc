@@ -95,6 +95,7 @@ base::string16 AppBannerInfoBarDelegateDesktop::GetButtonLabel(
 bool AppBannerInfoBarDelegateDesktop::Accept() {
   TrackUserResponse(USER_RESPONSE_WEB_APP_ACCEPTED);
   has_user_interaction_ = true;
+  InstallableMetrics::TrackInstallSource(WebAppInstallSource::AUTOMATIC_PROMPT);
 
   bookmark_app_helper_->Create(base::Bind(
       &AppBannerManager::DidFinishCreatingBookmarkApp, weak_manager_));
