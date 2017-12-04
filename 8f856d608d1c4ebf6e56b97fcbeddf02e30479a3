@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "950e02d7_18a4b92f",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/parser/make_atrule_names.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-12-04T04:13:17Z",
+      "side": 1,
+      "message": "It isn\u0027t for now - I\u0027ve made aliases (the only one seems to be -webkit-font-feature-settings) map directly to the same ID value as the aliased value at parse time (to avoid having the \"resolve\" step like in CSSPropertyID). I may revise that decision later, but for now this is the intended number. Added a comment to clarify this.",
+      "parentUuid": "5ddf511f_fb3f219c",
+      "revId": "8f856d608d1c4ebf6e56b97fcbeddf02e30479a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c23c64c1_2c4c9e44",
         "filename": "third_party/WebKit/Source/core/BUILD.gn",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "8f856d608d1c4ebf6e56b97fcbeddf02e30479a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c91da5fd_1e97477e",
+        "filename": "third_party/WebKit/Source/core/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 1258,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-12-04T04:13:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c23c64c1_2c4c9e44",
+      "revId": "8f856d608d1c4ebf6e56b97fcbeddf02e30479a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3a2b133d_1b9e7257",
+        "filename": "third_party/WebKit/Source/core/css/parser/AtRuleDescriptorParser.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-12-04T04:13:17Z",
+      "side": 1,
+      "message": "Yeah, almost entirely. Here\u0027s a diff that may or may not help visualise this: https://www.diffchecker.com/BNbuUoaf",
+      "parentUuid": "7c20afe5_1af63456",
+      "revId": "8f856d608d1c4ebf6e56b97fcbeddf02e30479a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d46468e4_82f938a5",
         "filename": "third_party/WebKit/Source/core/css/parser/AtRuleDescriptorParser.cpp",
         "patchSetId": 10
@@ -67,6 +121,24 @@
       "revId": "8f856d608d1c4ebf6e56b97fcbeddf02e30479a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ee4dd9c_e00e1a26",
+        "filename": "third_party/WebKit/Source/core/css/parser/AtRuleDescriptorParser.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-12-04T04:13:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d46468e4_82f938a5",
+      "revId": "8f856d608d1c4ebf6e56b97fcbeddf02e30479a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "a09ad011_4e795e01",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-12-04T04:13:17Z",
+      "side": 1,
+      "message": "it\u0027s called a \"property\" for CSS declarations, and we\u0027re naming it \"descriptor\" for @rules... so I figured \"lhs\" (left hand side) seemed most descriptive. I can change it if you can think of something better?",
+      "parentUuid": "e9b841a8_f4af1c12",
+      "revId": "8f856d608d1c4ebf6e56b97fcbeddf02e30479a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3324d0f_60456a18",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.cpp",
         "patchSetId": 10
@@ -101,6 +191,24 @@
       "revId": "8f856d608d1c4ebf6e56b97fcbeddf02e30479a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9a86861_04b78d2a",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-12-04T04:13:17Z",
+      "side": 1,
+      "message": "It\u0027s just an enum value, what does that add?",
+      "parentUuid": "e3324d0f_60456a18",
+      "revId": "8f856d608d1c4ebf6e56b97fcbeddf02e30479a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
