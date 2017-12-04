@@ -3110,6 +3110,7 @@ class FailingURLLoaderImpl : public mojom::URLLoader {
   }
 
   void FollowRedirect() override {}
+  void ProceedWithResponse() override {}
   void SetPriority(net::RequestPriority priority,
                    int32_t intra_priority_value) override {}
   void PauseReadingBodyFromNet() override {}

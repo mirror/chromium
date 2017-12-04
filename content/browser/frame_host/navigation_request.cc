@@ -1159,7 +1159,15 @@ void NavigationRequest::OnWillProcessResponseChecksComplete(
       OnRequestFailed(false, net::ERR_ABORTED, base::nullopt, false);
       return;
     }
-    loader_->ProceedWithResponse();
+    if (IsNavigationMojoResponseEnabled() &&
+        !base::FeatureList::IsEnabled(features::kNetworkService)) {
+      mojom::URLLoaderPtr url_loader(
+          std::move(url_loader_client_endpoints_->url_loader));
+      url_loader->ProceedWithResponse();
+      url_loader_client_endpoints_->url_loader = url_loader.PassInterface();
+    } else {
+      loader_->ProceedWithResponse();
+    }
   }
 
   // Abort the request if needed. This includes requests that were blocked by
