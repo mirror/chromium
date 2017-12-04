@@ -52,6 +52,24 @@
       "revId": "d54c3649e0128729ce1fe36283c5164f597d9d8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6ccb570_202d51fb",
+        "filename": "third_party/WebKit/Source/core/paint/InlineFlowBoxPainter.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-12-04T16:15:15Z",
+      "side": 1,
+      "message": "I was checking that code but couldn\u0027t find anything related with selection.",
+      "parentUuid": "9e050d27_ec5913ca",
+      "revId": "d54c3649e0128729ce1fe36283c5164f597d9d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
