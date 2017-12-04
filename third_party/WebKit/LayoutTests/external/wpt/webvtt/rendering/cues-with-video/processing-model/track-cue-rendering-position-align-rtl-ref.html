@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<script src="../media-file.js"></script>
+<script src="/common/media.js"></script>
 <script>
-var mediaFile = findMediaFile('video', '../content/test');
+var mediaFile = getVideoURI('/media/A4');
 </script>
 <style>
 .container {
@@ -18,14 +18,12 @@ var mediaFile = findMediaFile('video', '../content/test');
     overflow: hidden;
 }
 .cue.start {
-    right: 25%;
     text-align: end;
 }
 .cue.middle {
     text-align: center;
 }
 .cue.end {
-    left: 25%;
     text-align: start;
 }
 .cue > span {
