@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "d4767ed5_9e674599",
+        "filename": "chrome/browser/extensions/extension_system_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-12-04T16:48:32Z",
+      "side": 1,
+      "message": "Good question, not sure what I was thinking.",
+      "parentUuid": "cb3b7268_625eaed5",
+      "range": {
+        "startLine": 462,
+        "startChar": 40,
+        "endLine": 462,
+        "endChar": 0
+      },
+      "revId": "a4f9a4ddfb70d5feb219bb4932ed3c1be190f314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90854d21_919901df",
         "filename": "components/update_client/component_unpacker.h",
         "patchSetId": 2

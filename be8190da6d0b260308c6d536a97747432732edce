@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5cabf76_7ea35faf",
+        "filename": "extensions/browser/updater/extension_installer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-12-04T16:48:32Z",
+      "side": 1,
+      "message": "EXTENSIONS_BROWSER_UPDATER_EXTENSIONS_INSTALLER_H_",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 49
+      },
+      "revId": "be8190da6d0b260308c6d536a97747432732edce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
