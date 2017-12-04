@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c752f56_3a5169f5",
+        "filename": "third_party/WebKit/LayoutTests/media/track/text-track-cue-exceptions.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-12-04T13:36:45Z",
+      "side": 1,
+      "message": "As these tests (this and vtt-cue-exceptions.html) are for explicitly verifying the exceptions, i have written these in the below form. Do you have any other thoughts?",
+      "range": {
+        "startLine": 1,
+        "startChar": 2,
+        "endLine": 1,
+        "endChar": 9
+      },
+      "revId": "2140cf3924d82c7a844bc609bdefcaf81b5d3bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
