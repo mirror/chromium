@@ -305,8 +305,6 @@ std::unique_ptr<net::test_server::HttpResponse> WindowLocationHashHandlers(
       assertWithMatcher:grey_notNil()];
 
   // Verify that the forward button is not enabled.
-  // TODO(crbug.com/638674): Evaluate if size class determination can move to
-  // shared code.
   if (UIApplication.sharedApplication.keyWindow.traitCollection
           .horizontalSizeClass == UIUserInterfaceSizeClassCompact) {
     // In horizontally compact environments, the forward button is not visible.
