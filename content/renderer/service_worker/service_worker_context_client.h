@@ -29,6 +29,7 @@
 #include "ipc/ipc_listener.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "third_party/WebKit/common/blob/blob_registry.mojom.h"
+#include "third_party/WebKit/common/message_port/message_port_channel.h"
 #include "third_party/WebKit/public/platform/modules/payments/payment_app.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerError.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker.mojom.h"
@@ -75,8 +76,9 @@ class WebWorkerFetchContext;
 //
 // Unless otherwise noted (here or in base class documentation), all methods are
 // called on the worker thread.
-class ServiceWorkerContextClient : public blink::WebServiceWorkerContextClient,
-                                   public mojom::ServiceWorkerEventDispatcher {
+class CONTENT_EXPORT ServiceWorkerContextClient
+    : public blink::WebServiceWorkerContextClient,
+      public mojom::ServiceWorkerEventDispatcher {
  public:
   // Returns a thread-specific client instance.  This does NOT create a
   // new instance.
@@ -96,7 +98,9 @@ class ServiceWorkerContextClient : public blink::WebServiceWorkerContextClient,
       blink::mojom::ServiceWorkerHostAssociatedPtrInfo service_worker_host,
       mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host,
       mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info,
-      std::unique_ptr<EmbeddedWorkerInstanceClientImpl> embedded_worker_client);
+      std::unique_ptr<EmbeddedWorkerInstanceClientImpl> embedded_worker_client,
+      scoped_refptr<ThreadSafeSender> sender,
+      scoped_refptr<base::SingleThreadTaskRunner> io_thread_task_runner);
   ~ServiceWorkerContextClient() override;
 
   // Called on the main thread.
@@ -253,6 +257,7 @@ class ServiceWorkerContextClient : public blink::WebServiceWorkerContextClient,
   struct WorkerContextData;
   class NavigationPreloadRequest;
   friend class ControllerServiceWorkerImpl;
+  friend class ServiceWorkerContextClientTest;
 
   // Get routing_id for sending message to the ServiceWorkerVersion
   // in the browser process.
@@ -380,6 +385,8 @@ class ServiceWorkerContextClient : public blink::WebServiceWorkerContextClient,
   void OnIdle();
 
   base::WeakPtr<ServiceWorkerContextClient> GetWeakPtr();
+
+  static void RemoveThreadLocalPointerForTesting();
 
   const int embedded_worker_id_;
   const int64_t service_worker_version_id_;
