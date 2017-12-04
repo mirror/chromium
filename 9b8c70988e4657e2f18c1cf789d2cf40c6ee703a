@@ -68,6 +68,30 @@
       "revId": "9b8c70988e4657e2f18c1cf789d2cf40c6ee703a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9663a775_262b0d93",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-04T21:47:49Z",
+      "side": 1,
+      "message": "Some more info here.  Do we need this to be asynchronous?  If so, what does that mean for the request/response and state tracking for Entry?  e.g. what does it mean for an Entry to be ACTIVE but not have a DriverEntry because it\u0027s waiting for something from the Client?",
+      "parentUuid": "ddd53390_fa35c03a",
+      "range": {
+        "startLine": 473,
+        "startChar": 9,
+        "endLine": 473,
+        "endChar": 33
+      },
+      "revId": "9b8c70988e4657e2f18c1cf789d2cf40c6ee703a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
