@@ -324,7 +324,8 @@ AutomationPredicate.root = function(node) {
         // to be crossed when performing traversals up the ancestry chain.
         return false;
       }
-      return !node.parent || node.parent.root.role == Role.DESKTOP;
+      return !node.parent || !node.parent.root ||
+          node.parent.root.role == Role.DESKTOP;
     default:
       return false;
   }
