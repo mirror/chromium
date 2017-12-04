@@ -218,6 +218,10 @@ bool TestAXNodeWrapper::AccessibilityPerformAction(
     return true;
   }
 
+  if (data.action == ui::AX_ACTION_FOCUS) {
+    platform_node_->NotifyAccessibilityEvent(ui::AX_EVENT_FOCUS);
+  }
+
   return true;
 }
 
