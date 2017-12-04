@@ -46,6 +46,30 @@
       "revId": "f0c2f1e1dd8d3541473ad5d06c190d2c38f54de3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1de7fa81_f1583156",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-04T16:12:53Z",
+      "side": 1,
+      "message": "No, no trouble. I was just reading through the code and found this to be very confusing and subtle, and thought it was worth adding a comment to explain what\u0027s going on.\n\nMy point wasn\u0027t that the flow doesn\u0027t reach this case yet, my point was that even if it were to reach this case it looks like it would no-op, as it looks like for all of the callsites, |point| is equal to event-\u003elocation() (or equivalent). I would have expected this to be something like event.CreateFor(point - origin);\n\nAt any rate, if it\u0027s correct, a comment explaining how it\u0027s correct would be nice.",
+      "parentUuid": "b23492d2_7cae926f",
+      "range": {
+        "startLine": 480,
+        "startChar": 6,
+        "endLine": 480,
+        "endChar": 51
+      },
+      "revId": "f0c2f1e1dd8d3541473ad5d06c190d2c38f54de3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
