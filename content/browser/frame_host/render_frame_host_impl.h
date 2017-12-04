@@ -885,6 +885,9 @@ class CONTENT_EXPORT RenderFrameHostImpl
           validated_params) override;
   void BeginNavigation(const CommonNavigationParams& common_params,
                        mojom::BeginNavigationParamsPtr begin_params) override;
+  void DidCommitSameDocumentNavigation(
+      std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
+          validated_params) override;
 
   // Registers Mojo interfaces that this frame host makes available.
   void RegisterMojoInterfaces();
@@ -1058,6 +1061,10 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // for this frame. May be overridden by friend subclasses for e.g. tests which
   // wish to intercept outgoing navigation control messages.
   virtual mojom::FrameNavigationControl* GetNavigationControl();
+
+  bool DealWithRaceConditions();
+  bool ValidateProvisionalCommitParams(
+      FrameHostMsg_DidCommitProvisionalLoad_Params* validated_params);
 
   // For now, RenderFrameHosts indirectly keep RenderViewHosts alive via a
   // refcount that calls Shutdown when it reaches zero.  This allows each
