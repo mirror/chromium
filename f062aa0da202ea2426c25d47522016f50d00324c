@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee2e306c_c09808f1",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-04T15:18:44Z",
+      "side": 1,
+      "message": "nitpicky, but if you\u0027re going to set these on beginPresent and check that they\u0027re set, maybe you should also reset them when ending presentation?",
+      "range": {
+        "startLine": 528,
+        "startChar": 7,
+        "endLine": 528,
+        "endChar": 42
+      },
+      "revId": "f062aa0da202ea2426c25d47522016f50d00324c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f34adbe3_f7057640",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-04T15:18:44Z",
+      "side": 1,
+      "message": "nit: Probably better to do in a followup, but can you refactor the if and else cases here into functions for readability? This function\u0027s getting too long.",
+      "range": {
+        "startLine": 717,
+        "startChar": 2,
+        "endLine": 717,
+        "endChar": 4
+      },
+      "revId": "f062aa0da202ea2426c25d47522016f50d00324c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

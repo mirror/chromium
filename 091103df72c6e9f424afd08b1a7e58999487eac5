@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "59fbdfc9_469f51db",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-04T15:18:44Z",
+      "side": 1,
+      "message": "This looks better. sgtm to pass more device parameters in the future.",
+      "parentUuid": "bb1d8980_bba20ea4",
+      "range": {
+        "startLine": 112,
+        "startChar": 5,
+        "endLine": 112,
+        "endChar": 11
+      },
+      "revId": "091103df72c6e9f424afd08b1a7e58999487eac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9d1e060_0879276b",
         "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.h",
         "patchSetId": 3
