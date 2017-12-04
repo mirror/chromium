@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfa8c3d5_3daa41cd",
+        "filename": "extensions/renderer/bindings/api_event_handler_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1081,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-04T23:15:38Z",
+      "side": 1,
+      "message": "Q: Do you need RunUntilIdle here to ensure that the event was fired?\nupdate: I guess Flush would ensure that?",
+      "revId": "7b3758440277b12f09c57ce6d4e33637b8693f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a76b503_3c349f2d",
+        "filename": "extensions/renderer/bindings/event_emitter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-04T23:15:38Z",
+      "side": 1,
+      "message": "Do we need to update/move the comment here?",
+      "revId": "7b3758440277b12f09c57ce6d4e33637b8693f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
