@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42045e19_e69b508c",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-12-04T11:24:49Z",
+      "side": 1,
+      "message": "It will only be run once after it is set, though, right?\nIs there anything non-obvious that RunLoop::QuitClosure() does, or can you BindOnce on RunLoop::Quit()?",
+      "range": {
+        "startLine": 270,
+        "startChar": 8,
+        "endLine": 270,
+        "endChar": 24
+      },
+      "revId": "7baac92bf89467f8cb9ebf3fd278222552b6000c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
