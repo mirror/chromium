@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "aa56713d_f47e466a",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFastPaths.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1119169
+      },
+      "writtenOn": "2017-12-04T22:55:16Z",
+      "side": 1,
+      "message": "The terminator can be a backslash for the third value, but only if the terminator was previously whitespace (rgb(0 0 0 / 1) and rgb(0,0,0,1) are valid, rgb(0 0 0,1) is not). Additionally, the code currently uses the ending parenthesis as a terminator for the last value.\n\nI\u0027m not sure what would be easiest for this case, since the first value could either be terminated with a comma or whitespace, the second value would need to have the same terminator as the first, and the third value could either be terminated with a comma (if the previous were commas), a backslash (if the previous were whitespace), or a parenthesis (if the function call doesn\u0027t contain an alpha value).",
+      "parentUuid": "7a0cb124_89b54b9a",
+      "revId": "9f8a86cb0b329996f0278821a10ed1a62fffef44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4cbb2df_f7520f62",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFastPaths.cpp",
         "patchSetId": 9
