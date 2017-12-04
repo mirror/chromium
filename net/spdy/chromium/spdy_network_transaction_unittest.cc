@@ -40,6 +40,7 @@
 #include "net/spdy/chromium/spdy_http_stream.h"
 #include "net/spdy/chromium/spdy_http_utils.h"
 #include "net/spdy/chromium/spdy_session.h"
+#include "net/spdy/chromium/spdy_session_peer.h"
 #include "net/spdy/chromium/spdy_session_pool.h"
 #include "net/spdy/chromium/spdy_test_util_common.h"
 #include "net/spdy/core/spdy_protocol.h"
@@ -57,6 +58,7 @@
 
 using net::test::IsError;
 using net::test::IsOk;
+using net::test::SpdySessionPeer;
 
 //-----------------------------------------------------------------------------
 
@@ -392,8 +394,9 @@ class SpdyNetworkTransactionTest : public ::testing::Test {
         session->spdy_session_pool()->FindAvailableSession(
             key, /* enable_ip_based_pooling = */ true, log_);
     ASSERT_TRUE(spdy_session);
-    EXPECT_EQ(0u, spdy_session->num_active_streams());
-    EXPECT_EQ(0u, spdy_session->num_unclaimed_pushed_streams());
+    EXPECT_EQ(0u, SpdySessionPeer::num_active_streams(spdy_session.get()));
+    EXPECT_EQ(
+        0u, SpdySessionPeer::num_unclaimed_pushed_streams(spdy_session.get()));
   }
 
   void RunServerPushTest(SequencedSocketData* data,
@@ -4974,9 +4977,9 @@ TEST_F(SpdyNetworkTransactionTest, ServerPushValidCrossOrigin) {
           key, /* enable_ip_based_pooling = */ true, log_);
 
   EXPECT_EQ(1u,
-            spdy_session->unclaimed_pushed_streams_.CountStreamsForSession());
-  EXPECT_TRUE(
-      spdy_session->has_unclaimed_pushed_stream_for_url(GURL(url_to_push)));
+            SpdySessionPeer::num_unclaimed_pushed_streams(spdy_session.get()));
+  EXPECT_TRUE(SpdySessionPeer::has_unclaimed_pushed_stream_for_url(
+      spdy_session.get(), GURL(url_to_push)));
 
   HttpNetworkTransaction trans1(DEFAULT_PRIORITY, helper.session());
   HttpRequestInfo push_request;
@@ -4988,7 +4991,7 @@ TEST_F(SpdyNetworkTransactionTest, ServerPushValidCrossOrigin) {
   EXPECT_THAT(rv, IsOk());
 
   EXPECT_EQ(0u,
-            spdy_session->unclaimed_pushed_streams_.CountStreamsForSession());
+            SpdySessionPeer::num_unclaimed_pushed_streams(spdy_session.get()));
 
   HttpResponseInfo response = *trans0->GetResponseInfo();
   EXPECT_TRUE(response.headers);
@@ -5116,7 +5119,7 @@ TEST_F(SpdyNetworkTransactionTest, ServerPushValidCrossOriginWithOpenSession) {
           key0, /* enable_ip_based_pooling = */ true, log_);
 
   EXPECT_EQ(0u,
-            spdy_session0->unclaimed_pushed_streams_.CountStreamsForSession());
+            SpdySessionPeer::num_unclaimed_pushed_streams(spdy_session0.get()));
 
   HostPortPair host_port_pair1("docs.example.org", 443);
   SpdySessionKey key1(host_port_pair1, ProxyServer::Direct(),
@@ -5126,9 +5129,9 @@ TEST_F(SpdyNetworkTransactionTest, ServerPushValidCrossOriginWithOpenSession) {
           key1, /* enable_ip_based_pooling = */ true, log_);
 
   EXPECT_EQ(1u,
-            spdy_session1->unclaimed_pushed_streams_.CountStreamsForSession());
-  EXPECT_TRUE(
-      spdy_session1->has_unclaimed_pushed_stream_for_url(GURL(url_to_push)));
+            SpdySessionPeer::num_unclaimed_pushed_streams(spdy_session1.get()));
+  EXPECT_TRUE(SpdySessionPeer::has_unclaimed_pushed_stream_for_url(
+      spdy_session1.get(), GURL(url_to_push)));
 
   // Request |url_to_push|, which should be served from the pushed resource.
   HttpNetworkTransaction trans2(DEFAULT_PRIORITY, helper.session());
@@ -5141,9 +5144,9 @@ TEST_F(SpdyNetworkTransactionTest, ServerPushValidCrossOriginWithOpenSession) {
   EXPECT_THAT(rv, IsOk());
 
   EXPECT_EQ(0u,
-            spdy_session0->unclaimed_pushed_streams_.CountStreamsForSession());
+            SpdySessionPeer::num_unclaimed_pushed_streams(spdy_session0.get()));
   EXPECT_EQ(0u,
-            spdy_session1->unclaimed_pushed_streams_.CountStreamsForSession());
+            SpdySessionPeer::num_unclaimed_pushed_streams(spdy_session1.get()));
 
   HttpResponseInfo response0 = *trans0->GetResponseInfo();
   EXPECT_TRUE(response0.headers);
