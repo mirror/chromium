@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "35b323a0_70121231",
+        "filename": "content/common/clipboard.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-12-04T18:25:07Z",
+      "side": 1,
+      "message": "Correct - I am doing it in steps to keep the CL\u0027s reviewable (i.e. short)",
+      "parentUuid": "3aafd8bc_eb6d0ebe",
+      "revId": "da5a3e867af7742dfe58f221151347238121c34d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d826d901_53ad5509",
         "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "da5a3e867af7742dfe58f221151347238121c34d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ceb7716_e4f6be0d",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-12-04T18:25:07Z",
+      "side": 1,
+      "message": "Can\u0027t do it in this CL - we\u0027re still using Platform::Current()-\u003eClipboard().",
+      "parentUuid": "d826d901_53ad5509",
+      "revId": "da5a3e867af7742dfe58f221151347238121c34d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "59c6eb66_9492e4ff",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-12-04T18:25:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bba7fa02_5209d971",
+      "revId": "da5a3e867af7742dfe58f221151347238121c34d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8005e50d_acce5941",
         "filename": "third_party/WebKit/common/clipboard/clipboard.mojom",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "da5a3e867af7742dfe58f221151347238121c34d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15222837_20f916e5",
+        "filename": "third_party/WebKit/common/clipboard/clipboard.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-12-04T18:25:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8005e50d_acce5941",
+      "revId": "da5a3e867af7742dfe58f221151347238121c34d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
