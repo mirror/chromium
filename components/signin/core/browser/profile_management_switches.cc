@@ -79,6 +79,13 @@ const char
 const char kAccountConsistencyFeatureMethodDiceMigration[] = "dice_migration";
 const char kAccountConsistencyFeatureMethodDice[] = "dice";
 
+bool DiceMethodGreaterOrEqual(AccountConsistencyMethod a,
+                              AccountConsistencyMethod b) {
+  DCHECK_NE(AccountConsistencyMethod::kMirror, a);
+  DCHECK_NE(AccountConsistencyMethod::kMirror, b);
+  return AccountConsistencyMethodGreaterOrEqual(a, b);
+}
+
 void RegisterAccountConsistencyProfilePrefs(
     user_prefs::PrefRegistrySyncable* registry) {
 #if defined(OS_CHROMEOS)

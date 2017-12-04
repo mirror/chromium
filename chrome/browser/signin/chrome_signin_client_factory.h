@@ -6,9 +6,9 @@
 #define CHROME_BROWSER_SIGNIN_CHROME_SIGNIN_CLIENT_FACTORY_H_
 
 #include "base/memory/singleton.h"
-#include "chrome/browser/signin/chrome_signin_client.h"
 #include "components/keyed_service/content/browser_context_keyed_service_factory.h"
 
+class ChromeSigninClient;
 class Profile;
 
 // Singleton that owns all ChromeSigninClients and associates them with
@@ -18,7 +18,7 @@ class ChromeSigninClientFactory : public BrowserContextKeyedServiceFactory {
   // Returns the instance of SigninClient associated with this profile
   // (creating one if none exists). Returns NULL if this profile cannot have an
   // SigninClient (for example, if |profile| is incognito).
-  static SigninClient* GetForProfile(Profile* profile);
+  static ChromeSigninClient* GetForProfile(Profile* profile);
 
   // Returns an instance of the factory singleton.
   static ChromeSigninClientFactory* GetInstance();

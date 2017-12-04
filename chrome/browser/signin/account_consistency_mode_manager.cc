@@ -7,6 +7,8 @@
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/signin/chrome_signin_client.h"
+#include "chrome/browser/signin/chrome_signin_client_factory.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_service.h"
 
@@ -66,6 +68,39 @@ void AccountConsistencyModeManager::RegisterProfilePrefs(
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
   registry->RegisterBooleanPref(kDiceMigrationOnStartupPref, false);
 #endif
+}
+
+signin::AccountConsistencyMethod
+AccountConsistencyModeManager::GetAccountConsistencyMethod() {
+  // The global account consistency method may be tweaked per profile.
+  signin::AccountConsistencyMethod method =
+      signin::GetAccountConsistencyMethod();
+
+  if ((method == signin::AccountConsistencyMethod::kDiceMigration) &&
+      signin::IsDiceEnabledForProfile(profile_->GetPrefs())) {
+    // If the migration is complete, return kDice.
+    return signin::AccountConsistencyMethod::kDice;
+  }
+
+  return method;
+}
+
+// static
+signin::AccountConsistencyMethod
+AccountConsistencyModeManager::GetMethodForProfile(Profile* profile) {
+  return ChromeSigninClientFactory::GetForProfile(profile)
+      ->account_consistency_mode_manager()
+      ->GetAccountConsistencyMethod();
+}
+
+// static
+signin::AccountConsistencyMethod
+AccountConsistencyModeManager::GetMethodForPrefMember(
+    BooleanPrefMember* dice_pref_member) {
+  if (signin::IsDiceEnabled(dice_pref_member))
+    return signin::AccountConsistencyMethod::kDice;
+
+  return signin::GetAccountConsistencyMethod();
 }
 
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)

@@ -54,12 +54,12 @@ ChromeConnectedHeaderHelper::ChromeConnectedHeaderHelper(bool is_mirror_enabled)
 
 // static
 std::string ChromeConnectedHeaderHelper::BuildRequestCookieIfPossible(
+    bool is_mirror_enabled,
     const GURL& url,
     const std::string& account_id,
     const content_settings::CookieSettings* cookie_settings,
     int profile_mode_mask) {
-  ChromeConnectedHeaderHelper chrome_connected_helper(
-      IsAccountConsistencyMirrorEnabled());
+  ChromeConnectedHeaderHelper chrome_connected_helper(is_mirror_enabled);
   if (!chrome_connected_helper.ShouldBuildRequestHeader(url, cookie_settings))
     return "";
   return chrome_connected_helper.BuildRequestHeader(

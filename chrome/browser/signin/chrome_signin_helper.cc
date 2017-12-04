@@ -17,6 +17,7 @@
 #include "build/build_config.h"
 #include "chrome/browser/prefs/incognito_mode_prefs.h"
 #include "chrome/browser/profiles/profile_io_data.h"
+#include "chrome/browser/signin/account_consistency_mode_manager.h"
 #include "chrome/browser/signin/account_reconcilor_factory.h"
 #include "chrome/browser/signin/chrome_signin_client.h"
 #include "chrome/browser/signin/chrome_signin_client_factory.h"
@@ -401,7 +402,9 @@ void FixAccountConsistencyRequestHeader(net::URLRequest* request,
   // Dice header:
   bool dice_header_added = AppendOrRemoveDiceRequestHeader(
       request, redirect_url, account_id, io_data->IsSyncEnabled(),
-      io_data->SyncHasAuthError(), io_data->dice_enabled(),
+      io_data->SyncHasAuthError(),
+      AccountConsistencyModeManager::GetMethodForPrefMember(
+          io_data->dice_enabled()),
       io_data->GetCookieSettings());
 
   // Block the AccountReconcilor while the Dice requests are in flight. This

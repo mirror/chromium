@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "components/prefs/pref_member.h"
+#include "components/signin/core/browser/profile_management_switches.h"
 #include "components/signin/core/browser/signin_features.h"
 #include "url/gurl.h"
 
@@ -184,6 +185,7 @@ bool SettingsAllowSigninCookies(
 // Returns the CHROME_CONNECTED cookie, or an empty string if it should not be
 // added to the request to |url|.
 std::string BuildMirrorRequestCookieIfPossible(
+    bool is_mirror_enabled,
     const GURL& url,
     const std::string& account_id,
     const content_settings::CookieSettings* cookie_settings,
@@ -210,7 +212,7 @@ bool AppendOrRemoveDiceRequestHeader(
     const std::string& account_id,
     bool sync_enabled,
     bool sync_has_auth_error,
-    BooleanPrefMember* dice_pref_member,
+    AccountConsistencyMethod account_consistency,
     const content_settings::CookieSettings* cookie_settings);
 
 // Returns the parameters contained in the X-Chrome-Manage-Accounts response

@@ -31,7 +31,8 @@ FakeSigninManager::FakeSigninManager(
     : SigninManager(client,
                     token_service,
                     account_tracker_service,
-                    cookie_manager_service),
+                    cookie_manager_service,
+                    signin::AccountConsistencyMethod::kDisabled),
       token_service_(token_service) {}
 
 FakeSigninManager::~FakeSigninManager() {}
