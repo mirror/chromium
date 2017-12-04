@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2920ec1_4703343d",
+        "filename": "components/payments/content/utility/fingerprint_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-12-04T19:50:10Z",
+      "side": 1,
+      "message": "is this should be removed now or just remove \u0027input\u0027 from below without above changes?",
+      "range": {
+        "startLine": 40,
+        "startChar": 13,
+        "endLine": 40,
+        "endChar": 26
+      },
+      "revId": "4926991f4176ababada115675e5ff585f0ba6141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
