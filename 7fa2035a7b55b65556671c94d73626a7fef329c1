@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eaae6d1b_4aee3b97",
+        "filename": "components/omnibox/browser/clipboard_url_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-12-04T22:41:34Z",
+      "side": 1,
+      "message": "This should still be false. We don\u0027t want to force the scheme for URLs on the clipboard which will almost always (always?) have a scheme.",
+      "revId": "7fa2035a7b55b65556671c94d73626a7fef329c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
