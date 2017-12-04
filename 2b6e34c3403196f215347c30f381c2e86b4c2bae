@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab741e69_9c188888",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 3502,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-04T23:41:06Z",
+      "side": 1,
+      "message": "nit: s/url/URL",
+      "range": {
+        "startLine": 3502,
+        "startChar": 72,
+        "endLine": 3502,
+        "endChar": 75
+      },
+      "revId": "2b6e34c3403196f215347c30f381c2e86b4c2bae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19c23dc1_42127509",
+        "filename": "ios/web/public/web_state/ui/crw_native_content_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-04T23:41:06Z",
+      "side": 1,
+      "message": "Please follow the existing comments style (Returns an autoreleased...).",
+      "range": {
+        "startLine": 43,
+        "startChar": 21,
+        "endLine": 43,
+        "endChar": 29
+      },
+      "revId": "2b6e34c3403196f215347c30f381c2e86b4c2bae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ccc78e3_fb6b01bd",
+        "filename": "ios/web/public/web_state/ui/crw_native_content_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-04T23:41:06Z",
+      "side": 1,
+      "message": "s/UIWebView/WebState",
+      "range": {
+        "startLine": 44,
+        "startChar": 36,
+        "endLine": 44,
+        "endChar": 45
+      },
+      "revId": "2b6e34c3403196f215347c30f381c2e86b4c2bae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "266c2234_26f5cb02",
+        "filename": "ios/web/public/web_state/ui/crw_native_content_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-04T23:41:06Z",
+      "side": 1,
+      "message": "Please add \n\n// DEPRECATED! Clients must use web::DownloadController for renderer initiated downloads.",
+      "range": {
+        "startLine": 46,
+        "startChar": 20,
+        "endLine": 46,
+        "endChar": 0
+      },
+      "revId": "2b6e34c3403196f215347c30f381c2e86b4c2bae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54fad8b3_f6eab062",
+        "filename": "ios/web/public/web_state/ui/crw_native_content_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-04T23:41:06Z",
+      "side": 1,
+      "message": "nit: s/url/URL",
+      "range": {
+        "startLine": 47,
+        "startChar": 72,
+        "endLine": 47,
+        "endChar": 75
+      },
+      "revId": "2b6e34c3403196f215347c30f381c2e86b4c2bae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
