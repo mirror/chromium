@@ -22,6 +22,30 @@
       "revId": "b36a00bfde5f4d4dde4b98362a00dffcca717236",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44b0b741_2032ea0c",
+        "filename": "base/debug/proc_maps_linux_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1244341
+      },
+      "writtenOn": "2017-12-04T13:02:56Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "171f3d33_bd58d5fe",
+      "range": {
+        "startLine": 228,
+        "startChar": 24,
+        "endLine": 228,
+        "endChar": 27
+      },
+      "revId": "b36a00bfde5f4d4dde4b98362a00dffcca717236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

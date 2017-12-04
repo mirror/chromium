@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "61d83f35_a9f1089c",
+        "filename": "base/metrics/field_trial_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1244341
+      },
+      "writtenOn": "2017-12-04T13:02:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b8bc23f_bc518a6e",
+      "range": {
+        "startLine": 89,
+        "startChar": 57,
+        "endLine": 89,
+        "endChar": 58
+      },
+      "revId": "7bcc4c90a045f61de599ed78f999c0278fc20f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a65368b5_418de3e3",
         "filename": "base/observer_list_unittest.cc",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "7bcc4c90a045f61de599ed78f999c0278fc20f72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92bd18a3_f2feabbb",
+        "filename": "base/observer_list_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1244341
+      },
+      "writtenOn": "2017-12-04T13:02:56Z",
+      "side": 1,
+      "message": "Simply removed this comment.",
+      "parentUuid": "a65368b5_418de3e3",
+      "revId": "7bcc4c90a045f61de599ed78f999c0278fc20f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "e505220b_d5efc483",
+        "filename": "base/security_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1244341
+      },
+      "writtenOn": "2017-12-04T13:02:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a20e89a2_69a6811c",
+      "range": {
+        "startLine": 58,
+        "startChar": 10,
+        "endLine": 58,
+        "endChar": 17
+      },
+      "revId": "7bcc4c90a045f61de599ed78f999c0278fc20f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3036e647_64c96e36",
         "filename": "base/test/android/javatests/src/org/chromium/base/test/util/ScalableTimeout.java",
         "patchSetId": 3
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "c6778666_d7fc4bdd",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/ScalableTimeout.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1244341
+      },
+      "writtenOn": "2017-12-04T13:02:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3036e647_64c96e36",
+      "range": {
+        "startLine": 9,
+        "startChar": 16,
+        "endLine": 9,
+        "endChar": 19
+      },
+      "revId": "7bcc4c90a045f61de599ed78f999c0278fc20f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4201d22_073c3faa",
         "filename": "base/tools_sanity_unittest.cc",
         "patchSetId": 3
@@ -102,6 +192,24 @@
       "revId": "7bcc4c90a045f61de599ed78f999c0278fc20f72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73c25aa4_ebc98cc4",
+        "filename": "base/tools_sanity_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1244341
+      },
+      "writtenOn": "2017-12-04T13:02:56Z",
+      "side": 1,
+      "message": "Undid these changes (I only had them because clang-format wanted a different style for the HARMFUL_ACCESS macro that I modified).",
+      "parentUuid": "b4201d22_073c3faa",
+      "revId": "7bcc4c90a045f61de599ed78f999c0278fc20f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
