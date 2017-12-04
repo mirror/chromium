@@ -93,6 +93,98 @@
       "revId": "2daabe90ad7d53fa719bd2c1d777485702fcec44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d716621_f4cbeeec",
+        "filename": "components/previews/content/previews_io_data.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-04T19:22:37Z",
+      "side": 1,
+      "message": "Explicitly say that the method takes ownership of |passed_reasons|.\n\nHere, and in other places too.",
+      "range": {
+        "startLine": 72,
+        "startChar": 14,
+        "endLine": 72,
+        "endChar": 0
+      },
+      "revId": "2daabe90ad7d53fa719bd2c1d777485702fcec44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "940f00c8_3e4c38e8",
+        "filename": "components/previews/content/previews_ui_service.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-04T19:22:37Z",
+      "side": 1,
+      "message": "Add space between \"method\" and \"|reason|\".\nPlease check other method comments too.",
+      "range": {
+        "startLine": 85,
+        "startChar": 63,
+        "endLine": 85,
+        "endChar": 77
+      },
+      "revId": "2daabe90ad7d53fa719bd2c1d777485702fcec44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e96a5f4_0761809b",
+        "filename": "components/previews/content/previews_ui_service.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-04T19:22:37Z",
+      "side": 1,
+      "message": "typo:\npassed\n\nPlease check other method comments too.",
+      "range": {
+        "startLine": 85,
+        "startChar": 46,
+        "endLine": 85,
+        "endChar": 51
+      },
+      "revId": "2daabe90ad7d53fa719bd2c1d777485702fcec44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80daa73c_5dc8120f",
+        "filename": "components/previews/content/previews_ui_service_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-04T19:22:37Z",
+      "side": 1,
+      "message": "Is there a need to do this? The default ctor should be sufficient?",
+      "range": {
+        "startLine": 59,
+        "startChar": 8,
+        "endLine": 59,
+        "endChar": 37
+      },
+      "revId": "2daabe90ad7d53fa719bd2c1d777485702fcec44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
