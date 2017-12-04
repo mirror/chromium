@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bd64cc21_e7f4bcee",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 3525,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-04T07:39:10Z",
+      "side": 1,
+      "message": "I think all of the checks on color_chooser_info_ can go.  I\u0027m a little reluctant to change this sort of code, but I think it is an improvement to not have it when it is not needed.",
+      "parentUuid": "c07609ef_3fa95ee5",
+      "revId": "06393ebfd0bf86e22de1b9d719b126fcf598afc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64896644_b24ee6ce",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 9
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "d1f3fd7f_ee33d569",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 4190,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-04T07:39:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64896644_b24ee6ce",
+      "range": {
+        "startLine": 4190,
+        "startChar": 2,
+        "endLine": 4190,
+        "endChar": 49
+      },
+      "revId": "06393ebfd0bf86e22de1b9d719b126fcf598afc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e07547fc_8c0ffaca",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 9
@@ -56,6 +98,24 @@
       "revId": "06393ebfd0bf86e22de1b9d719b126fcf598afc1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df34dc21_e2467e27",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 4192,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-04T07:39:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e07547fc_8c0ffaca",
+      "revId": "06393ebfd0bf86e22de1b9d719b126fcf598afc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "50b6c651_5bb23bfa",
+        "filename": "content/browser/web_contents/web_contents_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-04T07:39:10Z",
+      "side": 1,
+      "message": "This function is part of the content::mojom::ColorChooser interface.  I assume you are suggesting to make ColorChooserInfo the implementation of content::mojom::ColorChooser?",
+      "parentUuid": "df8ad4c0_27591a80",
+      "range": {
+        "startLine": 783,
+        "startChar": 7,
+        "endLine": 783,
+        "endChar": 23
+      },
+      "revId": "06393ebfd0bf86e22de1b9d719b126fcf598afc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6c1a94e_f46e3916",
         "filename": "content/browser/web_contents/web_contents_impl.h",
         "patchSetId": 9
@@ -96,6 +180,24 @@
       "revId": "06393ebfd0bf86e22de1b9d719b126fcf598afc1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcfb1797_6959596e",
+        "filename": "content/browser/web_contents/web_contents_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 1528,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-04T07:39:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6c1a94e_f46e3916",
+      "revId": "06393ebfd0bf86e22de1b9d719b126fcf598afc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "92235dff_129a6095",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 4421,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-04T07:39:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3b65e02_2c0fc1a8",
+      "revId": "06393ebfd0bf86e22de1b9d719b126fcf598afc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3561105_d01c064d",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 9
@@ -130,6 +250,24 @@
       "revId": "06393ebfd0bf86e22de1b9d719b126fcf598afc1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71aeb935_0bdba03d",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 4422,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-04T07:39:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3561105_d01c064d",
+      "revId": "06393ebfd0bf86e22de1b9d719b126fcf598afc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -153,6 +291,30 @@
       "revId": "06393ebfd0bf86e22de1b9d719b126fcf598afc1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cb61465_f1ae2d3b",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 4423,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-04T07:39:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a21849e9_5a798f3e",
+      "range": {
+        "startLine": 4423,
+        "startChar": 22,
+        "endLine": 4423,
+        "endChar": 31
+      },
+      "revId": "06393ebfd0bf86e22de1b9d719b126fcf598afc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
