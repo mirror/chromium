@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36a3f1b9_1cdb2304",
+        "filename": "content/browser/gpu/gpu_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-04T19:07:31Z",
+      "side": 1,
+      "message": "I assume this will only apply to Android. If we fail creating the channel, the following things happen in the renderer:\n1- compositor will retry forever (assuming it\u0027s visible)\n2- 2D canvas will fail and fallback to software\n3- WebGL will fail, reporting failure (not supported) to the app\n4- media will, mmh, crash, I think. RenderThreadImpl::GetStreamTexureFactory() will return null, that\u0027s used in MediaFactory::CreateRendererFactorySelector (called from  MediaFactory::CreateMediaPlayer) to pass to StreamTextureWrapperImpl::Create which will liberally pass a null pointer to StreamTextureWrapperImpl which expects it to be non-null.  (This is all Android-specific code, so I assume it\u0027s used, but I\u0027m not 100% up-to-date on the media story). Some other places also assume success (e.g. VEAEncoder which will crash if fail to create a channel, but I don\u0027t know that it\u0027s used on Android). I haven\u0027t tried to exhaustively find all places that this may impact.\n\nIOW, moderately annoying to really bad things will happen if we actually run into this. Do we have reason to believe we avoid those issues? In particular I\u0027m wondering about the transition from foreground to background or vice versa when the renderer might run while we believe in the browser that we are backgrounded? (I\u0027m not sure how the renderer interacts with that).",
+      "revId": "3a791213ca3094b39c5a72e333e15d18a2ba9a48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
