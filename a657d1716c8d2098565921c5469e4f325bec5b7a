@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fec8d155_2985c0ed",
+        "filename": "chrome/browser/chromeos/arc/arc_auth_notification.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-04T14:51:39Z",
+      "side": 1,
+      "message": "nit: no longer needs to be a pointer",
+      "range": {
+        "startLine": 113,
+        "startChar": 7,
+        "endLine": 113,
+        "endChar": 17
+      },
+      "revId": "a657d1716c8d2098565921c5469e4f325bec5b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55b73913_a60f8c3c",
+        "filename": "chrome/browser/chromeos/arc/arc_migration_guide_notification.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-04T14:51:39Z",
+      "side": 1,
+      "message": "nit: no longer needs to be a pointer",
+      "range": {
+        "startLine": 88,
+        "startChar": 7,
+        "endLine": 88,
+        "endChar": 17
+      },
+      "revId": "a657d1716c8d2098565921c5469e4f325bec5b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
