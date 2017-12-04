@@ -18,7 +18,7 @@ namespace ui {
 
 class SignalLogger {
  public:
-  enum SignalLoggerFlags { PROPERTY_CHANGE = 1 << 0 };
+  enum SignalLoggerFlags { PROPERTY_CHANGE = 1 << 0, STATE_CHANGE = 1 << 1 };
 
   SignalLogger() {}
   ~SignalLogger() {
@@ -49,6 +49,10 @@ class SignalLogger {
       g_signal_connect(atk_object, "property-change",
                        G_CALLBACK(OnPropertyChangeThunk), this);
     }
+    if (flags | STATE_CHANGE) {
+      g_signal_connect(atk_object, "state-change",
+                       G_CALLBACK(OnStateChangeThunk), this);
+    }
   }
 
  private:
@@ -57,6 +61,14 @@ class SignalLogger {
                      OnPropertyChange,
                      AtkObject*,
                      gpointer);
+
+  CHROMEG_CALLBACK_2(SignalLogger,
+                     void,
+                     OnStateChange,
+                     AtkObject*,
+                     gchar*,
+                     gboolean);
+
   std::string GValueStr(GValue* value) {
     if (G_VALUE_HOLDS_INT(value)) {
       return std::to_string(g_value_get_int(value));
@@ -80,6 +92,13 @@ void SignalLogger::OnPropertyChange(AtkObject* atk_object, gpointer arg1) {
     log_stream_ << GValueStr(&property_values->new_value);
   }
   log_stream_ << "|";
+}
+
+void SignalLogger::OnStateChange(AtkObject* atk_object,
+                                 gchar* arg1,
+                                 gboolean arg2) {
+  log_stream_ << "STATE_CHANGE " << arg1 << " - " << (arg2 ? "TRUE" : "FALSE")
+              << "|";
 }
 
 class AXPlatformNodeAuraLinuxTest : public AXPlatformNodeTest {
@@ -479,6 +498,25 @@ TEST_F(AXPlatformNodeAuraLinuxTest, TestAtkComponentsGetExtentsPositionSize) {
   EXPECT_EQ(200, width);
 
   g_object_unref(child_obj);
+  g_object_unref(root_obj);
+}
+
+TEST_F(AXPlatformNodeAuraLinuxTest, TestAtkComponentGrabFocus) {
+  SignalLogger signal_logger;
+
+  AXNodeData root;
+  root.id = 0;
+  root.location = gfx::RectF(0, 0, 30, 30);
+
+  Init(root);
+
+  AtkObject* root_obj(GetRootAtkObject());
+  EXPECT_TRUE(ATK_IS_OBJECT(root_obj));
+  signal_logger.AttachToAtkObject(root_obj, SignalLogger::STATE_CHANGE);
+  EXPECT_TRUE(ATK_IS_COMPONENT(root_obj));
+  EXPECT_TRUE(atk_component_grab_focus(ATK_COMPONENT(root_obj)));
+  EXPECT_EQ("STATE_CHANGE focused - TRUE|", signal_logger.GetLog());
+
   g_object_unref(root_obj);
 }
 
