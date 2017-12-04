@@ -121,10 +121,6 @@ void AuraTestHelper::SetUp(ui::ContextFactory* context_factory,
   capture_client_ = std::make_unique<client::DefaultCaptureClient>();
   const Env::Mode env_mode =
       (mode_ == Mode::LOCAL) ? Env::Mode::LOCAL : Env::Mode::MUS;
-  if (env_mode == Env::Mode::MUS) {
-    base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
-        switches::kMus, switches::kMusHostVizValue);
-  }
 
   if (mode_ == Mode::MUS_CREATE_WINDOW_TREE_CLIENT)
     InitWindowTreeClient();
