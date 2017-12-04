@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cdd659e_8db9c21d",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 2318,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-04T21:35:08Z",
+      "side": 0,
+      "message": "The code below treats all messages as main frame messages, so this change may introduce a bunch of different bugs. With that I believe we should keep ignoring all messages by default. In subsequent CLs we can start trusting messages on case by case basis assuming that receiving code distinguishes iframes from main frames. WDYT?",
+      "range": {
+        "startLine": 2318,
+        "startChar": 14,
+        "endLine": 2318,
+        "endChar": 0
+      },
+      "revId": "5311d6efaa575c768e53ebe6ce09ab33d123bcac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

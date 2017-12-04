@@ -2,6 +2,115 @@
   "comments": [
     {
       "key": {
+        "uuid": "6c40ed79_ca538704",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-04T21:35:08Z",
+      "side": 1,
+      "message": "form.js",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 14
+      },
+      "revId": "738029d2af6cb1c1f7f1672620c1ab5a5f7cea03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba6104d0_3b030e24",
+        "filename": "ios/web/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-04T21:35:08Z",
+      "side": 1,
+      "message": "Maybe iframe_web_bundle ? Frame term can be used for main frame as well.",
+      "range": {
+        "startLine": 599,
+        "startChar": 19,
+        "endLine": 599,
+        "endChar": 35
+      },
+      "revId": "738029d2af6cb1c1f7f1672620c1ab5a5f7cea03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "189f75c6_9aa60160",
+        "filename": "ios/web/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-04T21:35:08Z",
+      "side": 1,
+      "message": "Should we use a different entry point?",
+      "range": {
+        "startLine": 601,
+        "startChar": 33,
+        "endLine": 601,
+        "endChar": 42
+      },
+      "revId": "738029d2af6cb1c1f7f1672620c1ab5a5f7cea03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f67d023e_5dc9cac6",
+        "filename": "ios/web/web_state/js/page_script_util.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-04T21:35:08Z",
+      "side": 1,
+      "message": "This method returns scripts for main frame, which is probably return more scripts than we need.",
+      "range": {
+        "startLine": 66,
+        "startChar": 22,
+        "endLine": 66,
+        "endChar": 40
+      },
+      "revId": "738029d2af6cb1c1f7f1672620c1ab5a5f7cea03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a38a093_a18888fc",
+        "filename": "ios/web/web_state/js/page_script_util.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-04T21:35:08Z",
+      "side": 1,
+      "message": "Can we avoid code duplication? Maybe by changing GetEarlyPageScript to take the second argument (ALL_FRAMES, MAIN_FRAME_ONLY)?",
+      "revId": "738029d2af6cb1c1f7f1672620c1ab5a5f7cea03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b53f1c1_b9978f71",
         "filename": "ios/web/web_state/js/resources/form.js",
         "patchSetId": 7
@@ -18,6 +127,53 @@
         "startChar": 0,
         "endLine": 15,
         "endChar": 36
+      },
+      "revId": "738029d2af6cb1c1f7f1672620c1ab5a5f7cea03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f8a9a5c_d6c5148f",
+        "filename": "ios/web/web_state/js/resources/form.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-04T21:35:08Z",
+      "side": 1,
+      "message": "I don\u0027t think so. We should probably just include message JS.",
+      "parentUuid": "6b53f1c1_b9978f71",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 36
+      },
+      "revId": "738029d2af6cb1c1f7f1672620c1ab5a5f7cea03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8763eb0f_bcd6e291",
+        "filename": "ios/web/web_state/js/resources/form.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-04T21:35:08Z",
+      "side": 1,
+      "message": "Can we include necessary parts of common.js instead? Otherwise we will have to change this back again when Chrome supports cross-origin iframes.",
+      "range": {
+        "startLine": 49,
+        "startChar": 25,
+        "endLine": 49,
+        "endChar": 28
       },
       "revId": "738029d2af6cb1c1f7f1672620c1ab5a5f7cea03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
