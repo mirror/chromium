@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc48e087_2f03d7c7",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 865,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-12-04T04:20:11Z",
+      "side": 1,
+      "message": "GenerateMaskedSmallIcon() may invoke an image-resizing. And this method (NotificationViewMD::CreateOrUpdateSmallIconView) is called whenever notification is updated. So possibly-heavy resizing opration might be called frequently. Should we cache the resized image for performance?\n\nIf we add a cache, we can have 2 options:\n(1) Cache in Notification.\nTo track icon changing, a cache should be in Notification class. We would need a map of cache for each requested sizes. But it may waste some memory because Notification class doesn\u0027t know which sizes of icon are used multiple times.\n(2) Cache in NotificationViewMD\nIf we do this, we have to ignore (give up) ondemand icon changing during the notification view is visible, since this class doesn\u0027t know when the small-icon is updated.\n\nEvan, Tetsui-san, WDYT?",
+      "range": {
+        "startLine": 865,
+        "startChar": 48,
+        "endLine": 865,
+        "endChar": 71
+      },
+      "revId": "f224450e18d0da125e91a1d81d5b1c8e4c3ed17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
