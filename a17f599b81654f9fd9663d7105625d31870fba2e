@@ -16,6 +16,24 @@
       "revId": "a17f599b81654f9fd9663d7105625d31870fba2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3f6d65e_6f7c2b7e",
+        "filename": "ui/gl/gl_image.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-04T21:28:47Z",
+      "side": 1,
+      "message": "We do in the texture\u0027s cleared rect. This is to tell the decoder if the image is already cleared on initialization which is platform dependent. On Mac, anonymous IO surfaces aren\u0027t cleared after this change, whereas on ChromeOS, all surfaces are zero-initialized.",
+      "parentUuid": "e06d0325_dab549ae",
+      "revId": "a17f599b81654f9fd9663d7105625d31870fba2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
