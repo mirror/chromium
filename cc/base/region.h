@@ -76,25 +76,33 @@ class CC_BASE_EXPORT Region {
 
   class CC_BASE_EXPORT Iterator {
    public:
-    Iterator();
-    explicit Iterator(const Region& region);
-    ~Iterator();
+    Iterator() = default;
+    ~Iterator() = default;
 
-    gfx::Rect rect() const {
-      return gfx::SkIRectToRect(it_.rect());
-    }
+    gfx::Rect operator*() const { return gfx::SkIRectToRect(it_.rect()); }
 
-    void next() {
+    Iterator& operator++() {
       it_.next();
+      return *this;
     }
 
-    bool has_rect() const {
-      return !it_.done();
+    bool operator==(const Iterator& b) const {
+      // This should only be used to compare to end().
+      DCHECK(b.it_.done());
+      return it_.done();
     }
+
+    bool operator!=(const Iterator& b) const { return !(*this == b); }
 
    private:
+    explicit Iterator(const Region& region);
+    friend class Region;
+
     SkRegion::Iterator it_;
   };
+
+  Iterator begin() const;
+  Iterator end() const { return Iterator(); }
 
  private:
   SkRegion skregion_;
