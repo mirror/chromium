@@ -44,9 +44,9 @@ void SandboxBPFTestRunner::Run() {
     bpf_tester_delegate_->RunTestFunction();
   } else {
     printf("This BPF test is not fully running in this configuration!\n");
-    // Android and Valgrind are the only configurations where we accept not
-    // having kernel BPF support.
-    if (!IsAndroid() && !RunningOnValgrind()) {
+    // Android and is the only configuration where we accept not having
+    // kernel BPF support.
+    if (!IsAndroid()) {
       const bool seccomp_bpf_is_supported = false;
       SANDBOX_ASSERT(seccomp_bpf_is_supported);
     }
