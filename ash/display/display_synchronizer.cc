@@ -5,10 +5,13 @@
 #include "ash/display/display_synchronizer.h"
 
 #include "ash/host/ash_window_tree_host.h"
+#include "ash/public/cpp/config.h"
 #include "ash/shell.h"
+#include "base/command_line.h"
 #include "services/ui/public/interfaces/window_manager_constants.mojom.h"
 #include "ui/aura/mus/window_manager_delegate.h"
 #include "ui/aura/mus/window_tree_host_mus.h"
+#include "ui/base/ui_base_switches.h"
 #include "ui/display/manager/display_manager.h"
 #include "ui/display/manager/managed_display_info.h"
 
@@ -60,10 +63,16 @@ void DisplaySynchronizer::SendDisplayConfigurationToServer() {
     displays.push_back(display_manager->GetDisplayAt(i));
     metrics.push_back(GetMetricsForDisplay(displays[i].id()));
   }
-  const std::vector<display::Display>& mirrors =
+  std::vector<display::Display> mirrors =
       display_manager->software_mirroring_display_list();
-  for (size_t i = 0; i < mirrors.size(); ++i)
-    metrics.push_back(GetMetricsForDisplay(mirrors[i].id()));
+  for (const auto& mirror : mirrors)
+    metrics.push_back(GetMetricsForDisplay(mirror.id()));
+  if (base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(::switches::kMus) != ::switches::kMusHostVizValue && Shell::GetAshConfig() != Config::MASH) {
+    for (const auto& mirror : mirrors)
+      displays.push_back(mirror);
+    mirrors.clear();
+  }
+
   window_manager_client_->SetDisplayConfiguration(
       displays, std::move(metrics),
       WindowTreeHostManager::GetPrimaryDisplayId(), mirrors);

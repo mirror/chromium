@@ -183,6 +183,7 @@ void ShellPortMus::CreatePointerWatcherAdapter() {
 
 std::unique_ptr<AshWindowTreeHost> ShellPortMus::CreateAshWindowTreeHost(
     const AshWindowTreeHostInitParams& init_params) {
+  LOG(ERROR) << "MSW ShellPortMus::CreateAshWindowTreeHost A initial_bounds:" << init_params.initial_bounds.ToString(); 
   std::unique_ptr<aura::DisplayInitParams> display_params =
       std::make_unique<aura::DisplayInitParams>();
   display_params->viewport_metrics.bounds_in_pixels =

@@ -1391,6 +1391,7 @@ bool DisplayManager::UpdateDisplayBounds(int64_t display_id,
 }
 
 void DisplayManager::CreateMirrorWindowAsyncIfAny() {
+  LOG(ERROR) << "MSW CreateMirrorWindowAsyncIfAny"; 
   // Do not post a task if the software mirroring doesn't exist, or
   // during initialization when compositor's init task isn't posted yet.
   // ash::Shell::Init() will call this after the compositor is initialized.
@@ -1846,6 +1847,7 @@ void DisplayManager::UpdateNonPrimaryDisplayBoundsForLayout(
 }
 
 void DisplayManager::CreateMirrorWindowIfAny() {
+  LOG(ERROR) << "MSW CreateMirrorWindowIfAny software_mirroring_display_list_:" << software_mirroring_display_list_.size(); 
   if (software_mirroring_display_list_.empty() || !delegate_) {
     if (!created_mirror_window_.is_null())
       base::ResetAndReturn(&created_mirror_window_).Run();
