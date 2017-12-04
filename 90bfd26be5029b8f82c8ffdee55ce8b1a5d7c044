@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "4fcc0e2a_0dc745a2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-12-04T12:18:43Z",
+      "side": 1,
+      "message": "\u003e According to [1], the HTML spec defines that Worker does NOT inherit the owner\u0027s ReferrerPolicy. Do you think this is a spec bug?\n\nThat\u0027s not what we do for CSP, I guess it seems like we should make the same decision in both places, whatever it is.",
+      "parentUuid": "4fadd110_cea8c8fa",
+      "revId": "90bfd26be5029b8f82c8ffdee55ce8b1a5d7c044",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7965beb9_3fbb6521",
         "filename": "third_party/WebKit/Source/core/workers/MainThreadWorkletTest.cpp",
         "patchSetId": 5
