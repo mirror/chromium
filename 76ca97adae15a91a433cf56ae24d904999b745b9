@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e978c7b_5bf6cf2b",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 33
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-12-04T22:02:03Z",
+      "side": 1,
+      "message": "What are the values of these fields in that case? If they are equal to \"far in the past\", we should assign nil values. In general, if any field in load_timing_info is \"far in the past\", we should assign nil to the corresponding metric in |transaction_metrics|.",
+      "range": {
+        "startLine": 124,
+        "startChar": 0,
+        "endLine": 127,
+        "endChar": 21
+      },
+      "revId": "76ca97adae15a91a433cf56ae24d904999b745b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2369d4c7_71a7a15f",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 33
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-12-04T22:02:03Z",
+      "side": 1,
+      "message": "Should it be also declared as a private static member of the CronetMetricsDelegate class?",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 29
+      },
+      "revId": "76ca97adae15a91a433cf56ae24d904999b745b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03c818f0_31411e4c",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 33
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-12-04T22:02:03Z",
+      "side": 1,
+      "message": "I suggest we add \"-(NSString *)description\" method to the NSURLSessionTaskTransactionMetrics class.",
+      "range": {
+        "startLine": 20,
+        "startChar": 5,
+        "endLine": 20,
+        "endChar": 15
+      },
+      "revId": "76ca97adae15a91a433cf56ae24d904999b745b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04647ae6_b4a3ccbe",
+        "filename": "ios/net/crn_http_protocol_handler.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-12-04T22:02:03Z",
+      "side": 1,
+      "message": "Can you use:\nMetrics() \u003d default;\n~Metrics() \u003d default;\ninstead?",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 15
+      },
+      "revId": "76ca97adae15a91a433cf56ae24d904999b745b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b89972d4_7c7f1db4",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 33
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-12-04T22:02:03Z",
+      "side": 1,
+      "message": "If \" \u003d default\" is used these ones should not be needed here.",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 39
+      },
+      "revId": "76ca97adae15a91a433cf56ae24d904999b745b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
