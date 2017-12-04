@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "02c85523_382aefda",
+        "filename": "chrome/browser/chromeos/login/users/fake_chrome_user_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-04T12:31:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bb5427a_0d2b10d4",
+      "range": {
+        "startLine": 145,
+        "startChar": 35,
+        "endLine": 145,
+        "endChar": 40
+      },
+      "revId": "dc0aaf57a1a409c6da81affac8b85448f8b30fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3d191a9_bbd9d7a8",
         "filename": "chrome/browser/policy/profile_policy_connector_unittest.cc",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ed5af9dc_4a806d9d",
+        "filename": "chrome/browser/policy/profile_policy_connector_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-04T12:31:59Z",
+      "side": 1,
+      "message": "This is difficult to do.\nDue to legacy reasons, CreateRegularUser actually creates Google and Active Directory user types. So this is like \"CreateUser (default version)\".\n\nWe discussed this recently and will probably refactor all this code as soon as we can.",
+      "parentUuid": "f3d191a9_bbd9d7a8",
+      "range": {
+        "startLine": 69,
+        "startChar": 28,
+        "endLine": 69,
+        "endChar": 45
+      },
+      "revId": "dc0aaf57a1a409c6da81affac8b85448f8b30fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "118d744d_8601bb81",
         "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
         "patchSetId": 9
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-04T09:31:47Z",
       "side": 1,
       "message": "Is this include needed?",
+      "range": {
+        "startLine": 15,
+        "startChar": 34,
+        "endLine": 15,
+        "endChar": 46
+      },
+      "revId": "dc0aaf57a1a409c6da81affac8b85448f8b30fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dc66195_9fcab4d8",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-04T12:31:59Z",
+      "side": 1,
+      "message": "It is not important for my CL, but technically it is needed. user_manager::UserManager is used in this file, but the declaration was never directly included.",
+      "parentUuid": "118d744d_8601bb81",
       "range": {
         "startLine": 15,
         "startChar": 34,
