@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f22a8362_a3837712",
+        "filename": "gpu/ipc/service/command_buffer_stub_common.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-12-04T21:29:11Z",
+      "side": 1,
+      "message": "why not keep it as \"CommandBufferStub\"?  what does \"Common\" add that \"is a base class of\" doesn\u0027t imply already?\n\nplus, it makes this a much smaller CL.  :)",
+      "range": {
+        "startLine": 54,
+        "startChar": 34,
+        "endLine": 54,
+        "endChar": 40
+      },
+      "revId": "cecf05b570927a25c484a0bfa5ffc31a9012ea5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
