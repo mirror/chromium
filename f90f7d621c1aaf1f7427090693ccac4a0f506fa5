@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2e13b35_14302b69",
+        "filename": "net/http/http_stream_factory_impl_job_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-12-04T17:36:49Z",
+      "side": 1,
+      "message": "related Q: should we DCHECK(!main_job_is_resumed_)? Since ResumeMainJob will only be called once. Despite the reconsider proxy case and alt job success case, main job should always be resumed before its deletion, right?\n\nI guess we have a new invariant always cancel the resume_main_job_callback when resetting main_job_?",
+      "range": {
+        "startLine": 572,
+        "startChar": 27,
+        "endLine": 572,
+        "endChar": 0
+      },
+      "revId": "f90f7d621c1aaf1f7427090693ccac4a0f506fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2c2575a_cb613bee",
+        "filename": "net/http/http_stream_factory_impl_job_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1438,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-12-04T17:36:49Z",
+      "side": 1,
+      "message": "Should this be deleted?",
+      "range": {
+        "startLine": 1438,
+        "startChar": 50,
+        "endLine": 1438,
+        "endChar": 0
+      },
+      "revId": "f90f7d621c1aaf1f7427090693ccac4a0f506fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47abb2cf_1ef52274",
+        "filename": "net/http/http_stream_factory_impl_job_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1495,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-12-04T17:36:49Z",
+      "side": 1,
+      "message": "Will alt svc always mark broken? Could it be possible that we will still have two jobs racing after reconsider proxy? In particular, I want to see if we have two new jobs racing, the callback and booleans will not break ResumeMainJob logic, i.e., we are still able to delay and resume main job if needed. Would that scenario make sense?",
+      "range": {
+        "startLine": 1495,
+        "startChar": 67,
+        "endLine": 1495,
+        "endChar": 0
+      },
+      "revId": "f90f7d621c1aaf1f7427090693ccac4a0f506fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
