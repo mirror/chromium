@@ -16,6 +16,24 @@
       "revId": "4f9d384de8e2adab6035be43a7480ab5982c916d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b63ec63_dc01a752",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/idl/idl-BluetoothGATTRemoteServer-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-12-04T19:46:10Z",
+      "side": 0,
+      "message": "Yes, I\u0027ll remove this test from this CL.",
+      "parentUuid": "e2ad590c_c1715dc3",
+      "revId": "4f9d384de8e2adab6035be43a7480ab5982c916d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
