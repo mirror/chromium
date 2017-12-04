@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c08c336_6e9e38be",
+        "filename": "docs/security/mojo.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-04T20:45:54Z",
+      "side": 1,
+      "message": "Nit on my own wording: methods -\u003e Mojo interfaces",
+      "range": {
+        "startLine": 566,
+        "startChar": 0,
+        "endLine": 566,
+        "endChar": 7
+      },
+      "revId": "fcda5d29009180aa09a262239bf9fc0dec277aa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
