@@ -7,7 +7,7 @@
 #include <memory>
 #include <string>
 
-#include "base/command_line.h"
+#include "base/bind.h"
 #include "base/message_loop/message_loop.h"
 #include "base/strings/stringprintf.h"
 #include "components/content_settings/core/browser/cookie_settings.h"
@@ -121,6 +121,7 @@ class SigninHeaderHelperTest : public testing::Test {
   scoped_refptr<content_settings::CookieSettings> cookie_settings_;
 };
 
+#if !BUILDFLAG(ENABLE_DICE_SUPPORT)
 // Tests that no Mirror request is returned when the user is not signed in (no
 // account id).
 TEST_F(SigninHeaderHelperTest, TestNoMirrorRequestNoAccountId) {
@@ -165,6 +166,7 @@ TEST_F(SigninHeaderHelperTest, TestMirrorRequestGoogleCom) {
       GURL("https://www.google.com"), "0123456789",
       "id=0123456789:mode=0:enable_account_consistency=true");
 }
+#endif  // !BUILDFLAG(DICE_SUPPORT_ENABLED)
 
 // Tests that no header sent when mirror account consistency is nor requested.
 TEST_F(SigninHeaderHelperTest, TestMirrorRequestGoogleComNoProfileConsistency) {
@@ -193,20 +195,20 @@ TEST_F(SigninHeaderHelperTest, TestMirrorRequestGoogleComProfileConsistency) {
       "mode=0,enable_account_consistency=true");
 }
 
-// Mirror is always enabled on Android and iOS, so these tests are only relevant
-// on Desktop.
-#if BUILDFLAG(ENABLE_DICE_SUPPORT)
-
+#if !BUILDFLAG(ENABLE_MIRROR)
 // Tests that the Mirror request is returned when the target is a Gaia URL, even
 // if account consistency is disabled.
 TEST_F(SigninHeaderHelperTest, TestMirrorRequestGaiaURL) {
+  ASSERT_FALSE(IsAccountConsistencyMirrorEnabled());
   CheckMirrorHeaderRequest(GURL("https://accounts.google.com"), "0123456789",
                            "mode=0,enable_account_consistency=false");
   CheckMirrorCookieRequest(
       GURL("https://accounts.google.com"), "0123456789",
       "id=0123456789:mode=0:enable_account_consistency=false");
 }
+#endif  // !BUILDFLAG(ENABLE_MIRROR)
 
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
 // Tests Dice requests.
 TEST_F(SigninHeaderHelperTest, TestDiceRequest) {
   account_consistency_ = AccountConsistencyMethod::kDice;
@@ -241,12 +243,14 @@ TEST_F(SigninHeaderHelperTest, TestDiceRequest) {
   CheckDiceHeaderRequest(GURL("https://www.google.com"), "0123456789", "", "");
 }
 
+#if !BUILDFLAG(ENABLE_DICE_SUPPORT)
 // Tests that no Dice request is returned when Dice is not enabled.
 TEST_F(SigninHeaderHelperTest, TestNoDiceRequestWhenDisabled) {
   account_consistency_ = AccountConsistencyMethod::kMirror;
   CheckDiceHeaderRequest(GURL("https://accounts.google.com"), "0123456789",
                          "mode=0,enable_account_consistency=true", "");
 }
+#endif  // !BUILDFLAG(ENABLE_DICE_SUPPORT)
 
 // Tests that the signout confirmation is requested iff the Dice migration is
 // complete.
@@ -304,6 +308,7 @@ TEST_F(SigninHeaderHelperTest, TestDiceFixAuthError) {
                          kDiceProtocolVersion, client_id.c_str()));
 }
 
+#if !BUILDFLAG(ENABLE_DICE_SUPPORT)
 // Tests that the Mirror request is returned with the GAIA Id on Drive origin,
 // even if account consistency is disabled.
 TEST_F(SigninHeaderHelperTest, TestMirrorRequestDrive) {
@@ -323,6 +328,7 @@ TEST_F(SigninHeaderHelperTest, TestMirrorRequestDrive) {
       GURL("https://drive.google.com/drive"), "0123456789",
       "id=0123456789:mode=0:enable_account_consistency=true");
 }
+#endif  // !BUILDFLAG(ENABLE_DICE_SUPPORT)
 
 TEST_F(SigninHeaderHelperTest, TestDiceInvalidResponseParams) {
   DiceResponseParams params = BuildDiceSigninResponseParams("blah");
@@ -432,6 +438,7 @@ TEST_F(SigninHeaderHelperTest, TestBuildDiceResponseParams) {
 
 #endif  // BUILDFLAG(ENABLE_DICE_SUPPORT)
 
+#if !BUILDFLAG(ENABLE_DICE_SUPPORT)
 // Tests that the Mirror header request is returned normally when the redirect
 // URL is eligible.
 TEST_F(SigninHeaderHelperTest, TestMirrorHeaderEligibleRedirectURL) {
@@ -487,6 +494,7 @@ TEST_F(SigninHeaderHelperTest, TestIgnoreMirrorHeaderNonEligibleURLs) {
       kChromeConnectedHeader, &header));
   EXPECT_EQ(fake_header, header);
 }
+#endif  // !BUILDFLAG(ENABLE_DICE_SUPPORT)
 
 TEST_F(SigninHeaderHelperTest, TestInvalidManageAccountsParams) {
   ManageAccountsParams params = BuildManageAccountsParams("blah");
