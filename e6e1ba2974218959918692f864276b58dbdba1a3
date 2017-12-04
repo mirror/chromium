@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8d1710b_4e96cbce",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-04T18:54:43Z",
+      "side": 1,
+      "message": "Let\u0027s file a bug for this.\n\nWill you please also grab a screenrecording and upload to drive or the bug?",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 3
+      },
+      "revId": "e6e1ba2974218959918692f864276b58dbdba1a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe875954_8d95498d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1892,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-04T18:54:43Z",
+      "side": 1,
+      "message": "Can this be rolled into the HistoryManagerUtils method?",
+      "range": {
+        "startLine": 1888,
+        "startChar": 11,
+        "endLine": 1892,
+        "endChar": 20
+      },
+      "revId": "e6e1ba2974218959918692f864276b58dbdba1a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d5406ad_9139b6c4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1814,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-04T18:54:43Z",
+      "side": 1,
+      "message": "Same question about rolling into BookmarkUtils.java rather than forking here; and about DownloadUtils below.",
+      "range": {
+        "startLine": 1811,
+        "startChar": 15,
+        "endLine": 1814,
+        "endChar": 24
+      },
+      "revId": "e6e1ba2974218959918692f864276b58dbdba1a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b283b89_8f6ffa80",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuPropertiesDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-04T18:54:43Z",
+      "side": 1,
+      "message": "Can the menu be opened before native is initialized? If so, it\u0027s probably safer to hide these items rather than show then since the bottom sheet can\u0027t be opened before native is initialized.",
+      "range": {
+        "startLine": 216,
+        "startChar": 58,
+        "endLine": 216,
+        "endChar": 91
+      },
+      "revId": "e6e1ba2974218959918692f864276b58dbdba1a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "279b64e5_c847f787",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuPropertiesDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-04T18:54:43Z",
+      "side": 1,
+      "message": "Showing these is going to be temporary, after XX clicks, right? Should we add that logic now or in a follow-up CL?",
+      "range": {
+        "startLine": 217,
+        "startChar": 23,
+        "endLine": 218,
+        "endChar": 85
+      },
+      "revId": "e6e1ba2974218959918692f864276b58dbdba1a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "889b0fda_37b2dfac",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-04T18:54:43Z",
+      "side": 1,
+      "message": "I think ideally the menu item would open the bottom sheet to half-height, show something (e.g. IPH blue pulse) on the bookmarks/downloads/history bottom nav item, then switch the content to teach users the steps required to get to the bookmark manager.",
+      "range": {
+        "startLine": 181,
+        "startChar": 26,
+        "endLine": 181,
+        "endChar": 55
+      },
+      "revId": "e6e1ba2974218959918692f864276b58dbdba1a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b5138f1_8e39cc4b",
+        "filename": "chrome/browser/android/chrome_feature_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-04T18:54:43Z",
+      "side": 1,
+      "message": "Can we add this to about://flags so that we can test on non-rooted devices?",
+      "revId": "e6e1ba2974218959918692f864276b58dbdba1a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
