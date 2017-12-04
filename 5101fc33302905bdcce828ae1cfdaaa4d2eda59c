@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "f0e3a63a_b05bdd53",
+        "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-04T20:18:59Z",
+      "side": 1,
+      "message": "Just to be clear, need to call resetResolver(\u0027reloadItem\u0027) before MockInteractions.tap().",
+      "parentUuid": "ec2715ca_9da803dc",
+      "revId": "5101fc33302905bdcce828ae1cfdaaa4d2eda59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37614a81_a903f70b",
         "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
         "patchSetId": 8
