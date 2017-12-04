@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c10e909_f1205e51",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-12-04T21:50:08Z",
+      "side": 1,
+      "message": "ha, I think we forgot the \u0027$\u0027 in this template literal[1]. This was probably supposed to print the contents of `data` put it only prints the string \u0027{messageEvent.data}\u0027. Would be nice to follow up with a fix.\n\n[1] https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals",
+      "revId": "cf53bcb590f0b0a023e4c3368d287d24393b1747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c4cbe1e_c94fbfae",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/health-thermometer-iframe.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-12-04T21:50:08Z",
+      "side": 1,
+      "message": "We should use template literals! They are cool and avoid all the \u0027+\u0027s. This would be:\n\n`Bad message type: ${messageEvent.data.type}`",
+      "revId": "cf53bcb590f0b0a023e4c3368d287d24393b1747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
