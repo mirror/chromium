@@ -107,6 +107,120 @@
       "revId": "19aaa4ef26d4060ab53eb6675b19c114dc9eab89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a57d252_c21f59a3",
+        "filename": "ui/platform_window/x11/x11_window_base.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-04T15:21:04Z",
+      "side": 1,
+      "message": "constexpr int kNetWmStateAdd \u003d 1;\n\nSame below.",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 28
+      },
+      "revId": "19aaa4ef26d4060ab53eb6675b19c114dc9eab89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64adef41_0ca8a3a7",
+        "filename": "ui/platform_window/x11/x11_window_base.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-04T15:21:04Z",
+      "side": 1,
+      "message": "Comment explaining why format/data are set that way?",
+      "revId": "19aaa4ef26d4060ab53eb6675b19c114dc9eab89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f72765e_9d4a554b",
+        "filename": "ui/platform_window/x11/x11_window_base.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-04T15:21:04Z",
+      "side": 1,
+      "message": "nit: reflow comment.",
+      "revId": "19aaa4ef26d4060ab53eb6675b19c114dc9eab89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42a40ae3_74cc5b8e",
+        "filename": "ui/platform_window/x11/x11_window_base.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-04T15:21:04Z",
+      "side": 1,
+      "message": "This feels kind of arbitrary having two parameters? Although, I see why you did it. Maybe use a default value for the second parameter?",
+      "revId": "19aaa4ef26d4060ab53eb6675b19c114dc9eab89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "512db0dc_6934f82a",
+        "filename": "ui/platform_window/x11/x11_window_base.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-04T15:21:04Z",
+      "side": 1,
+      "message": "PlatformWindow overrides should be group with the other overrides above. The cc order should match the header order too.",
+      "range": {
+        "startLine": 79,
+        "startChar": 5,
+        "endLine": 79,
+        "endChar": 19
+      },
+      "revId": "19aaa4ef26d4060ab53eb6675b19c114dc9eab89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "118120dd_7ef2d1eb",
+        "filename": "ui/platform_window/x11/x11_window_base.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-04T15:21:04Z",
+      "side": 1,
+      "message": "A flat_set would probably be better here, assuming Atom is move-able?",
+      "revId": "19aaa4ef26d4060ab53eb6675b19c114dc9eab89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
