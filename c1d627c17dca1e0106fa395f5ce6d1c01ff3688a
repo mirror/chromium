@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a23047f2_be32aed2",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-04T04:10:16Z",
+      "side": 1,
+      "message": "Note that there are times types of key / data are different. In this CL, GestureListenerManager for example, the class for key is GestureListenerManager but the userdata is of the type GestureListenerManagerImpl. This should be allowed. Only something like setUserData(GestureListenerManager.clss, new UserData() {}) is rejected at compile time.\n\nNot sure if the same constraint should be imposed on getUserData, since it has only one parameter. I tried the similar to the input/return type, but it gives out a unchecked cast warning due to conversion from Data to T, which I had to suppress with annotation. The casting is safe because I allowed only the subtype of T to be stored in the entry with type T.\n\nLet me know how it looks. I think we can go without it for get case.",
+      "revId": "c1d627c17dca1e0106fa395f5ce6d1c01ff3688a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

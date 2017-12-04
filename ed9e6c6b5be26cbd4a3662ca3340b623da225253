@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "d3e1cb1a_cf37a048",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/UserData.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-04T04:10:16Z",
+      "side": 1,
+      "message": "I modeled UserData after c++. It\u0027s equivalent to SupportsUserData::Data which has no interface at all. I suppose it is SupportsUserData itself that will have the Set/Get interface, not Data.\n\nThat said, I hadn\u0027t defined the one equivalent to SupportsUserData yet, because for now I wanted WebContents to be the only one capable of managing UserData. So I added |getUserData| directly in WebContents.\n\nIn the new patch I introduced the interface SupportsUserData, and renamed UserData to just Data (like in c++) and moved inside it. It is implemented by WebContents. Take a look and let me know if that\u0027s how you want it to be done. Not tied to WebContents any more, it may be moved to a more suitable package.\n\nSince interface Data doesn\u0027t have anything defined in it, there\u0027s nothing to make generic. I assume you meant to have SupportsUserData generic instead? Updated to enforce key/data type to be matched as you asked in the other comment.",
+      "parentUuid": "2a4876ae_3af826a2",
+      "revId": "ed9e6c6b5be26cbd4a3662ca3340b623da225253",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7a9f28e_bd3dc909",
         "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/UserDataMap.java",
         "patchSetId": 8
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "80082cd4_682c1f85",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/UserDataMap.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-04T04:10:16Z",
+      "side": 1,
+      "message": "Done. Now it is lazily created in GestureListenerManager.fromWebContents().",
+      "parentUuid": "a7a9f28e_bd3dc909",
+      "revId": "ed9e6c6b5be26cbd4a3662ca3340b623da225253",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "268c5a6d_d2063e5c",
         "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/UserDataMap.java",
         "patchSetId": 8
@@ -64,6 +100,30 @@
       "writtenOn": "2017-12-01T15:14:01Z",
       "side": 1,
       "message": "is it possible to this and get generics, so that the Class and user type matches",
+      "range": {
+        "startLine": 31,
+        "startChar": 16,
+        "endLine": 31,
+        "endChar": 27
+      },
+      "revId": "ed9e6c6b5be26cbd4a3662ca3340b623da225253",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46c5d2e4_6f541d40",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/UserDataMap.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-04T04:10:16Z",
+      "side": 1,
+      "message": "Done. The type checking is done in at interface SupportsUserData definition.",
+      "parentUuid": "268c5a6d_d2063e5c",
       "range": {
         "startLine": 31,
         "startChar": 16,
