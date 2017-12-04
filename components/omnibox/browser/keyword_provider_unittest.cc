@@ -11,7 +11,6 @@
 
 #include "base/command_line.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/field_trial.h"
 #include "base/strings/utf_string_conversions.h"
@@ -66,7 +65,7 @@ class KeywordProviderTest : public testing::Test {
     // a DCHECK.
     field_trial_list_.reset();
     field_trial_list_.reset(new base::FieldTrialList(
-        base::MakeUnique<metrics::SHA1EntropyProvider>("foo")));
+        std::make_unique<metrics::SHA1EntropyProvider>("foo")));
     variations::testing::ClearAllVariationParams();
   }
   ~KeywordProviderTest() override {}
@@ -465,7 +464,7 @@ TEST_F(KeywordProviderTest, AddKeyword) {
   data.SetKeyword(keyword);
   data.SetURL("http://www.google.com/foo?q={searchTerms}");
   TemplateURL* template_url = client_->GetTemplateURLService()->Add(
-      base::MakeUnique<TemplateURL>(data));
+      std::make_unique<TemplateURL>(data));
   ASSERT_TRUE(
       template_url ==
       client_->GetTemplateURLService()->GetTemplateURLForKeyword(keyword));

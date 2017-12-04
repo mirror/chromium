@@ -7,7 +7,6 @@
 #include <map>
 #include <string>
 
-#include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial.h"
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
@@ -199,7 +198,7 @@ void ZeroSuggestProviderTest::SetUp() {
   data.SetShortName(base::ASCIIToUTF16("t"));
   data.SetURL("https://www.google.com/?q={searchTerms}");
   data.suggestions_url = "https://www.google.com/complete/?q={searchTerms}";
-  default_t_url_ = turl_model->Add(base::MakeUnique<TemplateURL>(data));
+  default_t_url_ = turl_model->Add(std::make_unique<TemplateURL>(data));
   turl_model->SetUserSelectedDefaultSearchProvider(default_t_url_);
 
   provider_ = ZeroSuggestProvider::Create(client_.get(), nullptr, this);
@@ -213,7 +212,7 @@ void ZeroSuggestProviderTest::ResetFieldTrialList() {
   // a DCHECK.
   field_trial_list_.reset();
   field_trial_list_.reset(new base::FieldTrialList(
-      base::MakeUnique<metrics::SHA1EntropyProvider>("foo")));
+      std::make_unique<metrics::SHA1EntropyProvider>("foo")));
   variations::testing::ClearAllVariationParams();
 }
 
