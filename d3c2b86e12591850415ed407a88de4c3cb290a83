@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6396adce_527b3b6c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-12-04T20:10:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0a2c915_15a4d9b7",
+      "revId": "d3c2b86e12591850415ed407a88de4c3cb290a83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "085d0474_726ba41b",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "d3c2b86e12591850415ed407a88de4c3cb290a83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c291bfd_23f02ef5",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-12-04T20:10:23Z",
+      "side": 1,
+      "message": "Doh! Thanks for catching this.\n\nI do my changes in WIP patch, then copy them over here, so I did not test it properly.",
+      "parentUuid": "085d0474_726ba41b",
+      "revId": "d3c2b86e12591850415ed407a88de4c3cb290a83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
