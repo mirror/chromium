@@ -225,8 +225,10 @@ public class HistoryAdapter extends DateDividedAdapter implements BrowsingHistor
         }
 
         if (!mIsInitialized) {
-            if (items.size() > 0 && !mIsSearching) setHeaders();
-            mIsInitialized = true;
+            if (items.size() > 0 && !mIsSearching) {
+                setHeaders();
+                mIsInitialized = true;
+            }
         }
 
         removeFooter();
