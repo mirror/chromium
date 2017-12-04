@@ -108,7 +108,7 @@ IN_PROC_BROWSER_TEST_F(PDFToEMFConverterBrowserTest, TestSuccess) {
   // A4 page format.
   PdfRenderSettings pdf_settings(gfx::Rect(0, 0, 1700, 2200), gfx::Point(0, 0),
                                  /*dpi=*/200, /*autorotate=*/false,
-                                 PdfRenderSettings::Mode::NORMAL);
+                                 PdfRenderSettings::Mode::GDI_TEXT);
 
   constexpr int kNumberOfPages = 3;
   std::unique_ptr<PdfConverter> pdf_converter;
@@ -123,6 +123,7 @@ IN_PROC_BROWSER_TEST_F(PDFToEMFConverterBrowserTest, TestSuccess) {
   }
 
   for (int i = 0; i < kNumberOfPages; i++) {
+    LOG(ERROR) << "** JAY ** PDFToEMFConverterBrowserTest page# " << i;
     int page_number = -1;
     std::unique_ptr<MetafilePlayer> emf_file;
     base::RunLoop run_loop;
