@@ -4,9 +4,12 @@
 
 #include "content/browser/loader/webpackage_loader.h"
 
+#include "base/command_line.h"
 #include "base/strings/stringprintf.h"
+#include "content/browser/loader/webpackage_subresource_manager_host.h"
 #include "content/browser/url_loader_factory_getter.h"
 #include "content/common/navigation_subresource_loader_params.h"
+#include "content/common/webpackage_subresource_loader.h"
 #include "content/public/common/resource_request.h"
 #include "content/public/common/resource_response.h"
 #include "content/public/common/url_loader_factory.mojom.h"
@@ -19,6 +22,14 @@
 #include "url/gurl.h"
 
 namespace content {
+
+bool WebPackageStreamResourcesEnabled() {
+  static bool enable_streaming =
+      base::CommandLine::ForCurrentProcess()->HasSwitch(
+          "enable-webpackage-streaming");
+  LOG(ERROR) << "** WebPackageStreaming: " << enable_streaming;
+  return !enable_streaming;
+}
 
 namespace {
 
@@ -68,11 +79,14 @@ const net::NetworkTrafficAnnotationTag kWebPackageNavigationTrafficAnnotation =
 // dropped.
 class MainResourceLoader : public mojom::URLLoader {
  public:
-  MainResourceLoader(const GURL& url,
-                     scoped_refptr<WebPackageReaderAdapter> reader,
-                     mojom::URLLoaderClientPtr client)
+  MainResourceLoader(
+      const GURL& url,
+      scoped_refptr<WebPackageReaderAdapter> reader,
+      mojom::URLLoaderClientPtr client,
+      base::WeakPtr<WebPackageSubresourceManagerHost> subresource_manager_host)
       : loader_client_(std::move(client)),
         reader_(std::move(reader)),
+        subresource_manager_host_(std::move(subresource_manager_host)),
         weak_factory_(this) {
     // LOG(ERROR) << "MainResourceLoader " << this << " " << url;
     if (url.path() == "/") {
@@ -105,6 +119,13 @@ class MainResourceLoader : public mojom::URLLoader {
           network::URLLoaderCompletionStatus(error_code));
       return;
     }
+    if (WebPackageStreamResourcesEnabled()) {
+      // This still should be around.
+      DCHECK(subresource_manager_host_);
+      // After this point it's fine to switch to the push mode.
+      reader_->StartPushResources(std::move(subresource_manager_host_));
+    }
+
     loader_client_->OnReceiveResponse(response_head, base::nullopt,
                                       nullptr /* download_file */);
     loader_client_->OnStartLoadingResponseBody(std::move(body));
@@ -123,172 +144,11 @@ class MainResourceLoader : public mojom::URLLoader {
 
   mojom::URLLoaderClientPtr loader_client_;
   scoped_refptr<WebPackageReaderAdapter> reader_;
+  base::WeakPtr<WebPackageSubresourceManagerHost> subresource_manager_host_;
 
   base::WeakPtrFactory<MainResourceLoader> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(MainResourceLoader);
-};
-
-// This class destroys itself when the Mojo pipe bound to this object
-// is dropped, or the Mojo request is passed over to the network service.
-class SubresourceLoader : public mojom::URLLoader {
- public:
-  SubresourceLoader(
-      mojom::URLLoaderRequest loader_request,
-      scoped_refptr<WebPackageReaderAdapter> reader,
-      scoped_refptr<URLLoaderFactoryGetter> loader_factory_getter,
-      int32_t routing_id,
-      int32_t request_id,
-      uint32_t options,
-      const ResourceRequest& resource_request,
-      mojom::URLLoaderClientPtr loader_client,
-      const net::MutableNetworkTrafficAnnotationTag& traffic_annotation,
-      bool allow_fallback)
-      : binding_(this, std::move(loader_request)),
-        loader_client_(std::move(loader_client)),
-        reader_(std::move(reader)),
-        loader_factory_getter_(std::move(loader_factory_getter)),
-        weak_factory_(this) {
-    // LOG(ERROR) << "SubresourceeLoader " << this << " " <<
-    // resource_request.url;
-    binding_.set_connection_error_handler(base::Bind(
-        &SubresourceLoader::OnConnectionError, base::Unretained(this)));
-    reader_->GetResource(resource_request,
-                         base::BindOnce(&SubresourceLoader::OnFoundResource,
-                                        weak_factory_.GetWeakPtr(), routing_id,
-                                        request_id, options, resource_request,
-                                        traffic_annotation, allow_fallback),
-                         base::BindOnce(&SubresourceLoader::OnComplete,
-                                        weak_factory_.GetWeakPtr()));
-  }
-
- private:
-  void OnFoundResource(
-      int32_t routing_id,
-      int32_t request_id,
-      uint32_t options,
-      const ResourceRequest& resource_request,
-      const net::MutableNetworkTrafficAnnotationTag& traffic_annotation,
-      bool allow_fallback,
-      int error_code,
-      const ResourceResponseHead& response_head,
-      mojo::ScopedDataPipeConsumerHandle body) {
-    if (error_code == net::ERR_FILE_NOT_FOUND) {
-      // LOG(ERROR) << "SubresourceLoader NotFound allow_fallback: "
-      //           << allow_fallback << " url: " << resource_request.url;
-      if (allow_fallback) {
-        // Let the NetworkFactory handle it.
-        loader_factory_getter_->GetNetworkFactory()->CreateLoaderAndStart(
-            binding_.Unbind(), routing_id, request_id, options,
-            resource_request, std::move(loader_client_), traffic_annotation);
-        base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
-        return;
-      }
-      // TODO(kinuko): Maybe we don't want to generate 404 not found here,
-      // we may want auto-reload on navigation.
-      std::string buf("HTTP/1.1 404 Not Found\r\n");
-      ResourceResponseHead response_head;
-      response_head.headers = new net::HttpResponseHeaders(
-          net::HttpUtil::AssembleRawHeaders(buf.c_str(), buf.size()));
-      loader_client_->OnReceiveResponse(response_head, base::nullopt,
-                                        nullptr /* download_file */);
-      loader_client_->OnComplete(network::URLLoaderCompletionStatus(net::OK));
-      return;
-    }
-    if (error_code != net::OK) {
-      // LOG(ERROR) << "SubresourceLoader OnFoundResource  error_code: "
-      //            << error_code << " url: " << resource_request.url;
-      loader_client_->OnComplete(
-          network::URLLoaderCompletionStatus(error_code));
-      return;
-    }
-    // LOG(ERROR) << "SubresourceLoader OnFoundResource " << this
-    //            << " url: " << resource_request.url;
-    loader_client_->OnReceiveResponse(response_head, base::nullopt,
-                                      nullptr /* download_file */);
-    loader_client_->OnStartLoadingResponseBody(std::move(body));
-  }
-  void OnComplete(const network::URLLoaderCompletionStatus& status) {
-    // LOG(ERROR) << "SubresourceLoader OnComplete " << this << " "
-    //            << status.error_code;
-    loader_client_->OnComplete(status);
-  }
-  void OnConnectionError() {
-    base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
-  }
-
-  void FollowRedirect() override {}
-  void SetPriority(net::RequestPriority priority,
-                   int32_t intra_priority_value) override {}
-  void PauseReadingBodyFromNet() override {}
-  void ResumeReadingBodyFromNet() override {}
-
-  mojo::Binding<mojom::URLLoader> binding_;
-  mojom::URLLoaderClientPtr loader_client_;
-
-  scoped_refptr<WebPackageReaderAdapter> reader_;
-  scoped_refptr<URLLoaderFactoryGetter> loader_factory_getter_;
-
-  base::WeakPtrFactory<SubresourceLoader> weak_factory_;
-
-  DISALLOW_COPY_AND_ASSIGN(SubresourceLoader);
-};
-
-// This class is self-destruct, when all the bindings are gone this deletes
-// itself.
-class SubresourceLoaderFactory : public mojom::URLLoaderFactory {
- public:
-  SubresourceLoaderFactory(
-      scoped_refptr<WebPackageReaderAdapter> reader,
-      scoped_refptr<URLLoaderFactoryGetter> loader_factory_getter)
-      : reader_(std::move(reader)),
-        loader_factory_getter_(std::move(loader_factory_getter)),
-        weak_factory_(this) {
-    bindings_.set_connection_error_handler(base::Bind(
-        &SubresourceLoaderFactory::OnConnectionError, base::Unretained(this)));
-  }
-
-  ~SubresourceLoaderFactory() override {
-    LOG(ERROR) << "** SubresourceLoaderFactory:: DTOR";
-  }
-
-  // mojom::URLLoaderFactory implementation.
-  void CreateLoaderAndStart(mojom::URLLoaderRequest loader_request,
-                            int32_t routing_id,
-                            int32_t request_id,
-                            uint32_t options,
-                            const ResourceRequest& resource_request,
-                            mojom::URLLoaderClientPtr loader_client,
-                            const net::MutableNetworkTrafficAnnotationTag&
-                                traffic_annotation) override {
-    LOG(ERROR) << "** CreateSubresourceLoader: " << resource_request.url;
-    // This class is self-destruct.
-    new SubresourceLoader(std::move(loader_request), reader_,
-                          loader_factory_getter_, routing_id, request_id,
-                          options, resource_request, std::move(loader_client),
-                          traffic_annotation, allow_fallback_);
-  }
-
-  void Clone(mojom::URLLoaderFactoryRequest request) override {
-    bindings_.AddBinding(this, std::move(request));
-  }
-
-  void set_allow_fallback(bool flag) { allow_fallback_ = flag; }
-
- private:
-  void OnConnectionError() {
-    if (bindings_.empty())
-      delete this;
-  }
-
-  scoped_refptr<WebPackageReaderAdapter> reader_;
-  scoped_refptr<URLLoaderFactoryGetter> loader_factory_getter_;
-  mojo::BindingSet<mojom::URLLoaderFactory> bindings_;
-  bool allow_fallback_ = false;
-
-  base::WeakPtrFactory<SubresourceLoaderFactory> weak_factory_;
-
-  DISALLOW_COPY_AND_ASSIGN(SubresourceLoaderFactory);
 };
 
 //----------------------------------------------------------------------------
@@ -312,19 +172,34 @@ void WebPackageRequestHandler::MaybeCreateLoader(
     DCHECK_EQ(webpackage_start_url_, resource_request.url);
     DCHECK(webpackage_reader_);
 
-    // Create the subresource loader factory before we run the callback,
-    // This is synchronously taken by MaybeCreateSubresourceLoaderParams
-    // during the callback.
-    DCHECK(loader_factory_getter_);
-    // The factory destroys itself when |factory_ptr| is dropped.
-    auto* factory = new SubresourceLoaderFactory(
-        webpackage_reader_, std::move(loader_factory_getter_));
-    factory->Clone(mojo::MakeRequest(&subresource_loader_factory_));
+    base::WeakPtr<WebPackageSubresourceManagerHost> subresource_manager_host;
+
+    if (WebPackageStreamResourcesEnabled()) {
+      // Create the subresource manager host before we run the callback,
+      // This is synchronously taken by MaybeCreateSubresourceLoaderParams
+      // during the callback.
+      //
+      // WebPackageSubresourceManagerHost's lifetime is tied to that of
+      // |subresource_manager_request_|.
+      mojom::WebPackageSubresourceManagerPtr subresource_manager_ptr;
+      subresource_manager_request_ =
+          mojo::MakeRequest(&subresource_manager_ptr);
+      auto* manager_host = new WebPackageSubresourceManagerHost(
+          webpackage_reader_, std::move(subresource_manager_ptr));
+      subresource_manager_host = manager_host->GetWeakPtr();
+    } else {
+      // The factory destroys itself when |factory_ptr| is dropped.
+      auto* factory = new WebPackageSubresourceLoaderFactory(
+          base::Bind(&WebPackageReaderAdapter::GetResource, webpackage_reader_),
+          base::Bind(&URLLoaderFactoryGetter::GetNetworkFactory,
+                     loader_factory_getter_));
+      factory->Clone(mojo::MakeRequest(&subresource_loader_factory_));
+    }
 
     // Run the callback to asynchronously create the main resource loader.
-    std::move(callback).Run(
-        base::BindOnce(&WebPackageRequestHandler::CreateMainResourceLoader,
-                       weak_factory_.GetWeakPtr()));
+    std::move(callback).Run(base::BindOnce(
+        &WebPackageRequestHandler::CreateMainResourceLoader,
+        weak_factory_.GetWeakPtr(), std::move(subresource_manager_host)));
 
     // After this point |webpackage_loader_| will destruct itself when
     // loading the package data is finished.
@@ -356,12 +231,21 @@ void WebPackageRequestHandler::MaybeCreateLoader(
 
 base::Optional<SubresourceLoaderParams>
 WebPackageRequestHandler::MaybeCreateSubresourceLoaderParams() {
-  if (!subresource_loader_factory_)
-    return base::nullopt;
-
   SubresourceLoaderParams params;
-  params.loader_factory_info = subresource_loader_factory_.PassInterface();
-  LOG(ERROR) << "** Returning subresource loader factory";
+  if (WebPackageStreamResourcesEnabled()) {
+    if (!subresource_manager_request_.is_pending())
+      return base::nullopt;
+
+    params.webpackage_subresource_manager_request =
+        std::move(subresource_manager_request_);
+    LOG(INFO) << "** Returning subresource manager";
+  } else {
+    if (!subresource_loader_factory_)
+      return base::nullopt;
+
+    params.loader_factory_info = subresource_loader_factory_.PassInterface();
+    LOG(INFO) << "** Returning subresource loader factory";
+  }
   return params;
 }
 
@@ -381,16 +265,18 @@ void WebPackageRequestHandler::OnRedirectedToMainResource(
 }
 
 void WebPackageRequestHandler::CreateMainResourceLoader(
+    base::WeakPtr<WebPackageSubresourceManagerHost> subresource_manager_host,
     mojom::URLLoaderRequest loader_request,
     mojom::URLLoaderClientPtr loader_client) {
   DCHECK(webpackage_reader_);
-  LOG(ERROR) << "** Creating WebPackgaeLoader's MainResourceLoader";
+  LOG(INFO) << "** Creating WebPackgaeLoader's MainResourceLoader";
   url::Replacements<char> remove_query;
   remove_query.ClearQuery();
   mojo::MakeStrongBinding(
       std::make_unique<MainResourceLoader>(
           webpackage_start_url_.ReplaceComponents(remove_query),
-          webpackage_reader_, std::move(loader_client)),
+          webpackage_reader_, std::move(loader_client),
+          std::move(subresource_manager_host)),
       std::move(loader_request));
 }
 
@@ -447,10 +333,6 @@ void WebPackageLoader::OnFoundManifest(const WebPackageManifest& manifest) {
   DCHECK(manifest.start_url.is_valid());
   webpackage_start_url_ = manifest.start_url;
   MaybeRunLoaderCallback();
-}
-
-void WebPackageLoader::OnFoundRequest(const ResourceRequest& request) {
-  // TODO: Push the request to the renderer asap.
 }
 
 void WebPackageLoader::OnFinishedPackage() {
@@ -530,7 +412,7 @@ void WebPackageLoader::OnComplete(
 
 void WebPackageLoader::StartRedirectResponse(mojom::URLLoaderRequest request,
                                              mojom::URLLoaderClientPtr client) {
-  LOG(ERROR) << "*** StartRedirectResponse: " << webpackage_start_url_;
+  LOG(INFO) << "*** StartRedirectResponse: " << webpackage_start_url_;
   net::RedirectInfo redirect_info;
   redirect_info.new_url = webpackage_start_url_;
   redirect_info.new_method = "GET";
