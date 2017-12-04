@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44bd96d0_070ddead",
+        "filename": "components/autofill/ios/browser/autofill_agent.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-12-04T20:16:26Z",
+      "side": 1,
+      "message": "Q: Is the first condition necessary? If all the suggestions for a specific field name are empty, is setting an empty string as the value of the field the same as setting nothing for that field?",
+      "range": {
+        "startLine": 861,
+        "startChar": 8,
+        "endLine": 861,
+        "endChar": 61
+      },
+      "revId": "342f5bca68f00e8af0631767c0d2a53958b80c92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
