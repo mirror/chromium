@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e61cd3a6_9e545765",
+        "filename": "mojo/public/cpp/system/file_data_pipe_producer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-12-04T21:59:16Z",
+      "side": 1,
+      "message": "Is there a reason why we can\u0027t just call Finish(result) here, and on line 153? If there is something downstream checking specifically for MOJO_RESULT_ABORTED then is my change on line 145 going to cause problems?",
+      "revId": "d2b5ad3a02b766ced1d1b27ff566d383d1e77b54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

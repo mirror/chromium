@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d87f343f_74037a41",
+        "filename": "mojo/public/cpp/system/file_data_pipe_producer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-12-04T21:59:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98fcdd40_9f5c0c5b",
+      "revId": "aef77a7292ebb795c99224183525378478f1091c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0fff80d_95ffc987",
         "filename": "mojo/public/cpp/system/file_data_pipe_producer.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "aef77a7292ebb795c99224183525378478f1091c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff7b6c7c_5854e80c",
+        "filename": "mojo/public/cpp/system/file_data_pipe_producer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-12-04T21:59:16Z",
+      "side": 1,
+      "message": "Actually, in  patch set 3 I\u0027m also calling this function when it\u0027s determined that the File is invalid. See the new test WriteFromInvalidFile. Without that added check I get this failed DCHECK:\n\n[31967:31984:1204/090213.328631:341279728087:FATAL:file_posix.cc(226)] Check failed: IsValid(). \n#0 0x7fca39adeb9d base::debug::StackTrace::StackTrace()\n#1 0x7fca39adcfcc base::debug::StackTrace::StackTrace()\n#2 0x7fca39b64b8a logging::LogMessage::~LogMessage()\n#3 0x7fca39b1a6ac base::File::ReadAtCurrentPos()\n#4 0x7fca3a0ff44f mojo::FileDataPipeProducer::FileSequenceState::TransferSomeBytes()\n#5 0x7fca3a0fe1b2 mojo::FileDataPipeProducer::FileSequenceState::StartFromFileOnFileSequen",
+      "parentUuid": "b0fff80d_95ffc987",
+      "revId": "aef77a7292ebb795c99224183525378478f1091c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "12f20d5f_520867a6",
+        "filename": "mojo/public/cpp/system/file_data_pipe_producer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-12-04T21:59:16Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "a65327cd_76fd0a5d",
+      "revId": "aef77a7292ebb795c99224183525378478f1091c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69052faf_1a831864",
         "filename": "mojo/public/cpp/system/file_data_pipe_producer.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "aef77a7292ebb795c99224183525378478f1091c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3a2c1a5_ec72adf9",
+        "filename": "mojo/public/cpp/system/file_data_pipe_producer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-12-04T21:59:16Z",
+      "side": 1,
+      "message": "I took all that out. FYI: The reason I had all possible Error values (including FILE_ERROR_MAX) was so that the compile would fail if a new one was added, prompting a new mapping. Now that we\u0027ve decided to keep this a specialized local function I\u0027m not so concerned about having a perfect mapping.",
+      "parentUuid": "69052faf_1a831864",
+      "revId": "aef77a7292ebb795c99224183525378478f1091c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
