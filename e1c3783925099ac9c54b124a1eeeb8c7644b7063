@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5370cb37_02294730",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-04T20:36:33Z",
+      "side": 1,
+      "message": "nit: I think you can do: doc \u003d ElementTree.parse(original_manifest)",
+      "revId": "e1c3783925099ac9c54b124a1eeeb8c7644b7063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d36f29d1_539a6854",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-04T20:36:33Z",
+      "side": 1,
+      "message": "nit: add comment about why reversing. (presumably that aapt2 processes in reverse order).\nalso - I think it would be clearer for this method to return the same order that came in, and to put the reversed() on line 708 (when adding the -s)",
+      "revId": "e1c3783925099ac9c54b124a1eeeb8c7644b7063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "348584ed_02201789",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-04T20:36:33Z",
+      "side": 1,
+      "message": "Can you add a comment (maybe here?) that this uses aapt rather than aapt2 because aapt2\u0027s compile doesn\u0027t support outputting an R.txt.",
+      "revId": "e1c3783925099ac9c54b124a1eeeb8c7644b7063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ecae8ab_2789cbc8",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-04T20:36:33Z",
+      "side": 1,
+      "message": "can you add a TODO() about removing this step in favour of aapt2\u0027s version of it? (and then validate that that\u0027s true and do it in a follow-up).",
+      "revId": "e1c3783925099ac9c54b124a1eeeb8c7644b7063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc7acae0_b11379db",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-04T20:36:33Z",
+      "side": 1,
+      "message": "I think we now need str(options.debuggable) in this list.",
+      "revId": "e1c3783925099ac9c54b124a1eeeb8c7644b7063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "704513b7_b59b38d7",
+        "filename": "tools/grit/grit/format/android_xml.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-04T20:36:33Z",
+      "side": 1,
+      "message": "order here might be non-deterministic now. Either use a collections.OrderedDict(), or sorted(lines.values()).\n\nAlso - probably best to put this in a separate commit.",
+      "revId": "e1c3783925099ac9c54b124a1eeeb8c7644b7063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
