@@ -16,6 +16,24 @@
       "revId": "572b5360b7d9e5dceca9036f7f0017353a04256e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc52d168_ec15d946",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-12-04T00:39:29Z",
+      "side": 1,
+      "message": "Ah good catch. We were also unnecessarily recording back/forward and from address bar. Done.",
+      "parentUuid": "91979553_c9553a79",
+      "revId": "572b5360b7d9e5dceca9036f7f0017353a04256e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
