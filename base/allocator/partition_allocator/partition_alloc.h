@@ -231,7 +231,8 @@ struct PartitionBucket;
 struct PartitionRootBase;
 
 struct PartitionFreelistEntry {
-  PartitionFreelistEntry* next;
+  // Offset of the next entry within the super page. Set to 0 for last entry.
+  uintptr_t next;
 };
 
 // Some notes on page states. A page can be in one of four major states:
@@ -265,7 +266,8 @@ struct PartitionFreelistEntry {
 // local variables, and documentation that refer to this concept should be
 // updated.
 struct PartitionPage {
-  PartitionFreelistEntry* freelist_head;
+  // Offset of the first freelist entry within the super page.
+  uintptr_t freelist_head;
   PartitionPage* next_page;
   PartitionBucket* bucket;
   // Deliberately signed, 0 for empty or decommitted page, -n for full pages:
@@ -555,8 +557,14 @@ class BASE_EXPORT PartitionAllocHooks {
   static FreeHook* free_hook_;
 };
 
-ALWAYS_INLINE PartitionFreelistEntry* PartitionFreelistMask(
-    PartitionFreelistEntry* ptr) {
+ALWAYS_INLINE uintptr_t PartitionFreelistMask(PartitionFreelistEntry* ptr) {
+  // We only store the offset of the entry within the super page. The remaining
+  // address bits a reconstructed using the super page base address when
+  // unmasking the entry. This prevents the allocator to hand out arbitrary
+  // attacker-controlled addresses by putting respective entries on the
+  // freelist via use-after-free or out-of-bounds write vulnerabilities.
+  uintptr_t masked = reinterpret_cast<uintptr_t>(ptr) & kSuperPageOffsetMask;
+
 // We use bswap on little endian as a fast mask for two reasons:
 // 1) If an object is freed and its vtable used where the attacker doesn't
 // get the chance to run allocations between the free and use, the vtable
@@ -566,11 +574,33 @@ ALWAYS_INLINE PartitionFreelistEntry* PartitionFreelistMask(
 // thwarted.
 // For big endian, similar guarantees are arrived at with a negation.
 #if defined(ARCH_CPU_BIG_ENDIAN)
-  uintptr_t masked = ~reinterpret_cast<uintptr_t>(ptr);
+  masked = ~masked;
 #else
-  uintptr_t masked = ByteSwapUintPtrT(reinterpret_cast<uintptr_t>(ptr));
+  masked = ByteSwapUintPtrT(reinterpret_cast<uintptr_t>(ptr));
 #endif
+  return masked;
+}
+
+ALWAYS_INLINE PartitionFreelistEntry* PartitionFreelistUnmask(
+    PartitionPage* page,
+    uintptr_t masked) {
+#if defined(ARCH_CPU_BIG_ENDIAN)
+  masked = ~masked;
+#else
+  masked = ByteSwapUintPtrT(masked);
+#endif
+  if (masked == 0)
+    return nullptr;
+
+  masked = (reinterpret_cast<uintptr_t>(page) & kSuperPageBaseMask) |
+           (masked & kSuperPageOffsetMask);
   return reinterpret_cast<PartitionFreelistEntry*>(masked);
+}
+
+ALWAYS_INLINE PartitionFreelistEntry* PartitionFreelistNext(
+    PartitionFreelistEntry* entry) {
+  return PartitionFreelistUnmask(PartitionPage::FromPointer(entry),
+                                 entry->next);
 }
 
 ALWAYS_INLINE size_t PartitionCookieSizeAdjustAdd(size_t size) {
@@ -720,17 +750,18 @@ ALWAYS_INLINE void* PartitionBucket::Alloc(PartitionRootBase* root,
   PartitionPage* page = this->active_pages_head;
   // Check that this page is neither full nor freed.
   DCHECK(page->num_allocated_slots >= 0);
-  void* ret = page->freelist_head;
-  if (LIKELY(ret != 0)) {
+  void* ret = nullptr;
+  if (LIKELY(page->freelist_head)) {
     // If these DCHECKs fire, you probably corrupted memory.
     // TODO(palmer): See if we can afford to make this a CHECK.
     DCHECK(PartitionPage::IsPointerValid(page));
     // All large allocations must go through the slow path to correctly
     // update the size metadata.
     DCHECK(page->get_raw_size() == 0);
-    PartitionFreelistEntry* new_head =
-        PartitionFreelistMask(static_cast<PartitionFreelistEntry*>(ret)->next);
-    page->freelist_head = new_head;
+    PartitionFreelistEntry* entry =
+        PartitionFreelistUnmask(page, page->freelist_head);
+    ret = entry;
+    page->freelist_head = entry->next;
     page->num_allocated_slots++;
   } else {
     ret = this->SlowPathAlloc(root, flags, size);
@@ -797,15 +828,18 @@ ALWAYS_INLINE void PartitionPage::Free(void* ptr) {
   memset(ptr, kFreedByte, slot_size);
 #endif
   DCHECK(this->num_allocated_slots);
+  PartitionFreelistEntry* next_free(
+      PartitionFreelistUnmask(this, freelist_head));
   // TODO(palmer): See if we can afford to make this a CHECK.
-  DCHECK(!freelist_head || PartitionPage::IsPointerValid(
-                               PartitionPage::FromPointer(freelist_head)));
-  CHECK(ptr != freelist_head);  // Catches an immediate double free.
+  DCHECK(!next_free ||
+         PartitionPage::IsPointerValid(PartitionPage::FromPointer(next_free)));
+  // Catches an immediate double free.
+  CHECK(ptr != next_free);
   // Look for double free one level deeper in debug.
-  DCHECK(!freelist_head || ptr != PartitionFreelistMask(freelist_head->next));
+  DCHECK(!next_free || ptr != PartitionFreelistUnmask(this, next_free->next));
   PartitionFreelistEntry* entry = static_cast<PartitionFreelistEntry*>(ptr);
-  entry->next = PartitionFreelistMask(freelist_head);
-  freelist_head = entry;
+  entry->next = freelist_head;
+  freelist_head = PartitionFreelistMask(entry);
   --this->num_allocated_slots;
   if (UNLIKELY(this->num_allocated_slots <= 0)) {
     FreeSlowPath();

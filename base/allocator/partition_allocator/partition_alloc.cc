@@ -597,7 +597,7 @@ static ALWAYS_INLINE char* PartitionPageAllocAndFillFreelist(
     char* freelist_pointer = firstFreelistPointer;
     PartitionFreelistEntry* entry =
         reinterpret_cast<PartitionFreelistEntry*>(freelist_pointer);
-    page->freelist_head = entry;
+    page->freelist_head = PartitionFreelistMask(entry);
     while (--num_new_freelist_entries) {
       freelist_pointer += size;
       PartitionFreelistEntry* next_entry =
@@ -607,7 +607,7 @@ static ALWAYS_INLINE char* PartitionPageAllocAndFillFreelist(
     }
     entry->next = PartitionFreelistMask(nullptr);
   } else {
-    page->freelist_head = nullptr;
+    page->freelist_head = 0;
   }
   return return_object;
 }
@@ -738,7 +738,8 @@ static ALWAYS_INLINE PartitionPage* PartitionDirectMap(PartitionRootBase* root,
   DCHECK(!page->page_offset);
   DCHECK(!page->empty_cache_index);
   page->bucket = bucket;
-  page->freelist_head = reinterpret_cast<PartitionFreelistEntry*>(slot);
+  page->freelist_head =
+      PartitionFreelistMask(reinterpret_cast<PartitionFreelistEntry*>(slot));
   PartitionFreelistEntry* next_entry =
       reinterpret_cast<PartitionFreelistEntry*>(slot);
   next_entry->next = PartitionFreelistMask(nullptr);
@@ -892,10 +893,10 @@ void* PartitionBucket::SlowPathAlloc(PartitionRootBase* root,
 
   // If we found an active page with free slots, or an empty page, we have a
   // usable freelist head.
-  if (LIKELY(new_page->freelist_head != nullptr)) {
-    PartitionFreelistEntry* entry = new_page->freelist_head;
-    PartitionFreelistEntry* new_head = PartitionFreelistMask(entry->next);
-    new_page->freelist_head = new_head;
+  if (LIKELY(new_page->freelist_head)) {
+    PartitionFreelistEntry* entry =
+        PartitionFreelistUnmask(new_page, new_page->freelist_head);
+    new_page->freelist_head = entry->next;
     new_page->num_allocated_slots++;
     return entry;
   }
@@ -917,7 +918,7 @@ static ALWAYS_INLINE void PartitionDecommitPage(PartitionRootBase* root,
   // Pulling this trick enables us to use a singly-linked page list for all
   // cases, which is critical in keeping the page metadata structure down to
   // 32 bytes in size.
-  page->freelist_head = nullptr;
+  page->freelist_head = 0;
   page->num_unprovisioned_slots = 0;
   DCHECK(PartitionPageStateIsDecommitted(page));
 }
@@ -1177,18 +1178,21 @@ static size_t PartitionPurgePage(PartitionPage* page, bool discard) {
   char* ptr = reinterpret_cast<char*>(PartitionPage::ToPointer(page));
   // First, walk the freelist for this page and make a bitmap of which slots
   // are not in use.
-  for (PartitionFreelistEntry* entry = page->freelist_head; entry; /**/) {
-    size_t slotIndex = (reinterpret_cast<char*>(entry) - ptr) / slot_size;
+  PartitionFreelistEntry* freelist_entry =
+      PartitionFreelistUnmask(page, page->freelist_head);
+  while (freelist_entry) {
+    size_t slotIndex =
+        (reinterpret_cast<char*>(freelist_entry) - ptr) / slot_size;
     DCHECK(slotIndex < num_slots);
     slot_usage[slotIndex] = 0;
-    entry = PartitionFreelistMask(entry->next);
+    freelist_entry = PartitionFreelistNext(freelist_entry);
 #if !defined(OS_WIN)
     // If we have a slot where the masked freelist entry is 0, we can
     // actually discard that freelist entry because touching a discarded
     // page is guaranteed to return original content or 0.
     // (Note that this optimization won't fire on big endian machines
     // because the masking function is negation.)
-    if (!PartitionFreelistMask(entry))
+    if (!PartitionFreelistMask(freelist_entry))
       last_slot = slotIndex;
 #endif
   }
@@ -1223,23 +1227,21 @@ static size_t PartitionPurgePage(PartitionPage* page, bool discard) {
       size_t num_new_entries = 0;
       page->num_unprovisioned_slots += static_cast<uint16_t>(truncated_slots);
       // Rewrite the freelist.
-      PartitionFreelistEntry** entry_ptr = &page->freelist_head;
+      uintptr_t* entry_ref_ptr = &page->freelist_head;
       for (size_t slotIndex = 0; slotIndex < num_slots; ++slotIndex) {
         if (slot_usage[slotIndex])
           continue;
         auto* entry = reinterpret_cast<PartitionFreelistEntry*>(
             ptr + (slot_size * slotIndex));
-        *entry_ptr = PartitionFreelistMask(entry);
-        entry_ptr = reinterpret_cast<PartitionFreelistEntry**>(entry);
+        *entry_ref_ptr = PartitionFreelistMask(entry);
+        entry_ref_ptr = &entry->next;
         num_new_entries++;
 #if !defined(OS_WIN)
         last_slot = slotIndex;
 #endif
       }
       // Terminate the freelist chain.
-      *entry_ptr = nullptr;
-      // The freelist head is stored unmasked.
-      page->freelist_head = PartitionFreelistMask(page->freelist_head);
+      *entry_ref_ptr = 0;
       DCHECK(num_new_entries == num_slots - page->num_allocated_slots);
       // Discard the memory.
       DiscardSystemPages(begin_ptr, unprovisioned_bytes);

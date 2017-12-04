@@ -137,7 +137,7 @@ class PartitionAllocTest : public testing::Test {
                 reinterpret_cast<size_t>(last) & kPartitionPageBaseMask);
     EXPECT_EQ(num_slots, static_cast<size_t>(
                              bucket->active_pages_head->num_allocated_slots));
-    EXPECT_EQ(nullptr, bucket->active_pages_head->freelist_head);
+    EXPECT_EQ(0U, bucket->active_pages_head->freelist_head);
     EXPECT_TRUE(bucket->active_pages_head);
     EXPECT_TRUE(bucket->active_pages_head != GetSentinelPageForTesting());
     return bucket->active_pages_head;
@@ -870,7 +870,8 @@ TEST_F(PartitionAllocTest, Realloc) {
   // realloc(ptr, 0) should be equivalent to free().
   void* ptr2 = generic_allocator.root()->Realloc(ptr, 0, type_name);
   EXPECT_EQ(nullptr, ptr2);
-  EXPECT_EQ(PartitionCookieFreePointerAdjust(ptr), page->freelist_head);
+  EXPECT_EQ(PartitionCookieFreePointerAdjust(ptr),
+            PartitionFreelistUnmask(page, page->freelist_head));
 
   // Test that growing an allocation with realloc() copies everything from the
   // old allocation.
