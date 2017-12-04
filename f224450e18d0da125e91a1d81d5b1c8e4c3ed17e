@@ -22,6 +22,30 @@
       "revId": "f224450e18d0da125e91a1d81d5b1c8e4c3ed17e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c0053ec_849ec14f",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 865,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-04T07:40:08Z",
+      "side": 1,
+      "message": "peter@:\nI wonder if you would add a TODO so that we can easily find the performance issue when similar change is made to extensions etc? Thank you!\n\nyoshiki@:\nProgress bar notification is what I can imagine for a case CreateOrUpdateViews is frequently called. Web notification does not support progress bar notification, extensions notification still use default icon, and system notification has |vector_small_image|, so IMHO it would unlikely cause the performance problem in the wild right now.",
+      "parentUuid": "fc48e087_2f03d7c7",
+      "range": {
+        "startLine": 865,
+        "startChar": 48,
+        "endLine": 865,
+        "endChar": 71
+      },
+      "revId": "f224450e18d0da125e91a1d81d5b1c8e4c3ed17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
