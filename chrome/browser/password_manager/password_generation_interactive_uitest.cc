@@ -196,8 +196,14 @@ IN_PROC_BROWSER_TEST_F(PasswordGenerationInteractiveTest,
   EXPECT_TRUE(GenerationPopupShowing());
 }
 
+// https://crbug.com/791389
+#if defined(OS_MACOSX)
+#define MAYBE_AutoSavingGeneratedPassword DISABLED_AutoSavingGeneratedPassword
+#else
+#define MAYBE_AutoSavingGeneratedPassword AutoSavingGeneratedPassword
+#endif
 IN_PROC_BROWSER_TEST_F(PasswordGenerationInteractiveTest,
-                       AutoSavingGeneratedPassword) {
+                       MAYBE_AutoSavingGeneratedPassword) {
   scoped_refptr<password_manager::TestPasswordStore> password_store =
       static_cast<password_manager::TestPasswordStore*>(
           PasswordStoreFactory::GetForProfile(
