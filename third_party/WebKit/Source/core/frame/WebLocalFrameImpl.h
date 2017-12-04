@@ -122,6 +122,8 @@ class CORE_EXPORT WebLocalFrameImpl final
                                 int argc,
                                 v8::Local<v8::Value> argv[],
                                 WebScriptExecutionCallback*) override;
+  void NotifyWhenNotPaused(v8::Local<v8::Context>,
+                           WebScriptNotPausedCallback*) override;
   void ExecuteScriptInIsolatedWorld(
       int world_id,
       const WebScriptSource* sources_in,

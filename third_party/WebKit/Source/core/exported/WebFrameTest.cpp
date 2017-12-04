@@ -119,6 +119,7 @@
 #include "platform/weborigin/SchemeRegistry.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/Forward.h"
+#include "platform/wtf/Functional.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/dtoa/utils.h"
 #include "public/platform/Platform.h"
@@ -150,6 +151,7 @@
 #include "public/web/WebRange.h"
 #include "public/web/WebRemoteFrame.h"
 #include "public/web/WebScriptExecutionCallback.h"
+#include "public/web/WebScriptNotPausedCallback.h"
 #include "public/web/WebScriptSource.h"
 #include "public/web/WebSearchableFormData.h"
 #include "public/web/WebSecurityPolicy.h"
@@ -563,6 +565,158 @@ TEST_P(ParameterizedWebFrameTest,
   RunPendingTasks();
   EXPECT_TRUE(callback_helper.DidComplete());
   EXPECT_EQ(true, callback_helper.BoolValue());
+}
+
+class ScriptNotPausedCallbackHelper : public WebScriptNotPausedCallback {
+ public:
+  ScriptNotPausedCallbackHelper() = default;
+  ~ScriptNotPausedCallbackHelper() override = default;
+
+  // WebScriptNotPausedCallback:
+  void Completed(Result result) override {
+    ASSERT_FALSE(result_) << "Callback invoked multiple times!";
+    result_ = result;
+    if (closure_)
+      std::move(*closure_).Run();
+  }
+
+  base::Optional<Result> result() { return result_; }
+
+  void set_closure(WTF::Closure closure) { closure_ = std::move(closure); }
+
+ private:
+  base::Optional<Result> result_;
+  base::Optional<WTF::Closure> closure_;
+};
+
+TEST_P(ParameterizedWebFrameTest, CallingNotifyWhenNotPausedWhileNotPaused) {
+  RegisterMockedHttpURLLoad("foo.html");
+
+  FrameTestHelpers::WebViewHelper web_view_helper;
+  web_view_helper.InitializeAndLoad(base_url_ + "foo.html");
+  WebLocalFrameImpl* main_frame = web_view_helper.LocalMainFrame();
+
+  v8::HandleScope scope(v8::Isolate::GetCurrent());
+  v8::Local<v8::Context> context = main_frame->MainWorldScriptContext();
+
+  ScriptNotPausedCallbackHelper callback_helper;
+  main_frame->NotifyWhenNotPaused(context, &callback_helper);
+  RunPendingTasks();
+
+  ASSERT_TRUE(callback_helper.result());
+  EXPECT_EQ(WebScriptNotPausedCallback::READY, *callback_helper.result());
+}
+
+TEST_P(ParameterizedWebFrameTest, CallingNotifyWhenNotPausedWhilePaused) {
+  RegisterMockedHttpURLLoad("foo.html");
+
+  FrameTestHelpers::WebViewHelper web_view_helper;
+  web_view_helper.InitializeAndLoad(base_url_ + "foo.html");
+  WebLocalFrameImpl* main_frame = web_view_helper.LocalMainFrame();
+
+  v8::HandleScope scope(v8::Isolate::GetCurrent());
+  v8::Local<v8::Context> context = main_frame->MainWorldScriptContext();
+
+  // Suspend scheduled tasks so the script doesn't run.
+  main_frame->GetFrame()->GetDocument()->PauseScheduledTasks();
+
+  ScriptNotPausedCallbackHelper callback_helper;
+  main_frame->NotifyWhenNotPaused(context, &callback_helper);
+  RunPendingTasks();
+  EXPECT_FALSE(callback_helper.result());
+
+  main_frame->GetFrame()->GetDocument()->UnpauseScheduledTasks();
+  RunPendingTasks();
+  ASSERT_TRUE(callback_helper.result());
+  EXPECT_EQ(WebScriptNotPausedCallback::READY, *callback_helper.result());
+}
+
+TEST_P(ParameterizedWebFrameTest, CallingNotifyWhenNotPausedAndNavigating) {
+  RegisterMockedHttpURLLoad("foo.html");
+  RegisterMockedHttpURLLoad("bar.html");
+
+  FrameTestHelpers::WebViewHelper web_view_helper;
+  web_view_helper.InitializeAndLoad(base_url_ + "foo.html");
+  WebLocalFrameImpl* main_frame = web_view_helper.LocalMainFrame();
+
+  v8::HandleScope scope(v8::Isolate::GetCurrent());
+  v8::Local<v8::Context> context = main_frame->MainWorldScriptContext();
+
+  // Suspend scheduled tasks so the script doesn't run.
+  main_frame->GetFrame()->GetDocument()->PauseScheduledTasks();
+
+  ScriptNotPausedCallbackHelper callback_helper;
+  main_frame->NotifyWhenNotPaused(context, &callback_helper);
+  RunPendingTasks();
+  EXPECT_FALSE(callback_helper.result());
+
+  // If the frame navigates, pending scripts should be removed, but the callback
+  // should always be ran.
+  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+                              base_url_ + "bar.html");
+  ASSERT_TRUE(callback_helper.result());
+  EXPECT_EQ(WebScriptNotPausedCallback::CONTEXT_DESTROYED,
+            *callback_helper.result());
+}
+
+TEST_P(ParameterizedWebFrameTest,
+       CallingNotifyWhenNotPausedWithAnInvalidContext) {
+  RegisterMockedHttpURLLoad("foo.html");
+  RegisterMockedHttpURLLoad("bar.html");
+
+  FrameTestHelpers::WebViewHelper web_view_helper;
+  web_view_helper.InitializeAndLoad(base_url_ + "foo.html");
+
+  WebLocalFrameImpl* main_frame = web_view_helper.LocalMainFrame();
+
+  v8::HandleScope scope(v8::Isolate::GetCurrent());
+  v8::Local<v8::Context> context = main_frame->MainWorldScriptContext();
+  scoped_refptr<ScriptState> foo_script_state = ScriptState::From(context);
+
+  // Navigate the frame to invalidate the old context.
+  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+                              base_url_ + "bar.html");
+  EXPECT_FALSE(foo_script_state->ContextIsValid());
+
+  // Try calling NotifyWhenNotPaused() with the invalid context.
+  ScriptNotPausedCallbackHelper callback_helper;
+  main_frame->NotifyWhenNotPaused(context, &callback_helper);
+  RunPendingTasks();
+  ASSERT_TRUE(callback_helper.result());
+  EXPECT_EQ(WebScriptNotPausedCallback::CONTEXT_INVALID,
+            *callback_helper.result());
+}
+
+TEST_P(ParameterizedWebFrameTest,
+       CallingNotifyWhenNotPausedAndDestroyingTheContext) {
+  RegisterMockedHttpURLLoad("foo.html");
+  RegisterMockedHttpURLLoad("bar.html");
+
+  FrameTestHelpers::WebViewHelper web_view_helper;
+  web_view_helper.InitializeAndLoad(base_url_ + "foo.html");
+  WebLocalFrameImpl* main_frame = web_view_helper.LocalMainFrame();
+
+  auto navigate_frame = [](FrameTestHelpers::WebViewHelper* web_view_helper,
+                           const std::string& url) {
+    FrameTestHelpers::LoadFrame(web_view_helper->WebView()->MainFrameImpl(),
+                                url);
+  };
+
+  ScriptNotPausedCallbackHelper callback_helper;
+  // Navigate the frame when the helper is notified that script can run. This
+  // will invalidate the context immediately.
+  callback_helper.set_closure(WTF::Bind(navigate_frame,
+                                        WTF::Unretained(&web_view_helper),
+                                        base_url_ + "bar.html"));
+
+  v8::HandleScope scope(v8::Isolate::GetCurrent());
+  v8::Local<v8::Context> context = main_frame->MainWorldScriptContext();
+
+  main_frame->NotifyWhenNotPaused(context, &callback_helper);
+  RunPendingTasks();
+
+  ASSERT_TRUE(callback_helper.result());
+  EXPECT_EQ(WebScriptNotPausedCallback::READY, *callback_helper.result());
 }
 
 TEST_P(ParameterizedWebFrameTest, IframeScriptRemovesSelf) {
