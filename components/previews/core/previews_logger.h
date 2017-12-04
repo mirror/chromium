@@ -24,6 +24,8 @@ namespace previews {
 // based on the |type| of Previews.
 std::string GetDescriptionForInfoBarDescription(previews::PreviewsType type);
 
+typedef std::vector<PreviewsEligibilityReason> PassedPreviewsEligibilities;
+
 class PreviewsLoggerObserver;
 
 // Records information about previews and interventions events. The class only
@@ -38,7 +40,8 @@ class PreviewsLogger {
     MessageLog(const std::string& event_type,
                const std::string& event_description,
                const GURL& url,
-               base::Time time);
+               base::Time time,
+               uint64_t page_id);
 
     MessageLog(const MessageLog& other);
 
@@ -53,6 +56,9 @@ class PreviewsLogger {
 
     // The time of when the event happened.
     const base::Time time;
+
+    // The ID associated with the request.
+    const uint64_t page_id;
   };
 
   PreviewsLogger();
@@ -72,7 +78,8 @@ class PreviewsLogger {
   virtual void LogMessage(const std::string& event_type,
                           const std::string& event_description,
                           const GURL& url,
-                          base::Time time);
+                          base::Time time,
+                          uint64_t page_id);
 
   // Convert |navigation| to a MessageLog, and add that message to
   // |log_messages_|. Virtualized in testing.
@@ -90,7 +97,8 @@ class PreviewsLogger {
       const GURL& url,
       base::Time time,
       PreviewsType type,
-      std::vector<PreviewsEligibilityReason>&& passed_reasons);
+      std::vector<PreviewsEligibilityReason>&& passed_reasons,
+      uint64_t page_id);
 
   // Notify observers that |host| is blacklisted at |time|. Virtualized in
   // testing.
