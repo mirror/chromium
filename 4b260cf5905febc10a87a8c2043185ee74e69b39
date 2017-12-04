@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "fbce0fc1_65d713e1",
+        "filename": "media/mojo/services/mojo_video_decoder_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-04T20:50:07Z",
+      "side": 1,
+      "message": "OK, let\u0027s call ReportBadMessage() on the binding-- though this won\u0027t actually result in a process kill if the service code isn\u0027t running in the context of the browser service, it\u0027s probably a reasonably generic way of trying to track these things. And it will close the binding to prevent receiving any more messages.",
+      "parentUuid": "8a2ce346_a542f736",
+      "revId": "4b260cf5905febc10a87a8c2043185ee74e69b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7d7b8bb_0ffb7176",
         "filename": "media/mojo/services/mojo_video_decoder_service.cc",
         "patchSetId": 9
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "Yes, it\u0027s possible up until Destroy() is called. Register() checks |connected_| to ensure that |video_frames_| remains empty in such a case.\n\nI added a comment in Register() to make that more clear.",
       "parentUuid": "e7d7b8bb_0ffb7176",
+      "revId": "4b260cf5905febc10a87a8c2043185ee74e69b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fde80c3_26d5b522",
+        "filename": "media/mojo/services/mojo_video_decoder_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-04T20:50:07Z",
+      "side": 1,
+      "message": "Hm...\n\nWould it make sense for MojoVideoDecoderService to just hold a WeakPtr to this, and have this class delete itself on connection error? I feel like maybe why I keep asking for comments is because we\u0027re manually emulating the role of WeakPtr.",
+      "parentUuid": "bd46b9eb_8a84adda",
       "revId": "4b260cf5905febc10a87a8c2043185ee74e69b39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

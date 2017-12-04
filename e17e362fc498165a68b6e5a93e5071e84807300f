@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4da6e56_a08e86e6",
+        "filename": "media/mojo/interfaces/video_decoder.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-04T20:50:07Z",
+      "side": 1,
+      "message": "Nit: please update the interface comment to mention where this interface lives (or can live; as with many things in media, I\u0027m not really sure what service process this is hosted in). I assume it\u0027s the GPU (and that most clients of this service are less trusted)",
+      "revId": "e17e362fc498165a68b6e5a93e5071e84807300f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
