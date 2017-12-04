@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5b4f8e5a_14f82e0b",
+        "filename": "media/midi/midi_message_queue_fuzzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1181480
+      },
+      "writtenOn": "2017-12-04T19:02:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33371dd9_41a48494",
+      "range": {
+        "startLine": 16,
+        "startChar": 15,
+        "endLine": 16,
+        "endChar": 16
+      },
+      "revId": "a71fee012c66e7ed8c2c20a739bd08e4d4764261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fc298cd_026bc9e1",
         "filename": "media/midi/midi_message_queue_fuzzer.cc",
         "patchSetId": 3
@@ -119,6 +143,54 @@
     },
     {
       "key": {
+        "uuid": "a6dc9de5_fd028b2b",
+        "filename": "media/midi/midi_message_queue_fuzzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1181480
+      },
+      "writtenOn": "2017-12-04T19:02:25Z",
+      "side": 1,
+      "message": "So mark it as static and declare it inside the function? I was thinking about that, but I didn\u0027t know whether the fuzzer started up a new process for each invocation of LLVMFuzzerTestOneInput()",
+      "parentUuid": "69547096_a368a8d8",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 13
+      },
+      "revId": "a71fee012c66e7ed8c2c20a739bd08e4d4764261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1264f0e7_bf8a15a9",
+        "filename": "media/midi/midi_message_queue_fuzzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1181480
+      },
+      "writtenOn": "2017-12-04T19:02:25Z",
+      "side": 1,
+      "message": "Yes we can. I think it will just have to be a separate fuzz test file. Either that,\nor we can instantiate two queues here. I will add it as a follow up CL.",
+      "parentUuid": "6fc298cd_026bc9e1",
+      "range": {
+        "startLine": 17,
+        "startChar": 54,
+        "endLine": 17,
+        "endChar": 58
+      },
+      "revId": "a71fee012c66e7ed8c2c20a739bd08e4d4764261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6101db5b_bcdfd31d",
         "filename": "media/midi/midi_message_queue_fuzzer.cc",
         "patchSetId": 3
@@ -142,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "ef80dff3_62059142",
+        "filename": "media/midi/midi_message_queue_fuzzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1181480
+      },
+      "writtenOn": "2017-12-04T19:02:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6101db5b_bcdfd31d",
+      "range": {
+        "startLine": 25,
+        "startChar": 25,
+        "endLine": 25,
+        "endChar": 26
+      },
+      "revId": "a71fee012c66e7ed8c2c20a739bd08e4d4764261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52982a0d_89598942",
         "filename": "media/midi/midi_webmidi_data_validator_fuzzer.cc",
         "patchSetId": 3
@@ -162,6 +258,30 @@
       "revId": "a71fee012c66e7ed8c2c20a739bd08e4d4764261",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2456a2ae_c8a70f72",
+        "filename": "media/midi/midi_webmidi_data_validator_fuzzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1181480
+      },
+      "writtenOn": "2017-12-04T19:02:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52982a0d_89598942",
+      "range": {
+        "startLine": 13,
+        "startChar": 40,
+        "endLine": 13,
+        "endChar": 41
+      },
+      "revId": "a71fee012c66e7ed8c2c20a739bd08e4d4764261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
