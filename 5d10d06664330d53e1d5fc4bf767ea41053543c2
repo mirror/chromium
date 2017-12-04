@@ -81,6 +81,30 @@
       "revId": "5d10d06664330d53e1d5fc4bf767ea41053543c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b825d75_dc439fe4",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1364,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-12-04T15:26:35Z",
+      "side": 1,
+      "message": "Yes, adding a DCHECK makes sense to me. We should change line 1359 as well though since it doesn\u0027t make sense to compare the current pending tree scroll offset to the active base.",
+      "parentUuid": "156d5bdc_f7600897",
+      "range": {
+        "startLine": 1364,
+        "startChar": 49,
+        "endLine": 1364,
+        "endChar": 59
+      },
+      "revId": "5d10d06664330d53e1d5fc4bf767ea41053543c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
