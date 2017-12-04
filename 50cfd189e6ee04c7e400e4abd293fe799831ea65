@@ -69,6 +69,24 @@
       "revId": "50cfd189e6ee04c7e400e4abd293fe799831ea65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef884e5a_7c6b89c3",
+        "filename": "components/omnibox/browser/history_quick_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-12-04T18:00:39Z",
+      "side": 1,
+      "message": "\u003e \u003e Separately, can we use autocomplet_input_.current_url() here instead of constructing a new GURL?\n\n\u003e re: current_url, no, that\u0027s the previous(current) site.\n\nOk, duh, I guess it would have helped if I had read the comment on that field.\n\nI still wonder if we can\u0027t get this information more directly out of AutocompleteInput, though. What about !autocomplete_input_.scheme().empty()?",
+      "parentUuid": "86bb08e5_0b0112f4",
+      "revId": "50cfd189e6ee04c7e400e4abd293fe799831ea65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
