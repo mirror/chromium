@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "4fadd110_cea8c8fa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-04T04:43:30Z",
+      "side": 1,
+      "message": "\u003e Hmmm... I tried this but didn\u0027t work. Worklets can call eval() regardless of the \u0027unsafe-eval\u0027 directive. Looks like Worklets don\u0027t obey the directive.\n\nI found the cause and fixed it in a separate CL:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/799654\n\n\u003e Mind filing a bug against Referrer Policy? We should almost certainly be inheriting that as well. CC jochen@. He loves bugs. :)\n\nAccording to [1], the HTML spec defines that Worker does NOT inherit the owner\u0027s ReferrerPolicy. Do you think this is a spec bug?\n\n[1] https://bugs.chromium.org/p/chromium/issues/detail?id\u003d783527#c4",
+      "parentUuid": "8d4509a9_fa029fc0",
+      "revId": "90bfd26be5029b8f82c8ffdee55ce8b1a5d7c044",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7965beb9_3fbb6521",
         "filename": "third_party/WebKit/Source/core/workers/MainThreadWorkletTest.cpp",
         "patchSetId": 5
