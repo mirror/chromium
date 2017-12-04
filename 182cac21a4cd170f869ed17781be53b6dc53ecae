@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "902d1a21_26a27d93",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1895,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-04T17:34:20Z",
+      "side": 1,
+      "message": "I think this should be moved to ProofVerifyDetailsChromium, as that\u0027s what encapsulates the proof verification (and ties to ProofVerifierChromium)\n\nThat\u0027s the closer symmetry to the SSLClientSocket side - all the logic for QUIC is meant to be encapsulated on the ProofVerifier state machine.",
+      "revId": "182cac21a4cd170f869ed17781be53b6dc53ecae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
