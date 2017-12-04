@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ae40e6c_3ba48723",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-04T19:31:57Z",
+      "side": 1,
+      "message": "Please document lifetime.",
+      "range": {
+        "startLine": 15,
+        "startChar": 22,
+        "endLine": 16,
+        "endChar": 22
+      },
+      "revId": "9f8b0f6c38a3a11aa90b7f8b94653bf218b1d81a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0dcdef2_7b9e6d64",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-04T19:31:57Z",
+      "side": 1,
+      "message": "Style guide says no protected members.",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 53
+      },
+      "revId": "9f8b0f6c38a3a11aa90b7f8b94653bf218b1d81a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06d61639_7dae2013",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-04T19:31:57Z",
+      "side": 1,
+      "message": "Might the callback end up deleting this? If so, use ResetAndReturn.",
+      "range": {
+        "startLine": 84,
+        "startChar": 6,
+        "endLine": 84,
+        "endChar": 36
+      },
+      "revId": "9f8b0f6c38a3a11aa90b7f8b94653bf218b1d81a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48ec6466_fb2e9105",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-04T19:31:57Z",
+      "side": 1,
+      "message": "optional: friend the test (or friend a class compiled only in tests) so the api is kept at a minimum.",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 43
+      },
+      "revId": "9f8b0f6c38a3a11aa90b7f8b94653bf218b1d81a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e4a9c0b_05b244ae",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-04T19:31:57Z",
+      "side": 1,
+      "message": "Are you sure you actually need a run loop here?",
+      "range": {
+        "startLine": 124,
+        "startChar": 2,
+        "endLine": 126,
+        "endChar": 17
+      },
+      "revId": "9f8b0f6c38a3a11aa90b7f8b94653bf218b1d81a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db8e0fab_5795565a",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-04T19:31:57Z",
+      "side": 1,
+      "message": "no {}",
+      "range": {
+        "startLine": 150,
+        "startChar": 39,
+        "endLine": 150,
+        "endChar": 40
+      },
+      "revId": "9f8b0f6c38a3a11aa90b7f8b94653bf218b1d81a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b0abe81_93c65389",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-04T19:31:57Z",
+      "side": 1,
+      "message": "Why are you waiting for 5 seconds? Generally arbitrary waits like this in tests cause all sorts of flake. You should wait for the condition you need and then continue, not an arbitrary amount of time.",
+      "range": {
+        "startLine": 175,
+        "startChar": 3,
+        "endLine": 176,
+        "endChar": 51
+      },
+      "revId": "9f8b0f6c38a3a11aa90b7f8b94653bf218b1d81a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
