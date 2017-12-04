@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3c8018f_8f5f3279",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-12-04T16:03:48Z",
+      "side": 1,
+      "message": "Can you try: widget.setClickable(false)? If that doesn\u0027t work just add doc to mClicked: \"Prevent double clicking on the text span.\"",
+      "range": {
+        "startLine": 97,
+        "startChar": 32,
+        "endLine": 97,
+        "endChar": 43
+      },
+      "revId": "3648af641ddf099a0885be503b3c12ec78a35734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
