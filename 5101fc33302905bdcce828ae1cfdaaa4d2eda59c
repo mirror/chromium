@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b57effd9_47a515aa",
+        "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-04T20:15:53Z",
+      "side": 1,
+      "message": "See suggestion in test_service.js about this. Assigning private member variables can be avoided by extending the public API of the TestService as needed.",
+      "range": {
+        "startLine": 203,
+        "startChar": 7,
+        "endLine": 203,
+        "endChar": 59
+      },
+      "revId": "5101fc33302905bdcce828ae1cfdaaa4d2eda59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec2715ca_9da803dc",
+        "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-04T20:15:53Z",
+      "side": 1,
+      "message": "Need to call proxyDelegate.resetResolver(\u0027reloadItem\u0027) here, because the previous resolver has already been resolved (and you want to wait for a new call on \u0027reloadItem\u0027.",
+      "revId": "5101fc33302905bdcce828ae1cfdaaa4d2eda59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37614a81_a903f70b",
+        "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-04T20:15:53Z",
+      "side": 1,
+      "message": "Unnecessary nesting. The then() call can be chained to avoid nesting.\n\nreturn proxyDelegate.whenCalled(\u0027reloadItem\u0027).then(function(id) {\n  ...\n  return verifyEventPromise(false);\n}).then(function() {\n  ...\n  return proxyDelegate.whenCalled(\u0027reloadItem\u0027);\n}).then(function(id) {\n  expectEquals(item.data.id, id);\n  return verifyEventPromise(true);\n});",
+      "range": {
+        "startLine": 205,
+        "startChar": 54,
+        "endLine": 205,
+        "endChar": 73
+      },
+      "revId": "5101fc33302905bdcce828ae1cfdaaa4d2eda59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "047412da_0d695abc",
+        "filename": "chrome/test/data/webui/extensions/test_service.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-04T20:15:53Z",
+      "side": 1,
+      "message": "Can we slightly modify this approach of customizing the proxy\u0027s behavior?\n\nInstead of assigning this private variable from the outside, how about the following (which is more consistent with how we configure proxies in other WebUI tests, similar example at [1]).\n\nclass TestService extends TestBrowserProxy {\n  constructor() {\n    ...\n    this.forceReloadItemError_ \u003d false;\n  }\n  ...\n\n  setForceReloadItemError(force) {\n    this.forceReloadItemError_ \u003d force;\n  }\n\n  /** @override */\n  reloadItem(id) {\n    this.methodCalled(\u0027reloadItem\u0027, id);\n    return this.forceReloadItemError_ ? Promise.reject() : Promise.resolve();\n  }\n}\n\n[1] https://cs.chromium.org/chromium/src/chrome/test/data/webui/settings/test_search_engines_browser_proxy.js?l\u003d26,71,57",
+      "range": {
+        "startLine": 67,
+        "startChar": 13,
+        "endLine": 67,
+        "endChar": 35
+      },
+      "revId": "5101fc33302905bdcce828ae1cfdaaa4d2eda59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d77a3da6_b5a48c93",
+        "filename": "chrome/test/data/webui/test_browser_proxy.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-04T20:15:53Z",
+      "side": 1,
+      "message": "Are you using this anywhere, or was this a previous attempt to modify the proxy behavior? I did not see any usage of it. Prefer not to augment a PromiseResolver with an non-declared |resolveResult| property.\n\nSee my other suggestion on why I think this is not necessary.",
+      "range": {
+        "startLine": 64,
+        "startChar": 1,
+        "endLine": 64,
+        "endChar": 33
+      },
+      "revId": "5101fc33302905bdcce828ae1cfdaaa4d2eda59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
