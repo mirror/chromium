@@ -70,6 +70,30 @@
       "revId": "ac3fd5a85b28d9266fc9fc504c8a22c10ad367df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d1be285_8a9386e6",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-04T16:36:48Z",
+      "side": 1,
+      "message": "One reason why mocks are bad is that they lead to testing interactions, not the state. Testing interactions is only good for delegate callbacks, while testing state is preferable for everything else. OCMClassMock allows to create stubs, and this is excacly what the test does via OCMStub call. Sylvain, are you concerned that people will start using OCMClassMock for mocking instead of stubbing?",
+      "parentUuid": "41b1e481_f2a28f0d",
+      "range": {
+        "startLine": 53,
+        "startChar": 12,
+        "endLine": 53,
+        "endChar": 44
+      },
+      "revId": "ac3fd5a85b28d9266fc9fc504c8a22c10ad367df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
