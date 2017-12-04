@@ -22,6 +22,30 @@
       "revId": "2971feb51dc7f188c1c68874eda05545aa40402d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "115a6129_98b3a79f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 101922,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-04T15:01:23Z",
+      "side": 1,
+      "message": "Done in https://chromium-review.googlesource.com/c/chromium/src/+/806357",
+      "parentUuid": "20ddff51_2d799463",
+      "range": {
+        "startLine": 101921,
+        "startChar": 0,
+        "endLine": 101922,
+        "endChar": 57
+      },
+      "revId": "2971feb51dc7f188c1c68874eda05545aa40402d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
