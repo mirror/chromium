@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e607f331_9e0d181a",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-04T22:52:03Z",
+      "side": 1,
+      "message": "The combination of the two values make up a unique identifier.\n\nSo for example, two local_surface_id_s could have the same parent_id() and a different child_sequence_number().\n\nSo using only the local_surface_id_.parent_id() here will not work for a unique BEGIN \u0026 END.\n\nI can hash the two identifiers. Or maybe I can just shift one value over 32 bits and use a 64-bit unique trace identifier?",
+      "parentUuid": "909548c6_a648e7e2",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 150,
+        "endChar": 48
+      },
+      "revId": "51c4c2b855e3d168703e338e85dd62f4241f2588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c217769_b71978e6",
         "filename": "components/viz/common/surfaces/local_surface_id.h",
         "patchSetId": 3
