@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "fd602554_d12de782",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-04T14:41:24Z",
+      "side": 1,
+      "message": "Ah. For our usage (|n_| is number of executables in archive) this won\u0027t be an issue. Floating point is essentially scientific notation with bounded binary digits. So repeated adds of bounded value will eventually become no-op since the value will fall below required precision.  Also there\u0027s +Infinity (and -Infinity) if exponent go beyond capacity.",
+      "parentUuid": "52e4e89d_a4e0154b",
+      "revId": "681131cc399265aab60b03c42ead23e63b00729c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51e5ced6_2922fd3e",
         "filename": "chrome/installer/zucchini/binary_data_histogram.cc",
         "patchSetId": 3
@@ -381,6 +399,30 @@
       "revId": "681131cc399265aab60b03c42ead23e63b00729c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecf70922_1cb72bc5",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-04T14:41:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fba53a7_5e1a6258",
+      "range": {
+        "startLine": 37,
+        "startChar": 20,
+        "endLine": 37,
+        "endChar": 25
+      },
+      "revId": "681131cc399265aab60b03c42ead23e63b00729c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
