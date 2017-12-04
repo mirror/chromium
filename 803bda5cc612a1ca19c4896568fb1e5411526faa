@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a93ac40_5407f4fe",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLFormControlElementWithState.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-04T15:18:32Z",
+      "side": 1,
+      "message": "Add a comment and mention why we need this.",
+      "revId": "803bda5cc612a1ca19c4896568fb1e5411526faa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
