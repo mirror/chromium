@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ee16c9b_bbd1047d",
+        "filename": "third_party/WebKit/Source/modules/canvas/canvas2d/BaseRenderingContext2D.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-12-04T20:01:59Z",
+      "side": 1,
+      "message": "It is a bad pattern for the base class to be explicitly aware of all types of derived classes and to make assumptions about them.  By the way, CanvasRenderingContext has an IsAccelerated() method that you can use. All you need to do is define in this class:\nvirtual bool IsAccelerated() const { return false; }. Then the overrides that already exist in CanvasRenderingContext2D and OffscreenCanvasRenderingContext2D will kick-in.  They will simultaneously override CanvasRenderinContext::IsAccelerated() and the new BaseRenderingContext2D::IsAccelerated()",
+      "range": {
+        "startLine": 321,
+        "startChar": 33,
+        "endLine": 321,
+        "endChar": 58
+      },
+      "revId": "460535435cda92bddcc344ca53610179fbb7ac22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

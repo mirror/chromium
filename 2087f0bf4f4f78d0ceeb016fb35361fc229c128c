@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44815fc4_abdf745b",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintDefinition.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-12-04T20:01:59Z",
+      "side": 0,
+      "message": "could we do this separately in a standalone CL that just removes the CSSPaint dependency on ImageBuffer?",
+      "range": {
+        "startLine": 19,
+        "startChar": 28,
+        "endLine": 19,
+        "endChar": 55
+      },
+      "revId": "2087f0bf4f4f78d0ceeb016fb35361fc229c128c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
