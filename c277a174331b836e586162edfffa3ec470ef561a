@@ -22,6 +22,30 @@
       "revId": "c277a174331b836e586162edfffa3ec470ef561a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49c4f553_06572403",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-12-04T06:11:19Z",
+      "side": 1,
+      "message": "// We are about to open a new app window context. Record the time since the last navigation in this context. (If it is very small, this context is probably an instant redirect, which is a bad user experience.)",
+      "parentUuid": "8cbe82e0_5f8908a3",
+      "range": {
+        "startLine": 172,
+        "startChar": 48,
+        "endLine": 172,
+        "endChar": 69
+      },
+      "revId": "c277a174331b836e586162edfffa3ec470ef561a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
