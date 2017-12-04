@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "5e549499_d28ef305",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/SnippetsPlugin.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-12-04T19:40:07Z",
+      "side": 1,
+      "message": "It would need some hint as to how? Toolbar items all look the same to it at the moment. This is a white space separator, not the thin line. So we can\u0027t just add one in between the toolbars from each plugin.",
+      "parentUuid": "c8a88293_42a2b351",
+      "range": {
+        "startLine": 35,
+        "startChar": 12,
+        "endLine": 35,
+        "endChar": 41
+      },
+      "revId": "2b9937cae526b4e0445c2df1e21efa1a3d72f5c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d261ba9_6a6726b0",
         "filename": "third_party/WebKit/Source/devtools/front_end/sources/UISourceCodeFrame.js",
         "patchSetId": 3
