@@ -74,9 +74,6 @@ class MODULES_EXPORT FetchResponseData final
   String InternalMIMEType() const;
   Time ResponseTime() const { return response_time_; }
   String CacheStorageCacheName() const { return cache_storage_cache_name_; }
-  const WebHTTPHeaderSet& CorsExposedHeaderNames() const {
-    return cors_exposed_header_names_;
-  }
 
   void SetURLList(const Vector<KURL>&);
   const Vector<KURL>& UrlList() const { return url_list_; }
@@ -90,9 +87,6 @@ class MODULES_EXPORT FetchResponseData final
   void SetResponseTime(Time response_time) { response_time_ = response_time; }
   void SetCacheStorageCacheName(const String& cache_storage_cache_name) {
     cache_storage_cache_name_ = cache_storage_cache_name;
-  }
-  void SetCorsExposedHeaderNames(const WebHTTPHeaderSet& header_names) {
-    cors_exposed_header_names_ = header_names;
   }
 
   // If the type is Default, replaces |m_buffer|.
@@ -124,7 +118,6 @@ class MODULES_EXPORT FetchResponseData final
   String mime_type_;
   Time response_time_;
   String cache_storage_cache_name_;
-  WebHTTPHeaderSet cors_exposed_header_names_;
 
   DISALLOW_COPY_AND_ASSIGN(FetchResponseData);
 };

@@ -1133,13 +1133,6 @@ void WebURLLoaderImpl::PopulateURLResponse(const WebURL& url,
       info.is_in_cache_storage
           ? blink::WebString::FromUTF8(info.cache_storage_cache_name)
           : blink::WebString());
-  blink::WebVector<blink::WebString> cors_exposed_header_names(
-      info.cors_exposed_header_names.size());
-  std::transform(
-      info.cors_exposed_header_names.begin(),
-      info.cors_exposed_header_names.end(), cors_exposed_header_names.begin(),
-      [](const std::string& h) { return blink::WebString::FromLatin1(h); });
-  response->SetCorsExposedHeaderNames(cors_exposed_header_names);
   response->SetDidServiceWorkerNavigationPreload(
       info.did_service_worker_navigation_preload);
   response->SetEncodedDataLength(info.encoded_data_length);

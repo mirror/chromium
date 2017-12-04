@@ -178,10 +178,6 @@ struct CONTENT_EXPORT ResourceResponseInfo {
   // report_raw_headers to true.
   net::SignedCertificateTimestampAndStatusList signed_certificate_timestamps;
 
-  // In case this is a CORS response fetched by a ServiceWorker, this is the
-  // set of headers that should be exposed.
-  std::vector<std::string> cors_exposed_header_names;
-
   // True if service worker navigation preload was performed due to the request
   // for this response.
   bool did_service_worker_navigation_preload;

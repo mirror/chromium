@@ -148,9 +148,7 @@ class FakeControllerServiceWorker : public mojom::ControllerServiceWorker {
                 0 /* blob_size */, nullptr /* blob */,
                 blink::mojom::ServiceWorkerResponseError::kUnknown,
                 base::Time(), false /* response_is_in_cache_storage */,
-                std::string() /* response_cache_storage_cache_name */,
-                std::make_unique<
-                    ServiceWorkerHeaderList>() /* cors_exposed_header_names */),
+                std::string() /* response_cache_storage_cache_name */),
             std::move(stream_handle_), base::Time::Now());
         std::move(callback).Run(
             blink::mojom::ServiceWorkerEventStatus::COMPLETED, base::Time());
@@ -171,9 +169,7 @@ class FakeControllerServiceWorker : public mojom::ControllerServiceWorker {
                 0 /* blob_size */, nullptr /* blob */,
                 blink::mojom::ServiceWorkerResponseError::kPromiseRejected,
                 base::Time(), false /* response_is_in_cache_storage */,
-                std::string() /* response_cache_storage_cache_name */,
-                std::make_unique<
-                    ServiceWorkerHeaderList>() /* cors_exposed_header_names */),
+                std::string() /* response_cache_storage_cache_name */),
             base::Time::Now());
         std::move(callback).Run(
             blink::mojom::ServiceWorkerEventStatus::REJECTED,
@@ -189,9 +185,7 @@ class FakeControllerServiceWorker : public mojom::ControllerServiceWorker {
                 "" /* blob_uuid */, 0 /* blob_size */, nullptr /* blob */,
                 blink::mojom::ServiceWorkerResponseError::kUnknown,
                 base::Time(), false /* response_is_in_cache_storage */,
-                std::string() /* response_cache_storage_cache_name */,
-                std::make_unique<
-                    ServiceWorkerHeaderList>() /* cors_exposed_header_names */),
+                std::string() /* response_cache_storage_cache_name */),
             base::Time::Now());
         std::move(callback).Run(
             blink::mojom::ServiceWorkerEventStatus::COMPLETED, base::Time());

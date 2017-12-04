@@ -331,13 +331,6 @@ class PLATFORM_EXPORT ResourceResponse final {
     cache_storage_cache_name_ = cache_storage_cache_name;
   }
 
-  const Vector<String>& CorsExposedHeaderNames() const {
-    return cors_exposed_header_names_;
-  }
-  void SetCorsExposedHeaderNames(const Vector<String>& header_names) {
-    cors_exposed_header_names_ = header_names;
-  }
-
   bool DidServiceWorkerNavigationPreload() const {
     return did_service_worker_navigation_preload_;
   }
@@ -504,10 +497,6 @@ class PLATFORM_EXPORT ResourceResponse final {
   // The cache name of the CacheStorage from where the response is served via
   // the ServiceWorker. Null if the response isn't from the CacheStorage.
   String cache_storage_cache_name_;
-
-  // The headers that should be exposed according to CORS. Only guaranteed
-  // to be set if the response was fetched by a ServiceWorker.
-  Vector<String> cors_exposed_header_names_;
 
   // The time at which the response headers were received.  For cached
   // responses, this time could be "far" in the past.

@@ -631,13 +631,6 @@ void CacheStorageDispatcher::PopulateWebResponseFromResponse(
       response.is_in_cache_storage
           ? blink::WebString::FromUTF8(response.cache_storage_cache_name)
           : blink::WebString());
-  blink::WebVector<blink::WebString> headers(
-      response.cors_exposed_header_names.size());
-  std::transform(response.cors_exposed_header_names.begin(),
-                 response.cors_exposed_header_names.end(), headers.begin(),
-                 [](const std::string& s) { return WebString::FromLatin1(s); });
-  web_response->SetCorsExposedHeaderNames(headers);
-
   for (const auto& i : response.headers) {
     web_response->SetHeader(WebString::FromASCII(i.first),
                             WebString::FromASCII(i.second));

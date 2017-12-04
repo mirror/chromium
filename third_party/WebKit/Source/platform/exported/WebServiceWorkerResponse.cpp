@@ -29,7 +29,6 @@ class WebServiceWorkerResponsePrivate
   mojom::ServiceWorkerResponseError error;
   Time response_time;
   WebString cache_storage_cache_name;
-  WebVector<WebString> cors_exposed_header_names;
   scoped_refptr<BlobDataHandle> side_data_blob_data_handle;
 };
 
@@ -167,16 +166,6 @@ void WebServiceWorkerResponse::SetCacheStorageCacheName(
 
 const WebString& WebServiceWorkerResponse::CacheStorageCacheName() const {
   return private_->cache_storage_cache_name;
-}
-
-void WebServiceWorkerResponse::SetCorsExposedHeaderNames(
-    const WebVector<WebString>& header_names) {
-  private_->cors_exposed_header_names = header_names;
-}
-
-const WebVector<WebString>& WebServiceWorkerResponse::CorsExposedHeaderNames()
-    const {
-  return private_->cors_exposed_header_names;
 }
 
 const HTTPHeaderMap& WebServiceWorkerResponse::Headers() const {

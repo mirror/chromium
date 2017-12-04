@@ -296,13 +296,6 @@ void ToWebServiceWorkerResponse(const ServiceWorkerResponse& response,
     web_response->SetCacheStorageCacheName(
         blink::WebString::FromUTF8(response.cache_storage_cache_name));
   }
-
-  std::vector<blink::WebString> cors_exposed_header_names;
-  for (const auto& name : response.cors_exposed_header_names)
-    cors_exposed_header_names.push_back(blink::WebString::FromUTF8(name));
-
-  web_response->SetCorsExposedHeaderNames(
-      blink::WebVector<blink::WebString>(cors_exposed_header_names));
 }
 
 // Finds an event callback keyed by |event_id| from |map|, and runs the callback

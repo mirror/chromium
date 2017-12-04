@@ -788,7 +788,6 @@ void ServiceWorkerURLRequestJob::SetResponse(
     const ServiceWorkerResponse& response) {
   response_url_list_ = response.url_list;
   fetch_response_type_ = response.response_type;
-  cors_exposed_header_names_ = response.cors_exposed_header_names;
   response_time_ = response.response_time;
   CreateResponseHeader(response.status_code, response.status_text,
                        response.headers);
@@ -933,7 +932,6 @@ void ServiceWorkerURLRequestJob::OnStartCompleted() const {
               base::TimeTicks() /* service_worker_ready_time */,
               false /* response_is_in_cache_storage */,
               std::string() /* response_cache_storage_cache_name */,
-              ServiceWorkerHeaderList() /* cors_exposed_header_names */,
               did_navigation_preload_);
       break;
     case ResponseType::FALLBACK_TO_RENDERER:
@@ -943,11 +941,10 @@ void ServiceWorkerURLRequestJob::OnStartCompleted() const {
       // renderer expects that.
       ServiceWorkerResponseInfo::ForRequest(request_, true)
           ->OnStartCompleted(
-              true /* was_fetched_via_service_worker */,
-              fall_back_required_, response_url_list_, fetch_response_type_,
-              worker_start_time_, worker_ready_time_,
-              response_is_in_cache_storage_, response_cache_storage_cache_name_,
-              cors_exposed_header_names_, did_navigation_preload_);
+              true /* was_fetched_via_service_worker */, fall_back_required_,
+              response_url_list_, fetch_response_type_, worker_start_time_,
+              worker_ready_time_, response_is_in_cache_storage_,
+              response_cache_storage_cache_name_, did_navigation_preload_);
       break;
   }
 }

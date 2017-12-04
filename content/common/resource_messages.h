@@ -217,7 +217,6 @@ IPC_STRUCT_TRAITS_BEGIN(content::ResourceResponseInfo)
   IPC_STRUCT_TRAITS_MEMBER(ssl_connection_status)
   IPC_STRUCT_TRAITS_MEMBER(ssl_key_exchange_group)
   IPC_STRUCT_TRAITS_MEMBER(signed_certificate_timestamps)
-  IPC_STRUCT_TRAITS_MEMBER(cors_exposed_header_names)
 IPC_STRUCT_TRAITS_END()
 
 IPC_ENUM_TRAITS_MAX_VALUE(net::URLRequest::ReferrerPolicy,

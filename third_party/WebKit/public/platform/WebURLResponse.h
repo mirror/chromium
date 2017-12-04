@@ -247,12 +247,6 @@ class WebURLResponse {
   // the ServiceWorker. Null if the response isn't from the CacheStorage.
   BLINK_PLATFORM_EXPORT void SetCacheStorageCacheName(const WebString&);
 
-  // The headers that should be exposed according to CORS. Only guaranteed
-  // to be set if the response was served by a ServiceWorker.
-  BLINK_PLATFORM_EXPORT WebVector<WebString> CorsExposedHeaderNames() const;
-  BLINK_PLATFORM_EXPORT void SetCorsExposedHeaderNames(
-      const WebVector<WebString>&);
-
   // Whether service worker navigation preload occurred.
   // See ServiceWorkerResponseInfo::did_navigation_preload() for
   // details.

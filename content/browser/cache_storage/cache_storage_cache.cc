@@ -271,10 +271,7 @@ std::unique_ptr<ServiceWorkerResponse> CreateResponse(
       std::move(headers), "", 0, nullptr /* blob */,
       blink::mojom::ServiceWorkerResponseError::kUnknown,
       base::Time::FromInternalValue(metadata.response().response_time()),
-      true /* is_in_cache_storage */, cache_name,
-      std::make_unique<ServiceWorkerHeaderList>(
-          metadata.response().cors_exposed_header_names().begin(),
-          metadata.response().cors_exposed_header_names().end()));
+      true /* is_in_cache_storage */, cache_name);
 }
 
 // The size of opaque (non-cors) resource responses are padded in order
@@ -1377,8 +1374,6 @@ void CacheStorageCache::PutDidCreateEntry(
     header_map->set_name(it->first);
     header_map->set_value(it->second);
   }
-  for (const auto& header : put_context->response->cors_exposed_header_names)
-    response_metadata->add_cors_exposed_header_names(header);
 
   std::unique_ptr<std::string> serialized(new std::string());
   if (!metadata.SerializeToString(serialized.get())) {

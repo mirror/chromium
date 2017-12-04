@@ -106,8 +106,7 @@ ServiceWorkerResponse::ServiceWorkerResponse(
     blink::mojom::ServiceWorkerResponseError error,
     base::Time response_time,
     bool is_in_cache_storage,
-    const std::string& cache_storage_cache_name,
-    std::unique_ptr<ServiceWorkerHeaderList> cors_exposed_headers)
+    const std::string& cache_storage_cache_name)
     : status_code(status_code),
       status_text(status_text),
       response_type(response_type),
@@ -120,7 +119,6 @@ ServiceWorkerResponse::ServiceWorkerResponse(
       cache_storage_cache_name(cache_storage_cache_name) {
   this->url_list.swap(*url_list);
   this->headers.swap(*headers);
-  this->cors_exposed_header_names.swap(*cors_exposed_headers);
 }
 
 ServiceWorkerResponse::ServiceWorkerResponse(
@@ -141,8 +139,6 @@ size_t ServiceWorkerResponse::EstimatedStructSize() {
     size += key_and_value.first.size();
     size += key_and_value.second.size();
   }
-  for (const auto& header : cors_exposed_header_names)
-    size += header.size();
   size += side_data_blob_uuid.size();
   return size;
 }
