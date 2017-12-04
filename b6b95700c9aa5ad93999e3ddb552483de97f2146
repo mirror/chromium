@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02440736_71b97042",
+        "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-12-04T16:21:51Z",
+      "side": 1,
+      "message": "I don\u0027t think I\u0027m really following why we have both chunkcopy_chunk_t and z_vec128i_t, especially if they\u0027re next constrained to be the same.  Can\u0027t we just use z_vec128i_t all the way through?",
+      "revId": "b6b95700c9aa5ad93999e3ddb552483de97f2146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "955b445f_861fec87",
+        "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-12-04T16:21:51Z",
+      "side": 1,
+      "message": "I think the names on these two might be reversed?  Seems like the sizeof(int8_t)*16 is the 128-bit check?",
+      "revId": "b6b95700c9aa5ad93999e3ddb552483de97f2146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d32e7541_67547e7e",
+        "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-12-04T16:21:51Z",
+      "side": 1,
+      "message": "Are we still TODO: fuse storechunk(..., loadchunk(...)) ?\n\nI only ask because now that we\u0027re not working with vector types explicitly, it probably reads more weirdly to split these two up than to fuse them.",
+      "revId": "b6b95700c9aa5ad93999e3ddb552483de97f2146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b010a62c_94934d6a",
+        "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-12-04T16:21:51Z",
+      "side": 1,
+      "message": "This file appears to mostly follow memcpy-like dst-then-src order for arguments.  Might want to swap these?",
+      "range": {
+        "startLine": 216,
+        "startChar": 40,
+        "endLine": 216,
+        "endChar": 72
+      },
+      "revId": "b6b95700c9aa5ad93999e3ddb552483de97f2146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4062cd7e_7bc8fd03",
+        "filename": "third_party/zlib/contrib/optimizations/inflate.c",
+        "patchSetId": 20
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-12-04T16:21:51Z",
+      "side": 1,
+      "message": "Moot now?",
+      "revId": "b6b95700c9aa5ad93999e3ddb552483de97f2146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
