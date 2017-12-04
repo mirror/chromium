@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b4a89aa8_7c9eac74",
+        "filename": "chrome/browser/resources/md_extensions/service.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-04T17:35:12Z",
+      "side": 1,
+      "message": "This behavior change *only* affects unpacked extensions.  So there is definitely a broken case where a non-unpacked extension fails to reload, and there\u0027s no actionable way for the user to easily fix it.  However, that\u0027s already the case today (again, no behavior change for packed extensions), and is also a potential problem in the current UI.  Also, it *should* be relatively rare for that to be the case (though certainly not impossible).",
+      "parentUuid": "81157808_1bb3f5a5",
+      "range": {
+        "startLine": 181,
+        "startChar": 17,
+        "endLine": 181,
+        "endChar": 66
+      },
+      "revId": "883ffd35da4eef5de207e2d425fcb57e823c1854",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c61f7857_b846e3bf",
         "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-01T22:48:05Z",
       "side": 1,
       "message": "You could simplify by using the existing TestService which is based on TestBrowserProxy, and already used by most tests, see [1], and specific example at [2]. TestBrowserProxy has a cleaner syntax for dealing with async testing I think.\n\n[1] https://cs.chromium.org/search/?q\u003dTestService+file:%5Esrc/chrome/test/data/webui/extensions/+package:%5Echromium$\u0026type\u003dcs\n[2] https://cs.chromium.org/chromium/src/chrome/test/data/webui/extensions/extension_toolbar_test.js?l\u003d51-68",
+      "range": {
+        "startLine": 180,
+        "startChar": 9,
+        "endLine": 180,
+        "endChar": 42
+      },
+      "revId": "883ffd35da4eef5de207e2d425fcb57e823c1854",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bbb03e6_ef6e3ad0",
+        "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-04T17:35:12Z",
+      "side": 1,
+      "message": "I agree that the async interaction is cleaner, but I don\u0027t see any way of validating the arguments passed to the method (e.g., verifying that item.data.id is passed to reloadItem).  This is a pretty important part of these tests overall.  Also, I\u0027d prefer to not have to update this whole test/whole file in this CL.  Is this approach okay for this CL, until we have a solution for argument matching?",
+      "parentUuid": "c61f7857_b846e3bf",
       "range": {
         "startLine": 180,
         "startChar": 9,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "ebae5ec0_e8da08d2",
+        "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-04T17:35:12Z",
+      "side": 1,
+      "message": "Ah!  Nifty - hadn\u0027t seen that before.  Done.",
+      "parentUuid": "5562ad97_a7e76298",
+      "revId": "883ffd35da4eef5de207e2d425fcb57e823c1854",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62c65bbe_06821144",
         "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
         "patchSetId": 6
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "4f377c9e_b587d32e",
+        "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-04T17:35:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62c65bbe_06821144",
+      "range": {
+        "startLine": 195,
+        "startChar": 12,
+        "endLine": 195,
+        "endChar": 62
+      },
+      "revId": "883ffd35da4eef5de207e2d425fcb57e823c1854",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9682e44_c3c1a82f",
         "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
         "patchSetId": 6
@@ -102,6 +192,24 @@
       "revId": "883ffd35da4eef5de207e2d425fcb57e823c1854",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c570e779_0b6977b5",
+        "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-04T17:35:12Z",
+      "side": 1,
+      "message": "I don\u0027t think this quite makes sense here, since a part of the test is to ensure that the event *is not* fired at a certain point.  Since the fire happens async, I\u0027d prefer we test similarly in both the expect-fired and expect-not-fired cases.",
+      "parentUuid": "d9682e44_c3c1a82f",
+      "revId": "883ffd35da4eef5de207e2d425fcb57e823c1854",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
