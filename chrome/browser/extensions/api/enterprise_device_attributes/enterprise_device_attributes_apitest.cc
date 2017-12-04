@@ -36,6 +36,7 @@ const base::FilePath::CharType kUpdateManifestFileName[] =
     FILE_PATH_LITERAL("update_manifest.xml");
 
 const char kAffiliatedUserEmail[] = "user@example.com";
+const char kAffiliatedUserGaiaId[] = "1029384756";
 const char kAffiliationID[] = "some-affiliation-id";
 const char kAnotherAffiliationID[] = "another-affiliation-id";
 
@@ -127,10 +128,8 @@ class EnterpriseDeviceAttributesTest :
   void SetUpOnMainThread() override {
     const base::ListValue* users =
         g_browser_process->local_state()->GetList("LoggedInUsers");
-    if (!users->empty()) {
-      policy::affiliation_test_helper::LoginUser(
-          affiliated_account_id_.GetUserEmail());
-    }
+    if (!users->empty())
+      policy::affiliation_test_helper::LoginUser(affiliated_account_id_);
 
     ExtensionApiTest::SetUpOnMainThread();
   }
@@ -184,7 +183,8 @@ class EnterpriseDeviceAttributesTest :
   }
 
   const AccountId affiliated_account_id_ =
-      AccountId::FromUserEmail(kAffiliatedUserEmail);
+      AccountId::FromUserEmailGaiaId(kAffiliatedUserEmail,
+                                     kAffiliatedUserGaiaId);
 
  private:
   policy::MockConfigurationPolicyProvider policy_provider_;
@@ -192,8 +192,7 @@ class EnterpriseDeviceAttributesTest :
 };
 
 IN_PROC_BROWSER_TEST_P(EnterpriseDeviceAttributesTest, PRE_Success) {
-  policy::affiliation_test_helper::PreLoginUser(
-      affiliated_account_id_.GetUserEmail());
+  policy::affiliation_test_helper::PreLoginUser(affiliated_account_id_);
 }
 
 IN_PROC_BROWSER_TEST_P(EnterpriseDeviceAttributesTest, Success) {
