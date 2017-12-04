@@ -203,8 +203,8 @@ bool IsSupportedInFeaturePolicy(FeaturePolicyFeature feature) {
     case FeaturePolicyFeature::kPayment:
     case FeaturePolicyFeature::kUsb:
     case FeaturePolicyFeature::kWebVr:
-      return true;
     case FeaturePolicyFeature::kSyncXHR:
+      return true;
     case FeaturePolicyFeature::kVibrate:
       return RuntimeEnabledFeatures::FeaturePolicyExperimentalFeaturesEnabled();
     default:
@@ -228,6 +228,7 @@ const FeatureNameMap& GetDefaultFeatureNameMap() {
     default_feature_name_map.Set("geolocation",
                                  FeaturePolicyFeature::kGeolocation);
     default_feature_name_map.Set("midi", FeaturePolicyFeature::kMidiFeature);
+    default_feature_name_map.Set("sync-xhr", FeaturePolicyFeature::kSyncXHR);
     default_feature_name_map.Set("vr", FeaturePolicyFeature::kWebVr);
     if (RuntimeEnabledFeatures::FeaturePolicyExperimentalFeaturesEnabled()) {
       default_feature_name_map.Set("vibrate", FeaturePolicyFeature::kVibrate);
@@ -239,7 +240,6 @@ const FeatureNameMap& GetDefaultFeatureNameMap() {
                                    FeaturePolicyFeature::kDocumentWrite);
       default_feature_name_map.Set("sync-script",
                                    FeaturePolicyFeature::kSyncScript);
-      default_feature_name_map.Set("sync-xhr", FeaturePolicyFeature::kSyncXHR);
     }
     if (RuntimeEnabledFeatures::FeaturePolicyAutoplayFeatureEnabled()) {
       default_feature_name_map.Set("autoplay", FeaturePolicyFeature::kAutoplay);
