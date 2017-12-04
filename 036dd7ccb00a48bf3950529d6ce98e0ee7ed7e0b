@@ -63,6 +63,30 @@
       "revId": "036dd7ccb00a48bf3950529d6ce98e0ee7ed7e0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb87e8a8_bbf4747c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-12-04T03:37:14Z",
+      "side": 1,
+      "message": "\u003e I also slightly prefer keeping WebSecurityOrigin here,\n\nI\u0027d like to understand the reason but it\u0027s ok to learn that later. Feel free to land it.",
+      "parentUuid": "a2de6abe_c3d75985",
+      "range": {
+        "startLine": 35,
+        "startChar": 48,
+        "endLine": 36,
+        "endChar": 49
+      },
+      "revId": "036dd7ccb00a48bf3950529d6ce98e0ee7ed7e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
