@@ -828,7 +828,8 @@ ObjectUI.ObjectPropertyTreeElement = class extends UI.TreeElement {
     if (this.property.value.type === 'string' && typeof text === 'string')
       text = '"' + text + '"';
 
-    this._editableDiv.setTextContentTruncatedIfNeeded(text, Common.UIString('<string is too large to edit>'));
+    this._editableDiv.setTextContentTruncatedIfNeeded(
+        text, Common.UIString('<string is too large to edit, use copy() if needed>'));
     var originalContent = this._editableDiv.textContent;
 
     // Lie about our children to prevent expanding on double click and to collapse subproperties.
