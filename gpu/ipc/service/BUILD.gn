@@ -28,13 +28,15 @@ if (is_component_build) {
 target(link_target_type, "ipc_service_sources") {
   visibility = [ "//gpu/*" ]
   sources = [
+    "command_buffer_stub_common.cc",
+    "command_buffer_stub_common.h",
+    "gles2_command_buffer_stub.cc",
+    "gles2_command_buffer_stub.h",
     "gpu_channel.cc",
     "gpu_channel.h",
     "gpu_channel_manager.cc",
     "gpu_channel_manager.h",
     "gpu_channel_manager_delegate.h",
-    "gpu_command_buffer_stub.cc",
-    "gpu_command_buffer_stub.h",
     "gpu_config.h",
     "gpu_init.cc",
     "gpu_init.h",
@@ -53,6 +55,8 @@ target(link_target_type, "ipc_service_sources") {
     "image_transport_surface_delegate.h",
     "pass_through_image_transport_surface.cc",
     "pass_through_image_transport_surface.h",
+    "raster_command_buffer_stub.cc",
+    "raster_command_buffer_stub.h",
     "switches.cc",
     "switches.h",
   ]

@@ -37,9 +37,11 @@
 #include "gpu/command_buffer/service/mailbox_manager.h"
 #include "gpu/command_buffer/service/scheduler.h"
 #include "gpu/ipc/common/gpu_messages.h"
+#include "gpu/ipc/service/gles2_command_buffer_stub.h"
 #include "gpu/ipc/service/gpu_channel_manager.h"
 #include "gpu/ipc/service/gpu_channel_manager_delegate.h"
 #include "gpu/ipc/service/gpu_memory_buffer_factory.h"
+#include "gpu/ipc/service/raster_command_buffer_stub.h"
 #include "ipc/ipc_channel.h"
 #include "ipc/message_filter.h"
 #include "ui/gl/gl_context.h"
@@ -421,15 +423,15 @@ bool GpuChannel::Send(IPC::Message* message) {
   return channel_->Send(message);
 }
 
-void GpuChannel::OnCommandBufferScheduled(GpuCommandBufferStub* stub) {
+void GpuChannel::OnCommandBufferScheduled(CommandBufferStubCommon* stub) {
   scheduler_->EnableSequence(stub->sequence_id());
 }
 
-void GpuChannel::OnCommandBufferDescheduled(GpuCommandBufferStub* stub) {
+void GpuChannel::OnCommandBufferDescheduled(CommandBufferStubCommon* stub) {
   scheduler_->DisableSequence(stub->sequence_id());
 }
 
-GpuCommandBufferStub* GpuChannel::LookupCommandBuffer(int32_t route_id) {
+CommandBufferStubCommon* GpuChannel::LookupCommandBuffer(int32_t route_id) {
   auto it = stubs_.find(route_id);
   if (it == stubs_.end())
     return nullptr;
@@ -486,7 +488,7 @@ bool GpuChannel::OnControlMessageReceived(const IPC::Message& msg) {
 
 void GpuChannel::HandleMessage(const IPC::Message& msg) {
   int32_t routing_id = msg.routing_id();
-  GpuCommandBufferStub* stub = LookupCommandBuffer(routing_id);
+  CommandBufferStubCommon* stub = LookupCommandBuffer(routing_id);
 
   DCHECK(!stub || stub->IsScheduled());
 
@@ -536,9 +538,9 @@ void GpuChannel::HandleOutOfOrderMessage(const IPC::Message& msg) {
 }
 
 #if defined(OS_ANDROID)
-const GpuCommandBufferStub* GpuChannel::GetOneStub() const {
+const CommandBufferStubCommon* GpuChannel::GetOneStub() const {
   for (const auto& kv : stubs_) {
-    const GpuCommandBufferStub* stub = kv.second.get();
+    const CommandBufferStubCommon* stub = kv.second.get();
     if (stub->decoder() && !stub->decoder()->WasContextLost())
       return stub;
   }
@@ -570,7 +572,7 @@ void GpuChannel::OnCreateCommandBuffer(
   }
 
   int32_t share_group_id = init_params.share_group_id;
-  GpuCommandBufferStub* share_group = LookupCommandBuffer(share_group_id);
+  CommandBufferStubCommon* share_group = LookupCommandBuffer(share_group_id);
 
   if (!share_group && share_group_id != MSG_ROUTING_NONE) {
     LOG(ERROR) << "ContextResult::kFatalFailure: invalid share group id";
@@ -617,17 +619,21 @@ void GpuChannel::OnCreateCommandBuffer(
     stream_sequences_[stream_id] = sequence_id;
   }
 
-  DVLOG(1) << "Should use raster decoder: "
-           << (gpu_channel_manager_->gpu_preferences().enable_raster_decoder &&
-               init_params.attribs.enable_oop_rasterization);
+  std::unique_ptr<CommandBufferStubCommon> stub;
+  if (gpu_channel_manager_->gpu_preferences().enable_raster_decoder &&
+      init_params.attribs.enable_oop_rasterization) {
+    stub = std::make_unique<RasterCommandBufferStub>(
+        this, init_params, command_buffer_id, sequence_id, stream_id, route_id);
+  } else {
+    stub = std::make_unique<GLES2CommandBufferStub>(
+        this, init_params, command_buffer_id, sequence_id, stream_id, route_id);
+  }
 
-  auto stub = std::make_unique<GpuCommandBufferStub>(
-      this, init_params, command_buffer_id, sequence_id, stream_id, route_id);
   auto stub_result =
       stub->Initialize(share_group, init_params, std::move(shared_state_shm));
   if (stub_result != gpu::ContextResult::kSuccess) {
     DLOG(ERROR) << "GpuChannel::CreateCommandBuffer(): failed to initialize "
-                   "GpuCommandBufferStub";
+                   "CommandBufferStubCommon";
     *result = stub_result;
     return;
   }
@@ -646,7 +652,7 @@ void GpuChannel::OnDestroyCommandBuffer(int32_t route_id) {
   TRACE_EVENT1("gpu", "GpuChannel::OnDestroyCommandBuffer", "route_id",
                route_id);
 
-  std::unique_ptr<GpuCommandBufferStub> stub;
+  std::unique_ptr<CommandBufferStubCommon> stub;
   auto it = stubs_.find(route_id);
   if (it != stubs_.end()) {
     stub = std::move(it->second);

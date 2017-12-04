@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef GPU_IPC_SERVICE_GPU_COMMAND_BUFFER_STUB_H_
-#define GPU_IPC_SERVICE_GPU_COMMAND_BUFFER_STUB_H_
+#ifndef GPU_IPC_SERVICE_COMMAND_BUFFER_STUB_COMMON_H_
+#define GPU_IPC_SERVICE_COMMAND_BUFFER_STUB_COMMON_H_
 
 #include <stddef.h>
 #include <stdint.h>
@@ -16,6 +16,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
 #include "base/time/time.h"
+#include "build/build_config.h"
 #include "gpu/command_buffer/common/command_buffer_id.h"
 #include "gpu/command_buffer/common/constants.h"
 #include "gpu/command_buffer/common/gpu_memory_allocation.h"
@@ -50,13 +51,12 @@ struct WaitForCommandState;
 class GpuChannel;
 class SyncPointClientState;
 
-class GPU_EXPORT GpuCommandBufferStub
+class GPU_EXPORT CommandBufferStubCommon
     : public IPC::Listener,
       public IPC::Sender,
       public CommandBufferServiceClient,
       public gles2::GLES2DecoderClient,
-      public ImageTransportSurfaceDelegate,
-      public base::SupportsWeakPtr<GpuCommandBufferStub> {
+      public ImageTransportSurfaceDelegate {
  public:
   class DestructionObserver {
    public:
@@ -67,22 +67,22 @@ class GPU_EXPORT GpuCommandBufferStub
     virtual ~DestructionObserver() {}
   };
 
-  GpuCommandBufferStub(GpuChannel* channel,
-                       const GPUCreateCommandBufferConfig& init_params,
-                       CommandBufferId command_buffer_id,
-                       SequenceId sequence_id,
-                       int32_t stream_id,
-                       int32_t route_id);
+  CommandBufferStubCommon(GpuChannel* channel,
+                          const GPUCreateCommandBufferConfig& init_params,
+                          CommandBufferId command_buffer_id,
+                          SequenceId sequence_id,
+                          int32_t stream_id,
+                          int32_t route_id);
 
-  ~GpuCommandBufferStub() override;
+  ~CommandBufferStubCommon() override;
 
   // This must leave the GL context associated with the newly-created
-  // GpuCommandBufferStub current, so the GpuChannel can initialize
+  // CommandBufferStubCommon current, so the GpuChannel can initialize
   // the gpu::Capabilities.
-  gpu::ContextResult Initialize(
-      GpuCommandBufferStub* share_group,
+  virtual gpu::ContextResult Initialize(
+      CommandBufferStubCommon* share_group,
       const GPUCreateCommandBufferConfig& init_params,
-      std::unique_ptr<base::SharedMemory> shared_state_shm);
+      std::unique_ptr<base::SharedMemory> shared_state_shm) = 0;
 
   // IPC::Listener implementation:
   bool OnMessageReceived(const IPC::Message& message) override;
@@ -143,11 +143,54 @@ class GPU_EXPORT GpuCommandBufferStub
 
   void MarkContextLost();
 
+  scoped_refptr<gles2::ContextGroup> context_group() { return context_group_; }
+  scoped_refptr<gl::GLShareGroup> share_group() { return share_group_; }
+
+ protected:
+  // FastSetActiveURL will shortcut the expensive call to SetActiveURL when the
+  // url_hash matches.
+  static void FastSetActiveURL(const GURL& url,
+                               size_t url_hash,
+                               GpuChannel* channel);
+
+  gles2::MemoryTracker* CreateMemoryTracker(
+      const GPUCreateCommandBufferConfig init_params) const;
+
+  // The lifetime of objects of this class is managed by a GpuChannel. The
+  // GpuChannels destroy all the CommandBufferStubCommons that they own when
+  // they are destroyed. So a raw pointer is safe.
+  GpuChannel* const channel_;
+
+  GURL active_url_;
+  size_t active_url_hash_;
+
+  // The group of contexts that share namespaces with this context.
+  scoped_refptr<gles2::ContextGroup> context_group_;
+
+  bool initialized_;
+  const SurfaceHandle surface_handle_;
+  bool use_virtualized_gl_context_;
+
+  std::unique_ptr<CommandBufferService> command_buffer_;
+  std::unique_ptr<gles2::GLES2Decoder> decoder_;
+
+  scoped_refptr<gl::GLSurface> surface_;
+  scoped_refptr<SyncPointClientState> sync_point_client_state_;
+  scoped_refptr<gl::GLShareGroup> share_group_;
+
+  const CommandBufferId command_buffer_id_;
+  const SequenceId sequence_id_;
+  const int32_t stream_id_;
+  const int32_t route_id_;
+
+  base::WeakPtr<CommandBufferStubCommon> GetWeakPtr() {
+    return weak_ptr_factory_.GetWeakPtr();
+  }
+
  private:
   GpuMemoryManager* GetMemoryManager() const;
 
   void Destroy();
-
   bool MakeCurrent();
 
   // Message handlers:
@@ -204,28 +247,7 @@ class GPU_EXPORT GpuCommandBufferStub
   static void SetContextGpuFeatureInfo(gl::GLContext* context,
                                        const GpuFeatureInfo& gpu_feature_info);
 
-  // The lifetime of objects of this class is managed by a GpuChannel. The
-  // GpuChannels destroy all the GpuCommandBufferStubs that they own when they
-  // are destroyed. So a raw pointer is safe.
-  GpuChannel* const channel_;
-
-  // The group of contexts that share namespaces with this context.
-  scoped_refptr<gles2::ContextGroup> context_group_;
-
-  bool initialized_;
-  const SurfaceHandle surface_handle_;
-  bool use_virtualized_gl_context_;
-  const CommandBufferId command_buffer_id_;
-  const SequenceId sequence_id_;
-  const int32_t stream_id_;
-  const int32_t route_id_;
   uint32_t last_flush_id_;
-
-  std::unique_ptr<CommandBufferService> command_buffer_;
-  std::unique_ptr<gles2::GLES2Decoder> decoder_;
-  scoped_refptr<SyncPointClientState> sync_point_client_state_;
-  scoped_refptr<gl::GLSurface> surface_;
-  scoped_refptr<gl::GLShareGroup> share_group_;
 
   base::ObserverList<DestructionObserver> destruction_observers_;
 
@@ -237,16 +259,15 @@ class GPU_EXPORT GpuCommandBufferStub
 
   base::Closure snapshot_requested_callback_;
 
-  GURL active_url_;
-  size_t active_url_hash_;
-
   std::unique_ptr<WaitForCommandState> wait_for_token_;
   std::unique_ptr<WaitForCommandState> wait_for_get_offset_;
   uint32_t wait_set_get_buffer_count_;
 
-  DISALLOW_COPY_AND_ASSIGN(GpuCommandBufferStub);
+  base::WeakPtrFactory<CommandBufferStubCommon> weak_ptr_factory_;
+
+  DISALLOW_COPY_AND_ASSIGN(CommandBufferStubCommon);
 };
 
 }  // namespace gpu
 
-#endif  // GPU_IPC_SERVICE_GPU_COMMAND_BUFFER_STUB_H_
+#endif  // GPU_IPC_SERVICE_COMMAND_BUFFER_STUB_COMMON_H_
