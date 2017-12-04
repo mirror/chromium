@@ -5,10 +5,12 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include "base/command_line.h"
+#include "build/build_config.h"
 #include "cc/paint/paint_op_buffer.h"
+#include "cc/test/test_context_provider.h"
 #include "third_party/skia/include/core/SkSurface.h"
 #include "third_party/skia/include/gpu/GrContext.h"
-#include "third_party/skia/include/gpu/gl/GrGLInterface.h"
 
 // Deserialize an arbitrary number of cc::PaintOps and raster them
 // using gpu raster into an SkCanvas.
@@ -16,14 +18,20 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
   const size_t kMaxSerializedSize = 1000000;
   const size_t kRasterDimension = 32;
 
-  SkImageInfo image_info = SkImageInfo::MakeN32(
-      kRasterDimension, kRasterDimension, kOpaque_SkAlphaType);
-  sk_sp<const GrGLInterface> gl_interface(GrGLCreateNullInterface());
-  sk_sp<GrContext> gr_context(GrContext::Create(
-      kOpenGL_GrBackend,
-      reinterpret_cast<GrBackendContext>(gl_interface.get())));
-  sk_sp<SkSurface> surface = SkSurface::MakeRenderTarget(
-      gr_context.get(), SkBudgeted::kYes, image_info);
+#if defined(OS_WIN)
+  base::CommandLine::InitUsingArgvForTesting(0, nullptr);
+#else
+  base::CommandLine::Init(0, nullptr);
+#endif
+
+  SkImageInfo image_info =
+      SkImageInfo::Make(kRasterDimension, kRasterDimension,
+                        kRGBA_8888_SkColorType, kOpaque_SkAlphaType);
+  scoped_refptr<cc::TestContextProvider> context_provider =
+      cc::TestContextProvider::Create();
+  GrContext* gr_context = context_provider->GrContext();
+  sk_sp<SkSurface> surface =
+      SkSurface::MakeRenderTarget(gr_context, SkBudgeted::kYes, image_info);
   SkCanvas* canvas = surface->getCanvas();
 
   cc::PlaybackParams params(nullptr, canvas->getTotalMatrix());
