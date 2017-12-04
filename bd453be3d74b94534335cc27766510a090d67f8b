@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4b0fa99_82a11c5a",
+        "filename": "build/config/sanitizers/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-12-04T18:55:02Z",
+      "side": 1,
+      "message": "maybe this belongs under \"default_sanitizer_ldflags\" instead? that\u0027s where the ldflags for sanitizer_coverage_flags are set.",
+      "range": {
+        "startLine": 404,
+        "startChar": 4,
+        "endLine": 404,
+        "endChar": 46
+      },
+      "revId": "bd453be3d74b94534335cc27766510a090d67f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cf4191e_00f79c4a",
+        "filename": "build/config/sanitizers/sanitizers.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-12-04T18:55:02Z",
+      "side": 1,
+      "message": "nit: maybe add an assertion somewhere around here to make it clear that |use_sanitizer_coverage| and |sanitizer_coverage_flags| are not used when |use_fuzzing_engine| is set.",
+      "range": {
+        "startLine": 147,
+        "startChar": 4,
+        "endLine": 147,
+        "endChar": 26
+      },
+      "revId": "bd453be3d74b94534335cc27766510a090d67f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
