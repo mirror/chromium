@@ -505,6 +505,23 @@
     },
     {
       "key": {
+        "uuid": "452f14a6_ee8f329f",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-12-04T21:35:53Z",
+      "side": 1,
+      "message": "Given that there\u0027s some doubt about whether this approach works, and given that the line above is pretty weird (Access-Control-Allow-Origin is being set on the request, but that\u0027s a response header), I think it makes sense to go back to your original filtering based on the link doctor URL. https://developers.google.com/api-client-library/javascript/features/authentication indicates that PII won\u0027t be available via googleapis.com unless you go through an oauth flow.",
+      "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "676361ce_a3f0e7e1",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
         "patchSetId": 26
@@ -533,6 +550,30 @@
       "writtenOn": "2017-12-04T18:18:42Z",
       "side": 1,
       "message": "I wish there was a way to be more explicit about this: it feels really indirect that these set of conditions being true implies an isolated world. For example, why is it important to check IsUnique() here? \n\nCan you help me understand what an \"isolated world execution context\" is? Does it mean the isolated world in which content scripts run? Or the actual Document corresponds to the execution context of an extension background/event page?",
+      "range": {
+        "startLine": 612,
+        "startChar": 0,
+        "endLine": 617,
+        "endChar": 25
+      },
+      "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68f0542a_af85d221",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-12-04T21:35:53Z",
+      "side": 1,
+      "message": "Maybe you want to suggest a rewording? \"Isolated world execution context\" is just me trying to speak Blink, and apparently failing. I\u0027d be more than happy for this to explicitly mention extension content scripts, but I thought layering required us to pretend they didn\u0027t exist.\n\nTwo cases that can cause this branch to be taken are: a fetch from setIsolatedWorldSecurityOrigin (via the test API), and a fetch from extension content scripts.  There are also isolated worlds carved out for ISOLATED_WORLD_ID_APPLESCRIPT and ISOLATED_WORLD_ID_CHROME_INTERNAL (which is used by dom distiller and offline pages). Unclear if either of these initiate fetches/XHRs, but if they do, they might hit this branch as well.\n\nAFAIK when a document is loaded in from a chrome-extension:// resource, its scripts run in the main world. My understanding of isolated worlds is that they are a way to get a second execution context running in the same document.\n\nChecking IsUnique() here is defensive -- I was worried about the case where Context.GetSecurityOrigin() is non-unique, but options.security_origin was default-initialized, and we don\u0027t want to lose the information. It is also important not to assign RequestorOrigin if both |origin| and |Context().GetSecurityOrigin()| are unique, because another code path might have assigned RequestorOrigin to be the Origin of the URL -- \"request.SetRequestorOrigin(SecurityOrigin::Create(GetDocument().Url()));\" occurs in at least a couple spots.",
+      "parentUuid": "1c35394b_719ace82",
       "range": {
         "startLine": 612,
         "startChar": 0,

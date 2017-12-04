@@ -22,6 +22,40 @@
       "revId": "a51a9743f711302b0ef2d189516f6ddcc166b7eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c083628f_365a371b",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-12-04T21:35:53Z",
+      "side": 1,
+      "message": "If there are downstream handlers that might defer during OnWillRead, then it seems like we might be in trouble here, since we\u0027re assuming that |buf| . I\u0027m not sure this happens in practice, since otherwise it\u0027s not clear how the ResourceLoader would be told of the final value of *buf after resuming (unless *buf points straight into ResourceLoader memory??!? \u003cinsert arthur lies-on-internet meme\u003e).\n\nIn other words: I have a gut worry that the state-machine complexity in the mime_sniffing_resource_handler is actually dictated by the handler API, and this handler is incorrect in those cases. I guess we\u0027ll find out?",
+      "revId": "a51a9743f711302b0ef2d189516f6ddcc166b7eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe54a0cf_194e2520",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-12-04T21:35:53Z",
+      "side": 1,
+      "message": "Is it possible to get here, and have blocked_read_completed_ be true? (e.g. due to an upstream resource handler that\u0027s also buffering?). If so it seems like this would sniff the second chunk, and potentially allow it, even though blocked_read_completed_ is true?",
+      "revId": "a51a9743f711302b0ef2d189516f6ddcc166b7eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

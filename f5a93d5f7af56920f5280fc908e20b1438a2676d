@@ -73,6 +73,161 @@
     },
     {
       "key": {
+        "uuid": "e434f755_fd7c8943",
+        "filename": "chrome/test/data/extensions/api_test/webrequest/test_unload5.js",
+        "patchSetId": 25
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-12-04T21:35:53Z",
+      "side": 1,
+      "message": "XHRs should never browser-initiated. Also, if we made it WEB_INITIATED, it appears that getServerDomain would append a port, which you don\u0027t want on a chrome-extension URL.",
+      "parentUuid": "b85f23cd_ac2f0c66",
+      "range": {
+        "startLine": 13,
+        "startChar": 22,
+        "endLine": 13,
+        "endChar": 64
+      },
+      "revId": "f5a93d5f7af56920f5280fc908e20b1438a2676d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a76716a_96bdca64",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-12-04T21:35:53Z",
+      "side": 1,
+      "message": "Nice.\n\nIt looks like our testserver impl only supports a single range, but I think the spec allows multiple ranges, like \"bytes\u003d1-24,26-100\" ?\n\nI\u0027d like to find an actual server with an html/json/xml resource that honors such requests, and see if there\u0027s any more protection we could offer.",
+      "range": {
+        "startLine": 157,
+        "startChar": 54,
+        "endLine": 157,
+        "endChar": 66
+      },
+      "revId": "f5a93d5f7af56920f5280fc908e20b1438a2676d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d3b233f_9ea70285",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-12-04T21:35:53Z",
+      "side": 1,
+      "message": "This test has no way of failing, correct?",
+      "revId": "f5a93d5f7af56920f5280fc908e20b1438a2676d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f747f92_4ad40272",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-12-04T21:35:53Z",
+      "side": 1,
+      "message": "s/expected_verdict/verdict/ -- or is that intentional?",
+      "revId": "f5a93d5f7af56920f5280fc908e20b1438a2676d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6605b94e_74a20d88",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-12-04T21:35:53Z",
+      "side": 1,
+      "message": "verfiy -\u003e verify",
+      "range": {
+        "startLine": 143,
+        "startChar": 14,
+        "endLine": 143,
+        "endChar": 20
+      },
+      "revId": "f5a93d5f7af56920f5280fc908e20b1438a2676d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea7577dc_11605806",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-12-04T21:35:53Z",
+      "side": 1,
+      "message": "FTP doesn\u0027t support headers; I guess the idea here is to make a scenario that would fail if the ftp were changed to https?",
+      "revId": "f5a93d5f7af56920f5280fc908e20b1438a2676d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbac357e_75e07b55",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-12-04T21:35:53Z",
+      "side": 1,
+      "message": "Is it intentional to OMIT the Origin header here from the request?",
+      "revId": "f5a93d5f7af56920f5280fc908e20b1438a2676d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c09717c2_69a20df5",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-12-04T21:35:53Z",
+      "side": 1,
+      "message": "What about file://, or content:// ?",
+      "revId": "f5a93d5f7af56920f5280fc908e20b1438a2676d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10515069_3fd13a7c",
         "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
         "patchSetId": 25
