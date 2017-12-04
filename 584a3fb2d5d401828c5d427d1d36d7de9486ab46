@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5f7a663e_0cdb3703",
+        "filename": "third_party/WebKit/Source/core/css/CSSPropertyValueSet.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-12-04T04:09:03Z",
+      "side": 1,
+      "message": "I had to move them to the cpp file to avoid circular #includes, and you can\u0027t inline things in cpp files (well you can write the word inline, but the compiler won\u0027t actually inline it).",
+      "parentUuid": "7a27bd38_53cd920a",
+      "revId": "584a3fb2d5d401828c5d427d1d36d7de9486ab46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "140a486d_95a4bef9",
         "filename": "third_party/WebKit/Source/core/css/ImmutableCSSPropertyValueSet.cpp",
         "patchSetId": 3
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "eaf7993d_d8945a65",
+        "filename": "third_party/WebKit/Source/core/css/ImmutableCSSPropertyValueSet.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-12-04T04:09:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "140a486d_95a4bef9",
+      "range": {
+        "startLine": 56,
+        "startChar": 30,
+        "endLine": 56,
+        "endChar": 61
+      },
+      "revId": "584a3fb2d5d401828c5d427d1d36d7de9486ab46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8018cf21_f4a761b5",
         "filename": "third_party/WebKit/Source/core/css/MutableCSSPropertyValueSet.cpp",
         "patchSetId": 3
@@ -56,6 +98,24 @@
       "revId": "584a3fb2d5d401828c5d427d1d36d7de9486ab46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3096f42_067eaa02",
+        "filename": "third_party/WebKit/Source/core/css/MutableCSSPropertyValueSet.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-12-04T04:09:03Z",
+      "side": 1,
+      "message": "Whoops, done.",
+      "parentUuid": "8018cf21_f4a761b5",
+      "revId": "584a3fb2d5d401828c5d427d1d36d7de9486ab46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
