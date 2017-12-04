@@ -133,8 +133,12 @@ class FormStructureBrowserTest
 
 FormStructureBrowserTest::FormStructureBrowserTest()
     : DataDrivenTest(GetTestDataDir()) {
-  feature_list_.InitAndDisableFeature(
-      autofill::features::kAutofillEnforceMinRequiredFieldsForUpload);
+  feature_list_.InitWithFeatures(
+      // Enabled
+      {},
+      // Disabled
+      {autofill::features::kAutofillEnforceMinRequiredFieldsForUpload,
+       autofill::features::kAutofillRestrictUnownedFieldsToFormlessCheckout});
 }
 
 FormStructureBrowserTest::~FormStructureBrowserTest() {
