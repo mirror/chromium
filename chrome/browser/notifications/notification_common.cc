@@ -28,18 +28,19 @@ const PersistentNotificationMetadata* PersistentNotificationMetadata::From(
 }
 
 // static
-void NotificationCommon::OpenNotificationSettings(
-    content::BrowserContext* browser_context) {
+void NotificationCommon::OpenNotificationSettings(Profile* profile,
+                                                  const GURL& origin) {
+// TODO(peter): Use the |origin| to direct the user to a more appropriate
+// settings page to toggle permission.
+
 #if defined(OS_ANDROID)
   // Android settings are opened directly from Java
   NOTIMPLEMENTED();
 #elif defined(OS_CHROMEOS)
   chrome::ShowContentSettingsExceptionsForProfile(
-      Profile::FromBrowserContext(browser_context),
-      CONTENT_SETTINGS_TYPE_NOTIFICATIONS);
+      profile, CONTENT_SETTINGS_TYPE_NOTIFICATIONS);
 #else
-  chrome::ScopedTabbedBrowserDisplayer browser_displayer(
-      Profile::FromBrowserContext(browser_context));
+  chrome::ScopedTabbedBrowserDisplayer browser_displayer(profile);
   chrome::ShowContentSettingsExceptions(browser_displayer.browser(),
                                         CONTENT_SETTINGS_TYPE_NOTIFICATIONS);
 #endif
