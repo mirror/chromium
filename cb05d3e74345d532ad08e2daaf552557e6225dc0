@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a444cbc3_efaf08b0",
+        "filename": "components/payments/content/payment_response_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2017-12-04T17:19:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38498b80_2af9dbb8",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 64
+      },
+      "revId": "cb05d3e74345d532ad08e2daaf552557e6225dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0fa8547_c668622d",
         "filename": "components/payments/core/payment_details_modifier.cc",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-15T18:29:31Z",
       "side": 1,
       "message": "Should probably be item.Clone() to avoid unexpected failures.",
+      "range": {
+        "startLine": 41,
+        "startChar": 39,
+        "endLine": 41,
+        "endChar": 55
+      },
+      "revId": "cb05d3e74345d532ad08e2daaf552557e6225dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f921d68_7c1e84d8",
+        "filename": "components/payments/core/payment_details_modifier.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2017-12-04T17:19:54Z",
+      "side": 1,
+      "message": "In this case, PaymentItem is not (yet) a mojo struct, so we want to use the copy constructor. I\u0027ve changed this to emplace_back the item directly.",
+      "parentUuid": "a0fa8547_c668622d",
       "range": {
         "startLine": 41,
         "startChar": 39,
@@ -128,6 +176,30 @@
       "writtenOn": "2017-11-15T18:29:31Z",
       "side": 1,
       "message": "Can we move all of the data structures from payment_request.mojom into here?",
+      "range": {
+        "startLine": 1,
+        "startChar": 2,
+        "endLine": 1,
+        "endChar": 3
+      },
+      "revId": "cb05d3e74345d532ad08e2daaf552557e6225dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "993c695c_6c68d63a",
+        "filename": "components/payments/mojom/payment_request_data.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2017-12-04T17:19:54Z",
+      "side": 1,
+      "message": "Yes, that\u0027s the plan, in a subsequent change. The non-data structure portions like the client, which I believe we won\u0027t want to include in the iOS build, could also move into this directory in a separate file and target.",
+      "parentUuid": "52d3d059_d95c3f05",
       "range": {
         "startLine": 1,
         "startChar": 2,

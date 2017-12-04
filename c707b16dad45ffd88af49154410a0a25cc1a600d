@@ -22,6 +22,30 @@
       "revId": "c707b16dad45ffd88af49154410a0a25cc1a600d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55fdb09a_70ea2695",
+        "filename": "components/payments/content/payment_request_converter.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2017-12-04T17:19:54Z",
+      "side": 0,
+      "message": "That\u0027s the eventual goal. I was advised not to try and remove all the intermediary structures at once.",
+      "parentUuid": "f44b91b3_4ad4dd52",
+      "range": {
+        "startLine": 29,
+        "startChar": 12,
+        "endLine": 29,
+        "endChar": 30
+      },
+      "revId": "c707b16dad45ffd88af49154410a0a25cc1a600d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
