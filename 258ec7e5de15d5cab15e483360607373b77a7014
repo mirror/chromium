@@ -16,6 +16,24 @@
       "revId": "258ec7e5de15d5cab15e483360607373b77a7014",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6078d20c_a5fe9029",
+        "filename": "gin/v8_initializer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-12-04T12:55:23Z",
+      "side": 1,
+      "message": "This branch is expected to be run in build-time.\nWe create v8_context_snapshot.bin from snapshot_blob.bin in the host machine, and hence we have to load snapshot_blob.bin at that time, even if we unship snapshot_blob.bin.",
+      "parentUuid": "9572e093_96ceb852",
+      "revId": "258ec7e5de15d5cab15e483360607373b77a7014",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
