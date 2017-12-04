@@ -140,7 +140,7 @@ TEST_F(WKWebViewConfigurationProviderTest, Purge) {
 TEST_F(WKWebViewConfigurationProviderTest, UserScript) {
   WKWebViewConfiguration* config = GetProvider().GetWebViewConfiguration();
   NSArray* scripts = config.userContentController.userScripts;
-  EXPECT_EQ(1U, scripts.count);
+  EXPECT_EQ(2U, scripts.count);
   NSString* early_script = GetEarlyPageScript(&browser_state_);
   // |earlyScript| is a substring of |userScripts|. The latter wraps the
   // former with "if (!injected)" check to avoid double injections.
