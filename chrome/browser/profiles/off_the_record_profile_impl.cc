@@ -181,6 +181,13 @@ void OffTheRecordProfileImpl::Init() {
          IncognitoModePrefs::GetAvailability(profile_->GetPrefs()) !=
              IncognitoModePrefs::DISABLED);
 
+#if defined(OS_CHROMEOS)
+  // Always crash when incognito is not available on Chrome OS.
+  CHECK(profile_->IsGuestSession() ||
+        IncognitoModePrefs::GetAvailability(profile_->GetPrefs()) !=
+            IncognitoModePrefs::DISABLED);
+#endif
+
 #if !defined(OS_ANDROID)
   TrackZoomLevelsFromParent();
 #endif
