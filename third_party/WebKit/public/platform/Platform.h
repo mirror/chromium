@@ -80,6 +80,10 @@ namespace service_manager {
 class Connector;
 }
 
+namespace url {
+class Origin;
+}
+
 namespace v8 {
 class Context;
 template <class T>
@@ -685,7 +689,7 @@ class BLINK_PLATFORM_EXPORT Platform {
   // with the current usage and quota information for the partition. When
   // an error occurs WebStorageQuotaCallbacks::DidFail is called with an
   // error code.
-  virtual void QueryStorageUsageAndQuota(const WebURL& storage_partition,
+  virtual void QueryStorageUsageAndQuota(const url::Origin& storage_partition,
                                          WebStorageQuotaType,
                                          WebStorageQuotaCallbacks) {}
 

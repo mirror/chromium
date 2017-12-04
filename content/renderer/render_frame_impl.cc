@@ -4899,8 +4899,8 @@ void RenderFrameImpl::RequestStorageQuota(
     return;
   }
   RenderThreadImpl::current()->quota_dispatcher()->RequestStorageQuota(
-      routing_id_, url::Origin(origin).GetURL(),
-      static_cast<storage::StorageType>(type), requested_size,
+      routing_id_, url::Origin(origin), static_cast<storage::StorageType>(type),
+      requested_size,
       QuotaDispatcher::CreateWebStorageQuotaCallbacksWrapper(callbacks));
 }
 
