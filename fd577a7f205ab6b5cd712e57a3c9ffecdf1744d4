@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e227ecc_a1f97f88",
+        "filename": "ios/chrome/browser/content_suggestions/ntp_home_mediator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-12-04T10:46:04Z",
+      "side": 1,
+      "message": "same here.",
+      "range": {
+        "startLine": 460,
+        "startChar": 28,
+        "endLine": 460,
+        "endChar": 31
+      },
+      "revId": "fd577a7f205ab6b5cd712e57a3c9ffecdf1744d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

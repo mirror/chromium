@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "435535da_d358b5b5",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_header_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-12-04T10:46:04Z",
+      "side": 1,
+      "message": "OK, I misread.\nI think it should be readonly because this variable cannot change and I am pretty sure that if you set it after the header is displayed (particularly press the button after you set it to false), some unexpected behavior will happen.\nIMO, this should be DCHECKed, prevented, or documented somehow.\n\nIs there a way to pass the value by the constructor, or to get the value via a callback?",
+      "parentUuid": "d9fd1b47_d8db9a3a",
+      "range": {
+        "startLine": 54,
+        "startChar": 21,
+        "endLine": 54,
+        "endChar": 27
+      },
+      "revId": "a2fed8c519c7962d6f212706195a69c8b1bdbd76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72f667d4_d3089b7b",
         "filename": "ios/chrome/browser/content_suggestions/ntp_home_mediator.mm",
         "patchSetId": 3
@@ -125,6 +149,24 @@
       "side": 1,
       "message": "The setter of the web state property removes the observer.",
       "parentUuid": "491ce3e3_a3027575",
+      "revId": "a2fed8c519c7962d6f212706195a69c8b1bdbd76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f7fc769_e5ed907e",
+        "filename": "ios/chrome/browser/content_suggestions/ntp_home_mediator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-12-04T10:46:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1bad246f_04053ea9",
       "revId": "a2fed8c519c7962d6f212706195a69c8b1bdbd76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
