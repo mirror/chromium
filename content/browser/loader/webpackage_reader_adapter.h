@@ -9,18 +9,12 @@
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "content/browser/url_loader_factory_getter.h"
+#include "content/common/webpackage_response_handler.h"
 #include "content/public/common/url_loader.mojom.h"
 #include "mojo/public/cpp/system/data_pipe.h"
 #include "mojo/public/cpp/system/simple_watcher.h"
-#include "net/base/io_buffer.h"
-#include "net/filter/source_stream.h"
-#include "services/network/public/cpp/net_adapters.h"
 #include "url/gurl.h"
 #include "wpkg/webpackage_reader.h"
-
-namespace net {
-class SourceStream;
-}
 
 namespace content {
 
@@ -32,71 +26,6 @@ struct WebPackageManifest {
   GURL start_url;
 };
 
-class WebPackageResponseHandler {
- public:
-  using ResourceCallback =
-      base::OnceCallback<void(int error_code,
-                              const ResourceResponseHead& response_head,
-                              mojo::ScopedDataPipeConsumerHandle body)>;
-  using CompletionCallback =
-      base::OnceCallback<void(const network::URLLoaderCompletionStatus&)>;
-
-  WebPackageResponseHandler(const GURL& request_url,
-                            ResourceResponseHead response_head,
-                            base::OnceClosure done_callback);
-  ~WebPackageResponseHandler();
-
-  // May synchronously fire the callbacks.
-  void AddCallbacks(ResourceCallback callback,
-                    CompletionCallback completion_callback);
-
-  void OnDataReceived(const void* data, size_t size);
-  void OnNotifyFinished(int error_code);
-
-  void GetCurrentReadBuffer(const char** buf, size_t* size);
-  void UpdateConsumedReadSize(size_t size);
-
- private:
-  void OnPipeWritable(MojoResult result);
-  MojoResult BeginWriteToPipe(
-      scoped_refptr<network::NetToMojoPendingBuffer>* pending,
-      uint32_t* available);
-  int WriteToPipe(network::NetToMojoPendingBuffer* dest_buffer,
-                  size_t dest_offset,
-                  size_t* dest_size_inout,
-                  const void* src,
-                  size_t* src_size_inout);
-  void MaybeCompleteAndNotify();
-
-  GURL request_url_;
-  ResourceResponseHead response_head_;
-
-  // For writing the package data to the consumer.
-  std::unique_ptr<mojo::SimpleWatcher> writable_handle_watcher_;
-  mojo::ScopedDataPipeProducerHandle producer_handle_;
-  bool data_write_finished_ = false;
-
-  // For buffering the package data returned by the reader.
-  std::deque<scoped_refptr<net::DrainableIOBuffer>> read_buffers_;
-  bool data_receive_finished_ = false;
-  int error_code_ = net::OK;
-
-  std::unique_ptr<net::SourceStream> source_stream_;
-  bool source_stream_may_have_data_ = false;
-
-  // Accessed only during srouce_stream_->Read() via
-  // GetCurrentReadBuffer() and UpdateConsumedReadSize().
-  const char* current_read_pointer_ = nullptr;
-  size_t current_read_size_ = 0;
-  size_t consumed_read_size_ = 0;
-
-  // We expect single reader for each resource (for now).
-  CompletionCallback completion_callback_;
-  base::OnceClosure done_callback_;
-
-  DISALLOW_COPY_AND_ASSIGN(WebPackageResponseHandler);
-};
-
 // TODO: Remove this indirection.
 class WebPackageReaderAdapterClient {
  public:
@@ -104,7 +33,6 @@ class WebPackageReaderAdapterClient {
 
   // Called at most once.
   virtual void OnFoundManifest(const WebPackageManifest& manifest) = 0;
-  virtual void OnFoundRequest(const ResourceRequest& request) = 0;
   virtual void OnFinishedPackage() = 0;
 };
 
@@ -112,8 +40,20 @@ class WebPackageReaderAdapter
     : public wpkg::WebPackageReaderClient,
       public base::RefCounted<WebPackageReaderAdapter> {
  public:
-  using ResourceCallback = WebPackageResponseHandler::ResourceCallback;
-  using CompletionCallback = WebPackageResponseHandler::CompletionCallback;
+  using ResourceCallback = WebPackageResourceCallback;
+  using CompletionCallback = WebPackageCompletionCallback;
+
+  class PushObserver {
+   public:
+    virtual ~PushObserver() {}
+    virtual void OnRequest(const GURL& request_url,
+                           const std::string& method) = 0;
+    virtual void OnResponse(const GURL& request_url,
+                            const std::string& method,
+                            const ResourceResponseHead& response_head,
+                            mojo::ScopedDataPipeConsumerHandle body,
+                            CompletionCallback* callback) = 0;
+  };
 
   WebPackageReaderAdapter(WebPackageReaderAdapterClient* client,
                           mojo::ScopedDataPipeConsumerHandle handle);
@@ -126,6 +66,8 @@ class WebPackageReaderAdapter
   // |handle| must be also given.
   // |completion_callback| is additionally called only if |callback| is fired
   // with net::OK, and when streaming the response body is finished.
+  //
+  // It is not valid to call this once StartPushResources() is called.
   void GetFirstResource(ResourceCallback callback,
                         CompletionCallback completion_callback);
 
@@ -135,14 +77,32 @@ class WebPackageReaderAdapter
   // |handle| must be also given.
   // |completion_callback| is additionally called only if |callback| is fired
   // with net::OK, and when streaming the response body is finished.
+  //
+  // It is not valid to call this once StartPushResources() is called.
   void GetResource(const ResourceRequest& resource_request,
                    ResourceCallback callback,
                    CompletionCallback completion_callback);
 
   WebPackageReaderAdapterClient* client() { return client_; }
 
+  // This attaches a push observer and also enables resource pushing.
+  // After calling this, all responses that do not have corresponding
+  // GetResource() calls will start to be pushed via the Observer
+  // interface.
+  // Only a single instance can observe pushes, it is not valid to call
+  // this multiple times.
+  //
+  // This can also only be called when there're no more pending GetResource
+  // requests.
+  void StartPushResources(base::WeakPtr<PushObserver> observer);
+
  private:
   const int kInvalidRequestId = -1;
+
+  enum FetchMode {
+    kPull,
+    kPush,
+  };
 
   enum State {
     kInitial,
@@ -152,17 +112,7 @@ class WebPackageReaderAdapter
     kFinished,
   };
 
-  struct PendingCallbacks {
-    PendingCallbacks(ResourceCallback callback,
-                     CompletionCallback completion_callback);
-    ~PendingCallbacks();
-    PendingCallbacks(PendingCallbacks&& other);
-    PendingCallbacks& operator=(PendingCallbacks&& other);
-
-    ResourceCallback callback;
-    CompletionCallback completion_callback;
-  };
-
+  using PendingCallbacks = WebPackagePendingCallbacks;
   using RequestURLAndMethod = std::pair<GURL, std::string>;
 
   friend class base::RefCounted<WebPackageReaderAdapter>;
@@ -208,6 +158,9 @@ class WebPackageReaderAdapter
   int first_request_id_ = kInvalidRequestId;
 
   std::unique_ptr<wpkg::WebPackageReader> reader_;
+
+  FetchMode fetch_mode_ = kPull;
+  base::WeakPtr<PushObserver> push_observer_;
 
   base::WeakPtrFactory<WebPackageReaderAdapter> weak_factory_;
   DISALLOW_COPY_AND_ASSIGN(WebPackageReaderAdapter);

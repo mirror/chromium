@@ -667,7 +667,7 @@ NavigationURLLoaderNetworkService::NavigationURLLoaderNetworkService(
 
 NavigationURLLoaderNetworkService::~NavigationURLLoaderNetworkService() {
   // base::debug::StackTrace trace;
-  LOG(ERROR)
+  LOG(INFO)
       << "** NavigationURLLoaderNetworkService: DTOR " /* << trace.ToString()*/;
   BrowserThread::DeleteSoon(BrowserThread::IO, FROM_HERE,
                             request_controller_.release());
@@ -695,7 +695,7 @@ void NavigationURLLoaderNetworkService::OnReceiveResponse(
     scoped_refptr<ResourceResponse> response,
     const base::Optional<net::SSLInfo>& ssl_info,
     mojom::DownloadedTempFilePtr downloaded_file) {
-  LOG(ERROR) << "** NAVLOADER @UI: OnReceiveResponse ";
+  LOG(INFO) << "** NAVLOADER @UI: OnReceiveResponse ";
   // TODO(scottmg): This needs to do more of what
   // NavigationResourceHandler::OnResponseStarted() does. Or maybe in
   // OnStartLoadingResponseBody().
@@ -708,7 +708,7 @@ void NavigationURLLoaderNetworkService::OnReceiveResponse(
 void NavigationURLLoaderNetworkService::OnReceiveRedirect(
     const net::RedirectInfo& redirect_info,
     scoped_refptr<ResourceResponse> response) {
-  LOG(ERROR) << "** NAVLOADER @UI: OnReceiveRedirect " << redirect_info.new_url;
+  LOG(INFO) << "** NAVLOADER @UI: OnReceiveRedirect " << redirect_info.new_url;
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   delegate_->OnRequestRedirected(redirect_info, std::move(response));
 }
@@ -717,8 +717,8 @@ void NavigationURLLoaderNetworkService::OnStartLoadingResponseBody(
     mojo::ScopedDataPipeConsumerHandle body) {
   DCHECK(response_);
 
-  LOG(ERROR) << "** NAVLOADER @UI: OnStartLoadingResponseBody "
-             << body.is_valid();
+  LOG(INFO) << "** NAVLOADER @UI: OnStartLoadingResponseBody "
+            << body.is_valid();
 
   TRACE_EVENT_ASYNC_END2("navigation", "Navigation timeToResponseStarted", this,
                          "&NavigationURLLoaderNetworkService", this, "success",
@@ -746,11 +746,9 @@ void NavigationURLLoaderNetworkService::OnComplete(
   // TODO(https://crbug.com/757633): Pass real values in the case of cert
   // errors.
   bool should_ssl_errors_be_fatal = true;
-  ssl_info_ = status.ssl_info;
 
-  LOG(ERROR) << "*** OnComplete: "
-             << request_controller_->resource_request_->url << " "
-             << status.error_code;
+  LOG(INFO) << "*** OnComplete: " << request_controller_->resource_request_->url
+            << " " << status.error_code;
 
   delegate_->OnRequestFailed(status.exists_in_cache, status.error_code,
                              ssl_info_, should_ssl_errors_be_fatal);
