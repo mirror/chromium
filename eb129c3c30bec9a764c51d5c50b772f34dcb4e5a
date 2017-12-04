@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "2faa5ecb_9417e165",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-12-04T21:36:42Z",
+      "side": 1,
+      "message": "question: Do we want to do this before sending, rather than after receiving? That prevents compromised receivers from just not-performing the drop in permissions.",
+      "revId": "eb129c3c30bec9a764c51d5c50b772f34dcb4e5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f33197a5_c155c9ec",
         "filename": "base/memory/shared_memory_android.cc",
         "patchSetId": 4
