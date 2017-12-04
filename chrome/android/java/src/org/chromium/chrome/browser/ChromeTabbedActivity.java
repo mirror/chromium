@@ -83,6 +83,8 @@ import org.chromium.chrome.browser.metrics.LaunchMetrics;
 import org.chromium.chrome.browser.metrics.MainIntentBehaviorMetrics;
 import org.chromium.chrome.browser.metrics.StartupMetrics;
 import org.chromium.chrome.browser.metrics.UmaUtils;
+import org.chromium.chrome.browser.modaldialog.ModalDialogManager;
+import org.chromium.chrome.browser.modaldialog.TabModalPresenter;
 import org.chromium.chrome.browser.multiwindow.MultiInstanceChromeTabbedActivity;
 import org.chromium.chrome.browser.multiwindow.MultiWindowUtils;
 import org.chromium.chrome.browser.net.spdyproxy.DataReductionProxySettings;
@@ -251,6 +253,8 @@ public class ChromeTabbedActivity
     private TabModelSelectorTabModelObserver mTabModelObserver;
 
     private ScreenshotMonitor mScreenshotMonitor;
+
+    private TabModalPresenter mTabModalPresenter;
 
     private boolean mUIInitialized;
 
@@ -1531,6 +1535,9 @@ public class ChromeTabbedActivity
 
         mUndoBarPopupController = new UndoBarController(this, mTabModelSelectorImpl,
                 getSnackbarManager());
+
+        mTabModalPresenter = new TabModalPresenter(this);
+        getModalDialogManager().registerPresenter(mTabModalPresenter, ModalDialogManager.TAB_MODAL);
     }
 
     @Override
@@ -1861,6 +1868,8 @@ public class ChromeTabbedActivity
         super.onOmniboxFocusChanged(hasFocus);
 
         mMainIntentMetrics.onOmniboxFocused();
+
+        mTabModalPresenter.onOmniboxFocusChanged(hasFocus);
     }
 
     private void recordBackPressedUma(String logMessage, @BackPressedResult int action) {
@@ -1901,6 +1910,8 @@ public class ChromeTabbedActivity
         }
 
         if (getBottomSheet() != null && getBottomSheet().handleBackPress()) return true;
+
+        if (mTabModalPresenter.handleBackPress()) return true;
 
         if (currentTab == null) {
             recordBackPressedUma("currentTab is null", BACK_PRESSED_TAB_IS_NULL);
