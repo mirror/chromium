@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf5a61d5_9670dea9",
+        "filename": "chrome/browser/sync/test/integration/single_client_user_events_sync_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-04T16:59:00Z",
+      "side": 0,
+      "message": "Nice, this is much more readable your way.",
+      "revId": "cf91f7bf3616c73cee3f04c5a70fcfd2dc623ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
