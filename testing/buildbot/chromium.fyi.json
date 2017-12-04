@@ -7436,6 +7436,26 @@
         },
         "test": "vr_pixeltests"
       }
+    ],
+    "isolated_scripts": [
+      {
+        "args": [
+          "--disable-uploads",
+          "--baseline-bucket=chrome-vr-test-apks",
+          "--baseline-file=test_baseline.json"
+        ],
+        "isolate_name": "vr_pixeltests",
+        "name": "vr_pixeltests_gold",
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "os": "Ubuntu-14.04"
+            }
+          ],
+          "hard_timeout": 60
+        }
+      }
     ]
   },
   "WebKit Linux layout_ng Dummy Builder": {
