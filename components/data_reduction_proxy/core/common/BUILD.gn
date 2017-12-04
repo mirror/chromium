@@ -79,6 +79,7 @@ static_library("test_support") {
   ]
   deps = [
     "//base",
+    "//components/prefs",
     "//net",
     "//net:test_support",
     "//testing/gmock",
@@ -100,6 +101,7 @@ source_set("unit_tests") {
     ":test_support",
     "//base",
     "//base/test:test_support",
+    "//components/prefs",
 
     # TODO this dependency seems wrong, but
     # data_reduction_proxy_event_store_unittest.cc includes a file from it.
