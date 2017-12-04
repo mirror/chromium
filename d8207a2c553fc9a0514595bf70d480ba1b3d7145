@@ -34,6 +34,24 @@
       "revId": "d8207a2c553fc9a0514595bf70d480ba1b3d7145",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e50cf524_34b2d243",
+        "filename": "ios/chrome/browser/ui/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-12-04T22:15:55Z",
+      "side": 1,
+      "message": "Thanks Sylvain! I removed the dependency here and created a new CL to add it in the downstream repo.",
+      "parentUuid": "e4c69479_320b327a",
+      "revId": "d8207a2c553fc9a0514595bf70d480ba1b3d7145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
