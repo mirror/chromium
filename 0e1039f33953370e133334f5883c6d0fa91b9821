@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "44104023_46d69c87",
+        "filename": "third_party/WebKit/Source/core/css/CSSSelector.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-12-04T08:08:52Z",
+      "side": 1,
+      "message": "Yes. That\u0027s for another CL. We should have a tracking issue in crbug.",
+      "parentUuid": "7a3f57ee_1eb12597",
+      "revId": "0e1039f33953370e133334f5883c6d0fa91b9821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "577ddfa7_1019812f",
         "filename": "third_party/WebKit/Source/core/css/PageRuleCollector.cpp",
         "patchSetId": 1
