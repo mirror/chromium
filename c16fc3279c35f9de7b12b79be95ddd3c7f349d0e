@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38432e88_bd7439f9",
+        "filename": "ios/chrome/browser/browser_state/chrome_browser_state_impl_io_data.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-12-04T23:45:52Z",
+      "side": 1,
+      "message": "address memory leak",
+      "range": {
+        "startLine": 237,
+        "startChar": 51,
+        "endLine": 237,
+        "endChar": 70
+      },
+      "revId": "c16fc3279c35f9de7b12b79be95ddd3c7f349d0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
