@@ -13,7 +13,6 @@
 #include "base/memory/weak_ptr.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/values.h"
-#include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/render_frame_observer.h"
 #include "content/public/renderer/render_thread.h"
@@ -220,14 +219,11 @@ void ScriptInjectionManager::RFOHelper::OnDestruct() {
 }
 
 void ScriptInjectionManager::RFOHelper::OnStop() {
-  // With PlzNavigate, we won't get a provisional load failed notification
-  // for 204/205/downloads since these don't notify the renderer. However the
-  // browser does fire the OnStop IPC. So use that signal instead to avoid
-  // keeping the frame in a START state indefinitely which leads to deadlocks.
-  if (content::IsBrowserSideNavigationEnabled()) {
-    DidFailProvisionalLoad(
-        blink::WebURLError(net::ERR_FAILED, blink::WebURL()));
-  }
+  // We won't get a provisional load failed notification for 204/205/downloads
+  // since these don't notify the renderer. However the browser does fire the
+  // OnStop IPC. So use that signal instead to avoid keeping the frame in a
+  // START state indefinitely which leads to deadlocks.
+  DidFailProvisionalLoad(blink::WebURLError(net::ERR_FAILED, blink::WebURL()));
 }
 
 void ScriptInjectionManager::RFOHelper::OnExecuteCode(

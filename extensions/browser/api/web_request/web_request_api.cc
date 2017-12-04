@@ -27,7 +27,6 @@
 #include "base/values.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/resource_request_info.h"
-#include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/child_process_host.h"
 #include "content/public/common/resource_type.h"
 #include "extensions/browser/api/activity_log/web_request_constants.h"
@@ -1140,9 +1139,9 @@ bool ExtensionWebRequestEventRouter::DispatchEvent(
     }
   }
 
-  // PlzNavigate: if this request corresponds to a navigation, use the
-  // NavigationUIData that was provided to the navigation on the UI thread to
-  // get the FrameData.
+  // If this request corresponds to a navigation, use the NavigationUIData that
+  // was provided to the navigation on the UI thread to get the FrameData.
+  //
   // For subresources loads, the request is first received on the IO thread,
   // therefore a construct such as the NavigationUIData cannot be used. Instead,
   // use the map of FrameData with the ids of the renderer that sent the
@@ -1151,8 +1150,7 @@ bool ExtensionWebRequestEventRouter::DispatchEvent(
   // (eg when created by a URLFetcher instead of the ResourceDispatcherHost).
   const content::ResourceRequestInfo* info =
       content::ResourceRequestInfo::ForRequest(request);
-  if (content::IsBrowserSideNavigationEnabled() && info &&
-      IsResourceTypeFrame(info->GetResourceType())) {
+  if (info && IsResourceTypeFrame(info->GetResourceType())) {
     DCHECK(navigation_ui_data);
     event_details->SetFrameData(navigation_ui_data->frame_data());
     DispatchEventToListeners(browser_context, extension_info_map,
