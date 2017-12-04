@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "01b06087_ebf69b24",
+        "filename": "services/network/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-04T22:28:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1335073a_a78ca470",
+      "revId": "2edd228d45c6e569e3ab3a332791f348a4111c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bb6e8d9_8151933f",
         "filename": "services/network/BUILD.gn",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "2edd228d45c6e569e3ab3a332791f348a4111c76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d4a3695_9573bb2e",
+        "filename": "services/network/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-04T22:28:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bb6e8d9_8151933f",
+      "revId": "2edd228d45c6e569e3ab3a332791f348a4111c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "9b3a8d0e_f5d1493f",
+        "filename": "services/network/udp_socket_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-04T22:28:51Z",
+      "side": 1,
+      "message": "I can\u0027t because the constructor is private. I added a comment.",
+      "parentUuid": "0745919a_cdaa597e",
+      "range": {
+        "startLine": 149,
+        "startChar": 14,
+        "endLine": 149,
+        "endChar": 34
+      },
+      "revId": "2edd228d45c6e569e3ab3a332791f348a4111c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "756b70c4_2d5f3ed3",
         "filename": "services/network/udp_socket_impl.cc",
         "patchSetId": 9
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "efb5fe6b_f3809842",
+        "filename": "services/network/udp_socket_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-04T22:28:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "756b70c4_2d5f3ed3",
+      "revId": "2edd228d45c6e569e3ab3a332791f348a4111c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "591065a6_69c4732c",
         "filename": "services/network/udp_socket_impl.cc",
         "patchSetId": 9
@@ -90,6 +168,24 @@
       "revId": "2edd228d45c6e569e3ab3a332791f348a4111c76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c91a88b_4a6274e9",
+        "filename": "services/network/udp_socket_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-04T22:28:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "591065a6_69c4732c",
+      "revId": "2edd228d45c6e569e3ab3a332791f348a4111c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "fac86fa0_ae224c50",
+        "filename": "services/network/udp_socket_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-04T22:28:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "991a2dfd_e0834338",
+      "range": {
+        "startLine": 219,
+        "startChar": 19,
+        "endLine": 219,
+        "endChar": 23
+      },
+      "revId": "2edd228d45c6e569e3ab3a332791f348a4111c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf956a5a_a8034924",
         "filename": "services/network/udp_socket_impl.cc",
         "patchSetId": 9
@@ -130,6 +250,24 @@
       "revId": "2edd228d45c6e569e3ab3a332791f348a4111c76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98f0e170_22e2b26c",
+        "filename": "services/network/udp_socket_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-04T22:28:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf956a5a_a8034924",
+      "revId": "2edd228d45c6e569e3ab3a332791f348a4111c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -150,6 +288,24 @@
     },
     {
       "key": {
+        "uuid": "ec951b1c_268cd66c",
+        "filename": "services/network/udp_socket_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-04T22:28:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3df45ac_1ca9a554",
+      "revId": "2edd228d45c6e569e3ab3a332791f348a4111c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3420187a_62eade59",
         "filename": "services/network/udp_socket_impl.cc",
         "patchSetId": 9
@@ -164,6 +320,24 @@
       "revId": "2edd228d45c6e569e3ab3a332791f348a4111c76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3251d42f_b0410f27",
+        "filename": "services/network/udp_socket_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-04T22:28:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3420187a_62eade59",
+      "revId": "2edd228d45c6e569e3ab3a332791f348a4111c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
