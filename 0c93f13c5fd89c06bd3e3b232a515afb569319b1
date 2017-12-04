@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48019be9_111af45f",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-12-04T21:20:26Z",
+      "side": 1,
+      "message": "I\u0027m setting this attribute in another change, but I\u0027m setting it as \"both\", because there is an autocomplete popup.",
+      "revId": "0c93f13c5fd89c06bd3e3b232a515afb569319b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
