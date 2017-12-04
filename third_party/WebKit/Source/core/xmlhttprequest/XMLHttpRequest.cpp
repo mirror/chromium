@@ -1450,9 +1450,11 @@ String XMLHttpRequest::getAllResponseHeaders() const {
 
   StringBuilder string_builder;
 
-  WebHTTPHeaderSet access_control_expose_header_set;
-  WebCORS::ExtractCorsExposedHeaderNamesList(WrappedResourceResponse(response_),
-                                             access_control_expose_header_set);
+  WebHTTPHeaderSet access_control_expose_header_set =
+      WebCORS::ExtractCorsExposedHeaderNamesList(
+          with_credentials_ ? network::mojom::FetchCredentialsMode::kInclude
+                            : network::mojom::FetchCredentialsMode::kSameOrigin,
+          WrappedResourceResponse(response_));
 
   HTTPHeaderMap::const_iterator end = response_.HttpHeaderFields().end();
   for (HTTPHeaderMap::const_iterator it = response_.HttpHeaderFields().begin();
@@ -1496,9 +1498,11 @@ const AtomicString& XMLHttpRequest::getResponseHeader(
     return g_null_atom;
   }
 
-  WebHTTPHeaderSet access_control_expose_header_set;
-  WebCORS::ExtractCorsExposedHeaderNamesList(WrappedResourceResponse(response_),
-                                             access_control_expose_header_set);
+  WebHTTPHeaderSet access_control_expose_header_set =
+      WebCORS::ExtractCorsExposedHeaderNamesList(
+          with_credentials_ ? network::mojom::FetchCredentialsMode::kInclude
+                            : network::mojom::FetchCredentialsMode::kSameOrigin,
+          WrappedResourceResponse(response_));
 
   if (!same_origin_request_ &&
       !WebCORS::IsOnAccessControlResponseHeaderWhitelist(name) &&
