@@ -22,6 +22,30 @@
       "revId": "34436a6d635af693723da6d613e9faec946fd77b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "def670a0_e06df69a",
+        "filename": "media/midi/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1181480
+      },
+      "writtenOn": "2017-12-04T21:56:21Z",
+      "side": 1,
+      "message": "Thanks. The efficient_fuzzer.md link didn\u0027t seem to specify what the accepted format was for the corpus. Is it a byte sequence every line? Is each sequence a separate file? Do we need to append \"0x\" to every byte? Is there an example where this is delineated?",
+      "parentUuid": "4c1014f8_4c483a89",
+      "range": {
+        "startLine": 220,
+        "startChar": 0,
+        "endLine": 236,
+        "endChar": 1
+      },
+      "revId": "34436a6d635af693723da6d613e9faec946fd77b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
