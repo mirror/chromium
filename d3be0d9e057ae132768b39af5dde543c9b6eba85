@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22ea3cf4_e5b60135",
+        "filename": "components/ukm/content/source_url_recorder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-12-04T00:35:30Z",
+      "side": 1,
+      "message": "let\u0027s set this to a sane initial value in the constructor, or use base::Optional",
+      "revId": "d3be0d9e057ae132768b39af5dde543c9b6eba85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

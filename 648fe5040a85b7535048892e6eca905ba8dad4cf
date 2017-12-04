@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "906b5a8d_a4c6c2c2",
+        "filename": "components/ukm/content/source_url_recorder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-12-04T00:35:30Z",
+      "side": 1,
+      "message": "what should we do here if last_committed_navigation_id_ is unset? DCHECK?",
+      "revId": "648fe5040a85b7535048892e6eca905ba8dad4cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7083a44b_abd85bac",
+        "filename": "components/ukm/content/source_url_recorder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-12-04T00:35:30Z",
+      "side": 1,
+      "message": "nit: could we add \"for the currently committed document of the web contents\"? to the comment? That makes it slightly clearer.",
+      "revId": "648fe5040a85b7535048892e6eca905ba8dad4cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
