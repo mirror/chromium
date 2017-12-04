@@ -93,6 +93,30 @@
       "revId": "ca603c4a9285717e68a85c427f19f1b3c70e81d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fc08419_7bd86cdf",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-04T16:34:33Z",
+      "side": 1,
+      "message": "I see. So, you basically want to special case any Window in the SettingBubbleContainer *not* the tray (you\u0027re comment about \u0027tray\u0027 on line 160 is wrong). My worry with looking at the SettingBubbleContainer is that it\u0027s entirely possible the tray may spawn a window that isn\u0027t in that container and key events should go to it (perhaps a menu). Does the NetworkStateListDetailedView::InfoBubble have a transient parent of the tray (BubbleDialogDelegateView)?",
+      "parentUuid": "328733c0_b72a5457",
+      "range": {
+        "startLine": 165,
+        "startChar": 25,
+        "endLine": 165,
+        "endChar": 38
+      },
+      "revId": "ca603c4a9285717e68a85c427f19f1b3c70e81d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
