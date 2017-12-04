@@ -154,6 +154,10 @@ void OnTraceUploadComplete(TraceCrashServiceUploader* uploader,
 
 void UploadTraceToCrashServer(std::string file_contents,
                               std::string trigger_name) {
+  UMA_HISTOGRAM_CUSTOM_COUNTS("OutOfProcessHeapProfiling.UploadTrace.Size",
+                              file_contents.size(), 10 * 1024,
+                              300 * 1024 * 1024, 100);
+
   base::Value rules_list(base::Value::Type::LIST);
   base::Value rule(base::Value::Type::DICTIONARY);
   rule.SetKey("rule", base::Value("MEMLOG"));
@@ -488,6 +492,8 @@ void ProfilingProcessHost::RequestProcessReport(std::string trigger_name) {
 
   auto finish_report_callback = base::BindOnce(
       [](std::string trigger_name, bool success, std::string trace) {
+        UMA_HISTOGRAM_BOOLEAN("OutOfProcessHeapProfiling.RecordTrace.Success",
+                              success);
         if (success) {
           UploadTraceToCrashServer(std::move(trace), std::move(trigger_name));
         }
@@ -549,10 +555,10 @@ void ProfilingProcessHost::RequestTraceWithHeapDump(
     DCHECK(!dump_process_for_tracing_callback_);
     dump_process_for_tracing_callback_ = std::move(stop_tracing_closure);
   } else {
-    // Wait 10 seconds, then end the trace.
+    // Wait 30 seconds, then end the trace.
     base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
         FROM_HERE, std::move(stop_tracing_closure),
-        base::TimeDelta::FromSeconds(10));
+        base::TimeDelta::FromSeconds(30));
   }
 }
 
