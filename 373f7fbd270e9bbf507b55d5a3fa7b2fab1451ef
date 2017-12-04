@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bc4e90d_39de08e7",
+        "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-04T13:00:28Z",
+      "side": 1,
+      "message": "Shouldn\u0027t |printers_policy_observer_| be reset here too, just like other policy observers are reset here?",
+      "revId": "373f7fbd270e9bbf507b55d5a3fa7b2fab1451ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d73824f0_7155e418",
+        "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-04T13:00:28Z",
+      "side": 1,
+      "message": "nit: This should be put into an anonymous namespace.",
+      "revId": "373f7fbd270e9bbf507b55d5a3fa7b2fab1451ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61f9cf3a_2fcd82c6",
+        "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-04T13:00:28Z",
+      "side": 1,
+      "message": "Maybe put the feature checks inside the implementation of the ExternalPrinters methods? To me the enabled checks are an implementation details, not the caller\u0027s concern.",
+      "revId": "373f7fbd270e9bbf507b55d5a3fa7b2fab1451ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc051451_5d934749",
+        "filename": "chrome/browser/chromeos/printing/external_printers_factory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-04T13:00:28Z",
+      "side": 1,
+      "message": "Can this be made inheriting from BrowserContextKeyedServiceFactory?\nOr you discovered some issue with that approach?",
+      "revId": "373f7fbd270e9bbf507b55d5a3fa7b2fab1451ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
