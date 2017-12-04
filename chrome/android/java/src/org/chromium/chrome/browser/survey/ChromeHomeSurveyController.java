@@ -337,13 +337,15 @@ public class ChromeHomeSurveyController implements InfoBarContainer.InfoBarAnima
             }
 
             @Override
-            public void onSurveyInfoBarClosed() {
+            public void onSurveyInfobarCloseButtonClicked() {
+                RecordUserAction.record("Android.ChromeHome.ClickedSurveyInfobarCloseButton");
                 recordInfoBarDisplayed();
             }
 
             @Override
             public void onSurveyTriggered() {
                 RecordUserAction.record("Android.ChromeHome.AcceptedSurvey");
+                recordInfoBarDisplayed();
             }
 
             @Override

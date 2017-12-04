@@ -101,7 +101,7 @@ public class SurveyInfoBar extends InfoBar {
 
                 SurveyController.getInstance().showSurveyIfAvailable(
                         tab.getActivity(), mSiteId, mShowAsBottomSheet, mDisplayLogoResId);
-                onCloseButtonClicked();
+                closeInfoBar();
                 mClicked = true;
             }
         };
@@ -127,7 +127,7 @@ public class SurveyInfoBar extends InfoBar {
 
     @Override
     public void onCloseButtonClicked() {
-        mDelegate.onSurveyInfoBarClosed();
+        mDelegate.onSurveyInfobarCloseButtonClicked();
         super.onCloseButtonClicked();
     }
 
