@@ -274,14 +274,29 @@ VideoPixelFormat VideoFormat(
 VideoPixelFormat FinalVideoFormat(
     GpuVideoAcceleratorFactories::OutputFormat format) {
   // Consumers should sample from NV12 textures as if they're XRGB.
-  if (format == GpuVideoAcceleratorFactories::OutputFormat::NV12_SINGLE_GMB)
-    return PIXEL_FORMAT_XRGB;
+
+  //if (format == GpuVideoAcceleratorFactories::OutputFormat::NV12_SINGLE_GMB)
+  //  return PIXEL_FORMAT_XRGB;
+
   return VideoFormat(format);
 }
 
 // The number of output planes to be copied in each iteration.
 size_t NumGpuMemoryBuffers(GpuVideoAcceleratorFactories::OutputFormat format) {
-  return VideoFrame::NumPlanes(FinalVideoFormat(format));
+  switch (format) {
+    case GpuVideoAcceleratorFactories::OutputFormat::I420:
+      return 3;
+    case GpuVideoAcceleratorFactories::OutputFormat::NV12_SINGLE_GMB:
+      return 1;
+    case GpuVideoAcceleratorFactories::OutputFormat::NV12_DUAL_GMB:
+      return 2;
+    case GpuVideoAcceleratorFactories::OutputFormat::UYVY:
+      return 1;
+    case GpuVideoAcceleratorFactories::OutputFormat::UNDEFINED:
+      NOTREACHED();
+      break;
+  }
+  return 0;
 }
 
 // The number of output rows to be copied in each iteration.
