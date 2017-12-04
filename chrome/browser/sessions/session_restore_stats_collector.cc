@@ -117,7 +117,7 @@ SessionRestoreStatsCollector::SessionRestoreStatsCollector(
       waiting_for_load_tab_count_(0u),
       loading_tab_count_(0u),
       deferred_tab_count_(0u),
-      tick_clock_(new base::DefaultTickClock()),
+      tick_clock_(base::DefaultTickClock::GetInstance()),
       reporting_delegate_(std::move(reporting_delegate)) {
   this_retainer_ = this;
 }

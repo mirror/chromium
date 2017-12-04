@@ -133,7 +133,7 @@ class COMPONENTS_PREFS_EXPORT JsonPrefStore
     // the time.
     WriteCountHistogram(const base::TimeDelta& commit_interval,
                         const base::FilePath& path,
-                        std::unique_ptr<base::Clock> clock);
+                        base::Clock* clock);
     ~WriteCountHistogram();
 
     // Record that a write has occured.
@@ -153,7 +153,7 @@ class COMPONENTS_PREFS_EXPORT JsonPrefStore
     const base::FilePath path_;
 
     // Clock which is used to retrieve the current time.
-    std::unique_ptr<base::Clock> clock_;
+    base::Clock* clock_;
 
     // The interval at which to report write counts.
     const base::TimeDelta report_interval_;
