@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ff86542_5d6fcbe5",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-12-04T22:03:33Z",
+      "side": 1,
+      "message": "Presumably nonexistent values result in just a blank page?\nDo we cover this possibility in one of your unit tests?",
+      "range": {
+        "startLine": 43,
+        "startChar": 8,
+        "endLine": 43,
+        "endChar": 17
+      },
+      "revId": "7e5a393e59631149f5129659a7fa08eb38ed8ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
