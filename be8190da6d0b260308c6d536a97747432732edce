@@ -22,6 +22,30 @@
       "revId": "be8190da6d0b260308c6d536a97747432732edce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4de4638_37989f19",
+        "filename": "extensions/browser/updater/extension_installer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-12-04T19:43:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5cabf76_7ea35faf",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 49
+      },
+      "revId": "be8190da6d0b260308c6d536a97747432732edce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
