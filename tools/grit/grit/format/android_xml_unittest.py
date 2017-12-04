@@ -69,12 +69,12 @@ a sledge hammer."</string>
 <string name="whitespace">"   How old fashioned  --  she thought. "</string>
 <string name="placeholders">"I\'ll buy a %d nm laser at %s."</string>
 <plurals name="plurals">
-  <item quantity="one">"Maybe I\'ll get one laser."</item>
   <item quantity="other">"Maybe I\'ll get %d lasers."</item>
+  <item quantity="one">"Maybe I\'ll get one laser."</item>
 </plurals>
 <plurals name="plurals_no_space">
-  <item quantity="one">"OneMississippi"</item>
   <item quantity="other">"ManyMississippis"</item>
+  <item quantity="one">"OneMississippi"</item>
 </plurals>
 </resources>
 """
