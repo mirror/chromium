@@ -22,6 +22,30 @@
       "revId": "b3d11796082d7cca565a42f105f811245c07a64d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0db9d76_46b8e13e",
+        "filename": "ui/views/controls/scroll_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-12-04T21:50:35Z",
+      "side": 1,
+      "message": "This works:\n\nfocused_now-\u003eScrollRectToVisible(focused_now-\u003eGetLocalBounds());\n\nNext patch will have change. Working on fixing up trybot failures.",
+      "parentUuid": "e89692d9_8e37bd3f",
+      "range": {
+        "startLine": 833,
+        "startChar": 4,
+        "endLine": 836,
+        "endChar": 50
+      },
+      "revId": "b3d11796082d7cca565a42f105f811245c07a64d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
