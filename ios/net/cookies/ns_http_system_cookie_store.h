@@ -45,6 +45,8 @@ class NSHTTPSystemCookieStore : public net::SystemCookieStore {
 
   NSHTTPCookieAcceptPolicy GetCookieAcceptPolicy() override;
 
+  const char* GetClassName() const override;
+
  private:
   // Returns all cookies for a specific |url| from the internal cookie store.
   // Cookies are sorted, as per RFC6265.
