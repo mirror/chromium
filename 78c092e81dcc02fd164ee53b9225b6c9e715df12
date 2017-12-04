@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56ffe15e_b831ce6f",
+        "filename": "components/url_formatter/idn_spoof_checker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-04T23:36:45Z",
+      "side": 1,
+      "message": "U+04CF sure looks like a capital i to me, should it be replaced with \u0027i\u0027 instead of \u0027l\u0027?",
+      "revId": "78c092e81dcc02fd164ee53b9225b6c9e715df12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
