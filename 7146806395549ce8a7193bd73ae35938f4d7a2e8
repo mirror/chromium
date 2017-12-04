@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af64d843_5f0b502e",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-04T03:29:06Z",
+      "side": 1,
+      "message": "Now I\u0027m wondering if this is correct.\nDo you think |host_for_client_| or |host_for_global_scope_| can be null if the pipe to the browser\u0027s RegistrationHost gets disconnected at the same time when |binding_| is disconnected?\nIf so, we may need to do null-check before calling methods on GetRegistrationObjectHost().",
+      "revId": "7146806395549ce8a7193bd73ae35938f4d7a2e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
