@@ -114,6 +114,9 @@ void CompositorFrameSinkSupport::SetBeginFrameSource(
 }
 
 void CompositorFrameSinkSupport::EvictCurrentSurface() {
+  if (true)
+    return;
+
   if (!current_surface_id_.is_valid())
     return;
 
