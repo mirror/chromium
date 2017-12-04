@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc0dc0e9_3d7f891e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-04T03:51:55Z",
+      "side": 1,
+      "message": "Perhaps:\n\nLog the source when installing a PWA on desktop",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 11
+      },
+      "revId": "37662725d57c55a3921ed9f176f14ce7a61b640a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8933dda_5bfbe48f",
+        "filename": "chrome/browser/extensions/tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-04T03:51:55Z",
+      "side": 1,
+      "message": "We don\u0027t actually know at this point if the page is a PWA. BookmarkAppHelper has to work that out, so this will overcount.\n\nAlso, there is an additional confirmation dialog before the installation starts, whereas on Android we only record this metric when an install has actually started. This will also (slightly) overcount.\n\nWDYT about passing the source to BookmarkAppHelper as an argument, and logging it inside BookmarkAppHelper::OnBubbleCompleted if installable_ is INSTALLABLE_YES? Then you can remove the other changes in this CL since BookmarkAppHelper will handle the metric update.",
+      "range": {
+        "startLine": 372,
+        "startChar": 5,
+        "endLine": 372,
+        "endChar": 72
+      },
+      "revId": "37662725d57c55a3921ed9f176f14ce7a61b640a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
