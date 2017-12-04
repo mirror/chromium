@@ -53,6 +53,7 @@
 #include "content/browser/keyboard_lock/keyboard_lock_service_impl.h"
 #include "content/browser/loader/resource_dispatcher_host_impl.h"
 #include "content/browser/loader/resource_scheduler_filter.h"
+#include "content/browser/media/capture/audio_mirroring_manager.h"
 #include "content/browser/media/media_interface_proxy.h"
 #include "content/browser/media/session/media_session_service_impl.h"
 #include "content/browser/payments/payment_app_context_impl.h"
@@ -62,6 +63,7 @@
 #include "content/browser/renderer_host/dip_util.h"
 #include "content/browser/renderer_host/input/input_router.h"
 #include "content/browser/renderer_host/input/timeout_monitor.h"
+#include "content/browser/renderer_host/media/audio_input_delegate_impl.h"
 #include "content/browser/renderer_host/media/media_devices_dispatcher_host.h"
 #include "content/browser/renderer_host/render_process_host_impl.h"
 #include "content/browser/renderer_host/render_view_host_delegate.h"
@@ -127,7 +129,9 @@
 #include "content/public/common/url_constants.h"
 #include "content/public/common/url_utils.h"
 #include "device/vr/vr_service.mojom.h"
+#include "media/audio/audio_manager.h"
 #include "media/base/media_switches.h"
+#include "media/base/user_input_monitor.h"
 #include "media/media_features.h"
 #include "media/mojo/interfaces/remoting.mojom.h"
 #include "media/mojo/services/media_interface_provider.h"
@@ -3081,6 +3085,10 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
   registry_->AddInterface<device::mojom::VRService>(base::Bind(
       &WebvrServiceProvider::BindWebvrService, base::Unretained(this)));
 
+  registry_->AddInterface(
+      base::BindRepeating(&RenderFrameHostImpl::CreateAudioInputStreamFactory,
+                          base::Unretained(this)));
+
   if (RendererAudioOutputStreamFactoryContextImpl::UseMojoFactories()) {
     registry_->AddInterface(base::BindRepeating(
         &RenderFrameHostImpl::CreateAudioOutputStreamFactory,
@@ -4242,6 +4250,19 @@ void RenderFrameHostImpl::ResetFeaturePolicy() {
       frame_tree_node()->effective_frame_policy().container_policy;
   feature_policy_ = blink::FeaturePolicy::CreateFromParentPolicy(
       parent_policy, container_policy, last_committed_origin_);
+}
+
+void RenderFrameHostImpl::CreateAudioInputStreamFactory(
+    mojom::RendererAudioInputStreamFactoryRequest request) {
+  BrowserMainLoop* bml = BrowserMainLoop::GetInstance();
+  DCHECK(bml);
+  audio_input_stream_factory_ =
+      RenderFrameAudioInputStreamFactoryHandle::CreateFactory(
+          base::BindRepeating(
+              &AudioInputDelegateImpl::Create, media::AudioManager::Get(),
+              AudioMirroringManager::GetInstance(), bml->user_input_monitor(),
+              GetProcess()->GetID(), GetRoutingID()),
+          bml->media_stream_manager(), std::move(request));
 }
 
 void RenderFrameHostImpl::CreateAudioOutputStreamFactory(
