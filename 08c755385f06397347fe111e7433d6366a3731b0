@@ -34,6 +34,24 @@
       "revId": "08c755385f06397347fe111e7433d6366a3731b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61fc828b_e6a82142",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-12-04T22:03:27Z",
+      "side": 1,
+      "message": "And the answer is no, you CANNOT call is_full() on a full page that has been detached from the freelist. The reason is in SetNewActivePage(), which does all the book keeping for the active_pages list, full pages are removed from all lists. On the removal, the |num_allocated_slots| field is negated which will cause the is_full() conditional of\n  bool ret \u003d (num_allocated_slots \u003d\u003d bucket-\u003eget_slots_per_span());\n\nto return the wrong thing.\n\nFun huh?",
+      "parentUuid": "fde5228d_0ec1ac50",
+      "revId": "08c755385f06397347fe111e7433d6366a3731b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
