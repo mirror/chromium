@@ -2727,10 +2727,6 @@ TEST_F(DevToolsAgentTest, WindowOpenWithEmptyURL) {
 }
 
 TEST_F(DevToolsAgentTest, WindowOpenWithRelativeURL) {
-  // Enable browser side navigation to avoid actually load url for the new
-  // window.
-  base::CommandLine::ForCurrentProcess()->AppendSwitch(
-      switches::kEnableBrowserSideNavigation);
   Attach();
   DispatchDevToolsMessage("Page.enable",
                           "{\"id\":1,\"method\":\"Page.enable\"}");
@@ -2747,10 +2743,6 @@ TEST_F(DevToolsAgentTest, WindowOpenWithRelativeURL) {
 }
 
 TEST_F(DevToolsAgentTest, WindowOpenFromClick) {
-  // Enable browser side navigation to avoid actually load url for the new
-  // window.
-  base::CommandLine::ForCurrentProcess()->AppendSwitch(
-      switches::kEnableBrowserSideNavigation);
   Attach();
   DispatchDevToolsMessage("Page.enable",
                           "{\"id\":1,\"method\":\"Page.enable\"}");

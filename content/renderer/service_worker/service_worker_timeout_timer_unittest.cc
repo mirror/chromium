@@ -49,8 +49,7 @@ class ServiceWorkerTimeoutTimerTest : public testing::Test {
   }
 
   void EnableServicification() {
-    feature_list_.InitWithFeatures(
-        {features::kBrowserSideNavigation, features::kNetworkService}, {});
+    feature_list_.InitWithFeatures({features::kNetworkService}, {});
     ASSERT_TRUE(ServiceWorkerUtils::IsServicificationEnabled());
   }
 

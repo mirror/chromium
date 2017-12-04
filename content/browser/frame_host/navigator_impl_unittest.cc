@@ -45,6 +45,7 @@
 
 namespace content {
 
+// TODO(clamy): Rename the tests NavigatorTests.
 class NavigatorTestWithBrowserSideNavigation
     : public RenderViewHostImplTestHarness {
  public:
@@ -52,7 +53,6 @@ class NavigatorTestWithBrowserSideNavigation
   using SiteInstanceRelation = RenderFrameHostManager::SiteInstanceRelation;
 
   void SetUp() override {
-    EnableBrowserSideNavigation();
     RenderViewHostImplTestHarness::SetUp();
   }
 
