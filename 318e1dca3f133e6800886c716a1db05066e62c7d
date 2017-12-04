@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d227c072_09b590a2",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webvtt/rendering/cues-with-video/processing-model/track-cue-rendering-position-align-rtl.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-12-04T07:47:15Z",
+      "side": 1,
+      "message": "try using /common/media.js similar to other test cases in wpt.",
+      "range": {
+        "startLine": 2,
+        "startChar": 25,
+        "endLine": 2,
+        "endChar": 31
+      },
+      "revId": "318e1dca3f133e6800886c716a1db05066e62c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
