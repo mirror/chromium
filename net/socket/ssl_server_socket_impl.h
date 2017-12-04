@@ -23,13 +23,19 @@ class SSLServerContextImpl : public SSLServerContext {
   SSLServerContextImpl(X509Certificate* certificate,
                        const crypto::RSAPrivateKey& key,
                        const SSLServerConfig& ssl_server_config);
+  SSLServerContextImpl(X509Certificate* certificate,
+                       scoped_refptr<SSLPrivateKey> key,
+                       const SSLServerConfig& ssl_server_config);
   ~SSLServerContextImpl() override;
 
   std::unique_ptr<SSLServerSocket> CreateSSLServerSocket(
       std::unique_ptr<StreamSocket> socket) override;
 
  private:
+  class Handshaker;
   class SocketImpl;
+
+  void Init();
 
   bssl::UniquePtr<SSL_CTX> ssl_ctx_;
 
@@ -41,6 +47,8 @@ class SSLServerContextImpl : public SSLServerContext {
 
   // Private key used by the server.
   std::unique_ptr<crypto::RSAPrivateKey> key_;
+
+  const scoped_refptr<SSLPrivateKey> private_key_;
 };
 
 }  // namespace net
