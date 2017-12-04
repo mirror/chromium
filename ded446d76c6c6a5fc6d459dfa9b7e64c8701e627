@@ -16,6 +16,24 @@
       "revId": "ded446d76c6c6a5fc6d459dfa9b7e64c8701e627",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9779c0a5_b34370de",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-04T23:58:34Z",
+      "side": 1,
+      "message": "Which main thread are you referring to here? The Renderer isn\u0027t supposed to start with a new frame at this point, so it\u0027s intentionally blocked here. This avoids overstuffed GPU buffers and corresponding unacceptable latency, and also was necessary to avoid unfortunate GPU scheduling effects where the new frame\u0027s rendering work was delaying completion of the previous one, see for example http://crbug.com/747159.\n\nThe average wait time here can range from zero to ~20ms for a GPU-bound WebVR page. I\u0027m working on a followup change to replace this with a GpuFence which doesn\u0027t require CPU-level synchronization, combined with heuristics to delay WebVR\u0027s animation start if it\u0027s likely to just be waiting at this step, and tracking the time needed is in preparation for that.",
+      "parentUuid": "0dfb8ede_729081e0",
+      "revId": "ded446d76c6c6a5fc6d459dfa9b7e64c8701e627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
