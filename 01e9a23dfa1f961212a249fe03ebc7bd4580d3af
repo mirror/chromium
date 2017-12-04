@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cae645e8_5ab994fe",
+        "filename": "net/nqe/network_quality_estimator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-04T22:51:27Z",
+      "side": 1,
+      "message": "Much better, thanks!\nDone.",
+      "parentUuid": "a7d650e6_691e3199",
+      "revId": "01e9a23dfa1f961212a249fe03ebc7bd4580d3af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26066d89_d160c22f",
         "filename": "net/nqe/network_quality_estimator.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "01e9a23dfa1f961212a249fe03ebc7bd4580d3af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a0a1306_adab6361",
+        "filename": "net/nqe/network_quality_estimator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-04T22:51:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26066d89_d160c22f",
+      "revId": "01e9a23dfa1f961212a249fe03ebc7bd4580d3af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
