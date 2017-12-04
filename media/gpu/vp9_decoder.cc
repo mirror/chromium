@@ -40,7 +40,7 @@ bool VP9Decoder::Flush() {
   return true;
 }
 
-void VP9Decoder::Reset() {
+bool VP9Decoder::Reset() {
   curr_frame_hdr_ = nullptr;
   for (auto& ref_frame : ref_frames_)
     ref_frame = nullptr;
@@ -49,6 +49,8 @@ void VP9Decoder::Reset() {
 
   if (state_ == kDecoding)
     state_ = kAfterReset;
+
+  return true;
 }
 
 VP9Decoder::DecodeResult VP9Decoder::Decode() {
