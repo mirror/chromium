@@ -385,9 +385,9 @@ class CONTENT_EXPORT RenderWidgetHostImpl
       const ui::LatencyInfo& latency);  // Virtual for testing.
   void ForwardMouseEventWithLatencyInfo(const blink::WebMouseEvent& mouse_event,
                                         const ui::LatencyInfo& latency);
-  virtual void ForwardWheelEventWithLatencyInfo(
+  void ForwardWheelEventWithLatencyInfo(
       const blink::WebMouseWheelEvent& wheel_event,
-      const ui::LatencyInfo& latency);  // Virtual for testing.
+      const ui::LatencyInfo& latency) override;  // Virtual for testing.
 
   // Returns an emulator for this widget. See TouchEmulator for more details.
   TouchEmulator* GetTouchEmulator();

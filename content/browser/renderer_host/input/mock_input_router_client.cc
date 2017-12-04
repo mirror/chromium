@@ -73,6 +73,15 @@ void MockInputRouterClient::ForwardGestureEventWithLatencyInfo(
         GestureEventWithLatencyInfo(gesture_event, latency_info));
 }
 
+void MockInputRouterClient::ForwardWheelEventWithLatencyInfo(
+    const blink::WebMouseWheelEvent& wheel_event,
+    const ui::LatencyInfo& latency_info) {
+  if (input_router_) {
+    input_router_->SendWheelEvent(
+        MouseWheelEventWithLatencyInfo(wheel_event, latency_info));
+  }
+}
+
 bool MockInputRouterClient::GetAndResetFilterEventCalled() {
   bool filter_input_event_called = filter_input_event_called_;
   filter_input_event_called_ = false;
