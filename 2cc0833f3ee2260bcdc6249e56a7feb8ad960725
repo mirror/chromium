@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "095b0b7c_207b1267",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-04T20:34:47Z",
+      "side": 1,
+      "message": "nit: consider doing this anyway in the in-process case, just for consistency between the two?",
+      "revId": "2cc0833f3ee2260bcdc6249e56a7feb8ad960725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
