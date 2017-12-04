@@ -5,6 +5,7 @@
 #include "components/discardable_memory/service/discardable_shared_memory_manager.h"
 
 #include <algorithm>
+#include <memory>
 #include <utility>
 
 #include "base/atomic_sequence_num.h"
@@ -15,7 +16,6 @@
 #include "base/macros.h"
 #include "base/memory/discardable_memory.h"
 #include "base/memory/memory_coordinator_client_registry.h"
-#include "base/memory/ptr_util.h"
 #include "base/memory/shared_memory_tracker.h"
 #include "base/numerics/safe_math.h"
 #include "base/process/memory.h"
@@ -29,7 +29,6 @@
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
 #include "components/discardable_memory/common/discardable_shared_memory_heap.h"
-#include "mojo/public/cpp/bindings/strong_binding.h"
 #include "mojo/public/cpp/system/platform_handle.h"
 
 #if defined(OS_LINUX)
@@ -235,8 +234,8 @@ DiscardableSharedMemoryManager::~DiscardableSharedMemoryManager() {
 void DiscardableSharedMemoryManager::Bind(
     mojom::DiscardableSharedMemoryManagerRequest request,
     const service_manager::BindSourceInfo& source_info) {
-  mojo::MakeStrongBinding(
-      base::MakeUnique<MojoDiscardableSharedMemoryManagerImpl>(
+  discardable_shared_memory_manager_bindings_.AddBinding(
+      std::make_unique<MojoDiscardableSharedMemoryManagerImpl>(
           next_client_id_++, this),
       std::move(request));
 }
@@ -258,7 +257,7 @@ DiscardableSharedMemoryManager::AllocateLockedDiscardableMemory(size_t size) {
     base::TerminateBecauseOutOfMemory(size);
   // Close file descriptor to avoid running out.
   memory->Close();
-  return base::MakeUnique<DiscardableMemoryImpl>(
+  return std::make_unique<DiscardableMemoryImpl>(
       std::move(memory),
       base::Bind(
           &DiscardableSharedMemoryManager::DeletedDiscardableSharedMemory,

@@ -28,6 +28,7 @@
 #include "base/trace_event/memory_dump_provider.h"
 #include "components/discardable_memory/common/discardable_memory_export.h"
 #include "components/discardable_memory/public/interfaces/discardable_shared_memory_manager.mojom.h"
+#include "mojo/public/cpp/bindings/strong_binding_set.h"
 
 namespace service_manager {
 struct BindSourceInfo;
@@ -142,7 +143,7 @@ class DISCARDABLE_MEMORY_EXPORT DiscardableSharedMemoryManager
   // a heap. The LRU memory segment always first.
   using MemorySegmentVector = std::vector<scoped_refptr<MemorySegment>>;
   MemorySegmentVector segments_;
-  size_t default_memory_limit_;
+  const size_t default_memory_limit_;
   size_t memory_limit_;
   size_t bytes_allocated_;
   std::unique_ptr<base::MemoryPressureListener> memory_pressure_listener_;
@@ -150,6 +151,8 @@ class DISCARDABLE_MEMORY_EXPORT DiscardableSharedMemoryManager
       enforce_memory_policy_task_runner_;
   base::Closure enforce_memory_policy_callback_;
   bool enforce_memory_policy_pending_;
+  mojo::StrongBindingSet<mojom::DiscardableSharedMemoryManager>
+      discardable_shared_memory_manager_bindings_;
   base::WeakPtrFactory<DiscardableSharedMemoryManager> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(DiscardableSharedMemoryManager);
