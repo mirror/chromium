@@ -18,7 +18,9 @@
 #include "base/test/simple_test_tick_clock.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
+#include "chrome/browser/content_settings/tab_specific_content_settings.h"
 #include "chrome/browser/infobars/infobar_service.h"
+#include "chrome/browser/ui/blocked_content/framebust_block_tab_helper.h"
 #include "chrome/browser/ui/blocked_content/popup_tracker.h"
 #include "chrome/browser/ui/blocked_content/tab_under_navigation_throttle.h"
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
@@ -58,6 +60,8 @@ class PopupOpenerTabHelperTest : public ChromeRenderViewHostTestHarness {
     PopupOpenerTabHelper::CreateForWebContents(web_contents(),
                                                std::move(tick_clock));
     InfoBarService::CreateForWebContents(web_contents());
+    TabSpecificContentSettings::CreateForWebContents(web_contents());
+    FramebustBlockTabHelper::CreateForWebContents(web_contents());
 
     // The tick clock needs to be advanced manually so it isn't set to null,
     // which the code uses to determine if it is set yet.
@@ -344,7 +348,10 @@ class BlockTabUnderTest : public PopupOpenerTabHelperTest {
   void ExpectUIShown(bool shown) {
 #if defined(OS_ANDROID)
     EXPECT_EQ(shown, !!GetInfoBar());
-#endif  // defined(OS_ANDROID)
+#else
+    EXPECT_EQ(shown, FramebustBlockTabHelper::FromWebContents(web_contents())
+                         ->HasBlockedUrls());
+#endif
   }
 
   // content::WebContentsDelegate:
@@ -489,7 +496,13 @@ TEST_F(BlockTabUnderTest, TabUnderWithSubsequentGesture_IsNotBlocked) {
   // A subsequent navigation should be allowed, even if it is classified as a
   // suspicious redirect.
   EXPECT_TRUE(NavigateAndCommitWithoutGesture(GURL("https://example.test2/")));
+#if defined(OS_ANDROID)
   ExpectUIShown(false);
+#else
+  EXPECT_EQ(1u, FramebustBlockTabHelper::FromWebContents(web_contents())
+                    ->blocked_urls()
+                    .size());
+#endif
 }
 
 TEST_F(BlockTabUnderTest, MultipleRedirectAttempts_AreBlocked) {
