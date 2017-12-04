@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6d41d35_3191db54",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-04T17:43:41Z",
+      "side": 1,
+      "message": "You might want to mention *why* we want to implement zaura shell 2.",
+      "revId": "a48bdf3d29283249d287530b9ba2427157e2cae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a24c981d_c24a1b73",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-04T17:43:41Z",
+      "side": 1,
+      "message": "Any chance we can get proper unit testing?",
+      "revId": "a48bdf3d29283249d287530b9ba2427157e2cae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9f83059_7a1cf766",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-04T17:43:41Z",
+      "side": 1,
+      "message": "Should we track this in a bug?",
+      "revId": "a48bdf3d29283249d287530b9ba2427157e2cae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
