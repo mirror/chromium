@@ -34,6 +34,24 @@
       "revId": "0913a4ab824ad7ea253a23a62a81fee67db46a3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88b2c56c_6ecc352a",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-04T16:54:18Z",
+      "side": 1,
+      "message": "Glad to hear it! :)",
+      "parentUuid": "e6f30b74_7530eaad",
+      "revId": "0913a4ab824ad7ea253a23a62a81fee67db46a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
