@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "a36bbb6c_01e78be1",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-04T22:00:58Z",
+      "side": 1,
+      "message": "*buf points into resource loader memory: https://cs.chromium.org/chromium/src/content/browser/loader/resource_loader.cc?rcl\u003d62fe5b7ce29d093f44c3a630517499e75b5959d3\u0026l\u003d695\n\nSo a ResourceHandler should be safe to deref it on resume. One thing to do would be to make this class a ResourceController and wait until Resume is called before executing this block.",
+      "parentUuid": "c083628f_365a371b",
+      "revId": "a51a9743f711302b0ef2d189516f6ddcc166b7eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe54a0cf_194e2520",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 27
@@ -53,6 +71,24 @@
       "writtenOn": "2017-12-04T21:35:53Z",
       "side": 1,
       "message": "Is it possible to get here, and have blocked_read_completed_ be true? (e.g. due to an upstream resource handler that\u0027s also buffering?). If so it seems like this would sniff the second chunk, and potentially allow it, even though blocked_read_completed_ is true?",
+      "revId": "a51a9743f711302b0ef2d189516f6ddcc166b7eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20ccf287_20d831b0",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-04T22:00:58Z",
+      "side": 1,
+      "message": "I don\u0027t think it should be possible, but I\u0027m not 100% sure. I didn\u0027t think you could get e.g. 2 OnWillReads in a row without an OnReadCompleted for the first one.",
+      "parentUuid": "fe54a0cf_194e2520",
       "revId": "a51a9743f711302b0ef2d189516f6ddcc166b7eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
