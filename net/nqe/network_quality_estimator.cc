@@ -695,7 +695,6 @@ void NetworkQualityEstimator::DisableOfflineCheckForTesting(
     bool disable_offline_check) {
   DCHECK(thread_checker_.CalledOnValidThread());
   disable_offline_check_ = disable_offline_check;
-  network_quality_store_->DisableOfflineCheckForTesting(disable_offline_check_);
 }
 
 void NetworkQualityEstimator::ReportEffectiveConnectionTypeForTesting(
@@ -868,10 +867,19 @@ void NetworkQualityEstimator::UpdateSignalStrength() {
   if (past_signal_strength == new_signal_strength)
     return;
 
-  current_network_id_.signal_strength = new_signal_strength;
   // Check if the signal strength is unavailable.
-  if (current_network_id_.signal_strength == INT32_MIN)
+  if (new_signal_strength == INT32_MIN)
     return;
+
+  // Store the network quality with the past signal strength.
+  network_quality_store_->Add(current_network_id_,
+                              nqe::internal::CachedNetworkQuality(
+                                  tick_clock_->NowTicks(), network_quality_,
+                                  effective_connection_type_));
+
+  current_network_id_.signal_strength = new_signal_strength;
+  // Read the network quality for the network with the new signal strength.
+  ReadCachedNetworkQualityEstimate();
 
   min_signal_strength_since_connection_change_ =
       std::min(min_signal_strength_since_connection_change_.value_or(INT32_MAX),
@@ -1576,14 +1584,6 @@ bool NetworkQualityEstimator::ReadCachedNetworkQualityEstimate() {
 
   if (!params_->persistent_cache_reading_enabled())
     return false;
-
-  if (current_network_id_.type !=
-          NetworkChangeNotifier::ConnectionType::CONNECTION_WIFI &&
-      current_network_id_.type !=
-          NetworkChangeNotifier::ConnectionType::CONNECTION_ETHERNET &&
-      !disable_offline_check_) {
-    return false;
-  }
 
   nqe::internal::CachedNetworkQuality cached_network_quality;
 
