@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6f1e356b_fdc71ab0",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit_source.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-04T20:29:59Z",
+      "side": 1,
+      "message": "Added comment about the threading model on the constructor of TabLifecycleUnit https://cs.chromium.org/chromium/src/chrome/browser/resource_coordinator/lifecycle_unit_source_observer.h?rcl\u003df3a97d84aad07be772be0aa0e257daf1bed8a2e9 \n\nDo we need more?",
+      "parentUuid": "02ee82d0_2bfb9790",
+      "range": {
+        "startLine": 93,
+        "startChar": 23,
+        "endLine": 93,
+        "endChar": 47
+      },
+      "revId": "6a0cb98c3e41328ec1ead45630bd252570522ad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97530b0d_00e59729",
         "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit_source.h",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "6a0cb98c3e41328ec1ead45630bd252570522ad2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbe70f7f_70571df0",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit_source.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-04T20:29:59Z",
+      "side": 1,
+      "message": "https://cs.chromium.org/chromium/src/chrome/browser/resource_coordinator/lifecycle_unit_source_observer.h?rcl\u003df3a97d84aad07be772be0aa0e257daf1bed8a2e9",
+      "parentUuid": "97530b0d_00e59729",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 33
+      },
+      "revId": "6a0cb98c3e41328ec1ead45630bd252570522ad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
