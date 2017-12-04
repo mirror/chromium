@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21083e2c_b9daa7f3",
+        "filename": "chrome/browser/metrics/tab_stats_tracker_unittests.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-04T18:53:32Z",
+      "side": 1,
+      "message": "Nit: Add\nprivate:\n DISALLOW_COPY_AND_ASSIGN():",
+      "range": {
+        "startLine": 93,
+        "startChar": 2,
+        "endLine": 93,
+        "endChar": 0
+      },
+      "revId": "b22c7cf663da8d5d461660e1c1e11d05b39202dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
