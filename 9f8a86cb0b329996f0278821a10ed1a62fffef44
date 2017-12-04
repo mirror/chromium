@@ -71,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "7a0cb124_89b54b9a",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFastPaths.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-12-04T22:44:54Z",
+      "side": 1,
+      "message": "Ah okay, so the terminator could be a char OR whitespace, and you want to make sure that the same teminator/delimiter/separator is used consistently in rgb(). Can the terminator be anything else other than comma? If not, then maybe the terminator could be like an enum or something e.g.\n\n    enum Terminator { kUnknown (or kInfer), kComma, kWhitespace }.\n\nNot sure if that\u0027s any better. Maybe Eric has some ideas as well.",
+      "parentUuid": "1e91a584_cf5d63a9",
+      "revId": "9f8a86cb0b329996f0278821a10ed1a62fffef44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4cbb2df_f7520f62",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFastPaths.cpp",
         "patchSetId": 9
