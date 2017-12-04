@@ -33,23 +33,28 @@
 - (float)animation:(NSAnimation*)animation
     valueForProgress:(NSAnimationProgress)progress {
   ++frameCount_;
+  LOG(INFO) << "valueForProgress() now frames " << frameCount_;
   if (frameCount_ >= 2)
     [animation setDuration:0.0];
   return frameCount_ == 1 ? 0.2 : 0.6;
 }
 
 - (void)animationDidEnd:(NSAnimation*)animation {
+  LOG(INFO) << "animationDidEnd()";
   EXPECT_EQ(2, frameCount_);
   message_pump_->Quit();
 }
 
 - (void)runAnimation:(NSAnimation*)animation {
+  LOG(INFO) << "runAnimation()";
   // This class will end the animation after 2 frames. Set a large duration to
   // ensure that both frames are processed.
   [animation setDuration:600];
   [animation setDelegate:self];
   [animation startAnimation];
+  LOG(INFO) << "starting pump";
   message_pump_->Run(NULL);
+  LOG(INFO) << "ending pump";
 }
 
 @end
@@ -81,5 +86,6 @@ TEST_F(ConstrainedWindowAnimationTest, Hide) {
 TEST_F(ConstrainedWindowAnimationTest, Pulse) {
   base::scoped_nsobject<NSAnimation> animation(
       [[ConstrainedWindowAnimationPulse alloc] initWithWindow:test_window()]);
+  LOG(INFO) << "Running animation";
   [delegate_ runAnimation:animation];
 }
