@@ -25,6 +25,7 @@
 #include "components/content_settings/core/browser/content_settings_registry.h"
 #include "components/content_settings/core/common/content_settings_types.h"
 #include "components/safe_browsing/features.h"
+#include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/browser_test_utils.h"
@@ -466,4 +467,93 @@ IN_PROC_BROWSER_TEST_F(PageInfoBubbleViewBrowserTest,
 IN_PROC_BROWSER_TEST_F(PageInfoBubbleViewBrowserTest,
                        InvokeDialog_BlockAllPermissions) {
   RunDialog();
+}
+
+class PageInfoBubbleViewNavigationBrowserTest
+    : public PageInfoBubbleViewBrowserTest {
+ public:
+  void SetUp() override {
+    embedded_test_server()->ServeFilesFromSourceDirectory(
+        "chrome/browser/ui/views/page_info/testdata");
+    ASSERT_TRUE(embedded_test_server()->InitializeAndListen());
+    PageInfoBubbleViewBrowserTest::SetUp();
+  }
+
+  void SetUpOnMainThread() override {
+    embedded_test_server()->StartAcceptingConnections();
+  }
+
+  GURL GetURL(const std::string& name) {
+    return embedded_test_server()->GetURL(name);
+  }
+};
+
+IN_PROC_BROWSER_TEST_F(PageInfoBubbleViewNavigationBrowserTest,
+                       ClosesOnUserNavigateToSamePage) {
+  ui_test_utils::NavigateToURL(browser(), GetURL("/empty0.html"));
+  OpenPageInfoBubble(browser());
+  EXPECT_EQ(PageInfoBubbleView::BUBBLE_PAGE_INFO,
+            PageInfoBubbleView::GetShownBubbleType());
+  ui_test_utils::NavigateToURL(browser(), GetURL("/empty0.html"));
+  EXPECT_EQ(PageInfoBubbleView::BUBBLE_NONE,
+            PageInfoBubbleView::GetShownBubbleType());
+}
+
+IN_PROC_BROWSER_TEST_F(PageInfoBubbleViewNavigationBrowserTest,
+                       ClosesOnUserNavigateToDifferentPage) {
+  ui_test_utils::NavigateToURL(browser(), GetURL("/empty0.html"));
+  OpenPageInfoBubble(browser());
+  EXPECT_EQ(PageInfoBubbleView::BUBBLE_PAGE_INFO,
+            PageInfoBubbleView::GetShownBubbleType());
+  ui_test_utils::NavigateToURL(browser(), GetURL("/empty1.html"));
+  EXPECT_EQ(PageInfoBubbleView::BUBBLE_NONE,
+            PageInfoBubbleView::GetShownBubbleType());
+}
+
+// A SubframeUrlLoadWaiter is used for a load of a given target URL to complete
+// in the main frame or any subframe. It is like UrlLoadObserver, but includes
+// subframe loads as well.
+class SubframeUrlLoadWaiter : public content::WebContentsObserver {
+ public:
+  SubframeUrlLoadWaiter(content::WebContents* contents, const GURL& target_url)
+      : content::WebContentsObserver(contents),
+        run_loop_(new base::RunLoop),
+        target_url_(target_url) {}
+
+  // Wait until a load of |target_url| has completed.
+  void Wait() {
+    if (!signalled_)
+      run_loop_->Run();
+  }
+
+  // WebContentsObserver:
+  void DidFinishNavigation(content::NavigationHandle* handle) override {
+    if (handle->GetURL() != target_url_)
+      return;
+    signalled_ = true;
+    run_loop_->Quit();
+  }
+
+ private:
+  std::unique_ptr<base::RunLoop> run_loop_;
+  bool signalled_ = false;
+  GURL target_url_;
+};
+
+IN_PROC_BROWSER_TEST_F(PageInfoBubbleViewNavigationBrowserTest,
+                       DoesntCloseOnSubframeNavigate) {
+  // For this test, subframe.html iframes redirect.html, which redirects after 1
+  // second to redirected.html.
+  SubframeUrlLoadWaiter waiter(
+      browser()->tab_strip_model()->GetWebContentsAt(0),
+      GetURL("/empty0.html"));
+  ui_test_utils::NavigateToURL(browser(), GetURL("/subframe.html"));
+  OpenPageInfoBubble(browser());
+  EXPECT_EQ(PageInfoBubbleView::BUBBLE_PAGE_INFO,
+            PageInfoBubbleView::GetShownBubbleType());
+  waiter.Wait();
+  // Expect that the bubble is still open even after a subframe navigation has
+  // happened.
+  EXPECT_EQ(PageInfoBubbleView::BUBBLE_PAGE_INFO,
+            PageInfoBubbleView::GetShownBubbleType());
 }
