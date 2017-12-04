@@ -46,6 +46,30 @@
       "revId": "460535435cda92bddcc344ca53610179fbb7ac22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b41ce376_96e2fea4",
+        "filename": "third_party/WebKit/Source/modules/canvas/canvas2d/BaseRenderingContext2D.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-12-04T21:23:27Z",
+      "side": 1,
+      "message": "You can have: virtual bool IsRecording() const { return false; } which you\u0027d override only in PaintRenderingContext2D.  I don\u0027t think it is necessary to distinguish between HTML vs. Offscreen.",
+      "parentUuid": "ce97715a_2169e6a8",
+      "range": {
+        "startLine": 321,
+        "startChar": 33,
+        "endLine": 321,
+        "endChar": 58
+      },
+      "revId": "460535435cda92bddcc344ca53610179fbb7ac22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
