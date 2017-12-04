@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d16e09ca_38eb72c2",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-04T09:12:16Z",
+      "side": 1,
+      "message": "nit: May be good to add a brief comment to note that at this point the loader and client end points must have been unbound and forwarded to the renderer.",
+      "revId": "5bd0e80d8c2b58108bd1e9f1af1a8dd3cfa456fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

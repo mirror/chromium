@@ -33,6 +33,40 @@
       "revId": "614f02d0914c8351f514cdfc3f865be69b71f593",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "567d09a0_52cac73d",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-04T09:12:16Z",
+      "side": 1,
+      "message": "nit: headers\u0027s -\u003e headers\u0027\nmight contains -\u003e might contain",
+      "revId": "614f02d0914c8351f514cdfc3f865be69b71f593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae1212c1_b8c8546c",
+        "filename": "content/renderer/loader/url_loader_client_impl.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-04T09:12:16Z",
+      "side": 1,
+      "message": "Could you add a brief comment to this method about the usage of this class? (Something like \"Binds this instance to the given URLLoaderClient endpoints so that it can start getting the mojo calls from the given loader. This is used only for the main resource loading when NavigationMojoResponse and/or NetworkService is enabled. Otherwise (in regular subresource loading cases) |this| is not bound to a client request, but used via ThrottlingURLLoader to get client upcalls from the loader.\")",
+      "revId": "614f02d0914c8351f514cdfc3f865be69b71f593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
