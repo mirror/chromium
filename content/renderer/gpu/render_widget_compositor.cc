@@ -477,6 +477,7 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
   settings.solid_color_scrollbar_color = SkColorSetARGB(128, 128, 128, 128);
   settings.scrollbar_fade_delay = base::TimeDelta::FromMilliseconds(300);
   settings.scrollbar_fade_duration = base::TimeDelta::FromMilliseconds(300);
+  settings.use_half_width_tiles_for_gpu_rasterization = true;
 
 #if defined(OS_ANDROID)
   bool using_synchronous_compositor =
