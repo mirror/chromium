@@ -40,6 +40,14 @@ class WebState;
                                withError:(NSError*)error
                                   isPost:(BOOL)isPost;
 
+// Called to ask the delegate for a controller to display the given url,
+// which contained content that the UIWebView couldn't display. Returns
+// the native controller to display if the delegate can handle the url,
+// or nil otherwise.
+- (id<CRWNativeContent>)controllerForUnhandledContentAtURL:(const GURL&)url
+                                                  webState:
+                                                      (web::WebState*)webState;
+
 @end
 
 #endif  // IOS_WEB_PUBLIC_WEB_STATE_UI_CRW_NATIVE_CONTENT_PROVIDER_H_
