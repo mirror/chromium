@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "350443af_4538d188",
+        "filename": "content/common/quota_dispatcher_host.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-04T03:46:19Z",
+      "side": 1,
+      "message": "Remove.",
+      "revId": "e87729d58e070ed032246e410f9b161382653cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7c688fa_841e7b0e",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4902,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-04T03:46:19Z",
+      "side": 1,
+      "message": "origin",
+      "range": {
+        "startLine": 4902,
+        "startChar": 19,
+        "endLine": 4902,
+        "endChar": 38
+      },
+      "revId": "e87729d58e070ed032246e410f9b161382653cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e38a0e7f_814156ae",
+        "filename": "third_party/WebKit/public/platform/Platform.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-04T03:46:19Z",
+      "side": 1,
+      "message": "WebSecurityOrigin",
+      "range": {
+        "startLine": 692,
+        "startChar": 47,
+        "endLine": 692,
+        "endChar": 58
+      },
+      "revId": "e87729d58e070ed032246e410f9b161382653cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
