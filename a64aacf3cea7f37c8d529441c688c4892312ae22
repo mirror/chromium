@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a89539e3_4a9ef426",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-04T01:49:57Z",
+      "side": 1,
+      "message": "// All other content settings only show up when they are non-default values or if they have been changed by the user since the last page load.",
+      "revId": "a64aacf3cea7f37c8d529441c688c4892312ae22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af6282e2_e1869467",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-04T01:49:57Z",
+      "side": 1,
+      "message": "I think it would be clearer to move this block below the autoplay check below and rework it:\n\nif (tab_specific_content_settings-\u003eIsContentSettingsChangedToDefault(...))\n  return true;\n\nif (!IsPermissionFactoryDefault(...))\n  return true;\n\nreturn false;\n\n--\n\n(Also I think we can rename IsContentSettingsChangedToDefault to HasUserChangedContentSettingSinceLastNavigation)",
+      "revId": "a64aacf3cea7f37c8d529441c688c4892312ae22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8b00050_9d97869b",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 942,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-04T01:49:57Z",
+      "side": 1,
+      "message": "Apologies - originally I was thinking to move all the logic into page_info.cc but that\u0027s not possible because the PageInfo object is scoped to the lifetime of the UI. Given that, it\u0027s probably better to move this back to tab_specific_content_settings.cc. Sorry for the extra work :(",
+      "revId": "a64aacf3cea7f37c8d529441c688c4892312ae22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57f14730_31242650",
+        "filename": "chrome/browser/ui/page_info/page_info_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-04T01:49:57Z",
+      "side": 1,
+      "message": "Should this just be called:\n\"expected_visible_permissions\" now?",
+      "revId": "a64aacf3cea7f37c8d529441c688c4892312ae22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

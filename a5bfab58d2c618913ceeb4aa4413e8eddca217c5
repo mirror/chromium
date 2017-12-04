@@ -104,6 +104,24 @@
       "revId": "a5bfab58d2c618913ceeb4aa4413e8eddca217c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17d07996_817f2a5c",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-04T01:49:57Z",
+      "side": 1,
+      "message": "I think the logic is simpler if we just always add them. The amount of extra data is negligible.",
+      "parentUuid": "6fd67ec9_2d9af7e3",
+      "revId": "a5bfab58d2c618913ceeb4aa4413e8eddca217c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
