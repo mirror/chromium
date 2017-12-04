@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fedda9c5_5dda8ced",
+        "filename": "chrome/browser/chromeos/printing/cups_print_job_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-04T19:15:54Z",
+      "side": 1,
+      "message": "120s seems too long for waiting for rendering. Hope it\u0027s only temporary.",
+      "revId": "6ff22c3391c7f347972fb14b28834d52dd5409bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
