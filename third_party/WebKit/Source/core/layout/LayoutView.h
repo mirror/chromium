@@ -230,9 +230,6 @@ class CORE_EXPORT LayoutView final : public LayoutBlockFlow {
   // It is very likely you do not want to call this method.
   void SetShouldDoFullPaintInvalidationForViewAndAllDescendants();
 
-  void SetShouldDoFullPaintInvalidationOnResizeIfNeeded(bool width_changed,
-                                                        bool height_changed);
-
   // The document scrollbar is always on the right, even in RTL. This is to
   // prevent it from moving around on navigations.
   // TODO(skobes): This is not quite the ideal behavior, see
