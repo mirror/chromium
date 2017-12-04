@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a619f983_7122f9cb",
+        "filename": "chrome/browser/notifications/platform_notification_service_interactive_uitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-04T18:59:22Z",
+      "side": 1,
+      "message": "I extracted this because simulating a click now waits for the event to finish, whereas the keep alive registry needs to test an intermediate state.",
+      "revId": "47ddbdbc5c60a17fde5fe62be8b2ba0474f54947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
