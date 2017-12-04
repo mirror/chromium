@@ -94,6 +94,30 @@
       "revId": "ac3fd5a85b28d9266fc9fc504c8a22c10ad367df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11be3026_96da77c7",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-04T16:42:44Z",
+      "side": 1,
+      "message": "My concern are:\n1. I find really hard to read/understand code using mocking frameworks\n2. I consider OCMock code quality low\n\nI won\u0027t block this CL due to the use of OCMClassMock. I was initially trying to point another way not using a mocking framework making the code easier to read in my opinion.",
+      "parentUuid": "3d1be285_8a9386e6",
+      "range": {
+        "startLine": 53,
+        "startChar": 12,
+        "endLine": 53,
+        "endChar": 44
+      },
+      "revId": "ac3fd5a85b28d9266fc9fc504c8a22c10ad367df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
