@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fea19f9_15fa4a55",
+        "filename": "ios/chrome/browser/snapshots/web_controller_snapshot_helper.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-04T14:55:48Z",
+      "side": 0,
+      "message": "The fact that this DCHECK was false is due to undefined behavior I want to guard against.\n\nTab -webController is implemented as:\n\n  - (CRWWebController*)webController {\n    return _webStateImpl ? _webStateImpl-\u003eGetWebController() : nil;\n  }\n\nAnd _webStateImpl is initialized in Tab initializer to:\n\n  _webStateImpl \u003d static_cast\u003cweb::WebStateImpl*\u003e(webState);\n\nSo, if we insert a TestWebState in TabModel, then we are casting a TestWebState to a WebStateImpl. So how does it happen that this method return nil? Well, this is because we were lucky.\n\nWebStateImpl::GetWebController() is not a virtual method, so the implementation used is the one from WebStateImpl, even if the WebState is a TestWebState and it access to the field via a simple offset.\n\nIt happens that the offset of the pointer to CRWWebController* in WebStateImpl is the same as the offset of the pointer to the CRWContentView* in TestWebState that is initialized to nil.\n\n  (lldb) p (long long)\u0026((web::WebStateImpl*)0)-\u003eweb_controller_\n  136\n  (lldb) p (long long)\u0026((web::TestWebState*)0)-\u003etransient_content_view_\n  136\n\nDoubly lucky in fact because web_controller_ is not a raw pointer to an Objective-C object but is a base::scoped_nsobject\u003cCRWWebController\u003e. It just happens that the size of this smart pointer is the same as a regular pointer and the retain/release manipulation is inlined.\n\nSo this DCHECK failed for the correct reason and must not be removed.",
+      "revId": "6bf5e45d34018dfd5fbb114d88d422581aa33be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
