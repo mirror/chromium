@@ -91,6 +91,36 @@ NGPhysicalOffsetRect NGPhysicalBoxFragment::VisualRectWithContents() const {
   return visual_rect;
 }
 
+NGPhysicalOffsetRect NGPhysicalBoxFragment::LocalCaretRect(
+    CaretPositionType position_type,
+    unsigned*) const {
+  DCHECK(position_type == CaretPositionType::kBeforeFragment ||
+         position_type == CaretPositionType::kAfterFragment);
+
+  // TODO(xiaochengh): Handle horizontal writing mode. How do we know writing
+  // mode?
+
+  const LayoutUnit caret_width =
+      GetLayoutObject()->GetFrameView()->CaretWidth();
+
+  // TODO(xiaochengh): This is wrong for mixed BiDi. Fix it.
+  bool ltr = Style().IsLeftToRightDirection();
+  const bool move_right =
+      ltr ^ (position_type == CaretPositionType::kBeforeFragment);
+  const LayoutUnit caret_left =
+      move_right ? Size().width - caret_width : LayoutUnit();
+
+  const LayoutUnit caret_top;
+  const LayoutUnit caret_height = Size().height;
+  // TODO(xiaochengh): Make NGInlineFragmentIterator remember bounding line box
+  // for each inline fragment, so that we can get line height.
+  // caret_height = line_box_bottom - line_box_top;
+  // caret_top = line_box_top;
+
+  const NGPhysicalOffset caret_location(caret_left, caret_top);
+  const NGPhysicalSize caret_size(caret_width, caret_height);
+  return NGPhysicalOffsetRect(caret_location, caret_size);
+}
 scoped_refptr<NGPhysicalFragment> NGPhysicalBoxFragment::CloneWithoutOffset()
     const {
   Vector<scoped_refptr<NGPhysicalFragment>> children_copy(children_);
