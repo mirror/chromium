@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4cf740c5_13a02493",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1137,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-04T16:23:39Z",
+      "side": 1,
+      "message": "I rebased the code.\nMy new code is:\n```\nmojom::URLLoaderPtr url_loader(std::move(url_loader_client_endpoints_-\u003eurl_loader));\nurl_loader-\u003eProceedWithResponse();\nurl_loader_client_endpoints_-\u003eurl_loader \u003d url_loader.PassInterface();\n```\n\n|url_loader_client_endpoints_-\u003eurl_loader.is_valid()| is true before this 3 line of code.\nThen we bind it to a InterfacePtr that will be used to add the message |ProceedWithResponse| to the datapipe.\nSince URLLoaderPtr constructor and URLLoader::PassInterface() are called on the same task, it is guaranteed that no connection error message was received.\nSo at the end |url_loader_client_endpoints_-\u003eurl_loader.is_valid()| is still true.",
+      "parentUuid": "45fd66f1_a0c53c27",
+      "revId": "5e992fd427a13560ec2ee6cff2c0760ea31e951b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6058ee22_644ac213",
         "filename": "content/browser/loader/mojo_async_resource_handler.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0bb906e8_d486ba86",
+        "filename": "content/browser/loader/mojo_async_resource_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-04T16:23:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6058ee22_644ac213",
+      "revId": "5e992fd427a13560ec2ee6cff2c0760ea31e951b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11df646d_48ae68b6",
         "filename": "content/browser/loader/mojo_async_resource_handler.cc",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "5e992fd427a13560ec2ee6cff2c0760ea31e951b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da500cf4_27868792",
+        "filename": "content/browser/loader/mojo_async_resource_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-04T16:23:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11df646d_48ae68b6",
+      "revId": "5e992fd427a13560ec2ee6cff2c0760ea31e951b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +158,24 @@
     },
     {
       "key": {
+        "uuid": "fe93ecf7_a3a7caeb",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1482,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-04T16:23:39Z",
+      "side": 1,
+      "message": "Done, but that\u0027s weird, with the second form, it looks like the comment applies to the whole expression.",
+      "parentUuid": "3873a9c4_187b4b4e",
+      "revId": "5e992fd427a13560ec2ee6cff2c0760ea31e951b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cbdc56d_60c242d4",
         "filename": "content/public/common/url_loader.mojom",
         "patchSetId": 5
@@ -118,6 +190,24 @@
       "revId": "5e992fd427a13560ec2ee6cff2c0760ea31e951b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c64f1238_f6fbd500",
+        "filename": "content/public/common/url_loader.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-04T16:23:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cbdc56d_60c242d4",
+      "revId": "5e992fd427a13560ec2ee6cff2c0760ea31e951b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
