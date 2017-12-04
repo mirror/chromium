@@ -69,6 +69,24 @@
       "revId": "a1acda193b77fe264efbb4aa4c59e5c62ae7c8b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6039e1b6_5aa012e9",
+        "filename": "ui/base/test/ui_controls_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1230445
+      },
+      "writtenOn": "2017-12-04T08:41:32Z",
+      "side": 1,
+      "message": "It\u0027d not be just manually created events that are affected: anyone can read [NSEvent modifierFlags] and if a test depends on it somehow, it\u0027ll start failing. And in general I think it\u0027s a good idea to clean up the global flags/state/…: test starts in a clean environment and after it\u0027s finished, the environment is cleaned up again.",
+      "parentUuid": "27df6cd1_84113769",
+      "revId": "a1acda193b77fe264efbb4aa4c59e5c62ae7c8b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
