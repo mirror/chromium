@@ -57,7 +57,6 @@
 #include "content/public/browser/notification_types.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
-#include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/url_constants.h"
 #include "content/public/test/browser_test_utils.h"
 #include "net/base/net_errors.h"
@@ -2152,8 +2151,7 @@ IN_PROC_BROWSER_TEST_F(CaptivePortalBrowserTest,
   // stopped, no cert error occurs and SSLErrorHandler isn't instantiated.
   MultiNavigationObserver test_navigation_observer;
   chrome::Reload(browser(), WindowOpenDisposition::CURRENT_TAB);
-  test_navigation_observer.WaitForNavigations(
-      content::IsBrowserSideNavigationEnabled() ? 1 : 2);
+  test_navigation_observer.WaitForNavigations(1);
 
   // Make sure that the |ssl_error_handler| is deleted.
   EXPECT_TRUE(nullptr == SSLErrorHandler::FromWebContents(broken_tab_contents));
@@ -2215,8 +2213,7 @@ IN_PROC_BROWSER_TEST_F(CaptivePortalBrowserTest,
   // With PlzNavigate: expect one navigation.
   // Without PlzNavigate: expect two navigations: First one for stopping the
   // hanging page, second one for completing the load of the above navigation.
-  test_navigation_observer.WaitForNavigations(
-      content::IsBrowserSideNavigationEnabled() ? 1 : 2);
+  test_navigation_observer.WaitForNavigations(1);
 
   // Make sure that the |ssl_error_handler| is deleted.
   EXPECT_TRUE(nullptr == SSLErrorHandler::FromWebContents(broken_tab_contents));
@@ -2284,8 +2281,7 @@ IN_PROC_BROWSER_TEST_F(
   // With PlzNavigate: expect one navigation.
   // Without PlzNavigate: expect two navigations: First one for stopping the
   // hanging page, second one for completing the load of the above navigation.
-  test_navigation_observer.WaitForNavigations(
-      content::IsBrowserSideNavigationEnabled() ? 1 : 2);
+  test_navigation_observer.WaitForNavigations(1);
   // Should end up with an SSL interstitial.
   WaitForInterstitialAttach(broken_tab_contents);
   ASSERT_TRUE(broken_tab_contents->ShowingInterstitialPage());
@@ -2337,8 +2333,7 @@ IN_PROC_BROWSER_TEST_F(
   // 2- For completing the load of the above navigation.
   // 3- For completing the load of the login tab.
   // NOTE: for PlzNavigate the first one doesn't show up.
-  test_navigation_observer.WaitForNavigations(
-      content::IsBrowserSideNavigationEnabled() ? 2 : 3);
+  test_navigation_observer.WaitForNavigations(2);
   // Should end up with a captive portal interstitial and a new login tab.
   WaitForInterstitialAttach(broken_tab_contents);
   ASSERT_TRUE(broken_tab_contents->ShowingInterstitialPage());
@@ -2379,22 +2374,11 @@ IN_PROC_BROWSER_TEST_F(CaptivePortalBrowserTest, SSLCertErrorLogin) {
   TabStripModel* tab_strip_model = browser()->tab_strip_model();
   WebContents* broken_tab_contents = tab_strip_model->GetActiveWebContents();
 
-  // Setting the delay to zero above has a race condition: A captive portal
-  // result triggered by a cert error can arrive before the SSL interstitial
-  // display timer is fired, even though it's set to zero.
-  // To avoid this, disable captive portal checks until the SSL interstitial is
-  // displayed. Once it's displayed, enable portal checks and fire one.
-  // NOTE: this doesn't occur with PlzNavigate, since the SSL interstitial timer
-  // is fired synchronously due to different timings when
-  // CaptivePortalTabReloader gets the load start callback.
-  bool delay_portal_response_until_interstitial =
-      !content::IsBrowserSideNavigationEnabled();
-
   // The path does not matter.
   GURL cert_error_url = https_server.GetURL(kTestServerLoginPath);
   // A captive portal check is triggered in FastErrorBehindCaptivePortal.
   FastErrorBehindCaptivePortal(browser(), true, cert_error_url,
-                               delay_portal_response_until_interstitial);
+                               false);
 
   EXPECT_EQ(SSLBlockingPage::kTypeForTesting,
             GetInterstitialType(broken_tab_contents));

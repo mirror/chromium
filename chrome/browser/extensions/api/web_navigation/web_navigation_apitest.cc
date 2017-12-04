@@ -42,7 +42,6 @@
 #include "content/public/browser/resource_dispatcher_host.h"
 #include "content/public/browser/resource_throttle.h"
 #include "content/public/browser/web_contents.h"
-#include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/context_menu_params.h"
 #include "content/public/common/resource_type.h"
 #include "content/public/common/url_constants.h"
@@ -452,8 +451,6 @@ IN_PROC_BROWSER_TEST_F(WebNavigationApiTest, ServerRedirectSingleProcess) {
 }
 
 IN_PROC_BROWSER_TEST_F(WebNavigationApiTest, ForwardBack) {
-  if (content::IsBrowserSideNavigationEnabled())
-    return; // TODO(jam): investigate
   ASSERT_TRUE(RunExtensionTest("webnavigation/forwardBack")) << message_;
 }
 
@@ -659,60 +656,6 @@ IN_PROC_BROWSER_TEST_F(WebNavigationApiTest, CrossProcess) {
   call_script_user_gesture.set_has_user_gesture(true);
 
   ASSERT_TRUE(RunExtensionTest("webnavigation/crossProcess")) << message_;
-}
-
-// This test verifies proper events for the following navigation sequence:
-// * Site A commits
-// * Slow cross-site navigation to site B starts
-// * Slow same-site navigation to different page in site A starts
-// * The slow cross-site navigation commits, cancelling the slow same-site
-//   navigation
-// Slow navigations are simulated by deferring an URL request, which fires
-// an onBeforeNavigate event, but doesn't reach commit. The URL request can
-// later be resumed to allow it to commit and load.
-// This test cannot use DelayLoadStartAndExecuteJavascript, as that class
-// resumes all URL requests. Instead, the test explicitly delays each URL
-// and resumes manually at the required time.
-IN_PROC_BROWSER_TEST_F(WebNavigationApiTest, CrossProcessAbort) {
-  // This test does not make sense in PlzNavigate mode, as simultanious
-  // navigations that make network requests are not supported.
-  if (content::IsBrowserSideNavigationEnabled())
-    return;
-
-  ASSERT_TRUE(StartEmbeddedTestServer());
-
-  // Add the cross-site URL delay early on, as loading the extension will
-  // cause the cross-site navigation to start.
-  GURL cross_site_url = embedded_test_server()->GetURL("/title1.html");
-  test_navigation_listener()->DelayRequestsForURL(cross_site_url);
-
-  // Load the extension manually, as its base URL is needed later on to
-  // construct a same-site URL to delay.
-  const Extension* extension =
-      LoadExtension(test_data_dir_.AppendASCII("webnavigation")
-                        .AppendASCII("crossProcessAbort"));
-
-  WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
-  ResultCatcher catcher;
-  StartProvisionalLoadObserver cross_site_load(tab, cross_site_url);
-
-  GURL same_site_url =
-      extension->GetResourceURL(extension->url(), "empty.html");
-  test_navigation_listener()->DelayRequestsForURL(same_site_url);
-  StartProvisionalLoadObserver same_site_load(tab, same_site_url);
-
-  // Ensure the cross-site navigation has started, then execute JavaScript
-  // to cause the renderer-initiated, non-user navigation.
-  cross_site_load.Wait();
-  tab->GetMainFrame()->ExecuteJavaScriptForTests(
-      base::UTF8ToUTF16("navigate2()"));
-
-  // Wait for the same-site navigation to start and resume the cross-site
-  // one, allowing it to commit.
-  same_site_load.Wait();
-  test_navigation_listener()->Resume(cross_site_url);
-
-  ASSERT_TRUE(catcher.GetNextResult()) << catcher.message();
 }
 
 // crbug.com/708139.
