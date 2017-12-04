@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0daf281f_52a4bc9e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-12-04T22:19:02Z",
+      "side": 1,
+      "message": "nit: Maybe link to the specific section of the spec?",
+      "revId": "9f8a86cb0b329996f0278821a10ed1a62fffef44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a78058c5_f335d30f",
+        "filename": "third_party/WebKit/LayoutTests/css-parser/color3-expected.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-12-04T22:19:02Z",
+      "side": 1,
+      "message": "Not sure what we\u0027re meant to do with these now FAILing tests. Eric, WDYT?",
+      "revId": "9f8a86cb0b329996f0278821a10ed1a62fffef44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ee42aa3_67836f4b",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFastPaths.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-12-04T22:19:02Z",
+      "side": 1,
+      "message": "Q: I don\u0027t quite understand this bit. So there\u0027s a terminator (which is usually comma), but also a whitespace terminate?",
+      "revId": "9f8a86cb0b329996f0278821a10ed1a62fffef44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4cbb2df_f7520f62",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFastPaths.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-12-04T22:19:02Z",
+      "side": 1,
+      "message": "Instead of just \u0027true\u0027, it might be clearer to use either an enum or something like\n\n    should_whitespace_terminate, true /* is_first_value */, expect",
+      "revId": "9f8a86cb0b329996f0278821a10ed1a62fffef44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
