@@ -1934,6 +1934,27 @@ void LayoutObject::StyleDidChange(StyleDifference diff,
     // Change of transform-style may affect descendant transform property nodes.
     SetSubtreeNeedsPaintPropertyUpdate();
   }
+
+  if (old_style && !NeedsPaintPropertyUpdate() &&
+      (CompositingReasonFinder::RequiresCompositingForTransformAnimation(
+           *old_style) !=
+           CompositingReasonFinder::RequiresCompositingForTransformAnimation(
+               *style_) ||
+       CompositingReasonFinder::RequiresCompositingForOpacityAnimation(
+           *old_style) !=
+           CompositingReasonFinder::RequiresCompositingForOpacityAnimation(
+               *style_) ||
+       CompositingReasonFinder::RequiresCompositingForFilterAnimation(
+           *old_style) !=
+           CompositingReasonFinder::RequiresCompositingForFilterAnimation(
+               *style_) ||
+       CompositingReasonFinder::RequiresCompositingForBackdropFilterAnimation(
+           *old_style) !=
+           CompositingReasonFinder::
+               RequiresCompositingForBackdropFilterAnimation(*style_))) {
+    // Need to update direct compositing reasons in paint property nodes.
+    SetNeedsPaintPropertyUpdate();
+  }
 }
 
 void LayoutObject::ApplyPseudoStyleChanges(const ComputedStyle& old_style) {
