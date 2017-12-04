@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "c4489570_5e78adf7",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-04T23:01:57Z",
+      "side": 1,
+      "message": "Yeah, I believe combining to form a int64_t ID may be what you need.",
+      "parentUuid": "e607f331_9e0d181a",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 150,
+        "endChar": 48
+      },
+      "revId": "51c4c2b855e3d168703e338e85dd62f4241f2588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c217769_b71978e6",
         "filename": "components/viz/common/surfaces/local_surface_id.h",
         "patchSetId": 3
