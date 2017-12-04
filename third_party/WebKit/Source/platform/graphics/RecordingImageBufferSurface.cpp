@@ -85,11 +85,6 @@ void RecordingImageBufferSurface::FallBackToRasterCanvas(
     return;
   }
 
-  DEFINE_THREAD_SAFE_STATIC_LOCAL(
-      EnumerationHistogram, canvas_fallback_histogram,
-      ("Canvas.DisplayListFallbackReason", kFallbackReasonCount));
-  canvas_fallback_histogram.Count(reason);
-
   fallback_surface_ = WTF::WrapUnique(new UnacceleratedImageBufferSurface(
       Size(), kInitializeImagePixels, ColorParams()));
   // If the fallback surface fails to be created, then early out.
