@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "788d4614_1815e8a0",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-04T03:02:04Z",
+      "side": 1,
+      "message": "Should we also test refreshing (or even just navigating to the same page)?",
+      "revId": "4596680e50dfda99fca7ca1efccc665648b3362e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "740b9196_2e916796",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-04T03:02:04Z",
+      "side": 1,
+      "message": "What\u0027s the main reason for the redirect? \n\nRather than using this class and the redirect bits, could we just call NavigateIframeToURL ?",
+      "revId": "4596680e50dfda99fca7ca1efccc665648b3362e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41c4ad32_a2df49a2",
+        "filename": "chrome/browser/ui/views/page_info/testdata/empty0.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-04T03:02:04Z",
+      "side": 1,
+      "message": "nit: may be good to put a valid html document here? (and in the other empty html files?)",
+      "revId": "4596680e50dfda99fca7ca1efccc665648b3362e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
