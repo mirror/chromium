@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "c4e0daa2_06632589",
+        "filename": "net/http/http_stream_factory_impl_job_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-04T18:46:28Z",
+      "side": 1,
+      "message": "\u003e nit: one more step forward, you could now get rid of main_job_is_resumed_ as it was used to ensure main_job is not resumed multiple times.\n\nWe still need |main_job_is_resumed_|. I tried to remove it initially but the DelayTCP tests started to fail. Let\u0027s talk about this offline?",
+      "parentUuid": "604a4229_4fec65eb",
+      "range": {
+        "startLine": 572,
+        "startChar": 27,
+        "endLine": 572,
+        "endChar": 0
+      },
+      "revId": "f90f7d621c1aaf1f7427090693ccac4a0f506fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2eb7ad68_6fbf28c0",
         "filename": "net/http/http_stream_factory_impl_job_controller.cc",
         "patchSetId": 4
@@ -87,6 +111,24 @@
       "revId": "f90f7d621c1aaf1f7427090693ccac4a0f506fa5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d63cc8fe_b229824e",
+        "filename": "net/http/http_stream_factory_impl_job_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1323,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-04T18:46:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2eb7ad68_6fbf28c0",
+      "revId": "f90f7d621c1aaf1f7427090693ccac4a0f506fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -149,6 +191,30 @@
       "side": 1,
       "message": "Oh, thanks for the clarification.\n\nnit: I wonder whether NetTestSuit::SetScipedTaskEnvironment() should do the reset as well so that you don\u0027t need explicitly to reset the former one and construct a new global?",
       "parentUuid": "0cd9f6d6_a0fb2dd2",
+      "range": {
+        "startLine": 1438,
+        "startChar": 50,
+        "endLine": 1438,
+        "endChar": 0
+      },
+      "revId": "f90f7d621c1aaf1f7427090693ccac4a0f506fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eea4cff4_ac30a242",
+        "filename": "net/http/http_stream_factory_impl_job_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1438,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-04T18:46:28Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "109029ea_9f7a2969",
       "range": {
         "startLine": 1438,
         "startChar": 50,

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdd37fee_12bc8b93",
+        "filename": "net/http/http_stream_factory_impl_job_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-04T18:46:28Z",
+      "side": 1,
+      "message": "Cherie, I need to add this check back. \n|main_job_is_resumed_| is apparently serving other purposes.  The DelayTCP tests are failing in the previous patch.\nLet\u0027s revisit in a follow-up.",
+      "revId": "efb5cb0ce0085054d6e1faedece8c6bbb0c191fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
