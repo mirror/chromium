@@ -25,6 +25,13 @@ void delete_pointer(wl_pointer* pointer) {
     wl_pointer_destroy(pointer);
 }
 
+void delete_touch(wl_touch* touch) {
+  if (wl_touch_get_version(touch) >= WL_TOUCH_RELEASE_SINCE_VERSION)
+    wl_touch_release(touch);
+  else
+    wl_touch_destroy(touch);
+}
+
 void delete_seat(wl_seat* seat) {
   if (wl_seat_get_version(seat) >= WL_SEAT_RELEASE_SINCE_VERSION)
     wl_seat_release(seat);
@@ -54,6 +61,9 @@ void (*ObjectTraits<wl_keyboard>::deleter)(wl_keyboard*) = &delete_keyboard;
 
 const wl_interface* ObjectTraits<wl_pointer>::interface = &wl_pointer_interface;
 void (*ObjectTraits<wl_pointer>::deleter)(wl_pointer*) = &delete_pointer;
+
+const wl_interface* ObjectTraits<wl_touch>::interface = &wl_touch_interface;
+void (*ObjectTraits<wl_touch>::deleter)(wl_touch*) = &delete_touch;
 
 const wl_interface* ObjectTraits<wl_registry>::interface =
     &wl_registry_interface;
