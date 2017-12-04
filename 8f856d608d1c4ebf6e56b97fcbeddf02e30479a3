@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "06a41823_ab562e98",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/parser/make_atrule_names.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-12-04T05:55:08Z",
+      "side": 1,
+      "message": "Oh I see, cool.",
+      "parentUuid": "950e02d7_18a4b92f",
+      "revId": "8f856d608d1c4ebf6e56b97fcbeddf02e30479a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c23c64c1_2c4c9e44",
         "filename": "third_party/WebKit/Source/core/BUILD.gn",
         "patchSetId": 10
@@ -177,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "13880378_d23f0624",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-12-04T05:55:08Z",
+      "side": 1,
+      "message": "nah that\u0027s fine; it\u0027s more descriptive than what the spec offers.",
+      "parentUuid": "a09ad011_4e795e01",
+      "revId": "8f856d608d1c4ebf6e56b97fcbeddf02e30479a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3324d0f_60456a18",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.cpp",
         "patchSetId": 10
@@ -206,6 +242,24 @@
       "side": 1,
       "message": "It\u0027s just an enum value, what does that add?",
       "parentUuid": "e3324d0f_60456a18",
+      "revId": "8f856d608d1c4ebf6e56b97fcbeddf02e30479a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e463e22a_071365a3",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-12-04T05:55:08Z",
+      "side": 1,
+      "message": "As discussed offline, this is fine as is.",
+      "parentUuid": "e9a86861_04b78d2a",
       "revId": "8f856d608d1c4ebf6e56b97fcbeddf02e30479a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
