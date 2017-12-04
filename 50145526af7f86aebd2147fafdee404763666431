@@ -70,6 +70,30 @@
       "revId": "50145526af7f86aebd2147fafdee404763666431",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0678c906_aa1bf114",
+        "filename": "chrome/browser/cryptauth/chrome_cryptauth_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-12-04T19:23:15Z",
+      "side": 1,
+      "message": "Hmm... there probably isn\u0027t a guideline--at least not one that I could find. \n\nI added the listener as you suggested, but only for starting the services. If a feature is disabled by policy, I think it\u0027s fine to just keep them running until the user logs off. Otherwise, it\u0027s a bit more complex.",
+      "parentUuid": "60579612_7f192233",
+      "range": {
+        "startLine": 335,
+        "startChar": 29,
+        "endLine": 335,
+        "endChar": 56
+      },
+      "revId": "50145526af7f86aebd2147fafdee404763666431",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
