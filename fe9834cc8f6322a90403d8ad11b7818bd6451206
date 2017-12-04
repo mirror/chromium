@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "72d21651_33d6dc78",
+        "filename": "styleguide/c++/c++-dos-and-donts.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-04T01:17:15Z",
+      "side": 1,
+      "message": "Thanks! Didn\u0027t know about that :) Updated this one to a warning and the TLDR on const below to a promo.",
+      "parentUuid": "1a93a709_010786b5",
+      "revId": "fe9834cc8f6322a90403d8ad11b7818bd6451206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b812a629_c174befc",
         "filename": "styleguide/c++/c++-dos-and-donts.md",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "fe9834cc8f6322a90403d8ad11b7818bd6451206",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74a90717_5ef5bdee",
+        "filename": "styleguide/c++/c++-dos-and-donts.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-04T01:17:15Z",
+      "side": 1,
+      "message": "Thanks; didn\u0027t know there was a way to previous these. Done.",
+      "parentUuid": "b812a629_c174befc",
+      "revId": "fe9834cc8f6322a90403d8ad11b7818bd6451206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2ed580ed_01ae9680",
+        "filename": "styleguide/c++/c++-dos-and-donts.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-04T01:17:15Z",
+      "side": 1,
+      "message": "Ahh, i see. I thought this was the correct way to format it. Fixed for all indented code blocks.",
+      "parentUuid": "bf57c873_bbb4b54f",
+      "revId": "fe9834cc8f6322a90403d8ad11b7818bd6451206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a406821_1ee873da",
         "filename": "styleguide/c++/c++-dos-and-donts.md",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "fe9834cc8f6322a90403d8ad11b7818bd6451206",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "670da7cd_a8fdbc90",
+        "filename": "styleguide/c++/c++-dos-and-donts.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-04T01:17:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a406821_1ee873da",
+      "revId": "fe9834cc8f6322a90403d8ad11b7818bd6451206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "38c8ad0f_03dcb18a",
+        "filename": "styleguide/c++/c++-dos-and-donts.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-04T01:17:15Z",
+      "side": 1,
+      "message": "Oops; removed.",
+      "parentUuid": "5b38405e_d5600a5e",
+      "revId": "fe9834cc8f6322a90403d8ad11b7818bd6451206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0de877a_364c3511",
         "filename": "styleguide/c++/c++-dos-and-donts.md",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "fe9834cc8f6322a90403d8ad11b7818bd6451206",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99221754_b423b757",
+        "filename": "styleguide/c++/c++-dos-and-donts.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-04T01:17:15Z",
+      "side": 1,
+      "message": "Thanks; removed.",
+      "parentUuid": "d0de877a_364c3511",
+      "revId": "fe9834cc8f6322a90403d8ad11b7818bd6451206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
