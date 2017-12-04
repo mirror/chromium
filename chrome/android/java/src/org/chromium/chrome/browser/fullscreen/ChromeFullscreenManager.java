@@ -474,12 +474,12 @@ public class ChromeFullscreenManager
                 && bottomControlOffset != 0 && bottomControlOffset != getBottomControlsHeight()) {
             return;
         }
+        Tab tab = getTab();
+        if (tab == null) return;
         boolean controlsResizeView =
                 topContentOffset > 0 || bottomControlOffset < getBottomControlsHeight();
         controlsResizeView &= !VrShellDelegate.isInVr();
         mControlsResizeView = controlsResizeView;
-        Tab tab = getTab();
-        if (tab == null) return;
         tab.setTopControlsHeight(getTopControlsHeight(), controlsResizeView);
         tab.setBottomControlsHeight(getBottomControlsHeight());
         for (FullscreenListener listener : mListeners) listener.onUpdateViewportSize();
