@@ -35,6 +35,7 @@
 #include "content/browser/renderer_host/render_view_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_delegate.h"
 #include "content/browser/wake_lock/wake_lock_context_host.h"
+#include "content/common/color_chooser.mojom.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/color_chooser.h"
 #include "content/public/browser/download_url_parameters.h"
@@ -96,7 +97,6 @@ class WebContentsImpl;
 class WebContentsView;
 class WebContentsViewDelegate;
 struct AXEventNotificationDetails;
-struct ColorSuggestion;
 struct FaviconURL;
 struct LoadNotificationDetails;
 struct MHTMLGenerationParams;
@@ -123,14 +123,17 @@ WebContentsView* CreateWebContentsView(
     WebContentsViewDelegate* delegate,
     RenderViewHostDelegateView** render_view_host_delegate_view);
 
-class CONTENT_EXPORT WebContentsImpl : public WebContents,
-                                       public RenderFrameHostDelegate,
-                                       public RenderViewHostDelegate,
-                                       public RenderWidgetHostDelegate,
-                                       public RenderFrameHostManager::Delegate,
-                                       public NotificationObserver,
-                                       public NavigationControllerDelegate,
-                                       public NavigatorDelegate {
+class CONTENT_EXPORT WebContentsImpl
+    : public WebContents,
+      public RenderFrameHostDelegate,
+      public RenderViewHostDelegate,
+      public RenderWidgetHostDelegate,
+      public RenderFrameHostManager::Delegate,
+      public content::mojom::ColorChooserFactory,
+      public content::mojom::ColorChooser,
+      public NotificationObserver,
+      public NavigationControllerDelegate,
+      public NavigatorDelegate {
  public:
   class FriendWrapper;
 
@@ -770,6 +773,15 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   int GetOuterDelegateFrameTreeNodeId() override;
   RenderWidgetHostImpl* GetFullscreenRenderWidgetHost() const override;
 
+  // content::mojom::ColorChooser(Factory) -------------------------------------
+
+  void OpenColorChooser(
+      content::mojom::ColorChooserRequest chooser,
+      content::mojom::ColorChooserClientPtr client,
+      SkColor color,
+      std::vector<content::mojom::ColorSuggestionPtr> suggestions) override;
+  void SetSelectedColor(SkColor color) override;
+
   // NotificationObserver ------------------------------------------------------
 
   void Observe(int type,
@@ -1118,14 +1130,6 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   void OnAppCacheAccessed(RenderViewHostImpl* source,
                           const GURL& manifest_url,
                           bool blocked_by_policy);
-  void OnOpenColorChooser(RenderFrameHostImpl* source,
-                          int color_chooser_id,
-                          SkColor color,
-                          const std::vector<ColorSuggestion>& suggestions);
-  void OnEndColorChooser(RenderFrameHostImpl* source, int color_chooser_id);
-  void OnSetSelectedColorInColorChooser(RenderFrameHostImpl* source,
-                                        int color_chooser_id,
-                                        SkColor color);
   void OnUpdatePageImportanceSignals(RenderFrameHostImpl* source,
                                      const PageImportanceSignals& signals);
 #if BUILDFLAG(ENABLE_PLUGINS)
@@ -1522,28 +1526,15 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
 
   // Holds information about a current color chooser dialog, if one is visible.
   struct ColorChooserInfo {
-    ColorChooserInfo(int render_process_id,
-                     int render_frame_id,
-                     ColorChooser* chooser,
-                     int identifier);
+    ColorChooserInfo(content::ColorChooser* chooser,
+                     content::mojom::ColorChooserClientPtr);
     ~ColorChooserInfo();
 
-    bool Matches(RenderFrameHostImpl* render_frame_host, int color_chooser_id);
-
-    int render_process_id;
-    int render_frame_id;
-
     // Color chooser that was opened by this tab.
-    std::unique_ptr<ColorChooser> chooser;
+    std::unique_ptr<content::ColorChooser> chooser;
 
-    // A unique identifier for the current color chooser.  Identifiers are
-    // unique across a renderer process.  This avoids race conditions in
-    // synchronizing the browser and renderer processes.  For example, if a
-    // renderer closes one chooser and opens another, and simultaneously the
-    // user picks a color in the first chooser, the IDs can be used to drop the
-    // "chose a color" message rather than erroneously tell the renderer that
-    // the user picked a color in the second chooser.
-    int identifier;
+    // mojo renderer client.
+    content::mojom::ColorChooserClientPtr client;
   };
 
   std::unique_ptr<ColorChooserInfo> color_chooser_info_;
@@ -1601,6 +1592,12 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   std::unique_ptr<WakeLockContextHost> wake_lock_context_host_;
 
   device::mojom::WakeLockPtr renderer_wake_lock_;
+
+  std::unique_ptr<
+      content::WebContentsFrameBindingSet<content::mojom::ColorChooserFactory>>
+      color_chooser_factory_bindings_;
+  mojo::Binding<content::mojom::ColorChooser> color_chooser_binding_;
+  content::mojom::ColorChooserClientPtr color_chooser_client_;
 
 #if defined(OS_ANDROID)
   std::unique_ptr<NFCHost> nfc_host_;
