@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c00af055_68f16488",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-12-04T21:25:31Z",
+      "side": 1,
+      "message": "nit: you could write SetCanBeStopped(StopInBackgroundExperimentalEnabled()).",
+      "range": {
+        "startLine": 307,
+        "startChar": 6,
+        "endLine": 307,
+        "endChar": 50
+      },
+      "revId": "963c027bac30249f5c75c7a465512875035cef5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
