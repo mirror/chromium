@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c34a9682_91c76206",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwSettingsTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2869,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-04T22:10:01Z",
+      "side": 1,
+      "message": "Drive-by: does the testCSSHexAlphaColorEnabled() throws Throwable test also need updating?",
+      "revId": "e3526f77d76ab1277059880b3cc472ea25d64fe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
