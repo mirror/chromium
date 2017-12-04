@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "ee209bcc_591c35f2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-04T18:06:43Z",
+      "side": 1,
+      "message": "You can reference https://crbug.com/598424 for this work if you want.",
+      "revId": "e87729d58e070ed032246e410f9b161382653cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9243630a_8207075a",
+        "filename": "content/browser/quota_dispatcher_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-04T18:06:43Z",
+      "side": 1,
+      "message": "This potentially does a bunch of extra work since if the origin does have a host it can just return that rather than converting the origin to a URL.\n\nThis isn\u0027t performance critical code so it\u0027s fine to leave as-is, but can you toss in a TODO? We likely wouldn\u0027t catch this during later refactors since the input/output don\u0027t need to change (origin -\u003e string).",
+      "revId": "e87729d58e070ed032246e410f9b161382653cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "350443af_4538d188",
         "filename": "content/common/quota_dispatcher_host.mojom",
         "patchSetId": 1
