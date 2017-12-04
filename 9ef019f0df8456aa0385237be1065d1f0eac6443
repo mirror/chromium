@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "12dc27b3_fb4ecae1",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-04T19:52:01Z",
+      "side": 1,
+      "message": "a → are",
+      "revId": "9ef019f0df8456aa0385237be1065d1f0eac6443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cff7dd8_90f5ac6a",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-04T19:52:01Z",
+      "side": 1,
+      "message": "\"prevents the allocator from handing out...\"",
+      "revId": "9ef019f0df8456aa0385237be1065d1f0eac6443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c1bed7f_8c43367e",
         "filename": "base/allocator/partition_allocator/partition_alloc.h",
         "patchSetId": 1
@@ -186,6 +220,41 @@
       "writtenOn": "2017-12-04T19:16:08Z",
       "side": 1,
       "message": "So the original code did this weird thing where the PartitionBucket\u0027s freelist_head pointer was Not masked.  This changes that behavior. Is there a reason for that?\n\nNote, I had it on a TODO in an upcoming CL to actually create 2 types.. PartitionEncodedFreelistEntry PartitionFreeListEntry which the mask/unmask functions being member methods that flipped between the two. The idea would be then that PartitionBucket holds PartitionFreeListEntry which contains a PartitionEncodedFreelistEntry member...  Not suggesting that you have to introduce that change in this CL, but if the concern is keeping all \"freelist\" entry pointers consistently masked/unmasked, a fix is coming soon...",
+      "revId": "9ef019f0df8456aa0385237be1065d1f0eac6443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2daad351_17060a15",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-04T19:52:01Z",
+      "side": 1,
+      "message": "Yeah I\u0027d like to see Albert\u0027s change landed first in any case.",
+      "parentUuid": "60741011_da517e77",
+      "revId": "9ef019f0df8456aa0385237be1065d1f0eac6443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23189204_b349dca2",
+        "filename": "base/allocator/partition_allocator/partition_alloc_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-04T19:52:01Z",
+      "side": 1,
+      "message": "Can you add some negative tests to make sure that crazy values are correctly constrained instead of going totally wild? The implementation of `PartitionFreelistUnmask` looks right to me, but a test will help maintain it.\n\nAlso, this mitigation approach seems to still leave a chance of mangling objects/the middles of objects inside a `PartitionPage`, even if it does keep crazy pointers constrained to being inside a `PartitionPage`. We should consider if a cookie for pointer obfuscation might provide better mitigation.",
       "revId": "9ef019f0df8456aa0385237be1065d1f0eac6443",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
