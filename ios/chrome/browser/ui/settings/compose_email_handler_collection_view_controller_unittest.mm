@@ -10,7 +10,7 @@
 #import "ios/chrome/browser/ui/collection_view/collection_view_controller_test.h"
 #import "ios/chrome/browser/web/fake_mailto_handler_helpers.h"
 #import "ios/chrome/browser/web/mailto_handler_system_mail.h"
-#import "ios/chrome/browser/web/nullable_mailto_url_rewriter.h"
+#import "ios/chrome/browser/web/mailto_url_rewriter.h"
 #include "ios/chrome/grit/ios_strings.h"
 #import "ios/third_party/material_components_ios/src/components/Palettes/src/MDCPalettes.h"
 #include "testing/gtest_mac.h"
@@ -31,8 +31,7 @@ class ComposeEmailHandlerCollectionViewControllerTest
   // a MailtoURLRewriter which in turn used for the construction of the
   // CollectionViewController.
   CollectionViewController* InstantiateController() override {
-    rewriter_ =
-        [NullableMailtoURLRewriter mailtoURLRewriterWithStandardHandlers];
+    rewriter_ = [MailtoURLRewriter mailtoURLRewriterWithStandardHandlers];
     // Clears the state so unit tests start from a known state.
     [[NSUserDefaults standardUserDefaults]
         removeObjectForKey:[[rewriter_ class] userDefaultsKey]];
