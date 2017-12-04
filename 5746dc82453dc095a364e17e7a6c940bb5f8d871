@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "562d4deb_1e7bf177",
+        "filename": "ui/gfx/geometry/rect_f.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-04T02:25:35Z",
+      "side": 1,
+      "message": "OOC, why did you change the location of this stuff?",
+      "revId": "5746dc82453dc095a364e17e7a6c940bb5f8d871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a203d89_3bd06302",
+        "filename": "ui/gfx/geometry/rect_f.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-04T02:25:35Z",
+      "side": 1,
+      "message": "Are the outer braces necessary?",
+      "revId": "5746dc82453dc095a364e17e7a6c940bb5f8d871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
