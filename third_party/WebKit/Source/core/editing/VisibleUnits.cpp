@@ -64,6 +64,7 @@
 #include "core/layout/api/LineLayoutItem.h"
 #include "core/layout/line/InlineIterator.h"
 #include "core/layout/line/InlineTextBox.h"
+#include "core/layout/ng/inline/ng_offset_mapping.h"
 #include "platform/heap/Handle.h"
 #include "platform/text/TextBoundaries.h"
 
@@ -695,7 +696,20 @@ LocalCaretRect LocalCaretRectOfPositionTemplate(
   if (!layout_object)
     return LocalCaretRect();
 
-  const InlineBoxPosition& box_position = ComputeInlineBoxPosition(position);
+  const PositionWithAffinityTemplate<Strategy> adjusted =
+      ComputeInlineAdjustedPosition(position);
+  const Position adjusted_in_dom = ToPositionInDOMTree(adjusted.GetPosition());
+  if (NGInlineFormattingContextOf(ToPositionInDOMTree(adjusted_in_dom))) {
+    return ComputeLocalCaretRectNG(
+        PositionWithAffinity(adjusted_in_dom, adjusted.Affinity()));
+  }
+
+  if (adjusted.IsNotNull()) {
+    DCHECK_EQ(PrimaryDirectionOf(*position.AnchorNode()),
+              PrimaryDirectionOf(*adjusted.AnchorNode()));
+  }
+  const InlineBoxPosition& box_position =
+      ComputeInlineBoxPositionForInlineAdjustedPosition(adjusted);
 
   if (box_position.inline_box) {
     return ComputeLocalCaretRect(
