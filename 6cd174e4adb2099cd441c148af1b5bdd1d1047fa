@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a414dd9_8689a46c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/metrics/PageLoadMetricsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-12-04T09:24:09Z",
+      "side": 1,
+      "message": "nit: Use a lambda?\n\nThreadUtils.runOnUiThreadBlocking(() -\u003e PageLoadMetrics.addObserver(mMetricsObserver));",
+      "revId": "6cd174e4adb2099cd441c148af1b5bdd1d1047fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9814b66a_5897098f",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/metrics/PageLoadMetricsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-12-04T09:24:09Z",
+      "side": 1,
+      "message": "nit: ditto.",
+      "revId": "6cd174e4adb2099cd441c148af1b5bdd1d1047fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7d16fa9_0e2d1cbf",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/metrics/PageLoadMetricsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-12-04T09:24:09Z",
+      "side": 1,
+      "message": "nit: ditto.",
+      "revId": "6cd174e4adb2099cd441c148af1b5bdd1d1047fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
