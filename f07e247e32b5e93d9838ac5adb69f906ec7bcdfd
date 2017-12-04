@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33d88875_50c5d611",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-04T17:57:24Z",
+      "side": 1,
+      "message": "s/ of check for/ of checking for\n\nHere and in the comment below",
+      "range": {
+        "startLine": 37,
+        "startChar": 47,
+        "endLine": 37,
+        "endChar": 52
+      },
+      "revId": "f07e247e32b5e93d9838ac5adb69f906ec7bcdfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fec64dea_b84383aa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-04T17:57:24Z",
+      "side": 1,
+      "message": "stylistic nit: Add {} since this spans multiple lines",
+      "range": {
+        "startLine": 61,
+        "startChar": 12,
+        "endLine": 61,
+        "endChar": 72
+      },
+      "revId": "f07e247e32b5e93d9838ac5adb69f906ec7bcdfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a8dd885_19037873",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-04T17:57:24Z",
+      "side": 1,
+      "message": "You may want to save whether an export is requested to the bundle in #onSaveInstanceState() (and read the value in onCreate) if it\u0027s possible for the preference activity/fragment to be destroyed while the lock screen is showing. You can test by enabling \"Destroy activities\" in Android\u0027s developer settings.",
+      "range": {
+        "startLine": 241,
+        "startChar": 8,
+        "endLine": 244,
+        "endChar": 9
+      },
+      "revId": "f07e247e32b5e93d9838ac5adb69f906ec7bcdfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
