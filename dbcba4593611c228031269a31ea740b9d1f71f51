@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9e96e1fe_731572a0",
+        "filename": "chrome/app/vector_icons/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-12-04T23:32:21Z",
+      "side": 1,
+      "message": "Yes, I did - I started off making all of these icons the .x1.icon variants, but was hitting this DCHECK https://cs.chromium.org/chromium/src/ui/gfx/paint_vector_icon.cc?rcl\u003d7be49f33afa3174281ad1617d5d1ba5dfa423175\u0026l\u003d544 when testing with --force-device-scale-factor\u003d2 on CrOS when opening the other UI surface the same icons were being used in.\n\nThat led me to the bug cited in this TODO (https://crbug.com/647286) which seems to suggest that the idea is to have separate .icon files for differently sized vector icons?\n\nPlease let me know if I\u0027ve misunderstood something - basically what I want is to have the same icon be used at 18x18dip in one UI surface and 16x16 in another, regardless of the device scale factor. Thanks for the help!",
+      "parentUuid": "df631088_d7a4c32a",
+      "range": {
+        "startLine": 109,
+        "startChar": 12,
+        "endLine": 110,
+        "endChar": 65
+      },
+      "revId": "dbcba4593611c228031269a31ea740b9d1f71f51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7dd32ca0_fb2397e9",
         "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
         "patchSetId": 14
