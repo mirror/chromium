@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "ab052956_5017d438",
+        "filename": "media/midi/midi_message_queue_fuzzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-12-04T19:06:35Z",
+      "side": 1,
+      "message": "Sorry, I meant that we need a new object for each invocation of LLVMFuzzerTestOneInput. Static won\u0027t be useful here, as it\u0027ll be still the same object which preserves its state, right?\n\nLLVMFuzzerTestOneInput() is being called in a single process, basically the fuzzing engine does the following:\n\n  while (true) {\n    input \u003d fuzzer::generateNewInput();\n    LLVMFuzzerTestOneInput(input.data(), input.size());\n    // if we crash, report |input| as a bug reproducer\n  }\n\nSo, we need LLVMFuzzerTestOneInput() to be completely independent between multiple invocations.",
+      "parentUuid": "a6dc9de5_fd028b2b",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 13
+      },
+      "revId": "a71fee012c66e7ed8c2c20a739bd08e4d4764261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6101db5b_bcdfd31d",
         "filename": "media/midi/midi_message_queue_fuzzer.cc",
         "patchSetId": 3
