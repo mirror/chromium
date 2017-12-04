@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c45ff6e3_da2243e7",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-12-04T16:41:03Z",
+      "side": 1,
+      "message": "It means that the Doodle will be wide when the page is wide, without spilling over the edges of the page when it\u0027s narrow.\n\nThe other options are:\n\n* 100% (which I think is what we originally discussed). I don\u0027t see a strong reason for or against 100% relative to --content-width; either way, the doodle will have to handle resizes\n* Some fixed amount, say 500px. This will look bad on a narrow page.\n\nOf course, I\u0027m not sure how well doodles will really handle being narrow, anyway. google.com doesn\u0027t seem to go below 980px wide these days.",
+      "parentUuid": "f9fead1b_3c02cded",
+      "range": {
+        "startLine": 167,
+        "startChar": 30,
+        "endLine": 167,
+        "endChar": 0
+      },
+      "revId": "028d63d69ff0d04e9141d08cbfbb10112aef0ae3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f0f45a9_9858e28f",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "028d63d69ff0d04e9141d08cbfbb10112aef0ae3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2135bfe2_74c7ef06",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-12-04T16:41:03Z",
+      "side": 1,
+      "message": "It clears iframe.style.width/height, meaning that the defaults from the stylesheet will apply again.",
+      "parentUuid": "0f0f45a9_9858e28f",
+      "range": {
+        "startLine": 584,
+        "startChar": 33,
+        "endLine": 584,
+        "endChar": 0
+      },
+      "revId": "028d63d69ff0d04e9141d08cbfbb10112aef0ae3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
