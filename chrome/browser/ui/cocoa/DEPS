@@ -2,6 +2,7 @@ include_rules = [
   "+third_party/apple_sample_code",  # Apple code ImageAndTextCell.
   "+third_party/molokocacao",  # For NSBezierPath additions.
   "+third_party/ocmock",  # For unit tests.
+
   # Tooklit-views dependencies shouldn't be introduced here except for special
   # cases below.
   "-ui/views",
