@@ -22,6 +22,30 @@
       "revId": "7baac92bf89467f8cb9ebf3fd278222552b6000c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30115814_c060d9a5",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-04T14:10:35Z",
+      "side": 1,
+      "message": "RunLoop::QuitClosure does do non-obvious things which I don\u0027t understand and so don\u0027t want to touch. However, it\u0027s possible to just assign its return value to a OnceClosure, so I did that.",
+      "parentUuid": "42045e19_e69b508c",
+      "range": {
+        "startLine": 270,
+        "startChar": 8,
+        "endLine": 270,
+        "endChar": 24
+      },
+      "revId": "7baac92bf89467f8cb9ebf3fd278222552b6000c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
