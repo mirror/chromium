@@ -16,6 +16,24 @@
       "revId": "8be4d27775b824b1732db9797f2b2f7b69b4be46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e33548d_87538c3a",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/background.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-04T18:03:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83c3faa4_6c313808",
+      "revId": "8be4d27775b824b1732db9797f2b2f7b69b4be46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
