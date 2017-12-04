@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3438e5b0_3c7a9746",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-04T22:30:28Z",
+      "side": 1,
+      "message": "nit: combine these two if statements",
+      "range": {
+        "startLine": 227,
+        "startChar": 7,
+        "endLine": 228,
+        "endChar": 52
+      },
+      "revId": "facb4e004307cae6267642fbdf4c476093c2ad76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
