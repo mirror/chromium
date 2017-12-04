@@ -28,6 +28,40 @@ namespace {
 // 64 MB chunks whenever a producer is writable.
 constexpr uint32_t kDefaultMaxReadSize = 64 * 1024 * 1024;
 
+MojoResult FileErrorToMojoResult(base::File::Error error) {
+  switch (error) {
+    case base::File::FILE_OK:
+      return MOJO_RESULT_OK;
+    case base::File::FILE_ERROR_FAILED:
+      return MOJO_RESULT_UNKNOWN;
+    case base::File::FILE_ERROR_EXISTS:
+      return MOJO_RESULT_ALREADY_EXISTS;
+    case base::File::FILE_ERROR_NOT_FOUND:
+      return MOJO_RESULT_NOT_FOUND;
+    case base::File::FILE_ERROR_SECURITY:
+    case base::File::FILE_ERROR_ACCESS_DENIED:
+      return MOJO_RESULT_PERMISSION_DENIED;
+    case base::File::FILE_ERROR_TOO_MANY_OPENED:
+    case base::File::FILE_ERROR_NO_MEMORY:
+      return MOJO_RESULT_RESOURCE_EXHAUSTED;
+    case base::File::FILE_ERROR_NO_SPACE:
+      return MOJO_RESULT_RESOURCE_EXHAUSTED;
+    case base::File::FILE_ERROR_ABORT:
+      return MOJO_RESULT_ABORTED;
+    case base::File::FILE_ERROR_MAX:
+    case base::File::FILE_ERROR_NOT_A_DIRECTORY:
+    case base::File::FILE_ERROR_IN_USE:
+    case base::File::FILE_ERROR_INVALID_OPERATION:
+    case base::File::FILE_ERROR_NOT_A_FILE:
+    case base::File::FILE_ERROR_NOT_EMPTY:
+    case base::File::FILE_ERROR_INVALID_URL:
+    case base::File::FILE_ERROR_IO:
+      return MOJO_RESULT_UNKNOWN;
+  }
+  NOTREACHED();
+  return MOJO_RESULT_UNKNOWN;
+}
+
 }  // namespace
 
 class FileDataPipeProducer::FileSequenceState
@@ -138,11 +172,18 @@ class FileDataPipeProducer::FileSequenceState
           std::min(static_cast<size_t>(size), max_bytes_remaining));
       int read_size = file_.ReadAtCurrentPos(static_cast<char*>(pipe_buffer),
                                              attempted_read_size);
+      base::File::Error read_error;
+      if (read_size < 0) {
+        read_error = base::File::GetLastFileError();
+        DCHECK_NE(base::File::FILE_OK, read_error);
+      } else {
+        read_error = base::File::FILE_OK;
+      }
       producer_handle_->EndWriteData(
           read_size >= 0 ? static_cast<uint32_t>(read_size) : 0);
 
       if (read_size < 0) {
-        Finish(MOJO_RESULT_ABORTED);
+        Finish(FileErrorToMojoResult(read_error));
         return;
       }
 
