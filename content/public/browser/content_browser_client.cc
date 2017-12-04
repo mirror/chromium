@@ -594,4 +594,10 @@ bool ContentBrowserClient::AllowRenderingMhtmlOverHttp(
   return false;
 }
 
+bool ContentBrowserClient::ShouldForceDownloadResource(
+    const GURL& url,
+    const std::string& mime_type) const {
+  return false;
+}
+
 }  // namespace content
