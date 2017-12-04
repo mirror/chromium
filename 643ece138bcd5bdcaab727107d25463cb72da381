@@ -1,0 +1,685 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "883872ab_ba92c485",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T19:23:45Z",
+      "side": 1,
+      "message": "nit: const -\u003e constexpr since you are here.",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 5
+      },
+      "revId": "643ece138bcd5bdcaab727107d25463cb72da381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c982ea7b_4dbd497d",
+        "filename": "chrome/browser/chromeos/accessibility/magnification_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T19:23:45Z",
+      "side": 1,
+      "message": "nit: const -\u003e constexpr",
+      "revId": "643ece138bcd5bdcaab727107d25463cb72da381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c187d72d_b1083ec4",
+        "filename": "chrome/browser/chromeos/extensions/quick_unlock_private/quick_unlock_private_api_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T19:23:45Z",
+      "side": 1,
+      "message": "const char* -\u003e constexpr char kXXXX[]",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 11
+      },
+      "revId": "643ece138bcd5bdcaab727107d25463cb72da381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b841f9e_543f18ae",
+        "filename": "chrome/browser/chromeos/file_manager/external_filesystem_apitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T19:23:45Z",
+      "side": 1,
+      "message": "nit: const -\u003e constexpr and update existing ones",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 5
+      },
+      "revId": "643ece138bcd5bdcaab727107d25463cb72da381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6af36544_224096fa",
+        "filename": "chrome/browser/chromeos/login/login_manager_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T19:23:45Z",
+      "side": 1,
+      "message": "nit: const -\u003e constexpr",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 5
+      },
+      "revId": "643ece138bcd5bdcaab727107d25463cb72da381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f981399_206ad86a",
+        "filename": "chrome/browser/chromeos/login/login_manager_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T19:23:45Z",
+      "side": 1,
+      "message": "nit: base::MakeUnique -\u003e std::make_unique",
+      "range": {
+        "startLine": 160,
+        "startChar": 6,
+        "endLine": 160,
+        "endChar": 22
+      },
+      "revId": "643ece138bcd5bdcaab727107d25463cb72da381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5b7d96e_30eefc75",
+        "filename": "chrome/browser/chromeos/login/login_manager_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T19:23:45Z",
+      "side": 1,
+      "message": "Can we use this as the fake gaia id for all? Then we don\u0027t need to have the special mapping for kEnterpriseUser1/2.",
+      "revId": "643ece138bcd5bdcaab727107d25463cb72da381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76106bf4_cc647164",
+        "filename": "chrome/browser/chromeos/login/login_ui_keyboard_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T19:23:45Z",
+      "side": 1,
+      "message": "nit: const -\u003e constexpr",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 5
+      },
+      "revId": "643ece138bcd5bdcaab727107d25463cb72da381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8d075cf_c3ee548e",
+        "filename": "chrome/browser/chromeos/login/login_ui_keyboard_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T19:23:45Z",
+      "side": 1,
+      "message": "Can we use LoginManagerTest::GetGaiaIdForUserId so that we don\u0027t need to declare these?",
+      "revId": "643ece138bcd5bdcaab727107d25463cb72da381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ae367ec_495504ea",
+        "filename": "chrome/browser/chromeos/login/reset_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T19:23:45Z",
+      "side": 1,
+      "message": "nit: const -\u003e constexpr",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 5
+      },
+      "revId": "643ece138bcd5bdcaab727107d25463cb72da381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af522923_da29f9ba",
+        "filename": "chrome/browser/chromeos/login/reset_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T19:23:45Z",
+      "side": 1,
+      "message": "nit: User LoginManagerTest::GetGaiaIDForUserID instead of this ?",
+      "revId": "643ece138bcd5bdcaab727107d25463cb72da381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2643ae03_e5ae65b2",
+        "filename": "chrome/browser/chromeos/login/screens/user_selection_screen_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T19:23:45Z",
+      "side": 1,
+      "message": "nit: GetGaiaIDForUserID instead?",
+      "revId": "643ece138bcd5bdcaab727107d25463cb72da381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8828e312_afffc199",
+        "filename": "chrome/browser/chromeos/login/session_login_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T19:23:45Z",
+      "side": 1,
+      "message": "nit: const -\u003e constexpr",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 5
+      },
+      "revId": "643ece138bcd5bdcaab727107d25463cb72da381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d38b4b95_012b60ac",
+        "filename": "chrome/browser/chromeos/login/session_login_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T19:23:45Z",
+      "side": 1,
+      "message": "nit: GetGaiaIDForUserID instead ?",
+      "revId": "643ece138bcd5bdcaab727107d25463cb72da381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97db115a_fda1e62e",
+        "filename": "chrome/browser/chromeos/login/supervised/supervised_user_test_base.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T19:23:45Z",
+      "side": 1,
+      "message": "nit: const -\u003e constexpr",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 5
+      },
+      "revId": "643ece138bcd5bdcaab727107d25463cb72da381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22c5a41f_65164236",
+        "filename": "chrome/browser/chromeos/login/ui/user_adding_screen_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T19:23:45Z",
+      "side": 1,
+      "message": "nit: move this to L46 where it is used. Not like having struct as global var.",
+      "revId": "643ece138bcd5bdcaab727107d25463cb72da381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "898e5aef_d2d9c5ac",
+        "filename": "chrome/browser/chromeos/login/users/avatar/user_image_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T19:23:45Z",
+      "side": 1,
+      "message": "nit: const -\u003e constexpr",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 5
+      },
+      "revId": "643ece138bcd5bdcaab727107d25463cb72da381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1c662c9_a607b68b",
+        "filename": "chrome/browser/chromeos/login/users/avatar/user_image_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T19:23:45Z",
+      "side": 1,
+      "message": "nit: GetGaiaIDForUserID ?",
+      "revId": "643ece138bcd5bdcaab727107d25463cb72da381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e7c1018_c772fe2f",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T19:23:45Z",
+      "side": 1,
+      "message": "nit: const -\u003e constexpr",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 5
+      },
+      "revId": "643ece138bcd5bdcaab727107d25463cb72da381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78944c5f_7205e681",
+        "filename": "chrome/browser/chromeos/net/network_portal_detector_impl_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T19:23:45Z",
+      "side": 1,
+      "message": "nit: const -\u003e constexpr",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 5
+      },
+      "revId": "643ece138bcd5bdcaab727107d25463cb72da381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fe5be44_ae6f97ae",
+        "filename": "chrome/browser/chromeos/net/network_portal_detector_impl_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T19:23:45Z",
+      "side": 1,
+      "message": "nit: GetGaiaIDForUserID ?",
+      "revId": "643ece138bcd5bdcaab727107d25463cb72da381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "143ead28_98750581",
+        "filename": "chrome/browser/chromeos/policy/unaffiliated_arc_allowed_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T19:23:45Z",
+      "side": 1,
+      "message": "nit: const -\u003e constexpr",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 5
+      },
+      "revId": "643ece138bcd5bdcaab727107d25463cb72da381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "234907ee_9babd612",
+        "filename": "chrome/browser/chromeos/policy/user_affiliation_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T19:23:45Z",
+      "side": 1,
+      "message": "nit: const -\u003e constexpr",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 5
+      },
+      "revId": "643ece138bcd5bdcaab727107d25463cb72da381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf802ef8_ea10d353",
+        "filename": "chrome/browser/chromeos/preferences_chromeos_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T19:23:45Z",
+      "side": 1,
+      "message": "nit: move kTestUsers to L59 where it is used to avoid having a struct global var.",
+      "revId": "643ece138bcd5bdcaab727107d25463cb72da381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9c71fdc_104be15c",
+        "filename": "chrome/browser/extensions/api/braille_display_private/braille_display_private_apitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T19:23:45Z",
+      "side": 1,
+      "message": "nit: const -\u003e constexpr",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 5
+      },
+      "revId": "643ece138bcd5bdcaab727107d25463cb72da381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f496241c_ee6c2c2e",
+        "filename": "chrome/browser/extensions/api/enterprise_device_attributes/enterprise_device_attributes_apitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T19:23:45Z",
+      "side": 1,
+      "message": "nit: const -\u003e constexpr",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 5
+      },
+      "revId": "643ece138bcd5bdcaab727107d25463cb72da381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40a2250d_dedfe12d",
+        "filename": "chrome/browser/net/nss_context_chromeos_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T19:23:45Z",
+      "side": 1,
+      "message": "nit: const -\u003e constexpr",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 5
+      },
+      "revId": "643ece138bcd5bdcaab727107d25463cb72da381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4489de6_4d60570e",
+        "filename": "chrome/browser/net/nss_context_chromeos_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T19:23:45Z",
+      "side": 1,
+      "message": "nit: GetGaiaIDForUserID ?",
+      "revId": "643ece138bcd5bdcaab727107d25463cb72da381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "497afb5f_af772f96",
+        "filename": "chrome/browser/notifications/login_state_notification_blocker_chromeos_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T19:23:45Z",
+      "side": 1,
+      "message": "nit: move kTestUsers to where it is used",
+      "revId": "643ece138bcd5bdcaab727107d25463cb72da381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d80eb6b0_86a61149",
+        "filename": "chrome/browser/profiles/profile_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T19:23:45Z",
+      "side": 1,
+      "message": "nit: const -\u003e constexpr",
+      "range": {
+        "startLine": 285,
+        "startChar": 2,
+        "endLine": 285,
+        "endChar": 7
+      },
+      "revId": "643ece138bcd5bdcaab727107d25463cb72da381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7243b9c2_367831de",
+        "filename": "chrome/browser/signin/chromeos_mirror_account_consistency_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T19:23:45Z",
+      "side": 1,
+      "message": "nit: GetGaiaIDForUserID ?",
+      "revId": "643ece138bcd5bdcaab727107d25463cb72da381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e0f026a_4b9e7252",
+        "filename": "chrome/browser/ui/ash/chrome_new_window_client_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T19:23:45Z",
+      "side": 1,
+      "message": "nit: const -\u003e constexpr",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 5
+      },
+      "revId": "643ece138bcd5bdcaab727107d25463cb72da381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30f7fd11_23fccf79",
+        "filename": "chrome/browser/ui/ash/session_controller_client_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T19:23:45Z",
+      "side": 1,
+      "message": "const char* -\u003e constexpr char kXXX[]",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 11
+      },
+      "revId": "643ece138bcd5bdcaab727107d25463cb72da381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
