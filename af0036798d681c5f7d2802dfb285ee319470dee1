@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36d64c16_44a3d0b9",
+        "filename": "net/disk_cache/disk_cache_perftest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-12-04T21:11:05Z",
+      "side": 1,
+      "message": "Is this preferred style? It\u0027s more confusing to me since I can\u0027t see where it\u0027s set before it\u0027s used in the constructor.",
+      "revId": "af0036798d681c5f7d2802dfb285ee319470dee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d865c8e_9efeb312",
+        "filename": "net/disk_cache/disk_cache_perftest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-12-04T21:11:05Z",
+      "side": 1,
+      "message": "How can you have next_offset \u003e data_len? Shouldn\u0027t it be at most next_offset \u003d\u003d data_len if we just finished writing the whole buffer?",
+      "revId": "af0036798d681c5f7d2802dfb285ee319470dee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8f5d277_012cb64c",
+        "filename": "net/disk_cache/disk_cache_perftest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-12-04T21:11:05Z",
+      "side": 1,
+      "message": "You can just do \"... \u003d *entry_ptr;\" like above.",
+      "revId": "af0036798d681c5f7d2802dfb285ee319470dee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59284727_c6e10c85",
+        "filename": "net/disk_cache/disk_cache_perftest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-12-04T21:11:05Z",
+      "side": 1,
+      "message": "Looks like leftover debugging code?",
+      "revId": "af0036798d681c5f7d2802dfb285ee319470dee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
