@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0751429_a35fe661",
+        "filename": "chrome/browser/ui/exclusive_access/fullscreen_controller_interactive_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-04T13:26:32Z",
+      "side": 1,
+      "message": "this one is flaking from time to time. i\u0027ve filed https://crbug.com/791539 and am disabling in https://chromium-review.googlesource.com/c/chromium/src/+/806214.",
+      "revId": "abae8b0a785a7edfd52a26023738c3aaabc18dfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
