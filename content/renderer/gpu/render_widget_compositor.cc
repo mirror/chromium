@@ -1012,7 +1012,7 @@ void RenderWidgetCompositor::LayoutAndPaintAsync(
   layout_and_paint_async_callback_ = callback;
 
   if (CompositeIsSynchronous()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    layer_tree_host_->GetTaskRunnerProvider()->MainThreadTaskRunner()->PostTask(
         FROM_HERE,
         base::BindOnce(&RenderWidgetCompositor::LayoutAndUpdateLayers,
                        weak_factory_.GetWeakPtr()));
@@ -1073,7 +1073,7 @@ void RenderWidgetCompositor::CompositeAndReadbackAsync(
   // be installed after layout which will happen as a part of the commit, for
   // widgets that delay the creation of their output surface.
   if (CompositeIsSynchronous()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    layer_tree_host_->GetTaskRunnerProvider()->MainThreadTaskRunner()->PostTask(
         FROM_HERE,
         base::BindOnce(&RenderWidgetCompositor::SynchronouslyComposite,
                        weak_factory_.GetWeakPtr()));
@@ -1154,7 +1154,7 @@ void RenderWidgetCompositor::RequestDecode(
   // in this case we actually need a commit to transfer the decode requests to
   // the impl side. So, force a commit to happen.
   if (CompositeIsSynchronous()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    layer_tree_host_->GetTaskRunnerProvider()->MainThreadTaskRunner()->PostTask(
         FROM_HERE,
         base::BindOnce(&RenderWidgetCompositor::SynchronouslyComposite,
                        weak_factory_.GetWeakPtr()));
@@ -1230,7 +1230,7 @@ void RenderWidgetCompositor::DidFailToInitializeLayerTreeFrameSink() {
     return;
   }
   layer_tree_frame_sink_request_failed_while_invisible_ = false;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  layer_tree_host_->GetTaskRunnerProvider()->MainThreadTaskRunner()->PostTask(
       FROM_HERE,
       base::BindOnce(&RenderWidgetCompositor::RequestNewLayerTreeFrameSink,
                      weak_factory_.GetWeakPtr()));
@@ -1294,7 +1294,8 @@ void RenderWidgetCompositor::SetContentSourceId(uint32_t id) {
 
 void RenderWidgetCompositor::NotifySwapTime(ReportTimeCallback callback) {
   QueueSwapPromise(std::make_unique<ReportTimeSwapPromise>(
-      std::move(callback), base::ThreadTaskRunnerHandle::Get()));
+      std::move(callback),
+      layer_tree_host_->GetTaskRunnerProvider()->MainThreadTaskRunner()));
 }
 
 void RenderWidgetCompositor::RequestBeginMainFrameNotExpected(bool new_state) {
