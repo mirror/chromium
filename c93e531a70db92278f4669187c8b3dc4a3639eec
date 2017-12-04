@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a700782_11e8fc86",
+        "filename": "third_party/WebKit/Source/core/fileapi/BlobPropertyBag.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-12-04T09:26:15Z",
+      "side": 1,
+      "message": "nit: spec ended up with EndingType",
+      "revId": "c93e531a70db92278f4669187c8b3dc4a3639eec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
