@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "fd1baea2_68a25ee9",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-04T22:52:12Z",
+      "side": 1,
+      "message": "I would be most comfortable landing the Controller thing now, but since the feature is gated on isolated origins the risk is relatively low (at least we can turn it off in an emergency or something).\n\nI\u0027ll be honest, this code is very easy to get wrong and constantly trips me up, so I feel like \"better safe than sorry\" makes sense :)",
+      "parentUuid": "08c52eeb_0197fb19",
+      "revId": "a51a9743f711302b0ef2d189516f6ddcc166b7eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe54a0cf_194e2520",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 27
