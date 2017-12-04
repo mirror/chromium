@@ -105,8 +105,8 @@ class CORE_EXPORT ExecutionContext : public ContextLifecycleNotifier,
 
   // TODO(hiroshige): Make GetSecurityOrigin() return |const SecurityOrigin*|.
   // crbug.com/779730
-  SecurityOrigin* GetSecurityOrigin();
-  SecurityOrigin* GetMutableSecurityOrigin();
+  const SecurityOrigin* GetSecurityOrigin();
+  const SecurityOrigin* GetMutableSecurityOrigin();
 
   ContentSecurityPolicy* GetContentSecurityPolicy();
   virtual const KURL& Url() const = 0;

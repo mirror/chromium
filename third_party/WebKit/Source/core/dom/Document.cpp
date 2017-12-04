@@ -5225,7 +5225,8 @@ const KURL Document::SiteForCookies() const {
   if (top.IsLocalFrame()) {
     top_document_url = ToLocalFrame(top).GetDocument()->Url();
   } else {
-    SecurityOrigin* origin = top.GetSecurityContext()->GetSecurityOrigin();
+    const SecurityOrigin* origin =
+        top.GetSecurityContext()->GetSecurityOrigin();
     // TODO(yhirano): Ideally |origin| should not be null here.
     if (origin)
       top_document_url = KURL(NullURL(), origin->ToString());
@@ -5546,7 +5547,7 @@ KURL Document::OpenSearchDescriptionURL() {
 
     // Count usage; perhaps we can lock this to secure contexts.
     WebFeature osd_disposition;
-    scoped_refptr<SecurityOrigin> target =
+    scoped_refptr<const SecurityOrigin> target =
         SecurityOrigin::Create(link_element->Href());
     if (IsSecureContext()) {
       osd_disposition = target->IsPotentiallyTrustworthy()
@@ -6019,7 +6020,7 @@ void Document::InitSecurityContext(const DocumentInit& initializer) {
 
   if (IsSandboxed(kSandboxOrigin)) {
     cookie_url_ = url_;
-    scoped_refptr<SecurityOrigin> security_origin =
+    scoped_refptr<const SecurityOrigin> security_origin =
         SecurityOrigin::CreateUnique();
     // If we're supposed to inherit our security origin from our
     // owner, but we're also sandboxed, the only things we inherit are
@@ -6173,7 +6174,7 @@ void Document::InitContentSecurityPolicy(
 }
 
 bool Document::IsSecureTransitionTo(const KURL& url) const {
-  scoped_refptr<SecurityOrigin> other = SecurityOrigin::Create(url);
+  scoped_refptr<const SecurityOrigin> other = SecurityOrigin::Create(url);
   return GetSecurityOrigin()->CanAccess(other.get());
 }
 
@@ -6245,13 +6246,14 @@ bool Document::AllowInlineEventHandler(Node* node,
 }
 
 void Document::EnforceSandboxFlags(SandboxFlags mask) {
-  scoped_refptr<SecurityOrigin> stand_in_origin = GetSecurityOrigin();
+  scoped_refptr<const SecurityOrigin> stand_in_origin = GetSecurityOrigin();
   bool is_potentially_trustworthy =
       stand_in_origin && stand_in_origin->IsPotentiallyTrustworthy();
   ApplySandboxFlags(mask, is_potentially_trustworthy);
 }
 
-void Document::UpdateSecurityOrigin(scoped_refptr<SecurityOrigin> origin) {
+void Document::UpdateSecurityOrigin(
+    scoped_refptr<const SecurityOrigin> origin) {
   SetSecurityOrigin(std::move(origin));
   DidUpdateSecurityOrigin();
 }

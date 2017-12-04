@@ -38,7 +38,7 @@ MediaStreamRegistry& MediaStreamRegistry::Registry() {
   return instance;
 }
 
-void MediaStreamRegistry::RegisterURL(SecurityOrigin*,
+void MediaStreamRegistry::RegisterURL(const SecurityOrigin*,
                                       const KURL& url,
                                       URLRegistrable* stream) {
   DCHECK(&stream->Registry() == this);
