@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8eb6e30_d27a912f",
+        "filename": "third_party/WebKit/LayoutTests/editing/pasteboard/clipboard-event-targets-visible-unfocused-selection.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-04T04:07:26Z",
+      "side": 1,
+      "message": "nit: We can do this as following:\n\nwindow.getSelection().selectAllChildren(selectedElement);",
+      "revId": "468ff5fc0809e27195274e3a9dcea6468680cf2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28b4252f_33f6f2c5",
+        "filename": "third_party/WebKit/LayoutTests/editing/pasteboard/clipboard-event-targets-visible-unfocused-selection.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-04T04:07:26Z",
+      "side": 1,
+      "message": "nit: ++selection_hit_count;\nI prefer prefix version of ++ as C++.",
+      "revId": "468ff5fc0809e27195274e3a9dcea6468680cf2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b87af749_708ac400",
+        "filename": "third_party/WebKit/LayoutTests/editing/pasteboard/clipboard-event-targets-visible-unfocused-selection.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-04T04:07:26Z",
+      "side": 1,
+      "message": "nit: ++document_hit_count;\nI prefer prefix version of ++ as C++.",
+      "revId": "468ff5fc0809e27195274e3a9dcea6468680cf2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ff122db_3de13c0f",
+        "filename": "third_party/WebKit/LayoutTests/editing/pasteboard/clipboard-event-targets-visible-unfocused-selection.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-04T04:07:26Z",
+      "side": 1,
+      "message": "nit: Let\u0027s use string template for improve readability:\n\n`The selection should receive a ${eventName}-event`",
+      "range": {
+        "startLine": 38,
+        "startChar": 40,
+        "endLine": 38,
+        "endChar": 97
+      },
+      "revId": "468ff5fc0809e27195274e3a9dcea6468680cf2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "077c9ab9_32f71e98",
+        "filename": "third_party/WebKit/LayoutTests/editing/pasteboard/no-clipboard-event-to-hidden-selection.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-04T04:07:26Z",
+      "side": 1,
+      "message": "nit: s/selection_hit_count/selectionHitCount/\nPlease use lowerCamelCase.",
+      "revId": "468ff5fc0809e27195274e3a9dcea6468680cf2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92e3a64f_d98b39e4",
+        "filename": "third_party/WebKit/LayoutTests/editing/pasteboard/no-clipboard-event-to-hidden-selection.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-04T04:07:26Z",
+      "side": 1,
+      "message": "nit: s/document_hit_count/documentHitCount/\nPlease use lowerCamelCase.",
+      "revId": "468ff5fc0809e27195274e3a9dcea6468680cf2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "060edca7_72dc9e86",
+        "filename": "third_party/WebKit/LayoutTests/editing/pasteboard/no-clipboard-event-to-hidden-selection.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-04T04:07:26Z",
+      "side": 1,
+      "message": "nit: s/last_target/lastTarget/\nPlease use lowerCamelCase.",
+      "revId": "468ff5fc0809e27195274e3a9dcea6468680cf2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a643817_b67a76fb",
+        "filename": "third_party/WebKit/LayoutTests/editing/pasteboard/no-clipboard-event-to-hidden-selection.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-04T04:07:26Z",
+      "side": 1,
+      "message": "Could you add a comment to explain the reason why we use testRunner.execCommand().",
+      "revId": "468ff5fc0809e27195274e3a9dcea6468680cf2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
