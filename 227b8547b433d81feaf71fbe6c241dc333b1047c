@@ -46,6 +46,30 @@
       "revId": "227b8547b433d81feaf71fbe6c241dc333b1047c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "00fbe6db_fc6970bd",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-12-04T16:34:59Z",
+      "side": 1,
+      "message": "Thanks for verifying Max! I\u0027m landing the first version!",
+      "parentUuid": "784de7c4_36b183f0",
+      "range": {
+        "startLine": 265,
+        "startChar": 5,
+        "endLine": 265,
+        "endChar": 25
+      },
+      "revId": "227b8547b433d81feaf71fbe6c241dc333b1047c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
