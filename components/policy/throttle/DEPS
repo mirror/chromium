@@ -1,0 +1,12 @@
+include_rules = [
+  "+chromeos/chromeos_switches.h",
+  "+content/public",
+  "+components/policy",
+  "+components/keyed_service",
+  "+components/prefs",
+  "+components/user_prefs",
+  "+extensions/common/constants.h",
+  "+extensions/features/features.h",
+  "+google_apis/gaia",
+  "+net/base",
+]
