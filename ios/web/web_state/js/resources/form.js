@@ -10,10 +10,25 @@
 
 goog.provide('__crWeb.form');
 
-goog.require('__crWeb.message');
+//For iframe __crWeb.message is called from the top frame, so it's not required.
+//if (window.top == window)
+//  goog.require('__crWeb.message');
 
 /** Beginning of anonymous object */
 (function() {
+
+  // Skip iframes that have the same origin as the main frame. For such frames
+  // no form related actions (eg. filling, saving) are supported.
+  try {
+    // The following line generates exception for iframes that have different
+    // origin that.
+    if (!window.top.document)
+      return;
+  }
+  catch(error) {
+    return;
+  }
+
 
   /**
    * Focus and input events for form elements are messaged to the main
@@ -24,19 +39,22 @@ goog.require('__crWeb.message');
    * @private
    */
   var formActivity_ = function(evt) {
+ debugger;
     var srcElement = evt.srcElement;
     var value = srcElement.value || '';
     var fieldType = srcElement.type || '';
 
     var msg = {
       'command': 'form.activity',
-      'formName': __gCrWeb.common.getFormIdentifier(evt.srcElement.form),
-      'fieldName': __gCrWeb.common.getFieldIdentifier(srcElement),
+      'formName': window.top.__gCrWeb.common.
+                      getFormIdentifier(evt.srcElement.form),
+      'fieldName': window.top.__gCrWeb.common.
+                      getFieldIdentifier(srcElement),
       'fieldType': fieldType,
       'type': evt.type,
       'value': value
     };
-    __gCrWeb.message.invokeOnHost(msg);
+    window.top.__gCrWeb.message.invokeOnHost(msg);
   };
 
   /**
@@ -66,9 +84,10 @@ goog.require('__crWeb.message');
     if (!action) {
       action = document.location.href;
     }
-    __gCrWeb.message.invokeOnHost({
+    window.top.__gCrWeb.message.invokeOnHost({
              'command': 'document.submit',
-            'formName': __gCrWeb.common.getFormIdentifier(evt.srcElement),
+            'formName': window.top.__gCrWeb.common.
+                            getFormIdentifier(evt.srcElement),
                 'href': getFullyQualifiedUrl_(action)
     });
   }, false);
@@ -83,8 +102,8 @@ goog.require('__crWeb.message');
   };
 
   /** Flush the message queue. */
-  if (__gCrWeb.message) {
-    __gCrWeb.message.invokeQueues();
+  if (window.top.__gCrWeb.message) {
+    window.top.__gCrWeb.message.invokeQueues();
   }
 
 }());  // End of anonymous object
