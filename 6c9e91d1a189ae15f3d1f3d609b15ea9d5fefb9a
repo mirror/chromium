@@ -140,6 +140,30 @@
       "revId": "6c9e91d1a189ae15f3d1f3d609b15ea9d5fefb9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a3f6925_15c81f01",
+        "filename": "third_party/WebKit/public/platform/modules/mediastream/media_devices.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-12-04T19:06:04Z",
+      "side": 1,
+      "message": "I\u0027d prefer it one per line, but am not picky.  We\u0027ve don\u0027t use clang-format on mojo in general.",
+      "parentUuid": "2c3e154e_f6e610ec",
+      "range": {
+        "startLine": 105,
+        "startChar": 40,
+        "endLine": 105,
+        "endChar": 41
+      },
+      "revId": "6c9e91d1a189ae15f3d1f3d609b15ea9d5fefb9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
