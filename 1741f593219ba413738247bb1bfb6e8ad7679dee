@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92ae6208_bf4b710d",
+        "filename": "chrome/browser/chromeos/login/users/avatar/user_image_manager_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T17:58:08Z",
+      "side": 1,
+      "message": "nit: document bools since there are more than 1 here.\ne.g. false /* browser_restart */ , false /* is_child */",
+      "revId": "1741f593219ba413738247bb1bfb6e8ad7679dee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49b4d068_d1a4cc74",
+        "filename": "chrome/browser/chromeos/login/users/user_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T17:58:08Z",
+      "side": 1,
+      "message": "nit: document bools here and other places",
+      "revId": "1741f593219ba413738247bb1bfb6e8ad7679dee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4c45e80_39e86911",
+        "filename": "chrome/browser/extensions/active_tab_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T17:58:08Z",
+      "side": 1,
+      "message": "nit: document bools",
+      "revId": "1741f593219ba413738247bb1bfb6e8ad7679dee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d8599d3_874f7801",
+        "filename": "chrome/browser/profiles/profile_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T17:58:08Z",
+      "side": 1,
+      "message": "nit: document bools here and the other place",
+      "revId": "1741f593219ba413738247bb1bfb6e8ad7679dee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d90b1346_c274caf7",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T17:58:08Z",
+      "side": 1,
+      "message": "nit: document bools",
+      "revId": "1741f593219ba413738247bb1bfb6e8ad7679dee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "964dddac_9246d936",
+        "filename": "components/arc/arc_util_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T17:58:08Z",
+      "side": 1,
+      "message": "nit: document bools",
+      "revId": "1741f593219ba413738247bb1bfb6e8ad7679dee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b59fb9d_419b8a72",
+        "filename": "components/user_manager/user.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T17:58:08Z",
+      "side": 1,
+      "message": "nit: wrap with {} since conditions \u003e 1 line",
+      "revId": "1741f593219ba413738247bb1bfb6e8ad7679dee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "588b3387_45379b98",
+        "filename": "components/user_manager/user_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-04T17:58:08Z",
+      "side": 1,
+      "message": "This might be a behavior change. In old code, we treat this as public session only when user \u003d\u003d nullptr. So maybe move it down after \"if (user)\" ?",
+      "revId": "1741f593219ba413738247bb1bfb6e8ad7679dee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
