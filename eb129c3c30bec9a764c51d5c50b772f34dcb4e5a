@@ -2,6 +2,109 @@
   "comments": [
     {
       "key": {
+        "uuid": "f33197a5_c155c9ec",
+        "filename": "base/memory/shared_memory_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-04T16:22:44Z",
+      "side": 1,
+      "message": "This is definitely logically correct but was anything (incorrectly) relying on getting implicit PROT_EXEC before?",
+      "range": {
+        "startLine": 39,
+        "startChar": 39,
+        "endLine": 39,
+        "endChar": 75
+      },
+      "revId": "eb129c3c30bec9a764c51d5c50b772f34dcb4e5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4de6b84_1c76cc45",
+        "filename": "base/memory/shared_memory_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-04T16:22:44Z",
+      "side": 1,
+      "message": "I think this is a bit confusingly worded, since it sounds like the read-only bit is set on the FD.",
+      "range": {
+        "startLine": 50,
+        "startChar": 67,
+        "endLine": 51,
+        "endChar": 16
+      },
+      "revId": "eb129c3c30bec9a764c51d5c50b772f34dcb4e5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d25c4d9_a15e94d6",
+        "filename": "base/memory/shared_memory_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-04T16:22:44Z",
+      "side": 1,
+      "message": "nit: spelling",
+      "range": {
+        "startLine": 60,
+        "startChar": 56,
+        "endLine": 60,
+        "endChar": 62
+      },
+      "revId": "eb129c3c30bec9a764c51d5c50b772f34dcb4e5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "746b68ba_8d96e55c",
+        "filename": "base/memory/shared_memory_handle_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-04T16:22:44Z",
+      "side": 1,
+      "message": "Drop these logs (assuming they\u0027re here because you said it\u0027s WIP)",
+      "revId": "eb129c3c30bec9a764c51d5c50b772f34dcb4e5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4b33db4_2609b36a",
+        "filename": "base/memory/shared_memory_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-04T16:22:44Z",
+      "side": 1,
+      "message": "Does this mean that the handle still gets transmitted from browser \u003e renderer as RW, but we change the prot at map time?\n\nI worry that just importing the handle to the process as RW could be raced by an attacker-controlled thread looping over the FD table for new descriptors.\n\nCould we instead do it at GetReadOnlyHandle() time?",
+      "revId": "eb129c3c30bec9a764c51d5c50b772f34dcb4e5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "463ce427_60e5ab2f",
         "filename": "ipc/ipc_message_utils.cc",
         "patchSetId": 4
@@ -13,6 +116,47 @@
       "writtenOn": "2017-12-04T14:54:55Z",
       "side": 1,
       "message": "it\u0027s clearer to send the read only bit as an additional boolean (that\u0027s read/written only on android)",
+      "revId": "eb129c3c30bec9a764c51d5c50b772f34dcb4e5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "962e85a0_a2b24f58",
+        "filename": "ipc/ipc_message_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-04T16:22:44Z",
+      "side": 1,
+      "message": "+1 since this is already in an #if OS_ANDROID block.",
+      "parentUuid": "463ce427_60e5ab2f",
+      "revId": "eb129c3c30bec9a764c51d5c50b772f34dcb4e5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "809c4b34_307a031c",
+        "filename": "services/device/generic_sensor/platform_sensor_and_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-04T16:22:44Z",
+      "side": 1,
+      "message": "nit: remove word?",
+      "range": {
+        "startLine": 74,
+        "startChar": 17,
+        "endLine": 74,
+        "endChar": 24
+      },
       "revId": "eb129c3c30bec9a764c51d5c50b772f34dcb4e5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
