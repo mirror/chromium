@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1ed2891_ea5ab331",
+        "filename": "chrome/browser/browser_process_platform_part_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-12-04T16:11:28Z",
+      "side": 1,
+      "message": "nit: should this be something like SetCrosComponentPath or something? \"Add\" usually implies addition to a collection, e.g. x \u003d [], x.add(1); x.add(1); x \u003d\u003d [1, 1].",
+      "range": {
+        "startLine": 196,
+        "startChar": 33,
+        "endLine": 196,
+        "endChar": 59
+      },
+      "revId": "7298350484d39ccf902131d062e5098b9c31d3cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
