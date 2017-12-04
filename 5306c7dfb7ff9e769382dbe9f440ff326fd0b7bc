@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b1161c12_e5aff9f9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-12-04T19:03:36Z",
+      "side": 1,
+      "message": "I had updated the commit message when I use git commit --amend, but I don\u0027t know why it doesn\u0027t update the message here.",
+      "parentUuid": "e09ddd80_75c5efc1",
+      "revId": "5306c7dfb7ff9e769382dbe9f440ff326fd0b7bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25e6855f_14a22d3b",
         "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
         "patchSetId": 11
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e5bd9d00_31208a19",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-12-04T19:03:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "25e6855f_14a22d3b",
+      "revId": "5306c7dfb7ff9e769382dbe9f440ff326fd0b7bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4694e2f_72c4b3e1",
         "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
         "patchSetId": 11
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-03T22:23:32Z",
       "side": 1,
       "message": "You can also change this to use the new method.",
+      "revId": "5306c7dfb7ff9e769382dbe9f440ff326fd0b7bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e33ebac_431b930f",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-12-04T19:03:36Z",
+      "side": 1,
+      "message": "I ran into some troubles in attempting to make this function use setUpHealthThermometerDevice. The tests crash when simulateCentral is called more than once with the same state, and because the new method calls simulateCentral but doesn\u0027t return the fake_central object, I am not able to use it for the second peripheral. The only way that I was able to get it to work with the new method is by doing the following:\n\nfunction setUpHealthThermometerDevice(fake_central) {\n  if (typeof fake_central \u003d\u003d \u0027undefined\u0027) {\n    return setUpPreconnectedDevice({\n      address: \u002709:09:09:09:09:09\u0027,\n      name: \u0027Health Thermometer\u0027,\n      knownServiceUUIDs: [\u0027generic_access\u0027, \u0027health_thermometer\u0027],\n    });\n  }\n  return fake_central.simulatePreconnectedPeripheral({\n    address: \u002709:09:09:09:09:09\u0027,\n    name: \u0027Health Thermometer\u0027,\n    knownServiceUUIDs: [\u0027generic_access\u0027, \u0027health_thermometer\u0027],\n  });\n}\n\nfunction setUpHealthThermometerAndHeartRateDevices() {\n  return navigator.bluetooth.test.simulateCentral({state: \u0027powered-on\u0027})\n    .then(fake_central \u003d\u003e Promise.all([\n      setUpHealthThermometerDevice(fake_central),\n      fake_central.simulatePreconnectedPeripheral({\n       address: \u002708:08:08:08:08:08\u0027,\n       name: \u0027Heart Rate\u0027,\n       knownServiceUUIDs: [\u0027generic_access\u0027, \u0027heart_rate\u0027],\n      })]));\n}",
+      "parentUuid": "b4694e2f_72c4b3e1",
       "revId": "5306c7dfb7ff9e769382dbe9f440ff326fd0b7bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "c21b1d5a_b915000f",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-12-04T19:03:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9769d7d2_cdb25790",
+      "revId": "5306c7dfb7ff9e769382dbe9f440ff326fd0b7bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84ad63b1_91f7d681",
         "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
         "patchSetId": 11
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "981f7b5a_1559e0f9",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-12-04T19:03:36Z",
+      "side": 1,
+      "message": "I think that I did this because I was using the messageHandler in health-thermometer-iframe.html as a reference when I was modifying this section of the code, but I see what you mean. It doesn\u0027t make sense to use that here for only two cases.",
+      "parentUuid": "84ad63b1_91f7d681",
+      "revId": "5306c7dfb7ff9e769382dbe9f440ff326fd0b7bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ff25761_ba408d42",
         "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/health-thermometer-iframe.html",
         "patchSetId": 11
@@ -101,6 +191,24 @@
       "revId": "5306c7dfb7ff9e769382dbe9f440ff326fd0b7bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26143bcd_b55f8c79",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/health-thermometer-iframe.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-12-04T19:03:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ff25761_ba408d42",
+      "revId": "5306c7dfb7ff9e769382dbe9f440ff326fd0b7bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
