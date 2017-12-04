@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0ee14705_72cfa3aa",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-04T16:01:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4dfe69c5_7c1ed692",
+      "revId": "e614ad7c8cc207c10672e87441ec5e83101bb53d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8227647e_b762174d",
         "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
         "patchSetId": 24
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-04T12:27:04Z",
       "side": 1,
       "message": "Hrm. Why is this the dragged data as a URL? That might be correct, but I don\u0027t really understand what it means in this context. Can you add some comments?",
+      "revId": "e614ad7c8cc207c10672e87441ec5e83101bb53d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "293c6228_e9c499dd",
+        "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-04T16:01:48Z",
+      "side": 1,
+      "message": "I don\u0027t know if it is correct. I only know that it preserves what blink used to to.\nBefore this patch the FrameLoadRequest constructor (1 line below) used to set the resource_request\u0027s initiator to be the resource_request url\u0027s origin.\nIn this patch, it is done directly here.\n\nI will add a comment explaining this.\n\nMaybe using a unique origin would be better from a security point of view. I don\u0027t know what are the implications of this, but I suppose at least it prevents the browser from sending Same-Site cookies. What do you think?\nI think I should ask another reviewer, but it is not clear to me who owns the DragController class.",
+      "parentUuid": "8227647e_b762174d",
       "revId": "e614ad7c8cc207c10672e87441ec5e83101bb53d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
