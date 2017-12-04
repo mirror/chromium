@@ -45,6 +45,30 @@
       "revId": "399b03e24e9f3ffcab4b2dbe78cff4b850ac7318",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8529556a_0a122ffe",
+        "filename": "ui/latency/latency_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-04T15:29:56Z",
+      "side": 1,
+      "message": "The test calls terminated() on LatencyInfo so it should be fine.",
+      "parentUuid": "2f9e5f1c_3bc8e815",
+      "range": {
+        "startLine": 71,
+        "startChar": 5,
+        "endLine": 71,
+        "endChar": 24
+      },
+      "revId": "399b03e24e9f3ffcab4b2dbe78cff4b850ac7318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
