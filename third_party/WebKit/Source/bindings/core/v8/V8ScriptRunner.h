@@ -106,6 +106,11 @@ class CORE_EXPORT V8ScriptRunner final {
   static v8::MaybeLocal<v8::Value> RunCompiledScript(v8::Isolate*,
                                                      v8::Local<v8::Script>,
                                                      ExecutionContext*);
+  static void ProduceCache(v8::Isolate*,
+                           v8::Local<v8::Script>,
+                           CachedMetadataHandler*,
+                           const String& source_code,
+                           V8CacheOptions);
   static v8::MaybeLocal<v8::Value> CompileAndRunInternalScript(
       ScriptState*,
       v8::Local<v8::String>,

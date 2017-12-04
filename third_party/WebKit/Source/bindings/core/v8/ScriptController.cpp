@@ -129,10 +129,15 @@ v8::Local<v8::Value> ScriptController::ExecuteScriptAndReturnValue(
              .ToLocal(&script))
       return result;
 
-    if (!V8ScriptRunner::RunCompiledScript(GetIsolate(), script,
-                                           GetFrame()->GetDocument())
-             .ToLocal(&result))
+    v8::MaybeLocal<v8::Value> maybe_result = V8ScriptRunner::RunCompiledScript(
+        GetIsolate(), script, GetFrame()->GetDocument());
+    CachedMetadataHandler* cache_handler =
+        source.GetResource() ? source.GetResource()->CacheHandler() : nullptr;
+    V8ScriptRunner::ProduceCache(GetIsolate(), script, cache_handler,
+                                 source.Source(), v8_cache_options);
+    if (!maybe_result.ToLocal(&result)) {
       return result;
+    }
   }
 
   return result;
