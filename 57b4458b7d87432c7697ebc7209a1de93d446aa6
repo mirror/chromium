@@ -232,6 +232,24 @@
     },
     {
       "key": {
+        "uuid": "2b621311_d2e10e0e",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1507,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-12-04T21:44:28Z",
+      "side": 1,
+      "message": "New comment:\n    // Embedded content layers do not have a clipping rect defined,\n    // so match their chld containment geometry to the embedded content\u0027s\n    // geometry.\n\nThe layer ends up at -[some huge value] if we do not special case it, because the ClippingRect is infinite.",
+      "parentUuid": "d549da0a_4c040d0b",
+      "revId": "57b4458b7d87432c7697ebc7209a1de93d446aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f55ab01_84cc350a",
         "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingRequirementsUpdater.cpp",
         "patchSetId": 10
