@@ -70,6 +70,30 @@
       "revId": "75100569efbb7c51374488dbbac62ebdc5c82ae5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12aeb83f_107a1693",
+        "filename": "chrome/browser/chromeos/login/enrollment/auto_enrollment_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2017-12-04T16:17:26Z",
+      "side": 1,
+      "message": "The only harm is additional waiting time (till 90 seconds). The benefits are only erased by waiting without network for those 90 seconds if the user hits this case. For the case you suggested, the device is expected to be stuck in D-Bus call with infinite timeout waiting for the keys. The bug we are avoiding here was noticed only on new devices. If you think it\u0027s worth it, I can add it in a separate CL (as this landed already).",
+      "parentUuid": "5004c5f8_48d64fbb",
+      "range": {
+        "startLine": 239,
+        "startChar": 28,
+        "endLine": 239,
+        "endChar": 47
+      },
+      "revId": "75100569efbb7c51374488dbbac62ebdc5c82ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
