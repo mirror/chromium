@@ -16,7 +16,6 @@
 #import "ios/chrome/browser/web/external_apps_launch_policy_decider.h"
 #import "ios/chrome/browser/web/mailto_handler.h"
 #import "ios/chrome/browser/web/mailto_url_rewriter.h"
-#import "ios/chrome/browser/web/nullable_mailto_url_rewriter.h"
 #include "ios/chrome/grit/ios_strings.h"
 #include "ios/third_party/material_components_ios/src/components/BottomSheet/src/MDCBottomSheetController.h"
 #import "net/base/mac/url_conversions.h"
@@ -320,7 +319,7 @@ void LaunchMailClientApp(const GURL& URL, MailtoHandler* handler) {
   // Replaces |URL| with a rewritten URL if it is of mailto: scheme.
   if (gURL.SchemeIs(url::kMailToScheme)) {
     MailtoURLRewriter* rewriter =
-        [NullableMailtoURLRewriter mailtoURLRewriterWithStandardHandlers];
+        [MailtoURLRewriter mailtoURLRewriterWithStandardHandlers];
     NSString* handlerID = [rewriter defaultHandlerID];
     if (!handlerID) {
       [self promptForMailClientWithURL:gURL URLRewriter:rewriter];

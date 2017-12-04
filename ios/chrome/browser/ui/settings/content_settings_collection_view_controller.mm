@@ -23,7 +23,7 @@
 #import "ios/chrome/browser/ui/settings/settings_navigation_controller.h"
 #import "ios/chrome/browser/ui/settings/translate_collection_view_controller.h"
 #import "ios/chrome/browser/ui/settings/utils/content_setting_backed_boolean.h"
-#import "ios/chrome/browser/web/nullable_mailto_url_rewriter.h"
+#import "ios/chrome/browser/web/mailto_url_rewriter.h"
 #include "ios/chrome/grit/ios_strings.h"
 #import "ios/third_party/material_components_ios/src/components/CollectionCells/src/MaterialCollectionCells.h"
 #import "ios/third_party/material_components_ios/src/components/Palettes/src/MaterialPalettes.h"
@@ -107,7 +107,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
     [_disablePopupsSetting setObserver:self];
 
     _mailtoURLRewriter =
-        [NullableMailtoURLRewriter mailtoURLRewriterWithStandardHandlers];
+        [MailtoURLRewriter mailtoURLRewriterWithStandardHandlers];
     [_mailtoURLRewriter setObserver:self];
 
     // TODO(crbug.com/764578): -loadModel should not be called from
