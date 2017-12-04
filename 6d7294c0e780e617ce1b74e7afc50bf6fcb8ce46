@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3454670_b77b67f8",
+        "filename": "media/audio/audio_manager_base.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-04T15:21:46Z",
+      "side": 1,
+      "message": "Could you add an explanation about expectations for |device_names| returned by get_device_names(): \nwhat default/communication device entries there look like? Otherwise it\u0027s not clear why |device_names| are iterated two times.",
+      "revId": "6d7294c0e780e617ce1b74e7afc50bf6fcb8ce46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d73da0d_b9f81e03",
+        "filename": "media/audio/audio_manager_base.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-04T15:21:46Z",
+      "side": 1,
+      "message": "nit: Can we have AudioDeviceDescription::IsCommunicationsDevice()? Would be a little easier to read.",
+      "revId": "6d7294c0e780e617ce1b74e7afc50bf6fcb8ce46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e0444df_8834da4b",
+        "filename": "media/audio/audio_manager_base.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-04T15:21:46Z",
+      "side": 1,
+      "message": "When is it possible that we have a default or communication device, but their names are empty?",
+      "revId": "6d7294c0e780e617ce1b74e7afc50bf6fcb8ce46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
