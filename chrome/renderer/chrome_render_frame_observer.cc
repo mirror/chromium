@@ -137,6 +137,9 @@ ChromeRenderFrameObserver::ChromeRenderFrameObserver(
   render_frame->GetAssociatedInterfaceRegistry()->AddInterface(
       base::Bind(&ChromeRenderFrameObserver::OnRenderFrameObserverRequest,
                  base::Unretained(this)));
+  render_frame->GetAssociatedInterfaceRegistry()->AddInterface(base::Bind(
+      &ChromeRenderFrameObserver::OnWebApplicationInfoProviderRequest,
+      base::Unretained(this)));
 #if defined(SAFE_BROWSING_CSD)
   const base::CommandLine& command_line =
       *base::CommandLine::ForCurrentProcess();
@@ -167,8 +170,6 @@ bool ChromeRenderFrameObserver::OnMessageReceived(const IPC::Message& message) {
     return false;
 
   IPC_BEGIN_MESSAGE_MAP(ChromeRenderFrameObserver, message)
-    IPC_MESSAGE_HANDLER(ChromeFrameMsg_GetWebApplicationInfo,
-                        OnGetWebApplicationInfo)
 #if BUILDFLAG(ENABLE_PRINTING)
     IPC_MESSAGE_HANDLER(PrintMsg_PrintNodeUnderContextMenu,
                         OnPrintNodeUnderContextMenu)
@@ -261,7 +262,8 @@ void ChromeRenderFrameObserver::OnPrintNodeUnderContextMenu() {
 #endif
 }
 
-void ChromeRenderFrameObserver::OnGetWebApplicationInfo() {
+void ChromeRenderFrameObserver::GetWebApplicationInfo(
+    const GetWebApplicationInfoCallback& callback) {
   WebLocalFrame* frame = render_frame()->GetWebFrame();
 
   WebApplicationInfo web_app_info;
@@ -298,8 +300,7 @@ void ChromeRenderFrameObserver::OnGetWebApplicationInfo() {
   web_app_info.description =
       web_app_info.description.substr(0, chrome::kMaxMetaTagAttributeLength);
 
-  Send(new ChromeFrameHostMsg_DidGetWebApplicationInfo(routing_id(),
-                                                       web_app_info));
+  std::move(callback).Run(web_app_info);
 }
 
 void ChromeRenderFrameObserver::SetClientSidePhishingDetection(
@@ -463,4 +464,9 @@ void ChromeRenderFrameObserver::SetWindowFeatures(
     blink::mojom::WindowFeaturesPtr window_features) {
   render_frame()->GetRenderView()->GetWebView()->SetWindowFeatures(
       content::ConvertMojoWindowFeaturesToWebWindowFeatures(*window_features));
+}
+
+void ChromeRenderFrameObserver::OnWebApplicationInfoProviderRequest(
+    chrome::mojom::WebApplicationInfoProviderAssociatedRequest request) {
+  web_application_info_provider_bindings_.AddBinding(this, std::move(request));
 }
