@@ -22,6 +22,30 @@
       "revId": "3648af641ddf099a0885be503b3c12ec78a35734",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f258525_118afff1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-12-04T17:32:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3c8018f_8f5f3279",
+      "range": {
+        "startLine": 97,
+        "startChar": 32,
+        "endLine": 97,
+        "endChar": 43
+      },
+      "revId": "3648af641ddf099a0885be503b3c12ec78a35734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
