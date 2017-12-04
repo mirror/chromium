@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cada4f17_ecd0a122",
+        "filename": "extensions/renderer/bindings/argument_spec.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-04T18:17:22Z",
+      "side": 1,
+      "message": "Note: my original version of this patch instead just added an undefined value to the object for missing properties, which meant we wouldn\u0027t hit the prototype chain. Unfortunately, some places use `in` or hasOwnProperty() to check for if a value is present, and that made those checks fail.  We *could* update them to also check `undefined`, but this seemed simpler.",
+      "revId": "f437710fcc5a6e052cca296c2c1ef3c977b5895c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a7fe303_485957b0",
+        "filename": "extensions/renderer/bindings/argument_spec.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-04T18:17:22Z",
+      "side": 1,
+      "message": "This CHECK should be safe, right?  I don\u0027t *think* that doing something crazy like adding a setter to \u0027prototype\u0027 on Object.prototype will affect the ability to SetPrototype() (and it didn\u0027t in my quick tests), but I wouldn\u0027t be entirely surprised if there was some other weird case here...",
+      "revId": "f437710fcc5a6e052cca296c2c1ef3c977b5895c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
