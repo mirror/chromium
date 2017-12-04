@@ -1924,7 +1924,7 @@ std::unique_ptr<blink::WebRTCRtpSender> RTCPeerConnectionHandler::AddTrack(
 bool RTCPeerConnectionHandler::RemoveTrack(blink::WebRTCRtpSender* web_sender) {
   DCHECK(thread_checker_.CalledOnValidThread());
   RTCRtpSender* sender = static_cast<RTCRtpSender*>(web_sender);
-  if (!native_peer_connection_->RemoveTrack(sender->webrtc_rtp_sender())) {
+  if (!native_peer_connection_->RemoveTrack(sender->webrtc_sender())) {
     return false;
   }
   sender->OnRemoved();
