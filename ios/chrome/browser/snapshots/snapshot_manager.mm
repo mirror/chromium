@@ -18,19 +18,6 @@
 #error "This file requires ARC support."
 #endif
 
-namespace {
-// Returns YES if |view| or any view it contains is a WKWebView.
-BOOL ViewHierarchyContainsWKWebView(UIView* view) {
-  if ([view isKindOfClass:[WKWebView class]])
-    return YES;
-  for (UIView* subview in view.subviews) {
-    if (ViewHierarchyContainsWKWebView(subview))
-      return YES;
-  }
-  return NO;
-}
-}  // namespace
-
 @implementation SnapshotManager {
   web::WebState* _webState;
 }
@@ -55,28 +42,13 @@ BOOL ViewHierarchyContainsWKWebView(UIView* view) {
   const CGFloat kScale = [[self snapshotCache] snapshotScaleForDevice];
   UIGraphicsBeginImageContextWithOptions(size, YES, kScale);
   CGContext* context = UIGraphicsGetCurrentContext();
-  if (!context) {
-    NOTREACHED();
-    return nil;
-  }
-
-  // -drawViewHierarchyInRect:afterScreenUpdates:YES is buggy as of iOS 8.3.
-  // Using it afterScreenUpdates:YES creates unexpected GPU glitches, screen
-  // redraws during animations, broken pinch to dismiss on tablet, etc.  For now
-  // only using this with WKWebView, which depends on -drawViewHierarchyInRect.
-  // TODO(justincohen): Remove this (and always use drawViewHierarchyInRect)
-  // once the iOS 8 bugs have been fixed.
-  BOOL useDrawViewHierarchy = ViewHierarchyContainsWKWebView(view);
+  DCHECK(context);
 
   BOOL snapshotSuccess = YES;
   CGContextSaveGState(context);
   CGContextTranslateCTM(context, -rect.origin.x, -rect.origin.y);
-  if (useDrawViewHierarchy) {
-    snapshotSuccess =
-        [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:NO];
-  } else {
-    [[view layer] renderInContext:context];
-  }
+  snapshotSuccess =
+      [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:NO];
   if ([overlays count]) {
     for (SnapshotOverlay* overlay in overlays) {
       // Render the overlay view at the desired offset. It is achieved
@@ -84,12 +56,8 @@ BOOL ViewHierarchyContainsWKWebView(UIView* view) {
       // drawing to context.
       CGContextSaveGState(context);
       CGContextTranslateCTM(context, 0, overlay.yOffset);
-      if (useDrawViewHierarchy) {
-        [overlay.view drawViewHierarchyInRect:overlay.view.bounds
-                           afterScreenUpdates:YES];
-      } else {
-        [[overlay.view layer] renderInContext:context];
-      }
+      [overlay.view drawViewHierarchyInRect:overlay.view.bounds
+                         afterScreenUpdates:YES];
       CGContextRestoreGState(context);
     }
   }
