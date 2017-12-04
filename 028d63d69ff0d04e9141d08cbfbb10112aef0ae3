@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4fb95760_931ecfd1",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-04T17:58:17Z",
+      "side": 1,
+      "message": "It looks like the remote NTP goes with a fixed width, which can spill over the fakebox. So it might be the least pain to stay with that, but I don\u0027t feel particularly strongly - it won\u0027t look great on narrow pages either way.",
+      "parentUuid": "c45ff6e3_da2243e7",
+      "range": {
+        "startLine": 167,
+        "startChar": 30,
+        "endLine": 167,
+        "endChar": 0
+      },
+      "revId": "028d63d69ff0d04e9141d08cbfbb10112aef0ae3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f0f45a9_9858e28f",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
         "patchSetId": 2
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "It clears iframe.style.width/height, meaning that the defaults from the stylesheet will apply again.",
       "parentUuid": "0f0f45a9_9858e28f",
+      "range": {
+        "startLine": 584,
+        "startChar": 33,
+        "endLine": 584,
+        "endChar": 0
+      },
+      "revId": "028d63d69ff0d04e9141d08cbfbb10112aef0ae3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "42bc746c_e4ea1647",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-04T17:58:17Z",
+      "side": 1,
+      "message": "Today I learned!",
+      "parentUuid": "2135bfe2_74c7ef06",
       "range": {
         "startLine": 584,
         "startChar": 33,
