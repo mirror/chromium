@@ -67,6 +67,8 @@ Vector<char> AsciiDebug(StringImpl* impl) {
 
 }  // namespace
 
+String::String(String&& str) : impl_(str.ReleaseImpl()) {}
+
 // Construct a string with UTF-16 data.
 String::String(const UChar* characters, unsigned length)
     : impl_(characters ? StringImpl::Create(characters, length) : nullptr) {}

@@ -69,6 +69,10 @@ class WTF_EXPORT String {
   // Construct a string with UTF-16 data.
   String(const UChar* characters, unsigned length);
 
+  String(const String&) = default;
+  String& operator=(const String&) = default;
+  String(String&&);
+
   // Construct a string by copying the contents of a vector.
   // This method will never create a null string. Vectors with size() == 0
   // will return the empty string.
