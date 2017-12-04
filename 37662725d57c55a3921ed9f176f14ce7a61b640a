@@ -93,6 +93,30 @@
       "revId": "37662725d57c55a3921ed9f176f14ce7a61b640a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c88973b0_cd5412a1",
+        "filename": "chrome/browser/extensions/tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-12-04T04:52:53Z",
+      "side": 1,
+      "message": "What about adding SetInstallSource method to BookmarkAppHelper, which can be used to optionally configure the install source before calling Create? Then there is no need to document that MAX should be passed as a psuedo-null value.",
+      "parentUuid": "f8458a76_44830350",
+      "range": {
+        "startLine": 372,
+        "startChar": 5,
+        "endLine": 372,
+        "endChar": 72
+      },
+      "revId": "37662725d57c55a3921ed9f176f14ce7a61b640a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
