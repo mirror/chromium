@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c2792e3a_a6b0673c",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000329
+      },
+      "writtenOn": "2017-12-04T22:02:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4dbee83_c302f1f3",
+      "range": {
+        "startLine": 126,
+        "startChar": 45,
+        "endLine": 126,
+        "endChar": 46
+      },
+      "revId": "828ff232689b036b04ca193326febb17a23864df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65ab0f45_eef72fc0",
         "filename": "extensions/browser/api/feedback_private/log_source_access_manager.cc",
         "patchSetId": 2
@@ -60,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "216d9093_f568ca5c",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000329
+      },
+      "writtenOn": "2017-12-04T22:02:08Z",
+      "side": 1,
+      "message": "Right. This is meant to land before Dominic\u0027s CL to run AnonymizerTool in the background. So instead of changing Single*LogSource, that CL will just modify this part to run in the background.",
+      "parentUuid": "04778f6f_9f5578ca",
+      "revId": "828ff232689b036b04ca193326febb17a23864df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34b29cb1_9b5c377b",
         "filename": "extensions/browser/api/feedback_private/log_source_access_manager.h",
         "patchSetId": 2
@@ -71,6 +113,30 @@
       "writtenOn": "2017-12-04T21:19:01Z",
       "side": 1,
       "message": "What\u0027s the reason for having this as a unique ptr?",
+      "range": {
+        "startLine": 155,
+        "startChar": 2,
+        "endLine": 155,
+        "endChar": 56
+      },
+      "revId": "828ff232689b036b04ca193326febb17a23864df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea1d57f7_ce215f39",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000329
+      },
+      "writtenOn": "2017-12-04T22:02:08Z",
+      "side": 1,
+      "message": "I think it will be required when we switch to executing AnonymizerTool on a background thread. See the other CL. https://chromium-review.googlesource.com/c/chromium/src/+/787713",
+      "parentUuid": "34b29cb1_9b5c377b",
       "range": {
         "startLine": 155,
         "startChar": 2,
