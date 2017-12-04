@@ -34,6 +34,24 @@
       "revId": "6516d4071f13320b87f21a56983258990ff9697f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61b180d4_8c90db37",
+        "filename": "components/viz/service/display/overlay_strategy_fullscreen.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-04T17:53:30Z",
+      "side": 1,
+      "message": "Sorry, I confused this CL with crrev.com/c/685748\nI think we should continue down that path.\nThe OverlayStrategyFullscreen is used mainly for android apps, when we have a fullscreen app that matches exactly the screen size. In that way we can use the android app buffer for scanout directly.\n\nWe use this strategy on old boards withot drm atomic.\nI\u0027m afraid we\u0027d break those with this change.",
+      "parentUuid": "ea4040f6_5a9f0e55",
+      "revId": "6516d4071f13320b87f21a56983258990ff9697f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
