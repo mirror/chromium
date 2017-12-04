@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7d650e6_691e3199",
+        "filename": "net/nqe/network_quality_estimator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-04T22:26:57Z",
+      "side": 1,
+      "message": "Rewording suggestion to see if I understand correctly and see if might be clearer:\n\n// Record the network quality we experienced for the previous signal strength\n// (for when we return to that signal strength).",
+      "revId": "01e9a23dfa1f961212a249fe03ebc7bd4580d3af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26066d89_d160c22f",
+        "filename": "net/nqe/network_quality_estimator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-04T22:26:57Z",
+      "side": 1,
+      "message": "// Update network quality from cached value for new signal strength.",
+      "revId": "01e9a23dfa1f961212a249fe03ebc7bd4580d3af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
