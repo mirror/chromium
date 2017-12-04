@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dced6298_65f5bf7f",
+        "filename": "components/password_manager/content/common/credential_manager_struct_traits.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-04T13:35:58Z",
+      "side": 1,
+      "message": "nit: could you rename this as well (possibly in a follow-up CL)?",
+      "range": {
+        "startLine": 87,
+        "startChar": 58,
+        "endLine": 87,
+        "endChar": 72
+      },
+      "revId": "3b435b989e099688ca27912095a3ba09c8a262c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c57a6b41_ed66ef03",
+        "filename": "components/password_manager/content/common/credential_manager_struct_traits.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-04T13:35:58Z",
+      "side": 1,
+      "message": "nit: maybe simply use |default| here?",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 99,
+        "endChar": 66
+      },
+      "revId": "3b435b989e099688ca27912095a3ba09c8a262c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e942579_d3ce9e89",
+        "filename": "services/service_manager/public/cpp/interface_provider.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-04T13:35:58Z",
+      "side": 1,
+      "message": "nit: base::Callback and base::Bind are basically deprecated and new code should use base::{Once,Repeating}Callback and base::Bind{Once,Repeating} where possible:\n\nhttps://chromium.googlesource.com/chromium/src/+/master/docs/callback.md#oncecallback_and-repeatingcallback",
+      "range": {
+        "startLine": 38,
+        "startChar": 14,
+        "endLine": 38,
+        "endChar": 28
+      },
+      "revId": "3b435b989e099688ca27912095a3ba09c8a262c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9682e9b_fbd55849",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialManagerProxy.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-04T13:35:58Z",
+      "side": 1,
+      "message": "Note: Technically the API is called Credential *Management* API, not Credential Manager API. It would be nice to clean this up at some point, but I suppose too many files would need to be changed to do it in this CL as well. Maybe in the future?",
+      "range": {
+        "startLine": 25,
+        "startChar": 61,
+        "endLine": 26,
+        "endChar": 6
+      },
+      "revId": "3b435b989e099688ca27912095a3ba09c8a262c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a258665_1e0341d8",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-04T13:35:58Z",
+      "side": 1,
+      "message": "I suppose this is the check for an \"a priori authenticated URL\": https://w3c.github.io/webappsec-credential-management/#dom-credentialuserdata-iconurl",
+      "range": {
+        "startLine": 200,
+        "startChar": 0,
+        "endLine": 200,
+        "endChar": 55
+      },
+      "revId": "3b435b989e099688ca27912095a3ba09c8a262c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
