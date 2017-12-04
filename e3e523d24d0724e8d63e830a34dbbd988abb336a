@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76831568_81091a98",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-12-04T09:37:36Z",
+      "side": 1,
+      "message": "Actually, you can just remove this whole constant, because https://crrev.com/c/666624 stopped using it recently (and forgot to delete it).",
+      "range": {
+        "startLine": 86,
+        "startChar": 31,
+        "endLine": 86,
+        "endChar": 45
+      },
+      "revId": "e3e523d24d0724e8d63e830a34dbbd988abb336a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
