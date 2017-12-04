@@ -57,7 +57,6 @@ NOINLINE Type HideValueFromCompiler(volatile Type value) {
 #if defined(OS_LINUX) && defined(__x86_64__)
 // Detect runtime TCMalloc bypasses.
 bool IsTcMallocBypassed() {
-  // This should detect a TCMalloc bypass from Valgrind.
   char* g_slice = getenv("G_SLICE");
   if (g_slice && !strcmp(g_slice, "always-malloc"))
     return true;

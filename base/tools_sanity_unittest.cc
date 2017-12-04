@@ -29,7 +29,10 @@ const base::subtle::Atomic32 kMagicValue = 42;
 #if defined(ADDRESS_SANITIZER) || defined(SYZYASAN)
 #if defined(OS_IOS)
 // EXPECT_DEATH is not supported on IOS.
-#define HARMFUL_ACCESS(action,error_regexp) do { action; } while (0)
+#define HARMFUL_ACCESS(action, error_regexp) \
+  do {                                       \
+    action;                                  \
+  } while (0)
 #elif defined(SYZYASAN)
 // We won't get a meaningful error message because we're not running under the
 // SyzyASan logger, but we can at least make sure that the error has been
@@ -38,17 +41,18 @@ const base::subtle::Atomic32 kMagicValue = 42;
 if (debug::IsBinaryInstrumented()) { EXPECT_DEATH(action, \
                                                   "AsanRuntime::OnError"); }
 #else
-#define HARMFUL_ACCESS(action,error_regexp) EXPECT_DEATH(action,error_regexp)
+#define HARMFUL_ACCESS(action, error_regexp) EXPECT_DEATH(action, error_regexp)
 #endif  // !OS_IOS && !SYZYASAN
 #else
-#define HARMFUL_ACCESS(action,error_regexp) \
-do { if (RunningOnValgrind()) { action; } } while (0)
+#define HARMFUL_ACCESS(action, error_regexp)
+#define HARMFUL_ACCESS_IS_NOOP
 #endif
 
 void DoReadUninitializedValue(char *ptr) {
   // Comparison with 64 is to prevent clang from optimizing away the
   // jump -- valgrind only catches jumps and conditional moves, but clang uses
-  // the borrow flag if the condition is just `*ptr == '\0'`.
+  // the borrow flag if the condition is just `*ptr == '\0'`.  We no longer
+  // support valgrind, but this constant should be fine to keep as-is.
   if (*ptr == 64) {
     VLOG(1) << "Uninit condition is true";
   } else {
@@ -65,6 +69,7 @@ void ReadUninitializedValue(char *ptr) {
 #endif
 }
 
+#ifndef HARMFUL_ACCESS_IS_NOOP
 void ReadValueOutOfArrayBoundsLeft(char *ptr) {
   char c = ptr[-2];
   VLOG(1) << "Reading a byte out of bounds: " << c;
@@ -75,15 +80,14 @@ void ReadValueOutOfArrayBoundsRight(char *ptr, size_t size) {
   VLOG(1) << "Reading a byte out of bounds: " << c;
 }
 
-// This is harmless if you run it under Valgrind thanks to redzones.
 void WriteValueOutOfArrayBoundsLeft(char *ptr) {
   ptr[-1] = kMagicValue;
 }
 
-// This is harmless if you run it under Valgrind thanks to redzones.
 void WriteValueOutOfArrayBoundsRight(char *ptr, size_t size) {
   ptr[size] = kMagicValue;
 }
+#endif  // HARMFUL_ACCESS_IS_NOOP
 
 void MakeSomeErrors(char *ptr, size_t size) {
   ReadUninitializedValue(ptr);
@@ -157,10 +161,8 @@ static int* allocateArray() {
 
 TEST(ToolsSanityTest, MAYBE_ArrayDeletedWithoutBraces) {
 #if !defined(ADDRESS_SANITIZER) && !defined(SYZYASAN)
-  // This test may corrupt memory if not run under Valgrind or compiled with
-  // AddressSanitizer.
-  if (!RunningOnValgrind())
-    return;
+  // This test may corrupt memory if not compiled with AddressSanitizer.
+  return;
 #endif
 
   // Without the |volatile|, clang optimizes away the next two lines.
@@ -176,10 +178,8 @@ static int* allocateScalar() {
 
 TEST(ToolsSanityTest, MAYBE_SingleElementDeletedWithBraces) {
 #if !defined(ADDRESS_SANITIZER)
-  // This test may corrupt memory if not run under Valgrind or compiled with
-  // AddressSanitizer.
-  if (!RunningOnValgrind())
-    return;
+  // This test may corrupt memory if not compiled with AddressSanitizer.
+  return;
 #endif
 
   // Without the |volatile|, clang optimizes away the next two lines.
@@ -221,6 +221,7 @@ TEST(ToolsSanityTest, DISABLED_AddressSanitizerGlobalOOBCrashTest) {
   *access = 43;
 }
 
+#ifndef HARMFUL_ACCESS_IS_NOOP
 TEST(ToolsSanityTest, AsanHeapOverflow) {
   HARMFUL_ACCESS(debug::AsanHeapOverflow() ,"to the right");
 }
@@ -237,6 +238,7 @@ TEST(ToolsSanityTest, AsanHeapUseAfterFree) {
 TEST(ToolsSanityTest, AsanCorruptHeapBlock) {
   HARMFUL_ACCESS(debug::AsanCorruptHeapBlock(), "");
 }
+#endif  // !HARMFUL_ACCESS_IS_NOOP
 
 TEST(ToolsSanityTest, AsanCorruptHeap) {
   // This test will kill the process by raising an exception, there's no
@@ -422,5 +424,13 @@ TEST(ToolsSanityTest, BadUnrelatedCast) {
 #endif  // BUILDFLAG(CFI_CAST_CHECK)
 
 #endif  // CFI_ERROR_MSG
+
+#undef CFI_ERROR_MSG
+#undef MAYBE_AccessesToNewMemory
+#undef MAYBE_AccessesToMallocMemory
+#undef MAYBE_ArrayDeletedWithoutBraces
+#undef MAYBE_SingleElementDeletedWithBraces
+#undef HARMFUL_ACCESS
+#undef HARMFUL_ACCESS_IS_NOOP
 
 }  // namespace base

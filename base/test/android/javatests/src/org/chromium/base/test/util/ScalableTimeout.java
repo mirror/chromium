@@ -6,7 +6,7 @@ package org.chromium.base.test.util;
 
 /**
  * Utility class for scaling various timeouts by a common factor.
- * For example, to run tests under Valgrind, you might want the following:
+ * For example, you might do something like this:
  *   adb shell "echo 20.0 > /data/local/tmp/chrome_timeout_scale"
  */
 public class ScalableTimeout {

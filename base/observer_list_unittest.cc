@@ -891,7 +891,7 @@ TEST(ObserverListTest, IteratorOutlivesList) {
 
   for (auto& observer : *observer_list)
     observer.Observe(0);
-  // If this test fails, there'll be Valgrind errors when this function goes out
+  // If this test fails, there should be TSan errors when this function goes out
   // of scope.
 }
 
