@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d6778aeb_7727605a",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-12-04T22:50:50Z",
+      "side": 1,
+      "message": "Ah yes, that would make the error useful wouldn\u0027t it?",
+      "parentUuid": "9c10e909_f1205e51",
+      "revId": "cf53bcb590f0b0a023e4c3368d287d24393b1747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c4cbe1e_c94fbfae",
         "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/health-thermometer-iframe.html",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "cf53bcb590f0b0a023e4c3368d287d24393b1747",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da45b100_348c3013",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/health-thermometer-iframe.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-12-04T22:50:50Z",
+      "side": 1,
+      "message": "Thanks. I had no idea that this was a thing in JavaScript. Are template literals only preferred for displaying console message or could they also be used to define strings? Would it be good to change the \n  parent.postMessage(\u0027FAIL: + err, \u0027*\u0027)\nwith\n  parent.postMessage(`FAIL: ${err}`, \u0027*\u0027)\nas well?",
+      "parentUuid": "3c4cbe1e_c94fbfae",
+      "revId": "cf53bcb590f0b0a023e4c3368d287d24393b1747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
