@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "438b66eb_e335563a",
+        "filename": "ios/chrome/browser/ui/autofill/chrome_autofill_client_ios.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-12-04T18:24:18Z",
+      "side": 1,
+      "message": "s/AutofillClientIOS/AutofillClient",
+      "range": {
+        "startLine": 30,
+        "startChar": 32,
+        "endLine": 30,
+        "endChar": 49
+      },
+      "revId": "cfeaf91aef8168f2e8726d28580b54efca683ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
