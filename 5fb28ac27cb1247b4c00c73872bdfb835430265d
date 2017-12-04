@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "05b0d6f0_40f912bc",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/empty-worklet-script.js.headers",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-04T06:31:48Z",
+      "side": 1,
+      "message": "Access-Control-Allow-Origin is not a default header for Worklet scripts. I renamed this to empty-worklet-script-with-cors-header.js. Does this make sense?",
+      "parentUuid": "5edc9fa2_20570da3",
+      "revId": "5fb28ac27cb1247b4c00c73872bdfb835430265d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c4a9a1a_32f8a49d",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/no-headers-empty-worklet-script.js",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-04T04:00:06Z",
       "side": 1,
       "message": "If we keep this filename, the comment could also explain the file name: This file has no corresponding .headers file, so it is served without any custom headers.\n\n(I\u0027m not sure if \"no headers\" is right, I imagine there are some default headers used.)",
+      "revId": "5fb28ac27cb1247b4c00c73872bdfb835430265d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c95d529_f3b3b1fe",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/no-headers-empty-worklet-script.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-04T06:31:48Z",
+      "side": 1,
+      "message": "Added a comment to empty-worklet-scropt-with-header.js.",
+      "parentUuid": "3c4a9a1a_32f8a49d",
       "revId": "5fb28ac27cb1247b4c00c73872bdfb835430265d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
