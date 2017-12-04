@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cb9314e_08abbe9f",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-04T16:02:55Z",
+      "side": 1,
+      "message": "I *think* this could be simplified as \n\nif (!this.userInitiatedCleanupsEnabled_ \u0026\u0026 idleReason \u003d\u003d settings.ChromeCleanupIdleReason.INITIAL) {\n  this.dismiss_(settings.ChromeCleanupDismissSource.OTHER);\n  return;\n}",
+      "range": {
+        "startLine": 329,
+        "startChar": 46,
+        "endLine": 329,
+        "endChar": 0
+      },
+      "revId": "1cbc630c161672ed2c5c82872ebd41d13a085176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b720825b_f9ec768a",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-04T16:02:55Z",
+      "side": 1,
+      "message": "Is there supposed to be some code here?",
+      "range": {
+        "startLine": 390,
+        "startChar": 73,
+        "endLine": 390,
+        "endChar": 0
+      },
+      "revId": "1cbc630c161672ed2c5c82872ebd41d13a085176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17b4e723_00ccb90d",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-04T16:02:55Z",
+      "side": 1,
+      "message": "components.explanation || \u0027\u0027; from line 458 is never going to be null.",
+      "range": {
+        "startLine": 507,
+        "startChar": 50,
+        "endLine": 507,
+        "endChar": 0
+      },
+      "revId": "1cbc630c161672ed2c5c82872ebd41d13a085176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b7dda31_b1ecded7",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-04T16:02:55Z",
+      "side": 1,
+      "message": "Wouldn\u0027t we want to have a learn more link to the Cleanup Tool\u0027s help center page?",
+      "range": {
+        "startLine": 666,
+        "startChar": 78,
+        "endLine": 666,
+        "endChar": 0
+      },
+      "revId": "1cbc630c161672ed2c5c82872ebd41d13a085176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bc48393_294cd97a",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-04T16:02:55Z",
+      "side": 1,
+      "message": "nit: move learnMoreIfUserInitiatedCleanupsDisabled up or down, it looks a bit weird sandwidtched between the two flags.",
+      "range": {
+        "startLine": 689,
+        "startChar": 56,
+        "endLine": 689,
+        "endChar": 0
+      },
+      "revId": "1cbc630c161672ed2c5c82872ebd41d13a085176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e53cff04_21297217",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-04T16:02:55Z",
+      "side": 1,
+      "message": "Could we still offer to reset settings?",
+      "range": {
+        "startLine": 757,
+        "startChar": 28,
+        "endLine": 757,
+        "endChar": 0
+      },
+      "revId": "1cbc630c161672ed2c5c82872ebd41d13a085176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42f25f81_d26b5ddb",
+        "filename": "chrome/browser/ui/webui/settings/chrome_cleanup_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-04T16:02:55Z",
+      "side": 1,
+      "message": "Is the CL landed? If so, please remove this comment.",
+      "range": {
+        "startLine": 220,
+        "startChar": 62,
+        "endLine": 220,
+        "endChar": 69
+      },
+      "revId": "1cbc630c161672ed2c5c82872ebd41d13a085176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92fceee8_a55eb642",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 17380,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-04T16:02:55Z",
+      "side": 1,
+      "message": "Please enter a description of the metric.",
+      "range": {
+        "startLine": 17380,
+        "startChar": 72,
+        "endLine": 17380,
+        "endChar": 0
+      },
+      "revId": "1cbc630c161672ed2c5c82872ebd41d13a085176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
