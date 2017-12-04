@@ -46,8 +46,6 @@ inline bool ShouldCreateBoxFragment(const NGInlineItem& item,
   // See |LayoutBlockFlow::LayoutInlineChildren()| for conditions for
   // enabling |AlwaysCreateLineBoxes()|.
   DCHECK(item.Style());
-  if (RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled())
-    return true;
   const ComputedStyle& style = *item.Style();
   // TODO(kojii): We might need more conditions to create box fragments.
   return style.HasBoxDecorationBackground() || style.HasOutline() ||
