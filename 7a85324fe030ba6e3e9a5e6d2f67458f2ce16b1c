@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "d55453ea_83fb03fe",
+        "filename": "content/browser/renderer_host/input/fling_controller.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-12-04T16:26:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5548ce75_f97f6a7c",
+      "revId": "7a85324fe030ba6e3e9a5e6d2f67458f2ce16b1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e7540f5_54a7ecee",
         "filename": "content/browser/renderer_host/input/fling_controller.h",
         "patchSetId": 13
@@ -87,6 +105,24 @@
     },
     {
       "key": {
+        "uuid": "92f6dd4d_09135ed9",
+        "filename": "content/browser/renderer_host/input/gesture_event_queue.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-12-04T16:26:13Z",
+      "side": 1,
+      "message": "as we discussed, this is not dependent on latching anymore.",
+      "parentUuid": "0bcc42fd_1237fe32",
+      "revId": "7a85324fe030ba6e3e9a5e6d2f67458f2ce16b1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ead7bd1_fd068815",
         "filename": "content/browser/renderer_host/input/gesture_event_queue.cc",
         "patchSetId": 13
@@ -98,6 +134,24 @@
       "writtenOn": "2017-12-01T16:29:17Z",
       "side": 1,
       "message": "The GFS is processed by the controller if it is a touchpad event. Do we ever get GFC for non touchpad events?",
+      "revId": "7a85324fe030ba6e3e9a5e6d2f67458f2ce16b1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64d5418b_9d27073d",
+        "filename": "content/browser/renderer_host/input/gesture_event_queue.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-12-04T16:26:13Z",
+      "side": 1,
+      "message": "Yes we do, on ET_GESTURE_TAP_DOWN, a GFC is sent before generating a gesture tap down event. Then later on we filter redundant GFCs and only handle the first GFC sent after a GFS.",
+      "parentUuid": "5ead7bd1_fd068815",
       "revId": "7a85324fe030ba6e3e9a5e6d2f67458f2ce16b1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
