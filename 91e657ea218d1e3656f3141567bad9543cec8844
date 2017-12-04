@@ -448,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "852481b7_25977f65",
+        "filename": "device/vr/orientation/orientation_device_provider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-04T16:03:25Z",
+      "side": 1,
+      "message": "We definitely want to run the add_device_callback_ before the initialized_callback_ so that when the VrService is notified of initialization being complete the devices have already been added.\n\nThe ordering really shouldn\u0027t matter, but there\u0027s kind of a deficiency in the WebVR 1.1 spec where most sites only call Navigator.getVRDisplays() once, and don\u0027t register onDisplayConnected event handlers, so if we add the device after responding to getVRDisplays they won\u0027t pick it up :(\n\nMounir, is the worry that running the callback could theoretically trigger the DeviceManager to delete this provider, and hence reset the second callback before it\u0027s used if it isn\u0027t copied? If we were to copy the second callback to allow the provider to be deleted in the first callback we would also have to take into account that the initialized callback could be run for a provider that\u0027s been deleted, which could get quite complicated.",
+      "parentUuid": "fa0409d7_e060a16b",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 41
+      },
+      "revId": "91e657ea218d1e3656f3141567bad9543cec8844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58167ef6_53e21eae",
         "filename": "device/vr/orientation/orientation_device_provider.h",
         "patchSetId": 10

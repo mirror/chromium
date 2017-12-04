@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8166c4ff_0b99e86d",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-04T16:03:25Z",
+      "side": 1,
+      "message": "remove newlines",
+      "revId": "0b9194b133010c00290b684dca7eb509c19010fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb46189a_1d4fabe8",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-04T16:03:25Z",
+      "side": 1,
+      "message": "This will create a static initializer, which isn\u0027t allowed. Can you use a \u0027static const char*\u0027 instead, and move it inside CreateVRDisplayInfo to make it a local static?",
+      "range": {
+        "startLine": 26,
+        "startChar": 13,
+        "endLine": 26,
+        "endChar": 24
+      },
+      "revId": "0b9194b133010c00290b684dca7eb509c19010fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20c1297c_a5ae1164",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-04T16:03:25Z",
+      "side": 1,
+      "message": "ultra-nit: you can move this into the line above \u0027ready_callback_(std::move(ready_callback))\u0027",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 46
+      },
+      "revId": "0b9194b133010c00290b684dca7eb509c19010fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8a8261b_2fdd9734",
+        "filename": "device/vr/orientation/orientation_device_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-04T16:03:25Z",
+      "side": 1,
+      "message": "7",
+      "range": {
+        "startLine": 1,
+        "startChar": 16,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "0b9194b133010c00290b684dca7eb509c19010fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d64b711_590366d1",
+        "filename": "device/vr/orientation/orientation_device_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-04T16:03:25Z",
+      "side": 1,
+      "message": "Move the duplicated FakeSensorProvider and FakeOrientationProvider out into their own files in the device/vr/test directory",
+      "revId": "0b9194b133010c00290b684dca7eb509c19010fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
