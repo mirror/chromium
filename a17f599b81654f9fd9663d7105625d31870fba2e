@@ -88,6 +88,25 @@
       "revId": "a17f599b81654f9fd9663d7105625d31870fba2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4096650_94910728",
+        "filename": "ui/gl/gl_image.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-04T22:59:43Z",
+      "side": 1,
+      "message": "Ifdefs are hard to deal with / test. What\u0027s wrong with GLImage describing its state?",
+      "parentUuid": "25dc0a80_7cabe357",
+      "tag": "mailMessageId\u003d\u003cCAMeTaZeqKaBy3e8trhUtVXXLZR_u+2nZZ0UiruU-rQBh_V2Vdw@mail.gmail.com\u003e",
+      "revId": "a17f599b81654f9fd9663d7105625d31870fba2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
