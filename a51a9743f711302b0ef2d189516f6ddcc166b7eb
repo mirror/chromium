@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c12382fe_6cf16c67",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 1239,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-04T20:35:50Z",
+      "side": 1,
+      "message": "perf nit: LinkDoctorBaseURL does a full GURL parse, would you mind inlining it in the if statement to avoid this work if the initiator is not unique?",
+      "range": {
+        "startLine": 1239,
+        "startChar": 45,
+        "endLine": 1239,
+        "endChar": 62
+      },
+      "revId": "a51a9743f711302b0ef2d189516f6ddcc166b7eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
