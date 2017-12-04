@@ -15,6 +15,7 @@
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
 #include "ui/display/types/display_constants.h"
+#include "ui/wm/core/window_util.h"
 
 namespace ash {
 
@@ -135,26 +136,34 @@ int64_t GetNextDisplay(const display::Display& origin_display,
                                           : next_cycled_display.id();
 }
 
+void MoveTransientChildrenToDisplay(aura::Window* window,
+                                    int64_t dest_display_id) {
+  aura::Window::Windows transient_children = ::wm::GetTransientChildren(window);
+  for (auto* transient_child : transient_children)
+    MoveTransientChildrenToDisplay(transient_child, dest_display_id);
+  wm::MoveWindowToDisplay(window, dest_display_id);
+}
+
 }  // namespace
 
 void HandleMoveWindowToDisplay(DisplayMoveWindowDirection direction) {
-  aura::Window* window = wm::GetActiveWindow();
-  if (!window)
-    return;
-
-  // When |window_list| is not empty, |window| can only be the first one of the
-  // fresh built list if it is in the list.
+  // When |window_list| is not empty, target window to be moved must be the
+  // first one of the fresh built list.
   MruWindowTracker::WindowList window_list =
       Shell::Get()->mru_window_tracker()->BuildWindowForCycleList();
-  if (window_list.empty() || window_list.front() != window)
+  if (window_list.empty())
     return;
 
+  aura::Window* window = window_list.front();
   display::Display origin_display =
       display::Screen::GetScreen()->GetDisplayNearestWindow(window);
   int64_t dest_display_id = GetNextDisplay(origin_display, direction);
   if (dest_display_id == display::kInvalidDisplayId)
     return;
+
   wm::MoveWindowToDisplay(window, dest_display_id);
+  // Transient children should be moved along with |window|.
+  MoveTransientChildrenToDisplay(window, dest_display_id);
 
   // Send a11y alert.
   mojom::AccessibilityAlert alert = mojom::AccessibilityAlert::NONE;
