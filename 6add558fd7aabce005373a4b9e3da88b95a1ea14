@@ -34,6 +34,24 @@
       "revId": "6add558fd7aabce005373a4b9e3da88b95a1ea14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f97340de_108309e9",
+        "filename": "components/autofill/core/browser/address_normalizer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-04T21:05:31Z",
+      "side": 1,
+      "message": "Good, thanks!",
+      "parentUuid": "9bce3dae_c617295b",
+      "revId": "6add558fd7aabce005373a4b9e3da88b95a1ea14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
