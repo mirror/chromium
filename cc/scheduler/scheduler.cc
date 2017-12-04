@@ -488,12 +488,16 @@ void Scheduler::BeginImplFrame(const viz::BeginFrameArgs& args,
   DCHECK(begin_impl_frame_deadline_task_.IsCancelled());
   DCHECK(state_machine_.HasInitializedLayerTreeFrameSink());
 
-  begin_impl_frame_tracker_.Start(args);
-  state_machine_.OnBeginImplFrame(args.source_id, args.sequence_number);
-  devtools_instrumentation::DidBeginFrame(layer_tree_host_id_);
-  compositor_timing_history_->WillBeginImplFrame(
-      state_machine_.NewActiveTreeLikely(), args.frame_time, args.type, now);
-  client_->WillBeginImplFrame(begin_impl_frame_tracker_.Current());
+  {
+    base::AutoReset<bool> mark_inside(&inside_begin_impl_frame_, true);
+
+    begin_impl_frame_tracker_.Start(args);
+    state_machine_.OnBeginImplFrame(args.source_id, args.sequence_number);
+    devtools_instrumentation::DidBeginFrame(layer_tree_host_id_);
+    compositor_timing_history_->WillBeginImplFrame(
+        state_machine_.NewActiveTreeLikely(), args.frame_time, args.type, now);
+    client_->WillBeginImplFrame(begin_impl_frame_tracker_.Current());
+  }
 
   ProcessScheduledActions();
 }
@@ -632,7 +636,7 @@ void Scheduler::ProcessScheduledActions() {
 
   // We do not allow ProcessScheduledActions to be recursive.
   // The top-level call will iteratively execute the next action for us anyway.
-  if (inside_process_scheduled_actions_)
+  if (inside_process_scheduled_actions_ || inside_begin_impl_frame_)
     return;
 
   base::AutoReset<bool> mark_inside(&inside_process_scheduled_actions_, true);
