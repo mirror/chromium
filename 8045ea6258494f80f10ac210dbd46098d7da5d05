@@ -50,6 +50,29 @@
       "revId": "8045ea6258494f80f10ac210dbd46098d7da5d05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfcb273c_b1c35930",
+        "filename": "chrome/browser/usb/web_usb_detector_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-12-04T18:00:45Z",
+      "side": 1,
+      "message": "Add\n#include \"base/optional.h\"\nfor this.",
+      "range": {
+        "startLine": 96,
+        "startChar": 2,
+        "endLine": 96,
+        "endChar": 16
+      },
+      "revId": "8045ea6258494f80f10ac210dbd46098d7da5d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
