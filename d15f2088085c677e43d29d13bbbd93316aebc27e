@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20d3bd86_96ca33da",
+        "filename": "tools/cygprofile/orderfile_generator_backend.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-04T13:57:24Z",
+      "side": 1,
+      "message": "thank you for this!!",
+      "range": {
+        "startLine": 758,
+        "startChar": 11,
+        "endLine": 758,
+        "endChar": 34
+      },
+      "revId": "d15f2088085c677e43d29d13bbbd93316aebc27e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6058f23_a9bf86fb",
+        "filename": "tools/cygprofile/profile_android_startup.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-04T13:57:24Z",
+      "side": 1,
+      "message": "maybe put a comment which device you tested it with?",
+      "range": {
+        "startLine": 66,
+        "startChar": 22,
+        "endLine": 66,
+        "endChar": 38
+      },
+      "revId": "d15f2088085c677e43d29d13bbbd93316aebc27e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21978495_72a687b3",
+        "filename": "tools/cygprofile/profile_android_startup.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-04T13:57:24Z",
+      "side": 1,
+      "message": "maybe for later change .. it will be useful to instead have a flag to record WPR while running the test (and put in some location for easy uploading to cloud storage and reusing from it).",
+      "range": {
+        "startLine": 402,
+        "startChar": 7,
+        "endLine": 402,
+        "endChar": 15
+      },
+      "revId": "d15f2088085c677e43d29d13bbbd93316aebc27e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1590533_87eb8972",
+        "filename": "tools/cygprofile/profile_android_startup.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-04T13:57:24Z",
+      "side": 1,
+      "message": "nit: simulate-user-gestures?",
+      "range": {
+        "startLine": 407,
+        "startChar": 9,
+        "endLine": 407,
+        "endChar": 22
+      },
+      "revId": "d15f2088085c677e43d29d13bbbd93316aebc27e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
