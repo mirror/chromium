@@ -75,7 +75,13 @@ class LayoutTreeBuilder {
         layout_object_parent_->GetNode()->NeedsAttach())
       return nullptr;
 
-    return LayoutTreeBuilderTraversal::NextSiblingLayoutObject(*node_);
+    LayoutObject* next =
+        LayoutTreeBuilderTraversal::NextSiblingLayoutObject(*node_);
+    if (next && next->IsText() && next->Parent()->IsAnonymous() &&
+        next->Parent()->IsInline()) {
+      return next->Parent();
+    }
+    return next;
   }
 
   Member<NodeType> node_;
@@ -110,8 +116,12 @@ class LayoutTreeBuilderForText : public LayoutTreeBuilder<Text> {
                            ComputedStyle* style_from_parent)
       : LayoutTreeBuilder(text, layout_parent), style_(style_from_parent) {}
 
-  scoped_refptr<ComputedStyle> style_;
   void CreateLayoutObject();
+
+ private:
+  LayoutObject* CreateInlineWrapperForDisplayContentsIfNeeded();
+
+  scoped_refptr<ComputedStyle> style_;
 };
 
 }  // namespace blink
