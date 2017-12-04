@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "20d90811_eec36db7",
+        "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-04T19:58:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bc4e90d_39de08e7",
+      "revId": "373f7fbd270e9bbf507b55d5a3fa7b2fab1451ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d73824f0_7155e418",
         "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_impl.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "373f7fbd270e9bbf507b55d5a3fa7b2fab1451ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c908304_84a0e940",
+        "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-04T19:58:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d73824f0_7155e418",
+      "revId": "373f7fbd270e9bbf507b55d5a3fa7b2fab1451ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "344c67f5_ad551019",
+        "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-04T19:58:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61f9cf3a_2fcd82c6",
+      "revId": "373f7fbd270e9bbf507b55d5a3fa7b2fab1451ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc051451_5d934749",
         "filename": "chrome/browser/chromeos/printing/external_printers_factory.h",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2017-12-04T13:00:28Z",
       "side": 1,
       "message": "Can this be made inheriting from BrowserContextKeyedServiceFactory?\nOr you discovered some issue with that approach?",
+      "revId": "373f7fbd270e9bbf507b55d5a3fa7b2fab1451ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a43fe80_efe01ff5",
+        "filename": "chrome/browser/chromeos/printing/external_printers_factory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-04T19:58:01Z",
+      "side": 1,
+      "message": "I\u0027m not sure when the Profile object is initialized.  But I\u0027ll double check.",
+      "parentUuid": "fc051451_5d934749",
       "revId": "373f7fbd270e9bbf507b55d5a3fa7b2fab1451ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
