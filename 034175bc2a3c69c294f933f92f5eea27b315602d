@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3472f009_ded922fe",
+        "filename": "cc/ipc/cc_param_traits.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-04T23:38:52Z",
+      "side": 1,
+      "message": "nit: is this the same as child_sequence_number? Can we use that everywhere?",
+      "range": {
+        "startLine": 641,
+        "startChar": 27,
+        "endLine": 641,
+        "endChar": 49
+      },
+      "revId": "034175bc2a3c69c294f933f92f5eea27b315602d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdeee117_3de4b952",
+        "filename": "components/viz/common/surfaces/local_surface_id.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-04T23:38:52Z",
+      "side": 1,
+      "message": "this should be a single |",
+      "range": {
+        "startLine": 57,
+        "startChar": 51,
+        "endLine": 57,
+        "endChar": 53
+      },
+      "revId": "034175bc2a3c69c294f933f92f5eea27b315602d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
