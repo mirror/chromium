@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd863c3d_8259e2bf",
+        "filename": "components/url_formatter/idn_spoof_checker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-04T23:44:34Z",
+      "side": 1,
+      "message": "Nit: This sort of \"pointer + length\" API is easy to use incorrectly (off-by-ones, etc.).  Any way we can pass a vector, string, initializer_list, or some other self-contained object instead?",
+      "revId": "526cfc019645be169de32cf6556051575a373eda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48494287_a4944551",
+        "filename": "components/url_formatter/idn_spoof_checker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-04T23:44:34Z",
+      "side": 1,
+      "message": "Nit: Any reason not to use DCHECKs instead?\n\n(expected, actual) order for EQ/NE.",
+      "revId": "526cfc019645be169de32cf6556051575a373eda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a599c325_88ce2842",
+        "filename": "components/url_formatter/idn_spoof_checker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-04T23:44:34Z",
+      "side": 1,
+      "message": "Nit: Place with the other functions, above the variables.",
+      "revId": "526cfc019645be169de32cf6556051575a373eda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "240bfbf0_cdba04bf",
+        "filename": "components/url_formatter/top_domains/README",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-04T23:44:34Z",
+      "side": 1,
+      "message": "Nit: Extra newline",
+      "revId": "526cfc019645be169de32cf6556051575a373eda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
