@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f2ea36f_12946cb0",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-12-04T19:45:25Z",
+      "side": 1,
+      "message": "Could you further explain what you mean by localize it please?",
+      "revId": "3d3c50b8e3bc040158cf41b13e97501e490ea56f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
