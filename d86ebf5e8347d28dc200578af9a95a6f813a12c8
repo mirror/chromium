@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04f9551b_afa3dad8",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-04T14:21:04Z",
+      "side": 1,
+      "message": "Add comment here, note that this is lazily instantiated.",
+      "range": {
+        "startLine": 49,
+        "startChar": 10,
+        "endLine": 49,
+        "endChar": 19
+      },
+      "revId": "d86ebf5e8347d28dc200578af9a95a6f813a12c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd570471_2d8d5e31",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-04T14:21:04Z",
+      "side": 1,
+      "message": "Sorry, I don\u0027t understand why this is part of this CL.",
+      "range": {
+        "startLine": 655,
+        "startChar": 11,
+        "endLine": 655,
+        "endChar": 25
+      },
+      "revId": "d86ebf5e8347d28dc200578af9a95a6f813a12c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45fdd65e_5ebd3601",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-04T14:21:04Z",
+      "side": 1,
+      "message": "Optional but nice to have - replace the image view with a view that\u0027s backed with an appropriate CAGradientLayer.",
+      "range": {
+        "startLine": 715,
+        "startChar": 36,
+        "endLine": 715,
+        "endChar": 58
+      },
+      "revId": "d86ebf5e8347d28dc200578af9a95a6f813a12c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c400c0e4_302a6201",
+        "filename": "ios/chrome/browser/ui/toolbar/public/toolbar_controller_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-04T14:21:04Z",
+      "side": 1,
+      "message": "s/shadown/shadow",
+      "range": {
+        "startLine": 70,
+        "startChar": 17,
+        "endLine": 70,
+        "endChar": 24
+      },
+      "revId": "d86ebf5e8347d28dc200578af9a95a6f813a12c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
