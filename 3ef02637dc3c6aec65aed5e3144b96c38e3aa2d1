@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ef2c752_a7c357b8",
+        "filename": "chrome/browser/chromeos/system_logs/single_log_file_log_source.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-04T21:19:01Z",
+      "side": 0,
+      "message": "+1 For removing this. \n\nSystemLogsFetcher has its own anonymizer, and a SingleLogFileLogSource can be used a fetcher\u0027s log source, so it would be a waste if we do double anonymizing.",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 39
+      },
+      "revId": "3ef02637dc3c6aec65aed5e3144b96c38e3aa2d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "c4dbee83_c302f1f3",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-04T21:19:01Z",
+      "side": 1,
+      "message": "Nit: remove braces for single-line blocks.",
+      "range": {
+        "startLine": 126,
+        "startChar": 45,
+        "endLine": 126,
+        "endChar": 46
+      },
+      "revId": "828ff232689b036b04ca193326febb17a23864df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65ab0f45_eef72fc0",
         "filename": "extensions/browser/api/feedback_private/log_source_access_manager.cc",
         "patchSetId": 2
@@ -13,6 +36,47 @@
       "writtenOn": "2017-12-04T18:36:48Z",
       "side": 1,
       "message": "I am reviewing this just from a phone, so I may have missed this. On which thread is this executed? It should not be on the thread.",
+      "revId": "828ff232689b036b04ca193326febb17a23864df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04778f6f_9f5578ca",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-04T21:19:01Z",
+      "side": 1,
+      "message": "This seems to be called on the UI thread, which is not what we want.",
+      "parentUuid": "65ab0f45_eef72fc0",
+      "revId": "828ff232689b036b04ca193326febb17a23864df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34b29cb1_9b5c377b",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-04T21:19:01Z",
+      "side": 1,
+      "message": "What\u0027s the reason for having this as a unique ptr?",
+      "range": {
+        "startLine": 155,
+        "startChar": 2,
+        "endLine": 155,
+        "endChar": 56
+      },
       "revId": "828ff232689b036b04ca193326febb17a23864df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
