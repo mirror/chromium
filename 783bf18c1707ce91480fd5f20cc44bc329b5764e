@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4c0c5e3_5627beaa",
+        "filename": "net/quic/platform/api/quic_aligned.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-04T18:13:53Z",
+      "side": 1,
+      "message": "I don\u0027t recall these changes in the internal CL. Is this a cleanup?",
+      "range": {
+        "startLine": 13,
+        "startChar": 52,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "783bf18c1707ce91480fd5f20cc44bc329b5764e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "791bb844_40722d52",
+        "filename": "net/quic/platform/impl/quic_aligned_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-04T18:13:53Z",
+      "side": 1,
+      "message": "Is this TODO obsolete now?",
+      "range": {
+        "startLine": 19,
+        "startChar": 35,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "783bf18c1707ce91480fd5f20cc44bc329b5764e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "059da812_3080b490",
+        "filename": "net/quic/platform/impl/quic_prefetch_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-04T18:13:53Z",
+      "side": 1,
+      "message": "Can you add a comment about what 0 and 3 are?",
+      "range": {
+        "startLine": 16,
+        "startChar": 32,
+        "endLine": 16,
+        "endChar": 33
+      },
+      "revId": "783bf18c1707ce91480fd5f20cc44bc329b5764e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
