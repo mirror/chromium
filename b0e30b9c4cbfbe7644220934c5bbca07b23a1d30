@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fd1194a_21e483c3",
+        "filename": "styleguide/c++/c++-dos-and-donts.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-04T15:55:45Z",
+      "side": 1,
+      "message": "s/warning/note/ (the three block kinds are \"note\", \"aside\" and \"promo\")",
+      "revId": "b0e30b9c4cbfbe7644220934c5bbca07b23a1d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b6cfcbc_2e73efc5",
+        "filename": "styleguide/c++/c++-dos-and-donts.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-04T15:55:45Z",
+      "side": 1,
+      "message": "nit: base::, not base:",
+      "revId": "b0e30b9c4cbfbe7644220934c5bbca07b23a1d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
