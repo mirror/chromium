@@ -22,6 +22,30 @@
       "revId": "460535435cda92bddcc344ca53610179fbb7ac22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce97715a_2169e6a8",
+        "filename": "third_party/WebKit/Source/modules/canvas/canvas2d/BaseRenderingContext2D.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-12-04T20:31:16Z",
+      "side": 1,
+      "message": "Having the IsAccelerated() will not help in distinguishing whether the BaseRenderingContext2D is for html canvas only. The use of this function is in the histogram in BaseRenderingContext2D, where the data is wrongly collected for Paint and Offscreen, whilst the histogram is named \"Blink.Canvas\".",
+      "parentUuid": "2ee16c9b_bbd1047d",
+      "range": {
+        "startLine": 321,
+        "startChar": 33,
+        "endLine": 321,
+        "endChar": 58
+      },
+      "revId": "460535435cda92bddcc344ca53610179fbb7ac22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
