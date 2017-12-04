@@ -44,7 +44,8 @@
 #include "content/public/renderer/render_thread.h"
 #include "content/renderer/gpu/compositor_dependencies.h"
 #include "content/renderer/layout_test_dependencies.h"
-#include "content/renderer/media/audio_ipc_factory.h"
+#include "content/renderer/media/audio_input_ipc_factory.h"
+#include "content/renderer/media/audio_output_ipc_factory.h"
 #include "gpu/ipc/client/gpu_channel_host.h"
 #include "ipc/ipc_sync_channel.h"
 #include "media/media_features.h"
@@ -682,7 +683,10 @@ class CONTENT_EXPORT RenderThreadImpl
   // Provides AudioOutputIPC objects for audio output devices. It either uses
   // an AudioMessageFilter for this or provides MojoAudioOutputIPC objects.
   // Initialized in Init.
-  base::Optional<AudioIPCFactory> audio_ipc_factory_;
+  base::Optional<AudioOutputIPCFactory> audio_output_ipc_factory_;
+  // Provides AudioInputIPC objects for audio input devices. Initialized in
+  // Init.
+  base::Optional<AudioInputIPCFactory> audio_input_ipc_factory_;
 
   // Used on the render thread.
   std::unique_ptr<VideoCaptureImplManager> vc_manager_;
