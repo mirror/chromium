@@ -233,6 +233,11 @@ std::unique_ptr<net::URLRequestContext> NetworkContext::MakeURLRequestContext(
 void NetworkContext::ApplyContextParamsToBuilder(
     net::URLRequestContextBuilder* builder,
     mojom::NetworkContextParams* network_context_params) {
+  LOG(ERROR) << "NS NetworkContext::ApplyContextParamsToBuilder()";
+  LOG(ERROR) << " network_context_params->http_cache_enabled:" << network_context_params->http_cache_enabled;
+  LOG(ERROR) << " network_context_params->http_cache_path?" << !!network_context_params->http_cache_path;
+  if (network_context_params->http_cache_path)
+    LOG(ERROR) << " network_context_params->http_cache_path.value():" << network_context_params->http_cache_path.value();
   // |network_service_| may be nullptr in tests.
   if (network_service_)
     builder->set_net_log(network_service_->net_log());
@@ -242,14 +247,17 @@ void NetworkContext::ApplyContextParamsToBuilder(
     builder->set_name(*network_context_params->context_name);
 
   if (!network_context_params->http_cache_enabled) {
+    LOG(ERROR) << " builder->DisableHttpCache()";
     builder->DisableHttpCache();
   } else {
     net::URLRequestContextBuilder::HttpCacheParams cache_params;
     cache_params.max_size = network_context_params->http_cache_max_size;
     if (!network_context_params->http_cache_path) {
+      LOG(ERROR) << " net::URLRequestContextBuilder::HttpCacheParams::IN_MEMORY";
       cache_params.type =
           net::URLRequestContextBuilder::HttpCacheParams::IN_MEMORY;
     } else {
+      LOG(ERROR) << " cache_params.path = *network_context_params->http_cache_path";
       cache_params.path = *network_context_params->http_cache_path;
       cache_params.type = network_session_configurator::ChooseCacheType(
           *base::CommandLine::ForCurrentProcess());

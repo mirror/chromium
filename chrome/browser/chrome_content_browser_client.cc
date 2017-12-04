@@ -2904,9 +2904,11 @@ ChromeContentBrowserClient::CreateNetworkContext(
     content::BrowserContext* context,
     bool in_memory,
     const base::FilePath& relative_partition_path) {
+  LOG(ERROR) << "ChromeContentBrowserClient::CreateNetworkContext in_memory:" << in_memory << " relative_partition_path:" << relative_partition_path.value();
   // If the relative partition path is empty, this is creating the Profile's
   // main NetworkContext.
   if (relative_partition_path.empty()) {
+    LOG(ERROR) << " Creating profile->CreateMainNetworkContext()";
     // TODO(mmenke): Look into calling ProfileNetworkContextServiceFactory, once
     // ProfileIOData is removed. Currently, TestProfile (used in unit tests)
     // needs to be able to bypass ProfileNetworkContextServiceFactory, since
@@ -2917,6 +2919,7 @@ ChromeContentBrowserClient::CreateNetworkContext(
   // TODO(mmenke):  Implement this once ProfileNetworkContextServiceFactory can
   // create a fully functional NetworkContext for Apps when the network service
   // is disabled.
+  LOG(ERROR) << " Creating ContentBrowserClient::CreateNetworkContext()";
   return ContentBrowserClient::CreateNetworkContext(context, in_memory,
                                                     relative_partition_path);
 }
