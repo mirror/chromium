@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5db036d5_b2563207",
+        "filename": "chrome/browser/search/search.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-04T15:29:37Z",
+      "side": 1,
+      "message": "\u003e Adding exceptions here worries me, because it seems like this should be a simple question, or at least one that\u0027s answered elsewhere, so we could call a shared function. Listing exceptions here makes it likely we miss one.\n\nShared function for what exactly?\n\nFWIW, I really hope this\u0027ll be the only exception, and it\u0027ll go away once crbug.com/448486 gets resolved and interstitials are Less Weird.\n\n\u003e For example, what is window.location.href in an interstitial? Except, apparently window.location.href *is* still the NTP (\"chrome-search://local-ntp/local-ntp.html\") after a navigation from the NTP to an interstitial. And it even keeps the security context of the previous page; for example, window.localStorage returns storage from the previous page\u0027s origin.\n\nInterstitials are Weird (TM), and actually coexist on top of the page that was loaded before. The inspector sees only the page below, which is why it still claims that window.location.href is the NTP. I just tried (by hacking code), and on the interstitial page itself, window.location.href is a data URI, which is apparently how interstitials are delivered.\n\n(Also, you don\u0027t actually navigate to an interstitial. You *try* to navigate to some other page, but the navigation never gets committed. So you\u0027re in a weird state where there\u0027s a committed navigation/URL (e.g. NTP), a pending navigation/visible URL (blocked page), and neither of the two is what\u0027s actually on screen...)\n\n\u003e So I guess interstitials get a lot of permissions already that they maybe shouldn\u0027t, and that\u0027s considered OK and we trust them…?\n\nAs above, I don\u0027t think they do; they\u0027re just confusing. That said, we probably do trust them, since they\u0027re all baked into Chrome.",
+      "parentUuid": "06929e33_1ead6ba1",
+      "revId": "a2649ffaa3a0d22367b4e07eb8d4a60e4f8ec2cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5acb047f_f2ed3ca1",
         "filename": "chrome/browser/search/search.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-04T14:33:41Z",
       "side": 1,
       "message": "Is this actually necessary?",
+      "revId": "a2649ffaa3a0d22367b4e07eb8d4a60e4f8ec2cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46bcadd1_5c303371",
+        "filename": "chrome/browser/search/search.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-04T15:29:37Z",
+      "side": 1,
+      "message": "Yes, for the case when you directly open an NTP in a new tab. A bunch of places check for the \"is NTP\" state before the navigation is committed.",
+      "parentUuid": "5acb047f_f2ed3ca1",
       "revId": "a2649ffaa3a0d22367b4e07eb8d4a60e4f8ec2cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "a2649ffaa3a0d22367b4e07eb8d4a60e4f8ec2cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12f85830_98cb2d9d",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-04T15:29:37Z",
+      "side": 1,
+      "message": "Huh, I thought that case was well-defined for OnceCallback (the current implementation at least works like this), but there\u0027s a discussion on chromium-dev about guaranteeing this that wasn\u0027t resolved. So I guess you\u0027re right, it\u0027s safer to explicitly Reset(). Done.",
+      "parentUuid": "02206710_256da80e",
+      "revId": "a2649ffaa3a0d22367b4e07eb8d4a60e4f8ec2cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "1a56eadc_c4f1c2f9",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-04T15:29:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be786776_13bff9e8",
+      "range": {
+        "startLine": 678,
+        "startChar": 52,
+        "endLine": 678,
+        "endChar": 54
+      },
+      "revId": "a2649ffaa3a0d22367b4e07eb8d4a60e4f8ec2cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e184f63_96d95497",
         "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
         "patchSetId": 6
@@ -90,6 +168,24 @@
       "revId": "a2649ffaa3a0d22367b4e07eb8d4a60e4f8ec2cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19ef74c4_e09b4523",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-04T15:29:37Z",
+      "side": 1,
+      "message": "Right, another thing that\u0027s weird about interstitials... content::InterstitialPage takes ownership of its delegate (without telling anyone). I\u0027ve rewritten this and added comments to make things clearer.",
+      "parentUuid": "4e184f63_96d95497",
+      "revId": "a2649ffaa3a0d22367b4e07eb8d4a60e4f8ec2cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
