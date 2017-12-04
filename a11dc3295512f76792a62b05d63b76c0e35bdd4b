@@ -69,6 +69,24 @@
       "revId": "a11dc3295512f76792a62b05d63b76c0e35bdd4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb67932e_6c72c4d4",
+        "filename": "android_webview/browser/aw_content_browser_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-04T17:08:57Z",
+      "side": 1,
+      "message": "\u003e That is a good question.  The old way of doing things was through the network delegate and the new way is and will be through throttles.  One should replace the other.  Previously, the blacklisting code would run via the ChromeNetworkDelegate::OnBeforeURLRequest. I believe throttles run around the same time, but not sure if it makes any difference.  Are you concerned that InterceptNavigationDelegate might need to run iif it passed the blacklist?\n\nYeah, something like that. Just want to avoid any observable behavior changes for apps. Could you just double check the ordering?\n\nAlso separate double check, this only applies to main frames?",
+      "parentUuid": "d05b506c_583f9514",
+      "revId": "a11dc3295512f76792a62b05d63b76c0e35bdd4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
