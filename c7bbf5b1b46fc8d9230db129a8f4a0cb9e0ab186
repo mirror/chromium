@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "421a1599_485497df",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-04T17:01:30Z",
+      "side": 1,
+      "message": "I\u0027m surprised this hits disk!",
+      "range": {
+        "startLine": 461,
+        "startChar": 33,
+        "endLine": 461,
+        "endChar": 39
+      },
+      "revId": "c7bbf5b1b46fc8d9230db129a8f4a0cb9e0ab186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
