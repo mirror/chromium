@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "468b2215_6016329c",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-04T09:58:34Z",
+      "side": 1,
+      "message": "I think these lines could hit thread assertions as they can be also called on non-main thread.",
+      "revId": "83ff34c20780b9d3f8b8baa80a4c53e4077c54f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
