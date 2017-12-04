@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "f848792c_c9287e21",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/module/instantiation-error-1.html",
+        "patchSetId": 20
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1119597
+      },
+      "writtenOn": "2017-12-04T10:32:26Z",
+      "side": 1,
+      "message": "Yes, we should. Do I understand correctly, that errors 1, 2 and 4 are still guaranteed to be the same by HTML? Equally for 3 and 5.",
+      "parentUuid": "6d97676f_8a58491e",
+      "revId": "4d479f3c977787389166a4dfa50a2e95f76aa631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72eff9c6_5a5a8a9c",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/module/instantiation-error-5.html",
         "patchSetId": 20
