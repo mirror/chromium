@@ -50,9 +50,7 @@ ContentVerifyJob::ContentVerifyJob(ContentHashReader* hash_reader,
       hash_reader_(hash_reader),
       failure_callback_(std::move(failure_callback)),
       failed_(false) {
-  // It's ok for this object to be constructed on a different thread from where
-  // it's used.
-  thread_checker_.DetachFromThread();
+  base::AutoLock auto_lock(lock_);
 }
 
 ContentVerifyJob::~ContentVerifyJob() {
@@ -61,7 +59,7 @@ ContentVerifyJob::~ContentVerifyJob() {
 }
 
 void ContentVerifyJob::Start() {
-  DCHECK(thread_checker_.CalledOnValidThread());
+  base::AutoLock auto_lock(lock_);
   if (g_test_observer)
     g_test_observer->JobStarted(hash_reader_->extension_id(),
                                 hash_reader_->relative_path());
@@ -73,7 +71,7 @@ void ContentVerifyJob::Start() {
 
 void ContentVerifyJob::BytesRead(int count, const char* data) {
   ScopedElapsedTimer timer(&time_spent_);
-  DCHECK(thread_checker_.CalledOnValidThread());
+  base::AutoLock auto_lock(lock_);
   if (failed_)
     return;
   if (g_test_delegate) {
@@ -120,7 +118,7 @@ void ContentVerifyJob::BytesRead(int count, const char* data) {
 
 void ContentVerifyJob::DoneReading() {
   ScopedElapsedTimer timer(&time_spent_);
-  DCHECK(thread_checker_.CalledOnValidThread());
+  base::AutoLock auto_lock(lock_);
   if (failed_)
     return;
   if (g_test_delegate) {

@@ -5,6 +5,8 @@
 #ifndef MOJO_PUBLIC_CPP_SYSTEM_FILE_DATA_PIPE_PRODUCER_H_
 #define MOJO_PUBLIC_CPP_SYSTEM_FILE_DATA_PIPE_PRODUCER_H_
 
+#include <memory>
+
 #include "base/callback_forward.h"
 #include "base/files/file.h"
 #include "base/files/file_path.h"
@@ -15,6 +17,22 @@
 #include "mojo/public/cpp/system/system_export.h"
 
 namespace mojo {
+
+class DataPipeProducerObserver {
+ public:
+  DataPipeProducerObserver() {}
+  virtual ~DataPipeProducerObserver() {}
+
+  // Called once per read attempt. |data| contains the read data, if any.
+  // |bytes_read| is the number of read bytes. 0 indicates EOF,
+  virtual void OnReadComplete(int bytes_read,
+                              const void* data,
+                              base::File::Error read_result) {}
+  virtual void DoneReading() {}
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(DataPipeProducerObserver);
+};
 
 // Helper class which takes ownership of a ScopedDataPipeProducerHandle and
 // assumes responsibility for feeding it the contents of a given file. This
@@ -30,7 +48,8 @@ class MOJO_CPP_SYSTEM_EXPORT FileDataPipeProducer {
   using CompletionCallback = base::OnceCallback<void(MojoResult result)>;
 
   // Constructs a new FileDataPipeProducer which will write data to |producer|.
-  explicit FileDataPipeProducer(ScopedDataPipeProducerHandle producer);
+  FileDataPipeProducer(ScopedDataPipeProducerHandle producer,
+                       std::unique_ptr<DataPipeProducerObserver> observer);
   ~FileDataPipeProducer();
 
   // Attempts to eventually write all of |file|'s contents to the pipe. Invokes
@@ -71,6 +90,7 @@ class MOJO_CPP_SYSTEM_EXPORT FileDataPipeProducer {
 
   ScopedDataPipeProducerHandle producer_;
   scoped_refptr<FileSequenceState> file_sequence_state_;
+  std::unique_ptr<DataPipeProducerObserver> observer_;
   base::WeakPtrFactory<FileDataPipeProducer> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(FileDataPipeProducer);
