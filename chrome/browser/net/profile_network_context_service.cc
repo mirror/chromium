@@ -44,6 +44,7 @@ ProfileNetworkContextService::~ProfileNetworkContextService() {}
 
 content::mojom::NetworkContextPtr
 ProfileNetworkContextService::CreateMainNetworkContext() {
+  LOG(ERROR) << "Begin ProfileNetworkContextService::CreateMainNetworkContext()";
   if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
     // |profile_io_data_main_network_context_| may be initialized if
     // SetUpProfileIOdataMainContext was called first.
@@ -57,6 +58,7 @@ ProfileNetworkContextService::CreateMainNetworkContext() {
   content::mojom::NetworkContextPtr network_context;
   content::GetNetworkService()->CreateNetworkContext(
       MakeRequest(&network_context), CreateMainNetworkContextParams());
+  LOG(ERROR) << "End ProfileNetworkContextService::CreateMainNetworkContext()";
   return network_context;
 }
 
@@ -107,6 +109,7 @@ void ProfileNetworkContextService::FlushProxyConfigMonitorForTesting() {
 
 content::mojom::NetworkContextParamsPtr
 ProfileNetworkContextService::CreateMainNetworkContextParams() {
+  LOG(ERROR) << "ProfileNetworkContextService::CreateMainNetworkContextParams";
   // TODO(mmenke): Set up parameters here.
   content::mojom::NetworkContextParamsPtr network_context_params =
       CreateDefaultNetworkContextParams();
@@ -119,6 +122,7 @@ ProfileNetworkContextService::CreateMainNetworkContextParams() {
   // Configure on-disk storage for non-OTR profiles. OTR profiles just use
   // default behavior (in memory storage, default sizes).
   PrefService* prefs = profile_->GetPrefs();
+  LOG(ERROR) << " profile_->IsOffTheRecord():" << profile_->IsOffTheRecord();
   if (!profile_->IsOffTheRecord()) {
     // Configure the HTTP cache path and size.
     base::FilePath base_cache_path;
@@ -128,6 +132,7 @@ ProfileNetworkContextService::CreateMainNetworkContextParams() {
       base_cache_path = disk_cache_dir.Append(base_cache_path.BaseName());
     network_context_params->http_cache_path =
         base_cache_path.Append(chrome::kCacheDirname);
+    LOG(ERROR) << " network_context_params->http_cache_path:" << network_context_params->http_cache_path.value();
     network_context_params->http_cache_max_size =
         prefs->GetInteger(prefs::kDiskCacheSize);
 
