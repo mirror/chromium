@@ -12,10 +12,12 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/single_thread_task_runner.h"
+#include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
+#include "net/base/interval.h"
 #include "net/base/io_buffer.h"
 #include "net/base/net_errors.h"
 #include "net/disk_cache/blockfile/backend_impl.h"
@@ -653,6 +655,12 @@ void SparseControl::UpdateRange(int result) {
   }
 
   child_map_.SetRange(first_bit, last_bit, true);
+  LOG(ERROR) << entry_->entry()->address().value() << " UpdateRange "
+             << child_offset_ << "," << child_len_ << " " << result
+             << " HI:" << child_data_.header.last_block << " "
+             << child_data_.header.last_block_len << " "
+             << base::HexEncode(static_cast<void*>(&child_data_.bitmap),
+                                32 * 4);
 }
 
 int SparseControl::PartialBlockLength(int block_index) const {
@@ -726,6 +734,13 @@ bool SparseControl::DoChildIO() {
             CreateNetLogSparseReadWriteCallback(child_->net_log().source(),
                                                 child_len_));
       }
+      LOG(ERROR) << entry_->entry()->address().value() << " ReadOperation "
+                 << child_offset_ << "," << child_len_
+                 << " HI:" << child_data_.header.last_block << " "
+                 << child_data_.header.last_block_len << " "
+                 << base::HexEncode(static_cast<void*>(&child_data_.bitmap),
+                                    32 * 4);
+
       rv = child_->ReadDataImpl(kSparseData, child_offset_, user_buf_.get(),
                                 child_len_, callback);
       break;
@@ -736,6 +751,13 @@ bool SparseControl::DoChildIO() {
             CreateNetLogSparseReadWriteCallback(child_->net_log().source(),
                                                 child_len_));
       }
+      LOG(ERROR) << entry_->entry()->address().value() << " kWriteOperation "
+                 << child_offset_ << "," << child_len_
+                 << " HI:" << child_data_.header.last_block << " "
+                 << child_data_.header.last_block_len << " "
+                 << base::HexEncode(static_cast<void*>(&child_data_.bitmap),
+                                    32 * 4);
+
       rv = child_->WriteDataImpl(kSparseData, child_offset_, user_buf_.get(),
                                  child_len_, callback, false);
       break;
@@ -783,50 +805,48 @@ int SparseControl::DoGetAvailableRange() {
   // child_offset_ + child_len_.
   int last_bit = (child_offset_ + child_len_ + kBlockSize - 1) >> 10;
   int start = child_offset_ >> 10;
-  int partial_start_bytes = PartialBlockLength(start);
   int found = start;
   int bits_found = child_map_.FindBits(&found, last_bit, true);
-  bool is_last_block_in_range = start < child_data_.header.last_block &&
-                                child_data_.header.last_block < last_bit;
 
-  int block_offset = child_offset_ & (kBlockSize - 1);
-  if (!bits_found && partial_start_bytes <= block_offset) {
-    if (!is_last_block_in_range)
-      return child_len_;
-    found = last_bit - 1;  // There are some bytes here.
+  net::Interval<int> to_find(child_offset_, child_offset_ + child_len_);
+
+  // What we have on the disk.
+  net::Interval<int> bits_range(found, found + bits_found * kBlockSize);
+  net::Interval<int> last_write_range;
+  if (child_data_.header.last_block >= 0)
+    last_write_range =
+        net::Interval<int>(child_data_.header.last_block * kBlockSize,
+                           child_data_.header.last_block * kBlockSize +
+                               child_data_.header.last_block_len);
+
+  // Often times the last_write_range is contiguously after bits_range, but not
+  // always. See if they can be combined.
+  if (!last_write_range.Empty() && !bits_range.Empty() &&
+      bits_range.max() == last_write_range.min()) {
+    bits_range.SetMax(last_write_range.max());
+    last_write_range.Clear();
   }
 
-  // We are done. Just break the loop and reset result_ to our real result.
-  range_found_ = true;
+  // Do any of them have anything relevent?
+  bits_range.IntersectWith(to_find);
+  last_write_range.IntersectWith(to_find);
 
-  int bytes_found = bits_found << 10;
-  bytes_found += PartialBlockLength(found + bits_found);
+  // Now return the earliest non-empty interval, if any.
+  net::Interval<int> result_range = bits_range;
+  if (bits_range.Empty() ||
+      (!last_write_range.Empty() && last_write_range.min() < bits_range.min()))
+    result_range = bits_range;
 
-  // found now points to the first bytes. Lets see if we have data before it.
-  int empty_start = std::max((found << 10) - child_offset_, 0);
-  if (empty_start >= child_len_)
+  if (result_range.Empty()) {
+    // Nothing found, so we just skip over this child.
     return child_len_;
-
-  // At this point we have bytes_found stored after (found << 10), and we want
-  // child_len_ bytes after child_offset_. The first empty_start bytes after
-  // child_offset_ are invalid.
-
-  if (start == found)
-    bytes_found -= block_offset;
-
-  // If the user is searching past the end of this child, bits_found is the
-  // right result; otherwise, we have some empty space at the start of this
-  // query that we have to subtract from the range that we searched.
-  result_ = std::min(bytes_found, child_len_ - empty_start);
-
-  if (partial_start_bytes) {
-    result_ = std::min(partial_start_bytes - block_offset, child_len_);
-    empty_start = 0;
   }
 
-  // Only update offset_ when this query found zeros at the start.
-  if (empty_start)
-    offset_ += empty_start;
+  // We are done. Just break the loop and reset result_ to our real result,
+  // also updating offset if we couldn't quite start at child_offset_
+  range_found_ = true;
+  offset_ += result_range.min() - child_offset_;
+  result_ = result_range.max() - result_range.min();
 
   // This will actually break the loop.
   buf_len_ = 0;

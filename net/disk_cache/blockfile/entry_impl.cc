@@ -360,6 +360,8 @@ int EntryImpl::ReadSparseDataImpl(int64_t offset,
                                   IOBuffer* buf,
                                   int buf_len,
                                   const CompletionCallback& callback) {
+  LOG(ERROR) << entry_.address().value() << " EntryImpl:" << key_
+             << " ReadSparseDataImpl:" << offset << "," << buf_len;
   DCHECK(node_.Data()->dirty || read_only_);
   int result = InitSparseData();
   if (net::OK != result)
@@ -376,6 +378,8 @@ int EntryImpl::WriteSparseDataImpl(int64_t offset,
                                    IOBuffer* buf,
                                    int buf_len,
                                    const CompletionCallback& callback) {
+  LOG(ERROR) << entry_.address().value() << " EntryImpl:" << key_
+             << " WriteSparseDataImpl:" << offset << "," << buf_len;
   DCHECK(node_.Data()->dirty || read_only_);
   int result = InitSparseData();
   if (net::OK != result)
@@ -389,6 +393,8 @@ int EntryImpl::WriteSparseDataImpl(int64_t offset,
 }
 
 int EntryImpl::GetAvailableRangeImpl(int64_t offset, int len, int64_t* start) {
+  LOG(ERROR) << entry_.address().value() << " EntryImpl:" << key_
+             << " GetAvailableRangeImpl:" << offset << "," << len;
   int result = InitSparseData();
   if (net::OK != result)
     return result;
