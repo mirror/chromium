@@ -107,11 +107,13 @@ import org.chromium.chrome.browser.tab.TabDelegateFactory;
 import org.chromium.chrome.browser.tab.TabStateBrowserControlsVisibilityDelegate;
 import org.chromium.chrome.browser.tabmodel.AsyncTabParamsManager;
 import org.chromium.chrome.browser.tabmodel.ChromeTabCreator;
+import org.chromium.chrome.browser.tabmodel.EmptyTabModelSelectorObserver;
 import org.chromium.chrome.browser.tabmodel.TabModel;
 import org.chromium.chrome.browser.tabmodel.TabModel.TabLaunchType;
 import org.chromium.chrome.browser.tabmodel.TabModel.TabSelectionType;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
 import org.chromium.chrome.browser.tabmodel.TabModelSelectorImpl;
+import org.chromium.chrome.browser.tabmodel.TabModelSelectorObserver;
 import org.chromium.chrome.browser.tabmodel.TabModelSelectorTabModelObserver;
 import org.chromium.chrome.browser.tabmodel.TabModelSelectorTabObserver;
 import org.chromium.chrome.browser.tabmodel.TabModelUtils;
@@ -251,6 +253,7 @@ public class ChromeTabbedActivity
     private TabModelSelectorImpl mTabModelSelectorImpl;
     private TabModelSelectorTabObserver mTabModelSelectorTabObserver;
     private TabModelSelectorTabModelObserver mTabModelObserver;
+    private TabModelSelectorObserver mTabModelSelectorObserver;
 
     private ScreenshotMonitor mScreenshotMonitor;
 
@@ -496,6 +499,34 @@ public class ChromeTabbedActivity
                             NewTabPageUma.NTP_IMPESSION_POTENTIAL_NOTAB);
                 }
             };
+
+            mTabModelSelectorObserver = new EmptyTabModelSelectorObserver() {
+                @Override
+                @SuppressLint("NewApi")
+                public void onTabModelSelected(TabModel newModel, TabModel oldModel) {
+                    // TODO(twellington): handle in overview mode...
+                    if (newModel.isIncognito()) {
+                        // TODO(twellington): use a different color for non-Chrome Home?
+                        getWindow().setNavigationBarColor(ApiCompatibilityUtils.getColor(
+                                getResources(), R.color.incognito_primary_color));
+
+                        ViewGroup rootView = (ViewGroup) getWindow().getDecorView().getRootView();
+                        int visibility = rootView.getSystemUiVisibility();
+                        visibility &= ~View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
+                        rootView.setSystemUiVisibility(visibility);
+                    } else {
+                        getWindow().setNavigationBarColor(Color.WHITE);
+
+                        ViewGroup rootView = (ViewGroup) getWindow().getDecorView().getRootView();
+                        int visibility = rootView.getSystemUiVisibility();
+                        visibility |= View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
+                        rootView.setSystemUiVisibility(visibility);
+                    }
+
+                }
+            };
+
+            mTabModelSelectorImpl.addObserver(mTabModelSelectorObserver);
         } finally {
             TraceEvent.end("ChromeTabbedActivity.initializeCompositor");
         }
@@ -2241,20 +2272,40 @@ public class ChromeTabbedActivity
     }
 
     @Override
+    @SuppressLint("NewApi")
     public void onOverviewModeStartedShowing(boolean showToolbar) {
         if (getFindToolbarManager() != null) getFindToolbarManager().hideToolbar();
         if (getAssistStatusHandler() != null) getAssistStatusHandler().updateAssistState();
         if (getAppMenuHandler() != null) getAppMenuHandler().hideAppMenu();
         ApiCompatibilityUtils.setStatusBarColor(getWindow(), Color.BLACK);
         StartupMetrics.getInstance().recordOpenedTabSwitcher();
+
+        if (!FeatureUtilities.isChromeHomeEnabled()) {
+            getWindow().setNavigationBarColor(Color.BLACK);
+
+            ViewGroup rootView = (ViewGroup) getWindow().getDecorView().getRootView();
+            int visibility = rootView.getSystemUiVisibility();
+            visibility &= ~View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
+            rootView.setSystemUiVisibility(visibility);
+        }
     }
 
     @Override
     public void onOverviewModeFinishedShowing() {}
 
     @Override
+    @SuppressLint("NewApi")
     public void onOverviewModeStartedHiding(boolean showToolbar, boolean delayAnimation) {
         if (getAppMenuHandler() != null) getAppMenuHandler().hideAppMenu();
+
+        if (!FeatureUtilities.isChromeHomeEnabled()) {
+            getWindow().setNavigationBarColor(Color.WHITE);
+
+            ViewGroup rootView = (ViewGroup) getWindow().getDecorView().getRootView();
+            int visibility = rootView.getSystemUiVisibility();
+            visibility |= View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
+            rootView.setSystemUiVisibility(visibility);
+        }
     }
 
     @Override
@@ -2263,6 +2314,7 @@ public class ChromeTabbedActivity
         if (getActivityTab() != null) {
             setStatusBarColor(getActivityTab(), getActivityTab().getThemeColor());
         }
+
     }
 
     @Override

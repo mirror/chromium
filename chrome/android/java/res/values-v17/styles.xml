@@ -18,7 +18,7 @@
 
     <style name="LauncherTheme" parent="@android:style/Theme.NoDisplay" />
 
-    <style name="MainTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="MainThemeBase" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:textColorHighlight">@color/text_highlight_color</item>
         <item name="android:textColorLink">@color/light_active_color</item>
@@ -42,6 +42,7 @@
         <item name="android:windowSharedElementEnterTransition" tools:targetApi="21">@transition/move_image</item>
         <item name="android:windowSharedElementExitTransition" tools:targetApi="21">@transition/move_image</item>
     </style>
+    <style name="MainTheme" parent="MainThemeBase" />
 
     <style name="SearchActivityTheme" parent="MainTheme">
         <item name="android:windowBackground">@color/google_grey_500</item>
@@ -73,7 +74,7 @@
       <item name="android:windowBackground">@android:color/black</item>
     </style>
 
-    <style name="FullscreenWhite" parent="Theme.AppCompat.Light" >
+    <style name="FullscreenWhiteBase" parent="Theme.AppCompat.Light" >
         <item name="android:windowBackground">@android:color/white</item>
         <item name="android:textColorLink">@color/light_active_color</item>
         <item name="colorPrimaryDark">@android:color/black</item>
@@ -81,8 +82,9 @@
         <item name="colorAccent">@color/light_active_color</item>
         <item name="windowNoTitle">true</item>
     </style>
+    <style name="FullscreenWhite" parent="FullscreenWhiteBase" />
 
-    <style name="FullscreenTransparentActivityTheme" parent="Theme.AppCompat.Light.NoActionBar" >
+    <style name="FullscreenTransparentActivityThemeBase" parent="Theme.AppCompat.Light.NoActionBar" >
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowIsFloating">true</item>
@@ -90,6 +92,7 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="windowNoTitle">true</item>
     </style>
+  <style name="FullscreenTransparentActivityTheme" parent="FullscreenTransparentActivityThemeBase" />
 
     <style name="FullscreenWhiteActivityTheme" parent="FullscreenWhite">
         <item name="windowActionBar">false</item>
@@ -206,15 +209,15 @@
         <item name="android:importantForAccessibility">no</item>
     </style>
 
-    <style name="ThemeWithActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="ThemeWithActionBarBase" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:windowBackground">@drawable/action_bar_activity_bg</item>
         <!-- Action bar color -->
         <item name="colorPrimary">@color/dark_action_bar_color</item>
         <!-- Status bar color -->
         <item name="colorPrimaryDark">#161e21</item>
         <!-- Color of checkboxes, switches, buttons, etc. -->
-        <item name="colorAccent">@color/pref_accent_color</item>
     </style>
+    <style name="ThemeWithActionBar" parent="ThemeWithActionBarBase" />
 
     <style name="FlushFooterButton">
       <item name="android:textColor">@color/light_normal_color</item>
@@ -357,7 +360,7 @@
     </style>
 
     <!-- Promo dialogs -->
-    <style name="PromoDialog" >
+    <style name="PromoDialog">
         <item name="android:background">@android:color/transparent</item>
         <item name="android:backgroundDimEnabled">false</item>
         <item name="android:clipChildren">false</item>
@@ -467,7 +470,7 @@
     </style>
 
     <!-- First Run and Bookmark/recent-tabs dialogs -->
-    <style name="DialogWhenLarge" parent="Theme.AppCompat.Light.DialogWhenLarge" >
+    <style name="DialogWhenLargeBase" parent="Theme.AppCompat.Light.DialogWhenLarge" >
         <item name="android:windowBackground">@drawable/bg_white_dialog</item>
         <item name="android:textColor">@color/default_text_color</item>
         <item name="android:textColorLink">@color/light_active_color</item>
@@ -478,6 +481,7 @@
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
     </style>
+    <style name="DialogWhenLarge" parent="DialogWhenLargeBase" />
 
     <style name="SigninAlertDialogTheme" parent="AlertDialogTheme">
         <item name="buttonBarButtonStyle">@style/SigninDialogButtonStyle</item>
@@ -532,17 +536,19 @@
     </style>
 
     <!-- Physical Web styles -->
-    <style name="PhysicalWebNearbyUrlsListStyle" parent="Theme.AppCompat.Light">
+    <style name="PhysicalWebNearbyUrlsListStyleBase" parent="Theme.AppCompat.Light">
         <item name="android:windowBackground">@android:color/white</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
     </style>
-    <style name="PhysicalWebOptInStyle" parent="Theme.AppCompat.Light">
+    <style name="PhysicalWebNearbyUrlsListStyle" parent="PhysicalWebNearbyUrlsListStyleBase" />
+    <style name="PhysicalWebOptInStyleBase" parent="Theme.AppCompat.Light">
         <item name="android:windowBackground">@android:color/white</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
+    <style name="PhysicalWebOptInStyle" parent="PhysicalWebOptInStyleBase" />
 
     <!-- Payments UI -->
     <style name="PaymentsUiSectionHeader">
