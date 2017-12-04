@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6b269dd_31a19242",
+        "filename": "third_party/zlib/contrib/optimizations/inffast_chunk.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-04T21:28:23Z",
+      "side": 0,
+      "message": "I heard back from our lawyers and have confirmed the situation.\n\ntl;dr: We should not remove this in this patch.\n\nThe copyright shouldn\u0027t have been here in the first place. It was submitted to Chromium under the Chromium CLA. It was my mistake to let it in.\n\nBut now that it is in, we would need to start discussion with ARM to remove it. So we can\u0027t remove it just yet.\n\nHowever, this code will hopefully be landing in upstream zlib (where the ARM copyright can appear -- not part of the Chromium CLA). Once it is in upstream zlib and we pull it in from upstream, the problem will resolve itself.\n\n\nIn the future, I\u0027m going to have to be extra careful not to accept this. That will perhaps make ARM contributions more tricky. Hopefully ARM is okay submitting with the Chromium copyright until it lands upstream.",
+      "range": {
+        "startLine": 3,
+        "startChar": 1,
+        "endLine": 3,
+        "endChar": 31
+      },
+      "revId": "27bcca76fb5c9e73b5270c8a407eb42ec445f2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
