@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "64bec967_06e11849",
+        "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-04T20:57:59Z",
+      "side": 1,
+      "message": "I want to call attention to this just to make sure we don\u0027t accidentally venture into undefined behavior.\n\nThis is done for type punning, which is legal in C. But in C++, it is undefined behavior (assigning one union member and then reading another).\n\nThis header is only included from .c files. There are no special flags in the BUILD.gn to force using a C standard but perhaps the default treatment of .c files is to compile as C and not C++. If so, this is fine -- it is just something we should be aware of.\n\nAnother bit of interest is the alternate union member is only ever read via a memcpy right now. memcpy has special semantics for aliasing, but I don\u0027t think it has special semantics for this UB.",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 14
+      },
+      "revId": "b6b95700c9aa5ad93999e3ddb552483de97f2146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02440736_71b97042",
         "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
         "patchSetId": 20
