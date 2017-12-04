@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "a89da932_71350c42",
+        "filename": "ui/base/class_property.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-04T19:26:58Z",
+      "side": 1,
+      "message": "Looks like some of these broke the build. Doh. Let\u0027s revert that.",
+      "parentUuid": "12704e1f_cd555542",
+      "revId": "b7b401552126bb4fd6c73803b131914210a8abf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb7d25ad_e12aed73",
         "filename": "ui/views/view_constants_aura.h",
         "patchSetId": 4
