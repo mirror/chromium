@@ -16,6 +16,24 @@
       "revId": "d2b5ad3a02b766ced1d1b27ff566d383d1e77b54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5c3da6d_3d4f2df3",
+        "filename": "mojo/public/cpp/system/file_data_pipe_producer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-04T22:03:54Z",
+      "side": 1,
+      "message": "We can. My original rationale was that users won\u0027t really care what the specific reason for failure was, only that the operation failed. But what you\u0027re doing to add more specific return codes seems reasonable.",
+      "parentUuid": "e61cd3a6_9e545765",
+      "revId": "d2b5ad3a02b766ced1d1b27ff566d383d1e77b54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
