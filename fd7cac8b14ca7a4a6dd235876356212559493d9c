@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c257844b_ff1a6fab",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-04T19:48:50Z",
+      "side": 1,
+      "message": "Is this something we expect MediaRouteProviders to be doing? What would happen if a MRP forgets to do untrack sink queries? It would be good to have spell out what is the MRP supposed to do in relation to OnSinkAvailabilityUpdated / OnSinksReceived in the contracts in media_router.mojom if it isn\u0027t already.",
+      "revId": "fd7cac8b14ca7a4a6dd235876356212559493d9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
