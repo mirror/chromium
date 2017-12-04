@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65ab0f45_eef72fc0",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-04T18:36:48Z",
+      "side": 1,
+      "message": "I am reviewing this just from a phone, so I may have missed this. On which thread is this executed? It should not be on the thread.",
+      "revId": "828ff232689b036b04ca193326febb17a23864df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
