@@ -76,6 +76,24 @@
     },
     {
       "key": {
+        "uuid": "ebd36c50_d13ffe5f",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-04T18:18:42Z",
+      "side": 1,
+      "message": "Minor nit: \u003cstring.h\u003e, since strictly speaking, \u003ccstring\u003e is only required to declare std::memcpy.",
+      "parentUuid": "9f2bb96e_e03d1e10",
+      "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07975fb2_7dd20f7f",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 26
@@ -223,6 +241,46 @@
       "writtenOn": "2017-12-04T16:17:01Z",
       "side": 1,
       "message": "nit: No implementation actually needs |url|, so you could omit it.",
+      "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "676361ce_a3f0e7e1",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-04T18:18:42Z",
+      "side": 1,
+      "message": "Super minor nit: either const ref here, or std::move() below when calling SetRequestorOrigin().",
+      "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c35394b_719ace82",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-04T18:18:42Z",
+      "side": 1,
+      "message": "I wish there was a way to be more explicit about this: it feels really indirect that these set of conditions being true implies an isolated world. For example, why is it important to check IsUnique() here? \n\nCan you help me understand what an \"isolated world execution context\" is? Does it mean the isolated world in which content scripts run? Or the actual Document corresponds to the execution context of an extension background/event page?",
+      "range": {
+        "startLine": 612,
+        "startChar": 0,
+        "endLine": 617,
+        "endChar": 25
+      },
       "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
