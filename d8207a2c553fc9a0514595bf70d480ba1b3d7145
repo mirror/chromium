@@ -16,6 +16,24 @@
       "revId": "d8207a2c553fc9a0514595bf70d480ba1b3d7145",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4c69479_320b327a",
+        "filename": "ios/chrome/browser/ui/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-04T13:39:54Z",
+      "side": 1,
+      "message": "GoogleCast is only added as a dependency in the downstream repository, so I think a better location to add the CoreBluetooth.framework would be in the downstream repository (look for .../Cast/BUILD.gn).\n\nThis should be done in a separate CL landed first. Then the current CL can be landed without adding the dependency on CoreBluetooth.framework.",
+      "parentUuid": "3a1b03eb_31bc8df7",
+      "revId": "d8207a2c553fc9a0514595bf70d480ba1b3d7145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
