@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "dccc8e14_a547577a",
+        "filename": "components/previews/content/previews_io_data.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-04T19:23:55Z",
+      "side": 1,
+      "message": "I think std::move (without \u0026\u0026) will also get the same result. IIUC, \u0026\u0026 is just enforcing the move semantics which seems fine to me (to include).",
+      "parentUuid": "a5cada5f_c014aace",
+      "range": {
+        "startLine": 161,
+        "startChar": 4,
+        "endLine": 161,
+        "endChar": 44
+      },
+      "revId": "2daabe90ad7d53fa719bd2c1d777485702fcec44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae8a1c22_e39ba3b3",
         "filename": "components/previews/content/previews_io_data.cc",
         "patchSetId": 9
