@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93a29a59_dff674a2",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-12-04T03:25:53Z",
+      "side": 1,
+      "message": "I think this should be moved to line 311.",
+      "revId": "0bb04a6953978f3bf55438e9ba6093599aa42f40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
