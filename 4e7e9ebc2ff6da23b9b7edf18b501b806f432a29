@@ -34,6 +34,24 @@
       "revId": "4e7e9ebc2ff6da23b9b7edf18b501b806f432a29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04708861_65529f1d",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-12-04T04:03:07Z",
+      "side": 1,
+      "message": "This plan sounds good to me. I\u0027d slightly change the naming to \n\nBackgroundColorIgnoringVisited\nVisitedBackgroundColor or BackgroundColorVisited (though I slightly prefer the former, but what\u0027s the point in having both BackgroundColorIgnoringUnvisited and VisitedListBackgroundColor?)",
+      "parentUuid": "634147fc_af37e0f3",
+      "revId": "4e7e9ebc2ff6da23b9b7edf18b501b806f432a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
