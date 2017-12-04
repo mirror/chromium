@@ -424,6 +424,24 @@
     },
     {
       "key": {
+        "uuid": "935a1366_77cfeecf",
+        "filename": "chrome_elf/whitelist/whitelist_file_format.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-04T11:56:39Z",
+      "side": 1,
+      "message": "Please make a source_set holding .h and .cc files that need to be compiled/linked into both targets, then include that in both targets.",
+      "parentUuid": "8176fd51_87573fb7",
+      "revId": "3ce4feb404701e33a6c4fae78bf8fad55e2df22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c07efc31_db8a2d9e",
         "filename": "chrome_elf/whitelist/whitelist_file_format.h",
         "patchSetId": 3
@@ -453,6 +471,24 @@
       "side": 1,
       "message": "This value is used and managed by the whitelist management code up in the higher-level chrome code.\n\nThat external code will update these timestamps, and handle flushing out entries that are no longer needed locally.  Chrome_elf doesn\u0027t touch them at all at this point.",
       "parentUuid": "c07efc31_db8a2d9e",
+      "revId": "3ce4feb404701e33a6c4fae78bf8fad55e2df22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5ae8a59_0a21d094",
+        "filename": "chrome_elf/whitelist/whitelist_file_format.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-04T11:56:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "52c6d0fa_ab72f8d1",
       "revId": "3ce4feb404701e33a6c4fae78bf8fad55e2df22c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

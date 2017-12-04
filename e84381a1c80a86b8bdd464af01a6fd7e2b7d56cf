@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5848bf3f_cc5b0651",
+        "filename": "chrome_elf/whitelist/whitelist_file.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-04T11:56:39Z",
+      "side": 1,
+      "message": "nit: remove space after \u0027*\u0027",
+      "range": {
+        "startLine": 114,
+        "startChar": 14,
+        "endLine": 114,
+        "endChar": 15
+      },
+      "revId": "e84381a1c80a86b8bdd464af01a6fd7e2b7d56cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a1755e8_8bf2a3aa",
+        "filename": "chrome_elf/whitelist/whitelist_file.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-04T11:56:39Z",
+      "side": 1,
+      "message": "here, too (please tell me cl format didn\u0027t put that there!)",
+      "range": {
+        "startLine": 123,
+        "startChar": 14,
+        "endLine": 123,
+        "endChar": 15
+      },
+      "revId": "e84381a1c80a86b8bdd464af01a6fd7e2b7d56cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88ca9dea_a15180df",
+        "filename": "chrome_elf/whitelist/whitelist_file.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-04T11:56:39Z",
+      "side": 1,
+      "message": "apologies for not mentioning this before: i think \"fhandle\" goes against the \"don\u0027t abbreviate\" style guideline. will \"file_handle\" work well enough here?",
+      "range": {
+        "startLine": 136,
+        "startChar": 48,
+        "endLine": 136,
+        "endChar": 55
+      },
+      "revId": "e84381a1c80a86b8bdd464af01a6fd7e2b7d56cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e3364a6_b20aa81f",
+        "filename": "chrome_elf/whitelist/whitelist_file.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-04T11:56:39Z",
+      "side": 1,
+      "message": "nit:\n    g_wl_module_array \u003d nullptr;\nso that a dangling pointer isn\u0027t left around",
+      "revId": "e84381a1c80a86b8bdd464af01a6fd7e2b7d56cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f9e0394_76df8006",
+        "filename": "chrome_elf/whitelist/whitelist_file.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-04T11:56:39Z",
+      "side": 1,
+      "message": "are these values used in a histogram or something? are you sure it\u0027s okay to change the values of existing elements?",
+      "revId": "e84381a1c80a86b8bdd464af01a6fd7e2b7d56cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bc34efc_f8637cab",
+        "filename": "chrome_elf/whitelist/whitelist_file_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-04T11:56:39Z",
+      "side": 1,
+      "message": "nit: can you use\n    ASSERT_EQ(file.Write(...), size);\n?\n\nabove, too, although i think you\u0027ll need a cast there",
+      "range": {
+        "startLine": 132,
+        "startChar": 11,
+        "endLine": 132,
+        "endChar": 15
+      },
+      "revId": "e84381a1c80a86b8bdd464af01a6fd7e2b7d56cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a15183e_f5975aa1",
+        "filename": "chrome_elf/whitelist/whitelist_file_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-04T11:56:39Z",
+      "side": 1,
+      "message": "ASSERT_EQ here and below, too?",
+      "revId": "e84381a1c80a86b8bdd464af01a6fd7e2b7d56cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
