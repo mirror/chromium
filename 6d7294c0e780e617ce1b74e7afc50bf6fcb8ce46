@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "26972945_d63f3064",
+        "filename": "media/audio/audio_manager_base.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-04T16:51:07Z",
+      "side": 1,
+      "message": "Added a comment to explain that the first loop is to find the entries for the real devices.\nAlso rewrote it using iterators instead of strings in order to avoid a string copy and emphasize that the concatenation only makes sense if the real entry was actually found.",
+      "parentUuid": "f3454670_b77b67f8",
+      "revId": "6d7294c0e780e617ce1b74e7afc50bf6fcb8ce46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d73da0d_b9f81e03",
         "filename": "media/audio/audio_manager_base.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e181cfe5_cdfc17bb",
+        "filename": "media/audio/audio_manager_base.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-04T16:51:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d73da0d_b9f81e03",
+      "revId": "6d7294c0e780e617ce1b74e7afc50bf6fcb8ce46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e0444df_8834da4b",
         "filename": "media/audio/audio_manager_base.cc",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-04T15:21:46Z",
       "side": 1,
       "message": "When is it possible that we have a default or communication device, but their names are empty?",
+      "revId": "6d7294c0e780e617ce1b74e7afc50bf6fcb8ce46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2d7e461_4c65765c",
+        "filename": "media/audio/audio_manager_base.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-04T16:51:07Z",
+      "side": 1,
+      "message": "It is possible when the system has communication devices, but the AudioManager implementation does not implement the GetCommunicationsInputDeviceID()/GetCommunicationsOutputDeviceID() methods.\nThat is, Windows until we implement those methods in a follow-up CL :)\n\nAnother possibility is if a new device is plugged and designated default communications device after get_device_names() returns but before get_communications_device_id() is called.",
+      "parentUuid": "5e0444df_8834da4b",
       "revId": "6d7294c0e780e617ce1b74e7afc50bf6fcb8ce46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
