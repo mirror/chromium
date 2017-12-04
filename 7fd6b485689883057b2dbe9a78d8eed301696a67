@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "507e3aae_a27db6fe",
+        "filename": "components/autofill/core/browser/address_normalizer_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-04T22:03:31Z",
+      "side": 1,
+      "message": "Could you:\n- Add a NormalizationRequest to |pending_normalization_| when |address_validator_| is nullptr.\n- In AssignValidator(), start loading rules for all regions in |pending_normalization_|.\n(optional) - Post a CreateAddressValidator task the first time that NormalizeAddressAsync is called instead of in the constructor (given that everything is async anyways).\n\nThat way, autofill does not affect startup time and it works well even if the user clicks on a text field before |adress_validator_| is loaded.",
+      "range": {
+        "startLine": 173,
+        "startChar": 2,
+        "endLine": 177,
+        "endChar": 3
+      },
+      "revId": "7fd6b485689883057b2dbe9a78d8eed301696a67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da6015c4_6c09393a",
+        "filename": "components/autofill/core/browser/address_normalizer_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-04T22:03:31Z",
+      "side": 1,
+      "message": "A forward declaration is all you need to declare a unique_ptr.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 74
+      },
+      "revId": "7fd6b485689883057b2dbe9a78d8eed301696a67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c910023_b6c5b10a",
+        "filename": "components/autofill/core/browser/address_normalizer_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-04T22:03:31Z",
+      "side": 1,
+      "message": "#include \"base/memory/weak_ptr.h\"",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 22
+      },
+      "revId": "7fd6b485689883057b2dbe9a78d8eed301696a67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
