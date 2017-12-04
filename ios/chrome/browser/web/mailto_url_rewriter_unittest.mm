@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import "ios/chrome/browser/web/nullable_mailto_url_rewriter.h"
+#import "ios/chrome/browser/web/mailto_url_rewriter.h"
 
 #import "ios/chrome/browser/web/fake_mailto_handler_helpers.h"
 #import "ios/chrome/browser/web/mailto_handler_system_mail.h"
@@ -14,18 +14,18 @@
 #error "This file requires ARC support."
 #endif
 
-class NullableMailtoURLRewriterTest : public PlatformTest {
+class MailtoURLRewriterTest : public PlatformTest {
  public:
-  NullableMailtoURLRewriterTest() {
+  MailtoURLRewriterTest() {
     [[NSUserDefaults standardUserDefaults]
-        removeObjectForKey:[NullableMailtoURLRewriter userDefaultsKey]];
+        removeObjectForKey:[MailtoURLRewriter userDefaultsKey]];
   }
 };
 
 // Tests that a new instance has expected properties and behaviors.
-TEST_F(NullableMailtoURLRewriterTest, TestStandardInstance) {
-  NullableMailtoURLRewriter* rewriter =
-      [NullableMailtoURLRewriter mailtoURLRewriterWithStandardHandlers];
+TEST_F(MailtoURLRewriterTest, TestStandardInstance) {
+  MailtoURLRewriter* rewriter =
+      [MailtoURLRewriter mailtoURLRewriterWithStandardHandlers];
   EXPECT_TRUE(rewriter);
 
   NSArray<MailtoHandler*>* handlers = [rewriter defaultHandlers];
@@ -43,9 +43,8 @@ TEST_F(NullableMailtoURLRewriterTest, TestStandardInstance) {
 }
 
 // If Gmail is not installed, rewriter defaults to system Mail app.
-TEST_F(NullableMailtoURLRewriterTest, TestNoGmailInstalled) {
-  NullableMailtoURLRewriter* rewriter =
-      [[NullableMailtoURLRewriter alloc] init];
+TEST_F(MailtoURLRewriterTest, TestNoGmailInstalled) {
+  MailtoURLRewriter* rewriter = [[MailtoURLRewriter alloc] init];
   [rewriter setDefaultHandlers:@[
     [[MailtoHandlerSystemMail alloc] init],
     [[FakeMailtoHandlerGmailNotInstalled alloc] init]
@@ -55,9 +54,8 @@ TEST_F(NullableMailtoURLRewriterTest, TestNoGmailInstalled) {
 
 // If Gmail is installed but user has not made a choice, there is no default
 // mail app.
-TEST_F(NullableMailtoURLRewriterTest, TestWithGmailChoiceNotMade) {
-  NullableMailtoURLRewriter* rewriter =
-      [[NullableMailtoURLRewriter alloc] init];
+TEST_F(MailtoURLRewriterTest, TestWithGmailChoiceNotMade) {
+  MailtoURLRewriter* rewriter = [[MailtoURLRewriter alloc] init];
   [rewriter setDefaultHandlers:@[
     [[MailtoHandlerSystemMail alloc] init],
     [[FakeMailtoHandlerGmailInstalled alloc] init]
@@ -66,9 +64,8 @@ TEST_F(NullableMailtoURLRewriterTest, TestWithGmailChoiceNotMade) {
 }
 
 // Tests that it is possible to unset the default handler.
-TEST_F(NullableMailtoURLRewriterTest, TestUnsetDefaultHandler) {
-  NullableMailtoURLRewriter* rewriter =
-      [[NullableMailtoURLRewriter alloc] init];
+TEST_F(MailtoURLRewriterTest, TestUnsetDefaultHandler) {
+  MailtoURLRewriter* rewriter = [[MailtoURLRewriter alloc] init];
   MailtoHandler* gmailInstalled =
       [[FakeMailtoHandlerGmailInstalled alloc] init];
   MailtoHandler* systemMail = [[MailtoHandlerSystemMail alloc] init];
@@ -81,9 +78,8 @@ TEST_F(NullableMailtoURLRewriterTest, TestUnsetDefaultHandler) {
 
 // If Gmail was installed and user has made a choice, then Gmail is uninstalled.
 // The default returns to system Mail app.
-TEST_F(NullableMailtoURLRewriterTest, TestWithGmailUninstalled) {
-  NullableMailtoURLRewriter* rewriter =
-      [[NullableMailtoURLRewriter alloc] init];
+TEST_F(MailtoURLRewriterTest, TestWithGmailUninstalled) {
+  MailtoURLRewriter* rewriter = [[MailtoURLRewriter alloc] init];
   MailtoHandler* systemMailHandler = [[MailtoHandlerSystemMail alloc] init];
   MailtoHandler* fakeGmailHandler =
       [[FakeMailtoHandlerGmailInstalled alloc] init];
@@ -91,7 +87,7 @@ TEST_F(NullableMailtoURLRewriterTest, TestWithGmailUninstalled) {
   [rewriter setDefaultHandlerID:[fakeGmailHandler appStoreID]];
   EXPECT_NSEQ([fakeGmailHandler appStoreID], [rewriter defaultHandlerID]);
 
-  rewriter = [[NullableMailtoURLRewriter alloc] init];
+  rewriter = [[MailtoURLRewriter alloc] init];
   fakeGmailHandler = [[FakeMailtoHandlerGmailNotInstalled alloc] init];
   [rewriter setDefaultHandlers:@[ systemMailHandler, fakeGmailHandler ]];
   EXPECT_NSEQ([MailtoURLRewriter systemMailApp], [rewriter defaultHandlerID]);
@@ -101,11 +97,9 @@ TEST_F(NullableMailtoURLRewriterTest, TestWithGmailUninstalled) {
 // default mail handler app. Then Gmail is uninstalled. User's choice of system
 // Mail app remains unchanged and will persist through a re-installation of
 // Gmail.
-TEST_F(NullableMailtoURLRewriterTest,
-       TestSystemMailAppChosenSurviveGmailUninstall) {
+TEST_F(MailtoURLRewriterTest, TestSystemMailAppChosenSurviveGmailUninstall) {
   // Initial state of system Mail app explicitly chosen.
-  NullableMailtoURLRewriter* rewriter =
-      [[NullableMailtoURLRewriter alloc] init];
+  MailtoURLRewriter* rewriter = [[MailtoURLRewriter alloc] init];
   MailtoHandler* systemMailHandler = [[MailtoHandlerSystemMail alloc] init];
   [rewriter setDefaultHandlers:@[
     systemMailHandler, [[FakeMailtoHandlerGmailInstalled alloc] init]
@@ -114,14 +108,14 @@ TEST_F(NullableMailtoURLRewriterTest,
   EXPECT_NSEQ([systemMailHandler appStoreID], [rewriter defaultHandlerID]);
 
   // Gmail is installed.
-  rewriter = [[NullableMailtoURLRewriter alloc] init];
+  rewriter = [[MailtoURLRewriter alloc] init];
   [rewriter setDefaultHandlers:@[
     systemMailHandler, [[FakeMailtoHandlerGmailNotInstalled alloc] init]
   ]];
   EXPECT_NSEQ([systemMailHandler appStoreID], [rewriter defaultHandlerID]);
 
   // Gmail is installed again.
-  rewriter = [[NullableMailtoURLRewriter alloc] init];
+  rewriter = [[MailtoURLRewriter alloc] init];
   [rewriter setDefaultHandlers:@[
     systemMailHandler, [[FakeMailtoHandlerGmailInstalled alloc] init]
   ]];
