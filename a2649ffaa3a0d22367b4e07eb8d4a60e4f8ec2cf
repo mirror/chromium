@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "5d139480_b938cef1",
+        "filename": "chrome/browser/search/search.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-04T16:07:49Z",
+      "side": 1,
+      "message": "\u003e \u003e \u003e Adding exceptions here worries me, because it seems like this should be a simple question, or at least one that\u0027s answered elsewhere, so we could call a shared function. Listing exceptions here makes it likely we miss one.\n\u003e \u003e \n\u003e \u003e Shared function for what exactly?\n\u003e \n\u003e “What\u0027s on screen?”\n\u003e \n\u003e or alternately\n\u003e \n\u003e “What’s the URL that determines the permissions of JS on the current page?”\n\nAs far as I can tell, that doesn\u0027t quite exist :(\nLastCommittedURL/Entry *mostly* does that, with the exception of interstitials. (The fallback to \"visible\" is specific to how this function is used, i.e. querying \"is NTP?\" before the navigation has actually committed.)",
+      "parentUuid": "bf508859_e6c8cfc3",
+      "revId": "a2649ffaa3a0d22367b4e07eb8d4a60e4f8ec2cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5acb047f_f2ed3ca1",
         "filename": "chrome/browser/search/search.cc",
         "patchSetId": 6
