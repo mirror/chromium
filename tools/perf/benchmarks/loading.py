@@ -2,6 +2,8 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import os
+
 from core import perf_benchmark
 import page_sets
 
@@ -53,12 +55,15 @@ class LoadingMobile(_LoadingBase):
   SUPPORTED_PLATFORMS = [story.expectations.ALL_MOBILE]
 
   def CreateStorySet(self, options):
+    settings = [traffic_setting.NONE]
+    if not os.getenv('NO_3G'):
+        settings.append(traffic_setting.REGULAR_3G)
     return page_sets.LoadingMobileStorySet(
         cache_temperatures=[cache_temperature.ANY],
         cache_temperatures_for_pwa=[cache_temperature.COLD,
                                     cache_temperature.WARM,
                                     cache_temperature.HOT],
-        traffic_settings=[traffic_setting.NONE, traffic_setting.REGULAR_3G])
+        traffic_settings=settings)
 
   def GetExpectations(self):
     class StoryExpectations(story.expectations.StoryExpectations):
