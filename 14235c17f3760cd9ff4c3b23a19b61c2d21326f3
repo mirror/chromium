@@ -46,6 +46,30 @@
       "revId": "14235c17f3760cd9ff4c3b23a19b61c2d21326f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "997c3010_01ee3904",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/TabWebContentsObserver.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-12-04T01:21:41Z",
+      "side": 1,
+      "message": "THanks for pointing out that bit about the native lib init - you\u0027re right. There\u0027s only a single instance of it, in which case it does provide good signal.\n\nSo a concrete thing I\u0027m worried about is GCMBackgroundTask - probably needs some investigation to see if it may be an issue, looks like it eventually reaches native so probably not a biggie.\n\nBeyond that, I guess chrome doesn\u0027t too too much if it\u0027s started without native. So it may be a fairly safe assumption for now but possible it breaks in the future. One thing you may worry about is downloads - they have a bunch of logic for long-running downloads and I don\u0027t know if that can cause the browser process to be running for a long time in a pure java mode? +dtrainor\n\nAFAIK, you can\u0027t really tell. I mean you call getIntent on the activity which can tell you why the activity started, but it doesn\u0027t tell you why the app process instance was created.",
+      "parentUuid": "a3082bb5_403cfbb5",
+      "range": {
+        "startLine": 212,
+        "startChar": 27,
+        "endLine": 212,
+        "endChar": 28
+      },
+      "revId": "14235c17f3760cd9ff4c3b23a19b61c2d21326f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
