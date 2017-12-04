@@ -242,6 +242,10 @@ int64_t AndroidUsbSocket::GetTotalReceivedBytes() const {
   return 0;
 }
 
+void AndroidUsbSocket::Tag(const net::SocketTag& tag) {
+  NOTIMPLEMENTED();
+}
+
 void AndroidUsbSocket::RespondToReader(bool disconnect) {
   if (read_callback_.is_null() || (read_buffer_.empty() && !disconnect))
     return;
