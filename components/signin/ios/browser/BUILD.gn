@@ -7,8 +7,8 @@ source_set("browser") {
   sources = [
     "account_consistency_service.h",
     "account_consistency_service.mm",
-    "ios_signin_client.cc",
-    "ios_signin_client.h",
+    "delay_callback_helper.cc",
+    "delay_callback_helper.h",
     "manage_accounts_delegate.h",
     "merge_session_observer_bridge.h",
     "merge_session_observer_bridge.mm",
@@ -70,6 +70,7 @@ source_set("unit_tests") {
   sources = [
     "account_consistency_service_unittest.mm",
     "active_state_manager_impl_unittest.mm",
+    "delay_callback_helper_unittest.cc",
     "profile_oauth2_token_service_ios_delegate_unittest.mm",
   ]
 
