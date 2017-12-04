@@ -61,7 +61,9 @@ def parse(data):
         trimLine = line.strip()
 
         if trimLine.startswith('#'):
-            description += trimLine[1:]
+            if len(description):
+              description += '\n'
+            description += trimLine[2:]
             continue
         else:
             nukeDescription = True
