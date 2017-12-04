@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "832f2d20_7f4bc954",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-04T12:56:18Z",
+      "side": 1,
+      "message": "For download notifications, the fields would be:\n\n- Notification.title: \"Downloading random_filename.pdf\"\n- Notification.message: \"10 secs left\"\n- RichNotificationData.progress_status: \"150MB from origin.com\"\n\nBy completely removing the title if the message is too long, attribution of the notification to a particular download would completely be removed, wouldn\u0027t it? How would the user retain context?\n\nI realise that this case is unlikely to happen for download notifications, but it could happen for extension notifications where the developer is in control of this text.\n\nCould we consider some prioritised balancing algorithm where we always try to fit both, even if that means eliding both? For example 2/3rds of the width for the title, 1/3rd for the message, if this situation occurs? (Or half/half if you prefer.)",
+      "revId": "d3047de244937f972c6d0e1c426d0ec7587b41a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
