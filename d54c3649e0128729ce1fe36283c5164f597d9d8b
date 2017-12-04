@@ -34,6 +34,24 @@
       "revId": "d54c3649e0128729ce1fe36283c5164f597d9d8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e050d27_ec5913ca",
+        "filename": "third_party/WebKit/Source/core/paint/InlineFlowBoxPainter.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-04T03:58:23Z",
+      "side": 1,
+      "message": "Does |extra_width_to_end_of_line| relate to compute rect with newline?\n\nLayoutObject:\n  virtual LayoutRect LocalCaretRect(\n      const InlineBox*,\n      int caret_offset,\n      LayoutUnit* extra_width_to_end_of_line \u003d nullptr) const;",
+      "parentUuid": "0eb49d6f_e9aa5c91",
+      "revId": "d54c3649e0128729ce1fe36283c5164f597d9d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
