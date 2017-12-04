@@ -1,0 +1,268 @@
+{
+  "layers": [
+    {
+      "name": "LayoutView #document",
+      "bounds": [585, 1616],
+      "contentsOpaque": true,
+      "backgroundColor": "#FFFFFF",
+      "paintInvalidations": [
+        {
+          "object": "LayoutView #document",
+          "rect": [0, 0, 585, 1616],
+          "reason": "geometry"
+        }
+      ]
+    },
+    {
+      "name": "LayoutBlockFlow HTML",
+      "position": [8, 8],
+      "bounds": [400, 1600],
+      "contentsOpaque": true,
+      "backgroundColor": "#000000",
+      "paintInvalidations": [
+        {
+          "object": "LayoutBlockFlow DIV",
+          "rect": [0, 0, 400, 1600],
+          "reason": "background"
+        }
+      ]
+    },
+    {
+      "name": "LayoutView #document",
+      "position": [585, 0],
+      "bounds": [15, 250],
+      "paintInvalidations": [
+        {
+          "object": "VerticalScrollbar",
+          "rect": [0, 0, 15, 250],
+          "reason": "scroll control"
+        }
+      ]
+    }
+  ],
+  "objectPaintInvalidations": [
+    {
+      "object": "LayoutView #document",
+      "reason": "geometry"
+    },
+    {
+      "object": "VerticalScrollbar",
+      "reason": "scroll control"
+    },
+    {
+      "object": "LayoutBlockFlow DIV",
+      "reason": "background"
+    }
+  ]
+}
+{
+  "layers": [
+    {
+      "name": "LayoutView #document",
+      "bounds": [408, 1616],
+      "contentsOpaque": true,
+      "backgroundColor": "#FFFFFF"
+    },
+    {
+      "name": "LayoutBlockFlow HTML",
+      "position": [8, 8],
+      "bounds": [400, 1600],
+      "contentsOpaque": true,
+      "backgroundColor": "#000000",
+      "paintInvalidations": [
+        {
+          "object": "LayoutBlockFlow DIV",
+          "rect": [0, 0, 400, 1600],
+          "reason": "background"
+        }
+      ]
+    },
+    {
+      "name": "LayoutView #document",
+      "bounds": [408, 1616],
+      "paintInvalidations": [
+        {
+          "object": "LayoutView #document",
+          "rect": [0, 0, 408, 1616],
+          "reason": "paint property change"
+        },
+        {
+          "object": "LayoutView #document",
+          "rect": [0, 0, 15, 250],
+          "reason": "paint property change"
+        }
+      ]
+    }
+  ],
+  "objectPaintInvalidations": [
+    {
+      "object": "LayoutView #document",
+      "reason": "geometry"
+    },
+    {
+      "object": "HorizontalScrollbar",
+      "reason": "scroll control"
+    },
+    {
+      "object": "LayoutView #document",
+      "reason": "geometry"
+    },
+    {
+      "object": "VerticalScrollbar",
+      "reason": "scroll control"
+    },
+    {
+      "object": "LayoutView #document",
+      "reason": "incremental"
+    },
+    {
+      "object": "LayoutBlockFlow DIV",
+      "reason": "background"
+    }
+  ]
+}
+{
+  "layers": [
+    {
+      "name": "LayoutView #document",
+      "bounds": [408, 1616],
+      "contentsOpaque": true,
+      "backgroundColor": "#FFFFFF",
+      "paintInvalidations": [
+        {
+          "object": "LayoutView #document",
+          "rect": [0, 0, 408, 1616],
+          "reason": "geometry"
+        }
+      ]
+    },
+    {
+      "name": "LayoutBlockFlow HTML",
+      "position": [8, 8],
+      "bounds": [400, 1600],
+      "contentsOpaque": true,
+      "backgroundColor": "#000000",
+      "paintInvalidations": [
+        {
+          "object": "LayoutBlockFlow DIV",
+          "rect": [0, 0, 400, 1600],
+          "reason": "background"
+        }
+      ]
+    },
+    {
+      "name": "LayoutView #document",
+      "bounds": [408, 1616],
+      "paintInvalidations": [
+        {
+          "object": "LayoutView #document",
+          "rect": [0, 0, 408, 1616],
+          "reason": "geometry"
+        },
+        {
+          "object": "HorizontalScrollbar",
+          "rect": [0, 585, 385, 15],
+          "reason": "scroll control"
+        },
+        {
+          "object": "HorizontalScrollbar",
+          "rect": [0, 235, 385, 15],
+          "reason": "scroll control"
+        },
+        {
+          "object": "VerticalScrollbar",
+          "rect": [385, 0, 15, 585],
+          "reason": "scroll control"
+        }
+      ]
+    }
+  ],
+  "objectPaintInvalidations": [
+    {
+      "object": "HorizontalScrollbar",
+      "reason": "scroll control"
+    },
+    {
+      "object": "LayoutView #document",
+      "reason": "geometry"
+    },
+    {
+      "object": "VerticalScrollbar",
+      "reason": "scroll control"
+    },
+    {
+      "object": "LayoutBlockFlow DIV",
+      "reason": "background"
+    }
+  ]
+}
+{
+  "layers": [
+    {
+      "name": "LayoutView #document",
+      "bounds": [785, 1616],
+      "contentsOpaque": true,
+      "backgroundColor": "#FFFFFF",
+      "paintInvalidations": [
+        {
+          "object": "LayoutView #document",
+          "rect": [408, 0, 377, 1616],
+          "reason": "incremental"
+        }
+      ]
+    },
+    {
+      "name": "LayoutBlockFlow HTML",
+      "position": [8, 8],
+      "bounds": [400, 1600],
+      "contentsOpaque": true,
+      "backgroundColor": "#000000",
+      "paintInvalidations": [
+        {
+          "object": "LayoutBlockFlow DIV",
+          "rect": [0, 0, 400, 1600],
+          "reason": "background"
+        }
+      ]
+    },
+    {
+      "name": "LayoutView #document",
+      "position": [785, 0],
+      "bounds": [15, 600],
+      "paintInvalidations": [
+        {
+          "object": "LayoutView #document",
+          "rect": [0, 0, 15, 600],
+          "reason": "paint property change"
+        }
+      ]
+    }
+  ],
+  "objectPaintInvalidations": [
+    {
+      "object": "HorizontalScrollbar",
+      "reason": "scroll control"
+    },
+    {
+      "object": "LayoutView #document",
+      "reason": "geometry"
+    },
+    {
+      "object": "LayoutView #document",
+      "reason": "geometry"
+    },
+    {
+      "object": "VerticalScrollbar",
+      "reason": "scroll control"
+    },
+    {
+      "object": "LayoutView #document",
+      "reason": "incremental"
+    },
+    {
+      "object": "LayoutBlockFlow DIV",
+      "reason": "background"
+    }
+  ]
+}
+

@@ -1691,14 +1691,8 @@ void LocalFrameView::ViewportSizeChanged(bool width_changed,
       // we wont perform a layout. If we have a fixed background image however,
       // the background layer needs to get resized so we should request a layout
       // explicitly.
-      if (GetLayoutView()->Compositor()->NeedsFixedRootBackgroundLayer()) {
+      if (GetLayoutView()->Compositor()->NeedsFixedRootBackgroundLayer())
         SetNeedsLayout();
-      } else {
-        // If root layer scrolls is on, we've already issued a full invalidation
-        // above.
-        GetLayoutView()->SetShouldDoFullPaintInvalidationOnResizeIfNeeded(
-            width_changed, height_changed);
-      }
     } else if (height_changed) {
       // If the document rect doesn't fill the full view height, hiding the
       // URL bar will expose area outside the current LayoutView so we need to
@@ -1715,6 +1709,8 @@ void LocalFrameView::ViewportSizeChanged(bool width_changed,
 
   if (GetFrame().GetDocument() && !IsInPerformLayout())
     MarkViewportConstrainedObjectsForLayout(width_changed, height_changed);
+
+  InvalidateBackgroundAttachmentFixedObjects();
 }
 
 void LocalFrameView::MarkViewportConstrainedObjectsForLayout(
