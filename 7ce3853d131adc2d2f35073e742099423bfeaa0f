@@ -183,6 +183,24 @@
       "revId": "7ce3853d131adc2d2f35073e742099423bfeaa0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dab78bc_c46b16ae",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaStreamTrack.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-04T16:05:54Z",
+      "side": 1,
+      "message": "For audio tracks with processing enabled, which seem to be the most problematic ones in our experiments, I believe the memory is allocated in C++\u0027s free store (i.e., using new/delete).\n\npeah@: is this correct?",
+      "parentUuid": "7036b43b_3a60b394",
+      "revId": "7ce3853d131adc2d2f35073e742099423bfeaa0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
