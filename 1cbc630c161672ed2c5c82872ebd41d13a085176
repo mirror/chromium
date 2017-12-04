@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1c82ee14_fa21ccbe",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-12-04T21:42:25Z",
+      "side": 1,
+      "message": "As discussed, this layout is easier to inspect and makes it easier to clean up once this feature becomes the default behavior. Moving the dismiss action to the top to make it more obvious.",
+      "parentUuid": "3cb9314e_08abbe9f",
+      "range": {
+        "startLine": 329,
+        "startChar": 46,
+        "endLine": 329,
+        "endChar": 0
+      },
+      "revId": "1cbc630c161672ed2c5c82872ebd41d13a085176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b720825b_f9ec768a",
         "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "1cbc630c161672ed2c5c82872ebd41d13a085176",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da27a4c6_38bfd348",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-12-04T21:42:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b720825b_f9ec768a",
+      "range": {
+        "startLine": 390,
+        "startChar": 73,
+        "endLine": 390,
+        "endChar": 0
+      },
+      "revId": "1cbc630c161672ed2c5c82872ebd41d13a085176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "cea966d6_508c7746",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-12-04T21:42:25Z",
+      "side": 1,
+      "message": "Good catch!\n\nDone.",
+      "parentUuid": "17b4e723_00ccb90d",
+      "range": {
+        "startLine": 507,
+        "startChar": 50,
+        "endLine": 507,
+        "endChar": 0
+      },
+      "revId": "1cbc630c161672ed2c5c82872ebd41d13a085176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b7dda31_b1ecded7",
         "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
         "patchSetId": 11
@@ -91,6 +163,30 @@
       "revId": "1cbc630c161672ed2c5c82872ebd41d13a085176",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5ac4cd6_b065ab59",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-12-04T21:42:25Z",
+      "side": 1,
+      "message": "The text was ambiguous. Settings page sections have a default link at the top to help center articles. I\u0027m using it instead of a custom link.\n\nUpdated the comment to make it more clear.",
+      "parentUuid": "8b7dda31_b1ecded7",
+      "range": {
+        "startLine": 666,
+        "startChar": 78,
+        "endLine": 666,
+        "endChar": 0
+      },
+      "revId": "1cbc630c161672ed2c5c82872ebd41d13a085176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "3f2fc40e_f4d0e14c",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-12-04T21:42:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bc48393_294cd97a",
+      "range": {
+        "startLine": 689,
+        "startChar": 56,
+        "endLine": 689,
+        "endChar": 0
+      },
+      "revId": "1cbc630c161672ed2c5c82872ebd41d13a085176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e53cff04_21297217",
         "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
         "patchSetId": 11
@@ -137,6 +257,30 @@
       "revId": "1cbc630c161672ed2c5c82872ebd41d13a085176",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe76453c_19fcae87",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-12-04T21:42:25Z",
+      "side": 1,
+      "message": "That\u0027s a very good idea!\n\nI added a TODO to discuss this with UX, since the current flow will look a bit weird.",
+      "parentUuid": "e53cff04_21297217",
+      "range": {
+        "startLine": 757,
+        "startChar": 28,
+        "endLine": 757,
+        "endChar": 0
+      },
+      "revId": "1cbc630c161672ed2c5c82872ebd41d13a085176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "d3bc2ead_867f8187",
+        "filename": "chrome/browser/ui/webui/settings/chrome_cleanup_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-12-04T21:42:25Z",
+      "side": 1,
+      "message": "Replaced with a TODO. The second CL to land will delete this.",
+      "parentUuid": "42f25f81_d26b5ddb",
+      "range": {
+        "startLine": 220,
+        "startChar": 62,
+        "endLine": 220,
+        "endChar": 69
+      },
+      "revId": "1cbc630c161672ed2c5c82872ebd41d13a085176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92fceee8_a55eb642",
         "filename": "tools/metrics/actions/actions.xml",
         "patchSetId": 11
@@ -183,6 +351,30 @@
       "revId": "1cbc630c161672ed2c5c82872ebd41d13a085176",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77e4bc76_4e3101f8",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 17380,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-12-04T21:42:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92fceee8_a55eb642",
+      "range": {
+        "startLine": 17380,
+        "startChar": 72,
+        "endLine": 17380,
+        "endChar": 0
+      },
+      "revId": "1cbc630c161672ed2c5c82872ebd41d13a085176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
