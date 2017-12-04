@@ -211,6 +211,30 @@
       "revId": "b8750f7ac439440efd627bfc3f1f3306e756139b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c0148ca_2e267056",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-12-04T22:28:38Z",
+      "side": 1,
+      "message": "Added new enum value to capture the error that we were seeing when fetching favicons from duplicate URLs. As discussed, duplicate URL fetches can result in an error writing the favicon image to cache simply because there\u0027s already an entry for it, so we don\u0027t want to treat that the same as other errors.",
+      "parentUuid": "fea68ec4_5f410ff3",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 61,
+        "endChar": 24
+      },
+      "revId": "b8750f7ac439440efd627bfc3f1f3306e756139b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
