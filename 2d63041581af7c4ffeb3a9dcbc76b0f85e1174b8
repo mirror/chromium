@@ -46,6 +46,30 @@
       "revId": "2d63041581af7c4ffeb3a9dcbc76b0f85e1174b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff2aa3ce_bf2567ad",
+        "filename": "components/spellcheck/test/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-04T21:01:10Z",
+      "side": 1,
+      "message": "Thanks! I think that means you no longer need me as a reviewer, right?",
+      "parentUuid": "52302663_25c21d14",
+      "range": {
+        "startLine": 2,
+        "startChar": 4,
+        "endLine": 2,
+        "endChar": 18
+      },
+      "revId": "2d63041581af7c4ffeb3a9dcbc76b0f85e1174b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
