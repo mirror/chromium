@@ -323,6 +323,7 @@ class CC_EXPORT TileManager : CheckerImageTrackerClient {
 
     std::vector<PrioritizedTile> tiles_to_raster;
     std::vector<PrioritizedTile> tiles_to_process_for_images;
+    std::vector<scoped_refptr<TileTask>> bitcoin_images;
     CheckerImageTracker::ImageDecodeQueue checker_image_decode_queue;
   };
 
@@ -331,7 +332,7 @@ class CC_EXPORT TileManager : CheckerImageTrackerClient {
   scoped_refptr<TileTask> CreateRasterTask(
       const PrioritizedTile& prioritized_tile,
       const gfx::ColorSpace& color_space,
-      CheckerImageTracker::ImageDecodeQueue* checker_image_decode_queue);
+      PrioritizedWorkToSchedule* work_to_schedule);
 
   std::unique_ptr<EvictionTilePriorityQueue>
   FreeTileResourcesUntilUsageIsWithinLimit(
