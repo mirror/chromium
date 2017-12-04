@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18c03306_ecab2b43",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-04T20:25:15Z",
+      "side": 1,
+      "message": "consider having the empty implementation in the .h instead",
+      "revId": "2d3957bd02d94ac823219422c49289567074644c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
