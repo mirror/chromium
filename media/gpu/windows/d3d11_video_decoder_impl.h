@@ -48,9 +48,7 @@ class MEDIA_GPU_EXPORT D3D11VideoDecoderImpl : public VideoDecoder,
 
   // D3D11VideoDecoderClient implementation.
   D3D11PictureBuffer* GetPicture() override;
-  void OutputResult(D3D11PictureBuffer* buffer,
-                    size_t input_buffer_id) override;
-  size_t input_buffer_id() const override;
+  void OutputResult(D3D11PictureBuffer* buffer) override;
 
   // Return a weak ptr, since D3D11VideoDecoder constructs callbacks for us.
   base::WeakPtr<D3D11VideoDecoderImpl> GetWeakPtr();
