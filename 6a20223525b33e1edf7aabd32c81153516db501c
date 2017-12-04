@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0e844869_0bfaba7e",
+        "filename": "chrome/browser/notifications/notification_common.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-04T22:12:16Z",
+      "side": 1,
+      "message": "Yup, will change.",
+      "parentUuid": "46fb7270_a8d898b1",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 16
+      },
+      "revId": "6a20223525b33e1edf7aabd32c81153516db501c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a9dfaf6_b8219d1b",
         "filename": "chrome/browser/notifications/notification_common.h",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7b803828_150368a6",
+        "filename": "chrome/browser/notifications/notification_common.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-04T22:12:16Z",
+      "side": 1,
+      "message": "Yes. I\u0027m adding an explicit TODO here:\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/793691/4/chrome/browser/notifications/notification_display_service_impl.h#41\n\nThese methods will be static so that we can get rid of the profile loading duplication too.",
+      "parentUuid": "6a9dfaf6_b8219d1b",
+      "range": {
+        "startLine": 20,
+        "startChar": 7,
+        "endLine": 20,
+        "endChar": 16
+      },
+      "revId": "6a20223525b33e1edf7aabd32c81153516db501c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a6f330ba_da36cf50",
         "filename": "chrome/browser/notifications/notification_handler.cc",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-04T22:04:33Z",
       "side": 1,
       "message": "should this be a NOTREACHED or pure virtual?",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 69
+      },
+      "revId": "6a20223525b33e1edf7aabd32c81153516db501c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63076fa2_9cdbf8a1",
+        "filename": "chrome/browser/notifications/notification_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-04T22:12:16Z",
+      "side": 1,
+      "message": "NOTREACHED() is probably fine since availability of the context menu is controlled through RichNotificationData.settings_button_handler. Will change.",
+      "parentUuid": "a6f330ba_da36cf50",
       "range": {
         "startLine": 31,
         "startChar": 0,
