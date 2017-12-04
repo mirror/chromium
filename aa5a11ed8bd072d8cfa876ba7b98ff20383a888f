@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7fb06c5_b7dd860e",
+        "filename": "components/browser_sync/profile_sync_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1933,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-12-04T18:52:27Z",
+      "side": 1,
+      "message": "I see this is old code, but you could shorten this a bit with std::find_if (if you want)",
+      "revId": "aa5a11ed8bd072d8cfa876ba7b98ff20383a888f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac697ad1_38acfbb9",
+        "filename": "components/browser_sync/profile_sync_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-12-04T18:52:27Z",
+      "side": 1,
+      "message": "[nit] Can you give this a name that denotes its boolean-ness? e.g. HasCookieJarMismatch? Could you also make it more clear what |accounts| represents? e.g. cookie_jar_accounts",
+      "revId": "aa5a11ed8bd072d8cfa876ba7b98ff20383a888f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
