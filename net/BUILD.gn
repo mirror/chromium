@@ -5236,6 +5236,7 @@ test("net_unittests") {
     "spdy/chromium/spdy_network_transaction_unittest.cc",
     "spdy/chromium/spdy_proxy_client_socket_unittest.cc",
     "spdy/chromium/spdy_read_queue_unittest.cc",
+    "spdy/chromium/spdy_session_peer.h",
     "spdy/chromium/spdy_session_pool_unittest.cc",
     "spdy/chromium/spdy_session_test_util.cc",
     "spdy/chromium/spdy_session_test_util.h",
