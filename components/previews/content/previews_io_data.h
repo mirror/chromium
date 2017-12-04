@@ -75,7 +75,8 @@ class PreviewsIOData : public PreviewsDecider,
       const GURL& url,
       base::Time time,
       PreviewsType type,
-      std::vector<PreviewsEligibilityReason>&& passed_reasons) const;
+      std::vector<PreviewsEligibilityReason>&& passed_reasons,
+      uint64_t page_id) const;
 
   // Adds a navigation to |url| to the black list with result |opt_out|.
   void AddPreviewNavigation(const GURL& url, bool opt_out, PreviewsType type);
