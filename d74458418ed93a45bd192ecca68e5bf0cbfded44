@@ -104,6 +104,24 @@
       "revId": "d74458418ed93a45bd192ecca68e5bf0cbfded44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafe47a3_e0047098",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-04T18:27:39Z",
+      "side": 1,
+      "message": "*and using view-\u003eSetBorder()",
+      "parentUuid": "dbcdb666_ac817698",
+      "revId": "d74458418ed93a45bd192ecca68e5bf0cbfded44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
