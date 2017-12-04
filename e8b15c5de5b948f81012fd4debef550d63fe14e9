@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "2a123b6c_07bccdca",
+        "filename": "net/android/java/src/org/chromium/net/NetworkChangeNotifierAutoDetect.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-04T13:49:12Z",
+      "side": 1,
+      "message": "I think I\u0027ll leave as-is.  I think it\u0027s a little simpler and less overloaded in it\u0027s current form.",
+      "parentUuid": "7618b69e_28a138c5",
+      "revId": "e8b15c5de5b948f81012fd4debef550d63fe14e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cbe739a_59c6e3aa",
         "filename": "net/android/java/src/org/chromium/net/NetworkChangeNotifierAutoDetect.java",
         "patchSetId": 2
