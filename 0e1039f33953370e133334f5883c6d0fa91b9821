@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "4dd487b3_16700a3d",
+        "filename": "third_party/WebKit/Source/core/css/CSSSelector.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-12-04T06:55:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2625536_136c7335",
+      "revId": "0e1039f33953370e133334f5883c6d0fa91b9821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3bebe0a4_9b82111f",
         "filename": "third_party/WebKit/Source/core/css/CSSSelector.cpp",
         "patchSetId": 1
@@ -66,6 +84,24 @@
       "writtenOn": "2017-11-13T09:06:29Z",
       "side": 1,
       "message": "Don\u0027t we need to support escaped \\* as namespace prefix as well?",
+      "revId": "0e1039f33953370e133334f5883c6d0fa91b9821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a3f57ee_1eb12597",
+        "filename": "third_party/WebKit/Source/core/css/CSSSelector.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-12-04T06:55:21Z",
+      "side": 1,
+      "message": "Not quite sure, seems like we should. Firefox considers \\* to be a non-universal namespace prefix:\n\n    \u003cstyle\u003e\n    \\*|* { color: red; }\n    \u003c/style\u003e\n    \u003cdiv\u003eshould not be red\u003c/div\u003e\n\nHowever, we might need to use a different method since g_null_atom is already used as a sentinel value for the default namespace...",
+      "parentUuid": "3bebe0a4_9b82111f",
       "revId": "0e1039f33953370e133334f5883c6d0fa91b9821",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -193,6 +229,24 @@
       "revId": "0e1039f33953370e133334f5883c6d0fa91b9821",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "807c7dc9_5f11818a",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSSelectorParser.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-12-04T06:55:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed9d4db1_638473e3",
+      "revId": "0e1039f33953370e133334f5883c6d0fa91b9821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

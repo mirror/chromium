@@ -34,6 +34,24 @@
       "revId": "8c582a76833f73edaf5f1c7ba425203f4f07da6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e52c5b0b_1199c913",
+        "filename": "third_party/WebKit/LayoutTests/fast/css/css-selector-text.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-12-04T06:55:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcddc65d_655f9d63",
+      "revId": "8c582a76833f73edaf5f1c7ba425203f4f07da6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
