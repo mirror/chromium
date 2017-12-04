@@ -70,18 +70,6 @@ FetchResponseData* FetchResponseData::CreateBasicFilteredResponse() const {
   return response;
 }
 
-FetchResponseData* FetchResponseData::CreateCORSFilteredResponse() const {
-  DCHECK_EQ(type_, Type::kDefault);
-  WebHTTPHeaderSet access_control_expose_header_set;
-  String access_control_expose_headers;
-  if (header_list_->Get(HTTPNames::Access_Control_Expose_Headers,
-                        access_control_expose_headers)) {
-    WebCORS::ParseAccessControlExposeHeadersAllowList(
-        access_control_expose_headers, access_control_expose_header_set);
-  }
-  return CreateCORSFilteredResponse(access_control_expose_header_set);
-}
-
 FetchResponseData* FetchResponseData::CreateCORSFilteredResponse(
     const WebHTTPHeaderSet& exposed_headers) const {
   DCHECK_EQ(type_, Type::kDefault);

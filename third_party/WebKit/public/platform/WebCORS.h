@@ -105,13 +105,9 @@ GetErrorString(const network::mojom::CORSError,
                const WebSecurityOrigin&,
                const WebURLRequest::RequestContext);
 
-BLINK_PLATFORM_EXPORT void ParseAccessControlExposeHeadersAllowList(
-    const WebString&,
-    WebHTTPHeaderSet&);
-
-BLINK_PLATFORM_EXPORT void ExtractCorsExposedHeaderNamesList(
-    const WebURLResponse&,
-    WebHTTPHeaderSet&);
+BLINK_PLATFORM_EXPORT WebHTTPHeaderSet
+ExtractCorsExposedHeaderNamesList(network::mojom::FetchCredentialsMode,
+                                  const WebURLResponse&);
 
 BLINK_PLATFORM_EXPORT bool IsOnAccessControlResponseHeaderWhitelist(
     const WebString&);
