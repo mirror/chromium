@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b8bc23f_bc518a6e",
+        "filename": "base/metrics/field_trial_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000853
+      },
+      "writtenOn": "2017-12-04T12:26:22Z",
+      "side": 1,
+      "message": "Nit: missing period.",
+      "range": {
+        "startLine": 89,
+        "startChar": 57,
+        "endLine": 89,
+        "endChar": 58
+      },
+      "revId": "7bcc4c90a045f61de599ed78f999c0278fc20f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a65368b5_418de3e3",
+        "filename": "base/observer_list_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1000853
+      },
+      "writtenOn": "2017-12-04T12:26:22Z",
+      "side": 1,
+      "message": "TSan checks that the program doesn\u0027t have deadlocks and data races.\nI don\u0027t think a failure of this test indicates either of those.\nPerhaps you\u0027re talking about ASan (I have no idea what this test does though)?",
+      "revId": "7bcc4c90a045f61de599ed78f999c0278fc20f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a20e89a2_69a6811c",
+        "filename": "base/security_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000853
+      },
+      "writtenOn": "2017-12-04T12:26:22Z",
+      "side": 1,
+      "message": "I guess Valgrind was the only case for bypassing TCMalloc using G_SLICE\u003dalways-malloc, so we probably don\u0027t need this function anymore.",
+      "range": {
+        "startLine": 58,
+        "startChar": 10,
+        "endLine": 58,
+        "endChar": 17
+      },
+      "revId": "7bcc4c90a045f61de599ed78f999c0278fc20f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3036e647_64c96e36",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/ScalableTimeout.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000853
+      },
+      "writtenOn": "2017-12-04T12:26:22Z",
+      "side": 1,
+      "message": "Please mention memory tools as an example of a reason to do so, e.g.:\n\n\"For example, to run tests under slow memory tools, you might...\"",
+      "range": {
+        "startLine": 9,
+        "startChar": 16,
+        "endLine": 9,
+        "endChar": 19
+      },
+      "revId": "7bcc4c90a045f61de599ed78f999c0278fc20f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4201d22_073c3faa",
+        "filename": "base/tools_sanity_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000853
+      },
+      "writtenOn": "2017-12-04T12:26:22Z",
+      "side": 1,
+      "message": "Please land formatting changes separately if you want them.",
+      "revId": "7bcc4c90a045f61de599ed78f999c0278fc20f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "171f3d33_bd58d5fe",
+        "filename": "base/debug/proc_maps_linux_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000853
+      },
+      "writtenOn": "2017-12-04T12:26:22Z",
+      "side": 0,
+      "message": "Make sure to include 431702 into the BUG list so that it gets updated.",
+      "range": {
+        "startLine": 228,
+        "startChar": 24,
+        "endLine": 228,
+        "endChar": 27
+      },
+      "revId": "b36a00bfde5f4d4dde4b98362a00dffcca717236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
