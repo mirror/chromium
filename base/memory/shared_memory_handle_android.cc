@@ -4,6 +4,8 @@
 
 #include "base/memory/shared_memory_handle.h"
 
+#include <fcntl.h>
+#include <sys/mman.h>
 #include <unistd.h>
 
 #include "base/android/android_hardware_buffer_compat.h"
@@ -11,6 +13,8 @@
 #include "base/posix/eintr_wrapper.h"
 #include "base/posix/unix_domain_socket.h"
 #include "base/unguessable_token.h"
+
+#include "third_party/ashmem/ashmem.h"
 
 namespace base {
 
@@ -154,11 +158,15 @@ SharedMemoryHandle SharedMemoryHandle::Duplicate() const {
       return SharedMemoryHandle();
     case Type::ASHMEM: {
       DCHECK(IsValid());
+      SharedMemoryHandle result;
       int duped_handle = HANDLE_EINTR(dup(file_descriptor_.fd));
-      if (duped_handle < 0)
-        return SharedMemoryHandle();
-      return SharedMemoryHandle(FileDescriptor(duped_handle, true), GetSize(),
-                                GetGUID());
+      if (duped_handle >= 0) {
+        result = SharedMemoryHandle(FileDescriptor(duped_handle, true),
+                                    GetSize(), GetGUID());
+        if (IsReadOnly())
+          result.SetReadOnly();
+      }
+      return result;
     }
     case Type::ANDROID_HARDWARE_BUFFER:
       DCHECK(IsValid());
@@ -193,6 +201,29 @@ bool SharedMemoryHandle::OwnershipPassesToIPC() const {
     case Type::ANDROID_HARDWARE_BUFFER:
       return ownership_passes_to_ipc_;
   }
+}
+
+bool SharedMemoryHandle::EnforceReadOnlyRegionIfNeeded() const {
+  if (type_ != Type::ASHMEM)
+    return false;
+
+  if (!read_only_)
+    return false;
+
+  LOG(ERROR) << "descriptor is read only";
+  int prot = ashmem_get_prot_region(file_descriptor_.fd);
+  CHECK(prot >= 0) << "Error " << prot
+                   << " when trying to get ashmem protection mask";
+
+  LOG(ERROR) << "region prot=" << prot;
+  if ((prot & PROT_WRITE) != 0) {
+    prot &= ~PROT_WRITE;
+    LOG(ERROR) << "new_prot=" << prot;
+    int err = ashmem_set_prot_region(file_descriptor_.fd, prot);
+    CHECK(err == 0) << "Error " << err
+                    << " when trying to set ashmem region read-only";
+  }
+  return true;
 }
 
 }  // namespace base

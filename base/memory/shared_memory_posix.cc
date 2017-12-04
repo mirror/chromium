@@ -325,6 +325,10 @@ bool SharedMemory::MapAt(off_t offset, size_t bytes) {
       return false;
     bytes = ashmem_bytes;
   }
+
+  // Also on Android, trying to map a read-only descriptor should force
+  // the region itself to read-only mode.
+  shm_.EnforceReadOnlyRegionIfNeeded();
 #endif
 
   memory_ = mmap(nullptr, bytes, PROT_READ | (read_only_ ? 0 : PROT_WRITE),
@@ -339,6 +343,7 @@ bool SharedMemory::MapAt(off_t offset, size_t bytes) {
                   (SharedMemory::MAP_MINIMUM_ALIGNMENT - 1));
     SharedMemoryTracker::GetInstance()->IncrementMemoryUsage(*this);
   } else {
+    DPLOG(ERROR) << "When mapping segment read_only=" << read_only_;
     memory_ = nullptr;
   }
 
