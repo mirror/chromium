@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e6f2fe4_5fe783b3",
+        "filename": "content/public/common/ssl_info.typemap",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-04T14:51:46Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "ef5ccac2f3220345eaa9556fe85d00baaf385aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fe1dd1c_83998e8d",
+        "filename": "content/public/common/ssl_info.typemap",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-04T14:51:46Z",
+      "side": 1,
+      "message": "nit: you don\u0027t need the \":cpp\" part. When you specify a dependency on src/to/target, GN will look for a \"target\" build target in that file. You only need to specify a specific target if it\u0027s not the same name as the directory.",
+      "revId": "ef5ccac2f3220345eaa9556fe85d00baaf385aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a55777fc_7d3748cf",
+        "filename": "content/public/common/url_loader_completion_status.typemap",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-04T14:51:46Z",
+      "side": 1,
+      "message": "ditto for these 2 lines",
+      "revId": "ef5ccac2f3220345eaa9556fe85d00baaf385aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
