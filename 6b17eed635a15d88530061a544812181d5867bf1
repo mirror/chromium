@@ -156,6 +156,24 @@
     },
     {
       "key": {
+        "uuid": "2793f158_51c16ab0",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-12-04T14:43:06Z",
+      "side": 1,
+      "message": "I do think that TEST_F functions need not know that WebState is fake, but I don\u0027t feel as strongly as you do. In any case, there is one static_cast\u003c\u003e needed because GetWebStateAt() returns a WebState, not a TestWebState. Since the InsertWebState() and GetWebState() are right next to one another, I feel the use of static_cast\u003c\u003e in this case is well justified.",
+      "parentUuid": "696b5042_50317494",
+      "revId": "6b17eed635a15d88530061a544812181d5867bf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93ac5274_7729aec0",
         "filename": "ios/chrome/browser/metrics/tab_usage_recorder_unittest.mm",
         "patchSetId": 5
@@ -167,6 +185,24 @@
       "writtenOn": "2017-12-01T23:14:38Z",
       "side": 1,
       "message": "Why add WasHidden() calls?\nThe only tests that verify this are StateAtRendererTermination... \n\nIf there is a concern about malformed WebStates, then should this be called each time a TestWebState is created?",
+      "revId": "6b17eed635a15d88530061a544812181d5867bf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c2fae56_8e3c8b5f",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-12-04T14:43:06Z",
+      "side": 1,
+      "message": "I see, you are referring to the fact that newly created TestWebState are already considered \"hidden\", so why do we have to explicitly do it again? I guess it is not needed.",
+      "parentUuid": "93ac5274_7729aec0",
       "revId": "6b17eed635a15d88530061a544812181d5867bf1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -280,6 +316,30 @@
       "side": 1,
       "message": "I was suggesting to use /**/ for the new code. There is no need to be consistent with code, which does not follow Style Guide.",
       "parentUuid": "fb5ccb5e_ca6fc75f",
+      "range": {
+        "startLine": 379,
+        "startChar": 55,
+        "endLine": 379,
+        "endChar": 59
+      },
+      "revId": "6b17eed635a15d88530061a544812181d5867bf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2897cd84_d95b8b78",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-12-04T14:43:06Z",
+      "side": 1,
+      "message": "Since I have to change InsertTestWebState()\u0027s return type anyway, I changed the in_memory parameter to be a self-documenting enum type.",
+      "parentUuid": "e0e7fc33_0325b9b2",
       "range": {
         "startLine": 379,
         "startChar": 55,
