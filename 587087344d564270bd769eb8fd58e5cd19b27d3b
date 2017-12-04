@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "814ba87a_5bdf8efd",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSProperty.h.tmpl",
+        "patchSetId": 19
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-12-04T03:49:09Z",
+      "side": 1,
+      "message": "nit: Please name the bool argument.",
+      "revId": "587087344d564270bd769eb8fd58e5cd19b27d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4309483c_8818ac15",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleCSSValueMapping.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 1889,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-12-04T03:49:09Z",
+      "side": 1,
+      "message": "You define CurrentColorOrValidColor in the new ComputedStyleUtils file. Would it be bad to reference that here? (Or maybe we don\u0027t care because you\u0027re working on getting rid of this file?)",
+      "revId": "587087344d564270bd769eb8fd58e5cd19b27d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f37503c_774ac0b8",
+        "filename": "third_party/WebKit/Source/core/css/properties/ComputedStyleUtils.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-12-04T03:49:09Z",
+      "side": 1,
+      "message": "nit: Please name the bool argument.",
+      "revId": "587087344d564270bd769eb8fd58e5cd19b27d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aac005b_ecbcb050",
+        "filename": "third_party/WebKit/Source/core/css/properties/Longhand.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-12-04T03:49:09Z",
+      "side": 1,
+      "message": "Do we instantiate the Longhand class anywhere? If we don\u0027t, it might be better to make this function virtual.\n\nAlso, does every longhand need a Color getter? I find that mildly surprising.",
+      "revId": "587087344d564270bd769eb8fd58e5cd19b27d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58ba5e3b_c32f694c",
+        "filename": "third_party/WebKit/Source/core/css/properties/longhands/WebkitTapHighlightColor.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-12-04T03:49:09Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think you should be forward declaring this here - I used a script to remove a bunch of these a while ago. Shouldn\u0027t it be already forward declared in the header?",
+      "revId": "587087344d564270bd769eb8fd58e5cd19b27d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd8c9d88_4ac3b362",
+        "filename": "third_party/WebKit/Source/core/css/properties/longhands/WebkitTextEmphasisColor.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-12-04T03:49:09Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "587087344d564270bd769eb8fd58e5cd19b27d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e8d45c6_e669c8ed",
+        "filename": "third_party/WebKit/Source/core/css/properties/longhands/WebkitTextFillColor.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-12-04T03:49:09Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "587087344d564270bd769eb8fd58e5cd19b27d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae17bdbd_165f4113",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 2203,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-12-04T03:49:09Z",
+      "side": 1,
+      "message": "Should we delete this comment then?",
+      "revId": "587087344d564270bd769eb8fd58e5cd19b27d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
