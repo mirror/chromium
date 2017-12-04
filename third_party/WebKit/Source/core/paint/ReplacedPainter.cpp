@@ -60,11 +60,6 @@ void ReplacedPainter::Paint(const PaintInfo& paint_info,
     return;
   }
 
-  if (local_paint_info.phase == PaintPhase::kClippingMask &&
-      (!layout_replaced_.HasLayer() ||
-       !layout_replaced_.Layer()->HasCompositedClippingMask()))
-    return;
-
   if (ShouldPaintSelfOutline(local_paint_info.phase)) {
     ObjectPainter(layout_replaced_)
         .PaintOutline(local_paint_info, adjusted_paint_offset);
@@ -73,8 +68,7 @@ void ReplacedPainter::Paint(const PaintInfo& paint_info,
 
   if (local_paint_info.phase != PaintPhase::kForeground &&
       local_paint_info.phase != PaintPhase::kSelection &&
-      !layout_replaced_.CanHaveChildren() &&
-      local_paint_info.phase != PaintPhase::kClippingMask)
+      !layout_replaced_.CanHaveChildren())
     return;
 
   if (local_paint_info.phase == PaintPhase::kSelection)
@@ -108,14 +102,8 @@ void ReplacedPainter::Paint(const PaintInfo& paint_info,
       }
     }
 
-    if (!completely_clipped_out) {
-      if (local_paint_info.phase == PaintPhase::kClippingMask) {
-        BoxPainter(layout_replaced_)
-            .PaintClippingMask(local_paint_info, adjusted_paint_offset);
-      } else {
-        layout_replaced_.PaintReplaced(local_paint_info, adjusted_paint_offset);
-      }
-    }
+    if (!completely_clipped_out)
+      layout_replaced_.PaintReplaced(local_paint_info, adjusted_paint_offset);
   }
 
   // The selection tint never gets clipped by border-radius rounding, since we
@@ -149,7 +137,6 @@ bool ReplacedPainter::ShouldPaint(
       !ShouldPaintSelfOutline(paint_info.phase) &&
       paint_info.phase != PaintPhase::kSelection &&
       paint_info.phase != PaintPhase::kMask &&
-      paint_info.phase != PaintPhase::kClippingMask &&
       !ShouldPaintSelfBlockBackground(paint_info.phase))
     return false;
 
