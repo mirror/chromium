@@ -16,6 +16,24 @@
       "revId": "97ccc87eaf42b22a2f586f03510fb134fbfe231b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adf7e620_d3bfd033",
+        "filename": "third_party/WebKit/Source/core/editing/commands/InsertParagraphSeparatorCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-12-04T18:12:13Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "6916b128_943ae6ad",
+      "revId": "97ccc87eaf42b22a2f586f03510fb134fbfe231b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
