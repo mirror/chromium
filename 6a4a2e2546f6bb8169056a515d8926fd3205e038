@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d49c4db5_a40daff4",
+        "filename": "third_party/WebKit/Source/core/frame/DOMVisualViewport.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-04T19:57:27Z",
+      "side": 1,
+      "message": "Should UpdateStyleAndLayoutIgnorePendingStylesheets be applied before calling view-\u003eLayoutViewportScrollableArea() ?",
+      "revId": "6a4a2e2546f6bb8169056a515d8926fd3205e038",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
