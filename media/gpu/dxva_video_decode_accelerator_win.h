@@ -5,6 +5,7 @@
 #ifndef MEDIA_GPU_DXVA_VIDEO_DECODE_ACCELERATOR_WIN_H_
 #define MEDIA_GPU_DXVA_VIDEO_DECODE_ACCELERATOR_WIN_H_
 
+#include <d3d11.h>
 #include <d3d11_1.h>
 #include <d3d9.h>
 #include <initguid.h>
