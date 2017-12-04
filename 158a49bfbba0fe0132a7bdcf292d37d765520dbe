@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ef89e6af_604ed393",
+        "filename": "chrome/browser/autofill/form_structure_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-04T21:12:34Z",
+      "side": 1,
+      "message": "Implicit move and RVO for unique_ptr can only happen when the types match exactly. In this case, the compiler is not free to take the response lvalue and convert it from unique_ptr\u003cBasicHttpResponse\u003e to an rvalue of type unique_ptr\u003cHttpRequest\u003e.\n\nWe have to convert response to an rvalue-ref (the std::move) so that the compiler can invoke the appropriate cross-type move-constructor to generate the return value.\n\nSee the \"However,...\" paragraph of:\n\nhttps://www.chromium.org/rvalue-references#TOC-11.-Don-t-return-references.-Don-t-use-std::move-on-rvalues.",
+      "parentUuid": "950b613f_099d5f50",
+      "range": {
+        "startLine": 198,
+        "startChar": 9,
+        "endLine": 198,
+        "endChar": 18
+      },
+      "revId": "158a49bfbba0fe0132a7bdcf292d37d765520dbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a908aa4d_edd4f27e",
         "filename": "components/autofill/core/browser/form_structure.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "158a49bfbba0fe0132a7bdcf292d37d765520dbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64a57d35_43805a61",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-04T21:12:34Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "a908aa4d_edd4f27e",
+      "range": {
+        "startLine": 656,
+        "startChar": 6,
+        "endLine": 656,
+        "endChar": 72
+      },
+      "revId": "158a49bfbba0fe0132a7bdcf292d37d765520dbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
