@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "85021ddc_b6223103",
+        "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-04T18:40:22Z",
+      "side": 1,
+      "message": "Validating arguments is supported. Here is how:\n\n1) Pass the arguments as a 2nd param to methodCalled(), see  example at [1]\n2) Receive the arguments from whenCalled(), and perform assertions an them, see example at [2].\n\nAlso see documentation at [3] which explains how arguments can be validated.\n\n\n[1] https://cs.chromium.org/chromium/src/chrome/test/data/webui/settings/reset_page_test.js?l\u003d123\n[2] https://cs.chromium.org/chromium/src/chrome/test/data/webui/settings/reset_page_test.js?l\u003d123\n[3] https://cs.chromium.org/chromium/src/chrome/test/data/webui/test_browser_proxy.js?q\u003dtest_browser_proxy.js\u0026dr\u0026l\u003d12-29",
+      "parentUuid": "0bbb03e6_ef6e3ad0",
+      "range": {
+        "startLine": 180,
+        "startChar": 9,
+        "endLine": 180,
+        "endChar": 42
+      },
+      "revId": "883ffd35da4eef5de207e2d425fcb57e823c1854",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5562ad97_a7e76298",
         "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
         "patchSetId": 6
