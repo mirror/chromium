@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "828f58d2_0ee0ba8d",
+        "filename": "chrome/browser/chromeos/certificate_provider/certificate_provider_service_factory.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-04T16:32:17Z",
+      "side": 1,
+      "message": "Just asking to confirm - haven\u0027t these recent refactorings of X.509 certificate handling led to a change of behavior, so that an extension can now receive an invalid certificate DER blob?\nI\u0027m concerned as cert_buffer() is documented as \"The data is not guaranteed to be valid DER or to encode a valid Certificate object.\".",
+      "revId": "96094e273b47a1402cdffc2ec3286a0e43f5cc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8265b01c_74f619d4",
         "filename": "components/cast_channel/cast_auth_util.cc",
         "patchSetId": 11
@@ -99,6 +116,23 @@
       "writtenOn": "2017-12-02T00:48:31Z",
       "side": 1,
       "message": "This method name and comment is a little confusing since the relationship between CRYPTO_BUFFER and \u0027handle\u0027 is not obvious. I recognize that globally renaming CreateFromHandle might be confusing, but maybe include some of the comment that was deleted above the typedef and reference that in the comment above?",
+      "revId": "96094e273b47a1402cdffc2ec3286a0e43f5cc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa7985c3_17271f6e",
+        "filename": "net/cert/x509_certificate.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-04T16:32:17Z",
+      "side": 1,
+      "message": "Shouldn\u0027t the |cert_handle| parameter here and in the other methods of this class be renamed to |cert_buffer|, given that both the type became the explicit CRYPTO_BUFFER and the accessor method is renamed to cert_buffer()?\nOr you planned to do this in a follow-up CL?",
       "revId": "96094e273b47a1402cdffc2ec3286a0e43f5cc70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
