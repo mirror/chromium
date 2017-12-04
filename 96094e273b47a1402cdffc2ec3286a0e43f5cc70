@@ -19,6 +19,75 @@
     },
     {
       "key": {
+        "uuid": "e3fcf220_e593a73f",
+        "filename": "components/cronet/android/cert/cert_verifier_cache_serializer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-04T15:59:03Z",
+      "side": 1,
+      "message": "nit: This function no longer returns \u0027false\u0027, so could be converted to void.",
+      "range": {
+        "startLine": 33,
+        "startChar": 5,
+        "endLine": 33,
+        "endChar": 24
+      },
+      "revId": "96094e273b47a1402cdffc2ec3286a0e43f5cc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "532b89e6_7066bb54",
+        "filename": "components/cronet/android/cert/cert_verifier_cache_serializer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-04T15:59:03Z",
+      "side": 1,
+      "message": "nit: SerializeCertHandle no longer returns \u0027false\u0027, so we don\u0027t need this \u0027if\u0027.",
+      "range": {
+        "startLine": 50,
+        "startChar": 7,
+        "endLine": 50,
+        "endChar": 26
+      },
+      "revId": "96094e273b47a1402cdffc2ec3286a0e43f5cc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36fcc4c4_c6610901",
+        "filename": "components/cronet/android/cert/cert_verifier_cache_serializer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-04T15:59:03Z",
+      "side": 1,
+      "message": "nit: SerializeCertHandle no longer returns \u0027false\u0027, so we don\u0027t need this \u0027if\u0027.",
+      "range": {
+        "startLine": 56,
+        "startChar": 9,
+        "endLine": 56,
+        "endChar": 28
+      },
+      "revId": "96094e273b47a1402cdffc2ec3286a0e43f5cc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52df7674_a5bc9d44",
         "filename": "net/cert/x509_certificate.h",
         "patchSetId": 11
