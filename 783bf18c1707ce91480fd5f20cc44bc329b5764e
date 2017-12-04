@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3b841d17_95427074",
+        "filename": "net/quic/platform/api/quic_aligned.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1140166
+      },
+      "writtenOn": "2017-12-04T18:33:01Z",
+      "side": 1,
+      "message": "We don\u0027t have ABSL_CACHELINE_SIZE in net.  This replaces that and will need to be backported.",
+      "parentUuid": "a4c0c5e3_5627beaa",
+      "range": {
+        "startLine": 13,
+        "startChar": 52,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "783bf18c1707ce91480fd5f20cc44bc329b5764e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "791bb844_40722d52",
         "filename": "net/quic/platform/impl/quic_aligned_impl.h",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "9d0d5541_1acb2585",
+        "filename": "net/quic/platform/impl/quic_aligned_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1140166
+      },
+      "writtenOn": "2017-12-04T18:33:01Z",
+      "side": 1,
+      "message": "No, updated the comment to reflect the current state of affairs.",
+      "parentUuid": "791bb844_40722d52",
+      "range": {
+        "startLine": 19,
+        "startChar": 35,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "783bf18c1707ce91480fd5f20cc44bc329b5764e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "059da812_3080b490",
         "filename": "net/quic/platform/impl/quic_prefetch_impl.h",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "783bf18c1707ce91480fd5f20cc44bc329b5764e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97a0a131_64002043",
+        "filename": "net/quic/platform/impl/quic_prefetch_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1140166
+      },
+      "writtenOn": "2017-12-04T18:33:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "059da812_3080b490",
+      "range": {
+        "startLine": 16,
+        "startChar": 32,
+        "endLine": 16,
+        "endChar": 33
+      },
+      "revId": "783bf18c1707ce91480fd5f20cc44bc329b5764e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
