@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb24800b_33bbb131",
+        "filename": "chrome/browser/command_updater.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-04T20:29:33Z",
+      "side": 1,
+      "message": "I believe this suffers the same problem I referred to last time around. I think it far safer for BrowserCommandController to know about the extra state and do the right thing. By that I mean:\n. when entering locked-fullscreen disable all commands.\n. make sure any functions that are called during locked-fullscreen in BrowserCommandController to update state early out.\n. when existing reenable the appropriate comments (again, from BrowserCommandController).\n\nDoing that should mean you don\u0027t need to change CommandUpdater at all.",
+      "range": {
+        "startLine": 82,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 1
+      },
+      "revId": "290b174da47bbfe5b84558458eddc4b33e7a2772",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
