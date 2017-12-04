@@ -33,6 +33,24 @@
       "revId": "d3be6e4d85c951da0e2e1323ea2233562c13cb3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5748eca7_ef3e5468",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-04T23:45:07Z",
+      "side": 1,
+      "message": "*sigh* this is really subtle.\n\nThe comment in OnWillRead clarifies this a bit:\n  // The request will not continue until one of |controller|\u0027s resume or\n  // cancellation methods is invoked.\n\nStepping back and taking a look at the code, the resource loader sets up the state to be DEFERRED_SYNC before calling into the handler chain:\nhttps://cs.chromium.org/chromium/src/content/browser/loader/resource_loader.cc?rcl\u003d8e7c5e4dc2fe0d5caa25c9815d7b0d2492d791fb\u0026l\u003d695\n\nDEFERRED_SYNC is... weird:\n    // Magic deferral \"stage\" which means that the code is currently in a\n    // recursive call from the ResourceLoader. When in this state, Resume() does\n    // nothing but update the deferral state, and when the stack is unwound back\n    // up to the ResourceLoader, the request will be continued. This is used to\n    // prevent the stack from getting too deep.\n\nSo I think this should be fine, but yeah it isn\u0027t very clear.",
+      "parentUuid": "a9b6ee69_0aa62586",
+      "revId": "d3be6e4d85c951da0e2e1323ea2233562c13cb3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
