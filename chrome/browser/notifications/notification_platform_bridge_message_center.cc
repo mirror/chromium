@@ -1,22 +1,17 @@
-// Copyright 2016 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/notifications/message_center_display_service.h"
+#include "chrome/browser/notifications/notification_platform_bridge_message_center.h"
 
-#include <memory>
-#include <set>
-#include <string>
-
+#include "base/bind.h"
+#include "base/callback.h"
+#include "base/memory/scoped_refptr.h"
 #include "chrome/browser/browser_process.h"
-#include "chrome/browser/notifications/notification_display_service_factory.h"
-#include "chrome/browser/notifications/notification_handler.h"
+#include "chrome/browser/notifications/notification_display_service_impl.h"
 #include "chrome/browser/notifications/notification_ui_manager.h"
-#include "chrome/browser/profiles/profile.h"
 #include "content/public/browser/browser_thread.h"
-#include "content/public/browser/notification_event_dispatcher.h"
 #include "ui/message_center/notification.h"
-#include "ui/message_center/notification_delegate.h"
 
 namespace {
 
@@ -40,7 +35,7 @@ class PassThroughDelegate : public message_center::NotificationDelegate {
 #if defined(OS_CHROMEOS)
     NOTREACHED();
 #else
-    NotificationDisplayServiceFactory::GetForProfile(profile_)
+    NotificationDisplayServiceImpl::GetForProfile(profile_)
         ->ProcessNotificationOperation(
             NotificationCommon::SETTINGS, notification_type_,
             notification_.origin_url(), notification_.id(), base::nullopt,
@@ -49,7 +44,7 @@ class PassThroughDelegate : public message_center::NotificationDelegate {
   }
 
   void DisableNotification() override {
-    NotificationDisplayServiceFactory::GetForProfile(profile_)
+    NotificationDisplayServiceImpl::GetForProfile(profile_)
         ->ProcessNotificationOperation(
             NotificationCommon::DISABLE_PERMISSION, notification_type_,
             notification_.origin_url(), notification_.id(),
@@ -58,7 +53,7 @@ class PassThroughDelegate : public message_center::NotificationDelegate {
   }
 
   void Close(bool by_user) override {
-    NotificationDisplayServiceFactory::GetForProfile(profile_)
+    NotificationDisplayServiceImpl::GetForProfile(profile_)
         ->ProcessNotificationOperation(
             NotificationCommon::CLOSE, notification_type_,
             notification_.origin_url(), notification_.id(),
@@ -67,7 +62,7 @@ class PassThroughDelegate : public message_center::NotificationDelegate {
   }
 
   void Click() override {
-    NotificationDisplayServiceFactory::GetForProfile(profile_)
+    NotificationDisplayServiceImpl::GetForProfile(profile_)
         ->ProcessNotificationOperation(
             NotificationCommon::CLICK, notification_type_,
             notification_.origin_url(), notification_.id(),
@@ -76,7 +71,7 @@ class PassThroughDelegate : public message_center::NotificationDelegate {
   }
 
   void ButtonClick(int action_index) override {
-    NotificationDisplayServiceFactory::GetForProfile(profile_)
+    NotificationDisplayServiceImpl::GetForProfile(profile_)
         ->ProcessNotificationOperation(
             NotificationCommon::CLICK, notification_type_,
             notification_.origin_url(), notification_.id(), action_index,
@@ -85,7 +80,7 @@ class PassThroughDelegate : public message_center::NotificationDelegate {
 
   void ButtonClickWithReply(int action_index,
                             const base::string16& reply) override {
-    NotificationDisplayServiceFactory::GetForProfile(profile_)
+    NotificationDisplayServiceImpl::GetForProfile(profile_)
         ->ProcessNotificationOperation(
             NotificationCommon::CLICK, notification_type_,
             notification_.origin_url(), notification_.id(), action_index, reply,
@@ -105,25 +100,29 @@ class PassThroughDelegate : public message_center::NotificationDelegate {
 
 }  // namespace
 
-MessageCenterDisplayService::MessageCenterDisplayService(Profile* profile)
-    : NotificationDisplayService(profile), profile_(profile) {}
+NotificationPlatformBridgeMessageCenter::
+    NotificationPlatformBridgeMessageCenter(Profile* profile)
+    : profile_(profile) {}
 
-MessageCenterDisplayService::~MessageCenterDisplayService() {}
+NotificationPlatformBridgeMessageCenter::
+    ~NotificationPlatformBridgeMessageCenter() = default;
 
-void MessageCenterDisplayService::Display(
+void NotificationPlatformBridgeMessageCenter::Display(
     NotificationHandler::Type notification_type,
+    const std::string& /* profile_id */,
+    bool /* is_incognito */,
     const message_center::Notification& notification,
-    std::unique_ptr<NotificationCommon::Metadata> metadata) {
-  // This can be called when the browser is shutting down and the
-  // NotificationUiManager has already destructed.
+    std::unique_ptr<NotificationCommon::Metadata> /* metadata */) {
   NotificationUIManager* ui_manager =
       g_browser_process->notification_ui_manager();
   if (!ui_manager)
-    return;
+    return;  // the process is shutting down
 
-  NotificationHandler* handler = GetNotificationHandler(notification_type);
-  if (handler)
-    handler->OnShow(profile_, notification.id());
+  // TODO(peter): Why is this here? Define and document the timing of the
+  // NotificationHandler callbacks.
+  // NotificationHandler* handler = GetNotificationHandler(notification_type);
+  // if (handler)
+  //  handler->OnShow(profile_, notification.id());
 
   if (notification.delegate() ||
       notification_type == NotificationHandler::Type::TRANSIENT) {
@@ -139,21 +138,22 @@ void MessageCenterDisplayService::Display(
   ui_manager->Add(notification_with_delegate, profile_);
 }
 
-void MessageCenterDisplayService::Close(
-    NotificationHandler::Type notification_type,
+void NotificationPlatformBridgeMessageCenter::Close(
+    const std::string& /* profile_id */,
     const std::string& notification_id) {
-  // This can be called when the browser is shutting down and the
-  // NotificationUiManager has already destructed.
   NotificationUIManager* ui_manager =
       g_browser_process->notification_ui_manager();
-  if (ui_manager) {
-    ui_manager->CancelById(notification_id,
-                           NotificationUIManager::GetProfileID(profile_));
-  }
+  if (!ui_manager)
+    return;  // the process is shutting down
+
+  ui_manager->CancelById(notification_id,
+                         NotificationUIManager::GetProfileID(profile_));
 }
 
-void MessageCenterDisplayService::GetDisplayed(
-    const DisplayedNotificationsCallback& callback) {
+void NotificationPlatformBridgeMessageCenter::GetDisplayed(
+    const std::string& /* profile_id */,
+    bool /* incognito */,
+    const GetDisplayedNotificationsCallback& callback) const {
   auto displayed_notifications = std::make_unique<std::set<std::string>>(
       g_browser_process->notification_ui_manager()->GetAllIdsByProfile(
           NotificationUIManager::GetProfileID(profile_)));
@@ -162,4 +162,10 @@ void MessageCenterDisplayService::GetDisplayed(
       content::BrowserThread::UI, FROM_HERE,
       base::BindOnce(callback, base::Passed(&displayed_notifications),
                      true /* supports_synchronization */));
+}
+
+void NotificationPlatformBridgeMessageCenter::SetReadyCallback(
+    NotificationBridgeReadyCallback callback) {
+  // This bridge is only available when the Message Center is as well.
+  std::move(callback).Run(true /* success */);
 }
