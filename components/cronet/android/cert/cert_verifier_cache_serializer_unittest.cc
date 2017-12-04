@@ -55,13 +55,13 @@ void VerifyCert(const std::string& cert_name,
 TEST(CertVerifierCacheSerializerTest, RestoreEmptyData) {
   // Restoring empty data should fail.
   cronet_pb::CertVerificationCache cert_cache;
-  net::CachingCertVerifier verifier(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier(std::make_unique<net::MockCertVerifier>());
   EXPECT_FALSE(DeserializeCertVerifierCache(cert_cache, &verifier));
 }
 
 TEST(CertVerifierCacheSerializerTest, SerializeCache) {
   net::CertVerifyResult verify_result;
-  net::CachingCertVerifier verifier(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier(std::make_unique<net::MockCertVerifier>());
   ASSERT_NO_FATAL_FAILURE(
       VerifyCert("ok_cert.pem", "www.example.com", &verifier, &verify_result));
   cronet_pb::CertVerificationCache cert_cache =
@@ -87,7 +87,7 @@ TEST(CertVerifierCacheSerializerTest, RestoreMultipleEntriesIntoNewVerifier) {
   // Verify www.example.com host's certificate.
   std::string example_hostname("www.example.com");
   net::CertVerifyResult verifier1_result1;
-  net::CachingCertVerifier verifier(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier(std::make_unique<net::MockCertVerifier>());
   ASSERT_NO_FATAL_FAILURE(VerifyCert("ok_cert.pem", example_hostname, &verifier,
                                      &verifier1_result1));
 
@@ -115,7 +115,7 @@ TEST(CertVerifierCacheSerializerTest, RestoreMultipleEntriesIntoNewVerifier) {
   DCHECK_EQ(2, cert_cache.cert_entry_size());
   DCHECK_EQ(2, cert_cache.cache_entry_size());
 
-  net::CachingCertVerifier verifier2(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier2(std::make_unique<net::MockCertVerifier>());
 
   // Populate |verifier2|'s cache.
   EXPECT_TRUE(DeserializeCertVerifierCache(cert_cache, &verifier2));
@@ -146,7 +146,7 @@ TEST(CertVerifierCacheSerializerTest, RestoreMultipleEntriesIntoNewVerifier) {
 // Should not deserialize a corrupted cert_entry.
 TEST(CertVerifierCacheSerializerTest, DeserializeCorruptedCerts) {
   net::CertVerifyResult verify_result;
-  net::CachingCertVerifier verifier(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier(std::make_unique<net::MockCertVerifier>());
   ASSERT_NO_FATAL_FAILURE(
       VerifyCert("ok_cert.pem", "www.example.com", &verifier, &verify_result));
   cronet_pb::CertVerificationCache cert_cache =
@@ -156,7 +156,7 @@ TEST(CertVerifierCacheSerializerTest, DeserializeCorruptedCerts) {
 
   cert_cache.clear_cert_entry();
 
-  net::CachingCertVerifier verifier2(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier2(std::make_unique<net::MockCertVerifier>());
   EXPECT_FALSE(DeserializeCertVerifierCache(cert_cache, &verifier2));
 }
 
@@ -164,7 +164,7 @@ TEST(CertVerifierCacheSerializerTest, DeserializeCorruptedCerts) {
 // deserialized. Should not deserialize a corrupted |cert_entry|.
 TEST(CertVerifierCacheSerializerTest, DeserializeCorruptedCacheEntry) {
   net::CertVerifyResult verify_result;
-  net::CachingCertVerifier verifier(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier(std::make_unique<net::MockCertVerifier>());
   ASSERT_NO_FATAL_FAILURE(
       VerifyCert("ok_cert.pem", "www.example.com", &verifier, &verify_result));
   cronet_pb::CertVerificationCache cert_cache =
@@ -175,7 +175,7 @@ TEST(CertVerifierCacheSerializerTest, DeserializeCorruptedCacheEntry) {
   // Corrupt |cache_entry|.
   cert_cache.clear_cache_entry();
 
-  net::CachingCertVerifier verifier2(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier2(std::make_unique<net::MockCertVerifier>());
   EXPECT_FALSE(DeserializeCertVerifierCache(cert_cache, &verifier2));
 }
 
@@ -183,7 +183,7 @@ TEST(CertVerifierCacheSerializerTest, DeserializeCorruptedCacheEntry) {
 // deserialized. Should not deserialize a corrupted |request_params|.
 TEST(CertVerifierCacheSerializerTest, DeserializeCorruptedRequestParams) {
   net::CertVerifyResult verify_result;
-  net::CachingCertVerifier verifier(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier(std::make_unique<net::MockCertVerifier>());
   ASSERT_NO_FATAL_FAILURE(
       VerifyCert("ok_cert.pem", "www.example.com", &verifier, &verify_result));
   cronet_pb::CertVerificationCache cert_cache =
@@ -198,7 +198,7 @@ TEST(CertVerifierCacheSerializerTest, DeserializeCorruptedRequestParams) {
     cache_entry->clear_request_params();
   }
 
-  net::CachingCertVerifier verifier2(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier2(std::make_unique<net::MockCertVerifier>());
   EXPECT_FALSE(DeserializeCertVerifierCache(cert_cache, &verifier2));
 }
 
@@ -206,7 +206,7 @@ TEST(CertVerifierCacheSerializerTest, DeserializeCorruptedRequestParams) {
 // fail to be deserialized. Should not deserialize a corrupted |certificate|.
 TEST(CertVerifierCacheSerializerTest, DeserializeRequestParamsNoCertificate) {
   net::CertVerifyResult verify_result;
-  net::CachingCertVerifier verifier(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier(std::make_unique<net::MockCertVerifier>());
   ASSERT_NO_FATAL_FAILURE(
       VerifyCert("ok_cert.pem", "www.example.com", &verifier, &verify_result));
   cronet_pb::CertVerificationCache cert_cache =
@@ -223,7 +223,7 @@ TEST(CertVerifierCacheSerializerTest, DeserializeRequestParamsNoCertificate) {
     request_params->clear_certificate();
   }
 
-  net::CachingCertVerifier verifier2(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier2(std::make_unique<net::MockCertVerifier>());
   EXPECT_FALSE(DeserializeCertVerifierCache(cert_cache, &verifier2));
 }
 
@@ -231,7 +231,7 @@ TEST(CertVerifierCacheSerializerTest, DeserializeRequestParamsNoCertificate) {
 // fail to be deserialized. Should not deserialize a corrupted |hostname|.
 TEST(CertVerifierCacheSerializerTest, DeserializeRequestParamsNoHostname) {
   net::CertVerifyResult verify_result;
-  net::CachingCertVerifier verifier(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier(std::make_unique<net::MockCertVerifier>());
   ASSERT_NO_FATAL_FAILURE(
       VerifyCert("ok_cert.pem", "www.example.com", &verifier, &verify_result));
   cronet_pb::CertVerificationCache cert_cache =
@@ -248,7 +248,7 @@ TEST(CertVerifierCacheSerializerTest, DeserializeRequestParamsNoHostname) {
     request_params->clear_hostname();
   }
 
-  net::CachingCertVerifier verifier2(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier2(std::make_unique<net::MockCertVerifier>());
   EXPECT_FALSE(DeserializeCertVerifierCache(cert_cache, &verifier2));
 }
 
@@ -256,7 +256,7 @@ TEST(CertVerifierCacheSerializerTest, DeserializeRequestParamsNoHostname) {
 // fail to be deserialized. Should not deserialize an invalid |hostname|.
 TEST(CertVerifierCacheSerializerTest, DeserializeRequestParamsEmptyHostname) {
   net::CertVerifyResult verify_result;
-  net::CachingCertVerifier verifier(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier(std::make_unique<net::MockCertVerifier>());
   ASSERT_NO_FATAL_FAILURE(
       VerifyCert("ok_cert.pem", "www.example.com", &verifier, &verify_result));
   cronet_pb::CertVerificationCache cert_cache =
@@ -273,7 +273,7 @@ TEST(CertVerifierCacheSerializerTest, DeserializeRequestParamsEmptyHostname) {
     request_params->set_hostname("");
   }
 
-  net::CachingCertVerifier verifier2(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier2(std::make_unique<net::MockCertVerifier>());
   EXPECT_FALSE(DeserializeCertVerifierCache(cert_cache, &verifier2));
 }
 
@@ -281,7 +281,7 @@ TEST(CertVerifierCacheSerializerTest, DeserializeRequestParamsEmptyHostname) {
 // fail to be deserialized. Should not deserialize a corrupted |flags|.
 TEST(CertVerifierCacheSerializerTest, DeserializeRequestParamsNoFlags) {
   net::CertVerifyResult verify_result;
-  net::CachingCertVerifier verifier(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier(std::make_unique<net::MockCertVerifier>());
   ASSERT_NO_FATAL_FAILURE(
       VerifyCert("ok_cert.pem", "www.example.com", &verifier, &verify_result));
   cronet_pb::CertVerificationCache cert_cache =
@@ -298,7 +298,7 @@ TEST(CertVerifierCacheSerializerTest, DeserializeRequestParamsNoFlags) {
     request_params->clear_flags();
   }
 
-  net::CachingCertVerifier verifier2(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier2(std::make_unique<net::MockCertVerifier>());
   EXPECT_FALSE(DeserializeCertVerifierCache(cert_cache, &verifier2));
 }
 
@@ -306,7 +306,7 @@ TEST(CertVerifierCacheSerializerTest, DeserializeRequestParamsNoFlags) {
 // fail to be deserialized. Should not deserialize a corrupted |ocsp_response|.
 TEST(CertVerifierCacheSerializerTest, DeserializeRequestParamsNoOcspResponse) {
   net::CertVerifyResult verify_result;
-  net::CachingCertVerifier verifier(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier(std::make_unique<net::MockCertVerifier>());
   ASSERT_NO_FATAL_FAILURE(
       VerifyCert("ok_cert.pem", "www.example.com", &verifier, &verify_result));
   cronet_pb::CertVerificationCache cert_cache =
@@ -323,7 +323,7 @@ TEST(CertVerifierCacheSerializerTest, DeserializeRequestParamsNoOcspResponse) {
     request_params->clear_ocsp_response();
   }
 
-  net::CachingCertVerifier verifier2(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier2(std::make_unique<net::MockCertVerifier>());
   EXPECT_FALSE(DeserializeCertVerifierCache(cert_cache, &verifier2));
 }
 
@@ -332,7 +332,7 @@ TEST(CertVerifierCacheSerializerTest, DeserializeRequestParamsNoOcspResponse) {
 TEST(CertVerifierCacheSerializerTest,
      DeserializeRequestParamsCertificateNoCertNumbers) {
   net::CertVerifyResult verify_result;
-  net::CachingCertVerifier verifier(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier(std::make_unique<net::MockCertVerifier>());
   ASSERT_NO_FATAL_FAILURE(
       VerifyCert("ok_cert.pem", "www.example.com", &verifier, &verify_result));
   cronet_pb::CertVerificationCache cert_cache =
@@ -351,7 +351,7 @@ TEST(CertVerifierCacheSerializerTest,
     certificate->clear_cert_numbers();
   }
 
-  net::CachingCertVerifier verifier2(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier2(std::make_unique<net::MockCertVerifier>());
   EXPECT_FALSE(DeserializeCertVerifierCache(cert_cache, &verifier2));
 }
 
@@ -361,7 +361,7 @@ TEST(CertVerifierCacheSerializerTest,
 TEST(CertVerifierCacheSerializerTest,
      DeserializeCorruptedRequestParamsCertNumbers) {
   net::CertVerifyResult verify_result;
-  net::CachingCertVerifier verifier(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier(std::make_unique<net::MockCertVerifier>());
   ASSERT_NO_FATAL_FAILURE(
       VerifyCert("ok_cert.pem", "www.example.com", &verifier, &verify_result));
   cronet_pb::CertVerificationCache cert_cache =
@@ -380,7 +380,7 @@ TEST(CertVerifierCacheSerializerTest,
     certificate->set_cert_numbers(0, 100);
   }
 
-  net::CachingCertVerifier verifier2(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier2(std::make_unique<net::MockCertVerifier>());
   EXPECT_FALSE(DeserializeCertVerifierCache(cert_cache, &verifier2));
 }
 
@@ -409,7 +409,7 @@ TEST(CertVerifierCacheSerializerTest,
   net::TestCompletionCallback callback;
   std::unique_ptr<net::CertVerifier::Request> request;
 
-  net::CachingCertVerifier verifier(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier(std::make_unique<net::MockCertVerifier>());
   // Verify the |cert| with |trust_anchors|.
   ignore_result(callback.GetResult(verifier.Verify(
       net::CertVerifier::RequestParams(cert, "www.example.com", 0,
@@ -435,7 +435,7 @@ TEST(CertVerifierCacheSerializerTest,
     }
   }
 
-  net::CachingCertVerifier verifier2(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier2(std::make_unique<net::MockCertVerifier>());
   EXPECT_FALSE(DeserializeCertVerifierCache(cert_cache, &verifier2));
 }
 
@@ -443,7 +443,7 @@ TEST(CertVerifierCacheSerializerTest,
 // deserialized. Should not deserialize a corrupted |cached_result|.
 TEST(CertVerifierCacheSerializerTest, DeserializeCorruptedCachedResult) {
   net::CertVerifyResult verify_result;
-  net::CachingCertVerifier verifier(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier(std::make_unique<net::MockCertVerifier>());
   ASSERT_NO_FATAL_FAILURE(
       VerifyCert("ok_cert.pem", "www.example.com", &verifier, &verify_result));
   cronet_pb::CertVerificationCache cert_cache =
@@ -458,7 +458,7 @@ TEST(CertVerifierCacheSerializerTest, DeserializeCorruptedCachedResult) {
     cache_entry->clear_cached_result();
   }
 
-  net::CachingCertVerifier verifier2(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier2(std::make_unique<net::MockCertVerifier>());
   EXPECT_FALSE(DeserializeCertVerifierCache(cert_cache, &verifier2));
 }
 
@@ -466,7 +466,7 @@ TEST(CertVerifierCacheSerializerTest, DeserializeCorruptedCachedResult) {
 // Should not deserialize a corrupted |error|.
 TEST(CertVerifierCacheSerializerTest, DeserializeCachedResultNoError) {
   net::CertVerifyResult verify_result;
-  net::CachingCertVerifier verifier(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier(std::make_unique<net::MockCertVerifier>());
   ASSERT_NO_FATAL_FAILURE(
       VerifyCert("ok_cert.pem", "www.example.com", &verifier, &verify_result));
   cronet_pb::CertVerificationCache cert_cache =
@@ -483,7 +483,7 @@ TEST(CertVerifierCacheSerializerTest, DeserializeCachedResultNoError) {
     cached_result->clear_error();
   }
 
-  net::CachingCertVerifier verifier2(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier2(std::make_unique<net::MockCertVerifier>());
   EXPECT_FALSE(DeserializeCertVerifierCache(cert_cache, &verifier2));
 }
 
@@ -491,7 +491,7 @@ TEST(CertVerifierCacheSerializerTest, DeserializeCachedResultNoError) {
 // Should not deserialize a corrupted |result|.
 TEST(CertVerifierCacheSerializerTest, DeserializeCachedResultNoResult) {
   net::CertVerifyResult verify_result;
-  net::CachingCertVerifier verifier(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier(std::make_unique<net::MockCertVerifier>());
   ASSERT_NO_FATAL_FAILURE(
       VerifyCert("ok_cert.pem", "www.example.com", &verifier, &verify_result));
   cronet_pb::CertVerificationCache cert_cache =
@@ -508,7 +508,7 @@ TEST(CertVerifierCacheSerializerTest, DeserializeCachedResultNoResult) {
     cached_result->clear_result();
   }
 
-  net::CachingCertVerifier verifier2(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier2(std::make_unique<net::MockCertVerifier>());
   EXPECT_FALSE(DeserializeCertVerifierCache(cert_cache, &verifier2));
 }
 
@@ -516,7 +516,7 @@ TEST(CertVerifierCacheSerializerTest, DeserializeCachedResultNoResult) {
 // deserialized. Should not deserialize a corrupted |cert_status|.
 TEST(CertVerifierCacheSerializerTest, DeserializeCachedResultNoCertStatus) {
   net::CertVerifyResult verify_result;
-  net::CachingCertVerifier verifier(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier(std::make_unique<net::MockCertVerifier>());
   ASSERT_NO_FATAL_FAILURE(
       VerifyCert("ok_cert.pem", "www.example.com", &verifier, &verify_result));
   cronet_pb::CertVerificationCache cert_cache =
@@ -534,7 +534,7 @@ TEST(CertVerifierCacheSerializerTest, DeserializeCachedResultNoCertStatus) {
     result->clear_cert_status();
   }
 
-  net::CachingCertVerifier verifier2(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier2(std::make_unique<net::MockCertVerifier>());
   EXPECT_FALSE(DeserializeCertVerifierCache(cert_cache, &verifier2));
 }
 
@@ -542,7 +542,7 @@ TEST(CertVerifierCacheSerializerTest, DeserializeCachedResultNoCertStatus) {
 // deserialized. Should not deserialize a corrupted |verification_time|.
 TEST(CertVerifierCacheSerializerTest, DeserializeCachedResultNoVerifiedCert) {
   net::CertVerifyResult verify_result;
-  net::CachingCertVerifier verifier(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier(std::make_unique<net::MockCertVerifier>());
   ASSERT_NO_FATAL_FAILURE(
       VerifyCert("ok_cert.pem", "www.example.com", &verifier, &verify_result));
   cronet_pb::CertVerificationCache cert_cache =
@@ -560,7 +560,7 @@ TEST(CertVerifierCacheSerializerTest, DeserializeCachedResultNoVerifiedCert) {
     result->clear_verified_cert();
   }
 
-  net::CachingCertVerifier verifier2(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier2(std::make_unique<net::MockCertVerifier>());
   EXPECT_FALSE(DeserializeCertVerifierCache(cert_cache, &verifier2));
 }
 
@@ -569,7 +569,7 @@ TEST(CertVerifierCacheSerializerTest, DeserializeCachedResultNoVerifiedCert) {
 TEST(CertVerifierCacheSerializerTest,
      DeserializeCachedResultNoVerifiedCertNumber) {
   net::CertVerifyResult verify_result;
-  net::CachingCertVerifier verifier(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier(std::make_unique<net::MockCertVerifier>());
   ASSERT_NO_FATAL_FAILURE(
       VerifyCert("ok_cert.pem", "www.example.com", &verifier, &verify_result));
   cronet_pb::CertVerificationCache cert_cache =
@@ -590,7 +590,7 @@ TEST(CertVerifierCacheSerializerTest,
     certificate->clear_cert_numbers();
   }
 
-  net::CachingCertVerifier verifier2(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier2(std::make_unique<net::MockCertVerifier>());
   EXPECT_FALSE(DeserializeCertVerifierCache(cert_cache, &verifier2));
 }
 
@@ -600,7 +600,7 @@ TEST(CertVerifierCacheSerializerTest,
 TEST(CertVerifierCacheSerializerTest,
      DeserializeCorruptedCachedResultVerifiedCertNumber) {
   net::CertVerifyResult verify_result;
-  net::CachingCertVerifier verifier(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier(std::make_unique<net::MockCertVerifier>());
   ASSERT_NO_FATAL_FAILURE(
       VerifyCert("ok_cert.pem", "www.example.com", &verifier, &verify_result));
   cronet_pb::CertVerificationCache cert_cache =
@@ -620,7 +620,7 @@ TEST(CertVerifierCacheSerializerTest,
     certificate->set_cert_numbers(0, 100);
   }
 
-  net::CachingCertVerifier verifier2(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier2(std::make_unique<net::MockCertVerifier>());
   EXPECT_FALSE(DeserializeCertVerifierCache(cert_cache, &verifier2));
 }
 
@@ -629,7 +629,7 @@ TEST(CertVerifierCacheSerializerTest,
 TEST(CertVerifierCacheSerializerTest,
      DeserializeCorruptedCachedResultPublicKeyHashes) {
   net::CertVerifyResult verify_result;
-  net::CachingCertVerifier verifier(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier(std::make_unique<net::MockCertVerifier>());
   ASSERT_NO_FATAL_FAILURE(
       VerifyCert("ok_cert.pem", "www.example.com", &verifier, &verify_result));
   cronet_pb::CertVerificationCache cert_cache =
@@ -647,7 +647,7 @@ TEST(CertVerifierCacheSerializerTest,
     result->add_public_key_hashes("");
   }
 
-  net::CachingCertVerifier verifier2(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier2(std::make_unique<net::MockCertVerifier>());
   EXPECT_FALSE(DeserializeCertVerifierCache(cert_cache, &verifier2));
 }
 
@@ -655,7 +655,7 @@ TEST(CertVerifierCacheSerializerTest,
 // deserialized. Should not deserialize a corrupted |verification_time|.
 TEST(CertVerifierCacheSerializerTest, DeserializeCorruptedVerificationTime) {
   net::CertVerifyResult verify_result;
-  net::CachingCertVerifier verifier(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier(std::make_unique<net::MockCertVerifier>());
   ASSERT_NO_FATAL_FAILURE(
       VerifyCert("ok_cert.pem", "www.example.com", &verifier, &verify_result));
   cronet_pb::CertVerificationCache cert_cache =
@@ -670,7 +670,7 @@ TEST(CertVerifierCacheSerializerTest, DeserializeCorruptedVerificationTime) {
     cache_entry->clear_verification_time();
   }
 
-  net::CachingCertVerifier verifier2(base::MakeUnique<net::MockCertVerifier>());
+  net::CachingCertVerifier verifier2(std::make_unique<net::MockCertVerifier>());
   EXPECT_FALSE(DeserializeCertVerifierCache(cert_cache, &verifier2));
 }
 
