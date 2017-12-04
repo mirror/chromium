@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99c77b20_8138e605",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-12-04T23:32:11Z",
+      "side": 1,
+      "message": "We should probably avoid allocating an OnWillReadController if we\u0027ve already deemed this resource safe, right? So something like:\n\nif (should_block_based_on_headers_ \u0026\u0026 !allow_based_on_sniffing_) {\n  HoldController(std::move(controller));\n  controller \u003d std::make_unique\u003cOnWillReadController\u003e(this, buf, buf_size);\n}\nnext_handler_-\u003eOnWillRead(buf, buf_size, controller);",
+      "revId": "d3be6e4d85c951da0e2e1323ea2233562c13cb3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9b6ee69_0aa62586",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-12-04T23:32:11Z",
+      "side": 1,
+      "message": "Is a Resume() guaranteed by the last handler\u0027s OnWillRead? It looks like async_resource_handler calls Resume() always, but the comment in ResourceController\u0027s header file suggests otherwise:\n\n  // Resumes the request. May only be called if the request was previously\n  // deferred. Guaranteed not to call back into the ResourceHandler, or destroy\n  // it, synchronously.\n  virtual void Resume() \u003d 0",
+      "revId": "d3be6e4d85c951da0e2e1323ea2233562c13cb3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
