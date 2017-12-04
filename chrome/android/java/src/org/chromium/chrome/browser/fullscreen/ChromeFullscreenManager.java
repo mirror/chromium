@@ -465,6 +465,8 @@ public class ChromeFullscreenManager
      * Updates viewport size to have it render the content correctly.
      */
     public void updateViewportSize() {
+        Tab tab = getTab();
+        if (tab == null || tab.getWebContents() == null) return;
         if (mInGesture || mContentViewScrolling) return;
 
         // Update content viewport size only when the browser controls are not animating.
@@ -478,8 +480,6 @@ public class ChromeFullscreenManager
                 topContentOffset > 0 || bottomControlOffset < getBottomControlsHeight();
         controlsResizeView &= !VrShellDelegate.isInVr();
         mControlsResizeView = controlsResizeView;
-        Tab tab = getTab();
-        if (tab == null) return;
         tab.setTopControlsHeight(getTopControlsHeight(), controlsResizeView);
         tab.setBottomControlsHeight(getBottomControlsHeight());
         for (FullscreenListener listener : mListeners) listener.onUpdateViewportSize();
