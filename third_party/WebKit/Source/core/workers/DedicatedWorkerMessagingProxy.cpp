@@ -119,9 +119,17 @@ void DedicatedWorkerMessagingProxy::PostMessageToWorkerGlobalScope(
   }
 }
 
-void DedicatedWorkerMessagingProxy::WorkerThreadCreated() {
+bool DedicatedWorkerMessagingProxy::HasPendingActivity() const {
   DCHECK(IsParentContextThread());
-  ThreadedMessagingProxyBase::WorkerThreadCreated();
+  return !AskedToTerminate();
+}
+
+void DedicatedWorkerMessagingProxy::DidEvaluateWorkerScript(bool success) {
+  DCHECK(IsParentContextThread());
+  if (!success) {
+    queued_early_tasks_.clear();
+    return;
+  }
 
   for (auto& queued_task : queued_early_tasks_) {
     WTF::CrossThreadClosure task = CrossThreadBind(
@@ -135,11 +143,6 @@ void DedicatedWorkerMessagingProxy::WorkerThreadCreated() {
         ->PostTask(BLINK_FROM_HERE, std::move(task));
   }
   queued_early_tasks_.clear();
-}
-
-bool DedicatedWorkerMessagingProxy::HasPendingActivity() const {
-  DCHECK(IsParentContextThread());
-  return !AskedToTerminate();
 }
 
 void DedicatedWorkerMessagingProxy::PostMessageToWorkerObject(

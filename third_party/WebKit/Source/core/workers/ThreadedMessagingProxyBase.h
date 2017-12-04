@@ -77,7 +77,6 @@ class CORE_EXPORT ThreadedMessagingProxyBase
       const WTF::Optional<WorkerBackingThreadStartupData>&,
       const KURL& script_url,
       const v8_inspector::V8StackTraceId&);
-  virtual void WorkerThreadCreated();
 
   ThreadableLoadingContext* CreateThreadableLoadingContext() const;
 

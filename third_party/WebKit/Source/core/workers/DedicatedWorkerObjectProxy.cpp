@@ -59,7 +59,7 @@ std::unique_ptr<DedicatedWorkerObjectProxy> DedicatedWorkerObjectProxy::Create(
       messaging_proxy_weak_ptr, parent_frame_task_runners));
 }
 
-DedicatedWorkerObjectProxy::~DedicatedWorkerObjectProxy() {}
+DedicatedWorkerObjectProxy::~DedicatedWorkerObjectProxy() = default;
 
 void DedicatedWorkerObjectProxy::PostMessageToWorkerObject(
     scoped_refptr<SerializedScriptValue> message,
@@ -115,6 +115,15 @@ void DedicatedWorkerObjectProxy::DidCreateWorkerGlobalScope(
     WorkerOrWorkletGlobalScope* global_scope) {
   DCHECK(!worker_global_scope_);
   worker_global_scope_ = ToWorkerGlobalScope(global_scope);
+}
+
+void DedicatedWorkerObjectProxy::DidEvaluateWorkerScript(bool success) {
+  GetParentFrameTaskRunners()
+      ->Get(TaskType::kUnspecedTimer)
+      ->PostTask(BLINK_FROM_HERE,
+                 CrossThreadBind(
+                     &DedicatedWorkerMessagingProxy::DidEvaluateWorkerScript,
+                     messaging_proxy_weak_ptr_, success));
 }
 
 void DedicatedWorkerObjectProxy::WillDestroyWorkerGlobalScope() {

@@ -88,7 +88,6 @@ void ThreadedMessagingProxyBase::InitializeWorkerThread(
           GetWorkerInspectorProxy()->ShouldPauseOnWorkerStart(document),
           stack_id),
       GetParentFrameTaskRunners());
-  WorkerThreadCreated();
   GetWorkerInspectorProxy()->WorkerThreadCreated(document, GetWorkerThread(),
                                                  script_url);
 }
@@ -114,12 +113,6 @@ void ThreadedMessagingProxyBase::ReportConsoleMessage(
   if (worker_inspector_proxy_)
     worker_inspector_proxy_->AddConsoleMessageFromWorker(level, message,
                                                          std::move(location));
-}
-
-void ThreadedMessagingProxyBase::WorkerThreadCreated() {
-  DCHECK(IsParentContextThread());
-  DCHECK(!asked_to_terminate_);
-  DCHECK(worker_thread_);
 }
 
 void ThreadedMessagingProxyBase::ParentObjectDestroyed() {
