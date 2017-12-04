@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "c2d47530_a3e69e1b",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-12-04T14:58:32Z",
+      "side": 1,
+      "message": "Ah, I tried this, but it doesn\u0027t actually work: iframes are loaded asynchronously, so in some runs of the test on the bots, the NavigateIframeToURL() call was happening before the iframe was loaded and ready to be navigated. NavigateToURL() only waits for the main frame load to be ready. So, I think it\u0027s safer after all for the navigation to be kicked off by the iframe itself, since that will inherently only happen when the iframe is ready to go.",
+      "parentUuid": "e9da5955_8ac951ea",
+      "revId": "4596680e50dfda99fca7ca1efccc665648b3362e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41c4ad32_a2df49a2",
         "filename": "chrome/browser/ui/views/page_info/testdata/empty0.html",
         "patchSetId": 2
