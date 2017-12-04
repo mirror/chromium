@@ -224,24 +224,6 @@ void LayoutView::CheckLayoutState() {
 }
 #endif
 
-void LayoutView::SetShouldDoFullPaintInvalidationOnResizeIfNeeded(
-    bool width_changed,
-    bool height_changed) {
-  // When background-attachment is 'fixed', we treat the viewport (instead of
-  // the 'root' i.e. html or body) as the background positioning area, and we
-  // should fully invalidate on viewport resize if the background image is not
-  // composited and needs full paint invalidation on background positioning area
-  // resize.
-  if (Style()->HasFixedBackgroundImage() &&
-      (!compositor_ || !compositor_->NeedsFixedRootBackgroundLayer())) {
-    if ((width_changed && MustInvalidateFillLayersPaintOnWidthChange(
-                              Style()->BackgroundLayers())) ||
-        (height_changed && MustInvalidateFillLayersPaintOnHeightChange(
-                               Style()->BackgroundLayers())))
-      SetShouldDoFullPaintInvalidation(PaintInvalidationReason::kBackground);
-  }
-}
-
 void LayoutView::UpdateBlockLayout(bool relayout_children) {
   SubtreeLayoutScope layout_scope(*this);
 
@@ -281,15 +263,6 @@ void LayoutView::UpdateBlockLayout(bool relayout_children) {
 void LayoutView::UpdateLayout() {
   if (!GetDocument().Paginated())
     SetPageLogicalHeight(LayoutUnit());
-
-  // TODO(wangxianzhu): Move this into ViewPaintInvalidator when
-  // rootLayerScrolling is permanently enabled.
-  IncludeScrollbarsInRect include_scrollbars =
-      RuntimeEnabledFeatures::RootLayerScrollingEnabled() ? kIncludeScrollbars
-                                                          : kExcludeScrollbars;
-  SetShouldDoFullPaintInvalidationOnResizeIfNeeded(
-      OffsetWidth() != GetLayoutSize(include_scrollbars).Width(),
-      OffsetHeight() != GetLayoutSize(include_scrollbars).Height());
 
   if (PageLogicalHeight() && ShouldUsePrintingLayout()) {
     min_preferred_logical_width_ = max_preferred_logical_width_ =
