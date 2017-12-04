@@ -63,7 +63,6 @@ void FrameConsole::AddMessage(ConsoleMessage* console_message) {
       console_message->SetNodes(frame, std::move(nodes));
     }
   }
-
   if (AddMessageToStorage(console_message))
     ReportMessageToClient(console_message->Source(), console_message->Level(),
                           console_message->Message(),
@@ -82,6 +81,7 @@ void FrameConsole::ReportMessageToClient(MessageSource source,
                                          MessageLevel level,
                                          const String& message,
                                          SourceLocation* location) {
+  fprintf(stderr, "**************** Console: %s\n", message.Utf8().data());
   if (source == kNetworkMessageSource)
     return;
 

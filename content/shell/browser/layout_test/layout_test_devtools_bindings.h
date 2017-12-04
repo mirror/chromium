@@ -27,6 +27,7 @@ class LayoutTestDevToolsBindings : public ShellDevToolsBindings {
                              bool new_harness);
 
   void EvaluateInFrontend(int call_id, const std::string& expression);
+  void Inspect();
 
   ~LayoutTestDevToolsBindings() override;
 

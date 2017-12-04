@@ -137,6 +137,20 @@ void LayoutTestDevToolsBindings::EvaluateInFrontend(int call_id,
       base::UTF8ToUTF16(source));
 }
 
+void LayoutTestDevToolsBindings::Inspect() {
+  fprintf(stderr, "******* LayoutTestDevToolsBindings::Inspect\n");
+  if (agent_host())
+    agent_host()->DetachClient(this);
+  set_agent_host(DevToolsAgentHost::GetOrCreateFor(inspected_contents()));
+  agent_host()->AttachClient(this);
+  if (inspect_element_at_x_ != -1) {
+    agent_host()->InspectElement(this, inspect_element_at_x_,
+                                inspect_element_at_y_);
+    inspect_element_at_x_ = -1;
+    inspect_element_at_y_ = -1;
+  }
+}
+
 LayoutTestDevToolsBindings::LayoutTestDevToolsBindings(
     WebContents* devtools_contents,
     WebContents* inspected_contents,
@@ -163,6 +177,7 @@ LayoutTestDevToolsBindings::~LayoutTestDevToolsBindings() {}
 
 void LayoutTestDevToolsBindings::HandleMessageFromDevToolsFrontend(
     const std::string& message) {
+  fprintf(stderr, "************ LayoutTestDevToolsBindings::HandleMessageFromDevToolsFrontend: message=%s\n", message.c_str());
   std::string method;
   base::DictionaryValue* dict = nullptr;
   std::unique_ptr<base::Value> parsed_message = base::JSONReader::Read(message);

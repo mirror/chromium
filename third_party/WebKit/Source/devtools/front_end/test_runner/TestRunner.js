@@ -35,6 +35,13 @@ TestRunner._executeTestScript = function() {
           testScript = testScript.slice(0, testScript.length - 1);
 
         (async function() {
+          testRunner.navigateSecondaryWindow('');
+          console.log('post navigate');
+          await new Promise(f => setTimeout(f, 500));
+          Main._mainForTesting._initializeTarget();
+          await new Promise(f => setTimeout(f, 500));
+          console.log('evaling main script');
+
           try {
             await eval(testScript + `\n//# sourceURL=${testScriptURL}`);
           } catch (err) {
@@ -1320,9 +1327,8 @@ TestRunner._TestObserver = class {
     if (TestRunner._startedTest)
       return;
     TestRunner._startedTest = true;
-    TestRunner._printDevToolsConsole();
     TestRunner._setupTestHelpers(target);
-    TestRunner._runTest();
+    TestRunner._setBaseTag();
   }
 
   /**
@@ -1333,7 +1339,7 @@ TestRunner._TestObserver = class {
   }
 };
 
-TestRunner._runTest = async function() {
+TestRunner._setBaseTag = async function() {
   var testPath = TestRunner.url();
   await TestRunner.loadHTML(`
     <head>
@@ -1342,7 +1348,6 @@ TestRunner._runTest = async function() {
     <body>
     </body>
   `);
-  TestRunner._executeTestScript();
 };
 
 /**
@@ -1370,4 +1375,7 @@ function completeTestOnError(message, source, lineno, colno, error) {
 }
 
 self['onerror'] = completeTestOnError;
+// TestRunner._printDevToolsConsole();
+TestRunner._executeTestScript();
+
 })();

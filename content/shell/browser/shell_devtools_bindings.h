@@ -54,6 +54,11 @@ class ShellDevToolsBindings : public WebContentsObserver,
   ~ShellDevToolsBindings() override;
 
   WebContents* inspected_contents() { return inspected_contents_; }
+  scoped_refptr<DevToolsAgentHost> agent_host() { return agent_host_; }
+  void set_agent_host(scoped_refptr<DevToolsAgentHost> agent_host) { agent_host_ = agent_host; }
+  // TOOD: prpoepr abstarction
+  int inspect_element_at_x_;
+  int inspect_element_at_y_;
 
  protected:
   // content::DevToolsAgentHostClient implementation.
@@ -63,7 +68,10 @@ class ShellDevToolsBindings : public WebContentsObserver,
 
   void SetPreferences(const std::string& json);
   virtual void HandleMessageFromDevToolsFrontend(const std::string& message);
-
+  scoped_refptr<DevToolsAgentHost> agent_host_;
+#if !defined(OS_ANDROID)
+  std::unique_ptr<DevToolsFrontendHost> frontend_host_;
+#endif
  private:
   // WebContentsObserver overrides
   void ReadyToCommitNavigation(NavigationHandle* navigation_handle) override;
@@ -77,12 +85,8 @@ class ShellDevToolsBindings : public WebContentsObserver,
 
   WebContents* inspected_contents_;
   ShellDevToolsDelegate* delegate_;
-  scoped_refptr<DevToolsAgentHost> agent_host_;
-  int inspect_element_at_x_;
-  int inspect_element_at_y_;
-#if !defined(OS_ANDROID)
-  std::unique_ptr<DevToolsFrontendHost> frontend_host_;
-#endif
+  // int inspect_element_at_x_;
+  // int inspect_element_at_y_;
   using PendingRequestsMap = std::map<const net::URLFetcher*, int>;
   PendingRequestsMap pending_requests_;
   base::DictionaryValue preferences_;

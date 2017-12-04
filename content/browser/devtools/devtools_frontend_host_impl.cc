@@ -28,6 +28,7 @@ DevToolsFrontendHost* DevToolsFrontendHost::Create(
     RenderFrameHost* frame_host,
     const HandleMessageCallback& handle_message_callback) {
   DCHECK(!frame_host->GetParent());
+  fprintf(stderr, "********** DevToolsFrontendHost::Create\n");
   return new DevToolsFrontendHostImpl(frame_host, handle_message_callback);
 }
 
