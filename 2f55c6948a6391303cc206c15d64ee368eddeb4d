@@ -16,6 +16,24 @@
       "revId": "2f55c6948a6391303cc206c15d64ee368eddeb4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27f79490_d5ffaa59",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResource.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-12-04T11:26:55Z",
+      "side": 1,
+      "message": "This is related to resource leak detection. Since the UA stylesheets are kept around permanently in the renderer process any images used by those stylesheets will result in an incorrectly identified \"leak\" since they stay around after user navigation.\n\nThe UA stylesheets always hold onto an ImageResource and are not deleted so it is probably of no use to track UA CSS usage.",
+      "parentUuid": "927e8a0a_68fb18c2",
+      "revId": "2f55c6948a6391303cc206c15d64ee368eddeb4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
