@@ -510,12 +510,6 @@ void DelegatedFrameHost::SubmitCompositorFrame(
 
     DCHECK(enable_surface_synchronization_ || has_primary_surface_);
   }
-
-  if (!enable_surface_synchronization_) {
-    if (has_primary_surface_)
-      frame_evictor_->SwappedFrame(client_->DelegatedFrameHostIsVisible());
-    // Note: the frame may have been evicted immediately.
-  }
 }
 
 void DelegatedFrameHost::ClearDelegatedFrame() {
@@ -565,6 +559,7 @@ void DelegatedFrameHost::OnFirstSurfaceActivation(
     client_->DelegatedFrameHostGetLayer()->SetShowPrimarySurface(
         surface_info.id(), frame_size_in_dip, GetSurfaceReferenceFactory());
     has_primary_surface_ = true;
+    frame_evictor_->SwappedFrame(client_->DelegatedFrameHostIsVisible());
   }
 
   // If surface synchronization is enabled, and we don't have a primary surface
