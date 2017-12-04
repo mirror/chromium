@@ -22,6 +22,30 @@
       "revId": "45553cf944a56633e630f3abb2864473f0b6c6e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8af34baf_1db21dd6",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/signin/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-12-04T12:48:52Z",
+      "side": 1,
+      "message": "Good catch, I\u0027ve forgot about links in OWNERS files. Done.",
+      "parentUuid": "ea978104_b59f78b4",
+      "range": {
+        "startLine": 1,
+        "startChar": 8,
+        "endLine": 1,
+        "endChar": 9
+      },
+      "revId": "45553cf944a56633e630f3abb2864473f0b6c6e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
