@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "b549e9e1_f0c83cf5",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-12-04T23:26:11Z",
+      "side": 1,
+      "message": "Yea, maybe use the hash of the LocalSurfaceId?",
+      "parentUuid": "c4489570_5e78adf7",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 150,
+        "endChar": 48
+      },
+      "revId": "51c4c2b855e3d168703e338e85dd62f4241f2588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c217769_b71978e6",
         "filename": "components/viz/common/surfaces/local_surface_id.h",
         "patchSetId": 3
@@ -114,6 +138,47 @@
         "endLine": 35,
         "endChar": 74
       },
+      "revId": "51c4c2b855e3d168703e338e85dd62f4241f2588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85009907_cf112687",
+        "filename": "components/viz/common/surfaces/local_surface_id.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-12-04T23:26:11Z",
+      "side": 1,
+      "message": "sounds good to me.",
+      "parentUuid": "0c217769_b71978e6",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 74
+      },
+      "revId": "51c4c2b855e3d168703e338e85dd62f4241f2588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acee06d9_700b61cc",
+        "filename": "components/viz/common/surfaces/local_surface_id.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-12-04T23:26:11Z",
+      "side": 1,
+      "message": "Is there an invalid child_sequence_number?",
       "revId": "51c4c2b855e3d168703e338e85dd62f4241f2588",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -143,6 +208,30 @@
     },
     {
       "key": {
+        "uuid": "8065365e_2faf9ce2",
+        "filename": "components/viz/service/display/surface_aggregator_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-12-04T23:26:11Z",
+      "side": 1,
+      "message": "SGTM",
+      "parentUuid": "c1f2d800_9d1a0b3f",
+      "range": {
+        "startLine": 55,
+        "startChar": 21,
+        "endLine": 55,
+        "endChar": 46
+      },
+      "revId": "51c4c2b855e3d168703e338e85dd62f4241f2588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5dcdcb43_efec132a",
         "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
         "patchSetId": 3
@@ -154,6 +243,30 @@
       "writtenOn": "2017-12-04T22:37:30Z",
       "side": 1,
       "message": "Another instance of \"we should probably update the trace...\"\nAlthough, since this is in the browser perhaps we can leave this one out. It will always be 0, right?",
+      "range": {
+        "startLine": 2665,
+        "startChar": 2,
+        "endLine": 2666,
+        "endChar": 47
+      },
+      "revId": "51c4c2b855e3d168703e338e85dd62f4241f2588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "235b1d1b_9d7edef1",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2666,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-12-04T23:26:11Z",
+      "side": 1,
+      "message": "Maybe use the hash?",
+      "parentUuid": "5dcdcb43_efec132a",
       "range": {
         "startLine": 2665,
         "startChar": 2,
