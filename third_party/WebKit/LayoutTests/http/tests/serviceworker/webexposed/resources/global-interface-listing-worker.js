@@ -10,7 +10,7 @@
 
   globalInterfaceListing(global_object,
                          global_property_names,
-                         false,
+                         /*platformSpecific=*/false,
                          string => globals.push(string));
 
   self.addEventListener('message', function(event) {

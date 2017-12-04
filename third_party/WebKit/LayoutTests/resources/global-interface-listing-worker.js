@@ -4,8 +4,8 @@
   // Save the list of property names of the global object before loading other scripts.
   var propertyNamesInGlobal = Object.getOwnPropertyNames(globalObject);
 
-  importScripts('../../resources/js-test.js');
-  importScripts('../../resources/global-interface-listing.js');
+  importScripts('js-test.js');
+  importScripts('global-interface-listing.js');
 
   if (!self.postMessage) {
     // Shared worker.  Make postMessage send to the newest client, which in
@@ -35,7 +35,7 @@
   // interface that is both worker-specific and platform-specific. This can be
   // reconsidered in the future if that does become the case however.
 
-  globalInterfaceListing(globalObject, propertyNamesInGlobal, false /* platformSpecific */, debug);
+  globalInterfaceListing(globalObject, propertyNamesInGlobal, /*platformSpecific=*/false, debug);
 
   finishJSTest();
 
