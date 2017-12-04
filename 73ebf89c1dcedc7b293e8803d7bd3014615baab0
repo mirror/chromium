@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2e6fa63_68f95ee2",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1848,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-04T08:38:34Z",
+      "side": 1,
+      "message": "Is this if needed?",
+      "revId": "73ebf89c1dcedc7b293e8803d7bd3014615baab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7c4d59d_260aeaf4",
+        "filename": "content/renderer/service_worker/service_worker_context_client_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-04T08:38:34Z",
+      "side": 1,
+      "message": "\"instance\" doesnt feel like the key word here. embedded_worker_host or embedded_worker_instance_host is more descriptive",
+      "revId": "73ebf89c1dcedc7b293e8803d7bd3014615baab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac288aec_1e09adb2",
+        "filename": "content/renderer/service_worker/service_worker_context_client_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-04T08:38:34Z",
+      "side": 1,
+      "message": "Can you write out the type? (Optimize for the reader)",
+      "revId": "73ebf89c1dcedc7b293e8803d7bd3014615baab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecefbb79_5cde35a0",
+        "filename": "content/renderer/service_worker/service_worker_context_client_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-04T08:38:34Z",
+      "side": 1,
+      "message": "Maybe add comments about what this test does, since there are no expects?",
+      "revId": "73ebf89c1dcedc7b293e8803d7bd3014615baab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52577203_f209f209",
+        "filename": "content/renderer/service_worker/service_worker_dispatcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-04T08:38:34Z",
+      "side": 1,
+      "message": "This is a little confusing since it\u0027s talking about a new dispatcher. (this one was already created)",
+      "revId": "73ebf89c1dcedc7b293e8803d7bd3014615baab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
