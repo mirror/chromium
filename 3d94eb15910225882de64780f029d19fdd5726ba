@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f1139fa_4b43b4c6",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1264,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-04T23:39:59Z",
+      "side": 1,
+      "message": "I find these things at odds/confusing:\n - SurveyInfobar#onCloseButtonClicked() calls a delegate #onSurveyInfobarClosed() method\n - ChromehomeSurveyController#onSurveyInfobarClosed() records this histogram, which talks about the close button being clicked\n - SurveyInfobar exposes a #closeInfobar() method that intentionally side-steps the delegate\u0027s #onSurveyInfobarClosed() but still calls #onCloseButtonClicked()\n\n\nCan the delegate method be renamed to #onSurveyInfobarCloseButtonClicked() and this action to ClickedSurveyInfobarCloseButton so that \"close button clicked\" and \"survey infobar closed\" are less muddled?",
+      "range": {
+        "startLine": 1264,
+        "startChar": 41,
+        "endLine": 1264,
+        "endChar": 69
+      },
+      "revId": "3d94eb15910225882de64780f029d19fdd5726ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
