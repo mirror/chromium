@@ -22,6 +22,7 @@
 #import "ios/chrome/browser/ui/toolbar/public/web_toolbar_controller_constants.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #import "ios/chrome/browser/ui/util/constraints_ui_util.h"
+#include "ios/chrome/grit/ios_theme_resources.h"
 #import "ios/third_party/material_components_ios/src/components/ProgressView/src/MaterialProgressView.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -45,6 +46,8 @@
 @property(nonatomic, strong) ToolbarButton* contractButton;
 @property(nonatomic, assign) BOOL voiceSearchEnabled;
 @property(nonatomic, strong) MDCProgressView* progressBar;
+// Lazily instantiated.
+@property(nonatomic, strong) UIImageView* shadowView;
 // Background view, used to display the incognito NTP background color on the
 // toolbar.
 @property(nonatomic, strong) UIView* backgroundView;
@@ -85,24 +88,10 @@
 @synthesize contractButton = _contractButton;
 @synthesize voiceSearchEnabled = _voiceSearchEnabled;
 @synthesize progressBar = _progressBar;
+@synthesize shadowView = _shadowView;
 @synthesize expandedToolbarConstraints = _expandedToolbarConstraints;
 @synthesize topSafeAnchor = _topSafeAnchor;
 @synthesize regularToolbarConstraints = _regularToolbarConstraints;
-
-#pragma mark - Properties accessor
-
-- (UIView*)backgroundView {
-  if (!_backgroundView) {
-    _backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
-    _backgroundView.translatesAutoresizingMaskIntoConstraints = NO;
-    _backgroundView.backgroundColor =
-        [UIColor colorWithWhite:kNTPBackgroundColorBrightnessIncognito
-                          alpha:1.0];
-    [self.view insertSubview:_backgroundView atIndex:0];
-    AddSameConstraints(self.view, _backgroundView);
-  }
-  return _backgroundView;
-}
 
 #pragma mark - Public
 
@@ -190,6 +179,7 @@
   [self setUpToolbarStackView];
   [self setUpToolbarContainerView];
   [self.view addSubview:self.stackView];
+  [self.view addSubview:self.shadowView];
   [self.view addSubview:self.progressBar];
   [self setConstraints];
 }
@@ -269,6 +259,17 @@
         constraintEqualToConstant:kProgressBarHeight],
   ];
   [NSLayoutConstraint activateConstraints:progressBarConstraints];
+
+  // Shadow constraints.
+  [NSLayoutConstraint activateConstraints:@[
+    [self.shadowView.topAnchor constraintEqualToAnchor:self.view.bottomAnchor],
+    [self.shadowView.leadingAnchor
+        constraintEqualToAnchor:self.view.leadingAnchor],
+    [self.shadowView.trailingAnchor
+        constraintEqualToAnchor:self.view.trailingAnchor],
+    [self.shadowView.heightAnchor
+        constraintEqualToConstant:kToolbarShadowHeight],
+  ]];
 
   // StackView constraints.
   NSArray* stackViewConstraints = @[
@@ -652,6 +653,19 @@
 
 #pragma mark - Setters & Getters.
 
+- (UIView*)backgroundView {
+  if (!_backgroundView) {
+    _backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
+    _backgroundView.translatesAutoresizingMaskIntoConstraints = NO;
+    _backgroundView.backgroundColor =
+        [UIColor colorWithWhite:kNTPBackgroundColorBrightnessIncognito
+                          alpha:1.0];
+    [self.view insertSubview:_backgroundView atIndex:0];
+    AddSameConstraints(self.view, _backgroundView);
+  }
+  return _backgroundView;
+}
+
 - (NSLayoutYAxisAnchor*)topSafeAnchor {
   if (!_topSafeAnchor) {
     if (@available(iOS 11, *)) {
@@ -692,6 +706,16 @@
     ];
   }
   return _expandedToolbarConstraints;
+}
+
+- (UIImageView*)shadowView {
+  if (!_shadowView) {
+    _shadowView = [[UIImageView alloc] init];
+    _shadowView.translatesAutoresizingMaskIntoConstraints = NO;
+    _shadowView.userInteractionEnabled = NO;
+    _shadowView.image = NativeImage(IDR_IOS_TOOLBAR_SHADOW);
+  }
+  return _shadowView;
 }
 
 #pragma mark - Private
