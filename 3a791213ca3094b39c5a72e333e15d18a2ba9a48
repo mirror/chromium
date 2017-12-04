@@ -16,6 +16,24 @@
       "revId": "3a791213ca3094b39c5a72e333e15d18a2ba9a48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73ee8d0e_647ab323",
+        "filename": "content/browser/gpu/gpu_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-04T19:36:48Z",
+      "side": 1,
+      "message": "\u003e I assume this will only apply to Android.\n\nYes, implemented on android only.\n\n\u003e If we fail creating the channel, the following things happen in the renderer:\n\u003e 1- compositor will retry forever (assuming it\u0027s visible)\n\nThis is ok because we don\u0027t actually prevent launches in this CL. But definitely need to do something about this when we prevent all launches; there are corner cases where renderer visibility does not converge to match AllowGpuLaunchRetryOnIOThread.\n\n\u003e 2- 2D canvas will fail and fallback to software\n\u003e 3- WebGL will fail, reporting failure (not supported) to the app\n\nThese two should treat this the same way as a context loss near creation, right? At least I didn\u0027t find any specific code that treats establish channel failure differently?\n\n\u003e 4- media will, mmh, crash, I think. RenderThreadImpl::GetStreamTexureFactory() will return null, that\u0027s used in MediaFactory::CreateRendererFactorySelector (called from  MediaFactory::CreateMediaPlayer) to pass to StreamTextureWrapperImpl::Create which will liberally pass a null pointer to StreamTextureWrapperImpl which expects it to be non-null.  (This is all Android-specific code, so I assume it\u0027s used, but I\u0027m not 100% up-to-date on the media story). Some other places also assume success (e.g. VEAEncoder which will crash if fail to create a channel, but I don\u0027t know that it\u0027s used on Android). I haven\u0027t tried to exhaustively find all places that this may impact.\n\nI\u0027ll get back to you on this.. crashing would be bad.\n\n\u003e \n\u003e IOW, moderately annoying to really bad things will happen if we actually run into this. Do we have reason to believe we avoid those issues? In particular I\u0027m wondering about the transition from foreground to background or vice versa when the renderer might run while we believe in the browser that we are backgrounded? (I\u0027m not sure how the renderer interacts with that).\n\nThat\u0027s definitely possible. Some tabs can remain in visible state even when the app is in the background (eg if tab is playing music).\n\nFor this CL, I was hoping everything treats establish channel failure like it\u0027s a recoverable context loss. If that\u0027s not the case, then that would be a problem.",
+      "parentUuid": "36a3f1b9_1cdb2304",
+      "revId": "3a791213ca3094b39c5a72e333e15d18a2ba9a48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
