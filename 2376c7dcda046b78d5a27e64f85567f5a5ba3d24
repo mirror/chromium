@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "08f1d5c2_3874fe1f",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-04T20:30:04Z",
+      "side": 1,
+      "message": "Yes, the only user of TabLifecycleObserver is the extensions API.",
+      "parentUuid": "dc7b99e6_b41945bb",
+      "range": {
+        "startLine": 25,
+        "startChar": 15,
+        "endLine": 25,
+        "endChar": 43
+      },
+      "revId": "2376c7dcda046b78d5a27e64f85567f5a5ba3d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1f3dd13_410c47d0",
         "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit.h",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e11d3139_0e0bf413",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-04T20:30:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1f3dd13_410c47d0",
+      "range": {
+        "startLine": 29,
+        "startChar": 30,
+        "endLine": 29,
+        "endChar": 31
+      },
+      "revId": "2376c7dcda046b78d5a27e64f85567f5a5ba3d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cffad335_854d97c6",
         "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit.h",
         "patchSetId": 5
@@ -68,6 +116,30 @@
       "revId": "2376c7dcda046b78d5a27e64f85567f5a5ba3d24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8492a1b_1c95544b",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-04T20:30:04Z",
+      "side": 1,
+      "message": "Added comment to explain that the pointed list can be modified outside of this TabLifecycleUnit, but only on the sequence on which the constructor is invoked.",
+      "parentUuid": "cffad335_854d97c6",
+      "range": {
+        "startLine": 31,
+        "startChar": 25,
+        "endLine": 31,
+        "endChar": 37
+      },
+      "revId": "2376c7dcda046b78d5a27e64f85567f5a5ba3d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
