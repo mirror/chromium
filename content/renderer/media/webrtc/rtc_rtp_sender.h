@@ -8,6 +8,7 @@
 #include <memory>
 #include <vector>
 
+// TODO: move includes to .cc
 #include "content/common/content_export.h"
 #include "content/renderer/media/webrtc/webrtc_media_stream_adapter_map.h"
 #include "content/renderer/media/webrtc/webrtc_media_stream_track_adapter_map.h"
@@ -23,40 +24,36 @@ namespace content {
 // of the pointer to the webrtc sender.
 class CONTENT_EXPORT RTCRtpSender : public blink::WebRTCRtpSender {
  public:
-  static uintptr_t getId(const webrtc::RtpSenderInterface* webrtc_rtp_sender);
+  static uintptr_t getId(const webrtc::RtpSenderInterface* webrtc_sender);
 
-  RTCRtpSender(rtc::scoped_refptr<webrtc::RtpSenderInterface> webrtc_rtp_sender,
-               std::unique_ptr<WebRtcMediaStreamTrackAdapterMap::AdapterRef>
-                   track_adapter);
   RTCRtpSender(
-      rtc::scoped_refptr<webrtc::RtpSenderInterface> webrtc_rtp_sender,
-      std::unique_ptr<WebRtcMediaStreamTrackAdapterMap::AdapterRef>
-          track_adapter,
+      rtc::scoped_refptr<webrtc::RtpSenderInterface> webrtc_sender,
+      std::unique_ptr<WebRtcMediaStreamTrackAdapterMap::AdapterRef> track_ref);
+  RTCRtpSender(
+      rtc::scoped_refptr<webrtc::RtpSenderInterface> webrtc_sender,
+      std::unique_ptr<WebRtcMediaStreamTrackAdapterMap::AdapterRef> track_ref,
       std::vector<std::unique_ptr<WebRtcMediaStreamAdapterMap::AdapterRef>>
-          stream_adapters);
+          stream_refs);
+  RTCRtpSender(const RTCRtpSender& other);
   ~RTCRtpSender() override;
+
+  RTCRtpSender& operator=(const RTCRtpSender& other);
 
   // Creates a shallow copy of the sender, representing the same underlying
   // webrtc sender as the original.
+  // TODO(hbos): Remove in favor of constructor.
   std::unique_ptr<RTCRtpSender> ShallowCopy() const;
 
   uintptr_t Id() const override;
-  const blink::WebMediaStreamTrack* Track() const override;
+  blink::WebMediaStreamTrack Track() const override;
 
   void OnRemoved();
-  webrtc::RtpSenderInterface* webrtc_rtp_sender();
+  webrtc::RtpSenderInterface* webrtc_sender();
   const webrtc::MediaStreamTrackInterface* webrtc_track() const;
 
  private:
-  const rtc::scoped_refptr<webrtc::RtpSenderInterface> webrtc_rtp_sender_;
-  // The track adapter is the glue between blink and webrtc layer tracks.
-  // Keeping a reference to the adapter ensures it is not disposed, as is
-  // required as long as the webrtc layer track is in use by the sender.
-  std::unique_ptr<WebRtcMediaStreamTrackAdapterMap::AdapterRef> track_adapter_;
-  // Similarly, reference needs to be kept to the stream adapters when a sender
-  // is created for |addTrack| with associated stream(s).
-  std::vector<std::unique_ptr<WebRtcMediaStreamAdapterMap::AdapterRef>>
-      stream_adapters_;
+  class RTCRtpSenderInternal;
+  scoped_refptr<RTCRtpSenderInternal> internal_;
 };
 
 }  // namespace content
