@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5334595a_7fac6c8f",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-12-04T14:03:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebfaa29e_c59a5178",
+      "range": {
+        "startLine": 141,
+        "startChar": 2,
+        "endLine": 141,
+        "endChar": 23
+      },
+      "revId": "23628c4c930a72bfe222308e6e9006040b8e80fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d1fc16d_97182037",
         "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.h",
         "patchSetId": 11
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-30T14:40:37Z",
       "side": 1,
       "message": "I think this would be better suited as a |state_|.",
+      "range": {
+        "startLine": 143,
+        "startChar": 7,
+        "endLine": 143,
+        "endChar": 23
+      },
+      "revId": "23628c4c930a72bfe222308e6e9006040b8e80fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82f39bfc_9f7f7d3a",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-12-04T14:03:15Z",
+      "side": 1,
+      "message": "|state_| is already used for ParseState.\nrenamed as |header_state|.",
+      "parentUuid": "4d1fc16d_97182037",
       "range": {
         "startLine": 143,
         "startChar": 7,
@@ -68,6 +116,30 @@
       "revId": "23628c4c930a72bfe222308e6e9006040b8e80fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a1eb690_7d805263",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-12-04T14:03:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3df4977a_a0962298",
+      "range": {
+        "startLine": 144,
+        "startChar": 20,
+        "endLine": 144,
+        "endChar": 27
+      },
+      "revId": "23628c4c930a72bfe222308e6e9006040b8e80fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
