@@ -26,6 +26,7 @@
 #include "base/macros.h"
 #include "base/posix/eintr_wrapper.h"
 #include "base/posix/unix_domain_socket.h"
+#include "build/build_config.h"
 #include "sandbox/linux/syscall_broker/broker_client.h"
 #include "sandbox/linux/tests/scoped_temporary_file.h"
 #include "sandbox/linux/tests/test_utils.h"
@@ -716,8 +717,11 @@ TEST(BrokerProcess, StatFile) {
     EXPECT_NE(0u, static_cast<unsigned int>(sb.st_dev));
     EXPECT_NE(0u, static_cast<unsigned int>(sb.st_ino));
     EXPECT_NE(0u, static_cast<unsigned int>(sb.st_mode));
+#if !defined(OS_ANDROID)
+    // Triggers https://crbug.com/791696, uid/gid may be 0.
     EXPECT_NE(0u, static_cast<unsigned int>(sb.st_uid));
     EXPECT_NE(0u, static_cast<unsigned int>(sb.st_gid));
+#endif
     EXPECT_NE(0u, static_cast<unsigned int>(sb.st_blksize));
     EXPECT_NE(0u, static_cast<unsigned int>(sb.st_blocks));
 
