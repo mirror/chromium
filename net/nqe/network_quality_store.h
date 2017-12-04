@@ -100,10 +100,6 @@ class NET_EXPORT_PRIVATE NetworkQualityStore {
   base::ObserverList<NetworkQualitiesCacheObserver>
       network_qualities_cache_observer_list_;
 
-  // When set to true, disables the offline check when storing the network
-  // quality.
-  bool disable_offline_check_;
-
   base::ThreadChecker thread_checker_;
 
   base::WeakPtrFactory<NetworkQualityStore> weak_ptr_factory_;

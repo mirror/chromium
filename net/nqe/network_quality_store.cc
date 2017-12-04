@@ -14,8 +14,7 @@ namespace nqe {
 
 namespace internal {
 
-NetworkQualityStore::NetworkQualityStore()
-    : disable_offline_check_(false), weak_ptr_factory_(this) {
+NetworkQualityStore::NetworkQualityStore() : weak_ptr_factory_(this) {
   static_assert(kMaximumNetworkQualityCacheSize > 0,
                 "Size of the network quality cache must be > 0");
   // This limit should not be increased unless the logic for removing the
@@ -140,18 +139,7 @@ bool NetworkQualityStore::EligibleForCaching(
     const NetworkID& network_id) const {
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  // |disable_offline_check_| forces caching of the network quality even if
-  // the network is set to offline.
-  return network_id.type == NetworkChangeNotifier::CONNECTION_ETHERNET ||
-         !network_id.id.empty() ||
-         (network_id.type == NetworkChangeNotifier::CONNECTION_NONE &&
-          disable_offline_check_);
-}
-
-void NetworkQualityStore::DisableOfflineCheckForTesting(
-    bool disable_offline_check) {
-  DCHECK(thread_checker_.CalledOnValidThread());
-  disable_offline_check_ = disable_offline_check;
+  return true;
 }
 
 void NetworkQualityStore::NotifyCacheObserverIfPresent(
