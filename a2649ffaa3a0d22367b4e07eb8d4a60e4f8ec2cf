@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "bf508859_e6c8cfc3",
+        "filename": "chrome/browser/search/search.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-12-04T15:50:05Z",
+      "side": 1,
+      "message": "\u003e \u003e Adding exceptions here worries me, because it seems like this should be a simple question, or at least one that\u0027s answered elsewhere, so we could call a shared function. Listing exceptions here makes it likely we miss one.\n\u003e \n\u003e Shared function for what exactly?\n\n“What\u0027s on screen?”\n\nor alternately\n\n“What’s the URL that determines the permissions of JS on the current page?”\n\n\u003e FWIW, I really hope this\u0027ll be the only exception, and it\u0027ll go away once crbug.com/448486 gets resolved and interstitials are Less Weird.\n\u003e \n\u003e \u003e For example, what is window.location.href in an interstitial? Except, apparently window.location.href *is* still the NTP (\"chrome-search://local-ntp/local-ntp.html\") after a navigation from the NTP to an interstitial. And it even keeps the security context of the previous page; for example, window.localStorage returns storage from the previous page\u0027s origin.\n\u003e \n\u003e Interstitials are Weird (TM), and actually coexist on top of the page that was loaded before. The inspector sees only the page below, which is why it still claims that window.location.href is the NTP. I just tried (by hacking code), and on the interstitial page itself, window.location.href is a data URI, which is apparently how interstitials are delivered.\n\u003e \n\u003e (Also, you don\u0027t actually navigate to an interstitial. You *try* to navigate to some other page, but the navigation never gets committed. So you\u0027re in a weird state where there\u0027s a committed navigation/URL (e.g. NTP), a pending navigation/visible URL (blocked page), and neither of the two is what\u0027s actually on screen...)\n\u003e \n\u003e \u003e So I guess interstitials get a lot of permissions already that they maybe shouldn\u0027t, and that\u0027s considered OK and we trust them…?\n\u003e \n\u003e As above, I don\u0027t think they do; they\u0027re just confusing. That said, we probably do trust them, since they\u0027re all baked into Chrome.",
+      "parentUuid": "5db036d5_b2563207",
+      "revId": "a2649ffaa3a0d22367b4e07eb8d4a60e4f8ec2cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5acb047f_f2ed3ca1",
         "filename": "chrome/browser/search/search.cc",
         "patchSetId": 6
@@ -69,6 +87,24 @@
       "revId": "a2649ffaa3a0d22367b4e07eb8d4a60e4f8ec2cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3869bb6_57ea3bfd",
+        "filename": "chrome/browser/search/search.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-12-04T15:50:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "46bcadd1_5c303371",
+      "revId": "a2649ffaa3a0d22367b4e07eb8d4a60e4f8ec2cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
