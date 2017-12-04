@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b5a7d7d9_c09daa34",
+        "filename": "chrome/test/data/extensions/api_test/webrequest/test_unload5.js",
+        "patchSetId": 25
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-04T21:35:17Z",
+      "side": 1,
+      "message": "correct, these should be web-initiated requests, not browser-initiated requests.",
+      "parentUuid": "b85f23cd_ac2f0c66",
+      "range": {
+        "startLine": 13,
+        "startChar": 22,
+        "endLine": 13,
+        "endChar": 64
+      },
+      "revId": "f5a93d5f7af56920f5280fc908e20b1438a2676d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10515069_3fd13a7c",
         "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
         "patchSetId": 25
