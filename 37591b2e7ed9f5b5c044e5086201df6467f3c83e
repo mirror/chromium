@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa9f93ad_2cb06b23",
+        "filename": "chrome/browser/chromeos/system_logs/single_debug_daemon_log_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-04T22:09:51Z",
+      "side": 1,
+      "message": "Nit: No need for these braces.",
+      "range": {
+        "startLine": 67,
+        "startChar": 26,
+        "endLine": 67,
+        "endChar": 27
+      },
+      "revId": "37591b2e7ed9f5b5c044e5086201df6467f3c83e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

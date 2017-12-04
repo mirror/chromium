@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "5408c954_d952d25b",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-04T22:09:51Z",
+      "side": 1,
+      "message": "Oh, I see. If this meant to be a prereq to the other CL, then ACK.",
+      "parentUuid": "216d9093_f568ca5c",
+      "revId": "828ff232689b036b04ca193326febb17a23864df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34b29cb1_9b5c377b",
         "filename": "extensions/browser/api/feedback_private/log_source_access_manager.h",
         "patchSetId": 2
