@@ -2663,6 +2663,8 @@ void RenderWidgetHostImpl::SubmitCompositorFrame(
   // TODO(gklassen): Route hit-test data to appropriate HitTestAggregator.
   TRACE_EVENT_FLOW_END0(TRACE_DISABLED_BY_DEFAULT("cc.debug.ipc"),
                         "SubmitCompositorFrame", local_surface_id.parent_id());
+  // This trace should probably include
+  // local_surface_id.child_sequence_number());
   bool tracing_enabled;
   TRACE_EVENT_CATEGORY_GROUP_ENABLED(TRACE_DISABLED_BY_DEFAULT("cc.debug.ipc"),
                                      &tracing_enabled);
