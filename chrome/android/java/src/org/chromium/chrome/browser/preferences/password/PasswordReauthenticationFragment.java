@@ -22,6 +22,9 @@ public class PasswordReauthenticationFragment extends Fragment {
 
     protected static final int CONFIRM_DEVICE_CREDENTIAL_REQUEST_CODE = 2;
 
+    private static final String SAVED_STATE_PREVENT_REPEATED_CREATION_ID =
+            "saved-state-prevent-repeated-creation-id";
+
     private static boolean sPreventLockDevice = false;
 
     private FragmentManager mFragmentManager;
@@ -30,9 +33,17 @@ public class PasswordReauthenticationFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mFragmentManager = getFragmentManager();
-        if (!sPreventLockDevice) {
+        final boolean isFirstTime = savedInstanceState == null
+                || !savedInstanceState.containsKey(SAVED_STATE_PREVENT_REPEATED_CREATION_ID);
+        if (!sPreventLockDevice && isFirstTime) {
             lockDevice();
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(SAVED_STATE_PREVENT_REPEATED_CREATION_ID, true);
     }
 
     @Override
