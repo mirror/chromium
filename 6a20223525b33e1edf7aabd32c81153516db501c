@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46fb7270_a8d898b1",
+        "filename": "chrome/browser/notifications/notification_common.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-04T22:04:33Z",
+      "side": 1,
+      "message": "should this be a NOTREACHED?",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 16
+      },
+      "revId": "6a20223525b33e1edf7aabd32c81153516db501c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a9dfaf6_b8219d1b",
+        "filename": "chrome/browser/notifications/notification_common.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-04T22:04:33Z",
+      "side": 1,
+      "message": "Do I remember correctly that you mentioned you wanted to get rid of this enum? Since you\u0027re adding to it, now seems like a good time to discuss it. What is the advantage of this over separate functions in NDS (ProcessClick, ProcessClose, etc.)? It seems kind of bad to have all these optional params in ProcessNotificationOperation that are only relevant to certain operations.",
+      "range": {
+        "startLine": 20,
+        "startChar": 7,
+        "endLine": 20,
+        "endChar": 16
+      },
+      "revId": "6a20223525b33e1edf7aabd32c81153516db501c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6f330ba_da36cf50",
+        "filename": "chrome/browser/notifications/notification_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-04T22:04:33Z",
+      "side": 1,
+      "message": "should this be a NOTREACHED or pure virtual?",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 69
+      },
+      "revId": "6a20223525b33e1edf7aabd32c81153516db501c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
