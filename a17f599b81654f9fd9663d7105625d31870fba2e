@@ -52,6 +52,24 @@
       "revId": "a17f599b81654f9fd9663d7105625d31870fba2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2a01d8a_da98f298",
+        "filename": "ui/gl/gl_image.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-04T22:11:12Z",
+      "side": 1,
+      "message": "piman@ suggested that we avoid the clear for ChromeOS since it\u0027s already cleared on creation, but mac isn\u0027t cleared. If we want to always clear anonymous images, we don\u0027t even need an ifdef.",
+      "parentUuid": "25dc0a80_7cabe357",
+      "revId": "a17f599b81654f9fd9663d7105625d31870fba2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
