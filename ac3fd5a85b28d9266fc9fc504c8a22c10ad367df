@@ -118,6 +118,30 @@
       "revId": "ac3fd5a85b28d9266fc9fc504c8a22c10ad367df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d3a7a6dd_004a43a3",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-12-04T17:32:57Z",
+      "side": 1,
+      "message": "Thank you for the reference go/mock-objects link and the discussion here. The distinction between mocks/stubs/fakes is important. In this particular case, it is a stub that we want to have [UIApplication sharedApplication] returns a specific -applicationState for the duration of a specific test. I will consider the use of OCMClassMock to be the appropriate tool for the job. It has the benefit of keeping the code being test simple and straight-forward.\n\nI agree that in other situations, fakes or mocks may be the right/better choice.",
+      "parentUuid": "11be3026_96da77c7",
+      "range": {
+        "startLine": 53,
+        "startChar": 12,
+        "endLine": 53,
+        "endChar": 44
+      },
+      "revId": "ac3fd5a85b28d9266fc9fc504c8a22c10ad367df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
