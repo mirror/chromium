@@ -17,6 +17,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace content {
+namespace restricted_cookie_manager_unittest {
 
 // Synchronous proxies to a wrapped RestrictedCookieManager's methods.
 class RestrictedCookieManagerSync {
@@ -129,14 +130,10 @@ class RestrictedCookieManagerTest : public testing::Test {
   std::unique_ptr<RestrictedCookieManagerSync> sync_service_;
 };
 
-namespace {
-
 bool CompareCanonicalCookies(const net::CanonicalCookie& c1,
                              const net::CanonicalCookie& c2) {
   return c1.FullCompare(c2);
 }
-
-}  // anonymous namespace
 
 TEST_F(RestrictedCookieManagerTest, GetAllForUrlBlankFilter) {
   SetSessionCookie("cookie-name", "cookie-value", "example.com", "/");
@@ -237,4 +234,5 @@ TEST_F(RestrictedCookieManagerTest, SetCanonicalCookie) {
   EXPECT_EQ("new-value", cookies[0].Value());
 }
 
+}  // namespace restricted_cookie_manager_unittest
 }  // namespace content

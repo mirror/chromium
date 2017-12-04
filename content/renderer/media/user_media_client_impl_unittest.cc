@@ -40,8 +40,7 @@
 using testing::_;
 
 namespace content {
-
-namespace {
+namespace user_media_client_impl_unittest {
 
 blink::WebMediaConstraints CreateDefaultConstraints() {
   MockConstraintFactory factory;
@@ -449,8 +448,6 @@ class UserMediaClientImplUnderTest : public UserMediaClientImpl {
   RequestState* state_;
   blink::WebVector<blink::WebMediaDeviceInfo> last_devices_;
 };
-
-}  // namespace
 
 class UserMediaClientImplTest : public ::testing::Test {
  public:
@@ -1435,4 +1432,5 @@ TEST_F(UserMediaClientImplTest, ApplyConstraintsVideoDeviceStopped) {
   }
 }
 
+}  // namespace user_media_client_impl_unittest
 }  // namespace content

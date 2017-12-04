@@ -10,8 +10,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace content {
-
-namespace {
+namespace csp_context_unittest {
 
 class CSPContextTest : public CSPContext {
  public:
@@ -63,8 +62,6 @@ ContentSecurityPolicy BuildPolicy(CSPDirective::Name directive_name,
       {CSPDirective(directive_name, CSPSourceList(false, false, sources))},
       std::vector<std::string>());  // report_end_points
 }
-
-}  // namespace
 
 TEST(CSPContextTest, SchemeShouldBypassCSP) {
   CSPSource source("", "example.com", false, url::PORT_UNSPECIFIED, false, "");
@@ -273,4 +270,5 @@ TEST(CSPContextTest, ShouldModifyRequestUrlForCsp) {
                                                     false, &new_url));
 }
 
+}  // namespace csp_context_unittest
 }  // namespace content
