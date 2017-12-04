@@ -1,0 +1,276 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f840860b_6de58611",
+        "filename": "chrome/browser/devtools/device/adb/adb_client_socket.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-04T21:57:16Z",
+      "side": 1,
+      "message": "Wouldn\u0027t you need to update the SendCommand interface, since the annotation comes from there?",
+      "revId": "f1e657b9aa786d674cac262d4acbc657f8eee3ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f851ca29_ba7cd48f",
+        "filename": "chrome/browser/devtools/device/android_device_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-04T21:57:16Z",
+      "side": 1,
+      "message": "This is roughly akin to a URLRequest, so wouldn\u0027t your annotation need to be updated to the HttpRequest interface, since the |request| is supplied by the caller",
+      "revId": "f1e657b9aa786d674cac262d4acbc657f8eee3ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "988d6ba8_cbc2c37d",
+        "filename": "chrome/browser/devtools/device/android_web_socket.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-04T21:57:16Z",
+      "side": 1,
+      "message": "Similarly, this seems like you\u0027d need to track additional bits with the |request_buffer_| (which itself is coalesced between multiple data frames) to track.",
+      "revId": "f1e657b9aa786d674cac262d4acbc657f8eee3ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2434fa09_e58b4151",
+        "filename": "chrome/browser/devtools/device/port_forwarding_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-04T21:57:16Z",
+      "side": 1,
+      "message": "What would an annotation like this look like, considering it copies data from one socket to another?",
+      "revId": "f1e657b9aa786d674cac262d4acbc657f8eee3ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4c4d0c7_4f2302a8",
+        "filename": "chrome/browser/devtools/device/usb/android_usb_socket.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-04T21:57:16Z",
+      "side": 1,
+      "message": "This shows where the //net interface changes are a bit weird, as we\u0027re writing data to a USB connection here (that is implemented using the net interface but is not networked)",
+      "revId": "f1e657b9aa786d674cac262d4acbc657f8eee3ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6acc4dd_827754f5",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-04T21:57:16Z",
+      "side": 1,
+      "message": "Wouldn\u0027t this have to be updated to annotate the |send_buffer| in this interface?",
+      "revId": "f1e657b9aa786d674cac262d4acbc657f8eee3ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7828bfa_f33fdfd5",
+        "filename": "components/cast_channel/cast_transport.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-04T21:57:16Z",
+      "side": 1,
+      "message": "Similarly, wouldn\u0027t the annotations need to be stored with the |WriteRequest| ?",
+      "revId": "f1e657b9aa786d674cac262d4acbc657f8eee3ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "194b6f2a_6d1e4918",
+        "filename": "components/ui_devtools/devtools_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-04T21:57:16Z",
+      "side": 1,
+      "message": "Why wouldn\u0027t we track the annotation with |protocol::Serializable|? It could contain user data",
+      "revId": "f1e657b9aa786d674cac262d4acbc657f8eee3ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e98e4904_c1e3170e",
+        "filename": "content/browser/devtools/devtools_http_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-04T21:57:16Z",
+      "side": 1,
+      "message": "Why don\u0027t you have to annotate each of these methods?",
+      "revId": "f1e657b9aa786d674cac262d4acbc657f8eee3ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af71ee4c_e92a99b3",
+        "filename": "content/browser/renderer_host/p2p/socket_host_tcp.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-04T21:57:16Z",
+      "side": 1,
+      "message": "While these messages come from the renderer, the renderer can use this interface to, say, talk with Google (AIUI).\n\n1) Should we expect annotations from the renderer?\n2) Should we trust annotations from the renderer?\n3) What are the implications if we don\u0027t annotate?",
+      "revId": "f1e657b9aa786d674cac262d4acbc657f8eee3ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39679886_93d78188",
+        "filename": "content/browser/renderer_host/pepper/pepper_tcp_socket_message_filter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-04T21:57:16Z",
+      "side": 1,
+      "message": "Same remark - these are driven by the renderer and can include renderer features with cookies or the like.",
+      "revId": "f1e657b9aa786d674cac262d4acbc657f8eee3ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1da7f36_1e447439",
+        "filename": "device/bluetooth/bluetooth_socket_net.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-04T21:57:16Z",
+      "side": 1,
+      "message": "Wouldn\u0027t this need to propogate to the caller API?",
+      "revId": "f1e657b9aa786d674cac262d4acbc657f8eee3ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71acd2e0_c1a7d622",
+        "filename": "extensions/browser/api/socket/socket_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-04T21:57:16Z",
+      "side": 1,
+      "message": "Why update socket.cc but not the socket_api? Don\u0027t you need both?",
+      "revId": "f1e657b9aa786d674cac262d4acbc657f8eee3ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "714abc87_250b0d19",
+        "filename": "google_apis/gcm/base/socket_stream.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-04T21:57:16Z",
+      "side": 1,
+      "message": "Don\u0027t you need to track this, similar to |write_buffer_|, with the caller\u0027s context?",
+      "revId": "f1e657b9aa786d674cac262d4acbc657f8eee3ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9553eb8d_c0ced928",
+        "filename": "jingle/glue/chrome_async_socket.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-04T21:57:16Z",
+      "side": 1,
+      "message": "Why do you do this? And why line 308 which go mutable to immutable?",
+      "revId": "f1e657b9aa786d674cac262d4acbc657f8eee3ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "388d90c0_75464a6e",
+        "filename": "media/cast/net/udp_transport.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-04T21:57:16Z",
+      "side": 1,
+      "message": "Doesn\u0027t this need to get context from the caller?",
+      "revId": "f1e657b9aa786d674cac262d4acbc657f8eee3ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
