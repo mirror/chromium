@@ -178,8 +178,7 @@ void Label::SetMultiLine(bool multi_line) {
     return;
   is_first_paint_text_ = true;
   multi_line_ = multi_line;
-  if (render_text_->MultilineSupported())
-    render_text_->SetMultiline(multi_line);
+  render_text_->SetMultiline(multi_line);
   render_text_->SetReplaceNewlineCharsWithSymbols(!multi_line);
   ResetLayout();
 }
@@ -375,7 +374,7 @@ int Label::GetHeightForWidth(int w) const {
   int base_line_height = std::max(line_height(), font_list().GetHeight());
   if (!multi_line() || text().empty() || w <= 0) {
     height = base_line_height;
-  } else if (render_text_->MultilineSupported()) {
+  } else {
     // SetDisplayRect() has a side effect for later calls of GetStringSize().
     // Be careful to invoke |render_text_->SetDisplayRect(gfx::Rect())| to
     // cancel this effect before the next time GetStringSize() is called.
@@ -389,9 +388,6 @@ int Label::GetHeightForWidth(int w) const {
     height = multi_line() && max_lines() > 0
                  ? std::min(max_lines() * base_line_height, string_height)
                  : string_height;
-  } else {
-    std::vector<base::string16> lines = GetLinesForWidth(w);
-    height = lines.size() * std::max(line_height(), font_list().GetHeight());
   }
   height -= gfx::ShadowValue::GetMargin(render_text_->shadows()).height();
   return height + GetInsets().height();
@@ -821,7 +817,8 @@ const gfx::RenderText* Label::GetRenderTextForSelectionController() const {
 }
 
 void Label::Init(const base::string16& text, const gfx::FontList& font_list) {
-  render_text_.reset(gfx::RenderText::CreateInstance());
+  render_text_ = gfx::RenderText::CreateInstanceForToolkitUI();
+  DCHECK(render_text_->MultilineSupported());
   render_text_->SetHorizontalAlignment(gfx::ALIGN_CENTER);
   render_text_->SetDirectionalityMode(gfx::DIRECTIONALITY_FROM_TEXT);
   // NOTE: |render_text_| should not be elided at all. This is used to keep some
@@ -892,67 +889,30 @@ void Label::MaybeBuildRenderTextLines() const {
   gfx::ElideBehavior elide_behavior =
       multi_line() && (elide_behavior_ != gfx::NO_ELIDE) ? gfx::ELIDE_TAIL
                                                          : elide_behavior_;
-  if (!multi_line() || render_text_->MultilineSupported()) {
-    std::unique_ptr<gfx::RenderText> render_text =
-        CreateRenderText(text(), alignment, directionality, elide_behavior);
-    render_text->SetDisplayRect(rect);
-    render_text->SetMultiline(multi_line());
-    render_text->SetMaxLines(multi_line() ? max_lines() : 0);
-    render_text->SetWordWrapBehavior(render_text_->word_wrap_behavior());
+  std::unique_ptr<gfx::RenderText> render_text =
+      CreateRenderText(text(), alignment, directionality, elide_behavior);
+  render_text->SetDisplayRect(rect);
+  render_text->SetMultiline(multi_line());
+  render_text->SetMaxLines(multi_line() ? max_lines() : 0);
+  render_text->SetWordWrapBehavior(render_text_->word_wrap_behavior());
 
-    // Setup render text for selection controller.
-    if (selectable()) {
-      render_text->set_focused(HasFocus());
-      if (stored_selection_range_.IsValid())
-        render_text->SelectRange(stored_selection_range_);
-    }
-
-    lines_.push_back(std::move(render_text));
-  } else {
-    // TODO(warx): Apply max_lines property when RenderText doesn't support
-    // multi-line (crbug.com/758720).
-    std::vector<base::string16> lines = GetLinesForWidth(rect.width());
-    if (lines.size() > 1)
-      rect.set_height(std::max(line_height(), font_list().GetHeight()));
-
-    const int bottom = GetContentsBounds().bottom();
-    for (size_t i = 0; i < lines.size() && rect.y() <= bottom; ++i) {
-      std::unique_ptr<gfx::RenderText> line =
-          CreateRenderText(lines[i], alignment, directionality, elide_behavior);
-      line->SetDisplayRect(rect);
-      lines_.push_back(std::move(line));
-      rect.set_y(rect.y() + rect.height());
-    }
-    // Append the remaining text to the last visible line.
-    for (size_t i = lines_.size(); i < lines.size(); ++i)
-      lines_.back()->SetText(lines_.back()->text() + lines[i]);
+  // Setup render text for selection controller.
+  if (selectable()) {
+    render_text->set_focused(HasFocus());
+    if (stored_selection_range_.IsValid())
+      render_text->SelectRange(stored_selection_range_);
   }
 
+  lines_.push_back(std::move(render_text));
   stored_selection_range_ = gfx::Range::InvalidRange();
   ApplyTextColors();
-}
-
-std::vector<base::string16> Label::GetLinesForWidth(int width) const {
-  std::vector<base::string16> lines;
-  // |width| can be 0 when getting the default text size, in that case
-  // the ideal lines (i.e. broken at newline characters) are wanted.
-  if (width <= 0) {
-    lines = base::SplitString(
-        render_text_->GetDisplayText(), base::string16(1, '\n'),
-        base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
-  } else {
-    gfx::ElideRectangleText(render_text_->GetDisplayText(), font_list(), width,
-                            std::numeric_limits<int>::max(),
-                            render_text_->word_wrap_behavior(), &lines);
-  }
-  return lines;
 }
 
 gfx::Size Label::GetTextSize() const {
   gfx::Size size;
   if (text().empty()) {
     size = gfx::Size(0, std::max(line_height(), font_list().GetHeight()));
-  } else if (!multi_line() || render_text_->MultilineSupported()) {
+  } else {
     // Cancel the display rect of |render_text_|. The display rect may be
     // specified in GetHeightForWidth(), and specifying empty Rect cancels
     // its effect. See also the comment in GetHeightForWidth().
@@ -961,18 +921,6 @@ gfx::Size Label::GetTextSize() const {
     // the comment for MultilinePreferredSizeTest in label_unittest.cc.
     render_text_->SetDisplayRect(gfx::Rect(0, 0, width(), 0));
     size = render_text_->GetStringSize();
-  } else {
-    // Get the natural text size, unelided and only wrapped on newlines.
-    std::vector<base::string16> lines = GetLinesForWidth(width());
-    std::unique_ptr<gfx::RenderText> render_text(
-        gfx::RenderText::CreateInstance());
-    render_text->SetFontList(font_list());
-    for (size_t i = 0; i < lines.size(); ++i) {
-      render_text->SetText(lines[i]);
-      const gfx::Size line = render_text->GetStringSize();
-      size.set_width(std::max(size.width(), line.width()));
-      size.set_height(std::max(line_height(), size.height() + line.height()));
-    }
   }
   const gfx::Insets shadow_margin = -gfx::ShadowValue::GetMargin(shadows());
   size.Enlarge(shadow_margin.width(), shadow_margin.height());

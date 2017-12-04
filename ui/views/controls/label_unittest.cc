@@ -883,12 +883,7 @@ TEST_F(LabelTest, ResetRenderTextData) {
   EXPECT_EQ(1u, label()->lines_.size());
 }
 
-#if !defined(OS_MACOSX)
 TEST_F(LabelTest, MultilineSupportedRenderText) {
-  std::unique_ptr<gfx::RenderText> render_text(
-      gfx::RenderText::CreateInstance());
-  ASSERT_TRUE(render_text->MultilineSupported());
-
   label()->SetText(ASCIIToUTF16("Example of\nmultilined label"));
   label()->SetMultiLine(true);
   label()->SizeToPreferredSize();
@@ -899,7 +894,6 @@ TEST_F(LabelTest, MultilineSupportedRenderText) {
   // There's only one 'line', RenderText itself supports multiple lines.
   EXPECT_EQ(1u, label()->lines_.size());
 }
-#endif
 
 // Ensures SchedulePaint() calls are not made in OnPaint().
 TEST_F(LabelTest, NoSchedulePaintInOnPaint) {
