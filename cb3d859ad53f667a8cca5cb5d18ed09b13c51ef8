@@ -22,6 +22,30 @@
       "revId": "cb3d859ad53f667a8cca5cb5d18ed09b13c51ef8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da0d24c1_96d82f31",
+        "filename": "components/autofill/core/browser/credit_card_save_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-12-04T21:40:00Z",
+      "side": 0,
+      "message": "Good catch, thank you.",
+      "parentUuid": "71f65f25_5879e0db",
+      "range": {
+        "startLine": 793,
+        "startChar": 3,
+        "endLine": 793,
+        "endChar": 26
+      },
+      "revId": "cb3d859ad53f667a8cca5cb5d18ed09b13c51ef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
