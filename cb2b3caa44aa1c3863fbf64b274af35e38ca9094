@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32b795a6_0eee6f58",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasAsyncBlobCreator.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-12-04T17:24:58Z",
+      "side": 1,
+      "message": "Could you put the default value in the constructor, to be consistent with other variables?",
+      "revId": "cb2b3caa44aa1c3863fbf64b274af35e38ca9094",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
